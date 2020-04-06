@@ -13,11 +13,6 @@ spec:
   strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
-          -o choreo-k8s
-        kompose.version: 1.21.0 (992df58d8)
-  #      linkerd.io/inject: enabled
       labels:
         io.kompose.network/choreo: "true"
         io.kompose.service: frontend
