@@ -2,14 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: choreo-mysql
+    choreo.component: choreo-mysql
   name: choreo-mysql
   namespace: choreo-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: choreo-mysql
+      choreo.component: choreo-mysql
   strategy:
     type: RollingUpdate
   template:
@@ -18,7 +18,7 @@ spec:
         linkerd.io/inject: enabled
       labels:
         io.kompose.network/choreo: "true"
-        io.kompose.service: choreo-mysql
+        choreo.component: choreo-mysql
     spec:
       containers:
       - env:

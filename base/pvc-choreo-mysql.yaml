@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    io.kompose.service: choreo-mysql-claim
+    choreo.component: choreo-mysql-claim
   name: choreo-mysql-claim
   namespace: choreo-system
 spec:

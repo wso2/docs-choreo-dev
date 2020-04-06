@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    io.kompose.service: telemetry
+    choreo.component: telemetry
   name: telemetry
   namespace: choreo-system
 spec:
@@ -11,4 +11,4 @@ spec:
     port: 9090
     targetPort: 9090
   selector:
-    io.kompose.service: telemetry
+    choreo.component: telemetry

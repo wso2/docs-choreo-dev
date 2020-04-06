@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: frontend
+    choreo.component: frontend
   name: frontend
   namespace: choreo-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: frontend
+      choreo.component: frontend
   strategy: {}
   template:
     metadata:
       labels:
         io.kompose.network/choreo: "true"
-        io.kompose.service: frontend
+        choreo.component: frontend
     spec:
       containers:
       - env:

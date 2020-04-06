@@ -2,14 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: telemetry
+    choreo.component: telemetry
   name: telemetry
   namespace: choreo-system
 spec:
   replicas: 1 
   selector:
     matchLabels:
-      io.kompose.service: telemetry
+      choreo.component: telemetry
   strategy: {}
   template:
     metadata:
@@ -17,7 +17,7 @@ spec:
         linkerd.io/inject: enabled
       labels:
         io.kompose.network/choreo: "true"
-        io.kompose.service: telemetry
+        choreo.component: telemetry
     spec:
       containers:
       - env:
