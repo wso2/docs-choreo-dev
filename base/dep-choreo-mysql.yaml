@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+      -o choreo-k8s
+    kompose.version: 1.21.0 (992df58d8)
+  labels:
+    io.kompose.service: choreo-mysql
+  name: choreo-mysql
+  namespace: choreo-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: choreo-mysql
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+          -o choreo-k8s
+        kompose.version: 1.21.0 (992df58d8)
+        linkerd.io/inject: enabled 
+      labels:
+        io.kompose.network/choreo: "true"
+        io.kompose.service: choreo-mysql
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: choreo-secret
+            key: db_password
+        image: choreoipaas/choreo-mysql:latest
+        name: choreo-mysql
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: choreo-mysql-claim
+      restartPolicy: Always
+      volumes:
+      - name: choreo-mysql-claim
+        persistentVolumeClaim:
+          claimName: choreo-mysql-claim

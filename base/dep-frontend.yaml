@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+      -o choreo-k8s
+    kompose.version: 1.21.0 (992df58d8)
+  labels:
+    io.kompose.service: frontend
+  name: frontend
+  namespace: choreo-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: frontend
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+          -o choreo-k8s
+        kompose.version: 1.21.0 (992df58d8)
+  #      linkerd.io/inject: enabled
+      labels:
+        io.kompose.network/choreo: "true"
+        io.kompose.service: frontend
+    spec:
+      containers:
+      - env:
+        - name: APP_API
+          value: https://depman.development.choreo.dev
+        - name: AUTH_FLOW
+          value: B2C_1_Signup
+        - name: CLIENT_ID
+          value: cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+        - name: LOGS_API
+          value: wss://depman.development.choreo.dev
+        - name: OBSERVE_API
+          value: http://ingress.local/graphql
+        - name: REDIRECT_URL
+          value: https://development.choreo.dev/
+        - name: TENANT
+          value: choreodevb2c
+        image: choreoipaas/console-app:latest
+        imagePullPolicy: ""
+        name: frontend
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

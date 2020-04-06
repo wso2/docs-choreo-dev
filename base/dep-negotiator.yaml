@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+      -o choreo-k8s
+    kompose.version: 1.21.0 (992df58d8)
+  labels:
+    io.kompose.service: negotiator
+  name: negotiator
+  namespace: choreo-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: negotiator
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+          -o choreo-k8s
+        kompose.version: 1.21.0 (992df58d8)
+        linkerd.io/inject: enabled
+      labels:
+        io.kompose.network/choreo: "true"
+        io.kompose.service: negotiator
+    spec:
+      containers:
+      - env:
+        - name: CHOREO_APP_URL
+          value: http://localhost:31250/observe/app/
+        - name: CHOREO_DB_HOST
+          value: choreo-mysql
+        - name: CHOREO_DB_NAME
+          value: choreo_db
+        - name: CHOREO_DB_PASSWORD
+          valueFrom: 
+           secretKeyRef:
+             name: choreo-secret
+             key: db_password
+        - name: CHOREO_DB_PORT
+          value: "3306"
+        - name: CHOREO_DB_USERNAME
+          value: root
+        image: choreoipaas/choreo-negotiator:latest
+        name: negotiator
+        readinessProbe:
+            httpGet:
+             port: 9091
+             path: /health
+        livenessProbe:
+            httpGet:
+             port: 9091
+             path: /health
+        ports:
+        - containerPort: 9090
+        - containerPort: 9091
+        resources: {}
+      restartPolicy: Always

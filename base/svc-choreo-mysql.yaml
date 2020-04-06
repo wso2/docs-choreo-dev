@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert --file /Users/azeez/projects/choreo-ipaas/choreo/services/docker-compose.yaml
+      -o choreo-k8s
+    kompose.version: 1.21.0 (992df58d8)
+  labels:
+    io.kompose.service: choreo-mysql
+  name: choreo-mysql
+  namespace: choreo-system  
+spec:
+  ports:
+  - name: "3306"
+    port: 3306
+    targetPort: 3306
+  selector:
+    io.kompose.service: choreo-mysql
