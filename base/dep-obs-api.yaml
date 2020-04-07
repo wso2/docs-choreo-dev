@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: observability-api
+  name: observability-api
+  namespace: choreo-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: observability-api
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        io.kompose.network/choreo: "true"
+        choreo.component: observability-api
+    spec:
+      containers:
+      - env:
+        - name: CHOREO_DB_HOSTNAME
+          value: choreo-mysql
+        - name: CHOREO_DB_NAME
+          value: choreo_db
+        - name: CHOREO_DB_PASSWORD
+          valueFrom: 
+           secretKeyRef: 
+             name: choreo-secret 
+             key: db_password
+        - name: CHOREO_DB_PORT
+          value: "3306"
+        - name: CHOREO_DB_USERNAME
+          value: root
+        - name: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: choreo-secret
+              key: tsi_client_id
+        - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: choreo-secret
+              key: tsi_client_secret
+        - name: AZURE_TIMESERIESINSIGHTS_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: choreo-secret
+              key: tsi_tenant_id 
+        - name: AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN
+          valueFrom:
+            secretKeyRef:
+              name: choreo-secret
+              key: tsi_env_fqdn
+        image: choreoipaas/observability-api:latest
+        imagePullPolicy: ""
+        name: observability-api
+        ports:
+        - containerPort: 9095
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

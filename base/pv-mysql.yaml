@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    docker.io/hostpath: /Users/azeez/.docker/Volumes/choreo-mysql-claim/pvc-cce3f54d-025c-4cd7-bd2b-b649722f3f5e
+    pv.kubernetes.io/provisioned-by: docker.io/hostpath
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pvc-cce3f54d-025c-4cd7-bd2b-b649722f3f5e
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 300Mi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: choreo-mysql-claim
+    namespace: choreo-system
+    resourceVersion: "2699113"
+    uid: cce3f54d-025c-4cd7-bd2b-b649722f3f5e
+  hostPath:
+    path: /Users/azeez/.docker/Volumes/choreo-mysql-claim/pvc-cce3f54d-025c-4cd7-bd2b-b649722f3f5e
+    type: ""
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: hostpath
+  volumeMode: Filesystem

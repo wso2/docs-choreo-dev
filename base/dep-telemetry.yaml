@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: telemetry
+  name: telemetry
+  namespace: choreo-system
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      choreo.component: telemetry
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        io.kompose.network/choreo: "true"
+        choreo.component: telemetry
+    spec:
+      containers:
+      - env:
+        - name: CHOREO_DB_NAME 
+          value: choreo_db
+        - name: CHOREO_DB_USERNAME 
+          value: root
+        - name: CHOREO_DB_PASSWORD 
+          valueFrom: 
+           secretKeyRef: 
+             name: choreo-secret
+             key: db_password 
+        - name: CHOREO_DB_HOST 
+          value: choreo-mysql
+        - name: CHOREO_DB_PORT 
+          value: "3306"
+        - name: EVENTHUB_NAMESPACE
+          value: choreo-poc-observability-event-hub-ns.servicebus.windows.net/
+        - name: EVENTHUB_SHARED_ACCESS_POLICY_NAME
+          value: choreo-poc-observability-event-hub-sender-policy
+        - name: METRICS_EVENTHUB_NAME
+          value: choreo-poc-observability-metrics-event-hub
+        - name: METRICS_TO_BE_STORED
+          value: response_time_seconds_mean,requests_total,up,response_time_nanoseconds_total
+        - name: EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY
+          valueFrom: 
+            secretKeyRef:
+              name: choreo-secret
+              key: eh_shared_access_sig_key  
+        image: choreoipaas/choreo-telemetry:latest
+        imagePullPolicy: ""
+        name: telemetry
+        ports:
+        - containerPort: 9090
+        - containerPort: 9091
+        readinessProbe:
+            httpGet:
+             port: 9091
+             path: /health
+        livenessProbe:
+            httpGet:
+             port: 9091
+             path: /health
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

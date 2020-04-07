@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: observability-api
+  name: observability-api
+  namespace: choreo-system
+spec:
+  ports:
+  - name: "obs-api-port"
+    port: 9095
+    targetPort: 9095
+  selector:
+    choreo.component: observability-api

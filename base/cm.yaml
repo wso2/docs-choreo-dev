@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  app_port: "31250"
+kind: ConfigMap
+metadata:
+  name: choreo-cm
+  namespace: choreo-system
