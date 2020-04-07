@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: frontend
   name: frontend
-  namespace: choreo-system
 spec:
   type: NodePort
   ports:
