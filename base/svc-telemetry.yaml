@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: telemetry
   name: telemetry
-  namespace: choreo-system
 spec:
   ports:
   - name: "telemetry-port"

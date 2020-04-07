@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: telemetry
   name: telemetry
-  namespace: choreo-system
 spec:
   replicas: 1 
   selector:
@@ -31,7 +30,7 @@ spec:
              name: choreo-secret
              key: db_password 
         - name: CHOREO_DB_HOST 
-          value: choreo-mysql
+          value: $(CHOREO_DB_SERVICE)
         - name: CHOREO_DB_PORT 
           value: "3306"
         - name: EVENTHUB_NAMESPACE

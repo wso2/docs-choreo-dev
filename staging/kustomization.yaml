@@ -1,3 +1,20 @@
 resources:
   - ../base
 namespace: stage-choreo-system
+
+patches:
+  - path: ingress-patch.json
+    target:
+      group: networking.k8s.io
+      version: v1beta1
+      kind: Ingress
+      name: ingress-http
+  - path: ingress-patch.json
+    target:
+      group: networking.k8s.io
+      version: v1beta1
+      kind: Ingress
+      name: ingress-grpc
+
+patchesStrategicMerge:
+  - replica-rollout-strategy.yaml

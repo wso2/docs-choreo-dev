@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: observability-api
   name: observability-api
-  namespace: choreo-system
 spec:
   ports:
   - name: "obs-api-port"

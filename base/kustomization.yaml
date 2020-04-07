@@ -17,3 +17,17 @@ resources:
   - svc-negotiator.yaml
   - svc-obs-api.yaml
   - svc-telemetry.yaml
+
+vars:
+  - name: CHOREO_DB_SERVICE
+    objref:
+      kind: Service
+      name: choreo-mysql
+      apiVersion: v1
+  - name: CHOREO_HTTP_INGRESS
+    objref:
+      apiVersion: networking.k8s.io/v1beta1
+      kind: Ingress
+      name: ingress-http
+    fieldref:
+      fieldpath: spec.rules[0].host

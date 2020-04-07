@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: choreo-mysql-claim
   name: choreo-mysql-claim
-  namespace: choreo-system
 spec:
   accessModes:
   - ReadWriteMany

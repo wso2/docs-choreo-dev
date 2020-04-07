@@ -13,3 +13,6 @@ linkerd install | kubectl apply -f -
 # sealed secrets
 brew install kubeseal
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/controller.yaml
+
+# kustomize
+brew install kustomize
