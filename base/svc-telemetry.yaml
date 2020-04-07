@@ -7,7 +7,7 @@ metadata:
   namespace: choreo-system
 spec:
   ports:
-  - name: "9090"
+  - name: "telemetry-port"
     port: 9090
     targetPort: 9090
   selector:

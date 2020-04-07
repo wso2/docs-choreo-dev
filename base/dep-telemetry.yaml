@@ -64,4 +64,3 @@ spec:
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
