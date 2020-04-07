@@ -1,0 +1,3 @@
+resources:
+  - ../base
+namespace: stage-choreo-system

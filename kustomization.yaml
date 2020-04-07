@@ -1,0 +1,4 @@
+resources:
+  - dev
+  - prod
+namePrefix: choreo-
