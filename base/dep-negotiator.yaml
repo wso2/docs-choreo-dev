@@ -22,9 +22,9 @@ spec:
       containers:
       - env:
         - name: CHOREO_APP_URL
-          value: http://localhost:31250/observe/app/
+          value: http://localhost/observe/app/
         - name: CHOREO_DB_HOST
-          value: choreo-mysql
+          value: $(CHOREO_DB_SERVICE)
         - name: CHOREO_DB_NAME
           value: choreo_db
         - name: CHOREO_DB_PASSWORD

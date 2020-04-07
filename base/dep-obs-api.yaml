@@ -22,7 +22,7 @@ spec:
       containers:
       - env:
         - name: CHOREO_DB_HOSTNAME
-          value: choreo-mysql
+          value: $(CHOREO_DB_SERVICE)
         - name: CHOREO_DB_NAME
           value: choreo_db
         - name: CHOREO_DB_PASSWORD
