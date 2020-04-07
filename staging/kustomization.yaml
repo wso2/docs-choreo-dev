@@ -1,5 +1,7 @@
 resources:
   - ../base
+  - namespace.yaml
+
 namespace: stage-choreo-system
 
 patches:

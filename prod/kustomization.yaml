@@ -1,5 +1,7 @@
 resources:
   - ../base
+  - namespace.yaml
+
 namespace: prod-choreo-system
 
 patches:

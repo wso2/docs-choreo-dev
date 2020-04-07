@@ -7,7 +7,6 @@ resources:
   - dep-telemetry.yaml
   - ingress-grpc.yaml
   - ingress-http.yaml
-  - ns-choreo-system.yaml
   - pv-mysql.yaml
   - pvc-choreo-mysql.yaml
   - sealed-ingress-cert.yaml

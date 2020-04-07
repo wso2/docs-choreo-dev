@@ -1,5 +1,6 @@
 resources:
   - ../base
+  - namespace.yaml
 namespace: dev-choreo-system
 
 patches:
