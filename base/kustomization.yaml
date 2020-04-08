@@ -1,7 +1,6 @@
 resources:
   - pv-mysql.yaml
   - pvc-choreo-mysql.yaml
-  - sealed-secret.yaml
   - dep-choreo-mysql.yaml
   - dep-frontend.yaml
   - dep-negotiator.yaml

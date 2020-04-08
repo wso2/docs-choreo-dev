@@ -1,6 +1,7 @@
 resources:
   - ../base
   - namespace.yaml
+  - sealed-secret.yaml
 
 namespace: stage-choreo-system
 
