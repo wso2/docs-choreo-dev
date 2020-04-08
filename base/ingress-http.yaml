@@ -21,10 +21,10 @@ spec:
     - http:
         paths:
           - backend:
-              serviceName: frontend
-              servicePort: 8080
-            path: /
-          - backend:
               serviceName: observability-api
               servicePort: 9095
             path: /graphql
+          - backend:
+              serviceName: frontend
+              servicePort: 8080
+            path: /

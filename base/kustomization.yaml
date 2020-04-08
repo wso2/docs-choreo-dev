@@ -1,21 +1,19 @@
 resources:
-  - cm.yaml
+  - pv-mysql.yaml
+  - pvc-choreo-mysql.yaml
+  - sealed-secret.yaml
   - dep-choreo-mysql.yaml
   - dep-frontend.yaml
   - dep-negotiator.yaml
   - dep-obs-api.yaml
   - dep-telemetry.yaml
-  - ingress-grpc.yaml
-  - ingress-http.yaml
-  - pv-mysql.yaml
-  - pvc-choreo-mysql.yaml
-  - sealed-ingress-cert.yaml
-  - sealed-secret.yaml
   - svc-choreo-mysql.yaml
   - svc-frontend.yaml
   - svc-negotiator.yaml
   - svc-obs-api.yaml
   - svc-telemetry.yaml
+  - ingress-grpc.yaml
+  - ingress-http.yaml
 
 vars:
   - name: CHOREO_DB_SERVICE
