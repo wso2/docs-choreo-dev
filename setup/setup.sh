@@ -57,21 +57,13 @@ done
 
 ########### create chore sealed secrets for all environments
 echo "--- Creating ingress TLS cert sealed secrets for all environments..."
-echo "Please MAKE SURE that you copy the *choreo-secret.properties* file to the *out* directory and press enter"
-read -p "Press enter to continue"
 
-file="$outdir/choreo-secret.properties"
 from_lit_str=""
-if [[ -f "$file" ]]
-then
-   while IFS='=' read -r k v; do
-       arr["$k"]="$v"
-       from_lit_str=${from_lit_str}" --from-literal "$k"="$v" "
-   done < $file
-else
-  echo "$file not found."
-  exit 1
-fi
+for k in "db_password" "eh_shared_access_sig_key" "tsi_client_id" "tsi_client_secret" "tsi_tenant_id" "tsi_env_fqdn"
+do
+    read -p "${k}: " v
+    from_lit_str=${from_lit_str}" --from-literal "$k"="$v" "
+done
 
 for env in "dev" "stage" "prod"
 do
