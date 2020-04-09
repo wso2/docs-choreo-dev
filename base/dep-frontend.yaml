@@ -27,7 +27,7 @@ spec:
         - name: LOGS_API
           value: wss://depman.development.choreo.dev
         - name: OBSERVE_API
-          value: http://$(CHOREO_HTTP_INGRESS)/graphql
+          value: https://$(CHOREO_HTTP_INGRESS)/graphql
         - name: REDIRECT_URL
           value: https://development.choreo.dev/
         - name: TENANT
