@@ -39,7 +39,7 @@ sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -
 echo "--- Import ingress certificate to JRE trust store..."
 keystore=$JAVA_HOME/jre/lib/security/cacerts
 sudo keytool -delete -alias choreoingress_local -keystore $keystore
-sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt
+sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
 
 ############### create ingress TLS cert sealed secrets for all environments
 echo "--- Creating ingress TLS cert sealed secrets for all environments..."
