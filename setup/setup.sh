@@ -57,7 +57,7 @@ done
 
 ########### create chore sealed secrets for all environments
 echo "--- Creating ingress TLS cert sealed secrets for all environments..."
-echo "Please MAKE SURE that you copy the Choreo *secret.properties* file to the *out* directory and press enter"
+echo "Please MAKE SURE that you copy the *choreo-secret.properties* file to the *out* directory and press enter"
 read -p "Press enter to continue"
 
 file="$outdir/choreo-secret.properties"
