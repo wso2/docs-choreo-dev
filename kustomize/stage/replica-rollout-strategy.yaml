@@ -25,7 +25,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: negotiator
+  name: telemetry
 spec:
   replicas: 3
   strategy:
