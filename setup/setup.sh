@@ -16,17 +16,17 @@ fi
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
-brew install linkerd
+command -v linkerd >/dev/null 2>&1 || {brew install linkerd}
 linkerd install | kubectl apply -f -
 
 ############## Install Sealed secret support
 echo "--- Installing kubeseal & Bitnami sealed secrets..."
-brew install kubeseal
+command -v kubeseal >/dev/null 2>&1 || {brew install kubeseal}
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/controller.yaml
 
 ############## Install Kustomize
 echo "--- Installing Kustomize..."
-brew install kustomize
+command -v kustomize >/dev/null 2>&1 || {brew install kustomize}
 
 ################ create the ingress certificate
 echo "--- Generating ingress TLS key & certificate..."
