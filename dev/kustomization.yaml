@@ -2,6 +2,8 @@ resources:
   - ../base
   - namespace.yaml
   - sealed-secret.yaml
+  - sealed-ingress-cert.yaml
+
 namespace: dev-choreo-system
 
 patches:

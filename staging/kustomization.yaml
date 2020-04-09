@@ -2,6 +2,7 @@ resources:
   - ../base
   - namespace.yaml
   - sealed-secret.yaml
+  - sealed-ingress-cert.yaml
 
 namespace: stage-choreo-system
 
