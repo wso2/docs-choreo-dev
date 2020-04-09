@@ -1,0 +1,6 @@
+### Installation
+
+Run
+```
+./setup.sh
+```

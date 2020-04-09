@@ -1,30 +1,34 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-http
+  name: ingress-grpc
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/affinity: cookie
     nginx.ingress.kubernetes.io/affinity-mode: balanced
-    nginx.ingress.kubernetes.io/backend-protocol: http
+    nginx.ingress.kubernetes.io/backend-protocol: grpc
     nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/session-cookie-expires: "300"
     nginx.ingress.kubernetes.io/session-cookie-hash: sha1
     nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
     nginx.ingress.kubernetes.io/session-cookie-name: route
-    #  nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 spec:
+  tls:
+    - hosts:
+        - domain.com
+      secretName: ingress-cert
   rules:
-    - http:
-        paths:
-          - backend:
-              serviceName: frontend
-              servicePort: 8080
-            path: /
-          - backend:
-              serviceName: observability-api
-              servicePort: 9095
-            path: /graphql
+  -  http:
+      paths:
+      - backend:
+          serviceName: telemetry
+          servicePort: 9090
+        path: /Telemetry
+      - backend:
+          serviceName: negotiator
+          servicePort: 9090
+        path: /Handshake

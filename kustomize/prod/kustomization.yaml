@@ -1,6 +1,10 @@
 resources:
   - ../base
-namespace: stage-choreo-system
+  - namespace.yaml
+  - sealed-secret.yaml
+  - sealed-ingress-cert.yaml
+
+namespace: prod-choreo-system
 
 patches:
   - path: ingress-patch.json

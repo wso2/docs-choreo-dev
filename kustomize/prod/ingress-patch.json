@@ -1,5 +1,5 @@
 [
   {"op": "replace",
     "path": "/spec/rules/0/host",
-    "value": "stage.choreo.local.dev"}
+    "value": "prod.choreo.local"}
 ]

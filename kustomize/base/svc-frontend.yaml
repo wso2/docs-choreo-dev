@@ -5,11 +5,9 @@ metadata:
     choreo.component: frontend
   name: frontend
 spec:
-  type: NodePort
   ports:
   - name: "frontend-port"
     port: 8080
     targetPort: 8080
-    nodePort: 31250
   selector:
     choreo.component: frontend
