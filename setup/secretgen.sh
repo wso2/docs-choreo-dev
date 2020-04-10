@@ -2,14 +2,40 @@
 
 propfile=$1
 [[ $# -eq 0 ]] &&
-{ echo "Usage: $0 propfile [namespace] [output-dir]"; \
-echo "   propfile   - secrets properties file"; \
-echo "   namespace  - namespace for which sealed secrets are generated"; \
-echo "   output-dir - directory where sealed secrets are written to"; exit 1; }
+{ echo "Usage: $0 -p propfile [-n namespace] [-o output-dir]"; \
+echo "   -p=propfile   - secrets properties file"; \
+echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
+echo "   -o=output-dir - directory where sealed secrets are written to"; \
+echo; \
+echo "   e.g. $0 -p=choreo-secret.properties -n=dev-choreo-system -o=out"; \
+exit 1; }
 
 namespace=$2
-[[ -z "${namespace}" ]] && { namespace="default"; }
 outdir=$3
+
+# Loop through arguments and process them
+for arg in "$@"
+do
+    case $arg in
+        -p=*|--propfile=*)
+        propfile="${arg#*=}"
+        shift
+        ;;
+        -n=*|--namespace=*)
+        namespace="${arg#*=}"
+        shift
+        ;;
+        -o=*|--outdir=*)
+        outdir="${arg#*=}"
+        shift
+        ;;
+        *)
+        OTHER_ARGUMENTS+=("$1")
+        shift # Remove generic argument from processing
+        ;;
+    esac
+done
+[[ -z "${namespace}" ]] && { namespace="default"; }
 [[ -z "${outdir}" ]] && { outdir="out"; }
 
 echo "Creating sealed secrets for namespace: "${namespace}

@@ -6,7 +6,21 @@ echo "----------------------------------------------"
 propfile=$1
 [[ $# -eq 0 ]] &&
 { echo "Usage: $0 propfile"; \
-echo "   propfile - secrets properties file"; exit 1; }
+echo "   -p=propfile - secrets properties file"; exit 1; }
+
+for arg in "$@"
+do
+    case $arg in
+        -p=*|--propfile=*)
+        propfile="${arg#*=}"
+        shift
+        ;;
+        *)
+        OTHER_ARGUMENTS+=("$1")
+        shift
+        ;;
+    esac
+done
 
 outdir=out
 mkdir $outdir
@@ -110,7 +124,7 @@ done
 echo "--- Creating Choreo sealed secrets for all environments..."
 for env in "dev" "stage" "prod"; do
     mkdir -p ${outdir}/${env}
-    ./secretgen.sh ${propfile} ${env}-choreo-system ${outdir}/${env}
+    ./secretgen.sh -p=${propfile} -n=${env}-choreo-system -o=${outdir}/${env}
     cp ${outdir}/${env}/sealed-secret.yaml ../kustomize/${env}/
 done
 
