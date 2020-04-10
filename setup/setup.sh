@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+echo "----------------------------------------------"
+echo "| Choreo Control Plane setup on Kubernetes   |"
+echo "----------------------------------------------"
 
 outdir=out
 mkdir $outdir
@@ -8,10 +11,16 @@ echo "--- Installing nginx ingress..."
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
 read -p "Are you using Docker Desktop? [y/N] " response
 echo    # (optional) move to a new line
-if [[ ${response} =~ ^[Yy]$ ]]
-then
-  echo "--- Installing nginx ingress for Docker Desktop"
+if [[ ${response} =~ ^[Yy]$ ]]; then
+  echo "--- Installing nginx ingress for Docker Desktop..."
   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+else
+    read -p "Are you using Minikube? [y/N] " response
+    echo    # (optional) move to a new line
+    if [[ ${response} =~ ^[Yy]$ ]]; then
+      echo "--- Enabling nginx ingress addon for Minikube..."
+      minikube addons enable ingress
+    fi
 fi
 
 ############## Install Linkerd
@@ -46,8 +55,7 @@ echo "--- Creating ingress TLS cert sealed secrets for all environments..."
 sudo chown $USER $outdir/tls.key
 sudo chown $USER $outdir/tls.crt
 
-for env in "dev" "stage" "prod"
-do
+for env in "dev" "stage" "prod"; do
     mkdir -p $outdir/$env
     kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
             --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
@@ -55,18 +63,16 @@ do
     echo "Sealed secret ingress cert generated and copied to "$env
 done
 
-########### create chore sealed secrets for all environments
+########### create choreo sealed secrets for all environments
 echo "--- Creating ingress TLS cert sealed secrets for all environments..."
 
 from_lit_str=""
-for k in "db_password" "eh_shared_access_sig_key" "tsi_client_id" "tsi_client_secret" "tsi_tenant_id" "tsi_env_fqdn"
-do
+for k in "db_password" "eh_shared_access_sig_key" "tsi_client_id" "tsi_client_secret" "tsi_tenant_id" "tsi_env_fqdn"; do
     read -p "${k}: " v
     from_lit_str=${from_lit_str}" --from-literal "$k"="$v" "
 done
 
-for env in "dev" "stage" "prod"
-do
+for env in "dev" "stage" "prod"; do
     mkdir -p ${outdir}/${env}
     kubectl create secret generic choreo-secret -n ${env}-choreo-system ${from_lit_str} \
              --dry-run=client -o yaml > ${outdir}/${env}/choreo-secret.yaml
