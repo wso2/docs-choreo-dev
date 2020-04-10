@@ -19,3 +19,6 @@ patches:
       version: v1beta1
       kind: Ingress
       name: ingress-grpc
+
+patchesStrategicMerge:
+  - hpa-strategy.yaml

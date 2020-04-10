@@ -6,13 +6,20 @@ resources:
   - dep-negotiator.yaml
   - dep-obs-api.yaml
   - dep-telemetry.yaml
+#  - dep-appservice.yaml
   - svc-choreo-mysql.yaml
   - svc-frontend.yaml
   - svc-negotiator.yaml
   - svc-obs-api.yaml
   - svc-telemetry.yaml
+  - svc-appservice.yaml
   - ingress-grpc.yaml
   - ingress-http.yaml
+  - hpa-frontend.yaml
+  - hpa-negotiator.yaml
+  - hpa-obs-api.yaml
+  - hpa-telemetry.yaml
+  - hpa-appservice.yaml
 
 vars:
   - name: CHOREO_DB_SERVICE

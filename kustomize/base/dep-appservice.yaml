@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: appservice
+  name: appservice
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      choreo.component: appservice
+  template:
+    metadata:
+      labels:
+        choreo.component: appservice
+    spec:
+      containers:
+      - env:
+        - name: platformer_configmap_hash
+          value: 28dbd851-7ae4-11ea-971f-6f4ac6d7b9e0
+        - name: platformer_secret_hash
+          value: 28dbd850-7ae4-11ea-971f-6f4ac6d7b9e0
+        - name: PLATFORMER_RUDDER_PASSWORD
+          value: wso2
+        - name: WORKSPACE_INGRESS_TLS_SECRET
+          value: choreo-preprod-wildcard-cert
+        - name: PLATFORMER_GOOGLE_ID
+          value: platformer-1580639005087-z1go3
+        - name: WORKSPACE_NAMESPACE
+          value: pxe-dev-platformer-1580893230462-5ggle
+        - name: IDP_ISSUER
+          value: https://choreodevb2c.b2clogin.com/a8d5aca6-c571-40ba-bc0f-d104b73ed587/v2.0/
+        - name: DISABLE_AUTHN
+          value: "false"
+        - name: WORKSPACE_VOLUME_CLAIM
+          value: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+        - name: IDP_CLIENT_SECRET
+          value: rXiT6:L`g54+xkEz-mHcWTP_
+        - name: PLATFORMER_CLUSTER_NAME
+          value: wso2-aks-chor
+        - name: IDP_AUTH_FLOW
+          value: B2C_1_Signup
+        - name: IDP_REDIRECT_URL
+          value: https://development.choreo.dev/
+        - name: EXECUTOR_INGRESS_HOST_SUFFIX
+          value: -test.preprod.choreo.dev
+        - name: PLATFORMER_RUDDER_URL
+          value: https://api.rudder.wso2.platformer.com
+        - name: REPO_PATH
+          value: /repo
+        - name: PERISCOPE_GRPC_ADDRESS
+          value: choreo-nego-z1jqfgi.pxe-dev-platformer-1580893230462-5ggle.svc:80
+        - name: REDIS_ADDRESS
+          value: choreo-dev.redis.cache.windows.net:6380
+        - name: PLATFORMER_RUDDER_USERNAME
+          value: wso2
+        - name: NEGOTIATOR_GRPC_ADDRESS
+          value: choreo-nego-z1jqfgi.pxe-dev-platformer-1580893230462-5ggle.svc:9092
+        - name: GITHUB_TOKEN
+          value: 3bab8c889ec3340a14177c8c1351f21e5228666b
+        - name: EXECUTOR_SVC_HOST
+          value: bexecuter
+        - name: DEPLOY_APP_NAMESPACE
+          value: pxe-dev-platformer-1580639005087-z1go3
+        - name: CLIENT_ID
+          value: 75102319-c590-498b-a3d5-aa971a22a518
+        - name: DEPLOY_INGRESS_SECRET
+          value: choreo-preprod-wildcard-cert
+        - name: DATABASE_URL
+          value: choreo_user@choreo-poc-db:choreo_user@tcp(choreo-poc-db.mysql.database.azure.com:3306)/choreo_db?tls=skip-verify&autocommit=true
+        - name: IDP_CLIENT_ID
+          value: cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+        - name: IDP_HOST
+          value: https://login.microsoftonline.com
+        - name: EXECUTOR_SVC_PORT
+          value: "8080"
+        - name: GITHUB_APP_ORG
+          value: integration-apps
+        - name: LANG_SERVER_IMAGE
+          value: isurulucky/lang-server
+        - name: IDP_TENANT_NAME
+          value: choreodevb2c
+        - name: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
+          value: "86400"
+        - name: DEPLOY_INGRESS_HOST_SUFFIX
+          value: preprod.choreo.dev
+        - name: BASIC_AUTH_PASSWORD
+          value: choreo
+        - name: GITHUB_USER_EMAIL
+          value: integration2020.wso2@gmail.com
+        - name: REDIS_PASSWORD
+          value: m9p4m5KvMBPWpJdOLLbZctnjjGLpDlsEhsLEF20xjWE=
+        - name: TENANT
+          value: choreodevb2c
+        - name: EXECUTOR_IMAGE
+          value: choreoipaas/bexecuter:latest
+        - name: PLATFORMER_PROJECT_ID
+          value: -M-4QFnMxM_qqAizY_Bv
+        - name: BASIC_AUTH_USERNAME
+          value: choreo
+        - name: PLATFORMER_ORG_ID
+          value: -M-4Q539L2y9RtB02Ttp
+        - name: GITHUB_USER
+          value: wso2-ipaas-bot
+        - name: PLATFORMER_IMG_TAG
+          value: master-0819fd3ff759a25037e510ebff6e574e0c73139c
+        image: gcr.io/platformer-1580893230462-5ggle/3a1e6700-5496-11ea-b07a-5d5dda74534e:master-0819fd3ff759a25037e510ebff6e574e0c73139c
+        imagePullPolicy: IfNotPresent
+        name: appservice
+        ports:
+        - containerPort: 8080
+          name: port-7ydy
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
+        securityContext: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /repo
+          name: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: platformer-1580893230462-5ggle
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+        persistentVolumeClaim:
+          claimName: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
