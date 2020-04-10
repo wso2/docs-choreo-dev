@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+command -v kubeseal >/dev/null 2>&1 ||
+{ echo "kubeseal not installed. See https://github.com/bitnami-labs/sealed-secrets/releases"; exit 1; }
 propfile=$1
 [[ $# -eq 0 ]] &&
 { echo "Usage: $0 -p propfile [-n namespace] [-o output-dir]"; \
