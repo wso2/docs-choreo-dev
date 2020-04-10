@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: negotiator
+  name: negotiator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: negotiator
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        io.kompose.network/choreo: "true"
+        choreo.component: negotiator
+    spec:
+      containers:
+      - env:
+        - name: CHOREO_APP_URL
+          value: http://$(CHOREO_HTTP_INGRESS)/observe/app/
+        - name: CHOREO_DB_HOST
+          value: $(CHOREO_DB_SERVICE)
+        - name: CHOREO_DB_NAME
+          value: choreo_db
+        - name: CHOREO_DB_PASSWORD
+          valueFrom: 
+           secretKeyRef:
+             name: choreo-secret
+             key: db_password
+        - name: CHOREO_DB_PORT
+          value: "3306"
+        - name: CHOREO_DB_USERNAME
+          value: root
+        image: choreoipaas/choreo-negotiator:latest
+        name: negotiator
+        readinessProbe:
+            httpGet:
+             port: 9091
+             path: /health
+        livenessProbe:
+            httpGet:
+             port: 9091
+             path: /health
+        ports:
+        - containerPort: 9090
+        - containerPort: 9091
+        resources: {}
+      restartPolicy: Always
