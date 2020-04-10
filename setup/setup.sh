@@ -3,6 +3,11 @@ echo "----------------------------------------------"
 echo "| Choreo Control Plane setup on Kubernetes   |"
 echo "----------------------------------------------"
 
+propfile=$1
+[[ $# -eq 0 ]] &&
+{ echo "Usage: $0 propfile"; \
+echo "   propfile - secrets properties file"; exit 1; }
+
 outdir=out
 mkdir $outdir
 
@@ -102,20 +107,11 @@ for env in "dev" "stage" "prod"; do
 done
 
 ########### create choreo sealed secrets for all environments
-echo "--- Creating ingress TLS cert sealed secrets for all environments..."
-
-from_lit_str=""
-for k in "db_password" "eh_shared_access_sig_key" "tsi_client_id" "tsi_client_secret" "tsi_tenant_id" "tsi_env_fqdn"; do
-    read -p "${k}: " v
-    from_lit_str=${from_lit_str}" --from-literal "$k"="$v" "
-done
-
+echo "--- Creating Choreo sealed secrets for all environments..."
 for env in "dev" "stage" "prod"; do
     mkdir -p ${outdir}/${env}
-    kubectl create secret generic choreo-secret -n ${env}-choreo-system ${from_lit_str} \
-             --dry-run=client -o yaml > ${outdir}/${env}/choreo-secret.yaml
-    kubeseal --scope strict < ${outdir}/${env}/choreo-secret.yaml -o yaml  > ../kustomize/${env}/sealed-secret.yaml
-    echo "Choreo Sealed secret generated and copied to "$env
+    ./secretgen.sh ${propfile} ${env}-choreo-system ${outdir}/${env}
+    cp ${outdir}/${env}/sealed-secret.yaml ../kustomize/${env}/
 done
 
 ########### Cleanup

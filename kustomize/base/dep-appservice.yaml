@@ -106,7 +106,7 @@ spec:
           value: wso2-ipaas-bot
         - name: PLATFORMER_IMG_TAG
           value: master-0819fd3ff759a25037e510ebff6e574e0c73139c
-        image: gcr.io/platformer-1580893230462-5ggle/3a1e6700-5496-11ea-b07a-5d5dda74534e:master-0819fd3ff759a25037e510ebff6e574e0c73139c
+        image: choreoipaas/app-service:latest
         imagePullPolicy: IfNotPresent
         name: appservice
         ports:
