@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+echo "----------------------------------------------"
+echo "| Choreo Control Plane setup on Kubernetes   |"
+echo "----------------------------------------------"
 
 outdir=out
 mkdir $outdir
@@ -8,25 +11,68 @@ echo "--- Installing nginx ingress..."
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
 read -p "Are you using Docker Desktop? [y/N] " response
 echo    # (optional) move to a new line
-if [[ ${response} =~ ^[Yy]$ ]]
-then
-  echo "--- Installing nginx ingress for Docker Desktop"
+if [[ ${response} =~ ^[Yy]$ ]]; then
+  echo "--- Installing nginx ingress for Docker Desktop..."
   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+else
+    read -p "Are you using Minikube? [y/N] " response
+    echo    # (optional) move to a new line
+    if [[ ${response} =~ ^[Yy]$ ]]; then
+      echo "--- Enabling nginx ingress addon for Minikube..."
+      minikube addons enable ingress
+    fi
 fi
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
-command -v linkerd >/dev/null 2>&1 || {brew install linkerd}
+linkerd_installed="true"
+command -v linkerd >/dev/null 2>&1 || {linkerd_installed="false"}
+if [[ "${linkerd_installed}" == "false" ]]; then
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        curl -sL https://run.linkerd.io/install | sh
+        linkerd_installed="true"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install linkerd
+        linkerd_installed="true"
+    else
+        echo "Could not install linkerd. Unsupported operating system. Please manually install it.."
+    fi
+fi
 linkerd install | kubectl apply -f -
 
 ############## Install Sealed secret support
 echo "--- Installing kubeseal & Bitnami sealed secrets..."
-command -v kubeseal >/dev/null 2>&1 || {brew install kubeseal}
+kubeseal_installed="true"
+command -v kubeseal >/dev/null 2>&1 || {kubeseal_installed="false"}
+if [[ "${kubeseal_installed}" == "false" ]]; then
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/kubeseal-linux-amd64 -O kubeseal
+        sudo install -m 755 kubeseal /usr/local/bin/kubeseal
+        kubeseal_installed="true"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install kubeseal
+        kubeseal_installed="true"
+    else
+        echo "Could not install kubeseal. Unsupported operating system. Please manually install it."
+    fi
+fi
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/controller.yaml
 
 ############## Install Kustomize
 echo "--- Installing Kustomize..."
-command -v kustomize >/dev/null 2>&1 || {brew install kustomize}
+kustomize_installed="true"
+command -v kustomize >/dev/null 2>&1 || {kustomize_installed="false"}
+if [[ "${kustomize_installed}" == "false" ]]; then
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+        kustomize_installed="true"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install kustomize
+        kustomize_installed="true"
+    else
+        echo "Could not install kustomize. Unsupported operating system. Please manually install it."
+    fi
+fi
 
 ################ create the ingress certificate
 echo "--- Generating ingress TLS key & certificate..."
@@ -37,6 +83,7 @@ sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -
 
 ############### import the cert into JRE CA trusted certs to make Java clients work
 echo "--- Import ingress certificate to JRE trust store..."
+echo "Default keystore password = changeit"
 keystore=$JAVA_HOME/jre/lib/security/cacerts
 sudo keytool -delete -alias choreoingress_local -keystore $keystore
 sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
@@ -46,8 +93,7 @@ echo "--- Creating ingress TLS cert sealed secrets for all environments..."
 sudo chown $USER $outdir/tls.key
 sudo chown $USER $outdir/tls.crt
 
-for env in "dev" "stage" "prod"
-do
+for env in "dev" "stage" "prod"; do
     mkdir -p $outdir/$env
     kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
             --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
@@ -55,18 +101,16 @@ do
     echo "Sealed secret ingress cert generated and copied to "$env
 done
 
-########### create chore sealed secrets for all environments
+########### create choreo sealed secrets for all environments
 echo "--- Creating ingress TLS cert sealed secrets for all environments..."
 
 from_lit_str=""
-for k in "db_password" "eh_shared_access_sig_key" "tsi_client_id" "tsi_client_secret" "tsi_tenant_id" "tsi_env_fqdn"
-do
+for k in "db_password" "eh_shared_access_sig_key" "tsi_client_id" "tsi_client_secret" "tsi_tenant_id" "tsi_env_fqdn"; do
     read -p "${k}: " v
     from_lit_str=${from_lit_str}" --from-literal "$k"="$v" "
 done
 
-for env in "dev" "stage" "prod"
-do
+for env in "dev" "stage" "prod"; do
     mkdir -p ${outdir}/${env}
     kubectl create secret generic choreo-secret -n ${env}-choreo-system ${from_lit_str} \
              --dry-run=client -o yaml > ${outdir}/${env}/choreo-secret.yaml
@@ -75,5 +119,21 @@ do
 done
 
 ########### Cleanup
-rm -rf $outdir
+rm -rf ${outdir}
+successful="true"
+if [[ "${linkerd_installed}" == "false" ]]; then
+    echo "[FAILED] linkerd installation. See https://linkerd.io/2/getting-started/"
+    successful=false
+fi
+if [[ "${kubeseal_installed}" == "false" ]]; then
+    echo "[FAILED] kubeseal installation. See https://github.com/bitnami-labs/sealed-secrets/releases"
+    successful=false
+fi
+if [[ "${kustomize_installed}" == "false" ]]; then
+    echo "[FAILED] kustomize installation. See https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md"
+    successful=false
+fi
+if [[ "${successful}" == "true" ]]; then
+    echo "Choreo control plane successfully installed"
+fi
 
