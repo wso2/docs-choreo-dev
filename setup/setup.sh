@@ -25,17 +25,46 @@ fi
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
-command -v linkerd >/dev/null 2>&1 || {brew install linkerd}
+linkerd_installed="false"
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    curl -sL https://run.linkerd.io/install | sh
+    linkerd_installed="true"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install linkerd
+    linkerd_installed="true"
+else
+    echo "Could not install linkerd. Unsupported operating system. Please manually install it.."
+fi
 linkerd install | kubectl apply -f -
 
 ############## Install Sealed secret support
 echo "--- Installing kubeseal & Bitnami sealed secrets..."
-command -v kubeseal >/dev/null 2>&1 || {brew install kubeseal}
+kubeseal_installed="false"
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/kubeseal-linux-amd64 -O kubeseal
+    sudo install -m 755 kubeseal /usr/local/bin/kubeseal
+    kubeseal_installed="true"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install kubeseal
+    kubeseal_installed="true"
+else
+    echo "Could not install kubeseal. Unsupported operating system. Please manually install it."
+fi
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/controller.yaml
 
 ############## Install Kustomize
 echo "--- Installing Kustomize..."
-command -v kustomize >/dev/null 2>&1 || {brew install kustomize}
+kustomize_installed=false
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+    kustomize_installed="true"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install kustomize
+    kustomize_installed="true"
+else
+    echo "Could not install kustomize. Unsupported operating system. Please manually install it."
+fi
+
 
 ################ create the ingress certificate
 echo "--- Generating ingress TLS key & certificate..."
@@ -46,6 +75,7 @@ sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -
 
 ############### import the cert into JRE CA trusted certs to make Java clients work
 echo "--- Import ingress certificate to JRE trust store..."
+echo "Default keystore password = changeit"
 keystore=$JAVA_HOME/jre/lib/security/cacerts
 sudo keytool -delete -alias choreoingress_local -keystore $keystore
 sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
@@ -81,5 +111,21 @@ for env in "dev" "stage" "prod"; do
 done
 
 ########### Cleanup
-rm -rf $outdir
+rm -rf ${outdir}
+successful="true"
+if [[ "${linkerd_installed}" == "false" ]]; then
+    echo "[FAILED] linkerd installation. See https://linkerd.io/2/getting-started/"
+    successful=false
+fi
+if [[ "${kubeseal_installed}" == "false" ]]; then
+    echo "[FAILED] kubeseal installation. See https://github.com/bitnami-labs/sealed-secrets/releases"
+    successful=false
+fi
+if [[ "${kustomize_installed}" == "false" ]]; then
+    echo "[FAILED] kustomize installation. See https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md"
+    successful=false
+fi
+if [[ "${successful}" == "true" ]]; then
+    echo "Choreo control plane successfully installed"
+fi
 
