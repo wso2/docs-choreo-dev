@@ -35,7 +35,7 @@ spec:
         - name: DISABLE_AUTHN
           value: "false"
         - name: WORKSPACE_VOLUME_CLAIM
-          value: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+          value: nfs-claim
         - name: IDP_CLIENT_SECRET
           value: rXiT6:L`g54+xkEz-mHcWTP_
         - name: PLATFORMER_CLUSTER_NAME
@@ -125,7 +125,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /repo
-          name: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+          name: nfs-claim
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: platformer-1580893230462-5ggle
@@ -134,6 +134,6 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+      - name: nfs-claim
         persistentVolumeClaim:
-          claimName: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+          claimName: nfs-claim
