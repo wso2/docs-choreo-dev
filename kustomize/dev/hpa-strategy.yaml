@@ -1,0 +1,32 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: frontend
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: negotiator
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: telemetry
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: observability-api
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---

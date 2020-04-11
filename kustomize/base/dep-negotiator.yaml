@@ -23,18 +23,30 @@ spec:
         - name: CHOREO_APP_URL
           value: http://$(CHOREO_HTTP_INGRESS)/observe/app/
         - name: CHOREO_DB_HOST
-          value: $(CHOREO_DB_SERVICE)
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_HOST
+              name: cm-choreodb
         - name: CHOREO_DB_NAME
-          value: choreo_db
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_NAME
+              name: cm-choreodb
         - name: CHOREO_DB_PASSWORD
           valueFrom: 
            secretKeyRef:
              name: choreo-secret
              key: db_password
         - name: CHOREO_DB_PORT
-          value: "3306"
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_PORT
+              name: cm-choreodb
         - name: CHOREO_DB_USERNAME
-          value: root
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_USERNAME
+              name: cm-choreodb
         image: choreoipaas/choreo-negotiator:latest
         name: negotiator
         readinessProbe:

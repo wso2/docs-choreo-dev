@@ -6,6 +6,12 @@ resources:
 
 namespace: dev-choreo-system
 
+configMapGenerator:
+  - name: cm-frontend
+    behavior: merge
+    literals:
+      - OBSERVE_API=https://dev.choreo.local/graphql
+
 patches:
   - path: ingress-patch.json
     target:
@@ -19,3 +25,6 @@ patches:
       version: v1beta1
       kind: Ingress
       name: ingress-grpc
+
+patchesStrategicMerge:
+  - hpa-strategy.yaml
