@@ -6,7 +6,7 @@ resources:
   - dep-negotiator.yaml
   - dep-obs-api.yaml
   - dep-telemetry.yaml
-#  - dep-appservice.yaml
+  - dep-appservice.yaml
   - svc-choreo-mysql.yaml
   - svc-frontend.yaml
   - svc-negotiator.yaml
@@ -46,6 +46,54 @@ configMapGenerator:
       - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-poc-observability-event-hub-sender-policy
       - METRICS_EVENTHUB_NAME=choreo-poc-observability-metrics-event-hub
       - METRICS_TO_BE_STORED=response_time_seconds_mean,requests_total,up,response_time_nanoseconds_total
+  - name: cm-appservice
+    behavior: create
+    literals:
+      - platformer_configmap_hash=28dbd851-7ae4-11ea-971f-6f4ac6d7b9e0
+      - platformer_secret_hash=28dbd850-7ae4-11ea-971f-6f4ac6d7b9e0
+      - PLATFORMER_RUDDER_PASSWORD=wso2
+      - WORKSPACE_INGRESS_TLS_SECRET=choreo-preprod-wildcard-cert
+      - PLATFORMER_GOOGLE_ID=platformer-1580639005087-z1go3
+      - WORKSPACE_NAMESPACE=pxe-dev-platformer-1580893230462-5ggle
+      - IDP_ISSUER=https://choreodevb2c.b2clogin.com/a8d5aca6-c571-40ba-bc0f-d104b73ed587/v2.0/
+      - DISABLE_AUTHN="false"
+      - WORKSPACE_VOLUME_CLAIM=nfs-claim
+      - IDP_CLIENT_SECRET=rXiT6:L`g54+xkEz-mHcWTP_
+      - PLATFORMER_CLUSTER_NAME=wso2-aks-chor
+      - IDP_AUTH_FLOW=B2C_1_Signup
+      - IDP_REDIRECT_URL=https://development.choreo.dev/
+      - EXECUTOR_INGRESS_HOST_SUFFIX=-test.preprod.choreo.dev
+      - PLATFORMER_RUDDER_URL=https://api.rudder.wso2.platformer.com
+      - REPO_PATH=/repo
+      - PERISCOPE_GRPC_ADDRESS=choreo-nego-z1jqfgi.pxe-dev-platformer-1580893230462-5ggle.svc:80
+      - REDIS_ADDRESS=choreo-dev.redis.cache.windows.net:6380
+      - PLATFORMER_RUDDER_USERNAME=wso2
+      - NEGOTIATOR_GRPC_ADDRESS=choreo-nego-z1jqfgi.pxe-dev-platformer-1580893230462-5ggle.svc:9092
+      - GITHUB_TOKEN=3bab8c889ec3340a14177c8c1351f21e5228666b
+      - EXECUTOR_SVC_HOST=bexecuter
+      - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1580639005087-z1go3
+      - CLIENT_ID=75102319-c590-498b-a3d5-aa971a22a518
+      - DEPLOY_INGRESS_SECRET=choreo-preprod-wildcard-cert
+      - DATABASE_URL=choreo_user@choreo-poc-db:choreo_user@tcp(choreo-poc-db.mysql.database.azure.com:3306)/choreo_db?tls=skip-verify&autocommit=true
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - IDP_HOST=https://login.microsoftonline.com
+      - EXECUTOR_SVC_PORT="8080"
+      - GITHUB_APP_ORG=integration-apps
+      - LANG_SERVER_IMAGE=isurulucky/lang-server
+      - IDP_TENANT_NAME=choreodevb2c
+      - IDP_AUTH_RESPONSE_COOKIE_MAX_AGE="86400"
+      - DEPLOY_INGRESS_HOST_SUFFIX=preprod.choreo.dev
+      - BASIC_AUTH_PASSWORD=choreo
+      - GITHUB_USER_EMAIL=integration2020.wso2@gmail.com
+      - REDIS_PASSWORD=m9p4m5KvMBPWpJdOLLbZctnjjGLpDlsEhsLEF20xjWE=
+      - TENANT=choreodevb2c
+      - EXECUTOR_IMAGE=choreoipaas/bexecuter:latest
+      - PLATFORMER_PROJECT_ID=-M-4QFnMxM_qqAizY_Bv
+      - BASIC_AUTH_USERNAME=choreo
+      - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
+      - GITHUB_USER=wso2-ipaas-bot
+      - PLATFORMER_IMG_TAG=master-0819fd3ff759a25037e510ebff6e574e0c73139c
+
 vars:
   - name: CHOREO_HTTP_INGRESS
     objref:
