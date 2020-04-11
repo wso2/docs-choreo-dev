@@ -21,7 +21,10 @@ spec:
       containers:
       - env:
         - name: CHOREO_APP_URL
-          value: http://$(CHOREO_HTTP_INGRESS)/observe/app/
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_APP_URL
+              name: cm-negotiator
         - name: CHOREO_DB_HOST
           valueFrom:
             configMapKeyRef:
