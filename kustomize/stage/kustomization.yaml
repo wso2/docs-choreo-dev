@@ -6,6 +6,12 @@ resources:
 
 namespace: stage-choreo-system
 
+configMapGenerator:
+  - name: cm-frontend
+    behavior: merge
+    literals:
+      - OBSERVE_API=https://stage.choreo.local/graphql
+
 patches:
   - path: ingress-patch.json
     target:

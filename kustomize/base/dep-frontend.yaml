@@ -19,19 +19,40 @@ spec:
       containers:
       - env:
         - name: APP_API
-          value: https://depman.development.choreo.dev
+          valueFrom:
+            configMapKeyRef:
+              key: APP_API
+              name: cm-frontend
         - name: AUTH_FLOW
-          value: B2C_1_Signup
+          valueFrom:
+            configMapKeyRef:
+              key: AUTH_FLOW
+              name: cm-frontend
         - name: CLIENT_ID
-          value: cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+          valueFrom:
+            configMapKeyRef:
+              key: CLIENT_ID
+              name: cm-frontend
         - name: LOGS_API
-          value: wss://depman.development.choreo.dev
+          valueFrom:
+            configMapKeyRef:
+              key: LOGS_API
+              name: cm-frontend
         - name: OBSERVE_API
-          value: https://$(CHOREO_HTTP_INGRESS)/graphql
+          valueFrom:
+            configMapKeyRef:
+              key: OBSERVE_API
+              name: cm-frontend
         - name: REDIRECT_URL
-          value: https://development.choreo.dev/
+          valueFrom:
+            configMapKeyRef:
+              key: REDIRECT_URL
+              name: cm-frontend
         - name: TENANT
-          value: choreodevb2c
+          valueFrom:
+            configMapKeyRef:
+              key: TENANT
+              name: cm-frontend
         image: choreoipaas/console-app:latest
         imagePullPolicy: ""
         name: frontend

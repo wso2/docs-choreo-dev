@@ -21,12 +21,32 @@ resources:
   - hpa-telemetry.yaml
   - hpa-appservice.yaml
 
+configMapGenerator:
+  - name: cm-frontend
+    behavior: create
+    literals:
+      - APP_API=https://depman.development.choreo.dev
+      - AUTH_FLOW=B2C_1_Signup
+      - CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - LOGS_API=wss://depman.development.choreo.dev
+      - OBSERVE_API=https://$(CHOREO_HTTP_INGRESS)/graphql
+      - REDIRECT_URL=https://development.choreo.dev/
+      - TENANT=choreodevb2c
+  - name: cm-choreodb
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo-mysql
+      - CHOREO_DB_NAME=choreo_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-eventhub
+    behavior: create
+    literals:
+      - EVENTHUB_NAMESPACE=choreo-poc-observability-event-hub-ns.servicebus.windows.net/
+      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-poc-observability-event-hub-sender-policy
+      - METRICS_EVENTHUB_NAME=choreo-poc-observability-metrics-event-hub
+      - METRICS_TO_BE_STORED=response_time_seconds_mean,requests_total,up,response_time_nanoseconds_total
 vars:
-  - name: CHOREO_DB_SERVICE
-    objref:
-      kind: Service
-      name: choreo-mysql
-      apiVersion: v1
   - name: CHOREO_HTTP_INGRESS
     objref:
       apiVersion: networking.k8s.io/v1beta1
