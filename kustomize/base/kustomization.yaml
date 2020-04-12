@@ -1,6 +1,8 @@
 resources:
   - pv-mysql.yaml
+  - pv-appservice.yaml
   - pvc-choreo-mysql.yaml
+  - pvc-appservice.yaml
   - dep-choreo-mysql.yaml
   - dep-frontend.yaml
   - dep-negotiator.yaml
@@ -57,7 +59,7 @@ configMapGenerator:
       - WORKSPACE_NAMESPACE=pxe-dev-platformer-1580893230462-5ggle
       - IDP_ISSUER=https://choreodevb2c.b2clogin.com/a8d5aca6-c571-40ba-bc0f-d104b73ed587/v2.0/
       - DISABLE_AUTHN="false"
-      - WORKSPACE_VOLUME_CLAIM=nfs-claim
+      - WORKSPACE_VOLUME_CLAIM=appservice-claim
       - IDP_CLIENT_SECRET=rXiT6:L`g54+xkEz-mHcWTP_
       - PLATFORMER_CLUSTER_NAME=wso2-aks-chor
       - IDP_AUTH_FLOW=B2C_1_Signup

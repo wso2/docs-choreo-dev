@@ -5,8 +5,9 @@ metadata:
     choreo.component: choreo-mysql-claim
   name: choreo-mysql-claim
 spec:
+  storageClassName: hostpath
   accessModes:
-  - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 300Mi
+      storage: 20Gi

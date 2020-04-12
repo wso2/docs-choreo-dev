@@ -1,21 +1,16 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  annotations:
-    pv.kubernetes.io/bind-completed: "yes"
-    pv.kubernetes.io/bound-by-controller: "yes"
-    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/azure-file
   finalizers:
   - kubernetes.io/pvc-protection
   labels:
     kind: pvc-mounts
-  name: nfs-claim
+  name: appservice-claim
 spec:
   accessModes:
   - ReadWriteMany
+  volumeMode: Filesystem
+  storageClassName: file
   resources:
     requests:
-      storage: 100Gi
-  storageClassName: azurefile-premium-lrs
-  volumeMode: Filesystem
-#  volumeName: pvc-0561f849-64f9-11ea-a362-66a37d2a03c7
+      storage: 300Mi
