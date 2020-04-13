@@ -17,4 +17,7 @@ We may need to introduce a local env
 create PVs for each env (PVs don't have a namespace)
 create service account for app service
 Bring appservice into this setup
+Bring AI services to this setup
+Properly configure AI config maps
+Update local mysql DB to include tables from appservice, AI services
 Refactor all configs into properties or YAML files

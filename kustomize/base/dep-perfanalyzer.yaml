@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: perfanalyzer
+  name: perfanalyzer
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: perfanalyzer
+  template:
+    metadata:
+      labels:
+        choreo.component: perfanalyzer
+    spec:
+      containers:
+      - env:
+        - name: platformer_configmap_hash
+          value: a4d06c01-6ce3-11ea-971f-6f4ac6d7b9e0
+        - name: platformer_secret_hash
+          value: a4d06c00-6ce3-11ea-971f-6f4ac6d7b9e0
+        - name: PLATFORMER_IMG_TAG
+          value: master-2b73d0186d4040929b6d33e9554e8eaf0665a8ab
+        image: gcr.io/platformer-1580893230462-5ggle/4de6c140-6532-11ea-9f79-ad44402cc67b:master-2b73d0186d4040929b6d33e9554e8eaf0665a8ab
+        imagePullPolicy: Always
+        name: perf-analyser-poklw
+        ports:
+        - containerPort: 5005
+          name: port-7a8r
+          protocol: TCP
+        - containerPort: 5006
+          name: port-7a8s
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 1Gi
+          requests:
+            cpu: 1500m
+            memory: 1Gi
+        securityContext: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /home/perfAnalyzer/tsi_config.py
+          name: 0270e6c0-653f-11ea-9f79-ad44402cc67b-volume
+          subPath: 0270e6c0-653f-11ea-9f79-ad44402cc67b
+        - mountPath: /home/perfAnalyzer/db_config.py
+          name: f6d71550-653e-11ea-9f79-ad44402cc67b-volume
+          subPath: f6d71550-653e-11ea-9f79-ad44402cc67b
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: platformer-1580893230462-5ggle
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: perf-analyser-poklw
+        name: 0270e6c0-653f-11ea-9f79-ad44402cc67b-volume
+      - configMap:
+          defaultMode: 420
+          name: perf-analyser-poklw
+        name: f6d71550-653e-11ea-9f79-ad44402cc67b-volume

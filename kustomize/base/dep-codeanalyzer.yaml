@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "15"
+  labels:
+    choreo.component: codeanalyzer
+  name: codeanalyzer
+spec:
+  selector:
+    matchLabels:
+      choreo.component: codeanalyzer
+  template:
+    metadata:
+      labels:
+        choreo.component: codeanalyzer
+    spec:
+      containers:
+      - env:
+        - name: platformer_configmap_hash
+          value: c652f2d1-730f-11ea-971f-6f4ac6d7b9e0
+        - name: platformer_secret_hash
+          value: c652f2d0-730f-11ea-971f-6f4ac6d7b9e0
+        - name: PLATFORMER_IMG_TAG
+          value: master-1fb8873002c7a415fd7a72bc03aa5530fae94c73
+        image: gcr.io/platformer-1580893230462-5ggle/5c8475b0-6818-11ea-add8-81daf7bbfff6:master-1fb8873002c7a415fd7a72bc03aa5530fae94c73
+        imagePullPolicy: IfNotPresent
+        name: test-code-ana-z1yfnxb
+        ports:
+        - containerPort: 8080
+          name: port-7ydy
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 460m
+            memory: 512Mi
+          requests:
+            cpu: 460m
+            memory: 512Mi
+        securityContext: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: '/home/ballerina/src/main/resources/application.properties '
+          name: 60679160-681a-11ea-add8-81daf7bbfff6-volume
+          subPath: 60679160-681a-11ea-add8-81daf7bbfff6
+        - mountPath: /repo
+          name: nfs-d3003a20-6819-11ea-add8-81daf7bbfff6
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: platformer-1580893230462-5ggle
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: test-code-ana-z1yfnxb
+        name: 60679160-681a-11ea-add8-81daf7bbfff6-volume
+      - name: nfs-d3003a20-6819-11ea-add8-81daf7bbfff6
+        persistentVolumeClaim:
+          claimName: nfs-000085d0-64f9-11ea-9f79-ad44402cc67b
+          readOnly: true

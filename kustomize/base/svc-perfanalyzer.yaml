@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: perf-analyser-poklw
+    app_id: 4de6c140-6532-11ea-9f79-ad44402cc67b
+    project_id: platformer-1580893230462-5ggle
+    random_key: 01025b40-47f6-11ea-9cb6-29d0663d1000
+  name: perfanalyzer
+spec:
+  ports:
+  - name: port-7a8r
+    port: 5005
+    protocol: TCP
+    targetPort: 5005
+  - name: port-7a8s
+    port: 5006
+    protocol: TCP
+    targetPort: 5006
+  selector:
+    choreo.component: perfanalyzer
