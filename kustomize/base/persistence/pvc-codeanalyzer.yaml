@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+    - kubernetes.io/pvc-protection
+  labels:
+    kind: pvc-mounts
+  name: codeanalyzer-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  storageClassName: file
+  resources:
+    requests:
+      storage: 500Mi

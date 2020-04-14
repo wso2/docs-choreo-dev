@@ -1,35 +1,46 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-  - pv-mysql.yaml
-  - pv-appservice.yaml
-  - pvc-choreo-mysql.yaml
-  - pvc-appservice.yaml
-  - dep-choreo-mysql.yaml
-  - dep-frontend.yaml
-  - dep-negotiator.yaml
-  - dep-obs-api.yaml
-  - dep-telemetry.yaml
-  - dep-appservice.yaml
-  - dep-codeanalyzer.yaml
-  - dep-perfanalyzer.yaml
-  - svc-choreo-mysql.yaml
-  - svc-frontend.yaml
-  - svc-negotiator.yaml
-  - svc-obs-api.yaml
-  - svc-telemetry.yaml
-  - svc-appservice.yaml
-  - svc-codeanalyzer.yaml
-  - svc-perfanalyzer.yaml
-  - ingress-grpc.yaml
-  - ingress-http.yaml
-  - hpa-frontend.yaml
-  - hpa-negotiator.yaml
-  - hpa-obs-api.yaml
-  - hpa-telemetry.yaml
-  - hpa-appservice.yaml
+  - persistence/pv-mysql.yaml
+  - persistence/pv-appservice.yaml
+  - persistence/pv-codeanalyzer.yaml
+  - persistence/pvc-choreo-mysql.yaml
+  - persistence/pvc-appservice.yaml
+  - persistence/pvc-codeanalyzer.yaml
+  - deployment/dep-choreo-mysql.yaml
+  - deployment/dep-frontend.yaml
+  - deployment/dep-negotiator.yaml
+  - deployment/dep-obs-api.yaml
+  - deployment/dep-telemetry.yaml
+  - deployment/dep-appservice.yaml
+  - deployment/dep-codeanalyzer.yaml
+  - deployment/dep-perfanalyzer.yaml
+  - service/svc-choreo-mysql.yaml
+  - service/svc-frontend.yaml
+  - service/svc-negotiator.yaml
+  - service/svc-obs-api.yaml
+  - service/svc-telemetry.yaml
+  - service/svc-appservice.yaml
+  - service/svc-codeanalyzer.yaml
+  - service/svc-perfanalyzer.yaml
+  - ingress/ingress-grpc.yaml
+  - ingress/ingress-http.yaml
+  - hpa/hpa-frontend.yaml
+  - hpa/hpa-negotiator.yaml
+  - hpa/hpa-obs-api.yaml
+  - hpa/hpa-telemetry.yaml
+  - hpa/hpa-appservice.yaml
 
 configMapGenerator:
+  - name: cm-codeanalyzer
+    behavior: create
+    files:
+      - config/codeanalyzer/application.properties
+  - name: cm-perfanalyzer
+    behavior: create
+    files:
+      - config/perfanalyzer/db_config.py
+      - config/perfanalyzer/tsi_config.py
   - name: cm-frontend
     behavior: create
     literals:
