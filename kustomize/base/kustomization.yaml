@@ -1,4 +1,6 @@
 resources:
+  - cluster-role.yaml
+  - cluster-role-binding.yaml
   - pv-mysql.yaml
   - pv-appservice.yaml
   - pvc-choreo-mysql.yaml
@@ -9,12 +11,16 @@ resources:
   - dep-obs-api.yaml
   - dep-telemetry.yaml
   - dep-appservice.yaml
+  - dep-codeanalyzer.yaml
+  - dep-perfanalyzer.yaml
   - svc-choreo-mysql.yaml
   - svc-frontend.yaml
   - svc-negotiator.yaml
   - svc-obs-api.yaml
   - svc-telemetry.yaml
   - svc-appservice.yaml
+  - svc-codeanalyzer.yaml
+  - svc-perfanalyzer.yaml
   - ingress-grpc.yaml
   - ingress-http.yaml
   - hpa-frontend.yaml
