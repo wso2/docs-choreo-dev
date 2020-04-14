@@ -23,9 +23,8 @@ spec:
           value: c652f2d0-730f-11ea-971f-6f4ac6d7b9e0
         - name: PLATFORMER_IMG_TAG
           value: master-1fb8873002c7a415fd7a72bc03aa5530fae94c73
-        image: gcr.io/platformer-1580893230462-5ggle/5c8475b0-6818-11ea-add8-81daf7bbfff6:master-1fb8873002c7a415fd7a72bc03aa5530fae94c73
-        imagePullPolicy: IfNotPresent
-        name: test-code-ana-z1yfnxb
+        image: choreoipaas/codeanalyzer:latest
+        name: codeanalyzer
         ports:
         - containerPort: 8080
           name: port-7ydy
@@ -41,9 +40,8 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: '/home/ballerina/src/main/resources/application.properties'
+        - mountPath: '/home/ballerina/src/main/resources/'
           name: codeanalyzer-config
-          subPath: application.properties
         - mountPath: /repo
           name: repo
       dnsPolicy: ClusterFirst

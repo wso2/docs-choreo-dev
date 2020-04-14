@@ -2,10 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: perf-analyser-poklw
-    app_id: 4de6c140-6532-11ea-9f79-ad44402cc67b
-    project_id: platformer-1580893230462-5ggle
-    random_key: 01025b40-47f6-11ea-9cb6-29d0663d1000
+    choreo.component: perfanalyzer
   name: perfanalyzer
 spec:
   ports:
