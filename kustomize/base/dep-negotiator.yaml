@@ -15,7 +15,6 @@ spec:
       annotations:
         linkerd.io/inject: enabled
       labels:
-        io.kompose.network/choreo: "true"
         choreo.component: negotiator
     spec:
       containers:

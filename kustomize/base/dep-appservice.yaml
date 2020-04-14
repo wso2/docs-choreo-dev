@@ -5,14 +5,14 @@ metadata:
     choreo.component: appservice
   name: appservice
 spec:
-  progressDeadlineSeconds: 600
-  replicas: 2
-  revisionHistoryLimit: 10
+  replicas: 1
   selector:
     matchLabels:
       choreo.component: appservice
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         choreo.component: appservice
     spec:

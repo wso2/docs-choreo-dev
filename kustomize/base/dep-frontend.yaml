@@ -13,7 +13,6 @@ spec:
   template:
     metadata:
       labels:
-        io.kompose.network/choreo: "true"
         choreo.component: frontend
     spec:
       containers:
