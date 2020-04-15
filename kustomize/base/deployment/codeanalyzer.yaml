@@ -29,13 +29,6 @@ spec:
         - containerPort: 8080
           name: port-7ydy
           protocol: TCP
-        resources:
-          limits:
-            cpu: 460m
-            memory: 512Mi
-          requests:
-            cpu: 460m
-            memory: 512Mi
         securityContext: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

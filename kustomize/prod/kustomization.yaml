@@ -32,3 +32,4 @@ patches:
 
 patchesStrategicMerge:
   - replica-rollout-strategy.yaml
+  - requests.yaml
