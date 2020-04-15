@@ -30,6 +30,7 @@ resources:
   - hpa/obsapi.yaml
   - hpa/telemetry.yaml
   - hpa/appservice.yaml
+  - cronjob/workspace-cleanup.yaml
 
 configMapGenerator:
   - name: cm-codeanalyzer
@@ -112,6 +113,10 @@ configMapGenerator:
       - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
       - GITHUB_USER=wso2-ipaas-bot
       - PLATFORMER_IMG_TAG=master-0819fd3ff759a25037e510ebff6e574e0c73139c
+  - name: env-workspace-cleanup
+    behavior: create
+    literals:
+      - WORKSPACE_NAMESPACE=pxe-dev-platformer-1580893230462-5ggle
 
 vars:
   - name: CHOREO_HTTP_INGRESS

@@ -2,7 +2,10 @@
 All Choreo control plane related scripts and configuration are in this repo.
 
 ## First time setup
-Run `setup.sh`
+1. Run `setup.sh` using a secret.properties file as the argument.
+
+    ex: `setup.sh secret.properties`
+2. Run `kustomize build <env> | kubectl apply-f -` to generate and apply K8s artifacts related to a particular environment.
 
 ## Change secrets
 Edit a secret.properties file and run `secretgen.sh` for the relevant environment

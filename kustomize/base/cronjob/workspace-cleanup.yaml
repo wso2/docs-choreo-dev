@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: workspace-cleanup
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: workspace-cleanup
+              image: choreoipaas/workspace-cleanup
+              env:
+                - name: WORKSPACE_NAMESPACE
+                  valueFrom:
+                    configMapKeyRef:
+                      key: WORKSPACE_NAMESPACE
+                      name: env-workspace-cleanup
