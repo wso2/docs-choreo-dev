@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: perfanalyzer
+  name: perfanalyzer
+spec:
+  ports:
+  - name: port-7a8r
+    port: 5005
+    protocol: TCP
+    targetPort: 5005
+  - name: port-7a8s
+    port: 5006
+    protocol: TCP
+    targetPort: 5006
+  selector:
+    choreo.component: perfanalyzer

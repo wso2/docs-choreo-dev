@@ -25,7 +25,7 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: observability-api
+  name: obsapi
 spec:
   maxReplicas: 1
   minReplicas: 1

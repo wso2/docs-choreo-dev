@@ -2,21 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    choreo.component: observability-api
-  name: observability-api
+    choreo.component: obsapi
+  name: obsapi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: observability-api
+      choreo.component: obsapi
   strategy: {}
   template:
     metadata:
       annotations:
         linkerd.io/inject: enabled
       labels:
-        io.kompose.network/choreo: "true"
-        choreo.component: observability-api
+        choreo.component: obsapi
     spec:
       containers:
       - env:
@@ -67,7 +66,7 @@ spec:
               key: tsi_env_fqdn
         image: choreoipaas/observability-api:latest
         imagePullPolicy: ""
-        name: observability-api
+        name: obsapi
         ports:
         - containerPort: 9095
         resources: {}

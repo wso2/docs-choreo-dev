@@ -11,6 +11,10 @@ configMapGenerator:
     behavior: merge
     literals:
       - OBSERVE_API=https://prod.choreo.local/graphql
+  - name: cm-negotiator
+    behavior: create
+    literals:
+      - CHOREO_APP_URL=http://prod.choreo.local/observe/app/
 
 patches:
   - path: ingress-patch.json
