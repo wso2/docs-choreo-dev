@@ -45,8 +45,7 @@ fi
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
 linkerd_installed="true"
-command -v linkerd >/dev/null 2>&1 || {linkerd_installed="false"}
-if [[ "${linkerd_installed}" == "false" ]]; then
+command -v linkerd >/dev/null 2>&1 || {
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         curl -sL https://run.linkerd.io/install | sh
         linkerd_installed="true"
@@ -56,14 +55,13 @@ if [[ "${linkerd_installed}" == "false" ]]; then
     else
         echo "Could not install linkerd. Unsupported operating system. Please manually install it.."
     fi
-fi
+}
 linkerd install | kubectl apply -f -
 
 ############## Install Sealed secret support
 echo "--- Installing kubeseal & Bitnami sealed secrets..."
 kubeseal_installed="true"
-command -v kubeseal >/dev/null 2>&1 || {kubeseal_installed="false"}
-if [[ "${kubeseal_installed}" == "false" ]]; then
+command -v kubeseal >/dev/null 2>&1 || {
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/kubeseal-linux-amd64 -O kubeseal
         sudo install -m 755 kubeseal /usr/local/bin/kubeseal
@@ -74,14 +72,13 @@ if [[ "${kubeseal_installed}" == "false" ]]; then
     else
         echo "Could not install kubeseal. Unsupported operating system. Please manually install it."
     fi
-fi
+}
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/controller.yaml
 
 ############## Install Kustomize
 echo "--- Installing Kustomize..."
 kustomize_installed="true"
-command -v kustomize >/dev/null 2>&1 || {kustomize_installed="false"}
-if [[ "${kustomize_installed}" == "false" ]]; then
+command -v kustomize >/dev/null 2>&1 || {
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
         kustomize_installed="true"
@@ -91,7 +88,7 @@ if [[ "${kustomize_installed}" == "false" ]]; then
     else
         echo "Could not install kustomize. Unsupported operating system. Please manually install it."
     fi
-fi
+}
 
 ################ create the ingress certificate
 echo "--- Generating ingress TLS key & certificate..."
