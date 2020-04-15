@@ -4,13 +4,13 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageValue":"241591910400m"}}]'
   labels:
-    choreo.component: observability-api
-  name: observability-api
+    choreo.component: obsapi
+  name: obsapi
 spec:
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: observability-api
+    name: obsapi
   targetCPUUtilizationPercentage: 90

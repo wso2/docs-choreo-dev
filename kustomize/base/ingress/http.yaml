@@ -25,7 +25,7 @@ spec:
     - http:
         paths:
           - backend:
-              serviceName: observability-api
+              serviceName: obsapi
               servicePort: 9095
             path: /graphql
           - backend:
