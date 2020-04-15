@@ -2,10 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: test-code-ana-z1yfnxb
-    app_id: 5c8475b0-6818-11ea-add8-81daf7bbfff6
-    project_id: platformer-1580893230462-5ggle
-    random_key: 01025b40-47f6-11ea-9cb6-29d0663d1000
+    choreo.component: codeanalyzer
   name: codeanalyzer
 spec:
   ports:

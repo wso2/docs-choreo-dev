@@ -7,29 +7,29 @@ resources:
   - persistence/pvc-choreo-mysql.yaml
   - persistence/pvc-appservice.yaml
   - persistence/pvc-codeanalyzer.yaml
-  - deployment/dep-choreo-mysql.yaml
-  - deployment/dep-frontend.yaml
-  - deployment/dep-negotiator.yaml
-  - deployment/dep-obs-api.yaml
-  - deployment/dep-telemetry.yaml
-  - deployment/dep-appservice.yaml
-  - deployment/dep-codeanalyzer.yaml
-  - deployment/dep-perfanalyzer.yaml
-  - service/svc-choreo-mysql.yaml
-  - service/svc-frontend.yaml
-  - service/svc-negotiator.yaml
-  - service/svc-obs-api.yaml
-  - service/svc-telemetry.yaml
-  - service/svc-appservice.yaml
-  - service/svc-codeanalyzer.yaml
-  - service/svc-perfanalyzer.yaml
-  - ingress/ingress-grpc.yaml
-  - ingress/ingress-http.yaml
-  - hpa/hpa-frontend.yaml
-  - hpa/hpa-negotiator.yaml
-  - hpa/hpa-obs-api.yaml
-  - hpa/hpa-telemetry.yaml
-  - hpa/hpa-appservice.yaml
+  - deployment/choreo-mysql.yaml
+  - deployment/frontend.yaml
+  - deployment/negotiator.yaml
+  - deployment/obsapi.yaml
+  - deployment/telemetry.yaml
+  - deployment/appservice.yaml
+  - deployment/codeanalyzer.yaml
+  - deployment/perfanalyzer.yaml
+  - service/choreo-mysql.yaml
+  - service/frontend.yaml
+  - service/negotiator.yaml
+  - service/obsapi.yaml
+  - service/telemetry.yaml
+  - service/appservice.yaml
+  - service/codeanalyzer.yaml
+  - service/perfanalyzer.yaml
+  - ingress/grpc.yaml
+  - ingress/http.yaml
+  - hpa/frontend.yaml
+  - hpa/negotiator.yaml
+  - hpa/obsapi.yaml
+  - hpa/telemetry.yaml
+  - hpa/appservice.yaml
 
 configMapGenerator:
   - name: cm-codeanalyzer
