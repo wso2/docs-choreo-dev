@@ -44,8 +44,9 @@ fi
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
-linkerd_installed="false"
+linkerd_installed="true"
 command -v linkerd >/dev/null 2>&1 || {
+    linkerd_installed="false"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         curl -sL https://run.linkerd.io/install | sh
         linkerd_installed="true"
@@ -60,8 +61,9 @@ linkerd install | kubectl apply -f -
 
 ############## Install Sealed secret support
 echo "--- Installing kubeseal & Bitnami sealed secrets..."
-kubeseal_installed="false"
+kubeseal_installed="true"
 command -v kubeseal >/dev/null 2>&1 || {
+    kubeseal_installed="false"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/kubeseal-linux-amd64 -O kubeseal
         sudo install -m 755 kubeseal /usr/local/bin/kubeseal
@@ -77,8 +79,9 @@ kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/downloa
 
 ############## Install Kustomize
 echo "--- Installing Kustomize..."
-kustomize_installed="false"
+kustomize_installed="true"
 command -v kustomize >/dev/null 2>&1 || {
+    kustomize_installed="false"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
         kustomize_installed="true"
