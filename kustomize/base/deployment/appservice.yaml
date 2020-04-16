@@ -18,21 +18,11 @@ spec:
     spec:
       containers:
       - env:
-        - name: platformer_configmap_hash
-          valueFrom:
-            configMapKeyRef:
-              key: platformer_configmap_hash
-              name: cm-appservice
-        - name: platformer_secret_hash
-          valueFrom:
-            configMapKeyRef:
-              key: platformer_secret_hash
-              name: cm-appservice
         - name: PLATFORMER_RUDDER_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_RUDDER_PASSWORD
-              name: cm-appservice
+            secretKeyRef:
+              name: choreo-secret
+              key: rudder_password
         - name: WORKSPACE_INGRESS_TLS_SECRET
           valueFrom:
             configMapKeyRef:
@@ -65,9 +55,9 @@ spec:
               name: cm-appservice
         - name: IDP_CLIENT_SECRET
           valueFrom:
-            configMapKeyRef:
-              key: IDP_CLIENT_SECRET
-              name: cm-appservice
+            secretKeyRef:
+              name: choreo-secret
+              key: idp_client_secret
         - name: PLATFORMER_CLUSTER_NAME
           valueFrom:
             configMapKeyRef:
@@ -120,9 +110,9 @@ spec:
               name: cm-appservice
         - name: GITHUB_TOKEN
           valueFrom:
-            configMapKeyRef:
-              key: GITHUB_TOKEN
-              name: cm-appservice
+            secretKeyRef:
+              name: choreo-secret
+              key: github_token
         - name: EXECUTOR_SVC_HOST
           valueFrom:
             configMapKeyRef:
@@ -143,10 +133,30 @@ spec:
             configMapKeyRef:
               key: DEPLOY_INGRESS_SECRET
               name: cm-appservice
-        - name: DATABASE_URL
+        - name: DATABASE_USERNAME
           valueFrom:
             configMapKeyRef:
-              key: DATABASE_URL
+              key: DATABASE_USERNAME
+              name: cm-appservice
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: choreo-secret
+              key: db_password
+        - name: DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DATABASE_HOST
+              name: cm-appservice
+        - name: DATABASE_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: DATABASE_PORT
+              name: cm-appservice
+        - name: DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: DATABASE_NAME
               name: cm-appservice
         - name: IDP_CLIENT_ID
           valueFrom:
@@ -188,11 +198,6 @@ spec:
             configMapKeyRef:
               key: DEPLOY_INGRESS_HOST_SUFFIX
               name: cm-appservice
-        - name: BASIC_AUTH_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              key: BASIC_AUTH_PASSWORD
-              name: cm-appservice
         - name: GITHUB_USER_EMAIL
           valueFrom:
             configMapKeyRef:
@@ -200,14 +205,9 @@ spec:
               name: cm-appservice
         - name: REDIS_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              key: REDIS_PASSWORD
-              name: cm-appservice
-        - name: TENANT
-          valueFrom:
-            configMapKeyRef:
-              key: TENANT
-              name: cm-appservice
+            secretKeyRef:
+              name: choreo-secret
+              key: redis_password
         - name: EXECUTOR_IMAGE
           valueFrom:
             configMapKeyRef:
@@ -218,11 +218,6 @@ spec:
             configMapKeyRef:
               key: PLATFORMER_PROJECT_ID
               name: cm-appservice
-        - name: BASIC_AUTH_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: BASIC_AUTH_USERNAME
-              name: cm-appservice
         - name: PLATFORMER_ORG_ID
           valueFrom:
             configMapKeyRef:
@@ -232,11 +227,6 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: GITHUB_USER
-              name: cm-appservice
-        - name: PLATFORMER_IMG_TAG
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_IMG_TAG
               name: cm-appservice
         image: choreoipaas/app-service:latest
         imagePullPolicy: IfNotPresent
