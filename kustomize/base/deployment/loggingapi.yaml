@@ -89,15 +89,14 @@ spec:
           name: loggingapi
           ports:
             - containerPort: 9097
-            - containerPort: 9091
           readinessProbe:
             httpGet:
-              port: 9091
-              path: /health
+              port: 9097
+              path: /api/0.1.0/health
           livenessProbe:
             httpGet:
-              port: 9091
-              path: /health
+              port: 9097
+              path: /api/0.1.0/health
           resources: {}
       restartPolicy: Always
       serviceAccountName: ""
