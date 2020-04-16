@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-choreo-codeanalyzer
+  name: pv-choreo-programanalyzer
 spec:
   accessModes:
     - ReadWriteMany
@@ -10,5 +10,5 @@ spec:
   capacity:
     storage: 500Mi
   hostPath:
-    path: /home/docker/choreo-codeanalyzer
+    path: /home/docker/choreo-programanalyzer
   persistentVolumeReclaimPolicy: Delete

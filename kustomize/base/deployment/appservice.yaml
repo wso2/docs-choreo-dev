@@ -224,7 +224,6 @@ spec:
               key: GITHUB_USER
               name: cm-appservice
         image: choreoipaas/app-service:latest
-        imagePullPolicy: IfNotPresent
         name: appservice
         ports:
         - containerPort: 8080

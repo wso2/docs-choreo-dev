@@ -18,12 +18,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: codeanalyzer
+  name: programanalyzer
 spec:
   template:
     spec:
       containers:
-        - name: codeanalyzer
+        - name: programanalyzer
           resources:
             limits:
               cpu: 460m
