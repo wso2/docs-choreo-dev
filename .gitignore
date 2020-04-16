@@ -13,6 +13,8 @@
 # Idea files
 .idea/
 *.iml
+*.iws
+*.ipr
 
 # VSCode files
 .vscode/

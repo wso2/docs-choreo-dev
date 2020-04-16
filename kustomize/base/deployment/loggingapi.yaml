@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: loggingapi
+  name: loggingapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: loggingapi
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        choreo.component: loggingapi
+    spec:
+      containers:
+        - env:
+            - name: CHOREO_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_HOST
+                  name: cm-choreodb
+            - name: CHOREO_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_NAME
+                  name: cm-choreodb
+            - name: CHOREO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: choreo-secret
+                  key: db_password
+            - name: CHOREO_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_PORT
+                  name: cm-choreodb
+            - name: CHOREO_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_USERNAME
+                  name: cm-choreodb
+            - name: AAD_TENANT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AAD_TENANT_ID
+                  name: cm-activedirectory
+            - name: AAD_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AAD_CLIENT_ID
+                  name: cm-activedirectory
+            - name: USER_APPS_NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  key: USER_APPS_NAMESPACE
+                  name: cm-k8sservice
+            - name: K8S_SERVICE_SUBSCRIPTION_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: K8S_SERVICE_SUBSCRIPTION_ID
+                  name: cm-k8sservice
+            - name: RESOURCE_GROUP
+              valueFrom:
+                configMapKeyRef:
+                  key: RESOURCE_GROUP
+                  name: cm-k8sservice
+            - name: CLUSTER_NAME
+              valueFrom:
+               configMapKeyRef:
+                 key: CLUSTER_NAME
+                 name: cm-k8sservice
+            - name: LOG_WORKSPACE_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: LOG_WORKSPACE_ID
+                  name: cm-loganalytics
+            - name: AAD_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: choreo-secret
+                  key: aad_client-secret
+          image: choreoipaas/choreo-logging:latest
+          imagePullPolicy: ""
+          name: loggingapi
+          ports:
+            - containerPort: 9097
+          readinessProbe:
+            httpGet:
+              port: 9097
+              path: /api/0.1.0/health
+          livenessProbe:
+            httpGet:
+              port: 9097
+              path: /api/0.1.0/health
+          resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
