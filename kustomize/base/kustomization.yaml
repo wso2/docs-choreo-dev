@@ -71,10 +71,10 @@ configMapGenerator:
   - name: cm-appservice
     behavior: create
     literals:
-      - DATABASE_HOST=choreo-poc-db.mysql.database.azure.com
+      - DATABASE_HOST=choreo-mysql
       - DATABASE_NAME=choreo_db
       - DATABASE_PORT=3306
-      - DATABASE_USERNAME=choreo_user@choreo-poc-db
+      - DATABASE_USERNAME=root
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1580639005087-z1go3
       - DEPLOY_INGRESS_HOST_SUFFIX=preprod.choreo.dev
       - DEPLOY_INGRESS_SECRET=choreo-preprod-wildcard-cert
