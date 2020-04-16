@@ -16,20 +16,14 @@ spec:
         choreo.component: codeanalyzer
     spec:
       containers:
-      - env:
-        - name: platformer_configmap_hash
-          value: c652f2d1-730f-11ea-971f-6f4ac6d7b9e0
-        - name: platformer_secret_hash
-          value: c652f2d0-730f-11ea-971f-6f4ac6d7b9e0
-        - name: PLATFORMER_IMG_TAG
-          value: master-1fb8873002c7a415fd7a72bc03aa5530fae94c73
-        image: choreoipaas/codeanalyzer:latest
+      - image: choreoipaas/codeanalyzer:latest
+#        command: ["sleep", "48000"]
         name: codeanalyzer
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: port-7ydy
           protocol: TCP
-        securityContext: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
