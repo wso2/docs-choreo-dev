@@ -123,11 +123,6 @@ spec:
             configMapKeyRef:
               key: DEPLOY_APP_NAMESPACE
               name: cm-appservice
-        - name: CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: CLIENT_ID
-              name: cm-appservice
         - name: DEPLOY_INGRESS_SECRET
           valueFrom:
             configMapKeyRef:
