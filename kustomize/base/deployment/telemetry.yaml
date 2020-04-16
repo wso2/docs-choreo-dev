@@ -59,11 +59,6 @@ spec:
             configMapKeyRef:
               key: METRICS_EVENTHUB_NAME
               name: cm-eventhub
-        - name: METRICS_TO_BE_STORED
-          valueFrom:
-            configMapKeyRef:
-              key: METRICS_TO_BE_STORED
-              name: cm-eventhub
         - name: EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY
           valueFrom: 
             secretKeyRef:
