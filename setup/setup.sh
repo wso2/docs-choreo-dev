@@ -76,6 +76,7 @@ command -v kubeseal >/dev/null 2>&1 || {
     fi
 }
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.12.1/controller.yaml
+sleep 15
 
 ############## Install Kustomize
 echo "--- Installing Kustomize..."
