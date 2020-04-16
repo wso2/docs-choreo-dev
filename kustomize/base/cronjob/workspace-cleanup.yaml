@@ -18,4 +18,4 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: WORKSPACE_NAMESPACE
-                      name: env-workspace-cleanup
+                      name: cm-workspace-cleanup
