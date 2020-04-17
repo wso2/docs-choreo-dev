@@ -5,7 +5,7 @@ metadata:
     - kubernetes.io/pvc-protection
   labels:
     kind: pvc-mounts
-  name: codeanalyzer-claim
+  name: programanalyzer-claim
 spec:
   accessModes:
     - ReadWriteMany

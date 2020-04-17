@@ -3,17 +3,17 @@ resources:
   - cluster-role-binding.yaml
   - persistence/pv-mysql.yaml
   - persistence/pv-appservice.yaml
-  - persistence/pv-codeanalyzer.yaml
+  - persistence/pv-programanalyzer.yaml
   - persistence/pvc-choreo-mysql.yaml
   - persistence/pvc-appservice.yaml
-  - persistence/pvc-codeanalyzer.yaml
+  - persistence/pvc-programanalyzer.yaml
   - deployment/choreo-mysql.yaml
   - deployment/frontend.yaml
   - deployment/negotiator.yaml
   - deployment/obsapi.yaml
   - deployment/telemetry.yaml
   - deployment/appservice.yaml
-  - deployment/codeanalyzer.yaml
+  - deployment/programanalyzer.yaml
   - deployment/perfanalyzer.yaml
   - deployment/loggingapi.yaml
   - service/choreo-mysql.yaml
@@ -22,7 +22,7 @@ resources:
   - service/obsapi.yaml
   - service/telemetry.yaml
   - service/appservice.yaml
-  - service/codeanalyzer.yaml
+  - service/programanalyzer.yaml
   - service/perfanalyzer.yaml
   - service/loggingapi.yaml
   - ingress/grpc.yaml
@@ -36,10 +36,10 @@ resources:
   - cronjob/workspace-cleanup.yaml
 
 configMapGenerator:
-  - name: cm-codeanalyzer
+  - name: cm-programanalyzer
     behavior: create
     files:
-      - config/codeanalyzer/application.properties
+      - config/programanalyzer/application.properties
   - name: cm-perfanalyzer
     behavior: create
     files:

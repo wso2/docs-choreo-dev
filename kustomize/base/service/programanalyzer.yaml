@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: codeanalyzer
-  name: codeanalyzer
+    choreo.component: programanalyzer
+  name: programanalyzer
 spec:
   ports:
   - name: port-7ydy
@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    choreo.component: codeanalyzer
+    choreo.component: programanalyzer
