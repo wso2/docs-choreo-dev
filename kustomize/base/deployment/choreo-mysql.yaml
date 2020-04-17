@@ -27,6 +27,7 @@ spec:
             key: db_password
         image: choreoipaas/choreo-mysql:latest
         name: choreo-mysql
+        imagePullPolicy: Always
         ports:
         - containerPort: 3306
         resources: {}
