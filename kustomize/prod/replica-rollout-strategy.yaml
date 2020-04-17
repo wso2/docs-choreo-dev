@@ -45,3 +45,15 @@ spec:
       maxSurge: 1
       maxUnavailable: 1
     type: RollingUpdate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loggingapi
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
