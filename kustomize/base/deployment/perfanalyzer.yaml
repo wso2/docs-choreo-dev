@@ -12,6 +12,8 @@ spec:
       choreo.component: perfanalyzer
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         choreo.component: perfanalyzer
     spec:
