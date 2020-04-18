@@ -3,6 +3,22 @@ resources:
   - namespace.yaml
   - sealed-secret.yaml
   - sealed-ingress-cert.yaml
+  - persistence/pv-choreo_app_db.yaml
+  - persistence/pv-choreo_perf_db.yaml
+  - persistence/pv-choreo_program_db.yaml
+  - persistence/pv-choreo_trace_db.yaml
+  - persistence/pvc-choreo_app_db.yaml
+  - persistence/pvc-choreo_perf_db.yaml
+  - persistence/pvc-choreo_program_db.yaml
+  - persistence/pvc-choreo_trace_db.yaml
+  - deployment/choreo_app_db.yaml
+  - deployment/choreo_perf_db.yaml
+  - deployment/choreo_program_db.yaml
+  - deployment/choreo_trace_db.yaml
+  - service/choreo_app_db.yaml
+  - service/choreo_perf_db.yaml
+  - service/choreo_program_db.yaml
+  - service/choreo_trace_db.yaml
 
 namespace: dev-choreo-system
 
