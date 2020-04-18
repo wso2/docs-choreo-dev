@@ -24,17 +24,14 @@ spec:
           valueFrom:
            secretKeyRef:
             name: choreo-secret
-            key: db_password
+            key: choreo_program_db_password
         image: choreoipaas/choreo_program_db:latest
         name: choreo_program_db
-        imagePullPolicy: Always
         ports:
         - containerPort: 3306
-        resources: {}
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: choreo_program_db-claim
-      restartPolicy: Always
       volumes:
       - name: choreo_program_db-claim
         persistentVolumeClaim:

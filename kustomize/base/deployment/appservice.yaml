@@ -131,28 +131,28 @@ spec:
         - name: DATABASE_USERNAME
           valueFrom:
             configMapKeyRef:
-              key: DATABASE_USERNAME
-              name: cm-appservice
+              key: CHOREO_DB_USERNAME
+              name: cm-choreo_app_db
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: choreo-secret
-              key: db_password
+              key: choreo_app_db_password
         - name: DATABASE_HOST
           valueFrom:
             configMapKeyRef:
-              key: DATABASE_HOST
-              name: cm-appservice
+              key: CHOREO_DB_HOST
+              name: cm-choreo_app_db
         - name: DATABASE_PORT
           valueFrom:
             configMapKeyRef:
-              key: DATABASE_PORT
-              name: cm-appservice
+              key: CHOREO_DB_PORT
+              name: cm-choreo_app_db
         - name: DATABASE_NAME
           valueFrom:
             configMapKeyRef:
-              key: DATABASE_NAME
-              name: cm-appservice
+              key: CHOREO_DB_NAME
+              name: cm-choreo_app_db
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
