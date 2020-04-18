@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    choreo.component: choreo_app_db
+  name: choreo_app_db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo_app_db
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        choreo.component: choreo_app_db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: choreo-secret
+            key: choreo_app_db_password
+        image: choreoipaas/choreo_app_db:latest
+        name: choreo_app_db
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: choreo_app_db-claim
+      volumes:
+      - name: choreo_app_db-claim
+        persistentVolumeClaim:
+          claimName: choreo_app_db-claim

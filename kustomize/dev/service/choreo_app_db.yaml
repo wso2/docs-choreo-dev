@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo_app_db
+  name: choreo_app_db
+spec:
+  ports:
+  - name: "mysql-port"
+    port: 3306
+    targetPort: 3306
+  selector:
+    choreo.component: choreo_app_db

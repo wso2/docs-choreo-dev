@@ -1,13 +1,13 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-  - persistence/pv-mysql.yaml
+#  - persistence/pv-mysql.yaml
   - persistence/pv-appservice.yaml
   - persistence/pv-programanalyzer.yaml
-  - persistence/pvc-choreo-mysql.yaml
+#  - persistence/pvc-choreo-mysql.yaml
   - persistence/pvc-appservice.yaml
   - persistence/pvc-programanalyzer.yaml
-  - deployment/choreo-mysql.yaml
+#  - deployment/choreo-mysql.yaml
   - deployment/frontend.yaml
   - deployment/negotiator.yaml
   - deployment/obsapi.yaml
@@ -16,7 +16,7 @@ resources:
   - deployment/programanalyzer.yaml
   - deployment/perfanalyzer.yaml
   - deployment/loggingapi.yaml
-  - service/choreo-mysql.yaml
+#  - service/choreo-mysql.yaml
   - service/frontend.yaml
   - service/negotiator.yaml
   - service/obsapi.yaml
@@ -57,11 +57,32 @@ configMapGenerator:
       - OBSERVE_API=https://$(CHOREO_HTTP_INGRESS)/graphql
       - REDIRECT_URL=https://development.choreo.dev/
       - TENANT=choreodevb2c
-  - name: cm-choreodb
+  - name: cm-choreo_app_db
     behavior: create
     literals:
-      - CHOREO_DB_HOST=choreo-mysql
-      - CHOREO_DB_NAME=choreo_db
+      - CHOREO_DB_HOST=choreo_app_db
+      - CHOREO_DB_NAME=choreo_app_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo_perf_db
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo_perf_db
+      - CHOREO_DB_NAME=choreo_perf_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo_program_db
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo_program_db
+      - CHOREO_DB_NAME=choreo_program_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo_trace_db
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo_trace_db
+      - CHOREO_DB_NAME=choreo_trace_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=root
   - name: cm-eventhub
