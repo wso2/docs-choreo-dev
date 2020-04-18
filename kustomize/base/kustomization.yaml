@@ -33,6 +33,8 @@ resources:
   - hpa/telemetry.yaml
   - hpa/appservice.yaml
   - hpa/loggingapi.yaml
+  - hpa/programanalyzer.yaml
+  - hpa/perfanalyzer.yaml
   - cronjob/workspace-cleanup.yaml
 
 configMapGenerator:

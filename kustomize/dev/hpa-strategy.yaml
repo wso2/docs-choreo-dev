@@ -38,3 +38,19 @@ spec:
   maxReplicas: 1
   minReplicas: 1
 ---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: programanalyzer
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: perfanalyzer
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---
