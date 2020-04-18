@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       choreo.component: obsapi
-  strategy: {}
   template:
     metadata:
       annotations:
@@ -19,31 +18,56 @@ spec:
     spec:
       containers:
       - env:
-        - name: CHOREO_DB_HOSTNAME
+        - name: CHOREO_PROGRAM_DB_HOST
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreodb
-        - name: CHOREO_DB_NAME
+              name: cm-choreo_program_db
+        - name: CHOREO_PROGRAM_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreodb
-        - name: CHOREO_DB_PASSWORD
+              name: cm-choreo_program_db
+        - name: CHOREO_PROGRAM_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: choreo-secret
-              key: db_password
-        - name: CHOREO_DB_PORT
+              key: choreo_program_db_password
+        - name: CHOREO_PROGRAM_DB_PORT
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreodb
-        - name: CHOREO_DB_USERNAME
+              name: cm-choreo_program_db
+        - name: CHOREO_PROGRAM_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreodb
+              name: cm-choreo_program_db
+        - name: CHOREO_TRACE_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_HOST
+              name: cm-choreo_trace_db
+        - name: CHOREO_TRACE_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_NAME
+              name: cm-choreo_trace_db
+        - name: CHOREO_TRACE_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: choreo-secret
+              key: choreo_trace_db_password
+        - name: CHOREO_TRACE_DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_PORT
+              name: cm-choreo_trace_db
+        - name: CHOREO_TRACE_DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_USERNAME
+              name: cm-choreo_trace_db
         - name: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
           valueFrom:
             secretKeyRef:
@@ -65,10 +89,6 @@ spec:
               name: choreo-secret
               key: tsi_env_fqdn
         image: choreoipaas/observability-api:latest
-        imagePullPolicy: ""
         name: obsapi
         ports:
         - containerPort: 9095
-        resources: {}
-      restartPolicy: Always
-      serviceAccountName: ""

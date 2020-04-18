@@ -57,13 +57,6 @@ configMapGenerator:
       - OBSERVE_API=https://$(CHOREO_HTTP_INGRESS)/graphql
       - REDIRECT_URL=https://development.choreo.dev/
       - TENANT=choreodevb2c
-  - name: cm-choreodb
-    behavior: create
-    literals:
-      - CHOREO_DB_HOST=choreo-mysql
-      - CHOREO_DB_NAME=choreo_db
-      - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=root
   - name: cm-choreo_app_db
     behavior: create
     literals:
