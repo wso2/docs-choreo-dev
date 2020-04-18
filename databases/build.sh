@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for db in "choreo_app_db" "choreo_perf_db" "choreo_program_db" "choreo_trace_db"; do
+for db in $(ls -1 scripts | sed -e 's/\..*$//'); do
     docker build --build-arg DATABASE=${db} -t choreoipaas/${db}:latest .
     docker push choreoipaas/${db}:latest
 done
