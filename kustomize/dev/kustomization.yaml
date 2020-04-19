@@ -3,22 +3,22 @@ resources:
   - namespace.yaml
   - sealed-secret.yaml
   - sealed-ingress-cert.yaml
-  - persistence/pv-choreo_app_db.yaml
-  - persistence/pv-choreo_perf_db.yaml
-  - persistence/pv-choreo_program_db.yaml
-  - persistence/pv-choreo_trace_db.yaml
-  - persistence/pvc-choreo_app_db.yaml
-  - persistence/pvc-choreo_perf_db.yaml
-  - persistence/pvc-choreo_program_db.yaml
-  - persistence/pvc-choreo_trace_db.yaml
-  - deployment/choreo_app_db.yaml
-  - deployment/choreo_perf_db.yaml
-  - deployment/choreo_program_db.yaml
-  - deployment/choreo_trace_db.yaml
-  - service/choreo_app_db.yaml
-  - service/choreo_perf_db.yaml
-  - service/choreo_program_db.yaml
-  - service/choreo_trace_db.yaml
+  - persistence/pv-choreo-app-db.yaml
+  - persistence/pv-choreo-perf-db.yaml
+  - persistence/pv-choreo-program-db.yaml
+  - persistence/pv-choreo-trace-db.yaml
+  - persistence/pvc-choreo-app-db.yaml
+  - persistence/pvc-choreo-perf-db.yaml
+  - persistence/pvc-choreo-program-db.yaml
+  - persistence/pvc-choreo-trace-db.yaml
+  - deployment/choreo-app-db.yaml
+  - deployment/choreo-perf-db.yaml
+  - deployment/choreo-program-db.yaml
+  - deployment/choreo-trace-db.yaml
+  - service/choreo-app-db.yaml
+  - service/choreo-perf-db.yaml
+  - service/choreo-program-db.yaml
+  - service/choreo-trace-db.yaml
 
 namespace: dev-choreo-system
 

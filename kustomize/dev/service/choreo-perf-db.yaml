@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: choreo_trace_db
-  name: choreo_trace_db
+    choreo.component: choreo-perf-db
+  name: choreo-perf-db
 spec:
   ports:
   - name: "mysql-port"
     port: 3306
     targetPort: 3306
   selector:
-    choreo.component: choreo_trace_db
+    choreo.component: choreo-perf-db

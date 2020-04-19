@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    choreo.component: choreo_perf_db
-  name: choreo_perf_db
+    choreo.component: choreo-program-db
+  name: choreo-program-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo_perf_db
+      choreo.component: choreo-program-db
   strategy:
     type: RollingUpdate
   template:
@@ -16,7 +16,7 @@ spec:
       annotations:
         linkerd.io/inject: enabled
       labels:
-        choreo.component: choreo_perf_db
+        choreo.component: choreo-program-db
     spec:
       containers:
       - env:
@@ -24,15 +24,15 @@ spec:
           valueFrom:
            secretKeyRef:
             name: choreo-secret
-            key: choreo_perf_db_password
-        image: choreoipaas/choreo_perf_db:latest
-        name: choreo_perf_db
+            key: choreo_program_db_password
+        image: choreoipaas/choreo_program_db:latest
+        name: choreo-program-db
         ports:
         - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: choreo_perf_db-claim
+          name: choreo-program-db-claim
       volumes:
-      - name: choreo_perf_db-claim
+      - name: choreo-program-db-claim
         persistentVolumeClaim:
-          claimName: choreo_perf_db-claim
+          claimName: pvc-choreo-program-db

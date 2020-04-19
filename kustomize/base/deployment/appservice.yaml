@@ -132,7 +132,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo_app_db
+              name: cm-choreo-app-db
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -142,17 +142,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo_app_db
+              name: cm-choreo-app-db
         - name: DATABASE_PORT
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo_app_db
+              name: cm-choreo-app-db
         - name: DATABASE_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo_app_db
+              name: cm-choreo-app-db
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:

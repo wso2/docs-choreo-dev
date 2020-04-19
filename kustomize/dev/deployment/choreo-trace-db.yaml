@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    choreo.component: choreo_trace_db
-  name: choreo_trace_db
+    choreo.component: choreo-trace-db
+  name: choreo-trace-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo_trace_db
+      choreo.component: choreo-trace-db
   strategy:
     type: RollingUpdate
   template:
@@ -16,7 +16,7 @@ spec:
       annotations:
         linkerd.io/inject: enabled
       labels:
-        choreo.component: choreo_trace_db
+        choreo.component: choreo-trace-db
     spec:
       containers:
       - env:
@@ -26,13 +26,13 @@ spec:
             name: choreo-secret
             key: choreo_trace_db_password
         image: choreoipaas/choreo_trace_db:latest
-        name: choreo_trace_db
+        name: choreo-trace-db
         ports:
         - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: choreo_trace_db-claim
+          name: choreo-trace-db-claim
       volumes:
-      - name: choreo_trace_db-claim
+      - name: choreo-trace-db-claim
         persistentVolumeClaim:
-          claimName: choreo_trace_db-claim
+          claimName: pvc-choreo-trace-db

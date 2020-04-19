@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    choreo.component: choreo-program-db-claim
+  name: pvc-choreo-program-db
+spec:
+  volumeMode: Filesystem
+  storageClassName: file
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
