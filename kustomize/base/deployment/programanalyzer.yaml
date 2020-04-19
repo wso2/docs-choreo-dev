@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "15"
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: programanalyzer
   name: programanalyzer

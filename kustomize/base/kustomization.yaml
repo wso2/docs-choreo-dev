@@ -33,6 +33,9 @@ resources:
   - hpa/perfanalyzer.yaml
   - cronjob/workspace-cleanup.yaml
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   - name: cm-programanalyzer
     behavior: create
