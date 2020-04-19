@@ -11,8 +11,6 @@ spec:
       choreo.component: obsapi
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         choreo.component: obsapi
     spec:

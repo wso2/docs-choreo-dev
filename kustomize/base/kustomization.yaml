@@ -1,13 +1,10 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-#  - persistence/pv-mysql.yaml
   - persistence/pv-appservice.yaml
   - persistence/pv-programanalyzer.yaml
-#  - persistence/pvc-choreo-mysql.yaml
   - persistence/pvc-appservice.yaml
   - persistence/pvc-programanalyzer.yaml
-#  - deployment/choreo-mysql.yaml
   - deployment/frontend.yaml
   - deployment/negotiator.yaml
   - deployment/obsapi.yaml
@@ -16,7 +13,6 @@ resources:
   - deployment/programanalyzer.yaml
   - deployment/perfanalyzer.yaml
   - deployment/loggingapi.yaml
-#  - service/choreo-mysql.yaml
   - service/frontend.yaml
   - service/negotiator.yaml
   - service/obsapi.yaml
@@ -94,10 +90,6 @@ configMapGenerator:
   - name: cm-appservice
     behavior: create
     literals:
-      - DATABASE_HOST=choreo-mysql
-      - DATABASE_NAME=choreo_db
-      - DATABASE_PORT=3306
-      - DATABASE_USERNAME=root
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1580639005087-z1go3
       - DEPLOY_INGRESS_HOST_SUFFIX=preprod.choreo.dev
       - DEPLOY_INGRESS_SECRET=choreo-preprod-wildcard-cert

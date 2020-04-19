@@ -12,8 +12,6 @@ spec:
       choreo.component: programanalyzer
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         choreo.component: programanalyzer
     spec:
