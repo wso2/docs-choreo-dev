@@ -1,13 +1,10 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-#  - persistence/pv-mysql.yaml
   - persistence/pv-appservice.yaml
   - persistence/pv-programanalyzer.yaml
-#  - persistence/pvc-choreo-mysql.yaml
   - persistence/pvc-appservice.yaml
   - persistence/pvc-programanalyzer.yaml
-#  - deployment/choreo-mysql.yaml
   - deployment/frontend.yaml
   - deployment/negotiator.yaml
   - deployment/obsapi.yaml
@@ -16,7 +13,6 @@ resources:
   - deployment/programanalyzer.yaml
   - deployment/perfanalyzer.yaml
   - deployment/loggingapi.yaml
-#  - service/choreo-mysql.yaml
   - service/frontend.yaml
   - service/negotiator.yaml
   - service/obsapi.yaml
@@ -36,6 +32,9 @@ resources:
   - hpa/programanalyzer.yaml
   - hpa/perfanalyzer.yaml
   - cronjob/workspace-cleanup.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
 
 configMapGenerator:
   - name: cm-programanalyzer
@@ -57,31 +56,31 @@ configMapGenerator:
       - OBSERVE_API=https://$(CHOREO_HTTP_INGRESS)/graphql
       - REDIRECT_URL=https://development.choreo.dev/
       - TENANT=choreodevb2c
-  - name: cm-choreo_app_db
+  - name: cm-choreo-app-db
     behavior: create
     literals:
-      - CHOREO_DB_HOST=choreo_app_db
+      - CHOREO_DB_HOST=choreo-app-db
       - CHOREO_DB_NAME=choreo_app_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=root
-  - name: cm-choreo_perf_db
+  - name: cm-choreo-perf-db
     behavior: create
     literals:
-      - CHOREO_DB_HOST=choreo_perf_db
+      - CHOREO_DB_HOST=choreo-perf-db
       - CHOREO_DB_NAME=choreo_perf_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=root
-  - name: cm-choreo_program_db
+  - name: cm-choreo-program-db
     behavior: create
     literals:
-      - CHOREO_DB_HOST=choreo_program_db
+      - CHOREO_DB_HOST=choreo-program-db
       - CHOREO_DB_NAME=choreo_program_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=root
-  - name: cm-choreo_trace_db
+  - name: cm-choreo-trace-db
     behavior: create
     literals:
-      - CHOREO_DB_HOST=choreo_trace_db
+      - CHOREO_DB_HOST=choreo-trace-db
       - CHOREO_DB_NAME=choreo_trace_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=root
@@ -94,10 +93,6 @@ configMapGenerator:
   - name: cm-appservice
     behavior: create
     literals:
-      - DATABASE_HOST=choreo-mysql
-      - DATABASE_NAME=choreo_db
-      - DATABASE_PORT=3306
-      - DATABASE_USERNAME=root
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1580639005087-z1go3
       - DEPLOY_INGRESS_HOST_SUFFIX=preprod.choreo.dev
       - DEPLOY_INGRESS_SECRET=choreo-preprod-wildcard-cert

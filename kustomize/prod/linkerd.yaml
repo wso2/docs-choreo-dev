@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: perfanalyzer
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: programanalyzer
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: negotiator
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obsapi
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appservice
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loggingapi
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+---

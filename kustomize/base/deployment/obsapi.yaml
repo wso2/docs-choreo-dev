@@ -1,6 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+#    secret.reloader.stakater.com/reload: "choreo-secret"
+#    configmap.reloader.stakater.com/reload: "cm-choreo-program-db,cm-choreo-trace-db"
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: obsapi
   name: obsapi
@@ -11,8 +15,6 @@ spec:
       choreo.component: obsapi
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         choreo.component: obsapi
     spec:
@@ -22,12 +24,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_PROGRAM_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_PROGRAM_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -37,22 +39,22 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_PROGRAM_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_TRACE_DB_HOST
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo_trace_db
+              name: cm-choreo-trace-db
         - name: CHOREO_TRACE_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo_trace_db
+              name: cm-choreo-trace-db
         - name: CHOREO_TRACE_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -62,12 +64,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo_trace_db
+              name: cm-choreo-trace-db
         - name: CHOREO_TRACE_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo_trace_db
+              name: cm-choreo-trace-db
         - name: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
           valueFrom:
             secretKeyRef:

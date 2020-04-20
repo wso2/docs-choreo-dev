@@ -1,6 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: perfanalyzer
   name: perfanalyzer
@@ -12,8 +14,6 @@ spec:
       choreo.component: perfanalyzer
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         choreo.component: perfanalyzer
     spec:

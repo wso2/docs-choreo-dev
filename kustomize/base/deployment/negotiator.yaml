@@ -1,6 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: negotiator
   name: negotiator
@@ -12,8 +14,6 @@ spec:
   strategy: {}
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         choreo.component: negotiator
     spec:
@@ -28,12 +28,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_DB_PASSWORD
           valueFrom: 
            secretKeyRef:
@@ -43,12 +43,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         - name: CHOREO_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo_program_db
+              name: cm-choreo-program-db
         image: choreoipaas/choreo-negotiator:latest
         name: negotiator
         readinessProbe:

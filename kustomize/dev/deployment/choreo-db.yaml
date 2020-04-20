@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    secret.reloader.stakater.com/reload: "choreo-secret"
   labels:
-    choreo.component: choreo_trace_db
-  name: choreo_trace_db
+    choreo.component: choreo-db
+  name: choreo-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo_trace_db
+      choreo.component: choreo-db
   strategy:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
-        choreo.component: choreo_trace_db
+        choreo.component: choreo-db
     spec:
       containers:
       - env:
@@ -24,15 +24,15 @@ spec:
           valueFrom:
            secretKeyRef:
             name: choreo-secret
-            key: choreo_trace_db_password
-        image: choreoipaas/choreo_trace_db:latest
-        name: choreo_trace_db
+            key: choreo_app_db_password
+        image: choreoipaas/choreo_db:latest
+        name: choreo-db
         ports:
         - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: choreo_trace_db-claim
+          name: choreo-db-claim
       volumes:
-      - name: choreo_trace_db-claim
+      - name: choreo-db-claim
         persistentVolumeClaim:
-          claimName: choreo_trace_db-claim
+          claimName: pvc-choreo-db

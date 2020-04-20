@@ -3,22 +3,10 @@ resources:
   - namespace.yaml
   - sealed-secret.yaml
   - sealed-ingress-cert.yaml
-  - persistence/pv-choreo_app_db.yaml
-  - persistence/pv-choreo_perf_db.yaml
-  - persistence/pv-choreo_program_db.yaml
-  - persistence/pv-choreo_trace_db.yaml
-  - persistence/pvc-choreo_app_db.yaml
-  - persistence/pvc-choreo_perf_db.yaml
-  - persistence/pvc-choreo_program_db.yaml
-  - persistence/pvc-choreo_trace_db.yaml
-  - deployment/choreo_app_db.yaml
-  - deployment/choreo_perf_db.yaml
-  - deployment/choreo_program_db.yaml
-  - deployment/choreo_trace_db.yaml
-  - service/choreo_app_db.yaml
-  - service/choreo_perf_db.yaml
-  - service/choreo_program_db.yaml
-  - service/choreo_trace_db.yaml
+  - persistence/pv-choreo-db.yaml
+  - persistence/pvc-choreo-db.yaml
+  - deployment/choreo-db.yaml
+  - service/choreo-db.yaml
 
 namespace: dev-choreo-system
 
@@ -27,6 +15,26 @@ configMapGenerator:
     behavior: merge
     literals:
       - OBSERVE_API=https://dev.choreo.local/graphql
+  - name: cm-choreo-app-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_NAME=choreo_db
+  - name: cm-choreo-perf-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_NAME=choreo_db
+  - name: cm-choreo-program-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_NAME=choreo_db
+  - name: cm-choreo-trace-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_NAME=choreo_db
   - name: cm-negotiator
     behavior: create
     literals:
