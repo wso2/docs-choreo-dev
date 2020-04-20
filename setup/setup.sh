@@ -3,16 +3,35 @@ echo "----------------------------------------------"
 echo "| Choreo Control Plane setup on Kubernetes   |"
 echo "----------------------------------------------"
 
-propfile=$1
+## TODO: pass environments
+
+propfile="choreo-secrets.properties"
+create_ingress="true"
+declare -a environments=("dev")
 [[ $# -eq 0 ]] &&
-{ echo "Usage: $0 propfile"; \
-echo "   -p=propfile - secrets properties file"; exit 1; }
+{
+    echo "Usage: $0 -p=propfile [-e=environments] [-i=true/false]"; \
+    echo "   -p=propfile     - secrets properties file";
+    echo "   -e=environments - comma separated environment list";
+    echo "   -i=true/false   - create ingress";
+    echo;
+    echo "   e.g. $0 -p=choreo-secret.properties -e=prod,stage,dev -i=false";
+    exit 1;
+}
 
 for arg in "$@"
 do
     case $arg in
         -p=*|--propfile=*)
         propfile="${arg#*=}"
+        shift
+        ;;
+        -e=*|--environments=*)
+        IFS=',' read -r -a environments <<< "${arg#*=}"
+        shift
+        ;;
+        -i=*|--ingress=*)
+        create_ingress="${arg#*=}"
         shift
         ;;
         *)
@@ -27,22 +46,24 @@ mkdir $outdir
 
 ############## Install Reloader
 echo "--- Installing Reloader..."
-k apply -n kube-system -f reloader.yaml
+kubectl apply -n kube-system -f reloader.yaml
 
-############## Install nginx ingress
-echo "--- Installing nginx ingress..."
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
-read -p "Are you using Docker Desktop? [y/N] " response
-echo    # (optional) move to a new line
-if [[ ${response} =~ ^[Yy]$ ]]; then
-  echo "--- Installing nginx ingress for Docker Desktop..."
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
-else
-    read -p "Are you using Minikube? [y/N] " response
+############## Install nginx ingress (Optional)
+if [[ "$create_ingress" == "true" ]]; then
+    echo "--- Installing nginx ingress..."
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+    read -p "Are you using Docker Desktop? [y/N] " response
     echo    # (optional) move to a new line
     if [[ ${response} =~ ^[Yy]$ ]]; then
-      echo "--- Enabling nginx ingress addon for Minikube..."
-      minikube addons enable ingress
+      echo "--- Installing nginx ingress for Docker Desktop..."
+      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+    else
+        read -p "Are you using Minikube? [y/N] " response
+        echo    # (optional) move to a new line
+        if [[ ${response} =~ ^[Yy]$ ]]; then
+          echo "--- Enabling nginx ingress addon for Minikube..."
+          minikube addons enable ingress
+        fi
     fi
 fi
 
@@ -98,36 +119,40 @@ command -v kustomize >/dev/null 2>&1 || {
     fi
 }
 
-################ create the ingress certificate
-echo "--- Generating ingress TLS key & certificate..."
-sudo openssl genrsa -out $outdir/tls.key 2048
-sudo openssl req -new -out $outdir/tls.csr -key $outdir/tls.key -config openssl.cnf
-sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -out $outdir/tls.crt \
-     -extensions v3_req -extfile openssl.cnf
+################ Create the ingress certificate (optional)
+if [[ "$create_ingress" == "true" ]]; then
+    echo "--- Generating ingress TLS key & certificate..."
+    sudo openssl genrsa -out $outdir/tls.key 2048
+    sudo openssl req -new -out $outdir/tls.csr -key $outdir/tls.key -config openssl.cnf
+    sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -out $outdir/tls.crt \
+         -extensions v3_req -extfile openssl.cnf
+fi
 
-############### import the cert into JRE CA trusted certs to make Java clients work
-echo "--- Import ingress certificate to JRE trust store..."
-echo "Default keystore password = changeit"
-keystore=$JAVA_HOME/jre/lib/security/cacerts
-sudo keytool -delete -alias choreoingress_local -keystore $keystore
-sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
+if [[ "$create_ingress" == "true" ]]; then
+    ############### Import the cert into JRE CA trusted certs to make Java clients work (Optional)
+    echo "--- Import ingress certificate to JRE trust store..."
+    echo "Default keystore password = changeit"
+    keystore=$JAVA_HOME/jre/lib/security/cacerts
+    sudo keytool -delete -alias choreoingress_local -keystore $keystore
+    sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
 
-############### create ingress TLS cert sealed secrets for all environments
-echo "--- Creating ingress TLS cert sealed secrets for all environments..."
-sudo chown $USER $outdir/tls.key
-sudo chown $USER $outdir/tls.crt
+    ############### Create ingress TLS cert sealed secrets for all environments (Optional)
+    sudo chown $USER $outdir/tls.key
+    sudo chown $USER $outdir/tls.crt
 
-for env in "dev" "stage" "prod"; do
-    mkdir -p $outdir/$env
-    kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
-            --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
-    kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/sealed-ingress-cert.yaml
-    echo "Sealed secret ingress cert generated and copied to "$env
-done
+    for env in "${environments[@]}"; do
+        echo "--- Creating ingress TLS cert sealed secrets for ${env} environment..."
+        mkdir -p $outdir/$env
+        kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
+                --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
+        kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/sealed-ingress-cert.yaml
+        echo "Sealed secret ingress cert generated and copied to "$env
+    done
+fi
 
-########### create choreo sealed secrets for all environments
-echo "--- Creating Choreo sealed secrets for all environments..."
-for env in "dev" "stage" "prod"; do
+########### Create choreo sealed secrets for all environments
+for env in "${environments[@]}"; do
+    echo "--- Creating Choreo sealed secrets for for ${env} environment..."
     mkdir -p ${outdir}/${env}
     ./secretgen.sh -p=${propfile} -n=${env}-choreo-system -o=${outdir}/${env}
     cp ${outdir}/${env}/sealed-secret.yaml ../kustomize/${env}/
