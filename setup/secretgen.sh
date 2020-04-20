@@ -3,13 +3,15 @@ command -v kubeseal >/dev/null 2>&1 ||
 { echo "kubeseal not installed. See https://github.com/bitnami-labs/sealed-secrets/releases"; exit 1; }
 propfile=$1
 [[ $# -eq 0 ]] &&
-{ echo "Usage: $0 -p propfile [-n namespace] [-o output-dir]"; \
-echo "   -p=propfile   - secrets properties file"; \
-echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
-echo "   -o=output-dir - directory where sealed secrets are written to"; \
-echo; \
-echo "   e.g. $0 -p=choreo-secret.properties -n=dev-choreo-system -o=out"; \
-exit 1; }
+{
+    echo "Usage: $0 -p propfile [-n namespace] [-o output-dir]"; \
+    echo "   -p=propfile   - secrets properties file"; \
+    echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
+    echo "   -o=output-dir - directory where sealed secrets are written to"; \
+    echo; \
+    echo "   e.g. $0 -p=choreo-secret.properties -n=dev-choreo-system -o=out"; \
+    exit 1;
+}
 
 namespace=$2
 outdir=$3
