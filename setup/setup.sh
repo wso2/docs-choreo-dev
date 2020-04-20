@@ -48,25 +48,6 @@ mkdir $outdir
 echo "--- Installing Reloader..."
 kubectl apply -n kube-system -f reloader.yaml
 
-############## Install nginx ingress (Optional)
-if [[ "$create_ingress" == "true" ]]; then
-    echo "--- Installing nginx ingress..."
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
-    read -p "Are you using Docker Desktop? [y/N] " response
-    echo    # (optional) move to a new line
-    if [[ ${response} =~ ^[Yy]$ ]]; then
-      echo "--- Installing nginx ingress for Docker Desktop..."
-      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
-    else
-        read -p "Are you using Minikube? [y/N] " response
-        echo    # (optional) move to a new line
-        if [[ ${response} =~ ^[Yy]$ ]]; then
-          echo "--- Enabling nginx ingress addon for Minikube..."
-          minikube addons enable ingress
-        fi
-    fi
-fi
-
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
 linkerd_installed="true"
@@ -119,16 +100,31 @@ command -v kustomize >/dev/null 2>&1 || {
     fi
 }
 
-################ Create the ingress certificate (optional)
 if [[ "$create_ingress" == "true" ]]; then
+    ############## Install nginx ingress (Optional)
+    echo "--- Installing nginx ingress..."
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+    read -p "Are you using Docker Desktop? [y/N] " response
+    echo    # (optional) move to a new line
+    if [[ ${response} =~ ^[Yy]$ ]]; then
+      echo "--- Installing nginx ingress for Docker Desktop..."
+      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+    else
+        read -p "Are you using Minikube? [y/N] " response
+        echo    # (optional) move to a new line
+        if [[ ${response} =~ ^[Yy]$ ]]; then
+          echo "--- Enabling nginx ingress addon for Minikube..."
+          minikube addons enable ingress
+        fi
+    fi
+
+    ################ Create the ingress certificate (optional)
     echo "--- Generating ingress TLS key & certificate..."
     sudo openssl genrsa -out $outdir/tls.key 2048
     sudo openssl req -new -out $outdir/tls.csr -key $outdir/tls.key -config openssl.cnf
     sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -out $outdir/tls.crt \
          -extensions v3_req -extfile openssl.cnf
-fi
 
-if [[ "$create_ingress" == "true" ]]; then
     ############### Import the cert into JRE CA trusted certs to make Java clients work (Optional)
     echo "--- Import ingress certificate to JRE trust store..."
     echo "Default keystore password = changeit"
