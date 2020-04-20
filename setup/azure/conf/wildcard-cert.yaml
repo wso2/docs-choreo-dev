@@ -1,0 +1,21 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: "${NAMESPACE}-wildcard-cert"
+spec:
+  secretName: "${NAMESPACE}-wildcard-tls"
+  issuerRef:
+    name: "${NAMESPACE}-letsencrypt-prod"
+    kind: ClusterIssuer
+  commonName: $WILDCARD_DOMAIN
+  dnsNames:
+  - $WILDCARD_DOMAIN
+  - "*.$WILDCARD_DOMAIN"
+  acme:
+    config:
+    - dns01:
+        provider: azure-dns
+        ingressClass: "${NAMESPACE}-nginx"
+      domains:
+        - $WILDCARD_DOMAIN
+        - "*.$WILDCARD_DOMAIN"
