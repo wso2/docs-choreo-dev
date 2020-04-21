@@ -32,8 +32,8 @@ spec:
             - name: CHOREO_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: choreo-secret
-                  key: choreo_app_db_password
+                  name: secret-app_db
+                  key: CHOREO_DB_PASSWORD
             - name: CHOREO_DB_PORT
               valueFrom:
                 configMapKeyRef:
@@ -82,8 +82,8 @@ spec:
             - name: AAD_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: choreo-secret
-                  key: aad_client-secret
+                  name: secret-loggingapi
+                  key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           image: choreoipaas/choreo-logging:latest
           imagePullPolicy: ""
           name: loggingapi

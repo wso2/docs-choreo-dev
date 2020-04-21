@@ -21,13 +21,13 @@ spec:
         - name: PLATFORMER_RUDDER_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: rudder_password
+              name: secret-appservice
+              key: PLATFORMER_RUDDER_PASSWORD
         - name: WORKSPACE_INGRESS_TLS_SECRET
           valueFrom:
             configMapKeyRef:
-              key: WORKSPACE_INGRESS_TLS_SECRET
               name: cm-appservice
+              key: WORKSPACE_INGRESS_TLS_SECRET
         - name: PLATFORMER_GOOGLE_ID
           valueFrom:
             configMapKeyRef:
@@ -56,8 +56,8 @@ spec:
         - name: IDP_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: idp_client_secret
+              name: secret-appservice
+              key: IDP_CLIENT_SECRET
         - name: PLATFORMER_CLUSTER_NAME
           valueFrom:
             configMapKeyRef:
@@ -111,8 +111,8 @@ spec:
         - name: GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: github_token
+              name: secret-appservice
+              key: GITHUB_TOKEN
         - name: EXECUTOR_SVC_HOST
           valueFrom:
             configMapKeyRef:
@@ -128,6 +128,7 @@ spec:
             configMapKeyRef:
               key: DEPLOY_INGRESS_SECRET
               name: cm-appservice
+        # APP DB
         - name: DATABASE_USERNAME
           valueFrom:
             configMapKeyRef:
@@ -136,8 +137,8 @@ spec:
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: choreo_app_db_password
+              name: secret-app_db
+              key: CHOREO_DB_PASSWORD
         - name: DATABASE_HOST
           valueFrom:
             configMapKeyRef:
@@ -153,6 +154,7 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_NAME
               name: cm-choreo-app-db
+        # -----------------------
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
@@ -201,8 +203,8 @@ spec:
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: redis_password
+              name: secret-appservice
+              key: REDIS_PASSWORD
         - name: EXECUTOR_IMAGE
           valueFrom:
             configMapKeyRef:

@@ -1,8 +1,15 @@
 resources:
   - ../base
   - namespace.yaml
-  - sealed-secret.yaml
-  - sealed-ingress-cert.yaml
+  - secret/app_db.yaml
+  - secret/appservice.yaml
+  - secret/loggingapi.yaml
+  - secret/obsapi.yaml
+  - secret/perf_db.yaml
+  - secret/program_db.yaml
+  - secret/telemetry.yaml
+  - secret/trace_db.yaml
+  - secret/sealed-ingress-cert.yaml
   - persistence/pv-choreo-db.yaml
   - persistence/pvc-choreo-db.yaml
   - deployment/choreo-db.yaml

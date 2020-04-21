@@ -32,8 +32,8 @@ spec:
         - name: CHOREO_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: choreo_trace_db_password
+              name: secret-trace_db
+              key: CHOREO_DB_PASSWORD
         - name: CHOREO_DB_PORT
           valueFrom:
             configMapKeyRef:
@@ -62,8 +62,8 @@ spec:
         - name: EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY
           valueFrom: 
             secretKeyRef:
-              name: choreo-secret
-              key: eh_shared_access_sig_key  
+              name: secret-telemetry
+              key: EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY
         image: choreoipaas/choreo-telemetry:latest
         imagePullPolicy: ""
         name: telemetry
