@@ -137,7 +137,7 @@ spec:
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-app_db
+              name: secret-app-db
               key: CHOREO_DB_PASSWORD
         - name: DATABASE_HOST
           valueFrom:

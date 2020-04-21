@@ -32,7 +32,7 @@ spec:
         - name: CHOREO_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-trace_db
+              name: secret-trace-db
               key: CHOREO_DB_PASSWORD
         - name: CHOREO_DB_PORT
           valueFrom:

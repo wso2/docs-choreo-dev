@@ -23,7 +23,7 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
            secretKeyRef:
-            name: secret-app_db
+            name: secret-app-db
             key: CHOREO_DB_PASSWORD
         image: choreoipaas/choreo_db:latest
         name: choreo-db

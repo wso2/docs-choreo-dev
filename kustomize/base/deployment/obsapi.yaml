@@ -33,7 +33,7 @@ spec:
         - name: CHOREO_PROGRAM_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-program_db
+              name: secret-program-db
               key: CHOREO_DB_PASSWORD
         - name: CHOREO_PROGRAM_DB_PORT
           valueFrom:
@@ -59,7 +59,7 @@ spec:
         - name: CHOREO_TRACE_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-trace_db
+              name: secret-trace-db
               key: CHOREO_DB_PASSWORD
         - name: CHOREO_TRACE_DB_PORT
           valueFrom:
