@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-#    secret.reloader.stakater.com/reload: "choreo-secret"
-#    configmap.reloader.stakater.com/reload: "cm-choreo-program-db,cm-choreo-trace-db"
     reloader.stakater.com/auto: "true"
   labels:
     choreo.component: obsapi
@@ -20,6 +18,8 @@ spec:
     spec:
       containers:
       - env:
+        # --------------------------------------------------------
+        # PROGRAM_DB
         - name: CHOREO_PROGRAM_DB_HOST
           valueFrom:
             configMapKeyRef:
@@ -33,8 +33,8 @@ spec:
         - name: CHOREO_PROGRAM_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: choreo_program_db_password
+              name: secret-program-db
+              key: CHOREO_DB_PASSWORD
         - name: CHOREO_PROGRAM_DB_PORT
           valueFrom:
             configMapKeyRef:
@@ -45,6 +45,7 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
+        # TRACE_DB
         - name: CHOREO_TRACE_DB_HOST
           valueFrom:
             configMapKeyRef:
@@ -58,8 +59,8 @@ spec:
         - name: CHOREO_TRACE_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: choreo_trace_db_password
+              name: secret-trace-db
+              key: CHOREO_DB_PASSWORD
         - name: CHOREO_TRACE_DB_PORT
           valueFrom:
             configMapKeyRef:
@@ -70,26 +71,28 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-trace-db
+        # AZURE TSI
         - name: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
           valueFrom:
-            secretKeyRef:
-              name: choreo-secret
-              key: tsi_client_id
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
+        - name: AZURE_TIMESERIESINSIGHTS_TENANT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_TIMESERIESINSIGHTS_TENANT_ID
+        - name: AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN
         - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
-              name: choreo-secret
-              key: tsi_client_secret
-        - name: AZURE_TIMESERIESINSIGHTS_TENANT_ID
-          valueFrom:
-            secretKeyRef:
-              name: choreo-secret
-              key: tsi_tenant_id 
-        - name: AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN
-          valueFrom:
-            secretKeyRef:
-              name: choreo-secret
-              key: tsi_env_fqdn
+              name: secret-obsapi
+              key: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+        # --------------------------------------------------------
         image: choreoipaas/observability-api:latest
         name: obsapi
         ports:

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    secret.reloader.stakater.com/reload: "choreo-secret"
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: choreo-db
   name: choreo-db
@@ -23,8 +23,8 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
            secretKeyRef:
-            name: choreo-secret
-            key: choreo_app_db_password
+            name: secret-app-db
+            key: CHOREO_DB_PASSWORD
         image: choreoipaas/choreo_db:latest
         name: choreo-db
         ports:

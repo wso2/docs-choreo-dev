@@ -37,6 +37,12 @@ generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
+  - name: cm-obsapi
+    behavior: create
+    literals:
+      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=f3780944-a32e-4b9d-89ed-3b18beb47942
+      - AZURE_TIMESERIESINSIGHTS_TENANT_ID=9c3e5d51-c9ab-4565-a419-4248b5d54817
+      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=208dc027-b0ba-416d-8826-4660a6eec433.env.timeseries.azure.com
   - name: cm-programanalyzer
     behavior: create
     files:

@@ -37,8 +37,8 @@ spec:
         - name: CHOREO_DB_PASSWORD
           valueFrom: 
            secretKeyRef:
-             name: choreo-secret
-             key: choreo_program_db_password
+             name: secret-program-db
+             key: CHOREO_DB_PASSWORD
         - name: CHOREO_DB_PORT
           valueFrom:
             configMapKeyRef:
