@@ -1,8 +1,15 @@
 resources:
   - ../base
   - namespace.yaml
-  - sealed-secret.yaml
-  - sealed-ingress-cert.yaml
+  - secret/app-db.yaml
+  - secret/appservice.yaml
+  - secret/loggingapi.yaml
+  - secret/obsapi.yaml
+  - secret/perf-db.yaml
+  - secret/program-db.yaml
+  - secret/telemetry.yaml
+  - secret/trace-db.yaml
+  - secret/sealed-ingress-cert.yaml
 
 namespace: stage-choreo-system
 
@@ -15,7 +22,34 @@ configMapGenerator:
     behavior: create
     literals:
       - CHOREO_APP_URL=http://stage.choreo.local/observe/app/
-
+  - name: cm-choreo-app-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-app-db
+      - CHOREO_DB_NAME=choreo_app_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo-perf-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-perf-db
+      - CHOREO_DB_NAME=choreo_perf_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo-program-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-program-db
+      - CHOREO_DB_NAME=choreo_program_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo-trace-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreo-trace-db
+      - CHOREO_DB_NAME=choreo_trace_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=root
 patches:
   - path: ingress-patch.json
     target:

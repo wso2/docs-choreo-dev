@@ -19,3 +19,4 @@ Need to run mysql deployment only when running `local env`
 We may need to introduce a local env
 create PVs for each env (PVs don't have a namespace)
 Refactor all configs into properties or YAML files
+Create separate AAD etc apps for stage, dev etc
