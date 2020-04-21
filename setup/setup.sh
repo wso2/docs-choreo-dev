@@ -10,18 +10,22 @@ create_ingress="true"
 declare -a environments=("dev")
 [[ $# -eq 0 ]] &&
 {
-    echo "Usage: $0 -p=propfile [-e=environments] [-i=true/false]"; \
-    echo "   -p=propfile     - secrets properties file";
+    echo "Usage: $0 -d=secretdir [-e=environments] [-i=true/false]"; \
+    echo "   -d=secretdir    - directory containing secret properties files";
     echo "   -e=environments - comma separated environment list";
     echo "   -i=true/false   - create ingress";
     echo;
-    echo "   e.g. $0 -p=choreo-secret.properties -e=prod,stage,dev -i=false";
+    echo "   e.g. $0 -d=secret -e=prod,stage,dev -i=false";
     exit 1;
 }
 
 for arg in "$@"
 do
     case $arg in
+        -d=*|--secretdir=*)
+        secretdir="${arg#*=}"
+        shift
+        ;;
         -p=*|--propfile=*)
         propfile="${arg#*=}"
         shift
@@ -141,17 +145,17 @@ if [[ "$create_ingress" == "true" ]]; then
         mkdir -p $outdir/$env
         kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
                 --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
-        kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/sealed-ingress-cert.yaml
-        echo "Sealed secret ingress cert generated and copied to "$env
+        kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/secret/sealed-ingress-cert.yaml
+        echo "Sealed secret ingress cert generated and copied to "$env"/secret"
     done
 fi
 
+### TODO: generate for all secret prop files
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
     mkdir -p ${outdir}/${env}
-    ./secretgen.sh -p=${propfile} -n=${env}-choreo-system -o=${outdir}/${env}
-    cp ${outdir}/${env}/sealed-secret.yaml ../kustomize/${env}/
+    ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/secret
 done
 
 ########### Cleanup
