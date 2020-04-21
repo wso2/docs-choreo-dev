@@ -100,9 +100,8 @@ kubectl create namespace ${namespace} --dry-run -oyaml | kubectl apply -f -
 echo "--- Requesting wildcard cert for ${WILDCARD_DOMAIN}"
 envsubst < conf/wildcard-cert.yaml | kubectl apply -n ${namespace} -f -
 
-echo "--- Creating AKS read only cluster role and rolebinding integration with AAD"
-kubectl apply -f conf/readonly-cluster-role.yaml
-kubectl apply -f conf/readonly-cluster-role-binding.yaml
+echo "--- Creating AKS view cluster role binding to AAD"
+kubectl apply -f conf/view-cluster-role-binding.yaml
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
