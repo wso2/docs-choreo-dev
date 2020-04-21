@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 [[ $# -eq 0 ]] &&
-{ echo "Usage: $0 -d azure-deploy.properties [-n namespace]"; \
-echo "   -d=azuredfile  - azure deployment properties file"; \
-echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
-echo; \
-echo "   e.g. $0 -d=azure-deploy.properties -n=dev-choreo-system "; \
-exit 1; }
+{
+    echo "Usage: $0 -d azure-deploy.properties [-n namespace]"; \
+    echo "   -d=azuredfile  - azure deployment properties file"; \
+    echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
+    echo; \
+    echo "   e.g. $0 -d=azure-deploy.properties -n=dev-choreo-system "; \
+    exit 1;
+}
 
 azuredfile=$1
 namespace=$2
@@ -103,6 +105,9 @@ envsubst < conf/wildcard-cert.yaml | kubectl apply -n ${namespace} -f -
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
 
+## Initialize Kubernetes Cluster
+source ../common/k8s-cluster-init.sh
+
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
 if [[ -r ${azuredfile} ]]
@@ -117,3 +122,12 @@ else
     echo "File "${azuredfile}" not found"; exit 1
 fi
 unset NAMESPACE
+
+successful="true"
+if [[ "${k8s_install_successful}" == "false" ]]; then
+    echo "[FAILED] Kubernetes initialization."
+    successful=false
+fi
+if [[ "${successful}" == "true" ]]; then
+    echo "Choreo control plane successfully installed"
+fi
