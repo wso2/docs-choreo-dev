@@ -9,7 +9,6 @@ resources:
   - secret/program-db.yaml
   - secret/telemetry.yaml
   - secret/trace-db.yaml
-  - secret/sealed-ingress-cert.yaml
 
 namespace: prod-choreo-system
 
