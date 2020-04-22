@@ -71,6 +71,7 @@ configMapGenerator:
     literals:
       - AAD_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
       - AAD_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
+
 patches:
   - path: ingress-patch.json
     target:
@@ -89,4 +90,4 @@ patchesStrategicMerge:
   - replica-rollout-strategy.yaml
   - linkerd.yaml
   - requests.yaml
-  - ingress-class.yaml
+  - ingress-patch.yaml
