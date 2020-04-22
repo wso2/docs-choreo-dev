@@ -16,20 +16,13 @@ command -v kubeseal >/dev/null 2>&1 ||
 
 function gensecret {
     local from_lit_str=""
-    if [[ -r $1 ]]
+    if [[ ! -f $1 ]]
     then
-        while IFS= read -r line
-        do
-             k=$(cut -d "=" -f1 <<< $line)
-             v=$(cut -d "=" -f2- <<< "$line")
-             from_lit_str=${from_lit_str}" --from-literal "$k"="$v" "
-        done < "$1"
-    else
         echo "File "$1" not found"; exit 1
     fi
     local secret=$(echo "$1" | cut -d "/" -f2- | sed 's/\(.*\)\..*/\1/')
     mkdir -p ${outdir}
-    kubectl create secret generic secret-${secret} -n ${namespace} ${from_lit_str} --dry-run=client -o yaml |
+    kubectl create secret generic secret-${secret} -n ${namespace} --from-env-file $1 --dry-run=client -o yaml |
             kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml
     echo "Choreo Sealed secret generated to "${outdir}
 }
