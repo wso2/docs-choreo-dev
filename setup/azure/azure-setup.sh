@@ -66,7 +66,7 @@ command -v helm >/dev/null 2>&1 || {
 
 ############### Install Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
-kubectl create namespace "${namespace}-nginx-ingress" --dry-run -o yaml | kubectl apply -f -
+kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
@@ -91,13 +91,13 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.1
 ############## Install Cluster Issuer
 ## Create azure dns contributor client secret
 echo "--- Creating azure dns contributor client secret"
-kubectl create secret generic "${namespace}-secret-azuredns-config" --from-literal=client-secret="$SERVICE_PRINCIPLE_CLIENT_SECRET" -n cert-manager --dry-run -oyaml | kubectl apply -f -
+kubectl create secret generic "${namespace}-secret-azuredns-config" --from-literal=client-secret="$SERVICE_PRINCIPLE_CLIENT_SECRET" -n cert-manager --dry-run=client -oyaml | kubectl apply -f -
 
 ## Install Cluster Issuer
 envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
 
 ## Create Namespace
-kubectl create namespace ${namespace} --dry-run -o yaml | kubectl apply -f -
+kubectl create namespace ${namespace} --dry-run=client -o yaml | kubectl apply -f -
 #
 echo "--- Requesting wildcard cert for ${WILDCARD_DOMAIN}"
 envsubst < conf/wildcard-cert.yaml | kubectl apply -n ${namespace} -f -
