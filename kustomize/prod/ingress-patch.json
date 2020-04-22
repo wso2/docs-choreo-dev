@@ -1,8 +1,5 @@
 [
   {"op": "replace",
     "path": "/spec/rules/0/host",
-    "value": "choreo.dev"},
-  {"op": "replace",
-    "path": "/spec/rules/0/secretName",
-    "value": "prod-choreo-system-wildcard-tls"}
+    "value": "choreo.dev"}
 ]
