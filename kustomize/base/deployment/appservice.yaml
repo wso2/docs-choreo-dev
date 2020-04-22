@@ -243,7 +243,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /repo
-          name: appservice-claim
+          name: pvc-userappstorage
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: platformer-1580893230462-5ggle
@@ -252,6 +252,6 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: appservice-claim
+      - name: pvc-userappstorage
         persistentVolumeClaim:
-          claimName: appservice-claim
+          claimName: pvc-userappstorage

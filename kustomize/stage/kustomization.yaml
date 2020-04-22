@@ -1,6 +1,8 @@
 resources:
   - ../base
   - namespace.yaml
+  - persistence/azure-storageclass.yaml
+  - persistence/pvc-userappstorage.yaml
   - secret/app-db.yaml
   - secret/appservice.yaml
   - secret/loggingapi.yaml
@@ -16,39 +18,65 @@ configMapGenerator:
   - name: cm-frontend
     behavior: merge
     literals:
-      - OBSERVE_API=https://stage.choreo.local/graphql
+      - OBSERVE_API=https://choreo.dev/graphql
+      - REDIRECT_URL=https://choreo.dev/
+      - IDP_CLIENT_ID=TODO.same as app service IDP_CLIENT_ID
   - name: cm-negotiator
     behavior: create
     literals:
-      - CHOREO_APP_URL=http://stage.choreo.local/observe/app/
+      - CHOREO_APP_URL=http://choreo.dev/observe/app/
   - name: cm-choreo-app-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-app-db
+      - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_app_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=root
+      - CHOREO_DB_USERNAME=choreo_app_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-perf-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-perf-db
+      - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_perf_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=root
+      - CHOREO_DB_USERNAME=choreo_perf_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-program-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-program-db
+      - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_program_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=root
+      - CHOREO_DB_USERNAME=choreo_program_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-trace-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-trace-db
+      - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_trace_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=root
+      - CHOREO_DB_USERNAME=choreo_trace_db_user@choreo-prod-control-plane-mysql-db
+  - name: cm-eventhub
+    behavior: merge
+    literals:
+      - EVENTHUB_NAMESPACE=choreo-prod-eventhub.servicebus.windows.net/
+      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-prod-observability-telemetry
+      - METRICS_EVENTHUB_NAME=choreo-prod-observability
+  - name: cm-obsapi
+    behavior: merge
+    literals:
+      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=b899bf41-32cf-4f79-b95f-b591c9e0f173
+      - AZURE_TIMESERIESINSIGHTS_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
+      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=control-plane-tsi.choreo.dev
+  - name: cm-appservice
+    behavior: merge
+    literals:
+      - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
+      - IDP_REDIRECT_URL=https://choreo.dev/
+      - IDP_CLIENT_ID=TODO
+  - name: cm-activedirectory
+    behavior: merge
+    literals:
+      - AAD_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
+      - AAD_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
+
 patches:
   - path: ingress-patch.json
     target:
@@ -67,3 +95,4 @@ patchesStrategicMerge:
   - replica-rollout-strategy.yaml
   - linkerd.yaml
   - requests.yaml
+  - ingress-patch.yaml

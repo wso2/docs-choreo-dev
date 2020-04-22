@@ -1,10 +1,6 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-  - persistence/pv-appservice.yaml
-  - persistence/pv-programanalyzer.yaml
-  - persistence/pvc-appservice.yaml
-  - persistence/pvc-programanalyzer.yaml
   - deployment/frontend.yaml
   - deployment/negotiator.yaml
   - deployment/obsapi.yaml
@@ -57,7 +53,7 @@ configMapGenerator:
     literals:
       - APP_API=https://depman.development.choreo.dev
       - AUTH_FLOW=B2C_1_Signup
-      - CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
       - LOGS_API=wss://depman.development.choreo.dev
       - OBSERVE_API=https://$(CHOREO_HTTP_INGRESS)/graphql
       - REDIRECT_URL=https://development.choreo.dev/
@@ -118,8 +114,7 @@ configMapGenerator:
       - IDP_REDIRECT_URL=https://development.choreo.dev/
       - IDP_TENANT_NAME=choreodevb2c
       - LANG_SERVER_IMAGE=isurulucky/lang-server
-      - NEGOTIATOR_GRPC_ADDRESS=choreo-nego-z1jqfgi.pxe-dev-platformer-1580893230462-5ggle.svc:9092
-      - PERISCOPE_GRPC_ADDRESS=choreo-nego-z1jqfgi.pxe-dev-platformer-1580893230462-5ggle.svc:80
+      - NEGOTIATOR_GRPC_ADDRESS=negotiator:9090
       - PLATFORMER_CLUSTER_NAME=wso2-aks-chor
       - PLATFORMER_GOOGLE_ID=platformer-1580639005087-z1go3
       - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
@@ -130,7 +125,7 @@ configMapGenerator:
       - REPO_PATH=/repo
       - WORKSPACE_INGRESS_TLS_SECRET=choreo-preprod-wildcard-cert
       - WORKSPACE_NAMESPACE=pxe-dev-platformer-1580893230462-5ggle
-      - WORKSPACE_VOLUME_CLAIM=appservice-claim
+      - WORKSPACE_VOLUME_CLAIM=pvc-userappstorage
   - name: cm-activedirectory
     behavior: create
     literals:

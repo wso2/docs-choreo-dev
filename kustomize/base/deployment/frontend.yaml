@@ -32,7 +32,7 @@ spec:
         - name: CLIENT_ID
           valueFrom:
             configMapKeyRef:
-              key: CLIENT_ID
+              key: IDP_CLIENT_ID
               name: cm-frontend
         - name: LOGS_API
           valueFrom:

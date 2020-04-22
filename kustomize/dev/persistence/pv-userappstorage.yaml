@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-choreo-programanalyzer
+  name: pv-userappstorage
 spec:
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   volumeMode: Filesystem
   storageClassName: file
   capacity:
-    storage: 500Mi
+    storage: 300Mi
   hostPath:
-    path: /home/docker/choreo-programanalyzer
+    path: /home/docker/choreo-appservice
   persistentVolumeReclaimPolicy: Delete
