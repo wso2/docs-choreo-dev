@@ -28,28 +28,28 @@ configMapGenerator:
       - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_app_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=choreo_app_db_user
+      - CHOREO_DB_USERNAME=choreo_app_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-perf-db
     behavior: merge
     literals:
       - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_perf_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=choreo_perf_db_user
+      - CHOREO_DB_USERNAME=choreo_perf_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-program-db
     behavior: merge
     literals:
       - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_program_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=choreo_program_db_user
+      - CHOREO_DB_USERNAME=choreo_program_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-trace-db
     behavior: merge
     literals:
       - CHOREO_DB_HOST=control-plane-db.choreo.dev
       - CHOREO_DB_NAME=choreo_trace_db
       - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=choreo_trace_db_user
+      - CHOREO_DB_USERNAME=choreo_trace_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-eventhub
     behavior: merge
     literals:
