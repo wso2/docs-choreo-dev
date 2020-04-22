@@ -1,10 +1,6 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-#  - persistence/pv-userappstorage.yaml
-#  - persistence/pv-programanalyzer.yaml
-#  - persistence/pvc-userappstorage.yaml
-#  - persistence/pvc-programanalyzer.yaml
   - deployment/frontend.yaml
   - deployment/negotiator.yaml
   - deployment/obsapi.yaml
