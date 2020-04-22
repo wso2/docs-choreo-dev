@@ -15,7 +15,6 @@ command -v kubeseal >/dev/null 2>&1 ||
 }
 
 function gensecret {
-    local from_lit_str=""
     if [[ ! -f $1 ]]
     then
         echo "File "$1" not found"; exit 1
