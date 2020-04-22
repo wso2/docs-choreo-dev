@@ -1,6 +1,8 @@
 resources:
   - ../base
   - namespace.yaml
+  - persistence/azure-storageclass.yaml
+  - persistence/pvc-userappstorage.yaml
   - secret/app-db.yaml
   - secret/appservice.yaml
   - secret/loggingapi.yaml
@@ -9,7 +11,6 @@ resources:
   - secret/program-db.yaml
   - secret/telemetry.yaml
   - secret/trace-db.yaml
-  - secret/sealed-ingress-cert.yaml
 
 namespace: prod-choreo-system
 
@@ -18,6 +19,8 @@ configMapGenerator:
     behavior: merge
     literals:
       - OBSERVE_API=https://choreo.dev/graphql
+      - REDIRECT_URL=https://choreo.dev/
+      - IDP_CLIENT_ID=TODO.same as app service IDP_CLIENT_ID
   - name: cm-negotiator
     behavior: create
     literals:
@@ -66,6 +69,8 @@ configMapGenerator:
     behavior: merge
     literals:
       - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
+      - IDP_REDIRECT_URL=https://choreo.dev/
+      - IDP_CLIENT_ID=TODO
   - name: cm-activedirectory
     behavior: merge
     literals:

@@ -5,12 +5,12 @@ metadata:
   - kubernetes.io/pvc-protection
   labels:
     kind: pvc-mounts
-  name: appservice-claim
+  name: pvc-userappstorage
 spec:
   accessModes:
   - ReadWriteMany
   volumeMode: Filesystem
-  storageClassName: file
+  storageClassName: azurefile-premium
   resources:
     requests:
-      storage: 300Mi
+      storage: 100Gi

@@ -29,7 +29,7 @@ spec:
         - mountPath: '/home/program-analyzer/config'
           name: programanalyzer-config
         - mountPath: /repo
-          name: repo
+          name: pvc-userappstorage
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: platformer-1580893230462-5ggle
@@ -38,7 +38,7 @@ spec:
         configMap:
           defaultMode: 420
           name: cm-programanalyzer
-      - name: repo
+      - name: pvc-userappstorage
         persistentVolumeClaim:
-          claimName: programanalyzer-claim
+          claimName: pvc-userappstorage
           readOnly: true

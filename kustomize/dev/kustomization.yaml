@@ -11,7 +11,9 @@ resources:
   - secret/trace-db.yaml
   - secret/sealed-ingress-cert.yaml
   - persistence/pv-choreo-db.yaml
+  - persistence/pv-userappstorage.yaml
   - persistence/pvc-choreo-db.yaml
+  - persistence/pvc-userappstorage.yaml
   - deployment/choreo-db.yaml
   - service/choreo-db.yaml
 
