@@ -53,7 +53,7 @@ configMapGenerator:
   - name: cm-eventhub
     behavior: merge
     literals:
-      - EVENTHUB_NAMESPACE=control-plane-eventhub.choreo.dev
+      - EVENTHUB_NAMESPACE=choreo-prod-eventhub.servicebus.windows.net/
       - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-prod-observability-telemetry
       - METRICS_EVENTHUB_NAME=choreo-prod-observability
   - name: cm-obsapi
@@ -65,7 +65,7 @@ configMapGenerator:
   - name: cm-appservice
     behavior: merge
     literals:
-      - REDIS_ADDRESS=control-plane-redis.choreo.dev:6380
+      - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
   - name: cm-activedirectory
     behavior: merge
     literals:
