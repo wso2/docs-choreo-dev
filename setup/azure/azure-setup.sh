@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 [[ $# -eq 0 ]] &&
-{ echo "Usage: $0 -d azure-deploy.properties [-n namespace]"; \
-echo "   -d=azuredfile  - azure deployment properties file"; \
-echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
-echo; \
-echo "   e.g. $0 -d=azure-deploy.properties -n=dev-choreo-system "; \
-exit 1; }
+{
+    echo "Usage: $0 -d azure-deploy.properties [-n namespace]"; \
+    echo "   -d=azuredfile  - azure deployment properties file"; \
+    echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
+    echo; \
+    echo "   e.g. $0 -d=azure-deploy.properties -n=dev-choreo-system "; \
+    exit 1;
+}
 
 azuredfile=$1
 namespace=$2
@@ -64,7 +66,7 @@ command -v helm >/dev/null 2>&1 || {
 
 ############### Install Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
-kubectl create namespace "${namespace}-nginx-ingress" --dry-run -o yaml | kubectl apply -f -
+kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
@@ -89,19 +91,22 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.1
 ############## Install Cluster Issuer
 ## Create azure dns contributor client secret
 echo "--- Creating azure dns contributor client secret"
-kubectl create secret generic "${namespace}-secret-azuredns-config" --from-literal=client-secret="$SERVICE_PRINCIPLE_CLIENT_SECRET" -n cert-manager --dry-run -oyaml | kubectl apply -f -
+kubectl create secret generic "${namespace}-secret-azuredns-config" --from-literal=client-secret="$SERVICE_PRINCIPLE_CLIENT_SECRET" -n cert-manager --dry-run=client -oyaml | kubectl apply -f -
 
 ## Install Cluster Issuer
 envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
 
 ## Create Namespace
-kubectl create namespace ${namespace} --dry-run -o yaml | kubectl apply -f -
+kubectl create namespace ${namespace} --dry-run=client -o yaml | kubectl apply -f -
 #
 echo "--- Requesting wildcard cert for ${WILDCARD_DOMAIN}"
 envsubst < conf/wildcard-cert.yaml | kubectl apply -n ${namespace} -f -
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
+
+## Initialize Kubernetes Cluster
+source ../common/k8s-cluster-init.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
@@ -117,3 +122,12 @@ else
     echo "File "${azuredfile}" not found"; exit 1
 fi
 unset NAMESPACE
+
+successful="true"
+if [[ "${k8s_install_successful}" == "false" ]]; then
+    echo "[FAILED] Kubernetes initialization."
+    successful=false
+fi
+if [[ "${successful}" == "true" ]]; then
+    echo "Choreo control plane successfully installed"
+fi
