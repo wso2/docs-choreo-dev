@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS trace_spans (
   parentSpanId          VARCHAR(36)     NOT NULL,
   traceId               VARCHAR(36)     NOT NULL,
   uuid                  VARCHAR(72)     NOT NULL,
-  startTime             DATETIME        NOT NULL,
+  startTime             DATETIME(3)     NOT NULL,
   duration              INT UNSIGNED    DEFAULT 0,
   invocationFQN         VARCHAR(255)    NOT NULL,
   isError               BOOL            DEFAULT FALSE,
