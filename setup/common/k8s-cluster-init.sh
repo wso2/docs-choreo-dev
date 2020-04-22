@@ -2,7 +2,7 @@
 
 ############## Install Reloader
 echo "--- Installing Reloader..."
-kubectl apply -n kube-system -f reloader.yaml
+kubectl apply -n kube-system -f ../reloader.yaml
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
