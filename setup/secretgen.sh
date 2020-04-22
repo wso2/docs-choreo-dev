@@ -29,7 +29,7 @@ function gensecret {
     fi
     local secret=$(echo "$1" | cut -d "/" -f2- | sed 's/\(.*\)\..*/\1/')
     mkdir -p ${outdir}
-    kubectl create secret generic secret-${secret} -n ${namespace} ${from_lit_str} --dry-run=client -o yaml |
+    kubectl create secret generic secret-${secret} -n ${namespace} ${from_lit_str} --dry-run -o yaml |
             kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml
     echo "Choreo Sealed secret generated to "${outdir}
 }
