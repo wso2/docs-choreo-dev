@@ -91,7 +91,7 @@ if [[ "$create_ingress" == "true" ]]; then
         echo "--- Creating ingress TLS cert sealed secrets for ${env} environment..."
         mkdir -p $outdir/$env
         kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
-                --dry-run -o yaml > $outdir/$env/ingress-cert.yaml
+                --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
         kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/secret/sealed-ingress-cert.yaml
         echo "Sealed secret ingress cert generated and copied to "$env"/secret"
     done
