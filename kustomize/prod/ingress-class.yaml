@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-grpc
+  annotations:
+    kubernetes.io/ingress.class: prod-choreo-system-nginx
+spec:
+  tls:
+    - hosts:
+        - choreo.dev
+      secretName: prod-choreo-system-wildcard-tls
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-http
+  annotations:
+    kubernetes.io/ingress.class: prod-choreo-system-nginx
+spec:
+  tls:
+    - hosts:
+        - choreo.dev
+      secretName: prod-choreo-system-wildcard-tls
