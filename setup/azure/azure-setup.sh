@@ -95,7 +95,7 @@ kubectl create secret generic "${namespace}-secret-azuredns-config" --from-liter
 envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
 
 ## Create Namespace
-kubectl create namespace ${namespace} --dry-run -oyaml | kubectl apply -f -
+kubectl create namespace ${namespace} --dry-run -o yaml | kubectl apply -f -
 #
 echo "--- Requesting wildcard cert for ${WILDCARD_DOMAIN}"
 envsubst < conf/wildcard-cert.yaml | kubectl apply -n ${namespace} -f -
