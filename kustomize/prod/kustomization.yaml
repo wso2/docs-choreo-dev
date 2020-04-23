@@ -98,8 +98,8 @@ patchesStrategicMerge:
   - ingress-patch.yaml
 
 images:
-  - name: choreoipaas/console-app
-    newName: choreoctrlplane.azurecr.io/choreoipaas/console-app
+  - name: choreoipaas/choreo-console
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
     newTag: latest
   - name: choreoipaas/app-service
     newName: choreoctrlplane.azurecr.io/choreoipaas/app-service
