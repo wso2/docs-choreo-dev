@@ -7,10 +7,10 @@ function printusage {
     echo "Usage: $0 [-n=namespace] [-o=outputdir] [--self-signed=true/false] [--tls-key=key] [--tls-cert=cert] [--secret-name=name]"; \
     echo "   -n=namespace             - namespace for which sealed TLS secret is generated"; \
     echo "   -o=outputdir             - sealed TLS secret output directory";
-    echo "   --tls-key=key            - directory containing secret properties files";
-    echo "   --tls-cert=cert          - comma separated environment list";
+    echo "   --tls-key=key            - TLS private key";
+    echo "   --tls-cert=cert          - TLS certificate";
     echo "   --self-signed=true/false - generate self signed cert";
-    echo "   --secret-name=name        - generate self signed cert";
+    echo "   --secret-name=name       - name of the secret";
     echo;
     echo "   e.g. $0 --tls-key=choreo.key --tls-cert=choreo.crt -o=out";
     echo "   e.g. $0 --self-signed=true -o=out";

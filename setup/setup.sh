@@ -8,8 +8,10 @@ create_ingress="true"
 declare -a environments=("dev")
 [[ $# -eq 0 ]] &&
 {
-    echo "Usage: $0 -d=secretdir [-e=environments] [-i=true/false]"; \
+    echo "Usage: $0 -d=secretdir [-e=environments] [-i=true/false] [--tls-key=key] [--tls-cert=cert]"; \
     echo "   -d=secretdir    - directory containing secret properties files";
+    echo "   --tls-key=key   - TLS private key";
+    echo "   --tls-cert=cert - TLS certificate";
     echo "   -e=environments - comma separated environment list";
     echo "   -i=true/false   - create ingress";
     echo;
@@ -22,6 +24,14 @@ do
     case $arg in
         -d=*|--secretdir=*)
         secretdir="${arg#*=}"
+        shift
+        ;;
+        -k=*|--tls-key=*)
+        tlskey="${arg#*=}"
+        shift
+        ;;
+        -c=*|--tls-cert=*)
+        tlscert="${arg#*=}"
         shift
         ;;
         -p=*|--propfile=*)
@@ -66,14 +76,22 @@ if [[ "$create_ingress" == "true" ]]; then
           minikube addons enable ingress
         fi
     fi
-
-    ## TODO: If self signed, do the following, else use specified tls.crt and tls.key
-    for env in "${environments[@]}"; do
-        ./certsecretgen.sh -n=${env}-choreo-system --self-signed=true  --secret-name="ingress-cert" \
-                            -o="../kustomize/$env/secret/"
-        echo "Sealed secret ingress cert generated and copied to "$env"/secret"
-    done
 fi
+
+sleep 10
+
+########## Create sealed ingress TLS secret
+for env in "${environments[@]}"; do
+    echo "--- Creating sealed ingress TLS secret..."
+    if [[ ( -z "${tlskey}" ) && ( -z "${tlscert}" ) ]]; then
+        ./certsecretgen.sh -n=${env}-choreo-system --self-signed=true  --secret-name="ingress-cert" \
+                        -o="../kustomize/$env/secret/"
+    else
+        ./certsecretgen.sh -n=${env}-choreo-system --tls-key=${tlskey} --tls-cert=${tlscert} --secret-name="ingress-cert" \
+                        -o="../kustomize/$env/secret/"
+    fi
+    echo "Sealed secret ingress cert generated and copied to "${env}"/secret"
+done
 
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
@@ -92,4 +110,3 @@ fi
 if [[ "${successful}" == "true" ]]; then
     echo "Choreo control plane successfully installed"
 fi
-
