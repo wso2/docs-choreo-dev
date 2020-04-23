@@ -92,25 +92,25 @@ patchesStrategicMerge:
 images:
   - name: choreoipaas/console-app
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/app-service
     newName: choreoctrlplane.azurecr.io/choreoipaas/app-service
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/choreo-logging
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/choreo-negotiator
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/observability-api
     newName: choreoctrlplane.azurecr.io/choreoipaas/observability-api
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/perfanalyzer
     newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/programanalyzer
     newName: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
-    newTag: latest
+    newTag: v0.1.0
   - name: choreoipaas/choreo-telemetry
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
-    newTag: latest
+    newTag: v0.1.0
