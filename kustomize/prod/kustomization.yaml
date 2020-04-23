@@ -10,9 +10,11 @@ configMapGenerator:
   - name: cm-frontend
     behavior: merge
     literals:
+      - APP_API=https://app.choreo.dev
+      - LOGS_API=wss://app.choreo.dev
       - OBSERVE_API=https://choreo.dev/graphql
       - REDIRECT_URL=https://choreo.dev/
-      - IDP_CLIENT_ID=TODO.same as app service IDP_CLIENT_ID
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
   - name: cm-negotiator
     behavior: create
     literals:
@@ -62,7 +64,7 @@ configMapGenerator:
     literals:
       - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
       - IDP_REDIRECT_URL=https://choreo.dev/
-      - IDP_CLIENT_ID=TODO
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
   - name: cm-activedirectory
     behavior: merge
     literals:
