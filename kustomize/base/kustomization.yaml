@@ -19,6 +19,7 @@ resources:
   - service/loggingapi.yaml
   - ingress/grpc.yaml
   - ingress/http.yaml
+  - ingress/appservice.yaml
   - hpa/frontend.yaml
   - hpa/negotiator.yaml
   - hpa/obsapi.yaml
@@ -51,10 +52,10 @@ configMapGenerator:
   - name: cm-frontend
     behavior: create
     literals:
-      - APP_API=https://depman.development.choreo.dev
+      - APP_API=https://app.development.choreo.dev
       - AUTH_FLOW=B2C_1_Signup
       - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
-      - LOGS_API=wss://depman.development.choreo.dev
+      - LOGS_API=wss://app.development.choreo.dev
       - OBSERVE_API=https://$(CHOREO_HTTP_INGRESS)/graphql
       - REDIRECT_URL=https://development.choreo.dev/
       - TENANT=choreodevb2c

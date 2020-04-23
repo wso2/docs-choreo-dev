@@ -21,3 +21,15 @@ spec:
     - hosts:
         - choreo.dev
       secretName: ingress-cert
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-appservice
+  annotations:
+    kubernetes.io/ingress.class: prod-choreo-system-nginx
+spec:
+  tls:
+    - hosts:
+      - app.choreo.dev
+      secretName: ingress-cert
