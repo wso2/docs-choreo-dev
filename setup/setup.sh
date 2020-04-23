@@ -67,30 +67,10 @@ if [[ "$create_ingress" == "true" ]]; then
         fi
     fi
 
-    ################ Create the ingress certificate (optional)
-    echo "--- Generating ingress TLS key & certificate..."
-    sudo openssl genrsa -out $outdir/tls.key 2048
-    sudo openssl req -new -out $outdir/tls.csr -key $outdir/tls.key -config openssl.cnf
-    sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -out $outdir/tls.crt \
-         -extensions v3_req -extfile openssl.cnf
-
-    ############### Import the cert into JRE CA trusted certs to make Java clients work (Optional)
-    echo "--- Import ingress certificate to JRE trust store..."
-    echo "Default keystore password = changeit"
-    keystore=$JAVA_HOME/jre/lib/security/cacerts
-    sudo keytool -delete -alias choreoingress_local -keystore $keystore
-    sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
-
-    ############### Create ingress TLS cert sealed secrets for all environments (Optional)
-    sudo chown $USER $outdir/tls.key
-    sudo chown $USER $outdir/tls.crt
-
+    ## TODO: If self signed, do the following, else use specified tls.crt and tls.key
     for env in "${environments[@]}"; do
-        echo "--- Creating ingress TLS cert sealed secrets for ${env} environment..."
-        mkdir -p $outdir/$env
-        kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
-                --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
-        kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/secret/sealed-ingress-cert.yaml
+        ./certsecretgen.sh -n=${env}-choreo-system --self-signed=true  --secret-name="ingress-cert" \
+                            -o="../kustomize/$env/secret/"
         echo "Sealed secret ingress cert generated and copied to "$env"/secret"
     done
 fi

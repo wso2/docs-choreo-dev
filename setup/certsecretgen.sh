@@ -78,8 +78,9 @@ if [[ "${selfsigned}" == "true" ]]; then
     echo "--- Import ingress certificate to JRE trust store..."
     echo "Default keystore password = changeit"
     keystore=$JAVA_HOME/jre/lib/security/cacerts
-    sudo keytool -delete -alias choreoingress_local -keystore ${keystore}
-    sudo keytool -import  -alias choreoingress_local -keystore ${keystore} -file ${outdir}/tls.crt -noprompt
+    alias=choreoingress_local${namespace}${secret_name}
+    sudo keytool -delete -alias ${alias} -keystore ${keystore}
+    sudo keytool -import  -alias ${alias} -keystore ${keystore} -file ${outdir}/tls.crt -noprompt
 
     ############### Create ingress TLS cert sealed secrets for all environments (Optional)
     sudo chown ${USER} ${outdir}/tls.key
