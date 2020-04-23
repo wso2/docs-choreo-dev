@@ -31,6 +31,5 @@ metadata:
 spec:
   tls:
     - hosts:
-        - app.choreo.dev
-      secretName: prod-choreo-system-wildcard-tls
+      - app.choreo.dev
       secretName: ingress-cert
