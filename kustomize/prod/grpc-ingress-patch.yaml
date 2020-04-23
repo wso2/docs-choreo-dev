@@ -1,0 +1,9 @@
+- op: replace
+  path: /spec/rules/0/host
+  value: choreo.dev
+- op: replace
+  path: /spec/tls/0/hosts/0
+  value: choreo.dev
+- op: replace
+  path: /metadata/annotations/kubernetes.io~1ingress.class
+  value: prod-choreo-system-nginx

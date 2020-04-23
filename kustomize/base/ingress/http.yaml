@@ -20,19 +20,28 @@ spec:
   tls:
     - hosts:
         - domain.com
+        - app.domain.com
       secretName: ingress-cert
   rules:
-    - http:
+    - host: domain.com
+      http:
         paths:
-          - backend:
-              serviceName: obsapi
-              servicePort: 9095
-            path: /graphql
-          - backend:
-              serviceName: frontend
-              servicePort: 8080
-            path: /
-          - backend:
-              serviceName: loggingapi
-              servicePort: 9097
-            path: /api/0.1.0
+        - backend:
+            serviceName: obsapi
+            servicePort: 9095
+          path: /graphql
+        - backend:
+            serviceName: frontend
+            servicePort: 8080
+          path: /
+        - backend:
+            serviceName: loggingapi
+            servicePort: 9097
+          path: /api/0.1.0
+    - host: app.domain.com
+      http:
+        paths:
+        - backend:
+            serviceName: appservice
+            servicePort: 8080
+          path: /
