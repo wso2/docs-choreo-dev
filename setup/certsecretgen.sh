@@ -12,7 +12,6 @@ function printusage {
     echo "   --secret-name=name       - name of the secret";
     echo;
     echo "   e.g. $0 --tls-key=choreo.key --tls-cert=choreo.crt -o=out";
-    echo "   e.g. $0 --self-signed=true -o=out";
     exit 1;
 }
 
