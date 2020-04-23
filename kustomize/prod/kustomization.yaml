@@ -84,6 +84,12 @@ patches:
       version: v1beta1
       kind: Ingress
       name: ingress-grpc
+  - path: ingress-patch.json
+    target:
+      group: networking.k8s.io
+      version: v1beta1
+      kind: Ingress
+      name: ingress-appservice
 
 patchesStrategicMerge:
   - replica-rollout-strategy.yaml
