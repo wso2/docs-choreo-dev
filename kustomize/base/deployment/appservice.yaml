@@ -88,11 +88,6 @@ spec:
             configMapKeyRef:
               key: REPO_PATH
               name: cm-appservice
-        - name: PERISCOPE_GRPC_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              key: PERISCOPE_GRPC_ADDRESS
-              name: cm-appservice
         - name: REDIS_ADDRESS
           valueFrom:
             configMapKeyRef:

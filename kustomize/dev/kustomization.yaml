@@ -1,19 +1,8 @@
 resources:
   - ../base
+  - secret
+  - persistence
   - namespace.yaml
-  - secret/app-db.yaml
-  - secret/appservice.yaml
-  - secret/loggingapi.yaml
-  - secret/obsapi.yaml
-  - secret/perf-db.yaml
-  - secret/program-db.yaml
-  - secret/telemetry.yaml
-  - secret/trace-db.yaml
-  - secret/sealed-ingress-cert.yaml
-  - persistence/pv-choreo-db.yaml
-  - persistence/pv-userappstorage.yaml
-  - persistence/pvc-choreo-db.yaml
-  - persistence/pvc-userappstorage.yaml
   - deployment/choreo-db.yaml
   - service/choreo-db.yaml
 

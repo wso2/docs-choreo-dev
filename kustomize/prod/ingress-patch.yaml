@@ -8,7 +8,7 @@ spec:
   tls:
     - hosts:
         - choreo.dev
-      secretName: prod-choreo-system-wildcard-tls
+      secretName: ingress-cert
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -20,7 +20,7 @@ spec:
   tls:
     - hosts:
         - choreo.dev
-      secretName: prod-choreo-system-wildcard-tls
+      secretName: ingress-cert
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -33,3 +33,4 @@ spec:
     - hosts:
         - app.choreo.dev
       secretName: prod-choreo-system-wildcard-tls
+      secretName: ingress-cert
