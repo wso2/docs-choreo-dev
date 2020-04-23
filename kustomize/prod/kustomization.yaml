@@ -88,3 +88,29 @@ patchesStrategicMerge:
   - linkerd.yaml
   - requests.yaml
   - ingress-patch.yaml
+
+images:
+  - name: choreoipaas/console-app
+    newName: choreoctrlplane.azurecr.io/choreoipaas/console-app
+    newTag: latest
+  - name: choreoipaas/app-service
+    newName: choreoctrlplane.azurecr.io/choreoipaas/app-service
+    newTag: latest
+  - name: choreoipaas/choreo-logging
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
+    newTag: latest
+  - name: choreoipaas/choreo-negotiator
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
+    newTag: latest
+  - name: choreoipaas/observability-api
+    newName: choreoctrlplane.azurecr.io/choreoipaas/observability-api
+    newTag: latest
+  - name: choreoipaas/perfanalyzer
+    newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
+    newTag: latest
+  - name: choreoipaas/programanalyzer
+    newName: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
+    newTag: latest
+  - name: choreoipaas/choreo-telemetry
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
+    newTag: latest
