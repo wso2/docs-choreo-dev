@@ -3,15 +3,11 @@ echo "----------------------------------------------"
 echo "| Choreo Control Plane setup on Kubernetes   |"
 echo "----------------------------------------------"
 
-## TODO: pass environments
-
-propfile="choreo-secrets.properties"
-create_ingress="true"
-declare -a environments=("dev")
-[[ $# -eq 0 ]] &&
-{
-    echo "Usage: $0 -d=secretdir [-e=environments] [-i=true/false]"; \
+function printusage {
+    echo "Usage: $0 -d=secretdir [-e=environments] [-i=true/false] [--tls-key=key] [--tls-cert=cert]"; \
     echo "   -d=secretdir    - directory containing secret properties files";
+    echo "   --tls-key=key   - TLS private key";
+    echo "   --tls-cert=cert - TLS certificate";
     echo "   -e=environments - comma separated environment list";
     echo "   -i=true/false   - create ingress";
     echo;
@@ -19,11 +15,27 @@ declare -a environments=("dev")
     exit 1;
 }
 
+propfile="choreo-secrets.properties"
+create_ingress="true"
+declare -a environments=("dev")
+[[ $# -eq 0 ]] &&
+{
+    printusage
+}
+
 for arg in "$@"
 do
     case $arg in
         -d=*|--secretdir=*)
         secretdir="${arg#*=}"
+        shift
+        ;;
+        -k=*|--tls-key=*)
+        tlskey="${arg#*=}"
+        shift
+        ;;
+        -c=*|--tls-cert=*)
+        tlscert="${arg#*=}"
         shift
         ;;
         -p=*|--propfile=*)
@@ -45,8 +57,12 @@ do
     esac
 done
 
+if [[ (( -z "${tlskey}" ) && ( ! -z "${tlscert}" )) || (( ! -z "${tlskey}" ) && ( -z "${tlscert}" )) ]]; then
+    printusage
+fi
+
 outdir=out
-mkdir $outdir
+mkdir -p $outdir
 
 ############## Initialize Kubernetes Cluster
 source common/k8s-cluster-init.sh
@@ -68,36 +84,18 @@ if [[ "$create_ingress" == "true" ]]; then
           minikube addons enable ingress
         fi
     fi
-
-    ################ Create the ingress certificate (optional)
-    echo "--- Generating ingress TLS key & certificate..."
-    sudo openssl genrsa -out $outdir/tls.key 2048
-    sudo openssl req -new -out $outdir/tls.csr -key $outdir/tls.key -config openssl.cnf
-    sudo openssl x509 -req -days 3650 -in $outdir/tls.csr -signkey $outdir/tls.key -out $outdir/tls.crt \
-         -extensions v3_req -extfile openssl.cnf
-
-    ############### Import the cert into JRE CA trusted certs to make Java clients work (Optional)
-    echo "--- Import ingress certificate to JRE trust store..."
-    echo "Default keystore password = changeit"
-    keystore=$JAVA_HOME/jre/lib/security/cacerts
-    sudo keytool -delete -alias choreoingress_local -keystore $keystore
-    sudo keytool -import  -alias choreoingress_local -keystore $keystore -file $outdir/tls.crt -noprompt
-
-    ############### Create ingress TLS cert sealed secrets for all environments (Optional)
-    sudo chown $USER $outdir/tls.key
-    sudo chown $USER $outdir/tls.crt
-
-    for env in "${environments[@]}"; do
-        echo "--- Creating ingress TLS cert sealed secrets for ${env} environment..."
-        mkdir -p $outdir/$env
-        kubectl create -n $env-choreo-system secret tls ingress-cert --key $outdir/tls.key --cert $outdir/tls.crt \
-                --dry-run=client -o yaml > $outdir/$env/ingress-cert.yaml
-        kubeseal --scope strict < $outdir/$env/ingress-cert.yaml -o yaml  > ../kustomize/$env/secret/sealed-ingress-cert.yaml
-        echo "Sealed secret ingress cert generated and copied to "$env"/secret"
-    done
 fi
 
-### TODO: generate for all secret prop files
+sleep 10
+
+########## Create sealed ingress TLS secret
+for env in "${environments[@]}"; do
+    echo "--- Creating sealed ingress TLS secret..."
+    ./certsecretgen.sh -n=${env}-choreo-system --tls-key=${tlskey} --tls-cert=${tlscert} --secret-name="ingress-cert" \
+                        -o="../kustomize/$env/secret/"
+    echo "Sealed secret ingress cert generated and copied to "${env}"/secret"
+done
+
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
@@ -115,4 +113,3 @@ fi
 if [[ "${successful}" == "true" ]]; then
     echo "Choreo control plane successfully installed"
 fi
-
