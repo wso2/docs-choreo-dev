@@ -4,12 +4,11 @@ echo "| Choreo Certificate Secret Generator   |"
 echo "-----------------------------------------"
 
 function printusage {
-    echo "Usage: $0 [-n=namespace] [-o=outputdir] [--self-signed=true/false] [--tls-key=key] [--tls-cert=cert] [--secret-name=name]"; \
+    echo "Usage: $0 [-n=namespace] [-o=outputdir] [--tls-key=key] [--tls-cert=cert] [--secret-name=name]"; \
     echo "   -n=namespace             - namespace for which sealed TLS secret is generated"; \
     echo "   -o=outputdir             - sealed TLS secret output directory";
     echo "   --tls-key=key            - TLS private key";
     echo "   --tls-cert=cert          - TLS certificate";
-    echo "   --self-signed=true/false - generate self signed cert";
     echo "   --secret-name=name       - name of the secret";
     echo;
     echo "   e.g. $0 --tls-key=choreo.key --tls-cert=choreo.crt -o=out";
@@ -61,21 +60,21 @@ do
     esac
 done
 
-if [[ ( "${selfsigned}" == "false" ) && (( -z "${tlskey}" ) || ( -z "${tlscert}" )) ]]; then
+if [[ (( -z "${tlskey}" ) && ( ! -z "${tlscert}" )) || (( ! -z "${tlskey}" ) && ( -z "${tlscert}" )) ]]; then
     printusage
 fi
 
-if [[ "${selfsigned}" == "true" ]]; then
+if [[ ( -z "${tlskey}" ) || ( -z "${tlscert}" ) ]]; then # Self signed cert
     mkdir -p ${outdir}
     ################ Create the ingress certificate (optional)
-    echo "--- Generating ingress TLS key & certificate..."
+    echo "--- Generating self signed ingress TLS key & certificate..."
     sudo openssl genrsa -out ${outdir}/tls.key 2048
     sudo openssl req -new -out ${outdir}/tls.csr -key ${outdir}/tls.key -config openssl.cnf
     sudo openssl x509 -req -days 3650 -in ${outdir}/tls.csr -signkey ${outdir}/tls.key -out ${outdir}/tls.crt \
          -extensions v3_req -extfile openssl.cnf
 
     ############### Import the cert into JRE CA trusted certs to make Java clients work (Optional)
-    echo "--- Import ingress certificate to JRE trust store..."
+    echo "--- Importing self signed ingress certificate to JRE trust store..."
     echo "Default keystore password = changeit"
     keystore=$JAVA_HOME/jre/lib/security/cacerts
     alias=choreoingress_local${namespace}${secret_name}
