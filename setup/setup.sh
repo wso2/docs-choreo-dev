@@ -3,8 +3,6 @@ echo "----------------------------------------------"
 echo "| Choreo Control Plane setup on Kubernetes   |"
 echo "----------------------------------------------"
 
-## TODO: pass environments
-
 propfile="choreo-secrets.properties"
 create_ingress="true"
 declare -a environments=("dev")
@@ -46,7 +44,7 @@ do
 done
 
 outdir=out
-mkdir $outdir
+mkdir -p $outdir
 
 ############## Initialize Kubernetes Cluster
 source common/k8s-cluster-init.sh
@@ -97,7 +95,6 @@ if [[ "$create_ingress" == "true" ]]; then
     done
 fi
 
-### TODO: generate for all secret prop files
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
