@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS trace_spans (
   connectorName         VARCHAR(36),
   service               VARCHAR(36),
   resource              VARCHAR(36),
-  httpUrl               VARCHAR(36),
+  httpUrl               VARCHAR(2048),
   httpMethod            VARCHAR(36),
   action                VARCHAR(36),
   PRIMARY KEY (spanId, traceId)
