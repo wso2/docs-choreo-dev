@@ -21,7 +21,6 @@ spec:
     - hosts:
         - domain.com
         - app.domain.com
-        - periscope.domain.com
       secretName: ingress-cert
   rules:
     - host: domain.com
@@ -46,14 +45,3 @@ spec:
             serviceName: appservice
             servicePort: 8080
           path: /
-    - host: periscope.domain.com
-      http:
-        paths:
-        - backend:
-            serviceName: telemetry
-            servicePort: 9090
-          path: /Telemetry
-        - backend:
-            serviceName: negotiator
-            servicePort: 9090
-          path: /Handshake
