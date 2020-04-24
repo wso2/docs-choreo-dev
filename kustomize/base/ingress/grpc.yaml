@@ -19,7 +19,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - domain.com
+        - periscope.domain.com
       secretName: ingress-cert
   rules:
   -  http:
