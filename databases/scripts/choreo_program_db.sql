@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS program_info(
   insertedTime          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   CONSTRAINT UC_uuid UNIQUE (uuid),
-  CONSTRAINT UC_appId UNIQUE (appId),
   CONSTRAINT UC_uuid_appid UNIQUE (uuid, appId)
 );
 CREATE INDEX uuid_index ON program_info (uuid);
