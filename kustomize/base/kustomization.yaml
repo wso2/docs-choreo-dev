@@ -19,7 +19,6 @@ resources:
   - service/loggingapi.yaml
   - ingress/grpc.yaml
   - ingress/http.yaml
-  - ingress/appservice.yaml
   - hpa/frontend.yaml
   - hpa/negotiator.yaml
   - hpa/obsapi.yaml
