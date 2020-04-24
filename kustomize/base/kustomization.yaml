@@ -114,7 +114,7 @@ configMapGenerator:
       - IDP_REDIRECT_URL=https://development.choreo.dev/
       - IDP_TENANT_NAME=choreodevb2c
       - LANG_SERVER_IMAGE=isurulucky/lang-server
-      - NEGOTIATOR_GRPC_ADDRESS=negotiator:9090
+      - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - PLATFORMER_CLUSTER_NAME=wso2-aks-chor
       - PLATFORMER_GOOGLE_ID=platformer-1580639005087-z1go3
       - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
