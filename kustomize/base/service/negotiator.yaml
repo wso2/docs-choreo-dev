@@ -8,6 +8,6 @@ spec:
   ports:
   - name: "negotiator-port"
     port: 9090
-    targetPort: 9090
+    targetPort: 9092
   selector:
     choreo.component: negotiator
