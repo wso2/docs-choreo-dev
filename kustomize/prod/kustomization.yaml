@@ -65,6 +65,18 @@ configMapGenerator:
       - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
       - IDP_REDIRECT_URL=https://choreo.dev/
       - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
+      - DEPLOY_INGRESS_HOST_SUFFIX=choreoapps.dev
+      - DEPLOY_INGRESS_SECRET=choreoapps-wildcard-tls
+      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.0
+      - EXECUTOR_INGRESS_HOST_SUFFIX=test.choreoapps.dev
+      - LANG_SERVER_IMAGE=choreoipaas/lang-server
+      - PLATFORMER_CLUSTER_NAME=wso2-prod-chor
+      - PLATFORMER_GOOGLE_ID=platformer-1587613454573-2vhrr
+      - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
+      - PLATFORMER_PROJECT_ID=-M5_7cJGF3MiCdjgvqSv
+      - WORKSPACE_INGRESS_TLS_SECRET=choreoapps-wildcard-tls
+      - WORKSPACE_NAMESPACE=prod-choreo-system
   - name: cm-activedirectory
     behavior: merge
     literals:
