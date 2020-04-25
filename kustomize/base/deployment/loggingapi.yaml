@@ -47,12 +47,12 @@ spec:
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
-                  key: AAD_TENANT_ID
+                  key: AZURE_ACTIVEDIRECTORY_TENANT_ID
                   name: cm-activedirectory
             - name: AAD_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
-                  key: AAD_CLIENT_ID
+                  key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
                   name: cm-activedirectory
             - name: USER_APPS_NAMESPACE
               valueFrom:

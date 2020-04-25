@@ -12,7 +12,17 @@ configMapGenerator:
   - name: cm-frontend
     behavior: merge
     literals:
+      - APP_API=https://app.dev.choreo.local
+      - AUTH_FLOW=B2C_1_Signup
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - LOGS_API=wss://app.dev.choreo.local
       - OBSERVE_API=https://dev.choreo.local/graphql
+      - REDIRECT_URL=https://dev.choreo.local/
+      - TENANT=choreodevb2c
+  - name: cm-negotiator
+    behavior: create
+    literals:
+      - CHOREO_APP_URL=http://dev.choreo.local/observe/app/
   - name: cm-choreo-app-db
     behavior: merge
     literals:
@@ -33,30 +43,51 @@ configMapGenerator:
     literals:
       - CHOREO_DB_HOST=choreo-db
       - CHOREO_DB_NAME=choreo_db
-  - name: cm-negotiator
-    behavior: create
+  - name: cm-eventhub
+    behavior: merge
     literals:
-      - CHOREO_APP_URL=http://dev.choreo.local/observe/app/
+      - EVENTHUB_NAMESPACE=choreo-prod-eventhub.servicebus.windows.net/
+      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-prod-observability-telemetry
+      - METRICS_EVENTHUB_NAME=choreo-prod-observability
+  - name: cm-obsapi
+    behavior: merge
+    literals:
+      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=b899bf41-32cf-4f79-b95f-b591c9e0f173
+      - AZURE_TIMESERIESINSIGHTS_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
+      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=36a123f6-8e63-483f-83bc-0d238e80de3a.env.timeseries.azure.com
+  - name: cm-appservice
+    behavior: merge
+    literals:
+      - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
+      - IDP_REDIRECT_URL=https://dev.choreo.local/
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
+      - DEPLOY_INGRESS_HOST_SUFFIX=choreoapps.dev
+      - DEPLOY_INGRESS_SECRET=choreoapps-wildcard-tls
+      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.0
+      - EXECUTOR_INGRESS_HOST_SUFFIX=test.choreoapps.dev
+      - LANG_SERVER_IMAGE=choreoipaas/lang-server
+      - PLATFORMER_CLUSTER_NAME=wso2-prod-chor
+      - PLATFORMER_GOOGLE_ID=platformer-1587613454573-2vhrr
+      - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
+      - PLATFORMER_PROJECT_ID=-M5_7cJGF3MiCdjgvqSv
+      - WORKSPACE_INGRESS_TLS_SECRET=choreoapps-wildcard-tls
+      - WORKSPACE_NAMESPACE=prod-choreo-system
+  - name: cm-activedirectory
+    behavior: merge
+    literals:
+      - AZURE_ACTIVEDIRECTORY_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
+      - AZURE_ACTIVEDIRECTORY_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
 
 patches:
-  - path: ingress-patch.json
+  - path: http-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-http
-  - path: ingress-patch.json
+  - path: grpc-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-grpc
-  - path: ingress-patch.json
-    target:
-      group: networking.k8s.io
-      version: v1beta1
-      kind: Ingress
-      name: ingress-appservice
 
 patchesStrategicMerge:
   - hpa-strategy.yaml
