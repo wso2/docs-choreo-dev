@@ -10,3 +10,6 @@
 - op: replace
   path: /spec/tls/0/hosts/1
   value: app.dev.choreo.local
+- op: replace
+  path: /metadata/annotations/kubernetes.io~1tls-acme
+  value: "true"
