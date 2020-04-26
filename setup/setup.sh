@@ -80,8 +80,6 @@ if [[ "$create_ingress" == "true" ]]; then
     fi
 fi
 
-sleep 10
-
 ########## Create sealed ingress TLS secret
 for env in "${environments[@]}"; do
     echo "--- Creating sealed ingress TLS secret..."
