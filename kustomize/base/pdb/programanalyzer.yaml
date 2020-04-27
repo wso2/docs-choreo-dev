@@ -1,9 +1,0 @@
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: pdb-programanalyzer
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      choreo.component: programanalyzer
