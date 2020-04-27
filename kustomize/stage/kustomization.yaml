@@ -70,16 +70,12 @@ configMapGenerator:
       - AAD_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
 
 patches:
-  - path: ingress-patch.json
+  - path: http-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-http
-  - path: ingress-patch.json
+  - path: grpc-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-grpc
 
@@ -87,4 +83,4 @@ patchesStrategicMerge:
   - replica-rollout-strategy.yaml
   - linkerd.yaml
   - requests.yaml
-  - ingress-patch.yaml
+
