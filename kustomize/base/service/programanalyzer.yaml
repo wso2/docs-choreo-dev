@@ -6,7 +6,7 @@ metadata:
   name: programanalyzer
 spec:
   ports:
-  - name: programanalyzer-port
+  - name: port-pa
     port: 9000
     protocol: TCP
     targetPort: 9000
