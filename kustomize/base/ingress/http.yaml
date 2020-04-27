@@ -16,6 +16,7 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-name: route
     #  nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
+    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   tls:
     - hosts:
