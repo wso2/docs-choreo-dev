@@ -94,7 +94,7 @@ patchesStrategicMerge:
   - hpa-strategy.yaml
 
 commonLabels:
-  app: choreo-control-plane
+  app: dev-choreo-control-plane
 
 images:
   - name: choreoipaas/console-app

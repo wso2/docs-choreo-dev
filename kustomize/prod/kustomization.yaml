@@ -100,7 +100,7 @@ patchesStrategicMerge:
   - requests.yaml
 
 commonLabels:
-  app: choreo-control-plane
+  app: prod-choreo-control-plane
 
 images:
   - name: choreoipaas/console-app
