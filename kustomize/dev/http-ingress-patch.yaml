@@ -1,0 +1,12 @@
+- op: replace
+  path: /spec/rules/0/host
+  value: choreo.local
+- op: replace
+  path: /spec/rules/1/host
+  value: app.choreo.local
+- op: replace
+  path: /spec/tls/0/hosts/0
+  value: choreo.local
+- op: replace
+  path: /spec/tls/0/hosts/1
+  value: app.choreo.local

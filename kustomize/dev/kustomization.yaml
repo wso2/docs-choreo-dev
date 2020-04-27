@@ -39,24 +39,14 @@ configMapGenerator:
       - CHOREO_APP_URL=http://dev.choreo.local/observe/app/
 
 patches:
-  - path: ingress-patch.json
+  - path: http-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-http
-  - path: ingress-patch.json
+  - path: grpc-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-grpc
-  - path: ingress-patch.json
-    target:
-      group: networking.k8s.io
-      version: v1beta1
-      kind: Ingress
-      name: ingress-appservice
 
 patchesStrategicMerge:
   - hpa-strategy.yaml
