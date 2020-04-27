@@ -95,6 +95,11 @@ for env in "${environments[@]}"; do
     ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/secret
 done
 
+########## Azure docker registry loging
+echo "--- Logging in to Azure Container Registry..."
+#az login #TODO: This has to be done before running the setup
+az acr login --subscription "wso2choreo-payasyouGo" --name choreoctrlplane
+
 ########### Cleanup
 rm -rf ${outdir}
 successful="true"
