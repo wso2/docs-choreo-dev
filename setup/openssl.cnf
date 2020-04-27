@@ -19,3 +19,5 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = *.choreo.local
+DNS.2 = periscope.dev.choreo.local
+DNS.3 = app.dev.choreo.local

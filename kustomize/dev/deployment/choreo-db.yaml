@@ -25,7 +25,7 @@ spec:
            secretKeyRef:
             name: secret-app-db
             key: CHOREO_DB_PASSWORD
-        image: choreoipaas/choreo_db:latest
+        image: choreoipaas/choreo_db:0.1.0
         name: choreo-db
         ports:
         - containerPort: 3306

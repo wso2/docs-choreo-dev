@@ -20,6 +20,11 @@ function printusage {
    printusage
 }
 
+while [[ $(kubectl get pods -n kube-system -l name=sealed-secrets-controller -o \
+      'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
+ echo "waiting for sealed-secrets-controller to be ready..." && sleep 10;
+done
+
 secret_name="ingress-cert"
 selfsigned="false"
 namespace="default"

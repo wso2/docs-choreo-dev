@@ -70,16 +70,12 @@ configMapGenerator:
       - AAD_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
 
 patches:
-  - path: ingress-patch.json
+  - path: http-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-http
-  - path: ingress-patch.json
+  - path: grpc-ingress-patch.yaml
     target:
-      group: networking.k8s.io
-      version: v1beta1
       kind: Ingress
       name: ingress-grpc
 
@@ -87,4 +83,29 @@ patchesStrategicMerge:
   - replica-rollout-strategy.yaml
   - linkerd.yaml
   - requests.yaml
-  - ingress-patch.yaml
+
+images:
+  - name: choreoipaas/console-app
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
+    newTag: v0.1.0
+  - name: choreoipaas/app-service
+    newName: choreoctrlplane.azurecr.io/choreoipaas/app-service
+    newTag: v0.1.0
+  - name: choreoipaas/choreo-logging
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
+    newTag: v0.1.1
+  - name: choreoipaas/choreo-negotiator
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
+    newTag: v0.1.1
+  - name: choreoipaas/observability-api
+    newName: choreoctrlplane.azurecr.io/choreoipaas/observability-api
+    newTag: v0.1.1
+  - name: choreoipaas/perfanalyzer
+    newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
+    newTag: v0.1.0
+  - name: choreoipaas/programanalyzer
+    newName: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
+    newTag: v0.1.0
+  - name: choreoipaas/choreo-telemetry
+    newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
+    newTag: v0.1.1
