@@ -19,6 +19,21 @@ spec:
     spec:
       containers:
       - env:
+        - name: LOGS_API
+          valueFrom:
+            configMapKeyRef:
+              key: LOGS_API
+              name: cm-frontend
+        - name: OBSERVE_API
+          valueFrom:
+            configMapKeyRef:
+              key: OBSERVE_API
+              name: cm-frontend
+        - name: ANALYZE_API
+          valueFrom:
+            configMapKeyRef:
+              key: ANALYZE_API
+              name: cm-frontend
         - name: APP_API
           valueFrom:
             configMapKeyRef:
@@ -33,16 +48,6 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-frontend
-        - name: LOGS_API
-          valueFrom:
-            configMapKeyRef:
-              key: LOGS_API
-              name: cm-frontend
-        - name: OBSERVE_API
-          valueFrom:
-            configMapKeyRef:
-              key: OBSERVE_API
               name: cm-frontend
         - name: REDIRECT_URL
           valueFrom:

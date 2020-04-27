@@ -21,6 +21,7 @@ spec:
     - hosts:
         - domain.com
         - app.domain.com
+        - programanalyzer.domain.com
       secretName: ingress-cert
   rules:
     - host: domain.com
@@ -45,3 +46,10 @@ spec:
             serviceName: appservice
             servicePort: 8080
           path: /
+    - host: programanalyzer.domain.com
+      http:
+        paths:
+          - backend:
+              serviceName: programanalyzer
+              servicePort: 8080
+            path: /

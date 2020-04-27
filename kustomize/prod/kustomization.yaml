@@ -15,6 +15,7 @@ configMapGenerator:
       - OBSERVE_API=https://choreo.dev/graphql
       - REDIRECT_URL=https://choreo.dev/
       - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - ANALYZE_API=https://programanalyzer.choreo.dev
   - name: cm-negotiator
     behavior: create
     literals:
