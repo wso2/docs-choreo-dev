@@ -68,7 +68,7 @@ configMapGenerator:
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
       - DEPLOY_INGRESS_HOST_SUFFIX=choreoapps.dev
       - DEPLOY_INGRESS_SECRET=choreoapps-wildcard-tls
-      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.0
+      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.1
       - EXECUTOR_INGRESS_HOST_SUFFIX=test.choreoapps.dev
       - LANG_SERVER_IMAGE=choreoipaas/lang-server
       - PLATFORMER_CLUSTER_NAME=wso2-prod-chor
@@ -104,7 +104,7 @@ images:
     newTag: v0.1.0
   - name: choreoipaas/app-service
     newName: choreoctrlplane.azurecr.io/choreoipaas/app-service
-    newTag: v0.1.0
+    newTag: v0.1.1
   - name: choreoipaas/choreo-logging
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
     newTag: v0.1.1
@@ -122,4 +122,7 @@ images:
     newTag: v0.1.0
   - name: choreoipaas/choreo-telemetry
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
+    newTag: v0.1.1
+  - name: choreoipaas/workspace-cleanup
+    newName: choreoctrlplane.azurecr.io/choreoipaas/workspace-cleanup
     newTag: v0.1.1
