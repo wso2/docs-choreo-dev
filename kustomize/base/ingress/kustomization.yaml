@@ -1,0 +1,3 @@
+resources:
+  - grpc.yaml
+  - http.yaml

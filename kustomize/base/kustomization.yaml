@@ -1,32 +1,10 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
-  - deployment/frontend.yaml
-  - deployment/negotiator.yaml
-  - deployment/obsapi.yaml
-  - deployment/telemetry.yaml
-  - deployment/appservice.yaml
-  - deployment/programanalyzer.yaml
-  - deployment/perfanalyzer.yaml
-  - deployment/loggingapi.yaml
-  - service/frontend.yaml
-  - service/negotiator.yaml
-  - service/obsapi.yaml
-  - service/telemetry.yaml
-  - service/appservice.yaml
-  - service/programanalyzer.yaml
-  - service/perfanalyzer.yaml
-  - service/loggingapi.yaml
-  - ingress/grpc.yaml
-  - ingress/http.yaml
-  - hpa/frontend.yaml
-  - hpa/negotiator.yaml
-  - hpa/obsapi.yaml
-  - hpa/telemetry.yaml
-  - hpa/appservice.yaml
-  - hpa/loggingapi.yaml
-  - hpa/programanalyzer.yaml
-  - hpa/perfanalyzer.yaml
+  - deployment
+  - service
+  - ingress
+  - hpa
   - cronjob/workspace-cleanup.yaml
 
 generatorOptions:
@@ -52,6 +30,7 @@ configMapGenerator:
     behavior: create
     literals:
       - APP_API=https://app.development.choreo.dev
+      - ANALYZE_API=https://programanalyzer.development.choreo.dev
       - AUTH_FLOW=B2C_1_Signup
       - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
       - LOGS_API=wss://app.development.choreo.dev
@@ -146,12 +125,3 @@ configMapGenerator:
     behavior: create
     literals:
       - WORKSPACE_NAMESPACE=pxe-dev-platformer-1580893230462-5ggle
-
-vars:
-  - name: CHOREO_HTTP_INGRESS
-    objref:
-      apiVersion: networking.k8s.io/v1beta1
-      kind: Ingress
-      name: ingress-http
-    fieldref:
-      fieldpath: spec.rules[0].host
