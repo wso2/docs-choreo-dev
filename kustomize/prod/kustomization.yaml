@@ -78,6 +78,7 @@ configMapGenerator:
       - PLATFORMER_PROJECT_ID=-M5_7cJGF3MiCdjgvqSv
       - WORKSPACE_INGRESS_TLS_SECRET=choreoapps-wildcard-tls
       - WORKSPACE_NAMESPACE=prod-choreo-system
+      - GITHUB_APP_ORG=integration-apps
   - name: cm-activedirectory
     behavior: merge
     literals:
