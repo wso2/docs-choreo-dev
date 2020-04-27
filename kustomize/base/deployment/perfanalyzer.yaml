@@ -20,6 +20,17 @@ spec:
       containers:
       - image: choreoipaas/perfanalyzer:latest
         name: perfanalyzer
+        env:
+          - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+                name: secret-perfanalyzer
+          - name: CHOREO_PERF_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: CHOREO_PERF_DB_PASSWORD
+                name: secret-perfanalyzer
         ports:
         - containerPort: 5005
           name: port-7a8r
@@ -31,11 +42,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - name: perfanalyzer-config
-          mountPath: /home/perf-analyzer/db_config.py
-          subPath: db_config.py
-        - name: perfanalyzer-config
-          mountPath: /home/perf-analyzer/tsi_config.py
-          subPath: tsi_config.py
+          mountPath: /home/perf-analyzer/config/
       volumes:
       - configMap:
           defaultMode: 420

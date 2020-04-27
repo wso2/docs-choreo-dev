@@ -24,8 +24,7 @@ configMapGenerator:
   - name: cm-perfanalyzer
     behavior: create
     files:
-      - config/perfanalyzer/db_config.py
-      - config/perfanalyzer/tsi_config.py
+      - config/perfanalyzer/application.properties
   - name: cm-frontend
     behavior: create
     literals:
