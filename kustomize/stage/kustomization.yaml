@@ -84,6 +84,9 @@ patchesStrategicMerge:
   - linkerd.yaml
   - requests.yaml
 
+commonLabels:
+  app: choreo-control-plane
+
 images:
   - name: choreoipaas/console-app
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
