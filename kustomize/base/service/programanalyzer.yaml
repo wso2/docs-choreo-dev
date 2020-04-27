@@ -6,9 +6,9 @@ metadata:
   name: programanalyzer
 spec:
   ports:
-  - name: port-7ydy
-    port: 8080
+  - name: programanalyzer-port
+    port: 9000
     protocol: TCP
-    targetPort: 8080
+    targetPort: 9000
   selector:
     choreo.component: programanalyzer
