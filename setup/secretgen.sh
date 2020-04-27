@@ -26,6 +26,11 @@ function gensecret {
     echo "Choreo Sealed secret generated to "${outdir}
 }
 
+while [[ $(kubectl get pods -n kube-system -l name=sealed-secrets-controller -o \
+      'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
+ echo "waiting for kubeseal controller to be ready..." && sleep 10;
+done
+
 propfile=""
 namespace=""
 outdir=""

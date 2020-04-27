@@ -71,22 +71,14 @@ if [[ "$create_ingress" == "true" ]]; then
     ############## Install nginx ingress (Optional)
     echo "--- Installing nginx ingress..."
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
-    read -p "Are you using Docker Desktop? [y/N] " response
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+    read -p "Are you using Minikube? [y/N] " response
     echo    # (optional) move to a new line
     if [[ ${response} =~ ^[Yy]$ ]]; then
-      echo "--- Installing nginx ingress for Docker Desktop..."
-      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
-    else
-        read -p "Are you using Minikube? [y/N] " response
-        echo    # (optional) move to a new line
-        if [[ ${response} =~ ^[Yy]$ ]]; then
-          echo "--- Enabling nginx ingress addon for Minikube..."
-          minikube addons enable ingress
-        fi
+      echo "--- Enabling nginx ingress addon for Minikube..."
+      minikube addons enable ingress
     fi
 fi
-
-sleep 10
 
 ########## Create sealed ingress TLS secret
 for env in "${environments[@]}"; do

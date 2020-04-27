@@ -54,3 +54,11 @@ spec:
   maxReplicas: 1
   minReplicas: 1
 ---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: appservice
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+---
