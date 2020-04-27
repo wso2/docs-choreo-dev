@@ -117,7 +117,7 @@ images:
     newTag: v0.1.1
   - name: choreoipaas/perfanalyzer
     newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
-    newTag: v0.1.0
+    newTag: v0.1.1
   - name: choreoipaas/programanalyzer
     newName: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
     newTag: v0.1.0
