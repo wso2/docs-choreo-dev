@@ -85,7 +85,6 @@ spec:
                   name: secret-loggingapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           image: choreoipaas/choreo-logging:latest
-          imagePullPolicy: ""
           name: loggingapi
           ports:
             - containerPort: 9097

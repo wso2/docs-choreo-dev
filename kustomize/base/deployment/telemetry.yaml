@@ -65,7 +65,6 @@ spec:
               name: secret-telemetry
               key: EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY
         image: choreoipaas/choreo-telemetry:latest
-        imagePullPolicy: ""
         name: telemetry
         ports:
         - containerPort: 9090
