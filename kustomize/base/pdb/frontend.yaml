@@ -3,7 +3,7 @@ kind: PodDisruptionBudget
 metadata:
   name: pdb-frontend
 spec:
-  maxUnavailable: "30%"
+  minAvailable: "70%"
   selector:
     matchLabels:
       choreo.component: frontend

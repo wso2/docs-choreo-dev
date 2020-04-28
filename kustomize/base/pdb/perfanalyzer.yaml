@@ -3,7 +3,7 @@ kind: PodDisruptionBudget
 metadata:
   name: pdb-perfanalyzer
 spec:
-  maxUnavailable: "30%"
+  minAvailable: "70%"
   selector:
     matchLabels:
       choreo.component: perfanalyzer
