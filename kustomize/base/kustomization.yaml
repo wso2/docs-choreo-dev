@@ -82,7 +82,7 @@ configMapGenerator:
       - EXECUTOR_INGRESS_HOST_SUFFIX=-test.preprod.choreo.dev
       - EXECUTOR_SVC_HOST=bexecuter
       - EXECUTOR_SVC_PORT="8080"
-      - GITHUB_APP_ORG=integration-apps
+      - GITHUB_APP_ORG=integration-apps-dev
       - GITHUB_USER_EMAIL=integration2020.wso2@gmail.com
       - GITHUB_USER=wso2-ipaas-bot
       - IDP_AUTH_FLOW=B2C_1_Signup
