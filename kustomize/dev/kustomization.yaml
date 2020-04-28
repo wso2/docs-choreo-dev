@@ -9,6 +9,10 @@ resources:
 namespace: dev-choreo-system
 
 configMapGenerator:
+  - name: cm-perfanalyzer
+    behavior: replace
+    files:
+      - config/perfanalyzer/application.properties
   - name: cm-frontend
     behavior: merge
     literals:
@@ -19,7 +23,7 @@ configMapGenerator:
       - OBSERVE_API=https://dev.choreo.local/graphql
       - REDIRECT_URL=https://dev.choreo.local/
       - TENANT=choreodevb2c
-      - ANALYZE_API=https://codeanalyzer.choreo.dev
+      - ANALYZE_API=https://programanalyzer.dev.choreo.local
   - name: cm-negotiator
     behavior: create
     literals:
@@ -47,19 +51,19 @@ configMapGenerator:
   - name: cm-eventhub
     behavior: merge
     literals:
-      - EVENTHUB_NAMESPACE=choreo-prod-eventhub.servicebus.windows.net/
-      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-prod-observability-telemetry
-      - METRICS_EVENTHUB_NAME=choreo-prod-observability
+      - EVENTHUB_NAMESPACE=choreo-dev-eventhub.servicebus.windows.net/
+      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-dev-observability-telemetry
+      - METRICS_EVENTHUB_NAME=choreo-dev-observability
   - name: cm-obsapi
     behavior: merge
     literals:
-      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=b899bf41-32cf-4f79-b95f-b591c9e0f173
+      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=d863975b-032a-4ff0-9648-0e8b84c51755
       - AZURE_TIMESERIESINSIGHTS_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
-      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=36a123f6-8e63-483f-83bc-0d238e80de3a.env.timeseries.azure.com
+      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=8ae91d53-d0b0-4189-a564-2a36a78543c9.env.timeseries.azure.com
   - name: cm-appservice
     behavior: merge
     literals:
-      - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
+      - REDIS_ADDRESS=choreo-dev-redis.redis.cache.windows.net:6380
       - IDP_REDIRECT_URL=https://dev.choreo.local/
       - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
@@ -78,7 +82,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
-      - AZURE_ACTIVEDIRECTORY_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
+      - AZURE_ACTIVEDIRECTORY_CLIENT_ID=2291c890-bdc2-4765-941c-76c1630fd955
   - name: cm-workspace-cleanup
     behavior: merge
     literals:

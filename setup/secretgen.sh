@@ -19,10 +19,10 @@ function gensecret {
     then
         echo "File "$1" not found"; exit 1
     fi
-    local secret=$(echo "$1" | cut -d "/" -f2- | sed 's/\(.*\)\..*/\1/')
+    local secret=$(echo ${1##*/} | sed 's/\(.*\)\..*/\1/')
     mkdir -p ${outdir}
     kubectl create secret generic secret-${secret} -n ${namespace} --from-env-file $1 --dry-run=client -o yaml |
-            kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml
+            kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml &&
     echo "Choreo Sealed secret generated to "${outdir}
 }
 
