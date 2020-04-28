@@ -12,3 +12,4 @@ mountOptions:
   - cache=strict
 parameters:
   skuName: Premium_ZRS
+reclaimPolicy: Retain
