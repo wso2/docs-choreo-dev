@@ -13,3 +13,6 @@
 - op: replace
   path: /metadata/annotations/kubernetes.io~1tls-acme
   value: "true"
+- op: replace
+  path: /metadata/annotations/nginx.ingress.kubernetes.io~1cors-allow-origin
+  value: https://choreo.local
