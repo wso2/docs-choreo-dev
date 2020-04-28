@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-choreo
+spec:
+  maxUnavailable: "30%"
+  selector:
+    matchLabels:
+      choreo.component: obsapi

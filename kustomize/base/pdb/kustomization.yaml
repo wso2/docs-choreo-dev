@@ -1,0 +1,9 @@
+resources:
+  - appservice.yaml
+  - frontend.yaml
+  - loggingapi.yaml
+  - negotiator.yaml
+  - obsapi.yaml
+  - perfanalyzer.yaml
+  - programanalyzer.yaml
+  - telemetry.yaml
