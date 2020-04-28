@@ -11,4 +11,4 @@ mountOptions:
   - mfsymlinks
   - cache=strict
 parameters:
-  skuName: Premium_LRS
+  skuName: Premium_ZRS
