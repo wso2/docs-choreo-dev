@@ -10,7 +10,7 @@ spec:
   accessModes:
   - ReadWriteMany
   volumeMode: Filesystem
-  storageClassName: azurefile-premium
+  storageClassName: azurefile-premium-zrs
   resources:
     requests:
       storage: 100Gi
