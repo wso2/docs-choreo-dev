@@ -3,7 +3,7 @@ kind: PodDisruptionBudget
 metadata:
   name: pdb-loggingapi
 spec:
-  minAvailable: "70%"
+  minAvailable: "50%"
   selector:
     matchLabels:
       choreo.component: loggingapi
