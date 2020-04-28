@@ -5,6 +5,7 @@ resources:
   - service
   - ingress
   - hpa
+  - pdb
   - cronjob/workspace-cleanup.yaml
 
 generatorOptions:
