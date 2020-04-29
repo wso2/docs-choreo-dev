@@ -250,4 +250,4 @@ spec:
       - name: pvc-userappstorage
         persistentVolumeClaim:
           claimName: pvc-userappstorage
-      serviceAccountName: app-service
+      serviceAccountName: sa-appservice
