@@ -1,6 +1,7 @@
 resources:
   - cluster-role.yaml
   - cluster-role-binding.yaml
+  - service-account.yaml
   - deployment
   - service
   - ingress
