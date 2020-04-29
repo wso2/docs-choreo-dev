@@ -92,11 +92,11 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              port: svc
+              port: logapi-port
               path: /api/0.1.0/health
           livenessProbe:
             httpGet:
-              port: svc
+              port: logapi-port
               path: /api/0.1.0/health
           resources: {}
       restartPolicy: Always
