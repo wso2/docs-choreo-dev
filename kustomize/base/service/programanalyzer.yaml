@@ -6,9 +6,9 @@ metadata:
   name: programanalyzer
 spec:
   ports:
-  - name: port-pa
+  - name: progan-port
     port: 9000
     protocol: TCP
-    targetPort: 9000
+    targetPort: progan-port
   selector:
     choreo.component: programanalyzer

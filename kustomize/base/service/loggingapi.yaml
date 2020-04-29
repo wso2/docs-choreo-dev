@@ -8,6 +8,6 @@ spec:
   ports:
   - name: "logging-api-port"
     port: 9097
-    targetPort: 9097
+    targetPort: logapi-port
   selector:
     choreo.component: loggingapi

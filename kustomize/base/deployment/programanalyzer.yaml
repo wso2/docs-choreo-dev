@@ -20,7 +20,7 @@ spec:
         name: programanalyzer
         ports:
         - containerPort: 9000
-          name: port-pa
+          name: progan-port
           protocol: TCP
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

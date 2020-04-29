@@ -31,27 +31,27 @@ spec:
         paths:
         - backend:
             serviceName: obsapi
-            servicePort: 9095
+            servicePort: obsapi-port
           path: /graphql
         - backend:
             serviceName: frontend
-            servicePort: 8080
+            servicePort: frontend-port
           path: /
         - backend:
             serviceName: loggingapi
-            servicePort: 9097
+            servicePort: logapi-port
           path: /api/0.1.0
     - host: app.domain.com
       http:
         paths:
         - backend:
             serviceName: appservice
-            servicePort: 8080
+            servicePort: appservice-port
           path: /
     - host: programanalyzer.domain.com
       http:
         paths:
           - backend:
               serviceName: programanalyzer
-              servicePort: 9000
+              servicePort: progan-port
             path: /

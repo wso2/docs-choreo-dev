@@ -63,6 +63,7 @@ spec:
         name: frontend
         ports:
         - containerPort: 8080
+          name: frontend-port
+          protocol: TCP
         resources: {}
       restartPolicy: Always
-      serviceAccountName: ""

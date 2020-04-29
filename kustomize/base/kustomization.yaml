@@ -43,13 +43,6 @@ configMapGenerator:
       - CHOREO_DB_NAME=choreo_app_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=root
-  - name: cm-choreo-perf-db
-    behavior: create
-    literals:
-      - CHOREO_DB_HOST=choreo-perf-db
-      - CHOREO_DB_NAME=choreo_perf_db
-      - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=root
   - name: cm-choreo-program-db
     behavior: create
     literals:
@@ -107,8 +100,8 @@ configMapGenerator:
   - name: cm-activedirectory
     behavior: create
     literals:
-      - AAD_TENANT_ID=9c3e5d51-c9ab-4565-a419-4248b5d54817
-      - AAD_CLIENT_ID=e1d6af4f-9af6-4e97-84ca-bb9f71bfcc54
+      - AZURE_ACTIVEDIRECTORY_TENANT_ID=9c3e5d51-c9ab-4565-a419-4248b5d54817
+      - AZURE_ACTIVEDIRECTORY_CLIENT_ID=e1d6af4f-9af6-4e97-84ca-bb9f71bfcc54
   - name: cm-k8sservice
     behavior: create
     literals:

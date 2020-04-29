@@ -33,11 +33,6 @@ configMapGenerator:
     literals:
       - CHOREO_DB_HOST=choreo-db
       - CHOREO_DB_NAME=choreo_db
-  - name: cm-choreo-perf-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreo-db
-      - CHOREO_DB_NAME=choreo_db
   - name: cm-choreo-program-db
     behavior: merge
     literals:

@@ -6,8 +6,8 @@ metadata:
   name: choreo-db
 spec:
   ports:
-  - name: "mysql-port"
+  - name: choreodb-port
     port: 3306
-    targetPort: 3306
+    targetPort: choreodb-port
   selector:
     choreo.component: choreo-db

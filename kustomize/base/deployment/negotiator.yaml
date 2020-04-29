@@ -53,14 +53,21 @@ spec:
         name: negotiator
         readinessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         livenessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         ports:
         - containerPort: 9090
+          name: handshake-port
+          protocol: TCP
+        - containerPort: 9092
+          name: negotiator-port
+          protocol: TCP
         - containerPort: 9091
+          name: health
+          protocol: TCP
         resources: {}
       restartPolicy: Always

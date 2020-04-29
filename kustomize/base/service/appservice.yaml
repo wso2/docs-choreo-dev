@@ -8,6 +8,6 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: appservice-port
   selector:
     choreo.component: appservice

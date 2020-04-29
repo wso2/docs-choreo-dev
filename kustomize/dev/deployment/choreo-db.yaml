@@ -29,6 +29,8 @@ spec:
         name: choreo-db
         ports:
         - containerPort: 3306
+          name: choreodb-port
+          protocol: TCP
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: choreo-db-claim
