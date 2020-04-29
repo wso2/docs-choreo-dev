@@ -7,6 +7,10 @@ resources:
 namespace: prod-choreo-system
 
 configMapGenerator:
+  - name: cm-perfanalyzer
+    behavior: replace
+    files:
+      - config/perfanalyzer/application.properties
   - name: cm-frontend
     behavior: merge
     literals:

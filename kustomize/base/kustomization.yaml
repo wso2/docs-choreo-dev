@@ -124,4 +124,4 @@ configMapGenerator:
   - name: cm-workspace-cleanup
     behavior: create
     literals:
-      - WORKSPACE_NAMESPACE=pxe-dev-platformer-1580893230462-5ggle
+      - WORKSPACE_NAMESPACE=default
