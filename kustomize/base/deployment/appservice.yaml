@@ -224,7 +224,7 @@ spec:
         name: appservice
         ports:
         - containerPort: 8080
-          name: port-7ydy
+          name: appservice-port
           protocol: TCP
         resources:
           limits:

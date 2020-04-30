@@ -97,3 +97,5 @@ spec:
         name: obsapi
         ports:
         - containerPort: 9095
+          name: obsapi-port
+          protocol: TCP

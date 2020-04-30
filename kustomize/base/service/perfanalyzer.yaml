@@ -6,13 +6,13 @@ metadata:
   name: perfanalyzer
 spec:
   ports:
-  - name: port-7a8r
+  - name: perfan-port
     port: 5005
     protocol: TCP
-    targetPort: 5005
+    targetPort: perfan-port
   - name: port-7a8s
     port: 5006
     protocol: TCP
-    targetPort: 5006
+    targetPort: perfan-port2
   selector:
     choreo.component: perfanalyzer

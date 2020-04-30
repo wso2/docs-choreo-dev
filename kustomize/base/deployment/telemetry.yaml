@@ -68,14 +68,18 @@ spec:
         name: telemetry
         ports:
         - containerPort: 9090
+          name: telemetry-port
+          protocol: TCP
         - containerPort: 9091
+          name: health
+          protocol: TCP
         readinessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         livenessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         resources: {}
       restartPolicy: Always

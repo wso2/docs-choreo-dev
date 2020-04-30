@@ -5,11 +5,17 @@
   path: /spec/rules/1/host
   value: app.dev.choreo.local
 - op: replace
+  path: /spec/rules/2/host
+  value: programanalyzer.dev.choreo.local
+- op: replace
   path: /spec/tls/0/hosts/0
   value: dev.choreo.local
 - op: replace
   path: /spec/tls/0/hosts/1
   value: app.dev.choreo.local
+- op: replace
+  path: /spec/tls/0/hosts/2
+  value: programanalyzer.dev.choreo.local
 - op: replace
   path: /metadata/annotations/kubernetes.io~1tls-acme
   value: "true"
