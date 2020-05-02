@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-choreo-db
+  name: pv-choreodb
 spec:
   accessModes:
     - ReadWriteOnce
@@ -12,5 +12,3 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: file
   volumeMode: Filesystem
-#  claimRef:
-#    name: pvc-choreo-db
