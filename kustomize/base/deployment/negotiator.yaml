@@ -50,6 +50,9 @@ spec:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
         image: choreoipaas/choreo-negotiator:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
         name: negotiator
         readinessProbe:
             httpGet:
