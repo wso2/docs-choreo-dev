@@ -83,4 +83,4 @@ spec:
              path: /health
         resources: {}
       restartPolicy: Always
-      serviceAccountName: ""
+      serviceAccountName: sa-choreo-default

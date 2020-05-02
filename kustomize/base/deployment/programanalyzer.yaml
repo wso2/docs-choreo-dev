@@ -41,3 +41,4 @@ spec:
         persistentVolumeClaim:
           claimName: pvc-userappstorage
           readOnly: true
+      serviceAccountName: sa-choreo-default

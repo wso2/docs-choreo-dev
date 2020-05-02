@@ -99,3 +99,4 @@ spec:
         - containerPort: 9095
           name: obsapi-port
           protocol: TCP
+      serviceAccountName: sa-choreo-default

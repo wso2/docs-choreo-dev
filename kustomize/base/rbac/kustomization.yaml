@@ -1,4 +1,4 @@
 resources:
   - service-account.yaml
-  - cluster-role.yaml
-  - cluster-role-binding.yaml
+  - appservice
+  - workspace-cleanup

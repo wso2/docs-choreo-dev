@@ -67,3 +67,4 @@ spec:
           protocol: TCP
         resources: {}
       restartPolicy: Always
+      serviceAccountName: sa-choreo-default
