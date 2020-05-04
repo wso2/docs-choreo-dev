@@ -61,8 +61,8 @@ spec:
               name: cm-frontend
         image: choreoipaas/console-app:latest
         securityContext:
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 101
+          runAsGroup: 101
         name: frontend
         ports:
         - containerPort: 8080
