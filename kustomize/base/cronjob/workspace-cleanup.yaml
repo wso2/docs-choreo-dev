@@ -11,7 +11,7 @@ spec:
         spec:
           serviceAccountName: sa-choreo-workspace-cleanup
           securityContext:
-            runAsUser: 100
+            runAsUser: 1000
             runAsGroup: 1000
           restartPolicy: OnFailure
           containers:
