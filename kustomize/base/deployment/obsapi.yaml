@@ -94,8 +94,12 @@ spec:
               key: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
         # --------------------------------------------------------
         image: choreoipaas/observability-api:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
         name: obsapi
         ports:
         - containerPort: 9095
           name: obsapi-port
           protocol: TCP
+      serviceAccountName: sa-choreo-default

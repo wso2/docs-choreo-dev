@@ -4,19 +4,19 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    choreo.component: choreo-db
-  name: choreo-db
+    choreo.component: choreodb
+  name: choreodb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-db
+      choreo.component: choreodb
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        choreo.component: choreo-db
+        choreo.component: choreodb
     spec:
       containers:
       - env:
@@ -26,15 +26,15 @@ spec:
             name: secret-app-db
             key: CHOREO_DB_PASSWORD
         image: choreoipaas/choreo_db:0.1.0
-        name: choreo-db
+        name: choreodb
         ports:
         - containerPort: 3306
           name: choreodb-port
           protocol: TCP
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: choreo-db-claim
+          name: choreodb-claim
       volumes:
-      - name: choreo-db-claim
+      - name: choreodb-claim
         persistentVolumeClaim:
-          claimName: pvc-choreo-db
+          claimName: pvc-choreodb

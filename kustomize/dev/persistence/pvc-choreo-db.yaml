@@ -2,8 +2,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    choreo.component: choreo-db-claim
-  name: pvc-choreo-db
+    choreo.component: pvc-choreodb
+  name: pvc-choreodb
 spec:
   volumeMode: Filesystem
   storageClassName: file

@@ -1,0 +1,4 @@
+resources:
+  - sa-appservice.yaml
+  - cr-appservice.yaml
+  - crb-appservice.yaml

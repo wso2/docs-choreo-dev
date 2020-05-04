@@ -6,6 +6,9 @@ resources:
 
 namespace: prod-choreo-system
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   - name: cm-perfanalyzer
     behavior: replace

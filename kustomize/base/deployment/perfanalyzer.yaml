@@ -19,6 +19,9 @@ spec:
     spec:
       containers:
       - image: choreoipaas/perfanalyzer:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
         name: perfanalyzer
         env:
           - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
@@ -48,3 +51,4 @@ spec:
           defaultMode: 420
           name: cm-perfanalyzer
         name: perfanalyzer-config
+      serviceAccountName: sa-choreo-default

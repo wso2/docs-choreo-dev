@@ -6,6 +6,9 @@ resources:
 
 namespace: stage-choreo-system
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   - name: cm-frontend
     behavior: merge
