@@ -50,17 +50,28 @@ spec:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
         image: choreoipaas/choreo-negotiator:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
         name: negotiator
         readinessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         livenessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         ports:
         - containerPort: 9090
+          name: handshake-port
+          protocol: TCP
+        - containerPort: 9092
+          name: negotiator-port
+          protocol: TCP
         - containerPort: 9091
+          name: health
+          protocol: TCP
         resources: {}
       restartPolicy: Always
+      serviceAccountName: sa-choreo-default

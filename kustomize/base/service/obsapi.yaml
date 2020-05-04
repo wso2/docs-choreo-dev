@@ -6,8 +6,8 @@ metadata:
   name: obsapi
 spec:
   ports:
-  - name: "obs-api-port"
+  - name: obsapi-port
     port: 9095
-    targetPort: 9095
+    targetPort: obsapi-port
   selector:
     choreo.component: obsapi

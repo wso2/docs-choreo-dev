@@ -65,18 +65,25 @@ spec:
               name: secret-telemetry
               key: EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY
         image: choreoipaas/choreo-telemetry:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
         name: telemetry
         ports:
         - containerPort: 9090
+          name: telemetry-port
+          protocol: TCP
         - containerPort: 9091
+          name: health
+          protocol: TCP
         readinessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         livenessProbe:
             httpGet:
-             port: 9091
+             port: health
              path: /health
         resources: {}
       restartPolicy: Always
-      serviceAccountName: ""
+      serviceAccountName: sa-choreo-default

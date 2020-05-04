@@ -85,17 +85,22 @@ spec:
                   name: secret-loggingapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           image: choreoipaas/choreo-logging:latest
+          securityContext:
+            runAsUser: 100
+            runAsGroup: 1000
           name: loggingapi
           ports:
             - containerPort: 9097
+              name: logapi-port
+              protocol: TCP
           readinessProbe:
             httpGet:
-              port: 9097
+              port: logapi-port
               path: /api/0.1.0/health
           livenessProbe:
             httpGet:
-              port: 9097
+              port: logapi-port
               path: /api/0.1.0/health
           resources: {}
       restartPolicy: Always
-      serviceAccountName: ""
+      serviceAccountName: sa-choreo-default

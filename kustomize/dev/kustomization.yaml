@@ -8,6 +8,9 @@ resources:
 
 namespace: dev-choreo-system
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   - name: cm-perfanalyzer
     behavior: replace
@@ -31,22 +34,17 @@ configMapGenerator:
   - name: cm-choreo-app-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-db
-      - CHOREO_DB_NAME=choreo_db
-  - name: cm-choreo-perf-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_HOST=choreodb
       - CHOREO_DB_NAME=choreo_db
   - name: cm-choreo-program-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_HOST=choreodb
       - CHOREO_DB_NAME=choreo_db
   - name: cm-choreo-trace-db
     behavior: merge
     literals:
-      - CHOREO_DB_HOST=choreo-db
+      - CHOREO_DB_HOST=choreodb
       - CHOREO_DB_NAME=choreo_db
   - name: cm-eventhub
     behavior: merge

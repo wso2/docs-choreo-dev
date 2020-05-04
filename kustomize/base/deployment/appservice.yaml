@@ -224,7 +224,7 @@ spec:
         name: appservice
         ports:
         - containerPort: 8080
-          name: port-7ydy
+          name: appservice-port
           protocol: TCP
         resources:
           limits:
@@ -233,7 +233,9 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
-        securityContext: {}
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:

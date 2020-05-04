@@ -60,9 +60,14 @@ spec:
               key: TENANT
               name: cm-frontend
         image: choreoipaas/console-app:latest
+        securityContext:
+          runAsUser: 101
+          runAsGroup: 101
         name: frontend
         ports:
         - containerPort: 8080
+          name: frontend-port
+          protocol: TCP
         resources: {}
       restartPolicy: Always
-      serviceAccountName: ""
+      serviceAccountName: sa-choreo-default

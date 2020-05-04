@@ -26,9 +26,9 @@ spec:
       paths:
       - backend:
           serviceName: telemetry
-          servicePort: 9090
+          servicePort: telemetry-port
         path: /Telemetry
       - backend:
           serviceName: negotiator
-          servicePort: 9090
+          servicePort: handshake-port
         path: /Handshake

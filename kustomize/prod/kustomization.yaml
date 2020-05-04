@@ -6,6 +6,9 @@ resources:
 
 namespace: prod-choreo-system
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   - name: cm-perfanalyzer
     behavior: replace
@@ -31,13 +34,6 @@ configMapGenerator:
       - CHOREO_DB_NAME=choreo_app_db
       - CHOREO_DB_PORT=3306
       - CHOREO_DB_USERNAME=choreo_app_db_user@choreo-prod-control-plane-mysql-db
-  - name: cm-choreo-perf-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreo-prod-control-plane-mysql-db.mysql.database.azure.com
-      - CHOREO_DB_NAME=choreo_perf_db
-      - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=choreo_perf_db_user@choreo-prod-control-plane-mysql-db
   - name: cm-choreo-program-db
     behavior: merge
     literals:
@@ -73,7 +69,7 @@ configMapGenerator:
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
       - DEPLOY_INGRESS_HOST_SUFFIX=choreoapps.dev
       - DEPLOY_INGRESS_SECRET=choreoapps-wildcard-tls
-      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.1
+      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.2
       - EXECUTOR_INGRESS_HOST_SUFFIX=test.choreoapps.dev
       - LANG_SERVER_IMAGE=choreoipaas/lang-server
       - PLATFORMER_CLUSTER_NAME=wso2-prod-chor
@@ -114,10 +110,10 @@ commonLabels:
 images:
   - name: choreoipaas/console-app
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
-    newTag: v0.1.0
+    newTag: v0.1.2
   - name: choreoipaas/app-service
     newName: choreoctrlplane.azurecr.io/choreoipaas/app-service
-    newTag: v0.1.1
+    newTag: v0.1.2
   - name: choreoipaas/choreo-logging
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
     newTag: v0.1.1
@@ -138,4 +134,4 @@ images:
     newTag: v0.1.1
   - name: choreoipaas/workspace-cleanup
     newName: choreoctrlplane.azurecr.io/choreoipaas/workspace-cleanup
-    newTag: v0.1.1
+    newTag: v0.1.2

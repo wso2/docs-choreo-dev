@@ -9,6 +9,10 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: sa-choreo-workspace-cleanup
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
           restartPolicy: OnFailure
           containers:
             - name: workspace-cleanup

@@ -6,8 +6,8 @@ metadata:
   name: telemetry
 spec:
   ports:
-  - name: "telemetry-port"
+  - name: telemetry-port
     port: 9090
-    targetPort: 9090
+    targetPort: telemetry-port
   selector:
     choreo.component: telemetry
