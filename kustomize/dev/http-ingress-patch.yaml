@@ -22,3 +22,6 @@
 - op: replace
   path: /metadata/annotations/nginx.ingress.kubernetes.io~1cors-allow-origin
   value: https://dv.choreo.dev
+- op: replace
+  path: /spec/tls/0/secretName
+  value: choreo-dev-wildcard-tls

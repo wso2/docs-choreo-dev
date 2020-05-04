@@ -7,3 +7,6 @@
 - op: replace
   path: /metadata/annotations/kubernetes.io~1ingress.class
   value: dev-choreo-system-nginx
+- op: replace
+  path: /spec/tls/0/secretName
+  value: choreo-dev-wildcard-tls
