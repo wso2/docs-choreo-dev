@@ -10,7 +10,7 @@ spec:
   accessModes:
   - ReadWriteMany
   volumeMode: Filesystem
-  storageClassName: file
+  storageClassName: dev-azurefile-premium-lrs
   resources:
     requests:
-      storage: 300Mi
+      storage: 100Gi

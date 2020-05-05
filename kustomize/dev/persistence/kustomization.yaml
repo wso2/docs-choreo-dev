@@ -1,5 +1,3 @@
 resources:
-  - pv-choreo-db.yaml
-  - pv-userappstorage.yaml
-  - pvc-choreo-db.yaml
+  - azure-storageclass.yaml
   - pvc-userappstorage.yaml
