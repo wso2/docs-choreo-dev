@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: choreodb
+  name: choreodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreodb
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        choreo.component: choreodb
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: secret-app-db
+            key: CHOREO_DB_PASSWORD
+        image: choreoipaas/choreo_db:0.1.0
+        name: choreodb
+        ports:
+        - containerPort: 3306
+          name: choreodb-port
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: choreodb-claim
+      volumes:
+      - name: choreodb-claim
+        persistentVolumeClaim:
+          claimName: pvc-choreodb

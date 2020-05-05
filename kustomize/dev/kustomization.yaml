@@ -100,9 +100,7 @@ patches:
       name: ingress-grpc
 
 patchesStrategicMerge:
-  - replica-rollout-strategy.yaml
-  - linkerd.yaml
-  - requests.yaml
+  - hpa-strategy.yaml
 
 commonLabels:
   app: prod-choreo-control-plane
