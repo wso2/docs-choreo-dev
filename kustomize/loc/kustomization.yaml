@@ -1,63 +1,14 @@
 resources:
-  - ../dev
+  - ../base
+  - ../dev/config
+#  - config
   - secret
   - persistence
   - namespace.yaml
   - deployment/choreo-db.yaml
   - service/choreo-db.yaml
 
-namespace: dev-choreo-system
-
-generatorOptions:
-  disableNameSuffixHash: true
-
-configMapGenerator:
-  - name: cm-perfanalyzer
-    behavior: replace
-    files:
-      - config/perfanalyzer/application.properties
-  - name: cm-frontend
-    behavior: merge
-    literals:
-      - APP_API=https://app.dev.choreo.local
-      - LOGS_API=wss://app.dev.choreo.local
-      - OBSERVE_API=https://dev.choreo.local/graphql
-      - REDIRECT_URL=https://dev.choreo.local/
-      - ANALYZE_API=https://programanalyzer.dev.choreo.local
-  - name: cm-negotiator
-    behavior: create
-    literals:
-      - CHOREO_APP_URL=http://dev.choreo.local/observe/app/
-  - name: cm-choreo-app-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreodb
-      - CHOREO_DB_NAME=choreo_db
-  - name: cm-choreo-program-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreodb
-      - CHOREO_DB_NAME=choreo_db
-  - name: cm-choreo-trace-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreodb
-      - CHOREO_DB_NAME=choreo_db
-  - name: cm-appservice
-    behavior: merge
-    literals:
-      - REDIS_ADDRESS=choreo-dev-redis.redis.cache.windows.net:6380
-      - IDP_REDIRECT_URL=https://dev.choreo.local/
-      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
-      - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
-      - DEPLOY_INGRESS_HOST_SUFFIX=choreoapps.dev
-      - DEPLOY_INGRESS_SECRET=choreoapps-wildcard-tls
-      - EXECUTOR_INGRESS_HOST_SUFFIX=test.choreoapps.dev
-      - WORKSPACE_NAMESPACE=loc-choreo-system
-  - name: cm-workspace-cleanup
-    behavior: merge
-    literals:
-      - WORKSPACE_NAMESPACE=loc-choreo-system
+namespace: loc-choreo-system
 
 patches:
   - path: http-ingress-patch.yaml
@@ -74,7 +25,55 @@ patchesStrategicMerge:
   - deployment-strategy.yaml
 
 commonLabels:
-  app: dev-choreo-control-plane
+  app: loc-choreo-control-plane
+
+configMapGenerator:
+  - name: cm-perfanalyzer
+    behavior: replace
+    files:
+      - config/perfanalyzer/application.properties
+  - name: cm-frontend
+    behavior: merge
+    literals:
+      - APP_API=https://app.dev.choreo.local
+      - LOGS_API=wss://app.dev.choreo.local
+      - OBSERVE_API=https://dev.choreo.local/graphql
+      - REDIRECT_URL=https://dev.choreo.local/
+      - ANALYZE_API=https://programanalyzer.dev.choreo.local
+  - name: cm-negotiator
+    behavior: merge
+    literals:
+      - CHOREO_APP_URL=http://dev.choreo.local/observe/app/
+  - name: cm-choreo-app-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreodb
+      - CHOREO_DB_NAME=choreo_db
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo-program-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreodb
+      - CHOREO_DB_NAME=choreo_db
+      - CHOREO_DB_USERNAME=root
+  - name: cm-choreo-trace-db
+    behavior: merge
+    literals:
+      - CHOREO_DB_HOST=choreodb
+      - CHOREO_DB_NAME=choreo_db
+      - CHOREO_DB_USERNAME=root
+  - name: cm-appservice
+    behavior: merge
+    literals:
+      - IDP_REDIRECT_URL=https://dev.choreo.local/
+      - WORKSPACE_NAMESPACE=loc-choreo-system
+  - name: cm-workspace-cleanup
+    behavior: merge
+    literals:
+      - WORKSPACE_NAMESPACE=loc-choreo-system
+
+generatorOptions:
+  disableNameSuffixHash: true
 
 images:
   - name: choreoipaas/console-app
@@ -93,9 +92,8 @@ images:
     newName: choreoctrlplane.azurecr.io/choreoipaas/observability-api
     newTag: latest
   - name: choreoipaas/perfanalyzer
-    newName: choreoipaas/perfanalyzer
-#    newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
-    newTag: test
+    newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
+    newTag: latest
   - name: choreoipaas/programanalyzer
     newName: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
     newTag: v0.1.0

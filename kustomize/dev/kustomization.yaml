@@ -1,93 +1,11 @@
 resources:
   - ../base
+  - config
   - secret
   - persistence
   - namespace.yaml
 
 namespace: dev-choreo-system
-
-generatorOptions:
-  disableNameSuffixHash: true
-
-configMapGenerator:
-  - name: cm-perfanalyzer
-    behavior: replace
-    files:
-      - config/perfanalyzer/application.properties
-  - name: cm-frontend
-    behavior: merge
-    literals:
-      - APP_API=https://app.dv.choreo.dev
-      - LOGS_API=wss://app.dv.choreo.dev
-      - OBSERVE_API=https://dv.choreo.dev/graphql
-      - REDIRECT_URL=https://dv.choreo.dev/
-      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
-      - ANALYZE_API=https://programanalyzer.dv.choreo.dev
-  - name: cm-negotiator
-    behavior: create
-    literals:
-      - CHOREO_APP_URL=http://dv.choreo.dev/observe/app/
-  - name: cm-choreo-app-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreo-non-prod-control-plane-mysql-db.mysql.database.azure.com
-      - CHOREO_DB_NAME=dev_choreo_app_db
-      - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=dev_choreo_app_db_user@choreo-non-prod-control-plane-mysql-db
-  - name: cm-choreo-program-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreo-non-prod-control-plane-mysql-db.mysql.database.azure.com
-      - CHOREO_DB_NAME=dev_choreo_program_db
-      - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=dev_choreo_program_db_user@choreo-non-prod-control-plane-mysql-db
-  - name: cm-choreo-trace-db
-    behavior: merge
-    literals:
-      - CHOREO_DB_HOST=choreo-non-prod-control-plane-mysql-db.mysql.database.azure.com
-      - CHOREO_DB_NAME=dev_choreo_trace_db
-      - CHOREO_DB_PORT=3306
-      - CHOREO_DB_USERNAME=dev_choreo_trace_db_user@choreo-non-prod-control-plane-mysql-db
-  - name: cm-eventhub
-    behavior: merge
-    literals:
-      - EVENTHUB_NAMESPACE=choreo-non-prod-eventhub.servicebus.windows.net/
-      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-non-prod-observability-telemetry
-      - METRICS_EVENTHUB_NAME=choreo-non-prod-observability
-  - name: cm-obsapi
-    behavior: merge
-    literals:
-      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=d863975b-032a-4ff0-9648-0e8b84c51755
-      - AZURE_TIMESERIESINSIGHTS_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
-      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=0958d0c9-3fcf-4b4a-a277-ebdb4db58ea7.env.timeseries.azure.com
-  - name: cm-appservice
-    behavior: merge
-    literals:
-      - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
-      - IDP_REDIRECT_URL=https://dv.choreo.dev/
-      - IDP_CLIENT_ID=to-be-added-later
-      - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1588576808354-zitew
-      - DEPLOY_INGRESS_HOST_SUFFIX=dv.choreoapps.dev
-      - DEPLOY_INGRESS_SECRET=dev-choreoapps-wildcard-tls
-      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.2
-      - EXECUTOR_INGRESS_HOST_SUFFIX=test.dv.choreoapps.dev
-      - LANG_SERVER_IMAGE=choreoipaas/lang-server
-      - PLATFORMER_CLUSTER_NAME=wso2-dev-chor
-      - PLATFORMER_GOOGLE_ID=platformer-1588576808354-zitew
-      - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
-      - PLATFORMER_PROJECT_ID=-M6TYZVkGD50bUCLpwDK
-      - WORKSPACE_INGRESS_TLS_SECRET=choreoapps-wildcard-tls
-      - WORKSPACE_NAMESPACE=dev-choreo-system
-      - GITHUB_APP_ORG=integration-apps-dev
-  - name: cm-activedirectory
-    behavior: merge
-    literals:
-      - AZURE_ACTIVEDIRECTORY_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
-      - AZURE_ACTIVEDIRECTORY_CLIENT_ID=2291c890-bdc2-4765-941c-76c1630fd955
-  - name: cm-workspace-cleanup
-    behavior: merge
-    literals:
-      - WORKSPACE_NAMESPACE=dev-choreo-system
 
 patches:
   - path: http-ingress-patch.yaml
@@ -103,7 +21,7 @@ patchesStrategicMerge:
   - hpa-strategy.yaml
 
 commonLabels:
-  app: prod-choreo-control-plane
+  app: dev-choreo-control-plane
 
 images:
   - name: choreoipaas/console-app
