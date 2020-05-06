@@ -1,5 +1,10 @@
 # choreo-control-plane
-All Choreo control plane related scripts and configuration are in this repo.
+The Choreo control plane repo contains all Kubernetes scripts which are related to cluster setup & configuration.
+The `setup` directory contains scripts required to initial cluster setup, sealed secret generation and sealed ingress 
+certificate generation. The `kustomize` directory contains the `base` Kubernetes scripts, in addition to the 
+environment specific scripts for the `prod`, `stage`, `dev` & `local` environments.
+
+This is the central gitops repo for the Kubernetes artifacts.
 
 ## First time setup
 1. Copy secret properties file to the relevant directory
