@@ -1,0 +1,113 @@
+configMapGenerator:
+  - name: cm-perfanalyzer
+    behavior: create
+    files:
+      - perfanalyzer/application.properties
+  - name: cm-programanalyzer
+    behavior: create
+    files:
+      - programanalyzer/application.properties
+  - name: cm-frontend
+    behavior: create
+    literals:
+      - AUTH_FLOW=B2C_1_Signup
+      - TENANT=choreodevb2c
+      - APP_API=https://app.choreo.dev
+      - LOGS_API=wss://app.choreo.dev
+      - OBSERVE_API=https://choreo.dev/graphql
+      - REDIRECT_URL=https://choreo.dev/
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - ANALYZE_API=https://programanalyzer.choreo.dev
+  - name: cm-negotiator
+    behavior: create
+    literals:
+      - CHOREO_APP_URL=http://choreo.dev/observe/app/
+  - name: cm-choreo-app-db
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo-prod-control-plane-mysql-db.mysql.database.azure.com
+      - CHOREO_DB_NAME=choreo_app_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=choreo_app_db_user@choreo-prod-control-plane-mysql-db
+  - name: cm-choreo-program-db
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo-prod-control-plane-mysql-db.mysql.database.azure.com
+      - CHOREO_DB_NAME=choreo_program_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=choreo_program_db_user@choreo-prod-control-plane-mysql-db
+  - name: cm-choreo-trace-db
+    behavior: create
+    literals:
+      - CHOREO_DB_HOST=choreo-prod-control-plane-mysql-db.mysql.database.azure.com
+      - CHOREO_DB_NAME=choreo_trace_db
+      - CHOREO_DB_PORT=3306
+      - CHOREO_DB_USERNAME=choreo_trace_db_user@choreo-prod-control-plane-mysql-db
+  - name: cm-eventhub
+    behavior: create
+    literals:
+      - EVENTHUB_NAMESPACE=choreo-prod-eventhub.servicebus.windows.net/
+      - EVENTHUB_SHARED_ACCESS_POLICY_NAME=choreo-prod-observability-telemetry
+      - METRICS_EVENTHUB_NAME=choreo-prod-observability
+  - name: cm-obsapi
+    behavior: create
+    literals:
+      - AZURE_TIMESERIESINSIGHTS_CLIENT_ID=b899bf41-32cf-4f79-b95f-b591c9e0f173
+      - AZURE_TIMESERIESINSIGHTS_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
+      - AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN=36a123f6-8e63-483f-83bc-0d238e80de3a.env.timeseries.azure.com
+  - name: cm-appservice
+    behavior: create
+    literals:
+      - REDIS_ADDRESS=choreo-prod-redis.redis.cache.windows.net:6380
+      - REPO_PATH=/repo
+      - DISABLE_AUTHN="false"
+      - IDP_REDIRECT_URL=https://choreo.dev/
+      - IDP_TENANT_NAME=choreodevb2c
+      - IDP_AUTH_RESPONSE_COOKIE_MAX_AGE="86400"
+      - IDP_HOST=https://login.microsoftonline.com
+      - IDP_AUTH_FLOW=B2C_1_Signup
+      - IDP_CLIENT_ID=cb4bcbd9-d807-492d-ba42-2ecb12eaa45f
+      - IDP_ISSUER=https://choreodevb2c.b2clogin.com/a8d5aca6-c571-40ba-bc0f-d104b73ed587/v2.0/
+      - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1587613454573-2vhrr
+      - DEPLOY_INGRESS_HOST_SUFFIX=choreoapps.dev
+      - DEPLOY_INGRESS_SECRET=choreoapps-wildcard-tls
+      - EXECUTOR_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/bexecuter:v0.1.2
+      - EXECUTOR_INGRESS_HOST_SUFFIX=test.choreoapps.dev
+      - EXECUTOR_SVC_HOST=bexecuter
+      - EXECUTOR_SVC_PORT="8080"
+      - LANG_SERVER_IMAGE=choreoipaas/lang-server
+      - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
+      - PLATFORMER_CLUSTER_NAME=wso2-prod-chor
+      - PLATFORMER_GOOGLE_ID=platformer-1587613454573-2vhrr
+      - PLATFORMER_ORG_ID=-M-4Q539L2y9RtB02Ttp
+      - PLATFORMER_RUDDER_URL=https://api.rudder.wso2.platformer.com
+      - PLATFORMER_RUDDER_USERNAME=wso2
+      - PLATFORMER_PROJECT_ID=-M5_7cJGF3MiCdjgvqSv
+      - WORKSPACE_INGRESS_TLS_SECRET=choreoapps-wildcard-tls
+      - WORKSPACE_NAMESPACE=prod-choreo-system
+      - WORKSPACE_VOLUME_CLAIM=pvc-userappstorage
+      - GITHUB_APP_ORG=integration-apps
+      - GITHUB_USER=wso2-ipaas-bot
+      - GITHUB_USER_EMAIL=integration2020.wso2@gmail.com
+  - name: cm-activedirectory
+    behavior: create
+    literals:
+      - AZURE_ACTIVEDIRECTORY_TENANT_ID=ba8b4bdf-edb4-4d39-bd50-4663ee28f275
+      - AZURE_ACTIVEDIRECTORY_CLIENT_ID=ea3a97d7-4165-4d6f-925f-f001f1f97a06
+  - name: cm-workspace-cleanup
+    behavior: create
+    literals:
+      - WORKSPACE_NAMESPACE=prod-choreo-system
+  - name: cm-k8sservice
+    behavior: create
+    literals:
+      - USER_APPS_NAMESPACE=pxe-dev-platformer-1580639005087-z1go3
+      - K8S_SERVICE_SUBSCRIPTION_ID=6e80ff13-db12-4a82-b998-807fbe9b3c4e
+      - RESOURCE_GROUP=choreo-poc
+      - CLUSTER_NAME=choreo-poc
+  - name: cm-loganalytics
+    behavior: create
+    literals:
+      - LOG_WORKSPACE_ID=f8f5b826-f42a-4d1a-803a-d50c2b03d3ab
+generatorOptions:
+  disableNameSuffixHash: true
