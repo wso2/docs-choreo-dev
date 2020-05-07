@@ -74,7 +74,7 @@ This is the central gitops repo for the Kubernetes artifacts.
 
    Use the proper node IP address.
      
-5. Run `kustomize build <env> | kubectl apply-f -` to generate and apply K8s artifacts related to a particular environment.
+5. Run `kustomize build <env> | kubectl apply -f -` to generate and apply K8s artifacts related to a particular environment.
 
    ex: `kustomize build loc | kubectl apply -f -`
 
@@ -94,11 +94,11 @@ That is it! All set!
 If you wish to change a secret, edit the relevant secret properties file and run `secretgen.sh` for the relevant environment
    ex: `./secretgen.sh -d=secret/loc -n=loc-choreo-system -o=../kustomize/loc/secret`
 
-Next, run `kustomize build <env> | kubectl apply-f -`
+Next, run `kustomize build <env> | kubectl apply -f -`
 
 ## Change config
 If you wish to change config in the relevant kustomize.yaml file which contains the configMapGenerator section,
-and run `kustomize build <env> | kubectl apply-f -`
+and run `kustomize build <env> | kubectl apply -f -`
 
 ## TODO:
 create PVs for each env (PVs don't have a namespace)
