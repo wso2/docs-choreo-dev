@@ -7,9 +7,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-          - name: appservice
-            imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -20,9 +17,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: frontend
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,9 +27,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: loggingapi
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,9 +37,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: negotiator
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,9 +47,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: obsapi
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -72,9 +57,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: perfanalyzer
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -85,9 +67,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: programanalyzer
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -98,9 +77,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: secret-acr
-      containers:
-        - name: telemetry
-          imagePullPolicy: IfNotPresent
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -113,6 +89,4 @@ spec:
         spec:
           imagePullSecrets:
             - name: secret-acr
-          containers:
-            - name: workspace-cleanup
-              imagePullPolicy: IfNotPresent
+              

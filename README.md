@@ -8,8 +8,8 @@ This is the central gitops repo for the Kubernetes artifacts.
 
 ## First time setup
 1. Copy secret properties file to the relevant directory
-   For example, copy the files to secret/loc if you want to setup local environment.
-   The following files need to be there.
+   For example, copy the files to `setup/secret/loc` if you want to setup local environment.
+   The following files need to be there. Contact @dhananjaya@wso2.com to obtain the values.
 
     ### app-db.properties
     ```
