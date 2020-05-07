@@ -64,7 +64,7 @@ This is the central gitops repo for the Kubernetes artifacts.
 
    ex: `kustomize build loc | kubectl apply-f -`
 
-4. **(Local setup only)** Add the following entries to your /etc/hosts file
+4. *(Local setup only)* Add the following entries to your /etc/hosts file
 
    ex:
     ```
