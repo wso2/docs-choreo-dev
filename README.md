@@ -76,7 +76,7 @@ This is the central gitops repo for the Kubernetes artifacts.
      
 5. Run `kustomize build <env> | kubectl apply-f -` to generate and apply K8s artifacts related to a particular environment.
 
-   ex: `kustomize build loc | kubectl apply-f -`
+   ex: `kustomize build loc | kubectl apply -f -`
 
 6. Test whether everything is working fine by running the hello-service sample in 
     [https://github.com/wso2-enterprise/choreo.git](https://github.com/wso2-enterprise/choreo.git)   
@@ -103,4 +103,3 @@ and run `kustomize build <env> | kubectl apply-f -`
 ## TODO:
 create PVs for each env (PVs don't have a namespace)
 Refactor all configs into properties or YAML files
-
