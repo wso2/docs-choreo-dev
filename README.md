@@ -57,7 +57,7 @@ This is the central gitops repo for the Kubernetes artifacts.
 
 2. Run `setup.sh` by providing the secret directory as the argument.
 
-    ex: `./setup.sh -d=secret/loc -e=dev -i=true` for local setup with secret properties files in the directory as given
+    ex: `./setup.sh -d=secret/loc -e=loc -i=true` for local setup with secret properties files in the directory as given
     in step 1, and with the -i=true option to create ingresses.
 
 3. *(Local setup only)* run `dockersecretgen.sh` to generate docker image pull sealed secrets.
