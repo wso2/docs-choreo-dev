@@ -60,9 +60,10 @@ This is the central gitops repo for the Kubernetes artifacts.
     ex: `./setup.sh -d=secret/loc -e=dev -i=true` for local setup with secret properties files in the directory as given
     in step 1, and with the -i=true option to create ingresses.
 
-3. Run `kustomize build <env> | kubectl apply-f -` to generate and apply K8s artifacts related to a particular environment.
+3. *(Local setup only)* run `dockersecretgen.sh` to generate docker image pull sealed secrets.
 
-   ex: `kustomize build loc | kubectl apply-f -`
+     ex: `./dockersecretgen.sh -e=<your-name>@wso2ipaasoutlook.onmicrosoft.com -u=xxx -p=xxxxx` 
+     Contact dhananjaya@wso2.com to get the details.
 
 4. *(Local setup only)* Add the following entries to your /etc/hosts file
 
@@ -72,8 +73,12 @@ This is the central gitops repo for the Kubernetes artifacts.
     ```
 
    Use the proper node IP address.
-   
-5. Test whether everything is working fine by running the hello-service sample in 
+     
+5. Run `kustomize build <env> | kubectl apply-f -` to generate and apply K8s artifacts related to a particular environment.
+
+   ex: `kustomize build loc | kubectl apply-f -`
+
+6. Test whether everything is working fine by running the hello-service sample in 
     [https://github.com/wso2-enterprise/choreo.git](https://github.com/wso2-enterprise/choreo.git)   
 
     For local setup, add the following to the ballerina.conf of the sample:
