@@ -69,7 +69,7 @@ This is the central gitops repo for the Kubernetes artifacts.
 
    ex:
     ```
-    192.168.64.6 	programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local prod.choreo.local stage.choreo.local
+    192.168.64.6 	programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local
     ```
 
    Use the proper node IP address.
