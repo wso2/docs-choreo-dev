@@ -19,6 +19,7 @@ patches:
 
 patchesStrategicMerge:
   - hpa-strategy.yaml
+  - linkerd.yaml
 
 commonLabels:
   app: dev-choreo-control-plane
