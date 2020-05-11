@@ -98,13 +98,13 @@ configMapGenerator:
   - name: cm-k8sservice
     behavior: create
     literals:
-      - USER_APPS_NAMESPACE=pxe-dev-platformer-1580639005087-z1go3
-      - K8S_SERVICE_SUBSCRIPTION_ID=6e80ff13-db12-4a82-b998-807fbe9b3c4e
-      - RESOURCE_GROUP=choreo-poc
-      - CLUSTER_NAME=choreo-poc
+      - USER_APPS_NAMESPACE=pxe-dev-platformer-1588576808354-zitew
+      - K8S_SERVICE_SUBSCRIPTION_ID=90878020-48fc-45be-90d0-e12eb86ad61c
+      - RESOURCE_GROUP=choreo-non-prod
+      - CLUSTER_NAME=choreo-non-prod-control-plane
   - name: cm-loganalytics
     behavior: create
     literals:
-      - LOG_WORKSPACE_ID=f8f5b826-f42a-4d1a-803a-d50c2b03d3ab
+      - LOG_WORKSPACE_ID=737c4d59-f214-4695-9ef4-aa04c40fac01
 generatorOptions:
   disableNameSuffixHash: true
