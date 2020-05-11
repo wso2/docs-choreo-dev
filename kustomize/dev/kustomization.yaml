@@ -3,6 +3,7 @@ resources:
   - config
   - secret
   - persistence
+  - certificate
   - namespace.yaml
 
 namespace: dev-choreo-system
