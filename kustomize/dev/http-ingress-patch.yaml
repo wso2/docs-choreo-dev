@@ -24,4 +24,4 @@
   value: https://dv.choreo.dev
 - op: replace
   path: /spec/tls/0/secretName
-  value: choreo-dev-wildcard-tls
+  value: choreo-control-plane-wildcard-tls
