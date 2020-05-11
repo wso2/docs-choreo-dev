@@ -84,7 +84,7 @@ This is the central gitops repo for the Kubernetes artifacts.
     For local setup, add the following to the ballerina.conf of the sample:
     ```
     [b7a.observability.tracing.choreo.reporter]
-    hostname="dev.choreo.local"
+    hostname="periscope.dev.choreo.local"
     port=443
     ```
 
