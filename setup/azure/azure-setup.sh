@@ -96,12 +96,6 @@ kubectl create secret generic "${namespace}-secret-azuredns-config" --from-liter
 ## Install Cluster Issuer
 envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
 
-## Create Namespace
-kubectl create namespace ${namespace} --dry-run=client -o yaml | kubectl apply -f -
-#
-echo "--- Requesting wildcard cert for ${WILDCARD_DOMAIN}"
-envsubst < conf/wildcard-cert.yaml | kubectl apply -n ${namespace} -f -
-
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
 
