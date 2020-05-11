@@ -34,13 +34,13 @@ images:
     newTag: v0.1.2
   - name: choreoipaas/choreo-logging
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
-    newTag: v0.1.1
+    newTag: v0.1.2
   - name: choreoipaas/choreo-negotiator
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
-    newTag: v0.1.1
+    newTag: v0.1.2
   - name: choreoipaas/observability-api
     newName: choreoctrlplane.azurecr.io/choreoipaas/observability-api
-    newTag: v0.1.1
+    newTag: v0.1.2
   - name: choreoipaas/perfanalyzer
     newName: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer
     newTag: v0.1.2
@@ -49,7 +49,7 @@ images:
     newTag: v0.1.0
   - name: choreoipaas/choreo-telemetry
     newName: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
-    newTag: v0.1.1
+    newTag: v0.1.2
   - name: choreoipaas/workspace-cleanup
     newName: choreoctrlplane.azurecr.io/choreoipaas/workspace-cleanup
     newTag: v0.1.2
