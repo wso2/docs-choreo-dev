@@ -66,6 +66,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - IDP_REDIRECT_URL=https://dev.choreo.local/
+      - IDP_CLIENT_ID=choreolocalportal
       - WORKSPACE_NAMESPACE=loc-choreo-system
   - name: cm-workspace-cleanup
     behavior: merge
