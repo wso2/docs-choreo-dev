@@ -38,11 +38,6 @@ spec:
             configMapKeyRef:
               key: WORKSPACE_NAMESPACE
               name: cm-appservice
-        - name: IDP_ISSUER
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_ISSUER
-              name: cm-appservice
         - name: DISABLE_AUTHN
           valueFrom:
             configMapKeyRef:
@@ -53,25 +48,10 @@ spec:
             configMapKeyRef:
               key: WORKSPACE_VOLUME_CLAIM
               name: cm-appservice
-        - name: IDP_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: secret-appservice
-              key: IDP_CLIENT_SECRET
         - name: PLATFORMER_CLUSTER_NAME
           valueFrom:
             configMapKeyRef:
               key: PLATFORMER_CLUSTER_NAME
-              name: cm-appservice
-        - name: IDP_AUTH_FLOW
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_AUTH_FLOW
-              name: cm-appservice
-        - name: IDP_REDIRECT_URL
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_REDIRECT_URL
               name: cm-appservice
         - name: EXECUTOR_INGRESS_HOST_SUFFIX
           valueFrom:
@@ -150,6 +130,16 @@ spec:
               key: CHOREO_DB_NAME
               name: cm-choreo-app-db
         # -----------------------
+        - name: IDP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: IDP_CLIENT_SECRET
+        - name: IDP_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_ISSUER
+              name: cm-appservice
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
@@ -160,6 +150,27 @@ spec:
             configMapKeyRef:
               key: IDP_HOST
               name: cm-appservice
+        - name: IDP_REDIRECT_URL
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_REDIRECT_URL
+              name: cm-appservice
+        - name: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
+              name: cm-appservice
+        - name: IDP_TOKEN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_TOKEN_ENDPOINT
+              name: cm-appservice
+        - name: IDP_JWKS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_JWKS_ENDPOINT
+              name: cm-appservice
+        # -----------------------------
         - name: EXECUTOR_SVC_PORT
           valueFrom:
             configMapKeyRef:
@@ -174,16 +185,6 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: LANG_SERVER_IMAGE
-              name: cm-appservice
-        - name: IDP_TENANT_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_TENANT_NAME
-              name: cm-appservice
-        - name: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
               name: cm-appservice
         - name: DEPLOY_INGRESS_HOST_SUFFIX
           valueFrom:
