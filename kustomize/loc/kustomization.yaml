@@ -38,7 +38,8 @@ configMapGenerator:
       - APP_API=https://app.dev.choreo.local
       - LOGS_API=wss://app.dev.choreo.local
       - OBSERVE_API=https://dev.choreo.local/graphql
-      - REDIRECT_URL=https://dev.choreo.local/
+      - IDP_REDIRECT_URL=https://dev.choreo.local/
+      - IDP_CLIENT_ID=choreolocalportal
       - ANALYZE_API=https://programanalyzer.dev.choreo.local
   - name: cm-negotiator
     behavior: merge

@@ -39,25 +39,20 @@ spec:
             configMapKeyRef:
               key: APP_API
               name: cm-frontend
-        - name: AUTH_FLOW
+        - name: IDP_URL
           valueFrom:
             configMapKeyRef:
-              key: AUTH_FLOW
+              key: IDP_URL
               name: cm-frontend
-        - name: CLIENT_ID
+        - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
               name: cm-frontend
-        - name: REDIRECT_URL
+        - name: IDP_REDIRECT_URL
           valueFrom:
             configMapKeyRef:
-              key: REDIRECT_URL
-              name: cm-frontend
-        - name: TENANT
-          valueFrom:
-            configMapKeyRef:
-              key: TENANT
+              key: IDP_REDIRECT_URL
               name: cm-frontend
         image: choreoipaas/console-app:latest
         securityContext:

@@ -14,8 +14,8 @@ configMapGenerator:
       - LOGS_API=wss://app.dv.choreo.dev
       - OBSERVE_API=https://dv.choreo.dev/graphql
       - ANALYZE_API=https://programanalyzer.dv.choreo.dev
-      - IDP_CLIENT_ID=choreoportalapplication
       - IDP_URL=http://id.preprod.choreo.dev
+      - IDP_CLIENT_ID=choreoportalapplication
       - IDP_REDIRECT_URL=https://dv.choreo.dev/
   - name: cm-negotiator
     behavior: create
@@ -65,6 +65,8 @@ configMapGenerator:
       - IDP_ISSUER=https://id.preprod.choreo.dev:443/oauth2/token
       - IDP_CLIENT_ID=choreoportalapplication
       - IDP_AUTH_RESPONSE_COOKIE_MAX_AGE="86400"
+      - IDP_TOKEN_ENDPOINT=/oauth2/token
+      - IDP_JWKS_ENDPOINT=/oauth2/jwks
       - DEPLOY_APP_NAMESPACE=pxe-dev-platformer-1588576808354-zitew
       - DEPLOY_INGRESS_HOST_SUFFIX=dv.choreoapps.dev
       - DEPLOY_INGRESS_SECRET=dev-choreoapps-wildcard-tls
