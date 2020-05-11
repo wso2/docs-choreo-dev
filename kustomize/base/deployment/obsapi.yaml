@@ -102,4 +102,12 @@ spec:
         - containerPort: 9095
           name: obsapi-port
           protocol: TCP
+        readinessProbe:
+          httpGet:
+            port: obsapi-port
+            path: /checkHealth
+        livenessProbe:
+          httpGet:
+            port: obsapi-port
+            path: /checkHealth
       serviceAccountName: sa-choreo-default
