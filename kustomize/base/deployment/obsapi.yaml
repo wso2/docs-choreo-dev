@@ -105,9 +105,9 @@ spec:
         readinessProbe:
           httpGet:
             port: obsapi-port
-            path: /checkHealth
+            path: /health
         livenessProbe:
           httpGet:
             port: obsapi-port
-            path: /checkHealth
+            path: /health
       serviceAccountName: sa-choreo-default
