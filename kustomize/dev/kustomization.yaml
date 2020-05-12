@@ -1,5 +1,6 @@
 resources:
   - ../base
+  - ../base/netpol
   - config
   - secret
   - persistence
@@ -21,6 +22,7 @@ patches:
 patchesStrategicMerge:
   - hpa-strategy.yaml
   - linkerd.yaml
+  - netpol-stratergy.yaml
 
 commonLabels:
   app: dev-choreo-control-plane
