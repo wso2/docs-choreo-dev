@@ -239,10 +239,11 @@ spec:
         volumeMounts:
         - mountPath: /repo
           name: pvc-userappstorage
-      securityContext:
-        fsGroup: 1000
-        runAsUser: 1000
-        runAsGroup: 1000
+#TODO: Enable security context once the permission issue is sorted out. @IsuruH
+#      securityContext:
+#        fsGroup: 1000
+#        runAsUser: 1000
+#        runAsGroup: 1000
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: platformer-1580893230462-5ggle
