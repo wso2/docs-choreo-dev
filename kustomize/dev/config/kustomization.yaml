@@ -82,7 +82,7 @@ configMapGenerator:
       - PLATFORMER_RUDDER_URL=https://api.rudder.wso2.platformer.com
       - PLATFORMER_PROJECT_ID=-M6TYZVkGD50bUCLpwDK
       - PLATFORMER_RUDDER_USERNAME=wso2
-      - WORKSPACE_INGRESS_TLS_SECRET=choreoapps-wildcard-tls
+      - WORKSPACE_INGRESS_TLS_SECRET=dev-choreoapps-wildcard-tls
       - WORKSPACE_NAMESPACE=dev-choreo-system
       - WORKSPACE_VOLUME_CLAIM=pvc-userappstorage
       - GITHUB_APP_ORG=integration-apps-dev
