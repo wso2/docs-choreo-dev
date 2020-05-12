@@ -2,5 +2,3 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: dev-choreo-system
-  labels:
-    name: dev-choreo-system
