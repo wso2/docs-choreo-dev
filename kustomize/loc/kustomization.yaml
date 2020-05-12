@@ -1,5 +1,6 @@
 resources:
   - ../base
+  - ../base/netpol
   - ../dev/config
 #  - config
   - secret
@@ -23,6 +24,7 @@ patches:
 patchesStrategicMerge:
   - hpa-strategy.yaml
   - deployment-strategy.yaml
+  - netpol-stratergy.yaml
 
 commonLabels:
   app: loc-choreo-control-plane
