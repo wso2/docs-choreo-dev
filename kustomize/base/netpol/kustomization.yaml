@@ -1,9 +1,5 @@
 resources:
-#  - ingress-default-deny.yaml
-  - appservice.yaml
-  - negotiator.yaml
-  - telemetry.yaml
-  - loggingapi.yaml
-  - obsapi.yaml
-  - perfanalyzer.yaml
-  - programanalyzer.yaml
+  - egress-default-allow.yaml
+  - ingress-default-deny.yaml
+  - ingress-intra-namespace-allow.yaml
+  - ingress-nginx-ingress-allow.yaml
