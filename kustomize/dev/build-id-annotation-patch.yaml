@@ -1,0 +1,3 @@
+- op: add
+  path: /metadata/annotations/deploymentBuildId
+  value: DEPLOYMENT_BUILD_ID

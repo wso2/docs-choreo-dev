@@ -16,6 +16,9 @@ patches:
     target:
       kind: Ingress
       name: ingress-grpc
+  - path: build-id-annotation-patch.yaml
+    target:
+      kind: Deployment
 
 patchesStrategicMerge:
   - hpa-strategy.yaml
