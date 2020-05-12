@@ -99,6 +99,22 @@ envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
 
+## Install kured for AKS linux node update and restart https://docs.microsoft.com/en-us/azure/aks/node-updates-kured
+# Add the stable Helm repository
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+
+# Update your local Helm chart repository cache
+helm repo update
+
+# Create a dedicated namespace where you would like to deploy kured into
+kubectl create namespace kured
+
+# Install kured in that namespace with Helm 3 (only on Linux nodes, kured is not working on Windows nodes)
+helm upgrade --install kured stable/kured --namespace kured \
+   --set nodeSelector."beta\.kubernetes\.io/os"=linux \
+   --set autolock.scheduleUnlock="0 4 * * 3" \
+   --set autolock.schedulelock="0 6 * * 3"
+
 ## Initialize Kubernetes Cluster
 source ../common/k8s-cluster-init.sh
 
