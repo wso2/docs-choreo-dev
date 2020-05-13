@@ -1,9 +1,0 @@
-- op: replace
-  path: /spec/rules/0/host
-  value: periscope.dev.choreo.local
-- op: replace
-  path: /spec/tls/0/hosts/0
-  value: periscope.dev.choreo.local
-- op: replace
-  path: /metadata/annotations/kubernetes.io~1tls-acme
-  value: "true"
