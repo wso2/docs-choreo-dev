@@ -81,7 +81,7 @@ stage and run automated & manual tests. Once successful, proceed towards promoti
 revert the PR.
 
 ## Production
-Once staging is successful, proceed to this stage. First synch the `prod` branch with the relevant tag in the 
+Once staging is successful, proceed to this stage. First sync the `prod` branch with the relevant tag in the 
 `master` in order to get the compatible Kustomize `base`. Then make the 
 necessary changes in your prod branch and send a PR to the upstream prod branch. You will use tagged images in this 
 stage and run automated & manual tests. If tests fail, revert the PR.
