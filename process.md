@@ -15,7 +15,7 @@ This contains the Kustomize `base` on top of which other overlays will be applie
 
 ### dev
 The `dev` branch has the `base`, which will periodically be synced with the `master`, in addition to the `dev` & `local`
-Kustomize overlays. The `base` in `dev` will generally be in synch with the master's `base`.
+Kustomize overlays. The `base` in `dev` will generally be in sync with the master's `base`.
  The `dev` overlay contains the ConfigMap generators/configs as well as the secrets relevant to the dev cluster. In addition,
  the image names and tags are also specified here. The image tags should always be `latest` to ensure that the latest
  images under development are pulled into this cluster.
