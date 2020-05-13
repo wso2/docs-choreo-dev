@@ -14,7 +14,7 @@ services, ingresses, HPAs and so on. This excludes any objects related to config
 This contains the Kustomize `base` on top of which other overlays will be applied in `dev`, `stage` & `prod`.
 
 ### dev
-The `dev` branch has the `base`, which will periodically be synched with the `master`, in addition to the `dev` & `local`
+The `dev` branch has the `base`, which will periodically be synced with the `master`, in addition to the `dev` & `local`
 Kustomize overlays. The `base` in `dev` will generally be in synch with the master's `base`.
  The `dev` overlay contains the ConfigMap generators/configs as well as the secrets relevant to the dev cluster. In addition,
  the image names and tags are also specified here. The image tags should always be `latest` to ensure that the latest
