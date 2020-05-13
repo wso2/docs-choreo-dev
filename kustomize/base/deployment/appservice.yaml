@@ -150,10 +150,10 @@ spec:
             configMapKeyRef:
               key: IDP_HOST
               name: cm-appservice
-        - name: IDP_REDIRECT_URL
+        - name: IDP_WHITELISTED_REDIRECT_URLS
           valueFrom:
             configMapKeyRef:
-              key: IDP_REDIRECT_URL
+              key: IDP_WHITELISTED_REDIRECT_URLS
               name: cm-appservice
         - name: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
           valueFrom:
