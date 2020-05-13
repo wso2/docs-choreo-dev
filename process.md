@@ -32,7 +32,7 @@ dev-branch
       |- local
 ```
 ### stage
-The `stage` branch has the `base`, which will be synched as required with a tag of the `master branch`. 
+The `stage` branch has the `base`, which will be synced as required with a tag of the `master branch`. 
 i.e. The `base` in `stage` will generally be in synch with a tag of the master's `base`.
 The `stage` overlay contains the ConfigMap generators/configs as well as the secrets relevant to the stage cluster.
 In addition, the image names and tags are also specified here. The image tags should *NEVER* be `latest` and only 
