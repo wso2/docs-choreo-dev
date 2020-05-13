@@ -47,7 +47,7 @@ stage-branch
       |- stage
 ```
 ### prod
-The `prod` branch has the `base`, which will be synched as required with a tag of the `master branch`. 
+The `prod` branch has the `base`, which will be synced as required with a tag of the `master branch`. 
 i.e. The `base` in `prod` will generally be in sync with a tag of the master's `base`.
 The `prod` overlay contains the ConfigMap generators/configs as well as the secrets relevant to the prod cluster. In addition,
 the image names and tags are also specified here. The image tags should *NEVER* be `latest` and only proper release tags 
