@@ -1,5 +1,0 @@
-resources:
-  - pv-choreo-db.yaml
-  - pv-userappstorage.yaml
-  - pvc-choreo-db.yaml
-  - pvc-userappstorage.yaml
