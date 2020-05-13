@@ -6,17 +6,18 @@ environment specific scripts for the `prod`, `stage`, `dev` & `local` environmen
 
 This is the central gitops repo for the Kubernetes artifacts.
 
-## First time setup
+## Setup
+### First time setup
 1. Copy secret properties file to the relevant directory
    For example, copy the files to `setup/secret/loc` if you want to setup local environment.
    The following files need to be there. Contact @dhananjaya@wso2.com to obtain the values.
 
-    ### app-db.properties
+    #### app-db.properties
     ```
     CHOREO_DB_PASSWORD=xxx
     ```
     
-    ### appservice.properties
+    #### appservice.properties
     ```
     PLATFORMER_RUDDER_PASSWORD=xxx
     IDP_CLIENT_SECRET=xxx
@@ -24,33 +25,33 @@ This is the central gitops repo for the Kubernetes artifacts.
     REDIS_PASSWORD=xxx
     ```
     
-    ### loggingapi.properties
+    #### loggingapi.properties
     ```
     AZURE_ACTIVEDIRECTORY_CLIENT_SECRET=xxx
     ```
     
-    ### obsapi.properties
+    #### obsapi.properties
     ```
     AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET=xxx
     ```
     
-    ### perfanalyzer.properties
+    #### perfanalyzer.properties
     ```
     AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET=xxx
     CHOREO_PERF_DB_PASSWORD=xxx
     ```
     
-    ### program-db.properties
+    #### program-db.properties
     ```
     CHOREO_DB_PASSWORD=xxx
     ```
     
-    ### telemetry.properties
+    #### telemetry.properties
     ```
     EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY=xxx
     ```
     
-    ### trace-db.properties
+    #### trace-db.properties
     ```
     CHOREO_DB_PASSWORD=xxx
     ```
@@ -104,6 +105,8 @@ Next, run `kustomize build <env> | kubectl apply -f -`
 If you wish to change config in the relevant kustomize.yaml file which contains the configMapGenerator section,
 and run `kustomize build <env> | kubectl apply -f -`
 
+## Branching, Development & GitOps
+See [Branching, Development & GitOps Guide](process.md)
+
 ## TODO:
-create PVs for each env (PVs don't have a namespace)
-Refactor all configs into properties or YAML files
+1. Refactor all configs into properties or YAML files
