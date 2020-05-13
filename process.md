@@ -74,7 +74,7 @@ Continue testing with the dev cluster. Run automated & manual tests. Once succes
 changes to `stage`. if failed, revert the PR.
 
 ## Staging
-Once the development process as described above has been successfully completed, proceed to this stage. First synch
+Once the development process as described above has been successfully completed, proceed to this stage. First sync
 the `stage` branch with the relevant tag in the `master` in order to get the compatible Kustomize `base`. Then make the 
 necessary changes in your stage branch and send a PR to the upstream stage branch. You will use tagged images in this 
 stage and run automated & manual tests. Once successful, proceed towards promoting these changes to prod. If failed,
