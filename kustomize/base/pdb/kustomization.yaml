@@ -7,3 +7,4 @@ resources:
   - perfanalyzer.yaml
   - programanalyzer.yaml
   - telemetry.yaml
+  - datamapper.yaml
