@@ -7,3 +7,4 @@ resources:
   - programanalyzer.yaml
   - perfanalyzer.yaml
   - loggingapi.yaml
+  - datamapper.yaml

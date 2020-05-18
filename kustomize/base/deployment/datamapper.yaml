@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: datamapper
+  name: datamapper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: datamapper
+  template:
+    metadata:
+      labels:
+        choreo.component: datamapper
+    spec:
+      initContainers:
+      - env:
+        - name: ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-datamapper
+              key: ACCESS_KEY
+        image: choreoipaas/datamapper-init:latest
+        name: datamapper-init
+        volumeMounts:
+        - name: datamapper-models
+          mountPath: "/mnt"
+        - name: datamapper-models-metadata
+          mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
+          subPath: "models.properties"
+      containers:
+      - command: ["/bin/sh","-c"]
+        args: ["gunicorn --bind 0.0.0.0:5000 --workers=5 apps:data_mapper_app"]
+        image: choreoipaas/datamapper:latest
+        name: datamapper
+        ports:
+        - containerPort: 5000
+          name: dm-port
+          protocol: TCP
+        volumeMounts:
+        - name: datamapper-models
+          mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"
+          subPath: "models"
+      volumes:
+      - name: datamapper-models
+        emptyDir: {}
+      - name: datamapper-models-metadata
+        configMap:
+          defaultMode: 420
+          name: cm-datamapper

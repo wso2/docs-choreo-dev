@@ -24,6 +24,7 @@ spec:
         - domain.com
         - app.domain.com
         - programanalyzer.domain.com
+        - datamapper.domain.com
       secretName: ingress-cert
   rules:
     - host: domain.com
@@ -55,3 +56,10 @@ spec:
               serviceName: programanalyzer
               servicePort: progan-port
             path: /
+    - host: datamapper.domain.com
+      http:
+        paths:
+          - backend:
+              serviceName: datamapper
+              servicePort: dm-port
+            path: /uploader
