@@ -2,6 +2,6 @@
     "clientScripts": [
         { "module": "@testing-library/dom/dist/@testing-library/dom.umd.js" }
       ],
-      "src":"src/api-creation-flow.ts",
+      "src":"src",
       "tsConfigPath": "tsconfig.json"
 }
