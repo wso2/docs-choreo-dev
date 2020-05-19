@@ -10,7 +10,7 @@ export const isValidUser = () => {
     config.user.name !== "$USERNAME" &&
     config.user.email !== "$EMAIL" &&
     config.user.picURL !== "$AVATAR_URL" &&
-    config.user.orgs !== "$ORGS" &&
+    config.user.orgs !== [] &&
     config.idpUsername !== "$IDP_USERNAME" &&
     config.idpPassword !== "$IDP_PASSWORD" &&
     config.idpAuthHeader !== "$IDP_AUTH_HEADER"
