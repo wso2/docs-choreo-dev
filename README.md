@@ -48,7 +48,7 @@ This is the central gitops repo for the Kubernetes artifacts.
     
     #### telemetry.properties
     ```
-    EVENTHUB_SHARED_ACCESS_SIGNATURE_KEY=xxx
+    EVENTHUB_CONNECTION_STRING=xxx
     ```
     
     #### trace-db.properties
