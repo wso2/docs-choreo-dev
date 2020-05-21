@@ -92,6 +92,42 @@ spec:
             secretKeyRef:
               name: secret-obsapi
               key: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+          # AZURE ADX
+        - name: AZURE_ADX_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_CLIENT_ID
+        - name: AZURE_ADX_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_ENDPOINT
+        - name: AZURE_ADX_DB
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_DB
+        - name: AZURE_ADX_TENANT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_TENANT_ID
+        - name: AZURE_ADX_METRIC_TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_METRIC_TABLE
+        - name: AZURE_ADX_TRACE_TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_TRACE_TABLE
+        - name: AZURE_ADX_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-obsapi
+              key: AZURE_ADX_CLIENT_SECRET
         # --------------------------------------------------------
         image: choreoipaas/observability-api:latest
         securityContext:
