@@ -82,11 +82,13 @@ helm upgrade --install nginx-ingress-controller stable/nginx-ingress \
     --set controller.resources.requests."cpu"=500m \
     --set controller.resources.limits."memory"=1000Mi \
     --set controller.resources.limits."cpu"=1000m \
-    --set controller.ingressClass="${namespace}-nginx"
+    --set controller.ingressClass="${namespace}-nginx" \
+    --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
+    --set controller.image.tag="0.30.0"
 
 ############### Install Certmanager CRDS
 echo "--- Installing Certmanager CRDS"
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.0/cert-manager.yaml
+kubectl apply -f jetstack/cert-manager.yaml
 
 ############## Install Cluster Issuer
 ## Create azure dns contributor client secret
@@ -112,11 +114,13 @@ kubectl create namespace kured
 # Install kured in that namespace with Helm 3 (only on Linux nodes, kured is not working on Windows nodes)
 helm upgrade --install kured stable/kured --namespace kured \
     --set nodeSelector."beta\.kubernetes\.io/os"=linux \
-    --set extraArgs.start-time=9am \
-    --set extraArgs.end-time=3pm \
+    --set extraArgs.start-time=4am \
+    --set extraArgs.end-time=10am \
     --set extraArgs.reboot-days="tue" \
     --set extraArgs.slack-hook-url="https://hooks.slack.com/services/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" \
-    --set extraArgs.slack-username="kured"
+    --set extraArgs.slack-username="kured" \
+    --set image.repository="choreoctrlplane.azurecr.io/weaveworks/kured" \
+    --set image.tag="1.3.0"
 
 ## Initialize Kubernetes Cluster
 source ../common/k8s-cluster-init.sh
