@@ -23,40 +23,21 @@ spec:
             secretKeyRef:
               name: secret-appservice
               key: PLATFORMER_RUDDER_PASSWORD
-        - name: WORKSPACE_INGRESS_TLS_SECRET
-          valueFrom:
-            configMapKeyRef:
-              name: cm-appservice
-              key: WORKSPACE_INGRESS_TLS_SECRET
         - name: PLATFORMER_GOOGLE_ID
           valueFrom:
             configMapKeyRef:
               key: PLATFORMER_GOOGLE_ID
               name: cm-appservice
-        - name: WORKSPACE_NAMESPACE
-          valueFrom:
-            configMapKeyRef:
-              key: WORKSPACE_NAMESPACE
-              name: cm-appservice
+
         - name: DISABLE_AUTHN
           valueFrom:
             configMapKeyRef:
               key: DISABLE_AUTHN
               name: cm-appservice
-        - name: WORKSPACE_VOLUME_CLAIM
-          valueFrom:
-            configMapKeyRef:
-              key: WORKSPACE_VOLUME_CLAIM
-              name: cm-appservice
         - name: PLATFORMER_CLUSTER_NAME
           valueFrom:
             configMapKeyRef:
               key: PLATFORMER_CLUSTER_NAME
-              name: cm-appservice
-        - name: EXECUTOR_INGRESS_HOST_SUFFIX
-          valueFrom:
-            configMapKeyRef:
-              key: EXECUTOR_INGRESS_HOST_SUFFIX
               name: cm-appservice
         - name: PLATFORMER_RUDDER_URL
           valueFrom:
@@ -88,11 +69,6 @@ spec:
             secretKeyRef:
               name: secret-appservice
               key: GITHUB_TOKEN
-        - name: EXECUTOR_SVC_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: EXECUTOR_SVC_HOST
-              name: cm-appservice
         - name: DEPLOY_APP_NAMESPACE
           valueFrom:
             configMapKeyRef:
@@ -171,11 +147,6 @@ spec:
               key: IDP_JWKS_ENDPOINT
               name: cm-idp
         # -----------------------------
-        - name: EXECUTOR_SVC_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: EXECUTOR_SVC_PORT
-              name: cm-appservice
         - name: GITHUB_APP_ORG
           valueFrom:
             configMapKeyRef:
@@ -201,11 +172,6 @@ spec:
             secretKeyRef:
               name: secret-appservice
               key: REDIS_PASSWORD
-        - name: EXECUTOR_IMAGE
-          valueFrom:
-            configMapKeyRef:
-              key: EXECUTOR_IMAGE
-              name: cm-appservice
         - name: PLATFORMER_PROJECT_ID
           valueFrom:
             configMapKeyRef:
@@ -221,6 +187,56 @@ spec:
             configMapKeyRef:
               key: GITHUB_USER
               name: cm-appservice
+        - name: WORKSPACE_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              key: WORKSPACE_NAMESPACE
+              name: cm-appservice
+        - name: WORKSPACE_VOLUME_CLAIM
+          valueFrom:
+            configMapKeyRef:
+              key: WORKSPACE_VOLUME_CLAIM
+              name: cm-appservice
+        - name: WORKSPACE_INGRESS_CLASS
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_INGRESS_CLASS
+        - name: WORKSPACE_API_INGRESS_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_API_INGRESS_HOSTNAME
+        - name: WORKSPACE_API_INGRESS_TLS_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_API_INGRESS_TLS_SECRET
+        - name: WORKSPACE_API_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_API_PORT
+        - name: WORKSPACE_INGRESS_HOST_SUFFIX
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_INGRESS_HOST_SUFFIX
+        - name: WORKSPACE_APP_INGRESS_TLS_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_APP_INGRESS_TLS_SECRET
+        - name: WORKSPACE_DISABLE_AUTO_CLEAN
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_DISABLE_AUTO_CLEAN
+        - name: WORKSPACE_IMAGE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_IMAGE
         image: choreoipaas/app-service:latest
         name: appservice
         ports:
@@ -234,24 +250,9 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /repo
-          name: pvc-userappstorage
-#TODO: Enable security context once the permission issue is sorted out. @IsuruH
-#      securityContext:
-#        fsGroup: 1000
-#        runAsUser: 1000
-#        runAsGroup: 1000
-      dnsPolicy: ClusterFirst
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
       imagePullSecrets:
       - name: platformer-1580893230462-5ggle
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      terminationGracePeriodSeconds: 30
-      volumes:
-      - name: pvc-userappstorage
-        persistentVolumeClaim:
-          claimName: pvc-userappstorage
       serviceAccountName: sa-choreo-appservice
