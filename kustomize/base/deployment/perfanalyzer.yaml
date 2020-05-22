@@ -41,6 +41,13 @@ spec:
         - containerPort: 5006
           name: perfan-port2
           protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 768Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:

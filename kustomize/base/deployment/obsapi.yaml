@@ -146,4 +146,11 @@ spec:
           httpGet:
             port: obsapi-port
             path: /health
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
       serviceAccountName: sa-choreo-default

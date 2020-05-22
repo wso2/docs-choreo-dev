@@ -79,6 +79,12 @@ spec:
             httpGet:
              port: health
              path: /health
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 768Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
