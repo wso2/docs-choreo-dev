@@ -101,6 +101,12 @@ spec:
             httpGet:
               port: logapi-port
               path: /api/0.1.0/health
-          resources: {}
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

@@ -72,6 +72,12 @@ spec:
         - containerPort: 9091
           name: health
           protocol: TCP
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 768Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

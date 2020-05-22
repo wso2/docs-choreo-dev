@@ -40,6 +40,13 @@ spec:
         - containerPort: 5000
           name: dm-port
           protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 2048Mi
+          requests:
+            cpu: 200m
+            memory: 1536Mi
         volumeMounts:
         - name: datamapper-models
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"

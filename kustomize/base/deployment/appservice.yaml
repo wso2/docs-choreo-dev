@@ -248,8 +248,8 @@ spec:
             cpu: 300m
             memory: 512Mi
           requests:
-            cpu: 300m
-            memory: 512Mi
+            cpu: 200m
+            memory: 256Mi
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000

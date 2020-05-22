@@ -63,6 +63,12 @@ spec:
         - containerPort: 8080
           name: frontend-port
           protocol: TCP
-        resources: {}
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
