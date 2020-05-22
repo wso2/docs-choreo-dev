@@ -25,6 +25,13 @@ spec:
               key: ACCESS_KEY
         image: choreoipaas/datamapper-init:latest
         name: datamapper-init
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
         volumeMounts:
         - name: datamapper-models
           mountPath: "/mnt"
