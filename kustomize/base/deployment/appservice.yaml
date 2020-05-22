@@ -217,6 +217,11 @@ spec:
             configMapKeyRef:
               name: cm-appservice
               key: WORKSPACE_API_PORT
+        - name: WORKSPACE_API_CORS_ORIGIN
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: WORKSPACE_API_CORS_ORIGIN
         - name: WORKSPACE_INGRESS_HOST_SUFFIX
           valueFrom:
             configMapKeyRef:
@@ -253,6 +258,4 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
-      imagePullSecrets:
-      - name: platformer-1580893230462-5ggle
       serviceAccountName: sa-choreo-appservice
