@@ -49,6 +49,11 @@ spec:
             configMapKeyRef:
               key: METRICS_EVENTHUB_NAME
               name: cm-eventhub
+        - name: TRACES_EVENTHUB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: TRACES_EVENTHUB_NAME
+              name: cm-eventhub
         - name: EVENTHUB_CONNECTION_STRING
           valueFrom: 
             secretKeyRef:
