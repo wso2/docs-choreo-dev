@@ -19,31 +19,6 @@ spec:
     spec:
       containers:
       - env:
-        - name: CHOREO_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-trace-db
-        - name: CHOREO_DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_NAME
-              name: cm-choreo-trace-db
-        - name: CHOREO_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-trace-db
-              key: CHOREO_DB_PASSWORD
-        - name: CHOREO_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-trace-db
-        - name: CHOREO_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-trace-db
         - name: METRICS_EVENTHUB_NAME
           valueFrom:
             configMapKeyRef:

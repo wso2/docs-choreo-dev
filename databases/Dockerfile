@@ -21,4 +21,3 @@ ENV MYSQL_DATABASE choreo_db
 COPY scripts/choreo_app_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_perf_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_program_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_trace_db.sql /docker-entrypoint-initdb.d/

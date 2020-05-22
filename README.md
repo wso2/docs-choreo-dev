@@ -50,11 +50,6 @@ This is the central gitops repo for the Kubernetes artifacts.
     ```
     EVENTHUB_CONNECTION_STRING=xxx
     ```
-    
-    #### trace-db.properties
-    ```
-    CHOREO_DB_PASSWORD=xxx
-    ```
 
 2. Run `setup.sh` by providing the secret directory as the argument.
 
