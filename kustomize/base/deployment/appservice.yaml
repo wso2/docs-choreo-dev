@@ -237,6 +237,11 @@ spec:
             configMapKeyRef:
               name: cm-appservice
               key: WORKSPACE_DISABLE_AUTO_CLEAN
+        - name: WORKSPACE_CLEAN_INTERVAL_MINUTES
+          valueFrom:
+            configMapKeyRef:
+              key: WORKSPACE_CLEAN_INTERVAL_MINUTES
+              name: cm-appservice
         - name: WORKSPACE_IMAGE
           valueFrom:
             configMapKeyRef:
