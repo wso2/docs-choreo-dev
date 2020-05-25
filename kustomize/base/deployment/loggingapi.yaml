@@ -19,6 +19,11 @@ spec:
     spec:
       containers:
         - env:
+            - name: b7a_log_level
+              valueFrom:
+                configMapKeyRef:
+                  key: B7A_LOG_LEVEL
+                  name: cm-loglevel-loggingapi
             - name: CHOREO_DB_HOST
               valueFrom:
                 configMapKeyRef:
