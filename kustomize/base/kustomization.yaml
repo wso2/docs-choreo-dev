@@ -6,4 +6,3 @@ resources:
   - hpa
   - pdb
 #  - netpol
-  - cronjob/workspace-cleanup.yaml
