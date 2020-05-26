@@ -96,16 +96,14 @@ kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release
 
 ## Install certmanager deployment
 helm repo add jetstack https://charts.jetstack.io
+helm repo update
 helm upgrade --install cert-manager --namespace cert-manager --wait jetstack/cert-manager --version v0.14.0
 
+################ Install emberstack refrector ########
+helm repo add emberstack https://emberstack.github.io/helm-charts
+helm repo update
+helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.0.10
 
-############## Install Cluster Issuer
-## Create azure dns contributor client secret
-echo "--- Creating azure dns contributor client secret"
-kubectl create secret generic "${namespace}-secret-azuredns-config" --from-literal=client-secret="$SERVICE_PRINCIPLE_CLIENT_SECRET" -n cert-manager --dry-run=client -oyaml | kubectl apply -f -
-
-## Install Cluster Issuer
-envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
