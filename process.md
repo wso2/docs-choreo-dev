@@ -68,7 +68,7 @@ prod-branch
 All changes have to first be tested on the `local` cluster using the latest images. You will generally use the `dev`
  branch for this purpose, if the changes are related to mainly configuration. However, if you need to change Kubernetes 
  objects such as deployments, services and so on, first make the change in your `master` branch and then sync that to 
- your `dev` branch. When you are ready, send PRs to the `base` and `dev` branches. The CD process will then deploy your 
+ your `dev` branch. When you are ready, send PRs to the `master` and `dev` branches. The CD process will then deploy your 
  changes to the dev cluster.
 Continue testing with the dev cluster. Run automated & manual tests. Once successful, proceed towards promoting these 
 changes to `stage`. if failed, revert the PR.
