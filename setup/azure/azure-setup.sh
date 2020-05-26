@@ -86,9 +86,18 @@ helm upgrade --install nginx-ingress-controller stable/nginx-ingress \
     --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
     --set controller.image.tag="0.30.0"
 
-############### Install Certmanager CRDS
-echo "--- Installing Certmanager CRDS"
-kubectl apply -f jetstack/cert-manager.yaml
+############### Install Certmanager
+echo "--- Installing Certmanager"
+kubectl create ns cert-manager
+kubectl label namespace cert-manager cert-manager.io/disable-validation=true
+
+## Install CRDs
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
+
+## Install certmanager deployment
+helm repo add jetstack https://charts.jetstack.io
+helm upgrade --install cert-manager --namespace cert-manager --wait jetstack/cert-manager --version v0.14.0
+
 
 ############## Install Cluster Issuer
 ## Create azure dns contributor client secret
