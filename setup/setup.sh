@@ -84,15 +84,15 @@ fi
 for env in "${environments[@]}"; do
     echo "--- Creating sealed ingress TLS secret..."
     ./certsecretgen.sh -n=${env}-choreo-system --tls-key=${tlskey} --tls-cert=${tlscert} --secret-name="ingress-cert" \
-                        -o="../kustomize/$env/secret/"
-    echo "Sealed secret ingress cert generated and copied to "${env}"/secret"
+                        -o="../kustomize/$env/choreo-system/secret/"
+    echo "Sealed secret ingress cert generated and copied to "${env}"/choreo-system/secret"
 done
 
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
     mkdir -p ${outdir}/${env}
-    ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/secret
+    ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/choreo-system/secret
 done
 
 ########### Cleanup
