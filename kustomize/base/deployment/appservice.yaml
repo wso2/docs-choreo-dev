@@ -253,6 +253,18 @@ spec:
         - containerPort: 8080
           name: appservice-port
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: appservice-port
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: appservice-port
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
         resources:
           limits:
             cpu: 300m
