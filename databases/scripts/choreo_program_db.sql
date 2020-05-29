@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS program (
    app_id                VARCHAR(255),
    inserted_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (id),
---    FOREIGN KEY (latest_version_id) REFERENCES version(id) ON DELETE CASCADE,
    CONSTRAINT uc_obs_id UNIQUE (obs_id),
    CONSTRAINT uc_obs_id_latest_version_id UNIQUE (obs_id, latest_version_id),
    CONSTRAINT uc_project_secret UNIQUE (project_secret)
@@ -22,5 +21,6 @@ CREATE TABLE IF NOT EXISTS version (
   FOREIGN KEY (program_id) REFERENCES program(id) ON DELETE CASCADE,
   CONSTRAINT uc_version_pid UNIQUE (program_id, version)
 );
+ALTER TABLE program ADD CONSTRAINT fk_last_version_id FOREIGN KEY (latest_version_id) REFERENCES version(id) ON DELETE CASCADE;
 CREATE INDEX obsid_index ON program (obs_id);
 CREATE INDEX version_index ON version (program_id, version);
