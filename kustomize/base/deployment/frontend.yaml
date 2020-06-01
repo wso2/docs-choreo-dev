@@ -59,6 +59,13 @@ spec:
           runAsUser: 101
           runAsGroup: 101
         name: frontend
+        lifecycle:
+          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+          preStop:
+            exec:
+              command:
+                - /bin/sleep
+                - "20"
         ports:
         - containerPort: 8080
           name: frontend-port

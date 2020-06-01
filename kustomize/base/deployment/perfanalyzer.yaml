@@ -23,6 +23,13 @@ spec:
           runAsUser: 100
           runAsGroup: 1000
         name: perfanalyzer
+        lifecycle:
+          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+          preStop:
+            exec:
+              command:
+                - /bin/sleep
+                - "20"
         env:
           - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
             valueFrom:
