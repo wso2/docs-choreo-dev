@@ -94,6 +94,13 @@ spec:
             runAsUser: 100
             runAsGroup: 1000
           name: loggingapi
+          lifecycle:
+            # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+            preStop:
+              exec:
+                command:
+                  - /bin/sleep
+                  - "20"
           ports:
             - containerPort: 9097
               name: logapi-port
