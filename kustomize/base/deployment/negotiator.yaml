@@ -67,10 +67,20 @@ spec:
                 - /bin/sleep
                 - "20"
         readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
              port: health
              path: /health
         livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
              port: health
              path: /health
