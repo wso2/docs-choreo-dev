@@ -7,8 +7,9 @@ CREATE TABLE IF NOT EXISTS program (
    inserted_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (id),
    CONSTRAINT uc_obs_id UNIQUE (obs_id),
-   CONSTRAINT uc_obs_id_latest_version_id UNIQUE (obs_id, latest_version_id),
-   CONSTRAINT uc_project_secret UNIQUE (project_secret)
+   CONSTRAINT uc_app_id UNIQUE (app_id),
+   CONSTRAINT uc_project_secret UNIQUE (project_secret),
+   CONSTRAINT uc_obs_id_latest_version_id UNIQUE (obs_id, latest_version_id)
 );
 CREATE TABLE IF NOT EXISTS version (
   id                    INT             AUTO_INCREMENT,
