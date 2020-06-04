@@ -40,7 +40,7 @@ spec:
           subPath: "models.properties"
       containers:
       - command: ["/bin/sh","-c"]
-        args: ["gunicorn --bind 0.0.0.0:5000 --workers=5 apps:data_mapper_app"]
+        args: ["gunicorn --bind 0.0.0.0:5000 --workers=1 apps:data_mapper_app"]
         image: choreoipaas/datamapper:latest
         name: datamapper
         lifecycle:
