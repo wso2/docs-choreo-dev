@@ -111,6 +111,11 @@ spec:
             secretKeyRef:
               name: secret-idp
               key: IDP_CLIENT_SECRET
+        - name: IDP_BACKEND_API_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: IDP_BACKEND_API_CLIENT_SECRET
         - name: IDP_ISSUER
           valueFrom:
             configMapKeyRef:
@@ -120,6 +125,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
+              name: cm-idp
+        - name: IDP_BACKEND_API_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_BACKEND_API_CLIENT_ID
               name: cm-idp
         - name: IDP_HOST
           valueFrom:
@@ -145,6 +155,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
+              name: cm-idp
+        - name: IDP_SCIM_USERS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_SCIM_USERS_ENDPOINT
               name: cm-idp
         # -----------------------------
         - name: GITHUB_APP_ORG
