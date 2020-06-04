@@ -25,6 +25,16 @@ This is the central gitops repo for the Kubernetes artifacts.
     REDIS_PASSWORD=xxx
     ```
     
+    #### datamapper.properties
+    ```
+    ACCESS_KEY=xxx
+    ```
+    
+    #### idp.properties
+    ```
+    IDP_CLIENT_SECRET=xxx
+    ```
+    
     #### loggingapi.properties
     ```
     AZURE_ACTIVEDIRECTORY_CLIENT_SECRET=xxx
@@ -65,7 +75,7 @@ This is the central gitops repo for the Kubernetes artifacts.
 
    ex:
     ```
-    192.168.64.6 	programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local
+    192.168.64.6 	datamapper.dev.choreo.local programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local
     ```
 
    Use the proper node IP address.
