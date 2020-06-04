@@ -45,6 +45,23 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
+          # INTERNAL
+        - name: AST_CACHE_MAX_SIZE_MB
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AST_CACHE_MAX_SIZE_MB
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: LOG_LEVEL
+          # NEGOTIATOR
+        - name: NEGOTIATOR_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: NEGOTIATOR_GRPC_ADDRESS
           # AZURE ADX
         - name: AZURE_ADX_CLIENT_ID
           valueFrom:
