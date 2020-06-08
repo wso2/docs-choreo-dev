@@ -28,12 +28,37 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: METRICS_EVENTHUB_NAME
-              name: cm-eventhub
+              name: cm-telemetry
         - name: TRACES_EVENTHUB_NAME
           valueFrom:
             configMapKeyRef:
               key: TRACES_EVENTHUB_NAME
-              name: cm-eventhub
+              name: cm-telemetry
+        - name: NEGOTIATOR_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: NEGOTIATOR_GRPC_ADDRESS
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_CAPACITY
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_CAPACITY
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_EVICTION_FACTOR
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_EVICTION_FACTOR
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_MAX_AGE
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_MAX_AGE
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
+              name: cm-telemetry
         - name: EVENTHUB_CONNECTION_STRING
           valueFrom: 
             secretKeyRef:
