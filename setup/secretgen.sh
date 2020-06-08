@@ -26,6 +26,19 @@ function gensecret {
     echo "Choreo Sealed secret generated to "${outdir}
 }
 
+function gensecretfromyaml {
+    if [[ ! -f $1 ]]
+    then
+        echo "File "$1" not found"; exit 1
+    fi
+    local secret=$(echo ${1##*/} | sed 's/\(.*\)\..*/\1/')
+    mkdir -p ${outdir}
+    secretname=$(echo $secret | tr a-z A-Z | tr - _)
+    kubectl create secret generic secret-${secret} -n ${namespace} --from-file=$secretname=$1 --dry-run=client -o yaml |
+            kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml &&
+    echo "Choreo Sealed from yaml file $1 secret generated to "${outdir}
+}
+
 while [[ $(kubectl get pods -n kube-system -l name=sealed-secrets-controller -o \
       'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
  echo "waiting for kubeseal controller to be ready..." && sleep 10;
@@ -66,6 +79,13 @@ done
 [[ -z "${outdir}" ]] && { outdir="out"; }
 
 echo "Creating sealed secrets for namespace: "${namespace}
+
+[[ -z "${propfile}" ]] &&
+{
+for filename in ${directory}/*.yaml; do
+  gensecretfromyaml ${filename}
+done
+}
 
 [[ -z "${propfile}" ]] &&
 {
