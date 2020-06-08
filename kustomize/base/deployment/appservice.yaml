@@ -18,31 +18,10 @@ spec:
     spec:
       containers:
       - env:
-        - name: PLATFORMER_RUDDER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-appservice
-              key: PLATFORMER_RUDDER_PASSWORD
-        - name: PLATFORMER_GOOGLE_ID
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_GOOGLE_ID
-              name: cm-appservice
-
         - name: DISABLE_AUTHN
           valueFrom:
             configMapKeyRef:
               key: DISABLE_AUTHN
-              name: cm-appservice
-        - name: PLATFORMER_CLUSTER_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_CLUSTER_NAME
-              name: cm-appservice
-        - name: PLATFORMER_RUDDER_URL
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_RUDDER_URL
               name: cm-appservice
         - name: REPO_PATH
           valueFrom:
@@ -53,11 +32,6 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: REDIS_ADDRESS
-              name: cm-appservice
-        - name: PLATFORMER_RUDDER_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_RUDDER_USERNAME
               name: cm-appservice
         - name: NEGOTIATOR_GRPC_ADDRESS
           valueFrom:
@@ -74,10 +48,10 @@ spec:
             configMapKeyRef:
               key: DEPLOY_APP_NAMESPACE
               name: cm-appservice
-        - name: DEPLOY_INGRESS_SECRET
+        - name: APPS_INGRESS_SECRET
           valueFrom:
             configMapKeyRef:
-              key: DEPLOY_INGRESS_SECRET
+              key: APPS_INGRESS_SECRET
               name: cm-appservice
         # APP DB
         - name: DATABASE_USERNAME
@@ -187,16 +161,6 @@ spec:
             secretKeyRef:
               name: secret-appservice
               key: REDIS_PASSWORD
-        - name: PLATFORMER_PROJECT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_PROJECT_ID
-              name: cm-appservice
-        - name: PLATFORMER_ORG_ID
-          valueFrom:
-            configMapKeyRef:
-              key: PLATFORMER_ORG_ID
-              name: cm-appservice
         - name: GITHUB_USER
           valueFrom:
             configMapKeyRef:
@@ -262,6 +226,47 @@ spec:
             configMapKeyRef:
               name: cm-appservice
               key: WORKSPACE_IMAGE
+        # ------------------------------
+        - name: APPS_K8S_API_SERVER_URL
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: APPS_K8S_API_SERVER_URL
+        - name: APPS_K8S_SERVICE_ACCOUNT
+          valueFrom:
+            secretKeyRef:
+              name: secret-apps-k8s-service-account
+              key: APPS_K8S_SERVICE_ACCOUNT
+        - name: APPS_DOCKER_REGISTRY
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: APPS_DOCKER_REGISTRY
+        - name: APPS_DOCKER_REGISTRY_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: APPS_DOCKER_REGISTRY_USERNAME
+        - name: APPS_DOCKER_REGISTRY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: APPS_DOCKER_REGISTRY_PASSWORD
+        - name: APPS_INGRESS_CLASS
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: APPS_INGRESS_CLASS
+        - name: DISABLE_REDIS_AUTH
+          valueFrom:
+            configMapKeyRef:
+              key: DISABLE_REDIS_AUTH
+              name: cm-appservice
+        - name: DISABLE_REDIS_TLS
+          valueFrom:
+            configMapKeyRef:
+              key: DISABLE_REDIS_TLS
+              name: cm-appservice
         image: choreoipaas/app-service:latest
         name: appservice
         lifecycle:
