@@ -18,7 +18,6 @@ metadata:
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://domain.com"
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
 spec:
