@@ -16,6 +16,10 @@ spec:
       labels:
         choreo.component: datamapper
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       initContainers:
       - env:
         - name: ACCESS_KEY
