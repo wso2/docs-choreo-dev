@@ -79,6 +79,16 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_NAME
               name: cm-choreo-app-db
+        - name: BALLERINA_CENTRAL_SYNC
+          valueFrom:
+            configMapKeyRef:
+              key: BALLERINA_CENTRAL_SYNC
+              name: cm-choreo-app-db
+        - name: BALLERINA_CENTRAL_DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: BALLERINA_CENTRAL_DATABASE_NAME
+              name: cm-choreo-app-db
         # -----------------------
         - name: IDP_CLIENT_SECRET
           valueFrom:
