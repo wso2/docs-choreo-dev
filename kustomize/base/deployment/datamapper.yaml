@@ -58,10 +58,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: 300m
+            cpu: 1100m
             memory: 2048Mi
           requests:
-            cpu: 200m
+            cpu: 1000m
             memory: 1536Mi
         volumeMounts:
         - name: datamapper-models
