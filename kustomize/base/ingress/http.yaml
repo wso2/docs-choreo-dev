@@ -33,6 +33,14 @@ spec:
       http:
         paths:
         - backend:
+            serviceName: linker
+            servicePort: linker-secured-port
+          path: /linkersec 
+        - backend:
+            serviceName: linker
+            servicePort: linker-unsecured-port
+          path: /linker   
+        - backend:
             serviceName: obsapi
             servicePort: obsapi-port
           path: /graphql
