@@ -68,11 +68,12 @@ command -v helm >/dev/null 2>&1 || {
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
 kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 echo "--- Installing nginx ingress using Helm 3..."
-helm upgrade --install nginx-ingress-controller stable/nginx-ingress \
+helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --namespace "${namespace}-nginx-ingress" \
+    --version 2.3.0 \
     --set controller.replicaCount=2 \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
     --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
@@ -84,7 +85,7 @@ helm upgrade --install nginx-ingress-controller stable/nginx-ingress \
     --set controller.resources.limits."cpu"=1000m \
     --set controller.ingressClass="${namespace}-nginx" \
     --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-    --set controller.image.tag="0.30.0"
+    --set controller.image.tag="0.32.0"
 
 ############### Install Certmanager
 echo "--- Installing Certmanager"
