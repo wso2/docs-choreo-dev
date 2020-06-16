@@ -81,10 +81,10 @@ spec:
              path: /health
         ports:
         - containerPort: 9090
-          name: linker-secured-port
+          name: linker-sport
           protocol: TCP
         - containerPort: 9092
-          name: linker-unsecured-port
+          name: linker-port
           protocol: TCP  
         - containerPort: 9091
           name: health

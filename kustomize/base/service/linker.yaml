@@ -6,12 +6,12 @@ metadata:
   name: linker
 spec:
   ports:
-  - name: linker-secured-port
+  - name: linker-sport
     port: 9090
-    targetPort: linker-secured-port
-  - name: linker-unsecured-port
+    targetPort: linker-sport
+  - name: linker-port
     port: 9092
-    targetPort: linker-unsecured-port
+    targetPort: linker-port
 
   selector:
     choreo.component: linker
