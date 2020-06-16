@@ -34,11 +34,11 @@ spec:
         paths:
         - backend:
             serviceName: linker
-            servicePort: linker-secured-port
+            servicePort: linker-sport
           path: /linkersec 
         - backend:
             serviceName: linker
-            servicePort: linker-unsecured-port
+            servicePort: linker-port
           path: /linker   
         - backend:
             serviceName: obsapi
