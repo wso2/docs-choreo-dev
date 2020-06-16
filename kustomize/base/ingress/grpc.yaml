@@ -27,8 +27,8 @@ spec:
       - backend:
           serviceName: telemetry
           servicePort: telemetry-port
-        path: /Telemetry
+        path: /v0_1_2.Telemetry
       - backend:
           serviceName: negotiator
           servicePort: handshake-port
-        path: /Handshake
+        path: /v0_1_2.Handshake
