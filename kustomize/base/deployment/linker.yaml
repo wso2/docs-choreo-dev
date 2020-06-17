@@ -49,6 +49,11 @@ spec:
             configMapKeyRef:
               key: NEGOTIATOR_GRPC_ADDRESS
               name: cm-negotiator
+        - name: LINKER_INGRESS_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: LINKER_INGRESS_ADDRESS
+              name: cm-linker      
         image: choreoipaas/choreo-linker:latest
         securityContext:
           runAsUser: 100
