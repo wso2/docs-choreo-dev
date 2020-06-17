@@ -33,14 +33,6 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: linker
-            servicePort: linker-sport
-          path: /linkersec 
-        - backend:
-            serviceName: linker
-            servicePort: linker-port
-          path: /linker   
-        - backend:
             serviceName: obsapi
             servicePort: obsapi-port
           path: /graphql
@@ -55,6 +47,14 @@ spec:
     - host: app.domain.com
       http:
         paths:
+        - backend:
+            serviceName: linker
+            servicePort: linker-sport
+          path: /linkersec 
+        - backend:
+            serviceName: linker
+            servicePort: linker-port
+          path: /linker             
         - backend:
             serviceName: appservice
             servicePort: appservice-port
