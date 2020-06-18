@@ -70,3 +70,8 @@ CREATE TABLE environment
         FOREIGN KEY (application_id) REFERENCES application (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+ALTER TABLE `application` ADD COLUMN `display_type` VARCHAR(255) NULL DEFAULT '' AFTER `working_file`;
+ALTER TABLE `application` ADD COLUMN `deploy_type` VARCHAR(255) NULL DEFAULT '' AFTER `display_type`;
+
+ALTER TABLE `environment` ADD COLUMN `deployment_build_id` VARCHAR(255) NULL DEFAULT '' AFTER `test_status`;
