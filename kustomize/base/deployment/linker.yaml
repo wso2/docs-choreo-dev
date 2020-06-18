@@ -49,6 +49,11 @@ spec:
             configMapKeyRef:
               key: NEGOTIATOR_GRPC_ADDRESS
               name: cm-negotiator
+        - name: JWKS_ENDPOINT_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              key: JWKS_ENDPOINT_PROTOCOL
+              name: cm-linker   
         - name: LINKER_INGRESS_ADDRESS
           valueFrom:
             configMapKeyRef:
