@@ -231,6 +231,11 @@ spec:
             configMapKeyRef:
               key: WORKSPACE_CLEAN_INTERVAL_MINUTES
               name: cm-appservice
+        - name: WORKSPACE_PERISCOPE_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: WORKSPACE_PERISCOPE_HOST
+              name: cm-appservice
         - name: WORKSPACE_IMAGE
           valueFrom:
             configMapKeyRef:
