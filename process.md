@@ -125,7 +125,7 @@ track current state of the feature.
 
 ```
 git fetch upstream
-git branch feature-foo-master upstream/master
+git branch feature-foo-master prod-latest
 git branch feature-foo-dev upstream/dev
 git branch feature-foo-prod upstream/prod
 ```
