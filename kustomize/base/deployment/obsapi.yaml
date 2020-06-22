@@ -97,7 +97,7 @@ spec:
           successThreshold: 1
           httpGet:
             port: obsapi-port
-            path: /health
+            path: /readiness
         livenessProbe:
           initialDelaySeconds: 10
           timeoutSeconds: 15
@@ -106,7 +106,7 @@ spec:
           successThreshold: 1
           httpGet:
             port: obsapi-port
-            path: /health
+            path: /liveness
         resources:
           limits:
             cpu: 300m
