@@ -29,6 +29,11 @@ spec:
             configMapKeyRef:
               key: OBSERVE_API
               name: cm-frontend
+        - name: LOG_COLLECTION_API
+          valueFrom:
+            configMapKeyRef:
+              key: LOG_COLLECTION_API
+              name: cm-frontend
         - name: ANALYZE_API
           valueFrom:
             configMapKeyRef:
