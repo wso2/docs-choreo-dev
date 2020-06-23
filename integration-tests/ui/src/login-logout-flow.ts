@@ -16,7 +16,7 @@ test("user login and logout redirection", async (t) => {
   
   await t
     .click(getByLabelText("account of current user"))
-    .expect(getByText(config.user.name).exists).ok()
+    .expect(getByText(config.user.email).exists).ok()
     .expect(getByText("Logout").exists).ok()
     .click(getByText("Logout")).expect(getLocation()).contains(config.testURL + "login")
     .expect(getByText("Sign in with Google").exists).ok()
