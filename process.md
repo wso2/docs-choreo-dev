@@ -96,14 +96,14 @@ stage and run automated & manual tests. If tests fail, revert the PR.
 ### Prerequisites
 
 - Git remote `upstream` is configured to point to
-  git@github.com:wso2-enterprise/choreo-control-plane.git
+  `git@github.com:wso2-enterprise/choreo-control-plane.git`
   ```
   git remote add upstream git@github.com:wso2-enterprise/choreo-control-plane.git
   ```
 - Git remote `origin` is configured to point to
-  git@github.com:<user-name>/choreo-control-plane.git
+  `git@github.com:<user-name>/choreo-control-plane.git`
   ```
-  git remote add upstream git@github.com:<user-name>/choreo-control-plane.git
+  git remote add origin git@github.com:<user-name>/choreo-control-plane.git
   ```
 - [GitHub CLI](https://cli.github.com/) is installed.
 
