@@ -1,15 +1,27 @@
-CREATE TABLE IF NOT EXISTS program_info(
-  id                    INT             AUTO_INCREMENT,
-  uuid                  VARCHAR(255)    NOT NULL,
-  programHash           VARCHAR(255)    NOT NULL,
-  programJson           MEDIUMTEXT,
-  userId                VARCHAR(255),
-  appId                 VARCHAR(255),
-  insertedTime          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  CONSTRAINT UC_uuid UNIQUE (uuid),
-  CONSTRAINT UC_uuid_appid UNIQUE (uuid, appId)
+CREATE TABLE IF NOT EXISTS program (
+   id                    INT             AUTO_INCREMENT,
+   obs_id                VARCHAR(255)    NOT NULL,
+   project_secret        VARCHAR(255)    NOT NULL,
+   latest_version_id     INT,
+   app_id                VARCHAR(255),
+   inserted_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (id),
+   CONSTRAINT uc_obs_id UNIQUE (obs_id),
+   CONSTRAINT uc_app_id UNIQUE (app_id),
+   CONSTRAINT uc_project_secret UNIQUE (project_secret),
+   CONSTRAINT uc_obs_id_latest_version_id UNIQUE (obs_id, latest_version_id)
 );
-CREATE INDEX uuid_index ON program_info (uuid);
-CREATE INDEX appid_index ON program_info (appId);
-CREATE INDEX uuid_appid_index ON program_info (uuid, appId);
+CREATE TABLE IF NOT EXISTS version (
+  id                    INT             AUTO_INCREMENT,
+  version               VARCHAR(255)    NOT NULL,
+  program_id            INT,
+  ast_hash              VARCHAR(255)    NOT NULL,
+  ast                   MEDIUMTEXT,
+  inserted_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (program_id) REFERENCES program(id) ON DELETE CASCADE,
+  CONSTRAINT uc_version_pid UNIQUE (program_id, version)
+);
+ALTER TABLE program ADD CONSTRAINT fk_last_version_id FOREIGN KEY (latest_version_id) REFERENCES version(id) ON DELETE CASCADE;
+CREATE INDEX obsid_index ON program (obs_id);
+CREATE INDEX version_index ON version (program_id, version);

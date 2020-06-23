@@ -2,7 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   annotations:
-    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageValue":"483183820800m"}}]'
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
     choreo.component: perfanalyzer
   name: perfanalyzer
@@ -13,4 +13,4 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: perfanalyzer
-  targetCPUUtilizationPercentage: 90
+  targetCPUUtilizationPercentage: 75

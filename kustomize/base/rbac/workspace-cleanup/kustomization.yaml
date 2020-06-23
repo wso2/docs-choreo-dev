@@ -1,4 +1,0 @@
-resources:
-  - sa-workspace-cleanup.yaml
-  - cr-workspace-cleanup.yaml
-  - crb-workspace-cleanup.yaml

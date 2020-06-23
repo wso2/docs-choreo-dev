@@ -45,69 +45,99 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
-        # TRACE_DB
-        - name: CHOREO_TRACE_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-trace-db
-        - name: CHOREO_TRACE_DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_NAME
-              name: cm-choreo-trace-db
-        - name: CHOREO_TRACE_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-trace-db
-              key: CHOREO_DB_PASSWORD
-        - name: CHOREO_TRACE_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-trace-db
-        - name: CHOREO_TRACE_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-trace-db
-        # AZURE TSI
-        - name: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
+          # INTERNAL
+        - name: AST_CACHE_MAX_SIZE_MB
           valueFrom:
             configMapKeyRef:
               name: cm-obsapi
-              key: AZURE_TIMESERIESINSIGHTS_CLIENT_ID
-        - name: AZURE_TIMESERIESINSIGHTS_TENANT_ID
+              key: AST_CACHE_MAX_SIZE_MB
+        - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:
               name: cm-obsapi
-              key: AZURE_TIMESERIESINSIGHTS_TENANT_ID
-        - name: AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN
+              key: LOG_LEVEL
+          # NEGOTIATOR
+        - name: NEGOTIATOR_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
               name: cm-obsapi
-              key: AZURE_TIMESERIESINSIGHTS_ENVIRONMENT_FQDN
-        - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+              key: NEGOTIATOR_GRPC_ADDRESS
+          # AZURE ADX
+        - name: AZURE_ADX_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_CLIENT_ID
+        - name: AZURE_ADX_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_ENDPOINT
+        - name: AZURE_ADX_DB
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_DB
+        - name: AZURE_ADX_TENANT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_TENANT_ID
+        - name: AZURE_ADX_METRIC_TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_METRIC_TABLE
+        - name: AZURE_ADX_TRACE_TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: AZURE_ADX_TRACE_TABLE
+        - name: AZURE_ADX_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: secret-obsapi
-              key: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
+              key: AZURE_ADX_CLIENT_SECRET
         # --------------------------------------------------------
         image: choreoipaas/observability-api:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
         name: obsapi
+        lifecycle:
+          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+          preStop:
+            exec:
+              command:
+                - /bin/sleep
+                - "20"
         ports:
         - containerPort: 9095
           name: obsapi-port
           protocol: TCP
         readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
           httpGet:
             port: obsapi-port
             path: /health
         livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
           httpGet:
             port: obsapi-port
             path: /health
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
       serviceAccountName: sa-choreo-default

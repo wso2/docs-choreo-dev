@@ -19,6 +19,11 @@ spec:
     spec:
       containers:
       - env:
+        - name: b7a_log_level
+          valueFrom:
+            configMapKeyRef:
+              key: B7A_LOG_LEVEL
+              name: cm-loglevel-negotiator
         - name: CHOREO_APP_URL
           valueFrom:
             configMapKeyRef:
@@ -54,11 +59,28 @@ spec:
           runAsUser: 100
           runAsGroup: 1000
         name: negotiator
+        lifecycle:
+          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+          preStop:
+            exec:
+              command:
+                - /bin/sleep
+                - "20"
         readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
              port: health
              path: /health
         livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
              port: health
              path: /health
@@ -72,6 +94,12 @@ spec:
         - containerPort: 9091
           name: health
           protocol: TCP
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 768Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

@@ -19,31 +19,11 @@ spec:
     spec:
       containers:
         - env:
-            - name: CHOREO_DB_HOST
+            - name: b7a_log_level
               valueFrom:
                 configMapKeyRef:
-                  key: CHOREO_DB_HOST
-                  name: cm-choreo-app-db
-            - name: CHOREO_DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: CHOREO_DB_NAME
-                  name: cm-choreo-app-db
-            - name: CHOREO_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-app-db
-                  key: CHOREO_DB_PASSWORD
-            - name: CHOREO_DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  key: CHOREO_DB_PORT
-                  name: cm-choreo-app-db
-            - name: CHOREO_DB_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  key: CHOREO_DB_USERNAME
-                  name: cm-choreo-app-db
+                  key: B7A_LOG_LEVEL
+                  name: cm-loglevel-loggingapi
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
@@ -89,18 +69,41 @@ spec:
             runAsUser: 100
             runAsGroup: 1000
           name: loggingapi
+          lifecycle:
+            # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+            preStop:
+              exec:
+                command:
+                  - /bin/sleep
+                  - "20"
           ports:
             - containerPort: 9097
               name: logapi-port
               protocol: TCP
           readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
               port: logapi-port
               path: /api/0.1.0/health
           livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
               port: logapi-port
               path: /api/0.1.0/health
-          resources: {}
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
