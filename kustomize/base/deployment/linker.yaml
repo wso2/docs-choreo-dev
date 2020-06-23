@@ -4,18 +4,18 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    choreo.component: telemetry
-  name: telemetry
+    choreo.component: linker
+  name: linker
 spec:
-  replicas: 1 
+  replicas: 1
   selector:
     matchLabels:
-      choreo.component: telemetry
+      choreo.component: linker
   strategy: {}
   template:
     metadata:
       labels:
-        choreo.component: telemetry
+        choreo.component: linker
     spec:
       containers:
       - env:
@@ -23,52 +23,47 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: B7A_LOG_LEVEL
-              name: cm-loglevel-telemetry
-        - name: METRICS_EVENTHUB_NAME
+              name: cm-loglevel-linker
+        - name: IDP_ISSUER
           valueFrom:
             configMapKeyRef:
-              key: METRICS_EVENTHUB_NAME
-              name: cm-telemetry
-        - name: TRACES_EVENTHUB_NAME
+              key: IDP_ISSUER
+              name: cm-idp
+        - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
-              key: TRACES_EVENTHUB_NAME
-              name: cm-telemetry
+              key: IDP_CLIENT_ID
+              name: cm-idp              
+        - name: IDP_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_HOST
+              name: cm-idp   
+        - name: IDP_JWKS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_JWKS_ENDPOINT
+              name: cm-idp                 
         - name: NEGOTIATOR_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
               key: NEGOTIATOR_GRPC_ADDRESS
-              name: cm-telemetry
-        - name: PROJECT_SECRET_CACHE_CAPACITY
+              name: cm-negotiator
+        - name: JWKS_ENDPOINT_PROTOCOL
           valueFrom:
             configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_CAPACITY
-              name: cm-telemetry
-        - name: PROJECT_SECRET_CACHE_EVICTION_FACTOR
+              key: JWKS_ENDPOINT_PROTOCOL
+              name: cm-linker   
+        - name: LINKER_INGRESS_ADDRESS
           valueFrom:
             configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_EVICTION_FACTOR
-              name: cm-telemetry
-        - name: PROJECT_SECRET_CACHE_MAX_AGE
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_MAX_AGE
-              name: cm-telemetry
-        - name: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
-              name: cm-telemetry
-        - name: EVENTHUB_CONNECTION_STRING
-          valueFrom: 
-            secretKeyRef:
-              name: secret-telemetry
-              key: EVENTHUB_CONNECTION_STRING
-        image: choreoipaas/choreo-telemetry:latest
+              key: LINKER_INGRESS_ADDRESS
+              name: cm-linker      
+        image: choreoipaas/choreo-linker:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
-        name: telemetry
+        name: linker
         lifecycle:
           # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
           preStop:
@@ -76,13 +71,6 @@ spec:
               command:
                 - /bin/sleep
                 - "20"
-        ports:
-        - containerPort: 9090
-          name: telemetry-port
-          protocol: TCP
-        - containerPort: 9091
-          name: health
-          protocol: TCP
         readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
@@ -101,6 +89,16 @@ spec:
             httpGet:
              port: health
              path: /health
+        ports:
+        - containerPort: 9090
+          name: linker-sport
+          protocol: TCP
+        - containerPort: 9092
+          name: linker-port
+          protocol: TCP  
+        - containerPort: 9091
+          name: health
+          protocol: TCP
         resources:
           limits:
             cpu: 500m

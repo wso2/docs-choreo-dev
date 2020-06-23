@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: linker
+  name: linker
+spec:
+  ports:
+  - name: linker-sport
+    port: 9090
+    targetPort: linker-sport
+  - name: linker-port
+    port: 9092
+    targetPort: linker-port
+
+  selector:
+    choreo.component: linker

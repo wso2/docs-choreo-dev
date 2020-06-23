@@ -1,4 +1,3 @@
 resources:
   - sa-choreo-default.yaml
   - appservice
-  - workspace-cleanup

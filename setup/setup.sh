@@ -70,8 +70,8 @@ source common/k8s-cluster-init.sh
 if [[ "$create_ingress" == "true" ]]; then
     ############## Install nginx ingress (Optional)
     echo "--- Installing nginx ingress..."
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+    # Hack, since there is no static yaml manifest for kubernetes ingress 0.32.0
+    curl -s https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml | sed "s/quay.io\/kubernetes-ingress-controller\/nginx-ingress-controller:.*/quay.io\/kubernetes-ingress-controller\/nginx-ingress-controller:0.32.0/" | kubectl apply -f -
     read -p "Are you using Minikube? [y/N] " response
     echo    # (optional) move to a new line
     if [[ ${response} =~ ^[Yy]$ ]]; then
@@ -84,15 +84,15 @@ fi
 for env in "${environments[@]}"; do
     echo "--- Creating sealed ingress TLS secret..."
     ./certsecretgen.sh -n=${env}-choreo-system --tls-key=${tlskey} --tls-cert=${tlscert} --secret-name="ingress-cert" \
-                        -o="../kustomize/$env/secret/"
-    echo "Sealed secret ingress cert generated and copied to "${env}"/secret"
+                        -o="../kustomize/$env/choreo-system/secret/"
+    echo "Sealed secret ingress cert generated and copied to "${env}"/choreo-system/secret"
 done
 
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
     mkdir -p ${outdir}/${env}
-    ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/secret
+    ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/choreo-system/secret
 done
 
 ########### Cleanup

@@ -68,11 +68,12 @@ command -v helm >/dev/null 2>&1 || {
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
 kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 echo "--- Installing nginx ingress using Helm 3..."
-helm upgrade --install nginx-ingress-controller stable/nginx-ingress \
+helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --namespace "${namespace}-nginx-ingress" \
+    --version 2.3.0 \
     --set controller.replicaCount=2 \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
     --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
@@ -82,19 +83,28 @@ helm upgrade --install nginx-ingress-controller stable/nginx-ingress \
     --set controller.resources.requests."cpu"=500m \
     --set controller.resources.limits."memory"=1000Mi \
     --set controller.resources.limits."cpu"=1000m \
-    --set controller.ingressClass="${namespace}-nginx"
+    --set controller.ingressClass="${namespace}-nginx" \
+    --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
+    --set controller.image.tag="0.32.0"
 
-############### Install Certmanager CRDS
-echo "--- Installing Certmanager CRDS"
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.0/cert-manager.yaml
+############### Install Certmanager
+echo "--- Installing Certmanager"
+kubectl create ns cert-manager
+kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
-############## Install Cluster Issuer
-## Create azure dns contributor client secret
-echo "--- Creating azure dns contributor client secret"
-kubectl create secret generic "${namespace}-secret-azuredns-config" --from-literal=client-secret="$SERVICE_PRINCIPLE_CLIENT_SECRET" -n cert-manager --dry-run=client -oyaml | kubectl apply -f -
+## Install CRDs
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
 
-## Install Cluster Issuer
-envsubst < conf/cluster-issuer.yaml  | kubectl apply -n cert-manager  -f -
+## Install certmanager deployment
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm upgrade --install cert-manager --namespace cert-manager --wait jetstack/cert-manager --version v0.14.0
+
+################ Install emberstack refrector ########
+helm repo add emberstack https://emberstack.github.io/helm-charts
+helm repo update
+helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.0.10
+
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
@@ -112,11 +122,13 @@ kubectl create namespace kured
 # Install kured in that namespace with Helm 3 (only on Linux nodes, kured is not working on Windows nodes)
 helm upgrade --install kured stable/kured --namespace kured \
     --set nodeSelector."beta\.kubernetes\.io/os"=linux \
-    --set extraArgs.start-time=9am \
-    --set extraArgs.end-time=3pm \
+    --set extraArgs.start-time=4am \
+    --set extraArgs.end-time=10am \
     --set extraArgs.reboot-days="tue" \
     --set extraArgs.slack-hook-url="https://hooks.slack.com/services/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" \
-    --set extraArgs.slack-username="kured"
+    --set extraArgs.slack-username="kured" \
+    --set image.repository="choreoctrlplane.azurecr.io/weaveworks/kured" \
+    --set image.tag="1.3.0"
 
 ## Initialize Kubernetes Cluster
 source ../common/k8s-cluster-init.sh

@@ -16,6 +16,10 @@ spec:
       labels:
         choreo.component: datamapper
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       initContainers:
       - env:
         - name: ACCESS_KEY
@@ -25,6 +29,13 @@ spec:
               key: ACCESS_KEY
         image: choreoipaas/datamapper-init:latest
         name: datamapper-init
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
         volumeMounts:
         - name: datamapper-models
           mountPath: "/mnt"
@@ -32,14 +43,26 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
           subPath: "models.properties"
       containers:
-      - command: ["/bin/sh","-c"]
-        args: ["gunicorn --bind 0.0.0.0:5000 --workers=5 apps:data_mapper_app"]
-        image: choreoipaas/datamapper:latest
+      - image: choreoipaas/datamapper:latest
         name: datamapper
+        lifecycle:
+          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+          preStop:
+            exec:
+              command:
+                - /bin/sleep
+                - "20"
         ports:
         - containerPort: 5000
           name: dm-port
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1100m
+            memory: 2048Mi
+          requests:
+            cpu: 1000m
+            memory: 1536Mi
         volumeMounts:
         - name: datamapper-models
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"
