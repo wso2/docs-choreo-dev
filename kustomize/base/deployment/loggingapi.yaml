@@ -113,7 +113,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: logapi-port
-              path: /api/0.1.0/health
+              path: /logs/0.1.0/health
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -122,7 +122,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: logapi-port
-              path: /api/0.1.0/health
+              path: /logs/0.1.0/health
           resources:
             limits:
               cpu: 500m
