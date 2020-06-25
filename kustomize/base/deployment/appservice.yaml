@@ -295,6 +295,9 @@ spec:
         - containerPort: 8080
           name: appservice-port
           protocol: TCP
+        - containerPort: 9092
+          name: as-grpc-port
+          protocol: TCP  
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 15
