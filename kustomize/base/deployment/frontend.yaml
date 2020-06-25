@@ -59,6 +59,11 @@ spec:
             configMapKeyRef:
               key: IDP_REDIRECT_URL
               name: cm-idp
+        - name: APP_INSIGHTS_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: APP_INSIGHTS_KEY
+              name: cm-frontend
         image: choreoipaas/console-app:latest
         securityContext:
           runAsUser: 101
