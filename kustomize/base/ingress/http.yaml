@@ -40,10 +40,6 @@ spec:
             serviceName: frontend
             servicePort: frontend-port
           path: /
-        - backend:
-            serviceName: loggingapi
-            servicePort: logapi-port
-          path: /api/0.1.0
     - host: app.domain.com
       http:
         paths:
@@ -59,6 +55,10 @@ spec:
             serviceName: appservice
             servicePort: appservice-port
           path: /
+        - backend:
+            serviceName: loggingapi
+            servicePort: logapi-port
+          path: /logs/0.1.0
     - host: programanalyzer.domain.com
       http:
         paths:
