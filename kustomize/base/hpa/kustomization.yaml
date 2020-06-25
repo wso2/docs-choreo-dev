@@ -8,3 +8,4 @@ resources:
   - programanalyzer.yaml
   - perfanalyzer.yaml
   - datamapper.yaml
+  - linker.yaml
