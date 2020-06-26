@@ -9,5 +9,8 @@ spec:
   - port: 80
     protocol: TCP
     targetPort: appservice-port
+  - port: 9092
+    protocol: TCP
+    targetPort: as-grpc-port  
   selector:
     choreo.component: appservice
