@@ -72,4 +72,4 @@ spec:
           - backend:
               serviceName: datamapper
               servicePort: dm-port
-            path: /uploader
+            path: /
