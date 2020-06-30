@@ -9,3 +9,4 @@ resources:
   - telemetry.yaml
   - datamapper.yaml
   - linker.yaml
+  - choreowww.yaml
