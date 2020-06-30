@@ -17,12 +17,13 @@ spec:
       labels:
         choreo.component: choreowww
     spec:
+      securityContext:
+        fsGroup: 101
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-www:latest
         securityContext:
           runAsUser: 101
           runAsGroup: 101
-          fsGroup: 101
         name: choreowww
         lifecycle:
           # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
