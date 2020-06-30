@@ -27,6 +27,7 @@ spec:
         - app.domain.com
         - programanalyzer.domain.com
         - datamapper.domain.com
+        - www.domain.com
       secretName: ingress-cert
   rules:
     - host: domain.com
@@ -72,4 +73,11 @@ spec:
           - backend:
               serviceName: datamapper
               servicePort: dm-port
+            path: /
+    - host: www.domain.com
+      http:
+        paths:
+          - backend:
+              serviceName: choreowww
+              servicePort: choreowww-port
             path: /
