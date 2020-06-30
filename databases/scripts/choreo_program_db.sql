@@ -25,3 +25,50 @@ CREATE TABLE IF NOT EXISTS version (
 ALTER TABLE program ADD CONSTRAINT fk_last_version_id FOREIGN KEY (latest_version_id) REFERENCES version(id) ON DELETE CASCADE;
 CREATE INDEX obsid_index ON program (obs_id);
 CREATE INDEX version_index ON version (program_id, version);
+
+DELIMITER //
+CREATE PROCEDURE GetObsId(IN projsec VARCHAR(255), IN appid VARCHAR(255), 
+                          OUT pid INT, OUT obsid VARCHAR(255))
+BEGIN
+  IF(appid = '') THEN
+     SET appid := NULL;
+  END IF;
+  INSERT INTO `program` (`obs_id`, `project_secret`, `app_id`) 
+  SELECT UUID(),projsec,appid
+  WHERE NOT EXISTS (SELECT id FROM `program` WHERE `project_secret`=projsec LIMIT 1);
+  SELECT LAST_INSERT_ID() INTO pid;
+  SELECT `id`,`obs_id` INTO pid,obsid FROM `program` WHERE `project_secret`=projsec;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE GetVersion(IN programid INT, IN asthash VARCHAR(255), 
+                            OUT vid INT, OUT vn VARCHAR(255), OUT rowcount INT)
+BEGIN
+  INSERT INTO `version` (`version`, `program_id`, `ast_hash`) 
+  SELECT UUID(),programid,asthash
+  WHERE NOT EXISTS (SELECT id FROM `version` WHERE `program_id`=programid AND `ast_hash`=asthash LIMIT 1);
+  SELECT ROW_COUNT() INTO rowcount;
+  SELECT LAST_INSERT_ID() INTO vid LIMIT 1;
+  SELECT `vid`,`version` INTO vid,vn from `version` WHERE `program_id`=programid AND `ast_hash`=asthash;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Register(IN projsec VARCHAR(255), IN asthash VARCHAR(255), IN appid VARCHAR(255), 
+                          OUT obsid VARCHAR(255), OUT vn VARCHAR(255), OUT astchanged BOOLEAN)
+BEGIN
+  START TRANSACTION;
+    SET @programid := 0;
+    SET @versionid := 0;
+    SET @versionrows := 0;
+    SET @astchanged := false;
+    CALL GetObsId(projsec, appid, @programid, obsid); 
+    CALL GetVersion(@programid, asthash, @versionid, vn, @versionrows); 
+    IF (@versionrows = 1) THEN
+      UPDATE program SET latest_version_id=@versionid WHERE id=@programid;
+      SET astchanged := true;
+    END IF;
+  COMMIT;
+END //
+DELIMITER ;
