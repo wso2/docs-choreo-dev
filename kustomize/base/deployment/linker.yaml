@@ -58,7 +58,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: LINKER_INGRESS_ADDRESS
-              name: cm-linker      
+              name: cm-linker  
+        - name: APPSERVICE_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: APPSERVICE_GRPC_ADDRESS
+              name: cm-linker            
         image: choreoipaas/choreo-linker:latest
         securityContext:
           runAsUser: 100
