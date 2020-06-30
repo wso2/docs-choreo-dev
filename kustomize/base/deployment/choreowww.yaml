@@ -41,6 +41,9 @@ spec:
           requests:
             cpu: 200m
             memory: 256Mi
+        volumeMounts:
+          - name: choreowww-config
+            mountPath: "/app/choreo.config.js"
       restartPolicy: Always
       volumes:
       - name: choreowww-config
