@@ -43,7 +43,8 @@ spec:
             memory: 256Mi
         volumeMounts:
           - name: choreowww-config
-            mountPath: "/app/choreo.config.js"
+            mountPath: /app
+            subPath: choreo.config.js
       restartPolicy: Always
       volumes:
       - name: choreowww-config
