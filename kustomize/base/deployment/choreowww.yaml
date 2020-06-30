@@ -22,6 +22,7 @@ spec:
         securityContext:
           runAsUser: 101
           runAsGroup: 101
+          fsGroup: 101
         name: choreowww
         lifecycle:
           # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
@@ -43,8 +44,8 @@ spec:
             memory: 256Mi
         volumeMounts:
           - name: choreowww-config
-            mountPath: /app/choreo.config.js
-            subPath: choreo.config.js
+            mountPath: /app/config.js
+            subPath: config.js
       restartPolicy: Always
       volumes:
       - name: choreowww-config
