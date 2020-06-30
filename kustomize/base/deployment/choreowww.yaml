@@ -18,7 +18,7 @@ spec:
         choreo.component: choreowww
     spec:
       containers:
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-www:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-www:latest
         securityContext:
           runAsUser: 101
           runAsGroup: 101
