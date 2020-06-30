@@ -9,3 +9,4 @@ resources:
   - perfanalyzer.yaml
   - datamapper.yaml
   - linker.yaml
+  - choreowww.yaml
