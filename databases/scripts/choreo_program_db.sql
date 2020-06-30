@@ -47,7 +47,7 @@ CREATE PROCEDURE GetVersion(IN programid INT, IN asthash VARCHAR(255),
 BEGIN
   INSERT INTO `version` (`version`, `program_id`, `ast_hash`) 
   SELECT UUID(),programid,asthash
-  WHERE NOT EXISTS (SELECT id FROM `version` WHERE `program_id`=programid AND `ast_hash`=asthash LIMIT 1);
+  WHERE NOT EXISTS (SELECT id FROM `version` WHERE `program_id`=programid AND `ast_hash`=asthash);
   SELECT ROW_COUNT() INTO rowcount;
   SELECT LAST_INSERT_ID() INTO vid LIMIT 1;
   SELECT `vid`,`version` INTO vid,vn from `version` WHERE `program_id`=programid AND `ast_hash`=asthash;
