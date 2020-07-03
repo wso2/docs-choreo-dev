@@ -287,6 +287,11 @@ spec:
             secretKeyRef:
               name: secret-appservice
               key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - name: BETA_PROGRAM_POST_VALIDATION_REDIRECT_URL
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_POST_VALIDATION_REDIRECT_URL
+              name: cm-appservice
         image: choreoipaas/app-service:latest
         name: appservice
         lifecycle:
