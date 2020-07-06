@@ -75,3 +75,21 @@ ALTER TABLE `application` ADD COLUMN `display_type` VARCHAR(255) NULL DEFAULT ''
 ALTER TABLE `application` ADD COLUMN `deploy_type` VARCHAR(255) NULL DEFAULT '' AFTER `display_type`;
 
 ALTER TABLE `environment` ADD COLUMN `deployment_build_id` VARCHAR(255) NULL DEFAULT '' AFTER `test_status`;
+
+CREATE TABLE beta_invitation
+(
+    id              int(11)      NOT NULL AUTO_INCREMENT,
+    invitation_code varchar(255) NOT NULL,
+    correlation_key varchar(255) NOT NULL,
+    invited_email   varchar(255) NOT NULL,
+    signed_up_email varchar(255),
+    user_id         int(11) DEFAULT NULL,
+    status          varchar(255) NOT NULL,
+    created_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY beta_invitation_correlation_key_uindex (correlation_key),
+    KEY beta_invitation_user_id_fk (user_id),
+    CONSTRAINT beta_invitation_user_id_fk FOREIGN KEY (user_id) REFERENCES user (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
