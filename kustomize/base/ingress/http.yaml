@@ -28,6 +28,7 @@ spec:
         - programanalyzer.domain.com
         - datamapper.domain.com
         - www.domain.com
+        - console.domain.com
       secretName: ingress-cert
   rules:
     - host: domain.com
@@ -37,10 +38,6 @@ spec:
             serviceName: obsapi
             servicePort: obsapi-port
           path: /graphql
-        - backend:
-            serviceName: frontend
-            servicePort: frontend-port
-          path: /
     - host: app.domain.com
       http:
         paths:
@@ -63,21 +60,28 @@ spec:
     - host: programanalyzer.domain.com
       http:
         paths:
-          - backend:
-              serviceName: programanalyzer
-              servicePort: progan-port
-            path: /
+        - backend:
+            serviceName: programanalyzer
+            servicePort: progan-port
+          path: /
     - host: datamapper.domain.com
       http:
         paths:
-          - backend:
-              serviceName: datamapper
-              servicePort: dm-port
-            path: /
+        - backend:
+            serviceName: datamapper
+            servicePort: dm-port
+          path: /
     - host: www.domain.com
       http:
         paths:
-          - backend:
-              serviceName: choreowww
-              servicePort: choreowww-port
-            path: /
+        - backend:
+            serviceName: choreowww
+            servicePort: choreowww-port
+          path: /
+    - host: console.domain.com
+      http:
+        paths:
+        - backend:
+            serviceName: frontend
+            servicePort: frontend-port
+          path: /
