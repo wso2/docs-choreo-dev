@@ -4,8 +4,8 @@ CREATE TABLE organization
     uuid       varchar(255) NOT NULL,
     name       varchar(255) NOT NULL,
     handle     varchar(255) NOT NULL,
-    created_at datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY handle_unique (handle)
 ) ENGINE = InnoDB
@@ -16,8 +16,8 @@ CREATE TABLE user
 (
     id              int(11)      NOT NULL AUTO_INCREMENT,
     idp_id          varchar(255) NOT NULL,
-    created_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY idp_id_unique (idp_id)
 ) ENGINE = InnoDB
@@ -28,8 +28,8 @@ CREATE TABLE organization_user_mapping
     user_id         int          NOT NULL,
     organization_id int          NOT NULL,
     user_roles      varchar(255) NOT NULL,
-    created_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, organization_id),
     CONSTRAINT user_id_fk
         FOREIGN KEY (user_id) REFERENCES user (id),
@@ -47,8 +47,8 @@ CREATE TABLE application
     template        varchar(255) NOT NULL,
     git_remote      varchar(255) NOT NULL DEFAULT '',
     organization_id varchar(255) NOT NULL,
-    created_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY organization_id_handle_unique (organization_id, handle)
 ) ENGINE = InnoDB
@@ -62,8 +62,8 @@ CREATE TABLE environment
     deployment_status VARCHAR(255) NULL,
     test_status       VARCHAR(255) NULL,
     application_id    INT          NOT NULL,
-    created_at        datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at        datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT environment_pk
         PRIMARY KEY (id),
     CONSTRAINT environment_application_id_fk
