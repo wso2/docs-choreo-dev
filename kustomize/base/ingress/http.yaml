@@ -35,10 +35,6 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: obsapi
-            servicePort: obsapi-port
-          path: /graphql
-        - backend:
             serviceName: choreowww
             servicePort: choreowww-port
           path: /
@@ -85,6 +81,10 @@ spec:
     - host: console.domain.com
       http:
         paths:
+        - backend:
+            serviceName: obsapi
+            servicePort: obsapi-port
+          path: /graphql
         - backend:
             serviceName: frontend
             servicePort: frontend-port
