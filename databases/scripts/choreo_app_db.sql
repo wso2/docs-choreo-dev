@@ -46,11 +46,13 @@ CREATE TABLE application
     working_file    varchar(500) NOT NULL,
     template        varchar(255) NOT NULL,
     git_remote      varchar(255) NOT NULL DEFAULT '',
-    organization_id varchar(255) NOT NULL,
+    organization_id int(11)      NOT NULL,
     created_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    UNIQUE KEY organization_id_handle_unique (organization_id, handle)
+    UNIQUE KEY organization_id_handle_unique (organization_id, handle),
+    KEY index_organization_id (organization_id),
+    CONSTRAINT fk_organization_id FOREIGN KEY (organization_id) REFERENCES organization(id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
