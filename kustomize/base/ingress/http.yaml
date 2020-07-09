@@ -27,23 +27,17 @@ spec:
         - app.domain.com
         - programanalyzer.domain.com
         - datamapper.domain.com
+        - www.domain.com
+        - console.domain.com
       secretName: ingress-cert
   rules:
     - host: domain.com
       http:
         paths:
         - backend:
-            serviceName: obsapi
-            servicePort: obsapi-port
-          path: /graphql
-        - backend:
-            serviceName: frontend
-            servicePort: frontend-port
+            serviceName: choreowww
+            servicePort: choreowww-port
           path: /
-        - backend:
-            serviceName: loggingapi
-            servicePort: logapi-port
-          path: /api/0.1.0
     - host: app.domain.com
       http:
         paths:
@@ -59,17 +53,39 @@ spec:
             serviceName: appservice
             servicePort: appservice-port
           path: /
+        - backend:
+            serviceName: loggingapi
+            servicePort: logapi-port
+          path: /logs/0.1.0
     - host: programanalyzer.domain.com
       http:
         paths:
-          - backend:
-              serviceName: programanalyzer
-              servicePort: progan-port
-            path: /
+        - backend:
+            serviceName: programanalyzer
+            servicePort: progan-port
+          path: /
     - host: datamapper.domain.com
       http:
         paths:
-          - backend:
-              serviceName: datamapper
-              servicePort: dm-port
-            path: /uploader
+        - backend:
+            serviceName: datamapper
+            servicePort: dm-port
+          path: /
+    - host: www.domain.com
+      http:
+        paths:
+        - backend:
+            serviceName: choreowww
+            servicePort: choreowww-port
+          path: /
+    - host: console.domain.com
+      http:
+        paths:
+        - backend:
+            serviceName: obsapi
+            servicePort: obsapi-port
+          path: /graphql
+        - backend:
+            serviceName: frontend
+            servicePort: frontend-port
+          path: /

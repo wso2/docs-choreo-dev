@@ -29,6 +29,11 @@ spec:
             configMapKeyRef:
               key: OBSERVE_API
               name: cm-frontend
+        - name: LOG_COLLECTION_API
+          valueFrom:
+            configMapKeyRef:
+              key: LOG_COLLECTION_API
+              name: cm-frontend
         - name: ANALYZE_API
           valueFrom:
             configMapKeyRef:
@@ -38,6 +43,16 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: APP_API
+              name: cm-frontend
+        - name: LINKER_API_WS
+          valueFrom:
+            configMapKeyRef:
+              key: LINKER_API_WS
+              name: cm-frontend
+        - name: LINKER_API
+          valueFrom:
+            configMapKeyRef:
+              key: LINKER_API
               name: cm-frontend
         - name: IDP_URL
           valueFrom:
@@ -54,6 +69,11 @@ spec:
             configMapKeyRef:
               key: IDP_REDIRECT_URL
               name: cm-idp
+        - name: APP_INSIGHTS_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: APP_INSIGHTS_KEY
+              name: cm-frontend
         image: choreoipaas/console-app:latest
         securityContext:
           runAsUser: 101

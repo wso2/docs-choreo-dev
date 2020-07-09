@@ -8,3 +8,5 @@ resources:
   - programanalyzer.yaml
   - telemetry.yaml
   - datamapper.yaml
+  - linker.yaml
+  - choreowww.yaml

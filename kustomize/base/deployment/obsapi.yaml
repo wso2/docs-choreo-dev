@@ -19,32 +19,6 @@ spec:
       containers:
       - env:
         # --------------------------------------------------------
-        # PROGRAM_DB
-        - name: CHOREO_PROGRAM_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-program-db
-        - name: CHOREO_PROGRAM_DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_NAME
-              name: cm-choreo-program-db
-        - name: CHOREO_PROGRAM_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-program-db
-              key: CHOREO_DB_PASSWORD
-        - name: CHOREO_PROGRAM_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-program-db
-        - name: CHOREO_PROGRAM_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-program-db
           # INTERNAL
         - name: AST_CACHE_MAX_SIZE_MB
           valueFrom:
@@ -123,7 +97,7 @@ spec:
           successThreshold: 1
           httpGet:
             port: obsapi-port
-            path: /health
+            path: /readiness
         livenessProbe:
           initialDelaySeconds: 10
           timeoutSeconds: 15
@@ -132,7 +106,7 @@ spec:
           successThreshold: 1
           httpGet:
             port: obsapi-port
-            path: /health
+            path: /liveness
         resources:
           limits:
             cpu: 300m

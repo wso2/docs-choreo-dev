@@ -1,0 +1,16 @@
+{
+  "user":{
+    "name": "$USERNAME",
+    "email": "$EMAIL",
+    "picURL": "$AVATAR_URL",
+    "orgs":  [],
+    "token":"$token_value",
+    "cwatf":"$cwatf_value"
+  },
+  "testURL":"$TEST_URL",
+  "idpURL" : "$IDP_URL",
+  "idpUsername":"$IDP_USERNAME",
+  "idpPassword":"$IDP_PASSWORD",
+  "idpAuthHeader":"$IDP_AUTH_HEADER"
+
+}

@@ -24,6 +24,31 @@ spec:
                 configMapKeyRef:
                   key: B7A_LOG_LEVEL
                   name: cm-loglevel-loggingapi
+            - name: IDP_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_ISSUER
+                  name: cm-idp
+            - name: IDP_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_CLIENT_ID
+                  name: cm-idp
+            - name: IDP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_HOST
+                  name: cm-idp
+            - name: IDP_JWKS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_JWKS_ENDPOINT
+                  name: cm-idp
+            - name: JWKS_ENDPOINT_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  key: JWKS_ENDPOINT_PROTOCOL
+                  name: cm-loggingapi
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
@@ -80,6 +105,9 @@ spec:
             - containerPort: 9097
               name: logapi-port
               protocol: TCP
+            - containerPort: 9098
+              name: health
+              protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
@@ -87,8 +115,8 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: logapi-port
-              path: /api/0.1.0/health
+              port: health
+              path: /health
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -96,8 +124,8 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: logapi-port
-              path: /api/0.1.0/health
+              port: health
+              path: /health
           resources:
             limits:
               cpu: 500m
