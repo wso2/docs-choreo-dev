@@ -11,4 +11,5 @@ labels: 'Type/New Feature'
 
 - [ ] Base PR merged
 - [ ] Dev PR merged
+- [ ] Stage PR merged
 - [ ] Prod PR merged
