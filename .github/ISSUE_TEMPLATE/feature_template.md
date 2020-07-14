@@ -1,6 +1,6 @@
 ---
 name: "\U0001f31e Control Plane Feature"
-about: "For control plane feature controbutions  \U0001f44d"
+about: "For control plane feature contributions  \U0001f44d"
 labels: 'Type/New Feature'
 
 ---
