@@ -13,7 +13,8 @@ export const isValidUser = () => {
     config.user.orgs !== [] &&
     config.idpUsername !== "$IDP_USERNAME" &&
     config.idpPassword !== "$IDP_PASSWORD" &&
-    config.idpAuthHeader !== "$IDP_AUTH_HEADER"
+    config.idpAuthHeader !== "$IDP_AUTH_HEADER" &&
+    config.backendHostName !== "$BACKEND_HOSTNAME"
   );
 };
 
