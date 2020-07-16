@@ -75,6 +75,7 @@ CREATE TABLE environment
 
 ALTER TABLE `application` ADD COLUMN `display_type` VARCHAR(255) NULL DEFAULT '' AFTER `working_file`;
 ALTER TABLE `application` ADD COLUMN `deploy_type` VARCHAR(255) NULL DEFAULT '' AFTER `display_type`;
+ALTER TABLE `application` ADD COLUMN `cron_schedule` VARCHAR(100) NULL DEFAULT '' AFTER `deploy_type`;
 
 ALTER TABLE `environment` ADD COLUMN `deployment_build_id` VARCHAR(255) NULL DEFAULT '' AFTER `test_status`;
 
