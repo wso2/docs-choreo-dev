@@ -130,6 +130,11 @@ spec:
             configMapKeyRef:
               key: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
               name: cm-idp
+        - name: IDP_DISABLE_SECURE_COOKIES
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_DISABLE_SECURE_COOKIES
+              name: cm-idp
         - name: IDP_TOKEN_ENDPOINT
           valueFrom:
             configMapKeyRef:
