@@ -157,9 +157,10 @@ cmd_publish() {
 
     echo
     echo "Summary of actions:"
-    echo "- The branch '$DEV_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
-    echo "- The branch '$STAGE_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
-    echo "- The branch '$PROD_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- The branch '$MASTER_BRANCH_NAME' was published to control plane repo'"
+    echo "- The branch '$DEV_BRANCH_NAME' was published to control plane repo'"
+    echo "- The branch '$STAGE_BRANCH_NAME' was published to control plane repo'"
+    echo "- The branch '$PROD_BRANCH_NAME' was published to control plane repo'"
     echo "- You are now on branch '$MASTER_BRANCH_NAME'"
     echo ""
     echo
