@@ -59,4 +59,6 @@ main() {
 	cmd_$SUBACTION "$@"
 }
 
+warn() { echo "$@" >&2; }
+
 main "$@"
