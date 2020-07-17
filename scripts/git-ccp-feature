@@ -4,9 +4,10 @@ usage() {
     echo "usage: git ccp feature <subcommand>"
     echo ""
     echo "Available subcommands are:"
-    echo "    init                 Initialize branches for a new feature"
-    echo "    sync <feature-id>    Sync feature base branch with the environment specific"
-    echo "                         branches"
+    echo "    init                                 Initialize branches for a new feature"
+    echo "    sync <feature-id>                    Sync feature base branch with the environment"
+    echo "                                         specific branches "
+    echo "    publish <feature-id> <issue-number>  Publish changes by creating pull requests"
     echo
 }
 
@@ -95,6 +96,51 @@ cmd_sync() {
 
     git checkout $PROD_BRANCH_NAME
     git merge --no-edit $MASTER_BRANCH_NAME
+
+    git checkout $MASTER_BRANCH_NAME
+
+    echo
+    echo "Summary of actions:"
+    echo "- The branch '$DEV_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- The branch '$STAGE_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- The branch '$PROD_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- You are now on branch '$MASTER_BRANCH_NAME'"
+    echo ""
+    echo
+}
+
+cmd_publish() {
+    parse_args "$@"
+
+    FEATURE_ID=$1
+
+    if [ -z "$FEATURE_ID" ]; then
+	warn "Missing argument <feature-id>"
+	usage
+	exit 1
+    fi
+
+    ISSUE_ID=$2
+
+    if [ -z "$ISSUE_ID" ]; then
+	warn "Missing argument <issue-number>"
+	usage
+	exit 1
+    fi
+
+    generate_env_branches $FEATURE_ID
+
+    git checkout $MASTER_BRANCH_NAME
+    gh pr create -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+
+    git checkout $DEV_BRANCH_NAME
+    gh pr create -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+
+    git checkout $STAGE_BRANCH_NAME
+    gh pr create -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+
+    git checkout $PROD_BRANCH_NAME
+    gh pr create -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout $MASTER_BRANCH_NAME
 
