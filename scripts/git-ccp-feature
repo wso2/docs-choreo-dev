@@ -88,14 +88,24 @@ cmd_sync() {
 
     generate_env_branches $FEATURE_ID
 
+    echo "==== Syncing $MASTER_BRANCH_NAME ===="
+    git checkout $MASTER_BRANCH_NAME
+    git push origin $MASTER_BRANCH_NAME
+
+    echo -e "\n\n==== Syncing $DEV_BRANCH_NAME ===="
     git checkout $DEV_BRANCH_NAME
     git merge --no-edit $MASTER_BRANCH_NAME
+    git push origin $DEV_BRANCH_NAME
 
+    echo -e "\n\n==== Syncing $STAGE_BRANCH_NAME ===="
     git checkout $STAGE_BRANCH_NAME
     git merge --no-edit $MASTER_BRANCH_NAME
+    git push origin $STAGE_BRANCH_NAME
 
+    echo -e "\n\n==== Syncing $PROD_BRANCH_NAME ===="
     git checkout $PROD_BRANCH_NAME
     git merge --no-edit $MASTER_BRANCH_NAME
+    git push origin $PROD_BRANCH_NAME
 
     git checkout $MASTER_BRANCH_NAME
 
@@ -104,6 +114,7 @@ cmd_sync() {
     echo "- The branch '$DEV_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
     echo "- The branch '$STAGE_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
     echo "- The branch '$PROD_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- All changes were synced with origin remote"
     echo "- You are now on branch '$MASTER_BRANCH_NAME'"
     echo ""
     echo
