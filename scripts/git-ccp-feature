@@ -4,7 +4,9 @@ usage() {
     echo "usage: git ccp feature <subcommand>"
     echo ""
     echo "Available subcommands are:"
-    echo "    init     Initialize branches for a new feature"
+    echo "    init                 Initialize branches for a new feature"
+    echo "    sync <feature-id>    Sync feature base branch with the environment specific"
+    echo "                         branches"
     echo
 }
 
@@ -33,10 +35,7 @@ cmd_init() {
     STAGE_BASE='upstream/stage'
     PROD_BASE='upstream/prod'
 
-    MASTER_BRANCH_NAME="feature/base/${answer}" 
-    DEV_BRANCH_NAME="feature/dev/${answer}" 
-    STAGE_BRANCH_NAME="feature/stage/${answer}" 
-    PROD_BRANCH_NAME="feature/prod/${answer}" 
+    generate_env_branches $answer
 
     git fetch upstream
     git branch $MASTER_BRANCH_NAME $MASTER_BASE 
@@ -56,6 +55,55 @@ cmd_init() {
     echo ""
     echo "Now, start committing on your feature. When done, use:"
     echo ""
-    echo "     gh pr create -B master -w"
+    echo "     git ccp feature sync $answer"
+    echo
+}
+
+generate_env_branches() {
+    T_FEATURE_ID=$1
+
+    MASTER_BRANCH_NAME="feature/base/${T_FEATURE_ID}"
+    DEV_BRANCH_NAME="feature/dev/${T_FEATURE_ID}"
+    STAGE_BRANCH_NAME="feature/stage/${T_FEATURE_ID}"
+    PROD_BRANCH_NAME="feature/prod/${T_FEATURE_ID}"
+}
+
+parse_args() {
+    # parse options
+    FLAGS "$@" || exit $?
+    eval set -- "${FLAGS_ARGV}"
+}
+
+cmd_sync() {
+    parse_args "$@"
+
+    FEATURE_ID=$1
+
+    if [ -z "$FEATURE_ID" ]; then
+	warn "Missing argument <feature-id>"
+	usage
+	exit 1
+    fi
+
+    generate_env_branches $FEATURE_ID
+
+    git checkout $DEV_BRANCH_NAME
+    git merge --no-edit $MASTER_BRANCH_NAME
+
+    git checkout $STAGE_BRANCH_NAME
+    git merge --no-edit $MASTER_BRANCH_NAME
+
+    git checkout $PROD_BRANCH_NAME
+    git merge --no-edit $MASTER_BRANCH_NAME
+
+    git checkout $MASTER_BRANCH_NAME
+
+    echo
+    echo "Summary of actions:"
+    echo "- The branch '$DEV_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- The branch '$STAGE_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- The branch '$PROD_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    echo "- You are now on branch '$MASTER_BRANCH_NAME'"
+    echo ""
     echo
 }
