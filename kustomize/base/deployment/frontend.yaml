@@ -74,6 +74,11 @@ spec:
             configMapKeyRef:
               key: APP_INSIGHTS_KEY
               name: cm-frontend
+        - name: BETA_PROGRAM_WIDGET_URL
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_WIDGET_URL
+              name: cm-frontend
         image: choreoipaas/console-app:latest
         securityContext:
           runAsUser: 101
