@@ -5,4 +5,7 @@ resources:
   - ingress
   - hpa
   - pdb
+  - cron
+
 #  - netpol
+
