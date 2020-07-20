@@ -5,7 +5,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      choreo.component: perfanalyzer
+      choreo.component: pperfanalyzer-estimator
   policyTypes:
     - Ingress
     - Egress
@@ -13,5 +13,5 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              choreo.component: programanalyzer
+              choreo.component: perfanalyzer-estimator
   egress: []

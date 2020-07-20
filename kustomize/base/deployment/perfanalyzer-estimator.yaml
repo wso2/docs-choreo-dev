@@ -4,25 +4,25 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    choreo.component: perfanalyzer
-  name: perfanalyzer
+    choreo.component: perfanalyzer-estimator
+  name: perfanalyzer-estimator
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: perfanalyzer
+      choreo.component: perfanalyzer-estimator
   template:
     metadata:
       labels:
-        choreo.component: perfanalyzer
+        choreo.component: perfanalyzer-estimator
     spec:
       containers:
-      - image: choreoipaas/perfanalyzer:latest
+      - image: choreoipaas/perfanalyzer-estimator:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
-        name: perfanalyzer
+        name: perfanalyzer-estimator
         lifecycle:
           # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
           preStop:
@@ -44,9 +44,6 @@ spec:
         ports:
         - containerPort: 5005
           name: perfan-port
-          protocol: TCP
-        - containerPort: 5006
-          name: perfan-port2
           protocol: TCP
         resources:
           limits:

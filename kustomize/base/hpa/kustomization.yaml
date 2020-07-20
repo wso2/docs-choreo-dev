@@ -6,6 +6,6 @@ resources:
   - appservice.yaml
   - loggingapi.yaml
   - programanalyzer.yaml
-  - perfanalyzer.yaml
+  - perfanalyzer-estimator.yaml
   - datamapper.yaml
   - linker.yaml
