@@ -5,5 +5,5 @@ resources:
   - telemetry.yaml
   - loggingapi.yaml
   - obsapi.yaml
-  - perfanalyzer.yaml
+  - perfanalyzer-estimator.yaml
   - programanalyzer.yaml

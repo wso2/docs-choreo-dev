@@ -6,7 +6,7 @@ resources:
   - telemetry.yaml
   - appservice.yaml
   - programanalyzer.yaml
-  - perfanalyzer.yaml
+  - perfanalyzer-estimator.yaml
   - loggingapi.yaml
   - datamapper.yaml
   - choreowww.yaml

@@ -6,4 +6,4 @@ spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: perfanalyzer
+      choreo.component: perfanalyzer-estimator

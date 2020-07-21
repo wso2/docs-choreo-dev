@@ -4,13 +4,13 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
-    choreo.component: perfanalyzer
-  name: perfanalyzer
+    choreo.component: perfanalyzer-estimator
+  name: perfanalyzer-estimator
 spec:
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: perfanalyzer
+    name: perfanalyzer-estimator
   targetCPUUtilizationPercentage: 75
