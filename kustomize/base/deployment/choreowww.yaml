@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: choreowww
+  name: choreowww
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreowww
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreowww
+    spec:
+      securityContext:
+        fsGroup: 101
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-www:latest
+        securityContext:
+          runAsUser: 101
+          runAsGroup: 101
+        name: choreowww
+        lifecycle:
+          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+          preStop:
+            exec:
+              command:
+                - /bin/sleep
+                - "20"
+        ports:
+        - containerPort: 8080
+          name: choreowww-port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+          - name: choreowww-config
+            mountPath: /app/config.js
+            subPath: config.js
+      restartPolicy: Always
+      volumes:
+      - name: choreowww-config
+        configMap:
+          defaultMode: 420
+          name: cm-choreowww
+      serviceAccountName: sa-choreo-default

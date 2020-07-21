@@ -9,3 +9,4 @@ resources:
   - perfanalyzer-estimator.yaml
   - loggingapi.yaml
   - datamapper.yaml
+  - choreowww.yaml

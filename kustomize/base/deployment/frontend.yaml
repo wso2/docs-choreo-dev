@@ -44,6 +44,16 @@ spec:
             configMapKeyRef:
               key: APP_API
               name: cm-frontend
+        - name: LINKER_API_WS
+          valueFrom:
+            configMapKeyRef:
+              key: LINKER_API_WS
+              name: cm-frontend
+        - name: LINKER_API
+          valueFrom:
+            configMapKeyRef:
+              key: LINKER_API
+              name: cm-frontend
         - name: IDP_URL
           valueFrom:
             configMapKeyRef:
@@ -63,6 +73,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: APP_INSIGHTS_KEY
+              name: cm-frontend
+        - name: BETA_PROGRAM_WIDGET_URL
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_WIDGET_URL
               name: cm-frontend
         image: choreoipaas/console-app:latest
         securityContext:

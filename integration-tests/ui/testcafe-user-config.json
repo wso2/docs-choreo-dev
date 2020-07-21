@@ -8,9 +8,9 @@
     "cwatf":"$cwatf_value"
   },
   "testURL":"$TEST_URL",
+  "backendHostName":"$BACKEND_HOSTNAME",
   "idpURL" : "$IDP_URL",
   "idpUsername":"$IDP_USERNAME",
   "idpPassword":"$IDP_PASSWORD",
   "idpAuthHeader":"$IDP_AUTH_HEADER"
-
 }

@@ -130,6 +130,11 @@ spec:
             configMapKeyRef:
               key: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
               name: cm-idp
+        - name: IDP_DISABLE_SECURE_COOKIES
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_DISABLE_SECURE_COOKIES
+              name: cm-idp
         - name: IDP_TOKEN_ENDPOINT
           valueFrom:
             configMapKeyRef:
@@ -282,6 +287,21 @@ spec:
             configMapKeyRef:
               key: DISABLE_REDIS_TLS
               name: cm-appservice
+        - name: BETA_PROGRAM_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_ENABLED
+              name: cm-appservice
+        - name: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - name: BETA_PROGRAM_POST_VALIDATION_REDIRECT_URL
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_POST_VALIDATION_REDIRECT_URL
+              name: cm-appservice
         image: choreoipaas/app-service:latest
         name: appservice
         lifecycle:
@@ -295,6 +315,9 @@ spec:
         - containerPort: 8080
           name: appservice-port
           protocol: TCP
+        - containerPort: 9092
+          name: as-grpc-port
+          protocol: TCP  
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 15

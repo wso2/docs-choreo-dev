@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# enable debug mode
+if [ "$DEBUG" = "yes" ]; then
+	set -x
+fi
+
+export GITCCP_DIR=$(dirname $0)
+
+usage() {
+	echo "usage: git ccp <subcommand>"
+	echo
+	echo "Available subcommands are:"
+	echo "   feature      Work with branches for a new feature."
+	echo
+	echo "Try 'git ccp <subcommand> help' for details."
+}
+
+main() {
+	if [ $# -lt 1 ]; then
+		usage
+		exit 1
+	fi
+
+	# use the shFlags project to parse the command line arguments
+	. "$GITCCP_DIR/shflags"
+	FLAGS_PARENT="git ccp"
+
+	# parse the command-line
+	FLAGS "$@" || exit $?
+	eval set -- "${FLAGS_ARGV}"
+
+	# sanity checks
+	SUBCOMMAND="$1"; shift
+
+	if [ ! -e "$GITCCP_DIR/git-ccp-$SUBCOMMAND" ]; then
+		usage
+		exit 1
+	fi
+
+	# run command
+	. "$GITCCP_DIR/git-ccp-$SUBCOMMAND"
+	FLAGS_PARENT="git ccp $SUBCOMMAND"
+
+	
+	# test if the first argument is a flag (i.e. starts with '-')
+	# in that case, we interpret this arg as a flag for the default
+	# command
+	SUBACTION="default"
+	if [ "$1" != "" ] && { ! echo "$1" | grep -q "^-"; } then
+		SUBACTION="$1"; shift
+	fi
+	if ! type "cmd_$SUBACTION" >/dev/null 2>&1; then
+		warn "Unknown subcommand: '$SUBACTION'"
+		usage
+		exit 1
+	fi
+
+	cmd_$SUBACTION "$@"
+}
+
+warn() { echo "$@" >&2; }
+
+main "$@"

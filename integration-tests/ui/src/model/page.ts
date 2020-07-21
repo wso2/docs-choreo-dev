@@ -4,9 +4,10 @@ import config from "../../testcafe-user-config.json";
 import { isValidUser, getAccessToken, setTokenData } from "../utils/utils";
 
 const STORAGE_KEY = "PORTAL_STATE";
+const backendRegexp = "https:\/\/"+config.backendHostName+"\/*"
 
 class Page {
-  loginHook = new ChoreoLoginHook(/\https:\/\/app.dv.choreo.dev\/*/, {});
+  loginHook = new ChoreoLoginHook(new RegExp(backendRegexp), {});
   localStorageSet = ClientFunction((key, value) =>
     localStorage.setItem(key, value)
   );
