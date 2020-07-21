@@ -106,7 +106,11 @@ stage and run automated & manual tests. If tests fail, revert the PR.
   git remote add origin git@github.com:<user-name>/choreo-control-plane.git
   ```
 - [GitHub CLI](https://cli.github.com/) is installed.
-
+- `git ccp` sub command is installed.
+  - Add `<choreo-control-plane-repo-location>/scripts` to `$PATH`.
+	```
+	export PATH=/path/to/wso2-enterprise/choreo-control-plane/scripts:$PATH
+	```
 
 ### How to request a component version upgrade to prod?
 
@@ -124,69 +128,70 @@ track current state of the feature.
 #### 2. Creating the feature branches
 
 ```
-git fetch upstream
-git branch feature-foo-master prod-latest
-git branch feature-foo-dev upstream/dev
-git branch feature-foo-prod upstream/prod
+git ccp feature init
 ```
 
-#### 3. Creating the Base PR
+#### 3. Creating the base changes
 
 ```
-git checkout feature-foo-master
 # do base changes
 git add <files>
-git commmit
-gh pr create -B master -w
+git commit
+git ccp feature sync feature-foo
 ```
 
-#### 4. Creating the Dev PR
+#### 4. Creating the Dev changes
 
 ```
-git checkout feature-foo-dev
-git merge feature-foo-master
+git checkout feature/dev/feature-foo
 # do dev overlay changes
 git add <files>
-git commmit
-gh pr create -B dev -w
+git commit
 ```
 
-#### 5. Creating the Prod PR
+#### 5. Creating the Stage changes
 
 ```
-git checkout feature-foo-prod
-git merge feature-foo-master
+git checkout feature/stage/feature-foo
+# do stage overlay changes
+git add <files>
+git commit
+```
+
+#### 6. Creating the Prod changes
+
+```
+git checkout feature/prod/feature-foo
 # do prod overlay changes
 git add <files>
-git commmit
-gh pr create -B prod -w
+git commit
 ```
+
+#### 7. Create a CP issue and publish PRs
+
+```
+gh issue create
+git ccp feature publish feature-foo 999
+```
+
+Please use the correct issue number instead of 999 in above command.
 
 #### Pushing changes after review
 ##### Doing the changes to base
 
 ```
-git checkout feature-foo-master
-# do the base change
+# do base changes
 git add <files>
-git commmit
-git push origin feature-foo-master
-
-git checkout feature-foo-dev
-git merge feature-foo-master
-git push origin feature-foo-dev
-
-git checkout feature-foo-prod
-git merge feature-foo-master
-git push origin feature-foo-prod
+git commit
+git ccp feature sync feature-foo
 ```
 
 ##### Doing the env overlay changes
 
 ```
-git checkout feature-foo-dev
+git checkout feature/<env>/feature-foo
 # do the base change
 git add <files>
 git commmit
-git push origin feature-foo-dev
+git push origin feature/<env>/feature-foo
 ```
