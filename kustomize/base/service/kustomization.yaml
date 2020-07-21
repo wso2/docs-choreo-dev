@@ -5,7 +5,7 @@ resources:
   - obsapi.yaml
   - telemetry.yaml
   - appservice.yaml
+  - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
-  - perfanalyzer.yaml
   - loggingapi.yaml
   - datamapper.yaml
