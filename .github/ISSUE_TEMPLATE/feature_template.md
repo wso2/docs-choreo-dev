@@ -13,3 +13,8 @@ labels: 'Type/New Feature'
 - [ ] Dev PR merged
 - [ ] Stage PR merged
 - [ ] Prod PR merged
+
+
+### Optional
+
+- [ ] Updated the release note in <https://github.com/wso2-enterprise/choreo-control-plane/releases>.
