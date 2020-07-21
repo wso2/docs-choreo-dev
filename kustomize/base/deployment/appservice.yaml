@@ -292,6 +292,11 @@ spec:
             configMapKeyRef:
               key: BETA_PROGRAM_ENABLED
               name: cm-appservice
+        - name: BETA_PROGRAM_ENFORCE_ON_EXISTING_USERS
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_ENFORCE_ON_EXISTING_USERS
+              name: cm-appservice
         - name: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
           valueFrom:
             secretKeyRef:
