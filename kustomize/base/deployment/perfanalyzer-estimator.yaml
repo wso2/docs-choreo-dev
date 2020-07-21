@@ -31,11 +31,6 @@ spec:
                 - /bin/sleep
                 - "20"
         env:
-          - name: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET
-                name: secret-perfanalyzer
           - name: CHOREO_PERF_DB_PASSWORD
             valueFrom:
               secretKeyRef:
