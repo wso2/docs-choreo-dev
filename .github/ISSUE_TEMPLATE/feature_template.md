@@ -17,5 +17,4 @@ labels: 'Type/New Feature'
 
 ### Optional
 
-- [ ] Updated the release note in
-      <https://github.com/wso2-enterprise/choreo-control-plane/releases>.
+- [ ] Updated the release note in <https://github.com/wso2-enterprise/choreo-control-plane/releases>.
