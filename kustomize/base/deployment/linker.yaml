@@ -64,7 +64,7 @@ spec:
             configMapKeyRef:
               key: APPSERVICE_GRPC_ADDRESS
               name: cm-linker            
-        image: choreoipaas/choreo-linker:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-linker:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000

@@ -73,7 +73,7 @@ spec:
               name: secret-obsapi
               key: AZURE_ADX_CLIENT_SECRET
         # --------------------------------------------------------
-        image: choreoipaas/observability-api:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/observability-api:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000

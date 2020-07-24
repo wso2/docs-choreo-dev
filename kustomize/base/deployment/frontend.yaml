@@ -79,7 +79,7 @@ spec:
             configMapKeyRef:
               key: BETA_PROGRAM_WIDGET_URL
               name: cm-frontend
-        image: choreoipaas/console-app:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
           runAsGroup: 101

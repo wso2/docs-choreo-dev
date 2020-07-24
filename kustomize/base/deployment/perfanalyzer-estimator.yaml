@@ -18,7 +18,7 @@ spec:
         choreo.component: perfanalyzer-estimator
     spec:
       containers:
-      - image: choreoipaas/perfanalyzer-estimator:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
