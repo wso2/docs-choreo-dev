@@ -307,7 +307,7 @@ spec:
             configMapKeyRef:
               key: BETA_PROGRAM_POST_VALIDATION_REDIRECT_URL
               name: cm-appservice
-        image: choreoipaas/app-service:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
         name: appservice
         lifecycle:
           # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint

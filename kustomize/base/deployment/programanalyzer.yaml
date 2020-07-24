@@ -16,7 +16,7 @@ spec:
         choreo.component: programanalyzer
     spec:
       containers:
-      - image: choreoipaas/programanalyzer:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000

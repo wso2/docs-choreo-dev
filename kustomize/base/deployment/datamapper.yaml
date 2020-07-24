@@ -27,7 +27,7 @@ spec:
             secretKeyRef:
               name: secret-datamapper
               key: ACCESS_KEY
-        image: choreoipaas/datamapper-init:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/datamapper-init:latest
         name: datamapper-init
         resources:
           limits:
@@ -43,7 +43,7 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
           subPath: "models.properties"
       containers:
-      - image: choreoipaas/datamapper:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/datamapper:latest
         name: datamapper
         lifecycle:
           # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint

@@ -64,7 +64,7 @@ spec:
             secretKeyRef:
               name: secret-telemetry
               key: EVENTHUB_CONNECTION_STRING
-        image: choreoipaas/choreo-telemetry:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000

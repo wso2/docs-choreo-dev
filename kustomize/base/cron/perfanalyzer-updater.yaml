@@ -18,7 +18,7 @@ spec:
           terminationGracePeriodSeconds: 30
           containers:
           - name: perfanalyzer-updater
-            image: choreoipaas/perfanalyzer-updater:latest
+            image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
             securityContext:
               runAsUser: 100
               runAsGroup: 1000
