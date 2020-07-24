@@ -120,10 +120,10 @@ spec:
             configMapKeyRef:
               key: IDP_HOST
               name: cm-idp
-        - name: IDP_WHITELISTED_REDIRECT_URLS
+        - name: IDP_ALLOWED_REDIRECT_URLS
           valueFrom:
             configMapKeyRef:
-              key: IDP_WHITELISTED_REDIRECT_URLS
+              key: IDP_ALLOWED_REDIRECT_URLS
               name: cm-idp
         - name: IDP_AUTH_RESPONSE_COOKIE_MAX_AGE
           valueFrom:
