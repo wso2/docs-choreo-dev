@@ -15,6 +15,9 @@ spec:
     metadata:
       labels:
         choreo.component: obsapi
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "20"
     spec:
       containers:
       - env:

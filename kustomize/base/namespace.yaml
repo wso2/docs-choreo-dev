@@ -1,7 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  annotations:
-    linkerd.io/inject: enabled
-    config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "20"
   name: choreo-system
