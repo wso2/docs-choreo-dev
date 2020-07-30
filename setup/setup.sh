@@ -87,6 +87,9 @@ for env in "${environments[@]}"; do
     echo "Sealed secret ingress cert generated and copied to "${env}"/choreo-system/secret"
 done
 
+########### Install Linkerd #############
+linkerd install | kubectl apply -f -
+
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
