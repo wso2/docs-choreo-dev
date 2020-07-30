@@ -67,6 +67,9 @@ mkdir -p $outdir
 ############## Initialize Kubernetes Cluster
 source common/k8s-cluster-init.sh
 
+########### Install Linkerd #############
+linkerd install | kubectl apply -f -
+
 if [[ "$create_ingress" == "true" ]]; then
     ############## Install nginx ingress (Optional)
     echo "--- Installing nginx ingress..."
@@ -77,6 +80,8 @@ if [[ "$create_ingress" == "true" ]]; then
       echo "--- Enabling nginx ingress addon for Minikube..."
       minikube addons enable ingress
     fi
+    kubectl annotate namespace ingress-nginx linkerd.io/inject=enabled
+    kubectl rollout restart deployment/ingress-nginx-controller -n ingress-nginx # to enable linkerd proxies for the ingress controller
 fi
 
 ########## Create sealed ingress TLS secret
@@ -86,9 +91,6 @@ for env in "${environments[@]}"; do
                         -o="../kustomize/$env/choreo-system/secret/"
     echo "Sealed secret ingress cert generated and copied to "${env}"/choreo-system/secret"
 done
-
-########### Install Linkerd #############
-linkerd install | kubectl apply -f -
 
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
