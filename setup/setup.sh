@@ -70,8 +70,7 @@ source common/k8s-cluster-init.sh
 if [[ "$create_ingress" == "true" ]]; then
     ############## Install nginx ingress (Optional)
     echo "--- Installing nginx ingress..."
-    # Hack, since there is no static yaml manifest for kubernetes ingress 0.32.0
-    curl -s https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml | sed "s/quay.io\/kubernetes-ingress-controller\/nginx-ingress-controller:.*/quay.io\/kubernetes-ingress-controller\/nginx-ingress-controller:0.32.0/" | kubectl apply -f -
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.0/deploy/static/provider/cloud/deploy.yaml
     read -p "Are you using Minikube? [y/N] " response
     echo    # (optional) move to a new line
     if [[ ${response} =~ ^[Yy]$ ]]; then
