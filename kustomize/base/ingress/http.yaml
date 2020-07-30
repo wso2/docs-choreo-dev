@@ -18,6 +18,8 @@ metadata:
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://domain.com"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
 spec:
@@ -28,48 +30,48 @@ spec:
         - datamapper.domain.com
         - console.domain.com
       secretName: ingress-cert
-  rules:
+  rules: # servicePort string values are replaced with numeric since nginx + linkerd does not work with string values ref: https://github.com/linkerd/linkerd2/issues/4211
     - host: app.domain.com
       http:
         paths:
         - backend:
             serviceName: linker
-            servicePort: linker-sport
+            servicePort: 9090
           path: /linkersec 
         - backend:
             serviceName: linker
-            servicePort: linker-port
+            servicePort: 9092
           path: /linker             
         - backend:
             serviceName: appservice
-            servicePort: appservice-port
+            servicePort: 80
           path: /
         - backend:
             serviceName: loggingapi
-            servicePort: logapi-port
+            servicePort: 9097
           path: /logs/0.1.0
     - host: programanalyzer.domain.com
       http:
         paths:
         - backend:
             serviceName: programanalyzer
-            servicePort: progan-port
+            servicePort: 9000
           path: /
     - host: datamapper.domain.com
       http:
         paths:
         - backend:
             serviceName: datamapper
-            servicePort: dm-port
+            servicePort: 5000
           path: /
     - host: console.domain.com
       http:
         paths:
         - backend:
             serviceName: obsapi
-            servicePort: obsapi-port
+            servicePort: 9095
           path: /graphql
         - backend:
             serviceName: frontend
-            servicePort: frontend-port
+            servicePort: 8080
           path: /
