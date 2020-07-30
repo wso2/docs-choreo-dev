@@ -307,6 +307,37 @@ spec:
             configMapKeyRef:
               key: BETA_PROGRAM_POST_VALIDATION_REDIRECT_URL
               name: cm-appservice
+        # ------------------------------
+        - name: GITHUB_BOT_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: GITHUB_BOT_ACCESS_TOKEN
+        - name: USER_FEEDBACK_GITHUB_REPO_OWNER
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: USER_FEEDBACK_GITHUB_REPO_OWNER
+        - name: USER_FEEDBACK_GITHUB_REPO_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: USER_FEEDBACK_GITHUB_REPO_NAME
+        - name: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_NAME
+        - name: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-appservice
+              key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+        - name: USER_FEEDBACK_AZURE_BLOB_CONTAINER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: cm-appservice
+              key: USER_FEEDBACK_AZURE_BLOB_CONTAINER_NAME
         image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
         name: appservice
         lifecycle:
