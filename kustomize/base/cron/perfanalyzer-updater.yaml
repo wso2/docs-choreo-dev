@@ -11,6 +11,8 @@ spec:
     spec:
       template:
         metadata:
+          annotations:
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
             choreo.component: perfanalyzer-updater
         spec:

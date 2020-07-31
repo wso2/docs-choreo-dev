@@ -10,20 +10,24 @@ fi
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
+LINKERD_VERSION=stable-2.8.1
 linkerd_installed="true"
 command -v linkerd >/dev/null 2>&1 || {
     linkerd_installed="false"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        curl -sL https://run.linkerd.io/install | sh
+        curl -sLO "https://github.com/linkerd/linkerd2/releases/download/$LINKERD_VERSION/linkerd2-cli-$LINKERD_VERSION-linux"
+        sudo cp ./linkerd2-cli-$LINKERD_VERSION-linux /usr/local/bin/linkerd
+        sudo chmod +x /usr/local/bin/linkerd
         linkerd_installed="true"
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install linkerd
+        curl -sLO "https://github.com/linkerd/linkerd2/releases/download/$LINKERD_VERSION/linkerd2-cli-$LINKERD_VERSION-darwin"
+        sudo cp ./linkerd2-cli-$LINKERD_VERSION-darwin /usr/local/bin/linkerd
+        sudo chmod +x /usr/local/bin/linkerd
         linkerd_installed="true"
     else
         echo "Could not install linkerd. Unsupported operating system. Please manually install it.."
     fi
 }
-linkerd install | kubectl apply -f -
 
 ############## Install Sealed secret support
 echo "--- Installing kubeseal & Bitnami sealed secrets..."

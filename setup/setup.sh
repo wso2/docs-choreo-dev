@@ -67,17 +67,21 @@ mkdir -p $outdir
 ############## Initialize Kubernetes Cluster
 source common/k8s-cluster-init.sh
 
+########### Install Linkerd #############
+linkerd install | kubectl apply -f -
+
 if [[ "$create_ingress" == "true" ]]; then
     ############## Install nginx ingress (Optional)
     echo "--- Installing nginx ingress..."
-    # Hack, since there is no static yaml manifest for kubernetes ingress 0.32.0
-    curl -s https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml | sed "s/quay.io\/kubernetes-ingress-controller\/nginx-ingress-controller:.*/quay.io\/kubernetes-ingress-controller\/nginx-ingress-controller:0.32.0/" | kubectl apply -f -
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.0/deploy/static/provider/cloud/deploy.yaml
     read -p "Are you using Minikube? [y/N] " response
     echo    # (optional) move to a new line
     if [[ ${response} =~ ^[Yy]$ ]]; then
       echo "--- Enabling nginx ingress addon for Minikube..."
       minikube addons enable ingress
     fi
+    kubectl annotate namespace ingress-nginx linkerd.io/inject=enabled
+    kubectl rollout restart deployment/ingress-nginx-controller -n ingress-nginx # to enable linkerd proxies for the ingress controller
 fi
 
 ########## Create sealed ingress TLS secret

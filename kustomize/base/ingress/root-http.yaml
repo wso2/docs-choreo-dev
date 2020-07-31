@@ -33,12 +33,12 @@ spec:
         paths:
         - backend:
             serviceName: choreowww
-            servicePort: choreowww-port
+            servicePort: 8080
           path: /
     - host: www.domain.com
       http:
         paths:
         - backend:
             serviceName: choreowww
-            servicePort: choreowww-port
+            servicePort: 8080
           path: /

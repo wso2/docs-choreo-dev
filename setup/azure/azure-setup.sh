@@ -48,6 +48,9 @@ else
 fi
 export NAMESPACE=${namespace}
 
+## Initialize Kubernetes Cluster
+source ../common/k8s-cluster-init.sh
+
 ############### Install Helm 3
 echo "--- Installing Helm 3..."
 helm3_installed="true"
@@ -64,28 +67,22 @@ command -v helm >/dev/null 2>&1 || {
     fi
 }
 
-############### Install Nginx Ingress Controller using Helm 3
-echo "--- Creating namespace ${namespace}-nginx-ingress..."
-kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
-
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-
-echo "--- Installing nginx ingress using Helm 3..."
-helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
-    --namespace "${namespace}-nginx-ingress" \
-    --version 2.3.0 \
-    --set controller.replicaCount=2 \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
-    --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
-    --set rbac.create=true \
-    --set controller.service.externalTrafficPolicy=Local \
-    --set controller.resources.requests."memory"=500Mi \
-    --set controller.resources.requests."cpu"=500m \
-    --set controller.resources.limits."memory"=1000Mi \
-    --set controller.resources.limits."cpu"=1000m \
-    --set controller.ingressClass="${namespace}-nginx" \
-    --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-    --set controller.image.tag="0.32.0"
+############### Install Step Cli
+echo "--- Installing Step to generate Keys"
+step_installed="true"
+command -v helm >/dev/null 2>&1 || {
+    step_installed="false"
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        wget https://github.com/smallstep/cli/releases/download/v0.14.6/step-cli_0.14.6_amd64.deb -O /tmp/step-cli_0.14.6_amd64.deb
+        sudo dpkg -i /tmp/step-cli_0.14.6_amd64.deb
+        step_installed="true"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install step
+        step_installed="true"
+    else
+        echo "Could not install helm3. Unsupported operating system. Please manually install it.."
+    fi
+}
 
 ############### Install Certmanager
 echo "--- Installing Certmanager"
@@ -99,6 +96,61 @@ kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 helm upgrade --install cert-manager --namespace cert-manager --wait jetstack/cert-manager --version v0.14.0
+
+############### Install Linkerd2 using Helm 3
+echo "-- Creating namespace linkerd"
+kubectl create namespace linkerd
+kubectl annotate namespace linkerd config.linkerd.io/admission-webhooks=disabled
+
+echo "-- Creating secrets for linkerd"
+step certificate create identity.linkerd.cluster.local /tmp/ca.crt /tmp/ca.key \
+  --profile root-ca --no-password --insecure
+
+echo "-- Creating k8s TLS secrets to Automatically rotate control plane TLS using certmanager"
+#Automatically Rotating Control Plane TLS Credentials https://linkerd.io/2/tasks/automatically-rotating-control-plane-tls-credentials/
+kubectl create secret tls linkerd-trust-anchor --cert=/tmp/ca.crt --key=/tmp/ca.key --namespace=linkerd
+
+kubectl apply -n linkerd -f linkerd2/certmanager/issuer.yaml
+kubectl apply -n linkerd -f linkerd2/certmanager/certificate.yaml
+
+echo "--- Installing linkerd2... "
+helm repo add linkerd https://helm.linkerd.io/stable
+helm repo update
+helm upgrade --install linkerd2 --wait \
+     --set-file global.identityTrustAnchorsPEM=/tmp/ca.crt \
+     -f values.yaml -f ha-values.yaml \
+     -n linkerd \
+     --version 2.8.1
+
+############### Install Nginx Ingress Controller using Helm 3
+echo "--- Creating namespace ${namespace}-nginx-ingress..."
+kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
+
+# Annotate Nginx ingress namespace for linker mTLS
+kubectl annotate namespace "${namespace}-nginx-ingress" linkerd.io/inject=enabled
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm repo update
+
+echo "--- Installing nginx ingress using Helm 3..."
+helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
+    --namespace "${namespace}-nginx-ingress" \
+    --version 2.11.0 \
+    --set controller.replicaCount=2 \
+    --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
+    --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
+    --set rbac.create=true \
+    --set controller.service.externalTrafficPolicy=Local \
+    --set controller.resources.requests."memory"=500Mi \
+    --set controller.resources.requests."cpu"=500m \
+    --set controller.resources.limits."memory"=1000Mi \
+    --set controller.resources.limits."cpu"=1000m \
+    --set controller.ingressClass="${namespace}-nginx" \
+    --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
+    --set controller.image.tag="v0.34.0" \
+    --set controller.image.digest=null \
+    --set controller.admissionWebhooks.enabled=false
 
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
@@ -130,9 +182,6 @@ helm upgrade --install kured stable/kured --namespace kured \
     --set image.repository="choreoctrlplane.azurecr.io/weaveworks/kured" \
     --set image.tag="1.3.0"
 
-## Initialize Kubernetes Cluster
-source ../common/k8s-cluster-init.sh
-
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
 if [[ -r ${azuredfile} ]]
@@ -155,4 +204,12 @@ if [[ "${k8s_install_successful}" == "false" ]]; then
 fi
 if [[ "${successful}" == "true" ]]; then
     echo "Choreo control plane successfully installed"
+fi
+if [[ "${helm3_installed}" == "false" ]]; then
+    echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"
+    helm3_installed=false
+fi
+if [[ "${step_installed}" == "false" ]]; then
+    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
+    step_installed=false
 fi

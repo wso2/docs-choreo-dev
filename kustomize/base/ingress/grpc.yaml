@@ -15,6 +15,8 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
     nginx.ingress.kubernetes.io/session-cookie-name: route
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 spec:
   tls:
@@ -26,9 +28,9 @@ spec:
       paths:
       - backend:
           serviceName: telemetry
-          servicePort: telemetry-port
+          servicePort: 9090 # https://github.com/linkerd/linkerd2/issues/4211
         path: /v0_1_2.Telemetry
       - backend:
           serviceName: negotiator
-          servicePort: handshake-port
+          servicePort: 9090 # https://github.com/linkerd/linkerd2/issues/4211
         path: /v0_1_2.Handshake
