@@ -17,6 +17,9 @@ usage() {
 }
 
 main() {
+
+        check_prerequisite
+
 	if [ $# -lt 1 ]; then
 		usage
 		exit 1
@@ -60,5 +63,13 @@ main() {
 }
 
 warn() { echo "$@" >&2; }
+
+check_prerequisite() {
+    if ! command -v gh &> /dev/null
+    then
+	echo "GitHub CLI (gh) could not be found. Please install gh to use 'git ccp' command"
+	exit
+    fi
+}
 
 main "$@"
