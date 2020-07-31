@@ -22,7 +22,7 @@ cmd_help() {
 
 cmd_init() {
     
-    printf "Control Plane Feature ID: "
+    printf "Feature name (use a one without spaces) : "
     read answer
 
     if [ -z "$answer" ]
@@ -81,7 +81,7 @@ cmd_sync() {
     FEATURE_ID=$1
 
     if [ -z "$FEATURE_ID" ]; then
-	warn "Missing argument <feature-id>"
+	warn "Missing argument <feature-name>"
 	usage
 	exit 1
     fi
@@ -126,7 +126,7 @@ cmd_publish() {
     FEATURE_ID=$1
 
     if [ -z "$FEATURE_ID" ]; then
-	warn "Missing argument <feature-id>"
+	warn "Missing argument <feature-name>"
 	usage
 	exit 1
     fi
