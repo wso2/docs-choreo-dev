@@ -118,9 +118,9 @@ helm repo add linkerd https://helm.linkerd.io/stable
 helm repo update
 helm upgrade --install linkerd2 --wait \
      --set-file global.identityTrustAnchorsPEM=/tmp/ca.crt \
-     -f values.yaml -f ha-values.yaml \
-     -n linkerd \
-     --version 2.8.1
+     linkerd/linkerd2 \
+     -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
+     -n linkerd --version 2.8.1
 
 ############### Install Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
