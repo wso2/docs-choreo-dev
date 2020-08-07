@@ -113,5 +113,5 @@ and run `kustomize build <env> | kubectl apply -f -`
 ## Branching, Development & GitOps
 See [Branching, Development & GitOps Guide](process.md)
 
-## TODO:
+## TODO
 1. Refactor all configs into properties or YAML files
