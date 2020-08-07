@@ -150,6 +150,7 @@ helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
     --set controller.image.tag="v0.34.0" \
     --set controller.image.digest=null \
+    --set-string controller.config.server-tokens=false \
     --set controller.admissionWebhooks.enabled=false
 
 ################ Install emberstack refrector ########
