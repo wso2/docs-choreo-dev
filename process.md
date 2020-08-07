@@ -8,33 +8,33 @@ repo has the following active branches:
 3. stage
 4. prod
 
-### master
+## master
 The `master` branch has all the relevant Kubernetes objects related to the Choreo control plane,
 including deployments, services, ingresses, HPAs and so on. This excludes any objects related to
 configuration, such as ConfigMaps and Secrets. This contains the Kustomize `base` on top of which
 other overlays will be applied in `dev`, `stage` & `prod`.
 
-### dev
+## dev
 The `dev` branch has the `base`, which will periodically be synced with the `master`, in addition to
 the `dev` & `local` Kustomize overlays. The `base` in `dev` will generally be in sync with the
 master's `base`. The `dev` overlay contains the ConfigMap generators/configs as well as the secrets
 relevant to the dev cluster. In addition, the image names and tags are also specified here. The
 image tags should always be `latest` to ensure that the latest images under development are pulled
 into this cluster.
- 
+
 The `local` overlay builds on top of `dev` and overrides some of the dev configurations as well as
 the secrets. These secrets are generated against the developer's local cluster and will not be
 checked in to the code repo. The developer can use the `secretgen.sh` script in the `setup`
 directory to generate these secrets.
 
-```
+```text
 dev-branch
   |- kustomize
       |- base
       |- dev
       |- local
 ```
-### stage
+## stage
 The `stage` branch has the `base`, which will be synced as required with a tag of the `master
 branch`. i.e. The `base` in `stage` will generally be in sync with a tag of the master's `base`. The
 `stage` overlay contains the ConfigMap generators/configs as well as the secrets relevant to the
@@ -44,13 +44,13 @@ conventions (e.g. v0.1.13) are allowed. Please ensure that the relevant code rep
 properly tagged with these versions, which will allow the CI process to build and push the images to
 the Azure Container Registry.
 
-```
-stage-branch 
+```text
+stage-branch
   |- kustomize
       |- base
       |- stage
 ```
-### prod
+## prod
 The `prod` branch has the `base`, which will be synced as required with a tag of the `master
 branch`. i.e. The `base` in `prod` will generally be in sync with a tag of the master's `base`. The
 `prod` overlay contains the ConfigMap generators/configs as well as the secrets relevant to the prod
@@ -60,8 +60,8 @@ conventions (e.g. v0.1.13) are allowed. Please ensure that the relevant code rep
 properly tagged with these versions, which will allow the CI process to build and push the images to
 the Azure Container Registry.
 
-```
-prod-branch 
+```text
+prod-branch
   |- kustomize
       |- base
       |- prod
@@ -97,20 +97,20 @@ stage and run automated & manual tests. If tests fail, revert the PR.
 
 - Git remote `upstream` is configured to point to
   `git@github.com:wso2-enterprise/choreo-control-plane.git`
-  ```
+  ```text
   git remote add upstream git@github.com:wso2-enterprise/choreo-control-plane.git
   ```
 - Git remote `origin` is configured to point to
   `git@github.com:<user-name>/choreo-control-plane.git`
-  ```
+  ```text
   git remote add origin git@github.com:<user-name>/choreo-control-plane.git
   ```
 - [GitHub CLI](https://cli.github.com/) is installed.
 - `git ccp` sub command is installed.
   - Add `<choreo-control-plane-repo-location>/scripts` to `$PATH`.
-	```
-	export PATH=/path/to/wso2-enterprise/choreo-control-plane/scripts:$PATH
-	```
+    ```text
+    export PATH=/path/to/wso2-enterprise/choreo-control-plane/scripts:$PATH
+    ```
 
 ### How to request a component version upgrade to prod?
 
@@ -127,13 +127,13 @@ track current state of the feature.
 
 #### 2. Creating the feature branches
 
-```
+```bash
 git ccp feature init
 ```
 
 #### 3. Creating the base changes
 
-```
+```bash
 # do base changes
 git add <files>
 git commit
@@ -142,7 +142,7 @@ git ccp feature sync feature-foo
 
 #### 4. Creating the Dev changes
 
-```
+```bash
 git checkout feature/dev/feature-foo
 # do dev overlay changes
 git add <files>
@@ -151,7 +151,7 @@ git commit
 
 #### 5. Creating the Stage changes
 
-```
+```bash
 git checkout feature/stage/feature-foo
 # do stage overlay changes
 git add <files>
@@ -160,7 +160,7 @@ git commit
 
 #### 6. Creating the Prod changes
 
-```
+```bash
 git checkout feature/prod/feature-foo
 # do prod overlay changes
 git add <files>
@@ -169,7 +169,7 @@ git commit
 
 #### 7. Create a CP issue and publish PRs
 
-```
+```bash
 gh issue create
 git ccp feature publish feature-foo 999
 ```
@@ -179,7 +179,7 @@ Please use the correct issue number instead of 999 in above command.
 #### Pushing changes after review
 ##### Doing the changes to base
 
-```
+```bash
 # do base changes
 git add <files>
 git commit
@@ -188,7 +188,7 @@ git ccp feature sync feature-foo
 
 ##### Doing the env overlay changes
 
-```
+```bash
 git checkout feature/<env>/feature-foo
 # do the base change
 git add <files>

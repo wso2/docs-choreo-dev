@@ -12,9 +12,9 @@ AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 EOF
 ```
 
-Running the script 
+Running the script
 ```bash
- bash azure-setup.sh -d=azure-deploy.properties -n=prod-choreo-system 
+ bash azure-setup.sh -d=azure-deploy.properties -n=prod-choreo-system
 ```
 
-To Obtain Let's Encrypt Certs [follow](Lets-encrypt-certs) 
+To Obtain Let's Encrypt Certs [follow](Lets-encrypt-certs)
