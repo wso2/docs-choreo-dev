@@ -16,4 +16,4 @@ labels: 'Type/Component-Release'
 
 ### Optional
 
-- [ ] Updated the release note in <https://github.com/wso2-enterprise/choreo/wiki/Choreo-Release-Note-Draft>.
+- [ ] Updated the release note in <https://github.com/wso2-enterprise/choreo/wiki/Choreo-Release-Note-Draft>
