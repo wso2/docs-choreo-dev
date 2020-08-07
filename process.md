@@ -115,7 +115,7 @@ stage and run automated & manual tests. If tests fail, revert the PR.
 ### How to request a component version upgrade to prod?
 
 You can create a PR to the relevant environment branch with the new version of the component
-(example https://github.com/wso2-enterprise/choreo-control-plane/pull/256/files).
+(example <https://github.com/wso2-enterprise/choreo-control-plane/pull/256/files>).
 
 ### How to request a deployment config change to control plane?
 

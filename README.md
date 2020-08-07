@@ -63,20 +63,20 @@ EVENTHUB_CONNECTION_STRING=xxx
 
 2. Run `setup.sh` by providing the secret directory as the argument.
 
-	ex: `./setup.sh -d=secret/loc -e=loc -i=true` for local setup with secret properties files in the directory as given
-	in step 1, and with the -i=true option to create ingresses.
+    ex: `./setup.sh -d=secret/loc -e=loc -i=true` for local setup with secret properties files in the directory as given
+    in step 1, and with the -i=true option to create ingresses.
 
 3. *(Local setup only)* run `dockersecretgen.sh` to generate docker image pull sealed secrets.
 
-	 ex: `./dockersecretgen.sh -e=<your-name>@wso2ipaasoutlook.onmicrosoft.com -u=xxx -p=xxxxx`
-	 Contact dhananjaya@wso2.com to get the details.
+     ex: `./dockersecretgen.sh -e=<your-name>@wso2ipaasoutlook.onmicrosoft.com -u=xxx -p=xxxxx`
+     Contact dhananjaya@wso2.com to get the details.
 
 4. *(Local setup only)* Add the following entries to your /etc/hosts file
 
    ex:
-	```text
-	192.168.64.6	datamapper.dev.choreo.local programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local
-	```
+    ```text
+    192.168.64.6    datamapper.dev.choreo.local programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local
+    ```
 
    Use the proper node IP address.
 
@@ -85,18 +85,18 @@ EVENTHUB_CONNECTION_STRING=xxx
    ex: `kustomize build loc | kubectl apply -f -`
 
 6. Test whether everything is working fine by running the hello-service sample in
-	[https://github.com/wso2-enterprise/choreo.git](https://github.com/wso2-enterprise/choreo.git)
+    [https://github.com/wso2-enterprise/choreo.git](https://github.com/wso2-enterprise/choreo.git)
 
-	For local setup, add the following to the ballerina.conf of the sample:
-	```text
-	[b7a.observability]
-	enabled=true
-	provider="choreo"
+    For local setup, add the following to the ballerina.conf of the sample:
+    ```text
+    [b7a.observability]
+    enabled=true
+    provider="choreo"
 
-	[b7a.observability.tracing.choreo.reporter]
-	hostname="periscope.dev.choreo.local"
-	port=443
-	```
+    [b7a.observability.tracing.choreo.reporter]
+    hostname="periscope.dev.choreo.local"
+    port=443
+    ```
 
 That is it! All set!
 
