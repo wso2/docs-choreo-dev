@@ -38,17 +38,18 @@ if [[ -r ${azuredfile} ]]
 then
     while IFS= read -r line
     do
-         k=$(cut -d "=" -f1 <<< $line)
+         k=$(cut -d "=" -f1 <<< "$line")
          v=$(cut -d "=" -f2 <<< "$line")
          export_command="export $k=$v"
-         eval ${export_command}
+         eval "${export_command}"
     done < "${azuredfile}"
 else
-    echo "File "${azuredfile}" not found"; exit 1
+    echo "File ${azuredfile} not found"; exit 1
 fi
 export NAMESPACE=${namespace}
 
 ## Initialize Kubernetes Cluster
+# shellcheck disable=SC1091
 source ../common/k8s-cluster-init.sh
 
 ############### Install Helm 3
@@ -134,6 +135,7 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
 echo "--- Installing nginx ingress using Helm 3..."
+# shellcheck disable=SC2140
 helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --namespace "${namespace}-nginx-ingress" \
     --version 2.11.0 \
@@ -189,16 +191,17 @@ if [[ -r ${azuredfile} ]]
 then
     while IFS= read -r line
     do
-         k=$(cut -d "=" -f1 <<< $line)
+         k=$(cut -d "=" -f1 <<< "$line")
          unset_command="unset $k"
-         eval ${unset_command}
+         eval "${unset_command}"
     done < "${azuredfile}"
 else
-    echo "File "${azuredfile}" not found"; exit 1
+    echo "File ${azuredfile} not found"; exit 1
 fi
 unset NAMESPACE
 
 successful="true"
+# shellcheck disable=SC2154
 if [[ "${k8s_install_successful}" == "false" ]]; then
     echo "[FAILED] Kubernetes initialization."
     successful=false

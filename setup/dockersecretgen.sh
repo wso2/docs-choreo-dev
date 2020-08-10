@@ -14,10 +14,10 @@ function gensecret {
     local outdir="../kustomize/loc/secret"
     kubectl -n loc-choreo-system create secret docker-registry secret-acr \
       --docker-server choreoctrlplane.azurecr.io \
-      --docker-email ${email} \
-      --docker-username ${username} \
-      --docker-password ${password} --dry-run -oyaml |
-        kubeseal --scope strict -o yaml - > ${outdir}/acr.yaml &&
+      --docker-email "${email}" \
+      --docker-username "${username}" \
+      --docker-password "${password}" --dry-run -oyaml |
+        kubeseal --scope strict -o yaml - > "${outdir}/acr.yaml" &&
     echo "Choreo Sealed docker registry secret generated to "${outdir}
 }
 
