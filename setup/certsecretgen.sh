@@ -46,6 +46,7 @@ do
         shift
         ;;
         -s=*|--self-signed=*)
+	# shellcheck disable=SC2034
         selfsigned="${arg#*=}"
         shift
         ;;
@@ -64,17 +65,17 @@ do
     esac
 done
 
-if [[ (( -z "${tlskey}" ) && ( ! -z "${tlscert}" )) || (( ! -z "${tlskey}" ) && ( -z "${tlscert}" )) ]]; then
+if [[ (( -z "${tlskey}" ) && ( -n "${tlscert}" )) || (( -n "${tlskey}" ) && ( -z "${tlscert}" )) ]]; then
     printusage
 fi
 
 if [[ ( -z "${tlskey}" ) || ( -z "${tlscert}" ) ]]; then # Self signed cert
-    mkdir -p ${outdir}
+    mkdir -p "${outdir}"
     ################ Create the ingress certificate (optional)
     echo "--- Generating self signed ingress TLS key & certificate..."
-    sudo openssl genrsa -out ${outdir}/tls.key 2048
-    sudo openssl req -new -out ${outdir}/tls.csr -key ${outdir}/tls.key -config openssl.cnf
-    sudo openssl x509 -req -days 3650 -in ${outdir}/tls.csr -signkey ${outdir}/tls.key -out ${outdir}/tls.crt \
+    sudo openssl genrsa -out "${outdir}/tls.key" 2048
+    sudo openssl req -new -out "${outdir}/tls.csr" -key "${outdir}/tls.key" -config openssl.cnf
+    sudo openssl x509 -req -days 3650 -in "${outdir}/tls.csr" -signkey "${outdir}/tls.key" -out "${outdir}/tls.crt" \
          -extensions v3_req -extfile openssl.cnf
 
     ############### Import the cert into JRE CA trusted certs to make Java clients work (Optional)
@@ -82,20 +83,20 @@ if [[ ( -z "${tlskey}" ) || ( -z "${tlscert}" ) ]]; then # Self signed cert
     echo "Default keystore password = changeit"
     keystore=$JAVA_HOME/jre/lib/security/cacerts
     alias=choreoingress_local${namespace}${secret_name}
-    sudo keytool -delete -alias ${alias} -keystore ${keystore}
-    sudo keytool -import  -alias ${alias} -keystore ${keystore} -file ${outdir}/tls.crt -noprompt
+    sudo keytool -delete -alias "${alias}" -keystore "${keystore}"
+    sudo keytool -import  -alias "${alias}" -keystore "${keystore}" -file "${outdir}/tls.crt" -noprompt
 
     ############### Create ingress TLS cert sealed secrets for all environments (Optional)
-    sudo chown ${USER} ${outdir}/tls.key
-    sudo chown ${USER} ${outdir}/tls.crt
+    sudo chown "${USER}" "${outdir}/tls.key"
+    sudo chown "${USER}" "${outdir}/tls.crt"
 
     tlskey=${outdir}/tls.key
     tlscert=${outdir}/tls.crt
 fi
 
 echo "--- Creating ingress TLS cert sealed secrets for ${namespace} environment..."
-mkdir -p $outdir
-kubectl create -n ${namespace} secret tls ${secret_name} \
-       --key ${tlskey} --cert ${tlscert} --dry-run=client -o yaml |
-       kubeseal --scope strict -o yaml - > ${outdir}/sealed-${secret_name}.yaml
-echo "Sealed secret ingress cert generated and copied to "${outdir}
+mkdir -p "$outdir"
+kubectl create -n "${namespace}" secret tls "${secret_name}" \
+       --key "${tlskey}" --cert "${tlscert}" --dry-run=client -o yaml |
+       kubeseal --scope strict -o yaml - > "${outdir}/sealed-${secret_name}.yaml"
+echo "Sealed secret ingress cert generated and copied to ${outdir}"

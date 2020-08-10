@@ -17,26 +17,31 @@ command -v kubeseal >/dev/null 2>&1 ||
 function gensecret {
     if [[ ! -f $1 ]]
     then
-        echo "File "$1" not found"; exit 1
+        echo "File $1 not found"; exit 1
     fi
-    local secret=$(echo ${1##*/} | sed 's/\(.*\)\..*/\1/')
-    mkdir -p ${outdir}
-    kubectl create secret generic secret-${secret} -n ${namespace} --from-env-file $1 --dry-run=client -o yaml |
-            kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml &&
-    echo "Choreo Sealed secret generated to "${outdir}
+    local secret
+    # shellcheck disable=SC2001,2086
+    secret=$(echo ${1##*/} | sed 's/\(.*\)\..*/\1/')
+    mkdir -p "${outdir}"
+    kubectl create secret generic "secret-${secret}" -n "${namespace}" --from-env-file "$1" --dry-run=client -o yaml |
+            kubeseal --scope strict -o yaml - > "${outdir}/${secret}.yaml" &&
+    echo "Choreo Sealed secret generated to ${outdir}"
 }
 
 function gensecretfromyaml {
     if [[ ! -f $1 ]]
     then
-        echo "File "$1" not found"; exit 1
+        echo "File $1 not found"; exit 1
     fi
-    local secret=$(echo ${1##*/} | sed 's/\(.*\)\..*/\1/')
-    mkdir -p ${outdir}
-    secretname=$(echo $secret | tr a-z A-Z | tr - _)
-    kubectl create secret generic secret-${secret} -n ${namespace} --from-file=$secretname=$1 --dry-run=client -o yaml |
-            kubeseal --scope strict -o yaml - > ${outdir}/${secret}.yaml &&
-    echo "Choreo Sealed from yaml file $1 secret generated to "${outdir}
+    local secret
+    # shellcheck disable=SC2001,2086
+    secret=$(echo ${1##*/} | sed 's/\(.*\)\..*/\1/')
+    mkdir -p "${outdir}"
+    # shellcheck disable=SC2018,SC2019
+    secretname=$(echo "$secret" | tr a-z A-Z | tr - _)
+    kubectl create secret generic "secret-${secret}" -n "${namespace}" --from-file="$secretname=$1" --dry-run=client -o yaml |
+            kubeseal --scope strict -o yaml - > "${outdir}/${secret}.yaml" &&
+    echo "Choreo Sealed from yaml file $1 secret generated to ${outdir}"
 }
 
 while [[ $(kubectl get pods -n kube-system -l name=sealed-secrets-controller -o \
@@ -82,18 +87,18 @@ echo "Creating sealed secrets for namespace: "${namespace}
 
 [[ -z "${propfile}" ]] &&
 {
-for filename in ${directory}/*.yaml; do
-  gensecretfromyaml ${filename}
+for filename in "${directory}"/*.yaml; do
+  gensecretfromyaml "${filename}"
 done
 }
 
 [[ -z "${propfile}" ]] &&
 {
-for filename in ${directory}/*.properties; do
-  gensecret ${filename}
+for filename in "${directory}"/*.properties; do
+  gensecret "${filename}"
 done
 }
 [[ -z "${directory}" ]] &&
 {
-  gensecret ${propfile}
+  gensecret "${propfile}"
 }

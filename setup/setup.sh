@@ -39,6 +39,7 @@ do
         shift
         ;;
         -p=*|--propfile=*)
+	# shellcheck disable=SC2034
         propfile="${arg#*=}"
         shift
         ;;
@@ -57,7 +58,7 @@ do
     esac
 done
 
-if [[ (( -z "${tlskey}" ) && ( ! -z "${tlscert}" )) || (( ! -z "${tlskey}" ) && ( -z "${tlscert}" )) ]]; then
+if [[ (( -z "${tlskey}" ) && ( -n "${tlscert}" )) || (( -n "${tlskey}" ) && ( -z "${tlscert}" )) ]]; then
     printusage
 fi
 
@@ -65,6 +66,7 @@ outdir=out
 mkdir -p $outdir
 
 ############## Initialize Kubernetes Cluster
+# shellcheck disable=SC1091
 source common/k8s-cluster-init.sh
 
 ########### Install Linkerd #############
@@ -74,7 +76,7 @@ if [[ "$create_ingress" == "true" ]]; then
     ############## Install nginx ingress (Optional)
     echo "--- Installing nginx ingress..."
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.0/deploy/static/provider/cloud/deploy.yaml
-    read -p "Are you using Minikube? [y/N] " response
+    read -r -p "Are you using Minikube? [y/N] " response
     echo    # (optional) move to a new line
     if [[ ${response} =~ ^[Yy]$ ]]; then
       echo "--- Enabling nginx ingress addon for Minikube..."
@@ -87,21 +89,22 @@ fi
 ########## Create sealed ingress TLS secret
 for env in "${environments[@]}"; do
     echo "--- Creating sealed ingress TLS secret..."
-    ./certsecretgen.sh -n=${env}-choreo-system --tls-key=${tlskey} --tls-cert=${tlscert} --secret-name="ingress-cert" \
+    ./certsecretgen.sh -n="${env}-choreo-system" --tls-key="${tlskey}" --tls-cert="${tlscert}" --secret-name="ingress-cert" \
                         -o="../kustomize/$env/choreo-system/secret/"
-    echo "Sealed secret ingress cert generated and copied to "${env}"/choreo-system/secret"
+    echo "Sealed secret ingress cert generated and copied to ${env}/choreo-system/secret"
 done
 
 ########### Create choreo sealed secrets for all environments
 for env in "${environments[@]}"; do
     echo "--- Creating Choreo sealed secrets for for ${env} environment..."
-    mkdir -p ${outdir}/${env}
-    ./secretgen.sh -d=${secretdir} -n=${env}-choreo-system -o=../kustomize/${env}/choreo-system/secret
+    mkdir -p "${outdir}/${env}"
+    ./secretgen.sh -d="${secretdir}" -n="${env}-choreo-system" -o="../kustomize/${env}/choreo-system/secret"
 done
 
 ########### Cleanup
 rm -rf ${outdir}
 successful="true"
+# shellcheck disable=SC2154
 if [[ "${k8s_install_successful}" == "false" ]]; then
     echo "[FAILED] Kubernetes initialization."
     successful=false
