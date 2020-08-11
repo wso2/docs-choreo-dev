@@ -26,7 +26,9 @@ rebaseRules:
       apiVersion: autoscaling/v1
       kind: HorizontalPodAutoscaler
 
-- path: [metadata, annotations, pv.kubernetes.io/bound-by-controller]
+- paths:
+  - [metadata, annotations, pv.kubernetes.io/bound-by-controller]
+  - [spec, claimRef]
   type: copy
   sources: [existing, new]
   resourceMatchers:
