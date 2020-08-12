@@ -77,7 +77,7 @@ spec:
             successThreshold: 1
             httpGet:
              port: health
-             path: /health
+             path: /health/readiness
         livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -86,7 +86,7 @@ spec:
             successThreshold: 1
             httpGet:
              port: health
-             path: /health
+             path: /health/liveness
         ports:
         - containerPort: 9090
           name: handshake-port
