@@ -8,6 +8,8 @@ usage() {
     echo "    sync <feature-id>                    Sync feature base branch with the environment"
     echo "                                         specific branches "
     echo "    publish <feature-id> <issue-number>  Publish changes by creating pull requests"
+    echo "    pending <env>                        List all commits still pending to be merged to"
+    echo "                                         the given env prod"
     echo
 }
 
@@ -164,4 +166,18 @@ cmd_publish() {
     echo "- You are now on branch '$MASTER_BRANCH_NAME'"
     echo ""
     echo
+}
+
+cmd_pending() {
+    parse_args "$@"
+
+    ENVIRONMENT=$1
+
+    if [ -z "$ENVIRONMENT" ]; then
+	warn "Missing argument <environment>"
+	usage
+	exit 1
+    fi
+
+    git --no-pager log upstream/${ENVIRONMENT}..upstream/master
 }
