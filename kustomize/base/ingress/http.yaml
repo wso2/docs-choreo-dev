@@ -14,6 +14,7 @@ metadata:
       proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
 spec:
   tls:
     - hosts:
