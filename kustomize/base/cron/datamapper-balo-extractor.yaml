@@ -5,7 +5,7 @@ metadata:
   labels:
     choreo.component: datamapper-balo-extractor
 spec:
-  schedule: 0 0 2 ? * * *
+  schedule: 0 2 * * *
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
