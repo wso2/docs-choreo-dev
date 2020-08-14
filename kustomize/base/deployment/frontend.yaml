@@ -82,6 +82,11 @@ spec:
             configMapKeyRef:
               key: BETA_PROGRAM_WIDGET_URL
               name: cm-frontend
+        - name: BETA_PROGRAM_PROJECT_CODE
+          valueFrom:
+            configMapKeyRef:
+              key: BETA_PROGRAM_PROJECT_CODE
+              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
