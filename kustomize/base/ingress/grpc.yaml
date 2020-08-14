@@ -10,7 +10,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
-    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 spec:
   tls:
     - hosts:

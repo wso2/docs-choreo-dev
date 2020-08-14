@@ -8,7 +8,6 @@ metadata:
     nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://domain.com"
     nginx.ingress.kubernetes.io/configuration-snippet: |
