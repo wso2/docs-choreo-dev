@@ -18,7 +18,6 @@ spec:
         choreo.component: telemetry
       annotations:
         linkerd.io/inject: enabled
-        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "20"
     spec:
       containers:
       - env:
@@ -72,13 +71,6 @@ spec:
           runAsUser: 100
           runAsGroup: 1000
         name: telemetry
-        lifecycle:
-          # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
-          preStop:
-            exec:
-              command:
-                - /bin/sleep
-                - "20"
         ports:
         - containerPort: 9090
           name: telemetry-port
