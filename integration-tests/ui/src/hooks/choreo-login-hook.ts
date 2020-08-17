@@ -9,7 +9,7 @@ export class ChoreoLoginHook extends RequestHook {
 
   // @ts-ignore
   async onRequest(event) {
-    event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf;
+    event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf+"; cbearer="+config.user.cbearer;
     // console.log(event)
   }
 

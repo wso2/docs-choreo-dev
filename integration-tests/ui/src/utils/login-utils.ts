@@ -45,4 +45,5 @@ export const setTokenData = (data) => {
   const fragments = data["id_token"].split(".");
   config.user.token = fragments[0] + "." + fragments[1];
   config.user.cwatf = fragments[2];
+  config.user.cbearer = fragments[0] + "." + fragments[1];
 };
