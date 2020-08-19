@@ -1,9 +1,9 @@
 import { Selector } from "testcafe";
 import { getByText, getByLabelText } from "@testing-library/testcafe";
-import { getLocation, getAccessToken } from "../src/utils/login-utils";
-import page from "../src/model/page";
-import * as config from "../testcafe-user-config.json";
-import {logger} from '../src/utils/logger'
+import { getLocation, getAccessToken } from "../utils/login-utils";
+import page from "../model/page";
+import * as config from "../../testcafe-user-config.json";
+import {logger} from '../utils/logger'
 
 declare const test: TestFn;
 
