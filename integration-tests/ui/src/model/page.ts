@@ -1,10 +1,11 @@
 import { ChoreoLoginHook } from "../hooks/choreo-login-hook";
 import { t, ClientFunction } from "testcafe";
 import config from "../../testcafe-user-config.json";
+// import { isValidUser } from "../utils/login-utils";
 import { isValidUser, getAccessToken, setTokenData } from "../utils/login-utils";
 
 const STORAGE_KEY = "PORTAL_STATE";
-const backendRegexp = "http:\/\/"+config.backendHostName+"\/*"
+const backendRegexp = "https:\/\/"+config.backendHostName+"\/*"
 
 class Page {
   loginHook = new ChoreoLoginHook(new RegExp(backendRegexp), {});

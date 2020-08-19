@@ -1,16 +1,18 @@
 {
   "user":{
-    "name": "$USERNAME",
-    "email": "$EMAIL",
-    "picURL": "$AVATAR_URL",
-    "orgs":  [],
+    "name": "choreo-user",
+    "email": "choreo-test-user@wso2.com",
+    "picURL": "https://avatars1.githubusercontent.com/u/65526909?v=4",
+    "orgs":  [{"id": 32, "name": "choreo-user", "handle": "choreouser"}],
     "token":"$token_value",
-    "cwatf":"$cwatf_value"
+    "cwatf":"$cwatf_value",
+    "cbearer":"$cbearer_value"
   },
-  "testURL":"$TEST_URL",
-  "backendHostName":"$BACKEND_HOSTNAME",
-  "idpURL" : "$IDP_URL",
-  "idpUsername":"$IDP_USERNAME",
-  "idpPassword":"$IDP_PASSWORD",
-  "idpAuthHeader":"$IDP_AUTH_HEADER"
+  "testURL":"https://console.dv.choreo.dev/",
+  "backendHostName":"app.dv.choreo.dev",
+  "idpURL" : "https://id.preprod.choreo.dev/oauth2/token",
+  "idpUsername":"bda17a6c-f50d-49b9-b48a-83913b09d3d9",
+  "idpPassword":"5Tno10tV",
+  "idpAuthHeader":"Basic Y2hvcmVvcG9ydGFsYXBwbGljYXRpb246MzQzNGE2ZmVkc2NzZGUzMzNk"
+
 }
