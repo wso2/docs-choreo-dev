@@ -24,7 +24,6 @@ export const undeployAllApps = async(t:TestController) => {
     await t.click(screen.getByText("Stop"))
     .expect(screen.findByText("Deploy").exists).ok({timeout:200000})
     .click(screen.getByText("App list"))
-    .expect(Selector("#backdrop-loader").exists).ok()
     .expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
 
     deployedApps = await screen.findAllByText("Active").exists;
