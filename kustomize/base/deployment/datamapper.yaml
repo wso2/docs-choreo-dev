@@ -40,7 +40,7 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: datamapper-models
-          mountPath: "/mnt/workdir/models"
+          mountPath: "/home/python-ai/choreo-ai-data-mapper/models"
         - name: datamapper-models-metadata
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
           subPath: "models.properties"

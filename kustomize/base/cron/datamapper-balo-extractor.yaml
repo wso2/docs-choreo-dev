@@ -22,8 +22,8 @@ spec:
           - name: datamapper-balo-extractor
             image: choreoctrlplane.azurecr.io/choreoipaas/datamapper-balo-extractor:latest
             securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
+              runAsUser: 500
+              runAsGroup: 500
             resources:
               limits:
                 cpu: 300m
