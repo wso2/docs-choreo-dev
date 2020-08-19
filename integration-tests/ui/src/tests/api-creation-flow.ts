@@ -15,39 +15,39 @@ fixture("Application test run  and deployment")
     await page.login();
   });
 
-test("test run hello world service ", async (t) => {
+// test("test run hello world service ", async (t) => {
 
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2,5);
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
-  logger.info("Page loaded successfully");
-  await clearAppsIfExists(t);
-  await createNewApp(t,appName);
-  await t.expect(await getLocation()).contains("app/"+appName+"/develop", { timeout: 10000 })
-  await selectWebhookType(t,"hello");
-  await createProperty(t,'var res = "hello world";');
-  await createRespond(t,"res");
+//   const appName = "sampleapi-" + Math.random().toString(36).substr(2,5);
+//   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
+//   logger.info("Page loaded successfully");
+//   await clearAppsIfExists(t);
+//   await createNewApp(t,appName);
+//   await t.expect(await getLocation()).contains("app/"+appName+"/develop", { timeout: 10000 })
+//   await selectWebhookType(t,"hello");
+//   await createProperty(t,'var res = "hello world";');
+//   await createRespond(t,"res");
 
-  await t.wait(10000);
-  await t.click(screen.getByTestId("editor-run-btn"), { speed: 0.5 });
-  logger.info("Started test run");
+//   await t.wait(10000);
+//   await t.click(screen.getByTestId("editor-run-btn"), { speed: 0.5 });
+//   logger.info("Started test run");
 
-  await t
-    .expect(screen.findAllByTestId("test-url").exists).ok({ timeout: 40000 })
-    .expect(
-      screen.findAllByTestId("log-panel").withText("started HTTP/WS listener")
-        .exists
-    ).ok({ timeout: 40000 });
-  logger.info("Retrieving the test URL successful");
+//   await t
+//     .expect(screen.findAllByTestId("test-url").exists).ok({ timeout: 40000 })
+//     .expect(
+//       screen.findAllByTestId("log-panel").withText("started HTTP/WS listener")
+//         .exists
+//     ).ok({ timeout: 40000 });
+//   logger.info("Retrieving the test URL successful");
 
-  const testUrl = await screen.findAllByTestId("test-url").textContent;
+//   const testUrl = await screen.findAllByTestId("test-url").textContent;
 
-  await t.wait(20000);
-  const response = await callExternalEndpoint(t,(testUrl + "/hello"),3)
+//   await t.wait(20000);
+//   const response = await callExternalEndpoint(t,(testUrl + "/hello"),3)
  
-  logger.info("Backend service response : " +  response);
-  await t.expect(response).eql("hello world");
-  logger.info("Hello world string recieved successfully !")
-});
+//   logger.info("Backend service response : " +  response);
+//   await t.expect(response).eql("hello world");
+//   logger.info("Hello world string recieved successfully !")
+// });
 
 
 test("deploy hello world service",async (t)=>{
@@ -92,8 +92,11 @@ test("deploy hello world service",async (t)=>{
   .expect(screen.findByTestId("deploy-ok").exists).ok({timeout:100000})
   logger.info("Deploy phase successful!")
 
+  await t.wait(10000);
+
   const testUrl = await screen.findAllByTestId("deploy-url").find("input").value;
-  logger.info("test url : " + (testUrl + "/hello"));
+  logger.info("test url : " + testUrl);
+  await t.expect(testUrl.includes("https://")).ok();
   const response = await callExternalEndpoint(t,testUrl + "/hello",3);
 
   console.log("Service response : " +  response);
