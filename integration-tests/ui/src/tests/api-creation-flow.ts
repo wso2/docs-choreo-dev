@@ -78,9 +78,6 @@ test("deploy hello world service",async (t)=>{
   .expect(screen.findByTestId("build-ok").exists).ok({timeout:100000});
   logger.info("Build phase successful!");
 
-  // .expect(screen.findByTestId("build-loading").exists).ok({timeout:10000})
-  // .expect(screen.findByTestId("build-loading").exists).notOk({timeout:200000})
-  // .expect(screen.findByTestId("build-failed").exists).notOk({timeout:10000})
   await t.expect(screen.findByTestId("test-ok").exists).ok({timeout:100000})
   logger.info("Test phase successful!");
 
