@@ -42,7 +42,7 @@ export const clearAppsIfExists = async (t: TestController) => {
         .click(screen.getAllByLabelText("more"))
         .click(screen.getByTestId("delete-btn"))
         .click(screen.getByText("Delete"))
-        .expect(Selector("#backdrop-loader").exists).ok()
+        .expect(Selector("#backdrop-loader").exists).ok({timeout:5000})
         .expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
         appExists = await screen.queryAllByText("Time to create your first application",{timeout:5000}).exists;
   }
