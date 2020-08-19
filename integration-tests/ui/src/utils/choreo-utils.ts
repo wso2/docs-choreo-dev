@@ -34,14 +34,12 @@ export const clearAppsIfExists = async (t: TestController) => {
   await undeployAllApps(t);
   let appExists = await screen.queryAllByText("Time to create your first application").exists;
   
-  // let appExists = !(await f.exists);
   while(!appExists) {
     logger.info("An application exists, deleting the application");
     await t
         .click(screen.getAllByLabelText("more"))
         .click(screen.getByTestId("delete-btn"))
         .click(screen.getByText("Delete"))
-        // .expect(Selector("#backdrop-loader").exists).ok({timeout:5000})
         .expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
         appExists = await screen.queryAllByText("Time to create your first application",{timeout:5000}).exists;
   }
@@ -67,8 +65,6 @@ export const createProperty = async (t: TestController, expression: string) => {
   await t
     .click(Selector("#BigPlusRectangle"), { speed: 0.5 })
     .expect(screen.getByText("Process").exists).ok()
-    // .expect(screen.getByText("CONNECTOR").exists).ok()
-    // .expect(screen.getByText("CONDITION").exists).ok()
     .click(screen.getByTestId("process-rect"), { speed: 0.5 })
     .hover(screen.getByText("Property"),{speed:0.5})
     .click(screen.getByTestId("addproperty"), { speed: 0.5 })
@@ -89,8 +85,6 @@ export const createRespond = async (t: TestController, expression: string) => {
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
     .expect(screen.queryAllByText("Loading").exists).notOk({ timeout: 20000 })
-    // .click(Selector("#DottedStopRectangle"), { speed: 0.5 })
-    // .click(screen.getAllByText("Respond"))
     .click(screen.getByTestId("stop-oval"),{speed:0.5})
     .hover(screen.getByText("Respond"),{speed:0.5})
     .click(screen.getByTestId("addrespond"),{speed:0.5})
@@ -121,8 +115,5 @@ export const callExternalEndpoint = async (t:TestController,URL:string,attempts:
       logger.info("Attempt : " + attempt + " calling the endpoint.. response: "+ res);
       attempt++;
   }
-
   return res;
-
- 
 }
