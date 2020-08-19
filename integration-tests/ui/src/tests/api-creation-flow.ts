@@ -92,8 +92,11 @@ test("deploy hello world service",async (t)=>{
   .expect(screen.findByTestId("deploy-ok").exists).ok({timeout:100000})
   logger.info("Deploy phase successful!")
 
+  await t.wait(10000);
+
   const testUrl = await screen.findAllByTestId("deploy-url").find("input").value;
-  logger.info("test url : " + (testUrl + "/hello"));
+  logger.info("test url : " + testUrl);
+  await t.expect(testUrl.includes("https://")).ok();
   const response = await callExternalEndpoint(t,testUrl + "/hello",3);
 
   console.log("Service response : " +  response);
