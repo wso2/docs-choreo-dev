@@ -17,11 +17,12 @@ fixture("Application test run  and deployment")
 
 test("test run hello world service ", async (t) => {
 
+  const appName = "sampleapi-" + Math.random().toString(36).substr(2,5);
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
   logger.info("Page loaded successfully");
   await clearAppsIfExists(t);
-  await createNewApp(t,"sampleapi");
-  await t.expect(await getLocation()).contains("app/sampleapi/develop", { timeout: 10000 })
+  await createNewApp(t,appName);
+  await t.expect(await getLocation()).contains("app/"+appName+"/develop", { timeout: 10000 })
   await selectWebhookType(t,"hello");
   await createProperty(t,'var res = "hello world";');
   await createRespond(t,"res");
@@ -50,16 +51,18 @@ test("test run hello world service ", async (t) => {
 
 
 test("deploy hello world service",async (t)=>{
+
+  const appName = "sampleapi-" + Math.random().toString(36).substr(2,5);
   await clearAppsIfExists(t);
-  await createNewApp(t,"sampleapi");
-  await t.expect(await getLocation()).contains("app/sampleapi/develop", { timeout: 10000 })
+  await createNewApp(t,appName);
+  await t.expect(await getLocation()).contains("app/"+appName+"/develop", { timeout: 10000 })
   await selectWebhookType(t,"hello");
   await createProperty(t,'var res = "hello world";');
   await createRespond(t,"res");
 
   await t.click(screen.getByTitle("deploy"))
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 10000 });
-  await t.expect(await getLocation()).contains("app/sampleapi/deploy", { timeout: 10000 })
+  await t.expect(await getLocation()).contains("app/"+appName+"/deploy", { timeout: 10000 })
 
   logger.info("Succesfully Navigated to Deploy view")
 
