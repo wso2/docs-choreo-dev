@@ -4,19 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2etest": "testcafe chrome && testcafe firefox",
+    "e2etest": "testcafe chrome",
     "e2etest:headless": "testcafe chrome:headless && testcafe firefox:headless"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@testing-library/testcafe": "^4.1.0",
+    "@testing-library/testcafe": "^4.2.0",
     "@types/qs": "^6.9.2",
     "qs": "^6.9.4",
-    "testcafe": "^1.8.4",
+    "testcafe": "^1.9.0",
     "typescript": "^3.9.2"
   },
   "dependencies": {
-    "axios": "^0.19.2"
+    "@types/chalk": "^2.2.0",
+    "axios": "^0.19.2",
+    "typescript-logging": "^1.0.0"
   }
 }

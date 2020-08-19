@@ -1,8 +1,10 @@
 import { Selector } from "testcafe";
 import { getByText, getByLabelText } from "@testing-library/testcafe";
-import { getLocation, getAccessToken } from "./utils/utils";
-import page from "./model/page";
-import * as config from "../testcafe-user-config.json";
+import { getLocation, getAccessToken } from "../utils/login-utils";
+import page from "../model/page";
+import * as config from "../../testcafe-user-config.json";
+import {logger} from '../utils/logger'
+
 declare const test: TestFn;
 
 fixture("User flows")
@@ -12,8 +14,7 @@ fixture("User flows")
   });
 
 test("user login and logout redirection", async (t) => {
-  getAccessToken();
-  
+  logger.info("login logout flow")
   await t
     .click(getByLabelText("account of current user"))
     .expect(getByText(config.user.email).exists).ok()

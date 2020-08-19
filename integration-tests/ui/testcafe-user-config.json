@@ -5,7 +5,8 @@
     "picURL": "$AVATAR_URL",
     "orgs":  [],
     "token":"$token_value",
-    "cwatf":"$cwatf_value"
+    "cwatf":"$cwatf_value",
+    "cbearer":"$cbearer_value"
   },
   "testURL":"$TEST_URL",
   "backendHostName":"$BACKEND_HOSTNAME",
