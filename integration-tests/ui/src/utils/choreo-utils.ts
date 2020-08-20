@@ -18,7 +18,7 @@ export const createNewApp = async (t: TestController, name: string) => {
     .click(screen.getAllByTestId("create-with-choreo"))
     .typeText(screen.getAllByPlaceholderText("Application name"), name)
     .click(screen.getByText("Create"));
-
+  await t.wait(10000);
   await t.expect(Selector(".diagram-canvas").exists).ok({ timeout: 50000 });
   logger.info("Application created successfully with name: " + name);
 };
@@ -59,12 +59,13 @@ export const clearAppsIfExists = async (t: TestController) => {
 };
 
 export const selectWebhookType = async (t: TestController, name: string) => {
-  
+  let attempt = 0;
   let ss = await isWorkspaceUp();
 
-  while(ss === true){
-      await t.wait(5000);
+  while(ss === true && attempt <= 25){
+      await t.wait(7000);
       ss = await isWorkspaceUp();
+      attempt++;
   }
   
   await t
