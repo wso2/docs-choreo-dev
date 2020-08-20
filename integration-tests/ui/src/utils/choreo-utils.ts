@@ -1,7 +1,16 @@
-import { Selector } from "testcafe";
+import { Selector, ClientFunction } from "testcafe";
 import { screen } from "@testing-library/testcafe";
 import {logger} from './logger';
 import Axios from "axios";
+
+export const getStorage = ClientFunction(() => localStorage.getItem("PORTAL_STATE"));
+
+export const isWorkspaceUp = async ()=>{
+  const content = await getStorage();
+  const {appInfo:{isWaitingOnWorkspace}} : {appInfo:{isWaitingOnWorkspace:boolean}} = JSON.parse(content);
+  logger.info("waiting for workspace : " + isWaitingOnWorkspace);
+  return isWaitingOnWorkspace;
+}
 
 export const createNewApp = async (t: TestController, name: string) => {
   logger.info("Creating a new application with name : "+ name);
@@ -50,6 +59,14 @@ export const clearAppsIfExists = async (t: TestController) => {
 };
 
 export const selectWebhookType = async (t: TestController, name: string) => {
+  
+  let ss = await isWorkspaceUp();
+
+  while(ss === true){
+      await t.wait(5000);
+      ss = await isWorkspaceUp();
+  }
+  
   await t
     .click(screen.getByText("Webhook"))
     .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({timeout:200000})
