@@ -30,12 +30,14 @@ fixture("Application test run  and deployment")
     const {log,error}:BrowserConsoleMessages = await t.getBrowserConsoleMessages();
     const data = [...log,...error];
     fs.mkdirSync("artifacts", { recursive: true });
-    fs.writeFile("artifacts/"+ t.testRun.test.name.replace(" ","-")+"-log.txt",data.map(value=>{
+    fs.writeFile("artifacts/"+ t.testRun.test.name.split(" ").join("-")+"log.txt",data.map(value=>{
         return value + " \n"
     }),(err)=>{
       if(err) throw err;
       console.log("File write complete")
-    })
+    });
+    fs.writeFileSync("artifacts/"+ t.testRun.test.name.split(" ").join("-")+"http-log.json", JSON.stringify(httpRequestes));
+    httpLogger.clear();
 });
 
 test("test run hello world service ", async (t) => {
