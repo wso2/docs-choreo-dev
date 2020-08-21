@@ -12,12 +12,24 @@ export const isWorkspaceUp = async ()=>{
   return isWaitingOnWorkspace;
 }
 
+export const waitTillWorkspace = async (t: TestController) => {
+  let attempt = 0;
+  let ss = await isWorkspaceUp();
+
+  while(ss === true && attempt <= 25){
+      await t.wait(7000);
+      ss = await isWorkspaceUp();
+      attempt++;
+  }
+}
+
 export const createNewApp = async (t: TestController, name: string) => {
   logger.info("Creating a new application with name : "+ name);
   await t
     .click(screen.getAllByTestId("create-with-choreo"))
     .typeText(screen.getAllByPlaceholderText("Application name"), name)
     .click(screen.getByText("Create"));
+  await waitTillWorkspace(t);
   await t.wait(10000);
   await t.expect(Selector(".diagram-canvas").exists).ok({ timeout: 50000 });
   logger.info("Application created successfully with name: " + name);
@@ -59,15 +71,7 @@ export const clearAppsIfExists = async (t: TestController) => {
 };
 
 export const selectWebhookType = async (t: TestController, name: string) => {
-  let attempt = 0;
-  let ss = await isWorkspaceUp();
-
-  while(ss === true && attempt <= 25){
-      await t.wait(7000);
-      ss = await isWorkspaceUp();
-      attempt++;
-  }
-  
+  await waitTillWorkspace(t);
   await t
     .click(screen.getByText("Webhook"))
     .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({timeout:30000})
