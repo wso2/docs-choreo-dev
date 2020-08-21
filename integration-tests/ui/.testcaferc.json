@@ -4,5 +4,10 @@
       ],
       "skipJsErrors": true,
       "src":"src/tests",
-      "tsConfigPath": "tsconfig.json"
+      "tsConfigPath": "tsconfig.json",
+      "videoPath": "artifacts/videos",
+      "screenshots": {
+        "takeOnFails": true
+    }
+    
 }
