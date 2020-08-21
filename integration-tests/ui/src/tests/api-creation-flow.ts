@@ -30,7 +30,7 @@ fixture("Application test run  and deployment")
     const {log,error}:BrowserConsoleMessages = await t.getBrowserConsoleMessages();
     const data = [...log,...error];
     fs.mkdirSync("artifacts", { recursive: true });
-    fs.writeFile("artifacts/"+ t.testRun.test.name.replace(" ","-")+".txt",data.map(value=>{
+    fs.writeFile("artifacts/"+ t.testRun.test.name.replace(" ","-")+"-log.txt",data.map(value=>{
         return value + " \n"
     }),(err)=>{
       if(err) throw err;
