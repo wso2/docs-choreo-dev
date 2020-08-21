@@ -6,14 +6,37 @@ import page from "../model/page";
 import * as config from "../../testcafe-user-config.json";
 import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint } from "../utils/choreo-utils";
 import {logger} from '../utils/logger'
+import * as fs from 'fs';
+import * as mkdirp from 'mkdirp';
 
 declare const test: TestFn;
+declare global {
+  interface TestController {
+      testRun: {
+        test:{
+          name: string;
+        }          
+      };
+  }
+}
 
 fixture("Application test run  and deployment")
   .page(config.testURL)
   .beforeEach(async () => {
     await page.login();
-  });
+  })
+  
+  .afterEach(async t => {
+    const {log,error}:BrowserConsoleMessages = await t.getBrowserConsoleMessages();
+    const data = [...log,...error];
+    fs.mkdirSync("artifacts", { recursive: true });
+    fs.writeFile("artifacts/"+ t.testRun.test.name.replace(" ","-")+".txt",data.map(value=>{
+        return value + " \n"
+    }),(err)=>{
+      if(err) throw err;
+      console.log("File write complete")
+    })
+});
 
 test("test run hello world service ", async (t) => {
 
