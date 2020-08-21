@@ -70,7 +70,7 @@ export const selectWebhookType = async (t: TestController, name: string) => {
   
   await t
     .click(screen.getByText("Webhook"))
-    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({timeout:200000})
+    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({timeout:30000})
     .typeText(screen.queryByPlaceholderText("Relative path from host"), name, {speed: 0.5})
     .click(screen.getByText("Save"), { speed: 0.5 })
     .expect(screen.findAllByTestId("diagram-loader").exists).ok({ timeout: 20000 })
