@@ -107,7 +107,7 @@ export const createRespond = async (t: TestController, expression: string) => {
     .hover(screen.getByText("Respond"),{speed:0.5})
     .click(screen.getByTestId("addrespond"),{speed:0.5})
     .typeText(
-      screen.getByPlaceholderText("Enter value to send with respond"),
+      screen.getByPlaceholderText('eg: "Executed successfully!"'),
       "res",
       { speed: 0.5 }
     )
