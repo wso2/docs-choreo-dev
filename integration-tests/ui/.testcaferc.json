@@ -7,6 +7,7 @@
       "tsConfigPath": "tsconfig.json",
       "videoPath": "artifacts/videos",
       "screenshots": {
+        "path": "artifacts/screenshots",
         "takeOnFails": true
     }
     
