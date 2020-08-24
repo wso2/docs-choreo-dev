@@ -1,7 +1,27 @@
-import { Selector } from "testcafe";
+import { Selector, ClientFunction } from "testcafe";
 import { screen } from "@testing-library/testcafe";
 import {logger} from './logger';
 import Axios from "axios";
+
+export const getStorage = ClientFunction(() => localStorage.getItem("PORTAL_STATE"));
+
+export const isWorkspaceUp = async ()=>{
+  const content = await getStorage();
+  const {appInfo:{isWaitingOnWorkspace}} : {appInfo:{isWaitingOnWorkspace:boolean}} = JSON.parse(content);
+  logger.info("waiting for workspace : " + isWaitingOnWorkspace);
+  return isWaitingOnWorkspace;
+}
+
+export const waitTillWorkspace = async (t: TestController) => {
+  let attempt = 0;
+  let ss = await isWorkspaceUp();
+
+  while(ss === true && attempt <= 25){
+      await t.wait(7000);
+      ss = await isWorkspaceUp();
+      attempt++;
+  }
+}
 
 export const createNewApp = async (t: TestController, name: string) => {
   logger.info("Creating a new application with name : "+ name);
@@ -9,7 +29,8 @@ export const createNewApp = async (t: TestController, name: string) => {
     .click(screen.getAllByTestId("create-with-choreo"))
     .typeText(screen.getAllByPlaceholderText("Application name"), name)
     .click(screen.getByText("Create"));
-
+  await waitTillWorkspace(t);
+  await t.wait(10000);
   await t.expect(Selector(".diagram-canvas").exists).ok({ timeout: 50000 });
   logger.info("Application created successfully with name: " + name);
 };
@@ -50,9 +71,10 @@ export const clearAppsIfExists = async (t: TestController) => {
 };
 
 export const selectWebhookType = async (t: TestController, name: string) => {
+  await waitTillWorkspace(t);
   await t
     .click(screen.getByText("Webhook"))
-    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({timeout:200000})
+    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({timeout:30000})
     .typeText(screen.queryByPlaceholderText("Relative path from host"), name, {speed: 0.5})
     .click(screen.getByText("Save"), { speed: 0.5 })
     .expect(screen.findAllByTestId("diagram-loader").exists).ok({ timeout: 20000 })
@@ -89,7 +111,7 @@ export const createRespond = async (t: TestController, expression: string) => {
     .hover(screen.getByText("Respond"),{speed:0.5})
     .click(screen.getByTestId("addrespond"),{speed:0.5})
     .typeText(
-      screen.getByPlaceholderText("Enter value to send with respond"),
+      screen.getByPlaceholderText('eg: "Executed successfully!"'),
       "res",
       { speed: 0.5 }
     )

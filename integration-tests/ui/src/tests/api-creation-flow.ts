@@ -6,14 +6,50 @@ import page from "../model/page";
 import * as config from "../../testcafe-user-config.json";
 import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint } from "../utils/choreo-utils";
 import {logger} from '../utils/logger'
+import * as fs from 'fs';
+import * as mkdirp from 'mkdirp';
 
 declare const test: TestFn;
+
+const httpLogger = RequestLogger(undefined, {
+  logRequestBody: true,
+  logRequestHeaders: true,
+  logResponseBody: true,
+  logResponseHeaders: true,
+  stringifyRequestBody: true,
+  stringifyResponseBody: true
+});
+
+declare global {
+  interface TestController {
+      testRun: {
+        test:{
+          name: string;
+        }          
+      };
+  }
+}
 
 fixture("Application test run  and deployment")
   .page(config.testURL)
   .beforeEach(async () => {
     await page.login();
-  });
+  })
+  .requestHooks(httpLogger)
+  .afterEach(async t => {
+    const {log,error}:BrowserConsoleMessages = await t.getBrowserConsoleMessages();
+    const httpRequestes = httpLogger.requests;
+    const data = [...log,...error];
+    fs.mkdirSync("artifacts", { recursive: true });
+    fs.writeFile("artifacts/"+ t.testRun.test.name.split(" ").join("-")+"log.txt",data.map(value=>{
+        return value + " \n"
+    }),(err)=>{
+      if(err) throw err;
+      console.log("File write complete")
+    });
+    fs.writeFileSync("artifacts/"+ t.testRun.test.name.split(" ").join("-")+"http-log.json", JSON.stringify(httpRequestes));
+    httpLogger.clear();
+});
 
 test("test run hello world service ", async (t) => {
 
@@ -70,7 +106,7 @@ test("deploy hello world service",async (t)=>{
   await t.click(screen.getByTestId("deploy-btn"),{speed:0.5})
   .expect(screen.findByTestId("checkout-loading").exists).ok({timeout:20000})
   .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout:10000})
-  .expect(screen.findByTestId("checkout-ok").exists).ok({timeout:200000})
+  .expect(screen.findByTestId("checkout-ok").exists).ok({timeout:250000})
   logger.info("Checkout phase successful!")
 
 
@@ -106,5 +142,5 @@ test("deploy hello world service",async (t)=>{
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
   .expect(screen.findByText("Deploy").exists).ok({timeout:200000})
-  logger.info("Stopped application deployment successfully!")
+  logger.info("Undeloyed application successfully!")
 })

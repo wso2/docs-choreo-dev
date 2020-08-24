@@ -17,6 +17,7 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "@types/chalk": "^2.2.0",
     "axios": "^0.19.2",
     "typescript-logging": "^1.0.0"
