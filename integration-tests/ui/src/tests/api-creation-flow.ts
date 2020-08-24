@@ -142,5 +142,5 @@ test("deploy hello world service",async (t)=>{
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
   .expect(screen.findByText("Deploy").exists).ok({timeout:200000})
-  logger.info("Stopped application deployment successfully!")
+  logger.info("Undeloyed application successfully!")
 })
