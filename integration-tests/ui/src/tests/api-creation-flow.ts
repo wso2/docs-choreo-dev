@@ -10,6 +10,16 @@ import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 
 declare const test: TestFn;
+
+const httpLogger = RequestLogger(undefined, {
+  logRequestBody: true,
+  logRequestHeaders: true,
+  logResponseBody: true,
+  logResponseHeaders: true,
+  stringifyRequestBody: true,
+  stringifyResponseBody: true
+});
+
 declare global {
   interface TestController {
       testRun: {
@@ -25,9 +35,10 @@ fixture("Application test run  and deployment")
   .beforeEach(async () => {
     await page.login();
   })
-  
+  .requestHooks(httpLogger)
   .afterEach(async t => {
     const {log,error}:BrowserConsoleMessages = await t.getBrowserConsoleMessages();
+    const httpRequestes = httpLogger.requests;
     const data = [...log,...error];
     fs.mkdirSync("artifacts", { recursive: true });
     fs.writeFile("artifacts/"+ t.testRun.test.name.split(" ").join("-")+"log.txt",data.map(value=>{
