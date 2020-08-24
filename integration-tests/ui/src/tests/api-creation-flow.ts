@@ -95,7 +95,7 @@ test("deploy hello world service",async (t)=>{
   await t.click(screen.getByTestId("deploy-btn"),{speed:0.5})
   .expect(screen.findByTestId("checkout-loading").exists).ok({timeout:20000})
   .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout:10000})
-  .expect(screen.findByTestId("checkout-ok").exists).ok({timeout:200000})
+  .expect(screen.findByTestId("checkout-ok").exists).ok({timeout:250000})
   logger.info("Checkout phase successful!")
 
 
