@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-choreo
+  name: obsapi
 spec:
   minAvailable: "50%"
   selector:

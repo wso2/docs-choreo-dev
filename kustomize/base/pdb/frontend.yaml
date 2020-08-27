@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-frontend
+  name: frontend
 spec:
   minAvailable: "50%"
   selector:

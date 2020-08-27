@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-choreowww
+  name: choreowww
 spec:
   minAvailable: "50%"
   selector:

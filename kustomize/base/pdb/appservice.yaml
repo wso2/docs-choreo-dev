@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-appservice
+  name: appservice
 spec:
   minAvailable: "50%"
   selector:

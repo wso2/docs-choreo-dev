@@ -1,9 +1,9 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-logginapi
+  name: negotiator
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: loggingapi
+      choreo.component: negotiator

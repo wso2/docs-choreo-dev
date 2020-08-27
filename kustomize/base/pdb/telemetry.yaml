@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-telemetry
+  name: telemetry
 spec:
   minAvailable: "50%"
   selector:
