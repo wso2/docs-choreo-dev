@@ -9,7 +9,11 @@ export class ChoreoLoginHook extends RequestHook {
 
   // @ts-ignore
   async onRequest(event) {
-    event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf+"; cbearer="+config.user.cbearer;
+    if (event.requestOptions.url.includes("/linkersec/checklink")) {
+      event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf + "; " + event.requestOptions.headers.cookie;
+    } else {
+      event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf + "; cbearer=" + config.user.cbearer;
+    }
     // console.log(event)
   }
 
