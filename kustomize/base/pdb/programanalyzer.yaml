@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-programanalyzer
+  name: programanalyzer
 spec:
   minAvailable: "50%"
   selector:

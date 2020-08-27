@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: pdb-datamapper
+  name: datamapper
 spec:
   minAvailable: "50%"
   selector:
