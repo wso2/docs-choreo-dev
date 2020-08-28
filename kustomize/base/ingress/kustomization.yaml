@@ -1,4 +1,4 @@
 resources:
   - grpc.yaml
   - http.yaml
-  - root-http.yaml
+  - root.yaml

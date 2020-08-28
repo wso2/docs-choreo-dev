@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-root
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/permanent-redirect: "https://console.domain.com"
+spec:
+  tls:
+    - hosts:
+        - "*.domain.com"
+      secretName: ingress-cert
+  rules:
+    - host: "*.domain.com"
