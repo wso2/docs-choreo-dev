@@ -11,6 +11,8 @@ spec:
   tls:
     - hosts:
         - "*.domain.com"
+        - "domain.com"
       secretName: ingress-cert
   rules:
     - host: "*.domain.com"
+    - host: "domain.com"
