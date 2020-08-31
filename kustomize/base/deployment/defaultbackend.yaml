@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: default-backend
+  name: default-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: default-backend
+  template:
+    metadata:
+      labels:
+        choreo.component: default-backend
+      annotations:
+        linkerd.io/inject: disabled
+    spec:
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/default-backend:latest
+        securityContext:
+          runAsUser: 500
+          runAsGroup: 500
+        name: default-backend
+        ports:
+        - containerPort: 8080
+          name: dfbend-port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      serviceAccountName: sa-choreo-default
