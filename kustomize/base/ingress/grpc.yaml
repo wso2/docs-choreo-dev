@@ -11,6 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
     nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/custom-http-errors: "400,401,403,404,405,408,415,500,502,503,504"
 spec:
   tls:
     - hosts:
