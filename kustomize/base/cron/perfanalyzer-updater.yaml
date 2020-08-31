@@ -22,8 +22,8 @@ spec:
           - name: perfanalyzer-updater
             image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
             securityContext:
-              runAsUser: 100
-              runAsGroup: 1000
+              runAsUser: 500
+              runAsGroup: 500
             env:
               - name: AZURE_ADX_CLIENT_SECRET
                 valueFrom:
@@ -44,7 +44,7 @@ spec:
                 memory: 512Mi
             volumeMounts:
               - name: perfanalyzer-config
-                mountPath: /home/perf-analyzer/config/
+                mountPath: /home/python-ai/perf-analyzer/config/
           volumes:
             - configMap:
                 defaultMode: 420
