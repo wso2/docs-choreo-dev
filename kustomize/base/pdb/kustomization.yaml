@@ -10,3 +10,4 @@ resources:
   - datamapper.yaml
   - linker.yaml
   - choreowww.yaml
+  - defaultbackend.yaml

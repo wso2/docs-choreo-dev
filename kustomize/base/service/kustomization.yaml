@@ -10,3 +10,4 @@ resources:
   - loggingapi.yaml
   - datamapper.yaml
   - choreowww.yaml
+  - defaultbackend.yaml
