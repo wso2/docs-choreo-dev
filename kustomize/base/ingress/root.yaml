@@ -10,9 +10,9 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "*.domain.com"
+        - "www.domain.com"
         - "domain.com"
       secretName: ingress-cert
   rules:
-    - host: "*.domain.com"
+    - host: "www.domain.com"
     - host: "domain.com"
