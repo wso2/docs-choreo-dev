@@ -22,8 +22,8 @@ spec:
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 500
+          runAsGroup: 500
         name: perfanalyzer-estimator
         env:
           - name: CHOREO_PERF_DB_PASSWORD
@@ -46,7 +46,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - name: perfanalyzer-config
-          mountPath: /home/perf-analyzer/config/
+          mountPath: /home/python-ai/perf-analyzer/config/
       volumes:
       - configMap:
           defaultMode: 420
