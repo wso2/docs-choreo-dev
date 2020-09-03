@@ -1,5 +1,4 @@
 #!/bin/sh
-export CHOREO_ENV="DEV" &&
 cd src/utils/applinking_test &&
 docker container run --rm -v "$(pwd)":/home/ballerina -u "$(id -u)":"$(id -g)" -e JAVA_OPTS="-Duser.home=/home/ballerina" ballerina/ballerina:swan-lake-preview3 ballerina build --observability-included test &&
 rm -f ballerina.conf .choreoproject &&
