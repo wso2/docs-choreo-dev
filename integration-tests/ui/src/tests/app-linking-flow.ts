@@ -47,4 +47,35 @@ test("test app linking", async (t) => {
     logger.info("App Linking successful");
 });
 
+test("test annonymousapp linking", async (t) => {
+
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 20000 });
+    logger.info("Page loaded successfully");
+    await clearAppsIfExists(t);
+
+    logger.info("Start connecting an annonymous app : " + "annon-linking-test-app");
+
+    async function getAnnonAppUrl() {
+        const { stdout, stderr } = await exec('sh src/utils/applinking_test/run_annonapp.sh');
+        console.log('stdout:', stdout);
+        console.log('stderr:', stderr);
+        const url = /visit (http[^\s]+)/i.exec(stdout)[1];
+        return url;
+    }
+    const obsUrl = await getAnnonAppUrl();
+
+    await t.navigateTo(obsUrl)
+        .expect(screen.getByText("Add to Choreo")).ok({ timeout: 10000 })
+        .click(screen.getByText("Add to Choreo"))
+        .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
+        .click(screen.findByText("Next"))
+        .expect(screen.getByTestId("copy-btn")).ok({ timeout: 20000 })
+
+    const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
+    await exec(linkingCommand);
+    await t.expect(screen.getByText("Congratulations", { exact: false })).ok({ timeout: 60000 });
+
+    logger.info("Annonymous App Linking successful");
+});
+
 
