@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# Variables
+TARGET_BRANCH=latest-master-release
+REMOTE_NAME=upstream
+
+git fetch upstream
+
+commits=$(git --no-pager log --reverse --pretty=format:"%H" upstream/prod..upstream/master)
+
+jumpCommit=""
+for commitHash in $commits
+do
+    parentCommits=$(git cat-file -p $commitHash | grep "^parent " | wc -l)
+
+    if [[ "$parentCommits" -gt 1 ]]
+    then
+	jumpCommit=$commitHash
+    else
+	break
+    fi
+
+done
+
+if [[ ! -z "$jumpCommit" ]]
+then
+    echo
+
+    branchHead=$(git rev-parse upstream/$TARGET_BRANCH)
+
+    if [ "$branchHead" == "$jumpCommit" ]
+    then
+	echo "Nothing to do. $REMOTE_NAME/$TARGET_BRANCH branch is up to date"
+    else
+	echo "Updating latest-release-master with $jumpCommit"
+	git --no-pager show $jumpCommit
+
+	read -p "Are you sure [y/N]? "  -r
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+	    git push upstream "$jumpCommit:$TARGET_BRANCH"
+	    echo "$TARGET_BRANCH branch is updated"
+	else
+	    echo "$TARGET_BRANCH branch is not updated"
+	fi
+    fi
+
+    echo
+fi
