@@ -179,5 +179,6 @@ cmd_pending() {
 	exit 1
     fi
 
+    git fetch upstream
     git --no-pager log upstream/${ENVIRONMENT}..upstream/master
 }
