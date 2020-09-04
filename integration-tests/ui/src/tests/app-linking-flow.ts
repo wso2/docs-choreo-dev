@@ -63,9 +63,10 @@ test("test annonymousapp linking", async (t) => {
         return url;
     }
     const obsUrl = await getAnnonAppUrl();
+    await t.navigateTo(obsUrl);
+    await t.wait(20000);
 
-    await t.navigateTo(obsUrl)
-        .expect(screen.getByText("Add to Choreo")).ok({ timeout: 10000 })
+    await t.expect(screen.getByText("Add to Choreo")).ok({ timeout: 20000 })
         .click(screen.getByText("Add to Choreo"))
         .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
         .click(screen.findByText("Next"))
@@ -73,7 +74,8 @@ test("test annonymousapp linking", async (t) => {
 
     const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
     await exec(linkingCommand);
-    await t.expect(screen.getByText("Congratulations", { exact: false })).ok({ timeout: 60000 });
+    await t.wait(40000);
+    await t.expect(screen.getByText("annon-linking-test-app", { exact: false })).ok({ timeout: 40000 });
 
     logger.info("Annonymous App Linking successful");
 });
