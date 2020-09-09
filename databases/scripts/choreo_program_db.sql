@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS version (
   ast_hash              VARCHAR(255)    NOT NULL,
   ast                   MEDIUMTEXT,
   inserted_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_active           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (program_id) REFERENCES program(id) ON DELETE CASCADE,
   CONSTRAINT uc_version_pid UNIQUE (program_id, version)
@@ -70,5 +71,14 @@ BEGIN
       SET astchanged := true;
     END IF;
   COMMIT;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE UpdateLastActive(IN obsid varchar(255), IN vn VARCHAR(255))
+BEGIN
+  UPDATE `version`
+  SET `last_active` = CURRENT_TIMESTAMP
+  WHERE `program_id` IN (SELECT id FROM `program` WHERE `obs_id`=obsid) AND `version`=vn;
 END //
 DELIMITER ;
