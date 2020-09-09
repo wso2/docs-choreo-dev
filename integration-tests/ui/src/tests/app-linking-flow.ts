@@ -41,7 +41,8 @@ test("test app linking", async (t) => {
     console.log(secret);
     await runBallerinaApp(secret);
 
-    await t.expect(screen.findByText("Successfully Connected").exists).ok({ timeout: 120000 });
+    logger.info("Waiting for app to connect...")
+    await t.expect(screen.findByText("Successfully Connected").exists).ok({ timeout: 600000 });
     await t.click(screen.findByText("Observe"));
     await t.expect(await getLocation()).contains("observe/", { timeout: 20000 });
     logger.info("App Linking successful");
@@ -74,8 +75,8 @@ test("test annonymousapp linking", async (t) => {
 
     const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
     await exec(linkingCommand);
-    await t.wait(40000);
-    await t.expect(screen.getByText("annon-linking-test-app", { exact: false })).ok({ timeout: 40000 });
+    await t.wait(120000);
+    await t.expect(screen.getByText("annon-linking-test-app", { exact: false })).ok({ timeout: 60000 });
 
     logger.info("Annonymous App Linking successful");
 });
