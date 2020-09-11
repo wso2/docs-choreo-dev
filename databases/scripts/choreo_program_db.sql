@@ -73,12 +73,3 @@ BEGIN
   COMMIT;
 END //
 DELIMITER ;
-
-DELIMITER //
-CREATE PROCEDURE UpdateLastActive(IN obsid varchar(255), IN vn VARCHAR(255))
-BEGIN
-  UPDATE `version`
-  SET `last_active` = CURRENT_TIMESTAMP
-  WHERE `program_id` IN (SELECT id FROM `program` WHERE `obs_id`=obsid) AND `version`=vn;
-END //
-DELIMITER ;
