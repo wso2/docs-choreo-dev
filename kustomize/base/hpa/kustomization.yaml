@@ -3,10 +3,14 @@ resources:
   - negotiator.yaml
   - obsapi.yaml
   - telemetry.yaml
-  - appservice.yaml
+  - appservice.yaml # todo: remove old appservice after testing in dev
   - loggingapi.yaml
   - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
   - datamapper.yaml
   - linker.yaml
   - choreowww.yaml
+  - api-server.yaml
+  - app-deployer.yaml
+  - app-service.yaml
+  - workspace-manager.yaml

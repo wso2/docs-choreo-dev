@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: app-service
+  name: app-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: app-service
+  template:
+    metadata:
+      labels:
+        choreo.component: app-service
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
+        name: app-service
+        env:
+        - name: CHOREO_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-db
+              key: CHOREO_DB_PASSWORD
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: REDIS_PASSWORD
+        - name: GITHUB_BOT_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: GITHUB_BOT_ACCESS_TOKEN
+        - name: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+        - name: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        ports:
+        - containerPort: 8080
+          name: grpc-port
+        readinessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+          initialDelaySeconds: 5
+        livenessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"]
+          initialDelaySeconds: 20
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+        - mountPath: /app-service.yaml
+          name: config
+          subPath: app-service.yaml
+      volumes:
+      - name: config
+        configMap:
+          name: cm-app-service
+      serviceAccountName: sa-choreo-default

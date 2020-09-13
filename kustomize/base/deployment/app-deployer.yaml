@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: app-deployer
+  name: app-deployer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: app-deployer
+  template:
+    metadata:
+      labels:
+        choreo.component: app-deployer
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/app-deployer:latest
+        name: app-deployer
+        env:
+        - name: CHOREO_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-db
+              key: CHOREO_DB_PASSWORD
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-deployer
+              key: GITHUB_TOKEN
+        - name: DOCKER_REGISTRY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-deployer
+              key: DOCKER_REGISTRY_PASSWORD
+        - name: K8S_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-deployer
+              key: K8S_API_TOKEN
+        ports:
+        - containerPort: 8080
+          name: grpc-port
+        readinessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+          initialDelaySeconds: 5
+        livenessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"]
+          initialDelaySeconds: 20
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+        - mountPath: /app-deployer.yaml
+          name: config
+          subPath: app-deployer.yaml
+      volumes:
+      - name: config
+        configMap:
+          name: cm-app-deployer
+      serviceAccountName: sa-choreo-default

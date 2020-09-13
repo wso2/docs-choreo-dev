@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: workspace-manager
+  name: workspace-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: workspace-manager
+  template:
+    metadata:
+      labels:
+        choreo.component: workspace-manager
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager:latest
+        name: workspace-manager
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-workspace-manager
+              key: REDIS_PASSWORD
+        ports:
+        - containerPort: 8080
+          name: grpc-port
+        readinessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+          initialDelaySeconds: 5
+        livenessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"]
+          initialDelaySeconds: 20
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+        - mountPath: /workspace-manager.yaml
+          name: config
+          subPath: workspace-manager.yaml
+      volumes:
+      - name: config
+        configMap:
+          name: cm-workspace-manager
+      serviceAccountName: sa-choreo-workspace-manager
