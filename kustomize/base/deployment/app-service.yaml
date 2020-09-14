@@ -19,7 +19,7 @@ spec:
         linkerd.io/inject: enabled
     spec:
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/app-service-new:latest #todo: temp name change to avoid kustomize replacing the image with old one
         name: app-service
         env:
         - name: CHOREO_DB_PASSWORD
