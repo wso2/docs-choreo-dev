@@ -139,3 +139,21 @@ export const callExternalEndpoint = async (t: TestController, URL: string, attem
   }
   return res;
 }
+
+export const callExternalEndpointPOST = async (t: TestController, URL: string, requestBody: object, attempts: number) => {
+  let response;
+  let attempt = 0
+  while ( !response && attempt <= attempts) {
+    await t.wait(5000);
+
+    try {
+      logger.info("Test URL: " + (URL));
+      response = await Axios.post(URL,requestBody);
+    } catch (err) {
+      logger.error("Error while getting the test response", err);
+    }
+    logger.info("Attempt: " + attempt + " calling the endpoint..");
+    attempt++;
+  }
+  return response;
+}
