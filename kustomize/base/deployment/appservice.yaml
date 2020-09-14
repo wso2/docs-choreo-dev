@@ -340,7 +340,7 @@ spec:
             configMapKeyRef:
               name: cm-appservice
               key: USER_FEEDBACK_AZURE_BLOB_CONTAINER_NAME
-        image: choreoctrlplane.azurecr.io/choreoipaas/app-service:v0.2.19 # fix the old app-service version to avoid updating to new one
+        image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
         name: appservice
         ports:
         - containerPort: 8080

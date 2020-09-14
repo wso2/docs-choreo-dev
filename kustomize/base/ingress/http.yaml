@@ -36,7 +36,7 @@ spec:
             servicePort: 9092
           path: /linker             
         - backend:
-            serviceName: api-server # tmp switch to old appservice in new api-server has issues
+            serviceName: api-server
             servicePort: 80
           path: /
         - backend:
