@@ -30,7 +30,7 @@ spec:
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-app-service
+              name: secret-redis
               key: REDIS_PASSWORD
         - name: GITHUB_BOT_ACCESS_TOKEN
           valueFrom:

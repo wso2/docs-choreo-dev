@@ -25,7 +25,7 @@ spec:
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-workspace-manager
+              name: secret-redis
               key: REDIS_PASSWORD
         ports:
         - containerPort: 8080
