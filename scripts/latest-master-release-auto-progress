@@ -11,7 +11,7 @@ commits=$(git --no-pager log --reverse --pretty=format:"%H" upstream/prod..upstr
 jumpCommit=""
 for commitHash in $commits
 do
-    parentCommits=$(git cat-file -p $commitHash | grep "^parent " | wc -l)
+    parentCommits=$(git cat-file -p $commitHash | grep -c "^parent ")
 
     if [[ "$parentCommits" -gt 1 ]]
     then
