@@ -73,3 +73,10 @@ BEGIN
   COMMIT;
 END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE DeleteVersion(IN versionId INT, IN obsId VARCHAR(255))
+BEGIN
+  DELETE FROM version WHERE id=versionId AND id NOT IN (SELECT latest_version_id from program where obs_id=obsId);
+END //
+DELIMITER ;
