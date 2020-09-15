@@ -48,8 +48,8 @@ spec:
               - name: AZURE_DL_CLIENT_SECRET
                 valueFrom:
                   secretKeyRef:
-                    key: AZURE_DL_CLIENT_SECRET
-                    name: secret-datalake-ast
+                    key: AZURE_DL_AST_CLIENT_SECRET
+                    name: secret-datalake
               - name: LAST_ACTIVE_DURATION_IN_DAYS
                 valueFrom:
                   configMapKeyRef:
