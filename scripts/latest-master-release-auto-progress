@@ -24,8 +24,6 @@ done
 
 if [[ -n "$jumpCommit" ]]
 then
-    echo
-
     branchHead=$(git rev-parse upstream/$TARGET_BRANCH)
 
     if [ "$branchHead" == "$jumpCommit" ]
@@ -46,4 +44,8 @@ then
     fi
 
     echo
+else
+    echo "Nothing to do. $REMOTE_NAME/$TARGET_BRANCH branch is up to date"
 fi
+
+echo
