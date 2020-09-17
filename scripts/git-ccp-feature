@@ -41,10 +41,10 @@ cmd_init() {
     generate_env_branches "$answer"
 
     git fetch upstream
-    git branch "$MASTER_BRANCH_NAME $MASTER_BASE"
-    git branch "$DEV_BRANCH_NAME $DEV_BASE"
-    git branch "$STAGE_BRANCH_NAME $STAGE_BASE" 
-    git branch "$PROD_BRANCH_NAME $PROD_BASE"
+    git branch "$MASTER_BRANCH_NAME" "$MASTER_BASE"
+    git branch "$DEV_BRANCH_NAME" "$DEV_BASE"
+    git branch "$STAGE_BRANCH_NAME" "$STAGE_BASE"
+    git branch "$PROD_BRANCH_NAME" "$PROD_BASE"
 
     git checkout "$MASTER_BRANCH_NAME"
     
