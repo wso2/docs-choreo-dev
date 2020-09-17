@@ -5,7 +5,7 @@ if [ "$DEBUG" = "yes" ]; then
 	set -x
 fi
 
-export GITCCP_DIR=$(dirname $0)
+GITCCP_DIR=$(dirname "$0")
 
 usage() {
 	echo "usage: git ccp <subcommand>"
@@ -26,6 +26,7 @@ main() {
 	fi
 
 	# use the shFlags project to parse the command line arguments
+	# shellcheck source=/dev/null
 	. "$GITCCP_DIR/shflags"
 	FLAGS_PARENT="git ccp"
 
@@ -42,6 +43,7 @@ main() {
 	fi
 
 	# run command
+	# shellcheck source=/dev/null
 	. "$GITCCP_DIR/git-ccp-$SUBCOMMAND"
 	FLAGS_PARENT="git ccp $SUBCOMMAND"
 
@@ -59,7 +61,7 @@ main() {
 		exit 1
 	fi
 
-	cmd_$SUBACTION "$@"
+	"cmd_$SUBACTION" "$@"
 }
 
 warn() { echo "$@" >&2; }

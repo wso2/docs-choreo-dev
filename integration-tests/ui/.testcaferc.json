@@ -3,7 +3,7 @@
         { "module": "@testing-library/dom/dist/@testing-library/dom.umd.js" }
       ],
       "skipJsErrors": true,
-      "src":"src/tests",
+      "src":["src/tests","../data-mapper/src/tests"],
       "tsConfigPath": "tsconfig.json",
       "videoPath": "artifacts/videos",
       "screenshots": {

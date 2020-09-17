@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 usage() {
     echo "usage: git ccp feature <subcommand>"
@@ -25,7 +25,7 @@ cmd_help() {
 cmd_init() {
     
     printf "Feature name (use a one without spaces) : "
-    read answer
+    read -r answer
 
     if [ -z "$answer" ]
     then
@@ -38,15 +38,15 @@ cmd_init() {
     STAGE_BASE='upstream/stage'
     PROD_BASE='upstream/prod'
 
-    generate_env_branches $answer
+    generate_env_branches "$answer"
 
     git fetch upstream
-    git branch $MASTER_BRANCH_NAME $MASTER_BASE 
-    git branch $DEV_BRANCH_NAME $DEV_BASE 
-    git branch $STAGE_BRANCH_NAME $STAGE_BASE 
-    git branch $PROD_BRANCH_NAME $PROD_BASE 
+    git branch "$MASTER_BRANCH_NAME $MASTER_BASE"
+    git branch "$DEV_BRANCH_NAME $DEV_BASE"
+    git branch "$STAGE_BRANCH_NAME $STAGE_BASE" 
+    git branch "$PROD_BRANCH_NAME $PROD_BASE"
 
-    git checkout $MASTER_BRANCH_NAME
+    git checkout "$MASTER_BRANCH_NAME"
     
     echo
     echo "Summary of actions:"
@@ -88,28 +88,28 @@ cmd_sync() {
 	exit 1
     fi
 
-    generate_env_branches $FEATURE_ID
+    generate_env_branches "$FEATURE_ID"
 
     echo "==== Syncing $MASTER_BRANCH_NAME ===="
-    git checkout $MASTER_BRANCH_NAME
-    git push origin $MASTER_BRANCH_NAME
+    git checkout "$MASTER_BRANCH_NAME"
+    git push origin "$MASTER_BRANCH_NAME"
 
     echo -e "\n\n==== Syncing $DEV_BRANCH_NAME ===="
-    git checkout $DEV_BRANCH_NAME
-    git merge --no-edit $MASTER_BRANCH_NAME
-    git push origin $DEV_BRANCH_NAME
+    git checkout "$DEV_BRANCH_NAME"
+    git merge --no-edit "$MASTER_BRANCH_NAME"
+    git push origin "$DEV_BRANCH_NAME"
 
     echo -e "\n\n==== Syncing $STAGE_BRANCH_NAME ===="
-    git checkout $STAGE_BRANCH_NAME
-    git merge --no-edit $MASTER_BRANCH_NAME
-    git push origin $STAGE_BRANCH_NAME
+    git checkout "$STAGE_BRANCH_NAME"
+    git merge --no-edit "$MASTER_BRANCH_NAME"
+    git push origin "$STAGE_BRANCH_NAME"
 
     echo -e "\n\n==== Syncing $PROD_BRANCH_NAME ===="
-    git checkout $PROD_BRANCH_NAME
-    git merge --no-edit $MASTER_BRANCH_NAME
-    git push origin $PROD_BRANCH_NAME
+    git checkout "$PROD_BRANCH_NAME"
+    git merge --no-edit "$MASTER_BRANCH_NAME"
+    git push origin "$PROD_BRANCH_NAME"
 
-    git checkout $MASTER_BRANCH_NAME
+    git checkout "$MASTER_BRANCH_NAME"
 
     echo
     echo "Summary of actions:"
@@ -141,21 +141,21 @@ cmd_publish() {
 	exit 1
     fi
 
-    generate_env_branches $FEATURE_ID
+    generate_env_branches "$FEATURE_ID"
 
-    git checkout $MASTER_BRANCH_NAME
+    git checkout "$MASTER_BRANCH_NAME"
     gh pr create -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
-    git checkout $DEV_BRANCH_NAME
+    git checkout "$DEV_BRANCH_NAME"
     gh pr create -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
-    git checkout $STAGE_BRANCH_NAME
+    git checkout "$STAGE_BRANCH_NAME"
     gh pr create -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
-    git checkout $PROD_BRANCH_NAME
+    git checkout "$PROD_BRANCH_NAME"
     gh pr create -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
-    git checkout $MASTER_BRANCH_NAME
+    git checkout "$MASTER_BRANCH_NAME"
 
     echo
     echo "Summary of actions:"
@@ -180,5 +180,5 @@ cmd_pending() {
     fi
 
     git fetch upstream
-    git --no-pager log upstream/${ENVIRONMENT}..upstream/master
+    git --no-pager log "upstream/${ENVIRONMENT}..upstream/master"
 }

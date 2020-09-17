@@ -10,7 +10,7 @@
 # --------------------------------------------------------------------------------------
 
 # Derived from official mysql image (our base image)
-FROM mysql
+FROM mysql:5.7
 
 # Add a database
 ENV MYSQL_DATABASE choreo_db
