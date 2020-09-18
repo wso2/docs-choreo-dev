@@ -1,4 +1,5 @@
 resources:
+  - anomalydetector.yaml
   - frontend.yaml
   - negotiator.yaml
   - linker.yaml
@@ -10,4 +11,3 @@ resources:
   - loggingapi.yaml
   - datamapper.yaml
   - choreowww.yaml
-  - anomalydetector.yaml
