@@ -1,4 +1,5 @@
 resources:
+  - anomalydetector.yaml
   - frontend.yaml
   - negotiator.yaml
   - linker.yaml
