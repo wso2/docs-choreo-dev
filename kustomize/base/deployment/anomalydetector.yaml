@@ -27,7 +27,7 @@ spec:
             secretKeyRef:
               name: secret-anomalydetector
               key: MODEL_STORAGE_CONNECTION_STRING
-        image: choreoctrlplane.azurecr.io/choreoipaas/anomalydetector-init:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector-init:latest
         name: anomalydetector-init
         volumeMounts:
         - name: anomalydetector-models
@@ -43,7 +43,7 @@ spec:
             cpu: 100m
             memory: 300Mi
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/anomalydetector:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector:latest
         name: anomalydetector
         env:
           - name: CHECKPOINT_STORAGE_CONNECTION_STRING
