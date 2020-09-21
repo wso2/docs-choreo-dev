@@ -4,22 +4,39 @@ import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-user-config.json";
-import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint } from "../utils/choreo-utils";
+import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 declare const test: TestFn;
-
+const httpLogger = RequestLogger(undefined, {
+    logRequestBody: true,
+    logRequestHeaders: true,
+    logResponseBody: true,
+    logResponseHeaders: true,
+    stringifyRequestBody: true,
+    stringifyResponseBody: true
+  });
+  
 fixture("App linking")
     .page(config.testURL)
     .beforeEach(async () => {
         await page.login();
-    });
+        await enableDetailedLogs();
+    })
+    .requestHooks(httpLogger)
+    .afterEach(async t => {
+        const {log,error}:BrowserConsoleMessages = await t.getBrowserConsoleMessages();
+        const httpRequests = httpLogger.requests;
+        const data = [...log,...error];
+        saveLogs(t,data,httpRequests)
+        httpLogger.clear();
+});;
 
 test("test app linking", async (t) => {
 
-    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 20000 });
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     logger.info("Page loaded successfully");
     await clearAppsIfExists(t);
 
@@ -28,8 +45,8 @@ test("test app linking", async (t) => {
         .click(screen.getAllByTestId("link-ballerina-app"))
         .typeText(screen.getAllByPlaceholderText("App name"), "linking-test-app")
         .click(screen.getByText("Generate Secret"));
-    await t.expect(screen.queryAllByTestId("copy-btn").exists).ok({ timeout: 60000 });
-    logger.info("Secret generated successfully");
+    await t.expect(screen.queryAllByTestId("copy-btn").exists).ok({ timeout: WAIT_TIME_MEDIUM });
+    logger.info("Secret generated successfully ");
 
     async function runBallerinaApp(secret: string) {
         const secretConfig = 'secret=\\"' + secret + '\\"';
@@ -38,19 +55,19 @@ test("test app linking", async (t) => {
         console.log('stderr:', stderr);
     }
     const secret = (await screen.getByPlaceholderText("Application secret").value).toString();
-    console.log(secret);
+    logger.info("Secret value" + secret);
     await runBallerinaApp(secret);
 
     logger.info("Waiting for app to connect...")
-    await t.expect(screen.findByText("Successfully Connected").exists).ok({ timeout: 600000 });
+    await t.expect(screen.findByText("Successfully Connected").exists).ok({ timeout: WAIT_TIME_LONG });
     await t.click(screen.findByText("Observe"));
-    await t.expect(await getLocation()).contains("observe/", { timeout: 20000 });
+    await t.expect(await getLocation()).contains("observe/", { timeout: WAIT_TIME_MEDIUM });
     logger.info("App Linking successful");
 });
 
 test("test annonymousapp linking", async (t) => {
 
-    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: 20000 });
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     logger.info("Page loaded successfully");
     await clearAppsIfExists(t);
 
@@ -64,19 +81,21 @@ test("test annonymousapp linking", async (t) => {
         return url;
     }
     const obsUrl = await getAnnonAppUrl();
+    logger.info("Retrieved observe URL from ballerina application : " + obsUrl);
     await t.navigateTo(obsUrl);
     await t.wait(20000);
 
-    await t.expect(screen.getByText("Add to Choreo")).ok({ timeout: 20000 })
+    await t.expect(screen.getByText("Add to Choreo")).ok({ timeout: WAIT_TIME_SHORT })
         .click(screen.getByText("Add to Choreo"))
         .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
         .click(screen.findByText("Next"))
-        .expect(screen.getByTestId("copy-btn")).ok({ timeout: 20000 })
+        .expect(screen.getByTestId("copy-btn")).ok({ timeout: WAIT_TIME_SHORT })
 
     const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
+    logger.info("Retrieved app linking command : " + linkingCommand);
     await exec(linkingCommand);
-    await t.wait(120000);
-    await t.expect(screen.getByText("annon-linking-test-app", { exact: false })).ok({ timeout: 60000 });
+    await t.wait(WAIT_TIME_LONG);
+    await t.expect(screen.getByText("annon-linking-test-app", { exact: false })).ok({ timeout: WAIT_TIME_MEDIUM });
 
     logger.info("Annonymous App Linking successful");
 });
