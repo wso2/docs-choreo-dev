@@ -76,8 +76,8 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /readyz
-              port: appservice-port
+              path: /service/healthz
+              port: email-service-port
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -85,5 +85,5 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /livez
-              port: appservice-port
+              path: /service/healthz
+              port: email-service-port
