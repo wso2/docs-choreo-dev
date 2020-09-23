@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS choreo_perf_db;
+USE choreo_perf_db;
+
 CREATE TABLE IF NOT EXISTS api_metrics (
   `id`              int(11)       NOT NULL AUTO_INCREMENT,
   `time_stamp`      bigint(20)    NOT NULL,
