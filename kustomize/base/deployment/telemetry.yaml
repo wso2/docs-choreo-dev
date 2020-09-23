@@ -26,6 +26,11 @@ spec:
             configMapKeyRef:
               key: B7A_LOG_LEVEL
               name: cm-loglevel-telemetry
+        - name: EVENTHUB_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              key: EVENTHUB_NAMESPACE
+              name: cm-telemetry
         - name: METRICS_EVENTHUB_NAME
           valueFrom:
             configMapKeyRef:
