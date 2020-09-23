@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS choreo_app_db;
+USE choreo_app_db;
+
 CREATE TABLE organization
 (
     id         int(11)      NOT NULL AUTO_INCREMENT,
