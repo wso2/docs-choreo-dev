@@ -8,8 +8,8 @@ import * as mkdirp from 'mkdirp';
 
 declare global {
   interface Window {
-      enableDetailedLogs:()=> void;
-      disableDetailedLogs: () => void;    
+    enableDetailedLogs: () => void;
+    disableDetailedLogs: () => void;
   }
 }
 
@@ -19,7 +19,7 @@ export const WAIT_TIME_LONG = 240000; // 4 min
 export const WAIT_TIME_EX_LONG = 600000; // 10 min
 
 export const getStorage = ClientFunction(() => localStorage.getItem("PORTAL_STATE"));
-export const enableDetailedLogs = ClientFunction(()=> {
+export const enableDetailedLogs = ClientFunction(() => {
   console.log("enabling detailed logs")
   window.enableDetailedLogs()
 
@@ -102,7 +102,7 @@ export const selectWebhookType = async (t: TestController, name: string) => {
   logger.info("selected webhook app type with name : " + name);
 };
 
-export const createProperty = async (t: TestController, expression: string) => {
+export const createProperty = async (t: TestController, name: string, expression: string) => {
   logger.info("Creating the property with expression : " + expression);
   await t
     .click(Selector("#BigPlusRectangle"), { speed: 0.5 })
@@ -110,8 +110,16 @@ export const createProperty = async (t: TestController, expression: string) => {
     .click(screen.getByTestId("process-rect"), { speed: 0.5 })
     .hover(screen.getByText("Property"), { speed: 0.5 })
     .click(screen.getByTestId("addproperty"), { speed: 0.5 })
+    .selectText(screen.getByPlaceholderText("Enter Property Name"))
+    .pressKey("delete")
     .typeText(
-      screen.getByPlaceholderText("Enter custom code (eg: var x=12;)"),
+      screen.getByPlaceholderText("Enter Property Name"),
+      name,
+      { speed: 0.5 }
+    )
+    .click(screen.getByText("Define Expression"), { speed: 0.5 })
+    .typeText(
+      screen.getByPlaceholderText("eg: \"Hello World\""),
       expression,
       { speed: 0.5 }
     )
@@ -163,12 +171,12 @@ export const callExternalEndpoint = async (t: TestController, URL: string, attem
 export const callExternalEndpointPOST = async (t: TestController, URL: string, requestBody: object, attempts: number) => {
   let response;
   let attempt = 0
-  while ( !response && attempt <= attempts) {
+  while (!response && attempt <= attempts) {
     await t.wait(5000);
 
     try {
       logger.info("Test URL: " + (URL));
-      response = await Axios.post(URL,requestBody);
+      response = await Axios.post(URL, requestBody);
     } catch (err) {
       logger.error("Error while getting the test response", err);
     }
@@ -178,13 +186,13 @@ export const callExternalEndpointPOST = async (t: TestController, URL: string, r
   return response;
 }
 
-export const saveLogs = async (t:TestController,browserLogs:string[],networkLogs: LoggedRequest[]) => {
+export const saveLogs = async (t: TestController, browserLogs: string[], networkLogs: LoggedRequest[]) => {
   fs.mkdirSync("artifacts", { recursive: true });
-  fs.writeFile("artifacts/"+ t.browser.name+"-"+t.testRun.test.name.split(" ").join("-")+"log.txt",browserLogs.map(value=>{
-      return value + " \n"
-  }),(err)=>{
-    if(err) throw err;
+  fs.writeFile("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "log.txt", browserLogs.map(value => {
+    return value + " \n"
+  }), (err) => {
+    if (err) throw err;
     console.log("File write complete")
   });
-  fs.writeFileSync("artifacts/"+ t.browser.name+"-"+t.testRun.test.name.split(" ").join("-")+"http-log.json", JSON.stringify(networkLogs));
+  fs.writeFileSync("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "http-log.json", JSON.stringify(networkLogs));
 }
