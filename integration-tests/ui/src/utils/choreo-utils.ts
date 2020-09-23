@@ -3,7 +3,7 @@ import { screen, within } from "@testing-library/testcafe";
 import { logger } from './logger';
 import Axios from "axios";
 import * as fs from 'fs';
-import * as mkdirp from 'mkdirp';
+import {gunzipSync} from 'zlib'
 
 
 declare global {
@@ -119,7 +119,7 @@ export const createProperty = async (t: TestController, name: string, expression
     )
     .click(screen.getByText("Define Expression"), { speed: 0.5 })
     .typeText(
-      screen.getByPlaceholderText("eg: \"Hello World\""),
+      screen.getByPlaceholderText('eg: "Hello world"'),
       expression,
       { speed: 0.5 }
     )
@@ -192,7 +192,36 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
     return value + " \n"
   }), (err) => {
     if (err) throw err;
-    console.log("File write complete")
-  });
-  fs.writeFileSync("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "http-log.json", JSON.stringify(networkLogs));
+    console.log("File write complete");
+  })
+
+  
+  const logs = networkLogs.map((loggedRequest)=> {
+    
+    if(loggedRequest.request.url.includes(".js") ||
+      loggedRequest.request.url.includes(".svg") || 
+      loggedRequest.request.url.includes(".ico") || 
+      loggedRequest.request.url.includes(".css") ||
+      loggedRequest.request.url.includes(".woff2")|| 
+      loggedRequest.request.url.includes("/track")){
+      return null;
+    }
+
+    if(loggedRequest.response){
+      if(loggedRequest.response.headers['content-encoding']== 'gzip'){
+        const resData = (gunzipSync(loggedRequest.response.body as Buffer) as Buffer).toString();
+        return { 
+          ...loggedRequest,
+          response: {...loggedRequest.response,
+            body:resData.toString()
+          
+          }
+        }
+      }
+      return loggedRequest;
+    }
+    return loggedRequest;
+   
+})
+  fs.writeFileSync("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "http-log.json", JSON.stringify(logs));
 }

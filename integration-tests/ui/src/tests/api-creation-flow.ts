@@ -15,8 +15,7 @@ const httpLogger = RequestLogger(undefined, {
   logRequestHeaders: true,
   logResponseBody: true,
   logResponseHeaders: true,
-  stringifyRequestBody: true,
-  stringifyResponseBody: true
+  stringifyRequestBody: true
 });
 
 declare global {

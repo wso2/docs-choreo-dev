@@ -20,6 +20,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "@types/chalk": "^2.2.0",
     "axios": "^0.19.2",
-    "typescript-logging": "^1.0.0"
+    "typescript-logging": "^1.0.0",
+    "zlib": "^1.0.5"
   }
 }

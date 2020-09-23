@@ -10,13 +10,23 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 declare const test: TestFn;
+
+declare global {
+    interface TestController {
+      testRun: {
+        test: {
+          name: string;
+        }
+      };
+    }
+  }
+  
 const httpLogger = RequestLogger(undefined, {
     logRequestBody: true,
     logRequestHeaders: true,
     logResponseBody: true,
     logResponseHeaders: true,
-    stringifyRequestBody: true,
-    stringifyResponseBody: true
+    stringifyRequestBody: true
   });
   
 fixture("App linking")
