@@ -7,13 +7,21 @@ import {logger} from '../utils/logger'
 import { saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 
 declare const test: TestFn;
+declare global {
+  interface TestController {
+    testRun: {
+      test: {
+        name: string;
+      }
+    };
+  }
+}
 const httpLogger = RequestLogger(undefined, {
   logRequestBody: true,
   logRequestHeaders: true,
   logResponseBody: true,
   logResponseHeaders: true,
-  stringifyRequestBody: true,
-  stringifyResponseBody: true
+  stringifyRequestBody: true
 });
 
 fixture("User flows")
