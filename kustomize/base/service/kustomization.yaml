@@ -9,6 +9,7 @@ resources:
   - perfanalyzer-estimator.yaml
   - loggingapi.yaml
   - datamapper.yaml
+  - testbase.yaml
   - choreowww.yaml
   - api-server.yaml
   - app-service.yaml
