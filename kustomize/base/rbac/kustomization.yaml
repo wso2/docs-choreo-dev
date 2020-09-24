@@ -1,4 +1,3 @@
 resources:
   - sa-choreo-default.yaml
   - workspace-manager
-  - appservice # todo: remove old appservice after testing in dev

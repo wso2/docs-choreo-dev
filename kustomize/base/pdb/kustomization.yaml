@@ -1,5 +1,4 @@
 resources:
-  - appservice.yaml  # todo: remove old appservice after testing in dev
   - frontend.yaml
   - loggingapi.yaml
   - negotiator.yaml

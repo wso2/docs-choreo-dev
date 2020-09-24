@@ -1,6 +1,5 @@
 resources:
 #  - ingress-default-deny.yaml
-  - appservice.yaml
   - negotiator.yaml
   - telemetry.yaml
   - loggingapi.yaml

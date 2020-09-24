@@ -5,7 +5,6 @@ resources:
   - linker.yaml
   - obsapi.yaml
   - telemetry.yaml
-  - appservice.yaml  # todo: remove old appservice after testing in dev
   - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
   - loggingapi.yaml

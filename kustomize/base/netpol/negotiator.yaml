@@ -17,5 +17,5 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              choreo.component: appservice
+              choreo.component: app-service
   egress: []
