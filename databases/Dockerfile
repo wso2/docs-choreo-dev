@@ -15,6 +15,7 @@ FROM mysql:5.7
 # Add the content of the sql-scripts/ directory to your image
 # All scripts in docker-entrypoint-initdb.d/ are automatically
 # executed during container startup
+COPY scripts/choreo_testbase_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_app_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_perf_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_program_db.sql /docker-entrypoint-initdb.d/
