@@ -78,6 +78,7 @@ spec:
             httpGet:
               path: /service/healthz
               port: email-port
+              scheme: HTTPS
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -87,3 +88,4 @@ spec:
             httpGet:
               path: /service/healthz
               port: email-port
+              scheme: HTTPS
