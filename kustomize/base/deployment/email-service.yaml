@@ -16,7 +16,7 @@ spec:
       labels:
         choreo.component: email-service
       annotations:
-        linkerd.io/inject: enabled        
+        linkerd.io/inject: enabled
     spec:
       containers:
         - name: email-service
@@ -67,7 +67,7 @@ spec:
                   key: SENDER_MAIL
           ports:
             - containerPort: 8082
-              name: email-service-port
+              name: email-port
               protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
@@ -77,7 +77,7 @@ spec:
             successThreshold: 1
             httpGet:
               path: /service/healthz
-              port: email-service-port
+              port: email-port
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -86,4 +86,4 @@ spec:
             successThreshold: 1
             httpGet:
               path: /service/healthz
-              port: email-service-port
+              port: email-port
