@@ -6,9 +6,9 @@ metadata:
     choreo.component: email-service
 spec:
   ports:
-    - name: email-service-port-http
+    - name: email-port-http
       port: 8082
       protocol: TCP
-      targetPort: email-service-port-http
+      targetPort: email-port-http
   selector:
     choreo.component: email-service
