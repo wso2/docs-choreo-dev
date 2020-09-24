@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: email-service
+  labels:
+    choreo.component: email-service
+spec:
+  ports:
+    - name: email-port-http
+      port: 8082
+      protocol: TCP
+      targetPort: email-port-http
+  selector:
+    choreo.component: email-service

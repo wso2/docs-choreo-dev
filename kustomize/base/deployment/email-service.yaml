@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: email-service
+  name: email-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: email-service
+  template:
+    metadata:
+      labels:
+        choreo.component: email-service
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - name: email-service
+          lifecycle:
+            # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
+            preStop:
+              exec:
+                command:
+                  - /bin/sleep
+                  - "20"
+          imagePullPolicy: Always
+          image: choreoctrlplane.azurecr.io/choreoipaas/email-service:latest
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1000Mi
+            requests:
+              cpu: 300m
+              memory: 300Mi
+          envFrom:
+            - configMapRef:
+                name: cm-email-service
+          env:
+            - name: MAIL_SMTP_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-email-service
+                  key: MAIL_SMTP_AUTH_PASSWORD
+            - name: MAIL_SMTP_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-email-service
+                  key: MAIL_SMTP_AUTH_USERNAME
+            - name: MAIL_SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-email-service
+                  key: MAIL_SMTP_HOST
+            - name: MAIL_SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-email-service
+                  key: MAIL_SMTP_PORT
+            - name: SENDER_MAIL
+              valueFrom:
+                secretKeyRef:
+                  name: secret-email-service
+                  key: SENDER_MAIL
+          ports:
+            - containerPort: 8082
+              name: email-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /service/healthz
+              port: email-port
+              scheme: HTTPS
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /service/healthz
+              port: email-port
+              scheme: HTTPS
