@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS choreo_program_db;
+USE choreo_program_db;
+
 CREATE TABLE IF NOT EXISTS program (
    id                    INT             AUTO_INCREMENT,
    obs_id                VARCHAR(255)    NOT NULL,
@@ -50,7 +53,7 @@ BEGIN
   SELECT UUID(),programid,asthash
   WHERE NOT EXISTS (SELECT id FROM `version` WHERE `program_id`=programid AND `ast_hash`=asthash);
   SELECT ROW_COUNT() INTO rowcount;
-  SELECT LAST_INSERT_ID() INTO vid LIMIT 1;
+  SELECT LAST_INSERT_ID() INTO vid;
   SELECT `vid`,`version` INTO vid,vn from `version` WHERE `program_id`=programid AND `ast_hash`=asthash;
 END //
 DELIMITER ;

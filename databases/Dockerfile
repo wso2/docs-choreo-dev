@@ -12,12 +12,10 @@
 # Derived from official mysql image (our base image)
 FROM mysql:5.7
 
-# Add a database
-ENV MYSQL_DATABASE choreo_db
-
 # Add the content of the sql-scripts/ directory to your image
 # All scripts in docker-entrypoint-initdb.d/ are automatically
 # executed during container startup
 COPY scripts/choreo_app_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_perf_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_program_db.sql /docker-entrypoint-initdb.d/
+COPY scripts/configure_dbs.sql /docker-entrypoint-initdb.d/

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "e2etest": "testcafe chrome",
-    "e2etest:headless": "testcafe chrome:headless && testcafe firefox:headless"
+    "e2etest:headless": "testcafe \"chrome:headless '--window-size=1920,1080'\" &&   testcafe \"firefox:headless '-width=1920 -height=1080'\""
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "@types/chalk": "^2.2.0",
     "axios": "^0.19.2",
-    "typescript-logging": "^1.0.0"
+    "typescript-logging": "^1.0.0",
+    "zlib": "^1.0.5"
   }
 }

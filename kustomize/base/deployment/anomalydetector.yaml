@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: anomalydetector
+  name: anomalydetector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: anomalydetector
+  template:
+    metadata:
+      labels:
+        choreo.component: anomalydetector
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        runAsUser: 500
+        runAsGroup: 500
+        fsGroup: 500
+      initContainers:
+      - env:
+        - name: MODEL_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: secret-anomalydetector
+              key: MODEL_STORAGE_CONNECTION_STRING
+        image: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector-init:latest
+        name: anomalydetector-init
+        volumeMounts:
+        - name: anomalydetector-models
+          mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models"
+        - name: anomalydetector-model-metadata
+          mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models.properties"
+          subPath: "models.properties"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 300Mi
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector:latest
+        name: anomalydetector
+        env:
+          - name: CHECKPOINT_STORAGE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: secret-anomalydetector
+                key: CHECKPOINT_STORAGE_CONNECTION_STRING
+          - name: ANOMALY_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: secret-anomalydetector
+                key: ANOMALY_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+          - name: ALERTS_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: secret-anomalydetector
+                key: ALERTS_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 200m
+            memory: 500Mi
+        readinessProbe:
+          exec:
+            command:
+              - ls
+              - /home/python-ai/choreo-ai-anomaly-detector/models/supervisedModel
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        volumeMounts:
+        - name: anomalydetector-models
+          mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models/"
+        - name: anomalydetector-application-properties
+          mountPath: "/home/python-ai/choreo-ai-anomaly-detector/config/"
+      volumes:
+      - name: anomalydetector-models
+        emptyDir: {}
+      - name: anomalydetector-model-metadata
+        configMap:
+          defaultMode: 420
+          name: cm-anomalydetector-model-metadata
+      - name: anomalydetector-application-properties
+        configMap:
+          defaultMode: 420
+          name: cm-anomalydetector
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default

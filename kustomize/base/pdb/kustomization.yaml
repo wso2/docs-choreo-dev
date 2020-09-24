@@ -1,5 +1,5 @@
 resources:
-  - appservice.yaml
+  - appservice.yaml  # todo: remove old appservice after testing in dev
   - frontend.yaml
   - loggingapi.yaml
   - negotiator.yaml
@@ -10,4 +10,8 @@ resources:
   - datamapper.yaml
   - linker.yaml
   - choreowww.yaml
+  - api-server.yaml
+  - app-deployer.yaml
+  - app-service.yaml
+  - workspace-manager.yaml
   - email-service.yaml
