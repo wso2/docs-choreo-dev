@@ -74,5 +74,5 @@ spec:
         paths:
         - backend:
             serviceName: testbase
-            servicePort: 5000
+            servicePort: 9090
           path: /
