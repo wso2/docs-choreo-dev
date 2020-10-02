@@ -35,7 +35,11 @@ spec:
         - backend:
             serviceName: linker
             servicePort: 9092
-          path: /linker             
+          path: /linker
+        - backend:
+            serviceName: negotiator
+            servicePort: 9093
+          path: /negotiator
         - backend:
             serviceName: api-server
             servicePort: 80
