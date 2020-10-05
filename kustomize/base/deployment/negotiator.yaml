@@ -89,6 +89,9 @@ spec:
         - containerPort: 9091
           name: health
           protocol: TCP
+        - containerPort: 9093
+          name: healthz
+          protocol: TCP
         resources:
           limits:
             cpu: 500m
