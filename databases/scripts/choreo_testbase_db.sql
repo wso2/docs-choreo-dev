@@ -11,3 +11,13 @@ CREATE TABLE postman_settings (
   PRIMARY KEY (id),
   UNIQUE KEY user_id_unique (user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE current_collection_info (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  user_id varchar(255) NOT NULL,
+  workspace_id varchar(255) NOT NULL,
+  application_id varchar(255) NOT NULL,
+  collection_id varchar(255) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY user_app_ws_id_unique (user_id, application_id, workspace_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
