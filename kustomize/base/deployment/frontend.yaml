@@ -56,6 +56,11 @@ spec:
             configMapKeyRef:
               key: LINKER_API
               name: cm-frontend
+        - name: TESTBASE_API
+          valueFrom:
+            configMapKeyRef:
+              key: TESTBASE_API
+              name: cm-frontend
         - name: IDP_URL
           valueFrom:
             configMapKeyRef:
