@@ -22,7 +22,6 @@ spec:
         - programanalyzer.domain.com
         - datamapper.domain.com
         - console.domain.com
-        - testbase.domain.com
       secretName: ingress-cert
   rules: # servicePort string values are replaced with numeric since nginx + linkerd does not work with string values ref: https://github.com/linkerd/linkerd2/issues/4211
     - host: app.domain.com
@@ -44,6 +43,10 @@ spec:
             serviceName: api-server
             servicePort: 80
           path: /
+        - backend:
+            serviceName: testbase
+            servicePort: 9090
+          path: /testbase
         - backend:
             serviceName: loggingapi
             servicePort: 9097
@@ -72,11 +75,4 @@ spec:
         - backend:
             serviceName: frontend
             servicePort: 8080
-          path: /
-    - host: testbase.domain.com
-      http:
-        paths:
-        - backend:
-            serviceName: testbase
-            servicePort: 9090
           path: /
