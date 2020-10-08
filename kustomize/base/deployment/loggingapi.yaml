@@ -103,6 +103,9 @@ spec:
             - containerPort: 9098
               name: health
               protocol: TCP
+            - containerPort: 9099
+              name: healthz
+              protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15

@@ -9,5 +9,8 @@ spec:
   - name: logapi-port
     port: 9097
     targetPort: logapi-port
+  - name: healthz
+    port: 9099
+    targetPort: healthz
   selector:
     choreo.component: loggingapi
