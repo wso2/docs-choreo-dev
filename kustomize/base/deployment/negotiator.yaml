@@ -86,10 +86,10 @@ spec:
         - containerPort: 9092
           name: negotiator-port
           protocol: TCP
-        - containerPort: 9091
+        - containerPort: 9091      # To be used for readiness/liveness probes (internal)
           name: health
           protocol: TCP
-        - containerPort: 9093
+        - containerPort: 9093      # To be used for public health check (external)
           name: healthz
           protocol: TCP
         resources:

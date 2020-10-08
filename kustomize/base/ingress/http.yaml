@@ -40,6 +40,10 @@ spec:
             servicePort: 9093
           path: /negotiator
         - backend:
+            serviceName: telemetry
+            servicePort: 9092
+          path: /telemetry
+        - backend:
             serviceName: api-server
             servicePort: 80
           path: /
@@ -51,6 +55,10 @@ spec:
             serviceName: loggingapi
             servicePort: 9097
           path: /logs/0.1.0
+        - backend:
+            serviceName: loggingapi
+            servicePort: 9099
+          path: /loggingapi
     - host: programanalyzer.domain.com
       http:
         paths:
