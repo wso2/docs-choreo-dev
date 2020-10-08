@@ -80,10 +80,10 @@ spec:
         - containerPort: 9090
           name: telemetry-port
           protocol: TCP
-        - containerPort: 9091
+        - containerPort: 9091      # To be used for readiness/liveness probes (internal)
           name: health
           protocol: TCP
-        - containerPort: 9092
+        - containerPort: 9092      # To be used for public health check (external)
           name: healthz
           protocol: TCP
         readinessProbe:

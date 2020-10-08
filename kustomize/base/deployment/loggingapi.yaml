@@ -100,10 +100,10 @@ spec:
             - containerPort: 9097
               name: logapi-port
               protocol: TCP
-            - containerPort: 9098
+            - containerPort: 9098      # To be used for readiness/liveness probes (internal)
               name: health
               protocol: TCP
-            - containerPort: 9099
+            - containerPort: 9099      # To be used for public health check (external)
               name: healthz
               protocol: TCP
           readinessProbe:
