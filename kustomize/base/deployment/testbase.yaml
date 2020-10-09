@@ -61,11 +61,11 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-testbase-db
-        - name: APPSERVICE_GRPC_ADDRESS
+        - name: CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
-              key: APPSERVICE_GRPC_ADDRESS
-              name: cm-choreo-testbase-db
+              key: CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS
+              name: cm-testbase
         - name: CHOREO_DB_PASSWORD
           valueFrom:
            secretKeyRef:
