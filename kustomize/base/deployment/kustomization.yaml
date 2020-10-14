@@ -16,3 +16,4 @@ resources:
   - app-deployer.yaml
   - workspace-manager.yaml
   - email-service.yaml
+  - deploymentoptimizer.yaml

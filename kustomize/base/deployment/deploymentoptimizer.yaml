@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: deploymentoptimizer
+  name: deploymentoptimizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: deploymentoptimizer
+  template:
+    metadata:
+      labels:
+        choreo.component: deploymentoptimizer
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        runAsUser: 500
+        runAsGroup: 500
+        fsGroup: 500
+      initContainers:
+      - env:
+        - name: MODEL_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: secret-deploymentoptimizer
+              key: MODEL_STORAGE_CONNECTION_STRING
+        image: choreoctrlplane.azurecr.io/choreoipaas/deployment-optimizer-init:latest
+        name: deploymentoptimizer-init
+        volumeMounts:
+        - name: deploymentoptimizer-models
+          mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models"
+        - name: deploymentoptimizer-model-metadata
+          mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models.properties"
+          subPath: "models.properties"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 300Mi
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/deployment-optimizer:latest
+        name: deploymentoptimizer
+        env:
+          - name: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: secret-ai-eventhub-checkpoint
+                key: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING
+          - name: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: secret-ai-eventhub-metrics
+                key: EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+          - name: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secret-loggingapi
+                key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+          - name: TABLE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-ai-storage-table
+                  key: TABLE_CONNECTION_STRING
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 200m
+            memory: 500Mi
+        readinessProbe:
+          exec:
+            command:
+              - ls
+              - /home/python-ai/choreo-ai-deployment-optimizer/models/XGboost_model.sav
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        volumeMounts:
+        - name: deploymentoptimizer-models
+          mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models/"
+        - name: deploymentoptimizer-application-properties
+          mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/config/"
+      volumes:
+      - name: deploymentoptimizer-models
+        emptyDir: {}
+      - name: deploymentoptimizer-model-metadata
+        configMap:
+          defaultMode: 420
+          name: cm-deploymentoptimizer-model-metadata
+      - name: deploymentoptimizer-application-properties
+        configMap:
+          defaultMode: 420
+          name: cm-deploymentoptimizer
+      restartPolicy: Always
