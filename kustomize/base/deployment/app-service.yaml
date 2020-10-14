@@ -47,6 +47,11 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - name: IDP_BACKEND_API_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: IDP_BACKEND_API_CLIENT_SECRET
         ports:
         - containerPort: 8080
           name: grpc-port
