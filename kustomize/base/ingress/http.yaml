@@ -59,6 +59,10 @@ spec:
             serviceName: loggingapi
             servicePort: 9099
           path: /loggingapi
+        - backend:
+            serviceName: obsapi
+            servicePort: 9095
+          path: /obsapi
     - host: programanalyzer.domain.com
       http:
         paths:
@@ -76,10 +80,6 @@ spec:
     - host: console.domain.com
       http:
         paths:
-        - backend:
-            serviceName: obsapi
-            servicePort: 9095
-          path: /obsapi
         - backend:
             serviceName: frontend
             servicePort: 8080
