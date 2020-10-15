@@ -4,4 +4,3 @@
   "backendHostName":"$BACKEND_HOSTNAME",
   "idpURL" : "$IDP_URL"
 }
- 
