@@ -34,6 +34,5 @@ CREATE TABLE current_collection_info (
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  UNIQUE KEY user_id_unique (user_id),
   UNIQUE KEY user_app_ws_id_unique (user_id, application_id, workspace_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
