@@ -79,7 +79,7 @@ spec:
         - backend:
             serviceName: obsapi
             servicePort: 9095
-          path: /graphql
+          path: /obsapi
         - backend:
             serviceName: frontend
             servicePort: 8080
