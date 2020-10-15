@@ -1,0 +1,7 @@
+{
+  "testURL":"$TEST_URL",
+  "dataMapperTestURL":"$DATA_MAPPER_TEST_URL",
+  "backendHostName":"$BACKEND_HOSTNAME",
+  "idpURL" : "$IDP_URL"
+}
+ 
