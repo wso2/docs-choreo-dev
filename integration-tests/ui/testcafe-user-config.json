@@ -8,10 +8,6 @@
     "cwatf":"$cwatf_value",
     "cbearer":"$cbearer_value"
   },
-  "testURL":"$TEST_URL",
-  "dataMapperTestURL":"$DATA_MAPPER_TEST_URL",
-  "backendHostName":"$BACKEND_HOSTNAME",
-  "idpURL" : "$IDP_URL",
   "idpUsername":"$IDP_USERNAME",
   "idpPassword":"$IDP_PASSWORD",
   "idpAuthHeader":"$IDP_AUTH_HEADER"

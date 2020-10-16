@@ -3,7 +3,7 @@ import { screen } from "@testing-library/testcafe";
 import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-user-config.json";
+import * as config from "../../testcafe-run-config.json";
 import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 

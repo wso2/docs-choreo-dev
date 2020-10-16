@@ -1,5 +1,5 @@
 import { RequestHook } from "testcafe";
-import * as config from "../../testcafe-user-config.json";
+import * as userConfig from "../../testcafe-user-config.json";
 
 export class ChoreoLoginHook extends RequestHook {
   // @ts-ignore
@@ -10,9 +10,9 @@ export class ChoreoLoginHook extends RequestHook {
   // @ts-ignore
   async onRequest(event) {
     if (event.requestOptions.url.includes("/linkersec/checklink")) {
-      event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf + "; " + event.requestOptions.headers.cookie;
+      event.requestOptions.headers.cookie = "cwatf=" + userConfig.user.cwatf + "; " + event.requestOptions.headers.cookie;
     } else {
-      event.requestOptions.headers.cookie = "cwatf=" + config.user.cwatf + "; cbearer=" + config.user.cbearer;
+      event.requestOptions.headers.cookie = "cwatf=" + userConfig.user.cwatf + "; cbearer=" + userConfig.user.cbearer;
     }
     // console.log(event)
   }
