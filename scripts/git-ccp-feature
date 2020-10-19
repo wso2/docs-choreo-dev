@@ -33,6 +33,8 @@ cmd_init() {
 	exit 0
     fi
 
+    set_username
+
     MASTER_BASE='upstream/latest-master-release'
     DEV_BASE='upstream/dev'
     STAGE_BASE='upstream/stage'
@@ -69,6 +71,22 @@ generate_env_branches() {
     DEV_BRANCH_NAME="feature/dev/${T_FEATURE_ID}"
     STAGE_BRANCH_NAME="feature/stage/${T_FEATURE_ID}"
     PROD_BRANCH_NAME="feature/prod/${T_FEATURE_ID}"
+}
+
+set_username() {
+    USERNAME=$(git config --get user.name)
+    if [ -z "$USERNAME" ]
+    then
+        printf "Enter Github Username : "
+        read -r USERNAME
+
+        if [ -z "$USERNAME" ]
+        then
+            exit 0
+        fi
+
+        git config --global user.name $USERNAME
+    fi
 }
 
 parse_args() {
@@ -141,19 +159,21 @@ cmd_publish() {
 	exit 1
     fi
 
+    set_username
+
     generate_env_branches "$FEATURE_ID"
 
     git checkout "$MASTER_BRANCH_NAME"
-    gh pr create -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head USERNAME:$MASTER_BRANCH_NAME -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$DEV_BRANCH_NAME"
-    gh pr create -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head USERNAME:$DEV_BRANCH_NAME -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$STAGE_BRANCH_NAME"
-    gh pr create -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head USERNAME:$STAGE_BRANCH_NAME -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$PROD_BRANCH_NAME"
-    gh pr create -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head USERNAME:$PROD_BRANCH_NAME -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$MASTER_BRANCH_NAME"
 
