@@ -57,8 +57,8 @@ export const createNewApp = async (t: TestController, name: string) => {
 
 export const undeployAllApps = async (t: TestController) => {
   let deployedApps = await screen.findAllByText("Active").exists;
-
-  if (deployedApps) {
+  let retryCount = 5;
+  if (deployedApps && retryCount > 0) {
     await t.click(screen.findAllByText("Active"));
     await t.click(screen.getByTitle("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
@@ -68,14 +68,16 @@ export const undeployAllApps = async (t: TestController) => {
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 
     deployedApps = await screen.findAllByText("Active").exists;
-  }
+    retryCount = retryCount - 1;
+  }  
+  await t.expect(screen.findAllByText("Active").exists).notOk();
 }
 
 export const clearAppsIfExists = async (t: TestController) => {
   await undeployAllApps(t);
-  let appExists = await screen.queryAllByText("Time to create your first application").exists;
-
-  while (!appExists) {
+    let appExists = await screen.queryAllByText("Time to create your first application").exists;
+    let retryCount = 5;
+  while (!appExists && retryCount > 0 ) {
     logger.info("An application exists, deleting the application");
     await t
       .hover(Selector(".MuiTableRow-hover"))
@@ -83,6 +85,7 @@ export const clearAppsIfExists = async (t: TestController) => {
       .click(within(screen.findByRole("dialog")).getByText("Delete"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     appExists = await screen.queryAllByText("Time to create your first application", { timeout: WAIT_TIME_SHORT }).exists;
+    retryCount = retryCount - 1;
   }
 
   await t
