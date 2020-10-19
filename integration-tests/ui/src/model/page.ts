@@ -3,6 +3,7 @@ import { t, ClientFunction } from "testcafe";
 import config from "../../testcafe-user-config.json";
 // import { isValidUser } from "../utils/login-utils";
 import { isValidUser, getAccessToken, setTokenData } from "../utils/login-utils";
+import { logger } from "../utils/logger";
 
 const STORAGE_KEY = "PORTAL_STATE";
 const backendRegexp = "https:\/\/"+config.backendHostName+"\/*"
@@ -22,8 +23,10 @@ class Page {
   }
 
   async login() {
+    logger.info("Starting login process ...")
     setTokenData(await getAccessToken());
     await t.addRequestHooks(this.loginHook);
+    logger.info("Setting user data in local storage with Key : " + STORAGE_KEY +" , and  data : "+ JSON.stringify(config.user));
     await this.localStorageSet(
       STORAGE_KEY,
       JSON.stringify({
@@ -40,6 +43,7 @@ class Page {
         },
       })
     );
+    logger.info("local storage set successful!, navigating to URL : "+ config.testURL);
     await t.navigateTo(config.testURL);
   }
 }

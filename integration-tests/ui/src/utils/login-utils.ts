@@ -2,6 +2,7 @@ import { ClientFunction } from "testcafe";
 import * as config from "../../testcafe-user-config.json";
 import axios from "axios";
 import qs from "qs";
+import { logger } from "./logger";
 
 export const getLocation = ClientFunction(() => document.location.href);
 
@@ -20,6 +21,7 @@ export const isValidUser = () => {
 
 export const getAccessToken = async () => {
   try {
+    logger.info("Calling the endpoint " + config.idpURL + " to retrieve access token")
     const { data } = await axios.post(
       config.idpURL,
       qs.stringify({
@@ -35,8 +37,11 @@ export const getAccessToken = async () => {
         },
       }
     );
+    logger.info("Data returned from the IDP : " + JSON.stringify(data));
     return data;
+
   } catch (err) {
+    logger.error("Error occurred while calling IDP endpoint " , err);
     throw new Error("Retrieving Access token failed : " + err);
   }
 };
