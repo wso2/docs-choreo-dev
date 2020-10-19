@@ -74,7 +74,9 @@ generate_env_branches() {
 }
 
 set_username() {
+    # set github username to USERNAME
     USERNAME=$(git config --get user.name)
+    # If username is not set, prompt and set
     if [ -z "$USERNAME" ]
     then
         printf "Enter Github Username : "
@@ -82,6 +84,7 @@ set_username() {
 
         if [ -z "$USERNAME" ]
         then
+            echo "Github Username is required."
             exit 0
         fi
 
@@ -164,16 +167,16 @@ cmd_publish() {
     generate_env_branches "$FEATURE_ID"
 
     git checkout "$MASTER_BRANCH_NAME"
-    gh pr create --head USERNAME:$MASTER_BRANCH_NAME -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head $USERNAME:$MASTER_BRANCH_NAME -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$DEV_BRANCH_NAME"
-    gh pr create --head USERNAME:$DEV_BRANCH_NAME -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head $USERNAME:$DEV_BRANCH_NAME -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$STAGE_BRANCH_NAME"
-    gh pr create --head USERNAME:$STAGE_BRANCH_NAME -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head $USERNAME:$STAGE_BRANCH_NAME -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$PROD_BRANCH_NAME"
-    gh pr create --head USERNAME:$PROD_BRANCH_NAME -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    gh pr create --head $USERNAME:$PROD_BRANCH_NAME -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
 
     git checkout "$MASTER_BRANCH_NAME"
 
