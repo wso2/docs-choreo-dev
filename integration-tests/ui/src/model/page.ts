@@ -1,6 +1,7 @@
 import { ChoreoLoginHook } from "../hooks/choreo-login-hook";
 import { t, ClientFunction } from "testcafe";
-import config from "../../testcafe-user-config.json";
+import config from "../../testcafe-run-config.json";
+import userConfig from "../../testcafe-user-config.json";
 // import { isValidUser } from "../utils/login-utils";
 import { isValidUser, getAccessToken, setTokenData } from "../utils/login-utils";
 import { logger } from "../utils/logger";
@@ -34,11 +35,11 @@ class Page {
           isAuthenticated: true,
           isAuthInProgress: false,
           user: {
-            name: config.user.name,
-            email: config.user.email,
-            token: config.user.token,
-            picURL: config.user.picURL,
-            orgs: config.user.orgs,
+            name: userConfig.user.name,
+            email: userConfig.user.email,
+            token: userConfig.user.token,
+            picURL: userConfig.user.picURL,
+            orgs: userConfig.user.orgs,
           },
         },
       })

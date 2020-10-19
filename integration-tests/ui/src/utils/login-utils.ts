@@ -1,5 +1,6 @@
 import { ClientFunction } from "testcafe";
-import * as config from "../../testcafe-user-config.json";
+import * as config from "../../testcafe-run-config.json";
+import * as userConfig from "../../testcafe-user-config.json";
 import axios from "axios";
 import qs from "qs";
 import { logger } from "./logger";
@@ -8,13 +9,13 @@ export const getLocation = ClientFunction(() => document.location.href);
 
 export const isValidUser = () => {
   return (
-    config.user.name !== "$USERNAME" &&
-    config.user.email !== "$EMAIL" &&
-    config.user.picURL !== "$AVATAR_URL" &&
-    config.user.orgs !== [] &&
-    config.idpUsername !== "$IDP_USERNAME" &&
-    config.idpPassword !== "$IDP_PASSWORD" &&
-    config.idpAuthHeader !== "$IDP_AUTH_HEADER" &&
+    userConfig.user.name !== "$USERNAME" &&
+    userConfig.user.email !== "$EMAIL" &&
+    userConfig.user.picURL !== "$AVATAR_URL" &&
+    userConfig.user.orgs !== [] &&
+    userConfig.idpUsername !== "$IDP_USERNAME" &&
+    userConfig.idpPassword !== "$IDP_PASSWORD" &&
+    userConfig.idpAuthHeader !== "$IDP_AUTH_HEADER" &&
     config.backendHostName !== "$BACKEND_HOSTNAME"
   );
 };
@@ -27,12 +28,12 @@ export const getAccessToken = async () => {
       qs.stringify({
         grant_type: "password",
         scope: "openid",
-        username: config.idpUsername,
-        password: config.idpPassword,
+        username: userConfig.idpUsername,
+        password: userConfig.idpPassword,
       }),
       {
         headers: {
-          Authorization: config.idpAuthHeader,
+          Authorization: userConfig.idpAuthHeader,
           ContentType: "application/x-www-form-urlencoded",
         },
       }
@@ -48,7 +49,7 @@ export const getAccessToken = async () => {
 
 export const setTokenData = (data) => {
   const fragments = data["id_token"].split(".");
-  config.user.token = fragments[0] + "." + fragments[1];
-  config.user.cwatf = fragments[2];
-  config.user.cbearer = fragments[0] + "." + fragments[1];
+  userConfig.user.token = fragments[0] + "." + fragments[1];
+  userConfig.user.cwatf = fragments[2];
+  userConfig.user.cbearer = fragments[0] + "." + fragments[1];
 };

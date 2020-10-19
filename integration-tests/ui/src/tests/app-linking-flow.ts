@@ -3,7 +3,7 @@ import { screen } from "@testing-library/testcafe";
 import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-user-config.json";
+import * as config from "../../testcafe-run-config.json";
 import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 const util = require('util');
@@ -61,7 +61,7 @@ test("test app linking", async (t) => {
     async function runBallerinaApp(secret: string) {
         const secretConfig = 'secret=\\"' + secret + '\\"';
         const { stdout, stderr } = await exec('sh src/utils/applinking_test/run_ballerina.sh ' + secretConfig);
-        console.log('stdout:', stdout);
+        console.log('stdout:', stdout); 
         console.log('stderr:', stderr);
     }
     const secret = (await screen.getByPlaceholderText("Application secret").value).toString();
