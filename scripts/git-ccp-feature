@@ -73,25 +73,6 @@ generate_env_branches() {
     PROD_BRANCH_NAME="feature/prod/${T_FEATURE_ID}"
 }
 
-set_username() {
-    # set github username to USERNAME
-    USERNAME=$(git config --get user.name)
-    # If username is not set, prompt and set
-    if [ -z "$USERNAME" ]
-    then
-        printf "Enter Github Username : "
-        read -r USERNAME
-
-        if [ -z "$USERNAME" ]
-        then
-            echo "Github Username is required."
-            exit 0
-        fi
-
-        git config --global user.name "$USERNAME"
-    fi
-}
-
 parse_args() {
     # parse options
     FLAGS "$@" || exit $?
