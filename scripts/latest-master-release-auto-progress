@@ -4,6 +4,17 @@
 TARGET_BRANCH=latest-master-release
 REMOTE_NAME=upstream
 
+# source shflags
+GITCCP_DIR=$(dirname "$0")
+. "$GITCCP_DIR/shflags"
+
+# configure shflags
+DEFINE_boolean 'assume_yes' false 'Automatic yes to prompts' 'y'
+
+# run shflags
+FLAGS "$@" || exit $?
+eval set -- "${FLAGS_ARGV}"
+
 git fetch upstream
 
 commits=$(git --no-pager log --reverse --pretty=format:"%H" upstream/prod..upstream/master)
@@ -32,6 +43,13 @@ then
     else
 	echo "Updating latest-release-master with $jumpCommit"
 	git --no-pager show "$jumpCommit"
+
+	if [ ${FLAGS_assume_yes} -eq ${FLAGS_TRUE} ]
+	then
+		git push upstream "$jumpCommit:$TARGET_BRANCH"
+		echo "$TARGET_BRANCH branch is updated"
+		exit 0
+	fi
 
 	read -p "Are you sure [y/N]? "  -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
