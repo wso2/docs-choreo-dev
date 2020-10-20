@@ -6,7 +6,7 @@ REMOTE_NAME=upstream
 
 # source shflags
 GITCCP_DIR=$(dirname "$0")
-. "$GITCCP_DIR/shflags"
+. "$GITCCP_DIR"/shflags
 
 # configure shflags
 DEFINE_boolean 'assume_yes' false 'Automatic yes to prompts' 'y'
@@ -20,7 +20,7 @@ REMOTE_NAME=${FLAGS_remote_name}
 
 git fetch "$REMOTE_NAME"
 
-commits=$(git --no-pager log --reverse --pretty=format:"%H" "$REMOTE_NAME"/test.."$REMOTE_NAME"/master)
+commits=$(git --no-pager log --reverse --pretty=format:"%H" "$REMOTE_NAME"/prod.."$REMOTE_NAME"/master)
 
 jumpCommit=""
 for commitHash in $commits
