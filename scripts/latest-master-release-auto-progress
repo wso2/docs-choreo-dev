@@ -4,9 +4,24 @@
 TARGET_BRANCH=latest-master-release
 REMOTE_NAME=upstream
 
-git fetch upstream
+# source shflags
+GITCCP_DIR=$(dirname "$0")
+# shellcheck source=/dev/null
+. "$GITCCP_DIR/shflags"
 
-commits=$(git --no-pager log --reverse --pretty=format:"%H" upstream/prod..upstream/master)
+# configure shflags
+DEFINE_boolean 'assume_yes' false 'Automatic yes to prompts' 'y'
+DEFINE_string 'remote_name' 'upstream' 'Remote name' 'r'
+
+# run shflags
+FLAGS "$@" || exit $?
+eval set -- "${FLAGS_ARGV}"
+
+REMOTE_NAME=${FLAGS_remote_name} 
+
+git fetch "$REMOTE_NAME"
+
+commits=$(git --no-pager log --reverse --pretty=format:"%H" "$REMOTE_NAME"/prod.."$REMOTE_NAME"/master)
 
 jumpCommit=""
 for commitHash in $commits
@@ -24,7 +39,7 @@ done
 
 if [[ -n "$jumpCommit" ]]
 then
-    branchHead=$(git rev-parse upstream/$TARGET_BRANCH)
+    branchHead=$(git rev-parse "$REMOTE_NAME"/$TARGET_BRANCH)
 
     if [ "$branchHead" == "$jumpCommit" ]
     then
@@ -33,10 +48,16 @@ then
 	echo "Updating latest-release-master with $jumpCommit"
 	git --no-pager show "$jumpCommit"
 
-	read -p "Are you sure [y/N]? "  -r
+	if [ "${FLAGS_assume_yes}" -eq ${FLAGS_TRUE} ]
+	then
+		REPLY=Y
+	else
+		read -p "Are you sure [y/N]? "  -r
+	fi
+
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-	    git push upstream "$jumpCommit:$TARGET_BRANCH"
+	    git push "$REMOTE_NAME" "$jumpCommit:$TARGET_BRANCH"
 	    echo "$TARGET_BRANCH branch is updated"
 	else
 	    echo "$TARGET_BRANCH branch is not updated"
