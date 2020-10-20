@@ -6,7 +6,7 @@ REMOTE_NAME=upstream
 
 # source shflags
 GITCCP_DIR=$(dirname "$0")
-. "$GITCCP_DIR"/shflags
+. "$GITCCP_DIR/shflags"
 
 # configure shflags
 DEFINE_boolean 'assume_yes' false 'Automatic yes to prompts' 'y'
@@ -47,7 +47,7 @@ then
 	echo "Updating latest-release-master with $jumpCommit"
 	git --no-pager show "$jumpCommit"
 
-	if [ ${FLAGS_assume_yes} -eq ${FLAGS_TRUE} ]
+	if [ "${FLAGS_assume_yes}" -eq ${FLAGS_TRUE} ]
 	then
 		git push "$REMOTE_NAME" "$jumpCommit:$TARGET_BRANCH"
 		echo "$TARGET_BRANCH branch is updated"
