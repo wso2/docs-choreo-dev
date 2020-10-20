@@ -6,6 +6,7 @@ REMOTE_NAME=upstream
 
 # source shflags
 GITCCP_DIR=$(dirname "$0")
+# shellcheck source=/dev/null
 . "$GITCCP_DIR/shflags"
 
 # configure shflags
