@@ -86,7 +86,7 @@ set_username() {
         if [ -z "$USERNAME" ]
         then
             echo "Github Username is required."
-            exit 0
+            exit 1
         fi
 
         git config --global github.user "$USERNAME"

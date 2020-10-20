@@ -33,8 +33,6 @@ cmd_init() {
 	exit 0
     fi
 
-    set_username
-
     MASTER_BASE='upstream/latest-master-release'
     DEV_BASE='upstream/dev'
     STAGE_BASE='upstream/stage'
