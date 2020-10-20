@@ -50,12 +50,11 @@ then
 
 	if [ "${FLAGS_assume_yes}" -eq ${FLAGS_TRUE} ]
 	then
-		git push "$REMOTE_NAME" "$jumpCommit:$TARGET_BRANCH"
-		echo "$TARGET_BRANCH branch is updated"
-		exit 0
+		REPLY=Y
+	else
+		read -p "Are you sure [y/N]? "  -r
 	fi
 
-	read -p "Are you sure [y/N]? "  -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 	    git push "$REMOTE_NAME" "$jumpCommit:$TARGET_BRANCH"
