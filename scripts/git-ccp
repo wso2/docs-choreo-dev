@@ -74,4 +74,23 @@ check_prerequisite() {
     fi
 }
 
+set_username() {
+    # set github username to USERNAME
+    USERNAME=$(git config --get github.user)
+    # If username is not set, prompt and set
+    if [ -z "$USERNAME" ]
+    then
+        printf "Enter Github Username : "
+        read -r USERNAME
+
+        if [ -z "$USERNAME" ]
+        then
+            echo "Github Username is required."
+            exit 1
+        fi
+
+        git config --global github.user "$USERNAME"
+    fi
+}
+
 main "$@"
