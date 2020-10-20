@@ -102,3 +102,4 @@ spec:
           defaultMode: 420
           name: cm-deploymentoptimizer
       restartPolicy: Always
+
