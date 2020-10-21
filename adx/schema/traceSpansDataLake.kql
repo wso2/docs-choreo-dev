@@ -27,7 +27,7 @@ dataformat=csv
    h@'abfss://trace-spans@<storage-account-name>.dfs.core.windows.net/;sharedkey=<account-key>'
 )
 
-.create-or-alter continuous-export TraceSpansDataLakeCE
+.create-or-alter continuous-export <continuous-export-name>
 over (traceSpans)
 to table TraceSpansDataLake
 with
