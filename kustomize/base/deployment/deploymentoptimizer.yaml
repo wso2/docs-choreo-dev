@@ -64,10 +64,10 @@ spec:
                 name: secret-loggingapi
                 key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           - name: TABLE_CONNECTION_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: secret-ai-storage-table
-                  key: TABLE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: secret-ai-storage-table
+                key: TABLE_CONNECTION_STRING
         resources:
           limits:
             cpu: 200m
@@ -102,4 +102,3 @@ spec:
           defaultMode: 420
           name: cm-deploymentoptimizer
       restartPolicy: Always
-
