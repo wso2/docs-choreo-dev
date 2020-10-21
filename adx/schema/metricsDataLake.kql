@@ -31,3 +31,4 @@ to table MetricsDataLake
 with
 (intervalBetweenRuns=1h)
 <| metrics
+| where metricName != 'telemetry_health_check'
