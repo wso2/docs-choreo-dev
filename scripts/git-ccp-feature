@@ -33,11 +33,6 @@ cmd_init() {
 	exit 0
     fi
 
-    MASTER_BASE='upstream/latest-master-release'
-    DEV_BASE='upstream/dev'
-    STAGE_BASE='upstream/stage'
-    PROD_BASE='upstream/prod'
-
     generate_env_branches "$answer"
 
     git fetch upstream
@@ -65,6 +60,11 @@ cmd_init() {
 generate_env_branches() {
     T_FEATURE_ID=$1
 
+    MASTER_BASE='upstream/latest-master-release'
+    DEV_BASE='upstream/dev'
+    STAGE_BASE='upstream/stage'
+    PROD_BASE='upstream/prod'
+
     MASTER_BRANCH_NAME="feature/base/${T_FEATURE_ID}"
     DEV_BRANCH_NAME="feature/dev/${T_FEATURE_ID}"
     STAGE_BRANCH_NAME="feature/stage/${T_FEATURE_ID}"
@@ -75,6 +75,32 @@ parse_args() {
     # parse options
     FLAGS "$@" || exit $?
     eval set -- "${FLAGS_ARGV}"
+}
+
+print_summary_of_sync() {
+    BRANCH_NAME=$1
+    MASTER_BRANCH_NAME=$2
+    SYNC_WITH_BASE_STATUS=$3
+    SYNC_WITH_UPSTREAM_STATUS=$4
+    UPSTREAM_BRANCH_NAME=$5
+    PRINT_BASE_SYNC_MESSAGE=$6
+
+    if [ "$PRINT_BASE_SYNC_MESSAGE" == 1 ]
+    then
+        if [ "$SYNC_WITH_BASE_STATUS" == 0 ]
+        then
+            echo "- The branch '$BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+        else
+            echo "- The branch '$BRANCH_NAME' was failed to be merged with '$MASTER_BRANCH_NAME'"
+        fi
+    fi
+
+    if [ "$SYNC_WITH_UPSTREAM_STATUS" == 0 ]
+    then
+        echo "- The branch '$BRANCH_NAME' was merged with '$UPSTREAM_BRANCH_NAME'"
+    else
+        echo "- The branch '$BRANCH_NAME' was failed to be merged with '$UPSTREAM_BRANCH_NAME'"
+    fi
 }
 
 cmd_sync() {
@@ -92,34 +118,58 @@ cmd_sync() {
 
     echo "==== Syncing $MASTER_BRANCH_NAME ===="
     git checkout "$MASTER_BRANCH_NAME"
+    git merge --no-edit "$MASTER_BASE"
+    BASE_SYNC_WITH_UPSTREAM_STATUS=$?
     git push origin "$MASTER_BRANCH_NAME"
 
     echo -e "\n\n==== Syncing $DEV_BRANCH_NAME ===="
     git checkout "$DEV_BRANCH_NAME"
     git merge --no-edit "$MASTER_BRANCH_NAME"
+    DEV_SYNC_WITH_BASE_STATUS=$?
+    git merge --no-edit "$DEV_BASE"
+    DEV_SYNC_WITH_UPSTREAM_STATUS=$?
     git push origin "$DEV_BRANCH_NAME"
 
     echo -e "\n\n==== Syncing $STAGE_BRANCH_NAME ===="
     git checkout "$STAGE_BRANCH_NAME"
     git merge --no-edit "$MASTER_BRANCH_NAME"
+    STAGE_SYNC_WITH_BASE_STATUS=$?
+    git merge --no-edit "$STAGE_BASE"
+    STAGE_SYNC_WITH_UPSTREAM_STATUS=$?
     git push origin "$STAGE_BRANCH_NAME"
 
     echo -e "\n\n==== Syncing $PROD_BRANCH_NAME ===="
     git checkout "$PROD_BRANCH_NAME"
     git merge --no-edit "$MASTER_BRANCH_NAME"
+    PROD_SYNC_WITH_BASE_STATUS=$?
+    git merge --no-edit "$PROD_BASE"
+    PROD_SYNC_WITH_UPSTREAM_STATUS=$?
     git push origin "$PROD_BRANCH_NAME"
 
     git checkout "$MASTER_BRANCH_NAME"
 
     echo
     echo "Summary of actions:"
-    echo "- The branch '$DEV_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
-    echo "- The branch '$STAGE_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
-    echo "- The branch '$PROD_BRANCH_NAME' was merged with '$MASTER_BRANCH_NAME'"
+    print_summary_of_sync "$MASTER_BRANCH_NAME" "$MASTER_BRANCH_NAME" "1" "$BASE_SYNC_WITH_UPSTREAM_STATUS" "$MASTER_BASE" "0"
+    print_summary_of_sync "$DEV_BRANCH_NAME" "$MASTER_BRANCH_NAME" "$DEV_SYNC_WITH_BASE_STATUS" "$DEV_SYNC_WITH_UPSTREAM_STATUS" "$DEV_BASE" "1"
+    print_summary_of_sync "$STAGE_BRANCH_NAME" "$MASTER_BRANCH_NAME" "$STAGE_SYNC_WITH_BASE_STATUS" "$STAGE_SYNC_WITH_UPSTREAM_STATUS" "$STAGE_BASE" "1"
+    print_summary_of_sync "$PROD_BRANCH_NAME" "$MASTER_BRANCH_NAME" "$PROD_SYNC_WITH_BASE_STATUS" "$PROD_SYNC_WITH_UPSTREAM_STATUS" "$PROD_BASE" "1"
     echo "- All changes were synced with origin remote"
     echo "- You are now on branch '$MASTER_BRANCH_NAME'"
     echo ""
     echo
+}
+
+print_summary_of_publish() {
+    BRANCH_NAME=$1
+    PUSH_STATUS=$2
+    
+    if [ "$PUSH_STATUS" == 0 ]
+    then
+        echo "- The branch '$BRANCH_NAME' was published to control plane repo'"
+    else
+        echo "- The branch '$BRANCH_NAME' was failed to be published to control plane repo'"
+    fi
 }
 
 cmd_publish() {
@@ -147,24 +197,28 @@ cmd_publish() {
 
     git checkout "$MASTER_BRANCH_NAME"
     gh pr create --head "$USERNAME":"$MASTER_BRANCH_NAME" -B master --title "[BASE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    BASE_PR_CREATE_MESSAGE=$?
 
     git checkout "$DEV_BRANCH_NAME"
     gh pr create --head "$USERNAME":"$DEV_BRANCH_NAME" -B dev --title "[DEV] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    DEV_PR_CREATE_MESSAGE=$?
 
     git checkout "$STAGE_BRANCH_NAME"
     gh pr create --head "$USERNAME":"$STAGE_BRANCH_NAME" -B stage --title "[STAGE] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    STAGE_PR_CREATE_MESSAGE=$?
 
     git checkout "$PROD_BRANCH_NAME"
     gh pr create --head "$USERNAME":"$PROD_BRANCH_NAME" -B prod --title "[PROD] $FEATURE_ID" --body "## Related Issue"$'\n'$'\n'"#$ISSUE_ID"
+    PROD_PR_CREATE_MESSAGE=$?
 
     git checkout "$MASTER_BRANCH_NAME"
 
     echo
     echo "Summary of actions:"
-    echo "- The branch '$MASTER_BRANCH_NAME' was published to control plane repo'"
-    echo "- The branch '$DEV_BRANCH_NAME' was published to control plane repo'"
-    echo "- The branch '$STAGE_BRANCH_NAME' was published to control plane repo'"
-    echo "- The branch '$PROD_BRANCH_NAME' was published to control plane repo'"
+    print_summary_of_publish "$MASTER_BRANCH_NAME" "$BASE_PR_CREATE_MESSAGE"
+    print_summary_of_publish "$DEV_BRANCH_NAME" "$DEV_PR_CREATE_MESSAGE"
+    print_summary_of_publish "$STAGE_BRANCH_NAME" "$STAGE_PR_CREATE_MESSAGE"
+    print_summary_of_publish "$PROD_BRANCH_NAME" "$PROD_PR_CREATE_MESSAGE"
     echo "- You are now on branch '$MASTER_BRANCH_NAME'"
     echo ""
     echo
