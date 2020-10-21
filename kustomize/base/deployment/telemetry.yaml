@@ -46,6 +46,11 @@ spec:
             configMapKeyRef:
               key: NEGOTIATOR_GRPC_ADDRESS
               name: cm-telemetry
+        - name: NEGOTIATOR_HEALTHZ_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: NEGOTIATOR_HEALTHZ_ADDRESS
+              name: cm-telemetry
         - name: PROJECT_SECRET_CACHE_CAPACITY
           valueFrom:
             configMapKeyRef:
