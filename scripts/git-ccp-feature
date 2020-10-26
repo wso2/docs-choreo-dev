@@ -116,6 +116,8 @@ cmd_sync() {
 
     generate_env_branches "$FEATURE_ID"
 
+    git fetch upstream
+
     echo "==== Syncing $MASTER_BRANCH_NAME ===="
     git checkout "$MASTER_BRANCH_NAME"
     git merge --no-edit "$MASTER_BASE"
