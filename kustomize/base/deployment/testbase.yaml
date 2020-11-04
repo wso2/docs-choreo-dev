@@ -41,6 +41,11 @@ spec:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
               name: cm-idp
+        - name: JWKS_ENDPOINT_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              key: JWKS_ENDPOINT_PROTOCOL
+              name: cm-testbase
         - name: CHOREO_DB_PORT
           valueFrom:
             configMapKeyRef:
