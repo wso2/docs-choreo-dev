@@ -28,11 +28,11 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: linker
+            serviceName: l-svc
             servicePort: 9090
           path: /linkersec 
         - backend:
-            serviceName: linker
+            serviceName: linkerunsecured-svc
             servicePort: 9092
           path: /linker
         - backend:
