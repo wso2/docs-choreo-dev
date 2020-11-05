@@ -1,5 +1,0 @@
-resources:
-  - linker.yaml
-
-commonLabels:
-  choreo.component: linker

@@ -1,0 +1,18 @@
+kind: Deployment
+metadata:
+  name: "choreo-linker-0-deployment"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - name: "choreo-linker-0-deployment"
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default

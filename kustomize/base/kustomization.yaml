@@ -6,7 +6,7 @@ resources:
   - hpa
   - pdb
   - cron
-  - component-linker
+  - component/linker
 
 #  - netpol
 

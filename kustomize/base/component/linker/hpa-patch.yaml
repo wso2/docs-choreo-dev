@@ -1,0 +1,17 @@
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "choreo-linker-0-hpa"
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+  metrics:
+    - resource:
+        name: "cpu"
+        target:
+          averageUtilization: 75
+          type: "Utilization"
+      type: "Resource"
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 75
