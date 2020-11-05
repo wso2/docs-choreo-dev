@@ -28,7 +28,7 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: l-svc
+            serviceName: linker-svc
             servicePort: 9090
           path: /linkersec 
         - backend:
