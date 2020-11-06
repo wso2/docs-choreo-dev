@@ -46,7 +46,7 @@ fixture("App linking")
 
 test("test app linking", async (t) => {
 
-    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     logger.info("Page loaded successfully");
     await clearAppsIfExists(t);
 
@@ -77,7 +77,7 @@ test("test app linking", async (t) => {
 
 test("test annonymousapp linking", async (t) => {
 
-    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     logger.info("Page loaded successfully");
     await clearAppsIfExists(t);
 

@@ -30,9 +30,6 @@ main() {
 	. "$GITCCP_DIR/shflags"
 	FLAGS_PARENT="git ccp"
 
-	# parse the command-line
-	FLAGS "$@" || exit $?
-	eval set -- "${FLAGS_ARGV}"
 
 	# sanity checks
 	SUBCOMMAND="$1"; shift
@@ -61,6 +58,8 @@ main() {
 		exit 1
 	fi
 
+    # set FLAGS_PARENT upto sub command
+    FLAGS_PARENT="git ccp $SUBCOMMAND $SUBACTION"
 	"cmd_$SUBACTION" "$@"
 }
 

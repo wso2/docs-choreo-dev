@@ -24,16 +24,25 @@ cmd_help() {
 
 cmd_init() {
     
-    printf "Feature name (use a one without spaces) : "
-    read -r answer
+    # configure shflags
+    DEFINE_string 'feature_name' '' 'Feature name' 'n'
+    parse_args "$@"
 
-    if [ -z "$answer" ]
-    then
-	echo "Please give a valid feature ID"
-	exit 0
+    if [[ -z "$FLAGS_feature_name" ]]; then
+      printf "Feature name (use a one without spaces) : "
+      read -r answer
+
+      if [ -z "$answer" ]
+      then
+          echo "Please give a valid feature ID"
+          exit 0
+      fi
+      FEATURE_NAME=$answer
+     else
+      FEATURE_NAME=$FLAGS_feature_name
     fi
 
-    generate_env_branches "$answer"
+    generate_env_branches "${FEATURE_NAME}"
 
     git fetch upstream
     git branch "$MASTER_BRANCH_NAME" "$MASTER_BASE"
@@ -53,7 +62,7 @@ cmd_init() {
     echo ""
     echo "Now, start committing on your feature. When done, use:"
     echo ""
-    echo "     git ccp feature sync $answer"
+    echo "     git ccp feature sync $FEATURE_NAME"
     echo
 }
 
@@ -115,6 +124,8 @@ cmd_sync() {
     fi
 
     generate_env_branches "$FEATURE_ID"
+
+    git fetch upstream
 
     echo "==== Syncing $MASTER_BRANCH_NAME ===="
     git checkout "$MASTER_BRANCH_NAME"
