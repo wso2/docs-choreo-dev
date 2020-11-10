@@ -9,5 +9,6 @@
 //
 // --------------------------------------------------------------------------------------
 
-.alter table [table_name] policy roworder (obsId asc, version asc)
-// execute for metrics and traceSpans tables
+.alter table metrics policy roworder (obsId asc, version asc)
+
+.alter table traceSpans policy roworder (obsId asc, version asc)
