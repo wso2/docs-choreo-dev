@@ -95,17 +95,17 @@ test("test annonymousapp linking", async (t) => {
     await t.navigateTo(obsUrl);
     await t.wait(20000);
 
-    await t.expect(screen.getByText("Add to Choreo")).ok({ timeout: WAIT_TIME_SHORT })
+    await t.expect(screen.getByText("Add to Choreo").exists).ok({ timeout: WAIT_TIME_SHORT })
         .click(screen.getByText("Add to Choreo"))
         .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
         .click(screen.findByText("Next"))
-        .expect(screen.getByTestId("copy-btn")).ok({ timeout: WAIT_TIME_SHORT })
+        .expect(screen.getByTestId("copy-btn").exists).ok({ timeout: WAIT_TIME_SHORT })
 
     const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
     logger.info("Retrieved app linking command : " + linkingCommand);
     await exec(linkingCommand);
     await t.wait(WAIT_TIME_LONG);
-    await t.expect(screen.getByText("annon-linking-test-app", { exact: false })).ok({ timeout: WAIT_TIME_MEDIUM });
+    await t.expect(screen.getByText("annon-linking-test-app", { exact: false }).exists).ok({ timeout: WAIT_TIME_MEDIUM });
 
     logger.info("Annonymous App Linking successful");
 });

@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@testing-library/testcafe": "^4.2.0",
+    "@testing-library/testcafe": "^4.2.3",
     "@types/qs": "^6.9.2",
     "qs": "^6.9.4",
-    "testcafe": "^1.9.0",
+    "testcafe": "^1.9.4",
     "typescript": "^3.9.2"
   },
   "dependencies": {
