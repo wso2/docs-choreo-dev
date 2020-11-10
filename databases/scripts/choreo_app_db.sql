@@ -99,3 +99,18 @@ CREATE TABLE beta_invitation
     CONSTRAINT beta_invitation_user_id_fk FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE configuration
+(
+    id              INT AUTO_INCREMENT,
+    organization_id INT           NOT NULL,
+    `key`           VARCHAR(255)  NOT NULL,
+    value           VARCHAR(4000) NULL,
+    scope           VARCHAR(255)  NOT NULL,
+    type            VARCHAR(50)   NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY org_scoped_key_unique (organization_id, `key`, scope)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

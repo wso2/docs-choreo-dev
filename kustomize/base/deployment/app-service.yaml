@@ -52,6 +52,11 @@ spec:
             secretKeyRef:
               name: secret-idp
               key: IDP_BACKEND_API_CLIENT_SECRET
+        - name: AZURE_KEY_VAULT_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-key-vault
+              key: AZURE_KEY_VAULT_CLIENT_SECRET
         ports:
         - containerPort: 8080
           name: grpc-port
