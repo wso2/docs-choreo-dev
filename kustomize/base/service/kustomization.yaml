@@ -9,7 +9,6 @@ resources:
   - loggingapi.yaml
   - datamapper.yaml
   - testbase.yaml
-  - choreowww.yaml
   - api-server.yaml
   - app-service.yaml
   - app-deployer.yaml
