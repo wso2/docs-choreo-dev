@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - wildcard.domain.com
+        - "*.domain.com"
       secretName: ingress-cert
   rules:
-    - host: wildcard.domain.com
+    - host: "*.domain.com"
       http:
         paths:
           - backend:
