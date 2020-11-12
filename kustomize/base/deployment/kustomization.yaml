@@ -10,11 +10,13 @@ resources:
   - loggingapi.yaml
   - datamapper.yaml
   - testbase.yaml
-  - choreowww.yaml
   - api-server.yaml
   - app-service.yaml
   - app-deployer.yaml
   - workspace-manager.yaml
   - email-service.yaml
   - deploymentoptimizer.yaml
+
+commonAnnotations:
+  config.linkerd.io/skip-outbound-ports: 3306,443
 

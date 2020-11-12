@@ -8,8 +8,6 @@ metadata:
     nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
     nginx.ingress.kubernetes.io/service-upstream: "true"
 spec:
   tls:
