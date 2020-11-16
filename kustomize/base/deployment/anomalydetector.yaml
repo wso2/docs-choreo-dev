@@ -19,7 +19,6 @@ spec:
         linkerd.io/inject: enabled
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
@@ -38,6 +37,8 @@ spec:
         - name: anomalydetector-model-metadata
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models.properties"
           subPath: "models.properties"
+        securityContext:
+          allowPrivilegeEscalation: false
         resources:
           limits:
             cpu: 200m
@@ -86,6 +87,8 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models/"
         - name: anomalydetector-application-properties
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/config/"
+        securityContext:
+          allowPrivilegeEscalation: false
       volumes:
       - name: anomalydetector-models
         emptyDir: {}

@@ -21,7 +21,6 @@ spec:
         linkerd.io/inject: enabled
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
@@ -40,6 +39,8 @@ spec:
         - name: deploymentoptimizer-model-metadata
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models.properties"
           subPath: "models.properties"
+        securityContext:
+          allowPrivilegeEscalation: false
         resources:
           limits:
             cpu: 200m
@@ -93,6 +94,8 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models/"
         - name: deploymentoptimizer-application-properties
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/config/"
+        securityContext:
+          allowPrivilegeEscalation: false
       volumes:
       - name: deploymentoptimizer-models
         emptyDir: {}

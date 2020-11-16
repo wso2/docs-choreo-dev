@@ -19,10 +19,11 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:
-          allowPrivilegeEscalation: false
           runAsUser: 500
           runAsGroup: 500
         name: perfanalyzer-estimator

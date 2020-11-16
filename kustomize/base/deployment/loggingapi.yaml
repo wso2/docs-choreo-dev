@@ -19,6 +19,8 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
       containers:
         - env:
             - name: b7a_log_level
@@ -93,7 +95,6 @@ spec:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           image: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging:latest
           securityContext:
-            allowPrivilegeEscalation: false
             runAsUser: 100
             runAsGroup: 1000
           name: loggingapi

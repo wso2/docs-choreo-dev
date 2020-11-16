@@ -19,7 +19,6 @@ spec:
         linkerd.io/inject: enabled
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         runAsUser: 100
         runAsGroup: 1000
       containers:
@@ -69,6 +68,8 @@ spec:
                 secretKeyRef:
                   name: secret-email-service
                   key: SENDER_MAIL
+          securityContext:
+            allowPrivilegeEscalation: false
           ports:
             - containerPort: 8082
               name: email-port

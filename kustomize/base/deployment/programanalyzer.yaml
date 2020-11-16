@@ -17,10 +17,11 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer:latest
         securityContext:
-          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
         name: programanalyzer

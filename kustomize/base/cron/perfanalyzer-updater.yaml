@@ -16,13 +16,14 @@ spec:
           labels:
             choreo.component: perfanalyzer-updater
         spec:
+          securityContext:
+            allowPrivilegeEscalation: false
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
           - name: perfanalyzer-updater
             image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
             securityContext:
-              allowPrivilegeEscalation: false
               runAsUser: 500
               runAsGroup: 500
             env:

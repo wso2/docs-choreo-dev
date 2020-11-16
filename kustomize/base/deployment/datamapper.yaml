@@ -19,7 +19,6 @@ spec:
         linkerd.io/inject: enabled
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
@@ -45,6 +44,8 @@ spec:
         - name: datamapper-models-metadata
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
           subPath: "models.properties"
+        securityContext:
+          allowPrivilegeEscalation: false
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/datamapper:latest
         name: datamapper
@@ -80,6 +81,8 @@ spec:
         volumeMounts:
         - name: datamapper-models
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"
+        securityContext:
+          allowPrivilegeEscalation: false
       volumes:
       - name: datamapper-models
         emptyDir: {}

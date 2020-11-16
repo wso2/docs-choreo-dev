@@ -18,6 +18,8 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
       containers:
       - env:
         # --------------------------------------------------------
@@ -77,7 +79,6 @@ spec:
         # --------------------------------------------------------
         image: choreoctrlplane.azurecr.io/choreoipaas/observability-api:latest
         securityContext:
-          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
         name: obsapi

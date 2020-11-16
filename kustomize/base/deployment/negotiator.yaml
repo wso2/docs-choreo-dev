@@ -19,6 +19,8 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
       containers:
       - env:
         - name: b7a_log_level
@@ -58,7 +60,6 @@ spec:
               name: cm-choreo-program-db
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
-          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
         name: negotiator
