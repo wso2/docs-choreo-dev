@@ -73,6 +73,7 @@ spec:
              key: CHOREO_DB_PASSWORD
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
         name: testbase

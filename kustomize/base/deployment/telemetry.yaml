@@ -78,6 +78,7 @@ spec:
               key: EVENTHUB_CONNECTION_STRING
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
         name: telemetry

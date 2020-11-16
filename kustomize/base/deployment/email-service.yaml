@@ -18,6 +18,8 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
       containers:
         - name: email-service
           lifecycle:

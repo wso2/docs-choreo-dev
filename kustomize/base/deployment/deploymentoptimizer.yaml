@@ -21,6 +21,7 @@ spec:
         linkerd.io/inject: enabled
     spec:
       securityContext:
+        allowPrivilegeEscalation: false
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
