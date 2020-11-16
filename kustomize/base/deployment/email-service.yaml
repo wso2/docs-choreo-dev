@@ -20,6 +20,8 @@ spec:
     spec:
       securityContext:
         allowPrivilegeEscalation: false
+        runAsUser: 100
+        runAsGroup: 1000
       containers:
         - name: email-service
           lifecycle:
