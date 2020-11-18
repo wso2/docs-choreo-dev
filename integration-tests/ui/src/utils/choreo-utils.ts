@@ -108,7 +108,7 @@ export const selectWebhookType = async (t: TestController, name: string) => {
 export const createProperty = async (t: TestController, name: string, expression: string) => {
   logger.info("Creating the property with expression : " + expression);
   await t
-    .expect(screen.getByText("STATEMENT").exists).ok()
+    .expect(screen.getByText("Statments").exists).ok()
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
     .hover(screen.getByText("Property"), { speed: 0.5 })
     .click(screen.getByTestId("addproperty"), { speed: 0.5 })
