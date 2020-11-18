@@ -135,7 +135,7 @@ export const createRespond = async (t: TestController, expression: string) => {
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
-    .expect(screen.getByText("Statements").exists).ok()
+    .expect(screen.getByText("Statements").exists).ok({ timeout: 10000 })
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
     .hover(screen.getByText("Respond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
