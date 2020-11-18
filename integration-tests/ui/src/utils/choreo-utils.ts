@@ -120,11 +120,14 @@ export const createProperty = async (t: TestController, name: string, expression
       { speed: 0.5 }
     )
     .click(screen.getByText("Define Expression"), { speed: 0.5 })
+    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+    .wait(3000)
     .typeText(
-      screen.getByPlaceholderText('eg: "Hello world"'),
+      Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
       { speed: 0.5 }
     )
+    .wait(1000)
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
@@ -139,11 +142,14 @@ export const createRespond = async (t: TestController, expression: string) => {
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
     .hover(screen.getByText("Respond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
+    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+    .wait(3000)
     .typeText(
-      screen.getByPlaceholderText('eg: "Executed successfully!"'),
-      "res",
+      Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+      expression,
       { speed: 0.5 }
     )
+    .wait(1000)
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
