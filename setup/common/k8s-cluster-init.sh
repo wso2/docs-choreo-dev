@@ -10,7 +10,7 @@ fi
 
 ############## Install Linkerd
 echo "--- Installing Linkerd..."
-LINKERD_VERSION=stable-2.8.1
+LINKERD_VERSION=stable-2.9.0
 linkerd_installed="true"
 command -v linkerd >/dev/null 2>&1 || {
     linkerd_installed="false"

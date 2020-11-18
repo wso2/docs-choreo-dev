@@ -9,7 +9,6 @@ resources:
   - datamapper.yaml
   - testbase.yaml
   - linker.yaml
-  - choreowww.yaml
   - api-server.yaml
   - app-deployer.yaml
   - app-service.yaml

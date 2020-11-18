@@ -12,7 +12,7 @@ global:
   controlPlaneTracing: false
 
   # control plane version. See Proxy section for proxy version
-  linkerdVersion: &linkerd_version stable-2.8.1
+  linkerdVersion: &linkerd_version stable-2.9.0
 
   namespace: linkerd
 
@@ -71,7 +71,7 @@ global:
     image:
       name: choreoctrlplane.azurecr.io/linkerd-io/proxy-init
       pullPolicy: *image_pull_policy
-      version: v1.3.3
+      version: v1.3.6
     resources:
       cpu:
         limit: 100m
@@ -245,7 +245,7 @@ grafana:
   enabled: true
   name: linkerd-grafana
   image:
-    name: gcr.io/linkerd-io/grafana
+    name: choreoctrlplane.azurecr.io/linkerd-io/grafana
   # set resource requests and limits for grafana and its linkerd proxy respectively
   # see global.proxy.resources in the linkerd2 chart for details.
   # resources:

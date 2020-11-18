@@ -80,6 +80,27 @@ test("test run hello world service ", async (t) => {
   logger.info("Hello world string recieved successfully !")
 });
 
+test("test postman view", async (t) => {
+  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
+  await clearAppsIfExists(t);
+  await createNewApp(t, appName);
+  await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
+  await selectWebhookType(t, "hello");
+  await createProperty(t, "res", '"hello world"');
+  await createRespond(t, "res");
+
+  await t.click(screen.getByTitle("test"))
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT })
+  await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
+
+  logger.info("Testing invalid API key validation attempt scenario");
+  await t.click(Selector(screen.findByText('Click here')));
+  await t.expect(screen.findByText('/API Key/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.expect(screen.findByPlaceholderText('/XXXX-XXXX-XXXX-XXXX/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.typeText(screen.getByPlaceholderText('XXXX-XXXX-XXXX-XXXX'), 'dummyapikey');
+  await t.expect(screen.findByText('/your API key is wrong/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  logger.info("Test phase successful!");
+});
 
 test("deploy hello world service", async (t) => {
 

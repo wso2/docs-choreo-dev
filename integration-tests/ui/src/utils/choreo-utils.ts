@@ -84,7 +84,7 @@ export const clearAppsIfExists = async (t: TestController) => {
       .click(screen.getByText("Delete"))
       .click(within(screen.findByRole("dialog")).getByText("Delete"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-    appExists = await screen.queryAllByText("Time to create your first application", { timeout: WAIT_TIME_SHORT }).exists;
+    appExists = await screen.queryAllByText("Time to create your first application").exists;
     retryCount = retryCount - 1;
   }
 
