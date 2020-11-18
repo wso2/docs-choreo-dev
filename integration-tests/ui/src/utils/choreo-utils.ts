@@ -133,10 +133,9 @@ export const createProperty = async (t: TestController, name: string, expression
 
 export const createRespond = async (t: TestController, expression: string) => {
   await t
-    .expect(screen.queryAllByText("Statements").exists).ok({ timeout: 10000 })
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
-    .expect(screen.queryAllByText("Loading").exists).notOk({ timeout: 20000 })
+    .expect(screen.getByText("Statements").exists).ok()
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
     .hover(screen.getByText("Respond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
