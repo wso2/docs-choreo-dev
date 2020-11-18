@@ -108,7 +108,7 @@ export const selectWebhookType = async (t: TestController, name: string) => {
 export const createProperty = async (t: TestController, name: string, expression: string) => {
   logger.info("Creating the property with expression : " + expression);
   await t
-    .expect(screen.getByText("Statments").exists).ok()
+    .expect(screen.getByText("Statements").exists).ok()
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
     .hover(screen.getByText("Property"), { speed: 0.5 })
     .click(screen.getByTestId("addproperty"), { speed: 0.5 })
@@ -133,7 +133,7 @@ export const createProperty = async (t: TestController, name: string, expression
 
 export const createRespond = async (t: TestController, expression: string) => {
   await t
-    .expect(screen.queryAllByText("STATEMENT").exists).ok({ timeout: 10000 })
+    .expect(screen.queryAllByText("Statements").exists).ok({ timeout: 10000 })
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
     .expect(screen.queryAllByText("Loading").exists).notOk({ timeout: 20000 })
