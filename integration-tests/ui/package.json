@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "e2etest": "testcafe chrome",
-    "e2etest:headless": "testcafe \"chrome:headless '--window-size=1920,1080'\" &&   testcafe \"firefox:headless '-width=1920 -height=1080'\""
+    "e2etest:headless": "testcafe \"chrome:headless '--window-size=1920,1080'\"",
+    "e2etest:headless-disabled": "testcafe \"chrome:headless '--window-size=1920,1080'\" &&   testcafe \"firefox:headless '-width=1920 -height=1080'\""
   },
   "author": "",
   "license": "ISC",
