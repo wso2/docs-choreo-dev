@@ -24,6 +24,8 @@ spec:
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
       - env:
         - name: MODEL_STORAGE_CONNECTION_STRING

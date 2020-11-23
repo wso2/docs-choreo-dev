@@ -70,6 +70,8 @@ spec:
                   key: SENDER_MAIL
           securityContext:
             allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
             capabilities:
               drop:
                 - NET_RAW

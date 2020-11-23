@@ -21,6 +21,8 @@ spec:
     spec:
       securityContext:
         allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:

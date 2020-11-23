@@ -21,6 +21,8 @@ spec:
     spec:
       securityContext:
         allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - env:
             - name: b7a_log_level

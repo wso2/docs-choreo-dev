@@ -22,6 +22,8 @@ spec:
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
       - env:
         - name: ACCESS_KEY
