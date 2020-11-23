@@ -71,8 +71,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-            drop:
-              - NET_RAW
+              drop:
+                - NET_RAW
           ports:
             - containerPort: 8082
               name: email-port
