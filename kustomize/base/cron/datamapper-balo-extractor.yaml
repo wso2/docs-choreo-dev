@@ -29,6 +29,9 @@ spec:
             securityContext:
               runAsUser: 500
               runAsGroup: 500
+              capabilities:
+                drop:
+                  - NET_RAW
             resources:
               limits:
                 cpu: 300m

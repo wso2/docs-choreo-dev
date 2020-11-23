@@ -46,6 +46,9 @@ spec:
           subPath: "models.properties"
         securityContext:
           allowPrivilegeEscalation: false
+          capabilities:
+              drop:
+                - NET_RAW
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/datamapper:latest
         name: datamapper

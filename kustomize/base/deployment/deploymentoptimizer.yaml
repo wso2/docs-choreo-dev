@@ -41,6 +41,9 @@ spec:
           subPath: "models.properties"
         securityContext:
           allowPrivilegeEscalation: false
+          capabilities:
+              drop:
+                - NET_RAW
         resources:
           limits:
             cpu: 200m
