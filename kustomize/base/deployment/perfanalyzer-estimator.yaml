@@ -26,6 +26,9 @@ spec:
         securityContext:
           runAsUser: 500
           runAsGroup: 500
+          capabilities:
+            drop:
+              - NET_RAW
         name: perfanalyzer-estimator
         env:
           - name: CHOREO_PERF_DB_PASSWORD

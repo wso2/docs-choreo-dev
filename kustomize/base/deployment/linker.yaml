@@ -72,6 +72,9 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
         name: linker
         readinessProbe:
             initialDelaySeconds: 5

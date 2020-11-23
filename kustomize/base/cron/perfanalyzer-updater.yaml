@@ -26,6 +26,9 @@ spec:
             securityContext:
               runAsUser: 500
               runAsGroup: 500
+              capabilities:
+                drop:
+                  - NET_RAW
             env:
               - name: AZURE_ADX_CLIENT_SECRET
                 valueFrom:

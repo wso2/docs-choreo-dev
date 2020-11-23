@@ -77,6 +77,9 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
         name: testbase
         readinessProbe:
             initialDelaySeconds: 5

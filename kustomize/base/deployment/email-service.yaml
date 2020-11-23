@@ -70,6 +70,9 @@ spec:
                   key: SENDER_MAIL
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+            drop:
+              - NET_RAW
           ports:
             - containerPort: 8082
               name: email-port

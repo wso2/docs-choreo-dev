@@ -97,6 +97,9 @@ spec:
         securityContext:
           runAsUser: 101
           runAsGroup: 101
+          capabilities:
+            drop:
+              - NET_RAW
         name: frontend
         ports:
         - containerPort: 8080

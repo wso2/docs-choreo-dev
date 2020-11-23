@@ -18,6 +18,9 @@ spec:
         spec:
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+            drop:
+              - NET_RAW
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:

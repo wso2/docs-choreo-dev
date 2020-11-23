@@ -96,6 +96,9 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/config/"
         securityContext:
           allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - NET_RAW
       volumes:
       - name: deploymentoptimizer-models
         emptyDir: {}
