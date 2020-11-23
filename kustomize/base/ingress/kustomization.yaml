@@ -2,3 +2,4 @@ resources:
   - grpc.yaml
   - http.yaml
   - root.yaml
+  - default-backend.yaml
