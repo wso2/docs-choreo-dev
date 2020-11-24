@@ -31,6 +31,24 @@ spec:
               secretKeyRef:
                 key: CHOREO_PERF_DB_PASSWORD
                 name: secret-perfanalyzer
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: perfan-port
+            path: /readiness
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: perfan-port
+            path: /liveness
         ports:
         - containerPort: 5005
           name: perfan-port
