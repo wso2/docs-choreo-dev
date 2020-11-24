@@ -30,6 +30,24 @@ spec:
             drop:
               - NET_RAW
         name: programanalyzer
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: progan-port
+            path: /readiness
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: progan-port
+            path: /liveness
         ports:
         - containerPort: 9000
           name: progan-port
