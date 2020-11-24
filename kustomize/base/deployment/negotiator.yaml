@@ -19,6 +19,10 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - env:
         - name: b7a_log_level
@@ -60,6 +64,9 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
         name: negotiator
         readinessProbe:
             initialDelaySeconds: 5

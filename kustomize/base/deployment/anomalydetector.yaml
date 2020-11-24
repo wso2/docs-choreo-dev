@@ -22,6 +22,8 @@ spec:
         runAsUser: 500
         runAsGroup: 500
         fsGroup: 500
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
       - env:
         - name: MODEL_STORAGE_CONNECTION_STRING
@@ -37,6 +39,11 @@ spec:
         - name: anomalydetector-model-metadata
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models.properties"
           subPath: "models.properties"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+              drop:
+                - NET_RAW
         resources:
           limits:
             cpu: 200m
@@ -85,6 +92,11 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models/"
         - name: anomalydetector-application-properties
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/config/"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - NET_RAW
       volumes:
       - name: anomalydetector-models
         emptyDir: {}

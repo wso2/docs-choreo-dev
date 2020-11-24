@@ -19,6 +19,10 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - env:
         - name: LOGS_API
@@ -95,6 +99,9 @@ spec:
         securityContext:
           runAsUser: 101
           runAsGroup: 101
+          capabilities:
+            drop:
+              - NET_RAW
         name: frontend
         ports:
         - containerPort: 8080
