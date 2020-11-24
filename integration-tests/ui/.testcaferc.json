@@ -8,7 +8,11 @@
       "videoPath": "artifacts/videos",
       "screenshots": {
         "path": "artifacts/screenshots",
-        "takeOnFails": true
+        "takeOnFails": true,
+        "pathPattern": "${DATE}_${TIME}/${USERAGENT}/${FIXTURE}-${TEST}-${FILE_INDEX}.png"
+      },
+      "videoOptions": {
+        "pathPattern": "${DATE}_${TIME}/${USERAGENT}/${FIXTURE}-${TEST}-${FILE_INDEX}.mp4"
     }
     
 }
