@@ -106,16 +106,16 @@ export const selectWebhookType = async (t: TestController, name: string) => {
 };
 
 export const createProperty = async (t: TestController, name: string, expression: string) => {
-  logger.info("Creating the property with expression : " + expression);
+  logger.info("Creating the variable with expression : " + expression);
   await t
     .expect(screen.getByText("Statements").exists).ok()
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByText("Property"), { speed: 0.5 })
-    .click(screen.getByTestId("addproperty"), { speed: 0.5 })
-    .selectText(screen.getByPlaceholderText("Enter Property Name"))
+    .hover(screen.getByText("Variable"), { speed: 0.5 })
+    .click(screen.getByTestId("addVariable"), { speed: 0.5 })
+    .selectText(screen.getByPlaceholderText("Enter Variable Name"))
     .pressKey("delete")
     .typeText(
-      screen.getByPlaceholderText("Enter Property Name"),
+      screen.getByPlaceholderText("Enter Variable Name"),
       name,
       { speed: 0.5 }
     )
@@ -131,7 +131,7 @@ export const createProperty = async (t: TestController, name: string, expression
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  logger.info("Successfully created the property with expression : " + expression);
+  logger.info("Successfully created the variable with expression : " + expression);
 };
 
 export const createRespond = async (t: TestController, expression: string) => {
