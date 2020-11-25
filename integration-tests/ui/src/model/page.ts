@@ -7,7 +7,7 @@ import { isValidUser, getAccessToken, setTokenData } from "../utils/login-utils"
 import { logger } from "../utils/logger";
 
 const STORAGE_KEY = "PORTAL_STATE";
-const backendRegexp = "http:\/\/"+config.backendHostName+"\/*"
+const backendRegexp = "https:\/\/"+config.backendHostName+"\/*"
 
 class Page {
   loginHook = new ChoreoLoginHook(new RegExp(backendRegexp), {});
