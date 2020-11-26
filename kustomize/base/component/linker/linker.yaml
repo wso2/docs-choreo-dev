@@ -4,26 +4,14 @@ kind: "Service"
 metadata:
   labels:
     app: "choreo-linker-0.1.2"
-  name: "linker-svc"
+  name: "choreo-linker-0"
 spec:
   ports:
-  - name: "http-linker-svc"
+  - name: "linker-svc-1-ht"
     port: 9090
     protocol: "TCP"
     targetPort: 9090
-  selector:
-    app: "choreo-linker-0.1.2"
-  type: "ClusterIP"
----
-apiVersion: "v1"
-kind: "Service"
-metadata:
-  labels:
-    app: "choreo-linker-0.1.2"
-  name: "linkerunsecured-svc"
-spec:
-  ports:
-  - name: "http-linkerunse"
+  - name: "linkerunsecured"
     port: 9092
     protocol: "TCP"
     targetPort: 9092
@@ -48,7 +36,53 @@ spec:
         app: "choreo-linker-0.1.2"
     spec:
       containers:
-      - image: "choreoctrlplane.azurecr.io/choreoipaas/choreo-linker:latest"
+      - env:
+        - name: "b7a_log_level"
+          valueFrom:
+            configMapKeyRef:
+              key: "B7A_LOG_LEVEL"
+              name: "cm-loglevel-linker"
+        - name: "IDP_ISSUER"
+          valueFrom:
+            configMapKeyRef:
+              key: "IDP_ISSUER"
+              name: "cm-idp"
+        - name: "IDP_CLIENT_ID"
+          valueFrom:
+            configMapKeyRef:
+              key: "IDP_CLIENT_ID"
+              name: "cm-idp"
+        - name: "IDP_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "IDP_HOST"
+              name: "cm-idp"
+        - name: "IDP_JWKS_ENDPOINT"
+          valueFrom:
+            configMapKeyRef:
+              key: "IDP_JWKS_ENDPOINT"
+              name: "cm-idp"
+        - name: "NEGOTIATOR_GRPC_ADDRESS"
+          valueFrom:
+            configMapKeyRef:
+              key: "NEGOTIATOR_GRPC_ADDRESS"
+              name: "cm-negotiator"
+        - name: "JWKS_ENDPOINT_PROTOCOL"
+          valueFrom:
+            configMapKeyRef:
+              key: "JWKS_ENDPOINT_PROTOCOL"
+              name: "cm-linker"
+        - name: "LINKER_INGRESS_ADDRESS"
+          valueFrom:
+            configMapKeyRef:
+              key: "LINKER_INGRESS_ADDRESS"
+              name: "cm-linker"
+        - name: "APPSERVICE_GRPC_ADDRESS"
+          valueFrom:
+            configMapKeyRef:
+              key: "APPSERVICE_GRPC_ADDRESS"
+              name: "cm-linker"
+        image: "choreoctrlplane.azurecr.io/choreoipaas/choreo-linker:latest"
         imagePullPolicy: "IfNotPresent"
         lifecycle:
           preStop:
@@ -64,10 +98,10 @@ spec:
         name: "choreo-linker-0-deployment"
         ports:
         - containerPort: 9090
-          name: "http-linker-svc"
+          name: "linker-svc-1-ht"
           protocol: "TCP"
         - containerPort: 9092
-          name: "http-linkerunse"
+          name: "linkerunsecured"
           protocol: "TCP"
         readinessProbe:
           httpGet:
