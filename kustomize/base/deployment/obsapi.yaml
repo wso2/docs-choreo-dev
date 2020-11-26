@@ -42,6 +42,33 @@ spec:
             configMapKeyRef:
               name: cm-obsapi
               key: NEGOTIATOR_GRPC_ADDRESS
+          # APPSERVICE
+        - name: APPSERVICE_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: APPSERVICE_GRPC_ADDRESS
+          # IDP
+        - name: IDP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_URL
+        - name: IDP_TOKEN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_TOKEN_ENDPOINT
+        - name: IDP_JWKS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_JWKS_ENDPOINT
+        - name: IDP_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_CLIENT_ID
           # AZURE ADX
         - name: AZURE_ADX_CLIENT_ID
           valueFrom:
