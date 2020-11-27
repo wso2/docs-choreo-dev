@@ -18,6 +18,10 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - env:
         # --------------------------------------------------------
@@ -38,6 +42,33 @@ spec:
             configMapKeyRef:
               name: cm-obsapi
               key: NEGOTIATOR_GRPC_ADDRESS
+          # APPSERVICE
+        - name: APPSERVICE_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: APPSERVICE_GRPC_ADDRESS
+          # IDP
+        - name: IDP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_URL
+        - name: IDP_TOKEN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_TOKEN_ENDPOINT
+        - name: IDP_JWKS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_JWKS_ENDPOINT
+        - name: IDP_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-idp
+              key: IDP_CLIENT_ID
           # AZURE ADX
         - name: AZURE_ADX_CLIENT_ID
           valueFrom:
@@ -79,6 +110,9 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
         name: obsapi
         ports:
         - containerPort: 9095

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS program (
    latest_version_id     INT,
    app_id                VARCHAR(255),
    inserted_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   sharing_on            BOOLEAN DEFAULT false,
    PRIMARY KEY (id),
    CONSTRAINT uc_obs_id UNIQUE (obs_id),
    CONSTRAINT uc_app_id UNIQUE (app_id),

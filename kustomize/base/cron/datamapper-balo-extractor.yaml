@@ -16,6 +16,13 @@ spec:
           labels:
             choreo.component: datamapper-balo-extractor
         spec:
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - NET_RAW
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
@@ -24,6 +31,9 @@ spec:
             securityContext:
               runAsUser: 500
               runAsGroup: 500
+              capabilities:
+                drop:
+                  - NET_RAW
             resources:
               limits:
                 cpu: 300m

@@ -18,6 +18,9 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        runAsUser: 100
+        runAsGroup: 1000
       containers:
         - name: email-service
           lifecycle:
@@ -65,6 +68,13 @@ spec:
                 secretKeyRef:
                   name: secret-email-service
                   key: SENDER_MAIL
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - NET_RAW
           ports:
             - containerPort: 8082
               name: email-port
