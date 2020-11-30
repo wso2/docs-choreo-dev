@@ -150,7 +150,7 @@ helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --set controller.resources.limits."cpu"=1000m \
     --set controller.ingressClass="${namespace}-nginx" \
     --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-    --set controller.image.tag="v0.34.1" \
+    --set controller.image.tag="v0.41.2" \
     --set controller.image.digest=null \
     --set-string controller.config.server-tokens=false \
     --set controller.admissionWebhooks.enabled=false
