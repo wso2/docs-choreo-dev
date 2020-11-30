@@ -65,6 +65,11 @@ spec:
             configMapKeyRef:
               key: TESTBASE_API
               name: cm-frontend
+        - name: AI_API
+          valueFrom:
+            configMapKeyRef:
+              key: AI_API
+              name: cm-frontend
         - name: IDP_URL
           valueFrom:
             configMapKeyRef:
