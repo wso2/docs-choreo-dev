@@ -36,6 +36,11 @@ spec:
             configMapKeyRef:
               name: cm-obsapi
               key: LOG_LEVEL
+        - name: SKIP_AUTH
+          valueFrom:
+            configMapKeyRef:
+              name: cm-obsapi
+              key: SKIP_AUTH
           # NEGOTIATOR
         - name: NEGOTIATOR_GRPC_ADDRESS
           valueFrom:
