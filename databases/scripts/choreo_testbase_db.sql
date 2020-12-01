@@ -36,3 +36,15 @@ CREATE TABLE current_collection_info (
   PRIMARY KEY (id),
   UNIQUE KEY user_app_ws_id_unique (user_id, application_id, workspace_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE testcases (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  test_case_id varchar(255) NOT NULL,
+  name varchar(255) NOT NULL,
+  display_name varchar(255) NOT NULL,
+  working_file varchar(255),
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY test_case_id_unique (test_case_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
