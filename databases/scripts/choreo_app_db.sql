@@ -128,3 +128,19 @@ CREATE TABLE configuration
     UNIQUE KEY org_scoped_key_unique (organization_id, `key`, scope)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+ALTER TABLE `configuration`
+    ADD COLUMN `configuration_group_id` INT NOT NULL DEFAULT 0 AFTER `organization_id`;
+
+CREATE TABLE configuration_group
+(
+    id              INT AUTO_INCREMENT,
+    organization_id INT           NOT NULL,
+    `name`          VARCHAR(255)  NOT NULL,
+    display_name    VARCHAR(500)  NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY org_name_unique (organization_id, `name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
