@@ -119,7 +119,6 @@ export const createProperty = async (t: TestController, name: string, expression
       name,
       { speed: 0.5 }
     )
-    .click(screen.getByText("Define Expression"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .wait(3000)
     .typeText(
