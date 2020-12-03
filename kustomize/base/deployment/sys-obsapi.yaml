@@ -46,12 +46,12 @@ spec:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp
-            - name: AAD_TENANT_ID
+            - name: AZURE_LA_TENANT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
                   name: cm-sysobsapi
-            - name: AAD_CLIENT_ID
+            - name: AZURE_LA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
@@ -76,12 +76,12 @@ spec:
                configMapKeyRef:
                  key: CLUSTER_NAME
                  name: cm-k8sservice
-            - name: LOG_WORKSPACE_ID
+            - name: AZURE_LA_WORKSPACE_ID
               valueFrom:
                 configMapKeyRef:
                   key: LOG_WORKSPACE_ID
                   name: cm-loganalytics
-            - name: AAD_CLIENT_SECRET
+            - name: AZURE_LA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: secret-sysobsapi
