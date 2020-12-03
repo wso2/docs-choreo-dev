@@ -50,12 +50,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-sysobsapi
+                  name: cm-sys-obsapi
             - name: AZURE_LA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: cm-sysobsapi
+                  name: cm-sys-obsapi
             - name: USER_APPS_NAMESPACE
               valueFrom:
                 configMapKeyRef:
@@ -84,7 +84,7 @@ spec:
             - name: AZURE_LA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: secret-sysobsapi
+                  name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           image: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:

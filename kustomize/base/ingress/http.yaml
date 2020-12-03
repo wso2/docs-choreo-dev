@@ -64,7 +64,7 @@ spec:
         - backend:
             serviceName: sys-obsapi
             servicePort: 9098
-          path: /sysobs/0.1.0
+          path: /sysobsapi
         - backend:
             serviceName: sys-obsapi
             servicePort: 9097
