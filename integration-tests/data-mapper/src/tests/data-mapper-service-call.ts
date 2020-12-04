@@ -115,7 +115,7 @@ test("Test Data Mapper service call",async (t)=>{
   ]
 
   const expectedResponseBody = {
-  "answer": "\nfunction mapPersonToPerson (Person person) returns Person {\n// Some record fields might be missing in the AI based mapping.\n\tPerson person = {root: {calendarId: person.notroot.calendarId, kind: person.notroot.kind, id: person.notroot.id, scope: {value: person.notroot.scope.value}, role: person.notroot.role, fields: person.notroot.fields, etag: person.notroot.etag}};\n\treturn person;\n}"
+  "answer": "\nfunction mapPersonToPerson (Person person) returns Person {\n// Some record fields might be missing in the AI based mapping.\n\tPerson person = {calendarId: person.calendarId, kind: person.kind, id: person.id, scope: {type: person.scope.type, value: person.scope.value}, role: person.role, fields: person.fields, etag: person.etag};\n\treturn person;\n}"
   } 
 
   const response = await callExternalEndpointPOST(t,(config.dataMapperTestURL + "/map/1.0.0"),requestBody,3);
