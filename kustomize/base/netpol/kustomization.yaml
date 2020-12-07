@@ -6,3 +6,4 @@ resources:
   - obsapi.yaml
   - perfanalyzer-estimator.yaml
   - programanalyzer.yaml
+  - sys-obsapi.yaml
