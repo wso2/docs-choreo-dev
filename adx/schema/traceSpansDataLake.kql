@@ -18,7 +18,8 @@ nodeId: string,
 version: string,
 timestamp: datetime,
 duration: long,
-tags: dynamic
+tags: dynamic,
+checkpoints: dynamic
 )
 kind=adl
 partition by (Date:datetime = bin(timestamp, 1d))
@@ -26,6 +27,7 @@ dataformat=csv
 (
    h@'abfss://trace-spans@<storage-account-name>.dfs.core.windows.net/;sharedkey=<account-key>'
 )
+with (includeHeaders = "All")
 
 .create-or-alter continuous-export <continuous-export-name>
 over (traceSpans)
