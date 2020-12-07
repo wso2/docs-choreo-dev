@@ -43,6 +43,41 @@ export const waitTillWorkspace = async (t: TestController) => {
   }
 }
 
+
+/**
+ * Checks if the Performance Drill Down is loading. It does so by checking all 3 parameters
+ * isLoading, isAdvanceLoading and isBannerDataLoading in the local storage of the browser.
+ *
+ * @returns true if at least one parameter specified in the description above is true
+ */
+export const isPerformanceDrillDownLoading = async () => {
+  const localStorageContent = await getStorage();
+  const { obsViewState: { analysisInfo: { isLoading } } } : { obsViewState: { analysisInfo: { isLoading: boolean } } } = JSON.parse(localStorageContent);
+  const { obsViewState: { analysisInfo: { isAdvanceLoading } } }: { obsViewState: { analysisInfo: { isAdvanceLoading: boolean } } } = JSON.parse(localStorageContent);
+  const { obsViewState: { analysisInfo: { isBannerDataLoading } } }: { obsViewState: { analysisInfo: { isBannerDataLoading: boolean } } } = JSON.parse(localStorageContent);
+  return (isLoading || isAdvanceLoading || isBannerDataLoading);
+}
+
+
+/**
+ * Waits for the Performance Drill Down to complete loading. It does so by waiting for isPerformanceDrillDownLoading()
+ * to return false within 25 attempts
+ *
+ * @param t - Test Controller
+ */
+export const waitForPerformanceDrillDown = async (t: TestController) => {
+  let attempt = 1;
+  let ss = await isPerformanceDrillDownLoading();
+
+  while (ss === true && attempt <= 25) {
+    await t.wait(1000);
+    logger.info("Waiting for Performance Drill Down to load...");
+    ss = await isPerformanceDrillDownLoading();
+    attempt++;
+  }
+}
+
+
 export const createNewApp = async (t: TestController, name: string) => {
   logger.info("Creating a new application with name : " + name);
   await t
@@ -231,4 +266,51 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
    
 })
   fs.writeFileSync("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "http-log.json", JSON.stringify(logs));
+}
+
+
+/**
+ * Creates an HTTP connector using the Low Code Editor
+ *
+ * @param t - Test Controller
+ * @param url - URL
+ * @param operation - HTTP operation
+ * @param responseVariableName - Response Variable Name
+ * @param [outputPayloadType] - Output Payload Type
+ * @param [outputPayloadVariable] - Output Payload Variable Name
+ *
+ */
+export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
+                                          outputPayloadType?: string, outputPayloadVariable?: string) => {
+  logger.info("Creating HTTP Connector...")
+  await t
+    .click(screen.getByTestId("api-options"), { speed: 0.5 })
+    .expect(screen.getByText("Http").exists).ok({ timeout: 10000 })
+    .click(screen.getByText("Http"), { speed: 0.5 })
+    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+      .wait(3000)
+      .typeText(
+        Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+        "\"" + url + "\"",
+        { speed: 0.5 }
+      )
+    .wait(1000)
+    .click(screen.getByText(operation), { speed: 0.5 })
+    .click(screen.getByText("Next"), { speed: 0.5 })
+    .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
+    .pressKey("delete")
+    .typeText(screen.getByPlaceholderText("Enter Response Variable Name"), responseVariableName, { speed: 0.5 });
+  if (typeof outputPayloadType !== 'undefined' && typeof outputPayloadVariable !== 'undefined') {
+    await t
+      .click(screen.getByText("Select Type"), { speed: 0.5 })
+      .click(screen.getByText(outputPayloadType), { speed: 0.5 })
+      .click(screen.getByPlaceholderText("Enter Payload Variable Name"), { speed: 0.5 })
+      .selectText(screen.getByPlaceholderText("Enter Payload Variable Name"))
+      .pressKey("delete")
+      .typeText(screen.getByPlaceholderText("Enter Payload Variable Name"), outputPayloadVariable, { speed: 0.5 });
+  } else {
+    await t.click(screen.getByText("No Payload"), { speed: 0.5 });
+  }
+  await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
+  logger.info("Successfully created an HTTP Connector!")
 }
