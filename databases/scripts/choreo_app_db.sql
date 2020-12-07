@@ -108,7 +108,8 @@ CREATE TABLE app_environment_mapping
     updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deployment_build_id varchar(255) NULL DEFAULT '',
     CONSTRAINT fk_app_env_env_id FOREIGN KEY (environment_id) REFERENCES environment (id),
-    CONSTRAINT fk_app_env_app_id FOREIGN KEY (application_id) REFERENCES application (id)
+    CONSTRAINT fk_app_env_app_id FOREIGN KEY (application_id) REFERENCES application (id),
+    UNIQUE KEY app_env_mapper_key_uindex (environment_id, application_id)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
