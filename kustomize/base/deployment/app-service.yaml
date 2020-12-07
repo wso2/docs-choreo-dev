@@ -61,6 +61,11 @@ spec:
             secretKeyRef:
               name: secret-key-vault
               key: AZURE_KEY_VAULT_CLIENT_SECRET
+        - name: GH_CONNECTOR_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: github-connector
+              key: GH_CONNECTOR_CLIENT_SECRET
         ports:
         - containerPort: 8080
           name: grpc-port
