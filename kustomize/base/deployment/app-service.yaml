@@ -64,7 +64,7 @@ spec:
         - name: GH_CONNECTOR_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
-              name: github-connector
+              name: secret-github-connector
               key: GH_CONNECTOR_CLIENT_SECRET
         ports:
         - containerPort: 8080
