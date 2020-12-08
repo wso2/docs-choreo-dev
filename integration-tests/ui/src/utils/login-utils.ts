@@ -38,7 +38,7 @@ export const getAccessToken = async () => {
         },
       }
     );
-    logger.info("Data returned from the IDP : " + JSON.stringify(data));
+    logger.info("Data received from the IDP");
     return data;
 
   } catch (err) {
