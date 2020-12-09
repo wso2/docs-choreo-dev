@@ -66,6 +66,11 @@ spec:
             secretKeyRef:
               name: secret-github-connector
               key: GH_CONNECTOR_CLIENT_SECRET
+        - name: GSUITE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-gsuite
+              key: GSUITE_CLIENT_SECRET
         ports:
         - containerPort: 8080
           name: grpc-port
