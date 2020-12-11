@@ -40,6 +40,11 @@ spec:
             configMapKeyRef:
               key: LOG_COLLECTION_API
               name: cm-frontend
+        - name: SYS_OBSAPI
+          valueFrom:
+            configMapKeyRef:
+              key: SYS_OBSAPI
+              name: cm-frontend
         - name: ANALYZE_API
           valueFrom:
             configMapKeyRef:
