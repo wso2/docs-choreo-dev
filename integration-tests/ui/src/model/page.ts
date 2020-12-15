@@ -27,7 +27,7 @@ class Page {
     logger.info("Starting login process ...")
     setTokenData(await getAccessToken());
     await t.addRequestHooks(this.loginHook);
-    logger.info("Setting user data in local storage with Key : " + STORAGE_KEY +" , and  data : "+ JSON.stringify(userConfig.user));
+    logger.info("Setting user data in local storage with Key : " + STORAGE_KEY);
     await this.localStorageSet(
       STORAGE_KEY,
       JSON.stringify({
