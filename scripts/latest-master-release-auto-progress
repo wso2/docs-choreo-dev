@@ -76,35 +76,38 @@ if [[ -n "$blockingCommit" ]]
 then
 	pullRequest=$(gh api "$GH_API_REPO"/commits/"$blockingCommit"/pulls -H "Accept: application/vnd.github.groot-preview+json")
 	
-	if [ $? != 0 ]
+	status=$(echo $?)
+	if [ "$status" -ne 0 ]
 	then
 		echo -e "Failed to retrieve pull requests containing commit $blockingCommit"
 		exit 1
 	fi
 
-	pullBody=$(echo "$pullRequest" | jq -r '.[0].body')
-	pullNumber=$(echo "$pullRequest" | jq -r '.[0].number')
-	issueNumber=$(echo $pullBody | sed -nr  's/.*https:\/\/github.com\/wso2-enterprise\/choreo-control-plane\/issues\/([[:digit:]]+).*/\1/p')
+	pullBody=$(echo "$pullRequest" | jq -r '.[-1].body')
+	pullNumber=$(echo "$pullRequest" | jq -r '.[-1].number')
+	issueNumber=$(echo "$pullBody" | sed -nr  's/.*https:\/\/github.com\/wso2-enterprise\/choreo-control-plane\/issues\/([[:digit:]]+).*/\1/p')
 
 	if [[ -z "$issueNumber" || "$issueNumber" == "null" ]]
 	then
-		issueNumber=$(echo $pullBody | sed -nr  's/.*#([[:digit:]]+).*/\1/p')
+		issueNumber=$(echo "$pullBody" | sed -nr  's/.*#([[:digit:]]+).*/\1/p')
 	fi
 
 	if [[ -n "$issueNumber" && "$issueNumber" != "null" ]]
 	then
-		issue=$(gh api "$GH_API_REPO"/issues/"$issueNumber")
-		if [ $? == 0 ]
+		response=$(gh api "$GH_API_REPO"/issues/"$issueNumber")
+		status=$(echo $?)
+		if [ "$status" -eq 0 ]
 		then
 			response=$(echo -n '{"labels":["MainlineProgressBlockingIssue"]}' | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
-			if [ $? == 0 ]
+			status=$(echo $?)
+			if [ "$status" -eq 0 ]
 			then
 				echo "Added label 'MainlineProgressBlockingIssue' to issue #$issueNumber"
 			else
 				echo -e "Failed to add label 'MainlineProgressBlockingIssue' to issue #$issueNumber\n$response"
 			fi
 		else
-			echo "Issue does not exist with number $issueNumber"
+			echo "Issue does not exist with number $issueNumber\n$response"
 		fi
 	else
 		echo -e "Failed to find the issue number in pullrequest #$pullNumber's body:\n$pullBody"
