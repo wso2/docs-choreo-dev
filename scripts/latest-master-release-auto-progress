@@ -71,9 +71,10 @@ else
     echo "Nothing to do. $REMOTE_NAME/$TARGET_BRANCH branch is up to date"
 fi
 
+GH_API_REPO="repos/wso2-enterprise/choreo-control-plane"
 if [[ -n "$blockingCommit" ]]
 then
-	pullRequest=$(gh api repos/wso2-enterprise/choreo-control-plane/commits/"$blockingCommit"/pulls -H "Accept: application/vnd.github.groot-preview+json")
+	pullRequest=$(gh api "$GH_API_REPO"/commits/"$blockingCommit"/pulls -H "Accept: application/vnd.github.groot-preview+json")
 	
 	if [ $? != 0 ]
 	then
@@ -92,10 +93,10 @@ then
 
 	if [[ -n "$issueNumber" && "$issueNumber" != "null" ]]
 	then
-		issue=$(gh api repos/wso2-enterprise/choreo-control-plane/issues/"$issueNumber")
+		issue=$(gh api "$GH_API_REPO"/issues/"$issueNumber")
 		if [ $? == 0 ]
 		then
-			response=$(echo -n '{"labels":["MainlineProgressBlockingIssue"]}' | gh api repos/wso2-enterprise/choreo-control-plane/issues/"$issueNumber"/labels --input -)
+			response=$(echo -n '{"labels":["MainlineProgressBlockingIssue"]}' | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
 			if [ $? == 0 ]
 			then
 				echo "Added label 'MainlineProgressBlockingIssue' to issue #$issueNumber"
