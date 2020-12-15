@@ -24,6 +24,7 @@ git fetch "$REMOTE_NAME"
 commits=$(git --no-pager log --reverse --pretty=format:"%H" "$REMOTE_NAME"/prod.."$REMOTE_NAME"/master)
 
 jumpCommit=""
+blockingCommit=""
 for commitHash in $commits
 do
     parentCommits=$(git cat-file -p "$commitHash" | grep -c "^parent ")
@@ -32,6 +33,7 @@ do
     then
 	jumpCommit=$commitHash
     else
+	blockingCommit=$commitHash
 	break
     fi
 
@@ -67,6 +69,47 @@ then
     echo
 else
     echo "Nothing to do. $REMOTE_NAME/$TARGET_BRANCH branch is up to date"
+fi
+
+if [[ -n "$blockingCommit" ]]
+then
+	pullRequest=$(gh api repos/wso2-enterprise/choreo-control-plane/commits/"$blockingCommit"/pulls -H "Accept: application/vnd.github.groot-preview+json")
+	
+	if [ $? != 0 ]
+	then
+		echo -e "Failed to retrieve pull requests containing commit $blockingCommit"
+		exit 1
+	fi
+
+	pullBody=$(echo "$pullRequest" | jq -r '.[0].body')
+	pullNumber=$(echo "$pullRequest" | jq -r '.[0].number')
+	issueNumber=$(echo $pullBody | sed -nr  's/.*https:\/\/github.com\/wso2-enterprise\/choreo-control-plane\/issues\/([[:digit:]]+).*/\1/p')
+
+	if [[ -z "$issueNumber" || "$issueNumber" == "null" ]]
+	then
+		issueNumber=$(echo $pullBody | sed -nr  's/.*#([[:digit:]]+).*/\1/p')
+	fi
+
+	if [[ -n "$issueNumber" && "$issueNumber" != "null" ]]
+	then
+		issue=$(gh api repos/wso2-enterprise/choreo-control-plane/issues/"$issueNumber")
+		if [ $? == 0 ]
+		then
+			response=$(echo -n '{"labels":["MainlineProgressBlockingIssue"]}' | gh api repos/wso2-enterprise/choreo-control-plane/issues/"$issueNumber"/labels --input -)
+			if [ $? == 0 ]
+			then
+				echo "Added label 'MainlineProgressBlockingIssue' to issue #$issueNumber"
+			else
+				echo -e "Failed to add label 'MainlineProgressBlockingIssue' to issue #$issueNumber\n$response"
+			fi
+		else
+			echo "Issue does not exist with number $issueNumber"
+		fi
+	else
+		echo -e "Failed to find the issue number in pullrequest #$pullNumber's body:\n$pullBody"
+	fi
+else
+	echo "No blockers."
 fi
 
 echo
