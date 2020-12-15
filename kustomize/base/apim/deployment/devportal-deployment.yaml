@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: apim-devportal
+  name: apim-devportal-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: apim-devportal
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        choreo.component: apim-devportal
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal:latest
+          securityContext:
+            runAsUser: 101
+            runAsGroup: 101
+            capabilities:
+              drop:
+                - NET_RAW
+          name: apim-devportal
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: 8080
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: 8080
+              path: /health
+          ports:
+            - containerPort: 8080
+              name: devportal-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          volumeMounts:
+            - name: devportal-conf
+              mountPath: /app/devportal.config.js
+              subPath: devportal.config.js
+      restartPolicy: Always
+      volumes:
+        - name: devportal-conf
+          configMap:
+            name: choreo-apim-devportal-conf
+      serviceAccountName: dev-choreo-apim-svc-account

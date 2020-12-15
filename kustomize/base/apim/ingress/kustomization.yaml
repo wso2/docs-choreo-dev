@@ -1,0 +1,5 @@
+resources:
+- apim-ingress.yaml
+- choreo-gateway-ingress.yaml
+- devportal-ingress.yaml
+- gateway-ingress.yaml
