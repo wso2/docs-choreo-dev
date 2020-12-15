@@ -76,7 +76,7 @@ if [[ -n "$blockingCommit" ]]
 then
 	pullRequest=$(gh api "$GH_API_REPO"/commits/"$blockingCommit"/pulls -H "Accept: application/vnd.github.groot-preview+json")
 	
-	status=$(echo $?)
+	status="$?"
 	if [ "$status" -ne 0 ]
 	then
 		echo -e "Failed to retrieve pull requests containing commit $blockingCommit"
@@ -95,11 +95,11 @@ then
 	if [[ -n "$issueNumber" && "$issueNumber" != "null" ]]
 	then
 		response=$(gh api "$GH_API_REPO"/issues/"$issueNumber")
-		status=$(echo $?)
+		status="$?"
 		if [ "$status" -eq 0 ]
 		then
 			response=$(echo -n '{"labels":["MainlineProgressBlockingIssue"]}' | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
-			status=$(echo $?)
+			status="$?"
 			if [ "$status" -eq 0 ]
 			then
 				echo "Added label 'MainlineProgressBlockingIssue' to issue #$issueNumber"
@@ -107,7 +107,7 @@ then
 				echo -e "Failed to add label 'MainlineProgressBlockingIssue' to issue #$issueNumber\n$response"
 			fi
 		else
-			echo "Issue does not exist with number $issueNumber\n$response"
+			echo -e "Issue does not exist with number $issueNumber\n$response"
 		fi
 	else
 		echo -e "Failed to find the issue number in pullrequest #$pullNumber's body:\n$pullBody"
