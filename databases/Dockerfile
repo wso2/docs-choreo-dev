@@ -19,7 +19,7 @@ COPY scripts/choreo_testbase_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_app_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_perf_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/choreo_program_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/dev/choreo_apim_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/dev/choreo_apim_shared_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/dev/choreo_apim_user_db.sql /docker-entrypoint-initdb.d/
+COPY scripts/choreo_apim_db.sql /docker-entrypoint-initdb.d/
+COPY scripts/choreo_apim_shared_db.sql /docker-entrypoint-initdb.d/
+COPY scripts/choreo_apim_user_db.sql /docker-entrypoint-initdb.d/
 COPY scripts/configure_dbs.sql /docker-entrypoint-initdb.d/
