@@ -161,3 +161,5 @@ CREATE TABLE connection_info
     UNIQUE KEY unique_org_handle (organization_id, handle)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+ALTER TABLE `connection_info` ADD COLUMN `user_account_identifier` VARCHAR(4000) NULL DEFAULT '' AFTER `display_name`;
