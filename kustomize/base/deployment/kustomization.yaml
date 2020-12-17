@@ -15,6 +15,7 @@ resources:
   - workspace-manager.yaml
   - email-service.yaml
   - deploymentoptimizer.yaml
+  - sys-obsapi.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443

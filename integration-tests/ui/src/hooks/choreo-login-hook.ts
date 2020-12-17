@@ -14,7 +14,7 @@ export class ChoreoLoginHook extends RequestHook {
     } else {
       event.requestOptions.headers.cookie = "cwatf=" + userConfig.user.cwatf + "; cbearer=" + userConfig.user.cbearer;
     }
-    // console.log(event)
+    // console.log("****request log****", event);
   }
 
   /*tslint:disable:no-empty */

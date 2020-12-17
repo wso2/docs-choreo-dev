@@ -18,6 +18,10 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
         name: app-service
@@ -57,6 +61,16 @@ spec:
             secretKeyRef:
               name: secret-key-vault
               key: AZURE_KEY_VAULT_CLIENT_SECRET
+        - name: GH_CONNECTOR_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-github-connector
+              key: GH_CONNECTOR_CLIENT_SECRET
+        - name: GSUITE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-gsuite
+              key: GSUITE_CLIENT_SECRET
         ports:
         - containerPort: 8080
           name: grpc-port
@@ -78,6 +92,9 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
         volumeMounts:
         - mountPath: /app-service.yaml
           name: config

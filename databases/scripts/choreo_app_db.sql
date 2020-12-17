@@ -59,28 +59,10 @@ CREATE TABLE application
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-CREATE TABLE environment
-(
-    id                INT AUTO_INCREMENT,
-    invocation_url    VARCHAR(300) NULL,
-    observability_url VARCHAR(300) NULL,
-    deployment_status VARCHAR(255) NULL,
-    test_status       VARCHAR(255) NULL,
-    application_id    INT          NOT NULL,
-    created_at        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT environment_pk
-        PRIMARY KEY (id),
-    CONSTRAINT environment_application_id_fk
-        FOREIGN KEY (application_id) REFERENCES application (id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
 
 ALTER TABLE `application` ADD COLUMN `display_type` VARCHAR(255) NULL DEFAULT '' AFTER `working_file`;
 ALTER TABLE `application` ADD COLUMN `deploy_type` VARCHAR(255) NULL DEFAULT '' AFTER `display_type`;
 ALTER TABLE `application` ADD COLUMN `cron_schedule` VARCHAR(100) NULL DEFAULT '' AFTER `deploy_type`;
-
-ALTER TABLE `environment` ADD COLUMN `deployment_build_id` VARCHAR(255) NULL DEFAULT '' AFTER `test_status`;
 
 CREATE TABLE beta_invitation
 (
@@ -100,6 +82,38 @@ CREATE TABLE beta_invitation
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+CREATE TABLE environment
+(
+    id                  INT AUTO_INCREMENT,
+    display_name        VARCHAR(300) NOT NULL,
+    handle              VARCHAR(300) NOT NULL,
+    k8s_cluster_id      INT          NOT NULL DEFAULT -1,
+    k8s_namespace       VARCHAR(300) NOT NULL,
+    organization_id     INT          NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT environment_pk
+        PRIMARY KEY (id),
+        UNIQUE KEY environment_name_unique (handle,organization_id),
+    CONSTRAINT fk_orgz_id FOREIGN KEY (organization_id) REFERENCES organization (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE app_environment_mapping
+(
+    environment_id      INT NOT NULL,
+    application_id      int(11) NOT NULL,
+    status              varchar(255) NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deployment_build_id varchar(255) NULL DEFAULT '',
+    CONSTRAINT fk_app_env_env_id FOREIGN KEY (environment_id) REFERENCES environment (id),
+    CONSTRAINT fk_app_env_app_id FOREIGN KEY (application_id) REFERENCES application (id),
+    UNIQUE KEY app_env_mapper_key_uindex (environment_id, application_id)
+
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE configuration
 (
     id              INT AUTO_INCREMENT,
@@ -114,3 +128,38 @@ CREATE TABLE configuration
     UNIQUE KEY org_scoped_key_unique (organization_id, `key`, scope)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+ALTER TABLE `configuration`
+    ADD COLUMN `configuration_group_id` INT NOT NULL DEFAULT 0 AFTER `organization_id`;
+
+CREATE TABLE configuration_group
+(
+    id              INT AUTO_INCREMENT,
+    organization_id INT           NOT NULL,
+    `name`          VARCHAR(255)  NOT NULL,
+    display_name    VARCHAR(500)  NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY org_name_unique (organization_id, `name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE connection_info
+(
+    id                     INT AUTO_INCREMENT,
+    handle                 VARCHAR(255)  NOT NULL,
+    display_name           VARCHAR(255)  NOT NULL,
+    organization_id        INT NOT NULL,
+    configuration_group_id INT NOT NULL,
+    connector_name         VARCHAR(255)  NOT NULL,
+    created_at             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT config_group_id_fk FOREIGN KEY (configuration_group_id) REFERENCES configuration_group (id),
+    UNIQUE KEY unique_config_group (configuration_group_id),
+    UNIQUE KEY unique_org_handle (organization_id, handle)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+ALTER TABLE `connection_info` ADD COLUMN `user_account_identifier` VARCHAR(4000) NULL DEFAULT '' AFTER `display_name`;

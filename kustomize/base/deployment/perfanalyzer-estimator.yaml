@@ -19,11 +19,18 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:
           runAsUser: 500
           runAsGroup: 500
+          capabilities:
+            drop:
+              - NET_RAW
         name: perfanalyzer-estimator
         env:
           - name: CHOREO_PERF_DB_PASSWORD
@@ -31,6 +38,24 @@ spec:
               secretKeyRef:
                 key: CHOREO_PERF_DB_PASSWORD
                 name: secret-perfanalyzer
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: perfan-port
+            path: /readiness
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: perfan-port
+            path: /liveness
         ports:
         - containerPort: 5005
           name: perfan-port

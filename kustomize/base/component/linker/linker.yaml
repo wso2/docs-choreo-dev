@@ -15,6 +15,10 @@ spec:
     port: 9092
     protocol: "TCP"
     targetPort: 9092
+  - name: "health-svc-3-ht"
+    port: 9091
+    protocol: "TCP"
+    targetPort: 9091
   selector:
     app: "choreo-linker-0.1.2"
   type: "ClusterIP"
@@ -102,6 +106,9 @@ spec:
           protocol: "TCP"
         - containerPort: 9092
           name: "linkerunsecured"
+          protocol: "TCP"
+        - containerPort: 9091
+          name: "health-svc-3-ht"
           protocol: "TCP"
         readinessProbe:
           httpGet:

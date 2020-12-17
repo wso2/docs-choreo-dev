@@ -4,32 +4,28 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    choreo.component: loggingapi
-  name: loggingapi
+    choreo.component: sys-obsapi
+  name: sys-obsapi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: loggingapi
+      choreo.component: sys-obsapi
   strategy: {}
   template:
     metadata:
       labels:
-        choreo.component: loggingapi
+        choreo.component: sys-obsapi
       annotations:
         linkerd.io/inject: enabled
     spec:
-      securityContext:
-        allowPrivilegeEscalation: false
-        seccompProfile:
-          type: RuntimeDefault
       containers:
         - env:
             - name: b7a_log_level
               valueFrom:
                 configMapKeyRef:
                   key: B7A_LOG_LEVEL
-                  name: cm-loglevel-loggingapi
+                  name: cm-loglevel-sys-obsapi
             - name: IDP_ISSUER
               valueFrom:
                 configMapKeyRef:
@@ -50,21 +46,16 @@ spec:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp
-            - name: JWKS_ENDPOINT_PROTOCOL
-              valueFrom:
-                configMapKeyRef:
-                  key: JWKS_ENDPOINT_PROTOCOL
-                  name: cm-loggingapi
-            - name: AAD_TENANT_ID
+            - name: AZURE_LA_TENANT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-activedirectory
-            - name: AAD_CLIENT_ID
+                  name: cm-sys-obsapi
+            - name: AZURE_LA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: cm-activedirectory
+                  name: cm-sys-obsapi
             - name: USER_APPS_NAMESPACE
               valueFrom:
                 configMapKeyRef:
@@ -85,32 +76,29 @@ spec:
                configMapKeyRef:
                  key: CLUSTER_NAME
                  name: cm-k8sservice
-            - name: LOG_WORKSPACE_ID
+            - name: AZURE_LA_WORKSPACE_ID
               valueFrom:
                 configMapKeyRef:
                   key: LOG_WORKSPACE_ID
                   name: cm-loganalytics
-            - name: AAD_CLIENT_SECRET
+            - name: AZURE_LA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: secret-loggingapi
+                  name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging:latest
+          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
             runAsUser: 100
             runAsGroup: 1000
-            capabilities:
-              drop:
-                - NET_RAW
-          name: loggingapi
+          name: sys-obsapi
           ports:
-            - containerPort: 9097
-              name: logapi-port
+            - containerPort: 9098
+              name: sys-obsapi-port
               protocol: TCP
-            - containerPort: 9098      # To be used for readiness/liveness probes (internal)
+            - containerPort: 9096      # To be used for readiness/liveness probes (internal)
               name: health
               protocol: TCP
-            - containerPort: 9099      # To be used for public health check (external)
+            - containerPort: 9097      # To be used for public health check (external)
               name: healthz
               protocol: TCP
           readinessProbe:

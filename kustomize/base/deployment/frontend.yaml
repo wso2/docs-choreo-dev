@@ -19,6 +19,10 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - env:
         - name: LOGS_API
@@ -35,6 +39,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: LOG_COLLECTION_API
+              name: cm-frontend
+        - name: SYS_OBSAPI
+          valueFrom:
+            configMapKeyRef:
+              key: SYS_OBSAPI
               name: cm-frontend
         - name: ANALYZE_API
           valueFrom:
@@ -60,6 +69,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: TESTBASE_API
+              name: cm-frontend
+        - name: AI_API
+          valueFrom:
+            configMapKeyRef:
+              key: AI_API
               name: cm-frontend
         - name: IDP_URL
           valueFrom:
@@ -95,6 +109,9 @@ spec:
         securityContext:
           runAsUser: 101
           runAsGroup: 101
+          capabilities:
+            drop:
+              - NET_RAW
         name: frontend
         ports:
         - containerPort: 8080

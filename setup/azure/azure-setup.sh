@@ -138,7 +138,7 @@ echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
 helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --namespace "${namespace}-nginx-ingress" \
-    --version 2.11.3 \
+    --version 3.8.0 \
     --set controller.replicaCount=2 \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
     --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
@@ -150,7 +150,7 @@ helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
     --set controller.resources.limits."cpu"=1000m \
     --set controller.ingressClass="${namespace}-nginx" \
     --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-    --set controller.image.tag="v0.34.1" \
+    --set controller.image.tag="v0.41.2" \
     --set controller.image.digest=null \
     --set-string controller.config.server-tokens=false \
     --set controller.admissionWebhooks.enabled=false
