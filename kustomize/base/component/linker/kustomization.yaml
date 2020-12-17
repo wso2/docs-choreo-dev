@@ -1,5 +1,5 @@
 resources:
-  - linker.yaml
+  - generated/linker.yaml
 
 patches:
 - path: deployment-patch.yaml
