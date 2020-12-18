@@ -4,3 +4,4 @@ resources:
   - ingress
   - pdb
   - service
+  - rbac

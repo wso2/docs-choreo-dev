@@ -148,7 +148,7 @@ spec:
               subPath: docker-entrypoint.sh
             - name: mysql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
-      serviceAccountName: dev-choreo-apim-svc-account
+      serviceAccountName: sa-choreo-apim
       volumes:
         - name: wso2am-storage
           persistentVolumeClaim:
