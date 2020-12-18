@@ -17,6 +17,7 @@ resources:
   - email-service.yaml
   - deploymentoptimizer.yaml
   - sys-obsapi.yaml
+  - apim-service.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443
