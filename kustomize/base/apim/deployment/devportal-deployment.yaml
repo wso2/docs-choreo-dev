@@ -70,4 +70,4 @@ spec:
         - name: devportal-conf
           configMap:
             name: choreo-apim-devportal-conf
-      serviceAccountName: dev-choreo-apim-svc-account
+      serviceAccountName: sa-choreo-apim

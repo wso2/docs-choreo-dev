@@ -125,7 +125,7 @@ spec:
         - name: wso2am-gateway-conf
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
           subPath: deployment.toml
-      serviceAccountName: dev-choreo-apim-svc-account
+      serviceAccountName: sa-choreo-apim
       volumes:
       - name: wso2am-gateway-storage-volume
         persistentVolumeClaim:
