@@ -23,6 +23,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/session-cookie-hash: sha1
     nginx.ingress.kubernetes.io/session-cookie-name: apim
+    nginx.ingress.kubernetes.io/whitelist-source-range: 203.94.95.0/24
 spec:
   tls:
   - hosts:
