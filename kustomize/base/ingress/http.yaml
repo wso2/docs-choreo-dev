@@ -27,11 +27,11 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: linker
+            serviceName: choreo-linker-0
             servicePort: 9090
           path: /linkersec 
         - backend:
-            serviceName: linker
+            serviceName: choreo-linker-0
             servicePort: 9092
           path: /linker
         - backend:

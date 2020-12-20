@@ -1,7 +1,6 @@
 resources:
   - frontend.yaml
   - negotiator.yaml
-  - linker.yaml
   - obsapi.yaml
   - telemetry.yaml
   - programanalyzer.yaml
