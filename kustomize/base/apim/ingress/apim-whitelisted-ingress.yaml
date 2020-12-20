@@ -16,14 +16,13 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: choreo-apim-ingress
+  name: choreo-apim-whitelisted-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/affinity: cookie
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/session-cookie-hash: sha1
     nginx.ingress.kubernetes.io/session-cookie-name: apim
-    nginx.ingress.kubernetes.io/whitelist-source-range: 203.94.95.0/24
 spec:
   tls:
   - hosts:
@@ -33,7 +32,15 @@ spec:
     - host: apim.domain.com
       http:
         paths:
-        - path: /
+        - path: /apim
+          backend:
+            serviceName: choreo-am-service
+            servicePort: 9443
+        - path: /oauth2
+          backend:
+            serviceName: choreo-am-service
+            servicePort: 9443
+        - path: /api/am/store/v1/
           backend:
             serviceName: choreo-am-service
             servicePort: 9443
