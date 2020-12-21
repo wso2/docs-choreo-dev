@@ -4,7 +4,7 @@ import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { createNewApp, clearAppsIfExists, selectTrigger, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
