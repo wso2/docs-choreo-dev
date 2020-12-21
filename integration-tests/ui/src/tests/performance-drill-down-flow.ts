@@ -3,7 +3,7 @@ import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, createHttpConnector, clearAppsIfExists, getStorage, waitForPerformanceDrillDown, selectWebhookType, WAIT_TIME_SHORT, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { createNewApp, createHttpConnector, clearAppsIfExists, getStorage, waitForPerformanceDrillDown, selectTrigger, WAIT_TIME_SHORT, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -57,7 +57,7 @@ test ("Performance Drill Down test", async (t) => {
   await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
-  await selectWebhookType(t, "test");
+  await selectTrigger(t, "Webhook", "test");
 
   await createHttpConnector(t,ENDPOINT, "GET", "response");
   await t.wait(WAIT_TIME_SHORT);

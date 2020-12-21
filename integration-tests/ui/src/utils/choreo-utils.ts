@@ -128,17 +128,36 @@ export const clearAppsIfExists = async (t: TestController) => {
   logger.info("Application deleted successfully");
 };
 
-export const selectWebhookType = async (t: TestController, name: string) => {
+
+/**
+ * Selects the Application trigger
+ *
+ * @param t - Test Controller
+ * @param type - Trigger type ("Manual", "Webhook")
+ * @param [relativePath] - Relative Path to be used with Webhook Trigger
+ *
+ */
+export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
   await waitTillWorkspace(t);
+  switch (type) {
+    case "Manual":
+      await t.click(screen.getByText("Webhook"));
+      break;
+    case "Webhook":
+      await t
+        .click(screen.getByText("Webhook"))
+        .click(screen.getByText("Setup Manual Webhook"))
+        .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+        .typeText(screen.queryByPlaceholderText("Relative path from host"), relativePath, { speed: 0.5 })
+        .click(screen.getByText("Save Webhook"), { speed: 0.5 });
+      break;
+  }
   await t
-    .click(screen.getByText("Webhook"))
-    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
-    .typeText(screen.queryByPlaceholderText("Relative path from host"), name, { speed: 0.5 })
-    .click(screen.getByText("Save"), { speed: 0.5 })
     .expect(screen.findAllByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
-  logger.info("selected webhook app type with name : " + name);
+  logger.info("selected " + type + "trigger type");
 };
+
 
 export const createProperty = async (t: TestController, name: string, expression: string) => {
   logger.info("Creating the variable with expression : " + expression);
