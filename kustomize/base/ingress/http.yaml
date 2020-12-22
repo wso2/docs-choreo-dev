@@ -74,6 +74,10 @@ spec:
             serviceName: sys-obsapi
             servicePort: 9097
           path: /sysobsapi
+        - backend:
+            serviceName: apim-service-svc
+            servicePort: 9090
+          path: /apim
     - host: programanalyzer.domain.com
       http:
         paths:
@@ -95,10 +99,3 @@ spec:
             serviceName: frontend
             servicePort: 8080
           path: /
-    - host: apim.domain.com
-      http:
-        paths:
-        - path: /apim
-          backend:
-            serviceName: apim-service-svc
-            servicePort: 9090
