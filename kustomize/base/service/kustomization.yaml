@@ -8,6 +8,7 @@ resources:
   - loggingapi.yaml
   - datamapper.yaml
   - testbase.yaml
+  - connectords.yaml
   - api-server.yaml
   - app-service.yaml
   - app-deployer.yaml
