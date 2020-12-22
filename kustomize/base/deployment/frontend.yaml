@@ -110,6 +110,16 @@ spec:
             configMapKeyRef:
               key: HELP_CENTER_URL
               name: cm-frontend
+        - name: APIM_API
+          valueFrom:
+            configMapKeyRef:
+              key: APIM_API
+              name: cm-frontend
+        - name: DEVPORTAL_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              key: DEVPORTAL_HOSTNAME
+              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
