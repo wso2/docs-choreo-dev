@@ -100,7 +100,7 @@ then
 		status="$?"
 		if [ "$status" -eq 0 ]
 		then
-			response=$(echo -n '{"labels":["$MAINLINE_PROGRESS_BLOCKING_ISSUE"]}' | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
+			response=$(echo -n "{\"labels\":[\"$MAINLINE_PROGRESS_BLOCKING_ISSUE\"]}" | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
 			status="$?"
 			if [ "$status" -eq 0 ]
 			then
