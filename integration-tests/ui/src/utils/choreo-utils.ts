@@ -146,7 +146,6 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
     case "Webhook":
       await t
         .click(screen.getByText("Webhook"))
-        .click(screen.getByText("Setup Manual Webhook"))
         .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
         .typeText(screen.queryByPlaceholderText("Relative path from host"), relativePath, { speed: 0.5 })
         .click(screen.getByText("Save Webhook"), { speed: 0.5 });
