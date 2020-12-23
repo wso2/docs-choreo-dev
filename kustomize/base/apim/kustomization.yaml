@@ -1,0 +1,7 @@
+resources:
+  - deployment
+  - hpa
+  - ingress
+  - pdb
+  - service
+  - rbac

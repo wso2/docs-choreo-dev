@@ -61,6 +61,36 @@ spec:
             secretKeyRef:
               name: secret-key-vault
               key: AZURE_KEY_VAULT_CLIENT_SECRET
+        - name: GH_CONNECTOR_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-github-connector
+              key: GH_CONNECTOR_CLIENT_SECRET
+        - name: GSUITE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-gsuite
+              key: GSUITE_CLIENT_SECRET
+        - name: SERVICE_NOW_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: secret-service-now
+              key: SERVICE_NOW_CLIENT_ID
+        - name: SERVICE_NOW_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-service-now
+              key: SERVICE_NOW_CLIENT_SECRET
+        - name: SERVICE_NOW_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-service-now
+              key: SERVICE_NOW_USERNAME
+        - name: SERVICE_NOW_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-service-now
+              key: SERVICE_NOW_PASSWORD
         ports:
         - containerPort: 8080
           name: grpc-port

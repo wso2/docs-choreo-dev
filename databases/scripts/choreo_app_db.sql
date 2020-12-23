@@ -144,3 +144,22 @@ CREATE TABLE configuration_group
     UNIQUE KEY org_name_unique (organization_id, `name`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE connection_info
+(
+    id                     INT AUTO_INCREMENT,
+    handle                 VARCHAR(255)  NOT NULL,
+    display_name           VARCHAR(255)  NOT NULL,
+    organization_id        INT NOT NULL,
+    configuration_group_id INT NOT NULL,
+    connector_name         VARCHAR(255)  NOT NULL,
+    created_at             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT config_group_id_fk FOREIGN KEY (configuration_group_id) REFERENCES configuration_group (id),
+    UNIQUE KEY unique_config_group (configuration_group_id),
+    UNIQUE KEY unique_org_handle (organization_id, handle)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+ALTER TABLE `connection_info` ADD COLUMN `user_account_identifier` VARCHAR(4000) NULL DEFAULT '' AFTER `display_name`;
