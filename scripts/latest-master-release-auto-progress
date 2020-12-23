@@ -11,6 +11,7 @@ GITCCP_DIR=$(dirname "$0")
 
 # configure shflags
 DEFINE_boolean 'assume_yes' false 'Automatic yes to prompts' 'y'
+DEFINE_boolean 'add_label' false 'Add label to blocking issue' 'l'
 DEFINE_string 'remote_name' 'upstream' 'Remote name' 'r'
 
 # run shflags
@@ -72,7 +73,8 @@ else
 fi
 
 GH_API_REPO="repos/wso2-enterprise/choreo-control-plane"
-if [[ -n "$blockingCommit" ]]
+MAINLINE_PROGRESS_BLOCKING_ISSUE="MainlineProgressBlockingIssue"
+if [[ "${FLAGS_add_label}" -eq ${FLAGS_TRUE} && -n "$blockingCommit" ]]
 then
 	pullRequest=$(gh api "$GH_API_REPO"/commits/"$blockingCommit"/pulls -H "Accept: application/vnd.github.groot-preview+json")
 	
@@ -98,13 +100,13 @@ then
 		status="$?"
 		if [ "$status" -eq 0 ]
 		then
-			response=$(echo -n '{"labels":["MainlineProgressBlockingIssue"]}' | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
+			response=$(echo -n '{"labels":["$MAINLINE_PROGRESS_BLOCKING_ISSUE"]}' | gh api "$GH_API_REPO"/issues/"$issueNumber"/labels --input -)
 			status="$?"
 			if [ "$status" -eq 0 ]
 			then
-				echo "Added label 'MainlineProgressBlockingIssue' to issue #$issueNumber"
+				echo "Added label '$MAINLINE_PROGRESS_BLOCKING_ISSUE' to issue #$issueNumber"
 			else
-				echo -e "Failed to add label 'MainlineProgressBlockingIssue' to issue #$issueNumber\n$response"
+				echo -e "Failed to add label '$MAINLINE_PROGRESS_BLOCKING_ISSUE' to issue #$issueNumber\n$response"
 			fi
 		else
 			echo -e "Issue does not exist with number $issueNumber\n$response"
