@@ -138,6 +138,7 @@ export const clearAppsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
+  const webhookSourceFields = ['import','ballerina/http;', 'service', 'on', 'new', 'http:Listener(8090){']
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -152,13 +153,15 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
       break;
   }
   await t
-    .expect(screen.findAllByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
-    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+  await checkSourceCodeForValidation(t,webhookSourceFields)
   logger.info("selected " + type + "trigger type");
 };
 
 
 export const createProperty = async (t: TestController, name: string, expression: string) => {
+  const variableSourceFields = ['var', name, '=',expression]
+
   logger.info("Creating the variable with expression : " + expression);
   await t
     .expect(screen.getByText("Statements").exists).ok()
@@ -181,12 +184,15 @@ export const createProperty = async (t: TestController, name: string, expression
     )
     .wait(1000)
     .click(screen.getByText("Save"))
-    .expect(screen.findByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await checkSourceCodeForValidation(t,variableSourceFields)
+
   logger.info("Successfully created the variable with expression : " + expression);
 };
 
 export const createRespond = async (t: TestController, expression: string) => {
+  const responseSourceFields = ['checkpanic', ' caller', '->','respond(','<','@untainted','>',expression,')']
+
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
@@ -203,8 +209,9 @@ export const createRespond = async (t: TestController, expression: string) => {
     )
     .wait(1000)
     .click(screen.getByText("Save"))
-    .expect(screen.findByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  await checkSourceCodeForValidation(t,responseSourceFields)
+
   logger.info("Created respond action with variable : " + expression);
 };
 
@@ -330,4 +337,28 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   }
   await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
   logger.info("Successfully created an HTTP Connector!")
+}
+
+/**
+ * Validating components by going through the source code view and checking the terms
+ *
+ * @param t -Test Controller
+ * @param terms - Terms need to verify
+ */
+export const checkSourceCodeForValidation = async (t: TestController, terms: string[]) => {
+  await t.expect(screen.getByTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
+    .hover(Selector(".product-tour-code-view"))
+    .click(Selector(".product-tour-code-view"))
+  let sourceCodeStr = []
+  const count = await Selector(".view-line").find('span>span').count
+  for (let i = 0; i < count; i++) {
+    const text = await Selector(".view-line").find('span>span').nth(i).innerText
+    // Trim nbsp
+    sourceCodeStr.push(text.replace(/\s/g, ''))
+  }
+  for (const term of terms) {
+    await t.expect(sourceCodeStr).contains(term.replace(' ', ''));
+  }
+  await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
+    .click(Selector(screen.getByTestId("vertical-close-btn")))
 }
