@@ -17,6 +17,7 @@ resources:
   - deploymentoptimizer.yaml
   - sys-obsapi.yaml
   - apim-service.yaml
+  - language-server.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443

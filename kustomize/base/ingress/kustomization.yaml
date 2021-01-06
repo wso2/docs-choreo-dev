@@ -3,3 +3,4 @@ resources:
   - http.yaml
   - root.yaml
   - default-backend.yaml
+  - language-server.yaml

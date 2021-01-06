@@ -15,3 +15,4 @@ resources:
   - email-service.yaml
   - sys-obsapi.yaml
   - apim-service.yaml
+  - language-server.yaml
