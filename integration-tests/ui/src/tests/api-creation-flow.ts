@@ -4,7 +4,7 @@ import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { createNewApp, clearAppsIfExists, selectTrigger, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -54,7 +54,7 @@ test("test run hello world service ", async (t) => {
   await createNewApp(t, appName);
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
-  await selectWebhookType(t, "hello");
+  await selectTrigger(t, "Webhook", "hello");
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
@@ -85,7 +85,7 @@ test("test postman view", async (t) => {
   await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
-  await selectWebhookType(t, "hello");
+  await selectTrigger(t, "Webhook", "hello");
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
@@ -108,7 +108,7 @@ test("deploy hello world service", async (t) => {
   await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
-  await selectWebhookType(t, "hello");
+  await selectTrigger(t, "Webhook", "hello");
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
