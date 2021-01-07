@@ -32,10 +32,6 @@ spec:
     - host: apim.domain.com
       http:
         paths:
-        - path: /apim
-          backend:
-            serviceName: choreo-am-service
-            servicePort: 9443
         - path: /oauth2
           backend:
             serviceName: choreo-am-service
