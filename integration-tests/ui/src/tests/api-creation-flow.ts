@@ -54,7 +54,7 @@ test("test run hello world service ", async (t) => {
   await createNewApp(t, appName);
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
-  await selectTrigger(t, "Webhook", "hello");
+  await selectTrigger(t, "API", "hello");
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
@@ -85,7 +85,7 @@ test("test postman view", async (t) => {
   await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
-  await selectTrigger(t, "Webhook", "hello");
+  await selectTrigger(t, "API", "hello");
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
@@ -108,7 +108,7 @@ test("deploy hello world service", async (t) => {
   await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
-  await selectTrigger(t, "Webhook", "hello");
+  await selectTrigger(t, "API", "hello");
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 

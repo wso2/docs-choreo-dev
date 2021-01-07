@@ -57,7 +57,7 @@ test ("Performance Drill Down test", async (t) => {
   await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
-  await selectTrigger(t, "Webhook", "test");
+  await selectTrigger(t, "API", "test");
 
   await createHttpConnector(t,ENDPOINT, "GET", "response");
   await t.wait(WAIT_TIME_SHORT);

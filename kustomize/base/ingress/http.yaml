@@ -99,3 +99,10 @@ spec:
             serviceName: frontend
             servicePort: 8080
           path: /
+    - host: apim.domain.com
+      http:
+        paths:
+        - path: /apim
+          backend:
+            serviceName: apim-service-svc
+            servicePort: 9090
