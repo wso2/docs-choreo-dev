@@ -94,11 +94,13 @@ test("test postman view", async (t) => {
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Testing invalid API key validation attempt scenario");
+  await t.click(screen.getByTitle("Try out"))
   await t.click(Selector(screen.findByText('Click here')));
   await t.expect(screen.findByText('/API Key/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
   await t.expect(screen.findByPlaceholderText('/XXXX-XXXX-XXXX-XXXX/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
   await t.typeText(screen.getByPlaceholderText('XXXX-XXXX-XXXX-XXXX'), 'dummyapikey');
   await t.expect(screen.findByText('/your API key is wrong/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.wait(WAIT_TIME_SHORT);
   logger.info("Test phase successful!");
 });
 
