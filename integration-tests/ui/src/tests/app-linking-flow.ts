@@ -98,7 +98,8 @@ test("test annonymousapp linking", async (t) => {
         .click(screen.getByText("Add to Choreo"))
         .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
         .click(screen.findByText("Next"))
-        .wait(2000) // To enable the copy btn
+        // TODO : Check possibility to remove manual wait added to enable the copy btn
+        .wait(2000)
         .expect(screen.getByTestId("copy-btn").exists).ok({ timeout: WAIT_TIME_SHORT })
 
     const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
