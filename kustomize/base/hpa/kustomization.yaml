@@ -13,5 +13,6 @@ resources:
   - app-service.yaml
   - workspace-manager.yaml
   - email-service.yaml
+  - connectords.yaml
   - sys-obsapi.yaml
   - apim-service.yaml
