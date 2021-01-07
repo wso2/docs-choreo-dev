@@ -16,3 +16,4 @@ resources:
   - connectords.yaml
   - sys-obsapi.yaml
   - apim-service.yaml
+  - language-server.yaml
