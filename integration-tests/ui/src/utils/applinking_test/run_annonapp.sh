@@ -9,6 +9,6 @@ elif [ "$CHOREO_ENV" = "STAGE" ]; then
 elif [ "$CHOREO_ENV" = "PROD" ]; then
   cp ballerina.prod.template.conf ballerina.conf
 else
-  echo "\$CHOREO_DEV env variable should be one of 'DEV', 'TAGE', 'PROD' !"  >&2
+  echo "\$CHOREO_DEV env variable should be one of 'DEV', 'STAGE', 'PROD' !"  >&2
 fi &&
 java -jar target/bin/applinking_test.jar
