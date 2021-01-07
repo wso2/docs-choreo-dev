@@ -143,18 +143,18 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
     case "Manual":
       await t.click(screen.getByText("Webhook"));
       break;
-    case "Webhook":
+    case "API":
       await t
-        .click(screen.getByText("Webhook"))
+        .click(screen.getByText("API"))
         .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
         .typeText(screen.queryByPlaceholderText("Relative path from host"), relativePath, { speed: 0.5 })
-        .click(screen.getByText("Save Webhook"), { speed: 0.5 });
+        .click(screen.getByText("Save API"), { speed: 0.5 });
       break;
   }
   await t
     .expect(screen.findAllByTestId("diagram-loader").exists).ok({ timeout: WAIT_TIME_SHORT })
     .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
-  logger.info("selected " + type + "trigger type");
+  logger.info("selected " + type + " trigger type");
 };
 
 
