@@ -1,10 +1,9 @@
-import { Selector, ClientFunction, RequestLogger } from "testcafe";
+import { Selector, RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
-import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, clearAppsIfExists, selectWebhookType, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { clearAppsIfExists, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -61,7 +60,7 @@ test("test app linking", async (t) => {
     async function runBallerinaApp(secret: string) {
         const secretConfig = 'secret=\\"' + secret + '\\"';
         const { stdout, stderr } = await exec('sh src/utils/applinking_test/run_ballerina.sh ' + secretConfig);
-        console.log('stdout:', stdout); 
+        console.log('stdout:', stdout);
         console.log('stderr:', stderr);
     }
     const secret = (await screen.getByPlaceholderText("Application secret").value).toString();
@@ -99,6 +98,7 @@ test("test annonymousapp linking", async (t) => {
         .click(screen.getByText("Add to Choreo"))
         .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
         .click(screen.findByText("Next"))
+        .wait(2000) // To enable the copy btn
         .expect(screen.getByTestId("copy-btn").exists).ok({ timeout: WAIT_TIME_SHORT })
 
     const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
