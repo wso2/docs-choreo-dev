@@ -34,10 +34,6 @@ spec:
           backend:
             serviceName: choreo-am-gateway-service
             servicePort: 8243
-        - path: /token-cors
-          backend:
-            serviceName: choreo-am-gateway-service
-            servicePort: 8243
         - path: /revoke
           backend:
             serviceName: choreo-am-gateway-service
