@@ -59,12 +59,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-activedirectory
+                  name: cm-loggingapi
             - name: AAD_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: cm-activedirectory
+                  name: cm-loggingapi
             - name: USER_APPS_NAMESPACE
               valueFrom:
                 configMapKeyRef:

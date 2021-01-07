@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: language-server
+  name: language-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: language-server
+  template:
+    metadata:
+      labels:
+        choreo.component: language-server
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - image: choreoipaas/lang-server:latest
+        name: language-server
+        ports:
+        - containerPort: 9090
+          name: http-port
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 6
+          initialDelaySeconds: 5
+          periodSeconds: 3
+          tcpSocket:
+            port: 9090
+          timeoutSeconds: 3
+        volumeMounts:
+        - mountPath: /apps
+          name: pvc-userappstorage
+        resources:
+          limits:
+            cpu: "2"
+            memory: 2Gi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          capabilities:
+            drop:
+            - NET_RAW
+      volumes:
+      - name: pvc-userappstorage
+        persistentVolumeClaim:
+          claimName: pvc-userappstorage
+      serviceAccountName: sa-choreo-default
