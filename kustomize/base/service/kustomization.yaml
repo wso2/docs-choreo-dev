@@ -1,7 +1,6 @@
 resources:
   - frontend.yaml
   - negotiator.yaml
-  - linker.yaml
   - obsapi.yaml
   - telemetry.yaml
   - programanalyzer.yaml
@@ -15,3 +14,4 @@ resources:
   - workspace-manager.yaml
   - email-service.yaml
   - sys-obsapi.yaml
+  - apim-service.yaml

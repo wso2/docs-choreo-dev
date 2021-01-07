@@ -1,0 +1,6 @@
+resources:
+  - gateway-service.yaml
+  - am-service.yaml
+  - am-1-service.yaml
+  - am-2-service.yaml
+  - devportal-service.yaml

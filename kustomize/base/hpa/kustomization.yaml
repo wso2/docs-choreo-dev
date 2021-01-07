@@ -8,10 +8,10 @@ resources:
   - perfanalyzer-estimator.yaml
   - datamapper.yaml
   - testbase.yaml
-  - linker.yaml
   - api-server.yaml
   - app-deployer.yaml
   - app-service.yaml
   - workspace-manager.yaml
   - email-service.yaml
   - sys-obsapi.yaml
+  - apim-service.yaml
