@@ -59,8 +59,13 @@ spec:
         - mountPath: /workspace-manager.yaml
           name: config
           subPath: workspace-manager.yaml
+        - mountPath: /apps
+          name: pvc-userappstorage
       volumes:
       - name: config
         configMap:
           name: cm-workspace-manager
+      - name: pvc-userappstorage
+        persistentVolumeClaim:
+          claimName: pvc-userappstorage
       serviceAccountName: sa-choreo-workspace-manager
