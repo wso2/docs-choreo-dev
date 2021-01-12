@@ -40,7 +40,8 @@ fixture("Performance Analyzer")
     const data = [...log, ...error];
     saveLogs(t, data, httpRequests)
     httpLogger.clear();
-  });
+  })
+  .skip;
 
 test ("Performance Drill Down test", async (t) => {
   const ENDPOINT = config.performanceAnalyzerTest.endpoint;
