@@ -339,6 +339,74 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   logger.info("Successfully created an HTTP Connector!")
 }
 
+export const selectAPIType = async (t: TestController, name: string) => {
+  await waitTillWorkspace(t);
+  await t
+    .click(screen.getByText("API"))
+    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+    .typeText(screen.queryByPlaceholderText("Relative path from host"), name, { speed: 0.5 })
+    .click(screen.getByText("Save API"), { speed: 0.5 })
+    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  logger.info("selected api app type with name : " + name);
+};
+
+export const createApiFromChoreoApp = async (t: TestController, apiName: string, appName: string) => {
+  await screen.getAllByTestId("create-from-choreo-app").exists;
+  await t
+    .click(screen.getAllByTestId("create-from-choreo-app"))
+    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await screen.findAllByText("Create API From Choreo Application");
+  logger.info("Create api from choreo app form load successful!");
+
+  // fill in details
+  await screen.findByTestId("api-name").exists;
+  await t.typeText(screen.findByTestId("api-name"), apiName, { speed: 0.5 });
+  // api version is not input, since there's a default value: "1.0.0"
+  await screen.findByTestId("choreo-app-selector").exists;
+  await t.click(screen.findByTestId("choreo-app-selector"), { speed: 0.5 });
+  await screen.findByText(appName).exists;
+  await t.click(screen.findByText(appName), { speed: 0.5 });
+
+  // click create
+  await t.expect(screen.getByRole('button', { name: /create/i }).exists).ok();
+  await t.click(screen.getByRole('button', { name: /create/i }), { speed: 0.5 });
+  await t.wait(WAIT_TIME_MEDIUM);
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  logger.info("Created API with name: " + apiName);
+};
+
+export const addApiSimpleResponse = async (t: TestController, expression: string) => {
+  await t.expect(screen.findAllByText("Respond").exists).ok({ timeout: WAIT_TIME_SHORT });
+  await t
+    .click(screen.getByText("Respond"))
+    .typeText(
+      Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+      expression,
+      { speed: 0.5 }
+    )
+    .click(screen.getByText("Save"), { speed: 0.5 })
+    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  logger.info("Created API with a simple response : " + expression);
+};
+
+export const clearApisIfExists = async (t: TestController) => {
+  let apiExists = await screen.queryAllByText("Time to create your first API").exists;
+  let retryCount = 5;
+  while (!apiExists && retryCount > 0) {
+    logger.info("An api exists, deleting the application");
+    await t
+      .hover(Selector(".MuiTableRow-hover"))
+      .click(screen.getByText("Delete"))
+      .click(within(screen.findByRole("dialog")).getByText("Delete"))
+      .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+    apiExists = await screen.queryAllByText("Time to create your first API").exists;
+    retryCount = retryCount - 1;
+  }
+  await t
+    .expect(screen.queryAllByText("Time to create your first API").exists).ok({ timeout: 10000 });
+  logger.info("APIs deleted successfully");
+};
+
 /**
  * Validating components by going through the source code view and checking the terms
  *
