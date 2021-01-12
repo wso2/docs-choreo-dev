@@ -183,6 +183,7 @@ export const createProperty = async (t: TestController, name: string, expression
       { speed: 0.5 }
     )
     .wait(1000)
+    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
@@ -208,6 +209,7 @@ export const createRespond = async (t: TestController, expression: string) => {
       { speed: 0.5 }
     )
     .wait(1000)
+    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
@@ -320,6 +322,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       )
     .wait(1000)
     .click(screen.getByText(operation), { speed: 0.5 })
+    .expect(screen.getByText("Next").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Next"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
@@ -335,6 +338,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   } else {
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
+  await t.expect(screen.getByText("Save & Done").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
   await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
   logger.info("Successfully created an HTTP Connector!")
 }
