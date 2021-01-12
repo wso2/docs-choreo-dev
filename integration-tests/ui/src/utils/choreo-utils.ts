@@ -4,6 +4,7 @@ import { logger } from './logger';
 import Axios from "axios";
 import * as fs from 'fs';
 import {gunzipSync} from 'zlib'
+import {getLocation} from "./login-utils";
 
 
 declare global {
@@ -104,7 +105,7 @@ export const undeployAllApps = async (t: TestController) => {
 
     deployedApps = await screen.findAllByText("Active").exists;
     retryCount = retryCount - 1;
-  }  
+  }
   await t.expect(screen.findAllByText("Active").exists).notOk();
 }
 
@@ -139,6 +140,7 @@ export const clearAppsIfExists = async (t: TestController) => {
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
   const webhookSourceFields = ['import','ballerina/http;', 'service', 'on', 'new', 'http:Listener(8090){']
+
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -155,9 +157,9 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   await t
     .expect(screen.findAllByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,webhookSourceFields)
+
   logger.info("selected " + type + "trigger type");
 };
-
 
 export const createProperty = async (t: TestController, name: string, expression: string) => {
   const variableSourceFields = ['var', name, '=',expression]
@@ -183,11 +185,83 @@ export const createProperty = async (t: TestController, name: string, expression
       { speed: 0.5 }
     )
     .wait(1000)
+    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
 
   logger.info("Successfully created the variable with expression : " + expression);
+};
+
+
+export const deployToChoreo = async (t: TestController, appName: string) => {
+  logger.info('Deploying app to Choreo');
+  await t.wait(WAIT_TIME_SHORT);
+  await t.click(screen.getByTestId("editor-run-btn"), {speed: 0.5});
+  logger.info("Started test run");
+
+  await t.click(screen.getByTitle("deploy"))
+  await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
+  await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
+
+  logger.info("Succesfully Navigated to Deploy view")
+
+  logger.info("Deploying application...")
+  await t.click(screen.getByTestId("deploy-btn"), {speed: 0.5})
+      .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
+      .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(screen.findByTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+  logger.info("Checkout phase successful!")
+
+
+  logger.info("Starting build phase...")
+  await t.expect(screen.findByTestId("build-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(screen.findByTestId("build-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG}) // todo - increase timeout
+      .expect(screen.findByTestId("build-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(screen.findByTestId("build-ok").exists).ok({timeout: WAIT_TIME_EX_LONG});
+  logger.info("Build phase successful!");
+
+  await t.expect(screen.findByTestId("test-ok").exists).ok({timeout: WAIT_TIME_LONG})
+  logger.info("Test phase successful!");
+
+  logger.info("Starting deploy phase...");
+  await t
+      .expect(screen.findByTestId("deploy-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(screen.findByTestId("deploy-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(screen.findByTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(screen.findByTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+  logger.info("Deploy phase successful!")
+
+  const appURL = await screen.findAllByTestId("deploy-url").find("input").value;
+  logger.info("test url : " + appURL);
+  await t.expect(appURL.includes("https://")).ok();
+  return appURL
+};
+
+
+export const createLog = async (t: TestController, logType: string, expression: string) => {
+  logger.info(`Creating a log for type ${logType} with content '${expression}'`);
+  await t
+      .click(Selector("#SmallPlus"), {speed: 0.5})
+      .click(Selector("#Plus_a"), {speed: 0.5})
+      .expect(screen.getByText("Statements").exists).ok()
+      .click(screen.getByTestId("statement-options"), {speed: 0.5})
+      .hover(screen.getByText("Log"), {speed: 0.5})
+      .click(screen.getByText("Log"), {speed: 0.5})
+      .click(screen.getByTestId("Info"), {speed: 0.5})
+      .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
+      .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+      .typeText(
+          Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+          expression,
+          {speed: 0.5}
+      );
+  console.log(await screen.getByText("Save").hasAttribute('disabled'))
+  await t.expect(screen.getByText("Save").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
+      .click(screen.getByText("Save"))
+      .expect(screen.findAllByTestId("diagram-loader").exists).ok("Diagram exists", {timeout: WAIT_TIME_SHORT})
+      .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
+  logger.info(`Successfully added log type ${logType} with expression : ${expression}`);
 };
 
 export const createRespond = async (t: TestController, expression: string) => {
@@ -208,6 +282,7 @@ export const createRespond = async (t: TestController, expression: string) => {
       { speed: 0.5 }
     )
     .wait(1000)
+    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
@@ -232,6 +307,38 @@ export const callExternalEndpoint = async (t: TestController, URL: string, attem
     attempt++;
   }
   return res;
+}
+
+/**
+ * Calling deployed app via the url
+ * @param t
+ * @param URL
+ * @param attempts
+ * @param maxFailAttempts
+ */
+export const callDeployedApp = async (t: TestController, URL: string, attempts: number, maxFailAttempts: number) => {
+  let attempt = 0
+  let failureCount = 0
+  logger.info("Calling deployed app via : " + (URL));
+  return new Promise(async (resolve, reject) => {
+    while (attempt <= attempts) {
+      try {
+        logger.info("Test URL : " + (URL));
+        const response = await Axios.get(URL);
+        logger.info("Response received", response.data);
+        attempt++;
+        logger.info("Attempt : " + attempt + " calling the endpoint.");
+
+      } catch (err) {
+        logger.error("Failing Attempt : " + attempt + " calling the endpoint.", err);
+        failureCount++;
+      }
+      if (failureCount >= maxFailAttempts) {
+        reject()
+      }
+    }
+    resolve()
+  })
 }
 
 export const callExternalEndpointPOST = async (t: TestController, URL: string, requestBody: object, attempts: number) => {
@@ -261,14 +368,14 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
     console.log("File write complete");
   })
 
-  
+
   const logs = networkLogs.map((loggedRequest)=> {
-    
+
     if(loggedRequest.request.url.includes(".js") ||
-      loggedRequest.request.url.includes(".svg") || 
-      loggedRequest.request.url.includes(".ico") || 
+      loggedRequest.request.url.includes(".svg") ||
+      loggedRequest.request.url.includes(".ico") ||
       loggedRequest.request.url.includes(".css") ||
-      loggedRequest.request.url.includes(".woff2")|| 
+      loggedRequest.request.url.includes(".woff2")||
       loggedRequest.request.url.includes("/track")){
       return null;
     }
@@ -276,18 +383,18 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
     if(loggedRequest.response){
       if(loggedRequest.response.headers['content-encoding']== 'gzip'){
         const resData = (gunzipSync(loggedRequest.response.body as Buffer) as Buffer).toString();
-        return { 
+        return {
           ...loggedRequest,
           response: {...loggedRequest.response,
             body:resData.toString()
-          
+
           }
         }
       }
       return loggedRequest;
     }
     return loggedRequest;
-   
+
 })
   fs.writeFileSync("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "http-log.json", JSON.stringify(logs));
 }
@@ -311,12 +418,16 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
     .expect(screen.getByText("Http").exists).ok({ timeout: 10000 })
     .click(screen.getByText("Http"), { speed: 0.5 })
+    .wait(2000)
+    .expect(Selector('h4').withText('New Http Connection').exists).ok({ timeout: WAIT_TIME_MEDIUM })
+    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+    .pressKey("backspace")
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
       .wait(3000)
       .pressKey("backspace backspace")
       .typeText(
         Selector('.exp-editor .monaco-editor .inputarea').nth(0),
-        "\"" + url + "\"",
+         url + "\"",
         { speed: 0.5 }
       )
     .wait(1000)
