@@ -106,7 +106,7 @@ export const undeployAllApps = async (t: TestController) => {
     deployedApps = await screen.findAllByText("Active").exists;
     retryCount = retryCount - 1;
   }
-  await t.expect(screen.findAllByText("Active").exists).notOk();
+  await t.expect(screen.findAllByText("Active").exists).notOk({timeout:WAIT_TIME_MEDIUM});
 }
 
 export const clearAppsIfExists = async (t: TestController) => {
@@ -231,8 +231,8 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
       .expect(screen.findByTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
       .expect(screen.findByTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
   logger.info("Deploy phase successful!")
-
-  const appURL = await screen.findAllByTestId("deploy-url").find("input").value;
+  await t.expect(screen.findAllByTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
+  const appURL = await screen.findAllByTestId("deploy-url").find("input").getAttribute('value');
   logger.info("test url : " + appURL);
   await t.expect(appURL.includes("https://")).ok();
   return appURL
@@ -240,6 +240,8 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
 
 
 export const createLog = async (t: TestController, logType: string, expression: string) => {
+  const logSourceField = ['log:print(',`"${expression}"`,');']
+
   logger.info(`Creating a log for type ${logType} with content '${expression}'`);
   await t
       .click(Selector("#SmallPlus"), {speed: 0.5})
@@ -253,14 +255,15 @@ export const createLog = async (t: TestController, logType: string, expression: 
       .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
       .typeText(
           Selector('.exp-editor .monaco-editor .inputarea').nth(0),
-          expression,
+          `"${expression}"`,
           {speed: 0.5}
       );
   console.log(await screen.getByText("Save").hasAttribute('disabled'))
-  await t.expect(screen.getByText("Save").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
+  await t.expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
       .click(screen.getByText("Save"))
-      .expect(screen.findAllByTestId("diagram-loader").exists).ok("Diagram exists", {timeout: WAIT_TIME_SHORT})
-      .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
+      .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+  await checkSourceCodeForValidation(t,logSourceField)
+
   logger.info(`Successfully added log type ${logType} with expression : ${expression}`);
 };
 
@@ -282,7 +285,7 @@ export const createRespond = async (t: TestController, expression: string) => {
       { speed: 0.5 }
     )
     .wait(1000)
-    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
+    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
@@ -413,6 +416,8 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
  */
 export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
                                           outputPayloadType?: string, outputPayloadVariable?: string) => {
+  const httpSourceFields = ['http:Client httpEndpoint','=','new',url]
+
   logger.info("Creating HTTP Connector...")
   await t
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
@@ -432,6 +437,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       )
     .wait(1000)
     .click(screen.getByText(operation), { speed: 0.5 })
+    .expect(screen.getByText("Next").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Next"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
@@ -448,6 +454,9 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
   await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
+    .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  await checkSourceCodeForValidation(t,httpSourceFields)
+
   logger.info("Successfully created an HTTP Connector!")
 }
 
@@ -529,6 +538,7 @@ export const checkSourceCodeForValidation = async (t: TestController, terms: str
   await t.expect(screen.getByTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
+    .wait(4000)
   let sourceCodeStr = []
   const count = await Selector(".view-line").find('span>span').count
   for (let i = 0; i < count; i++) {
@@ -537,7 +547,7 @@ export const checkSourceCodeForValidation = async (t: TestController, terms: str
     sourceCodeStr.push(text.replace(/\s/g, ''))
   }
   for (const term of terms) {
-    await t.expect(sourceCodeStr).contains(term.replace(' ', ''));
+    await t.expect(sourceCodeStr).contains(term.replace(/\s/g, ''));
   }
   await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
     .click(Selector(screen.getByTestId("vertical-close-btn")))
