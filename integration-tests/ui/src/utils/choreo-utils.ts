@@ -99,13 +99,14 @@ export const undeployAllApps = async (t: TestController) => {
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     await t.click(screen.getByText("Stop"))
       .expect(screen.findByText("Deploy").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+      .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG})
       .click(screen.getByText("App list"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 
     deployedApps = await screen.findAllByText("Active").exists;
     retryCount = retryCount - 1;
-  }  
-  await t.expect(screen.findAllByText("Active").exists).notOk();
+  }
+  await t.expect(screen.findAllByText("Active").exists).notOk({timeout:WAIT_TIME_MEDIUM});
 }
 
 export const clearAppsIfExists = async (t: TestController) => {
@@ -182,8 +183,7 @@ export const createProperty = async (t: TestController, name: string, expression
       expression,
       { speed: 0.5 }
     )
-    .wait(1000)
-    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
@@ -209,7 +209,7 @@ export const createRespond = async (t: TestController, expression: string) => {
       { speed: 0.5 }
     )
     .wait(1000)
-    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
+    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
@@ -322,7 +322,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       )
     .wait(1000)
     .click(screen.getByText(operation), { speed: 0.5 })
-    .expect(screen.getByText("Next").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+    .expect(screen.getByText("Next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Next"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
@@ -338,7 +338,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   } else {
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
-  await t.expect(screen.getByText("Save & Done").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+  await t.expect(screen.getByText("Save & Done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
   await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
   logger.info("Successfully created an HTTP Connector!")
 }
@@ -353,6 +353,7 @@ export const checkSourceCodeForValidation = async (t: TestController, terms: str
   await t.expect(screen.getByTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
+    .wait(4000)
   let sourceCodeStr = []
   const count = await Selector(".view-line").find('span>span').count
   for (let i = 0; i < count; i++) {
@@ -361,7 +362,7 @@ export const checkSourceCodeForValidation = async (t: TestController, terms: str
     sourceCodeStr.push(text.replace(/\s/g, ''))
   }
   for (const term of terms) {
-    await t.expect(sourceCodeStr).contains(term.replace(' ', ''));
+    await t.expect(sourceCodeStr).contains(term.replace(/\s/g, ''));
   }
   await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
     .click(Selector(screen.getByTestId("vertical-close-btn")))
