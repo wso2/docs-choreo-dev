@@ -313,6 +313,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .click(screen.getByText("Http"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
       .wait(3000)
+      .pressKey("backspace backspace")
       .typeText(
         Selector('.exp-editor .monaco-editor .inputarea').nth(0),
         "\"" + url + "\"",
