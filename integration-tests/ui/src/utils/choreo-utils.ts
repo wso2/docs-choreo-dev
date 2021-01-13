@@ -98,7 +98,7 @@ export const undeployAllApps = async (t: TestController) => {
     await t.click(screen.getByTitle("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     await t.click(screen.getByText("Stop"))
-      .expect(screen.findByText("Deploy").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+      .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG})
       .click(screen.getByText("App list"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 
