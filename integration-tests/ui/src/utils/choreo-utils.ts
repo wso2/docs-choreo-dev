@@ -399,7 +399,7 @@ export const clearApisIfExists = async (t: TestController) => {
       .hover(Selector(".MuiTableRow-hover"))
       .click(screen.getByText("Delete"))
       .click(within(screen.findByRole("dialog")).getByText("Delete"))
-      .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+      .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     apiExists = await screen.queryAllByText("Time to create your first API").exists;
     retryCount = retryCount - 1;
   }
