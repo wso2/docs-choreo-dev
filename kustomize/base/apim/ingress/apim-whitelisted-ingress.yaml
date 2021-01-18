@@ -44,3 +44,7 @@ spec:
           backend:
             serviceName: choreo-am-service
             servicePort: 9443
+        - path: /authenticationendpoint
+          backend:
+            serviceName: choreo-am-service
+            servicePort: 9443
