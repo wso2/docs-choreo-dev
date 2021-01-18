@@ -65,20 +65,20 @@ async function deployApp(t: TestController) {
     await selectTrigger(t, "API", "hello");
     await createProperty(t, "res", '"hello world"');
     await t.click(Selector("#SmallPlus"), {speed: 0.5})
-            .click(Selector("#Plus_a"), {speed: 0.5})
-    await createHttpConnector(t, "https://postman-echo.com/get?foo1=bar1&foo2=bar2","GET", "response");
+        .click(Selector("#Plus_a"), {speed: 0.5})
+    await createHttpConnector(t, "https://postman-echo.com/get?foo1=bar1&foo2=bar2", "GET", "response");
     await createLog(t, 'Info', 'Special test Log for App');
     await createRespond(t, "res");
     const appURL = await deployToChoreo(t, appName)
+
+    await callDeployedApp(t, `${appURL}/hello`, 3, 3)
+    await t.wait(WAIT_TIME_MEDIUM)
 
     await t.click(screen.getByTitle("observe"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
     // await t.expect(await getLocation()).contains("app/" + appName + "/observe", { timeout: WAIT_TIME_SHORT })
 
     logger.info("Succesfully Navigated to Deploy view")
-
-    await callDeployedApp(t,`${appURL}/hello`,3,3)
-    await t.wait(WAIT_TIME_MEDIUM*2)
 }
 
 
@@ -99,21 +99,24 @@ test("test run observe overview hello world service ", async (t) => {
 
         // Test Diagram status
         .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_MEDIUM})
-        // TODO : Counter text
         .expect(Selector('#CounterLeft').exists).ok({timeout: WAIT_TIME_MEDIUM})
 
-        .expect(screen.getByTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout:WAIT_TIME_EX_LONG})
-        .expect(screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout:WAIT_TIME_EX_LONG})
+        .expect(screen.getByTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
 
         // Disable refresh
         .hover(Selector('#refresh-interval'))
         .click(Selector('#refresh-interval'))
         .click(screen.getAllByText('Off'))
 
+    // Check for log panel
+    await t.expect(screen.getByTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
+        // .click(screen.getByText('Past 24 hours'))
+        // .click(screen.getByText('Past 10 minutes'))
+
     // Enable the status bar
-    let d = await screen.getByTestId('histogram-throughput').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
+    let d = await screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
     d = d.replace('Z', '')
-    console.log(d)
     const newD = d.split("L")
     let prevY
     let finalX
@@ -128,47 +131,37 @@ test("test run observe overview hello world service ", async (t) => {
         prevY = arr[1]
     }
 
-    console.log('final',finalX,finalY)
-    await t.hover(screen.getByTestId('histogram-throughput').find('svg'), {
+    await t.hover(screen.getByTestId('histogram-response-time').find('svg'), {
         offsetX: Math.round(finalX),
         offsetY: Math.round(finalY),
     })
         .wait(3000)
-        .click(screen.getByTestId('histogram-throughput').find('svg'), {
+        .click(screen.getByTestId('histogram-response-time').find('svg'), {
             offsetX: Math.round(finalX),
             offsetY: Math.round(finalY),
         })
         .expect(screen.findByTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
-        .wait(WAIT_TIME_SHORT)
         .expect(screen.getByTestId('request-table').exists).ok({timeout: WAIT_TIME_EX_LONG})
-        .expect(screen.getAllByTestId("request-information").count).eql(3, {timeout: WAIT_TIME_SHORT})
-        // TODO: Test further
+        .expect(screen.getAllByTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
-        .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(2)').getStyleProperty('background-color')).eql("#36B475", {timeout: WAIT_TIME_SHORT})
+        .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
         // Check for hide options
         .hover(screen.getByText('Hide Options'))
         .click(screen.getByText('Hide Options'))
         .expect(screen.getByText('Show Options').exists).ok({timeout: WAIT_TIME_SHORT})
-
-        // Check for log panel
-        .expect(Selector('span').withText("[lakshankarunathilake/main-module] - Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
-
-
 });
 
 test("test run observe log view hello world service ", async (t) => {
     await deployApp(t);
-    // Check for log panel
-    await t.expect(Selector('span').withText("[lakshankarunathilake/main-module] - Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
-        t.expect(screen.getByTestId("panel-Logs-btn").exists).ok({timeout:WAIT_TIME_MEDIUM})
+    await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
+    await t.expect(screen.getByTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
         .click(screen.getByTestId("panel-Logs-btn"))
-        // .expect(screen.getByTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
         //Check for the given log
-        .expect(screen.getByTestId('log-panel').exists).ok({timeout: WAIT_TIME_MEDIUM})
+        .expect(screen.getByTestId('log-panel').exists).ok({timeout: WAIT_TIME_LONG})
     logger.info("TEST LOG")
 
-    await t.expect(Selector('span').withText("[lakshankarunathilake/main-module] - Special test Log for App").count).eql(3, 'Not exists', {timeout: WAIT_TIME_LONG})
+    await t.expect(Selector('span').withText("Special test Log for App").count).eql(3, 'Not exists', {timeout: WAIT_TIME_LONG})
         // Search for log key word
         .typeText(
             Selector('#log-search').nth(0),
@@ -176,7 +169,6 @@ test("test run observe log view hello world service ", async (t) => {
             {speed: 0.5}
         )
         .expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT})
-        .expect(Selector('span').withText("[lakshankarunathilake/main-module] - Special test Log for App").count).gte(3, 'Not exists', {timeout: WAIT_TIME_MEDIUM})
-
+        .expect(Selector('span').withText("Special test Log for App").count).gte(3, 'Not exists', {timeout: WAIT_TIME_MEDIUM})
 });
 
