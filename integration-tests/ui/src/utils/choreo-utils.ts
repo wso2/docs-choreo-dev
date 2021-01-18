@@ -258,7 +258,6 @@ export const createLog = async (t: TestController, logType: string, expression: 
           `"${expression}"`,
           {speed: 0.5}
       );
-  console.log(await screen.getByText("Save").hasAttribute('disabled'))
   await t.expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
       .click(screen.getByText("Save"))
       .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
@@ -268,7 +267,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
 };
 
 export const createRespond = async (t: TestController, expression: string) => {
-  const responseSourceFields = ['checkpanic', ' caller', '->','respond(','<','@untainted','>',expression,')']
+  const responseSourceFields = ['checkpanic', ' caller', '->',`respond(${expression});`]
 
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
@@ -339,6 +338,7 @@ export const callDeployedApp = async (t: TestController, URL: string, attempts: 
       if (failureCount >= maxFailAttempts) {
         reject()
       }
+      await t.wait(500)
     }
     resolve()
   })
