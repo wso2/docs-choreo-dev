@@ -44,7 +44,6 @@ const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
 fixture("Application observability")
     .page(config.testURL)
     .beforeEach(async t => {
-        await t.resizeWindow(1920, 1080)
         await page.login();
         await enableDetailedLogs();
     })
@@ -111,8 +110,8 @@ test("test run observe overview hello world service ", async (t) => {
 
     // Check for log panel
     await t.expect(screen.getByTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
-        // .click(screen.getByText('Past 24 hours'))
-        // .click(screen.getByText('Past 10 minutes'))
+        .click(screen.getByText('Past 24 hours'))
+        .click(screen.getByText('Past 30 minutes'))
 
     // Enable the status bar
     let d = await screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
