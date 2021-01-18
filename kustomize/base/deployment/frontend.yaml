@@ -120,6 +120,11 @@ spec:
             configMapKeyRef:
               key: DEVPORTAL_HOSTNAME
               name: cm-frontend
+        - name: DISABLE_ON_PREMISE_APPS
+          valueFrom:
+            configMapKeyRef:
+              key: DISABLE_ON_PREMISE_APPS
+              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
