@@ -320,7 +320,7 @@ export const callExternalEndpoint = async (t: TestController, URL: string, attem
  * @param maxFailAttempts
  */
 export const callDeployedApp = async (t: TestController, URL: string, attempts: number, maxFailAttempts: number) => {
-  let attempt = 0
+  let attempt = 1;
   let failureCount = 0
   logger.info("Calling deployed app via : " + (URL));
   return new Promise(async (resolve, reject) => {
@@ -437,7 +437,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       )
     .wait(1000)
     .click(screen.getByText(operation), { speed: 0.5 })
-    .expect(screen.getByText("Next").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
+    .expect(screen.getByText("Next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Next"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
