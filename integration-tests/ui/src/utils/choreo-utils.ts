@@ -140,7 +140,6 @@ export const clearAppsIfExists = async (t: TestController) => {
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
   const webhookSourceFields = ['import','ballerina/http;', 'service', 'on', 'new', 'http:Listener(8090){']
-
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -157,7 +156,6 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   await t
     .expect(screen.findAllByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,webhookSourceFields)
-
   logger.info("selected " + type + "trigger type");
 };
 
