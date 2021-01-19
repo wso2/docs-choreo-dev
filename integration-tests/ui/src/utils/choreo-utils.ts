@@ -139,7 +139,7 @@ export const clearAppsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
-  const webhookSourceFields = ['import','ballerina/http;', 'service', 'on', 'new', 'http:Listener(8090){']
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request req) {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -265,7 +265,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
 };
 
 export const createRespond = async (t: TestController, expression: string) => {
-  const responseSourceFields = ['checkpanic', ' caller', '->',`respond(${expression});`]
+  const responseSourceFields = [`checkpanic caller->respond(${expression});`]
 
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
@@ -414,7 +414,7 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
  */
 export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
                                           outputPayloadType?: string, outputPayloadVariable?: string) => {
-  const httpSourceFields = ['http:Client httpEndpoint','=','new',url]
+  const httpSourceFields = [`http:Client httpEndpoint = new ("${url}");`]
 
   logger.info("Creating HTTP Connector...")
   await t
@@ -530,23 +530,15 @@ export const clearApisIfExists = async (t: TestController) => {
  * Validating components by going through the source code view and checking the terms
  *
  * @param t -Test Controller
- * @param terms - Terms need to verify
+ * @param sourceLines
  */
-export const checkSourceCodeForValidation = async (t: TestController, terms: string[]) => {
+export const checkSourceCodeForValidation = async (t: TestController, sourceLines: string[]) => {
   await t.expect(screen.getByTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
-    .wait(4000)
-  let sourceCodeStr = []
-  const count = await Selector(".view-line").find('span>span').count
-  for (let i = 0; i < count; i++) {
-    const text = await Selector(".view-line").find('span>span').nth(i).innerText
-    // Trim nbsp
-    sourceCodeStr.push(text.replace(/\s/g, ''))
-  }
-  for (const term of terms) {
-    await t.expect(sourceCodeStr).contains(term.replace(/\s/g, ''));
-  }
+    for (const sourceLine of sourceLines) {
+      await t.expect(Selector(".view-line").withText(sourceLine.replace(/\s/g,'\u00a0')).exists).ok({timeout:WAIT_TIME_SHORT})
+    }
   await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
     .click(Selector(screen.getByTestId("vertical-close-btn")))
 }
