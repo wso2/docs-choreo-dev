@@ -410,21 +410,25 @@ export const addApiSimpleResponse = async (t: TestController, expression: string
 };
 
 export const clearApisIfExists = async (t: TestController) => {
-  let apiExists = await screen.queryAllByText("Time to create your first API").exists;
+  let isApiListEmpty: boolean;
   let retryCount = 5;
-  while (!apiExists && retryCount > 0) {
+  while (retryCount > 0) {
+    isApiListEmpty = await Selector("div", { timeout: WAIT_TIME_SHORT })
+      .withText("Time to create your first API").visible;
+    if (isApiListEmpty) {
+      logger.info("API list is empty");
+      break;
+    }
     logger.info("An api exists, deleting the application");
     await t
       .hover(Selector(".MuiTableRow-hover"))
       .click(screen.getByText("Delete"))
       .click(within(screen.findByRole("dialog")).getByText("Delete"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-    apiExists = await screen.queryAllByText("Time to create your first API").exists;
     retryCount = retryCount - 1;
   }
-  await t
-    .expect(screen.queryAllByText("Time to create your first API").exists).ok({ timeout: 10000 });
-  logger.info("APIs deleted successfully");
+  await t.expect(screen.queryAllByText("Time to create your first API").exists).ok({ timeout: WAIT_TIME_SHORT });
+  logger.info("API list cleared successfully");
 };
 
 /**
