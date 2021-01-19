@@ -163,3 +163,6 @@ CREATE TABLE connection_info
   DEFAULT CHARSET = utf8;
 
 ALTER TABLE `connection_info` ADD COLUMN `user_account_identifier` VARCHAR(4000) NULL DEFAULT '' AFTER `display_name`;
+
+ALTER TABLE `app_environment_mapping` DROP FOREIGN KEY `fk_app_env_app_id`;
+ALTER TABLE `app_environment_mapping` DROP INDEX `fk_app_env_app_id`;
