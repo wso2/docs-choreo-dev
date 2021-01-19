@@ -319,7 +319,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
         "\"" + url + "\"",
         { speed: 0.5 }
       )
-    .wait(1000)
+    .wait(5000)
     .click(screen.getByText(operation), { speed: 0.5 })
     .click(screen.getByText("Next"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
