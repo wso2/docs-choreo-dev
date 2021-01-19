@@ -191,7 +191,7 @@ export const createProperty = async (t: TestController, name: string, expression
 };
 
 export const createRespond = async (t: TestController, expression: string) => {
-  const responseSourceFields = ['checkpanic', ' caller', '->','respond(','<','@untainted','>',expression,')']
+  const responseSourceFields = ['checkpanic', ' caller', '->',`respond(${expression});`]
 
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
