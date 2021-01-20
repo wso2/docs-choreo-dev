@@ -238,7 +238,7 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
 
 
 export const createLog = async (t: TestController, logType: string, expression: string) => {
-  const logSourceField = ['log:print(',`"${expression}"`,');']
+  const logSourceField = [`log:print("${expression}");`]
 
   logger.info(`Creating a log for type ${logType} with content '${expression}'`);
   await t
