@@ -308,8 +308,6 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
  */
 export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
                                           outputPayloadType?: string, outputPayloadVariable?: string) => {
-  const httpSourceFields = ['http:Client httpEndpoint','=','new',url]
-
   logger.info("Creating HTTP Connector...")
   await t
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
@@ -347,7 +345,6 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   await t.expect(screen.getByText("Save & Done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
   await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
-  await checkSourceCodeForValidation(t,httpSourceFields)
 
   logger.info("Successfully created an HTTP Connector!")
 }
