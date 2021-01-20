@@ -98,7 +98,6 @@ export const undeployAllApps = async (t: TestController) => {
     await t.click(screen.getByTitle("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     await t.click(screen.getByText("Stop"))
-      .expect(screen.findByText("Deploy").exists).ok({ timeout: WAIT_TIME_MEDIUM })
       .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG})
       .click(screen.getByText("App list"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
@@ -314,8 +313,6 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .expect(screen.getByText("Http").exists).ok({ timeout: 10000 })
     .click(screen.getByText("Http"), { speed: 0.5 })
     .expect(Selector('h4').withText('New Http Connection').exists).ok({ timeout: WAIT_TIME_MEDIUM })
-    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .pressKey("backspace")
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
       .wait(3000)
       .pressKey("backspace backspace")
