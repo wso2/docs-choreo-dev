@@ -421,19 +421,16 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
     .expect(screen.getByText("Http").exists).ok({ timeout: 10000 })
     .click(screen.getByText("Http"), { speed: 0.5 })
-    .wait(2000)
     .expect(Selector('h4').withText('New Http Connection').exists).ok({ timeout: WAIT_TIME_MEDIUM })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .pressKey("backspace")
-    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-      .wait(3000)
-      .pressKey("backspace backspace")
-      .typeText(
-        Selector('.exp-editor .monaco-editor .inputarea').nth(0),
-         url + "\"",
-        { speed: 0.5 }
-      )
-    .wait(1000)
+    .wait(3000)
+    .pressKey("backspace backspace")
+    .typeText(
+      Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+      "\"" + url + "\"",
+      { speed: 0.5 }
+    )
+    .wait(5000)
     .click(screen.getByText(operation), { speed: 0.5 })
     .expect(screen.getByText("Next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
     .click(screen.getByText("Next"), { speed: 0.5 })
@@ -451,6 +448,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   } else {
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
+  await t.expect(screen.getByText("Save & Done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
   await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,httpSourceFields)
@@ -509,21 +507,25 @@ export const addApiSimpleResponse = async (t: TestController, expression: string
 };
 
 export const clearApisIfExists = async (t: TestController) => {
-  let apiExists = await screen.queryAllByText("Time to create your first API").exists;
+  let isApiListEmpty: boolean;
   let retryCount = 5;
-  while (!apiExists && retryCount > 0) {
+  while (retryCount > 0) {
+    isApiListEmpty = await Selector("div", { timeout: WAIT_TIME_SHORT })
+      .withText("Time to create your first API").visible;
+    if (isApiListEmpty) {
+      logger.info("API list is empty");
+      break;
+    }
     logger.info("An api exists, deleting the application");
     await t
       .hover(Selector(".MuiTableRow-hover"))
       .click(screen.getByText("Delete"))
       .click(within(screen.findByRole("dialog")).getByText("Delete"))
       .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-    apiExists = await screen.queryAllByText("Time to create your first API").exists;
     retryCount = retryCount - 1;
   }
-  await t
-    .expect(screen.queryAllByText("Time to create your first API").exists).ok({ timeout: 10000 });
-  logger.info("APIs deleted successfully");
+  await t.expect(screen.queryAllByText("Time to create your first API").exists).ok({ timeout: WAIT_TIME_SHORT });
+  logger.info("API list cleared successfully");
 };
 
 /**
