@@ -36,6 +36,13 @@ spec:
           tcpSocket:
             port: 9090
           timeoutSeconds: 3
+        livenessProbe:
+          initialDelaySeconds: 60
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 10
+          tcpSocket:
+            port: 9090
         volumeMounts:
         - mountPath: /apps
           name: pvc-userappstorage
