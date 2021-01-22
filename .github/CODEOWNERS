@@ -1,2 +1,5 @@
-# Code owners configuration deployment artifacts
+# Code owners configuration for deployment artifacts
 /kustomize/ @a5anka @ctienshi @DMadhuranga @shafanaS @Aaquiff @jsdjayanga
+
+# protect the CODEOWNERS file
+/.github/CODEOWNERS @a5anka @ctienshi @DMadhuranga @shafanaS @Aaquiff @jsdjayanga @ramith @isurulucky
