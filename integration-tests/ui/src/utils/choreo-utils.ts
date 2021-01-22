@@ -269,6 +269,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
       .click(screen.getByTestId("Info"), {speed: 0.5})
       .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
       .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+      .pressKey('backspace backspace')
       .typeText(
           Selector('.exp-editor .monaco-editor .inputarea').nth(0),
           `"${expression}"`,
