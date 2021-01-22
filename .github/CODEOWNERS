@@ -1,0 +1,5 @@
+# Code owners for stage overlay changes
+/kustomize/stage @a5anka @ctienshi @DMadhuranga @shafanaS @Aaquiff @jsdjayanga
+
+# Code owners for prod overlay changes
+/kustomize/prod @a5anka @ctienshi @DMadhuranga @shafanaS @Aaquiff @jsdjayanga
