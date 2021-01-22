@@ -74,7 +74,7 @@ test.skip("test app linking", async (t) => {
     logger.info("App Linking successful");
 });
 
-test.skip("test anonymous app linking", async (t) => {
+test("test anonymous app linking", async (t) => {
 
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     logger.info("Page loaded successfully");
