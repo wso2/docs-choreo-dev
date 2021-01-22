@@ -68,6 +68,7 @@ test("Create API type choreo app", async (t) => {
   logger.info("Succesfully Navigated to Deploy view")
 
   logger.info("Deploying application...")
+  await t.wait(WAIT_TIME_SHORT);
   await t.click(screen.getByTestId("deploy-btn"), { speed: 0.5 })
     .expect(screen.findByTestId("checkout-loading").exists).notOk({ timeout: WAIT_TIME_MEDIUM })
     .expect(screen.findByTestId("checkout-failed").exists).notOk({ timeout: WAIT_TIME_EX_LONG })
