@@ -39,8 +39,8 @@ spec:
         livenessProbe:
           initialDelaySeconds: 60
           timeoutSeconds: 15
-          periodSeconds: 10
-          failureThreshold: 10
+          periodSeconds: 60
+          failureThreshold: 5
           tcpSocket:
             port: 9090
         volumeMounts:
