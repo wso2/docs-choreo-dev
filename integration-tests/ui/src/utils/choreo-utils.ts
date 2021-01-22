@@ -129,6 +129,25 @@ export const clearAppsIfExists = async (t: TestController) => {
   logger.info("Application deleted successfully");
 };
 
+export const clearAPIDocumentsIfExists = async (t: TestController) => {
+  let documentExists = await screen.queryAllByTestId('delete-document').exists;
+  let retryCount = 5;
+  while (documentExists && retryCount > 0) {
+    logger.info("A document exists, deleting that document");
+    // Trigger the delete button
+    await t.expect(screen.findAllByTestId("delete-document").exists).ok();
+    await t.click(screen.queryAllByTestId("delete-document").nth(0), { speed: 0.5 });
+    // Check delete confirmation dialog
+    await t.expect(screen.findByText("Delete Document").exists).ok();
+    await t.expect(screen.findByText("Delete").exists).ok();
+    await t.click(screen.findByText("Delete"), { speed: 0.5 });
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+
+    documentExists = await screen.queryAllByTestId('delete-document').exists;
+    retryCount = retryCount - 1;
+  }
+  logger.info("Documents deleted successfully!");
+};
 
 /**
  * Selects the Application trigger
@@ -182,8 +201,7 @@ export const createProperty = async (t: TestController, name: string, expression
       expression,
       { speed: 0.5 }
     )
-    .wait(1000)
-    .expect(screen.getByText("Save").hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
