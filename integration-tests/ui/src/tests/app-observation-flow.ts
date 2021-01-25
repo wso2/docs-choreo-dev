@@ -73,9 +73,8 @@ async function deployApp(t: TestController) {
     await callDeployedApp(t, `${appURL}/hello`, 3, 3)
     await t.wait(WAIT_TIME_MEDIUM)
 
-    await t.click(screen.getByTitle("observe"))
+    await t.click(screen.getByTestId("observe"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
-    // await t.expect(await getLocation()).contains("app/" + appName + "/observe", { timeout: WAIT_TIME_SHORT })
 
     logger.info("Succesfully Navigated to Deploy view")
 }
@@ -111,7 +110,7 @@ test("test run observe overview hello world service ", async (t) => {
     // Check for log panel
     await t.expect(screen.getByTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
         .click(screen.getByText('Past 24 hours'))
-        .click(screen.getByText('Past 30 minutes'))
+        .click(screen.getByText('Past 10 minutes'))
 
     // Enable the status bar
     let d = await screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')

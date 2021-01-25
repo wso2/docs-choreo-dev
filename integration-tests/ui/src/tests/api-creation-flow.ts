@@ -1,10 +1,22 @@
-import { Selector, ClientFunction, RequestLogger } from "testcafe";
+import { Selector, RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
-import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, clearAppsIfExists, selectTrigger, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import {
+  createNewApp,
+  clearAppsIfExists,
+  selectTrigger,
+  createProperty,
+  createRespond,
+  callExternalEndpoint,
+  WAIT_TIME_SHORT,
+  WAIT_TIME_MEDIUM,
+  WAIT_TIME_LONG,
+  saveLogs,
+  enableDetailedLogs,
+  deployToChoreo
+} from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -114,41 +126,7 @@ test("deploy hello world service", async (t) => {
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.click(screen.getByTitle("deploy"))
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await t.expect(await getLocation()).contains("app/" + appName + "/deploy", { timeout: WAIT_TIME_SHORT })
-
-  logger.info("Succesfully Navigated to Deploy view")
-
-  logger.info("Deploying application...")
-  await t.click(screen.getByTestId("deploy-btn"), { speed: 0.5 })
-    .expect(screen.findByTestId("checkout-loading").exists).ok({ timeout: WAIT_TIME_MEDIUM })
-    .expect(screen.findByTestId("checkout-failed").exists).notOk({ timeout: WAIT_TIME_EX_LONG })
-    .expect(screen.findByTestId("checkout-ok").exists).ok({ timeout: WAIT_TIME_EX_LONG })
-  logger.info("Checkout phase successful!")
-
-
-  logger.info("Starting build phase...")
-  await t.expect(screen.findByTestId("build-loading").exists).ok({ timeout: WAIT_TIME_SHORT })
-    .expect(screen.findByTestId("build-loading").exists).notOk({ timeout: WAIT_TIME_EX_LONG }) // todo - increase timeout
-    .expect(screen.findByTestId("build-failed").exists).notOk({ timeout: WAIT_TIME_MEDIUM })
-    .expect(screen.findByTestId("build-ok").exists).ok({ timeout: WAIT_TIME_EX_LONG });
-  logger.info("Build phase successful!");
-
-  await t.expect(screen.findByTestId("test-ok").exists).ok({ timeout: WAIT_TIME_LONG })
-  logger.info("Test phase successful!");
-
-  logger.info("Starting deploy phase...");
-  await t
-    .expect(screen.findByTestId("deploy-loading").exists).ok({ timeout: WAIT_TIME_SHORT })
-    .expect(screen.findByTestId("deploy-loading").exists).notOk({ timeout: WAIT_TIME_EX_LONG })
-    .expect(screen.findByTestId("deploy-failed").exists).notOk({ timeout: WAIT_TIME_MEDIUM })
-    .expect(screen.findByTestId("deploy-ok").exists).ok({ timeout: WAIT_TIME_EX_LONG })
-  logger.info("Deploy phase successful!")
-
-  await t.wait(WAIT_TIME_MEDIUM);
-
-  const testUrl = await screen.findAllByTestId("deploy-url").find("input").value;
+  const testUrl = await deployToChoreo(t,appName)
   logger.info("test url : " + testUrl);
   await t.expect(testUrl.includes("https://")).ok();
   const response = await callExternalEndpoint(t, testUrl + "/hello", 3);
