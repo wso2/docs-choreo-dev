@@ -96,7 +96,7 @@ export const undeployAllApps = async (t: TestController) => {
   let retryCount = 5;
   if (deployedApps && retryCount > 0) {
     await t.click(screen.findAllByText("Active"));
-    await t.click(screen.getByTitle("deploy"))
+    await t.click(screen.getByTestId("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     await t.click(screen.getByText("Stop"))
       .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG})
@@ -216,14 +216,16 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
   await t.click(screen.getByTestId("editor-run-btn"), {speed: 0.5});
   logger.info("Started test run");
 
-  await t.click(screen.getByTitle("deploy"))
+  await t.click(screen.getByTestId('deploy'))
   await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
   await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
 
   logger.info("Succesfully Navigated to Deploy view")
 
   logger.info("Deploying application...")
-  await t.click(screen.getByTestId("deploy-btn"), {speed: 0.5})
+  await t.debug();
+  await t.expect(screen.getByTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
+      .click(screen.getByTestId("deploy-btn"), {speed: 0.5})
       .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
       .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
       .expect(screen.findByTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
@@ -438,9 +440,9 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   logger.info("Creating HTTP Connector...")
   await t
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
-    .expect(screen.getByText("Http").exists).ok({ timeout: 10000 })
-    .click(screen.getByText("Http"), { speed: 0.5 })
-    .expect(Selector('h4').withText('New Http Connection').exists).ok({ timeout: WAIT_TIME_MEDIUM })
+    .expect(screen.getByTestId("HTTP").exists).ok({ timeout: 10000 })
+    .click(screen.getByTestId("HTTP"), { speed: 0.5 })
+    .expect(screen.getByTestId("http-save-next").visible).ok({ timeout: WAIT_TIME_MEDIUM })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .wait(3000)
     .pressKey("backspace backspace")
@@ -451,8 +453,8 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     )
     .wait(5000)
     .click(screen.getByText(operation), { speed: 0.5 })
-    .expect(screen.getByText("Next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
-    .click(screen.getByText("Next"), { speed: 0.5 })
+    .expect(screen.getByTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
+    .click(screen.getByTestId("http-save-next"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
     .typeText(screen.getByPlaceholderText("Enter Response Variable Name"), responseVariableName, { speed: 0.5 });
