@@ -223,7 +223,6 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info("Succesfully Navigated to Deploy view")
 
   logger.info("Deploying application...")
-  await t.debug();
   await t.expect(screen.getByTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
       .click(screen.getByTestId("deploy-btn"), {speed: 0.5})
       .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
