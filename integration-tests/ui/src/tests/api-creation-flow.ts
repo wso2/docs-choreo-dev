@@ -89,7 +89,7 @@ test("test postman view", async (t) => {
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.click(screen.getByTitle("test"))
+  await t.click(screen.getByTestId("test"))
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT })
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
