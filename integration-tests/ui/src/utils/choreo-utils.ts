@@ -98,6 +98,7 @@ export const undeployAllApps = async (t: TestController) => {
     await t.click(screen.findAllByText("Active"));
     await t.click(screen.getByTestId("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+    await t.wait(5000);
     await t.click(screen.getByText("Stop"))
       .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG})
       .click(screen.getByText("App list"))
@@ -223,6 +224,7 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info("Succesfully Navigated to Deploy view")
 
   logger.info("Deploying application...")
+  await t.wait(WAIT_TIME_SHORT);
   await t.expect(screen.getByTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
       .click(screen.getByTestId("deploy-btn"), {speed: 0.5})
       .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
