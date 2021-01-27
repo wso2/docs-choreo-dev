@@ -196,7 +196,6 @@ export const createProperty = async (t: TestController, name: string, expression
       { speed: 0.5 }
     )
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .wait(3000)
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
@@ -297,13 +296,11 @@ export const createRespond = async (t: TestController, expression: string) => {
     .hover(screen.getByText("Respond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .wait(3000)
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
       { speed: 0.5 }
     )
-    .wait(1000)
     .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
@@ -358,6 +355,7 @@ export const callDeployedApp = async (t: TestController, URL: string, attempts: 
       if (failureCount >= maxFailAttempts) {
         reject()
       }
+      // This timeout added to avoid sampling, requests get sampled if there is not time gap leads to invalid assertion
       await t.wait(500)
     }
     resolve()
@@ -445,14 +443,12 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .click(screen.getByTestId("http"), { speed: 0.5 })
     .expect(Selector('[data-testid="http-save-next"]').visible).ok({ timeout: WAIT_TIME_MEDIUM })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .wait(3000)
     .pressKey("backspace backspace")
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       "\"" + url + "\"",
       { speed: 0.5 }
     )
-    .wait(5000)
     .click(screen.getByText(operation), { speed: 0.5 })
     .expect(screen.getByTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByTestId("http-save-next"), { speed: 0.5 })

@@ -71,6 +71,7 @@ async function deployApp(t: TestController) {
     const appURL = await deployToChoreo(t, appName)
 
     await callDeployedApp(t, `${appURL}/hello`, 3, 3)
+    // TODO : Observability logs view refresh is not working, this time out is a work around
     await t.wait(WAIT_TIME_MEDIUM)
 
     await t.click(screen.getByTestId("observe"))
@@ -133,7 +134,6 @@ test("test run observe overview hello world service ", async (t) => {
         offsetX: Math.round(finalX),
         offsetY: Math.round(finalY),
     })
-        .wait(3000)
         .click(screen.getByTestId('histogram-response-time').find('svg'), {
             offsetX: Math.round(finalX),
             offsetY: Math.round(finalY),
