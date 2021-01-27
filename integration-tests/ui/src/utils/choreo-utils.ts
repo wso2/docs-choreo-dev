@@ -441,7 +441,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
     .expect(screen.getByTestId("http").exists).ok({ timeout: 10000 })
     .click(screen.getByTestId("http"), { speed: 0.5 })
-    .expect(screen.getByTestId("http-save-next").visible).ok({ timeout: WAIT_TIME_MEDIUM })
+    .expect(Selector('[data-testid="http-save-next"]').visible).ok({ timeout: WAIT_TIME_MEDIUM })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .wait(3000)
     .pressKey("backspace backspace")
