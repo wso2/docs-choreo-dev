@@ -405,11 +405,14 @@ export const addApiSimpleResponse = async (t: TestController, expression: string
   await t.expect(screen.findAllByText("Respond").exists).ok({ timeout: WAIT_TIME_SHORT });
   await t
     .click(screen.getByText("Respond"))
+    .click(screen.getByTestId("addrespond"), { speed: 0.5 })
+    .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
       { speed: 0.5 }
     )
+    .wait(1000)
     .click(screen.getByText("Save"), { speed: 0.5 })
     .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   logger.info("Created API with a simple response : " + expression);
