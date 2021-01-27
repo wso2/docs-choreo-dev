@@ -43,7 +43,7 @@ fixture("App linking")
         httpLogger.clear();
 });;
 
-test("test app linking", async (t) => {
+test.skip("test app linking", async (t) => {
 
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     logger.info("Page loaded successfully");
@@ -74,13 +74,13 @@ test("test app linking", async (t) => {
     logger.info("App Linking successful");
 });
 
-test("test annonymousapp linking", async (t) => {
+test("test anonymous app linking", async (t) => {
 
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     logger.info("Page loaded successfully");
     await clearAppsIfExists(t);
 
-    logger.info("Start connecting an annonymous app : " + "annon-linking-test-app");
+    logger.info("Start connecting an anonymous app : " + "annon-linking-test-app");
 
     async function getAnnonAppUrl() {
         const { stdout, stderr } = await exec('sh src/utils/applinking_test/run_annonapp.sh');
@@ -108,7 +108,5 @@ test("test annonymousapp linking", async (t) => {
     await t.wait(WAIT_TIME_LONG);
     await t.expect(screen.getByText("annon-linking-test-app", { exact: false }).exists).ok({ timeout: WAIT_TIME_MEDIUM });
 
-    logger.info("Annonymous App Linking successful");
+    logger.info("Anonymous App Linking successful");
 });
-
-
