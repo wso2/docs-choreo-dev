@@ -61,7 +61,7 @@ test("Create API type choreo app", async (t) => {
   await addApiSimpleResponse(t, "\"hello world\"");
 
   // deploying app
-  await t.click(screen.getByTitle("deploy"))
+  await t.click(screen.getByTestId("deploy"))
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   await t.expect(await getLocation()).contains("app/" + appName + "/deploy", { timeout: WAIT_TIME_SHORT })
 
