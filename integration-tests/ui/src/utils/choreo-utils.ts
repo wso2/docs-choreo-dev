@@ -404,7 +404,6 @@ export const createApiFromChoreoApp = async (t: TestController, apiName: string,
 export const addApiSimpleResponse = async (t: TestController, expression: string) => {
   await t.expect(screen.findAllByText("Respond").exists).ok({ timeout: WAIT_TIME_SHORT });
   await t
-    .click(screen.getByText("Respond"))
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
