@@ -3,16 +3,16 @@ import { RequestLogger, Selector } from "testcafe";
 import * as config from "../../testcafe-run-config.json";
 import page from "../model/page";
 import {
-  createApiFromChoreoApp, addApiSimpleResponse, clearAppsIfExists, clearApisIfExists, clearAPIDocumentsIfExists,
-  createNewApp, enableDetailedLogs, saveLogs, selectAPIType, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, WAIT_TIME_MEDIUM,
-  WAIT_TIME_SHORT
+  createApiFromChoreoApp, addApiSimpleResponse, clearAPIDocumentsIfExists,
+  createNewApp, enableDetailedLogs, saveLogs, selectAPIType, generateAppName, generateApiName,
+  WAIT_TIME_EX_LONG, WAIT_TIME_LONG, WAIT_TIME_MEDIUM, WAIT_TIME_SHORT
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger';
 import { getLocation } from "../utils/login-utils";
 
 declare const test: TestFn;
-const appName = "demoapp-" + Math.random().toString(36).substr(2, 5);
-const apiName = "demoapi" + Math.random().toString(36).substr(2, 5);
+const appName = generateAppName("demoapp");
+const apiName = generateApiName("demoapi");
 
 const httpLogger = RequestLogger(undefined, {
   logRequestBody: true,
@@ -49,10 +49,6 @@ fixture("API creation and config flow")
   });
 
 test("Create API type choreo app", async (t) => {
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Page loaded successfully");
-
-  await clearAppsIfExists(t);
   await createNewApp(t, appName);
 
   // adding api content
@@ -114,9 +110,6 @@ test("Create API from previously created choreo app", async (t) => {
   await t.click(screen.getByText("APIs"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   logger.info("Go to API tab successful!");
-
-  // delete apis if exist
-  await clearApisIfExists(t);
 
   // create new api from choreo app
   await createApiFromChoreoApp(t, apiName, appName);

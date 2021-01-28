@@ -4,7 +4,7 @@ import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, clearAppsIfExists, selectTrigger, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { createNewApp, goBacktoAppsList, selectTrigger, createProperty, createRespond, callExternalEndpoint, generateAppName, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs, deleteApp } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -47,10 +47,7 @@ fixture("Application test run  and deployment")
 
 test("test run hello world service ", async (t) => {
 
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Page loaded successfully");
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-1");
   await createNewApp(t, appName);
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
@@ -78,11 +75,13 @@ test("test run hello world service ", async (t) => {
   logger.info("Backend service response : " + response);
   await t.expect(response).eql("hello world");
   logger.info("Hello world string recieved successfully !")
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName);
 });
 
 test("test postman view", async (t) => {
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-2");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
@@ -102,12 +101,14 @@ test("test postman view", async (t) => {
   await t.expect(screen.findByText('/your API key is wrong/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
   await t.wait(WAIT_TIME_SHORT);
   logger.info("Test phase successful!");
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName);
 });
 
 test("deploy hello world service", async (t) => {
 
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-3");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
@@ -162,4 +163,7 @@ test("deploy hello world service", async (t) => {
   await t.click(screen.getByText("Stop"))
     .expect(screen.findByPlaceholderText("Please deploy to get access URL").exists).ok({ timeout: WAIT_TIME_LONG })
   logger.info("Undeloyed application successfully!")
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName);
 })
