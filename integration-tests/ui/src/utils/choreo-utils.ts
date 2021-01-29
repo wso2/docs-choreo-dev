@@ -167,10 +167,10 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
       break;
     case "API":
       await t
-        .click(screen.getByText("API"))
-        .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
-        .typeText(screen.queryByPlaceholderText("Relative path from host"), relativePath, { speed: 0.5 })
-        .click(screen.getByText("Save API"), { speed: 0.5 });
+        .click(screen.getByTestId("api-trigger"))
+        .expect(screen.getByTestId("api-path").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+        .typeText(screen.getByTestId("api-path"), relativePath, { speed: 0.5 })
+        .click(screen.getByTestId("save-btn"), { speed: 0.5 });
       break;
   }
   await t
@@ -184,14 +184,14 @@ export const createProperty = async (t: TestController, name: string, expression
 
   logger.info("Creating the variable with expression : " + expression);
   await t
-    .expect(screen.getByText("Statements").exists).ok()
+    .expect(screen.getByTestId("statement-options").exists).ok()
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByText("Variable"), { speed: 0.5 })
+    .hover(screen.getByTestId("addVariable"), { speed: 0.5 })
     .click(screen.getByTestId("addVariable"), { speed: 0.5 })
-    .selectText(screen.getByPlaceholderText("Enter Variable Name"))
+    .selectText(within(screen.getByTestId('variable-name')).getByRole('textbox'))
     .pressKey("delete")
     .typeText(
-      screen.getByPlaceholderText("Enter Variable Name"),
+      screen.getByTestId("variable-name"),
       name,
       { speed: 0.5 }
     )
@@ -201,8 +201,8 @@ export const createProperty = async (t: TestController, name: string, expression
       expression,
       { speed: 0.5 }
     )
-    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
-    .click(screen.getByText("Save"))
+    .expect(screen.getByTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
+    .click(screen.getByTestId("save-btn"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
 
@@ -291,9 +291,9 @@ export const createRespond = async (t: TestController, expression: string) => {
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
-    .expect(screen.getByText("Statements").exists).ok({ timeout: 10000 })
+    .expect(screen.getByTestId("statement-options").exists).ok({ timeout: 10000 })
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByText("Respond"), { speed: 0.5 })
+    .hover(screen.getByTestId("addrespond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
@@ -301,8 +301,8 @@ export const createRespond = async (t: TestController, expression: string) => {
       expression,
       { speed: 0.5 }
     )
-    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
-    .click(screen.getByText("Save"))
+    .expect(screen.getByTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
+    .click(screen.getByTestId("save-btn"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
 
