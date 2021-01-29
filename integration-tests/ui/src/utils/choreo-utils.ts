@@ -167,14 +167,14 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
       break;
     case "API":
       await t
-        .click(screen.getByTestId("api-trigger"))
-        .expect(screen.getByTestId("api-path").exists).ok({ timeout: WAIT_TIME_MEDIUM })
-        .typeText(screen.getByTestId("api-path"), relativePath, { speed: 0.5 })
-        .click(screen.getByTestId("save-btn"), { speed: 0.5 });
+        .click(getElementFromSelectorTestId("api-trigger"))
+        .expect(getElementFromSelectorTestId("api-path")).ok({ timeout: WAIT_TIME_MEDIUM })
+        .typeText(getElementFromSelectorTestId("api-path"), relativePath, { speed: 0.5 })
+        .click(getElementFromSelectorTestId("save-btn"), { speed: 0.5 });
       break;
   }
   await t
-    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+    .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,webhookSourceFields)
   logger.info("selected " + type + "trigger type");
 };
@@ -184,14 +184,14 @@ export const createProperty = async (t: TestController, name: string, expression
 
   logger.info("Creating the variable with expression : " + expression);
   await t
-    .expect(screen.getByTestId("statement-options").exists).ok()
-    .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByTestId("addVariable"), { speed: 0.5 })
-    .click(screen.getByTestId("addVariable"), { speed: 0.5 })
-    .selectText(within(screen.getByTestId('variable-name')).getByRole('textbox'))
+    .expect(getElementFromSelectorTestId("statement-options")).ok()
+    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
+    .hover(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
+    .click(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
+    .selectText(within(getElementFromSelectorTestId('variable-name')).getByRole('textbox'))
     .pressKey("delete")
     .typeText(
-      screen.getByTestId("variable-name"),
+      getElementFromSelectorTestId("variable-name"),
       name,
       { speed: 0.5 }
     )
@@ -201,9 +201,9 @@ export const createProperty = async (t: TestController, name: string, expression
       expression,
       { speed: 0.5 }
     )
-    .expect(screen.getByTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
-    .click(screen.getByTestId("save-btn"))
-    .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+    .expect(getElementFromSelectorTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
+    .click(getElementFromSelectorTestId("save-btn"))
+    .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
 
   logger.info("Successfully created the variable with expression : " + expression);
@@ -291,19 +291,19 @@ export const createRespond = async (t: TestController, expression: string) => {
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
-    .expect(screen.getByTestId("statement-options").exists).ok({ timeout: 10000 })
-    .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByTestId("addrespond"), { speed: 0.5 })
-    .click(screen.getByTestId("addrespond"), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId("statement-options").exists).ok({ timeout: 10000 })
+    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
+    .hover(getElementFromSelectorTestId("addrespond"), { speed: 0.5 })
+    .click(getElementFromSelectorTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
       { speed: 0.5 }
     )
-    .expect(screen.getByTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
-    .click(screen.getByTestId("save-btn"))
-    .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+    .expect(getElementFromSelectorTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
+    .click(getElementFromSelectorTestId("save-btn"))
+    .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
 
   logger.info("Created respond action with variable : " + expression);
@@ -564,4 +564,9 @@ export const checkSourceCodeForValidation = async (t: TestController, sourceLine
     }
   await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
     .click(Selector(screen.getByTestId("vertical-close-btn")))
+}
+
+export function getElementFromSelectorTestId(testId: string): Selector {
+  const selectorText = '[data-testid="' + testId + '"';
+  return (Selector(selectorText));
 }
