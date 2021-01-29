@@ -15,7 +15,8 @@ import {
   WAIT_TIME_LONG,
   saveLogs,
   enableDetailedLogs,
-  deployToChoreo
+  deployToChoreo,
+  getElementFromSelectorTestId
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
@@ -70,19 +71,19 @@ test("test run hello world service ", async (t) => {
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.expect(Selector('[data-testid="editor-run-btn"]').visible).ok({ timeout: WAIT_TIME_SHORT })
-  await t.click(screen.getByTestId("editor-run-btn"), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("editor-run-btn").visible).ok({ timeout: WAIT_TIME_SHORT })
+  await t.click(getElementFromSelectorTestId("editor-run-btn"), { speed: 0.5 });
   logger.info("Started test run");
 
   await t
     .expect(screen.findAllByTestId("test-url").exists).ok({ timeout: WAIT_TIME_MEDIUM })
     .expect(
-      screen.findAllByTestId("log-panel").withText("started HTTP/WS listener")
+      getElementFromSelectorTestId("log-panel").withText("started HTTP/WS listener")
         .exists
     ).ok({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Retrieving the test URL successful");
 
-  const testUrl = await screen.findAllByTestId("test-url").textContent;
+  const testUrl = await getElementFromSelectorTestId("test-url").textContent;
 
   const response = await callExternalEndpoint(t, (testUrl + "/hello"), 3)
 
@@ -100,16 +101,16 @@ test("test postman view", async (t) => {
   await createProperty(t, "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.click(screen.getByTestId("test"))
+  await t.click(getElementFromSelectorTestId("test"))
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT })
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Testing invalid API key validation attempt scenario");
-  await t.click(screen.getByTestId("try out"))
-  await t.click(Selector(screen.getByTestId('click-here')));
-  await t.expect(Selector('[data-testid="api-key"]').visible).ok({ timeout: WAIT_TIME_SHORT })
-  await t.typeText(screen.getByTestId('api-key'), 'dummyapikey');
-  await t.expect(screen.findByTestId('api-key-error').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.click(getElementFromSelectorTestId("try out"))
+  await t.click(getElementFromSelectorTestId("click-here"));
+  await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
+  await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
+  await t.expect(getElementFromSelectorTestId('api-key-error').exists).notOk({ timeout: WAIT_TIME_SHORT });
   logger.info("Test phase successful!");
 });
 
