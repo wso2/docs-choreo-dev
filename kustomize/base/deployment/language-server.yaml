@@ -25,6 +25,12 @@ spec:
       containers:
       - image: choreoipaas/lang-server:latest
         name: language-server
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
         ports:
         - containerPort: 9090
           name: http-port
@@ -39,6 +45,9 @@ spec:
         volumeMounts:
         - mountPath: /apps
           name: pvc-userappstorage
+        - mountPath: /lang-server/application.properties
+          name: config
+          subPath: application.properties
         resources:
           limits:
             cpu: "2"
@@ -56,4 +65,7 @@ spec:
       - name: pvc-userappstorage
         persistentVolumeClaim:
           claimName: pvc-userappstorage
+      - name: config
+        configMap:
+          name: cm-language-server
       serviceAccountName: sa-choreo-default
