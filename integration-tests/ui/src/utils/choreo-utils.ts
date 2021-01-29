@@ -277,7 +277,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
           `"${expression}"`,
           {speed: 0.5}
       );
-  await t.expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
+  await t.expect(Selector('[data-testid="log-save-btn"]').parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
       .click(screen.getByText("Save"))
       .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,logSourceField)
@@ -452,6 +452,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .click(screen.getByText(operation), { speed: 0.5 })
     .expect(screen.getByTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByTestId("http-save-next"), { speed: 0.5 })
+    // TODO : Need to add source code validation for this response variable
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
     .typeText(screen.getByPlaceholderText("Enter Response Variable Name"), responseVariableName, { speed: 0.5 });
@@ -466,8 +467,8 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   } else {
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
-  await t.expect(screen.getByText("Save & Done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
-  await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
+  await t.expect(Selector('[data-testid="http-save-done"]').parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+  await t.click(Selector('[data-testid="http-save-done"]'), { speed: 0.5 })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,httpSourceFields)
 

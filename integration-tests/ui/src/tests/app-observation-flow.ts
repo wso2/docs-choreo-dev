@@ -87,7 +87,7 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(Selector(".worker-line").exists).ok("Diagram should be drawn", {timeout: WAIT_TIME_SHORT})
         .expect(Selector('#resource-path').innerText).contains('resource: /hello')
         //Check Refresh button works
-        .click(screen.getByTitle("Refresh"))
+        .click(Selector('[data-testid="refresh-btn"]'))
         .expect(screen.findByTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
         // Check Refresh interval works
         .hover(Selector('#refresh-interval'))
@@ -146,7 +146,7 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
         // Check for hide options
         .hover(screen.getByText('Hide Options'))
-        .click(screen.getByText('Hide Options'))
+        .click(Selector('[data-testid="hide-options-btn"]'))
         .expect(screen.getByText('Show Options').exists).ok({timeout: WAIT_TIME_SHORT})
 });
 
