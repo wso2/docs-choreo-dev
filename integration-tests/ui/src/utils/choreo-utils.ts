@@ -4,6 +4,7 @@ import { logger } from './logger';
 import Axios from "axios";
 import * as fs from 'fs';
 import {gunzipSync} from 'zlib'
+import {getLocation} from "./login-utils";
 
 
 declare global {
@@ -95,8 +96,9 @@ export const undeployAllApps = async (t: TestController) => {
   let retryCount = 5;
   if (deployedApps && retryCount > 0) {
     await t.click(screen.findAllByText("Active"));
-    await t.click(screen.getByTitle("deploy"))
+    await t.click(screen.getByTestId("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+    await t.wait(5000);
     await t.click(screen.getByText("Stop"))
       .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG})
       .click(screen.getByText("App list"))
@@ -157,7 +159,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
-  const webhookSourceFields = ['import','ballerina/http;', 'service', 'on', 'new', 'http:Listener(8090){']
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request req) {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -177,7 +179,6 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   logger.info("selected " + type + "trigger type");
 };
 
-
 export const createProperty = async (t: TestController, name: string, expression: string) => {
   const variableSourceFields = ['var', name, '=',expression]
 
@@ -195,7 +196,6 @@ export const createProperty = async (t: TestController, name: string, expression
       { speed: 0.5 }
     )
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .wait(3000)
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
@@ -209,8 +209,84 @@ export const createProperty = async (t: TestController, name: string, expression
   logger.info("Successfully created the variable with expression : " + expression);
 };
 
+
+export const deployToChoreo = async (t: TestController, appName: string) => {
+  logger.info('Deploying app to Choreo');
+  await t.wait(WAIT_TIME_SHORT);
+  await t.click(screen.getByTestId("editor-run-btn"), {speed: 0.5});
+  logger.info("Started test run");
+
+  await t.click(screen.getByTestId('deploy'))
+  await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
+  await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
+
+  logger.info("Succesfully Navigated to Deploy view")
+
+  logger.info("Deploying application...")
+  await t.wait(WAIT_TIME_SHORT);
+  await t.expect(screen.getByTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
+      .click(screen.getByTestId("deploy-btn"), {speed: 0.5})
+      .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
+      .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(screen.findByTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+  logger.info("Checkout phase successful!")
+
+
+  logger.info("Starting build phase...")
+  await t.expect(screen.findByTestId("build-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(screen.findByTestId("build-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG}) // todo - increase timeout
+      .expect(screen.findByTestId("build-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(screen.findByTestId("build-ok").exists).ok({timeout: WAIT_TIME_EX_LONG});
+  logger.info("Build phase successful!");
+
+  await t.expect(screen.findByTestId("test-ok").exists).ok({timeout: WAIT_TIME_LONG})
+  logger.info("Test phase successful!");
+
+  logger.info("Starting deploy phase...");
+  await t
+      .expect(screen.findByTestId("deploy-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(screen.findByTestId("deploy-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(screen.findByTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(screen.findByTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+  logger.info("Deploy phase successful!")
+  await t.expect(screen.findAllByTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
+  const appURL = await screen.findAllByTestId("deploy-url").find("input").getAttribute('value');
+  logger.info("test url : " + appURL);
+  await t.expect(appURL.includes("https://")).ok();
+  return appURL
+};
+
+
+export const createLog = async (t: TestController, logType: string, expression: string) => {
+  const logSourceField = [`log:print("${expression}");`]
+
+  logger.info(`Creating a log for type ${logType} with content '${expression}'`);
+  await t
+      .click(Selector("#SmallPlus"), {speed: 0.5})
+      .click(Selector("#Plus_a"), {speed: 0.5})
+      .expect(screen.getByText("Statements").exists).ok()
+      .click(screen.getByTestId("statement-options"), {speed: 0.5})
+      .hover(screen.getByText("Log"), {speed: 0.5})
+      .click(screen.getByText("Log"), {speed: 0.5})
+      .click(screen.getByTestId("Info"), {speed: 0.5})
+      .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
+      .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+      .pressKey('backspace backspace')
+      .typeText(
+          Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+          `"${expression}"`,
+          {speed: 0.5}
+      );
+  await t.expect(Selector('[data-testid="log-save-btn"]').parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
+      .click(screen.getByText("Save"))
+      .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+  await checkSourceCodeForValidation(t,logSourceField)
+
+  logger.info(`Successfully added log type ${logType} with expression : ${expression}`);
+};
+
 export const createRespond = async (t: TestController, expression: string) => {
-  const responseSourceFields = ['checkpanic', ' caller', '->',`respond(${expression});`]
+  const responseSourceFields = [`checkpanic caller->respond(${expression});`]
 
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
@@ -220,13 +296,11 @@ export const createRespond = async (t: TestController, expression: string) => {
     .hover(screen.getByText("Respond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-    .wait(3000)
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
       { speed: 0.5 }
     )
-    .wait(1000)
     .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
@@ -252,6 +326,40 @@ export const callExternalEndpoint = async (t: TestController, URL: string, attem
     attempt++;
   }
   return res;
+}
+
+/**
+ * Calling deployed app via the url
+ * @param t
+ * @param URL
+ * @param attempts
+ * @param maxFailAttempts
+ */
+export const callDeployedApp = async (t: TestController, URL: string, attempts: number, maxFailAttempts: number) => {
+  let attempt = 1;
+  let failureCount = 0
+  logger.info("Calling deployed app via : " + (URL));
+  return new Promise(async (resolve, reject) => {
+    while (attempt <= attempts) {
+      try {
+        logger.info("Test URL : " + (URL));
+        const response = await Axios.get(URL);
+        logger.info("Response received", response.data);
+        attempt++;
+        logger.info("Attempt : " + attempt + " calling the endpoint.");
+
+      } catch (err) {
+        logger.error("Failing Attempt : " + attempt + " calling the endpoint.", err);
+        failureCount++;
+      }
+      if (failureCount >= maxFailAttempts) {
+        reject()
+      }
+      // This timeout added to avoid sampling, requests get sampled if there is not time gap leads to invalid assertion
+      await t.wait(500)
+    }
+    resolve()
+  })
 }
 
 export const callExternalEndpointPOST = async (t: TestController, URL: string, requestBody: object, attempts: number) => {
@@ -281,14 +389,14 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
     console.log("File write complete");
   })
 
-  
+
   const logs = networkLogs.map((loggedRequest)=> {
-    
+
     if(loggedRequest.request.url.includes(".js") ||
-      loggedRequest.request.url.includes(".svg") || 
-      loggedRequest.request.url.includes(".ico") || 
+      loggedRequest.request.url.includes(".svg") ||
+      loggedRequest.request.url.includes(".ico") ||
       loggedRequest.request.url.includes(".css") ||
-      loggedRequest.request.url.includes(".woff2")|| 
+      loggedRequest.request.url.includes(".woff2")||
       loggedRequest.request.url.includes("/track")){
       return null;
     }
@@ -296,18 +404,18 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
     if(loggedRequest.response){
       if(loggedRequest.response.headers['content-encoding']== 'gzip'){
         const resData = (gunzipSync(loggedRequest.response.body as Buffer) as Buffer).toString();
-        return { 
+        return {
           ...loggedRequest,
           response: {...loggedRequest.response,
             body:resData.toString()
-          
+
           }
         }
       }
       return loggedRequest;
     }
     return loggedRequest;
-   
+
 })
   fs.writeFileSync("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "http-log.json", JSON.stringify(logs));
 }
@@ -326,24 +434,25 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
  */
 export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
                                           outputPayloadType?: string, outputPayloadVariable?: string) => {
+  const httpSourceFields = [`http:Client httpEndpoint = new ("${url}");`]
+
   logger.info("Creating HTTP Connector...")
   await t
     .click(screen.getByTestId("api-options"), { speed: 0.5 })
-    .expect(screen.getByText("Http").exists).ok({ timeout: 10000 })
-    .click(screen.getByText("Http"), { speed: 0.5 })
-    .expect(Selector('h4').withText('New Http Connection').exists).ok({ timeout: WAIT_TIME_MEDIUM })
+    .expect(screen.getByTestId("http").exists).ok({ timeout: 10000 })
+    .click(screen.getByTestId("http"), { speed: 0.5 })
+    .expect(Selector('[data-testid="http-save-next"]').visible).ok({ timeout: WAIT_TIME_MEDIUM })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
-      .wait(3000)
-      .pressKey("backspace backspace")
-      .typeText(
-        Selector('.exp-editor .monaco-editor .inputarea').nth(0),
-        "\"" + url + "\"",
-        { speed: 0.5 }
-      )
-    .wait(5000)
+    .pressKey("backspace backspace")
+    .typeText(
+      Selector('.exp-editor .monaco-editor .inputarea').nth(0),
+      "\"" + url + "\"",
+      { speed: 0.5 }
+    )
     .click(screen.getByText(operation), { speed: 0.5 })
-    .expect(screen.getByText("Next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_SHORT})
-    .click(screen.getByText("Next"), { speed: 0.5 })
+    .expect(screen.getByTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
+    .click(screen.getByTestId("http-save-next"), { speed: 0.5 })
+    // TODO : Need to add source code validation for this response variable
     .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
     .pressKey("delete")
     .typeText(screen.getByPlaceholderText("Enter Response Variable Name"), responseVariableName, { speed: 0.5 });
@@ -358,9 +467,10 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   } else {
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
-  await t.expect(screen.getByText("Save & Done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
-  await t.click(screen.getByText("Save & Done"), { speed: 0.5 })
+  await t.expect(Selector('[data-testid="http-save-done"]').parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+  await t.click(Selector('[data-testid="http-save-done"]'), { speed: 0.5 })
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  await checkSourceCodeForValidation(t,httpSourceFields)
 
   logger.info("Successfully created an HTTP Connector!")
 }
@@ -443,23 +553,15 @@ export const clearApisIfExists = async (t: TestController) => {
  * Validating components by going through the source code view and checking the terms
  *
  * @param t -Test Controller
- * @param terms - Terms need to verify
+ * @param sourceLines
  */
-export const checkSourceCodeForValidation = async (t: TestController, terms: string[]) => {
+export const checkSourceCodeForValidation = async (t: TestController, sourceLines: string[]) => {
   await t.expect(screen.getByTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
-    .wait(4000)
-  let sourceCodeStr = []
-  const count = await Selector(".view-line").find('span>span').count
-  for (let i = 0; i < count; i++) {
-    const text = await Selector(".view-line").find('span>span').nth(i).innerText
-    // Trim nbsp
-    sourceCodeStr.push(text.replace(/\s/g, ''))
-  }
-  for (const term of terms) {
-    await t.expect(sourceCodeStr).contains(term.replace(/\s/g, ''));
-  }
+    for (const sourceLine of sourceLines) {
+      await t.expect(Selector(".view-line").withText(sourceLine.replace(/\s/g,'\u00a0')).exists).ok({timeout:WAIT_TIME_SHORT})
+    }
   await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
     .click(Selector(screen.getByTestId("vertical-close-btn")))
 }
