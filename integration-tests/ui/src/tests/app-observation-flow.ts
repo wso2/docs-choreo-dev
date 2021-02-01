@@ -139,7 +139,7 @@ test("test run observe overview hello world service ", async (t) => {
             offsetY: Math.round(finalY),
         })
         .expect(screen.findByTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
-        .expect(screen.getByTestId('request-table').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(Selector('[data-testid="request-table"]').visible).ok({timeout: WAIT_TIME_EX_LONG})
         .expect(screen.getAllByTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
@@ -153,10 +153,10 @@ test("test run observe overview hello world service ", async (t) => {
 test("test run observe log view hello world service ", async (t) => {
     await deployApp(t);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
-    await t.expect(screen.getByTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
-        .click(screen.getByTestId("panel-Logs-btn"))
+    await t.expect(Selector('[data-testid="panel-Logs-btn"]').exists).ok({timeout: WAIT_TIME_MEDIUM})
+        .click(Selector('[data-testid="panel-Logs-btn"]'))
         //Check for the given log
-        .expect(screen.getByTestId('log-panel').exists).ok({timeout: WAIT_TIME_LONG})
+        .expect(Selector('[data-testid="panel-Logs-btn"]').exists).ok({timeout: WAIT_TIME_LONG})
     logger.info("TEST LOG")
 
     await t.expect(Selector('span').withText("Special test Log for App").count).eql(3, 'Not exists', {timeout: WAIT_TIME_LONG})
