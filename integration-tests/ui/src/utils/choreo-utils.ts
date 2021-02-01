@@ -168,13 +168,13 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
     case "API":
       await t
         .click(getElementFromSelectorTestId("api-trigger"))
-        .expect(getElementFromSelectorTestId("api-path")).ok({ timeout: WAIT_TIME_MEDIUM })
+        .expect(getElementFromSelectorTestId("api-path").exists).ok({ timeout: WAIT_TIME_MEDIUM })
         .typeText(getElementFromSelectorTestId("api-path"), relativePath, { speed: 0.5 })
         .click(getElementFromSelectorTestId("save-btn"), { speed: 0.5 });
       break;
   }
   await t
-    .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+  .expect(screen.findAllByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,webhookSourceFields)
   logger.info("selected " + type + "trigger type");
 };
@@ -184,7 +184,7 @@ export const createProperty = async (t: TestController, name: string, expression
 
   logger.info("Creating the variable with expression : " + expression);
   await t
-    .expect(getElementFromSelectorTestId("statement-options")).ok()
+    .expect(getElementFromSelectorTestId("statement-options").exists).ok()
     .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
     .hover(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
     .click(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
