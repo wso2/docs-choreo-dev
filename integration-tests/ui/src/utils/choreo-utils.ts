@@ -213,10 +213,10 @@ export const createProperty = async (t: TestController, name: string, expression
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
-  await t.click(screen.getByTestId("editor-run-btn"), {speed: 0.5});
+  await t.click(getElementFromSelectorTestId("editor-run-btn"), {speed: 0.5});
   logger.info("Started test run");
 
-  await t.click(screen.getByTestId('deploy'))
+  await t.click(getElementFromSelectorTestId('deploy'))
   await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
   await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
 
@@ -224,33 +224,33 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
 
   logger.info("Deploying application...")
   await t.wait(WAIT_TIME_SHORT);
-  await t.expect(screen.getByTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
-      .click(screen.getByTestId("deploy-btn"), {speed: 0.5})
-      .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
-      .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
-      .expect(screen.findByTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+  await t.expect(getElementFromSelectorTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
+      .click(getElementFromSelectorTestId("deploy-btn"), {speed: 0.5})
+      .expect(getElementFromSelectorTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
+      .expect(getElementFromSelectorTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(getElementFromSelectorTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
   logger.info("Checkout phase successful!")
 
 
   logger.info("Starting build phase...")
-  await t.expect(screen.findByTestId("build-loading").exists).ok({timeout: WAIT_TIME_SHORT})
-      .expect(screen.findByTestId("build-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG}) // todo - increase timeout
-      .expect(screen.findByTestId("build-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
-      .expect(screen.findByTestId("build-ok").exists).ok({timeout: WAIT_TIME_EX_LONG});
+  await t.expect(getElementFromSelectorTestId("build-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(getElementFromSelectorTestId("build-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG}) // todo - increase timeout
+      .expect(getElementFromSelectorTestId("build-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(getElementFromSelectorTestId("build-ok").exists).ok({timeout: WAIT_TIME_EX_LONG});
   logger.info("Build phase successful!");
 
-  await t.expect(screen.findByTestId("test-ok").exists).ok({timeout: WAIT_TIME_LONG})
+  await t.expect(getElementFromSelectorTestId("test-ok").exists).ok({timeout: WAIT_TIME_LONG})
   logger.info("Test phase successful!");
 
   logger.info("Starting deploy phase...");
   await t
-      .expect(screen.findByTestId("deploy-loading").exists).ok({timeout: WAIT_TIME_SHORT})
-      .expect(screen.findByTestId("deploy-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG})
-      .expect(screen.findByTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
-      .expect(screen.findByTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+      .expect(getElementFromSelectorTestId("deploy-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(getElementFromSelectorTestId("deploy-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(getElementFromSelectorTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(getElementFromSelectorTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
   logger.info("Deploy phase successful!")
-  await t.expect(screen.findAllByTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
-  const appURL = await screen.findAllByTestId("deploy-url").find("input").getAttribute('value');
+  await t.expect(getElementFromSelectorTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
+  const appURL = await getElementFromSelectorTestId("deploy-url").find("input").getAttribute('value');
   logger.info("test url : " + appURL);
   await t.expect(appURL.includes("https://")).ok();
   return appURL
