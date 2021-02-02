@@ -1,9 +1,11 @@
 import { RequestLogger, Selector } from "testcafe";
 import * as config from "../../testcafe-run-config.json";
+import { screen } from "@testing-library/testcafe";
 import page from "../model/page";
 import {
   enableDetailedLogs, saveLogs, appNamePrefix, isOldApp, deleteApp, deleteApi, goToApiListView
 } from "../utils/choreo-utils";
+import { logger } from '../utils/logger'
 
 declare const test: TestFn;
 
@@ -52,18 +54,20 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
       let app = await apps.nth(index);
       let appName = await app.child("td").nth(0).textContent;
       if (isOldApp(appName) || appName.startsWith(appNamePrefix)) {
+        logger.info("Adding app: " + appName + " for deletion")
         appsToBeDeleted.push(appName);
       }
     }
 
-    let nextButtonExist = await Selector("span[title='Next'] > button").exists;
-    if (!nextButtonExist) {
+    let nextButtonDisabled = await screen.getByText("chevron_right").parent().parent().hasClass("Mui-disabled");
+    if (nextButtonDisabled) {
       break;
     }
-    await t.click(Selector("span[title='Next'] > button"), { speed: 0.5 });
+    await t.click(screen.getByText("chevron_right").parent().parent(), { speed: 0.5 });
   }
 
   for (let index = 0; index < appsToBeDeleted.length; index++) {
+    logger.info("Delete: " + appsToBeDeleted[index])
     await deleteApp(t, appsToBeDeleted[index]);
   }
   
@@ -76,17 +80,17 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
 
     for (let index = 0; index < apiCount; index++) {
       let api = await apis.nth(index);
-      let apiName = await api.child("td").nth(0).textContent;
+      let apiName = await api.child("td").nth(0).find("p").innerText
       if (isOldApp(apiName) || apiName.startsWith(appNamePrefix)) {
         apisToBeDeleted.push(apiName);
       }
     }
 
-    let nextButtonExist = await Selector("span[title='Next'] > button").exists;
-    if (!nextButtonExist) {
+    let nextButtonDisabled = await screen.getByText("chevron_right").parent().parent().hasClass("Mui-disabled");
+    if (nextButtonDisabled) {
       break;
     }
-    await t.click(Selector("span[title='Next'] > button"), { speed: 0.5 });
+    await t.click(screen.getByText("chevron_right").parent().parent(), { speed: 0.5 });
   }
 
   for (let index = 0; index < apisToBeDeleted.length; index++) {

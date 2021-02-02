@@ -125,7 +125,7 @@ export const createNewApp = async (t: TestController, name: string) => {
   }
 
   await t
-    .typeText(screen.getAllByPlaceholderText("Application name"), name)
+    .typeText(getElementFromSelectorTestId("application-name"), name)
     .click(screen.getByText("Create"));
   await waitTillWorkspace(t);
   await t.expect(Selector(".diagram-canvas").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -240,6 +240,12 @@ export const resetAppSearch = async (t: TestController) => {
       .selectText(Selector(".MuiInputBase-input.MuiInput-input"))
       .pressKey("delete");
   }
+}
+
+export const goBacktoApisList = async(t: TestController) => {
+  await t.click(getElementFromSelectorTestId("api-list"));
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  logger.info("Apis page loaded successfully");
 }
 
 export const searchApis = async (t: TestController, name: string) => {
