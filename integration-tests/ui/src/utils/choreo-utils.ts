@@ -179,8 +179,8 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   logger.info("selected " + type + "trigger type");
 };
 
-export const createProperty = async (t: TestController, name: string, expression: string) => {
-  const variableSourceFields = ['var', name, '=',expression]
+export const createProperty = async (t: TestController, type: string, name: string, expression: string) => {
+  const variableSourceFields = [type, name, '=',expression]
 
   logger.info("Creating the variable with expression : " + expression);
   await t
@@ -188,13 +188,22 @@ export const createProperty = async (t: TestController, name: string, expression
     .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
     .hover(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
     .click(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
+    .click(screen.getByTestId("undefinedvar"), { speed: 0.5 })
+    .click(Selector('li').withAttribute('data-value',type))
     .selectText(within(getElementFromSelectorTestId('variable-name')).getByRole('textbox'))
     .pressKey("delete")
     .typeText(
       getElementFromSelectorTestId("variable-name"),
       name,
       { speed: 0.5 }
-    )
+    );
+  if (type == "string"){
+    await t
+      .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
+      .wait(3000)
+      .pressKey("backspace backspace");
+  }
+  await t
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),

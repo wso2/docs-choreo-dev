@@ -62,7 +62,7 @@ async function deployApp(t: TestController) {
 
     await t.expect(await getLocation()).contains("app/" + appName + "/develop", {timeout: WAIT_TIME_SHORT})
     await selectTrigger(t, "API", "hello");
-    await createProperty(t, "res", '"hello world"');
+    await createProperty(t, "var", "res", '"hello world"');
     await t.click(Selector("#SmallPlus"), {speed: 0.5})
         .click(Selector("#Plus_a"), {speed: 0.5})
     await createHttpConnector(t, "https://postman-echo.com/get?foo1=bar1&foo2=bar2", "GET", "response");
