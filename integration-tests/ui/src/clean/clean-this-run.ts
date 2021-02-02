@@ -5,7 +5,6 @@ import page from "../model/page";
 import {
   enableDetailedLogs, saveLogs, appNamePrefix, isOldApp, deleteApp, deleteApi, goToApiListView
 } from "../utils/choreo-utils";
-import { logger } from '../utils/logger'
 
 declare const test: TestFn;
 
@@ -27,7 +26,7 @@ declare global {
   }
 }
 
-fixture("Cleaning up the test run")
+fixture("Cleaning up")
   .page(config.testURL)
   .beforeEach(async () => {
     await page.login();
@@ -54,7 +53,6 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
       let app = await apps.nth(index);
       let appName = await app.child("td").nth(0).textContent;
       if (isOldApp(appName) || appName.startsWith(appNamePrefix)) {
-        logger.info("Adding app: " + appName + " for deletion")
         appsToBeDeleted.push(appName);
       }
     }
@@ -67,7 +65,6 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
   }
 
   for (let index = 0; index < appsToBeDeleted.length; index++) {
-    logger.info("Delete: " + appsToBeDeleted[index])
     await deleteApp(t, appsToBeDeleted[index]);
   }
   
