@@ -14,7 +14,7 @@ import {
     WAIT_TIME_LONG,
     saveLogs,
     enableDetailedLogs,
-    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger
+    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger, getElementFromSelectorTestId
 } from "../utils/choreo-utils";
 import {logger} from '../utils/logger'
 
@@ -145,9 +145,9 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
         .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
         // Check for hide options
-        .hover(screen.getByText('Hide Options'))
-        .click(Selector('[data-testid="hide-options-btn"]'))
-        .expect(screen.getByText('Show Options').exists).ok({timeout: WAIT_TIME_SHORT})
+        .hover(getElementFromSelectorTestId('hide-options-btn'))
+        .click(getElementFromSelectorTestId('hide-options-btn'))
+        .expect(getElementFromSelectorTestId('show-options-btn').exists).ok({timeout: WAIT_TIME_SHORT})
 });
 
 test("test run observe log view hello world service ", async (t) => {

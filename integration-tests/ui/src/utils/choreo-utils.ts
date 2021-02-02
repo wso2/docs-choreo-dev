@@ -224,7 +224,7 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
 
   logger.info("Deploying application...")
   await t.wait(WAIT_TIME_SHORT);
-  await t.expect(getElementFromSelectorTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
+  await t.expect(getElementFromSelectorTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_MEDIUM})
       .click(getElementFromSelectorTestId("deploy-btn"), {speed: 0.5})
       .expect(getElementFromSelectorTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
       .expect(getElementFromSelectorTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
@@ -264,11 +264,11 @@ export const createLog = async (t: TestController, logType: string, expression: 
   await t
       .click(Selector("#SmallPlus"), {speed: 0.5})
       .click(Selector("#Plus_a"), {speed: 0.5})
-      .expect(screen.getByText("Statements").exists).ok()
-      .click(screen.getByTestId("statement-options"), {speed: 0.5})
+      .expect(getElementFromSelectorTestId("statement-options").exists).ok()
+      .click(getElementFromSelectorTestId("statement-options"), {speed: 0.5})
       .hover(screen.getByText("Log"), {speed: 0.5})
       .click(screen.getByText("Log"), {speed: 0.5})
-      .click(screen.getByTestId("Info"), {speed: 0.5})
+      .click(getElementFromSelectorTestId("Info"), {speed: 0.5})
       .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
       .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
       .pressKey('backspace backspace')
@@ -278,8 +278,8 @@ export const createLog = async (t: TestController, logType: string, expression: 
           {speed: 0.5}
       );
   await t.expect(Selector('[data-testid="log-save-btn"]').parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
-      .click(screen.getByText("Save"))
-      .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+      .click(getElementFromSelectorTestId("log-save-btn"))
+      .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,logSourceField)
 
   logger.info(`Successfully added log type ${logType} with expression : ${expression}`);
