@@ -112,6 +112,9 @@ test("test run observe overview hello world service ", async (t) => {
         .click(screen.getByText('Past 24 hours'))
         .click(screen.getByText('Past 10 minutes'))
 
+      .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
+      .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
+
     // Enable the status bar
     let d = await getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
     d = d.replace('Z', '')
