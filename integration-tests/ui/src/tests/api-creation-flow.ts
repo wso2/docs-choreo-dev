@@ -135,6 +135,6 @@ test("deploy hello world service", async (t) => {
 
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
-    .expect(screen.findByPlaceholderText("Please deploy to get access URL").exists).ok({ timeout: WAIT_TIME_LONG })
+    .expect(getElementFromSelectorTestId("deploy-url").exists).ok({ timeout: WAIT_TIME_LONG })
   logger.info("Undeloyed application successfully!")
 })
