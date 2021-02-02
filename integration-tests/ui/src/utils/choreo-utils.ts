@@ -213,7 +213,6 @@ export const createProperty = async (t: TestController, name: string, expression
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
-  await t.click(screen.getByTestId("editor-run-btn"), {speed: 0.5});
   logger.info("Started test run");
 
   await t.click(screen.getByTestId('deploy'))
