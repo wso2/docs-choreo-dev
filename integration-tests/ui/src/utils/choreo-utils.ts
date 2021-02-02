@@ -163,14 +163,14 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
-      await t.click(screen.getByText("Webhook"));
+      await t.click(screen.findByText("Webhook"));
       break;
     case "API":
       await t
-        .click(screen.getByText("API"))
+        .click(screen.findByText("API"))
         .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
         .typeText(screen.queryByPlaceholderText("Relative path from host"), relativePath, { speed: 0.5 })
-        .click(screen.getByText("Save API"), { speed: 0.5 });
+        .click(screen.findByText("Save API"), { speed: 0.5 });
       break;
   }
   await t
@@ -184,9 +184,9 @@ export const createProperty = async (t: TestController, name: string, expression
 
   logger.info("Creating the variable with expression : " + expression);
   await t
-    .expect(screen.getByText("Statements").exists).ok()
+    .expect(screen.findByText("Statements").exists).ok()
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByText("Variable"), { speed: 0.5 })
+    .hover(screen.findByText("Variable"), { speed: 0.5 })
     .click(screen.getByTestId("addVariable"), { speed: 0.5 })
     .selectText(screen.getByPlaceholderText("Enter Variable Name"))
     .pressKey("delete")
@@ -201,8 +201,8 @@ export const createProperty = async (t: TestController, name: string, expression
       expression,
       { speed: 0.5 }
     )
-    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
-    .click(screen.getByText("Save"))
+    .expect(screen.findByText("Save").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
+    .click(screen.findByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await checkSourceCodeForValidation(t,variableSourceFields)
 
@@ -264,10 +264,10 @@ export const createLog = async (t: TestController, logType: string, expression: 
   await t
       .click(Selector("#SmallPlus"), {speed: 0.5})
       .click(Selector("#Plus_a"), {speed: 0.5})
-      .expect(screen.getByText("Statements").exists).ok()
+      .expect(screen.findByText("Statements").exists).ok()
       .click(screen.getByTestId("statement-options"), {speed: 0.5})
-      .hover(screen.getByText("Log"), {speed: 0.5})
-      .click(screen.getByText("Log"), {speed: 0.5})
+      .hover(screen.findByText("Log"), {speed: 0.5})
+      .click(screen.findByText("Log"), {speed: 0.5})
       .click(screen.getByTestId("Info"), {speed: 0.5})
       .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
       .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
@@ -278,7 +278,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
           {speed: 0.5}
       );
   await t.expect(Selector('[data-testid="log-save-btn"]').parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
-      .click(screen.getByText("Save"))
+      .click(screen.findByText("Save"))
       .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,logSourceField)
 
@@ -291,9 +291,9 @@ export const createRespond = async (t: TestController, expression: string) => {
   await t
     .click(Selector("#SmallPlus"), { speed: 0.5 })
     .click(Selector("#Plus_a"), { speed: 0.5 })
-    .expect(screen.getByText("Statements").exists).ok({ timeout: 10000 })
+    .expect(screen.findByText("Statements").exists).ok({ timeout: 10000 })
     .click(screen.getByTestId("statement-options"), { speed: 0.5 })
-    .hover(screen.getByText("Respond"), { speed: 0.5 })
+    .hover(screen.findByText("Respond"), { speed: 0.5 })
     .click(screen.getByTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
@@ -301,8 +301,8 @@ export const createRespond = async (t: TestController, expression: string) => {
       expression,
       { speed: 0.5 }
     )
-    .expect(screen.getByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
-    .click(screen.getByText("Save"))
+    .expect(screen.findByText("Save").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
+    .click(screen.findByText("Save"))
     .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,responseSourceFields)
 
@@ -449,7 +449,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       "\"" + url + "\"",
       { speed: 0.5 }
     )
-    .click(screen.getByText(operation), { speed: 0.5 })
+    .click(screen.findByText(operation), { speed: 0.5 })
     .expect(screen.getByTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(screen.getByTestId("http-save-next"), { speed: 0.5 })
     // TODO : Need to add source code validation for this response variable
@@ -458,14 +458,14 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .typeText(screen.getByPlaceholderText("Enter Response Variable Name"), responseVariableName, { speed: 0.5 });
   if (typeof outputPayloadType !== 'undefined' && typeof outputPayloadVariable !== 'undefined') {
     await t
-      .click(screen.getByText("Select Type"), { speed: 0.5 })
-      .click(screen.getByText(outputPayloadType), { speed: 0.5 })
+      .click(screen.findByText("Select Type"), { speed: 0.5 })
+      .click(screen.findByText(outputPayloadType), { speed: 0.5 })
       .click(screen.getByPlaceholderText("Enter Payload Variable Name"), { speed: 0.5 })
       .selectText(screen.getByPlaceholderText("Enter Payload Variable Name"))
       .pressKey("delete")
       .typeText(screen.getByPlaceholderText("Enter Payload Variable Name"), outputPayloadVariable, { speed: 0.5 });
   } else {
-    await t.click(screen.getByText("No Payload"), { speed: 0.5 });
+    await t.click(screen.findByText("No Payload"), { speed: 0.5 });
   }
   await t.expect(Selector('[data-testid="http-save-done"]').parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
   await t.click(Selector('[data-testid="http-save-done"]'), { speed: 0.5 })
