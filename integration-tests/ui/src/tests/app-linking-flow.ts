@@ -45,6 +45,10 @@ fixture("App linking")
 });;
 
 test.skip("test app linking", async (t) => {
+
+    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+    logger.info("Page loaded successfully");
+
     logger.info("Start connecting a running app : " + "linking-test-app");
     await t
         .click(screen.getAllByTestId("link-ballerina-app"))
