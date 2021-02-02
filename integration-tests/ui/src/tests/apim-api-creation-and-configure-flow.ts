@@ -5,7 +5,8 @@ import page from "../model/page";
 import {
   createApiFromChoreoApp, addApiSimpleResponse, clearAPIDocumentsIfExists,
   createNewApp, enableDetailedLogs, saveLogs, selectAPIType, generateAppName, generateApiName,
-  WAIT_TIME_EX_LONG, WAIT_TIME_LONG, WAIT_TIME_MEDIUM, WAIT_TIME_SHORT
+  WAIT_TIME_EX_LONG, WAIT_TIME_LONG, WAIT_TIME_MEDIUM, WAIT_TIME_SHORT, goToApiListView, goBacktoAppsList,
+  openApi
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger';
 import { getLocation } from "../utils/login-utils";
@@ -97,19 +98,12 @@ test("Create API type choreo app", async (t) => {
   await t.expect(testUrl.includes("https://")).ok();
 
   // go back app list
-  await t
-    .click(screen.getByText("App list"))
-    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await screen.findAllByText("Active").exists;
-  logger.info("Load app list successful!")
+  await goBacktoAppsList(t);
 })
 
 test("Create API from previously created choreo app", async (t) => {
-  // click api tab
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Go to API tab successful!");
+  // go to api tab
+  await goToApiListView(t);
 
   // create new api from choreo app
   await createApiFromChoreoApp(t, apiName, appName);
@@ -121,14 +115,10 @@ test("Create API from previously created choreo app", async (t) => {
 });
 
 test("Change design configurations of API", async (t) => {
-  // click api tab
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Go to API tab successful!");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to design configs tab
   await screen.findByText("Design Configurations").exists;
@@ -166,14 +156,10 @@ test("Change design configurations of API", async (t) => {
 });
 
 test("Change subscriptions of API", async (t) => {
-  // click api tab
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Go to API tab successful!");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to Subscriptions tab
   await screen.findByText("Subscriptions").exists;
@@ -200,14 +186,10 @@ test("Change subscriptions of API", async (t) => {
 });
 
 test("Change Business Info of API", async (t) => {
-  // click api tab
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Go to API tab successful!");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to Business Info tab
   await screen.findByText("Business Info").exists;
@@ -252,17 +234,8 @@ test("Change Business Info of API", async (t) => {
 });
 
 test.skip("Create and delete a new API", async (t) => {
-  // click api tab
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Go to API tab successful!");
-
-  // create new api from choreo app
-  await screen.findAllByText("Create").exists;
-  await t
-    .click(screen.getByText("Create"))
-    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  // go to api tab
+  await goToApiListView(t);
 
   await createApiFromChoreoApp(t, apiName + "v2", appName);
 
@@ -280,14 +253,10 @@ test.skip("Create and delete a new API", async (t) => {
 });
 
 test("Change Runtime Configurations of API", async (t) => {
-  // click api tab
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Go to API tab successful!");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to Runtime Configurations tab
   await screen.findByText("Runtime Configurations").exists;
@@ -348,14 +317,10 @@ test("Change Runtime Configurations of API", async (t) => {
 });
 
 test("Create a URL type document for an API", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -392,14 +357,10 @@ test("Create a URL type document for an API", async (t) => {
 });
 
 test("Create an Inline type document for an API", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -445,14 +406,10 @@ test("Create an Inline type document for an API", async (t) => {
 });
 
 test("Create a Markdown type document for an API", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -497,14 +454,10 @@ test("Create a Markdown type document for an API", async (t) => {
 });
 
 test("Create a File type document for an API", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -548,14 +501,10 @@ test("Create a File type document for an API", async (t) => {
 });
 
 test("View different types of API documents", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -808,14 +757,10 @@ test("View different types of API documents", async (t) => {
 });
 
 test("Delete an API document from document view page", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
@@ -844,15 +789,10 @@ test("Delete an API document from document view page", async (t) => {
 });
 
 test.skip("Delete documents of an API", async (t) => {
-  // click api tab
-  await t.expect(screen.findAllByText("APIs").exists).ok();
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  logger.info("API tab loaded successfully");
+  // go to api tab
+  await goToApiListView(t);
 
-  // click on created api
-  await t.click(screen.findByText(apiName), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await openApi(t, apiName);
 
   // Go to documents tab
   await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });

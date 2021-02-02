@@ -53,7 +53,7 @@ test ("Performance Drill Down test", async (t) => {
 
   logger.info("Starting Performance Analyzer Performance Drill Down test...");
 
-  const appName = generateAppName("perfanalyzer");
+  const appName = generateAppName("analyzer");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
   await selectTrigger(t, "API", "test");

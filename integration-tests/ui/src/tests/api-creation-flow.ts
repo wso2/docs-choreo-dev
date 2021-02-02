@@ -5,7 +5,6 @@ import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
 import {
   createNewApp,
-  clearAppsIfExists,
   selectTrigger,
   createProperty,
   createRespond,
@@ -16,7 +15,10 @@ import {
   saveLogs,
   enableDetailedLogs,
   deployToChoreo,
-  getElementFromSelectorTestId
+  getElementFromSelectorTestId,
+  generateAppName,
+  goBacktoAppsList,
+  deleteApp
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
@@ -59,7 +61,6 @@ fixture("Application test run  and deployment")
 
 
 test("test run hello world service ", async (t) => {
-
   const appName = generateAppName("app-1");
   await createNewApp(t, appName);
 

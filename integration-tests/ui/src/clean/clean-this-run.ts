@@ -1,11 +1,9 @@
-import { screen, within } from "@testing-library/testcafe";
 import { RequestLogger, Selector } from "testcafe";
 import * as config from "../../testcafe-run-config.json";
 import page from "../model/page";
 import {
-  clearAppsIfExists, clearApisIfExists, enableDetailedLogs, saveLogs, WAIT_TIME_SHORT, isOldApp, deleteApp, deleteApi, goToApiListView
+  enableDetailedLogs, saveLogs, appNamePrefix, isOldApp, deleteApp, deleteApi, goToApiListView
 } from "../utils/choreo-utils";
-import { logger } from '../utils/logger';
 
 declare const test: TestFn;
 
@@ -43,15 +41,7 @@ fixture("Cleaning up the test run")
 
   });
 
-test("Delete all Apps and Apis of this run", async (t) => {
-  await clearAppsIfExists(t);
-
-  await goToApiListView(t);
-
-  await clearApisIfExists(t);
-});
-
-test.skip("Delete old Apps and Apis", async (t) => {
+test("Delete Apps and APIs that are old or created by this run", async (t) => {
   
   let appsToBeDeleted = [];
   while (true) {
@@ -61,7 +51,7 @@ test.skip("Delete old Apps and Apis", async (t) => {
     for (let index = 0; index < appCount; index++) {
       let app = await apps.nth(index);
       let appName = await app.child("td").nth(0).textContent;
-      if (isOldApp(appName)) {
+      if (isOldApp(appName) || appName.startsWith(appNamePrefix)) {
         appsToBeDeleted.push(appName);
       }
     }
@@ -74,7 +64,6 @@ test.skip("Delete old Apps and Apis", async (t) => {
   }
 
   for (let index = 0; index < appsToBeDeleted.length; index++) {
-    logger.info("Deleting application: " + appsToBeDeleted[index])
     await deleteApp(t, appsToBeDeleted[index]);
   }
   
@@ -88,7 +77,7 @@ test.skip("Delete old Apps and Apis", async (t) => {
     for (let index = 0; index < apiCount; index++) {
       let api = await apis.nth(index);
       let apiName = await api.child("td").nth(0).textContent;
-      if (isOldApp(apiName)) {
+      if (isOldApp(apiName) || apiName.startsWith(appNamePrefix)) {
         apisToBeDeleted.push(apiName);
       }
     }
@@ -101,7 +90,6 @@ test.skip("Delete old Apps and Apis", async (t) => {
   }
 
   for (let index = 0; index < apisToBeDeleted.length; index++) {
-    logger.info("Deleting api: " + apisToBeDeleted[index])
     await deleteApi(t, apisToBeDeleted[index]);
   }
 });

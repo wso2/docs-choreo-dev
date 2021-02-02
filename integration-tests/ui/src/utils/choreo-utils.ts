@@ -29,7 +29,7 @@ export const enableDetailedLogs = ClientFunction(() => {
 });
 
 export const waitTillWorkspace = async (t: TestController) => {
-  await t.expect(screen.findByTestId("setting-up-workspace").exists).notOk({ timeout: WAIT_TIME_LONG })
+  await t.expect(getElementFromSelectorTestId("setting-up-workspace").exists).notOk({ timeout: WAIT_TIME_LONG })
 }
 
 
@@ -84,10 +84,16 @@ export const waitForPerformanceDrillDown = async (t: TestController) => {
 }
 
 export const goToApiListView = async (t: TestController) => {
-  await screen.findAllByText("APIs").exists;
-  await t.click(screen.getByText("APIs"), { speed: 0.5 });
+  await t.click(getElementFromSelectorTestId("apis-tab"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   logger.info("Go to API tab successful!");
+}
+
+export const openApi = async (t: TestController, name: string) => {
+  await searchApis(t, name);
+  await t.click(screen.findByText(name), { speed: 0.5 });
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  logger.info("Open API successful!");
 }
 
 export const isOldApp = (name: string) => {
@@ -108,67 +114,21 @@ export const createNewApp = async (t: TestController, name: string) => {
   logger.info("Page loaded successfully");
 
   logger.info("Creating a new application with name : " + name);
-  let newApplicationButtonExists = await screen.findByTestId("create-application-btn").exists;
+  let newApplicationButtonExists = await getElementFromSelectorTestId("create-application-btn").exists;
 
   if (newApplicationButtonExists) {
-    await t.click(screen.getByTestId("create-application-btn"));
+    await t.click(getElementFromSelectorTestId("create-application-btn"));
   } else {
-    await t.click(screen.getByTestId("create-with-choreo"));
+    await t.click(getElementFromSelectorTestId("create-with-choreo"));
   }
 
   await t
     .typeText(screen.getAllByPlaceholderText("Application name"), name)
     .click(screen.getByText("Create"));
   await waitTillWorkspace(t);
-  // await t.wait(10000);
   await t.expect(Selector(".diagram-canvas").exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Application created successfully with name: " + name);
 };
-
-export const undeployAllApps = async (t: TestController) => {
-  let appsExists = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
-  let lastUndeployedApp;
-  while (appsExists) {
-    await searchApps(t, appNamePrefix);
-
-    let apps = await Selector(".MuiTableRow-root.MuiTableRow-hover");
-    let appCount = await apps.count;
-
-    let index = 0;
-    let appToUndeploy;
-    let appName;
-    while (index < appCount) {
-      let app = await apps.nth(index);
-      appName = await app.child("td").nth(0).textContent;
-      let activeStatus = await app.child("td").nth(2).textContent;
-      
-      if (appName.startsWith(appNamePrefix) && activeStatus == "Active") {
-        appToUndeploy = app;
-        break;
-      }
-      index++;
-    }
-
-    if (!appToUndeploy) {
-      break;
-    }
-
-    await t.expect(lastUndeployedApp).notEql(appName, "Failed to undeploy app: " + lastUndeployedApp);
-
-    logger.info("An active application exists, undeploying the application: " + appName);
-    
-    await t.click(appToUndeploy);
-    await t.click(screen.getByTestId("deploy"))
-    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-    await t.wait(5000);
-    await t.click(screen.getByText("Stop"))
-      .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG});
-
-    await goBacktoAppsList(t);
-
-    lastUndeployedApp = appName;
-  }
-}
 
 export const undeployApp = async (t: TestController, name: string) => {
   await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).ok();
@@ -183,10 +143,10 @@ export const undeployApp = async (t: TestController, name: string) => {
     logger.info("Undeploying the application: " + name);
 
     await t.click(app);
-    await t.click(screen.getByTestId("deploy"))
+    await t.click(getElementFromSelectorTestId("deploy"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
     await t.click(screen.getByText("Stop"))
-      .expect(screen.findByTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG});
+      .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG});
 
     await goBacktoAppsList(t);
   }
@@ -209,21 +169,21 @@ export const deleteApp = async (t: TestController, name: string) => {
   logger.info("Deleting the application: " + name);
   await t
     .hover(app)
-    .click(within(app).getByTestId("delete-btn"))
-    .click(within(screen.findByRole("dialog")).getByTestId("delete-app"))
+    .click(getElementFromSelectorTestId("delete-btn"))
+    .click(getElementFromSelectorTestId("delete-app"))
     .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 }
 
 export const goBacktoAppsList = async(t: TestController) => {
-  await t.click(screen.getByTestId("app-list-btn"));
+  await t.click(getElementFromSelectorTestId("app-list-btn"));
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   logger.info("Apps page loaded successfully");
 }
 
 export const searchApps = async (t: TestController, name: string) => {
-  let searchButtonExists = await screen.findByTestId("search-btn").exists;
+  let searchButtonExists = await getElementFromSelectorTestId("search-btn").exists;
   if (searchButtonExists) {
-    await t.hover(screen.getByTestId("search-btn"));
+    await t.hover(getElementFromSelectorTestId("search-btn"));
   }
   await t
     .selectText(Selector(".MuiInputBase-input.MuiInput-input"))
@@ -236,9 +196,9 @@ export const searchApps = async (t: TestController, name: string) => {
 }
 
 export const resetAppSearch = async (t: TestController) => {
-  let searchButtonExists = await screen.findByTestId("search-btn").exists;
+  let searchButtonExists = await getElementFromSelectorTestId("search-btn").exists;
   if (searchButtonExists) {
-    await t.hover(screen.getByTestId("search-btn"));
+    await t.hover(getElementFromSelectorTestId("search-btn"));
   }
   let searchBoxExists = await Selector(".MuiInputBase-input.MuiInput-input").exists;
   if (searchBoxExists) {
@@ -248,10 +208,16 @@ export const resetAppSearch = async (t: TestController) => {
   }
 }
 
+export const goBacktoApisList = async(t: TestController) => {
+  await t.click(getElementFromSelectorTestId("app-list-btn"));
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  logger.info("Apps page loaded successfully");
+}
+
 export const searchApis = async (t: TestController, name: string) => {
-  let searchButtonExists = await screen.findByTestId("api-search-btn").exists;
+  let searchButtonExists = await getElementFromSelectorTestId("api-search-btn").exists;
   if (searchButtonExists) {
-    await t.hover(screen.getByTestId("api-search-btn"));
+    await t.hover(getElementFromSelectorTestId("api-search-btn"));
   }
   await t
     .selectText(Selector("input[aria-label='Search']"))
@@ -264,9 +230,9 @@ export const searchApis = async (t: TestController, name: string) => {
 }
 
 export const resetApiSearch = async (t: TestController) => {
-  let searchButtonExists = await screen.findByTestId("api-search-btn").exists;
+  let searchButtonExists = await getElementFromSelectorTestId("api-search-btn").exists;
   if (searchButtonExists) {
-    await t.hover(screen.getByTestId("api-search-btn"));
+    await t.hover(getElementFromSelectorTestId("api-search-btn"));
   }
   let searchBoxExists = await Selector("input[aria-label='Search']").exists;
   if (searchBoxExists) {
@@ -275,49 +241,6 @@ export const resetApiSearch = async (t: TestController) => {
       .pressKey("delete");
   }
 }
-
-export const clearAppsIfExists = async (t: TestController) => {
-  await undeployAllApps(t);
-  let appsExists = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
-  let lastDeletedApp;
-  while (appsExists) {
-    await searchApps(t, appNamePrefix);
-
-    let apps = await Selector(".MuiTableRow-root.MuiTableRow-hover");
-    let appCount = await apps.count;
-
-    let index = 0;
-    let appToDelete;
-    let appName;
-    while (index < appCount && appToDelete == null) {
-      let app = await apps.nth(index);
-      appName = await app.child("td").nth(0).textContent;
-      
-      if (appName.startsWith(appNamePrefix)) {
-        appToDelete = app;
-        break;
-      }
-      index++;
-    }
-
-    if (!appToDelete) {
-      break;
-    }
-
-    await t.expect(lastDeletedApp).notEql(appName, "Failed to delete app: " + lastDeletedApp);
-
-    logger.info("An application exists, deleting the application: " + appName);
-    await t
-      .hover(appToDelete)
-      .click(within(appToDelete).getAllByTestId("delete-btn"))
-      .click(within(screen.findByRole("dialog")).getByTestId("delete-app"))
-      .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-    
-    lastDeletedApp = appName;
-    appsExists = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;  
-  }
-  await resetAppSearch(t);
-};
 
 export const clearAPIDocumentsIfExists = async (t: TestController) => {
   let documentExists = await screen.queryAllByTestId('delete-document').exists;
@@ -676,24 +599,24 @@ export const selectAPIType = async (t: TestController, name: string) => {
 };
 
 export const createApiFromChoreoApp = async (t: TestController, apiName: string, appName: string) => {
-  let createApiButtonExist = await screen.findByTestId("create-api-btn").exists;
+  let createApiButtonExist = await getElementFromSelectorTestId("create-api-btn").exists;
   if (createApiButtonExist) {
-    await t.click(screen.getByTestId("create-api-btn"));
+    await t.click(getElementFromSelectorTestId("create-api-btn"));
   }
 
-  await screen.getAllByTestId("create-from-choreo-app").exists;
+  await getElementFromSelectorTestId("create-from-choreo-app").exists;
   await t
-    .click(screen.getAllByTestId("create-from-choreo-app"))
+    .click(getElementFromSelectorTestId("create-from-choreo-app"))
     .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   await screen.findAllByText("Create API From Choreo Application");
   logger.info("Create api from choreo app form load successful!");
 
   // fill in details
-  await screen.findByTestId("api-name").exists;
-  await t.typeText(screen.findByTestId("api-name"), apiName, { speed: 0.5 });
+  await getElementFromSelectorTestId("api-name").exists;
+  await t.typeText(getElementFromSelectorTestId("api-name"), apiName, { speed: 0.5 });
   // api version is not input, since there's a default value: "1.0.0"
-  await screen.findByTestId("choreo-app-selector").exists;
-  await t.click(screen.findByTestId("choreo-app-selector"), { speed: 0.5 });
+  await getElementFromSelectorTestId("choreo-app-selector").exists;
+  await t.click(getElementFromSelectorTestId("choreo-app-selector"), { speed: 0.5 });
   await screen.findByText(appName).exists;
   await t.click(screen.findByText(appName), { speed: 0.5 });
 
@@ -721,48 +644,6 @@ export const addApiSimpleResponse = async (t: TestController, expression: string
   logger.info("Created API with a simple response : " + expression);
 };
 
-export const clearApisIfExists = async (t: TestController) => {
-  let apisExists = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
-  let lastDeletedApi;
-  while (apisExists) {
-    await searchApis(t, appNamePrefix);
-
-    let apis = await Selector(".MuiTableRow-root.MuiTableRow-hover");
-    let apiCount = await apis.count;
-
-    let index = 0;
-    let apiToDelete;
-    let apiName;
-    while (index < apiCount) {
-      let api = await apis.nth(index);
-      apiName = await api.child("td").nth(0).find("p").innerText;
-      
-      if (apiName.startsWith(appNamePrefix)) {
-        apiToDelete = api;
-        break;
-      }
-      index++;
-    }
-
-    if (!apiToDelete) {
-      break;
-    }
-
-    await t.expect(lastDeletedApi).notEql(apiName, "Failed to delete api: " + lastDeletedApi);
-
-    logger.info("An api exists, deleting the api: " + apiName);
-    await t
-      .hover(apiToDelete)
-      .click(within(apiToDelete).queryAllByText("Delete"))
-      .click(within(screen.findByRole("dialog")).getByTestId("delete-api"))
-      .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-    
-    lastDeletedApi = apiName;
-    apisExists = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;  
-  }
-  await resetApiSearch(t);
-};
-
 export const deleteApi = async (t: TestController, name: string) => {
   // Check if apis are listed
   await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).ok();
@@ -775,8 +656,8 @@ export const deleteApi = async (t: TestController, name: string) => {
   logger.info("Deleting the api: " + name);
   await t
     .hover(api)
-    .click(within(api).getByTestId("api-delete-btn"))
-    .click(within(screen.findByRole("dialog")).getByTestId("delete-api"))
+    .click(getElementFromSelectorTestId("api-delete-btn"))
+    .click(getElementFromSelectorTestId("delete-api"))
     .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 }
 
