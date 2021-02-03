@@ -71,7 +71,7 @@ async function deployApp(t: TestController) {
 
     await callDeployedApp(t, `${appURL}/hello`, 3, 3)
     // TODO : Observability logs view refresh is not working, this time out is a work around
-    await t.wait(WAIT_TIME_MEDIUM)
+    await t.wait(WAIT_TIME_MEDIUM * 1.5 )
 
     await t.click(getElementFromSelectorTestId("observe"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
