@@ -214,7 +214,6 @@ export const createProperty = async (t: TestController, name: string, expression
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
-  logger.info("Started test run");
 
   await t.click(getElementFromSelectorTestId('deploy'))
   await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
