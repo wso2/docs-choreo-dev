@@ -1,7 +1,7 @@
 import { RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
 import * as config from "../../testcafe-run-config.json";
-import { saveLogs, logger, devportalLogin } from "../utils/choreo-utils";
+import { saveLogs, logger, devportalLogin, getLocation, WAIT_TIME_SHORT } from "../utils/choreo-utils";
 
 
 declare const test: TestFn;
@@ -42,4 +42,6 @@ test("Overview page click Try Api button", async (t) => {
     logger.info("Click on the Try Api button to switch to Try Out tab");
     await screen.getByRole('button', { name: /try api try api/i }).exists;
     await t.click(screen.getByRole('button', { name: /try api try api/i }), { speed: 0.5 });
+    await t.expect(await getLocation()).contains("/tryout", { timeout: WAIT_TIME_SHORT });
+
 });
