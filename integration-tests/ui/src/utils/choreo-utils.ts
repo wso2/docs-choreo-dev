@@ -179,6 +179,7 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   logger.info("selected " + type + "trigger type");
 };
 
+
 export const createProperty = async (t: TestController, name: string, expression: string) => {
   const variableSourceFields = ['var', name, '=',expression]
 
@@ -213,10 +214,10 @@ export const createProperty = async (t: TestController, name: string, expression
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
-  await t.click(screen.getByTestId("editor-run-btn"), {speed: 0.5});
+  await t.click(getElementFromSelectorTestId("editor-run-btn"), {speed: 0.5});
   logger.info("Started test run");
 
-  await t.click(screen.getByTestId('deploy'))
+  await t.click(getElementFromSelectorTestId('deploy'))
   await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
   await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
 
@@ -224,33 +225,33 @@ export const deployToChoreo = async (t: TestController, appName: string) => {
 
   logger.info("Deploying application...")
   await t.wait(WAIT_TIME_SHORT);
-  await t.expect(screen.getByTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_SHORT})
-      .click(screen.getByTestId("deploy-btn"), {speed: 0.5})
-      .expect(screen.findByTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
-      .expect(screen.findByTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
-      .expect(screen.findByTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+  await t.expect(getElementFromSelectorTestId("deploy-btn").exists).ok({timeout:WAIT_TIME_MEDIUM})
+      .click(getElementFromSelectorTestId("deploy-btn"), {speed: 0.5})
+      .expect(getElementFromSelectorTestId("checkout-loading").exists).ok({timeout: WAIT_TIME_MEDIUM})
+      .expect(getElementFromSelectorTestId("checkout-failed").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(getElementFromSelectorTestId("checkout-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
   logger.info("Checkout phase successful!")
 
 
   logger.info("Starting build phase...")
-  await t.expect(screen.findByTestId("build-loading").exists).ok({timeout: WAIT_TIME_SHORT})
-      .expect(screen.findByTestId("build-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG}) // todo - increase timeout
-      .expect(screen.findByTestId("build-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
-      .expect(screen.findByTestId("build-ok").exists).ok({timeout: WAIT_TIME_EX_LONG});
+  await t.expect(getElementFromSelectorTestId("build-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(getElementFromSelectorTestId("build-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG}) // todo - increase timeout
+      .expect(getElementFromSelectorTestId("build-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(getElementFromSelectorTestId("build-ok").exists).ok({timeout: WAIT_TIME_EX_LONG});
   logger.info("Build phase successful!");
 
-  await t.expect(screen.findByTestId("test-ok").exists).ok({timeout: WAIT_TIME_LONG})
+  await t.expect(getElementFromSelectorTestId("test-ok").exists).ok({timeout: WAIT_TIME_LONG})
   logger.info("Test phase successful!");
 
   logger.info("Starting deploy phase...");
   await t
-      .expect(screen.findByTestId("deploy-loading").exists).ok({timeout: WAIT_TIME_SHORT})
-      .expect(screen.findByTestId("deploy-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG})
-      .expect(screen.findByTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
-      .expect(screen.findByTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
+      .expect(getElementFromSelectorTestId("deploy-loading").exists).ok({timeout: WAIT_TIME_SHORT})
+      .expect(getElementFromSelectorTestId("deploy-loading").exists).notOk({timeout: WAIT_TIME_EX_LONG})
+      .expect(getElementFromSelectorTestId("deploy-failed").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+      .expect(getElementFromSelectorTestId("deploy-ok").exists).ok({timeout: WAIT_TIME_EX_LONG})
   logger.info("Deploy phase successful!")
-  await t.expect(screen.findAllByTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
-  const appURL = await screen.findAllByTestId("deploy-url").find("input").getAttribute('value');
+  await t.expect(getElementFromSelectorTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
+  const appURL = await getElementFromSelectorTestId("deploy-url").find("input").getAttribute('value');
   logger.info("test url : " + appURL);
   await t.expect(appURL.includes("https://")).ok();
   return appURL
@@ -264,11 +265,11 @@ export const createLog = async (t: TestController, logType: string, expression: 
   await t
       .click(Selector("#SmallPlus"), {speed: 0.5})
       .click(Selector("#Plus_a"), {speed: 0.5})
-      .expect(screen.getByText("Statements").exists).ok()
-      .click(screen.getByTestId("statement-options"), {speed: 0.5})
+      .expect(getElementFromSelectorTestId("statement-options").exists).ok()
+      .click(getElementFromSelectorTestId("statement-options"), {speed: 0.5})
       .hover(screen.getByText("Log"), {speed: 0.5})
       .click(screen.getByText("Log"), {speed: 0.5})
-      .click(screen.getByTestId("Info"), {speed: 0.5})
+      .click(getElementFromSelectorTestId("Info"), {speed: 0.5})
       .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
       .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
       .pressKey('backspace backspace')
@@ -278,8 +279,8 @@ export const createLog = async (t: TestController, logType: string, expression: 
           {speed: 0.5}
       );
   await t.expect(Selector('[data-testid="log-save-btn"]').parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
-      .click(screen.getByText("Save"))
-      .expect(screen.findByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
+      .click(getElementFromSelectorTestId("log-save-btn"))
+      .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_LONG});
   await checkSourceCodeForValidation(t,logSourceField)
 
   logger.info(`Successfully added log type ${logType} with expression : ${expression}`);
@@ -438,10 +439,10 @@ export const createHttpConnector = async (t: TestController, url: string, operat
 
   logger.info("Creating HTTP Connector...")
   await t
-    .click(screen.getByTestId("api-options"), { speed: 0.5 })
-    .expect(screen.getByTestId("http").exists).ok({ timeout: 10000 })
-    .click(screen.getByTestId("http"), { speed: 0.5 })
-    .expect(Selector('[data-testid="http-save-next"]').visible).ok({ timeout: WAIT_TIME_MEDIUM })
+    .click(getElementFromSelectorTestId("api-options"), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId("http").exists).ok({ timeout: 10000 })
+    .click(getElementFromSelectorTestId("http"), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId("http-save-next").visible).ok({ timeout: WAIT_TIME_MEDIUM })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .pressKey("backspace backspace")
     .typeText(
@@ -450,26 +451,26 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       { speed: 0.5 }
     )
     .click(screen.getByText(operation), { speed: 0.5 })
-    .expect(screen.getByTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
-    .click(screen.getByTestId("http-save-next"), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
+    .click(getElementFromSelectorTestId("http-save-next"), { speed: 0.5 })
     // TODO : Need to add source code validation for this response variable
-    .selectText(screen.getByPlaceholderText("Enter Response Variable Name"))
+    .selectText(within(getElementFromSelectorTestId('response-variable-name')).getByRole('textbox'))
     .pressKey("delete")
-    .typeText(screen.getByPlaceholderText("Enter Response Variable Name"), responseVariableName, { speed: 0.5 });
+    .typeText(within(getElementFromSelectorTestId('response-variable-name')).getByRole('textbox'), responseVariableName, { speed: 0.5 });
   if (typeof outputPayloadType !== 'undefined' && typeof outputPayloadVariable !== 'undefined') {
     await t
       .click(screen.getByText("Select Type"), { speed: 0.5 })
       .click(screen.getByText(outputPayloadType), { speed: 0.5 })
-      .click(screen.getByPlaceholderText("Enter Payload Variable Name"), { speed: 0.5 })
-      .selectText(screen.getByPlaceholderText("Enter Payload Variable Name"))
+      .click(getElementFromSelectorTestId("payload-variable-name"), { speed: 0.5 })
+      .selectText(getElementFromSelectorTestId("payload-variable-name"))
       .pressKey("delete")
-      .typeText(screen.getByPlaceholderText("Enter Payload Variable Name"), outputPayloadVariable, { speed: 0.5 });
+      .typeText(getElementFromSelectorTestId("payload-variable-name"), outputPayloadVariable, { speed: 0.5 });
   } else {
     await t.click(screen.getByText("No Payload"), { speed: 0.5 });
   }
-  await t.expect(Selector('[data-testid="http-save-done"]').parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
-  await t.click(Selector('[data-testid="http-save-done"]'), { speed: 0.5 })
-    .expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  await t.expect(getElementFromSelectorTestId("http-save-done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
+  await t.click(getElementFromSelectorTestId("http-save-done"), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   await checkSourceCodeForValidation(t,httpSourceFields)
 
   logger.info("Successfully created an HTTP Connector!")
@@ -556,14 +557,14 @@ export const clearApisIfExists = async (t: TestController) => {
  * @param sourceLines
  */
 export const checkSourceCodeForValidation = async (t: TestController, sourceLines: string[]) => {
-  await t.expect(screen.getByTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
+  await t.expect(getElementFromSelectorTestId("code-view-btn").hasAttribute('disabled')).notOk({timeout: WAIT_TIME_LONG})
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
     for (const sourceLine of sourceLines) {
       await t.expect(Selector(".view-line").withText(sourceLine.replace(/\s/g,'\u00a0')).exists).ok({timeout:WAIT_TIME_SHORT})
     }
-  await t.hover(Selector(screen.getByTestId("vertical-close-btn")))
-    .click(Selector(screen.getByTestId("vertical-close-btn")))
+  await t.hover(Selector(getElementFromSelectorTestId("vertical-close-btn")))
+    .click(Selector(getElementFromSelectorTestId("vertical-close-btn")))
 }
 
 export function getElementFromSelectorTestId(testId: string): Selector {

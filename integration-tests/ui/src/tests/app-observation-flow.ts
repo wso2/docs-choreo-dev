@@ -14,7 +14,7 @@ import {
     WAIT_TIME_LONG,
     saveLogs,
     enableDetailedLogs,
-    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger
+    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger, getElementFromSelectorTestId
 } from "../utils/choreo-utils";
 import {logger} from '../utils/logger'
 
@@ -74,7 +74,7 @@ async function deployApp(t: TestController) {
     // TODO : Observability logs view refresh is not working, this time out is a work around
     await t.wait(WAIT_TIME_MEDIUM)
 
-    await t.click(screen.getByTestId("observe"))
+    await t.click(getElementFromSelectorTestId("observe"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
 
     logger.info("Succesfully Navigated to Deploy view")
@@ -87,21 +87,21 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(Selector(".worker-line").exists).ok("Diagram should be drawn", {timeout: WAIT_TIME_SHORT})
         .expect(Selector('#resource-path').innerText).contains('resource: /hello')
         //Check Refresh button works
-        .click(Selector('[data-testid="refresh-btn"]'))
-        .expect(screen.findByTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
+        .click(getElementFromSelectorTestId("refresh-btn"))
+        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
         // Check Refresh interval works
         .hover(Selector('#refresh-interval'))
         .click(Selector('#refresh-interval'))
         .click(screen.getAllByText('10 Seconds').nth(1))
-        .expect(screen.findAllByTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
+        .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
 
 
         // Test Diagram status
         .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_MEDIUM})
         .expect(Selector('#CounterLeft').exists).ok({timeout: WAIT_TIME_MEDIUM})
 
-        .expect(screen.getByTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
-        .expect(screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
 
         // Disable refresh
         .hover(Selector('#refresh-interval'))
@@ -109,12 +109,12 @@ test("test run observe overview hello world service ", async (t) => {
         .click(screen.getAllByText('Off'))
 
     // Check for log panel
-    await t.expect(screen.getByTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
+    await t.expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
         .click(screen.getByText('Past 24 hours'))
         .click(screen.getByText('Past 10 minutes'))
 
     // Enable the status bar
-    let d = await screen.getByTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
+    let d = await getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
     d = d.replace('Z', '')
     const newD = d.split("L")
     let prevY
@@ -130,33 +130,33 @@ test("test run observe overview hello world service ", async (t) => {
         prevY = arr[1]
     }
 
-    await t.hover(screen.getByTestId('histogram-response-time').find('svg'), {
+    await t.hover(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
         offsetX: Math.round(finalX),
         offsetY: Math.round(finalY),
     })
-        .click(screen.getByTestId('histogram-response-time').find('svg'), {
+        .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
             offsetX: Math.round(finalX),
             offsetY: Math.round(finalY),
         })
-        .expect(screen.findByTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
-        .expect(screen.getByTestId('request-table').exists).ok({timeout: WAIT_TIME_EX_LONG})
-        .expect(screen.getAllByTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
-        .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
-        .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
-        .expect(screen.getAllByTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
+        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
+        .expect(getElementFromSelectorTestId('request-table').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(getElementFromSelectorTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
+        .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
+        .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
+        .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
         // Check for hide options
-        .hover(screen.getByText('Hide Options'))
-        .click(Selector('[data-testid="hide-options-btn"]'))
-        .expect(screen.getByText('Show Options').exists).ok({timeout: WAIT_TIME_SHORT})
+        .hover(getElementFromSelectorTestId('hide-options-btn'))
+        .click(getElementFromSelectorTestId('hide-options-btn'))
+        .expect(getElementFromSelectorTestId('show-options-btn').exists).ok({timeout: WAIT_TIME_SHORT})
 });
 
 test("test run observe log view hello world service ", async (t) => {
     await deployApp(t);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
-    await t.expect(screen.getByTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
-        .click(screen.getByTestId("panel-Logs-btn"))
+    await t.expect(getElementFromSelectorTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
+        .click(getElementFromSelectorTestId("panel-Logs-btn"))
         //Check for the given log
-        .expect(screen.getByTestId('log-panel').exists).ok({timeout: WAIT_TIME_LONG})
+        .expect(getElementFromSelectorTestId('log-panel').exists).ok({timeout: WAIT_TIME_LONG})
     logger.info("TEST LOG")
 
     await t.expect(Selector('span').withText("Special test Log for App").count).eql(3, 'Not exists', {timeout: WAIT_TIME_LONG})
