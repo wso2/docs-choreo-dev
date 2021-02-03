@@ -102,12 +102,12 @@ export const isOldApp = (name: string) => {
     let timestamp = Number(name.substring(1,14));
     if (!isNaN(timestamp)) {
       let currentTime = Date.now();
-      if ((currentTime - timestamp) > DAY*7) {
-        return true;
+      if ((currentTime - timestamp) < DAY*7) {
+        return false;
       }
     }
   }
-  return false;
+  return true;
 }
 
 export const createNewApp = async (t: TestController, name: string) => {
