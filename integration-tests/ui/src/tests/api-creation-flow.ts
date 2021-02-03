@@ -74,7 +74,7 @@ test("test run hello world service ", async (t) => {
   logger.info("Started test run");
 
   await t
-    .expect(screen.findAllByTestId("test-url").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+    .expect(getElementFromSelectorTestId("test-url").exists).ok({ timeout: WAIT_TIME_MEDIUM })
     .expect(
       getElementFromSelectorTestId("log-panel").withText("started HTTP/WS listener")
         .exists
@@ -106,7 +106,7 @@ test("test postman view", async (t) => {
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Testing invalid API key validation attempt scenario");
-  await t.click(getElementFromSelectorTestId("try out"))
+  await t.click(getElementFromSelectorTestId("try-out"))
   await t.click(getElementFromSelectorTestId("click-here"));
   await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
   await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
@@ -137,7 +137,7 @@ test("deploy hello world service", async (t) => {
 
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
-    .expect(screen.findByPlaceholderText("Please deploy to get access URL").exists).ok({ timeout: WAIT_TIME_LONG })
+    .expect(getElementFromSelectorTestId("deploy-url").exists).ok({ timeout: WAIT_TIME_LONG })
   logger.info("Undeloyed application successfully!")
 
   await goBacktoAppsList(t);
