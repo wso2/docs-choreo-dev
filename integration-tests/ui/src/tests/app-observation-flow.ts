@@ -94,7 +94,6 @@ test("test run observe overview hello world service ", async (t) => {
         .click(screen.getAllByText('10 Seconds').nth(1))
         .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
 
-
         // Test Diagram status
         .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_MEDIUM})
         .expect(Selector('#CounterLeft').exists).ok({timeout: WAIT_TIME_MEDIUM})
