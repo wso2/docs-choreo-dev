@@ -42,6 +42,14 @@ fixture("Data Mapper")
     httpLogger.clear();
   });
 
+/*
+* Following test checks whether AI suggestions returned by the Data Mapper service is shown in low code forms.
+*
+* This test creates a Choreo Application with an API trigger and adds a URL as a string variable. Then a HTTP connector
+* is added. When doing so, it clicks on the URL field and selects the first suggestion. (If there is a Data Mapper AI
+* suggestion, it would always appear first). Finally, the source code is checked to verify that the URL for the HTTP
+* connector is the previous variable.
+*/
 test ("Low code form AI suggestions", async (t) => {
   logger.info("Starting Data Mapper Low code form AI suggestion test...");
   const appName = "data-mapper-" + Math.random().toString(36).substr(2, 5);
