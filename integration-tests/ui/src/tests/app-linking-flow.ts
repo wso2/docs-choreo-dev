@@ -107,5 +107,5 @@ test("test anonymous app linking", async (t) => {
     logger.info("Anonymous App Linking successful");
 
     await goBacktoAppsList(t);
-    await deleteApp(t, appName);
+    await deleteApp(t, appName, true);
 });

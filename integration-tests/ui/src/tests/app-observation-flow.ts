@@ -148,7 +148,7 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(screen.getByText('Show Options').exists).ok({timeout: WAIT_TIME_SHORT})
 
     await goBacktoAppsList(t);
-    await deleteApp(t, appName);
+    await deleteApp(t, appName, true);
 });
 
 test("test run observe log view hello world service ", async (t) => {
@@ -172,6 +172,6 @@ test("test run observe log view hello world service ", async (t) => {
         .expect(Selector('span').withText("Special test Log for App").count).gte(3, 'Not exists', {timeout: WAIT_TIME_MEDIUM})
     
     await goBacktoAppsList(t);
-    await deleteApp(t, appName);
+    await deleteApp(t, appName, true);
 });
 

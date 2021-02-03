@@ -132,21 +132,28 @@ export const createNewApp = async (t: TestController, name: string) => {
   logger.info("Application created successfully with name: " + name);
 };
 
-export const undeployApp = async (t: TestController, name: string) => {
-  await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).ok();
-
+export const undeployApp = async (t: TestController, name: string, strict: boolean) => {
   // Check if apps are listed
   let appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+  if (strict) {
+    await t.expect(appsExist).ok();
+  }
 
   if (appsExist) {
     await searchApps(t, name);
 
     appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+    if (strict) {
+      await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one app should exists");
+    }
 
     if (appsExist) {
-      await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one app should exists");
       let app = await Selector(".MuiTableRow-root.MuiTableRow-hover");
-      await t.expect(app.child("td").nth(0).textContent).eql(name, "App name mismatch");  
+      if (strict) {
+        let appName = await app.child("td").nth(0).textContent; 
+        await t.expect(appName).eql(name, "App name mismatch");
+      }
+      
       let activeStatus = await app.child("td").nth(2).textContent;
       
       if (activeStatus == "Active") {
@@ -160,10 +167,12 @@ export const undeployApp = async (t: TestController, name: string) => {
 
         await goBacktoAppsList(t);
         
-        await searchApps(t, name);
-        await t
-          .expect(Selector(".MuiTableRow-root.MuiTableRow-hover").child("td").nth(2).textContent)
-          .notEql("Active", "App should be undeployed.");
+        if (strict) {
+          await searchApps(t, name);
+          await t
+            .expect(Selector(".MuiTableRow-root.MuiTableRow-hover").child("td").nth(2).textContent)
+            .notEql("Active", "App should be undeployed.");
+        }
       }
     }
 
@@ -171,22 +180,30 @@ export const undeployApp = async (t: TestController, name: string) => {
   }
 }
 
-export const deleteApp = async (t: TestController, name: string) => {
+export const deleteApp = async (t: TestController, name: string, strict: boolean) => {
   // Undeploy the app if active.
-  await undeployApp(t, name);
+  await undeployApp(t, name, strict);
 
   // Check if apps are listed
   let appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+  if (strict) {
+    await t.expect(appsExist).ok();
+  }
 
   if (appsExist) {
     await searchApps(t, name);
 
     appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+    if (strict) {
+      await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one app should exists");
+    }
 
     if (appsExist) {
-      await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one app should exists");
       let app = await Selector(".MuiTableRow-root.MuiTableRow-hover");
-      await t.expect(app.child("td").nth(0).textContent).eql(name, "App name mismatch");  
+      if (strict) {
+        let appName = await app.child("td").nth(0).textContent;
+        await t.expect(appName).eql(name, "App name mismatch");
+      }
     
       logger.info("Deleting the application: " + name);
       await t
@@ -195,10 +212,9 @@ export const deleteApp = async (t: TestController, name: string) => {
         .click(getElementFromSelectorTestId("delete-app"))
         .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 
-
       appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
 
-      if (appsExist) {
+      if (strict && appsExist) {
         await searchApps(t, name);
         await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).notOk("App should be deleted.");
       }
@@ -678,19 +694,27 @@ export const addApiSimpleResponse = async (t: TestController, expression: string
   logger.info("Created API with a simple response : " + expression);
 };
 
-export const deleteApi = async (t: TestController, name: string) => {
+export const deleteApi = async (t: TestController, name: string, strict: boolean) => {
   // Check if apis are listed
   let apisExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+  if (strict) {
+    await t.expect(apisExist).ok();
+  }
 
   if (apisExist) {
     await searchApis(t, name);
 
     apisExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+    if (strict) {
+      await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one api should exists");
+    }
 
     if (apisExist) {
-      await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one api should exists");
       let api = await Selector(".MuiTableRow-root.MuiTableRow-hover");
-      await t.expect(api.child("td").nth(0).find("p").innerText).eql(name, "Api name mismatch");  
+      if (strict) {
+        let apiName = await api.child("td").nth(0).find("p").innerText;
+        await t.expect(apiName).eql(name, "Api name mismatch");  
+      }
 
       logger.info("Deleting the api: " + name);
       await t
@@ -701,7 +725,7 @@ export const deleteApi = async (t: TestController, name: string) => {
 
       apisExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
 
-      if (apisExist) {
+      if (strict && apisExist) {
         await searchApis(t, name);
         await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).notOk("Api should be deleted.");
       }

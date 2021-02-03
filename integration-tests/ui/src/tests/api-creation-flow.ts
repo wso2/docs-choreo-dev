@@ -90,7 +90,7 @@ test("test run hello world service ", async (t) => {
   logger.info("Hello world string recieved successfully !")
 
   await goBacktoAppsList(t);
-  await deleteApp(t, appName);
+  await deleteApp(t, appName, true);
 });
 
 test("test postman view", async (t) => {
@@ -114,7 +114,7 @@ test("test postman view", async (t) => {
   logger.info("Test phase successful!");
 
   await goBacktoAppsList(t);
-  await deleteApp(t, appName);
+  await deleteApp(t, appName, true);
 });
 
 test("deploy hello world service", async (t) => {
@@ -141,5 +141,5 @@ test("deploy hello world service", async (t) => {
   logger.info("Undeloyed application successfully!")
 
   await goBacktoAppsList(t);
-  await deleteApp(t, appName);
+  await deleteApp(t, appName, true);
 })

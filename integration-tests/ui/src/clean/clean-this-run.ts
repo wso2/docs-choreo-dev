@@ -65,7 +65,7 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
   }
 
   for (let index = 0; index < appsToBeDeleted.length; index++) {
-    await deleteApp(t, appsToBeDeleted[index]);
+    await deleteApp(t, appsToBeDeleted[index], false);
   }
   
   await goToApiListView(t);
@@ -91,6 +91,6 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
   }
 
   for (let index = 0; index < apisToBeDeleted.length; index++) {
-    await deleteApi(t, apisToBeDeleted[index]);
+    await deleteApi(t, apisToBeDeleted[index], false);
   }
 });

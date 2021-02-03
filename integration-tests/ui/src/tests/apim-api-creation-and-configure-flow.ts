@@ -6,7 +6,7 @@ import {
   createApiFromChoreoApp, addApiSimpleResponse, clearAPIDocumentsIfExists,
   createNewApp, enableDetailedLogs, saveLogs, selectAPIType, generateAppName, generateApiName,
   WAIT_TIME_EX_LONG, WAIT_TIME_LONG, WAIT_TIME_MEDIUM, WAIT_TIME_SHORT, goToApiListView, goBacktoAppsList,
-  openApi
+  openApi, deleteApi
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger';
 import { getLocation } from "../utils/login-utils";
@@ -231,25 +231,6 @@ test("Change Business Info of API", async (t) => {
   await t.expect(screen.findByText("Jane Smith").exists).ok();
   await t.expect(screen.findByText("janesmith@mail.com").exists).ok();
   logger.info("Business Info update successful");
-});
-
-test.skip("Create and delete a new API", async (t) => {
-  // go to api tab
-  await goToApiListView(t);
-
-  await createApiFromChoreoApp(t, apiName + "v2", appName);
-
-  // test overview page loading
-  await t.expect(await getLocation()).contains("/config/overview", { timeout: WAIT_TIME_SHORT });
-  await screen.queryAllByText("Overview").exists;
-  logger.info("Created API config view loaded successfully!");
-
-  // delete new api and, test whether api list loading with deleted api removed
-  await t
-    .click(screen.getByRole('button', { name: /delete/i }))
-    .click(within(screen.findByRole("dialog")).getByText("Delete"))
-    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await t.expect(await getLocation()).contains("?list=apis", { timeout: WAIT_TIME_SHORT });
 });
 
 test("Change Runtime Configurations of API", async (t) => {
@@ -803,4 +784,11 @@ test.skip("Delete documents of an API", async (t) => {
 
   // delete available documents
   await clearAPIDocumentsIfExists(t);
+});
+
+test("Delete an API", async (t) => {
+  // go to api tab
+  await goToApiListView(t);
+
+  await deleteApi(t, apiName, true);
 });

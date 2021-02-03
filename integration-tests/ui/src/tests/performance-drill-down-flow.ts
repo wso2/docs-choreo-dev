@@ -92,5 +92,5 @@ test ("Performance Drill Down test", async (t) => {
   await t.wait(WAIT_TIME_SHORT);
 
   await goBacktoAppsList(t);
-  await deleteApp(t, appName);
+  await deleteApp(t, appName, true);
 });
