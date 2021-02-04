@@ -48,6 +48,9 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
   while (true) {
     let apps = await Selector(".MuiTableRow-root.MuiTableRow-hover");
     let appCount = await apps.count;
+    if (appCount == 0) {
+      break;
+    }
 
     for (let index = 0; index < appCount; index++) {
       let app = await apps.nth(index);
@@ -74,6 +77,9 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
   while (true) {
     let apis = await Selector(".MuiTableRow-root.MuiTableRow-hover");
     let apiCount = await apis.count;
+    if (apiCount == 0) {
+      break;
+    }
 
     for (let index = 0; index < apiCount; index++) {
       let api = await apis.nth(index);

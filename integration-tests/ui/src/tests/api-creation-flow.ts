@@ -110,7 +110,7 @@ test("test postman view", async (t) => {
   await t.click(getElementFromSelectorTestId("click-here"));
   await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
   await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
-  await t.expect(getElementFromSelectorTestId('api-key-error').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.expect(getElementFromSelectorTestId('api-key-error').exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Test phase successful!");
 
   await goBacktoAppsList(t);
@@ -137,7 +137,7 @@ test("deploy hello world service", async (t) => {
 
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
-    .expect(getElementFromSelectorTestId("deploy-url").exists).ok({ timeout: WAIT_TIME_LONG })
+    .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({ timeout: WAIT_TIME_LONG })
   logger.info("Undeloyed application successfully!")
 
   await goBacktoAppsList(t);
