@@ -126,7 +126,7 @@ export const createNewApp = async (t: TestController, name: string) => {
 
   await t
     .typeText(getElementFromSelectorTestId("application-name"), name)
-    .click(Selector("create-with-choreo-btn"));
+    .click(Selector("#create-with-choreo-btn"));
   await waitTillWorkspace(t);
   await t.expect(Selector(".diagram-canvas").exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Application created successfully with name: " + name);

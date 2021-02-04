@@ -13,12 +13,8 @@ import {
     WAIT_TIME_LONG,
     saveLogs,
     enableDetailedLogs,
-<<<<<<< HEAD
-    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger,
+    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger, getElementFromSelectorTestId,
     generateAppName, deleteApp, goBacktoAppsList
-=======
-    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger, getElementFromSelectorTestId
->>>>>>> upstream/master
 } from "../utils/choreo-utils";
 import {logger} from '../utils/logger'
 
