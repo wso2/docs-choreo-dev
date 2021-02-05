@@ -325,7 +325,7 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
-      await t.click(screen.getByText("Webhook"));
+      await t.click(screen.findByText("Webhook"));
       break;
     case "API":
       await t
@@ -376,8 +376,6 @@ export const createProperty = async (t: TestController, name: string, expression
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
-  await t.click(getElementFromSelectorTestId("editor-run-btn"), {speed: 0.5});
-  logger.info("Started test run");
 
   await t.click(getElementFromSelectorTestId('deploy'))
   await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
@@ -429,8 +427,8 @@ export const createLog = async (t: TestController, logType: string, expression: 
       .click(Selector("#Plus_a"), {speed: 0.5})
       .expect(getElementFromSelectorTestId("statement-options").exists).ok()
       .click(getElementFromSelectorTestId("statement-options"), {speed: 0.5})
-      .hover(screen.getByText("Log"), {speed: 0.5})
-      .click(screen.getByText("Log"), {speed: 0.5})
+      .hover(screen.findByText("Log"), {speed: 0.5})
+      .click(screen.findByText("Log"), {speed: 0.5})
       .click(getElementFromSelectorTestId("Info"), {speed: 0.5})
       .click(screen.getAllByText(logType).nth(1), {speed: 0.5})
       .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
@@ -612,7 +610,7 @@ export const createHttpConnector = async (t: TestController, url: string, operat
       "\"" + url + "\"",
       { speed: 0.5 }
     )
-    .click(screen.getByText(operation), { speed: 0.5 })
+    .click(screen.findByText(operation), { speed: 0.5 })
     .expect(getElementFromSelectorTestId("http-save-next").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(getElementFromSelectorTestId("http-save-next"), { speed: 0.5 })
     // TODO : Need to add source code validation for this response variable
@@ -621,14 +619,14 @@ export const createHttpConnector = async (t: TestController, url: string, operat
     .typeText(within(getElementFromSelectorTestId('response-variable-name')).getByRole('textbox'), responseVariableName, { speed: 0.5 });
   if (typeof outputPayloadType !== 'undefined' && typeof outputPayloadVariable !== 'undefined') {
     await t
-      .click(screen.getByText("Select Type"), { speed: 0.5 })
-      .click(screen.getByText(outputPayloadType), { speed: 0.5 })
+      .click(screen.findByText("Select Type"), { speed: 0.5 })
+      .click(screen.findByText(outputPayloadType), { speed: 0.5 })
       .click(getElementFromSelectorTestId("payload-variable-name"), { speed: 0.5 })
       .selectText(getElementFromSelectorTestId("payload-variable-name"))
       .pressKey("delete")
       .typeText(getElementFromSelectorTestId("payload-variable-name"), outputPayloadVariable, { speed: 0.5 });
   } else {
-    await t.click(screen.getByText("No Payload"), { speed: 0.5 });
+    await t.click(screen.findByText("No Payload"), { speed: 0.5 });
   }
   await t.expect(getElementFromSelectorTestId("http-save-done").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_SHORT})
   await t.click(getElementFromSelectorTestId("http-save-done"), { speed: 0.5 })

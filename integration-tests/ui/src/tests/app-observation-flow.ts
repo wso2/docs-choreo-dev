@@ -9,7 +9,6 @@ import {
     createRespond,
     WAIT_TIME_SHORT,
     WAIT_TIME_MEDIUM,
-    WAIT_TIME_EX_LONG,
     WAIT_TIME_LONG,
     saveLogs,
     enableDetailedLogs,
@@ -69,7 +68,7 @@ async function deployApp(t: TestController, name: string) {
 
     await callDeployedApp(t, `${appURL}/hello`, 3, 3)
     // TODO : Observability logs view refresh is not working, this time out is a work around
-    await t.wait(WAIT_TIME_MEDIUM)
+    await t.wait(WAIT_TIME_MEDIUM * 1.5 )
 
     await t.click(getElementFromSelectorTestId("observe"))
     await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM});
@@ -93,13 +92,12 @@ test("test run observe overview hello world service ", async (t) => {
         .click(screen.getAllByText('10 Seconds').nth(1))
         .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
 
-
         // Test Diagram status
         .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_MEDIUM})
         .expect(Selector('#CounterLeft').exists).ok({timeout: WAIT_TIME_MEDIUM})
 
-        .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
-        .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
+        .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
 
         // Disable refresh
         .hover(Selector('#refresh-interval'))
@@ -107,9 +105,12 @@ test("test run observe overview hello world service ", async (t) => {
         .click(screen.getAllByText('Off'))
 
     // Check for log panel
-    await t.expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_EX_LONG})
+    await t.expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_LONG})
         .click(screen.getByText('Past 24 hours'))
         .click(screen.getByText('Past 10 minutes'))
+
+      .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
+      .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
 
     // Enable the status bar
     let d = await getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').find('path').getAttribute('d')
@@ -137,7 +138,7 @@ test("test run observe overview hello world service ", async (t) => {
             offsetY: Math.round(finalY),
         })
         .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
-        .expect(getElementFromSelectorTestId('request-table').exists).ok({timeout: WAIT_TIME_EX_LONG})
+        .expect(getElementFromSelectorTestId('request-table').exists).ok({timeout: WAIT_TIME_LONG})
         .expect(getElementFromSelectorTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
