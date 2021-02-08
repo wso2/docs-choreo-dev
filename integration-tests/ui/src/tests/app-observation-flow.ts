@@ -97,7 +97,7 @@ test("test run observe overview hello world service ", async (t) => {
 
 
         // Test Diagram status
-        .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_MEDIUM})
+        .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_EX_LONG})
         .expect(Selector('#CounterLeft').exists).ok({timeout: WAIT_TIME_MEDIUM})
 
         .expect(screen.getByTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_EX_LONG})
