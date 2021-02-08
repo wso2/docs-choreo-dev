@@ -5,7 +5,6 @@ import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
 import {
     createNewApp,
-    clearAppsIfExists,
     createProperty,
     createRespond,
     WAIT_TIME_SHORT,
@@ -44,8 +43,6 @@ declare global {
     }
 }
 
-const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-
 fixture("Application observability")
     .page(config.testURL)
     .beforeEach(async t => {
@@ -61,19 +58,18 @@ fixture("Application observability")
         httpLogger.clear();
     });
 
-async function deployApp(t: TestController) {
-    await clearAppsIfExists(t);
-    await createNewApp(t, appName);
+async function deployApp(t: TestController, name: string) {
+    await createNewApp(t, name);
 
-    await t.expect(await getLocation()).contains("app/" + appName + "/develop", {timeout: WAIT_TIME_SHORT})
+    await t.expect(await getLocation()).contains("app/" + name + "/develop", {timeout: WAIT_TIME_SHORT})
     await selectTrigger(t, "API", "hello");
-    await createProperty(t, "res", '"hello world"');
+    await createProperty(t, "var", "res", '"hello world"');
     await t.click(Selector("#SmallPlus"), {speed: 0.5})
         .click(Selector("#Plus_a"), {speed: 0.5})
     await createHttpConnector(t, "https://postman-echo.com/get?foo1=bar1&foo2=bar2", "GET", "response");
     await createLog(t, 'Info', 'Special test Log for App');
     await createRespond(t, "res");
-    const appURL = await deployToChoreo(t, appName)
+    const appURL = await deployToChoreo(t, name)
 
     await callDeployedApp(t, `${appURL}/hello`, 3, 3)
     // TODO : Observability logs view refresh is not working, this time out is a work around
@@ -87,7 +83,8 @@ async function deployApp(t: TestController) {
 
 
 test("test run observe overview hello world service ", async (t) => {
-    await deployApp(t);
+    const appName = generateAppName("observe-1");
+    await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
         .expect(Selector(".worker-line").exists).ok("Diagram should be drawn", {timeout: WAIT_TIME_SHORT})
         .expect(Selector('#resource-path').innerText).contains('resource: /hello')
@@ -155,10 +152,14 @@ test("test run observe overview hello world service ", async (t) => {
         .hover(getElementFromSelectorTestId('hide-options-btn'))
         .click(getElementFromSelectorTestId('hide-options-btn'))
         .expect(getElementFromSelectorTestId('show-options-btn').exists).ok({timeout: WAIT_TIME_SHORT})
+
+    await goBacktoAppsList(t);
+    await deleteApp(t, appName, true);
 });
 
 test("test run observe log view hello world service ", async (t) => {
-    await deployApp(t);
+    const appName = generateAppName("observe-2");
+    await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
     await t.expect(getElementFromSelectorTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
         .click(getElementFromSelectorTestId("panel-Logs-btn"))
@@ -175,5 +176,8 @@ test("test run observe log view hello world service ", async (t) => {
         )
         .expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT})
         .expect(Selector('span').withText("Special test Log for App").count).gte(3, 'Not exists', {timeout: WAIT_TIME_MEDIUM})
+    
+    await goBacktoAppsList(t);
+    await deleteApp(t, appName, true);
 });
 

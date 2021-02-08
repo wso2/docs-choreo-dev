@@ -5,7 +5,6 @@ import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
 import {
   createNewApp,
-  clearAppsIfExists,
   selectTrigger,
   createProperty,
   createRespond,
@@ -16,7 +15,10 @@ import {
   saveLogs,
   enableDetailedLogs,
   deployToChoreo,
-  getElementFromSelectorTestId
+  getElementFromSelectorTestId,
+  generateAppName,
+  goBacktoAppsList,
+  deleteApp
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
@@ -59,16 +61,12 @@ fixture("Application test run  and deployment")
 
 
 test("test run hello world service ", async (t) => {
-
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Page loaded successfully");
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-1");
   await createNewApp(t, appName);
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
   await t.expect(getElementFromSelectorTestId("editor-run-btn").visible).ok({ timeout: WAIT_TIME_SHORT })
@@ -90,15 +88,17 @@ test("test run hello world service ", async (t) => {
   logger.info("Backend service response : " + response);
   await t.expect(response).eql("hello world");
   logger.info("Hello world string recieved successfully !")
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 });
 
 test("test postman view", async (t) => {
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-2");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
   await t.click(getElementFromSelectorTestId("test"))
@@ -110,18 +110,20 @@ test("test postman view", async (t) => {
   await t.click(getElementFromSelectorTestId("click-here"));
   await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
   await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
-  await t.expect(getElementFromSelectorTestId('api-key-error').exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.expect(getElementFromSelectorTestId('api-key-error').exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Test phase successful!");
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 });
 
 test("deploy hello world service", async (t) => {
 
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-3");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
   const testUrl = await deployToChoreo(t,appName)
@@ -135,6 +137,9 @@ test("deploy hello world service", async (t) => {
 
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
-    .expect(getElementFromSelectorTestId("deploy-url").exists).ok({ timeout: WAIT_TIME_LONG })
+    .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({ timeout: WAIT_TIME_LONG })
   logger.info("Undeloyed application successfully!")
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 })
