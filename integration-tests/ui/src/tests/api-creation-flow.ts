@@ -66,7 +66,7 @@ test("test run hello world service ", async (t) => {
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
   await t.expect(getElementFromSelectorTestId("editor-run-btn").visible).ok({ timeout: WAIT_TIME_SHORT })
@@ -98,7 +98,7 @@ test("test postman view", async (t) => {
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
   await t.click(getElementFromSelectorTestId("test"))
@@ -123,7 +123,7 @@ test("deploy hello world service", async (t) => {
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
   const testUrl = await deployToChoreo(t,appName)
