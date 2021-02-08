@@ -107,6 +107,9 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
         .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
 
+        // Change time granularity
+        .click(screen.getByText('Past 24 hours'))
+        .click(screen.getByText('Past 10 minutes'))
         // Disable refresh
         .hover(Selector('#refresh-interval'))
         .click(Selector('#refresh-interval'))
@@ -114,8 +117,6 @@ test("test run observe overview hello world service ", async (t) => {
 
     // Check for log panel
     await t.expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_LONG})
-        .click(screen.getByText('Past 24 hours'))
-        .click(screen.getByText('Past 10 minutes'))
 
       .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
       .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
