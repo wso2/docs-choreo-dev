@@ -3,7 +3,7 @@ import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { checkSourceCodeForValidation, createNewApp, createProperty, clearAppsIfExists, selectTrigger, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { checkSourceCodeForValidation, createNewApp, createProperty, deleteApp, generateAppName, selectTrigger, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -52,10 +52,9 @@ fixture("Data Mapper")
 */
 test ("Low code form AI suggestions", async (t) => {
   logger.info("Starting Data Mapper Low code form AI suggestion test...");
-  const appName = "data-mapper-" + Math.random().toString(36).substr(2, 5);
+  const appName = generateAppName("datamapper");
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   logger.info("Page loaded successfully!");
-  await clearAppsIfExists(t);
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
   await selectTrigger(t, "API", "test");
@@ -81,4 +80,5 @@ test ("Low code form AI suggestions", async (t) => {
   const variableSourceFields = ['http:Client httpEndpoint = new (url);']
   await checkSourceCodeForValidation(t,variableSourceFields);
   logger.info("Data Mapper AI suggestion added to Low Code form successfully!");
+  deleteApp(t, appName, true);
 });
