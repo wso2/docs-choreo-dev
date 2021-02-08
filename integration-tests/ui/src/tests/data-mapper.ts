@@ -53,7 +53,6 @@ fixture("Data Mapper")
 test ("Low code form AI suggestions", async (t) => {
   logger.info("Starting Data Mapper Low code form AI suggestion test...");
   const appName = generateAppName("datamapper");
-  logger.info("Page loaded successfully!");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
   await selectTrigger(t, "API", "test");
