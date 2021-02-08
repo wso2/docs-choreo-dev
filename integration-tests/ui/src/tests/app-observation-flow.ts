@@ -13,7 +13,13 @@ import {
     WAIT_TIME_LONG,
     saveLogs,
     enableDetailedLogs,
-    createHttpConnector, callDeployedApp, createLog, deployToChoreo, selectTrigger, getElementFromSelectorTestId
+    createHttpConnector,
+    callDeployedApp,
+    createLog,
+    deployToChoreo,
+    selectTrigger,
+    getElementFromSelectorTestId,
+    WAIT_TIME_EX_LONG
 } from "../utils/choreo-utils";
 import {logger} from '../utils/logger'
 
@@ -95,7 +101,7 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
 
         // Test Diagram status
-        .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_MEDIUM})
+        .expect(Selector('.metrics-text').withText('100% Success').exists).ok({timeout: WAIT_TIME_EX_LONG})
         .expect(Selector('#CounterLeft').exists).ok({timeout: WAIT_TIME_MEDIUM})
 
         .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
