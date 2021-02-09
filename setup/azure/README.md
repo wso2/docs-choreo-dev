@@ -9,6 +9,8 @@ SERVICE_PRINCIPLE_CLIENT_SECRET=xxxxxxxxxxxxx
 WILDCARD_DOMAIN=choreo.dev
 LOADBALANCER_IP=xxx.xxx.xxx.xxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 EOF
 ```
 

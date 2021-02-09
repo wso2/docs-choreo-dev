@@ -3,7 +3,9 @@ import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, createHttpConnector, clearAppsIfExists, getStorage, waitForPerformanceDrillDown, selectTrigger, WAIT_TIME_SHORT, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { createNewApp, createHttpConnector, goBacktoAppsList, getStorage, 
+  waitForPerformanceDrillDown, selectTrigger, generateAppName, WAIT_TIME_SHORT,
+  saveLogs, enableDetailedLogs, deleteApp } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -51,10 +53,7 @@ test ("Performance Drill Down test", async (t) => {
 
   logger.info("Starting Performance Analyzer Performance Drill Down test...");
 
-  const appName = "perfanalyzertest-" + Math.random().toString(36).substr(2, 5);
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Page loaded successfully!");
-  await clearAppsIfExists(t);
+  const appName = generateAppName("analyzer");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
   await selectTrigger(t, "API", "test");
@@ -91,4 +90,7 @@ test ("Performance Drill Down test", async (t) => {
   }
   logger.info("Performance Analyzer Performance Drill Down test completed successfully!");
   await t.wait(WAIT_TIME_SHORT);
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 });

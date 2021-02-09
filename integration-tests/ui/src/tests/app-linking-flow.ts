@@ -3,7 +3,8 @@ import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { clearAppsIfExists, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import { goBacktoAppsList, generateAppName, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM,
+  WAIT_TIME_LONG, saveLogs, enableDetailedLogs, deleteApp } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -47,7 +48,6 @@ test.skip("test app linking", async (t) => {
 
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     logger.info("Page loaded successfully");
-    await clearAppsIfExists(t);
 
     logger.info("Start connecting a running app : " + "linking-test-app");
     await t
@@ -75,12 +75,8 @@ test.skip("test app linking", async (t) => {
 });
 
 test("test anonymous app linking", async (t) => {
-
-    await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-    logger.info("Page loaded successfully");
-    await clearAppsIfExists(t);
-
-    logger.info("Start connecting an anonymous app : " + "annon-linking-test-app");
+    let appName = generateAppName("linking");
+    logger.info("Start connecting an anonymous app : " + appName);
 
     async function getAnnonAppUrl() {
         const { stdout, stderr } = await exec('sh src/utils/applinking_test/run_annonapp.sh');
@@ -96,7 +92,7 @@ test("test anonymous app linking", async (t) => {
 
     await t.expect(screen.getByText("Add to Choreo").exists).ok({ timeout: WAIT_TIME_SHORT })
         .click(screen.getByText("Add to Choreo"))
-        .typeText(screen.findByPlaceholderText("Application name"), "annon-linking-test-app")
+        .typeText(screen.findByPlaceholderText("Application name"), appName)
         .click(screen.findByText("Next"))
         // TODO : Check possibility to remove manual wait added to enable the copy btn
         .wait(2000)
@@ -106,7 +102,10 @@ test("test anonymous app linking", async (t) => {
     logger.info("Retrieved app linking command : " + linkingCommand);
     await exec(linkingCommand);
     await t.wait(WAIT_TIME_LONG);
-    await t.expect(screen.getByText("annon-linking-test-app", { exact: false }).exists).ok({ timeout: WAIT_TIME_MEDIUM });
+    await t.expect(screen.getByText(appName, { exact: false }).exists).ok({ timeout: WAIT_TIME_MEDIUM });
 
     logger.info("Anonymous App Linking successful");
+
+    await goBacktoAppsList(t);
+    await deleteApp(t, appName, true);
 });

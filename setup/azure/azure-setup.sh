@@ -160,6 +160,17 @@ helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
 helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.2.11
 
+################ Install CSI Secret Store Driver ########
+echo "--- Creating namespace csi-secret-store-driver..."
+kubectl create namespace csi-secret-store-driver --dry-run=client -o yaml | kubectl apply -f -
+
+helm repo add csi-secrets-store-provider-azure https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts
+helm repo update
+helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --namespace csi-secret-store-driver --version 0.0.16
+
+################ Install CSI Secret Store Class Secret ########
+# This secret has to be created in other namespaces as well if CSI driver is going to be used
+kubectl create secret generic csi-secret-store-azure --from-literal clientid="${CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${CSI_KEY_VAULT_CLIENT_SECRET}" -n "${NAMESPACE}"
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml

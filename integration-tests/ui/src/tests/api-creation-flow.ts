@@ -1,10 +1,25 @@
-import { Selector, ClientFunction, RequestLogger } from "testcafe";
+import { Selector, RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
-import Axios, { AxiosResponse } from "axios";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, clearAppsIfExists, selectTrigger, createProperty, createRespond, callExternalEndpoint, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, WAIT_TIME_EX_LONG, WAIT_TIME_LONG, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
+import {
+  createNewApp,
+  selectTrigger,
+  createProperty,
+  createRespond,
+  callExternalEndpoint,
+  WAIT_TIME_SHORT,
+  WAIT_TIME_MEDIUM,
+  WAIT_TIME_LONG,
+  saveLogs,
+  enableDetailedLogs,
+  deployToChoreo,
+  getElementFromSelectorTestId,
+  generateAppName,
+  goBacktoAppsList,
+  deleteApp
+} from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -46,110 +61,72 @@ fixture("Application test run  and deployment")
 
 
 test("test run hello world service ", async (t) => {
-
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  logger.info("Page loaded successfully");
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-1");
   await createNewApp(t, appName);
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.wait(WAIT_TIME_SHORT);
-  await t.click(screen.getByTestId("editor-run-btn"), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("editor-run-btn").visible).ok({ timeout: WAIT_TIME_SHORT })
+  await t.click(getElementFromSelectorTestId("editor-run-btn"), { speed: 0.5 });
   logger.info("Started test run");
 
   await t
-    .expect(screen.findAllByTestId("test-url").exists).ok({ timeout: WAIT_TIME_MEDIUM })
+    .expect(getElementFromSelectorTestId("test-url").exists).ok({ timeout: WAIT_TIME_MEDIUM })
     .expect(
-      screen.findAllByTestId("log-panel").withText("started HTTP/WS listener")
+      getElementFromSelectorTestId("log-panel").withText("started HTTP/WS listener")
         .exists
     ).ok({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Retrieving the test URL successful");
 
-  const testUrl = await screen.findAllByTestId("test-url").textContent;
+  const testUrl = await getElementFromSelectorTestId("test-url").textContent;
 
-  await t.wait(WAIT_TIME_SHORT);
   const response = await callExternalEndpoint(t, (testUrl + "/hello"), 3)
 
   logger.info("Backend service response : " + response);
   await t.expect(response).eql("hello world");
   logger.info("Hello world string recieved successfully !")
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 });
 
 test("test postman view", async (t) => {
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-2");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.click(screen.getByTitle("test"))
+  await t.click(getElementFromSelectorTestId("test"))
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT })
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Testing invalid API key validation attempt scenario");
-  await t.click(screen.getByTitle("Try out"))
-  await t.click(Selector(screen.findByText('Click here')));
-  await t.expect(screen.findByText('/API Key/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await t.expect(screen.findByPlaceholderText('/XXXX-XXXX-XXXX-XXXX/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await t.typeText(screen.getByPlaceholderText('XXXX-XXXX-XXXX-XXXX'), 'dummyapikey');
-  await t.expect(screen.findByText('/your API key is wrong/i').exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await t.wait(WAIT_TIME_SHORT);
+  await t.click(getElementFromSelectorTestId("try-out"))
+  await t.click(getElementFromSelectorTestId("click-here"));
+  await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
+  await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
+  await t.expect(getElementFromSelectorTestId('api-key-error').exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Test phase successful!");
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 });
 
 test("deploy hello world service", async (t) => {
 
-  const appName = "sampleapi-" + Math.random().toString(36).substr(2, 5);
-  await clearAppsIfExists(t);
+  const appName = generateAppName("app-3");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectTrigger(t, "API", "hello");
-  await createProperty(t, "res", '"hello world"');
+  await createProperty(t, "var", "res", '"hello world"');
   await createRespond(t, "res");
 
-  await t.click(screen.getByTitle("deploy"))
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await t.expect(await getLocation()).contains("app/" + appName + "/deploy", { timeout: WAIT_TIME_SHORT })
-
-  logger.info("Succesfully Navigated to Deploy view")
-
-  logger.info("Deploying application...")
-  await t.wait(WAIT_TIME_SHORT);
-  await t.click(screen.getByTestId("deploy-btn"), { speed: 0.5 })
-    .expect(screen.findByTestId("checkout-loading").exists).ok({ timeout: WAIT_TIME_MEDIUM })
-    .expect(screen.findByTestId("checkout-failed").exists).notOk({ timeout: WAIT_TIME_EX_LONG })
-    .expect(screen.findByTestId("checkout-ok").exists).ok({ timeout: WAIT_TIME_EX_LONG })
-  logger.info("Checkout phase successful!")
-
-
-  logger.info("Starting build phase...")
-  await t.expect(screen.findByTestId("build-loading").exists).ok({ timeout: WAIT_TIME_SHORT })
-    .expect(screen.findByTestId("build-loading").exists).notOk({ timeout: WAIT_TIME_EX_LONG }) // todo - increase timeout
-    .expect(screen.findByTestId("build-failed").exists).notOk({ timeout: WAIT_TIME_MEDIUM })
-    .expect(screen.findByTestId("build-ok").exists).ok({ timeout: WAIT_TIME_EX_LONG });
-  logger.info("Build phase successful!");
-
-  await t.expect(screen.findByTestId("test-ok").exists).ok({ timeout: WAIT_TIME_LONG })
-  logger.info("Test phase successful!");
-
-  logger.info("Starting deploy phase...");
-  await t
-    .expect(screen.findByTestId("deploy-loading").exists).ok({ timeout: WAIT_TIME_SHORT })
-    .expect(screen.findByTestId("deploy-loading").exists).notOk({ timeout: WAIT_TIME_EX_LONG })
-    .expect(screen.findByTestId("deploy-failed").exists).notOk({ timeout: WAIT_TIME_MEDIUM })
-    .expect(screen.findByTestId("deploy-ok").exists).ok({ timeout: WAIT_TIME_EX_LONG })
-  logger.info("Deploy phase successful!")
-
-  await t.wait(WAIT_TIME_MEDIUM);
-
-  const testUrl = await screen.findAllByTestId("deploy-url").find("input").value;
+  const testUrl = await deployToChoreo(t,appName)
   logger.info("test url : " + testUrl);
   await t.expect(testUrl.includes("https://")).ok();
   const response = await callExternalEndpoint(t, testUrl + "/hello", 3);
@@ -160,6 +137,9 @@ test("deploy hello world service", async (t) => {
 
   logger.info("Stopping deployed application")
   await t.click(screen.getByText("Stop"))
-    .expect(screen.findByPlaceholderText("Please deploy to get access URL").exists).ok({ timeout: WAIT_TIME_LONG })
+    .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({ timeout: WAIT_TIME_LONG })
   logger.info("Undeloyed application successfully!")
+
+  await goBacktoAppsList(t);
+  await deleteApp(t, appName, true);
 })

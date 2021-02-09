@@ -32,3 +32,7 @@ node_modules
 build
 #DirEnv file
 .envrc
+
+# Ballerina
+.ballerina
+target
