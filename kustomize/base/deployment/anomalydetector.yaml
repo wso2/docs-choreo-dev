@@ -39,6 +39,9 @@ spec:
         - name: anomalydetector-model-metadata
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/models.properties"
           subPath: "models.properties"
+        - name: secret-anomalydetector
+          mountPath: "/mnt/csi/secret-anomalydetector"
+          readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -108,5 +111,13 @@ spec:
         configMap:
           defaultMode: 420
           name: cm-anomalydetector
+      - name: secret-anomalydetector
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-anomalydetector
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
