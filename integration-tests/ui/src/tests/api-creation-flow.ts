@@ -81,6 +81,8 @@ test("test run hello world service ", async (t) => {
     ).ok({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Retrieving the test URL successful");
 
+  // Waiting to avoid getting 404 for the URL
+  await t.wait(WAIT_TIME_SHORT);
   const testUrl = await getElementFromSelectorTestId("test-url").textContent;
 
   const response = await callExternalEndpoint(t, (testUrl + "/hello"), 3)
