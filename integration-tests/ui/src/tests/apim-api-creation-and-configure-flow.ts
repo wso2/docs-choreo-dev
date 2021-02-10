@@ -540,8 +540,8 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByText("This is a sample document with inline content for an API").exists).ok();
   logger.info("Inline source type document loaded successfully");
 
-  await Selector('button').withText("Cancel").exists;
-  await t.click(Selector('button').withText("Cancel").nth(1), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("text-editor-cancel-btn").exists).ok();
+  await t.click(getElementFromSelectorTestId("text-editor-cancel-btn"), { speed: 0.5 });
 
   // Check edit behavior
   await t.expect(getElementFromSelectorTestId("document-edit").exists).ok();
@@ -578,8 +578,8 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByText("This is an updated document with inline content for an API").exists).ok();
   logger.info("Inline source type document updated successfully");
 
-  await t.expect(screen.findAllByText("Cancel").exists).ok();
-  await t.click(screen.findAllByText("Cancel").nth(1), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("text-editor-cancel-btn").exists).ok();
+  await t.click(getElementFromSelectorTestId("text-editor-cancel-btn"), { speed: 0.5 });
 
   await t.expect(getElementFromSelectorTestId("view-edit-cancel-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-cancel-btn"), { speed: 0.5 });
@@ -591,7 +591,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.findByText("Markdown").exists).ok();
   await t.click(screen.findByText("Markdown"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await t.expect(screen.findByText("View Document").exists).ok();
+  await t.expect(getElementFromSelectorTestId("tab-header").exists).ok();
   logger.info("Document view page loaded successfully");
 
   await t.expect(getElementFromSelectorTestId("document-name").find("input")
@@ -608,8 +608,8 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByText("This is a sample document with markdown content for an API").exists).ok();
   logger.info("Markdown source type document loaded successfully");
 
-  await t.expect(screen.findAllByText("Cancel").exists).ok();
-  await t.click(screen.findAllByText("Cancel").nth(1), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("markdown-editor-cancel-btn").exists).ok();
+  await t.click(getElementFromSelectorTestId("markdown-editor-cancel-btn"), { speed: 0.5 });
 
   // Check edit behavior
   await t.expect(getElementFromSelectorTestId("document-edit").exists).ok();
@@ -647,8 +647,8 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByText("This is an updated document with markdown content for an API").exists).ok();
   logger.info("Markdown source type document updated successfully");
 
-  await t.expect(screen.findAllByText("Cancel").exists).ok();
-  await t.click(screen.findAllByText("Cancel").nth(1), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("markdown-editor-cancel-btn").exists).ok();
+  await t.click(getElementFromSelectorTestId("markdown-editor-cancel-btn"), { speed: 0.5 });
 
   await t.expect(getElementFromSelectorTestId("view-edit-cancel-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-cancel-btn"), { speed: 0.5 });
@@ -723,7 +723,7 @@ test("Delete an API document from document view page", async (t) => {
   await t.expect(screen.findByText("URL").exists).ok();
   await t.click(screen.findByText("URL"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await t.expect(screen.findByText("View Document").exists).ok();
+  await t.expect(getElementFromSelectorTestId("tab-header").exists).ok();
   logger.info("Document view page loaded successfully");
 
   // Click delete button
