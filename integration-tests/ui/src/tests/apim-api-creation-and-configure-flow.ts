@@ -49,7 +49,7 @@ fixture("API creation and config flow")
 
   });
 
-test("Create API type choreo app", async (t) => {
+test.meta({'unstable': "true"})("Create API type choreo app", async (t) => {
   await createNewApp(t, appName);
 
   // adding api content
@@ -101,7 +101,7 @@ test("Create API type choreo app", async (t) => {
   await goBacktoAppsList(t);
 })
 
-test("Create API from previously created choreo app", async (t) => {
+test.meta({'unstable': "true"})("Create API from previously created choreo app", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -114,7 +114,7 @@ test("Create API from previously created choreo app", async (t) => {
   logger.info("Created API config view loaded successfully!");
 });
 
-test("Change design configurations of API", async (t) => {
+test.meta({'unstable': "true"})("Change design configurations of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -155,7 +155,7 @@ test("Change design configurations of API", async (t) => {
   logger.info("Design configuration update successful");
 });
 
-test("Change subscriptions of API", async (t) => {
+test.meta({'unstable': "true"})("Change subscriptions of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -185,7 +185,7 @@ test("Change subscriptions of API", async (t) => {
   logger.info("Subscription update successful");
 });
 
-test("Change Business Info of API", async (t) => {
+test.meta({'unstable': "true"})("Change Business Info of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -233,7 +233,7 @@ test("Change Business Info of API", async (t) => {
   logger.info("Business Info update successful");
 });
 
-test("Change Runtime Configurations of API", async (t) => {
+test.meta({'unstable': "true"})("Change Runtime Configurations of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -297,7 +297,7 @@ test("Change Runtime Configurations of API", async (t) => {
     .find("input[type=checkbox]").nth(0).checked).eql(true);
 });
 
-test("Create a URL type document for an API", async (t) => {
+test.meta({'unstable': "true"})("Create a URL type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -337,7 +337,7 @@ test("Create a URL type document for an API", async (t) => {
   logger.info("Created URL Source Document listed successfully!");
 });
 
-test("Create an Inline type document for an API", async (t) => {
+test.meta({'unstable': "true"})("Create an Inline type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -386,7 +386,7 @@ test("Create an Inline type document for an API", async (t) => {
   logger.info("Created Inline source Document listed successfully!");
 });
 
-test("Create a Markdown type document for an API", async (t) => {
+test.meta({'unstable': "true"})("Create a Markdown type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -434,7 +434,7 @@ test("Create a Markdown type document for an API", async (t) => {
   logger.info("Created markdown source Document listed successfully!");
 });
 
-test("Create a File type document for an API", async (t) => {
+test.meta({'unstable': "true"})("Create a File type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -481,7 +481,7 @@ test("Create a File type document for an API", async (t) => {
   logger.info("Created File source Document listed successfully!");
 });
 
-test("View different types of API documents", async (t) => {
+test.meta({'unstable': "true"})("View different types of API documents", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -737,7 +737,7 @@ test("View different types of API documents", async (t) => {
   logger.info("Returned to documents list page successfully");
 });
 
-test("Delete an API document from document view page", async (t) => {
+test.meta({'unstable': "true"})("Delete an API document from document view page", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
@@ -786,7 +786,7 @@ test.skip("Delete documents of an API", async (t) => {
   await clearAPIDocumentsIfExists(t);
 });
 
-test("Delete an API", async (t) => {
+test.meta({'unstable': "true"})("Delete an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 

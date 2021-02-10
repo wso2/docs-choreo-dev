@@ -60,7 +60,7 @@ fixture("Application test run  and deployment")
   });
 
 
-test("test run hello world service ", async (t) => {
+test.meta({'stable': "true"})("test run hello world service ", async (t) => {
   const appName = generateAppName("app-1");
   await createNewApp(t, appName);
 
@@ -93,7 +93,7 @@ test("test run hello world service ", async (t) => {
   await deleteApp(t, appName, true);
 });
 
-test("test postman view", async (t) => {
+test.meta({'stable': "true"})("test postman view", async (t) => {
   const appName = generateAppName("app-2");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
@@ -117,7 +117,7 @@ test("test postman view", async (t) => {
   await deleteApp(t, appName, true);
 });
 
-test("deploy hello world service", async (t) => {
+test.meta({'stable': "true"})("deploy hello world service", async (t) => {
 
   const appName = generateAppName("app-3");
   await createNewApp(t, appName);

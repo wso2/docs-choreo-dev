@@ -85,7 +85,7 @@ async function deployApp(t: TestController, name: string) {
 }
 
 
-test("test run observe overview hello world service ", async (t) => {
+test.meta({'unstable': "true"})("test run observe overview hello world service ", async (t) => {
     const appName = generateAppName("observe-1");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
@@ -160,7 +160,7 @@ test("test run observe overview hello world service ", async (t) => {
     await deleteApp(t, appName, true);
 });
 
-test("test run observe log view hello world service ", async (t) => {
+test.meta({'unstable': "true"})("test run observe log view hello world service ", async (t) => {
     const appName = generateAppName("observe-2");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})

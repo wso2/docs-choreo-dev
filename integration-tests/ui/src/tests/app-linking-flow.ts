@@ -74,7 +74,7 @@ test.skip("test app linking", async (t) => {
     logger.info("App Linking successful");
 });
 
-test("test anonymous app linking", async (t) => {
+test.meta({'stable': "true"})("test anonymous app linking", async (t) => {
     let appName = generateAppName("linking");
     logger.info("Start connecting an anonymous app : " + appName);
 
