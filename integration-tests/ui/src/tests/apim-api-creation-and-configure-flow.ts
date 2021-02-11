@@ -6,7 +6,7 @@ import {
   createApiFromChoreoApp, addApiSimpleResponse, clearAPIDocumentsIfExists,
   createNewApp, enableDetailedLogs, saveLogs, selectAPIType, generateAppName, generateApiName,
   WAIT_TIME_EX_LONG, WAIT_TIME_LONG, WAIT_TIME_MEDIUM, WAIT_TIME_SHORT, goToApiListView, goBacktoAppsList,
-  openApi, deleteApi
+  openApi, deleteApi, navigateToAPIDocumentsTab
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger';
 import { getLocation } from "../utils/login-utils";
@@ -110,7 +110,7 @@ test("Create API from previously created choreo app", async (t) => {
 
   // test overview page loading
   await t.expect(await getLocation()).contains("/config/overview", { timeout: WAIT_TIME_SHORT });
-  await screen.queryAllByText("Overview").exists;
+  await t.expect(screen.queryAllByText("Overview")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Created API config view loaded successfully!");
 });
 
@@ -121,37 +121,37 @@ test("Change design configurations of API", async (t) => {
   await openApi(t, apiName);
 
   // Go to design configs tab
-  await screen.findByText("Design Configurations").exists;
+  await t.expect(screen.findByText("Design Configurations")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Design Configurations"), { speed: 0.5 });
-  await screen.findByText("Description").exists;
+  await t.expect(screen.findByText("Description")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Navigated to design configuration tab successfully");
 
   // Enter a description and some tags
-  await screen.findByTestId("toggle-edit-description").exists;
+  await t.expect(screen.findByTestId("toggle-edit-description")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("toggle-edit-description"), { speed: 0.5 });
   await t.typeText(screen.findByTestId("description-input"), "This is a sample API", { speed: 0.5 });
-  await screen.findByTestId("toggle-add-tags").exists;
+  await t.expect(screen.findByTestId("toggle-add-tags")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("toggle-add-tags"), { speed: 0.5 });
-  await screen.findByTestId("tag-input").exists;
+  await t.expect(screen.findByTestId("tag-input")).ok({ timeout: WAIT_TIME_SHORT });
   await t
     .typeText(screen.findByTestId("tag-input"), "sample", { speed: 0.5 })
     .pressKey("Enter", { speed: 0.5 });
   await t
     .typeText(screen.findByTestId("tag-input"), "test", { speed: 0.5 })
     .pressKey("Enter", { speed: 0.5 });
-  await screen.findAllByText("sample").exists;
-  await screen.findAllByText("api").exists;
+  await t.expect(screen.findAllByText("sample")).ok({ timeout: WAIT_TIME_SHORT });
+  await t.expect(screen.findAllByText("api")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Input description and tags successful");
 
   // Save design configs
-  await screen.findByText("Save").exists;
+  await t.expect(screen.findByText("Save")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Save"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
   // Verify Design config update by checking overview tab
-  await screen.findByText("Overview").exists;
+  await t.expect(screen.findByText("Overview")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Overview"), { speed: 0.5 });
-  await screen.findByText("This is a sample API").exists;
+  await t.expect(screen.findByText("This is a sample API")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Design configuration update successful");
 });
 
@@ -162,26 +162,26 @@ test("Change subscriptions of API", async (t) => {
   await openApi(t, apiName);
 
   // Go to Subscriptions tab
-  await screen.findByText("Subscriptions").exists;
+  await t.expect(screen.findByText("Subscriptions")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Subscriptions"), { speed: 0.5 });
-  await screen.findByText("Attach business plans to API").exists;
+  await t.expect(screen.findByText("Attach business plans to API")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Navigated to Subscriptions tab successfully");
 
   // Add Gold and Silver business plan subscriptions
-  await screen.findByTestId("checkbox-Gold").exists;
+  await t.expect(screen.findByTestId("checkbox-Gold")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("checkbox-Gold"), { speed: 0.5 });
-  await screen.findByTestId("checkbox-Silver").exists;
+  await t.expect(screen.findByTestId("checkbox-Silver")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("checkbox-Silver"), { speed: 0.5 });
 
   // Save new suscriptions
-  await screen.findByText("Save").exists;
+  await t.expect(screen.findByText("Save")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Save"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
   // Verify Subscription update by checking overview tab
-  await screen.findByText("Overview").exists;
+  await t.expect(screen.findByText("Overview")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Overview"), { speed: 0.5 });
-  await screen.findByText("Unlimited, Gold, Silver").exists;
+  await t.expect(screen.findByText("Unlimited, Gold, Silver")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Subscription update successful");
 });
 
@@ -192,39 +192,39 @@ test("Change Business Info of API", async (t) => {
   await openApi(t, apiName);
 
   // Go to Business Info tab
-  await screen.findByText("Business Info").exists;
+  await t.expect(screen.findByText("Business Info")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Business Info"), { speed: 0.5 });
-  await screen.findByText("Business Information").exists;
+  await t.expect(screen.findByText("Business Information")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Navigated to Business Info tab successfully");
 
   // Edit Business Info details
-  await screen.findByTestId("editButton-businessOwnerName").exists;
+  await t.expect(screen.findByTestId("editButton-businessOwnerName")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("editButton-businessOwnerName"), { speed: 0.5 });
-  await screen.findByTestId("textbox-businessOwnerName").exists;
+  await t.expect(screen.findByTestId("textbox-businessOwnerName")).ok({ timeout: WAIT_TIME_SHORT });
   await t.typeText(screen.findByTestId("textbox-businessOwnerName"), "John Doe", { speed: 0.5, replace: true });
 
-  await screen.findByTestId("editButton-businessOwnerMail").exists;
+  await t.expect(screen.findByTestId("editButton-businessOwnerMail")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("editButton-businessOwnerMail"), { speed: 0.5 });
-  await screen.findByTestId("textbox-businessOwnerMail").exists;
+  await t.expect(screen.findByTestId("textbox-businessOwnerMail")).ok({ timeout: WAIT_TIME_SHORT });
   await t.typeText(screen.findByTestId("textbox-businessOwnerMail"), "johndoe@mail.com", { speed: 0.5, replace: true });
 
-  await screen.findByTestId("editButton-technicalOwnerName").exists;
+  await t.expect(screen.findByTestId("editButton-technicalOwnerName")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("editButton-technicalOwnerName"), { speed: 0.5 });
-  await screen.findByTestId("textbox-technicalOwnerName").exists;
+  await t.expect(screen.findByTestId("textbox-technicalOwnerName")).ok({ timeout: WAIT_TIME_SHORT });
   await t.typeText(screen.findByTestId("textbox-technicalOwnerName"), "Jane Smith", { speed: 0.5, replace: true });
 
-  await screen.findByTestId("editButton-technicalOwnerMail").exists;
+  await t.expect(screen.findByTestId("editButton-technicalOwnerMail")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByTestId("editButton-technicalOwnerMail"), { speed: 0.5 });
-  await screen.findByTestId("textbox-technicalOwnerMail").exists;
+  await t.expect(screen.findByTestId("textbox-technicalOwnerMail")).ok({ timeout: WAIT_TIME_SHORT });
   await t.typeText(screen.findByTestId("textbox-technicalOwnerMail"), "janesmith@mail.com", { speed: 0.5, replace: true });
 
   // Save new Business Info
-  await screen.findByText("Save").exists;
+  await t.expect(screen.findByText("Save")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Save"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
   // Verify Business Info update by checking overview tab
-  await screen.findByText("Overview").exists;
+  await t.expect(screen.findByText("Overview")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Overview"), { speed: 0.5 });
   await t.expect(screen.findByText("John Doe").exists).ok();
   await t.expect(screen.findByText("johndoe@mail.com").exists).ok();
@@ -240,9 +240,9 @@ test("Change Runtime Configurations of API", async (t) => {
   await openApi(t, apiName);
 
   // Go to Runtime Configurations tab
-  await screen.findByText("Runtime Configurations").exists;
+  await t.expect(screen.findByText("Runtime Configurations")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText("Runtime Configurations"), { speed: 0.5 });
-  await screen.findAllByText("Runtime Configurations").exists;
+  await t.expect(screen.findAllByText("Runtime Configurations")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Navigated to Runtime Configurations tab successfully");
 
   // Switch on CORS configuration and configure it
@@ -304,10 +304,7 @@ test("Create a URL type document for an API", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(screen.findAllByText("Documents").exists).ok();
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // delete available documents
   await clearAPIDocumentsIfExists(t);
@@ -323,7 +320,7 @@ test("Create a URL type document for an API", async (t) => {
   await t.typeText(screen.findByTestId("document-name"), "API doc link", { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc provides a URL contains the docs for"
-      + " the sample API", { speed: 0.5 });
+    + " the sample API", { speed: 0.5 });
   await t.expect(screen.findByTestId("document-url").exists).ok();
   await t.typeText(screen.findByTestId("document-url"), "https://sampleurl.doc", { speed: 0.5 });
 
@@ -333,7 +330,7 @@ test("Create a URL type document for an API", async (t) => {
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Document created successfully!");
 
-  await screen.queryByText("URL").exists;
+  await t.expect(screen.queryByText("URL")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Created URL Source Document listed successfully!");
 });
 
@@ -344,10 +341,7 @@ test("Create an Inline type document for an API", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(screen.findAllByText("Documents").exists).ok();
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // Go to add new document page
   await t.expect(screen.findByTestId("add-new-document").exists).ok();
@@ -360,7 +354,7 @@ test("Create an Inline type document for an API", async (t) => {
   await t.typeText(screen.findByTestId("document-name"), "Inline API doc", { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc provides an inline document" +
-      " contains the docs for the sample API", { speed: 0.5 });
+    " contains the docs for the sample API", { speed: 0.5 });
 
   // Select inline content type
   await t.expect(screen.findByTestId("document-source-selector").exists).ok();
@@ -371,8 +365,8 @@ test("Create an Inline type document for an API", async (t) => {
   // Add inline content
   await t.pressKey('tab');
   await t.pressKey('tab');
-  await t.typeText(() =>  document.activeElement, "This is a sample document with inline content for an" +
-      " API", { speed: 0.5 });
+  await t.typeText(() => document.activeElement, "This is a sample document with inline content for an" +
+    " API", { speed: 0.5 });
   await t.expect(screen.findByText("Add").exists).ok();
   await t.click(screen.findByText("Add"), { speed: 0.5 });
 
@@ -393,10 +387,7 @@ test("Create a Markdown type document for an API", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(screen.findAllByText("Documents").exists).ok();
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // Go to add new document page
   await t.expect(screen.findByTestId("add-new-document").exists).ok();
@@ -409,7 +400,7 @@ test("Create a Markdown type document for an API", async (t) => {
   await t.typeText(screen.findByTestId("document-name"), "Markdown API doc", { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc provides a markdown document" +
-      " contains the docs for the sample API", { speed: 0.5 });
+    " contains the docs for the sample API", { speed: 0.5 });
 
   // Select markdown content type
   await t.expect(screen.findByTestId("document-source-selector").exists).ok();
@@ -441,10 +432,7 @@ test("Create a File type document for an API", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(screen.findAllByText("Documents").exists).ok();
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // Go to add new document page
   await t.expect(screen.findByTestId("add-new-document").exists).ok();
@@ -457,7 +445,7 @@ test("Create a File type document for an API", async (t) => {
   await t.typeText(screen.findByTestId("document-name"), "File API doc", { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc provides a pdf document" +
-      " contains the docs for the sample API", { speed: 0.5 });
+    " contains the docs for the sample API", { speed: 0.5 });
 
   // Select file content type
   await t.expect(screen.findByTestId("document-source-selector").exists).ok();
@@ -468,8 +456,8 @@ test("Create a File type document for an API", async (t) => {
   // File upload
   await t.expect(screen.findByTestId("upload-button").exists).ok();
   await t
-      .setFilesToUpload(screen.findByTestId("file-input"),
-          ['../../resources/sample_doc.pdf']).click(screen.findByTestId("upload-button"));
+    .setFilesToUpload(screen.findByTestId("file-input"),
+      ['../../resources/sample_doc.pdf']).click(screen.findByTestId("upload-button"));
 
   // create document and wait for listing to loads
   await t.expect(screen.findByText("Save").exists).ok();
@@ -488,10 +476,7 @@ test("View different types of API documents", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(screen.findAllByText("Documents").exists).ok();
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // Go to view page
   await t.expect(screen.findByText("URL").exists).ok();
@@ -505,7 +490,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("API doc link").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc provides a URL contains the docs for the sample API")
-      .exists).ok();
+    .exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -519,10 +504,12 @@ test("View different types of API documents", async (t) => {
   await t.click(screen.findByTestId("document-edit"), { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc modifies the URL contains the docs" +
-      " for the sample API", { speed: 0.5, replace: true});
+    " for the sample API", { speed: 0.5, replace: true });
   await t.expect(screen.findByTestId("document-url").exists).ok();
-  await t.typeText(screen.findByTestId("document-url"), "https://updatedurl.doc", { speed: 0.5,
-    replace: true});
+  await t.typeText(screen.findByTestId("document-url"), "https://updatedurl.doc", {
+    speed: 0.5,
+    replace: true
+  });
 
   // update document
   await t.expect(screen.findByText("Save").exists).ok();
@@ -535,7 +522,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("API doc link").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc modifies the URL contains the docs for the sample API")
-      .exists).ok();
+    .exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -562,7 +549,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("Inline API doc").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc provides an inline document contains the docs for the " +
-      "sample API").exists).ok();
+    "sample API").exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -572,7 +559,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByText("This is a sample document with inline content for an API").exists).ok();
   logger.info("Inline source type document loaded successfully");
 
-  await Selector('button').withText("Cancel").exists;
+  await t.expect(Selector('button').withText("Cancel")).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(Selector('button').withText("Cancel").nth(1), { speed: 0.5 });
 
   // Check edit behavior
@@ -580,12 +567,12 @@ test("View different types of API documents", async (t) => {
   await t.click(screen.findByTestId("document-edit"), { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc contains modified inline document" +
-      " for the sample API", { speed: 0.5, replace: true});
+    " for the sample API", { speed: 0.5, replace: true });
   await t.click(screen.findByTestId("edit-btn"), { speed: 0.5 });
   await t.pressKey('tab');
   await t.pressKey('tab');
-  await t.typeText(() =>  document.activeElement, "This is an updated document with inline content for an"
-      + " API", { speed: 0.5, replace: true });
+  await t.typeText(() => document.activeElement, "This is an updated document with inline content for an"
+    + " API", { speed: 0.5, replace: true });
   await t.expect(screen.findByText("Add").exists).ok();
   await t.click(screen.findByText("Add"), { speed: 0.5 });
 
@@ -600,7 +587,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("Inline API doc").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc contains modified inline document for the sample API")
-      .exists).ok();
+    .exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -630,7 +617,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("Markdown API doc").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc provides a markdown document contains the docs for the" +
-      " sample API").exists).ok();
+    " sample API").exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -648,7 +635,7 @@ test("View different types of API documents", async (t) => {
   await t.click(screen.findByTestId("document-edit"), { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc provides updated markdown document" +
-      " for the sample API", { speed: 0.5, replace: true});
+    " for the sample API", { speed: 0.5, replace: true });
   await t.click(screen.findByTestId("edit-btn"), { speed: 0.5 });
   await t.pressKey('ctrl+a delete');
   await t.pressKey('T h i s space i s space a n space u p d a t e d space d o c u m e n t space w i t h space');
@@ -667,7 +654,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("Markdown API doc").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc provides updated markdown document" +
-      " for the sample API").exists).ok();
+    " for the sample API").exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -683,7 +670,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.findByText("Cancel").exists).ok();
   await t.click(screen.findByText("Cancel"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await screen.findAllByText("Documents").exists;
+  await t.expect(screen.findAllByText("Documents")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Returned to documents list page successfully");
 
   // View file source type doc
@@ -697,7 +684,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.getByDisplayValue("File API doc").exists).ok();
   await t.expect(screen.getByTestId("document-summary").exists).ok();
   await t.expect(screen.getByDisplayValue("This doc provides a pdf document contains the docs for the" +
-      " sample API").exists).ok();
+    " sample API").exists).ok();
   await t.expect(screen.getByTestId("document-type-selector").exists).ok();
   await t.expect(screen.getByText("How To").exists).ok();
   await t.expect(screen.getByTestId("document-source-selector").exists).ok();
@@ -711,7 +698,7 @@ test("View different types of API documents", async (t) => {
   await t.click(screen.findByTestId("document-edit"), { speed: 0.5 });
   await t.expect(screen.findByTestId("document-summary").exists).ok();
   await t.typeText(screen.findByTestId("document-summary"), "This doc provides a pdf document for the API",
-      { speed: 0.5, replace: true});
+    { speed: 0.5, replace: true });
 
   // update document
   await t.expect(screen.findByText("Save").exists).ok();
@@ -733,7 +720,7 @@ test("View different types of API documents", async (t) => {
   await t.expect(screen.findByText("Cancel").exists).ok();
   await t.click(screen.findByText("Cancel"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await screen.findAllByText("Documents").exists;
+  await t.expect(screen.findAllByText("Documents")).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Returned to documents list page successfully");
 });
 
@@ -744,10 +731,7 @@ test("Delete an API document from document view page", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(screen.findAllByText("Documents").exists).ok();
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // Go to view page
   await t.expect(screen.findByText("URL").exists).ok();
@@ -776,11 +760,7 @@ test.skip("Delete documents of an API", async (t) => {
   await openApi(t, apiName);
 
   // Go to documents tab
-  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await screen.findAllByText("Documents").exists;
-  logger.info("Navigated to documents tab successfully");
+  await navigateToAPIDocumentsTab(t);
 
   // delete available documents
   await clearAPIDocumentsIfExists(t);
