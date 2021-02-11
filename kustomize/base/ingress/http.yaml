@@ -21,6 +21,7 @@ spec:
         - datamapper.domain.com
         - console.domain.com
         - apim.domain.com
+        - capacityplanner.domain.com
       secretName: ingress-cert
   rules: # servicePort string values are replaced with numeric since nginx + linkerd does not work with string values ref: https://github.com/linkerd/linkerd2/issues/4211
     - host: app.domain.com
@@ -99,3 +100,11 @@ spec:
             serviceName: frontend
             servicePort: 8080
           path: /
+    - host: capacityplanner.domain.com
+      http:
+        paths:
+        - backend:
+            serviceName: capacity-planner
+            servicePort: 5000
+          path: /
+          
