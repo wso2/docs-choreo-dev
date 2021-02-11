@@ -146,11 +146,22 @@ test.meta({'unstable': "true"})("test run observe overview hello world service "
         offsetX: Math.round(finalX),
         offsetY: Math.round(finalY),
     })
+        .wait(2000)
         .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
             offsetX: Math.round(finalX),
             offsetY: Math.round(finalY),
         })
-        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
+      // TODO : Double click due to firefox failure
+        .hover(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
+            offsetX: Math.round(finalX),
+            offsetY: Math.round(prevY /2 ),
+        })
+        .wait(2000)
+        .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
+            offsetX: Math.round(finalX),
+            offsetY: Math.round(prevY /2 ),
+        })
+        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
         .expect(getElementFromSelectorTestId('request-table').exists).ok({timeout: WAIT_TIME_LONG})
         .expect(getElementFromSelectorTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
