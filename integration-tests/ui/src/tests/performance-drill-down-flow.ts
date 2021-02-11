@@ -44,7 +44,7 @@ fixture("Performance Analyzer")
     httpLogger.clear();
   });
 
-test ("Performance Drill Down test", async (t) => {
+test.meta({'stable': "true"})("Performance Drill Down test", async (t) => {
   const ENDPOINT = config.performanceAnalyzerTest.endpoint;
   const EXPECTED_BANNER_TPS = config.performanceAnalyzerTest.expectedBannerTps;
   const EXPECTED_BANNER_LATENCY = config.performanceAnalyzerTest.expectedBannerLatency;

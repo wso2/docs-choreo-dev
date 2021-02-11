@@ -60,7 +60,7 @@ fixture("Application test run  and deployment")
   });
 
 
-test("test run hello world service ", async (t) => {
+test.meta({'stable': "true"})("test run hello world service ", async (t) => {
   const appName = generateAppName("app-1");
   await createNewApp(t, appName);
 
@@ -81,6 +81,8 @@ test("test run hello world service ", async (t) => {
     ).ok({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Retrieving the test URL successful");
 
+  // Waiting to avoid getting 404 for the URL
+  await t.wait(WAIT_TIME_SHORT);
   const testUrl = await getElementFromSelectorTestId("test-url").textContent;
 
   const response = await callExternalEndpoint(t, (testUrl + "/hello"), 3)
@@ -93,7 +95,7 @@ test("test run hello world service ", async (t) => {
   await deleteApp(t, appName, true);
 });
 
-test("test postman view", async (t) => {
+test.meta({'stable': "true"})("test postman view", async (t) => {
   const appName = generateAppName("app-2");
   await createNewApp(t, appName);
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
@@ -117,7 +119,7 @@ test("test postman view", async (t) => {
   await deleteApp(t, appName, true);
 });
 
-test("deploy hello world service", async (t) => {
+test.meta({'stable': "true"})("deploy hello world service", async (t) => {
 
   const appName = generateAppName("app-3");
   await createNewApp(t, appName);
