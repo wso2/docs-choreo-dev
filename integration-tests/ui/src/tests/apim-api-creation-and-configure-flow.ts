@@ -298,7 +298,7 @@ test.meta({ 'unstable': "true" })("Create a URL type document for an API", async
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Document created successfully!");
 
-  await t.expect(screen.queryByText("URL")).ok({ timeout: WAIT_TIME_SHORT });
+  await t.expect(screen.queryByText("URL").exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Created URL Source Document listed successfully!");
 });
 
@@ -692,7 +692,7 @@ test.meta({ 'unstable': "true" })("View different types of API documents", async
   await t.expect(getElementFromSelectorTestId("view-edit-cancel-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-cancel-btn"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await t.expect(screen.findAllByText("Documents")).ok({ timeout: WAIT_TIME_SHORT });
+  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Returned to documents list page successfully");
 });
 
