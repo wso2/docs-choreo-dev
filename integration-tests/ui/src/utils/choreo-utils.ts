@@ -321,7 +321,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
-  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request req) {` ]
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
