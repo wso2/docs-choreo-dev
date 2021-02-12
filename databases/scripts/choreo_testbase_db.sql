@@ -60,5 +60,5 @@ CREATE TABLE openapi_definitions (
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  UNIQUE KEY swagger_def_id_unique (user_id, org_handle, app_handle, svc_file_digest)
+  UNIQUE KEY swagger_def_id_unique (org_handle, app_handle, svc_file_digest)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
