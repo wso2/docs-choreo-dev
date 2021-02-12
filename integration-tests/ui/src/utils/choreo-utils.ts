@@ -304,6 +304,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
     await t.expect(getElementFromSelectorTestId("Delete Document").exists).ok();
     await t.expect(getElementFromSelectorTestId("delete-api").exists).ok();
     await t.click(getElementFromSelectorTestId("delete-api"), { speed: 0.5 });
+    await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
     documentExists = await getElementFromSelectorTestId('delete-document').exists;
