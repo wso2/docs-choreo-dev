@@ -642,7 +642,7 @@ test.meta({ 'unstable': "true" })("View different types of API documents", async
   await t.expect(getElementFromSelectorTestId("view-edit-cancel-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-cancel-btn"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  await t.expect(screen.findAllByText("Documents")).ok({ timeout: WAIT_TIME_SHORT });
+  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Returned to documents list page successfully");
 
   // View file source type doc
