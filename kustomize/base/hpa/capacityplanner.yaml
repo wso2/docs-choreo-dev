@@ -14,4 +14,4 @@ spec:
     kind: Deployment
     name: capacity-planner
   targetCPUUtilizationPercentage: 75
-  
+
