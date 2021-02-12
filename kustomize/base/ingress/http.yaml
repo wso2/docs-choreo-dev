@@ -107,4 +107,4 @@ spec:
             serviceName: capacity-planner
             servicePort: 5000
           path: /
-          
+
