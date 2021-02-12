@@ -85,4 +85,6 @@ spec:
             secretProviderClass: secret-capacity-planner
           nodePublishSecretRef:
             name: csi-secret-store-azure
-          
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      
