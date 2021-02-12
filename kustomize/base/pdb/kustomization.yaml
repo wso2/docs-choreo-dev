@@ -18,4 +18,4 @@ resources:
   - sys-obsapi.yaml
   - apim-service.yaml
   - language-server.yaml
-  - capatityplanner.yaml
+  - capacityplanner.yaml
