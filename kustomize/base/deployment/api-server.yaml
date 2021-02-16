@@ -63,8 +63,19 @@ spec:
         - mountPath: /api-server.yaml
           name: config
           subPath: api-server.yaml
+        - name: secret-idp
+          mountPath: /mnt/csi/secret-idp
+          readOnly: true
       volumes:
       - name: config
         configMap:
           name: cm-api-server
+      - name: secret-idp
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-idp
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

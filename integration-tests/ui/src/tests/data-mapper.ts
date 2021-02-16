@@ -50,7 +50,7 @@ fixture("Data Mapper")
 * suggestion, it would always appear first). Finally, the source code is checked to verify that the URL for the HTTP
 * connector is the previous variable.
 */
-test ("Low code form AI suggestions", async (t) => {
+test.meta({'stable': "true"})("Low code form AI suggestions", async (t) => {
   logger.info("Starting Data Mapper Low code form AI suggestion test...");
   const appName = generateAppName("datamapper");
   await createNewApp(t, appName);

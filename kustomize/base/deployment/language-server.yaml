@@ -25,27 +25,37 @@ spec:
       containers:
       - image: choreoipaas/lang-server:latest
         name: language-server
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
         ports:
         - containerPort: 9090
           name: http-port
           protocol: TCP
         readinessProbe:
-          failureThreshold: 6
           initialDelaySeconds: 5
-          periodSeconds: 3
-          tcpSocket:
-            port: 9090
-          timeoutSeconds: 3
+          periodSeconds: 5
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8082
+          timeoutSeconds: 2
         livenessProbe:
-          initialDelaySeconds: 60
-          timeoutSeconds: 15
-          periodSeconds: 60
-          failureThreshold: 5
-          tcpSocket:
-            port: 9090
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8082
+          timeoutSeconds: 5
         volumeMounts:
         - mountPath: /apps
           name: pvc-userappstorage
+        - mountPath: /lang-server/application.properties
+          name: config
+          subPath: application.properties
         resources:
           limits:
             cpu: "2"
@@ -63,4 +73,7 @@ spec:
       - name: pvc-userappstorage
         persistentVolumeClaim:
           claimName: pvc-userappstorage
+      - name: config
+        configMap:
+          name: cm-language-server
       serviceAccountName: sa-choreo-default

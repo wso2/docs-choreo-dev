@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: capacity-planner
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: capacity-planner
+

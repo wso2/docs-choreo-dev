@@ -85,7 +85,7 @@ async function deployApp(t: TestController, name: string) {
 }
 
 
-test("test run observe overview hello world service ", async (t) => {
+test.meta({'unstable': "true"})("test run observe overview hello world service ", async (t) => {
     const appName = generateAppName("observe-1");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
@@ -117,6 +117,11 @@ test("test run observe overview hello world service ", async (t) => {
         .click(screen.getByText('Past 24 hours'))
         .click(screen.getByText('Past 10 minutes'))
 
+        // Disable refresh
+        .hover(Selector('#refresh-interval'))
+        .click(Selector('#refresh-interval'))
+        .click(screen.getAllByText('Off'))
+
       .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
       .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
 
@@ -141,11 +146,22 @@ test("test run observe overview hello world service ", async (t) => {
         offsetX: Math.round(finalX),
         offsetY: Math.round(finalY),
     })
+        .wait(2000)
         .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
             offsetX: Math.round(finalX),
             offsetY: Math.round(finalY),
         })
-        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
+      // TODO : Double click due to firefox failure
+        .hover(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
+            offsetX: Math.round(finalX),
+            offsetY: Math.round(prevY /2 ),
+        })
+        .wait(2000)
+        .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
+            offsetX: Math.round(finalX),
+            offsetY: Math.round(prevY /2 ),
+        })
+        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
         .expect(getElementFromSelectorTestId('request-table').exists).ok({timeout: WAIT_TIME_LONG})
         .expect(getElementFromSelectorTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
@@ -160,7 +176,7 @@ test("test run observe overview hello world service ", async (t) => {
     await deleteApp(t, appName, true);
 });
 
-test("test run observe log view hello world service ", async (t) => {
+test.meta({'unstable': "true"})("test run observe log view hello world service ", async (t) => {
     const appName = generateAppName("observe-2");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
