@@ -72,8 +72,6 @@ spec:
           mountPath: "/mnt/csi/secret-azure-storage-account"
           readOnly: true
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-      - name: platformer-1580893230462-5ggle
       volumes:
       - name: ballerina-home-dir
         emptyDir: {}
