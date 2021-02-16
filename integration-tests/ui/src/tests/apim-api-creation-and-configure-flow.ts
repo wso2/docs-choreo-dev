@@ -112,7 +112,7 @@ test.meta({'unstable': "true"})("Change design configurations of API", async (t)
   // Save design configs
   await getElementFromSelectorTestId("design-config-save-btn").exists;
   await t.click(getElementFromSelectorTestId("design-config-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
   // Verify Design config update by checking overview tab
   await getElementFromSelectorTestId("Overview").exists;
@@ -142,7 +142,7 @@ test.meta({'unstable': "true"})("Change subscriptions of API", async (t) => {
   // Save new suscriptions
   await getElementFromSelectorTestId("subscription-save-btn").exists;
   await t.click(getElementFromSelectorTestId("subscription-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
   // Verify Subscription update by checking overview tab
   await getElementFromSelectorTestId("Overview").exists;
@@ -187,7 +187,7 @@ test.meta({'unstable': "true"})("Change Business Info of API", async (t) => {
   // Save new Business Info
   await getElementFromSelectorTestId("business-info-save-btn").exists;
   await t.click(getElementFromSelectorTestId("business-info-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
   // Verify Business Info update by checking overview tab
   await getElementFromSelectorTestId("Overview").exists;
@@ -248,7 +248,7 @@ test.meta({'unstable': "true"})("Change Runtime Configurations of API", async (t
   // save changes
   await t
     .click(getElementFromSelectorTestId("runtime-config-save-btn"), { speed: 0.5 })
-    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+    .expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
 
   // assert changes
   await t.expect(getElementFromSelectorTestId("checkbox-allow-all-origins")
@@ -297,6 +297,7 @@ test.meta({'unstable': "true"})("Create a URL type document for an API", async (
   // create document and wait for listing to load
   await t.expect(getElementFromSelectorTestId("create-document").exists).ok();
   await t.click(getElementFromSelectorTestId("create-document"), { speed: 0.5 });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Document created successfully!");
 
@@ -346,6 +347,7 @@ test.meta({'unstable': "true"})("Create an Inline type document for an API", asy
   // create document and wait for listing to load
   await t.expect(getElementFromSelectorTestId("create-document").exists).ok();
   await t.click(getElementFromSelectorTestId("create-document"), { speed: 0.5 });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Inline source document created successfully!");
 
@@ -396,6 +398,7 @@ test.meta({'unstable': "true"})("Create a Markdown type document for an API", as
   // create document and wait for listing to load
   await t.expect(getElementFromSelectorTestId("create-document").exists).ok();
   await t.click(getElementFromSelectorTestId("create-document"), { speed: 0.5 });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Markdown source document created successfully!");
 
@@ -442,6 +445,7 @@ test.meta({'unstable': "true"})("Create a File type document for an API", async 
   // create document and wait for listing to loads
   await t.expect(getElementFromSelectorTestId("create-document").exists).ok();
   await t.click(getElementFromSelectorTestId("create-document"), { speed: 0.5 });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("File source document created successfully!");
 
@@ -496,7 +500,7 @@ test.meta({'unstable': "true"})("View different types of API documents", async (
   // update document
   await t.expect(getElementFromSelectorTestId("view-edit-save-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Updated document loaded successfully!");
 
   // Verify the updated elements
@@ -560,7 +564,7 @@ test.meta({'unstable': "true"})("View different types of API documents", async (
   // update document
   await t.expect(getElementFromSelectorTestId("view-edit-save-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Updated document loaded successfully!");
 
   // Verify the updated inline doc
@@ -629,7 +633,7 @@ test.meta({'unstable': "true"})("View different types of API documents", async (
   // update document
   await t.expect(getElementFromSelectorTestId("view-edit-save-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Updated markdown document loaded successfully!");
 
   // Verify the updated markdown doc
@@ -686,7 +690,7 @@ test.meta({'unstable': "true"})("View different types of API documents", async (
   // update document
   await t.expect(getElementFromSelectorTestId("view-edit-save-btn").exists).ok();
   await t.click(getElementFromSelectorTestId("view-edit-save-btn"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   logger.info("Updated File document loaded successfully!");
 
   // Verify the updated file doc
