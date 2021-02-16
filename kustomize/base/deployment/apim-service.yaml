@@ -74,8 +74,8 @@ spec:
               memory: 512Mi
           volumeMounts:
             - name: ballerina-conf
-              mountPath: /home/ballerina/ballerina.conf
-              subPath: ballerina.conf
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
             - name: secret-apim-service
               mountPath: /mnt/csi/secret-apim-service
               readOnly: true
