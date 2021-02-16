@@ -53,7 +53,7 @@ spec:
         name: capacity-planner
         ports:
         - containerPort: 5000
-          name: capacity-planner-port
+          name: cpp-port
           protocol: TCP
         resources:
           limits:

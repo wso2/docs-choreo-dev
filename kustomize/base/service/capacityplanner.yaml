@@ -6,10 +6,10 @@ metadata:
   name: capacity-planner
 spec:
   ports:
-    - name: capacity-planner-port
+    - name: cpp-port
       port: 5000
       protocol: TCP
-      targetPort: capacity-planner-port
+      targetPort: cpp-port
   selector:
     choreo.component: capacity-planner
 
