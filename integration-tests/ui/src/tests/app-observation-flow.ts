@@ -169,6 +169,9 @@ test("test run observe log view hello world service ", async (t) => {
     const appName = generateAppName("observe-2");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
+      // Waiting to logs appear in overview as logs view is not refreshing
+      .expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_LONG})
+
     await t.expect(getElementFromSelectorTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
         .click(getElementFromSelectorTestId("panel-Logs-btn"))
         //Check for the given log
