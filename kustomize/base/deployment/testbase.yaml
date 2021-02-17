@@ -89,9 +89,9 @@ spec:
               - NET_RAW
         name: testbase
         volumeMounts:
-          - name: secret-testbase-db
-            mountPath: "/mnt/csi/secret-testbase-db"
-            readOnly: true
+        - name: secret-testbase-db
+          mountPath: "/mnt/csi/secret-testbase-db"
+          readOnly: true
         readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
