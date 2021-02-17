@@ -31,6 +31,11 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        - name: JMX
+          valueFrom:
+            configMapKeyRef:
+              name: cm-language-server
+              key: JMX
         ports:
         - containerPort: 9090
           name: http-port
@@ -53,15 +58,15 @@ spec:
         volumeMounts:
         - mountPath: /apps
           name: pvc-userappstorage
+        - mountPath: /lang-server/application.properties
+          name: config
+          subPath: application.properties
         - name: secret-redis
           mountPath: "/mnt/csi/secret-redis"
           readOnly: true
         - name: secret-azure-storage-account
           mountPath: "/mnt/csi/secret-azure-storage-account"
           readOnly: true
-        - mountPath: /lang-server/application.properties
-          name: config
-          subPath: application.properties
         resources:
           limits:
             cpu: "2"
@@ -79,6 +84,9 @@ spec:
       - name: pvc-userappstorage
         persistentVolumeClaim:
           claimName: pvc-userappstorage
+      - name: config
+        configMap:
+          name: cm-language-server
       - name: secret-redis
         csi:
           driver: secrets-store.csi.k8s.io
@@ -95,7 +103,4 @@ spec:
             secretProviderClass: secret-azure-storage-account
           nodePublishSecretRef:
             name: csi-secret-store-azure
-      - name: config
-        configMap:
-          name: cm-language-server
       serviceAccountName: sa-choreo-default
