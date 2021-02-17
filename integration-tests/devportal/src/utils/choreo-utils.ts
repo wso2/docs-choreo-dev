@@ -68,7 +68,6 @@ export const devportalLogin = async (t: TestController) => {
   await t.typeText(screen.getByPlaceholderText(/password/i), config.apimPassword, { speed: 0.5 });
   await t.expect(screen.getByRole('button', { name: /continue/i }).exists).ok();
   await t.click(screen.getByRole('button', { name: /continue/i }), { speed: 0.5 });
-  await t.expect(await getLocation()).contains("/sign-in", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Verify if the test API loaded successfully");
   await t.expect(screen.findByText(/EndToEndTestApi/i).exists).ok();
