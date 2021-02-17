@@ -65,6 +65,11 @@ spec:
             configMapKeyRef:
               key: LINKER_API
               name: cm-frontend
+        - name: VWO_ACCOUNT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: VWO_ACCOUNT_ID
+              name: cm-frontend
         - name: TESTBASE_API
           valueFrom:
             configMapKeyRef:

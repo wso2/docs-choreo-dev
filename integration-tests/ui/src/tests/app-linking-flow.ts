@@ -3,8 +3,16 @@ import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { goBacktoAppsList, generateAppName, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM,
-  WAIT_TIME_LONG, saveLogs, enableDetailedLogs, deleteApp } from "../utils/choreo-utils";
+import {
+    WAIT_TIME_MEDIUM,
+    WAIT_TIME_LONG,
+    saveLogs,
+    enableDetailedLogs,
+    getElementFromSelectorTestId,
+    goBacktoAppsList,
+    generateAppName,
+    deleteApp
+} from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -74,7 +82,7 @@ test.skip("test app linking", async (t) => {
     logger.info("App Linking successful");
 });
 
-test("test anonymous app linking", async (t) => {
+test.meta({'stable': "true"})("test anonymous app linking", async (t) => {
     let appName = generateAppName("linking");
     logger.info("Start connecting an anonymous app : " + appName);
 
@@ -88,21 +96,18 @@ test("test anonymous app linking", async (t) => {
     const obsUrl = await getAnnonAppUrl();
     logger.info("Retrieved observe URL from ballerina application : " + obsUrl);
     await t.navigateTo(obsUrl);
-    await t.wait(20000);
 
-    await t.expect(screen.getByText("Add to Choreo").exists).ok({ timeout: WAIT_TIME_SHORT })
-        .click(screen.getByText("Add to Choreo"))
-        .typeText(screen.findByPlaceholderText("Application name"), appName)
-        .click(screen.findByText("Next"))
+    await t.expect(getElementFromSelectorTestId("link-to-choreo").exists).ok({ timeout: WAIT_TIME_LONG })
+        .click(getElementFromSelectorTestId("link-to-choreo"))
+        .typeText(getElementFromSelectorTestId("link-app-name"), appName)
+        .click(getElementFromSelectorTestId("link-app-next-btn"))
         // TODO : Check possibility to remove manual wait added to enable the copy btn
-        .wait(2000)
-        .expect(screen.getByTestId("copy-btn").exists).ok({ timeout: WAIT_TIME_SHORT })
+        .expect(getElementFromSelectorTestId("copy-btn").exists).ok({ timeout: WAIT_TIME_MEDIUM })
 
-    const linkingCommand = (await screen.getByPlaceholderText("App Linking command").value).toString();
+    const linkingCommand = await getElementFromSelectorTestId("app-linking-command").find("input").getAttribute('value');
     logger.info("Retrieved app linking command : " + linkingCommand);
     await exec(linkingCommand);
-    await t.wait(WAIT_TIME_LONG);
-    await t.expect(screen.getByText(appName, { exact: false }).exists).ok({ timeout: WAIT_TIME_MEDIUM });
+    await t.expect(getElementFromSelectorTestId("linked-app-name").exists).ok({ timeout: WAIT_TIME_LONG });
 
     logger.info("Anonymous App Linking successful");
 
