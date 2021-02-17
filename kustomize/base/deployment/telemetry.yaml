@@ -88,6 +88,10 @@ spec:
             drop:
               - NET_RAW
         name: telemetry
+        volumeMounts:
+        - name: secret-telemetry
+          mountPath: "/mnt/csi/secret-telemetry"
+          readOnly: true
         ports:
         - containerPort: 9090
           name: telemetry-port
@@ -123,5 +127,14 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
+      volumes:
+      - name: secret-telemetry
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-telemetry
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
