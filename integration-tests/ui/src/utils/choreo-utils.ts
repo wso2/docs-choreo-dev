@@ -85,7 +85,7 @@ export const waitForPerformanceDrillDown = async (t: TestController) => {
 
 export const goToApiListView = async (t: TestController) => {
   await t.click(getElementFromSelectorTestId("apis-tab"), { speed: 0.5 });
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(getElementFromSelectorTestId("apis-tab").hasClass("Mui-selected")).ok();
   logger.info("Go to API tab successful!");
 }
