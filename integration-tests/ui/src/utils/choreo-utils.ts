@@ -471,6 +471,7 @@ export const createRespond = async (t: TestController, expression: string) => {
       expression,
       { speed: 0.5 }
     )
+    .pressKey('esc')
     .expect(getElementFromSelectorTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(getElementFromSelectorTestId("save-btn"))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
