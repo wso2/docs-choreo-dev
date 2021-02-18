@@ -1,11 +1,21 @@
-import { Selector, RequestLogger } from "testcafe";
-import { screen } from "@testing-library/testcafe";
+import { RequestLogger } from "testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
-import { createNewApp, createHttpConnector, goBacktoAppsList, getStorage, 
-  waitForPerformanceDrillDown, selectTrigger, generateAppName, WAIT_TIME_SHORT,
-  saveLogs, enableDetailedLogs, deleteApp } from "../utils/choreo-utils";
+import {
+  createNewApp,
+  createHttpConnector,
+  getStorage,
+  waitForPerformanceDrillDown,
+  selectTrigger,
+  WAIT_TIME_SHORT,
+  saveLogs,
+  enableDetailedLogs,
+  getElementFromSelectorTestId,
+  goBacktoAppsList,
+  generateAppName,
+  deleteApp
+} from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
 
@@ -44,7 +54,7 @@ fixture("Performance Analyzer")
     httpLogger.clear();
   });
 
-test ("Performance Drill Down test", async (t) => {
+test.meta({'stable': "true"})("Performance Drill Down test", async (t) => {
   const ENDPOINT = config.performanceAnalyzerTest.endpoint;
   const EXPECTED_BANNER_TPS = config.performanceAnalyzerTest.expectedBannerTps;
   const EXPECTED_BANNER_LATENCY = config.performanceAnalyzerTest.expectedBannerLatency;
@@ -59,9 +69,9 @@ test ("Performance Drill Down test", async (t) => {
   await selectTrigger(t, "API", "test");
 
   await createHttpConnector(t,ENDPOINT, "GET", "response");
-  await t.wait(WAIT_TIME_SHORT);
+  await t.expect(getElementFromSelectorTestId("analyze-btn").visible).ok({ timeout: WAIT_TIME_SHORT })
 
-  await t.click(screen.getByTestId("analyze-btn"), { speed: 0.5 })
+  await t.click(getElementFromSelectorTestId("analyze-btn"), { speed: 0.5 })
   await waitForPerformanceDrillDown(t);
   const localStorageContent = await getStorage();
   logger.info("Testing Performance Drill Down Banner data...");
@@ -89,8 +99,6 @@ test ("Performance Drill Down test", async (t) => {
                  + "Latency(ms): " + actualLatency + "]");
   }
   logger.info("Performance Analyzer Performance Drill Down test completed successfully!");
-  await t.wait(WAIT_TIME_SHORT);
-
   await goBacktoAppsList(t);
   await deleteApp(t, appName, true);
 });

@@ -75,6 +75,11 @@ spec:
             configMapKeyRef:
               key: CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS
               name: cm-testbase
+        - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_APP_SERVICE_GRPC_ADDRESS
+              name: cm-testbase
         - name: CHOREO_DB_PASSWORD
           valueFrom:
            secretKeyRef:
@@ -88,6 +93,10 @@ spec:
             drop:
               - NET_RAW
         name: testbase
+        volumeMounts:
+        - name: secret-testbase-db
+          mountPath: "/mnt/csi/secret-testbase-db"
+          readOnly: true
         readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
@@ -120,5 +129,14 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
+      volumes:
+      - name: secret-testbase-db
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-testbase-db
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
