@@ -108,7 +108,7 @@ test.meta({'stable': "true"})("test postman view", async (t) => {
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Testing invalid API key validation attempt scenario");
-  await t.click(getElementFromSelectorTestId("try-out"))
+  await t.click(getElementFromSelectorTestId("postman"))
   await t.click(getElementFromSelectorTestId("click-here"));
   await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
   await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
