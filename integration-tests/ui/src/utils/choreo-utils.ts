@@ -270,10 +270,10 @@ export const searchApis = async (t: TestController, name: string) => {
     await t.hover(getElementFromSelectorTestId("api-search-btn"));
   }
   await t
-    .selectText(Selector("input[aria-label='Search']"))
+    .selectText(Selector(".MuiInputBase-input.MuiInput-input"))
     .pressKey("delete")
     .typeText(
-      Selector("input[aria-label='Search']"),
+      Selector(".MuiInputBase-input.MuiInput-input"),
       name,
       { speed: 0.5 }
     );
@@ -284,10 +284,10 @@ export const resetApiSearch = async (t: TestController) => {
   if (searchButtonExists) {
     await t.hover(getElementFromSelectorTestId("api-search-btn"));
   }
-  let searchBoxExists = await Selector("input[aria-label='Search']").exists;
+  let searchBoxExists = await Selector(".MuiInputBase-input.MuiInput-input").exists;
   if (searchBoxExists) {
     await t
-      .selectText(Selector("input[aria-label='Search']"))
+      .selectText(Selector(".MuiInputBase-input.MuiInput-input"))
       .pressKey("delete");
   }
 }
