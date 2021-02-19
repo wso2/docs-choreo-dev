@@ -39,7 +39,7 @@ fixture("User flows")
         httpLogger.clear();
 });
 
-test("user login and logout redirection", async (t) => {
+test.meta({'stable': "true"})("user login and logout redirection", async (t) => {
   logger.info("login logout flow")
   await t
     .click(getByLabelText("account of current user"))

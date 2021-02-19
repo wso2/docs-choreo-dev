@@ -50,3 +50,15 @@ CREATE TABLE testcases (
   PRIMARY KEY (id),
   UNIQUE KEY test_case_id_unique (user_id, organization_id, application_id, test_case_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE openapi_definitions (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  org_handle varchar(255) NOT NULL,
+  app_handle varchar(255) NOT NULL,
+  content text NOT NULL,
+  svc_file_digest varchar(255) NOT NULL,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY swagger_def_id_unique (org_handle, app_handle, svc_file_digest)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

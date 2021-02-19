@@ -11,7 +11,7 @@ fixture("Choreo AI Data Mapper")
 * The following test sends a data mapping request to the data mapper
 * service and checks if the service responds with the expected response.
 */
-test("Test Data Mapper service call",async (t)=>{
+test.meta({'stable': "true"})("Test Data Mapper service call",async (t)=>{
 
   const requestBody = [
   {

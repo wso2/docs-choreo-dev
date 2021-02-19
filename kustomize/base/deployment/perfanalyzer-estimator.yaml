@@ -72,9 +72,20 @@ spec:
         volumeMounts:
         - name: perfanalyzer-config
           mountPath: /home/python-ai/perf-analyzer/config/
+        - name: secret-perfanalyzer
+          mountPath: "/mnt/csi/secret-perfanalyzer"
+          readOnly: true
       volumes:
       - configMap:
           defaultMode: 420
           name: cm-perfanalyzer
         name: perfanalyzer-config
+      - name: secret-perfanalyzer
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-perfanalyzer
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

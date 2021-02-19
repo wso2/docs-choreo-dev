@@ -270,10 +270,10 @@ export const searchApis = async (t: TestController, name: string) => {
     await t.hover(getElementFromSelectorTestId("api-search-btn"));
   }
   await t
-    .selectText(Selector("input[aria-label='Search']"))
+    .selectText(Selector(".MuiInputBase-input.MuiInput-input"))
     .pressKey("delete")
     .typeText(
-      Selector("input[aria-label='Search']"),
+      Selector(".MuiInputBase-input.MuiInput-input"),
       name,
       { speed: 0.5 }
     );
@@ -284,29 +284,30 @@ export const resetApiSearch = async (t: TestController) => {
   if (searchButtonExists) {
     await t.hover(getElementFromSelectorTestId("api-search-btn"));
   }
-  let searchBoxExists = await Selector("input[aria-label='Search']").exists;
+  let searchBoxExists = await Selector(".MuiInputBase-input.MuiInput-input").exists;
   if (searchBoxExists) {
     await t
-      .selectText(Selector("input[aria-label='Search']"))
+      .selectText(Selector(".MuiInputBase-input.MuiInput-input"))
       .pressKey("delete");
   }
 }
 
 export const clearAPIDocumentsIfExists = async (t: TestController) => {
-  let documentExists = await screen.queryAllByTestId('delete-document').exists;
+  let documentExists = await getElementFromSelectorTestId('delete-document').exists;
   let retryCount = 5;
   while (documentExists && retryCount > 0) {
     logger.info("A document exists, deleting that document");
     // Trigger the delete button
-    await t.expect(screen.findAllByTestId("delete-document").exists).ok();
-    await t.click(screen.queryAllByTestId("delete-document").nth(0), { speed: 0.5 });
+    await t.expect(getElementFromSelectorTestId("delete-document").exists).ok();
+    await t.click(getElementFromSelectorTestId("delete-document").nth(0), { speed: 0.5 });
     // Check delete confirmation dialog
-    await t.expect(screen.findByText("Delete Document").exists).ok();
-    await t.expect(screen.findByText("Delete").exists).ok();
-    await t.click(screen.findByText("Delete"), { speed: 0.5 });
+    await t.expect(getElementFromSelectorTestId("Delete Document").exists).ok();
+    await t.expect(getElementFromSelectorTestId("delete-api").exists).ok();
+    await t.click(getElementFromSelectorTestId("delete-api"), { speed: 0.5 });
+    await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
-    documentExists = await screen.queryAllByTestId('delete-document').exists;
+    documentExists = await getElementFromSelectorTestId('delete-document').exists;
     retryCount = retryCount - 1;
   }
   logger.info("Documents deleted successfully!");
@@ -321,7 +322,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
-  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request req) {` ]
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -470,6 +471,7 @@ export const createRespond = async (t: TestController, expression: string) => {
       expression,
       { speed: 0.5 }
     )
+    .pressKey('esc')
     .expect(getElementFromSelectorTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk({timeout: WAIT_TIME_MEDIUM})
     .click(getElementFromSelectorTestId("save-btn"))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
@@ -674,30 +676,28 @@ export const createApiFromChoreoApp = async (t: TestController, apiName: string,
   // api version is not input, since there's a default value: "1.0.0"
   await getElementFromSelectorTestId("choreo-app-selector").exists;
   await t.click(getElementFromSelectorTestId("choreo-app-selector"), { speed: 0.5 });
-  await screen.findByText(appName).exists;
+  await t.expect(screen.findByText(appName).exists).ok({ timeout: WAIT_TIME_SHORT });
   await t.click(screen.findByText(appName), { speed: 0.5 });
 
   // click create
-  await t.expect(screen.getByRole('button', { name: /create/i }).exists).ok();
-  await t.click(screen.getByRole('button', { name: /create/i }), { speed: 0.5 });
-  await t.wait(WAIT_TIME_MEDIUM);
-  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
+  await t.expect(Selector("#create-API-from-app-btn").exists).ok();
+  await t.click("#create-API-from-app-btn", { speed: 0.5 });
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   logger.info("Created API with name: " + apiName);
 };
 
 export const addApiSimpleResponse = async (t: TestController, expression: string) => {
-  await t.expect(screen.findAllByText("Respond").exists).ok({ timeout: WAIT_TIME_SHORT });
-  await t
-    .click(screen.getByTestId("addrespond"), { speed: 0.5 })
+  await t.expect(getElementFromSelectorTestId("addrespond").exists).ok({ timeout: WAIT_TIME_SHORT })
+    .click(getElementFromSelectorTestId("addrespond"), { speed: 0.5 })
     .click(Selector('.exp-editor .monaco-editor .view-line').nth(0))
     .typeText(
       Selector('.exp-editor .monaco-editor .inputarea').nth(0),
       expression,
       { speed: 0.5 }
     )
-    .wait(1000)
-    .click(screen.getByText("Save"), { speed: 0.5 })
-    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+    .expect(getElementFromSelectorTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk({ timeout: WAIT_TIME_MEDIUM })
+    .click(getElementFromSelectorTestId("save-btn"))
+    .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   logger.info("Created API with a simple response : " + expression);
 };
 
@@ -760,6 +760,6 @@ export const checkSourceCodeForValidation = async (t: TestController, sourceLine
 }
 
 export function getElementFromSelectorTestId(testId: string): Selector {
-  const selectorText = '[data-testid="' + testId + '"';
+  const selectorText = '[data-testid="' + testId + '"]';
   return (Selector(selectorText));
 }
