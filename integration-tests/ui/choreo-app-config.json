@@ -1,0 +1,23 @@
+{
+  "github": {
+    "pat": "$GITHUB_APP",
+    "owner": "$GITHUB_REPO_OWNER",
+    "repo": "$GITHUB_REPO_NAME"
+  },
+  "calendar": {
+    "token": "$GOOGLE_CALENDAR_TOKEN",
+    "refresh_url": "$GOOGLE_CALENDAR_REFRESH_URL",
+    "refresh_token": "$GOOGLE_CALENDAR_REFRESH_URL",
+    "client_id": "$GOOGLE_CALENDAR_CLIENT_ID",
+    "client_secret": "$GOOGLE_CALENDAR_CLIENT_SECRET",
+    "calendar_id": "$GOOGLE_CALENDAR_ID"
+  },
+  "gmail": {
+    "token": "$GMAIL_TOKEN",
+    "refresh_url": "$GMAIL_REFRESH_URL",
+    "refresh_token": "$GMAIL_REFRESH_TOKEN",
+    "client_id": "$GMAIL_CLIENT_ID",
+    "client_secret": "$GMAIL_CLIENT_SECRET",
+    "user_id": "$GMAIL_ID"
+  }
+}
