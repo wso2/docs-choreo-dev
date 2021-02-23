@@ -321,7 +321,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string) => {
-  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request req) {` ]
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -372,6 +372,7 @@ export const createProperty = async (t: TestController, type: string, name: stri
       expression,
       { speed: 0.5 }
     )
+    .pressKey('esc')
     .expect(getElementFromSelectorTestId("save-btn").parent().parent().hasAttribute('disabled')).notOk( {timeout: WAIT_TIME_LONG})
     .click(getElementFromSelectorTestId("save-btn"))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
@@ -754,6 +755,7 @@ export const checkSourceCodeForValidation = async (t: TestController, sourceLine
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
     for (const sourceLine of sourceLines) {
+      logger.info("Validating source line : " + sourceLine)
       await t.expect(Selector(".view-line").withText(sourceLine.replace(/\s/g,'\u00a0')).exists).ok({timeout:WAIT_TIME_SHORT})
     }
   await t.hover(Selector(getElementFromSelectorTestId("vertical-close-btn")))
