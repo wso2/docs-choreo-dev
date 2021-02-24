@@ -106,5 +106,18 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
+        volumeMounts:
+        - mountPath: /mnt/csi/secret-program-db
+          name: secret-program-db
+          readOnly: true
       restartPolicy: Always
+      volumes:
+      - name: secret-program-db
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-program-db
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
