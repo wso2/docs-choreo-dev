@@ -98,6 +98,9 @@ spec:
             - mountPath: /mnt/csi/secret-program-db
               name: secret-program-db
               readOnly: true
+            - mountPath: /mnt/csi/secret-datalake
+              name: secret-datalake
+              readOnly: true
           volumes:
           - name: secret-program-db
             csi:
@@ -105,6 +108,14 @@ spec:
               readOnly: true
               volumeAttributes:
                 secretProviderClass: secret-program-db
+              nodePublishSecretRef:
+                name: csi-secret-store-azure
+          - name: secret-datalake
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: secret-datalake
               nodePublishSecretRef:
                 name: csi-secret-store-azure
           serviceAccountName: sa-choreo-default
