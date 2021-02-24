@@ -170,10 +170,6 @@ test.meta({'unstable': "true"})("test run observe overview hello world service "
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
-        // Check for hide options
-        .hover(getElementFromSelectorTestId('hide-options-btn'))
-        .click(getElementFromSelectorTestId('hide-options-btn'))
-        .expect(getElementFromSelectorTestId('show-options-btn').exists).ok({timeout: WAIT_TIME_SHORT})
 
     await goBacktoAppsList(t);
     await deleteApp(t, appName, true);
