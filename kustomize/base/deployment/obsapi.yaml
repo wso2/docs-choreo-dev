@@ -148,4 +148,17 @@ spec:
           requests:
             cpu: 200m
             memory: 256Mi
+        volumeMounts:
+        - mountPath: /mnt/csi/secret-obsapi
+          name: secret-obsapi
+          readOnly: true
+      volumes:
+      - name: secret-obsapi
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-obsapi
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
