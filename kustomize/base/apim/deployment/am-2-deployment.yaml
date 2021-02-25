@@ -134,17 +134,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                     key: MONGO_DB_PSWD
-                    name: secret-mongodb
+                    name: secret-apim-mongodb
             - name: MONGO_DB_ATLAS_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                     key: MONGO_DB_ATLAS_PRIVATE_KEY
-                    name: secret-mongodb
+                    name: secret-apim-mongodb
             - name: MONGO_DB_ATLAS_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
                     key: MONGO_DB_ATLAS_PUBLIC_KEY
-                    name: secret-mongodb   
+                    name: secret-apim-mongodb   
             - name: JVM_MEM_OPTS
               value: "-Xms1024m -Xmx1024m"
           volumeMounts:
