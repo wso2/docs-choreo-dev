@@ -965,7 +965,6 @@ export const checkSourceCodeForValidation = async (t: TestController, sourceLine
     .hover(Selector(".product-tour-code-view"))
     .click(Selector(".product-tour-code-view"))
     for (const sourceLine of sourceLines) {
-      logger.info("Validating source line : " + sourceLine)
       await t.expect(Selector(".view-line").withText(sourceLine.replace(/\s/g,'\u00a0')).exists).ok({timeout:WAIT_TIME_SHORT})
     }
   await t.hover(Selector(getElementFromSelectorTestId("vertical-close-btn")))

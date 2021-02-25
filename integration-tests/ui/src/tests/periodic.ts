@@ -1,4 +1,4 @@
-import { Selector, RequestLogger } from "testcafe";
+import { Selector, RequestLogger, t } from "testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
 import * as config from "../../testcafe-run-config.json";
@@ -48,7 +48,7 @@ declare global {
 
 fixture("Application with connectors creation and deployment")
   .page(config.testURL)
-  .beforeEach(async () => {
+  .beforeEach(async t => {
     await page.login();
     await enableDetailedLogs();
   })
@@ -69,6 +69,11 @@ test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
   await selectAPITrigger(t, "POST", "notify");
 
+  // Zooming out
+  for (let index = 0; index < 5; index++) {
+    await t.click(getElementFromSelectorTestId("zoom-out-btn"), { speed: 0.5 });
+  }
+
   // Create properties
   await createProperty(t, "json", "jsonMsg", "<json>checkpanic request.getJsonPayload()");
   await createProperty(t, "string", "destination", "(<json>checkpanic jsonMsg.destination).toString()");
@@ -79,16 +84,16 @@ test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
   await t.click(Selector("#SmallPlus"), { speed: 0.5 });
   await createIfElement(t, "destination == \"github\"");
   let topIfElement = ".diagram-canvas > g > g > g:nth-child(3) > .main-condition-wrapper > .if-else";
-  await t.click(Selector(topIfElement + " > .main-plus-wrapper"));
+  await t.click(Selector(topIfElement + " > .main-plus-wrapper > svg"));
   await createGithubIssue(t, userConfig.github.pat, userConfig.github.owner, userConfig.github.repo, "title", "message");
-  await t.click(Selector(topIfElement + " > .main-plus-wrapper"));
+  await t.click(Selector(topIfElement + " > .main-plus-wrapper > svg"));
   await createRespond(t, "createIssueResponse.toJsonString()", true);
 
   // Create second IF loop
-  await t.click(Selector(topIfElement + " > .else-line > .main-plus-wrapper"));
+  await t.click(Selector(topIfElement + " > .else-line > .main-plus-wrapper > svg"));
   await createIfElement(t, "destination == \"email\"");
   let secondIfElement = topIfElement + " > .else-line > .main-condition-wrapper > .if-else";
-  await t.click(Selector(secondIfElement + " > .main-plus-wrapper"));
+  await t.click(Selector(secondIfElement + " > .main-plus-wrapper > svg"));
   await createGmailSendElement(
     t,
     userConfig.gmail.token,
@@ -101,7 +106,7 @@ test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
     "title",
     "message"
   );
-  await t.click(Selector(secondIfElement + " > .main-plus-wrapper"));
+  await t.click(Selector(secondIfElement + " > .main-plus-wrapper > svg"));
   await createRespond(t, "sendMessageResponse.toJsonString()", true);
 
   // Create third IF loop
@@ -124,7 +129,7 @@ test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
   // await createRespond(t, "createEventResponse.toJsonString()", true);
 
   // Populate final else loop
-  await t.click(Selector(secondIfElement + " > .else-line > .main-plus-wrapper"));
+  await t.click(Selector(secondIfElement + " > .else-line > .main-plus-wrapper > svg"));
   await createRespond(t, '"Error"', true);
 
   // Deploy the application
