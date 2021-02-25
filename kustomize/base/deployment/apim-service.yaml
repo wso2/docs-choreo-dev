@@ -76,9 +76,20 @@ spec:
             - name: ballerina-conf
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-apim-service
+              mountPath: /mnt/csi/secret-apim-service
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: ballerina-conf
           configMap:
             name: cm-choreo-apim-service
+        - name: secret-apim-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

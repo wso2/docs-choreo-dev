@@ -119,8 +119,30 @@ spec:
         - mountPath: /app-service.yaml
           name: config
           subPath: app-service.yaml
+        - name: secret-redis
+          mountPath: "/mnt/csi/secret-redis"
+          readOnly: true
+        - name: secret-gsuite
+          mountPath: "/mnt/csi/secret-gsuite"
+          readOnly: true
       volumes:
       - name: config
         configMap:
           name: cm-app-service
+      - name: secret-gsuite
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-gsuite
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

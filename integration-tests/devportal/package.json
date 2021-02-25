@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2etest": "testcafe chrome",
-    "e2etest:headless": "testcafe \"chrome:headless '--window-size=1920,1080'\" --test-meta stable=true &&   testcafe \"firefox:headless '-width=1920 -height=1080'\" --test-meta stable=true",
-    "e2etest:headless-unstable": "testcafe \"chrome:headless '--window-size=1920,1080'\" --test-meta unstable=true &&   testcafe \"firefox:headless '-width=1920 -height=1080'\" --test-meta unstable=true"
+    "e2etest": "testcafe chrome --hostname localhost",
+    "e2etest:headless": "testcafe \"chrome:headless '--window-size=1920,1080'\" --hostname localhost && testcafe \"firefox:headless '-width=1920 -height=1080'\" --hostname localhost"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +13,7 @@
     "@testing-library/testcafe": "^4.2.3",
     "@types/qs": "^6.9.2",
     "qs": "^6.9.4",
-    "testcafe": "^1.9.4",
+    "testcafe": "^1.10.1",
     "typescript": "^3.9.2"
   },
   "dependencies": {
