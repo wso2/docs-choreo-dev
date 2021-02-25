@@ -38,7 +38,8 @@ spec:
       # securityContext:
       #   fsGroup: 802
       securityContext:
-        allowPrivilegeEscalation: false    
+        allowPrivilegeEscalation: false 
+      # @TODO update image tag once new image is pushed to ACR   
       containers:
         - name: wso2am
           image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim:latest
@@ -128,7 +129,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: CHOREO_IS_ADMIN_PSWD
-                  name: secret-apim        
+                  name: secret-apim
+            - name: MONGO_DB_PSWD
+              valueFrom:
+                secretKeyRef:
+                    key: MONGO_DB_PSWD
+                    name: secret-mongodb
+            - name: MONGO_DB_ATLAS_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                    key: MONGO_DB_ATLAS_PRIVATE_KEY
+                    name: secret-mongodb
+            - name: MONGO_DB_ATLAS_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                    key: MONGO_DB_ATLAS_PUBLIC_KEY
+                    name: secret-mongodb   
             - name: JVM_MEM_OPTS
               value: "-Xms1024m -Xmx1024m"
           volumeMounts:
@@ -137,12 +153,6 @@ spec:
               subPath: executionplans
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
-            - name: wso2am-storage
-              mountPath: /home/wso2carbon/solr/database
-              subPath: solr/node2/database
-            - name: wso2am-storage
-              mountPath: /home/wso2carbon/solr/indexed-data
-              subPath: solr/node2/indexed-data
             - name: wso2am-conf-entrypoint
               mountPath: /home/wso2carbon/docker-entrypoint.sh
               subPath: docker-entrypoint.sh
