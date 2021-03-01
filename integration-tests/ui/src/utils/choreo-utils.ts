@@ -551,9 +551,7 @@ export const callExternalEndpointPOST = async (t: TestController, URL: string, r
 
 export const saveLogs = async (t: TestController, browserLogs: string[], networkLogs: LoggedRequest[]) => {
   fs.mkdirSync("artifacts", { recursive: true });
-  fs.writeFile("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "log.txt", browserLogs.map(value => {
-    return value + " \n"
-  }), (err) => {
+  fs.writeFile("artifacts/" + t.browser.name + "-" + t.testRun.test.name.split(" ").join("-") + "log.txt", browserLogs.join("\n"), (err) => {
     if (err) throw err;
     console.log("File write complete");
   })
