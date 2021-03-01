@@ -23,13 +23,6 @@ spec:
         runAsGroup: 1000
       containers:
         - name: email-service
-          lifecycle:
-            # This "sleep" preStop hook delays the Pod shutdown until after the Ingress controller removes the matching Endpoint
-            preStop:
-              exec:
-                command:
-                  - /bin/sleep
-                  - "20"
           imagePullPolicy: Always
           image: choreoctrlplane.azurecr.io/choreoipaas/email-service:latest
           resources:
