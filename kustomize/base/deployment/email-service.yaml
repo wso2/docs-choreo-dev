@@ -99,3 +99,5 @@ spec:
               path: /service/healthz
               port: email-port
               scheme: HTTPS
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-defaul
