@@ -34,6 +34,6 @@ operationName:string
     '    { "column" : "timestamp", "Properties":{"Path":"$.timestamp"}},'
     '    { "column" : "duration", "Properties":{"Path":"$.duration"}},'
     '    { "column" : "tags", "Properties":{"Path":"$.tags"}},'
-    '    { "column" : "checkpoints", "Properties":{"Path":"$.checkpoints"}},',
+    '    { "column" : "checkpoints", "Properties":{"Path":"$.checkpoints"}},'
     '    { "column" : "operationName", "Properties":{"Path":"$.operationName"}}'
     ']';
