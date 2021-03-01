@@ -92,5 +92,18 @@ spec:
               path: /service/healthz
               port: email-port
               scheme: HTTPS
+          volumeMounts:
+          - name: secret-email-service
+            mountPath: "/mnt/csi/secret-email-service"
+            readOnly: true
+      volumes:
+      - name: secret-email-service
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-email-service
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
-      serviceAccountName: sa-choreo-defaul
+      serviceAccountName: sa-choreo-default
