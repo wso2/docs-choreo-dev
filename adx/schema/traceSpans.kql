@@ -20,7 +20,7 @@ timestamp: datetime,
 duration: long,
 tags: dynamic,
 checkpoints: dynamic,
-operationName:string
+operationName: string
 );
 
 .create table traceSpans ingestion json mapping "traceSpansMapping"
