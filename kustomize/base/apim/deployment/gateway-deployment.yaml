@@ -40,10 +40,9 @@ spec:
       #   fsGroup: 802
       securityContext:
         allowPrivilegeEscalation: false
-      # @TODO update image tag once new image is pushed to ACR
       containers:
       - name: wso2am-gateway
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim:latest
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim:mongodb
         env:
         - name: PROFILE_NAME
           value: gateway-worker
