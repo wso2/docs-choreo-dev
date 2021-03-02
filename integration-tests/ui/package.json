@@ -11,10 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@testing-library/testcafe": "^4.2.3",
+    "@testing-library/testcafe": "^4.3.1",
     "@types/qs": "^6.9.2",
     "qs": "^6.9.4",
-    "testcafe": "^1.9.4",
+    "testcafe": "^1.11.0",
     "typescript": "^3.9.2"
   },
   "dependencies": {
