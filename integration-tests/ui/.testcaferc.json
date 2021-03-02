@@ -4,7 +4,12 @@
       ],
       "skipJsErrors": true,
       "src":["src/tests", "../data-mapper/src/tests", "src/clean"],
-      "tsConfigPath": "tsconfig.json",
+      "compilerOptions": { 
+        "typescript": { 
+          "configPath": "tsconfig.json"
+        }
+      },
+      "skipUncaughtErrors": true,
       "videoPath": "artifacts/videos",
       "screenshots": {
         "path": "artifacts/screenshots",
