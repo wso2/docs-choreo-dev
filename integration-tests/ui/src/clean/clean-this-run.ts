@@ -84,7 +84,7 @@ test("Delete Apps and APIs that are old or created by this run", async (t) => {
     for (let index = 0; index < apiCount; index++) {
       let api = await apis.nth(index);
       let apiName = await api.child("td").nth(0).find("p").innerText
-      if ((isOldApp(apiName) || apiName.startsWith(appNamePrefix)) && !apiName.endsWith("EndToEndTestApi")) {
+      if ((isOldApp(apiName) || apiName.startsWith(appNamePrefix)) && !apiName.includes("EndToEndTestApi")) {
         apisToBeDeleted.push(apiName);
       }
     }
