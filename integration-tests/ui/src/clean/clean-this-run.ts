@@ -42,7 +42,7 @@ fixture("Cleaning up")
 
   });
 
-test.meta({'stable': "true", 'unstable': "true"})("Delete Apps and APIs that are old or created by this run", async (t) => {
+test.meta({'stable': "true", 'unstable': "true", 'periodic': "true"})("Delete Apps and APIs that are old or created by this run", async (t) => {
   
   let appsToBeDeleted = [];
   while (true) {
