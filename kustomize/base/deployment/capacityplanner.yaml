@@ -4,17 +4,17 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    choreo.component: datamapper
-  name: datamapper
+    choreo.component: capacity-planner
+  name: capacity-planner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: datamapper
+      choreo.component: capacity-planner
   template:
     metadata:
       labels:
-        choreo.component: datamapper
+        choreo.component: capacity-planner
       annotations:
         linkerd.io/inject: enabled
     spec:
@@ -25,14 +25,8 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       initContainers:
-      - env:
-        - name: ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: secret-datamapper
-              key: ACCESS_KEY
-        image: choreoctrlplane.azurecr.io/choreoipaas/datamapper-init:latest
-        name: datamapper-init
+      - image: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner-init:latest
+        name: capacity-planner-init
         resources:
           limits:
             cpu: 300m
@@ -41,13 +35,13 @@ spec:
             cpu: 200m
             memory: 256Mi
         volumeMounts:
-        - name: datamapper-models
-          mountPath: "/home/python-ai/choreo-ai-data-mapper/models"
-        - name: datamapper-models-metadata
-          mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
+        - name: capacity-planner-model
+          mountPath: "/home/python-ai/choreo-ai-capacity-planner/model"
+        - name: capacity-planner-model-metadata
+          mountPath: "/home/python-ai/choreo-ai-capacity-planner/models.properties"
           subPath: "models.properties"
-        - name: secret-datamapper
-          mountPath: "/mnt/csi/secret-datamapper"
+        - name: secret-capacity-planner
+          mountPath: "/mnt/csi/secret-capacity-planner"
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
@@ -55,8 +49,8 @@ spec:
               drop:
                 - NET_RAW
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/datamapper:latest
-        name: datamapper
+      - image: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner:latest
+        name: capacity-planner
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 15
@@ -64,8 +58,8 @@ spec:
           failureThreshold: 3
           successThreshold: 1
           httpGet:
-            port: dm-port
-            path: /health
+            port: cpp-port
+            path: /readiness
         livenessProbe:
           initialDelaySeconds: 10
           timeoutSeconds: 15
@@ -73,11 +67,11 @@ spec:
           failureThreshold: 3
           successThreshold: 1
           httpGet:
-            port: dm-port
-            path: /health
+            port: cpp-port
+            path: /liveness
         ports:
         - containerPort: 5000
-          name: dm-port
+          name: cpp-port
           protocol: TCP
         resources:
           limits:
@@ -87,25 +81,28 @@ spec:
             cpu: 1000m
             memory: 1536Mi
         volumeMounts:
-        - name: datamapper-models
-          mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"
+        - name: capacity-planner-model
+          mountPath: "/home/python-ai/choreo-ai-capacity-planner/model/"
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
               - NET_RAW
       volumes:
-      - name: datamapper-models
+      - name: capacity-planner-model
         emptyDir: {}
-      - name: datamapper-models-metadata
+      - name: capacity-planner-model-metadata
         configMap:
           defaultMode: 420
-          name: cm-datamapper
-      - name: secret-datamapper
+          name: cm-capacity-planner
+      - name: secret-capacity-planner
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: secret-datamapper
+            secretProviderClass: secret-capacity-planner
           nodePublishSecretRef:
             name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+

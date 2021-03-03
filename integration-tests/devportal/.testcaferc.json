@@ -3,13 +3,10 @@
         { "module": "@testing-library/dom/dist/@testing-library/dom.umd.js" }
       ],
       "skipJsErrors": true,
-      "src":["src/tests", "../data-mapper/src/tests", "src/clean"],
-      "compilerOptions": { 
-        "typescript": { 
-          "configPath": "tsconfig.json"
-        }
+      "src":["src/tests/"],
+      "compilerOptions": {
+        "typescript": { "configPath": "tsconfig.json"}
       },
-      "skipUncaughtErrors": true,
       "videoPath": "artifacts/videos",
       "screenshots": {
         "path": "artifacts/screenshots",

@@ -91,6 +91,10 @@ spec:
             runAsUser: 100
             runAsGroup: 1000
           name: sys-obsapi
+          volumeMounts:
+          - name: secret-sys-obsapi
+            mountPath: "/mnt/csi/secret-sys-obsapi"
+            readOnly: true
           ports:
             - containerPort: 9098
               name: sys-obsapi-port
@@ -126,5 +130,14 @@ spec:
             requests:
               cpu: 300m
               memory: 512Mi
+      volumes:
+      - name: secret-sys-obsapi
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-sys-obsapi
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

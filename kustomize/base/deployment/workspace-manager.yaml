@@ -61,6 +61,12 @@ spec:
           subPath: workspace-manager.yaml
         - mountPath: /apps
           name: pvc-userappstorage
+        - name: secret-redis
+          mountPath: "/mnt/csi/secret-redis"
+          readOnly: true
+        - name: secret-azure-storage-account
+          mountPath: "/mnt/csi/secret-azure-storage-account"
+          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -68,4 +74,20 @@ spec:
       - name: pvc-userappstorage
         persistentVolumeClaim:
           claimName: pvc-userappstorage
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-azure-storage-account
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-azure-storage-account
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-workspace-manager

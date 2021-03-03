@@ -103,6 +103,10 @@ spec:
               drop:
                 - NET_RAW
           name: loggingapi
+          volumeMounts:
+          - name: secret-loggingapi
+            mountPath: "/mnt/csi/secret-loggingapi"
+            readOnly: true
           ports:
             - containerPort: 9097
               name: logapi-port
@@ -138,5 +142,14 @@ spec:
             requests:
               cpu: 300m
               memory: 512Mi
+      volumes:
+      - name: secret-loggingapi
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-loggingapi
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

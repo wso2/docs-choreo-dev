@@ -20,6 +20,7 @@ timestamp: datetime,
 duration: long,
 tags: dynamic,
 checkpoints: dynamic,
+operationName: string
 serviceName: string
 );
 
@@ -35,5 +36,6 @@ serviceName: string
     '    { "column" : "duration", "Properties":{"Path":"$.duration"}},'
     '    { "column" : "tags", "Properties":{"Path":"$.tags"}},'
     '    { "column" : "checkpoints", "Properties":{"Path":"$.checkpoints"}},'
+    '    { "column" : "operationName", "Properties":{"Path":"$.operationName"}},'
     '    { "column" : "serviceName", "Properties":{"Path":"$.serviceName"}}'
     ']';
