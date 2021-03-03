@@ -19,7 +19,9 @@ version: string,
 timestamp: datetime,
 duration: long,
 tags: dynamic,
-checkpoints: dynamic
+checkpoints: dynamic,
+operationName: string,
+serviceName:string
 )
 kind=adl
 partition by (Date:datetime = bin(timestamp, 1d))
