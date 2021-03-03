@@ -19,7 +19,8 @@ version: string,
 timestamp: datetime,
 duration: long,
 tags: dynamic,
-checkpoints: dynamic
+checkpoints: dynamic,
+serviceName: string
 );
 
 .create table traceSpans ingestion json mapping "traceSpansMapping"
@@ -33,5 +34,6 @@ checkpoints: dynamic
     '    { "column" : "timestamp", "Properties":{"Path":"$.timestamp"}},'
     '    { "column" : "duration", "Properties":{"Path":"$.duration"}},'
     '    { "column" : "tags", "Properties":{"Path":"$.tags"}},'
-    '    { "column" : "checkpoints", "Properties":{"Path":"$.checkpoints"}}'
+    '    { "column" : "checkpoints", "Properties":{"Path":"$.checkpoints"}},'
+    '    { "column" : "serviceName", "Properties":{"Path":"$.serviceName"}}'
     ']';
