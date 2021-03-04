@@ -243,7 +243,7 @@ test.meta({'unstable': "true"})("Change Runtime Configurations of API", async (t
     .click(Selector('#remove-item-DELETE'), { speed: 0.5 });
 
   await t.click(getElementFromSelectorTestId("application-level-sec-label"), { speed: 0.5 });
-  await t.click(getElementFromSelectorTestId("checkbox-Basic"), { speed: 0.5 });
+  await t.click(getElementFromSelectorTestId("checkbox-Api Key"), { speed: 0.5 });
 
   // save changes
   await t
@@ -260,7 +260,7 @@ test.meta({'unstable': "true"})("Change Runtime Configurations of API", async (t
 
   await t.expect(getElementFromSelectorTestId("checkbox-OAuth2")
     .find("input[type=checkbox]").nth(0).checked).eql(true);
-  await t.expect(getElementFromSelectorTestId("checkbox-Basic")
+  await t.expect(getElementFromSelectorTestId("checkbox-Api Key")
     .find("input[type=checkbox]").nth(0).checked).eql(true);
 });
 
