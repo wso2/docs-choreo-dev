@@ -75,41 +75,13 @@ spec:
           name: config
           subPath: app-deployer.yaml
         - mountPath: /service-account.yaml
-          name: secret-apps-k8s-service-account
-          readOnly: true
+          name: sa-config
           subPath: APPS_K8S_SERVICE_ACCOUNT
-        - name: secret-app-deployer
-          mountPath: "/mnt/csi/secret-app-deployer"
-          readOnly: true
-        - name: secret-app-db
-          mountPath: "/mnt/csi/secret-app-db"
-          readOnly: true
       volumes:
       - name: config
         configMap:
           name: cm-app-deployer
-      - name: secret-apps-k8s-service-account
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-apps-k8s-service-account
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      - name: secret-app-deployer
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-app-deployer
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      - name: secret-app-db
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-app-db
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+      - name: sa-config
+        secret:
+          secretName: secret-apps-k8s-service-account
       serviceAccountName: sa-choreo-default
