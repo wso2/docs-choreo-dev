@@ -7,7 +7,7 @@
     "e2etest": "testcafe chrome",
     "e2etest:headless": "testcafe \"chrome:headless '--window-size=1920,1080'\" --test-meta stable=true &&   testcafe \"firefox:headless '-width=1920 -height=1080'\" --test-meta stable=true",
     "e2etest:headless-unstable": "testcafe \"chrome:headless '--window-size=1920,1080'\" --test-meta unstable=true &&   testcafe \"firefox:headless '-width=1920 -height=1080'\" --test-meta unstable=true",
-    "e2etest:headless-apim": "testcafe \"chrome:headless '--window-size=1920,1080'\" --test-meta apim=true &&   testcafe \"firefox:headless '-width=1920 -height=1080'\" --test-meta apim=true",
+    "e2etest:headless-apim": "testcafe \"chrome:headless '--window-size=1920,1080'\" --fixture-meta apim=true &&   testcafe \"firefox:headless '-width=1920 -height=1080'\" --fixture-meta apim=true",
     "e2etest:headless-periodic": "testcafe \"chrome:headless '--window-size=1920,1080'\" --test-meta periodic=true"
   },
   "author": "",
