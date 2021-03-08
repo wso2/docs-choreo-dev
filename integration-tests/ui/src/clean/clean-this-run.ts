@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-fixture("Cleaning up")
+fixture.meta({ 'apim': "true" })("Cleaning up")
   .page(config.testURL)
   .beforeEach(async () => {
     await page.login();
