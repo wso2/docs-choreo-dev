@@ -33,7 +33,7 @@ declare global {
   }
 }
 
-fixture("API creation and config flow")
+fixture.meta({ 'apim': "true" })("API creation and config flow")
   .page(config.testURL)
   .beforeEach(async () => {
     await page.login();
