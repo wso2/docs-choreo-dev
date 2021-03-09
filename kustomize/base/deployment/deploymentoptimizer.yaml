@@ -41,6 +41,8 @@ spec:
         - name: deploymentoptimizer-model-metadata
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models.properties"
           subPath: "models.properties"
+        - name: secret-deploymentoptimizer
+          mountPath: "/mnt/csi/secret-deploymentoptimizer"
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -99,6 +101,18 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/models/"
         - name: deploymentoptimizer-application-properties
           mountPath: "/home/python-ai/choreo-ai-deployment-optimizer/config/"
+        - name: secret-loggingapi
+          mountPath: "/mnt/csi/secret-loggingapi"
+          readOnly: true
+        - name: secret-ai-storage-table
+          mountPath: "/mnt/csi/secret-ai-storage-table"
+          readOnly: true
+        - name: secret-ai-eventhub-metrics
+          mountPath: "/mnt/csi/secret-ai-eventhub-metrics"
+          readOnly: true
+        - name: secret-ai-eventhub-checkpoint
+          mountPath: "/mnt/csi/secret-ai-eventhub-checkpoint"
+          readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -115,4 +129,44 @@ spec:
         configMap:
           defaultMode: 420
           name: cm-deploymentoptimizer
+      - name: secret-loggingapi
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-loggingapi
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-ai-storage-table
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-ai-storage-table
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-ai-eventhub-metrics
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-ai-eventhub-metrics
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-ai-eventhub-checkpoint
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-ai-eventhub-checkpoint
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-deploymentoptimizer
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-deploymentoptimizer
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
