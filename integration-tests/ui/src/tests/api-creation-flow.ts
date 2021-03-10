@@ -137,11 +137,6 @@ test.meta({'stable': "true"})("deploy hello world service", async (t) => {
   await t.expect(response).eql("hello world");
   logger.info("Hello world string recieved successfully !")
 
-  logger.info("Stopping deployed application")
-  await t.click(screen.getByText("Stop"))
-    .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({ timeout: WAIT_TIME_LONG })
-  logger.info("Undeloyed application successfully!")
-
   await goBacktoAppsList(t);
   await deleteApp(t, appName, true);
 })
