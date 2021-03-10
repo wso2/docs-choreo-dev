@@ -175,8 +175,8 @@ export const undeployApp = async (t: TestController, name: string, strict: boole
         await t.click(app);
         await t.click(getElementFromSelectorTestId("deploy"))
         await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-        await t.click(screen.getByText("Stop"))
-          .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({timeout: WAIT_TIME_EX_LONG});
+        await t.click(Selector("#deploy-app-btn"))
+          .expect(Selector(".MuiCircularProgress-svg").exists).notOk({timeout: WAIT_TIME_EX_LONG});
 
         await goBacktoAppsList(t);
         
