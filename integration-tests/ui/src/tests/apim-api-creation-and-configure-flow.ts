@@ -742,8 +742,8 @@ test("Delete an API document from document view page", async (t) => {
   await t.click(getElementFromSelectorTestId("document-delete"), { speed: 0.5 });
   // Check delete confirmation dialog
   await t.expect(getElementFromSelectorTestId("Delete Document").exists).ok();
-  await t.expect(getElementFromSelectorTestId("delete-api").exists).ok();
-  await t.click(getElementFromSelectorTestId("delete-api"), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("delete-api-document").exists).ok();
+  await t.click(getElementFromSelectorTestId("delete-api-document"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(screen.findByText("URL").exists).notOk();
 
