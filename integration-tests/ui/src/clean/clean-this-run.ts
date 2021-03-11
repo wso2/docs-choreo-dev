@@ -42,7 +42,7 @@ fixture.meta({ 'apim': "true" })("Cleaning up")
 
   });
 
-test.meta({'stable': "true", 'unstable': "true", 'periodic': "true"})("Delete Apps and APIs that are old or created by this run", async (t) => {
+test.meta({'stable': "true", 'unstable': "true", 'periodic': "true"})("Delete Apps that are old or created by this run", async (t) => {
   
   let appsToBeDeleted = [];
   while (true) {
@@ -70,7 +70,9 @@ test.meta({'stable': "true", 'unstable': "true", 'periodic': "true"})("Delete Ap
   for (let index = 0; index < appsToBeDeleted.length; index++) {
     await deleteApp(t, appsToBeDeleted[index], false);
   }
-  
+});
+
+test.meta({'unstable': "true"})("Delete APIs that are old or created by this run", async (t) => {
   await goToApiListView(t);
 
   let apisToBeDeleted = [];
