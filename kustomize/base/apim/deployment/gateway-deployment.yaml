@@ -42,7 +42,7 @@ spec:
         allowPrivilegeEscalation: false
       containers:
       - name: wso2am-gateway
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim:mongodb
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim:latest
         env:
         - name: PROFILE_NAME
           value: gateway-worker
