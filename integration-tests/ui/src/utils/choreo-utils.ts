@@ -315,8 +315,8 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
     await t.click(getElementFromSelectorTestId("delete-document").nth(0), { speed: 0.5 });
     // Check delete confirmation dialog
     await t.expect(getElementFromSelectorTestId("Delete Document").exists).ok();
-    await t.expect(getElementFromSelectorTestId("delete-api").exists).ok();
-    await t.click(getElementFromSelectorTestId("delete-api"), { speed: 0.5 });
+    await t.expect(getElementFromSelectorTestId("delete-api-document").exists).ok();
+    await t.click(getElementFromSelectorTestId("delete-api-document"), { speed: 0.5 });
     await t.expect(Selector("#circular-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
     await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
 
@@ -883,17 +883,6 @@ export const createHttpConnector = async (t: TestController, url: string, operat
   logger.info("Successfully created an HTTP Connector!")
 }
 
-export const selectAPIType = async (t: TestController, name: string) => {
-  await waitTillWorkspace(t);
-  await t
-    .click(screen.getByText("API"))
-    .expect(screen.findByPlaceholderText("Relative path from host").exists).ok({ timeout: WAIT_TIME_MEDIUM })
-    .typeText(screen.queryByPlaceholderText("Relative path from host"), name, { speed: 0.5 })
-    .click(screen.getByText("Save API"), { speed: 0.5 })
-    .expect(screen.findAllByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
-  logger.info("selected api app type with name : " + name);
-};
-
 export const createApiFromChoreoApp = async (t: TestController, apiName: string, appName: string) => {
   let createApiButtonExist = await getElementFromSelectorTestId("create-api-btn").exists;
   if (createApiButtonExist) {
@@ -919,6 +908,33 @@ export const createApiFromChoreoApp = async (t: TestController, apiName: string,
   // click create
   await t.expect(Selector("#create-API-from-app-btn").exists).ok();
   await t.click("#create-API-from-app-btn", { speed: 0.5 });
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
+  logger.info("Created API with name: " + apiName);
+};
+
+export const createApiFromRestEp = async (t: TestController, apiName: string, epUrl: string) => {
+  let createApiButtonExist = await getElementFromSelectorTestId("create-api-btn").exists;
+  if (createApiButtonExist) {
+    await t.click(getElementFromSelectorTestId("create-api-btn"));
+  }
+
+  await getElementFromSelectorTestId("upload-rest-definition").exists;
+  await t
+    .click(getElementFromSelectorTestId("upload-rest-definition"))
+    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await screen.findAllByText("Create API From REST API");
+  logger.info("Create API From REST API form load successful!");
+
+  // fill in details
+  await getElementFromSelectorTestId("api-name").exists;
+  await t.typeText(getElementFromSelectorTestId("api-name"), apiName, { speed: 0.5 });
+  // api version is not input, since there's a default value: "1.0.0"
+  await getElementFromSelectorTestId("choreo-app-selector").exists;
+  await t.typeText(getElementFromSelectorTestId("api-endpoint"), epUrl, { speed: 0.9 });
+
+  // click create
+  await t.expect(Selector("#create-API-from-restEp-btn").exists).ok();
+  await t.click("#create-API-from-restEp-btn", { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
   logger.info("Created API with name: " + apiName);
 };
