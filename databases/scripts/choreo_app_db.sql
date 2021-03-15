@@ -114,6 +114,52 @@ CREATE TABLE app_environment_mapping
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+CREATE TABLE support_user_creation_status
+(
+    id              int(11)      NOT NULL AUTO_INCREMENT,
+    idp_id     varchar(255) NOT NULL,
+    status ENUM('completed', 'incomplete') DEFAULT 'incomplete',
+    created_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY idp_id_unique_key (idp_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE onprem_key
+(
+    id                  int(11)      NOT NULL AUTO_INCREMENT,
+    display_name        varchar(255) NOT NULL,
+    handle              varchar(255) NOT NULL,
+    key_value               varchar(255) NOT NULL,
+    status ENUM('ACTIVE', 'REVOKED') DEFAULT 'ACTIVE',
+    organization_id     int(11),
+    created_by          int(11)      NOT NULL,
+    updated_by          int(11),
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT onprem_key_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id),
+    CONSTRAINT onprem_key_created_by_fk FOREIGN KEY (created_by) REFERENCES user(id),
+    CONSTRAINT onprem_key_updated_by_fk FOREIGN KEY (updated_by) REFERENCES user(id),
+    UNIQUE KEY key_value_unique (key_value)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE member_invitation (
+    uuid                VARCHAR(255) NOT NULL,
+    organization_id     int          NOT NULL,
+    user_email          VARCHAR(255) NOT NULL,
+    invited_roles       VARCHAR(255) DEFAULT "member",
+    invited_application VARCHAR(255) NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_email, organization_id, invited_application),
+    CONSTRAINT inv_organization_id_fk
+        FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE configuration
 (
     id              INT AUTO_INCREMENT,
