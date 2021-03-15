@@ -30,10 +30,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - apim.domain.com
+        - app.domain.com
       secretName: ingress-cert
   rules:
-    - host: apim.domain.com
+    - host: app.domain.com
       http:
         paths:
         - backend:
