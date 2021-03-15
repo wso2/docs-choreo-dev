@@ -1,5 +1,5 @@
 import { RequestLogger, Selector } from "testcafe";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import { screen } from "@testing-library/testcafe";
 import page from "../model/page";
 import {

@@ -1,7 +1,7 @@
 import { RequestLogger } from "testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import {
   createNewApp,
   createHttpConnector,

@@ -1,6 +1,6 @@
 import { callExternalEndpointPOST } from "../../../ui/src/utils/choreo-utils";
 import { logger } from "../../../ui/src/utils/logger";
-import * as config from "../../../ui/testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 
 declare const test: TestFn;
 
