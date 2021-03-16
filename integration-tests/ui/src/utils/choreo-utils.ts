@@ -375,6 +375,18 @@ export const selectAPITrigger = async (t: TestController, method: string, relati
   logger.info("selected API trigger");
 };
 
+export const selectStatementOption = async (t: TestController, option: string) => {
+  logger.info(`Selecting ${option} option from options panel`);
+  await t
+    .expect(getElementFromSelectorTestId("statement-options").exists).ok()
+    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 });
+
+  logger.info("Selected statement options tab");
+  await t
+    .click(getElementFromSelectorTestId(option), { speed: 0.5 });
+  logger.info(`Selected option: ${option}`);
+};
+
 export const createProperty = async (t: TestController, type: string, name: string, expression: string) => {
   const variableSourceFields = [type, name, '=',expression]
 
@@ -386,13 +398,16 @@ export const createProperty = async (t: TestController, type: string, name: stri
       .click(Selector("#SmallPlus"))
       .click(Selector("#Plus_a"));
   }
+
+  await selectStatementOption(t, "addVariable");
+
+  logger.info("Creating variable: selected variable option");
   await t
-    .expect(getElementFromSelectorTestId("statement-options").exists).ok()
-    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
-    .hover(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
-    .click(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
     .click(screen.getByTestId("undefinedvar"), { speed: 0.5 })
-    .click(Selector('li').withAttribute('data-value',type))
+    .click(Selector('li').withAttribute('data-value',type));
+
+  logger.info("Creating variable: selected variable type");
+  await t
     .selectText(within(getElementFromSelectorTestId('variable-name')).getByRole('textbox'))
     .pressKey("delete")
     .typeText(
@@ -401,8 +416,10 @@ export const createProperty = async (t: TestController, type: string, name: stri
       { speed: 0.5 }
     );
 
+  logger.info("Creating variable: added variable name");
   await typeOnNthExpressionEditor(t, 0, expression, false, "save-btn");
 
+  logger.info("Creating variable: added variable expression");
   await t
     .click(getElementFromSelectorTestId("save-btn"))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
@@ -497,13 +514,10 @@ export const createRespond = async (t: TestController, expression: string, skipS
     await t.click(Selector("#Plus_a"), { speed: 0.5 });
   }
 
-  await t
-    .expect(getElementFromSelectorTestId("statement-options").exists).ok({ timeout: 10000 })
-    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
-    .hover(getElementFromSelectorTestId("addrespond"), { speed: 0.5 })
-    .click(getElementFromSelectorTestId("addrespond"), { speed: 0.5 });
+  await selectStatementOption(t, "addrespond");
 
   await typeOnNthExpressionEditor(t, 0, expression, false, "save-btn");
+  logger.info(`Creating respond: added expression ${expression}`)
   
   await t
     .click(getElementFromSelectorTestId("save-btn"))
