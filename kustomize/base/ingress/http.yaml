@@ -20,7 +20,6 @@ spec:
         - programanalyzer.domain.com
         - datamapper.domain.com
         - console.domain.com
-        - apim.domain.com
         - capacityplanner.domain.com
       secretName: ingress-cert
   rules: # servicePort string values are replaced with numeric since nginx + linkerd does not work with string values ref: https://github.com/linkerd/linkerd2/issues/4211
@@ -75,10 +74,6 @@ spec:
             serviceName: sys-obsapi
             servicePort: 9097
           path: /sysobsapi
-        - backend:
-            serviceName: apim-service-svc
-            servicePort: 9090
-          path: /apim
     - host: programanalyzer.domain.com
       http:
         paths:
