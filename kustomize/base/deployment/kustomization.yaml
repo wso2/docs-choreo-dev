@@ -20,7 +20,7 @@ resources:
   - apim-service.yaml
   - language-server.yaml
   - capacityplanner.yaml
-  - testassistant.yaml
+  - test-assistant.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443

@@ -112,6 +112,6 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: testassistant
+            serviceName: test-assistant
             servicePort: 5000
           path: /

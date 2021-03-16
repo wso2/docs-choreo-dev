@@ -18,4 +18,4 @@ resources:
   - apim-service.yaml
   - language-server.yaml
   - capacityplanner.yaml
-  - testassistant.yaml
+  - test-assistant.yaml
