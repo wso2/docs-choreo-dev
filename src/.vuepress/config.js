@@ -3,7 +3,7 @@ const { description } = require('../../package')
 
 module.exports = config({
   
-  base: '/',
+  base: '/docs-choreo-dev/',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
