@@ -338,7 +338,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string, method?: string) => {
-  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) {` ]
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) returns error? {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -360,7 +360,7 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
 export const selectAPITrigger = async (t: TestController, method: string, relativePath?: string) => {
   const code = [
     'import ballerina/http;', 'service on new http:Listener(8090) {',
-    `resource function ${method.toLowerCase()} ${relativePath}(http:Caller caller, http:Request request) {` 
+    `resource function ${method.toLowerCase()} ${relativePath}(http:Caller caller, http:Request request) returns error? {` 
   ]
   await waitTillWorkspace(t);
   await t
@@ -503,7 +503,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
 };
 
 export const createRespond = async (t: TestController, expression: string, skipSmallPlus?: boolean) => {
-  const responseSourceFields = [`checkpanic caller->respond(${expression});`]
+  const responseSourceFields = [`check caller->respond(${expression});`]
 
   if (!skipSmallPlus) {
     await t.click(Selector("#SmallPlus"), { speed: 0.5 });
@@ -859,7 +859,7 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
  */
 export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
                                           outputPayloadType?: string, outputPayloadVariable?: string) => {
-  const httpSourceFields = [`http:Client httpEndpoint = new ("${url}");`]
+  const httpSourceFields = [`http:Client httpEndpoint = check new ("${url}");`]
 
   logger.info("Creating HTTP Connector...")
   await t
