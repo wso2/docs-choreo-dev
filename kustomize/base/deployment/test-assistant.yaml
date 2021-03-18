@@ -100,7 +100,7 @@ spec:
       - name: test-assistant-model-metadata
         configMap:
           defaultMode: 420
-          name: cm-test-assistant-model-metadata
+          name: cm-test-assistant
       - name: secret-test-assistant
         csi:
           driver: secrets-store.csi.k8s.io
