@@ -25,7 +25,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       initContainers:
-        image: choreoctrlplane.azurecr.io/choreoipaas/test-assistant-init:latest
+      - image: choreoctrlplane.azurecr.io/choreoipaas/test-assistant-init:latest
         name: test-assistant-init
         resources:
           limits: 
