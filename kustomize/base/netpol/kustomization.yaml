@@ -7,4 +7,3 @@ resources:
   - perfanalyzer-estimator.yaml
   - programanalyzer.yaml
   - sys-obsapi.yaml
-  - test-assistant.yaml
