@@ -166,3 +166,35 @@ ALTER TABLE `connection_info` ADD COLUMN `user_account_identifier` VARCHAR(4000)
 
 ALTER TABLE `app_environment_mapping` DROP FOREIGN KEY `fk_app_env_app_id`;
 ALTER TABLE `app_environment_mapping` DROP INDEX `fk_app_env_app_id`;
+
+CREATE TABLE config_mapping_info
+(
+    id              INT AUTO_INCREMENT,
+    display_name    VARCHAR(255)  NOT NULL,
+    app_id          INT NOT NULL,
+    env_id          INT NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT app_id_fk FOREIGN KEY (app_id) REFERENCES application (id) ON DELETE CASCADE,
+    CONSTRAINT env_id_fk FOREIGN KEY (env_id) REFERENCES environment (id),
+    UNIQUE KEY unique_app_env_ids (app_id, env_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE config_mapping
+(
+    id                      INT AUTO_INCREMENT,
+    config_mapping_info_id  INT NOT NULL,
+    config_id               INT NULL,
+    connection_id           INT NULL,
+    secret                  BOOLEAN NOT NULL,
+    key_type                VARCHAR(255)  NOT NULL,
+    config_key_name         VARCHAR(255)  NOT NULL,
+    created_at              TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at              TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT config_mapping_info_id_fk FOREIGN KEY (config_mapping_info_id) REFERENCES config_mapping_info (id) ON DELETE CASCADE,
+    CONSTRAINT config_id_fk FOREIGN KEY (config_id) REFERENCES configuration (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
