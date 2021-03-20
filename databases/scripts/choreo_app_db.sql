@@ -63,6 +63,9 @@ CREATE TABLE application
 ALTER TABLE `application` ADD COLUMN `display_type` VARCHAR(255) NULL DEFAULT '' AFTER `working_file`;
 ALTER TABLE `application` ADD COLUMN `deploy_type` VARCHAR(255) NULL DEFAULT '' AFTER `display_type`;
 ALTER TABLE `application` ADD COLUMN `cron_schedule` VARCHAR(100) NULL DEFAULT '' AFTER `deploy_type`;
+ALTER TABLE `application` ADD COLUMN `pre_built` TINYINT(1) NULL DEFAULT 0 AFTER `git_remote`;
+ALTER TABLE `application` ADD COLUMN `sample_reference` VARCHAR(255) NULL DEFAULT '' AFTER `pre_built`;
+ALTER TABLE `application` ADD COLUMN `docker_image` VARCHAR(255) NULL DEFAULT '' AFTER `sample_reference`;
 
 CREATE TABLE beta_invitation
 (
