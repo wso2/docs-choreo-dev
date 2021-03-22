@@ -16,6 +16,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: apim-am
   name: choreo-apim-am-1-deployment
