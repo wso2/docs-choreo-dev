@@ -98,7 +98,6 @@ test.meta({ 'periodic': "true" })("Create the app", async (t) => {
   await t.click(Selector(secondIfElement + " > .main-plus-wrapper > svg"));
   await createGmailSendElement(
     t,
-    userConfig.gmail.token,
     userConfig.gmail.refresh_url,
     userConfig.gmail.refresh_token,
     userConfig.gmail.client_id,
