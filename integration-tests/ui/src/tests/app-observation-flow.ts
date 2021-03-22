@@ -85,7 +85,7 @@ async function deployApp(t: TestController, name: string) {
 }
 
 
-test("test run observe overview hello world service ", async (t) => {
+test.meta({'unstable': "true"})("test run observe overview hello world service ", async (t) => {
     const appName = generateAppName("observe-1");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
@@ -107,7 +107,10 @@ test("test run observe overview hello world service ", async (t) => {
         .expect(getElementFromSelectorTestId('histogram-throughput').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
         .expect(getElementFromSelectorTestId('histogram-response-time').find('g.recharts-layer.recharts-area').exists).ok({timeout: WAIT_TIME_LONG})
 
-        // Disable refresh
+        // Check for log panel
+        .expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_LONG})
+
+      // Disable refresh
         .hover(Selector('#refresh-interval'))
         .click(Selector('#refresh-interval'))
         .click(screen.getAllByText('Off'))
@@ -146,29 +149,39 @@ test("test run observe overview hello world service ", async (t) => {
         offsetX: Math.round(finalX),
         offsetY: Math.round(finalY),
     })
+        .wait(2000)
         .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
             offsetX: Math.round(finalX),
             offsetY: Math.round(finalY),
         })
-        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_LONG})
+      // TODO : Double click due to firefox failure
+        .hover(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
+            offsetX: Math.round(finalX),
+            offsetY: Math.round(prevY /2 ),
+        })
+        .wait(2000)
+        .click(getElementFromSelectorTestId('histogram-response-time').find('svg'), {
+            offsetX: Math.round(finalX),
+            offsetY: Math.round(prevY /2 ),
+        })
+        .expect(getElementFromSelectorTestId("preloader").exists).notOk({timeout: WAIT_TIME_MEDIUM})
         .expect(getElementFromSelectorTestId('request-table').exists).ok({timeout: WAIT_TIME_LONG})
         .expect(getElementFromSelectorTestId("request-information").count).gte(1, {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(1').innerText).contains('ms', {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(2)').innerText).notEql('', {timeout: WAIT_TIME_SHORT})
         .expect(getElementFromSelectorTestId("request-information").find('div>div:nth-child(3)').getStyleProperty('background-color')).eql("rgb(54, 180, 117)", {timeout: WAIT_TIME_SHORT})
-        // Check for hide options
-        .hover(getElementFromSelectorTestId('hide-options-btn'))
-        .click(getElementFromSelectorTestId('hide-options-btn'))
-        .expect(getElementFromSelectorTestId('show-options-btn').exists).ok({timeout: WAIT_TIME_SHORT})
 
     await goBacktoAppsList(t);
     await deleteApp(t, appName, true);
 });
 
-test("test run observe log view hello world service ", async (t) => {
+test.meta({'unstable': "true"})("test run observe log view hello world service ", async (t) => {
     const appName = generateAppName("observe-2");
     await deployApp(t, appName);
     await t.expect(Selector(".diagram-canvas").exists).ok("Diagram should be visible", {timeout: WAIT_TIME_SHORT})
+      // Waiting to logs appear in overview as logs view is not refreshing
+      .expect(getElementFromSelectorTestId('log-panel').find('div>span').withText("Special test Log for App").count).gte(1, 'Log exists', {timeout: WAIT_TIME_LONG})
+
     await t.expect(getElementFromSelectorTestId("panel-Logs-btn").exists).ok({timeout: WAIT_TIME_MEDIUM})
         .click(getElementFromSelectorTestId("panel-Logs-btn"))
         //Check for the given log

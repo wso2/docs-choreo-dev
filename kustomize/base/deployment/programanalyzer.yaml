@@ -68,9 +68,10 @@ spec:
           name: pvc-userappstorage
         - mountPath: /home/user-ai
           name: ballerina-home-dir
+        - name: secret-azure-storage-account
+          mountPath: "/mnt/csi/secret-azure-storage-account"
+          readOnly: true
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-      - name: platformer-1580893230462-5ggle
       volumes:
       - name: ballerina-home-dir
         emptyDir: {}
@@ -82,4 +83,12 @@ spec:
         persistentVolumeClaim:
           claimName: pvc-userappstorage
           readOnly: true
+      - name: secret-azure-storage-account
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-azure-storage-account
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

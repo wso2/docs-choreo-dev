@@ -48,3 +48,7 @@ spec:
           backend:
             serviceName: choreo-am-service
             servicePort: 9443
+        - path: /logincontext
+          backend:
+            serviceName: choreo-am-service
+            servicePort: 9443

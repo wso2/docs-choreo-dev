@@ -25,27 +25,48 @@ spec:
       containers:
       - image: choreoipaas/lang-server:latest
         name: language-server
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
+        - name: JMX
+          valueFrom:
+            configMapKeyRef:
+              name: cm-language-server
+              key: JMX
         ports:
         - containerPort: 9090
           name: http-port
           protocol: TCP
         readinessProbe:
-          failureThreshold: 6
           initialDelaySeconds: 5
-          periodSeconds: 3
-          tcpSocket:
-            port: 9090
-          timeoutSeconds: 3
+          periodSeconds: 5
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8082
+          timeoutSeconds: 2
         livenessProbe:
-          initialDelaySeconds: 60
-          timeoutSeconds: 15
-          periodSeconds: 60
-          failureThreshold: 5
-          tcpSocket:
-            port: 9090
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8082
+          timeoutSeconds: 5
         volumeMounts:
         - mountPath: /apps
           name: pvc-userappstorage
+        - mountPath: /lang-server/application.properties
+          name: config
+          subPath: application.properties
+        - name: secret-redis
+          mountPath: "/mnt/csi/secret-redis"
+          readOnly: true
+        - name: secret-azure-storage-account
+          mountPath: "/mnt/csi/secret-azure-storage-account"
+          readOnly: true
         resources:
           limits:
             cpu: "2"
@@ -63,4 +84,23 @@ spec:
       - name: pvc-userappstorage
         persistentVolumeClaim:
           claimName: pvc-userappstorage
+      - name: config
+        configMap:
+          name: cm-language-server
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-azure-storage-account
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-azure-storage-account
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
