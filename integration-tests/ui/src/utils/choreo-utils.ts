@@ -85,6 +85,7 @@ export const waitForPerformanceDrillDown = async (t: TestController) => {
 }
 
 export const goToApiListView = async (t: TestController) => {
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.click(getElementFromSelectorTestId("apis-tab"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(getElementFromSelectorTestId("apis-tab").hasClass("Mui-selected")).ok();
@@ -194,6 +195,28 @@ export const undeployApp = async (t: TestController, name: string, strict: boole
 
     await resetAppSearch(t);
   }
+}
+
+export const openChoreoApp = async (t: TestController, name: string) => {
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.expect(getElementFromSelectorTestId("applications-tab").hasClass("Mui-selected")).ok();
+  logger.info("Page loaded successfully");
+  
+  // Check if apps are listed
+  let appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+  await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).ok({ timeout: WAIT_TIME_SHORT });
+
+  // search by app name
+  await searchApps(t, name);
+
+  // check if the correct app appears
+  await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one app should exists");
+  let app = await Selector(".MuiTableRow-root.MuiTableRow-hover");
+  let appName = await app.child("td").nth(0).textContent; 
+  await t.expect(appName).eql(name, "App name mismatch");
+
+  // open the app
+  await t.click(app);
 }
 
 export const deleteApp = async (t: TestController, name: string, strict: boolean) => {
@@ -428,16 +451,20 @@ export const createProperty = async (t: TestController, type: string, name: stri
   logger.info("Successfully created the variable with expression : " + expression);
 };
 
+export const switchToDeployView = async (t: TestController) => {
+  await t.click(getElementFromSelectorTestId('deploy'));
+  await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
+  await t.expect(await getLocation()).contains("app/", {timeout: WAIT_TIME_SHORT});
+  await t.expect(await getLocation()).contains("/deploy", {timeout: WAIT_TIME_SHORT});
+  logger.info("Succesfully Navigated to Deploy view")
+};
+
 
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
 
-  await t.click(getElementFromSelectorTestId('deploy'))
-  await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
-  await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
-
-  logger.info("Succesfully Navigated to Deploy view")
+  await switchToDeployView(t);
 
   logger.info("Deploying application...")
   await t.wait(WAIT_TIME_SHORT);
@@ -581,7 +608,7 @@ export const createGithubIssue = async (t: TestController, pat: string, owner: s
   logger.info("Creating GithubIssue element");
   await selectAPIOption(t, "github");
   await t
-    .hover(getElementFromSelectorTestId('git-manual-btn'), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId('git-manual-btn').exists).ok({ timeout: WAIT_TIME_LONG })
     .click(getElementFromSelectorTestId('git-manual-btn'), { speed: 0.5 });
 
   await typeOnNthExpressionEditor(t, 0, pat, true, 'git-save-next-btn');
@@ -589,7 +616,7 @@ export const createGithubIssue = async (t: TestController, pat: string, owner: s
   await t
     .click(getElementFromSelectorTestId('git-save-next-btn'))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG })
-    .click(getElementFromSelectorTestId('SelectcreateIssue'), { speed: 0.5 })
+    .click(getElementFromSelectorTestId('SelectgetAuthenticatedUser'), { speed: 0.5 })
     .click(Selector('li').withAttribute('data-value', 'createIssue'))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
 
@@ -652,7 +679,7 @@ export const createGmailSendElement = async (t: TestController, token: string, r
 
   await selectAPIOption(t, "gmail");
   await t
-    .hover(getElementFromSelectorTestId('gmail-manual-btn'))
+    .expect(getElementFromSelectorTestId('gmail-manual-btn').exists).ok({ timeout: WAIT_TIME_LONG })
     .click(getElementFromSelectorTestId('gmail-manual-btn'), { speed: 0.5 });
 
   await zoomOutUntilAvailable(t, 'gmail-save-next-btn');

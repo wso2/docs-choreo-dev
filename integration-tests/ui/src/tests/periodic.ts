@@ -11,17 +11,18 @@ import {
   createRespond,
   callExternalEndpointPOST,
   WAIT_TIME_SHORT,
+  WAIT_TIME_MEDIUM,
   saveLogs,
   enableDetailedLogs,
   deployToChoreo,
   generateAppName,
-  goBacktoAppsList,
-  deleteApp,
+  openChoreoApp,
   createIfElement,
   createGithubIssue,
   createGmailSendElement,
   appNamePrefix,
-  getElementFromSelectorTestId
+  getElementFromSelectorTestId,
+  switchToDeployView
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
@@ -46,6 +47,8 @@ declare global {
   }
 }
 
+const appName = generateAppName("app-1");
+
 fixture("Application with connectors creation and deployment")
   .page(config.testURL)
   .beforeEach(async t => {
@@ -59,11 +62,10 @@ fixture("Application with connectors creation and deployment")
     const data = [...log, ...error];
     saveLogs(t, data, httpRequests)
     httpLogger.clear();
-
+    
   });
 
-test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
-  const appName = generateAppName("app-1");
+test.meta({ 'periodic': "true" })("Create the app", async (t) => {
   await createNewApp(t, appName);
 
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
@@ -131,37 +133,53 @@ test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
   // Populate final else loop
   await t.click(Selector(secondIfElement + " > .else-line > .main-plus-wrapper > svg"));
   await createRespond(t, '"Error"', true);
+});
 
-  // Deploy the application
-  const testUrl = await deployToChoreo(t, appName)
-  await t.expect(testUrl.includes("https://")).ok();
+test.meta({ 'periodic': "true" })("Deploy the app", async (t) => {
+  await openChoreoApp(t, appName);
+
+  await deployToChoreo(t, appName)
+});
+
+test.meta({ 'periodic': "true" })("Invoke the app", async (t) => {
+  await openChoreoApp(t, appName);
+  await switchToDeployView(t);
+
+  await t.expect(getElementFromSelectorTestId("deploy-url").find("input").getAttribute('value')).notEql('',{timeout:WAIT_TIME_MEDIUM})
+  const appURL = await getElementFromSelectorTestId("deploy-url").find("input").getAttribute('value');
+  logger.info("test url : " + appURL);
 
   // Invoke github issue creation
+  const testUrl = appURL + "/notify";
   let githubIssue = {
     "destination": "github",
     "title": `Issue occurred on ${appNamePrefix}`,
     "message": "This is a critical issue"
   }
-  let response = await callExternalEndpointPOST(t, (testUrl + "/notify"), githubIssue, 3)
+  let response = await callExternalEndpointPOST(t, testUrl, githubIssue, 3)
   logger.info("Backend service response : " + JSON.stringify(response.data));
   await t.expect(response.data.title).eql(githubIssue.title);
   logger.info(`Githu issue with title \"Issue occurred on ${appNamePrefix}\" created successfully !`)
-
+  
   // Invoke send email
   let sendEmail = {
     "destination": "email",
     "title": `Issue occurred on ${appNamePrefix}`,
     "message": "This is a critical issue"
   }
-  response = await callExternalEndpointPOST(t, (testUrl + "/notify"), sendEmail, 3)
+  response = await callExternalEndpointPOST(t, testUrl, sendEmail, 3)
   logger.info("Backend service response : " + JSON.stringify(response.data));
   await t.expect(response.status).eql(200);
+});
 
+test.meta({ 'periodic': "true" })("Check the test view", async (t) => {
+  await openChoreoApp(t, appName);
+  
   // Checking test view
   await t.click(getElementFromSelectorTestId("test"))
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT })
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
-
+  
   logger.info("Testing invalid API key validation attempt scenario");
   await t.click(getElementFromSelectorTestId("postman"))
   await t.click(getElementFromSelectorTestId("click-here"));
@@ -169,8 +187,4 @@ test.meta({ 'periodic': "true" })("Create and deploy app", async (t) => {
   await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
   await t.expect(getElementFromSelectorTestId('api-key-error').exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Test phase successful!");
-
-  // Cleaning up
-  await goBacktoAppsList(t);
-  await deleteApp(t, appName, true);
 });
