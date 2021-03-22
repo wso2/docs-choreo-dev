@@ -46,6 +46,9 @@ spec:
         - name: datamapper-models-metadata
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models.properties"
           subPath: "models.properties"
+        - name: secret-datamapper
+          mountPath: "/mnt/csi/secret-datamapper"
+          readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -98,3 +101,11 @@ spec:
         configMap:
           defaultMode: 420
           name: cm-datamapper
+      - name: secret-datamapper
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-datamapper
+          nodePublishSecretRef:
+            name: csi-secret-store-azure

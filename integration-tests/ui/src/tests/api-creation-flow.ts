@@ -2,7 +2,7 @@ import { Selector, RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import {
   createNewApp,
   selectTrigger,
@@ -136,11 +136,6 @@ test.meta({'stable': "true"})("deploy hello world service", async (t) => {
   console.log("Service response : " + response);
   await t.expect(response).eql("hello world");
   logger.info("Hello world string recieved successfully !")
-
-  logger.info("Stopping deployed application")
-  await t.click(screen.getByText("Stop"))
-    .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({ timeout: WAIT_TIME_LONG })
-  logger.info("Undeloyed application successfully!")
 
   await goBacktoAppsList(t);
   await deleteApp(t, appName, true);
