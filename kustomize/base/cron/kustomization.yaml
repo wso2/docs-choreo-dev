@@ -2,3 +2,4 @@ resources:
   - perfanalyzer-updater.yaml
   - datamapper-balo-extractor.yaml
   - ast-archiver.yaml
+  - observability-data-generator.yaml
