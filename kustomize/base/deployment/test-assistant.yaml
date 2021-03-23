@@ -73,11 +73,11 @@ spec:
             path: /liveness
         resources:
           limits:
-            cpu: 700m
-            memory: 1200Mi
+            cpu: 500m
+            memory: 2300Mi
           requests:
-            cpu: 600m
-            memory: 1000Mi
+            cpu: 400m
+            memory: 2200Mi
         ports:
         - containerPort: 5000
           name: ta-port
