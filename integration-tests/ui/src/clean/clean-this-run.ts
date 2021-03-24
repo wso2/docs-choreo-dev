@@ -42,7 +42,7 @@ fixture("Cleaning up")
 
   });
 
-test.meta({'stable': "true", 'unstable': "true"})("Delete Apps and APIs that are old or created by this run", async (t) => {
+test.meta({'stable': "true", 'unstable': "true", 'periodic': "true"})("Delete Apps and APIs that are old or created by this run", async (t) => {
   
   let appsToBeDeleted = [];
   while (true) {
@@ -84,7 +84,7 @@ test.meta({'stable': "true", 'unstable': "true"})("Delete Apps and APIs that are
     for (let index = 0; index < apiCount; index++) {
       let api = await apis.nth(index);
       let apiName = await api.child("td").nth(0).find("p").innerText
-      if (isOldApp(apiName) || apiName.startsWith(appNamePrefix)) {
+      if ((isOldApp(apiName) || apiName.startsWith(appNamePrefix)) && !apiName.includes("EndToEndTestApi")) {
         apisToBeDeleted.push(apiName);
       }
     }

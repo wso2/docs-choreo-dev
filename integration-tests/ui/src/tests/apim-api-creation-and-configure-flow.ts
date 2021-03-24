@@ -3,7 +3,7 @@ import { RequestLogger, Selector } from "testcafe";
 import * as config from "../../testcafe-run-config.json";
 import page from "../model/page";
 import {
-  createApiFromChoreoApp, addApiSimpleResponse, clearAPIDocumentsIfExists,
+  createApiFromChoreoApp, createRespond, clearAPIDocumentsIfExists,
   createNewApp, enableDetailedLogs, saveLogs, selectAPIType, generateAppName, generateApiName, WAIT_TIME_MEDIUM,
   WAIT_TIME_SHORT, goToApiListView, openApi, deleteApi, deployToChoreo, getElementFromSelectorTestId
 } from "../utils/choreo-utils";
@@ -54,7 +54,7 @@ test.meta({'unstable': "true"})("Create API type choreo app", async (t) => {
   // adding api content
   await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
   await selectAPIType(t, "hello");
-  await addApiSimpleResponse(t, '"hello world"');
+  await createRespond(t, "\"hello world\"", true);
 
   // deploying app
   await deployToChoreo(t, appName);
