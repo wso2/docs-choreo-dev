@@ -598,7 +598,7 @@ export const zoomOutUntilAvailable = async (t: TestController, testId: string) =
 export const createGithubIssue = async (t: TestController, pat: string, owner: string, repo: string, title: string, body: string) => {
   const code = [
     `github:Client githubEndpoint = new ({accessToken: \"${pat}\"});`,
-    `var createIssueResponse = checkpanic githubEndpoint->createIssue(`,
+    `var createIssueResponse = check githubEndpoint->createIssue(`,
     `\"${owner}\"`,
     `\"${repo}\"`,
     `${title}`,
@@ -660,11 +660,10 @@ export const typeOnNthExpressionEditor = async (t: TestController, n: number, ex
     .pressKey("esc");
 }
 
-export const createGmailSendElement = async (t: TestController, token: string, refreshUrl: string, refreshToken: string, clientId: string, clientSecret: string, sender: string, recipient: string, subject: string, body: string) => {
+export const createGmailSendElement = async (t: TestController, refreshUrl: string, refreshToken: string, clientId: string, clientSecret: string, sender: string, recipient: string, subject: string, body: string) => {
   const code = [
     `googleapis_gmail:Client googleapis_gmailEndpoint = new ({oauthClientConfig:`,
-    `var sendMessageResponse = checkpanic googleapis_gmailEndpoint->sendMessage(\"${sender}\"`,
-    `accessToken: \"${token}\"`,
+    `var sendMessageResponse = check googleapis_gmailEndpoint->sendMessage(\"${sender}\"`,
     `refreshUrl: \"${refreshUrl}\"`,
     `refreshToken: \"${refreshToken}\"`,
     `clientId: \"${clientId}\"`,
@@ -683,11 +682,10 @@ export const createGmailSendElement = async (t: TestController, token: string, r
     .click(getElementFromSelectorTestId('gmail-manual-btn'), { speed: 0.5 });
 
   await zoomOutUntilAvailable(t, 'gmail-save-next-btn');
-  await typeOnNthExpressionEditor(t, 0, token, true, 'gmail-save-next-btn');
-  await typeOnNthExpressionEditor(t, 1, refreshUrl, true, 'gmail-save-next-btn');
-  await typeOnNthExpressionEditor(t, 2, refreshToken, true, 'gmail-save-next-btn');
-  await typeOnNthExpressionEditor(t, 3, clientId, true, 'gmail-save-next-btn');
-  await typeOnNthExpressionEditor(t, 4, clientSecret, true, 'gmail-save-next-btn');
+  await typeOnNthExpressionEditor(t, 0, refreshUrl, true, 'gmail-save-next-btn');
+  await typeOnNthExpressionEditor(t, 1, refreshToken, true, 'gmail-save-next-btn');
+  await typeOnNthExpressionEditor(t, 2, clientId, true, 'gmail-save-next-btn');
+  await typeOnNthExpressionEditor(t, 3, clientSecret, true, 'gmail-save-next-btn');
 
 
   await t
