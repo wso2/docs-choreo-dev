@@ -3,7 +3,7 @@ import { screen } from "@testing-library/testcafe";
 import * as fs from 'fs';
 import { gunzipSync } from 'zlib'
 import { Category, CategoryServiceFactory, CategoryConfiguration, LogLevel } from "typescript-logging";
-import * as config from '../../testcafe-user-config.json';
+import { userConfig as config } from "../../../ui/src/utils/config";
 
 declare global {
   interface Window {
