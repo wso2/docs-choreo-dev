@@ -42,7 +42,7 @@ spec:
         allowPrivilegeEscalation: false
       containers:
       - name: wso2am-gateway
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim:mongodb
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim:latest
         env:
         - name: PROFILE_NAME
           value: gateway-worker
@@ -119,17 +119,11 @@ spec:
         - containerPort: 9443
           protocol: TCP
         volumeMounts:
-        - name: wso2am-gateway-storage-volume
-          mountPath: /home/wso2carbon/wso2am-3.2.0/repository/deployment/server/synapse-configs
-          subPath: synapse-configs
         - name: wso2am-gateway-conf
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
           subPath: deployment.toml
       serviceAccountName: sa-choreo-apim
       volumes:
-      - name: wso2am-gateway-storage-volume
-        persistentVolumeClaim:
-          claimName: pvc-apimstorage
       - name: wso2am-gateway-conf
         configMap:
           name: choreo-apim-gateway-conf
