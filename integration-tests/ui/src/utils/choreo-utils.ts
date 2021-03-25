@@ -91,6 +91,18 @@ export const goToApiListView = async (t: TestController) => {
   logger.info("Go to API tab successful!");
 }
 
+/**
+ * Navigate to API document tab from API config view
+ *
+ * @param t -Test Controller
+ */
+export const navigateToAPIDocumentsTab = async (t: TestController) => {
+  await t.expect(screen.findAllByText("Documents").exists).ok({ timeout: WAIT_TIME_SHORT });
+  await t.click(screen.findAllByText("Documents"), { speed: 0.5 });
+  await t.expect(screen.findAllByText("Documents").exists).ok();
+  logger.info("Navigated to documents tab successfully");
+};
+
 export const openApi = async (t: TestController, name: string) => {
   await searchApis(t, name);
   await t.click(screen.findByText(name), { speed: 0.5 });
