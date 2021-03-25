@@ -2,8 +2,7 @@ import { Selector, RequestLogger } from "testcafe";
 import { getByText, getByLabelText } from "@testing-library/testcafe";
 import { getLocation, getAccessToken } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
-import * as userConfig from "../../testcafe-user-config.json";
+import { config, userConfig } from "../../../ui/src/utils/config";
 import {logger} from '../utils/logger'
 import { saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 

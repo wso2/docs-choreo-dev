@@ -1,19 +1,20 @@
-import { screen, within } from "@testing-library/testcafe";
+import { screen } from "@testing-library/testcafe";
 import { RequestLogger, Selector } from "testcafe";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import page from "../model/page";
 import {
-  createApiFromChoreoApp, createRespond, clearAPIDocumentsIfExists,
-  createNewApp, enableDetailedLogs, saveLogs, selectAPIType, generateAppName, generateApiName, WAIT_TIME_MEDIUM,
-  WAIT_TIME_SHORT, goToApiListView, openApi, deleteApi, deployToChoreo, getElementFromSelectorTestId,
-  navigateToAPIDocumentsTab
+  createApiFromChoreoApp, clearAPIDocumentsIfExists, createApiFromRestEp,
+  createNewApp, enableDetailedLogs, saveLogs, generateAppName, generateApiName, WAIT_TIME_MEDIUM,
+  WAIT_TIME_SHORT, goToApiListView, openApi, deleteApi, deployToChoreo, getElementFromSelectorTestId, createProperty,
+  callExternalEndpoint, goBacktoAppsList, selectTrigger, createRespond, navigateToAPIDocumentsTab
 } from "../utils/choreo-utils";
 import { logger } from '../utils/logger';
 import { getLocation } from "../utils/login-utils";
 
 declare const test: TestFn;
 const appName = generateAppName("demoapp");
-const apiName = generateApiName("demoapi");
+const apiFromChoreoApp = generateApiName("demoapi0");
+const apiFromEp = generateApiName("demoapi");
 
 const httpLogger = RequestLogger(undefined, {
   logRequestBody: true,
@@ -51,21 +52,21 @@ fixture.meta({ 'apim': "true" })("API creation and config flow")
 
 test("Create API type choreo app", async (t) => {
   await createNewApp(t, appName);
+  await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT })
+  await selectTrigger(t, "API", "hello");
+  await createProperty(t, "var", "res", '"hello world"');
+  await createRespond(t, "res");
 
-  // adding api content
-  await t.expect(await getLocation()).contains("app/" + appName + "/develop", { timeout: WAIT_TIME_SHORT });
-  await selectAPIType(t, "hello");
-  await createRespond(t, "\"hello world\"", true);
+  const testUrl = await deployToChoreo(t, appName)
+  logger.info("test url : " + testUrl);
+  await t.expect(testUrl.includes("https://")).ok();
+  const response = await callExternalEndpoint(t, testUrl + "/hello", 3);
 
-  // deploying app
-  await deployToChoreo(t, appName);
+  console.log("Service response : " + response);
+  await t.expect(response).eql("hello world");
+  logger.info("Hello world string recieved successfully !")
 
-  // go back app list
-  await t
-    .click(getElementFromSelectorTestId("app-list-btn"))
-    .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
-  await t.expect(getElementFromSelectorTestId("active-status")).ok({ timeout: WAIT_TIME_SHORT });
-  logger.info("Load app list successful!")
+  await goBacktoAppsList(t);
 })
 
 test("Create API from previously created choreo app", async (t) => {
@@ -73,19 +74,39 @@ test("Create API from previously created choreo app", async (t) => {
   await goToApiListView(t);
 
   // create new api from choreo app
-  await createApiFromChoreoApp(t, apiName, appName);
+  await createApiFromChoreoApp(t, apiFromChoreoApp, appName);
 
   // test overview page loading
-  await t.expect(await getLocation()).contains("/config/overview", { timeout: WAIT_TIME_SHORT });
-  await t.expect(getElementFromSelectorTestId("Overview")).ok({ timeout: WAIT_TIME_SHORT });
-  logger.info("Created API config view loaded successfully!");
+  await t.expect(await getLocation()).contains("/develop/overview", { timeout: WAIT_TIME_SHORT });
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  logger.info("Created API's Overview loaded successfully!");
+});
+
+test.meta({'unstable': "true"})("Delete API created from Choreo App", async (t) => {
+  // go to api tab
+  await goToApiListView(t);
+
+  await deleteApi(t, apiFromChoreoApp, false);
+});
+
+test.meta({'unstable': "true"})("Create API from an existing REST API", async (t) => {
+  // go to api tab
+  await goToApiListView(t);
+
+  // create new api from choreo app
+  await createApiFromRestEp(t, apiFromEp, "https://petstore.swagger.io/v2/swagger.json");
+
+  // test overview page loading
+  await t.expect(await getLocation()).contains("/develop/overview", { timeout: WAIT_TIME_SHORT });
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  logger.info("Created API's Overview loaded successfully!");
 });
 
 test("Change design configurations of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to design configs tab
   await t.expect(getElementFromSelectorTestId("Design Configurations")).ok({ timeout: WAIT_TIME_SHORT });
@@ -126,7 +147,7 @@ test("Change subscriptions of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to Subscriptions tab
   await t.expect(getElementFromSelectorTestId("Subscriptions")).ok({ timeout: WAIT_TIME_SHORT });
@@ -156,7 +177,7 @@ test("Change Business Info of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to Business Info tab
   await t.expect(getElementFromSelectorTestId("Business Info")).ok({ timeout: WAIT_TIME_SHORT });
@@ -204,7 +225,7 @@ test("Change Runtime Configurations of API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to Runtime Configurations tab
   await t.expect(getElementFromSelectorTestId("Runtime Configurations")).ok({ timeout: WAIT_TIME_SHORT });
@@ -269,7 +290,7 @@ test("Create a URL type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -307,7 +328,7 @@ test("Create an Inline type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -354,7 +375,7 @@ test("Create a Markdown type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -402,7 +423,7 @@ test("Create a File type document for an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -447,7 +468,7 @@ test("View different types of API documents", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -704,7 +725,7 @@ test("Delete an API document from document view page", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -721,8 +742,8 @@ test("Delete an API document from document view page", async (t) => {
   await t.click(getElementFromSelectorTestId("document-delete"), { speed: 0.5 });
   // Check delete confirmation dialog
   await t.expect(getElementFromSelectorTestId("Delete Document").exists).ok();
-  await t.expect(getElementFromSelectorTestId("delete-api").exists).ok();
-  await t.click(getElementFromSelectorTestId("delete-api"), { speed: 0.5 });
+  await t.expect(getElementFromSelectorTestId("delete-api-document").exists).ok();
+  await t.click(getElementFromSelectorTestId("delete-api-document"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(screen.findByText("URL").exists).notOk();
 
@@ -733,7 +754,7 @@ test.skip("Delete documents of an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await openApi(t, apiName);
+  await openApi(t, apiFromEp);
 
   // Go to documents tab
   await navigateToAPIDocumentsTab(t);
@@ -746,5 +767,5 @@ test("Delete an API", async (t) => {
   // go to api tab
   await goToApiListView(t);
 
-  await deleteApi(t, apiName, true);
+  await deleteApi(t, apiFromEp, true);
 });
