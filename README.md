@@ -62,7 +62,7 @@ Follow the steps below to clone the Choreo documentation GitHub repository and t
     Git clone the forked repository.
 
     ```shell
-    $ git clone https://github.com/[git-username]/docs-apim.git
+    $ git clone https://github.com/[git-username]/docs-choreo-dev.git
     ```
 
 3. Navigate to the folder containing the repo that you cloned in step 4.1 on a terminal window.
@@ -70,11 +70,11 @@ Follow the steps below to clone the Choreo documentation GitHub repository and t
     For example:
 
     ```shell
-    $ cd docs-apim/<Language-folder>/
+    $ cd docs-choreo-dev/<Language-folder>/
     ```
 
     ```shell
-    $ cd docs-apim/en/
+    $ cd docs-choreo-dev/en/
     ```
 
 4. Install the required pip packages.
