@@ -5,7 +5,7 @@ rm -f Config.toml .choreoproject &&
 if [ "$CHOREO_ENV" = "DEV" ]; then
   cp Config.dev.template.toml Config.toml
 elif [ "$CHOREO_ENV" = "STAGE" ]; then
-  cp Config.stage.template.conf Config.toml
+  cp Config.stage.template.toml Config.toml
 elif [ "$CHOREO_ENV" = "PROD" ]; then
   cp Config.prod.template.toml Config.toml
 else
