@@ -130,6 +130,11 @@ spec:
             configMapKeyRef:
               key: DISABLE_ON_PREMISE_APPS
               name: cm-frontend
+        - name: APIM_GATEWAY_ENDPOINT_SUFFIX
+          valueFrom:
+            configMapKeyRef:
+              key: APIM_GATEWAY_ENDPOINT_SUFFIX
+              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
