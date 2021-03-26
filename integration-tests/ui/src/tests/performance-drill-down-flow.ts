@@ -1,7 +1,7 @@
 import { RequestLogger } from "testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import {
   createNewApp,
   createHttpConnector,
@@ -52,7 +52,8 @@ fixture("Performance Analyzer")
     const data = [...log, ...error];
     saveLogs(t, data, httpRequests)
     httpLogger.clear();
-  });
+  })
+  .skip;
 
 test.meta({'stable': "true"})("Performance Drill Down test", async (t) => {
   const ENDPOINT = config.performanceAnalyzerTest.endpoint;

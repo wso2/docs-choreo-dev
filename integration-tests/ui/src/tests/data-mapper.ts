@@ -2,7 +2,7 @@ import { Selector, RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import { checkSourceCodeForValidation, createNewApp, createProperty, deleteApp, generateAppName, goBacktoAppsList, selectTrigger, WAIT_TIME_SHORT, WAIT_TIME_MEDIUM, saveLogs, enableDetailedLogs } from "../utils/choreo-utils";
 import { logger } from '../utils/logger'
 
@@ -75,7 +75,7 @@ test.meta({'stable': "true"})("Low code form AI suggestions", async (t) => {
     .click(screen.getByTestId("http-save-done"), { speed: 0.5 });
   logger.info("HTTP connector added successfully!");
   await t.expect(screen.findByTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
-  const variableSourceFields = ['http:Client httpEndpoint = new (url);']
+  const variableSourceFields = ['http:Client httpEndpoint = check new (url);']
   await checkSourceCodeForValidation(t,variableSourceFields);
   logger.info("Data Mapper AI suggestion added to Low Code form successfully!");
   await goBacktoAppsList(t);

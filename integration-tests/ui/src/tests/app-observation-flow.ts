@@ -2,7 +2,7 @@ import {Selector, RequestLogger} from "testcafe";
 import {screen} from "@testing-library/testcafe";
 import {getLocation} from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import {
     createNewApp,
     createProperty,
