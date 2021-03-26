@@ -2,7 +2,7 @@ import { Selector, RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
 import { getLocation } from "../utils/login-utils";
 import page from "../model/page";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import {
   createNewApp,
   selectTrigger,
@@ -108,10 +108,12 @@ test.meta({'stable': "true"})("test postman view", async (t) => {
   await t.expect(await getLocation()).contains("app/" + appName + "/test", { timeout: WAIT_TIME_SHORT });
 
   logger.info("Testing invalid API key validation attempt scenario");
-  await t.click(getElementFromSelectorTestId("postman"))
-  await t.click(getElementFromSelectorTestId("click-here"));
+  await t.expect(getElementFromSelectorTestId("postman").visible).ok({ timeout: WAIT_TIME_SHORT })
+  await t.click(getElementFromSelectorTestId("postman"), { speed: 0.5 })
+  await t.expect(getElementFromSelectorTestId("click-here").visible).ok({ timeout: WAIT_TIME_SHORT })
+  await t.click(getElementFromSelectorTestId("click-here"), { speed: 0.5 });
   await t.expect(getElementFromSelectorTestId("api-key").visible).ok({ timeout: WAIT_TIME_SHORT })
-  await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey');
+  await t.typeText(getElementFromSelectorTestId('api-key'), 'dummyapikey', { speed: 0.5 });
   await t.expect(getElementFromSelectorTestId('api-key-error').exists).ok({ timeout: WAIT_TIME_SHORT });
   logger.info("Test phase successful!");
 
@@ -136,11 +138,6 @@ test.meta({'stable': "true"})("deploy hello world service", async (t) => {
   console.log("Service response : " + response);
   await t.expect(response).eql("hello world");
   logger.info("Hello world string recieved successfully !")
-
-  logger.info("Stopping deployed application")
-  await t.click(screen.getByText("Stop"))
-    .expect(getElementFromSelectorTestId("deploy-ok").exists).notOk({ timeout: WAIT_TIME_LONG })
-  logger.info("Undeloyed application successfully!")
 
   await goBacktoAppsList(t);
   await deleteApp(t, appName, true);

@@ -1,6 +1,6 @@
 import { RequestLogger } from "testcafe";
 import { screen } from "@testing-library/testcafe";
-import * as config from "../../testcafe-run-config.json";
+import { config } from "../../../ui/src/utils/config";
 import { saveLogs, logger, devportalLogin, getLocation, WAIT_TIME_SHORT } from "../utils/choreo-utils";
 
 
