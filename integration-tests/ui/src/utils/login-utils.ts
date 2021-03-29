@@ -1,6 +1,5 @@
 import { ClientFunction } from "testcafe";
-import * as config from "../../testcafe-run-config.json";
-import * as userConfig from "../../testcafe-user-config.json";
+import { config, userConfig } from "../../../ui/src/utils/config";
 import axios from "axios";
 import qs from "qs";
 import { logger } from "./logger";

@@ -4,3 +4,4 @@ resources:
   - root.yaml
   - default-backend.yaml
   - language-server.yaml
+  - apim-service.yaml
