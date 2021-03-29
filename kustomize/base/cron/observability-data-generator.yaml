@@ -5,7 +5,7 @@ metadata:
   labels:
     choreo.component: observability-data-generator
 spec:
-  schedule: 30 09 * * * # will be updated to 30 20 1,15 * * once its merged to prod
+  schedule: 30 20 1,15 * *
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
