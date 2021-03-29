@@ -1,5 +1,5 @@
 import { RequestHook } from "testcafe";
-import * as userConfig from "../../testcafe-user-config.json";
+import { userConfig } from "../../../ui/src/utils/config";
 
 export class ChoreoLoginHook extends RequestHook {
   // @ts-ignore

@@ -16,6 +16,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: apim-am
   name: choreo-apim-am-2-deployment
@@ -41,7 +43,7 @@ spec:
         allowPrivilegeEscalation: false
       containers:
         - name: wso2am
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim:mongodb
+          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim:latest
           livenessProbe:
             httpGet:
               path: /services/Version
@@ -167,6 +169,9 @@ spec:
             - name: JVM_MEM_OPTS
               value: "-Xms1024m -Xmx1024m"
           volumeMounts:
+            - name: wso2am-storage
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT/repository/deployment/server/executionplans
+              subPath: executionplans
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
             - name: apim-docker-entrypoint
@@ -194,6 +199,9 @@ spec:
               subPath: client-truststore.jks
       serviceAccountName: sa-choreo-apim
       volumes:
+        - name: wso2am-storage
+          persistentVolumeClaim:
+            claimName: pvc-apimstorage
         - name: wso2am-conf
           configMap:
             name: choreo-apim-am-2-conf

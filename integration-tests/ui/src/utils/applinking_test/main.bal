@@ -1,4 +1,5 @@
 import ballerina/io;
+import ballerinax/choreo as _;
 
 # Prints `Hello World`.
 
