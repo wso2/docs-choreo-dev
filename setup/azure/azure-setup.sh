@@ -117,11 +117,14 @@ kubectl apply -n linkerd -f linkerd2/certmanager/certificate.yaml
 echo "--- Installing linkerd2... "
 helm repo add linkerd https://helm.linkerd.io/stable
 helm repo update
-helm upgrade --install linkerd2 --wait \
-     --set-file global.identityTrustAnchorsPEM=/tmp/ca.crt \
-     linkerd/linkerd2 \
-     -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
-     -n linkerd --version 2.9.0
+helm upgrade --install linkerd2 --wait \                                                                                                                                                                  ─╯
+  --set-file identityTrustAnchorsPEM=/tmp/ca.crt \
+  linkerd/linkerd2 \
+  -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
+  --set identity.issuer.scheme=kubernetes.io/tls \
+  --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
+  -n linkerd --version 2.10.0
+
 
 ############### Install Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
