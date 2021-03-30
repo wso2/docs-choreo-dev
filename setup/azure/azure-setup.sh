@@ -161,7 +161,7 @@ helm upgrade --install prod-choreo-system ingress-nginx/ingress-nginx \         
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
-helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.2.11
+helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.4.17
 
 ################ Install CSI Secret Store Driver ########
 echo "--- Creating namespace csi-secret-store-driver..."
