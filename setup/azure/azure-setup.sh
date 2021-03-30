@@ -131,6 +131,7 @@ kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml |
 
 # Annotate Nginx ingress namespace for linker mTLS
 kubectl annotate namespace "${namespace}-nginx-ingress" linkerd.io/inject=enabled
+kubectl annotate namespace "${namespace}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
@@ -138,24 +139,24 @@ helm repo update
 
 echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
-    --namespace "${namespace}-nginx-ingress" \
-    --version 3.8.0 \
-    --set controller.replicaCount=2 \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
-    --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
-    --set rbac.create=true \
-    --set controller.service.externalTrafficPolicy=Local \
-    --set controller.resources.requests."memory"=500Mi \
-    --set controller.resources.requests."cpu"=500m \
-    --set controller.resources.limits."memory"=1000Mi \
-    --set controller.resources.limits."cpu"=1000m \
-    --set controller.ingressClass="${namespace}-nginx" \
-    --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-    --set controller.image.tag="v0.41.2" \
-    --set controller.image.digest=null \
-    --set-string controller.config.server-tokens=false \
-    --set controller.admissionWebhooks.enabled=false
+helm upgrade --install prod-choreo-system ingress-nginx/ingress-nginx \                                                                                                                                    ─╯
+  --namespace "${namespace}-nginx-ingress" \
+  --version 3.8.0 \
+  --set controller.replicaCount=2 \
+  --set controller.service.loadBalancerIP="${LOADBALANCER_IP}"\
+  --set rbac.create=true \
+  --set controller.service.externalTrafficPolicy=Local \
+  --set controller.resources.requests."memory"=500Mi \
+  --set controller.resources.requests."cpu"=500m \
+  --set controller.resources.limits."cpu"=1000m \
+  --set controller.ingressClass="${namespace}-nginx" \
+  --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
+  --set controller.image.tag="v0.41.2" \
+  --set controller.image.digest=null \
+  --set-string controller.config.server-tokens=false \
+  --set controller.admissionWebhooks.enabled=false \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group"="${LOADBALANCER_IP_RG}"
+
 
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
