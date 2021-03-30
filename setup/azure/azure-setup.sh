@@ -90,13 +90,12 @@ echo "--- Installing Certmanager"
 kubectl create ns cert-manager
 kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
-## Install CRDs
-kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
-
-## Install certmanager deployment
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm upgrade --install cert-manager --namespace cert-manager --wait jetstack/cert-manager --version v0.14.0
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.2.0 \
+  -n cert-manager \
+  --set installCRDs=true
 
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
