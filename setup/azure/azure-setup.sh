@@ -103,7 +103,8 @@ kubectl create namespace linkerd
 kubectl annotate namespace linkerd config.linkerd.io/admission-webhooks=disabled
 
 echo "-- Creating secrets for linkerd"
-step certificate create identity.linkerd.cluster.local /tmp/ca.crt /tmp/ca.key \
+
+step certificate create root.linkerd.cluster.local /tmp/ca.crt /tmp/ca.key \
   --profile root-ca --no-password --insecure
 
 echo "-- Creating k8s TLS secrets to Automatically rotate control plane TLS using certmanager"
