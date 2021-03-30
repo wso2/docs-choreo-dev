@@ -90,5 +90,13 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
+        volumeMounts:
+        - mountPath: /home/ballerina/Config.toml
+          name: bal-config-volume
+          subPath: Config.toml
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      volumes:
+      - configMap:
+          name: cm-connectords
+        name: bal-config-volume
