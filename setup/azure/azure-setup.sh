@@ -100,7 +100,6 @@ helm install \
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
 kubectl create namespace linkerd
-kubectl annotate namespace linkerd config.linkerd.io/admission-webhooks=disabled
 
 echo "-- Creating secrets for linkerd"
 
