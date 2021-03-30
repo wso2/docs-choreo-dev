@@ -1,17 +1,16 @@
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: dev-choreo-system-wildcard-cert
-  namespace: cert-manager
   annotations:
     reflector.v1.k8s.emberstack.com/secret-reflection-allowed: "true"
     reflector.v1.k8s.emberstack.com/secret-reflection-auto-enabled: "true"
-    reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "<comma separated list of namespaces to replicate the secret"
+  name: prod-choreo-system-wildcard-cert
+  namespace: cert-manager
 spec:
   dnsNames:
-  - dv.choreo.dev
-  - '*.dv.choreo.dev'
+  - choreo.dev
+  - '*.choreo.dev'
   issuerRef:
-    kind: ClusterIssuer
+    kind: Issuer
     name: choreo-letsencrypt-prod
-  secretName: dev-choreo-system-wildcard-tls
+  secretName: prod-choreo-system-wildcard-tls
