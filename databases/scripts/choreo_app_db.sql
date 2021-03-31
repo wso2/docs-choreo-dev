@@ -231,6 +231,14 @@ CREATE TABLE config_mapping_info
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+ALTER TABLE `config_mapping_info` ADD COLUMN `user_id` INT NULL DEFAULT NULL AFTER `env_id`;
+ALTER TABLE `config_mapping_info` DROP FOREIGN KEY app_id_fk,
+                                  DROP FOREIGN KEY env_id_fk,
+                                  DROP INDEX unique_app_env_ids,
+                                  ADD FOREIGN KEY (app_id) REFERENCES application (id) ON DELETE CASCADE,
+                                  ADD FOREIGN KEY (env_id) REFERENCES environment (id),
+                                  ADD UNIQUE KEY `unique_user_app_env_ids` (`user_id`,`app_id`,`env_id`);
+
 CREATE TABLE config_mapping
 (
     id                      INT AUTO_INCREMENT,
@@ -247,3 +255,6 @@ CREATE TABLE config_mapping
     CONSTRAINT config_id_fk FOREIGN KEY (config_id) REFERENCES configuration (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+ALTER TABLE `config_mapping` DROP FOREIGN KEY config_id_fk;
+ALTER TABLE `config_mapping` DROP INDEX config_id_fk;
