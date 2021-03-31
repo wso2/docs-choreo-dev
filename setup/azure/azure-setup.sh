@@ -116,7 +116,7 @@ kubectl apply -n linkerd -f linkerd2/certmanager/certificate.yaml
 echo "--- Installing linkerd2... "
 helm repo add linkerd https://helm.linkerd.io/stable
 helm repo update
-helm upgrade --install linkerd2 --wait \                                                                                                                                                                  ─╯
+helm upgrade --install linkerd2 --wait \
   --set-file identityTrustAnchorsPEM=/tmp/ca.crt \
   linkerd/linkerd2 \
   -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
@@ -139,7 +139,7 @@ helm repo update
 
 echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install prod-choreo-system ingress-nginx/ingress-nginx \                                                                                                                                    ─╯
+helm upgrade --install prod-choreo-system ingress-nginx/ingress-nginx \
   --namespace "${namespace}-nginx-ingress" \
   --version 3.8.0 \
   --set controller.replicaCount=2 \
