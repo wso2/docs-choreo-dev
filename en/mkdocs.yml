@@ -48,23 +48,17 @@ strict: true
 # Navigation
 nav:
     - Documentation: index.md
-    - Get Started:
-        - Overview: get-started/overview.md
-        - About Choreo: get-started/introduction-to-choreo.md
-        - Quick Start Guide: get-started/quick-start-guide.md
-        - About this Release: get-started/about-this-release.md
-    - Concepts: 
-        - Overview: concepts/choreo-concepts.md
-    - Tutorials: 
-        - '': tutorials/overview.md
-    - Videos: 
-        - '': videos/videos.md
+    - Integrations:
+        - Concepts: integrations/integration-concepts.md
+    - Services: 
+        - Concepts: services/service-concepts.md
+    - APIs: 
+        - Concepts: apis/api-concepts.md
+    - Observability: 
+        - '': observability/observability.md
     - References: 
         - '': references/references.md
-    - Community: 
-        - '': community/community.md
-    - FAQ: 
-        - '': faq.md
+        
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
