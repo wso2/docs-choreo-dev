@@ -23,6 +23,11 @@ body.cChoreoBody {
 }
 .md-sidebar--secondary ul {
     margin-top: 30px;
+    background-color: transparent !important;
+}
+
+.md-nav.md-nav--secondary , .md-nav.md-nav--secondary .md-nav {
+    background-color: transparent !important;
 }
 
 .md-sidebar--secondary ul li.md-nav__item.active a {
@@ -258,5 +263,15 @@ a.cChoreoDocsButtons.localLink {
 
     .container {
         max-width: 770px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .md-sidebar.md-sidebar--secondary {
+        display: none;
+    }
+    html .md-nav--primary .md-nav__title ~ .md-nav__list {
+        background-color: #545CEC;
+        box-shadow: inset 0 .05rem 0 rgba(0,0,0,.07);
     }
 }
