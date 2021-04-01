@@ -19,14 +19,18 @@ body.cChoreoBody {
 }
 
 .md-sidebar--secondary ul li a {
-   color: #5567d5 !important;
+   color: #545CEC !important;
 }
 .md-sidebar--secondary ul {
     margin-top: 30px;
 }
 
+.md-sidebar--secondary ul li.md-nav__item.active a {
+    color: #000 !important;
+}
+
 .md-sidebar.md-sidebar--primary {
-    background-color: #5567d5; 
+    background-color: #545CEC; 
     top:0;
     height: 100vh !important;
 
@@ -36,15 +40,15 @@ body.cChoreoBody {
     background: #F6F5FA;
 } */
 [data-md-color-accent="deep-orange"] .md-nav__link:focus, [data-md-color-accent="deep-orange"] .md-nav__link:hover, [data-md-color-accent="deep-orange"] .md-typeset .footnote li:hover .footnote-backref:hover, [data-md-color-accent="deep-orange"] .md-typeset .footnote li:target .footnote-backref, [data-md-color-accent="deep-orange"] .md-typeset .md-clipboard:active::before, [data-md-color-accent="deep-orange"] .md-typeset .md-clipboard:hover::before, [data-md-color-accent="deep-orange"] .md-typeset [id] .headerlink:focus, [data-md-color-accent="deep-orange"] .md-typeset [id]:hover .headerlink:hover, [data-md-color-accent="deep-orange"] .md-typeset [id]:target .headerlink {
-    color: #5567d5;
+    color: #545CEC;
 }
 
 [data-md-color-primary="deep-orange"] .md-typeset a {
-	color: #5567d5;
+	color: #545CEC;
 }
 
 a , a label.md-nav__link , .md-nav__link {
-    color: #5567d5 !important;
+    color: #545CEC !important;
 }
 
 h1, h2, h3, h4 {
@@ -131,7 +135,7 @@ margin-top: 100px;
 }
 .md-nav__link.md-nav__link--active.localLink {
     background-color: #fff;
-    color: #5567d5 !important;
+    color: #545CEC !important;
     border-radius: 5px;
 }
 
@@ -156,7 +160,7 @@ ul.md-nav__list  ul.md-nav__list {
 
 
 /* .md-sidebar__scrollwrap {
-    color: #5567d5;
+    color: #545CEC;
     z-index: 1201;
     box-shadow: 0 1px 4px 0 rgb(0 0 0 / 8%), inset 0 -1px 0 0 #e1e2e7;
     background-color: #ffffff;
@@ -219,7 +223,7 @@ a.cChoreoDocsButtons.localLink {
     font-size: 14px;
     box-shadow: inset 0 0 0 1px rgb(0 0 0 / 6%), 0 1px 2px 0 rgb(0 0 0 / 15%);
     text-transform: capitalize;
-    background-color: #5567d5;
+    background-color: #545CEC;
 
     border-radius: 5px;
 
@@ -228,4 +232,31 @@ a.cChoreoDocsButtons.localLink {
     padding: 10px 25px;
     width: auto !important;
     margin-top: 20px;
+}
+
+.md-footer-nav {
+    margin-top: 30px;
+}
+.md-search {
+	padding-right: 24px;
+}
+
+
+.md-nav {
+	background-color: #545CEC;
+}
+
+
+@media screen and (max-width: 1540px) {
+
+.container {
+	max-width: 970px;
+}
+} 
+
+@media screen and (max-width: 1400px) {
+
+    .container {
+        max-width: 770px;
+    }
 }
