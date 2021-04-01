@@ -48,7 +48,7 @@ strict: true
 # Navigation
 nav:
     - Documentation: index.md
-    - Get Started x:
+    - Get Started:
         - Overview: get-started/overview.md
         - About Choreo: get-started/introduction-to-choreo.md
         - Quick Start Guide: get-started/quick-start-guide.md
