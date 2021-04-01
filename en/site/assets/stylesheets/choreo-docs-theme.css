@@ -1,0 +1,11 @@
+body.cChoreoBody {
+        background-color: #ffffff;
+        opacity: 1;
+        background-image: radial-gradient(#d5d5d5 0.9px, #ffffff 0.9px);
+        background-size: 18px 18px;
+
+}
+
+[data-md-color-primary="deep-orange"] .md-header {
+    border: none;
+}
