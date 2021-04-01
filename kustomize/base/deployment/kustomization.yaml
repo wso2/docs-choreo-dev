@@ -23,5 +23,5 @@ resources:
   - test-assistant.yaml
 
 commonAnnotations:
-  config.linkerd.io/skip-outbound-ports: 3306,443
+  config.linkerd.io/skip-outbound-ports: 3306,443,2587
 
