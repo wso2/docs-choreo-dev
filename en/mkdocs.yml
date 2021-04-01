@@ -66,6 +66,7 @@ nav:
         - 1.2: get-started/introduction-to-choreo.md
         - 1.3: get-started/quick-start-guide.md
         - 1.4: get-started/about-this-release.md       
+
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
