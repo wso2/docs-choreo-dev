@@ -48,23 +48,24 @@ strict: true
 # Navigation
 nav:
     - Documentation: index.md
-    - Get Started:
+    - Get Started x:
         - Overview: get-started/overview.md
         - About Choreo: get-started/introduction-to-choreo.md
         - Quick Start Guide: get-started/quick-start-guide.md
         - About this Release: get-started/about-this-release.md
     - Concepts: 
         - Overview: concepts/choreo-concepts.md
-    - Tutorials: 
-        - '': tutorials/overview.md
-    - Videos: 
-        - '': videos/videos.md
-    - References: 
-        - '': references/references.md
-    - Community: 
-        - '': community/community.md
-    - FAQ: 
-        - '': faq.md
+    - Tutorials: tutorials/overview.md
+    - Videos: videos/videos.md
+    - References: references/references.md
+    - Community: community/community.md
+    - FAQ: faq.md
+    - Test: test.md 
+    - 1 x:
+        - 1.1: get-started/overview.md
+        - 1.2: get-started/introduction-to-choreo.md
+        - 1.3: get-started/quick-start-guide.md
+        - 1.4: get-started/about-this-release.md       
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition

@@ -1,5 +1,5 @@
 <nav class="md-nav md-nav--primary" data-md-level="0">
-    <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <!-- <label class="md-nav__title md-nav__title--site" for="__drawer">
       <a href="{{ config.site_url | default(nav.homepage.url, true) | url }}" title="{{ config.site_name }}"
          class="md-nav__button md-logo">
         {% if config.theme.logo.icon %}
@@ -9,7 +9,7 @@
         {% endif %}
       </a>
       {{ config.site_name }}
-    </label>
+    </label> -->
     {% if config.repo_url %}
       <div class="md-nav__source">
         {% include "partials/source.html" %}
@@ -23,3 +23,4 @@
       {% endfor %}
     </ul>
   </nav>
+
