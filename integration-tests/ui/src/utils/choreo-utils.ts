@@ -85,6 +85,7 @@ export const waitForPerformanceDrillDown = async (t: TestController) => {
 }
 
 export const goToApiListView = async (t: TestController) => {
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.click(getElementFromSelectorTestId("apis-tab"), { speed: 0.5 });
   await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
   await t.expect(getElementFromSelectorTestId("apis-tab").hasClass("Mui-selected")).ok();
@@ -194,6 +195,28 @@ export const undeployApp = async (t: TestController, name: string, strict: boole
 
     await resetAppSearch(t);
   }
+}
+
+export const openChoreoApp = async (t: TestController, name: string) => {
+  await t.expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
+  await t.expect(getElementFromSelectorTestId("applications-tab").hasClass("Mui-selected")).ok();
+  logger.info("Page loaded successfully");
+  
+  // Check if apps are listed
+  let appsExist = await Selector(".MuiTableRow-root.MuiTableRow-hover").exists;
+  await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").exists).ok({ timeout: WAIT_TIME_SHORT });
+
+  // search by app name
+  await searchApps(t, name);
+
+  // check if the correct app appears
+  await t.expect(Selector(".MuiTableRow-root.MuiTableRow-hover").count).eql(1, "Only one app should exists");
+  let app = await Selector(".MuiTableRow-root.MuiTableRow-hover");
+  let appName = await app.child("td").nth(0).textContent; 
+  await t.expect(appName).eql(name, "App name mismatch");
+
+  // open the app
+  await t.click(app);
 }
 
 export const deleteApp = async (t: TestController, name: string, strict: boolean) => {
@@ -338,7 +361,7 @@ export const clearAPIDocumentsIfExists = async (t: TestController) => {
  *
  */
 export const selectTrigger = async (t: TestController, type: string, relativePath?: string, method?: string) => {
-  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) {` ]
+  const webhookSourceFields = ['import ballerina/http;', 'service on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) returns error? {` ]
   await waitTillWorkspace(t);
   switch (type) {
     case "Manual":
@@ -360,7 +383,7 @@ export const selectTrigger = async (t: TestController, type: string, relativePat
 export const selectAPITrigger = async (t: TestController, method: string, relativePath?: string) => {
   const code = [
     'import ballerina/http;', 'service on new http:Listener(8090) {',
-    `resource function ${method.toLowerCase()} ${relativePath}(http:Caller caller, http:Request request) {` 
+    `resource function ${method.toLowerCase()} ${relativePath}(http:Caller caller, http:Request request) returns error? {` 
   ]
   await waitTillWorkspace(t);
   await t
@@ -375,6 +398,18 @@ export const selectAPITrigger = async (t: TestController, method: string, relati
   logger.info("selected API trigger");
 };
 
+export const selectStatementOption = async (t: TestController, option: string) => {
+  logger.info(`Selecting ${option} option from options panel`);
+  await t
+    .expect(getElementFromSelectorTestId("statement-options").exists).ok()
+    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 });
+
+  logger.info("Selected statement options tab");
+  await t
+    .click(getElementFromSelectorTestId(option), { speed: 0.5 });
+  logger.info(`Selected option: ${option}`);
+};
+
 export const createProperty = async (t: TestController, type: string, name: string, expression: string) => {
   const variableSourceFields = [type, name, '=',expression]
 
@@ -386,13 +421,16 @@ export const createProperty = async (t: TestController, type: string, name: stri
       .click(Selector("#SmallPlus"))
       .click(Selector("#Plus_a"));
   }
+
+  await selectStatementOption(t, "addVariable");
+
+  logger.info("Creating variable: selected variable option");
   await t
-    .expect(getElementFromSelectorTestId("statement-options").exists).ok()
-    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
-    .hover(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
-    .click(getElementFromSelectorTestId("addVariable"), { speed: 0.5 })
     .click(screen.getByTestId("undefinedvar"), { speed: 0.5 })
-    .click(Selector('li').withAttribute('data-value',type))
+    .click(Selector('li').withAttribute('data-value',type));
+
+  logger.info("Creating variable: selected variable type");
+  await t
     .selectText(within(getElementFromSelectorTestId('variable-name')).getByRole('textbox'))
     .pressKey("delete")
     .typeText(
@@ -401,8 +439,10 @@ export const createProperty = async (t: TestController, type: string, name: stri
       { speed: 0.5 }
     );
 
+  logger.info("Creating variable: added variable name");
   await typeOnNthExpressionEditor(t, 0, expression, false, "save-btn");
 
+  logger.info("Creating variable: added variable expression");
   await t
     .click(getElementFromSelectorTestId("save-btn"))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_MEDIUM });
@@ -411,16 +451,20 @@ export const createProperty = async (t: TestController, type: string, name: stri
   logger.info("Successfully created the variable with expression : " + expression);
 };
 
+export const switchToDeployView = async (t: TestController) => {
+  await t.click(getElementFromSelectorTestId('deploy'));
+  await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
+  await t.expect(await getLocation()).contains("app/", {timeout: WAIT_TIME_SHORT});
+  await t.expect(await getLocation()).contains("/deploy", {timeout: WAIT_TIME_SHORT});
+  logger.info("Succesfully Navigated to Deploy view")
+};
+
 
 export const deployToChoreo = async (t: TestController, appName: string) => {
   logger.info('Deploying app to Choreo');
   await t.wait(WAIT_TIME_SHORT);
 
-  await t.click(getElementFromSelectorTestId('deploy'))
-  await t.expect(Selector("#backdrop-loader").exists).notOk({timeout: WAIT_TIME_SHORT});
-  await t.expect(await getLocation()).contains("app/" + appName + "/deploy", {timeout: WAIT_TIME_SHORT})
-
-  logger.info("Succesfully Navigated to Deploy view")
+  await switchToDeployView(t);
 
   logger.info("Deploying application...")
   await t.wait(WAIT_TIME_SHORT);
@@ -486,7 +530,7 @@ export const createLog = async (t: TestController, logType: string, expression: 
 };
 
 export const createRespond = async (t: TestController, expression: string, skipSmallPlus?: boolean) => {
-  const responseSourceFields = [`checkpanic caller->respond(${expression});`]
+  const responseSourceFields = [`check caller->respond(${expression});`]
 
   if (!skipSmallPlus) {
     await t.click(Selector("#SmallPlus"), { speed: 0.5 });
@@ -497,13 +541,10 @@ export const createRespond = async (t: TestController, expression: string, skipS
     await t.click(Selector("#Plus_a"), { speed: 0.5 });
   }
 
-  await t
-    .expect(getElementFromSelectorTestId("statement-options").exists).ok({ timeout: 10000 })
-    .click(getElementFromSelectorTestId("statement-options"), { speed: 0.5 })
-    .hover(getElementFromSelectorTestId("addrespond"), { speed: 0.5 })
-    .click(getElementFromSelectorTestId("addrespond"), { speed: 0.5 });
+  await selectStatementOption(t, "addrespond");
 
   await typeOnNthExpressionEditor(t, 0, expression, false, "save-btn");
+  logger.info(`Creating respond: added expression ${expression}`)
   
   await t
     .click(getElementFromSelectorTestId("save-btn"))
@@ -567,7 +608,7 @@ export const createGithubIssue = async (t: TestController, pat: string, owner: s
   logger.info("Creating GithubIssue element");
   await selectAPIOption(t, "github");
   await t
-    .hover(getElementFromSelectorTestId('git-manual-btn'), { speed: 0.5 })
+    .expect(getElementFromSelectorTestId('git-manual-btn').exists).ok({ timeout: WAIT_TIME_LONG })
     .click(getElementFromSelectorTestId('git-manual-btn'), { speed: 0.5 });
 
   await typeOnNthExpressionEditor(t, 0, pat, true, 'git-save-next-btn');
@@ -575,7 +616,7 @@ export const createGithubIssue = async (t: TestController, pat: string, owner: s
   await t
     .click(getElementFromSelectorTestId('git-save-next-btn'))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG })
-    .click(getElementFromSelectorTestId('SelectcreateIssue'), { speed: 0.5 })
+    .click(getElementFromSelectorTestId('SelectgetAuthenticatedUser'), { speed: 0.5 })
     .click(Selector('li').withAttribute('data-value', 'createIssue'))
     .expect(getElementFromSelectorTestId("diagram-loader").exists).notOk({ timeout: WAIT_TIME_LONG });
 
@@ -638,7 +679,7 @@ export const createGmailSendElement = async (t: TestController, token: string, r
 
   await selectAPIOption(t, "gmail");
   await t
-    .hover(getElementFromSelectorTestId('gmail-manual-btn'))
+    .expect(getElementFromSelectorTestId('gmail-manual-btn').exists).ok({ timeout: WAIT_TIME_LONG })
     .click(getElementFromSelectorTestId('gmail-manual-btn'), { speed: 0.5 });
 
   await zoomOutUntilAvailable(t, 'gmail-save-next-btn');
@@ -845,7 +886,7 @@ export const saveLogs = async (t: TestController, browserLogs: string[], network
  */
 export const createHttpConnector = async (t: TestController, url: string, operation: string, responseVariableName: string,
                                           outputPayloadType?: string, outputPayloadVariable?: string) => {
-  const httpSourceFields = [`http:Client httpEndpoint = new ("${url}");`]
+  const httpSourceFields = [`http:Client httpEndpoint = check new ("${url}");`]
 
   logger.info("Creating HTTP Connector...")
   await t
