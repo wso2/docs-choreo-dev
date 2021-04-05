@@ -20,7 +20,7 @@ spec:
       - backend:
           serviceName: telemetry
           servicePort: 9090 # https://github.com/linkerd/linkerd2/issues/4211
-        path: /v0_1_2.Telemetry
+        path: /v0_2_0.Telemetry
       - backend:
           serviceName: negotiator
           servicePort: 9090 # https://github.com/linkerd/linkerd2/issues/4211

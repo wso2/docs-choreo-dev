@@ -90,21 +90,20 @@ echo "--- Installing Certmanager"
 kubectl create ns cert-manager
 kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
-## Install CRDs
-kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
-
-## Install certmanager deployment
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm upgrade --install cert-manager --namespace cert-manager --wait jetstack/cert-manager --version v0.14.0
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.2.0 \
+  -n cert-manager \
+  --set installCRDs=true
 
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
 kubectl create namespace linkerd
-kubectl annotate namespace linkerd config.linkerd.io/admission-webhooks=disabled
 
 echo "-- Creating secrets for linkerd"
-step certificate create identity.linkerd.cluster.local /tmp/ca.crt /tmp/ca.key \
+
+step certificate create root.linkerd.cluster.local /tmp/ca.crt /tmp/ca.key \
   --profile root-ca --no-password --insecure
 
 echo "-- Creating k8s TLS secrets to Automatically rotate control plane TLS using certmanager"
@@ -118,10 +117,13 @@ echo "--- Installing linkerd2... "
 helm repo add linkerd https://helm.linkerd.io/stable
 helm repo update
 helm upgrade --install linkerd2 --wait \
-     --set-file global.identityTrustAnchorsPEM=/tmp/ca.crt \
-     linkerd/linkerd2 \
-     -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
-     -n linkerd --version 2.9.0
+  --set-file identityTrustAnchorsPEM=/tmp/ca.crt \
+  linkerd/linkerd2 \
+  -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
+  --set identity.issuer.scheme=kubernetes.io/tls \
+  --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
+  -n linkerd --version 2.10.0
+
 
 ############### Install Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
@@ -129,6 +131,7 @@ kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml |
 
 # Annotate Nginx ingress namespace for linker mTLS
 kubectl annotate namespace "${namespace}-nginx-ingress" linkerd.io/inject=enabled
+kubectl annotate namespace "${namespace}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
@@ -136,29 +139,29 @@ helm repo update
 
 echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install nginx-ingress-controller ingress-nginx/ingress-nginx \
-    --namespace "${namespace}-nginx-ingress" \
-    --version 3.8.0 \
-    --set controller.replicaCount=2 \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${namespace}-nginx-ingress" \
-    --set controller.service.loadBalancerIP="${LOADBALANCER_IP}" \
-    --set rbac.create=true \
-    --set controller.service.externalTrafficPolicy=Local \
-    --set controller.resources.requests."memory"=500Mi \
-    --set controller.resources.requests."cpu"=500m \
-    --set controller.resources.limits."memory"=1000Mi \
-    --set controller.resources.limits."cpu"=1000m \
-    --set controller.ingressClass="${namespace}-nginx" \
-    --set controller.image.repository="choreoctrlplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-    --set controller.image.tag="v0.41.2" \
-    --set controller.image.digest=null \
-    --set-string controller.config.server-tokens=false \
-    --set controller.admissionWebhooks.enabled=false
+helm upgrade --install prod-choreo-system ingress-nginx/ingress-nginx \
+  --namespace "${namespace}-nginx-ingress" \
+  --version 3.8.0 \
+  --set controller.replicaCount=2 \
+  --set controller.service.loadBalancerIP="${LOADBALANCER_IP}"\
+  --set rbac.create=true \
+  --set controller.service.externalTrafficPolicy=Local \
+  --set controller.resources.requests."memory"=500Mi \
+  --set controller.resources.requests."cpu"=500m \
+  --set controller.resources.limits."cpu"=1000m \
+  --set controller.ingressClass="${namespace}-nginx" \
+  --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
+  --set controller.image.tag="v0.41.2" \
+  --set controller.image.digest=null \
+  --set-string controller.config.server-tokens=false \
+  --set controller.admissionWebhooks.enabled=false \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group"="${LOADBALANCER_IP_RG}"
+
 
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
-helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.2.11
+helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.4.17
 
 ################ Install CSI Secret Store Driver ########
 echo "--- Creating namespace csi-secret-store-driver..."
@@ -174,27 +177,6 @@ kubectl create secret generic csi-secret-store-azure --from-literal clientid="${
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
-
-## Install kured for AKS linux node update and restart https://docs.microsoft.com/en-us/azure/aks/node-updates-kured
-# Add the stable Helm repository
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-
-# Update your local Helm chart repository cache
-helm repo update
-
-# Create a dedicated namespace where you would like to deploy kured into
-kubectl create namespace kured
-
-# Install kured in that namespace with Helm 3 (only on Linux nodes, kured is not working on Windows nodes)
-helm upgrade --install kured stable/kured --namespace kured \
-    --set nodeSelector."beta\.kubernetes\.io/os"=linux \
-    --set extraArgs.start-time=4am \
-    --set extraArgs.end-time=10am \
-    --set extraArgs.reboot-days="tue" \
-    --set extraArgs.slack-hook-url="https://hooks.slack.com/services/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" \
-    --set extraArgs.slack-username="kured" \
-    --set image.repository="choreoctrlplane.azurecr.io/weaveworks/kured" \
-    --set image.tag="1.3.0"
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"

@@ -1,5 +1,5 @@
-apiVersion: cert-manager.io/v1alpha2
-kind: ClusterIssuer
+apiVersion: cert-manager.io/v1
+kind: Issuer
 metadata:
   name: "choreo-letsencrypt-prod"
 spec:
@@ -8,19 +8,15 @@ spec:
     email: techops@wso2.com
     privateKeySecretRef:
       name: "choreo-letsencrypt-prod"
-    # Use dns-01 challenges in order to support wildcard domain names
     solvers:
     - dns01:
-        azuredns:
-          # Service principal client id
+        azureDNS:
           clientID: <Azure AD App client ID>
-          # Secret with the password
           clientSecretSecretRef:
-            key: client-secret
             name: choreo-secret-azuredns-config
-          # Name of the DNS Zone
-          hostedZoneName: <hosted domain name>
-          # Resource group where the DNS Zone is located
-          resourceGroupName: <Azure resource group in which DNS zone is>
+            key: client-secret
           subscriptionID: <Azure subscription ID>
           tenantID: <Azure tenant ID>
+          resourceGroupName: <Azure resource group in which DNS zone is>
+          hostedZoneName: <hosted domain name>
+          environment: AzurePublicCloud
