@@ -137,7 +137,7 @@ spec:
         - name: secret-github-connector
           mountPath: "/mnt/csi/secret-github-connector"
           readOnly: true
-        - name: secret-service-now
+        - name: secret-key-vault
           mountPath: "/mnt/csi/secret-key-vault"
           readOnly: true
         - name: secret-service-now
