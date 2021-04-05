@@ -125,6 +125,9 @@ spec:
         - name: wso2am-gateway-conf
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
           subPath: deployment.toml
+        - name: secret-apim
+          mountPath: /mnt/csi/secret-apim
+          readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
       - name: wso2am-gateway-storage-volume
@@ -133,3 +136,11 @@ spec:
       - name: wso2am-gateway-conf
         configMap:
           name: choreo-apim-gateway-conf
+      - name: secret-apim
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-apim
+          nodePublishSecretRef:
+            name: csi-secret-store-azure

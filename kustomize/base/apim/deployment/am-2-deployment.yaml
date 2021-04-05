@@ -163,6 +163,21 @@ spec:
               subPath: docker-entrypoint.sh
             - name: mysql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
+            - name: secret-apim-db
+              mountPath: /mnt/csi/secret-apim-db
+              readOnly: true
+            - name: secret-apim-shared-db
+              mountPath: /mnt/csi/secret-apim-shared-db
+              readOnly: true
+            - name: secret-apim-user-db
+              mountPath: /mnt/csi/secret-apim-user-db
+              readOnly: true
+            - name: secret-apim-mongodb
+              mountPath: /mnt/csi/secret-apim-mongodb
+              readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: wso2am-storage
@@ -177,3 +192,43 @@ spec:
             defaultMode: 0407
         - name: mysql-connector-jar
           emptyDir: {}
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-shared-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-shared-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-user-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-user-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-mongodb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-mongodb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
