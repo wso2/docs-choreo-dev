@@ -178,6 +178,9 @@ spec:
             - name: secret-apim-mongodb
               mountPath: /mnt/csi/secret-apim-mongodb
               readOnly: true
+            - name: secret-azure-storage-account
+              mountPath: /mnt/csi/secret-azure-storage-account
+              readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: wso2am-storage
@@ -230,5 +233,13 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim-mongodb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-azure-storage-account
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-azure-storage-account
             nodePublishSecretRef:
               name: csi-secret-store-azure
