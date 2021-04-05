@@ -125,6 +125,24 @@ spec:
         - name: secret-gsuite
           mountPath: "/mnt/csi/secret-gsuite"
           readOnly: true
+        - name: secret-app-db
+          mountPath: "/mnt/csi/secret-app-db"
+          readOnly: true
+        - name: secret-app-service
+          mountPath: "/mnt/csi/secret-app-service"
+          readOnly: true
+        - name: secret-idp
+          mountPath: "/mnt/csi/secret-idp"
+          readOnly: true
+        - name: secret-github-connector
+          mountPath: "/mnt/csi/secret-github-connector"
+          readOnly: true
+        - name: secret-service-now
+          mountPath: "/mnt/csi/secret-key-vault"
+          readOnly: true
+        - name: secret-service-now
+          mountPath: "/mnt/csi/secret-service-now"
+          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -143,6 +161,54 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-app-db
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-app-db
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-app-service
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-app-service
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-idp
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-idp
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-key-vault
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-key-vault
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-github-connector
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-github-connector
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-service-now
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-service-now
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
