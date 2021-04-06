@@ -165,6 +165,9 @@ spec:
         - name: apim-truststore
           mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT/repository/resources/security/client-truststore.jks
           subPath: client-truststore.jks
+        - name: secret-apim
+          mountPath: /mnt/csi/secret-apim
+          readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
       - name: wso2am-gateway-conf
@@ -209,3 +212,11 @@ spec:
       - name: apim-truststore
         configMap:
           name: choreo-apim-truststore
+      - name: secret-apim
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-apim
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
