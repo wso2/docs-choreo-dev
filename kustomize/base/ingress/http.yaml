@@ -71,10 +71,6 @@ spec:
             serviceName: sys-obsapi
             servicePort: 9098
           path: /sysobsapi
-        - backend:
-            serviceName: sys-obsapi
-            servicePort: 9097
-          path: /sysobsapi
     - host: programanalyzer.domain.com
       http:
         paths:

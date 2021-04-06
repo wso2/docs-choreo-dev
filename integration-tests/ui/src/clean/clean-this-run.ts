@@ -42,7 +42,7 @@ fixture.meta({ 'apim': "true" })("Cleaning up")
 
   });
 
-test.meta({'stable': "true", 'unstable': "true", 'periodic': "true"})("Delete Apps that are old or created by this run", async (t) => {
+test.meta({'unstable': "true", 'periodic': "true"})("Delete Apps that are old or created by this run", async (t) => {
   
   let appsToBeDeleted = [];
   while (true) {

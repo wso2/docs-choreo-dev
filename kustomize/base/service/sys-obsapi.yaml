@@ -9,8 +9,5 @@ spec:
     - name: sys-obsapi-port
       port: 9098
       targetPort: sys-obsapi-port
-    - name: healthz
-      port: 9097
-      targetPort: healthz
   selector:
     choreo.component: sys-obsapi
