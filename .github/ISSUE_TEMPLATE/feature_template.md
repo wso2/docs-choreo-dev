@@ -7,13 +7,6 @@ labels: 'Type/New Feature'
 
 ## Describe your feature
 
-## Checklist
-
-- [ ] Base PR merged
-- [ ] Dev PR merged
-- [ ] Stage PR merged
-- [ ] Prod PR merged
-
 
 ### Optional
 
