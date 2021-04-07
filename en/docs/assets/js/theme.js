@@ -118,7 +118,7 @@ request.onload = function() {
        */
 /*[Removing Versions]   
       if (dropdown){
-          data.list.sort().forEach(function(key, index){
+          data.list.forEach(function(key, index){
               var versionData = data.all[key];
               
               if(versionData) {
