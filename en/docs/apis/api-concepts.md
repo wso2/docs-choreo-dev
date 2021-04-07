@@ -20,4 +20,4 @@ API Key Manager handles all security and key-related operations.
 API Gateway acts as the entry point for an API request. It secures, protects, manages, and scales API calls. 
 
 ## API Lifecycle
-API lifecycle comprises of the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked` and `Retired`.
+API lifecycle comprises of the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked`, and `Retired`.
