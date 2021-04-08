@@ -1,5 +1,0 @@
-name: 'Check CP PR'
-description: 'Help user to merge PRs'
-runs:
-  using: 'node12'
-  main: 'index.js'

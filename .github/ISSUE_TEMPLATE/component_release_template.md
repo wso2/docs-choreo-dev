@@ -8,12 +8,6 @@ labels: 'Type/Component-Release'
 ## Component Change log
 
 
-
-## Checklist
-
-- [ ] Stage PR merged
-- [ ] Prod PR merged
-
 ### Optional
 
 - [ ] Updated the release note in <https://github.com/wso2-enterprise/choreo/wiki/Choreo-Release-Note-Draft>

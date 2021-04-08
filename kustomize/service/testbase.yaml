@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: testbase-replica
+  name: testbase-replica
+spec:
+  ports:
+  - name: tb-sport
+    port: 9090
+    targetPort: tb-sport
+  selector:
+    choreo.component: testbase-replica

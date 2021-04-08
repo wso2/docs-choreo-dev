@@ -1,5 +1,0 @@
-resources:
-  - am-1-deployment.yaml
-  - am-2-deployment.yaml
-  - gateway-deployment.yaml
-  - devportal-deployment.yaml

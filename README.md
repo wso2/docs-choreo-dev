@@ -110,8 +110,5 @@ Next, run `kustomize build <env> | kubectl apply -f -`
 If you wish to change config in the relevant kustomize.yaml file which contains the configMapGenerator section,
 and run `kustomize build <env> | kubectl apply -f -`
 
-## Branching, Development & GitOps
-See [Branching, Development & GitOps Guide](process.md)
-
 ## TODO
 1. Refactor all configs into properties or YAML files

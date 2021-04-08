@@ -1,9 +1,0 @@
-resources:
-#  - ingress-default-deny.yaml
-  - negotiator.yaml
-  - telemetry.yaml
-  - loggingapi.yaml
-  - obsapi.yaml
-  - perfanalyzer-estimator.yaml
-  - programanalyzer.yaml
-  - sys-obsapi.yaml
