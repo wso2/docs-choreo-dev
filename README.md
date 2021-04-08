@@ -111,4 +111,4 @@ If you wish to change config in the relevant kustomize.yaml file which contains 
 and run `kustomize build <env> | kubectl apply -f -`
 
 ## TODO
-1. Refactor all configs into properties or YAML files
+
