@@ -1,5 +1,5 @@
 
-# Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # WSO2 Inc. licenses this file to you under the Apache License,
 # Version 2.0 (the "License"); you may not use this file except
@@ -16,8 +16,8 @@
 # under the License.
 
 # Project information
-site_name: WSO2 Choreo Dev-Documentation
-site_description: Documentation for WSO2 Choreo
+site_name: Choreo Documentation
+site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs/en/
 
@@ -47,19 +47,18 @@ theme:
 strict: true
 # Navigation
 nav:
-    - Documentation: index.md
-    - Get Started:
-        - Overview: get-started/overview.md
-        - About Choreo: get-started/introduction-to-choreo.md
-        - Quick Start Guide: get-started/quick-start-guide.md
-        - About this Release: get-started/about-this-release.md
-    - Concepts: 
-        - Overview: concepts/choreo-concepts.md
-    - Tutorials: tutorials/overview.md
-    - Videos: videos/videos.md
-    - References: references/references.md
-    - Community: community/community.md
-    - FAQ: faq.md  
+    - Home: index.md
+    - Integrations:
+        - Integration Concepts: test.md
+        - Build Your First Integration: test.md
+    - Services: 
+        - Service Concepts: test.md
+        - Create and Manage Your First Service: test.md
+    - APIs: 
+        - API Concepts: test.md
+        - Create and Publish Your First API: test.md
+    - Observability: test.md 
+    - References: test.md 
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
