@@ -7,7 +7,7 @@
              <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies building integrations, creating services, and managing APIs while ensuring best practices and secure coding guidelines.</p>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
-            <img src="/en/images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
+            <img src="./images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
           </div>
        </div>
 </div>
@@ -15,21 +15,21 @@
        <div class="row">
           <div class="col-sm-12 col-md-4 col-lg-4">
           <div class="cIconContainer">
-          <img src="/en/images/placeholder.png"/>
+          <img src="./images/placeholder.png"/>
           <h3>Build Integrations</h3>
            <a href="">Learn More</a>
           </div>
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
            <div class="cIconContainer">
-          <img src="/en/images/placeholder.png"/>
+          <img src="./images/placeholder.png"/>
           <h3>Create Services</h3>
            <a href="">Learn More</a>
           </div>
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
            <div class="cIconContainer">
-          <img src="/en/images/placeholder.png"/>
+          <img src="./images/placeholder.png"/>
           <h3>Manage APIs</h3>
            <a href="">Learn More</a>
           </div>
@@ -74,13 +74,13 @@
          <h2>Watch Now</h2>
          </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
-            <img src="/en/images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
+            <img src="./images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
           </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
-            <img src="/en/images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
+            <img src="./images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
           </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
-            <img src="/en/images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
+            <img src="./images/video.jpg" alt="" class=" ls-is-cached lazyloaded">
           </div>
 </div>
 </div>
