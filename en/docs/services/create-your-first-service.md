@@ -63,7 +63,7 @@ To create the Choreo service, follow the procedure below:
     
     5. Then click **Save**.
     
-7. To filter the dates on which the active cases have exceeded 50,000, let's add a ForEach statement as follows: 
+7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
 
     1. Click the last **+** that is visible in the low code view of the service in its current state.
 
@@ -77,7 +77,7 @@ To create the Choreo service, follow the procedure below:
     
         Then click **Save**.
     
-    4. To apply the filter mentioned, add a custom statement wuthin the ForEach statement. To do this, click the **+** just below the last ForEach statement you added.
+    4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** just below the last ForEach statement you added.
 
         ![Add Custom Statement After Foreach Statement](assets/img/services/add-custom-statement-after-foreach-statement.png)
     
@@ -92,7 +92,7 @@ To create the Choreo service, follow the procedure below:
         
         Then click **Save**.
     
-14. To add a respond statement so that the result of the above processing is returned as a response, click the last **+** that is visible in the low code view of the service in its current state.
+14. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** that is visible in the low code view of the service in its current state.
 
         ![Add Respond Statement](assets/img/services/add-respond-statement.png)
     
@@ -115,7 +115,7 @@ Now you have completed designing your Choreo application. It looks as follows.
     ![Low Code View](assets/img/services/choreo-service-code-view.png)
 
     
-To validate the Choreo application, click **Run & Test**. The following is logged to indicate that the service is successfully started.
+To validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
     ![Service Started Log](assets/img/services/service-started-notification.png)
     
@@ -149,7 +149,7 @@ To deploy the `covid-stats` service, follow the procedure below:
 
 2. To deploy the service, click **Deploy**.
 
-The following message appears to indicate that the service is successfully deployed.
+The following message appears to indicate that you have successfully deployed the service.
 
 ![Successfully Deployed Notification](assets/img/services/successfully-deployed-notification.png)
 
@@ -167,7 +167,7 @@ The following message appears to indicate that the service is successfully deplo
     
     ![Execution History](assets/img/services/execution-history.png)
     
-To observe the `covid-stats` service by checking the statistics generated as a result of the CURL commands you issued. proceed to Step 4. 
+To observe the `covid-stats` service by checking the statistics generated as a result of the CURL commands you issued, proceed to Step 4. 
 
 ## Step 4: Observe the Choreo service.
 
