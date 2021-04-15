@@ -1,6 +1,6 @@
 # Create Your First Choreo Service
 
-To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that lists all the universities in a specified country, testing it, deploying it and then observing its performance.
+To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it and then observing its performance.
 
 ## Step 1: Create the Choreo service
 
@@ -14,9 +14,9 @@ To create the Choreo service, follow the procedure below:
     
 2. In the **Services** page, click **Create**.
 
-3. Under **Create with Choreo**, enter `FindUniversity` as the name of your Choreo service.
+3. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.
 
-4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `universities` as the relative path from host.
+4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
     ![Resource Configuration](assets/img/services/configure-api-trigger.png)
     
@@ -26,7 +26,7 @@ To create the Choreo service, follow the procedure below:
 
     1. Click **Connections**.
 
-    2. In the **New HTTP Connection** form, enter `http://universities.hipolabs.com` as the URL and select **Get** as the operation.
+    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **Get** as the operation.
     
         ![New HTTP Connection](assets/img/services/new-http-connection.png)
         
@@ -38,25 +38,84 @@ To create the Choreo service, follow the procedure below:
         
     4. Open the code view of the application by clicking the **<>** icon to the top right of the page.
     
-        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/search?country=United+States");`. This specifies that the GET statement in the HTTP connection invokes the public API to search for all the universities in United States.
+        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in United States.
         
-    5. Click **Save & Done**. Now your API trigger is connected to the public API that lists all the universities of the selected country.
+    5. Click **Save & Done**. Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
     
-6. To add a new statement, click on the **+** icon below the JSON payload. 
+6. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:
 
-    ![Add New Statement](assets/img/services/add-new-statement.png)
-    
-    Then click **+** again to select the new statement you need to add.
-    
-7. In the form that appears, click **Respond**.
+    1. Click on the **+** icon below the JSON payload. 
 
-8. In the **Respond** form that appears, enter `jsonPayload` as the respond expression.
+        ![Add New Statement](assets/img/services/add-new-statement.png)
+    
+    2. Then click **+** again to select the new statement you need to add.
+    
+    3. In the form that appears, click **Custom Statement**.
 
-    ![Add Respond Expression](assets/img/services/add-respond-expression.png)
+    4. In the **Custom Statement** form that appears, enter the following two lines as the statement.
     
-    Then click **Save**.
+        ```
+        json[] jsonArray = <json[]>jsonPayload;
+        json[] response = [];
+        ```
+
+        ![Add Custom Statement](assets/img/services/custom-statement.png)
     
-9. To validate the Choreo application, click **Run & Test**. The following is logged to indicate that the service is successfully started.
+    5. Then click **Save**.
+    
+7. To filter the dates on which the active cases have exceeded 50,000, let's add a ForEach statement as follows: 
+
+    1. Click the last **+** that is visible in the low code view of the service in its current state.
+
+        ![Add Custom Statement](assets/img/services/add-to-the-service.png)
+    
+    2. In the form that appears, click **ForEach**.
+
+    3. In the **ForEach** form, enter `jsonArray` as the iterable expression.
+
+        ![Add ForEach Statement](assets/img/services/add-foreach-statement.png)
+    
+        Then click **Save**.
+    
+    4. To apply the filter mentioned, add a custom statement wuthin the ForEach statement. To do this, click the **+** just below the last ForEach statement you added.
+
+        ![Add Custom Statement After Foreach Statement](assets/img/services/add-custom-statement-after-foreach-statement.png)
+    
+    5. In the form that appears, click **Custom Statement**. Then enter the following as the statement.
+
+        ```
+        int active = <int>(check item.Active);
+        if (active > 5000) {
+        response.push(item);
+        }
+        ```
+        
+        Then click **Save**.
+    
+14. To add a respond statement so that the result of the above processing is returned as a response, click the last **+** that is visible in the low code view of the service in its current state.
+
+        ![Add Respond Statement](assets/img/services/add-respond-statement.png)
+    
+    In the **Respond** form that appears, enter the following as the respond expression.
+
+    ```
+    response
+    ```
+    
+    ![Respond Expression](assets/img/services/respond-expression.png)
+    
+Now you have completed designing your Choreo application. It looks as follows.
+
+- In the Low Code View
+
+    ![Low Code View](assets/img/services/choreo-service-low-code-view.png)
+
+- In the Code View
+
+    ![Low Code View](assets/img/services/choreo-service-code-view.png)
+
+    
+To validate the Choreo application, click **Run & Test**. The following is logged to indicate that the service is successfully started.
 
     ![Service Started Log](assets/img/services/service-started-notification.png)
     
@@ -64,7 +123,7 @@ Congratulations! You have successfully created your first Choreo service.
    
 ## Step 2: Test the Choreo service
 
-To test the `FindUniversity` Choreo application you created, follow the procedure below:
+To test the `covid-stats` Choreo application you created, follow the procedure below:
 
 1. Click the **Test** icon in the left pane.
 
@@ -74,35 +133,49 @@ To test the `FindUniversity` Choreo application you created, follow the procedur
 
 3. Click **Try it out**, and then click **Execute**.
 
-The search results for universities of United States are displayed as the server response as shown below.
+The search results for COVID-19 statistics of United States are displayed as the server response as shown below.
 
 ![Server Response](assets/img/services/server-response.png)
 
-Now you have verified that the `FindUniversity` service works as expected. Therefore, you can deploy it.
+Now you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.
 
 ## Step 3: Deploy the Choreo service
 
-To deploy the `FindUniversity` service, follow the procedure below:
+To deploy the `covid-stats` service, follow the procedure below:
 
 1. Click the **Go Live** icon in the left pane.
 
     ![Test Icon](assets/img/services/deploy-icon.png)
 
-2. To start the service, click **Start**.
+2. To deploy the service, click **Deploy**.
 
 The following message appears to indicate that the service is successfully deployed.
 
 ![Successfully Deployed Notification](assets/img/services/successfully-deployed-notification.png)
 
-Now you can observe the performance of the `FindUniversity` service.
+3. Once the service is deployed, click on the **Go Live** tab below the low code design view. Then click **://cURL** and copy the CURL command that is displayed.
+
+    ![Get cURL command](assets/img/services/copy-curl-command.png)
+    
+    Invoke the `covid-stats` service by issuing a few CURL commands using the Postman application.
+    
+    The responses are logged as shown below.
+    
+    ![covid-stats-log](assets/img/services/covid-stats-log.png)
+
+    In the Choreo Development Console, **Go Live** tab, the requests are logged as follows.
+    
+    ![Execution History](assets/img/services/execution-history.png)
+    
+To observe the `covid-stats` service by checking the statistics generated as a result of the CURL commands you issued. proceed to Step 4. 
 
 ## Step 4: Observe the Choreo service.
 
-To observe the `FindUniversity` service, click the **Observe** icon in the left panel.
+To observe the `covid-stats` service, click the **Observe** icon in the left panel.
 
 ![Test Icon](assets/img/services/observe-icon.png)
 
-The throughput and the latency of the `FindUniversity` service is visualized as follows:
+The throughput and the latency of the `covid-stats` service is visualized as follows:
 
 ![Visualization of Throughput and Latency](assets/img/services/successfully-deployed-notification.png)
 
