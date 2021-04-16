@@ -10,7 +10,7 @@ To create the Choreo service, follow the procedure below:
 
     `https://console.choreo.dev/`
     
-    Sign in using either your Google or Github credentials.
+    Sign in using either your Google or GitHub credentials.
     
 2. In the **Services** page, click **Create**.
 
