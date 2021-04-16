@@ -1,6 +1,6 @@
 # Create Your First Choreo Service
 
-To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it and then observing its performance.
+To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
 
 ## Step 1: Create the Choreo service
 
@@ -10,7 +10,7 @@ To create the Choreo service, follow the procedure below:
 
     `https://console.choreo.dev/`
     
-    Sign in using either your Google or Github credentials.
+    Sign in using either your Google or GitHub credentials.
     
 2. In the **Services** page, click **Create**.
 
@@ -26,7 +26,7 @@ To create the Choreo service, follow the procedure below:
 
     1. Click **Connections**.
 
-    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **Get** as the operation.
+    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.
     
         ![New HTTP Connection](assets/img/services/new-http-connection.png)
         
@@ -38,7 +38,7 @@ To create the Choreo service, follow the procedure below:
         
     4. Open the code view of the application by clicking the **<>** icon to the top right of the page.
     
-        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in United States.
+        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in the United States.
         
     5. Click **Save & Done**. Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
     
@@ -48,7 +48,7 @@ To create the Choreo service, follow the procedure below:
 
         ![Add New Statement](assets/img/services/add-new-statement.png)
     
-    2. Then click **+** again to select the new statement you need to add.
+    2. Then click the **+** icon again to select the new statement you need to add.
     
     3. In the form that appears, click **Custom Statement**.
 
@@ -65,7 +65,7 @@ To create the Choreo service, follow the procedure below:
     
 7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
 
-    1. Click the last **+** that is visible in the low code view of the service in its current state.
+    1. Click the last **+** icon that is visible in the low code view of the service in its current state.
 
         ![Add Custom Statement](assets/img/services/add-to-the-service.png)
     
@@ -77,7 +77,7 @@ To create the Choreo service, follow the procedure below:
     
         Then click **Save**.
     
-    4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** just below the last ForEach statement you added.
+    4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
 
         ![Add Custom Statement After Foreach Statement](assets/img/services/add-custom-statement-after-foreach-statement.png)
     
@@ -92,7 +92,7 @@ To create the Choreo service, follow the procedure below:
         
         Then click **Save**.
     
-14. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** that is visible in the low code view of the service in its current state.
+14. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
 
         ![Add Respond Statement](assets/img/services/add-respond-statement.png)
     
@@ -149,9 +149,9 @@ To deploy the `covid-stats` service, follow the procedure below:
 
 2. To deploy the service, click **Deploy**.
 
-The following message appears to indicate that you have successfully deployed the service.
+    The following message appears to indicate that you have successfully deployed the service.
 
-![Successfully Deployed Notification](assets/img/services/successfully-deployed-notification.png)
+    ![Successfully Deployed Notification](assets/img/services/successfully-deployed-notification.png)
 
 3. Once the service is deployed, click on the **Go Live** tab below the low code design view. Then click **://cURL** and copy the CURL command that is displayed.
 
@@ -175,7 +175,6 @@ To observe the `covid-stats` service, click the **Observe** icon in the left pan
 
 ![Test Icon](assets/img/services/observe-icon.png)
 
-The throughput and the latency of the `covid-stats` service is visualized as follows:
+The throughput and the latency of the `covid-stats` service are visualized as follows:
 
 ![Visualization of Throughput and Latency](assets/img/services/successfully-deployed-notification.png)
-
