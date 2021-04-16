@@ -54,7 +54,7 @@ To create the Choreo service, follow the procedure below:
 
     4. In the **Custom Statement** form that appears, enter the following two lines as the statement.
     
-        ```
+        ```ballerina
         json[] jsonArray = <json[]>jsonPayload;
         json[] response = [];
         ```
@@ -83,7 +83,7 @@ To create the Choreo service, follow the procedure below:
     
     5. In the form that appears, click **Custom Statement**. Then enter the following as the statement.
 
-        ```
+        ```ballerina
         int active = <int>(check item.Active);
         if (active > 5000) {
         response.push(item);
@@ -98,7 +98,7 @@ To create the Choreo service, follow the procedure below:
     
     In the **Respond** form that appears, enter the following as the respond expression.
 
-    ```
+    ```ballerina
     response
     ```
     
