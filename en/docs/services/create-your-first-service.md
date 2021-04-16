@@ -1,6 +1,6 @@
 # Create Your First Choreo Service
 
-To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it and then observing its performance.
+To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
 
 ## Step 1: Create the Choreo service
 
@@ -178,4 +178,3 @@ To observe the `covid-stats` service, click the **Observe** icon in the left pan
 The throughput and the latency of the `covid-stats` service is visualized as follows:
 
 ![Visualization of Throughput and Latency](assets/img/services/successfully-deployed-notification.png)
-
