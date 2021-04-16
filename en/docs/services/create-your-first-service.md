@@ -48,7 +48,7 @@ To create the Choreo service, follow the procedure below:
 
         ![Add New Statement](assets/img/services/add-new-statement.png)
     
-    2. Then click **+** again to select the new statement you need to add.
+    2. Then click on the **+** icon again to select the new statement you need to add.
     
     3. In the form that appears, click **Custom Statement**.
 
