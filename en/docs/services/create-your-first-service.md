@@ -26,7 +26,7 @@ To create the Choreo service, follow the procedure below:
 
     1. Click **Connections**.
 
-    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **Get** as the operation.
+    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.
     
         ![New HTTP Connection](assets/img/services/new-http-connection.png)
         
