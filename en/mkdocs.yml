@@ -53,7 +53,7 @@ nav:
         - Build Your First Integration: test.md
     - Services: 
         - Service Concepts: test.md
-        - Create and Manage Your First Service: test.md
+        - Create and Manage Your First Service: services/create-your-first-service.md
     - APIs: 
         - API Concepts: test.md
         - Create and Publish Your First API: test.md
