@@ -38,7 +38,7 @@ To create the Choreo service, follow the procedure below:
         
     4. Open the code view of the application by clicking the **<>** icon to the top right of the page.
     
-        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in United States.
+        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in the United States.
         
     5. Click **Save & Done**. Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
     
