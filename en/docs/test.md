@@ -1,4 +1,4 @@
-# FAQ
+# Test
 
 
 ## What is Lorem Ipsum?
