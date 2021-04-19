@@ -92,9 +92,9 @@ To create the Choreo service, follow the procedure below:
         
         Then click **Save**.
     
-14. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
+8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
 
-        ![Add Respond Statement](assets/img/services/add-respond-statement.png)
+    ![Add Respond Statement](/assets/img/services/add-respond-statement.png)
     
     In the **Respond** form that appears, enter the following as the respond expression.
 
@@ -117,7 +117,7 @@ Now you have completed designing your Choreo application. It looks as follows.
     
 To validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
-    ![Service Started Log](assets/img/services/service-started-notification.png)
+![Service Started Log](/assets/img/services/service-started-notification.png)
     
 Congratulations! You have successfully created your first Choreo service.
    
