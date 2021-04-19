@@ -47,13 +47,15 @@ theme:
 strict: true
 # Navigation
 nav:
-
     - Home:
         - About Choreo: home/about-choreo.md
+    - Integrations: 
+        - Integration Concepts: integrations/integration-concepts.md
+    - Services:
+        - Service Concepts: services/service-concepts.md
+        - Create Your First Service: services/create-your-first-service.md
     - APIs: 
         - API Concepts: apis/api-concepts.md
-    - Services:
-        - Create Your First Service: services/create-your-first-service.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
