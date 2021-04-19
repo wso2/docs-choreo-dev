@@ -47,18 +47,13 @@ theme:
 strict: true
 # Navigation
 nav:
-    - Home: index.md
-    - Integrations:
-        - Integration Concepts: test.md
-        - Build Your First Integration: test.md
-    - Services: 
-        - Service Concepts: test.md
-        - Create and Manage Your First Service: services/create-your-first-service.md
+
+    - Home:
+        - About Choreo: home/about-choreo.md
     - APIs: 
-        - API Concepts: test.md
-        - Create and Publish Your First API: test.md
-    - Observability: test.md 
-    - References: test.md 
+        - API Concepts: apis/api-concepts.md
+    - Services:
+        - Create Your First Service: services/create-your-first-service.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
