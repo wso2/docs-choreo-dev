@@ -1,18 +1,15 @@
 # Build Your First Integration
-
 Choreo allows you to efficiently build integrations by connecting APIs, events, and streams. Choreo also provides a comprehensive set of prebuilt integration templates that you can select and use depending on your requirement.
 
 This quick start guide walks you through the steps to quickly configure and try out the **GitHub New Issue to Google Sheets Row** integration in Choreo.
 
 ## Prerequisites:
-
 - A GitHub account to connect to in the integration configuration.
 - A Google account to connect to in the integration configuration.
 - A blank spreadsheet named `Sample GitHub Integration` created in the Google account. This is the spreadsheet name to use in the integration configuration. 
   The spreadsheet will have a default worksheet named `Sheet1`. This is the worksheet name to use in the integration configuration.
 
 ## Step 1: Configure and start the integration
-
 Follow the procedure below to configure and start the **GitHub New Issue to Google Sheets Row** integration:
 
 1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
@@ -47,8 +44,8 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
 Now the **GitHub New Issue to Google Sheets Row** integration is successfully configured and running.
 
 ## Step 2: Try out the integration 
+Follow the procedure below to try out the integration:
 
-Follow the procedure below to try out the integration: 
 1. Go to the GitHub repository you specified when configuring the integration and create two new issues.
 2. Go to the Choreo Console and take a look at the **Execution History** of the configured integration. 
    ![Execution History](/assets/img/integrations/execution-history.png)
