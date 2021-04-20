@@ -21,4 +21,4 @@ spec:
         - backend:
             serviceName: testbase-replica
             servicePort: 9090
-          path: /testbase-replica
+          path: /testbase
