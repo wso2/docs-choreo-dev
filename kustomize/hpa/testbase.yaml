@@ -5,12 +5,12 @@ metadata:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
     choreo.component: testbase
-  name: testbase-replica
+  name: testbase
 spec:
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: testbase-replica
+    name: testbase
   targetCPUUtilizationPercentage: 75
