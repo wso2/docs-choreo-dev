@@ -51,6 +51,7 @@ nav:
         - About Choreo: home/about-choreo.md
     - Integrations: 
         - Integration Concepts: integrations/integration-concepts.md
+        - Build Your First Integration: integrations/build-your-first-integration.md
     - Services:
         - Service Concepts: services/service-concepts.md
         - Create Your First Service: services/create-your-first-service.md
