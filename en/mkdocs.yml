@@ -47,8 +47,7 @@ theme:
 strict: true
 # Navigation
 nav:
-    - Home:
-        - About Choreo: home/about-choreo.md
+    - Home: index.md
     - Integrations: 
         - Integration Concepts: integrations/integration-concepts.md
     - Services:
