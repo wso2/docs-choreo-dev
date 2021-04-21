@@ -55,6 +55,8 @@ nav:
         - Create Your First Service: services/create-your-first-service.md
     - APIs: 
         - API Concepts: apis/api-concepts.md
+    - Observabilty:
+          Performing Root Cause Analysis: observability/root-cause-analysis.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
