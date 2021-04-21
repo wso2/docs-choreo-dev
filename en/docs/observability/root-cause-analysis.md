@@ -1,6 +1,6 @@
 # Root Cause Analysis
 
-Performing root cause analysis is crucial in identifying and rectifying the underlying problem for any anomalies detected in a system. Choreo Observability provides helpful insights out-of-the-box that assists in carrying out a root cause analysis for any application deployed on the Choreo platform.
+Performing root cause analysis is crucial in identifying and rectifying the underlying problem for any anomalies detected in a system. Choreo Observability provides helpful insights out-of-the-box that assists in carrying out a root cause analysis for any service deployed on the Choreo platform.
 
 !!! info
     For explanation, we are using the sample data available in the product.
@@ -23,7 +23,7 @@ Performing root cause analysis is crucial in identifying and rectifying the unde
   
     
 ## Detecting anomalies and performing root cause analysis
-You can detect the anomalies of the usage of an application by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latency of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
+You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latency of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
 
 ### Analysing the throughput graph
 The throughput graph will show the throughput of requests per hour for a selected timestamp. 
@@ -90,7 +90,7 @@ Follow the steps below.
 
 4. Furthermore, when you look at the graphs at 17/02/2021 13:41:00, you can find a peak with 2221 error. At this exact timestamp, notice an increase in the throughput and a drop in latency. 
 5. By analyzing the graphs as above, you can confirm that the cause for the latency drop and the throughput spike is the connectivity issue displayed by the error logs.
-6. Observe that the error graph is also fluctuating over time as the application logs errors.
+6. Observe that the error graph is also fluctuating over time as the service logs errors.
 7.  You can observe similar behavior in the third and fourth bins as well.
 
    ![Diagnostic View - other bin](/assets/img/observability/other-bins.png)
