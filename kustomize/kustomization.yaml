@@ -1,6 +1,5 @@
 resources:
   - deployment
   - service
-  - ingress
   - hpa
   - pdb
