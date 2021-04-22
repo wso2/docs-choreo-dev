@@ -19,13 +19,11 @@ Performing root cause analysis is crucial in identifying and rectifying the unde
 6. Click **Try Sample Service**.
 
        ![Try sample service](/assets/img/observability/try-sample-service.png)
-
-  
     
 ## Detecting anomalies and performing root cause analysis
 You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latency of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
 
-### Analysing the throughput graph
+### Analyzing the throughput graph
 The throughput graph will show the throughput of requests per hour for a selected timestamp. 
 
 With the sample data, you will observe spikes in the throughput graph. Let's see how you can find
@@ -70,8 +68,8 @@ We refer to a horizontal section of the graph for a particular period as the **b
 - **Error**- Number of HTTP errors occurred at the selected time.
 - **TP**- Throughput of the requests at the selected time (req/s).  
 - **Latency**- Latency of the request at the selected time (ms).
-- **CPU**- CPU usage at the selected time (milicores).
-- **Memory**- Memory usage at the selected time (MiB)
+- **CPU**- CPU usage at the selected time (millicores).
+- **Memory**- Memory usage at the selected time (MiB).
 
 Let's see how to find the root cause by analyzing this data.
 
