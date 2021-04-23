@@ -86,7 +86,7 @@ To create the Choreo service, follow the procedure below:
         ```ballerina
         int active = <int>(check item.Active);
         if (active > 5000) {
-        response.push(item);
+            response.push(item);
         }
         ```
         
