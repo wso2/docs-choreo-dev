@@ -1,6 +1,6 @@
 # Concepts
 
-Before you start creating services with Choreo, there are basic concepts that you need to understand. This section walks you through all the concepts you need to know.  
+Before you start creating services with Choreo, there are basic concepts that you need to understand. This section walks you through all the service concepts you need to know.
  
 ## Service
 A service in Choreo is a logical representation of a repeatable activity that has a specified outcome.
