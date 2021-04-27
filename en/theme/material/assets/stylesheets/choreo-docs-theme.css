@@ -1,7 +1,7 @@
 body.cChoreoBody {
-        background-color: #F6F5FA;
+        background-color: #fff;
         opacity: 1;
-        background-image: radial-gradient(#eaeaea 0.9px, #F6F5FA 0.9px);
+        /* background-image: radial-gradient(#eaeaea 0.9px, #F6F5FA 0.9px); */
         background-size: 18px 18px;
 
         /* background: #F6F5FA; */
@@ -35,11 +35,41 @@ body.cChoreoBody {
 }
 
 .md-sidebar.md-sidebar--primary {
-    background-color: #545CEC; 
+    background-color: #fafafc; 
     top:0;
     height: 100vh !important;
+    border-right: 1px solid #e5e8ed;
 
 }
+.wy-breadcrumbs {
+display: inline-block;
+width: 100%;
+padding: 0;
+margin: 0;
+margin-top: 50px;
+}
+
+.wy-breadcrumbs li {
+    display: inline-block;
+    float: left;
+    list-style: none;
+    font-size: 0.6rem;
+    padding-right: 10px;
+}
+
+/* .wy-breadcrumbs li a {
+    line-height: 2rem;
+} */
+
+
+.wy-breadcrumbs  .md-icon.md-icon--arrow-forward.md-footer-nav__button {
+font-size: 0.6rem;
+padding: 0;
+margin: 0;
+line-height: 1rem;
+color: #40404a;
+}
+
 
 /* .md-main .md-content {
     background: #F6F5FA;
@@ -132,18 +162,27 @@ margin-top: 100px;
     
 }
 
+.md-header[data-md-state="shadow"] {
+	-webkit-transition: background-color .25s,color .25s,box-shadow .25s;
+	transition: background-color .25s,color .25s,box-shadow .25s;
+	box-shadow: 0 0 .2rem rgba(151, 151, 151, 0.4),0 .2rem .4rem rgba(255, 255, 255, 0.2);
+}
+
 .md-nav__item a , .md-nav__item label , .md-nav__item a ul a {
-    color: #fff !important; 
+    color: #40404a !important; 
     font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600;
+    font-weight: 400;
     padding: 10px;
 }
 .md-nav__link.md-nav__link--active.localLink {
-    background-color: #fff;
+    /* background-color: #fff; */
     color: #545CEC !important;
     border-radius: 5px;
 }
-
+.md-nav__item--nested > .md-nav__link::after {
+	content: "\E313";
+	float: right;
+}
 
 .md-nav__list ul {
     box-shadow: none;
@@ -199,7 +238,7 @@ padding-bottom: 2rem;
 }
 
 .md-header-nav__button.md-logo > img {
-	width: 150px;
+	width: 100px;
 	margin-top: 0px;
 	height: 38px;
 
@@ -248,7 +287,14 @@ a.cChoreoDocsButtons.localLink {
 
 
 .md-nav {
+	background-color: #fafafc;
+}
+
+.cChoreoHeaderBar {
+	display: inline-block;
+	width: 100%;
 	background-color: #545CEC;
+	height: 200px;
 }
 
 
