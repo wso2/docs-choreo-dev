@@ -24,7 +24,7 @@ site_url: https://wso2.com/choreo/docs/en/
 # Repository
 repo_name: wso2/docs-choreo-dev
 repo_url: https://github.com/wso2/docs-choreo-dev/
-edit_uri: https://github.com/wso2/docs-choreo-dev/edit/master/en/docs/
+edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
@@ -48,17 +48,16 @@ strict: true
 # Navigation
 nav:
     - Home: index.md
-    - Integrations:
-        - Integration Concepts: test.md
-        - Build Your First Integration: test.md
-    - Services: 
-        - Service Concepts: test.md
-        - Create and Manage Your First Service: test.md
+    - Integrations: 
+        - Integration Concepts: integrations/integration-concepts.md
+        - Build Your First Integration: integrations/build-your-first-integration.md
+    - Services:
+        - Service Concepts: services/service-concepts.md
+        - Create Your First Service: services/create-your-first-service.md
     - APIs: 
-        - API Concepts: test.md
-        - Create and Publish Your First API: test.md
-    - Observability: test.md 
-    - References: test.md 
+        - API Concepts: apis/api-concepts.md
+    - Observabilty:
+          Performing Root Cause Analysis: observability/root-cause-analysis.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
