@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base/
+
+images:
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
+  newTag: master-cdf012d77ddd4d09e9b4c1c45f7cbe0dbcd09709
