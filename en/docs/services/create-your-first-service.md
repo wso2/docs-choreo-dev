@@ -18,7 +18,7 @@ To create the Choreo service, follow the procedure below:
 
 4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
-    ![Resource Configuration](assets/img/services/configure-api-trigger.png)
+    ![Resource Configuration](/en/assets/img/services/configure-api-trigger.png)
     
     Then click **Save API**. Now you have saved the API trigger that starts your application.
     
@@ -28,13 +28,13 @@ To create the Choreo service, follow the procedure below:
 
     2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.
     
-        ![New HTTP Connection](assets/img/services/new-http-connection.png)
+        ![New HTTP Connection](/en/assets/img/services/new-http-connection.png)
         
         Then click **Save & Next**.
         
     3. In the **Select Payload Type** field, select **JSON**.
     
-        ![Select Payload Type](assets/img/services/select-payload-type.png)
+        ![Select Payload Type](/en/assets/img/services/select-payload-type.png)
         
     4. Open the code view of the application by clicking the **<>** icon to the top right of the page.
     
@@ -46,7 +46,7 @@ To create the Choreo service, follow the procedure below:
 
     1. Click on the **+** icon below the JSON payload. 
 
-        ![Add New Statement](assets/img/services/add-new-statement.png)
+        ![Add New Statement](/en/assets/img/services/add-new-statement.png)
     
     2. Then click the **+** icon again to select the new statement you need to add.
     
@@ -59,7 +59,7 @@ To create the Choreo service, follow the procedure below:
         json[] response = [];
         ```
 
-        ![Add Custom Statement](assets/img/services/custom-statement.png)
+        ![Add Custom Statement](/en/assets/img/services/custom-statement.png)
     
     5. Then click **Save**.
     
@@ -67,19 +67,19 @@ To create the Choreo service, follow the procedure below:
 
     1. Click the last **+** icon that is visible in the low code view of the service in its current state.
 
-        ![Add Custom Statement](assets/img/services/add-to-the-service.png)
+        ![Add Custom Statement](/en/assets/img/services/add-to-the-service.png)
     
     2. In the form that appears, click **ForEach**.
 
     3. In the **ForEach** form, enter `jsonArray` as the iterable expression.
 
-        ![Add ForEach Statement](assets/img/services/add-foreach-statement.png)
+        ![Add ForEach Statement](/en/assets/img/services/add-foreach-statement.png)
     
         Then click **Save**.
     
     4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
 
-        ![Add Custom Statement After Foreach Statement](assets/img/services/add-custom-statement-after-foreach-statement.png)
+        ![Add Custom Statement After Foreach Statement](/en/assets/img/services/add-custom-statement-after-foreach-statement.png)
     
     5. In the form that appears, click **Custom Statement**. Then enter the following as the statement.
 
@@ -94,7 +94,7 @@ To create the Choreo service, follow the procedure below:
     
 14. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
 
-        ![Add Respond Statement](assets/img/services/add-respond-statement.png)
+        ![Add Respond Statement](/en/assets/img/services/add-respond-statement.png)
     
     In the **Respond** form that appears, enter the following as the respond expression.
 
@@ -102,22 +102,22 @@ To create the Choreo service, follow the procedure below:
     response
     ```
     
-    ![Respond Expression](assets/img/services/respond-expression.png)
+    ![Respond Expression](/en/assets/img/services/respond-expression.png)
     
 Now you have completed designing your Choreo application. It looks as follows.
 
 - In the Low Code View
 
-    ![Low Code View](assets/img/services/choreo-service-low-code-view.png)
+    ![Low Code View](/en/assets/img/services/choreo-service-low-code-view.png)
 
 - In the Code View
 
-    ![Low Code View](assets/img/services/choreo-service-code-view.png)
+    ![Low Code View](/en/assets/img/services/choreo-service-code-view.png)
 
     
 To validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
-    ![Service Started Log](assets/img/services/service-started-notification.png)
+![Service Started Log](/en/assets/img/services/service-started-notification.png)
     
 Congratulations! You have successfully created your first Choreo service.
    
@@ -127,7 +127,7 @@ To test the `covid-stats` Choreo application you created, follow the procedure b
 
 1. Click the **Test** icon in the left pane.
 
-    ![Test Icon](assets/img/services/test-icon.png)
+    ![Test Icon](/en/assets/img/services/test-icon.png)
 
 2. In the section that opens to the right of the page, click **GET**.
 
@@ -135,7 +135,7 @@ To test the `covid-stats` Choreo application you created, follow the procedure b
 
 The search results for COVID-19 statistics of United States are displayed as the server response as shown below.
 
-![Server Response](assets/img/services/server-response.png)
+![Server Response](/en/assets/img/services/server-response.png)
 
 Now you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.
 
@@ -145,34 +145,34 @@ To deploy the `covid-stats` service, follow the procedure below:
 
 1. Click the **Go Live** icon in the left pane.
 
-    ![Test Icon](assets/img/services/deploy-icon.png)
+    ![Test Icon](/en/assets/img/services/deploy-icon.png)
 
 2. To deploy the service, click **Deploy**.
 
     The following message appears to indicate that you have successfully deployed the service.
 
-    ![Successfully Deployed Notification](assets/img/services/successfully-deployed-notification.png)
+    ![Successfully Deployed Notification](/en/assets/img/services/successfully-deployed-notification.png)
 
 3. Once the service is deployed, click on the **Go Live** tab below the low code design view. Then click **://cURL** and copy the CURL command that is displayed.
 
-    ![Get cURL command](assets/img/services/copy-curl-command.png)
+    ![Get cURL command](/en/assets/img/services/copy-curl-command.png)
     
     Invoke the `covid-stats` service by issuing a few CURL commands using the Postman application.
     
     The responses are logged as shown below.
     
-    ![covid-stats-log](assets/img/services/covid-stats-log.png)
+    ![covid-stats-log](/en/assets/img/services/covid-stats-log.png)
 
     In the Choreo Development Console, **Go Live** tab, the requests are logged as follows.
     
-    ![Execution History](assets/img/services/execution-history.png)
+    ![Execution History](/en/assets/img/services/execution-history.png)
     
 To observe the `covid-stats` service by checking the statistics generated as a result of the CURL commands you issued, proceed to Step 4. 
 
 ## Step 4: Observe the Choreo service.
 
 To observe the `covid-stats` service, click the **Observe** icon in the left panel.
-![Test Icon](assets/img/services/observe-icon.png)
+![Test Icon](/en/assets/img/services/observe-icon.png)
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
-![Visualization of Throughput and Latency](assets/img/services/successfully-deployed-notification.png)
+![Visualization of Throughput and Latency](/en/assets/img/services/successfully-deployed-notification.png)
