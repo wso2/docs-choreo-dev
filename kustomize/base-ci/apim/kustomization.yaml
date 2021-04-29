@@ -6,4 +6,4 @@ resources:
 
 images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
-  newTag: v0.1.8
+  newTag: main-b2b406c50450bf5b95d32de8a8bcbe976af7eeab
