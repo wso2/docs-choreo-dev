@@ -5,7 +5,5 @@ resources:
 - ../base/
 
 images:
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbas
-  newTag: latest
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-31916de74d67a03b414cff7bd82401d7d31722dc
