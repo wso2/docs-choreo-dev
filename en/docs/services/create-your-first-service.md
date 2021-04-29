@@ -19,7 +19,7 @@ To create the Choreo service, follow the procedure below:
 4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
     ![Resource Configuration](/en/assets/img/services/configure-api-trigger.png)
-    
+ 
     Then click **Save API**. Now you have saved the API trigger that starts your application.
     
 5. In the next form that appears, do as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
@@ -29,7 +29,7 @@ To create the Choreo service, follow the procedure below:
     2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.
     
         ![New HTTP Connection](/en/assets/img/services/new-http-connection.png)
-        
+     
         Then click **Save & Next**.
         
     3. In the **Select Payload Type** field, select **JSON**.
@@ -60,7 +60,7 @@ To create the Choreo service, follow the procedure below:
         ```
 
         ![Add Custom Statement](/en/assets/img/services/custom-statement.png)
-    
+
     5. Then click **Save**.
     
 7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
@@ -86,13 +86,13 @@ To create the Choreo service, follow the procedure below:
         ```ballerina
         int active = <int>(check item.Active);
         if (active > 5000) {
-        response.push(item);
+            response.push(item);
         }
         ```
         
         Then click **Save**.
     
-14. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
+8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
 
         ![Add Respond Statement](/en/assets/img/services/add-respond-statement.png)
     
@@ -101,7 +101,7 @@ To create the Choreo service, follow the procedure below:
     ```ballerina
     response
     ```
-    
+
     ![Respond Expression](/en/assets/img/services/respond-expression.png)
     
 Now you have completed designing your Choreo application. It looks as follows.
@@ -113,7 +113,6 @@ Now you have completed designing your Choreo application. It looks as follows.
 - In the Code View
 
     ![Low Code View](/en/assets/img/services/choreo-service-code-view.png)
-
     
 To validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
@@ -172,7 +171,9 @@ To observe the `covid-stats` service by checking the statistics generated as a r
 ## Step 4: Observe the Choreo service.
 
 To observe the `covid-stats` service, click the **Observe** icon in the left panel.
+
 ![Test Icon](/en/assets/img/services/observe-icon.png)
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
 ![Visualization of Throughput and Latency](/en/assets/img/services/successfully-deployed-notification.png)
+

@@ -1,5 +1,5 @@
 
-# Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # WSO2 Inc. licenses this file to you under the Apache License,
 # Version 2.0 (the "License"); you may not use this file except
@@ -16,15 +16,15 @@
 # under the License.
 
 # Project information
-site_name: WSO2 Choreo Dev-Documentation
-site_description: Documentation for WSO2 Choreo
+site_name: Choreo Documentation
+site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs/en/
 
 # Repository
 repo_name: wso2/docs-choreo-dev
 repo_url: https://github.com/wso2/docs-choreo-dev/
-edit_uri: https://github.com/wso2/docs-choreo-dev/edit/master/en/docs/
+edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
@@ -47,19 +47,17 @@ theme:
 strict: true
 # Navigation
 nav:
-    - Documentation: index.md
-    - Get Started:
-        - Overview: get-started/overview.md
-        - About Choreo: get-started/introduction-to-choreo.md
-        - Quick Start Guide: get-started/quick-start-guide.md
-        - About this Release: get-started/about-this-release.md
-    - Concepts: 
-        - Overview: concepts/choreo-concepts.md
-    - Tutorials: tutorials/overview.md
-    - Videos: videos/videos.md
-    - References: references/references.md
-    - Community: community/community.md
-    - FAQ: faq.md  
+    - Home: index.md
+    - Integrations: 
+        - Integration Concepts: integrations/integration-concepts.md
+        - Build Your First Integration: integrations/build-your-first-integration.md
+    - Services:
+        - Service Concepts: services/service-concepts.md
+        - Create Your First Service: services/create-your-first-service.md
+    - APIs: 
+        - API Concepts: apis/api-concepts.md
+    - Observabilty:
+          Performing Root Cause Analysis: observability/root-cause-analysis.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
