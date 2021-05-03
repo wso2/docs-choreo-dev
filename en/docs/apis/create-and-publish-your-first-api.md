@@ -31,7 +31,7 @@ Follow the procedure below to create an API using the mock REST service you test
 8. Follow the procedure below to add a resource to the API:
     1. Select `GET` as the HTTP verb.
     2. Enter `hello` as the URI pattern.
-    3. Click the + icon to add the resource.
+    3. Click the **+** icon to add the resource.
     4. Click **Save**. You can see a confirmation message to proceed with the changes.
     5. Click **Save** to proceed.
 
