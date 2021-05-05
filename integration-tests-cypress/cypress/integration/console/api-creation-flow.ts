@@ -1,0 +1,92 @@
+import { generateAppName } from '../../support/common/choreo-utils';
+
+/// <reference types="cypress" />
+
+describe('Application test run and deployment', () => {
+    let savedCookies
+    let appName: string
+
+    before(() => {
+        cy.log("Login into Choreo using Google")
+        cy.userLoginWithGmail()
+        cy.getCookies().then((cookies) => {
+            savedCookies = cookies
+        })
+    })
+
+    after(() => {
+        cy.userLogout()
+    })
+
+    beforeEach(() => {
+        savedCookies.map((cookie) => {
+            cy.setCookie(cookie.name, cookie.value, {
+                domain: cookie.domain,
+                expiry: cookie.expires,
+                httpOnly: cookie.httpOnly,
+                path: cookie.path,
+                secure: cookie.secure
+            })
+
+            Cypress.Cookies.defaults({
+                preserve: cookie.name
+            })
+        })
+
+        appName = generateAppName("app");
+        cy.log('app name: ', appName);
+        cy.createNewApp(appName);
+        cy.url().should('include', 'app/' + appName + '/develop');
+        cy.selectTrigger("API", "hello");
+        cy.createProperty("var", "res", '"hello world"');
+        cy.createRespond("res");
+    })
+
+    afterEach(() => {
+        cy.goBacktoAppsList();
+        cy.deleteApp(appName, true);
+    })
+
+    it('test run hello world service', () => {
+        cy.get('[data-testid="editor-run-btn"]').should('be.visible');
+        cy.get('[data-testid="editor-run-btn"]').click();
+        cy.log('Started test run');
+
+        cy.get('[data-testid="test-url"]').should('exist');
+        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: 600000}).should('exist');
+        cy.log('Retrieving the test URL successful');
+        
+        cy.get('[data-testid="test-url"]').invoke('text').then((testUrl) => {
+            cy.callExternalEndpoint((testUrl + "/hello"), 3, "hello world");
+            cy.log('Successfully invoked test endpoint');
+        })      
+    })
+
+    it('test postman view', () => {
+        cy.get('[data-testid="test"]').click();
+        cy.get('[id="backdrop-loader"').should('not.exist');
+        cy.url().should('include', 'app/' + appName + '/test');
+
+        cy.log('Testing invalid API key validation attempt scenario');
+        cy.get('[data-testid="postman"]').should('exist');
+        cy.get('[data-testid="postman"]').eq(0).click();
+        cy.get('[data-testid="click-here"]').should('exist');
+        cy.get('[data-testid="click-here"]').click();
+        cy.get('[data-testid="api-key"]').should('exist');
+        cy.get('[data-testid="api-key"]').type('dummyapikey');
+        cy.get('[data-testid="api-key-error"]').should('exist');
+        cy.log('Test phase successful!');
+    })
+
+    it('deploy hello world service', () => {
+        cy.deployToChoreo(appName);
+        cy.get('[data-testid="prod-url"]').invoke('text').then((appURL) => {
+            expect(appURL).not.to.equal('');
+            cy.log("test url: ", appURL);
+            expect(appURL).to.contain('https://');
+            cy.callExternalEndpoint((appURL + "/hello"), 3, "hello world");
+            cy.log('Hello world string recieved successfully!');
+            cy.log('Successfully invoked the deployed hello world service');
+        })
+    })
+})
