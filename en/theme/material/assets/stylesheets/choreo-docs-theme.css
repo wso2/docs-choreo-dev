@@ -317,7 +317,7 @@ a.cChoreoDocsButtons.localLink {
         display: none;
     }
     html .md-nav--primary .md-nav__title ~ .md-nav__list {
-        background-color: #545CEC;
+        background-color: #fafafc;
         box-shadow: inset 0 .05rem 0 rgba(0,0,0,.07);
     }
 }
