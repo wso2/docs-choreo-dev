@@ -1,0 +1,14 @@
+{
+    "defaultCommandTimeout": 30000,
+    "screenshotsFolder": "cypress/screenshots",
+    "ignoreTestFiles": "**/examples/*.js",
+    "chromeWebSecurity": false,
+    "baseUrl": "https://console.dv.choreo.dev",
+    "reporter": "mochawesome",
+    "reporterOptions": {
+        "reportDir": "cypress/reports/mocha",
+        "overwrite": false,
+        "html": true,
+        "json": true
+    }
+}
