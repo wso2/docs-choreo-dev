@@ -6,7 +6,8 @@
   "dependencies": {
     "cypress": "^7.1.0",
     "cypress-social-logins": "^1.11.2",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "@testing-library/cypress": "^7.0.6"
   },
   "devDependencies": {
     "cypress-multi-reporters": "^1.5.0",
