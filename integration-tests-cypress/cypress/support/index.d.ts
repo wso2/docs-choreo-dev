@@ -4,6 +4,7 @@
 
 declare namespace Cypress {
     interface Chainable {
+        consoleUserLogin(): Chainable<Element>
         userLoginWithGmail(): Chainable<Element>
         userLoginWithGithub(): Chainable<Element>
         userLogout(): Chainable<Element>

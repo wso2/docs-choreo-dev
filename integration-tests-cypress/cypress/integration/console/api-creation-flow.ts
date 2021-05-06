@@ -8,7 +8,7 @@ describe('Application test run and deployment', () => {
 
     before(() => {
         cy.log("Login into Choreo using Google")
-        cy.userLoginWithGmail()
+        cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })

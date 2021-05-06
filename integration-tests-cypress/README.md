@@ -12,4 +12,5 @@ password
 ```
 
 3. Run the following command to run the tests:
-	`npx cypress open`
+	In interactive mode: `npx cypress open`
+	In headless mode: `npm run test`
