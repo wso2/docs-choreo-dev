@@ -6,17 +6,17 @@ Choreo expressions comprise a powerful expression syntax based on the [Ballerina
 
 ### String
 
-A string is simply a sequence of characters. It is required to use double quotes (")  to mark the boundary between the starting and ending characters.
+A string is simply a sequence of characters. It is required to use double quotes (`"`)  to mark the boundary between the starting and ending characters.
 
 #### Examples
 
-  ```
+  ```ballerina
   "Colombo"
   ```
-  ```
+  ```ballerina
   "12345"
   ```
-  ```
+  ```ballerina
   "Ballerina is a programming language intended for network-distributed applications."
   ```
 
@@ -26,13 +26,13 @@ Using this type, you can give numbers as an input to an expression-supported fie
 
 #### Examples
 
-  ```
+  ```ballerina
   1234
   ```
-  ```
+  ```ballerina
   -10
   ```
-  ```
+  ```ballerina
   +2020
   ```
 
@@ -42,19 +42,19 @@ A number with a decimal point falls under this data type. You have the option to
 
 #### Examples
 
-  ```
+  ```ballerina
   0.3353
   ```
-  ```
+  ```ballerina
   2044.24
   ```
-  ```
+  ```ballerina
   -8593.992
   ```
-  ```
+  ```ballerina
   +950.930
   ```
-  ```
+  ```ballerina
   10.0
   ```
 
@@ -64,10 +64,10 @@ This data type has one of two possible values, `true` and `false`.
 
 #### Examples
 
-  ```
+  ```ballerina
   true
   ```
-  ```
+  ```ballerina
   false
   ```
 
@@ -79,7 +79,7 @@ Variables keep values in memory for later access. In an expression syntax-suppor
 
 #### Example
 
-  ```
+  ```ballerina
   VariableName
   ```
 
@@ -92,15 +92,18 @@ You can use the `+` operator to do string concatenations. The string value can c
 #### Examples
 
  - Concatenating two string literals.
-  ```
+ 
+  ```ballerina
   "Hello " + "world!" 
   ```
  - Concatenating a string literal and a variable.
-  ```
+ 
+  ```ballerina
   "Hi " + nameVar
   ```
  - Concatenating two string variables.
-  ```
+ 
+  ```ballerina
   firstNameString + lastNameString
   ```
 
@@ -109,19 +112,23 @@ You can use the  `+` operator for number addition. The number values can come fr
 
 #### Examples
 - Concatenating two integer literals.
-  ```
+
+  ```ballerina
   10 + 20
   ```
 - Concatenating two decimal literals.
-  ```
+
+  ```ballerina
   0.56 + 1.84
   ```
 - Concatenating a literal and a variable.
-  ```
+
+  ```ballerina
   100 + nameVariable
   ```
 - Concatenating two variables.
-  ```
+
+  ```ballerina
   firstNumber + secondNumber
   ```
 
@@ -131,19 +138,23 @@ You can use the `-` operator for number subtraction. The number values can come 
 
 #### Examples
 - Subtracting two integer literals.
-  ```
+
+  ```ballerina
   10 - 20
   ```
 - Subtracting two decimal literals.
-  ```
+
+  ```ballerina
   0.56 - 1.84
   ```
 - Subtracting a literal and a variable.
-  ```
+
+  ```ballerina
   100 - <named variable>
   ```
 - Subtracting two variables.
-  ```
+
+  ```ballerina
   <first number> - <second number>
   ```
 
@@ -154,19 +165,23 @@ You can use the `/` operator for number division. The number values can come fro
 #### Examples
 
 - Division between two integer literals.
-  ```
+
+  ```ballerina
   10 / 20
   ```
 - Division between two decimal literals.
-  ```
+
+  ```ballerina
   0.56 / 1.84
   ```
 - Division between a literal and a variable.
-  ```
+
+  ```ballerina
   100 / nameVariable
   ```
 - Division between two variables.
-  ```
+
+  ```ballerina
   firstNumber - secondNumber
   ```
 
@@ -177,19 +192,23 @@ You can use the `*` operator for number multiplication. The number values can co
 #### Examples
 
 - Multiplying two integer literals.
-  ```
+
+  ```ballerina
   10 * 20
   ```
 - Multiplying two decimal literals.
-  ```
+
+  ```ballerina
   0.56 * 1.84
   ```
 - Multiplying a literal and a variable.
-  ```
+
+  ```ballerina
   100 * nameVariable
   ```
 - Multiplying two variables.
-  ```
+
+  ```ballerina
   firstNumber * secondNumber
   ```
 
@@ -199,41 +218,49 @@ You can use the  `%` operator to get the remainder of a division. The number val
 
 #### Examples
 - Modulus of two integer literals.
-  ```
+
+  ```ballerina
   10 % 4
   ```
 - Modulus of a literal and a variable.
-  ```
+
+  ```ballerina
   100 % nameVariable
   ```
 - Modulus of two variables.
-  ```
+
+  ```ballerina
   firstNumber % secondNumber
   ```
 
 ### Checking The Equality of Basic Types 
 
-In the [Ballerina language](https://ballerina.io/), basic types are `Strings`, `Integers`, `Decimal numbers`, and `Booleans`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or a variable. Similarly `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of Boolean type. 
+In the [Ballerina language](https://ballerina.io/), basic types are `string`, `int`, `float`, `decimal`, and `boolean`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or a variable. Similarly `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
 
 #### Examples
 - Equality of two integer literals.
-  ```
+
+  ```ballerina
   10 == 4
   ```
 - Equality of two string literals.
-  ```
+
+  ```ballerina
   "hi" == "hi"
   ```
 - Equality of a literal and a variable.
-  ```
+
+  ```ballerina
   100 == expectedValueVariable
   ```
 - Equality of two variables.
-  ```
+
+  ```ballerina
   firstNumber == secondNumber
   ```
 - Inequality of two variables. The following returns true when the values of the two variables are different.
-  ```
+
+  ```ballerina
   firstNumber != secondNumber
   ```
 
@@ -243,6 +270,7 @@ The `is` operator is used to assert the type of a variable.
 
 #### Examples
 - Checking whether the variable is of JSON type.
+
   ```ballerina
   payload is JSON
   ```
@@ -257,11 +285,14 @@ The following operators are available in the expression editor for numeric value
 
 #### Examples
 - Checking if the value of a variable is greater than 10.
-  ```
+
+  ```ballerina
   myVar > 10
   ```
+  
 - Comparing two variables.
-  ```
+
+  ```ballerina
   myProperty <= limit
   ```
 
@@ -274,11 +305,14 @@ A typical HTTP request contains many headers. Some of these headers are standard
 
 #### Examples
 - Reading the value of Access-Control-Allow-Origin HTTP header.
-  ```
+
+  ```ballerina
   req.getHeader("Access-Control-Allow-Origin")
+  
   ```
 - Using a value stored in a variable as the header name. Please note the omission of the double quotes.
-  ```
+
+  ```ballerina
   req.getHeader(headerName)
   ```
 
@@ -288,11 +322,13 @@ Applications sometimes need to check the availability of a header before proceed
 
 #### Examples
 - Checking whether the content-length property is available as a header.
-  ```
+
+  ```ballerina
   req.hasHeader("content-length")
   ```
 - Using a value stored in a variable as the query parameter name. Please note the omission of the double quotes.
-  ```
+
+  ```ballerina
   req.hasHeader(myCustomeHeader)
   ```
 
@@ -302,7 +338,8 @@ JSON is a common content type used for HTTP communication. The `req` variable’
 
 #### Examples
 - Reading the JSON Payload of the HTTP request.
-  ```
+
+  ```ballerina
   req.getJsonPayload()
   ```
 
@@ -312,7 +349,8 @@ Sometimes, content is sent as a string (plain text) with the HTTP request. The `
 
 #### Examples
 - Reading the Text Payload of the HTTP request.
-  ```
+
+  ```ballerina
   req.getTextPayload()
   ```
 
@@ -322,11 +360,13 @@ Query parameters are used in an HTTP request to send additional inputs to consid
 
 #### Examples
 - Reading the query parameter named category.
-  ```
+
+  ```ballerina
   req.getQueryParamValue("category")
   ```
 - Using a value stored in a variable as the query parameter name. Note the omission of the double quotes.
-  ```
+
+  ```ballerina
   req.getQueryParamValue(queryParamName)
   ```
 
@@ -336,7 +376,8 @@ HTTP Cookies keep stateful information against a client. You can use the `req` v
 
 #### Examples
 - Reading all the cookies available in the request.
-  ```
+
+  ```ballerina
   req.getCookies()
   ```
 
