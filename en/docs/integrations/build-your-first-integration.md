@@ -27,18 +27,18 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
     9. In the **Worksheet Name** field, enter `Sheet1`.
 6. Click **Save**.
  
-    ![Save Configuration](/en/assets/img/integrations/configurations-panel.png)
+       ![Save Configuration](/assets/img/integrations/configurations-panel.png)
     
     Now you have configured the integration, and you are ready to start it.
 
 7. Click **Start**. 
    The following message indicates that the integration is starting:
   
-    ![](/en/assets/img/integrations/integration-starting.png)
+       ![](/assets/img/integrations/integration-starting.png)
     
     The following message indicates that the integration has started and is running:
 
-    ![](/en/assets/img/integrations/integration-started.png)
+       ![](/assets/img/integrations/integration-started.png)
 
 Now the **GitHub New Issue to Google Sheets Row** integration is successfully configured and running.
 
@@ -46,13 +46,16 @@ Now the **GitHub New Issue to Google Sheets Row** integration is successfully co
 Follow the procedure below to try out the integration:
 
 1. Go to the GitHub repository you specified when configuring the integration and create two new issues.
-2. Go to the Choreo Console and take a look at the **Execution History** of the configured integration. 
-   ![Execution History](/en/assets/img/integrations/execution-history.png)
-   You can see two executions. These are a result of creating new issues in the GitHub repository.
+2. Go to the Choreo Console and take a look at the **Execution History** of the configured integration.
+ 
+       ![Execution History](/assets/img/integrations/execution-history.png)
 
-3. Go to the `Sample GitHub Integration` spreadsheet in your Google account and take a look at `Sheet1`. 
-   ![](/en/assets/img/integrations/spreadsheet.png)
+     You can see two executions. These are a result of creating new issues in the GitHub repository.
 
-    You can see two entries with details of the GitHub issues you created.
+3. Go to the `Sample GitHub Integration` spreadsheet in your Google account and take a look at `Sheet1`.
+ 
+       ![](/assets/img/integrations/spreadsheet.png)
+
+     You can see two entries with details of the GitHub issues you created.
 
 Congratulations! Now you have successfully configured and tried out the **GitHub New Issue to Google Sheets Row** integration. 

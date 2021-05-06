@@ -56,6 +56,7 @@ nav:
         - Create Your First Service: services/create-your-first-service.md
     - APIs: 
         - API Concepts: apis/api-concepts.md
+        - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
     - Observabilty:
           Performing Root Cause Analysis: observability/root-cause-analysis.md
 # Extensions
