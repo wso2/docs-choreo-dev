@@ -18,7 +18,7 @@ To create the Choreo service, follow the procedure below:
 
 4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
-    ![Resource Configuration](/en/assets/img/services/configure-api-trigger.png)
+    [Resource Configuration](/en/assets/img/services/configure-a-trigge.md)
  
     Then click **Save API**. Now you have saved the API trigger that starts your application.
     
