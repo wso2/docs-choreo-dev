@@ -8,10 +8,10 @@ Cypress.Commands.add('devportalLogin', () => {
     cy.log('Successfully logged into Devportal');
 }),
 
-Cypress.Commands.add('navigateToOverviewInDevportal', () => {
+Cypress.Commands.add('navigateToOverviewInDevportal', (apiName: string) => {
     cy.log('Navigating to Overview');
     cy.wait(5000);
     cy.get('[data-testid="apis-appbar-btn"]').click();
-    cy.get('[data-testid="apiCard-e2eTestApiDv"]').click();
+    cy.get('[data-testid="apiCard-' + apiName + '"]').click();
     cy.log('Successfully navigated to Overview');
 })

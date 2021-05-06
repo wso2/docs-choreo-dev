@@ -4,11 +4,11 @@ import { generateAppName } from "../../support/common/choreo-utils";
 
 describe('Devportal', () => {
     const appName = generateAppName('-e2etest');
-    const apiName = 'e2eTestApiDv';
+    const apiName = 'e2eTestApiDv1';
 
     beforeEach(() => {
         cy.devportalLogin();
-        cy.navigateToOverviewInDevportal();
+        cy.navigateToOverviewInDevportal(apiName);
     });
 
     it('Adding and deleting comment for the API', () => {
@@ -29,9 +29,6 @@ describe('Devportal', () => {
         cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (0)");
         cy.get('[data-testid=txt-no-comments]').should('exist');
         cy.log('Successfully deleted the comment');
-
-        cy.get('[data-testid="btn-add-comment-open-close"]').contains('Close').click({force: true});
-        cy.log('Closed the comment box');
     });
 
     it('Adding and modifying the ratings of the API', () => {
