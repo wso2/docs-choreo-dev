@@ -12,6 +12,6 @@ Cypress.Commands.add('navigateToOverviewInDevportal', () => {
     cy.log('Navigating to Overview');
     cy.wait(5000);
     cy.get('[data-testid="apis-appbar-btn"]').click();
-    cy.get('[data-testid="apiCard-e2eTestApiDv"]').click();
+    cy.get('[data-testid="apiCard-e2eTestApiDv1"]').click();
     cy.log('Successfully navigated to Overview');
 })

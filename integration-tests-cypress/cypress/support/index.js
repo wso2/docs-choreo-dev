@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import '@testing-library/cypress/add-commands'
 import './common/login-commands'
 import './common/choreo-commands'
 import './devportal/devportal-commands'
