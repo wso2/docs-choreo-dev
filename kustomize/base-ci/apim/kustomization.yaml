@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-- ../../base/apim
-
-images:
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
-  newTag: main-e63485fc0e643b240b36e8261a9f4a38df6c4733
