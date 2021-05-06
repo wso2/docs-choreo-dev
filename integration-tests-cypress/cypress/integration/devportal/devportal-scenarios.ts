@@ -4,7 +4,7 @@ import { generateAppName } from "../../support/common/choreo-utils";
 
 describe('Devportal', () => {
     const appName = generateAppName('-e2etest');
-    const apiName = 'e2eTestApiDv1';
+    const apiName = 'e2eTestApiDev';
 
     beforeEach(() => {
         cy.devportalLogin();
