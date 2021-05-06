@@ -7,4 +7,4 @@ resources:
   - hpa
   - pdb
 
-namespace: choreo-apim
+namespace: choreo-system
