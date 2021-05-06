@@ -5,7 +5,7 @@ resources:
 - ../base/
 
 images:
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
-  newTag: master-dc94cd51e64e024a9dd0ac3bcc4f3a2b508d7596
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-e63485fc0e643b240b36e8261a9f4a38df6c4733
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
+  newTag: master-c99502822a1618efde252e6a8f5e30ebc4dde18d
