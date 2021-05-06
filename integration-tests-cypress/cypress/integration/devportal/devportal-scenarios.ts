@@ -8,8 +8,53 @@ describe('Devportal', () => {
 
     beforeEach(() => {
         cy.devportalLogin();
-        cy.navigateToOverviewInDevportal();
+        cy.navigateToOverviewInDevportal(apiName);
     });
+
+    it('Adding and deleting comment for the API', () => {
+        cy.get('button').contains('Add comment').click({force: true});
+        cy.log('Opened the comment box');
+        cy.get('[name="newComment"]').type('Test comment from Cypress Test Runner');
+        cy.get('[type="submit"]').contains('Add Comment').click({force: true});
+        cy.wait(2000);
+        cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (1)");
+        cy.get('[data-testid=txt-no-comments]').should('not.exist');
+        cy.log('Comment added successfully');
+
+        cy.log('Deleting the comment');
+        cy.get('table > tbody > tr:first').within(() => {
+            cy.get('[data-testid="btn-delete-comment"]').click({force: true});
+        });
+        cy.get('[class="MuiPopover-root"]').get('button').contains('Yes').click({force: true});
+        cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (0)");
+        cy.get('[data-testid=txt-no-comments]').should('exist');
+        cy.log('Successfully deleted the comment');
+    });
+
+    it('Adding and modifying the ratings of the API', () => {
+        cy.log('Opening the rating box');
+        cy.get('[class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-4"]').within(() => {
+            cy.get('button')
+            .first()
+            .click();
+        })
+
+        cy.log('Adding 4 star rating');
+        cy.get('[for="hover-feedback-4"]').trigger('focus');
+        cy.wait(3000);
+        cy.get('[for="hover-feedback-4"]').click({force: true});
+        cy.wait(3000);
+        cy.get('[class="MuiPopover-root"]').click({force: true});
+        cy.log('Added 4 star');
+
+        cy.log('Changing 4 star rating to 3 star');
+        cy.get('[for="hover-feedback-3"]').trigger('focus');
+        cy.wait(3000)
+        cy.get('[for="hover-feedback-3"]').click({force: true});
+        cy.wait(3000);
+        cy.get('[class="MuiPopover-root"]').click({force: true});
+        cy.log('Changed the rate to 3 stars');
+    })
 
     it('Credentials & Tryout', () => {
         cy.log("Navigating to credentials tab");
