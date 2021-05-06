@@ -4,8 +4,8 @@ import { generateAppName } from '../../support/common/choreo-utils';
 
 describe('Data Mapper', () => {
     before(() => {
-        cy.log("Logging into Choreo using google")
-        cy.userLoginWithGmail()
+        cy.log("Login into Choreo")
+        cy.consoleUserLogin();
     })
 
     after(() => {
@@ -19,7 +19,7 @@ describe('Data Mapper', () => {
         cy.createNewApp(appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("API", "test");
-        cy.createProperty("string", urlName, '"https://console.dv.choreo.dev"');
+        cy.createProperty("string", urlName, '"https://postman-echo.com/get"');
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click();

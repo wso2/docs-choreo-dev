@@ -18,6 +18,7 @@ import '@testing-library/cypress/add-commands'
 import './common/login-commands'
 import './common/choreo-commands'
 import './devportal/devportal-commands'
+import './console/console-login-commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
