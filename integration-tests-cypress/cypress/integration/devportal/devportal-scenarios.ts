@@ -4,7 +4,7 @@ import { generateAppName } from "../../support/common/choreo-utils";
 
 describe('Devportal', () => {
     const appName = generateAppName('-e2etest');
-    const apiName = 'e2eTestApiDv1';
+    const apiName = 'e2eTestApiDev';
 
     beforeEach(() => {
         cy.devportalLogin();
@@ -146,8 +146,8 @@ describe('Devportal', () => {
         cy.get('[class="opblock-summary opblock-summary-get"]').click();
         cy.get('.btn').click();
         cy.get('.execute').click();
-        cy.get('[class="response-col_status"]').should('have.text', 200);
-        cy.log('API Tryout was successful!');
+        cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
+        cy.log("Successfully invoked the API");
     });
 
     it('Delete a consumer application', () => {
