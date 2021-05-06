@@ -146,8 +146,8 @@ describe('Devportal', () => {
         cy.get('[class="opblock-summary opblock-summary-get"]').click();
         cy.get('.btn').click();
         cy.get('.execute').click();
-        cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
-        cy.log("Successfully invoked the API");
+        cy.get('[class="response-col_status"]').should('have.text', 200);
+        cy.log('API Tryout was successful!');
     });
 
     it('Delete a consumer application', () => {
