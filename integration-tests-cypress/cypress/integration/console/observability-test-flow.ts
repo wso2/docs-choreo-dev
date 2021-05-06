@@ -15,9 +15,11 @@ import { generateAppName } from '../../support/common/choreo-utils';
 /// <reference types="cypress" />
 
 describe('Observability tests', () => {
+    const obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
     let savedCookies
     let appName: string
-    let obsUrl: string
+    let obsId: string
+    let version: string
 
     before(() => {
         cy.log("Login into Choreo using Google")
@@ -34,16 +36,20 @@ describe('Observability tests', () => {
         cy.get('[data-testid="observe"]').should('be.visible');
         cy.get('[data-testid="observe"]').click();
 
+        let obsUrl: string
         cy.window().then((win) => {
             cy.stub(win, 'open').as('windowOpen').callsFake(url => {
-                obsUrl = url.replace('http://', 'https://');
+                obsUrl = url;
             });
         })
 
         cy.contains('button', 'Sample Service').click();
         cy.get('@windowOpen').should('be.called');
         cy.wait(1000).then(() => {
-            cy.visit(obsUrl)
+            let obsUrlRegexMatch = obsUrl.match(obsUrlRegexp);
+            expect(obsUrlRegexMatch).to.have.lengthOf(3)
+            obsId = obsUrlRegexMatch[1];
+            version = obsUrlRegexMatch[2];
         })
     })
     
@@ -62,7 +68,7 @@ describe('Observability tests', () => {
             })
         })
 
-        cy.visit(obsUrl)
+        cy.visit('/observe/app/' + obsId + '/' + version);
     });
 
     after(() => {
@@ -74,24 +80,21 @@ describe('Observability tests', () => {
     it('test logs view', () => {
         cy.get('[data-testid="panel-Logs-btn"]').should('be.visible');
         cy.get('[data-testid="panel-Logs-btn"]').click();
-        cy.get('[data-testid="log-panel"]').should('be.visible');
 
         cy.log('asseting mandatory log entry without any filter');
-        cy.get('span').contains('error while connecting to the hr-service');
+        cy.contains('[data-testid="log-panel"]', 'error while connecting to the hr-service', {timeout: 600000}).should('exist');
 
         cy.log('asseting mandatory log entry by providing a search phrace');
         cy.get('[id="log-search"]').type('employee information not found in the hr-service');
         cy.contains('button', 'Apply').click();
-        cy.get('[data-testid="log-panel"]').should('be.visible');
-        cy.get('span').contains('employee information not found in the hr-service');
-        cy.get('span').contains('error while connecting to the hr-service').should('not.exist');
+        cy.contains('[data-testid="log-panel"]', 'employee information not found in the hr-service', {timeout: 600000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'error while connecting to the hr-service', {timeout: 600000}).should('not.exist');
 
         cy.log('asseting log download');
         cy.get('[id="log-search"]').click().clear().type("ballerina");
         cy.contains('button', 'Apply').click();
-        cy.get('[data-testid="log-panel"]').should('be.visible');
+        cy.contains('[data-testid="log-panel"]', 'ballerina: started publishing metrics to Choreo', {timeout: 600000}).should('exist');
         cy.contains('button', 'Download').click();
         cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', '[INFO] [ballerina/http] started HTTP/WS listener 0.0.0.0:8090');
     })
-
 })
