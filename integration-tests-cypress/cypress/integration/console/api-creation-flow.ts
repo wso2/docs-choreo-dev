@@ -36,7 +36,6 @@ describe('Application test run and deployment', () => {
         cy.log('app name: ', appName);
         cy.createNewApp("service", appName);
         cy.url().should('include', 'app/' + appName + '/develop');
-        cy.log("Start configure resource");
         cy.configureResource("hello");
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("var", "res", '"hello world"');

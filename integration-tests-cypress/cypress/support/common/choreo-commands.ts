@@ -61,13 +61,14 @@ Cypress.Commands.add('configureResource', (relativePath?: string, method?: strin
         method = "GET";
     }
     const code = 'import ballerina/http; service / on new http:Listener(8090) { resource function ' + method.toLowerCase() + ' ' + relativePath + '(http:Caller caller, http:Request request) returns error? { }} '
+    cy.log("Started resource configuration");
     cy.waitTillWorkSpace();
     cy.contains('button', method).click();
     cy.get('[data-testid="api-path"]').type(relativePath);
     cy.get('[data-testid="save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.checkSourceCodeForValidation(code);
-    cy.log("Configured Resource");
+    cy.log("Configured resource successfully");
 }),
 
 /**
