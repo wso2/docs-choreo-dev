@@ -19,38 +19,25 @@ describe('Application test run and deployment', () => {
     })
 
     beforeEach(() => {
-        savedCookies.map((cookie) => {
-            cy.setCookie(cookie.name, cookie.value, {
-                domain: cookie.domain,
-                expiry: cookie.expires,
-                httpOnly: cookie.httpOnly,
-                path: cookie.path,
-                secure: cookie.secure
-            })
-
-            Cypress.Cookies.defaults({
-                preserve: cookie.name
-            })
-        })
-
+        cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(appName);
+        cy.createNewApp("service", appName);
         cy.url().should('include', 'app/' + appName + '/develop');
-        cy.selectTrigger("API", "hello");
-        cy.createProperty("var", "res", '"hello world"');
+        cy.log("Start configure resource");
+        cy.configureResource("hello");
+        cy.selectManualTriggerOptions("Statements", "addVariable");
+        cy.createVariableProperty("var", "res", '"hello world"');
         cy.createRespond("res");
     })
 
     afterEach(() => {
         cy.goBacktoAppsList();
-        cy.deleteApp(appName, true);
+        cy.deleteApp("service", appName, true);
     })
 
     it('test run hello world service', () => {
-        cy.get('[data-testid="editor-run-btn"]').should('be.visible');
-        cy.get('[data-testid="editor-run-btn"]').click();
-        cy.log('Started test run');
+        cy.testRunApp();
 
         cy.get('[data-testid="test-url"]').should('exist');
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: 600000}).should('exist');
@@ -79,7 +66,7 @@ describe('Application test run and deployment', () => {
     })
 
     it('deploy hello world service', () => {
-        cy.deployToChoreo(appName);
+        cy.deployToChoreo("service", appName);
         cy.get('[data-testid="prod-url"]').invoke('text').then((appURL) => {
             expect(appURL).not.to.equal('');
             cy.log("test url: ", appURL);

@@ -5,7 +5,7 @@ import { generateAppName } from '../../support/common/choreo-utils';
 describe('Data Mapper', () => {
     before(() => {
         cy.log("Login into Choreo")
-        cy.consoleUserLogin();
+        cy.consoleUserLogin()
     })
 
     after(() => {
@@ -16,10 +16,10 @@ describe('Data Mapper', () => {
         cy.log("Starting Data Mapper Low code form AI suggestion test...");
         const appName = generateAppName("datamapper");
         const urlName = "url"
-        cy.createNewApp(appName);
+        cy.createNewApp("service", appName);
         cy.url().should('include', 'app/' + appName + '/develop');
-        cy.selectTrigger("API", "test");
-        cy.createProperty("string", urlName, '"https://postman-echo.com/get"');
+        cy.configureResource("test");
+        cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click();
@@ -39,6 +39,6 @@ describe('Data Mapper', () => {
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
         cy.goBacktoAppsList();
-        cy.deleteApp(appName, true);
+        cy.deleteApp("service", appName, true);
     })
 })
