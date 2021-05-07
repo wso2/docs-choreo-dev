@@ -1,4 +1,4 @@
-# Create Your First Choreo Service
+# Create Your First Service
 
 To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
 

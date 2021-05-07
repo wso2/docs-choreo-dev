@@ -1,4 +1,4 @@
-# Root Cause Analysis
+# Perform Root Cause Analysis
 
 Performing root cause analysis is crucial in identifying and rectifying the underlying problem for any anomalies detected in a system. Choreo Observability provides helpful insights out-of-the-box that assists in carrying out a root cause analysis for any service deployed on the Choreo platform.
 

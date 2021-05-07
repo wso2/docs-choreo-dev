@@ -1,4 +1,4 @@
-# Concepts
+# Service Concepts
 
 Before you start creating services with Choreo, there are basic concepts that you need to understand. This section walks you through all the service concepts you need to know.
  
