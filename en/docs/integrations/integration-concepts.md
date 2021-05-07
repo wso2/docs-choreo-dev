@@ -1,4 +1,4 @@
-# Concepts
+# Integration Concepts
 Before you start building integrations with Choreo, there are basic concepts that you need to understand. This section walks you through all the integration concepts you need to know. 
  
 ## Integration
