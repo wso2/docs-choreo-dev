@@ -58,7 +58,7 @@ nav:
         - API Concepts: apis/api-concepts.md
         - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
     - Observabilty:
-          Perform Root Cause Analysis: observability/root-cause-analysis.md
+          Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
