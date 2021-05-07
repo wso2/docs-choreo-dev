@@ -17,6 +17,11 @@ declare namespace Cypress {
         selectManualTrigger(): Chainable<Element>
         selectManualTriggerOptions(type: string, option:string): Chainable<Element>
         selectSpecificOption(option: string): Chainable<Element>
+        selectAPITrigger(method: string, relativePath?: string): Chainable<Element>
+        selectGitHubTrigger(repoName: string, triggerEventType: string, triggerAction: string): Chainable<Element>
+        selectTrigger(type: string, relativePath?: string, method?: string): Chainable<Element>
+        selectStatementOption(option: string): Chainable<Element>
+        configureGmailConnector(emailAddress: string, action: string, emailSubject: string, emailBody: string): Chainable<Element>
         typeOnNthExpressionEditor(n: number, expression: string, withinQuotes: boolean, waitForEnable?: string): Chainable<Element>
         createVariableProperty(type: string, name: string, expression: string): Chainable<Element>
         createLogProperty(type: string, expression: string): Chainable<Element>

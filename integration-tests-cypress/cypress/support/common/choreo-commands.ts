@@ -20,9 +20,15 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
     cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
 }),
 
-Cypress.Commands.add('createNewApp', (type: string, name: string) => {
+Cypress.Commands.add('createNewApp', (type:string, name: string) => {
     cy.get('[id="backdrop-loader"').should('not.exist');
 
+    if(type == "integration"){
+        cy.get('[href="/integrations"]').click();
+    } else if(type == "service"){
+        cy.get('[href="/services"]').click();
+    }
+    cy.log("Page loaded successfully");
     if(type == "integration"){
         cy.get('[href="/integrations"]').click();
         cy.log("Integrations page loaded successfully");
@@ -85,8 +91,57 @@ Cypress.Commands.add('selectTrigger', (type: string) => {
         case "Schedule":
             // To be implemented
             break;
+
     }
     cy.log("selected " + type + "trigger type");
+})
+
+Cypress.Commands.add('selectGithubTrigger', (repoName: string, triggerEventType: string, triggerAction: string) => {
+    cy.log("Configuring the GitHub Trigger");
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('.trigger-wrapper').contains('GitHub').should('be.visible').click();
+    cy.get('[data-testid="zoom-out-btn"]').click();
+    cy.contains('GitHub Connection #1').click();
+    cy.get('.MuiAutocomplete-popupIndicator').eq(0).click();
+    cy.contains(repoName).click();
+    cy.get('.MuiAutocomplete-popupIndicator').eq(1).click();
+    cy.contains(triggerEventType).click();
+    cy.get('.MuiAutocomplete-popupIndicator').eq(2).click();
+    cy.contains(triggerAction).click();
+    cy.contains('Save').should('be.visible').click();
+    cy.waitTillWorkSpace();
+    cy.log("Completed configuring Github trigger");
+}),
+
+Cypress.Commands.add('configureGmailConnector', (emailAddress: string, action: string, emailSubject: string, emailBody: string) => {
+    cy.log("Configuring the Gmail connector");
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('[data-testid="api-options"]').click();
+    cy.get('[data-testid="gmail"]').click();
+    cy.contains('Gmail Connection #1').should('be.visible').click();
+    cy.contains('Save').should('exist').click();
+    cy.log("Setup of Gmail connection successful");
+
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('[id=SmallPlus]').eq(0).click({force: true});
+    cy.get('[data-testid="api-options"]').click();
+    cy.get('.existing-connector-details').children().get('.existing-connector-name').eq(0).click();
+
+    cy.get('.MuiAutocomplete-popupIndicator').eq(0).click();
+    cy.contains(action).click();
+
+    cy.typeOnNthExpressionEditor(1,emailAddress,true);
+    cy.typeOnNthExpressionEditor(2,emailSubject,true);
+    cy.typeOnNthExpressionEditor(3,emailBody,true);
+    cy.typeOnNthExpressionEditor(5,emailAddress,true);
+    cy.typeOnNthExpressionEditor(6,"",true);
+    cy.typeOnNthExpressionEditor(7,"",true);
+
+    cy.contains('Save').should('be.visible').click();
+
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.waitTillWorkSpace();
+    cy.log("Configured Gmail connector");
 }),
 
 Cypress.Commands.add('selectManualTrigger', () => {
