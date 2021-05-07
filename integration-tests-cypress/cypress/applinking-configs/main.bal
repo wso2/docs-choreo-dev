@@ -4,5 +4,5 @@ import ballerinax/choreo as _;
 # Prints `Hello World`.
 
 public function main() {
-    io:println("Hello Wor!");
+    io:println("Hello World!");
 }

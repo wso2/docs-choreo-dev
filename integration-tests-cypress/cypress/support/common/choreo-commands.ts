@@ -374,7 +374,7 @@ Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) =
 
                 cy.get('body').then($body => {
                     let appExist = ($body.find('.MuiTableRow-root.MuiTableRow-hover').length > 0) ? true : false;
-    
+
                     if (strict && appExist) {
                         cy.searchApps(name);
                         cy.get('.MuiTableRow-root.MuiTableRow-hover').should('not.exist');
@@ -394,6 +394,7 @@ Cypress.Commands.add('createRespond', (expression: string, skipSmallPlus?: boole
         let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
         if (!statementOptionsAvailable) {
             cy.get('[id="SmallPlus"]').eq(0).click();
+            cy.get('[id=Plus_a]').eq(0).click({force: true});
         }
         cy.selectSpecificOption('addrespond');
 

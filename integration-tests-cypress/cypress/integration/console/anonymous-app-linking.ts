@@ -16,14 +16,10 @@
 import {generateAppName} from "../../support/common/choreo-utils";
 
 describe('anonymous-app-linking', () => {
-    let savedCookies;
 
     before(() => {
         cy.log("Login into Choreo using Google");
         cy.consoleUserLogin();
-        cy.getCookies().then((cookies) => {
-            savedCookies = cookies;
-        });
     });
 
     after(() => {
@@ -52,6 +48,6 @@ describe('anonymous-app-linking', () => {
             });
         });
         cy.visit("/");
-        cy.deleteApp(appName, false, true);
+        cy.cleanupApp(appName, false, true);
     });
 });
