@@ -380,6 +380,3 @@ HTTP Cookies keep stateful information against a client. You can use the `req` v
   ```ballerina
   req.getCookies()
   ```
-
-
-
