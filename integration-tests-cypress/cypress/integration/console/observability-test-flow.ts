@@ -31,7 +31,7 @@ describe('Observability tests', () => {
 
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(appName);
+        cy.createNewApp("service", appName);
         cy.url().should('include', 'app/' + appName + '/develop');
 
         cy.get('[data-testid="observe"]').should('be.visible');
@@ -66,17 +66,7 @@ describe('Observability tests', () => {
     
     beforeEach(() => {
         savedCookies.map((cookie) => {
-            cy.setCookie(cookie.name, cookie.value, {
-                domain: cookie.domain,
-                expiry: cookie.expires,
-                httpOnly: cookie.httpOnly,
-                path: cookie.path,
-                secure: cookie.secure
-            })
-
-            Cypress.Cookies.defaults({
-                preserve: cookie.name
-            })
+            cy.preserveCookiesForTest(savedCookies);
         })
 
         cy.visit('/observe/app/' + obsId + '/' + version);
@@ -84,7 +74,7 @@ describe('Observability tests', () => {
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.deleteApp(appName, true);
+        cy.deleteApp("service", appName, true);
         cy.userLogout();
     })
 
