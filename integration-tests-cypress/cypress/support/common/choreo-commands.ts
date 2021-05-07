@@ -337,6 +337,21 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
     })
 }),
 
+Cypress.Commands.add('cleanupApp', (type:string, name: string, strict: boolean) => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    if (type != "external"){
+        cy.undeployApp(type, name, strict);
+    }
+    cy.log("Cleaning up app: " + name);
+    cy.request("DELETE",`${appSvcUrl}/orgs/${orgName}/apps/${name}`).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(200);
+        cy.log("Successfully cleaned up the app: "+ name);
+    });
+});
+
 Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
     // Undeploy the app if active
     cy.undeployApp(type, name, strict);

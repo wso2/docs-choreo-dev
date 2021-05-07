@@ -17,10 +17,7 @@ declare namespace Cypress {
         selectManualTrigger(): Chainable<Element>
         selectManualTriggerOptions(type: string, option:string): Chainable<Element>
         selectSpecificOption(option: string): Chainable<Element>
-        selectAPITrigger(method: string, relativePath?: string): Chainable<Element>
         selectGitHubTrigger(repoName: string, triggerEventType: string, triggerAction: string): Chainable<Element>
-        selectTrigger(type: string, relativePath?: string, method?: string): Chainable<Element>
-        selectStatementOption(option: string): Chainable<Element>
         configureGmailConnector(emailAddress: string, action: string, emailSubject: string, emailBody: string): Chainable<Element>
         typeOnNthExpressionEditor(n: number, expression: string, withinQuotes: boolean, waitForEnable?: string): Chainable<Element>
         createVariableProperty(type: string, name: string, expression: string): Chainable<Element>
@@ -30,6 +27,7 @@ declare namespace Cypress {
         resetAppSearch(): Chainable<Element>
         undeployApp(type:string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type:string, name: string, strict: boolean): Chainable<Element>
+        cleanupApp(type:string, name: string, strict: boolean): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>

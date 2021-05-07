@@ -45,9 +45,10 @@ describe('anonymous-app-linking', () => {
                let linkingCmd = $input.attr('value');
                 cy.exec(linkingCmd);
                 cy.get('[data-testid="linked-app-name"]').should('be.visible');
+                cy.log("Successfully linked the app");
             });
         });
         cy.visit("/");
-        cy.cleanupApp(appName, false, true);
+        cy.cleanupApp("external", appName, true);
     });
 });
