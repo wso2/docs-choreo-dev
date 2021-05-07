@@ -131,6 +131,7 @@ describe('Devportal', () => {
         // Add an API to the application
         cy.get('[data-testid="subscriptions"]').click();
         cy.get('[data-testid="create-subscription-btn"]').click();
+        cy.wait(2000);
         cy.get('[data-testid="add-api-' + apiName + '"]').click();
         cy.get('[data-testid="subscription-dialog-close-btn"]').click();
         cy.log('Subscribed to the API successfully');
