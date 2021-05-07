@@ -57,8 +57,10 @@ nav:
     - APIs: 
         - API Concepts: apis/api-concepts.md
         - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
-    - Observabilty:
-          Performing Root Cause Analysis: observability/root-cause-analysis.md
+    - Observability:
+          Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+    - Reference:
+          Choreo Expression Syntax: references/choreo-expression-syntax.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
