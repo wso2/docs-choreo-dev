@@ -10,6 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
 import { generateAppName } from '../../support/common/choreo-utils';
 
 /// <reference types="cypress" />
@@ -57,7 +58,7 @@ describe('Observability tests', () => {
         cy.get('@windowOpen').should('be.called');
         cy.wait(1000).then(() => {
             let obsUrlRegexMatch = obsUrl.match(obsUrlRegexp);
-            expect(obsUrlRegexMatch).to.have.lengthOf(3)
+            expect(obsUrlRegexMatch).to.have.lengthOf(3);
             obsId = obsUrlRegexMatch[1];
             version = obsUrlRegexMatch[2];
         })
@@ -84,7 +85,7 @@ describe('Observability tests', () => {
     after(() => {
         cy.goBacktoAppsList();
         cy.deleteApp(appName, true);
-        cy.userLogout()
+        cy.userLogout();
     })
 
     it('test logs view', () => {
