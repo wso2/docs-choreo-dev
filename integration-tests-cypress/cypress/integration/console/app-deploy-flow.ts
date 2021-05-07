@@ -15,23 +15,11 @@ import {generateAppName} from "../../support/common/choreo-utils";
 /// <reference types="cypress" />
 
 describe('App test run and deployment from scratch', ()=>{
-    let savedCookies
     let appName: string
 
     before(() => {
-        cy.log("Login into Choreo using Google")
-        cy.consoleUserLogin()
-        cy.getCookies().then((cookies) => {
-            savedCookies = cookies
-        })
-    })
-
-    after(() => {
-        cy.userLogout()
-    })
-
-    beforeEach(() => {
-        cy.preserveCookiesForTest(savedCookies);
+        cy.log("Login into Choreo using Google");
+        cy.consoleUserLogin();
         appName = generateAppName("app");
         cy.log('app name: ', appName);
         cy.createNewApp("integration", appName);
@@ -41,19 +29,21 @@ describe('App test run and deployment from scratch', ()=>{
         cy.createLogProperty("Info", "Hello World");
     })
 
-    afterEach(() => {
+    after(() => {
         cy.goBacktoAppsList();
         cy.deleteApp("integration", appName, true);
+        cy.userLogout();
     })
 
-    it('test and run integration', () => {
-        cy.testRunApp();
+    it('test-run and deploy integration', () => {
+        const loadRunTxt = "Running...";
 
+        cy.testRunApp();
+        cy.get('.product-tour-logs-panel').contains(loadRunTxt).should('exist');
+        cy.get('.product-tour-logs-panel').contains(loadRunTxt).should('not.exist', 50000);
         cy.get('[data-testid="log-panel"]').should('contains.text',"message = \"Hello World\"");
         cy.log('Expression is logged successfully');
-    })
 
-    it('deploy integration', () => {
         cy.deployToChoreo("integration", appName);
         cy.get('#tabpanel-1').contains("Successfully deployed").should('exist');
     })
