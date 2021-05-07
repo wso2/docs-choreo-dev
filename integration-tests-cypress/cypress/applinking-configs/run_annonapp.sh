@@ -1,5 +1,5 @@
 #!/bin/sh
-cd cypress/applinking_test &&
+cd cypress/applinking-configs &&
 docker container run --rm -v "$(pwd)":/home/ballerina -u "$(id -u)":"$(id -g)" -e JAVA_OPTS="-Duser.home=/home/ballerina" ballerina/ballerina:swan-lake-alpha2 bal build --observability-included &&
 rm -f Config.toml .choreoproject &&
 if [ "$CHOREO_ENV" = "DEV" ]; then
