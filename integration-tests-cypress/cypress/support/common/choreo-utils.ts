@@ -1,4 +1,9 @@
 export const appNamePrefix = 'a' + Date.now();
+export const marketplaceText = 'marketplace';
+export const integrationsText = 'integrations';
+export const servicesText = 'services';
+export const APIsText = 'apis';
+export const devOpsText = 'devops';
 
 /**
  * Create name for app.

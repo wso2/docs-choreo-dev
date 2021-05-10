@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import {generateAppName} from "../../support/common/choreo-utils";
+import {generateAppName, integrationsText} from "../../support/common/choreo-utils";
 
 /// <reference types="cypress" />
 
@@ -22,7 +22,7 @@ describe('App test run and deployment from scratch', ()=>{
         cy.consoleUserLogin();
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp("integration", appName);
+        cy.createNewApp(integrationsText, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements","addLog");

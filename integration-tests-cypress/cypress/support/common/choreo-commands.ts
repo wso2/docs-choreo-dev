@@ -1,4 +1,11 @@
-import { normalizeText } from './choreo-utils';
+import { 
+    normalizeText, 
+    marketplaceText, 
+    integrationsText, 
+    servicesText, 
+    APIsText, 
+    devOpsText 
+} from './choreo-utils';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
@@ -21,15 +28,7 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
 }),
 
 Cypress.Commands.add('createNewApp', (type: string, name: string) => {
-    cy.get('[id="backdrop-loader"').should('not.exist');
-
-    if(type == "integration"){
-        cy.get('[href="/integrations"]').click();
-        cy.log("Integrations page loaded successfully");
-    } else if(type == "service"){
-        cy.get('[href="/services"]').click();
-        cy.log("Services page loaded successfully");
-    }
+    cy.navigateFromHomePage(type);
 
     cy.log("Creating a new application with name : ", name);
     cy.contains('button', 'Create').click();
@@ -402,5 +401,28 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
         cy.get('[src="/images/failed.svg"]').should('not.exist');
         cy.get('[src="/images/check.svg"]').should('exist');
         cy.log('Expose phase successful!');
+    }
+}),
+
+/**
+ * Navigate from the home page to a desired page
+ *
+ * @param pageName - page name that needs to be loaded
+ */
+Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
+    cy.get('[id="backdrop-loader"').should('not.exist');
+    switch (pageName) {
+        case marketplaceText:
+        case integrationsText:
+        case servicesText:
+        case APIsText:
+        case devOpsText:
+            cy.get('[href="/' + pageName + '"]').click();
+            cy.url().should('include', '/' + pageName);
+            cy.log("Page loaded successfully");
+            break;
+        default:
+            cy.log('Page not found');
+            break;
     }
 })
