@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
 import { normalizeText } from './choreo-utils';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
@@ -20,13 +33,19 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
     cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
 }),
 
-Cypress.Commands.add('createNewApp', (type: string, name: string) => {
+Cypress.Commands.add('createNewApp', (type:string, name: string) => {
     cy.get('[id="backdrop-loader"').should('not.exist');
 
-    if(type == "integration"){
+    if (type == "integration") {
+        cy.get('[href="/integrations"]').click();
+    } else if (type == "service") {
+        cy.get('[href="/services"]').click();
+    }
+    cy.log("Page loaded successfully");
+    if (type == "integration") {
         cy.get('[href="/integrations"]').click();
         cy.log("Integrations page loaded successfully");
-    } else if(type == "service"){
+    } else if (type == "service") {
         cy.get('[href="/services"]').click();
         cy.log("Services page loaded successfully");
     }
@@ -85,8 +104,57 @@ Cypress.Commands.add('selectTrigger', (type: string) => {
         case "Schedule":
             // To be implemented
             break;
+
     }
     cy.log("selected " + type + "trigger type");
+})
+
+Cypress.Commands.add('selectGitHubTrigger', (repoName: string, triggerEventType: string, triggerAction: string) => {
+    cy.log("Configuring the GitHub Trigger");
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('.trigger-wrapper').contains('GitHub').should('be.visible').click();
+    cy.get('[data-testid="zoom-out-btn"]').click();
+    cy.contains('GitHub Connection #1').click();
+    cy.get('.MuiAutocomplete-popupIndicator').eq(0).click();
+    cy.contains(repoName).click();
+    cy.get('.MuiAutocomplete-popupIndicator').eq(1).click();
+    cy.contains(triggerEventType).click();
+    cy.get('.MuiAutocomplete-popupIndicator').eq(2).click();
+    cy.contains(triggerAction).click();
+    cy.contains('Save').should('be.visible').click();
+    cy.waitTillWorkSpace();
+    cy.log("Completed configuring Github trigger");
+}),
+
+Cypress.Commands.add('configureGmailConnector', (emailAddress: string, action: string, emailSubject: string, emailBody: string) => {
+    cy.log("Configuring the Gmail connector");
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('[data-testid="api-options"]').click();
+    cy.get('[data-testid="gmail"]').click();
+    cy.contains('Gmail Connection #1').should('be.visible').click();
+    cy.contains('Save').should('exist').click();
+    cy.log("Setup of Gmail connection successful");
+
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('[id=SmallPlus]').eq(0).click({force: true});
+    cy.get('[data-testid="api-options"]').click();
+    cy.get('.existing-connector-details').children().get('.existing-connector-name').eq(0).click();
+
+    cy.get('.MuiAutocomplete-popupIndicator').eq(0).click();
+    cy.contains(action).click();
+
+    cy.typeOnNthExpressionEditor(1,emailAddress,true);
+    cy.typeOnNthExpressionEditor(2,emailSubject,true);
+    cy.typeOnNthExpressionEditor(3,emailBody,true);
+    cy.typeOnNthExpressionEditor(5,emailAddress,true);
+    cy.typeOnNthExpressionEditor(6,"",true);
+    cy.typeOnNthExpressionEditor(7,"",true);
+
+    cy.contains('Save').should('be.visible').click();
+
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.waitTillWorkSpace();
+    cy.log("Configured Gmail connector");
 }),
 
 Cypress.Commands.add('selectManualTrigger', () => {
@@ -269,6 +337,21 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
     })
 }),
 
+Cypress.Commands.add('cleanupApp', (type:string, name: string, strict: boolean) => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    if (type != "external"){
+        cy.undeployApp(type, name, strict);
+    }
+    cy.log("Cleaning up app: " + name);
+    cy.request("DELETE",`${appSvcUrl}/orgs/${orgName}/apps/${name}`).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(200);
+        cy.log("Successfully cleaned up the app: "+ name);
+    });
+});
+
 Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
     // Undeploy the app if active
     cy.undeployApp(type, name, strict);
@@ -306,7 +389,7 @@ Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) =
 
                 cy.get('body').then($body => {
                     let appExist = ($body.find('.MuiTableRow-root.MuiTableRow-hover').length > 0) ? true : false;
-    
+
                     if (strict && appExist) {
                         cy.searchApps(name);
                         cy.get('.MuiTableRow-root.MuiTableRow-hover').should('not.exist');
@@ -326,6 +409,7 @@ Cypress.Commands.add('createRespond', (expression: string, skipSmallPlus?: boole
         let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
         if (!statementOptionsAvailable) {
             cy.get('[id="SmallPlus"]').eq(0).click();
+            cy.get('[id=Plus_a]').eq(0).click({force: true});
         }
         cy.selectSpecificOption('addrespond');
 
