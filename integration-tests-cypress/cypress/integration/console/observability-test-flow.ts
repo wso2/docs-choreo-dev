@@ -66,11 +66,13 @@ describe('Observability tests', () => {
     })
     
     beforeEach(() => {
-        savedCookies.map((cookie) => {
-            cy.preserveCookiesForTest(savedCookies);
-        })
-
+        cy.preserveCookiesForTest(savedCookies);
+        cy.restoreLocalStorage();
         cy.visit('/observe/app/' + obsId + '/' + version);
+    });
+
+    afterEach(() => {
+        cy.saveLocalStorage();
     });
 
     after(() => {
@@ -103,5 +105,16 @@ describe('Observability tests', () => {
         cy.contains('[data-testid="log-panel"]', systemLogEntry, {timeout: 600000}).should('exist');
         cy.get('[data-testid="log-download-btn"]').click();
         cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
+    })
+
+    it('test observability overview', () => {
+        cy.get('.diagram-canvas').should('exist');
+        cy.get('.worker-line').should('exist');
+        cy.get('[data-testid="refresh-btn"]').should('exist');
+        cy.get('[data-testid="preloader"]').should('not.exist');
+
+        cy.log('Test diagram status');
+        cy.get('.metrics-text').contains('100% Success', {timeout: 600000}).should('exist');
+
     })
 })
