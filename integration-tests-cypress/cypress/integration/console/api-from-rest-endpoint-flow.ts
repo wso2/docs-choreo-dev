@@ -13,7 +13,7 @@
 
 describe("API creation from an existing endpoint", () => {
 
-    const API_NAME = 'CyAPI126';
+    const API_NAME = 'CyAPI109';
     const API_VERSION = 'V0.0.1';
     const API_ENDPOINT = 'https://api.domainsdb.info/v1/domains';
 
@@ -21,20 +21,17 @@ describe("API creation from an existing endpoint", () => {
         cy.consoleUserLogin();
     });
 
-    it("select API page", () => {
+    it("Create API from existing endpoint and deploy and publish", () => {
         cy.log("Visiting API listing");
         cy.get(':nth-child(5) > a > .MuiButtonBase-root > .MuiListItemIcon-root > div > img').click();
         cy.location('pathname').should('eq', '/apis/');
         cy.wait(10000);
 
         cy.get('[data-testid=create-api-btn]').click();
-        // cy.get('[data-testid=api-table]').should('not.exist').then(() => {
-        //     cy.get('[data-testid=create-api-btn]').click();
-        // })
 
         cy.log('Opening API creation dialog');
         cy.contains('Create API').should('exist');
-        cy.get('button').contains('Next').first().click({ force: true })
+        cy.get('button').contains('Next').first().click({ force: true });
 
         cy.log('Filling API creation form data');
         cy.get('[data-testid=api-name]').type(API_NAME);
@@ -51,9 +48,6 @@ describe("API creation from an existing endpoint", () => {
         cy.get('[data-testid=api-name-nav-label]').should('have.text', API_NAME);
         cy.get('[data-testid=api-version-nav-label]').should('have.text', '(' + API_VERSION + ')');
         cy.get('[data-testid=resources-container]').should('be.visible', true);
-        cy.get('[data-testid=resources-container]').within(() => {
-
-        })
 
         cy.log('visiting design configuration and update data');
         cy.get('[data-testid="Design Configurations"]').click();
@@ -105,7 +99,7 @@ describe("API creation from an existing endpoint", () => {
         cy.get('button').contains('Save').click();
         cy.get('.MuiDialogContent-root').within(() => {
             cy.get('button').contains('Save').click();
-        })
+        });
         cy.wait(5000);
 
         cy.log('Visiting subscription page');
@@ -115,35 +109,35 @@ describe("API creation from an existing endpoint", () => {
         cy.wait(3000);
 
         // visit deploy screen
-        cy.log('Visiting deployment tab')
+        cy.log('Visiting deployment tab');
         cy.get('[data-testid=deployments]').click();
         cy.get('[data-testid=create-deploy-revision-btn]').click();
         cy.get('.MuiDialogContent-root').within(() => {
             cy.get('button').contains('Deploy').click();
-        })
-        cy.wait(1000);
+        });
+        cy.wait(5000);
 
         //visit test console
-        cy.log('Visiting test console')
+        cy.log('Visiting test console');
         cy.get('[data-testid=test]').click();
 
         cy.get('.opblock-summary').click({ force: true });
         cy.get('#operations-default-get_search').within(() => {
             cy.get('button').contains('Try it out').click({ force: true });
             cy.get('.execute-wrapper > .btn').click();
-            cy.wait(2000);
+            cy.wait(3000);
             cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
-            cy.log('Invoked th API successfully');
-        })
+            cy.log('Invoked the API successfully');
+        });
 
         //visit publish tab
-        cy.log('Visiting api publishing')
+        cy.log('Visiting api publishing');
         cy.get('[data-testid=lifecycle-management]').click();
         cy.get('[data-testid=Publish-lc-btn]').click();
         cy.wait(2000);
     })
 
-    it('Visiting API listing', () => {
+    it('Deleting the created API', () => {
         cy.contains('API list').click();
         cy.log("Visiting API listing");
         cy.get(':nth-child(5) > a > .MuiButtonBase-root > .MuiListItemIcon-root > div > img').click();
@@ -155,10 +149,13 @@ describe("API creation from an existing endpoint", () => {
         cy.get('[data-testid=api-search-text-field]').type(API_NAME);
         cy.get('[data-testid=apis-list-table]').within(() => {
             cy.contains(API_NAME).click();
+        });
+
+        cy.get('[data-testid=go-to-dev-portal-btn]').should('not.be.enabled');
+        cy.get('[data-testid=resources-container]').within(() => {
+            cy.get('[data-testid="resource-/search"]').should('exist');
         })
         cy.get('[data-testid=delete-api-btn]').click();
         cy.get('[data-testid=delete-api]').click();
     });
 });
-
-
