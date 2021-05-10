@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateAppName } from '../../support/common/choreo-utils';
+import { generateAppName, servicesText } from '../../support/common/choreo-utils';
 
 /// <reference types="cypress" />
 
@@ -29,7 +29,7 @@ describe('Data Mapper', () => {
         cy.log("Starting Data Mapper Low code form AI suggestion test...");
         const appName = generateAppName("datamapper");
         const urlName = "url"
-        cy.createNewApp("service", appName);
+        cy.createNewApp(servicesText, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("test");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
