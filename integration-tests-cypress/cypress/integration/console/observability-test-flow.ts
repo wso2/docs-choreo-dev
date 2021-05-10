@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateAppName } from '../../support/common/choreo-utils';
+import { generateAppName, servicesText } from '../../support/common/choreo-utils';
 
 /// <reference types="cypress" />
 
@@ -31,7 +31,7 @@ describe('Observability tests', () => {
 
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp("service", appName);
+        cy.createNewApp(servicesText, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
 
         cy.get('[data-testid="observe"]').should('be.visible');
