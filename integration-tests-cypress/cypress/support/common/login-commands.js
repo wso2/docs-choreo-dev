@@ -141,7 +141,7 @@ Cypress.Commands.add('userLoginWithGmail', () => {
 
     Cypress.Commands.add('userLogout', () => {
         cy.log("Logout from Choreo");
-        cy.get('[id="current-user"]').click({force: true});
+        cy.get('[id="current-user"]').click({ force: true });
         cy.contains('Logout').click();
         cy.url().should('include', '/login');
         cy.clearCookies();
