@@ -22,66 +22,71 @@ To create the Choreo service, follow the procedure below:
     
     Then click **Save API**. Now you have saved the API trigger that starts your application.
     
-5. In the next form that appears, do as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
+5. Click **API Calls**, and then enter informationas follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
 
-    1. Click **Connections**.
-
-    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.
+    1. Click **HTTP**.
     
-        ![New HTTP Connection](/en/assets/img/services/new-http-connection.png)
+        ![Select HTTP Connection](/en/assets/img/services/select-http-connection.png)
         
-        Then click **Save & Next**.
-        
-    3. In the **Select Payload Type** field, select **JSON**.
+    2. Enter information as follows:
     
-        ![Select Payload Type](/en/assets/img/services/select-payload-type.png)
+        | **Field**           | **Value**                    |
+        |---------------------|------------------------------|
+        | **Connection Name** | `httpEndpoint`               |
+        | **URL**             | `https://api.covid19api.com` |
         
-    4. Open the code view of the application by clicking the **<>** icon to the top right of the page.
+        Click **Save**.
+        
+    3. Click the **+** icon below the HTTP API call you added. 
     
-        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in the United States.
+        ![Update Existing Connection](/en/assets/img/services/update-existing-connection.png)
         
-    5. Click **Save & Done**. Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
+    4. Click **API Calls**, and then click on the existing connection.
+    
+        ![Select Existing connection](/en/assets/img/services/select-existing-connection.png)
+        
+        Then enter information as follows:
+        
+        ![Configure HTTP Connection](/en/assets/img/services/select-existing-connection.png)
+        
+        | **Field**               | **Value**                      |
+        |-------------------------|--------------------------------|
+        | **OPERATION**           | **get**                        |
+        | **Resource Path**       | `/total/country/united-states` |
+        | **Select Payload Type** | **JSON**                       |
+        
+        Click **Save & Done**.
+        
+        Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
     
 6. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:
 
-    1. Click on the **+** icon below the JSON payload. 
+    1. Click the last **+** icon in your low code diagram.
 
-        ![Add New Statement](/en/assets/img/services/add-new-statement.png)
+        ![Add New Statement](/en/assets/img/services/add-custom-statement.png)
     
-    2. Then click the **+** icon again to select the new statement you need to add.
+    2. Click **Other** and then enter the following in the **Statement** field.
     
-    3. In the form that appears, click **Custom Statement**.
-
-    4. In the **Custom Statement** form that appears, enter the following two lines as the statement.
     
-        ```ballerina
+        ```
         json[] jsonArray = <json[]>jsonPayload;
         json[] response = [];
         ```
-
-        ![Add Custom Statement](/en/assets/img/services/custom-statement.png)
-    
-    5. Then click **Save**.
+        Then click **Save**.
     
 7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
 
-    1. Click the last **+** icon that is visible in the low code view of the service in its current state.
-
-        ![Add Custom Statement](/en/assets/img/services/add-to-the-service.png)
+    1. Click the last **+** icon in your low code diagram.
     
-    2. In the form that appears, click **ForEach**.
+    2. Click **ForEach**.
 
-    3. In the **ForEach** form, enter `jsonArray` as the iterable expression.
-
-        ![Add ForEach Statement](/en/assets/img/services/add-foreach-statement.png)
-    
-        Then click **Save**.
+    3. In the **Iterable Expression** field, enter `jsonArray`. Then click **Save**.
     
     4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
 
         ![Add Custom Statement After Foreach Statement](/en/assets/img/services/add-custom-statement-after-foreach-statement.png)
     
-    5. In the form that appears, click **Custom Statement**. Then enter the following as the statement.
+    5. In the form that appears, click **Other**. Then enter the following in the **Statement** field.
 
         ```ballerina
         int active = <int>(check item.Active);
@@ -92,17 +97,12 @@ To create the Choreo service, follow the procedure below:
         
         Then click **Save**.
     
-8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
+8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low code diagram.
 
     ![Add Respond Statement](/en/assets/img/services/add-respond-statement.png)
     
-    In the **Respond** form that appears, enter the following as the respond expression.
+    In the **Respond Expression** field, enter `response`, and then click **Save**.
 
-    ```ballerina
-    response
-    ```
-    
-    ![Respond Expression](/en/assets/img/services/respond-expression.png)
     
 Now you have completed designing your Choreo application. It looks as follows.
 
