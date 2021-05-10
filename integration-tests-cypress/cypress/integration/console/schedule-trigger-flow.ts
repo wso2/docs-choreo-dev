@@ -20,7 +20,7 @@ describe('Schedule trigger test run and deployment', () => {
     let appName: string
 
     before(() => {
-        cy.log("Logging into Choreo using google")
+        cy.log("Login into Choreo using google")
         cy.userLoginWithGmail()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
