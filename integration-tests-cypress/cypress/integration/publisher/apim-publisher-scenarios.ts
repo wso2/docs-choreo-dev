@@ -20,7 +20,7 @@ describe('Choreo APIM publisher scenarios', () => {
     it('Creating and publishing an API from open API specification', () => {
         const filepath = 'publisher/generation_oas.yaml';
         cy.log("Starting API Creation using open API specification");
-        cy.get('[href="/apis/"]').click();
+        cy.navigateFromHomePage("apis");
         cy.get('[data-testid="create-api-btn"]').click({ force: true });
         cy.wait(3000);
         cy.get('[data-testid="upload-open-api-definition"]').click();
@@ -78,5 +78,9 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('[data-testid="delete-api"]').click();
         cy.url().should('not.include', '/develop/overview/');
         cy.log('API deleted successfully');
+    });
+
+    afterEach(() => {
+        cy.userLogout();
     });
 });
