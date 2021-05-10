@@ -36,3 +36,6 @@ build
 # Ballerina
 .ballerina
 target
+
+# Choreo
+.choreoproject
