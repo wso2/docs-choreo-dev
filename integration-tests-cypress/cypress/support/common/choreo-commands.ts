@@ -11,14 +11,7 @@
  * associated services.
  */
 
-import { 
-    normalizeText, 
-    marketplaceText, 
-    integrationsText, 
-    servicesText, 
-    APIsText, 
-    devOpsText 
-} from './choreo-utils';
+import { normalizeText, marketplaceText, integrationsText, servicesText, APIsText, devOpsText } from './choreo-utils';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
