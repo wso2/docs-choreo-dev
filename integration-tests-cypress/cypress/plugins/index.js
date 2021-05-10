@@ -30,9 +30,9 @@ module.exports = (on, config) => {
 // put all cy.log() messages to console output
 module.exports = on => {
   on('task', {
-    log (message) {
+    log(message) {
       console.log(message);
-      return null
+      return null;
     }
   });
 };
