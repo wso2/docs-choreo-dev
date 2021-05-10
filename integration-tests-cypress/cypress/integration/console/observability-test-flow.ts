@@ -24,14 +24,14 @@ describe('Observability tests', () => {
     let version: string
 
     before(() => {
-        cy.log("Login into Choreo using Google")
+        cy.log("Login into Choreo")
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
 
         appName = generateAppName("app");
-        cy.log('app name: ', appName);
+        cy.log('App name: ', appName);
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
 
@@ -75,7 +75,6 @@ describe('Observability tests', () => {
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
         cy.userLogout();
     })
@@ -89,20 +88,19 @@ describe('Observability tests', () => {
         cy.get('[data-testid="panel-Logs-btn"]').should('be.visible');
         cy.get('[data-testid="panel-Logs-btn"]').click();
 
-        cy.log('asseting mandatory log entry without any filter');
+        cy.log('Asserting mandatory log entry without any filter');
         cy.contains('[data-testid="log-panel"]', defaultLogEntry, {timeout: 600000}).should('exist');
 
-        cy.log('asseting mandatory log entry by providing a search phrase');
+        cy.log('Asserting mandatory log entry by providing a search phrase');
         cy.get('[data-testid="log-search"]').type(logEntryToBeSearched);
         cy.get('[data-testid="log-search-btn"]').click();
         cy.contains('[data-testid="log-panel"]', logEntryToBeSearched, {timeout: 600000}).should('exist');
         cy.contains('[data-testid="log-panel"]', defaultLogEntry, {timeout: 600000}).should('not.exist');
 
-        cy.log('asseting log download');
+        cy.log('Asserting log download');
         cy.get('[data-testid="log-search"]').click().clear().type("ballerina");
         cy.get('[data-testid="log-search-btn"]').click();
         cy.contains('[data-testid="log-panel"]', systemLogEntry, {timeout: 600000}).should('exist');
-        cy.contains('button', 'Download').click();
         cy.get('[data-testid="log-download-btn"]').click();
         cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
     })
