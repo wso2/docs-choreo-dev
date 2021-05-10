@@ -36,16 +36,16 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
 Cypress.Commands.add('createNewApp', (type:string, name: string) => {
     cy.get('[id="backdrop-loader"').should('not.exist');
 
-    if(type == "integration"){
+    if (type == "integration") {
         cy.get('[href="/integrations"]').click();
-    } else if(type == "service"){
+    } else if (type == "service") {
         cy.get('[href="/services"]').click();
     }
     cy.log("Page loaded successfully");
-    if(type == "integration"){
+    if (type == "integration") {
         cy.get('[href="/integrations"]').click();
         cy.log("Integrations page loaded successfully");
-    } else if(type == "service"){
+    } else if (type == "service") {
         cy.get('[href="/services"]').click();
         cy.log("Services page loaded successfully");
     }

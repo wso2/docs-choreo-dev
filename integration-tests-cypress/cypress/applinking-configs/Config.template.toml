@@ -3,4 +3,4 @@ enabled=true
 provider="choreo"
 
 [ballerinax.choreo]
-reporterHostname="periscope.dv.choreo.dev"
+reporterHostname="<REPORTER_HOST_NAME>"

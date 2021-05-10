@@ -27,10 +27,10 @@ describe('anonymous-app-linking', () => {
     });
 
     it('linking-app', () => {
-        let env = Cypress.env("choreoEnv");
+        let reporterHostName = Cypress.env("reporterHostName");
         const appName = generateAppName("anon");
         cy.log("Start running in anonymous mode");
-        cy.exec(`export CHOREO_ENV=${env} && ./cypress/applinking-configs/run_annonapp.sh`).then(result => {
+        cy.exec(`export REPORTER_HOST_NAME=${reporterHostName} && ./cypress/applinking-configs/run_annonapp.sh`).then(result => {
             const obsUrl = /visit (http[^\s]+)/i.exec(result.stdout)[1].replace('http://','https://');
             cy.log("Retrieved Observability URL for the anonymous app: " + obsUrl);
             cy.visit(obsUrl);
