@@ -487,7 +487,7 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
         })
         cy.get('.MuiInputBase-input.MuiInput-input').eq(1).click().clear().type("1");
         cy.contains('button', 'Save').click();
-    }else{
+    } else {
         cy.get('#deploy-button').should('exist');
         cy.get('#deploy-button').click();
     }

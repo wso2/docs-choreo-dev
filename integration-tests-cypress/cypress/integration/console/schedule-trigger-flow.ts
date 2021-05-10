@@ -21,32 +21,20 @@ describe('Schedule trigger test run and deployment', () => {
 
     before(() => {
         cy.log("Login into Choreo using google")
-        cy.userLoginWithGmail()
+        cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
     })
 
     beforeEach(() => {
-        savedCookies.map((cookie) => {
-            cy.setCookie(cookie.name, cookie.value, {
-                domain: cookie.domain,
-                expiry: cookie.expires,
-                httpOnly: cookie.httpOnly,
-                path: cookie.path,
-                secure: cookie.secure
-            })
-
-            Cypress.Cookies.defaults({
-                preserve: cookie.name
-            })
-        })
+        cy.preserveCookiesForTest(savedCookies);
     })
 
     it('create schedule trigger integration app', () => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
-        cy.log('app name: ', appName);
+        cy.log('Generated application name: ', appName);
         cy.createNewApp("integration", appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Schedule");
@@ -64,7 +52,7 @@ describe('Schedule trigger test run and deployment', () => {
 
     it('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
-        cy.log('Waiting 1 minute before checking whether the scheduler rand');
+        cy.log('Waiting 1 minute before checking whether the scheduler ran');
         cy.wait(60000);
         cy.contains('button', 'Run & Test').click();
         cy.contains('button', 'Go Live').click();
