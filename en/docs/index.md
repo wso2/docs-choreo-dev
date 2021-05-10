@@ -16,7 +16,7 @@
        <div class="row">
           <div class="col-sm-12 col-md-4 col-lg-4">
           <div class="cIconContainer">
-          <img src="../assets/img/home/integrations.svg"/>
+          <img src="assets/img/home/integrations.svg"/>
 	  <BR><BR><BR>
           <h3>Build Integrations</h3>
            <a href="integrations/build-your-first-integration/">Learn More</a>
@@ -24,7 +24,7 @@
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
            <div class="cIconContainer">
-          <img style= "height: 115px;" src="../assets/img/home/services.svg"/>
+          <img style= "height: 115px;" src="assets/img/home/services.svg"/>
          <BR><BR><BR>
           <h3>Create Services</h3>
            <a href="services/create-your-first-service/">Learn More</a>
@@ -32,7 +32,7 @@
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
            <div class="cIconContainer">
-          <img style= "height: 120px;" src="../assets/img/home/api.svg"/>
+          <img style= "height: 120px;" src="assets/img/home/api.svg"/>
 	  <BR><BR><BR>	
           <h3>Manage APIs</h3>
            <a href="apis/create-and-publish-your-first-api/">Learn More</a>
