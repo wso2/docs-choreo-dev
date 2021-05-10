@@ -22,3 +22,6 @@ import './console/console-login-commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Overwrite log command to use task to put all cy.log() messages to console output
+Cypress.Commands.overwrite('log', (subject, message) => cy.task('log', message));

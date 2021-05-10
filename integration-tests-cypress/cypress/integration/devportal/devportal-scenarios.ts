@@ -12,10 +12,10 @@ describe('Devportal', () => {
     });
 
     it('Adding and deleting comment for the API', () => {
-        cy.get('button').contains('Add comment').click({force: true});
+        cy.get('button').contains('Add comment').click({ force: true });
         cy.log('Opened the comment box');
         cy.get('[name="newComment"]').type('Test comment from Cypress Test Runner');
-        cy.get('[type="submit"]').contains('Add Comment').click({force: true});
+        cy.get('[type="submit"]').contains('Add Comment').click({ force: true });
         cy.wait(2000);
         cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (1)");
         cy.get('[data-testid=txt-no-comments]').should('not.exist');
@@ -23,9 +23,9 @@ describe('Devportal', () => {
 
         cy.log('Deleting the comment');
         cy.get('table > tbody > tr:first').within(() => {
-            cy.get('[data-testid="btn-delete-comment"]').click({force: true});
+            cy.get('[data-testid="btn-delete-comment"]').click({ force: true });
         });
-        cy.get('[class="MuiPopover-root"]').get('button').contains('Yes').click({force: true});
+        cy.get('[class="MuiPopover-root"]').get('button').contains('Yes').click({ force: true });
         cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (0)");
         cy.get('[data-testid=txt-no-comments]').should('exist');
         cy.log('Successfully deleted the comment');
@@ -35,28 +35,28 @@ describe('Devportal', () => {
         cy.log('Opening the rating box');
         cy.get('[class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-4"]').within(() => {
             cy.get('button')
-            .first()
-            .click();
+                .first()
+                .click();
         })
 
         cy.log('Adding 4 star rating');
         cy.get('[for="hover-feedback-4"]').trigger('focus');
         cy.wait(3000);
-        cy.get('[for="hover-feedback-4"]').click({force: true});
+        cy.get('[for="hover-feedback-4"]').click({ force: true });
         cy.wait(3000);
-        cy.get('[class="MuiPopover-root"]').click({force: true});
+        cy.get('[class="MuiPopover-root"]').click({ force: true });
         cy.log('Added 4 star');
 
         cy.log('Changing 4 star rating to 3 star');
         cy.get('[for="hover-feedback-3"]').trigger('focus');
         cy.wait(3000)
-        cy.get('[for="hover-feedback-3"]').click({force: true});
+        cy.get('[for="hover-feedback-3"]').click({ force: true });
         cy.wait(3000);
-        cy.get('[class="MuiPopover-root"]').click({force: true});
+        cy.get('[class="MuiPopover-root"]').click({ force: true });
         cy.log('Changed the rate to 3 stars');
     })
 
-    it('Credentials & Tryout', () => {
+    it('Generate credentials and tryout the API', () => {
         cy.log("Navigating to credentials tab");
         cy.wait(5000);
         cy.get('[data-testid="credentials-item-link"]').click();
@@ -64,7 +64,7 @@ describe('Devportal', () => {
         cy.log("Successfully navigated to credentials tab");
 
         cy.log("Generating credentials")
-        cy.get('.MuiSelect-root').click({force: true});
+        cy.get('.MuiSelect-root').click({ force: true });
         cy.get('.MuiList-root > [tabindex="0"]').click()
         cy.get('[data-testid="generate-creds-btn"]').click();
         cy.wait(6000);
@@ -90,8 +90,11 @@ describe('Devportal', () => {
         cy.wait(4000);
         cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
         cy.log("Successfully invoked the API");
+    });
 
+    it('Remove generated credentials', () => {
         cy.log("Navigating to Credentials tab to remove credentials");
+        cy.wait(5000);
         cy.get('[data-testid="credentials-item-link"]').click();
         cy.url().should('include', '/credentials');
         cy.get('[data-testid="remove-creds-btn"]').click();
@@ -108,7 +111,7 @@ describe('Devportal', () => {
         cy.get('[data-testid="create-application-btn"]').click();
         cy.get('[data-testid="app-name"]').type(appName);
         cy.get('[data-testid="application-description"]').type('Application for e2e testing');
-        cy.get('[data-testid="create-button"]').click({ force : true });
+        cy.get('[data-testid="create-button"]').click({ force: true });
 
         cy.get('[data-testid="application-description"]').should('have.text', 'Application for e2e testing');
         cy.get('[data-testid="application-throttling-policy"]').should('have.text',
@@ -159,8 +162,8 @@ describe('Devportal', () => {
     it('Delete a consumer application', () => {
         cy.get('[data-testid="applications-appbar-btn"]').click();
         cy.findByText(appName).trigger('mouseover');
-        cy.findByRole('button', {  name: /delete/i});
-        cy.findByRole('button', {  name: /delete/i}).click();
+        cy.findByRole('button', { name: /delete/i });
+        cy.findByRole('button', { name: /delete/i }).click();
         cy.get('[data-testid="delete-dialog-ok-button"]').click();
     });
 });
