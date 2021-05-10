@@ -1,6 +1,6 @@
-# Choreo Expression Syntax
+# Ballerina Expression Syntax
 
-Choreo expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you the common expressions that you can use while developing Choreo applications.
+Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you the common expressions that you can use while developing Choreo applications.
 
 ## Supported Literals 
 
@@ -310,7 +310,7 @@ A typical HTTP request contains many headers. Some of these headers are standard
   req.getHeader("Access-Control-Allow-Origin")
   
   ```
-- Using a value stored in a variable as the header name. Please note the omission of the double quotes.
+- Using a value stored in a variable as the header name. Note the omission of the double quotes.
 
   ```ballerina
   req.getHeader(headerName)
@@ -326,7 +326,7 @@ Applications sometimes need to check the availability of a header before proceed
   ```ballerina
   req.hasHeader("content-length")
   ```
-- Using a value stored in a variable as the query parameter name. Please note the omission of the double quotes.
+- Using a value stored in a variable as the query parameter name. Note the omission of the double quotes.
 
   ```ballerina
   req.hasHeader(myCustomeHeader)

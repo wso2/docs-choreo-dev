@@ -60,7 +60,7 @@ nav:
     - Observability:
           Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
     - Reference:
-          Choreo Expression Syntax: references/choreo-expression-syntax.md
+          Ballerina Expression Syntax: references/ballerina-expression-syntax.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
@@ -93,7 +93,9 @@ markdown_extensions:
 plugins:
     - search
     - markdownextradata: {}
-    # Extra
+    - redirects:
+         redirect_maps:
+            'references/choreo-expression-syntax.md': 'references/ballerina-expression-syntax.md'
 extra_css:
     - assets/lib/highlightjs/default.min.css
     - assets/css/theme.css
