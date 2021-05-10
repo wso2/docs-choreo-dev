@@ -31,6 +31,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
 
     after(() => {
         cy.goBacktoAppsList();
+        cy.undeployApp("integration", appName, true);
         cy.deleteApp("integration", appName, true);
         cy.userLogout();
     }),
