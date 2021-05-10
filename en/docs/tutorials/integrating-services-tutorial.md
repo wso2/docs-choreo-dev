@@ -206,7 +206,7 @@ To create this service, follow the procedure below:
         
             ![Custom Statement](/assets/img/tutorials/inventory-service-add-custom-statement-2.png)
             
-        2. Click **Custom**.
+        2. Click **Other**.
                    
         3. Enter the following in the **Statement** field.
         
@@ -225,15 +225,23 @@ To create this service, follow the procedure below:
 
     1. Click the last **+** icon in the diagram of your low code view, and then click **+** again.
     
+        ![If Statement](/assets/img/tutorials/inventory-service-add-if-statement.png)
+    
     2. Click **If**.
     
     3. In the **Condition** field, enter `index > 0`.
     
+        [If Statement](/assets/img/tutorials/inventory-service-if-statement.png)
+    
         Then click **Save**.
         
-    4. To add a custom statement, click the **+** icon below the `if` statement you added, and then click **+** again. Then click **Custom**.
+    4. To add a custom statement, click the **+** icon below the `if` statement you added, and then click **+** again. 
     
-        In the **Statement** field, enter the following.
+        ![Custom Statement](/assets/img/tutorials/inventory-service-add-custom-statement-3.png)
+        
+        Then click **Custom**. In the **Statement** field, enter the following.
+        
+        ![Custom Statement](/assets/img/tutorials/inventory-service-custom-statement-3.png)
         
         ```
         string cellName = "C" + index.toString();
@@ -242,9 +250,17 @@ To create this service, follow the procedure below:
         int intCellValue = checkpanic 'int:fromString(cellValue.toJsonString());
         ```
        
-    5. Click the **+** icon below the `custom` statement you added, and then click **+** again. Then click **if** to add another `if` statement as follows:
+    5. Add another `if` statement as follows:
     
-        1. In the **Condition** field, enter the following condition.
+        1. Click the **+** icon below the `custom` statement you added, and then click **+** again.
+        
+            ![If Statement](/assets/img/tutorials/inventory-service-add-if-statement-2.png)
+        
+        2. Click **If** .
+    
+        3. In the **Condition** field, enter the following condition.
+        
+            ![If Statement](/assets/img/tutorials/inventory-service-if-statement-2.png)
         
             ```
             intCellValue > quantity
@@ -252,13 +268,17 @@ To create this service, follow the procedure below:
        
             Then click **Save**.
        
-        2. Add a custom statement as follows:
+        4. Add a custom statement as follows:
         
             1. Click the **+** icon below the `if` statement you added, and then click **+** again.
             
-            2. Click **Custom**.
+                ![Custom Statement](/assets/img/tutorials/inventory-service-add-custom-statement-4.png)
+           
+            2. Click **Other**.
             
             3. In the **Statement** field, enter the following:
+            
+                ![Custom Statement](/assets/img/tutorials/inventory-service-custom-statement-4.png)
             
                 ```
                 int newStockValue = intCellValue - quantity;
@@ -272,9 +292,13 @@ To create this service, follow the procedure below:
 
     1. Click the last **+** icon in the diagram. Then click **+** again.
     
+        ![Respond Statement](/assets/img/tutorials/inventory-service-add-respond-statement.png)
+    
     2. Click **Respond**.
     
     3. In the **Respond Expression** field, enter `respondMessages`. 
+    
+        ![Respond Statement](/assets/img/tutorials/inventory-service-respond-statement.png)
     
     4. Click **Save**.
 
@@ -369,7 +393,7 @@ First, let's create a service that captures the online orders as follows:
         
             ![Add Custom statement to If statement 1](/assets/img/tutorials/order-service-add-custom-statement-to-if-statement-1.png)
     
-        2. Click **Custom Statement**
+        2. Click **Other**
     
         3. In the **Statement** field, enter `count = check int:fromString(queryParams.get("count")[0]);`.
         
@@ -396,7 +420,7 @@ First, let's create a service that captures the online orders as follows:
     
         ![Add Custom statement to If statement 2](/assets/img/tutorials/order-service-add-custom-statement-for-if-statement-2.png)
     
-    5. Click **Custom Statement**
+    5. Click **Other Statement**
     
     6. Enter `item = queryParams.get("item")[0];` as the statement and click **Save**.
     
