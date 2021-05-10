@@ -1,4 +1,4 @@
-# Concepts
+# API Concepts
 Before you start managing APIs via Choreo, there are basic concepts that you need to understand. This section walks you through all the concepts you need to know. 
  
 ## API

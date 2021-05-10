@@ -1,4 +1,4 @@
-# Concepts
+# Service Concepts
 
 Before you start creating services with Choreo, there are basic concepts that you need to understand. This section walks you through all the service concepts you need to know.
  
@@ -43,4 +43,4 @@ Choreo supports the following statements:
  - **Custom**: Allows you to specify a custom statement depending on your requirement.
 
 ## Expression Syntax
-The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](/references/choreo-expression-syntax)
+The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)
