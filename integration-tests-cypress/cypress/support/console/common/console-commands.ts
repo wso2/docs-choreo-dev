@@ -463,19 +463,15 @@ Cypress.Commands.add('deleteAppWithoutUndeploy', (type:string, name: string, str
                 if (strict) {
                     cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', name);
                 }
-                if(deleteWithoutUndeploy){
-                    cy.get('[style="color: inherit; width: 35%; box-sizing: border-box; font-size: 1rem; font-family: inherit; font-weight: inherit;"]').trigger('mouseover');
-                    // cy.contains("Undeploy the app to delete").should('exist');
-                    cy.get('[data-testid="delete-btn"]').parent().invoke('text').then((deleteText) => {
-                            // expect(deleteText).to.equal('Undeploy the app to delete')
-                            cy.contains('Undeploy the app to delete').should('exist');
-                    })
-                    cy.log("Cannot delete a deployed app");
-                }
                 
-            }
-
-         
+                cy.get('[style="color: inherit; width: 35%; box-sizing: border-box; font-size: 1rem; font-family: inherit; font-weight: inherit;"]').trigger('mouseover');
+                // cy.contains("Undeploy the app to delete").should('exist');
+                cy.get('[data-testid="delete-btn"]').parent().invoke('text').then((deleteText) => {
+                        // expect(deleteText).to.equal('Undeploy the app to delete')
+                        cy.contains('Undeploy the app to delete').should('exist');
+                })
+                cy.log("Cannot delete a deployed app");
+            } 
         }
     })
 }),
