@@ -94,6 +94,7 @@ describe('Devportal', () => {
 
     it('Remove generated credentials', () => {
         cy.log("Navigating to Credentials tab to remove credentials");
+        cy.wait(5000);
         cy.get('[data-testid="credentials-item-link"]').click();
         cy.url().should('include', '/credentials');
         cy.get('[data-testid="remove-creds-btn"]').click();
