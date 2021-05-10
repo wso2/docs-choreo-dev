@@ -115,9 +115,11 @@ describe('Devportal', () => {
             '10PerMin (Allows 10 request per minute)');
         cy.get('[data-testid="application-token-type"]').should('have.text', 'JWT');
         cy.log('Application created successfully!');
+        cy.wait(2000);
 
         // Create OAuth tokens and API Key
         cy.get('[data-testid="oauth-key"]').click();
+        cy.wait(2000);
         cy.get('[data-testid="generate-token-btn"]').should('not.exist');
         cy.get('[data-testid="generate-oauth-key"]').click();
         cy.get('[data-testid="generate-token-btn"]').should('exist');
@@ -131,6 +133,7 @@ describe('Devportal', () => {
         // Add an API to the application
         cy.get('[data-testid="subscriptions"]').click();
         cy.get('[data-testid="create-subscription-btn"]').click();
+        cy.wait(2000);
         cy.get('[data-testid="add-api-' + apiName + '"]').click();
         cy.get('[data-testid="subscription-dialog-close-btn"]').click();
         cy.log('Subscribed to the API successfully');
@@ -143,10 +146,13 @@ describe('Devportal', () => {
         cy.findByRole('option', { name: appName }).click();
         cy.get('[data-testid="get-test-key-btn"]').should('not.be.disabled');
         cy.get('[data-testid="get-test-key-btn"]').click();
-        cy.get('[class="opblock-summary opblock-summary-get"]').click();
+        cy.wait(4000);
+        cy.log("Invoking the API");
+        cy.get('.opblock-summary').click();
         cy.get('.btn').click();
-        cy.get('.execute').click();
-        cy.get('[class="response-col_status"]').should('have.text', 200);
+        cy.get('.execute-wrapper > .btn').click();
+        cy.wait(4000);
+        cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
         cy.log('API Tryout was successful!');
     });
 
