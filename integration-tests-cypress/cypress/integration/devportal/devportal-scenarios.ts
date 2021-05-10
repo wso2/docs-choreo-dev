@@ -108,6 +108,7 @@ describe('Devportal', () => {
         cy.get('[data-testid="applications-appbar-btn"]').click();
 
         // Create application
+        cy.wait(3000);
         cy.get('[data-testid="create-application-btn"]').click();
         cy.get('[data-testid="app-name"]').type(appName);
         cy.get('[data-testid="application-description"]').type('Application for e2e testing');
