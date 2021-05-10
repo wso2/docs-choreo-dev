@@ -1,0 +1,6 @@
+[ballerina.observe]
+enabled=true
+provider="choreo"
+
+[ballerinax.choreo]
+reporterHostname="<REPORTER_HOST_NAME>"
