@@ -8,22 +8,27 @@ declare namespace Cypress {
         userLoginWithGmail(): Chainable<Element>
         userLoginWithGithub(): Chainable<Element>
         userLogout(): Chainable<Element>
+        preserveCookiesForTest(cookies:Cookie[]): Chainable<Element>
         waitTillWorkSpace(): Chainable<Element>
-        createNewApp(name: string): Chainable<Element>
+        createNewApp(type: string, name: string): Chainable<Element>
         checkSourceCodeForValidation(sourceLines: string): Chainable<Element>
-        selectAPITrigger(method: string, relativePath?: string): Chainable<Element>
-        selectTrigger(type: string, relativePath?: string, method?: string): Chainable<Element>
-        selectStatementOption(option: string): Chainable<Element>
+        configureResource(relativePath?: string, method?: string): Chainable<Element>
+        selectTrigger(type: string): Chainable<Element>
+        selectManualTrigger(): Chainable<Element>
+        selectManualTriggerOptions(type: string, option:string): Chainable<Element>
+        selectSpecificOption(option: string): Chainable<Element>
         typeOnNthExpressionEditor(n: number, expression: string, withinQuotes: boolean, waitForEnable?: string): Chainable<Element>
-        createProperty(type: string, name: string, expression: string): Chainable<Element>
+        createVariableProperty(type: string, name: string, expression: string): Chainable<Element>
+        createLogProperty(type: string, expression: string): Chainable<Element>
         goBacktoAppsList(): Chainable<Element>
         searchApps(name: string): Chainable<Element>
         resetAppSearch(): Chainable<Element>
-        undeployApp(ame: string, strict: boolean): Chainable<Element>
-        deleteApp(name: string, strict: boolean): Chainable<Element>
+        undeployApp(type:string, name: string, strict: boolean): Chainable<Element>
+        deleteApp(type:string, name: string, strict: boolean): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>
-        deployToChoreo(appName: string): Chainable<Element>
+        deployToChoreo(type:string, appName: string): Chainable<Element>
+        testRunApp(): Chainable<Element>
     }
-  }
+}

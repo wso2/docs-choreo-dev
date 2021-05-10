@@ -1,14 +1,35 @@
 import { normalizeText } from './choreo-utils';
 
+Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
+    cookies.map((cookie) => {
+        cy.setCookie(cookie.name, cookie.value, {
+            domain: cookie.domain,
+            expiry: cookie.expires,
+            httpOnly: cookie.httpOnly,
+            path: cookie.path,
+            secure: cookie.secure
+        })
+
+        Cypress.Cookies.defaults({
+            preserve: cookie.name
+        })
+    })
+})
+
 Cypress.Commands.add('waitTillWorkSpace', () => {
     cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
 }),
 
-Cypress.Commands.add('createNewApp', (name: string) => {
+Cypress.Commands.add('createNewApp', (type: string, name: string) => {
     cy.get('[id="backdrop-loader"').should('not.exist');
 
-    cy.get('[href="/services"]').click();
-    cy.log("Page loaded successfully");
+    if(type == "integration"){
+        cy.get('[href="/integrations"]').click();
+        cy.log("Integrations page loaded successfully");
+    } else if(type == "service"){
+        cy.get('[href="/services"]').click();
+        cy.log("Services page loaded successfully");
+    }
 
     cy.log("Creating a new application with name : ", name);
     cy.contains('button', 'Create').click();
@@ -35,47 +56,73 @@ Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
     cy.get('[data-testid="vertical-close-btn"]').click();
 }),
 
-Cypress.Commands.add('selectAPITrigger', (method: string, relativePath?: string) => {
+Cypress.Commands.add('configureResource', (relativePath?: string, method?: string) => {
+    if (!method) {
+        method = "GET";
+    }
     const code = 'import ballerina/http; service / on new http:Listener(8090) { resource function ' + method.toLowerCase() + ' ' + relativePath + '(http:Caller caller, http:Request request) returns error? { }} '
+    cy.log("Started resource configuration");
     cy.waitTillWorkSpace();
     cy.contains('button', method).click();
     cy.get('[data-testid="api-path"]').type(relativePath);
     cy.get('[data-testid="save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.checkSourceCodeForValidation(code);
-    cy.log("selected API trigger");
+    cy.log("Configured resource successfully");
 }),
 
 /**
  * Selects the Application trigger
  *
- * @param type - Trigger type ("Manual", "Webhook")
- * @param [relativePath] - Relative Path to be used with Webhook Trigger
- * @param [method] - Method type ("GET", "PUT", "DELETE", "POST")
- *
+ * @param type - Trigger type ("Manual", "Schedule", "Calender", "Github", "Salesforce")
  */
-Cypress.Commands.add('selectTrigger', (type: string, relativePath?: string, method?: string) => {
-    const webhookSourceFields = ['import ballerina/http;', 'service / on new http:Listener(8090) {',`resource function get ${relativePath}(http:Caller caller, http:Request request) returns error? {` ]
+Cypress.Commands.add('selectTrigger', (type: string) => {
     cy.waitTillWorkSpace();
     switch (type) {
         case "Manual":
-            // to be implemented
+            cy.selectManualTrigger();
             break;
-        case "API":
-            if (!method) {
-                method = "GET";
-            }
-            cy.selectAPITrigger(method, relativePath);
+        case "Schedule":
+            // To be implemented
             break;
-
     }
     cy.log("selected " + type + "trigger type");
 }),
 
-Cypress.Commands.add('selectStatementOption', (option: string) => {
+Cypress.Commands.add('selectManualTrigger', () => {
+    const code = `public function main() returns error? { }`;
+    cy.waitTillWorkSpace();
+    cy.get('.trigger-wrapper').contains('Manual').click();
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.checkSourceCodeForValidation(code);
+    cy.log("selected Manual trigger");
+}),
+
+/**
+ * Selects the Manual Trigger Options
+ *
+ * @param type - Manual trigger category ("Statements", "Connections")
+ * @param option - Option under corresponding trigger type
+ */
+Cypress.Commands.add('selectManualTriggerOptions', (type: string, option:string) => {
+    cy.get('body').then($body => {
+        let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
+        if (!statementOptionsAvailable) {
+            cy.get('[id="SmallPlus"]').eq(0).click();
+        }
+        if(type == 'Statements'){
+            cy.get('[data-testid="statement-options"]').click();
+            cy.log('Selected statement category');
+        } else if(type == 'Connections'){
+            cy.get('[data-testid="api-options"]').click();
+            cy.log('Selected connections category');
+        }
+        cy.selectSpecificOption(option);
+    })
+}),
+
+Cypress.Commands.add('selectSpecificOption', (option: string) => {
     cy.log('Selecting ' + option + ' option from options panel');
-    cy.get('[data-testid="statement-options"]').click();
-    cy.log('Selected statement options tab');
     cy.get('[data-testid="' + option + '"]').click({force: true});
     cy.log('Selected option: ', option);
 }),
@@ -86,7 +133,7 @@ Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string
         expressionToType = `\"${expression}\"`
     }
 
-    cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{selectall}{backspace}' + expressionToType);
+    cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{backspace}{backspace}' + expressionToType);
 
     if (waitForEnable) {
         cy.get('[data-testid="' + waitForEnable + '"').should('not.have.attr', 'disabled');
@@ -95,45 +142,53 @@ Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string
     cy.get('body').type('{esc}', {force: true});
 }),
 
-Cypress.Commands.add('createProperty', (type: string, name: string, expression: string) => {
+Cypress.Commands.add('createVariableProperty', (type: string, name: string, expression: string) => {
     const variableSourceFields = type + ' ' + name + ' = ' + expression + ";";
-    cy.log('Creating the variable with expression : ', expression);
-
-    cy.get('body').then($body => {
-        let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
-        if (!statementOptionsAvailable) {
-            cy.get('[id="SmallPlus"]').eq(0).click();
-            cy.get('[id=Plus_a]').eq(0).click({force: true});
+    cy.log('Creating the variable with expression : '+ expression);
+    cy.get('[data-testid="undefinedvar"]').invoke('text').then((availableText) => {
+        if (!(availableText == type)) {
+            cy.get('[data-testid="undefinedvar"]').click();
+            cy.contains(type).click();
         }
-        cy.selectStatementOption("addVariable");
-
-        cy.log('Creating variable: selected variable option');
-        cy.get('[data-testid="undefinedvar"]').invoke('text').then((availableText) => {
-            if (!(availableText == type)) {
-                cy.get('[data-testid="undefinedvar"]').click();
-                cy.contains(type).click();
-            }
-        })
-
-        cy.log('Creating variable: selected variable type');
-        cy.get('[value="variable"]').click().clear().type(name);
-
-        cy.log('Creating variable: added variable name');
-        cy.typeOnNthExpressionEditor(0, expression, false, "save-btn");
-
-        cy.log("Creating variable: added variable expression");
-        cy.get('[data-testid="save-btn"]').click();
-        cy.get('[data-testid="diagram-loader"]').should('not.exist');
-        cy.checkSourceCodeForValidation(variableSourceFields);
-
-        cy.log('Successfully created the variable with expression : ', expression);
     })
+
+    cy.log('Creating variable: selected variable type');
+    cy.get('[value="variable"]').click().clear().type(name);
+
+    cy.log('Creating variable: added variable name');
+    cy.typeOnNthExpressionEditor(0, expression, false, "save-btn");
+
+    cy.log("Creating variable: added variable expression");
+    cy.get('[data-testid="save-btn"]').click();
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.checkSourceCodeForValidation(variableSourceFields);
+
+    cy.log('Successfully created the variable with expression : ', expression);
+}),
+
+Cypress.Commands.add('createLogProperty', (type: string, expression: string) => {
+    const variableSourceFields = "log:print(\"" + expression + "\");";
+    cy.log('Creating the log with expression : '+ expression);
+    cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
+        if (!(availableText == type)) {
+            cy.get('[data-testid="Info"]').click();
+            cy.contains(type).click();
+        }
+    })
+
+    cy.log('Creating log: added log type');
+    cy.typeOnNthExpressionEditor(0, expression, true, "log-save-btn");
+    cy.log("Creating log: added log expression");
+    cy.get('[data-testid="log-save-btn"]').click();
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.checkSourceCodeForValidation(variableSourceFields);
+    cy.log('Successfully created the log with expression : ', expression);
 }),
 
 Cypress.Commands.add('goBacktoAppsList', () => {
     cy.get('[data-testid="app-list-btn"]').click();
     cy.get('[id="backdrop-loader"').should('not.exist');
-    cy.log('Services page loaded successfully');
+    cy.log('App List Page loaded successfully');
 }),
 
 Cypress.Commands.add('searchApps', (name: string) => {
@@ -161,7 +216,9 @@ Cypress.Commands.add('resetAppSearch', () => {
     });
 })
 
-Cypress.Commands.add('undeployApp', (name: string, strict: boolean) => {
+Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean) => {
+    let listTableColumn = 1;
+
     // Check if apps are listed
     cy.get('[id="backdrop-loader"').should('not.exist');
     cy.get('body').then($body => {
@@ -183,8 +240,10 @@ Cypress.Commands.add('undeployApp', (name: string, strict: boolean) => {
                     if (strict) {
                         cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', name);
                     }
-
-                    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(1).invoke('text').then((activeStatus) => {
+                    if (type == 'integration') {
+                        listTableColumn = 2;
+                    }
+                    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(listTableColumn).invoke('text').then((activeStatus) => {
                         if (activeStatus == "Active") {
                             cy.log('Undeploying the application: ', name);
                             cy.get('.MuiTableRow-root.MuiTableRow-hover').click();
@@ -192,12 +251,12 @@ Cypress.Commands.add('undeployApp', (name: string, strict: boolean) => {
                             cy.get('[id="backdrop-loader"').should('not.exist');
                             cy.contains('button', 'Stop').click();
                             cy.contains('Stopping').should('not.exist');
-
+                            cy.wait(30000);
                             cy.goBacktoAppsList();
 
                             if (strict) {
                                 cy.searchApps(name);
-                                cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(1).invoke('text').then((activeStatus) => {
+                                cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(listTableColumn).invoke('text').then((activeStatus) => {
                                     expect(activeStatus).not.to.equal('Active', 'App should be undeployed')
                                 })
                             }
@@ -210,9 +269,9 @@ Cypress.Commands.add('undeployApp', (name: string, strict: boolean) => {
     })
 }),
 
-Cypress.Commands.add('deleteApp', (name: string, strict: boolean) => {
+Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
     // Undeploy the app if active
-    cy.undeployApp(name, strict);
+    cy.undeployApp(type, name, strict);
 
     // Check if apps are listed
     cy.get('[id="backdrop-loader"').should('not.exist');
@@ -267,9 +326,8 @@ Cypress.Commands.add('createRespond', (expression: string, skipSmallPlus?: boole
         let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
         if (!statementOptionsAvailable) {
             cy.get('[id="SmallPlus"]').eq(0).click();
-            cy.get('[id=Plus_a]').eq(0).click({force: true});
         }
-        cy.selectStatementOption('addrespond');
+        cy.selectSpecificOption('addrespond');
 
         cy.typeOnNthExpressionEditor(0, expression, false, "save-btn");
         cy.log('Creating respond: added expression ', expression);
@@ -297,6 +355,12 @@ Cypress.Commands.add('callExternalEndpoint', (URL: string, attempts: number, exp
     }
 }),
 
+Cypress.Commands.add('testRunApp', () => {
+    cy.get('[data-testid="editor-run-btn"]').should('be.visible');
+    cy.get('[data-testid="editor-run-btn"]').click();
+    cy.log('Started test run');
+})
+
 Cypress.Commands.add('switchToDeployView', (appName: string) => {
     cy.get('[data-testid="deploy"]').click();
     cy.get('[id="backdrop-loader"').should('not.exist');
@@ -304,13 +368,13 @@ Cypress.Commands.add('switchToDeployView', (appName: string) => {
     cy.log('Successfully navigated to deploy view');
 })
 
-Cypress.Commands.add('deployToChoreo', (appName: string) => {
+Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
 
     cy.switchToDeployView(appName);
 
     cy.log('Deploying application...');
-    cy.contains('button', 'Deploy').should('exist');
-    cy.contains('button', 'Deploy').click();
+    cy.get('#deploy-button').should('exist');
+    cy.get('#deploy-button').click();
 
     cy.log('Starting initialization phase...');
     cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]').should('exist');
@@ -331,10 +395,12 @@ Cypress.Commands.add('deployToChoreo', (appName: string) => {
     cy.contains(/^Deploy$/).parent().siblings('[src="/images/check.svg"]').should('exist');
     cy.log('Deploy phase successful!');
 
-    cy.log('Starting expose phase...');
-    cy.contains('Expose').parent().siblings('[src="/images/building.svg"]').should('exist');
-    cy.contains('Expose').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
-    cy.get('[src="/images/failed.svg"]').should('not.exist');
-    cy.get('[src="/images/check.svg"]').should('exist');
-    cy.log('Expose phase successful!');
+    if (type == "service") {
+        cy.log('Starting expose phase...');
+        cy.contains('Expose').parent().siblings('[src="/images/building.svg"]').should('exist');
+        cy.contains('Expose').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+        cy.get('[src="/images/failed.svg"]').should('not.exist');
+        cy.get('[src="/images/check.svg"]').should('exist');
+        cy.log('Expose phase successful!');
+    }
 })
