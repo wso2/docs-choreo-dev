@@ -27,13 +27,13 @@ describe('App test run and deployment from scratch', ()=>{
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements","addLog");
         cy.createLogProperty("Info", "Hello World");
-    })
+    }),
 
     after(() => {
         cy.goBacktoAppsList();
         cy.deleteApp("integration", appName, true);
         cy.userLogout();
-    })
+    }),
 
     it('test-run and deploy integration', () => {
         const loadRunTxt = "Running...";
@@ -46,5 +46,5 @@ describe('App test run and deployment from scratch', ()=>{
 
         cy.deployToChoreo("integration", appName);
         cy.get('#tabpanel-1').contains("Successfully deployed").should('exist');
-    })
-})
+    });
+});

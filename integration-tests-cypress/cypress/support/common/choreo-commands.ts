@@ -88,18 +88,40 @@ Cypress.Commands.add('selectTrigger', (type: string) => {
             cy.selectManualTrigger();
             break;
         case "Schedule":
-            // To be implemented
+            cy.selectScheduleTrigger();
             break;
-
+        case "GitHub":
+            cy.selectGitHubTrigger()
+            break;
     }
     cy.log("selected " + type + "trigger type");
 })
 
-Cypress.Commands.add('selectGitHubTrigger', (repoName: string, triggerEventType: string, triggerAction: string) => {
-    cy.log("Configuring the GitHub Trigger");
+/**
+ * Selects the GitHub Trigger Options
+ *
+ */
+Cypress.Commands.add('selectGitHubTrigger', () => {
+    cy.waitTillWorkSpace();
+    cy.log("Selecting the GitHub Trigger");
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.get('.trigger-wrapper').contains('GitHub').should('be.visible').click();
     cy.get('[data-testid="zoom-out-btn"]').click();
+    cy.log("Selected the GitHub trigger");
+}),
+
+/**
+* Configures a GitHub trigger event
+*
+* @param repoName - GitHub repository name to be used
+* @param triggerEventType - Type of event over the repository (Eg:- issue_comment)
+* @param action - Action performed on the event (Eg:- created, modified, deleted)
+*/
+Cypress.Commands.add('configureGitHubTrigger', (repoName: string, triggerEventType: string, triggerAction: string) => {
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.log("Configuring the GitHub trigger");
+
+    // Selecting the manually added GitHub connection (user - testuser-choreo)
     cy.contains('GitHub Connection #1').click();
     cy.get('.MuiAutocomplete-popupIndicator').eq(0).click();
     cy.contains(repoName).click();
@@ -112,22 +134,41 @@ Cypress.Commands.add('selectGitHubTrigger', (repoName: string, triggerEventType:
     cy.log("Completed configuring Github trigger");
 }),
 
-Cypress.Commands.add('configureGmailConnector', (emailAddress: string, action: string, emailSubject: string, emailBody: string) => {
-    cy.log("Configuring the Gmail connector");
-    cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.get('[data-testid="api-options"]').click();
+/**
+ * Setup Gmail Connection (select from existing connection created manually)
+ * Flow happens after the API Call options are displayed in Low code editor
+ */
+Cypress.Commands.add('setupGmailConnection', () => {
+    cy.log("Setting up Gmail connection");
     cy.get('[data-testid="gmail"]').click();
+    // Click on the Gmail connection that is already created manually
     cy.contains('Gmail Connection #1').should('be.visible').click();
     cy.contains('Save').should('exist').click();
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.log("Setup of Gmail connection successful");
+}),
+
+/**
+* Add a Gmail API call to send a message
+* Should be followed by the cypress command setupGmailConnection
+*
+* @param plusBtnIndex - Index of the element plus icon with id `SmallPlus` in the Low code editor
+* @param gmailConnectionIndex - Index of the element representing the Gmail connection with class `existing-connector-name` in the Low code editor
+* @param emailAddress - Email address to be configured to the Gmail connector
+* @param emailSubject - Subject of the Email to be sent
+* @param emailBody - Body of the Email
+*/
+Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionIndex: number, emailAddress: string, emailSubject: string, emailBody: string) => {
+    cy.log("Adding a Gmail connector");
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('[id=SmallPlus]').eq(plusBtnIndex).click({force: true});
+    cy.get('[data-testid="api-options"]').click();
+    cy.get('.existing-connector-details').children().get('.existing-connector-name').eq(gmailConnectionIndex).click();
+    cy.log("Added a Gmail connector");
 
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.get('[id=SmallPlus]').eq(0).click({force: true});
-    cy.get('[data-testid="api-options"]').click();
-    cy.get('.existing-connector-details').children().get('.existing-connector-name').eq(0).click();
-
     cy.get('.MuiAutocomplete-popupIndicator').eq(0).click();
-    cy.contains(action).click();
+    cy.contains("sendMessage").click();
 
     cy.typeOnNthExpressionEditor(1,emailAddress,true);
     cy.typeOnNthExpressionEditor(2,emailSubject,true);
@@ -140,7 +181,7 @@ Cypress.Commands.add('configureGmailConnector', (emailAddress: string, action: s
 
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.waitTillWorkSpace();
-    cy.log("Configured Gmail connector");
+    cy.log("Configuration set to send Gmail message");
 }),
 
 Cypress.Commands.add('selectManualTrigger', () => {
@@ -150,6 +191,24 @@ Cypress.Commands.add('selectManualTrigger', () => {
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.checkSourceCodeForValidation(code);
     cy.log("selected Manual trigger");
+}),
+
+Cypress.Commands.add('selectScheduleTrigger', () => {
+    const code = `public function main() returns error? { }`;
+    cy.waitTillWorkSpace();
+    cy.get('.trigger-wrapper').contains('Schedule').click();
+    cy.get('[data-testid="undefinedMinute"]').invoke('text').then((availableText) => {
+        cy.log("selected Input",availableText);
+        if (availableText != 'Minute') {
+            cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click();
+            cy.get('.MuiListItem-button').contains('Minute').click();
+        }
+    })
+    cy.get('.MuiInputBase-input.MuiInput-input').eq(1).click().clear().type("1");
+    cy.contains('button', 'Save').click();
+    cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.checkSourceCodeForValidation(code);
+    cy.log("selected & configured schedule trigger");
 }),
 
 /**
@@ -294,10 +353,8 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
                     if (strict) {
                         cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', name);
                     }
-                    if (type == 'integration') {
-                        listTableColumn = 2;
-                    }
-                    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(listTableColumn).invoke('text').then((activeStatus) => {
+                    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').get('[data-testid="active-status"]').invoke('text').then((activeStatus) => {
+                        cy.log("status: " + activeStatus);
                         if (activeStatus == "Active") {
                             cy.log('Undeploying the application: ', name);
                             cy.get('.MuiTableRow-root.MuiTableRow-hover').click();
@@ -310,7 +367,7 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
 
                             if (strict) {
                                 cy.searchApps(name);
-                                cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(listTableColumn).invoke('text').then((activeStatus) => {
+                                cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').get('[data-testid="active-status"]').invoke('text').then((activeStatus) => {
                                     expect(activeStatus).not.to.equal('Active', 'App should be undeployed')
                                 })
                             }
@@ -327,9 +384,6 @@ Cypress.Commands.add('cleanupApp', (type:string, name: string, strict: boolean) 
     let appSvcUrl = Cypress.env("appSvcURL");
     let orgName = Cypress.env("selectedOrgHandle");
 
-    if (type != "external"){
-        cy.undeployApp(type, name, strict);
-    }
     cy.log("Cleaning up app: " + name);
     cy.request("DELETE",`${appSvcUrl}/orgs/${orgName}/apps/${name}`).then((resp) => {
         // Status code is expected to be 200
@@ -395,7 +449,6 @@ Cypress.Commands.add('createRespond', (expression: string, skipSmallPlus?: boole
         let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
         if (!statementOptionsAvailable) {
             cy.get('[id="SmallPlus"]').eq(0).click();
-            cy.get('[id=Plus_a]').eq(0).click({force: true});
         }
         cy.selectSpecificOption('addrespond');
 
@@ -443,35 +496,55 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
     cy.switchToDeployView(appName);
 
     cy.log('Deploying application...');
-    cy.get('#deploy-button').should('exist');
-    cy.get('#deploy-button').click();
+    if(type === 'schedule'){
+        cy.contains('button', 'Schedule').click();
+        cy.get('[data-testid="undefinedMinute"]').invoke('text').then((availableText) => {
+            cy.log("selected Input",availableText);
+            if (availableText != 'Minute') {
+                cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click();
+                cy.get('.MuiListItem-button').contains('Minute').click();
+            }
+        })
+        cy.get('.MuiInputBase-input.MuiInput-input').eq(1).click().clear().type("1");
+        cy.contains('button', 'Save').click();
+    } else {
+        cy.get('#deploy-button').should('exist');
+        cy.get('#deploy-button').click();
+    }
 
-    cy.log('Starting initialization phase...');
-    cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]').should('exist');
-    cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
-    cy.get('[src="/images/failed.svg"]').should('not.exist');
-    cy.contains('Initialize').parent().siblings('[src="/images/check.svg"]').should('exist');
-    cy.log('Initialize phase successful!');
-
-    cy.log('Starting build phase...');
-    cy.contains('Build').parent().siblings('[src="/images/building.svg"]').should('exist');
-    cy.contains('Build').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
-    cy.get('[src="/images/failed.svg"]').should('not.exist');
-    cy.contains('Build').parent().siblings('[src="/images/check.svg"]').should('exist');
-    cy.log('Build phase successful!');
-
-    cy.log('Starting deploy phase...');
-    cy.get('[src="/images/failed.svg"]').should('not.exist');
-    cy.contains(/^Deploy$/).parent().siblings('[src="/images/check.svg"]').should('exist');
-    cy.log('Deploy phase successful!');
-
-    if (type == "service") {
-        cy.log('Starting expose phase...');
-        cy.contains('Expose').parent().siblings('[src="/images/building.svg"]').should('exist');
-        cy.contains('Expose').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+    if (type !== "schedule") {
+        cy.log('Starting initialization phase...');
+        cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]').should('exist');
+        cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
         cy.get('[src="/images/failed.svg"]').should('not.exist');
-        cy.get('[src="/images/check.svg"]').should('exist');
-        cy.log('Expose phase successful!');
+        cy.contains('Initialize').parent().siblings('[src="/images/check.svg"]').should('exist');
+        cy.log('Initialize phase successful!');
+
+        cy.log('Starting build phase...');
+        cy.contains('Build').parent().siblings('[src="/images/building.svg"]').should('exist');
+        cy.contains('Build').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+        cy.get('[src="/images/failed.svg"]').should('not.exist');
+        cy.contains('Build').parent().siblings('[src="/images/check.svg"]').should('exist');
+        cy.log('Build phase successful!');
+
+        if (type == "integration") {
+            cy.log('Starting deploy phase...');
+            cy.get('#tabpanel-1').contains("Successfully deployed", {timeout: 60000}).should('exist');
+            cy.log('Deploy phase successful!');
+        } else {
+            cy.log('Starting deploy phase...');
+            cy.contains('Deploy').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+            cy.log('Deploy phase successful!');
+
+            cy.log('Starting expose phase...');
+            cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 60000}).should('exist');
+            cy.log('Expose phase successful!');
+        }
+    }
+
+    if (type == "schedule") {
+        cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 600000}).should('exist');
+        cy.log('Deploy phase successful!');
     }
 }),
 
