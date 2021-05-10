@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { normalizeText } from './choreo-utils';
+import { normalizeText, marketplaceText, integrationsText, servicesText, APIsText, devOpsText } from './choreo-utils';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
@@ -33,22 +33,8 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
     cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
 }),
 
-Cypress.Commands.add('createNewApp', (type:string, name: string) => {
-    cy.get('[id="backdrop-loader"').should('not.exist');
-
-    if (type == "integration") {
-        cy.get('[href="/integrations"]').click();
-    } else if (type == "service") {
-        cy.get('[href="/services"]').click();
-    }
-    cy.log("Page loaded successfully");
-    if (type == "integration") {
-        cy.get('[href="/integrations"]').click();
-        cy.log("Integrations page loaded successfully");
-    } else if (type == "service") {
-        cy.get('[href="/services"]').click();
-        cy.log("Services page loaded successfully");
-    }
+Cypress.Commands.add('createNewApp', (type: string, name: string) => {
+    cy.navigateFromHomePage(type);
 
     cy.log("Creating a new application with name : ", name);
     cy.contains('button', 'Create').click();
@@ -525,5 +511,22 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
     if (type == "schedule") {
         cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 600000}).should('exist');
         cy.log('Deploy phase successful!');
+    }
+}),
+
+/**
+ * Navigate from the home page to a desired page
+ *
+ * @param pageName - page name that needs to be loaded
+ */
+Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
+    const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText];
+    cy.get('[id="backdrop-loader"]').should('not.exist');
+    if (pageNameArray.includes(pageName)) {
+        cy.get('[href="/' + pageName + '"]').click();
+        cy.url().should('include', '/' + pageName);
+        cy.log("Page loaded successfully");
+    } else {
+        cy.log('Page not found');
     }
 })

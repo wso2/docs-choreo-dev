@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateAppName } from '../../support/common/choreo-utils';
+import { generateAppName, integrationsText } from '../../support/common/choreo-utils';
 
 /// <reference types="cypress" />
 
@@ -35,7 +35,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
-        cy.createNewApp("integration", appName);
+        cy.createNewApp(integrationsText, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Schedule");
         cy.createLogProperty("Info", "Hello world");

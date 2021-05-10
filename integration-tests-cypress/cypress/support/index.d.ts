@@ -34,5 +34,6 @@ declare namespace Cypress {
         deployToChoreo(type:string, appName: string): Chainable<Element>
         testRunApp(): Chainable<Element>
         selectScheduleTrigger(): Chainable<Element>
+        navigateFromHomePage(pageName: string): Chainable<Element>
     }
 }
