@@ -10,6 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
 import { generateAppName } from '../../support/common/choreo-utils';
 
 /// <reference types="cypress" />
