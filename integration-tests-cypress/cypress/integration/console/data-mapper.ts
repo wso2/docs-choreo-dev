@@ -1,11 +1,24 @@
-import { generateAppName } from '../../support/common/choreo-utils';
+/*
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+import { generateAppName, servicesText } from '../../support/common/choreo-utils';
 
 /// <reference types="cypress" />
 
 describe('Data Mapper', () => {
     before(() => {
         cy.log("Login into Choreo")
-        cy.consoleUserLogin();
+        cy.consoleUserLogin()
     })
 
     after(() => {
@@ -16,10 +29,10 @@ describe('Data Mapper', () => {
         cy.log("Starting Data Mapper Low code form AI suggestion test...");
         const appName = generateAppName("datamapper");
         const urlName = "url"
-        cy.createNewApp(appName);
+        cy.createNewApp(servicesText, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
-        cy.selectTrigger("API", "test");
-        cy.createProperty("string", urlName, '"https://postman-echo.com/get"');
+        cy.configureResource("test");
+        cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click();
@@ -39,6 +52,6 @@ describe('Data Mapper', () => {
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
         cy.goBacktoAppsList();
-        cy.deleteApp(appName, true);
+        cy.deleteApp("service", appName, true);
     })
 })

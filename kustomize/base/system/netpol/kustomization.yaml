@@ -1,3 +1,2 @@
 resources:
-  - testbase.yaml
   - obsapi.yaml
