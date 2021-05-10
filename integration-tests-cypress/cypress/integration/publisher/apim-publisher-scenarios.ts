@@ -11,9 +11,11 @@
  * associated services.
  */
 
+import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../support/publisher/constants";
+
 describe('Choreo APIM publisher scenarios', () => {
     beforeEach(() => {
-        cy.log("Logging into Choreo using google");
+        cy.log("Login to Choreo using github");
         cy.consoleUserLogin();
     });
 
@@ -28,59 +30,22 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('input[type="file"]').attachFile(filepath);
         cy.get('[id="create-API-from-openAPI-def-btn"]').click();
         cy.get('[id="create-and-publish-api"]').click();
-        cy.url().should('include', '/develop/overview/');
+        cy.url().should('include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
         cy.get('[data-testid="go-to-dev-portal-btn"]').should('exist');
         cy.get('[data-testid="go-to-dev-portal-btn"]').should('not.be.disabled');
         cy.get('[data-testid="overview-item-State"]').should('have.text', 'Published');
         cy.get('[data-testid="overview-item-Business Plans"]').should('have.text', 'Unlimited');
         cy.log('Successfully created API from open API specification');
 
-        cy.get('[data-testid="Endpoint Configuration"]').click();
-        cy.get('[data-testid="api-endpoint"]').type('https://api.carbonintensity.org.uk');
-        cy.get('[data-testid="endpoint-config-save-btn"]').click();
-        cy.get('[id="circular-loader"]').should('not.exist');
-        cy.get('[data-testid="api-endpoint"]').within(() => {
-            cy.findByRole('textbox').should('have.value', 'https://api.carbonintensity.org.uk');
-        });
-        cy.wait(1000);
-        cy.log('Endpoint configuration updated successfully');
-
-        cy.get('[data-testid="Subscriptions"]').click();
-        cy.get('[data-testid="checkbox-Bronze"]').click();
-        cy.get('[data-testid="checkbox-Gold"]').click();
-        cy.get('[data-testid="subscription-save-btn"]').click();
-        cy.get('[id="circular-loader"]').should('not.exist');
-        cy.get('[data-testid="Overview"]').click();
-        cy.get('[data-testid="overview-item-Business Plans"]').should('have.text', 'Bronze, Gold, Unlimited');
-        cy.log('Subscriptions updated successfully');
-
-        cy.get('[data-testid="deployments"]').click();
-        cy.get('[id="revision-point-1"]').should('exist');
-        cy.get('[id="revision-point-2"]').should('not.exist');
-        cy.get('[data-testid="create-deploy-revision-btn"]').click();
-        cy.get('[data-testid="create-deploy-revision-dialog-btn"]').click();
-        cy.get('[id="revision-point-2"]').should('exist');
-        cy.log('Revision created and deployed successfully');
-
-        cy.get('[data-testid="test"]').click();
-        cy.wait(3000);
-        cy.log("Invoking the API");
-        cy.get('.opblock-summary').eq(0).click();
-        cy.get('.btn').click();
-        cy.get('.execute-wrapper > .btn').click();
-        cy.wait(2000);
-        cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
-        cy.log('Invoked th API successfully');
-
-        cy.get('[data-testid="develop"]').click();
-        cy.get('[data-testid="Overview"]').click();
-        cy.get('[data-testid="delete-api-btn"]').click();
-        cy.get('[data-testid="delete-api"]').click();
-        cy.url().should('not.include', '/develop/overview/');
-        cy.log('API deleted successfully');
+        cy.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
+        cy.updateSubscriptionPlans();
+        cy.createAndDeployRevision();
+        cy.testApiInPublisherTestConsole();
+        cy.deleteApiFromOverview();
     });
 
     afterEach(() => {
+        cy.log("Logout from Choreo");
         cy.userLogout();
     });
 });
