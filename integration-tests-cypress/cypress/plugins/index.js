@@ -26,3 +26,13 @@ module.exports = (on, config) => {
     GitHubSocialLogin: GitHubSocialLogin
   })
 }
+
+// put all cy.log() messages to console output
+module.exports = on => {
+  on('task', {
+    log (message) {
+      console.log(message);
+      return null
+    }
+  });
+};
