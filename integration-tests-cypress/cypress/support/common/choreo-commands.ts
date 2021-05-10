@@ -481,19 +481,13 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
  * @param pageName - page name that needs to be loaded
  */
 Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
-    cy.get('[id="backdrop-loader"').should('not.exist');
-    switch (pageName) {
-        case marketplaceText:
-        case integrationsText:
-        case servicesText:
-        case APIsText:
-        case devOpsText:
-            cy.get('[href="/' + pageName + '"]').click();
-            cy.url().should('include', '/' + pageName);
-            cy.log("Page loaded successfully");
-            break;
-        default:
-            cy.log('Page not found');
-            break;
+    const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText];
+    cy.get('[id="backdrop-loader"]').should('not.exist');
+    if (pageNameArray.includes(pageName)) {
+        cy.get('[href="/' + pageName + '"]').click();
+        cy.url().should('include', '/' + pageName);
+        cy.log("Page loaded successfully");
+    } else {
+        cy.log('Page not found');
     }
 })
