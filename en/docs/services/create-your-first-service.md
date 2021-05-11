@@ -18,7 +18,7 @@ To create the service, follow the procedure below:
 
     ![Resource Configuration](../assets/img/services/configure-api-trigger.png)
     
-    Then click **Save API**. Now you have saved the API trigger that starts your application.
+    Then click **Save API**. Now you have saved the API trigger that starts your service.
     
 6. Click **API Calls**, and then enter information as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
 
@@ -57,7 +57,7 @@ To create the service, follow the procedure below:
         
         Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
     
-7. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:
+7. To cast all the data retrieved via the API connected to the service before further processing, add a new custom statement as follows:
 
     1. Click the last **+** icon in your low code diagram.
 
