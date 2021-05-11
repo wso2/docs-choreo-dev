@@ -174,4 +174,4 @@ To observe the `covid-stats` service, click the **Observe** icon in the left pan
 ![Test Icon](../assets/img/services/observe-icon.png)
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
-![Visualization of Throughput and Latency](../assets/img/services/successfully-deployed-notification.png)
+![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png)
