@@ -49,6 +49,6 @@ describe('anonymous-app-linking', () => {
             });
         });
         cy.visit("/");
-        cy.cleanupApp("external", appName, true);
+        cy.cleanupApp(appName);
     });
 });
