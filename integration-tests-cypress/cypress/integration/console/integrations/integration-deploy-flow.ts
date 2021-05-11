@@ -10,11 +10,11 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import {generateAppName, integrationsText } from "../../support/common/choreo-utils";
+import {generateAppName, integrationsText } from "../../../support/common/utils";
 
 /// <reference types="cypress" />
 
-describe('App test run and deployment from scratch', ()=>{
+describe('Integrations test run and deployment from scratch', ()=>{
     let appName: string
 
     before(() => {
