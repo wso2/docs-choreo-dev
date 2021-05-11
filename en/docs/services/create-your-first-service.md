@@ -33,7 +33,7 @@ To create the Choreo service, follow the procedure below:
         | **Field**           | **Value**                    |
         |---------------------|------------------------------|
         | **Connection Name** | `httpEndpoint`               |
-        | **URL**             | `https://api.covid19api.com` |
+        | **URL**             | `"https://api.covid19api.com"` |
         
         Click **Save**.
         
@@ -66,7 +66,6 @@ To create the Choreo service, follow the procedure below:
         ![Add New Statement](/en/assets/img/services/add-custom-statement.png)
     
     2. Click **Other** and then enter the following in the **Statement** field.
-    
     
         ```
         json[] jsonArray = <json[]>jsonPayload;
