@@ -1,18 +1,18 @@
 # Create Your First Service
 
-To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
+To learn how to create a service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
 
 ## Step 1: Create the service
 
-To create the Choreo service, follow the procedure below: 
+To create the service, follow the procedure below: 
 
-1. Access the Choreo Console via https://console.choreo.dev/.
+1. Access the Choreo Development Console via https://console.choreo.dev/.
     
 2. Sign in using either your Google or GitHub credentials.
     
 3. In the **Services** page, click **Create**. You are directed to the low-code view
 
-4. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.
+4. Under **Create with Choreo**, enter `covid-stats` as the name of your service.
 
 5. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
@@ -101,7 +101,7 @@ To create the Choreo service, follow the procedure below:
     In the **Respond Expression** field, enter `response`, and then click **Save**.
 
     
-Now you have completed designing your Choreo application. It looks as follows.
+Now you have completed designing your service. It looks as follows.
 
 - In the Low Code View
 
@@ -112,15 +112,15 @@ Now you have completed designing your Choreo application. It looks as follows.
     ![Low Code View](../assets/img/services/choreo-service-code-view.png)
 
     
-To validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
+To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
 ![Service Started Log](../assets/img/services/service-started-notification.png)
     
-Congratulations! You have successfully created your first Choreo service.
+Congratulations! You have successfully created your first service.
    
-## Step 2: Test the Choreo service
+## Step 2: Test the service
 
-To test the `covid-stats` Choreo application you created, follow the procedure below:
+To test the `covid-stats` service you created, follow the procedure below:
 
 1. Click the **Test** icon in the left pane.
 
@@ -136,7 +136,7 @@ The search results for COVID-19 statistics of the United States are displayed as
 
 Now you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.
 
-## Step 3: Deploy the Choreo service
+## Step 3: Deploy the service
 
 To deploy the `covid-stats` service, follow the procedure below:
 
@@ -166,7 +166,7 @@ To deploy the `covid-stats` service, follow the procedure below:
     
 To observe the `covid-stats` service by checking the statistics generated as a result of the cURL commands you issued, proceed to Step 4. 
 
-## Step 4: Observe the Choreo service.
+## Step 4: Observe the service
 
 To observe the `covid-stats` service, click the **Observe** icon in the left panel.
 ![Test Icon](../assets/img/services/observe-icon.png)
