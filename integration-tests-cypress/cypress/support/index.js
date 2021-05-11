@@ -16,11 +16,12 @@
 // Import commands.js using ES2015 syntax:
 import '@testing-library/cypress/add-commands'
 import 'cypress-file-upload'
-import './common/login-commands'
-import './common/choreo-commands'
+import './console/common/console-commands'
 import './devportal/devportal-commands'
-import './console/console-login-commands'
+import './console/common/console-login-commands'
 import  './console/apis/publisher-commands'
+import './console/integrations/integration-commands'
+import './console/services/service-commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
