@@ -20,7 +20,7 @@ import './common/login-commands'
 import './common/choreo-commands'
 import './devportal/devportal-commands'
 import './console/console-login-commands'
-import  './publisher/publisher-commands'
+import  './console/apis/publisher-commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

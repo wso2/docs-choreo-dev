@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../support/publisher/constants";
+import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../../support/console/apis/constants";
 
 describe('Choreo APIM publisher scenarios', () => {
     beforeEach(() => {
