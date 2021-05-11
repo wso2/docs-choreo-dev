@@ -20,11 +20,12 @@
   "scripts": {
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
-    "e2etest:headless": "npx cypress run --headless --spec cypress/integration/devportal/*.ts",
+    "devportal-e2etest:headless": "npx cypress run --headless --spec cypress/integration/devportal/*.ts",
+    "console-e2etest:headless": "npx cypress run --headless --spec cypress/integration/console/**/*",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
     "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
     "posttest": "npm run combine-reports && npm run generate-report",
-    "test": "npm run e2etest:headless || npm run posttest"
+    "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest"
   },
   "author": "",
   "license": "ISC"
