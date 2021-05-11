@@ -9,7 +9,7 @@ A service in Choreo is a logical representation of a repeatable activity that ha
 A service sample in Choreo is a prebuilt service that performs a specific activity. Choreo provides a comprehensive set of service samples for you to clone, edit, and try out, depending on your requirement. 
 
 ## Connection
-A connection in Choreo allows you to connect to and interact with an external service through your application. You can use a connection to interact with generic protocol-based APIs and application-specific APIs.
+A connection in Choreo allows you to connect to and interact with an external service through your service. You can use a connection to interact with generic protocol-based APIs and service-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
   
@@ -18,7 +18,7 @@ Following are the connections you can use to interact with generic protocol-base
  - **POP3**: To receive emails from a POP3 email server.  
  - **IMAP**: To receive emails from any email server that supports the IMAP protocol. 
 
-Following are the connections you can use to interact with application-specific APIs:
+Following are the connections you can use to interact with service-specific APIs:
 
  - **Twilio**: To interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.
  - **Slack**: To interact with the Slack API and perform required operations. 
@@ -30,11 +30,11 @@ Following are the connections you can use to interact with application-specific 
  - **NetSuite**: To interact with the NetSuite API and perform required operations. 
 
 ## Statement
-A statement is a syntactic unit that specifies the action to be carried out in a Choreo application. 
+A statement is a syntactic unit that specifies the action to be carried out in a Choreo service. 
 
 Choreo supports the following statements:
 
- - **Log**: ATo add an entry to the application log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
+ - **Log**: ATo add an entry to the service log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
  - **Variable**: To declare a variable of a preferred type depending on your requirement.
  - **If**: To perform a conditional check and evaluate whether a statement is true or false.   
  - **ForEach**: To iterate over a list of items to perform control flow. 
