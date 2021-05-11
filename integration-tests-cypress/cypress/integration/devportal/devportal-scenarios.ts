@@ -13,7 +13,7 @@
 
 /// <reference types="cypress" />
 
-import { generateAppName } from "../../support/common/choreo-utils";
+import { generateAppName } from "../../support/common/utils";
 
 describe('Devportal', () => {
     const appName = generateAppName('-e2etest');
