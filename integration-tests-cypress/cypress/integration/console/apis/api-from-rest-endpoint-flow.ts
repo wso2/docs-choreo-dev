@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateApiName } from "../../../support/common/choreo-utils";
+import { generateApiName } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
 

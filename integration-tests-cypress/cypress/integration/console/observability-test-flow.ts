@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateAppName, servicesText } from '../../support/common/choreo-utils';
+import { generateAppName, servicesText } from '../../support/common/utils';
 
 /// <reference types="cypress" />
 

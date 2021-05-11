@@ -10,11 +10,11 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName, servicesText } from '../../support/common/choreo-utils';
+import { generateAppName, servicesText } from '../../../support/common/utils';
 
 /// <reference types="cypress" />
 
-describe('Application test run and deployment', () => {
+describe('Service test run and deployment', () => {
     let savedCookies
     let appName: string
 

@@ -127,11 +127,11 @@ Cypress.Commands.add('addApiDocument', () => {
 
 Cypress.Commands.add('deployInitialRevision', () => {
     cy.log('Visiting deployment tab');
-        cy.get('[data-testid=deployments]').click();
-        cy.get('[data-testid=create-deploy-revision-btn]').click();
-        cy.get('.MuiDialogContent-root').within(() => {
-            cy.get('button').contains('Deploy').click();
-        });
+    cy.get('[data-testid=deployments]').click();
+    cy.get('[data-testid=create-deploy-revision-btn]').click();
+    cy.get('.MuiDialogContent-root').within(() => {
+        cy.get('button').contains('Deploy').click();
+    });
 })
 
 Cypress.Commands.add('publishApi', () => {
