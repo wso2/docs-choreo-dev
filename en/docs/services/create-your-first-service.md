@@ -22,7 +22,7 @@ To create the Choreo service, follow the procedure below:
     
     Then click **Save API**. Now you have saved the API trigger that starts your application.
     
-5. Click **API Calls**, and then enter informationas follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
+5. Click **API Calls**, and then enter information as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
 
     1. Click **HTTP**.
     
