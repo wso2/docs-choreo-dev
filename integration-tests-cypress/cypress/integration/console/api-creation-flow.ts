@@ -99,7 +99,7 @@ describe('Test successful deployment of sample services', ()=>{
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.cleanupApp("service",appName,false);
+        cy.cleanupApp(appName);
         cy.userLogout();
     }),
 

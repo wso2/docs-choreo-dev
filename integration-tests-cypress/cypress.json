@@ -4,6 +4,12 @@
     "ignoreTestFiles": "**/examples/*.js",
     "chromeWebSecurity": false,
     "baseUrl": "https://console.dv.choreo.dev",
+    "testFiles": [
+        "console/*.ts",
+        "devportal/*.ts",
+        "publisher/*.ts",
+        "console/clean/clean-this-run.ts"
+    ],
     "reporter": "mochawesome",
     "reporterOptions": {
         "reportDir": "cypress/reports/mocha",

@@ -1,0 +1,49 @@
+/*
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+import { isOldApp, appNamePrefix } from '../../../support/common/choreo-utils';
+
+/// <reference types="cypress" />
+
+describe('Cleaning up', () => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    before(() => {
+        cy.log("Login into Choreo");
+        cy.consoleUserLogin();
+    })
+
+    after(() => {
+        cy.userLogout();
+    })
+
+    it('Delete Apps that are old or created by this run', () => {
+        cy.request({
+            method: "GET",
+            form: true,
+            url: `${appSvcUrl}/orgs/${orgName}/apps/`
+        }).then((response) => {
+            const data = response["body"];
+            for (const value of data) {
+                let appName = value["name"];
+                if (isOldApp(appName) || appName.startsWith(appNamePrefix)) {
+                    let status = String(value['status']);
+                    if (status == "running") {
+                        cy.undeployAppViaRESTAPICall(appName);
+                    }
+                    cy.cleanupApp(appName);
+                }
+            }
+        })
+    })
+})

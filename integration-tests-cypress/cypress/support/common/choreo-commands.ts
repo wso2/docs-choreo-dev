@@ -380,7 +380,7 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
     })
 }),
 
-Cypress.Commands.add('cleanupApp', (type:string, name: string, strict: boolean) => {
+Cypress.Commands.add('cleanupApp', (name: string) => {
     let appSvcUrl = Cypress.env("appSvcURL");
     let orgName = Cypress.env("selectedOrgHandle");
 
@@ -563,4 +563,19 @@ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
     } else {
         cy.log('Page not found');
     }
+}),
+
+Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    cy.request({
+        method: "POST",
+        url: `${appSvcUrl}/orgs/${orgName}/apps/${appName}/undeploy`,
+        timeout: 60000
+    }).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(200);
+        cy.log("Successfully undeployed the app: " + appName);
+    });
 })

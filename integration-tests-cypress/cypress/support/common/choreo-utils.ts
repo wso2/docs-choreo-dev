@@ -12,6 +12,7 @@
  */
 
 export const appNamePrefix = 'a' + Date.now();
+export const DAY = 86400000;
 export const marketplaceText = 'marketplace';
 export const integrationsText = 'integrations';
 export const servicesText = 'services';
@@ -38,4 +39,17 @@ export const generateApiName = (name: string) => {
 
 export const normalizeText = (s: string) => {
     return s.replace(/\s+/g, '\u00a0')
+}
+
+export const isOldApp = (name: string) => {
+    if (name.length > 13) {
+        let timestamp = Number(name.substring(1,14));
+        if (!isNaN(timestamp)) {
+            let currentTime = Date.now();
+            if ((currentTime - timestamp) < DAY*7) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
