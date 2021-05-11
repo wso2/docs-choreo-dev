@@ -18,5 +18,12 @@ declare namespace Cypress {
         testApiInPublisherTestConsole(): Chainable<Element>
         updateEndpointConfiguration(newEndpoint: string): Chainable<Element>
         deleteApiFromOverview(): Chainable<Element>
+        updateRuntimeConfiguration():  Chainable<Element>
+        updateDesignConfiguration():  Chainable<Element>
+        addApiDocument():  Chainable<Element>
+        verifyApiOverview(apiName: string, apiVersion: string):  Chainable<Element>
+        searchApiFromListAndVisit(apiName: string):  Chainable<Element>
+        deployInitialRevision():  Chainable<Element>
+        publishApi():  Chainable<Element>
     }
 }
