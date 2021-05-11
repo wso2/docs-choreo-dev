@@ -6,23 +6,21 @@ To learn how to create a Choreo service, let's try a simple scenario. In this ex
 
 To create the Choreo service, follow the procedure below: 
 
-1. Access the Choreo Development Console via the following URL.
-
-    `https://console.choreo.dev/`
+1. Access the Choreo Console via https://console.choreo.dev/.
     
-    Sign in using either your Google or GitHub credentials.
+2. Sign in using either your Google or GitHub credentials.
     
-2. In the **Services** page, click **Create**. You are directed to the low-code view
+3. In the **Services** page, click **Create**. You are directed to the low-code view
 
-3. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.
+4. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.
 
-4. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
+5. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
     ![Resource Configuration](../assets/img/services/configure-api-trigger.png)
     
     Then click **Save API**. Now you have saved the API trigger that starts your application.
     
-5. Click **API Calls**, and then enter information as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
+6. Click **API Calls**, and then enter information as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
 
     1. Click **HTTP**.
     
@@ -59,7 +57,7 @@ To create the Choreo service, follow the procedure below:
         
         Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
     
-6. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:
+7. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:
 
     1. Click the last **+** icon in your low code diagram.
 
@@ -73,7 +71,7 @@ To create the Choreo service, follow the procedure below:
         ```
         Then click **Save**.
     
-7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
+8. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
 
     1. Click the last **+** icon in your low code diagram.
     
@@ -96,7 +94,7 @@ To create the Choreo service, follow the procedure below:
         
         Then click **Save**.
     
-8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low code diagram.
+9. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low code diagram.
 
     ![Add Respond Statement](../assets/img/services/add-respond-statement.png)
     
