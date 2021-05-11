@@ -1,8 +1,8 @@
-# Create Your First Choreo Service
+# Create Your First Service
 
 To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
 
-## Step 1: Create the Choreo service
+## Step 1: Create the service
 
 To create the Choreo service, follow the procedure below: 
 
@@ -132,7 +132,7 @@ To test the `covid-stats` Choreo application you created, follow the procedure b
 
 3. Click **Try it out**, and then click **Execute**.
 
-The search results for COVID-19 statistics of United States are displayed as the server response as shown below.
+The search results for COVID-19 statistics of the United States are displayed as the server response as shown below.
 
 ![Server Response](../assets/img/services/server-response.png)
 
