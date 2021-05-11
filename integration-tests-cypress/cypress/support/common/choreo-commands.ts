@@ -557,7 +557,7 @@ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
     const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText];
     cy.get('[id="backdrop-loader"]').should('not.exist');
     if (pageNameArray.includes(pageName)) {
-        cy.get('[href="/' + pageName + '"]').click();
+        cy.get('[href="/' + pageName + '/"]').click();
         cy.url().should('include', '/' + pageName);
         cy.log("Page loaded successfully");
     } else {
