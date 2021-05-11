@@ -3,7 +3,6 @@
     "screenshotsFolder": "cypress/screenshots",
     "ignoreTestFiles": "**/examples/*.js",
     "chromeWebSecurity": false,
-    "baseUrl": "https://console.dv.choreo.dev",
     "reporter": "mochawesome",
     "reporterOptions": {
         "reportDir": "cypress/reports/mocha",
