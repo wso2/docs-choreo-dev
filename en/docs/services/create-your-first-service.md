@@ -12,11 +12,11 @@ To create the Choreo service, follow the procedure below:
     
     Sign in using either your Google or GitHub credentials.
     
-2. In the **Services** page, click **Create**.
+2. In the **Services** page, click **Create**. You are directed to the low-code view
 
 3. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.
 
-4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
+4. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
     ![Resource Configuration](../assets/img/services/configure-api-trigger.png)
     
