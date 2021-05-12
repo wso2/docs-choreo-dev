@@ -283,7 +283,7 @@ In the [Ballerina language](https://ballerina.io/), basic types are `string`, `i
   firstNumber == secondNumber
   ```
   
-- Checking if the values of two variables (`firstNumber` and `secondNumber`) are NOT equal. The following returns true when the value of the two variables are different.
+- Checking if the values of two variables (`firstNumber` and `secondNumber`) are **not** equal. The following returns true when the value of the two variables are different.
 
   ```ballerina
   firstNumber != secondNumber
