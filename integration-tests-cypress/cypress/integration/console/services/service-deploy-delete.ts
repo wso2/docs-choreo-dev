@@ -39,7 +39,7 @@ describe('Service deployment and delete deployed service', () => {
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.deleteAppWithoutUndeploy("service", appName, true);
+        cy.deleteAppWithoutUndeploy(appName, true);
         cy.userLogout()
     })
 

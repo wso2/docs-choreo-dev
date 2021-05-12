@@ -440,7 +440,7 @@ Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) =
     })
 }),
 
-Cypress.Commands.add('deleteAppWithoutUndeploy', (type:string, name: string, strict: boolean) => {
+Cypress.Commands.add('deleteAppWithoutUndeploy', (name: string, strict: boolean) => {
     // Check if apps are listed
     cy.get('[id="backdrop-loader"').should('not.exist');
     cy.get('body', {timeout:30000}).then($body => {
