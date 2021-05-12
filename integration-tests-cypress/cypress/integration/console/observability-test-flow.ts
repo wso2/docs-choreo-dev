@@ -68,7 +68,7 @@ describe('Observability tests', () => {
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
-        cy.visit('/observe/app/' + obsId + '/' + version);
+        cy.visit('/observe/app/' + obsId + '/' + version + '?isSample=true');
     });
 
     afterEach(() => {
@@ -108,13 +108,38 @@ describe('Observability tests', () => {
     })
 
     it('test observability overview', () => {
+        let d;
+        let prevY
+        let finalX
+        let finalY
         cy.get('.diagram-canvas').should('exist');
         cy.get('.worker-line').should('exist');
-        cy.get('[data-testid="refresh-btn"]').should('exist');
+        cy.get('[data-testid="refresh-btn"]').should('not.exist');
         cy.get('[data-testid="preloader"]').should('not.exist');
-
-        cy.log('Test diagram status');
         cy.get('.metrics-text').contains('100% Success', {timeout: 600000}).should('exist');
 
+        cy.get('[data-testid="histogram-throughput"]').get('g.recharts-layer.recharts-area').should('exist');
+        cy.get('[data-testid="histogram-response-time"]').get('g.recharts-layer.recharts-area').should('exist');
+
+        cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
+            d = $path.attr('d');
+            d = d.replace('Z', '')
+            const newD = d.split("L")
+            for (const v of newD) {
+                const arr = v.split(',')
+                if (prevY !== undefined && prevY !== arr[1]) {
+                    finalX = arr[0]
+                    finalY = arr[1]
+                    break
+                }
+                prevY = arr[1]
+            }
+
+            cy.get('[data-testid="histogram-throughput"]').find('svg').click(Math.round(finalX), Math.round(finalY));
+            cy.get('[data-testid="preloader"]').should('not.exist');
+
+            cy.get('[data-testid="request-table"]').should('be.visible');
+            cy.get('[data-testid="log-panel"]').should('be.visible');
+         });
     })
 })
