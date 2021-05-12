@@ -11,11 +11,11 @@
  * associated services.
  */
 
-import { generateAppName, servicesText } from '../../support/common/choreo-utils';
+import { generateAppName, servicesText } from '../../support/common/utils';
 
 /// <reference types="cypress" />
 
-describe('Data Mapper', () => {
+describe('Data Mapper AI suggestion', () => {
     before(() => {
         cy.log("Login into Choreo")
         cy.consoleUserLogin()

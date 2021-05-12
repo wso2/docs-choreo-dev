@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../support/publisher/constants";
+import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../../support/console/apis/constants";
 
 describe('Choreo APIM publisher scenarios', () => {
     beforeEach(() => {
@@ -20,7 +20,7 @@ describe('Choreo APIM publisher scenarios', () => {
     });
 
     it('Creating and publishing an API from open API specification', () => {
-        const filepath = 'publisher/generation_oas.yaml';
+        const filepath = 'console/apis/generation_oas.yaml';
         cy.log("Starting API Creation using open API specification");
         cy.navigateFromHomePage("apis");
         cy.get('[data-testid="create-api-btn"]').click({ force: true });
