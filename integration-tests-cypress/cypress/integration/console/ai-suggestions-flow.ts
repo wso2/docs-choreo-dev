@@ -53,6 +53,7 @@ describe('Data Mapper AI suggestion', () => {
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
         cy.goBacktoAppsList();
+        cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
     })
 })

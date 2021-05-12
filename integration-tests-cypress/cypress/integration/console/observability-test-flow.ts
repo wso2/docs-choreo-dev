@@ -75,6 +75,7 @@ describe('Observability tests', () => {
 
     after(() => {
         cy.goBacktoAppsList();
+        cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
         cy.userLogout();
     })
