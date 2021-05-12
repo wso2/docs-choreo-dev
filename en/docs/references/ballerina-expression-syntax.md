@@ -1,6 +1,6 @@
 # Ballerina Expression Syntax
 
-Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you the common expressions that you can use while developing Choreo applications.
+Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you with the common expressions that you can use while developing Choreo applications.
 
 ## Supported Literals 
 
@@ -22,7 +22,7 @@ A string is simply a sequence of characters. It is required to use double quotes
 
 ### Signed Integer
 
-Using this type, you can give numbers as an input to an expression-supported field.  You have the option to use `+` or `-` characters in the front to indicate the sign.  You can also define an integer by using only numerical characters without any delimiters. 
+A signed integer is an integer with the  `+` or `-` character in the front, indicating the sign. You can also define a positive integer or zero using only numerical characters without the sign. Using the signed integer type, you can give positive integers, negative integers, and zero as an input to an expression-supported field.
 
 #### Examples
 
@@ -38,7 +38,7 @@ Using this type, you can give numbers as an input to an expression-supported fie
 
 ### Decimal Floating-Point Number
 
-A number with a decimal point falls under this data type. You have the option to use `+` or `-` characters in the front to indicate the sign.
+A decimal floating-point number is a number with a decimal point. You have the option to use `+` or `-` characters in the front to indicate the sign.
 
 #### Examples
 
@@ -55,12 +55,12 @@ A number with a decimal point falls under this data type. You have the option to
   +950.930
   ```
   ```ballerina
-  10.0
+  0
   ```
 
 ### Boolean Value
 
-This data type has one of two possible values, `true` and `false`.
+The boolean data type has one of the two possible values, `true` or `false`.
 
 #### Examples
 
@@ -79,8 +79,9 @@ Variables keep values in memory for later access. In an expression syntax-suppor
 
 #### Example
 
+- Converting the value of the integer variable (`total`) to a string value.
   ```ballerina
-  VariableName
+  total.toString()
   ```
 
 ## Supported Operators
@@ -91,42 +92,48 @@ You can use the `+` operator to do string concatenations. The string value can c
 
 #### Examples
 
- - Concatenating two string literals.
+- Concatenating two string literals.
  
   ```ballerina
   "Hello " + "world!" 
   ```
- - Concatenating a string literal and a variable.
+  
+- Concatenating a string literal and a variable (`name`).
  
   ```ballerina
-  "Hi " + nameVar
+  "Hi " + name
   ```
- - Concatenating two string variables.
+  
+- Concatenating two string variables (`firstNameString` and `lastNameString`).
  
   ```ballerina
   firstNameString + lastNameString
   ```
 
 ### Number Addition
-You can use the  `+` operator for number addition. The number values can come from a literal or a variable.
+You can use the `+` operator for number addition. The number values can come from a literal or a variable.
 
 #### Examples
-- Concatenating two integer literals.
+
+- Adding two integer literals.
 
   ```ballerina
   10 + 20
   ```
-- Concatenating two decimal literals.
+  
+- Adding two decimal literals.
 
   ```ballerina
   0.56 + 1.84
   ```
-- Concatenating a literal and a variable.
+  
+- Adding a literal and a numerical variable (`firstNumber`).
 
   ```ballerina
-  100 + nameVariable
+  firstNumber + 100
   ```
-- Concatenating two variables.
+  
+- Adding two numerical variables (`firstNumber` and `secondNumber`).
 
   ```ballerina
   firstNumber + secondNumber
@@ -137,25 +144,29 @@ You can use the  `+` operator for number addition. The number values can come fr
 You can use the `-` operator for number subtraction. The number values can come from a literal or a variable.
 
 #### Examples
+
 - Subtracting two integer literals.
 
   ```ballerina
-  10 - 20
+  20 - 10
   ```
+  
 - Subtracting two decimal literals.
 
   ```ballerina
-  0.56 - 1.84
+  1.84 - 0.56  
   ```
-- Subtracting a literal and a variable.
+  
+- Subtracting a literal and a numerical variable (`firstNumber`).
 
   ```ballerina
-  100 - <named variable>
+  firstNumber - 100
   ```
-- Subtracting two variables.
+  
+- Subtracting two numerical variables (`firstNumber` and `secondNumber`).
 
   ```ballerina
-  <first number> - <second number>
+  firstNumber - secondNumber
   ```
 
 ### Number Division
@@ -164,25 +175,28 @@ You can use the `/` operator for number division. The number values can come fro
 
 #### Examples
 
-- Division between two integer literals.
+- Dividing two integer literals.
 
   ```ballerina
-  10 / 20
+  20 / 10 
   ```
-- Division between two decimal literals.
+  
+- Dividing two decimal literals.
 
   ```ballerina
-  0.56 / 1.84
+  1.84 / 0.56  
   ```
-- Division between a literal and a variable.
+  
+- Dividing a variable(`firstNumber`) by a literal.
 
   ```ballerina
-  100 / nameVariable
+  firstNumber / 100
   ```
-- Division between two variables.
+  
+- Dividing two variables (`firstNumber` and `secondNumber`).
 
   ```ballerina
-  firstNumber - secondNumber
+  firstNumber / secondNumber
   ```
 
 ### Number Multiplication
@@ -196,17 +210,20 @@ You can use the `*` operator for number multiplication. The number values can co
   ```ballerina
   10 * 20
   ```
+  
 - Multiplying two decimal literals.
 
   ```ballerina
   0.56 * 1.84
   ```
-- Multiplying a literal and a variable.
+  
+- Multiplying a variable (`firstNumber`) by a literal.
 
   ```ballerina
-  100 * nameVariable
+  firstNumber * 100
   ```
-- Multiplying two variables.
+  
+- Multiplying two variables (`firstNumber` by `secondNumber`).
 
   ```ballerina
   firstNumber * secondNumber
@@ -217,17 +234,20 @@ You can use the `*` operator for number multiplication. The number values can co
 You can use the  `%` operator to get the remainder of a division. The number values can come from a literal or a variable.
 
 #### Examples
-- Modulus of two integer literals.
+
+- Calculating the modulus of two integer literals.
 
   ```ballerina
   10 % 4
   ```
-- Modulus of a literal and a variable.
+  
+- Calculating the modulus of a literal and a variable (`firstNumber`).
 
   ```ballerina
-  100 % nameVariable
+  firstNumber % 100 
   ```
-- Modulus of two variables.
+  
+- Calculating the modulus of two variables (`firstNumber` and `secondNumber`).
 
   ```ballerina
   firstNumber % secondNumber
@@ -238,27 +258,32 @@ You can use the  `%` operator to get the remainder of a division. The number val
 In the [Ballerina language](https://ballerina.io/), basic types are `string`, `int`, `float`, `decimal`, and `boolean`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or a variable. Similarly `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
 
 #### Examples
-- Equality of two integer literals.
+
+- Checking if two integer literals are equal.
 
   ```ballerina
   10 == 4
   ```
-- Equality of two string literals.
+  
+- Checking if two string literals are equal.
 
   ```ballerina
   "hi" == "hi"
   ```
-- Equality of a literal and a variable.
+  
+- Checking if literal and the value of a variable (`firstNumber`) is equal.
 
   ```ballerina
-  100 == expectedValueVariable
+   firstNumber == 100
   ```
-- Equality of two variables.
+  
+- Checking if the values of two variables (`firstNumber` and `secondNumber`) are equal. The following returns true when the value of the two variables is equal.
 
   ```ballerina
   firstNumber == secondNumber
   ```
-- Inequality of two variables. The following returns true when the values of the two variables are different.
+  
+- Checking if the values of two variables (`firstNumber` and `secondNumber`) are NOT equal. The following returns true when the value of the two variables are different.
 
   ```ballerina
   firstNumber != secondNumber
@@ -269,10 +294,11 @@ In the [Ballerina language](https://ballerina.io/), basic types are `string`, `i
 The `is` operator is used to assert the type of a variable.
 
 #### Examples
-- Checking whether the variable is of JSON type.
+
+- Checking if a variable (`payload`) is of JSON type.
 
   ```ballerina
-  payload is JSON
+  payload is json
   ```
 
 ### Numerical Value Comparisons
@@ -284,101 +310,111 @@ The following operators are available in the expression editor for numeric value
 - `>=` (greater than or equal to)
 
 #### Examples
-- Checking if the value of a variable is greater than 10.
+
+- Checking if the value of a variable (`firstNumber`) is greater than a literal.
 
   ```ballerina
-  myVar > 10
+  firstNumber > 10
   ```
   
-- Comparing two variables.
+- Checking if the value of a variable (`firstNumber`) is less than or equal to the value of another variable (`secondNumber`).
 
   ```ballerina
-  myProperty <= limit
+  firstNumber <= secondNumber
   ```
 
 ## HTTP request related operations
 
-All the HTTP-related service applications created in Choreo have a variable called `req` (of type `http:Request`) which the developers can use to query information related to the HTTP request. Following is a list of use cases that an integration application developer would need more likely need to develop Choreo applications
+All the HTTP-related service applications created in Choreo have a variable called `request` (of type `http:Request`) which the developers can use to query information related to the HTTP request. Following is a list of such common use cases.
 
 ### Reading a header value in the request
-A typical HTTP request contains many headers. Some of these headers are standard, and some are custom. In an expression-enabled input field, you can use the `req` variable's `getHeader` function to read a specific header value.
+A typical HTTP request contains many headers.  These include standard and custom headers. You can use the `request` variable's `getHeader` function to read a specific header value in any expression-enabled input field.
 
 #### Examples
-- Reading the value of Access-Control-Allow-Origin HTTP header.
+
+- Reading the value of an HTTP header (`Access-Control-Allow-Origin`) passing the header name.
 
   ```ballerina
-  req.getHeader("Access-Control-Allow-Origin")
+  check request.getHeader("Access-Control-Allow-Origin")
   
   ```
-- Using a value stored in a variable as the header name. Note the omission of the double quotes.
+  
+- Reading the value of an HTTP header by passing a variable that contains the header name (`headerName`). Note the omission of the double-quotes.
 
   ```ballerina
-  req.getHeader(headerName)
+  check request.getHeader(headerName)
   ```
 
 ### Checking whether a header is present in the request
 
-Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the  `hasHeader`  function in the `req` object for this purpose.
+Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the  `hasHeader`  function in the `request` object for this purpose.
 
 #### Examples
-- Checking whether the content-length property is available as a header.
+
+- Checking if a particular HTTP header (`content-length`) exists given the header name.
 
   ```ballerina
-  req.hasHeader("content-length")
+  request.hasHeader("content-length")
   ```
-- Using a value stored in a variable as the query parameter name. Note the omission of the double quotes.
+  
+- Checking if a particular HTTP header (`content-length`) exists by passing a variable (`contentLength`) containing the header name. Note the omission of the double-quotes.
 
   ```ballerina
-  req.hasHeader(myCustomeHeader)
+  request.hasHeader(contentLength)
   ```
 
 ### Reading the JSON Payload of the request
 
-JSON is a common content type used for HTTP communication. The `req` variable’s `getJsonPayload` function can be used to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
+JSON is a common content type used for HTTP communication. The `request` variable’s `getJsonPayload` function can be used to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
 
 #### Examples
+
 - Reading the JSON Payload of the HTTP request.
 
   ```ballerina
-  req.getJsonPayload()
+  request.getJsonPayload()
   ```
 
 ### Reading the Text Payload of the request
 
-Sometimes, content is sent as a string (plain text) with the HTTP request. The `req` variable’s `getTextPayload` function can be used to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
+Sometimes, content is sent as a string (plain text) with the HTTP request. The `request` variable’s `getTextPayload` function can be used to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
 
 #### Examples
+
 - Reading the Text Payload of the HTTP request.
 
   ```ballerina
-  req.getTextPayload()
+  check request.getTextPayload()
   ```
 
 ### Reading the query parameter value
 
-Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the `req` variable's `getQueryParamValue` function to read the passed query parameter.
+Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the `request` variable's `getQueryParamValue` function to read the passed query parameter.
 
 #### Examples
-- Reading the query parameter named category.
+
+- Reading the query parameter value given the query parameter name (`category`).
 
   ```ballerina
-  req.getQueryParamValue("category")
+  request.getQueryParamValue("category")
   ```
-- Using a value stored in a variable as the query parameter name. Note the omission of the double quotes.
+  
+- Reading the query parameter value by passing a variable that contains the query parameter name. Note the omission of the double-quotes.
 
   ```ballerina
-  req.getQueryParamValue(queryParamName)
+  request.getQueryParamValue(queryParamName)
   ```
 
 ### Reading the cookies available in the request
 
-HTTP Cookies keep stateful information against a client. You can use the `req` variable's `getCookies` function to read cookies present in the request as an array.
+HTTP cookies keep stateful information against a client. You can use the `request` variable's `getCookies` function to read cookies present in the request as an array.
 
 #### Examples
+
 - Reading all the cookies available in the request.
 
   ```ballerina
-  req.getCookies()
+  request.getCookies()
   ```
 
 
