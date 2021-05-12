@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { generateAppName, servicesText } from '../../support/common/utils';
+import { generateAppName } from '../../support/common/utils';
+import { servicesText } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 

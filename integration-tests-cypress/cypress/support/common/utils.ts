@@ -11,13 +11,9 @@
  * associated services.
  */
 
+import { DAY } from './constants';
+
 export const appNamePrefix = 'a' + Date.now();
-export const DAY = 86400000;
-export const marketplaceText = 'marketplace';
-export const integrationsText = 'integrations';
-export const servicesText = 'services';
-export const APIsText = 'apis';
-export const devOpsText = 'devops';
 
 /**
  * Create name for app.

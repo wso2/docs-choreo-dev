@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { isOldApp, appNamePrefix } from '../../../support/common/choreo-utils';
+import { isOldApp, appNamePrefix } from '../../../support/common/utils';
 
 /// <reference types="cypress" />
 

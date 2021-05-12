@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { normalizeText, marketplaceText, integrationsText, servicesText, APIsText, devOpsText } from '../../common/utils';
+import { normalizeText,  } from '../../common/utils';
+import { marketplaceText, integrationsText, servicesText, APIsText, devOpsText , settingsText } from '../../common/constants';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
@@ -553,12 +554,19 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
  *
  * @param pageName - page name that needs to be loaded
  */
-Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
-    const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText];
+ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
+    const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText, settingsText];
+    let pathName = pageName;
+    if (pageName == settingsText) {
+        pathName = 'user-settings/organization/members';
+    } else if (pageName == APIsText) {
+        pathName = pageName + '/';
+    }
+    
     cy.get('[id="backdrop-loader"]').should('not.exist');
     if (pageNameArray.includes(pageName)) {
-        cy.get('[href="/' + pageName + ((pageName === "apis")? '/"]' : '"]')).click();
-        cy.url().should('include', '/' + pageName);
+        cy.get('[href="/' + pathName + '"]').click();
+        cy.url().should('include', '/' + pathName);
         cy.log("Page loaded successfully");
     } else {
         cy.log('Page not found');

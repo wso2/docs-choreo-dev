@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import {generateAppName, integrationsText } from "../../../support/common/utils";
+import {generateAppName } from "../../../support/common/utils";
+import { integrationsText } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
