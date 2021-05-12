@@ -12,9 +12,10 @@
  */
 
 export const DAY = 86400000;
-export const marketplaceText = 'marketplace';
-export const integrationsText = 'integrations';
-export const servicesText = 'services';
-export const APIsText = 'apis';
-export const devOpsText = 'devops';
-export const settingsText = 'settings';
+export const MARKETPLACE_TEXT = 'marketplace';
+export const INTEGRATIONS_TEXT = 'integrations';
+export const SERVICES_TEXT = 'services';
+export const APIS_TEXT = 'apis';
+export const DEVOPS_TEXT = 'devops';
+export const SETTINGS_TEXT = 'settings';
+export const SETTINGS_PATH = 'user-settings/organization/members';

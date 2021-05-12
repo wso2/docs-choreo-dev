@@ -11,7 +11,7 @@
  * associated services.
  */
 import { generateAppName } from '../../../support/common/utils';
-import { servicesText } from '../../../support/common/constants';
+import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -35,7 +35,7 @@ describe('Service test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(servicesText, appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello");
         cy.selectManualTriggerOptions("Statements", "addVariable");

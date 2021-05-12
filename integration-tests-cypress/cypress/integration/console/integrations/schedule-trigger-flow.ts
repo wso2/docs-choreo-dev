@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { generateAppName, integrationsText } from '../../../support/common/utils';
+import { generateAppName } from '../../../support/common/utils';
+import { INTEGRATIONS_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -35,7 +36,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
-        cy.createNewApp(integrationsText, appName);
+        cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Schedule");
         cy.createLogProperty("Info", "Hello world");

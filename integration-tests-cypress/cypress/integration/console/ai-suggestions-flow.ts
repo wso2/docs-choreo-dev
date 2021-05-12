@@ -12,7 +12,7 @@
  */
 
 import { generateAppName } from '../../support/common/utils';
-import { servicesText } from '../../support/common/constants';
+import { SERVICES_TEXT } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -30,7 +30,7 @@ describe('Data Mapper AI suggestion', () => {
         cy.log("Starting Data Mapper Low code form AI suggestion test...");
         const appName = generateAppName("datamapper");
         const urlName = "url"
-        cy.createNewApp(servicesText, appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("test");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');

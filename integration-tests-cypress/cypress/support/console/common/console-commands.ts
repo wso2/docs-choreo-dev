@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { normalizeText,  } from '../../common/utils';
-import { marketplaceText, integrationsText, servicesText, APIsText, devOpsText , settingsText } from '../../common/constants';
+import { normalizeText } from '../../common/utils';
+import { MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT , SETTINGS_TEXT, SETTINGS_PATH } from '../../common/constants';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
@@ -555,11 +555,11 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
  * @param pageName - page name that needs to be loaded
  */
  Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
-    const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText, settingsText];
+    const pageNameArray = [MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT, SETTINGS_TEXT];
     let pathName = pageName;
-    if (pageName == settingsText) {
-        pathName = 'user-settings/organization/members';
-    } else if (pageName == APIsText) {
+    if (pageName == SETTINGS_TEXT) {
+        pathName = SETTINGS_PATH;
+    } else if (pageName == APIS_TEXT) {
         pathName = pageName + '/';
     }
     
