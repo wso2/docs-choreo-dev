@@ -29,7 +29,7 @@ declare namespace Cypress {
         resetAppSearch(): Chainable<Element>
         undeployApp(type:string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type:string, name: string, strict: boolean): Chainable<Element>
-        cleanupApp(type:string, name: string, strict: boolean): Chainable<Element>
+        cleanupApp(name: string): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>
@@ -37,5 +37,6 @@ declare namespace Cypress {
         testRunApp(): Chainable<Element>
         selectScheduleTrigger(): Chainable<Element>
         navigateFromHomePage(pageName: string): Chainable<Element>
+        undeployAppViaRESTAPICall(appName: string): Chainable<Element>
     }
 }

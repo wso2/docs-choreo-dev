@@ -4,6 +4,14 @@
     "ignoreTestFiles": "**/examples/*.js",
     "chromeWebSecurity": false,
     "reporter": "mochawesome",
+    "testFiles": [
+        "console/apis/*.ts",
+        "console/integrations/*.ts",
+        "console/services/*.ts",
+        "console/*.ts",
+        "devportal/*.ts",
+        "console/clean/clean-this-run.ts"
+    ],
     "reporterOptions": {
         "reportDir": "cypress/reports/mocha",
         "overwrite": false,

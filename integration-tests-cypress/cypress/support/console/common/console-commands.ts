@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { normalizeText, marketplaceText, integrationsText, servicesText, APIsText, devOpsText } from '../../common/utils';
+import { normalizeText } from '../../common/utils';
+import { MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT , SETTINGS_TEXT, SETTINGS_PATH } from '../../common/constants';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
@@ -381,7 +382,7 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
     })
 }),
 
-Cypress.Commands.add('cleanupApp', (type:string, name: string, strict: boolean) => {
+Cypress.Commands.add('cleanupApp', (name: string) => {
     let appSvcUrl = Cypress.env("appSvcURL");
     let orgName = Cypress.env("selectedOrgHandle");
 
@@ -523,14 +524,36 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
  *
  * @param pageName - page name that needs to be loaded
  */
-Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
-    const pageNameArray = [marketplaceText, integrationsText, servicesText, APIsText, devOpsText];
+ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
+    const pageNameArray = [MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT, SETTINGS_TEXT];
+    let pathName = pageName;
+    if (pageName == SETTINGS_TEXT) {
+        pathName = SETTINGS_PATH;
+    } else if (pageName == APIS_TEXT) {
+        pathName = pageName + '/';
+    }
+    
     cy.get('[id="backdrop-loader"]').should('not.exist');
     if (pageNameArray.includes(pageName)) {
-        cy.get('[href="/' + pageName + ((pageName === "apis")? '/"]' : '"]')).click();
-        cy.url().should('include', '/' + pageName);
+        cy.get('[href="/' + pathName + '"]').click();
+        cy.url().should('include', '/' + pathName);
         cy.log("Page loaded successfully");
     } else {
         cy.log('Page not found');
     }
+}),
+
+Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    cy.request({
+        method: "POST",
+        url: `${appSvcUrl}/orgs/${orgName}/apps/${appName}/undeploy`,
+        timeout: 60000
+    }).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(200);
+        cy.log("Successfully undeployed the app: " + appName);
+    });
 })
