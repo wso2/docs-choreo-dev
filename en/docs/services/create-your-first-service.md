@@ -176,4 +176,4 @@ The throughput and the latency of the `covid-stats` service are visualized as fo
 
 ![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png)
 
-Congratulations! Now you have successfully created a services, tested it, deployed it, and obnserved its statistics.
+Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.
