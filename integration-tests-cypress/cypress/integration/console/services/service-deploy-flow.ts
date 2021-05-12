@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName, servicesText } from '../../../support/common/utils';
+import { generateAppName } from '../../../support/common/utils';
+import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -34,7 +35,7 @@ describe('Service test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(servicesText, appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello");
         cy.selectManualTriggerOptions("Statements", "addVariable");
@@ -99,7 +100,7 @@ describe('Test successful deployment of sample services', ()=>{
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.cleanupApp("service",appName,false);
+        cy.cleanupApp(appName);
         cy.userLogout();
     }),
 

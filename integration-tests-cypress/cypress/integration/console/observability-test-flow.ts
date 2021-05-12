@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { generateAppName, servicesText } from '../../support/common/utils';
+import { generateAppName } from '../../support/common/utils';
+import { SERVICES_TEXT } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -31,7 +32,7 @@ describe('Observability tests', () => {
 
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(servicesText, appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
 
         cy.get('[data-testid="observe"]').should('be.visible');
