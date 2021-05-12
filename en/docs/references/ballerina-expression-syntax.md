@@ -187,7 +187,7 @@ You can use the `/` operator for number division. The number values can come fro
   1.84 / 0.56  
   ```
   
-- Dividing a numerical variable(`firstNumber`) by a literal.
+- Dividing a numerical variable (`firstNumber`) by a literal.
 
   ```ballerina
   firstNumber / 100
