@@ -54,7 +54,7 @@ Follow the steps below.
 
 1. Hover over the latency graph and click at 01/04/2021 13:41:00.
 2. Observe the latencies of each request listed in the low-code diagram.
-3. Click on one request shown on the low code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
+3. Click on one request shown on the low-code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
 
 ### Diagnostics View
 The Diagnostics view provides the capability to view errors, throughput, latency, CPU, memory, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.

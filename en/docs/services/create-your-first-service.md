@@ -59,7 +59,7 @@ To create the service, follow the procedure below:
     
 7. To cast all the data retrieved via the API connected to the service before further processing, add a new custom statement as follows:
 
-    1. Click the last **+** icon in your low code diagram.
+    1. Click the last **+** icon in your low-code diagram.
 
         ![Add New Statement](../assets/img/services/add-custom-statement.png)
     
@@ -73,7 +73,7 @@ To create the service, follow the procedure below:
     
 8. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
 
-    1. Click the last **+** icon in your low code diagram.
+    1. Click the last **+** icon in your low-code diagram.
     
     2. Click **ForEach**.
 
@@ -94,7 +94,7 @@ To create the service, follow the procedure below:
         
         Then click **Save**.
     
-9. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low code diagram.
+9. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low-code diagram.
 
     ![Add Respond Statement](../assets/img/services/add-respond-statement.png)
     
@@ -150,7 +150,7 @@ To deploy the `covid-stats` service, follow the procedure below:
 
     ![Deployment Logs](../assets/img/services/deployment-logs.png)
 
-3. Once the service is deployed, click on the **Go Live** tab below the low code design view. Then click **://cURL** and copy the cURL command that is displayed.
+3. Once the service is deployed, click on the **Go Live** tab below the low-code design view. Then click **://cURL** and copy the cURL command that is displayed.
 
     ![Get cURL command](../assets/img/services/copy-curl-command.png)
     
