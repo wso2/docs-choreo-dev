@@ -43,7 +43,7 @@ To create the service, follow the procedure below:
     
         ![Select Existing connection](../assets/img/services/select-existing-connection.png)
         
-        Then enter information as follows:
+    5. Enter information as follows:
         
         ![Configure HTTP Connection](../assets/img/services/select-existing-connection.png)
         
