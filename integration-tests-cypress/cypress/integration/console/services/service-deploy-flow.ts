@@ -14,7 +14,7 @@ import { generateAppName, servicesText } from '../../../support/common/utils';
 
 /// <reference types="cypress" />
 
-describe('Service test run and deployment', () => {
+describe('Service test run and postman view', () => {
     let savedCookies
     let appName: string
 
