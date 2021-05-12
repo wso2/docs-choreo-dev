@@ -104,10 +104,10 @@ You can use the `+` operator to do string concatenations. The string value can c
   "Hi " + name
   ```
   
-- Concatenating two string variables (`firstNameString` and `lastNameString`).
+- Concatenating two string variables (`firstName` and `lastName`).
  
   ```ballerina
-  firstNameString + lastNameString
+  firstName + lastName
   ```
 
 ### Number Addition
