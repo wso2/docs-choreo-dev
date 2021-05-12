@@ -115,13 +115,13 @@ You can use the `+` operator for number addition. The number values can come fro
 
 #### Examples
 
-- Adding two integer literals.
+- Adding integer literals.
 
   ```ballerina
   10 + 20
   ```
   
-- Adding two decimal literals.
+- Adding decimal literals.
 
   ```ballerina
   0.56 + 1.84
@@ -145,25 +145,25 @@ You can use the `-` operator for number subtraction. The number values can come 
 
 #### Examples
 
-- Subtracting two integer literals.
+- Subtracting integer literals .
 
   ```ballerina
   20 - 10
   ```
   
-- Subtracting two decimal literals.
+- Subtracting decimal literals.
 
   ```ballerina
   1.84 - 0.56  
   ```
   
-- Subtracting a literal and a numerical variable (`firstNumber`).
+- Subtracting a literal from a numerical variable (`firstNumber`).
 
   ```ballerina
   firstNumber - 100
   ```
   
-- Subtracting two numerical variables (`firstNumber` and `secondNumber`).
+- Subtracting a numerical variable (`secondNumber`) from another numerical variable (`firstNumber`).
 
   ```ballerina
   firstNumber - secondNumber
@@ -175,25 +175,25 @@ You can use the `/` operator for number division. The number values can come fro
 
 #### Examples
 
-- Dividing two integer literals.
+- Dividing integer literals.
 
   ```ballerina
   20 / 10 
   ```
   
-- Dividing two decimal literals.
+- Dividing decimal literals.
 
   ```ballerina
   1.84 / 0.56  
   ```
   
-- Dividing a variable(`firstNumber`) by a literal.
+- Dividing a numerical variable(`firstNumber`) by a literal.
 
   ```ballerina
   firstNumber / 100
   ```
   
-- Dividing two variables (`firstNumber` and `secondNumber`).
+- Dividing a numerical variable (`firstNumber`) by another numerical variable (`secondNumber`).
 
   ```ballerina
   firstNumber / secondNumber
@@ -205,25 +205,25 @@ You can use the `*` operator for number multiplication. The number values can co
 
 #### Examples
 
-- Multiplying two integer literals.
+- Multiplying integer literals.
 
   ```ballerina
   10 * 20
   ```
   
-- Multiplying two decimal literals.
+- Multiplying decimal literals.
 
   ```ballerina
   0.56 * 1.84
   ```
   
-- Multiplying a variable (`firstNumber`) by a literal.
+- Multiplying a numerical variable (`firstNumber`) by a literal.
 
   ```ballerina
   firstNumber * 100
   ```
   
-- Multiplying two variables (`firstNumber` by `secondNumber`).
+- Multiplying a numerical variable (`firstNumber`) by another numerical variable (`secondNumber`).
 
   ```ballerina
   firstNumber * secondNumber
@@ -247,7 +247,7 @@ You can use the  `%` operator to get the remainder of a division. The number val
   firstNumber % 100 
   ```
   
-- Calculating the modulus of two variables (`firstNumber` and `secondNumber`).
+- Calculating the modulus of two numerical variables (`firstNumber` and `secondNumber`).
 
   ```ballerina
   firstNumber % secondNumber
@@ -271,7 +271,7 @@ In the [Ballerina language](https://ballerina.io/), basic types are `string`, `i
   "hi" == "hi"
   ```
   
-- Checking if literal and the value of a variable (`firstNumber`) is equal.
+- Checking if the literal and the value of a variable (`firstNumber`) is equal.
 
   ```ballerina
    firstNumber == 100
