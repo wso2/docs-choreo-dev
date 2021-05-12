@@ -58,7 +58,7 @@ A decimal floating-point number is a number with a decimal point. You have the o
   0
   ```
 
-### Boolean Value
+### Boolean 
 
 The boolean data type has one of the two possible values, `true` or `false`.
 
@@ -293,7 +293,7 @@ In the [Ballerina language](https://ballerina.io/), basic types are `string`, `i
 
 The `is` operator is used to assert the type of a variable.
 
-#### Examples
+#### Example
 
 - Checking if a variable (`payload`) is of JSON type.
 
