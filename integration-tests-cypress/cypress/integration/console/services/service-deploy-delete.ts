@@ -15,7 +15,7 @@ import { generateAppName } from '../../../support/common/utils';
 
 /// <reference types="cypress" />
 
-describe('Application test run and deployment', () => {
+describe('Service deployment and delete deployed service', () => {
     let savedCookies
     let appName: string
 
@@ -25,13 +25,7 @@ describe('Application test run and deployment', () => {
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
-    })
 
-    after(() => {
-        cy.userLogout()
-    })
-
-    beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
@@ -43,9 +37,10 @@ describe('Application test run and deployment', () => {
         cy.createRespond("res");
     })
 
-    afterEach(() => {
+    after(() => {
         cy.goBacktoAppsList();
         cy.deleteAppWithoutUndeploy("service", appName, true);
+        cy.userLogout()
     })
 
     it('deploy hello world service', () => {
