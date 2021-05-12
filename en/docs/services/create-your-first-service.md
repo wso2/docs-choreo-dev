@@ -169,7 +169,9 @@ To observe the `covid-stats` service by checking the statistics generated as a r
 ## Step 4: Observe the service
 
 To observe the `covid-stats` service, click the **Observe** icon in the left panel.
-![Test Icon](../assets/img/services/observe-icon.png)
+
+![Observe Icon](../assets/img/services/observe-icon.png)
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
+
 ![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png)
