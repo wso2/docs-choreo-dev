@@ -241,7 +241,7 @@ Cypress.Commands.add('selectSpecificOption', (option: string) => {
     cy.log('Selected option: ', option);
 }),
 
-Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string, withinQuotes: boolean, waitForEnable?: string) => {
+Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string, withinQuotes: boolean, waitForEnable?: string, validExpression = true) => {
     let expressionToType = expression;
     if (withinQuotes) {
         expressionToType = `\"${expression}\"`
@@ -249,55 +249,70 @@ Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string
 
     cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{backspace}{backspace}' + expressionToType);
 
-    if (waitForEnable) {
+    if (waitForEnable && validExpression) {
         cy.get('[data-testid="' + waitForEnable + '"').should('not.have.attr', 'disabled');
     }
 
     cy.get('body').type('{esc}', {force: true});
 }),
 
-Cypress.Commands.add('createVariableProperty', (type: string, name: string, expression: string) => {
-    const variableSourceFields = type + ' ' + name + ' = ' + expression + ";";
-    cy.log('Creating the variable with expression : '+ expression);
-    cy.get('[data-testid="undefinedvar"]').invoke('text').then((availableText) => {
-        if (!(availableText == type)) {
-            cy.get('[data-testid="undefinedvar"]').click();
-            cy.contains(type).click();
+Cypress.Commands.add('createVariableProperty', (type: string, name: string, expression: string, validExpression = true) => {
+    cy.get('body').then($body => {
+        const variableSourceFields = type + ' ' + name + ' = ' + expression + ";";
+        cy.log('Creating the variable with expression : '+ expression);
+        let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
+        if (!statementOptionsAvailable) {
+            cy.get('[id="SmallPlus"]').eq(0).click();
+        }
+        cy.selectSpecificOption('addVariable');
+        cy.get('[data-testid="undefinedvar"]').invoke('text').then((availableText) => {
+            if (!(availableText == type)) {
+                cy.get('[data-testid="undefinedvar"]').click();
+                cy.get('.MuiListItem-button').contains(type).click();
+            }
+        })
+
+        cy.log('Creating variable: selected variable type');
+        cy.get('[value="variable"]').click().clear().type(name);
+
+        cy.log('Creating variable: added variable name');
+        cy.typeOnNthExpressionEditor(0, expression, false, "save-btn", validExpression);
+
+        if(validExpression){
+            cy.log("Creating variable: added variable expression");
+            cy.get('[data-testid="save-btn"]').click();
+            cy.get('[data-testid="diagram-loader"]').should('not.exist');
+            cy.checkSourceCodeForValidation(variableSourceFields);
+    
+            cy.log('Successfully created the variable with expression : ', expression);
         }
     })
-
-    cy.log('Creating variable: selected variable type');
-    cy.get('[value="variable"]').click().clear().type(name);
-
-    cy.log('Creating variable: added variable name');
-    cy.typeOnNthExpressionEditor(0, expression, false, "save-btn");
-
-    cy.log("Creating variable: added variable expression");
-    cy.get('[data-testid="save-btn"]').click();
-    cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(variableSourceFields);
-
-    cy.log('Successfully created the variable with expression : ', expression);
 }),
 
 Cypress.Commands.add('createLogProperty', (type: string, expression: string) => {
-    const variableSourceFields = "log:print(\"" + expression + "\");";
-    cy.log('Creating the log with expression : '+ expression);
-    cy.selectSpecificOption('addLog');
-    cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
-        if (!(availableText == type)) {
-            cy.get('[data-testid="Info"]').click();
-            cy.contains(type).click();
+    cy.get('body').then($body => {
+        const variableSourceFields = "log:print(\"" + expression + "\");";
+        cy.log('Creating the log with expression : '+ expression);
+        let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
+        if (!statementOptionsAvailable) {
+            cy.get('[id="SmallPlus"]').eq(0).click();
         }
+        cy.selectSpecificOption('addLog');
+        cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
+            if (!(availableText == type)) {
+                cy.get('[data-testid="Info"]').click();
+                cy.contains(type).click();
+            }
+        })
+    
+        cy.log('Creating log: added log type');
+        cy.typeOnNthExpressionEditor(0, expression, true, "log-save-btn");
+        cy.log("Creating log: added log expression");
+        cy.get('[data-testid="log-save-btn"]').click();
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.checkSourceCodeForValidation(variableSourceFields);
+        cy.log('Successfully created the log with expression : ', expression);
     })
-
-    cy.log('Creating log: added log type');
-    cy.typeOnNthExpressionEditor(0, expression, true, "log-save-btn");
-    cy.log("Creating log: added log expression");
-    cy.get('[data-testid="log-save-btn"]').click();
-    cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(variableSourceFields);
-    cy.log('Successfully created the log with expression : ', expression);
 }),
 
 Cypress.Commands.add('goBacktoAppsList', () => {

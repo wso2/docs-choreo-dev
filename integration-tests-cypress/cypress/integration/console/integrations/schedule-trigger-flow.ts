@@ -41,6 +41,29 @@ describe('Schedule trigger test run and deployment', () => {
         cy.createLogProperty("Info", "Hello world");
     })
 
+    it('check LS diagnostics in expression editor', () => {
+        const variable1Name = 'numVar';
+        cy.log('Creating integer variable');
+        cy.createVariableProperty('int', variable1Name, '1');
+        
+        cy.log('Assigning integer variable to string variable');
+        cy.createVariableProperty('string', 'stringVar', variable1Name, false);
+        
+        cy.log('Checking expression editor diagnostics is visible');
+        cy.get('[data-testid="expr-diagnostics"]').should('be.visible');
+        
+        cy.log('Updating the input with a valid expression');
+        cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(0).click().type('.toString()');
+        
+        cy.log('Checking expression editor diagnostics is not visible and save button is enabled');
+        cy.get('[data-testid="save-btn"').should('not.have.attr', 'disabled');
+        cy.get('[data-testid="expr-diagnostics"]').should('not.exist');
+
+        cy.log("Creating variable with valid expression");
+        cy.get('[data-testid="save-btn"]').click();
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    })
+
     it('run schedule trigger integration', () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click();
