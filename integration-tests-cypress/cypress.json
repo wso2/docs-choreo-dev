@@ -3,8 +3,15 @@
     "screenshotsFolder": "cypress/screenshots",
     "ignoreTestFiles": "**/examples/*.js",
     "chromeWebSecurity": false,
-    "baseUrl": "https://console.dv.choreo.dev",
     "reporter": "mochawesome",
+    "testFiles": [
+        "console/apis/*.ts",
+        "console/integrations/*.ts",
+        "console/services/*.ts",
+        "console/*.ts",
+        "devportal/*.ts",
+        "console/clean/clean-this-run.ts"
+    ],
     "reporterOptions": {
         "reportDir": "cypress/reports/mocha",
         "overwrite": false,
