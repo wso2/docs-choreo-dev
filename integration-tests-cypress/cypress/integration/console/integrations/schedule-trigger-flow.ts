@@ -32,7 +32,6 @@ describe('Schedule trigger test run and deployment', () => {
     })
 
     it('create schedule trigger integration app', () => {
-        cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
         cy.createNewApp(integrationsText, appName);
@@ -52,11 +51,12 @@ describe('Schedule trigger test run and deployment', () => {
 
     it('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
-        cy.log('Waiting 1 minute before checking whether the scheduler ran');
-        cy.wait(60000);
+        cy.log('Waiting 2 minutes before checking whether the scheduler ran');
+        cy.wait(120000);
+        cy.log('2 Minutes wait completed');
         cy.contains('button', 'Run & Test').click();
         cy.contains('button', 'Go Live').click();
-        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 600000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 60000}).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
