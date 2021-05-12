@@ -368,7 +368,7 @@ Applications sometimes need to check the availability of a header before proceed
 
 JSON is a common content type used for HTTP communication. The `request` variable’s `getJsonPayload` function can be used to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
 
-#### Examples
+#### Example
 
 - Reading the JSON Payload of the HTTP request.
 
@@ -380,7 +380,7 @@ JSON is a common content type used for HTTP communication. The `request` variabl
 
 Sometimes, content is sent as a string (plain text) with the HTTP request. The `request` variable’s `getTextPayload` function can be used to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
 
-#### Examples
+#### Example
 
 - Reading the Text Payload of the HTTP request.
 
@@ -410,7 +410,7 @@ Query parameters are used in an HTTP request to send additional inputs to consid
 
 HTTP cookies keep stateful information against a client. You can use the `request` variable's `getCookies` function to read cookies present in the request as an array.
 
-#### Examples
+#### Example
 
 - Reading all the cookies available in the request.
 
