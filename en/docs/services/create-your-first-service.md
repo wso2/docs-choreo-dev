@@ -71,7 +71,7 @@ To create the service, follow the procedure below:
         ```
         Then click **Save**.
     
-8. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
+8. To filter the dates on which the active cases have exceeded 5,000, let's add a statement of the `ForEach` type as follows: 
 
     1. Click the last **+** icon in your low-code diagram.
     
