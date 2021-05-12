@@ -395,9 +395,6 @@ Cypress.Commands.add('cleanupApp', (name: string) => {
 });
 
 Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
-    // Undeploy the app if active
-    cy.undeployApp(type, name, strict);
-
     // Check if apps are listed
     cy.get('[id="backdrop-loader"').should('not.exist');
     cy.get('body').then($body => {
@@ -440,6 +437,37 @@ Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) =
             }
 
             cy.resetAppSearch();
+        }
+    })
+}),
+
+Cypress.Commands.add('deleteAppWithoutUndeploy', (name: string, strict: boolean) => {
+    // Check if apps are listed
+    cy.get('[id="backdrop-loader"').should('not.exist');
+    cy.get('body', {timeout:30000}).then($body => {
+        let appExist = ($body.find('.MuiTableRow-root.MuiTableRow-hover').length > 0) ? true : false;
+        if (strict) {
+            expect(appExist).to.equal(true);
+        }
+
+        if (appExist) {
+            cy.searchApps(name);
+            cy.get('body').then($body => {
+                let appCount = $body.find('.MuiTableRow-root.MuiTableRow-hover').length
+                appExist = (appCount > 0) ? true : false;
+                if (strict) {
+                    expect(appCount).to.equal(1, 'Only one app should exists');
+                }
+            })
+
+            if (appExist) {
+                if (strict) {
+                    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', name);
+                }
+                cy.get('[style="color: inherit; width: 35%; box-sizing: border-box; font-size: 1rem; font-family: inherit; font-weight: inherit;"]').trigger('mouseover');
+                cy.get('[title="Undeploy the app to delete"]').should('exist');
+                cy.log("Cannot delete a deployed app");
+            } 
         }
     })
 }),
