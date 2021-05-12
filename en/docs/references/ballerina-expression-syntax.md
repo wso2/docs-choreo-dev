@@ -304,6 +304,7 @@ The `is` operator is used to assert the type of a variable.
 ### Numerical Value Comparisons
 
 The following operators are available in the expression editor for numeric value comparisons:
+
 - `<` (less than)
 - `>` (greater than)
 - `<=` (less than or equal to)
