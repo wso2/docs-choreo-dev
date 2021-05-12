@@ -255,7 +255,7 @@ You can use the  `%` operator to get the remainder of a division. The number val
 
 ### Checking The Equality of Basic Types 
 
-In the [Ballerina language](https://ballerina.io/), basic types are `string`, `int`, `float`, `decimal`, and `boolean`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or a variable. Similarly `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
+In the [Ballerina language](https://ballerina.io/), basic types are `string`, `int`, `float`, `decimal`, `boolean`, and `nil`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or a variable. Similarly `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
 
 #### Examples
 
