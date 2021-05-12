@@ -282,6 +282,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 Cypress.Commands.add('createLogProperty', (type: string, expression: string) => {
     const variableSourceFields = "log:print(\"" + expression + "\");";
     cy.log('Creating the log with expression : '+ expression);
+    cy.selectSpecificOption('addLog');
     cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
         if (!(availableText == type)) {
             cy.get('[data-testid="Info"]').click();
@@ -361,7 +362,7 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
                             cy.get('[data-testid="deploy"]').click();
                             cy.get('[id="backdrop-loader"').should('not.exist');
                             cy.contains('button', 'Stop').click();
-                            cy.contains('Stopping').should('not.exist');
+                            cy.contains('Stopping', {timeout: 120000}).should('not.exist');
                             cy.wait(30000);
                             cy.goBacktoAppsList();
 
@@ -512,40 +513,9 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
         cy.get('#deploy-button').click();
     }
 
-    if (type !== "schedule") {
-        cy.log('Starting initialization phase...');
-        cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]').should('exist');
-        cy.contains('Initialize').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
-        cy.get('[src="/images/failed.svg"]').should('not.exist');
-        cy.contains('Initialize').parent().siblings('[src="/images/check.svg"]').should('exist');
-        cy.log('Initialize phase successful!');
-
-        cy.log('Starting build phase...');
-        cy.contains('Build').parent().siblings('[src="/images/building.svg"]').should('exist');
-        cy.contains('Build').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
-        cy.get('[src="/images/failed.svg"]').should('not.exist');
-        cy.contains('Build').parent().siblings('[src="/images/check.svg"]').should('exist');
-        cy.log('Build phase successful!');
-
-        if (type == "integration") {
-            cy.log('Starting deploy phase...');
-            cy.get('#tabpanel-1').contains("Successfully deployed", {timeout: 60000}).should('exist');
-            cy.log('Deploy phase successful!');
-        } else {
-            cy.log('Starting deploy phase...');
-            cy.contains('Deploy').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
-            cy.log('Deploy phase successful!');
-
-            cy.log('Starting expose phase...');
-            cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 60000}).should('exist');
-            cy.log('Expose phase successful!');
-        }
-    }
-
-    if (type == "schedule") {
-        cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 600000}).should('exist');
-        cy.log('Deploy phase successful!');
-    }
+    cy.log('Awaiting 15 minutes for the deployment to complete');
+    cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 900000}).should('exist');
+    cy.log('Deployment successful!');
 }),
 
 /**
