@@ -59,8 +59,8 @@ Choreo supports the following trigger types:
  
  - **Salesforce**: To trigger an application based on topics in a Salesforce account. 
 
-## Connection
-A connection in Choreo allows you to connect to and interact with an external service through your application. You can use a connection to interact with generic protocol-based APIs and application-specific APIs.
+## API Call
+An API call in Choreo allows you to connect to and interact with an external service through your application. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
   
