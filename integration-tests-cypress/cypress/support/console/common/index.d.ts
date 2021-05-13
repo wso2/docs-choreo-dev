@@ -38,5 +38,6 @@ declare namespace Cypress {
         selectScheduleTrigger(): Chainable<Element>
         navigateFromHomePage(pageName: string): Chainable<Element>
         undeployAppViaRESTAPICall(appName: string): Chainable<Element>
+        cleanOnPremKey(keyName: string): Chainable<Element>
     }
 }

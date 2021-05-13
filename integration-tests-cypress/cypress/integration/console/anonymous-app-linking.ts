@@ -48,7 +48,7 @@ describe('anonymous-app-linking', () => {
                 cy.log("Successfully linked the app");
             });
         });
-        cy.visit("/");
+        cy.visit(Cypress.env("baseUrl"));
         cy.cleanupApp(appName);
     });
 });

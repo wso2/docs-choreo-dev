@@ -14,6 +14,7 @@
 import { DAY } from './constants';
 
 export const appNamePrefix = 'a' + Date.now();
+export const keyNamePrefix = 'K' + Date.now();
 
 /**
  * Create name for app.
@@ -33,11 +34,20 @@ export const generateApiName = (name: string) => {
     return appNamePrefix + name;
 }
 
+/**
+ * Create name for on-prem key.
+ *
+ * @returns true name for a new on-prem key
+ */
+export const generateKeyName = (name: string) => {
+    return keyNamePrefix + name;
+}
+
 export const normalizeText = (s: string) => {
     return s.replace(/\s+/g, '\u00a0')
 }
 
-export const isOldApp = (name: string) => {
+export const isOldValue = (name: string) => {
     if (name.length > 13) {
         let timestamp = Number(name.substring(1,14));
         if (!isNaN(timestamp)) {

@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { isOldApp, appNamePrefix } from '../../../support/common/utils';
+import { isOldValue, appNamePrefix, keyNamePrefix } from '../../../support/common/utils';
 
 /// <reference types="cypress" />
 
@@ -36,12 +36,28 @@ describe('Cleaning up', () => {
             const data = response["body"];
             for (const value of data) {
                 let appName = value["name"];
-                if (isOldApp(appName) || appName.startsWith(appNamePrefix)) {
+                if (isOldValue(appName) || appName.startsWith(appNamePrefix)) {
                     let status = String(value['status']);
                     if (status == "running") {
                         cy.undeployAppViaRESTAPICall(appName);
                     }
                     cy.cleanupApp(appName);
+                }
+            }
+        })
+    })
+
+    it('Delete On-prem keys that are old or created by this run', () => {
+        cy.request({
+            method: "GET",
+            form: true,
+            url: `${appSvcUrl}/orgs/${orgName}/keys/`
+        }).then((response) => {
+            const data = response["body"];
+            for (const value of data) {
+                let keyName = value["displayName"];
+                if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
+                    cy.cleanOnPremKey(keyName);
                 }
             }
         })

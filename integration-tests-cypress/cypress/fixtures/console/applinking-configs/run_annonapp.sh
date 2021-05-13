@@ -1,5 +1,5 @@
 #!/bin/sh
-cd cypress/applinking-configs &&
+cd cypress/fixtures/console/applinking-configs &&
 docker container run --rm -v "$(pwd)":/home/ballerina -u "$(id -u)":"$(id -g)" -e JAVA_OPTS="-Duser.home=/home/ballerina" ballerina/ballerina:swan-lake-alpha2 bal build --observability-included &&
 rm -f Config.toml .choreoproject &&
 sed 's|<REPORTER_HOST_NAME>|'"$REPORTER_HOST_NAME"'|' Config.template.toml > Config.toml &&

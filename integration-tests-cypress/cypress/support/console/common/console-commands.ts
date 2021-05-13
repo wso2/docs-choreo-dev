@@ -552,7 +552,7 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
  *
  * @param pageName - page name that needs to be loaded
  */
- Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
+Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
     const pageNameArray = [MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT, SETTINGS_TEXT];
     let pathName = pageName;
     if (pageName == SETTINGS_TEXT) {
@@ -585,3 +585,15 @@ Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
         cy.log("Successfully undeployed the app: " + appName);
     });
 })
+
+Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    cy.log("Cleaning up on-prem key: " + keyName);
+    cy.request("POST",`${appSvcUrl}/orgs/${orgName}/keys/${keyName}/revoke`).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(200);
+        cy.log("Successfully cleaned up the on-prem key: " + keyName);
+    });
+});
