@@ -47,7 +47,7 @@ describe('Cleaning up', () => {
         })
     })
 
-    it('Delete On-prem keys that are old or created by this run', () => {
+    it('delete on-prem keys that are old or created by this run', () => {
         cy.request({
             method: "GET",
             form: true,
