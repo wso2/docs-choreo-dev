@@ -8,7 +8,7 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-93d60fda84d07f4b5d758e72e1deff562ca0eca1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
-  newTag: master-ea49bc26b336323340e69c4577326b6afc2ea305
+  newTag: master-f0926fda45bd064a1b9629439171da8a5b8877ba
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-8fd073fdf2412a71c332320e6defddd491dda3d5
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-api
