@@ -15,7 +15,7 @@
 
 describe('login-logout flow', () => {
 
-    it('login-logout flow with gmail', () => {
+    it.skip('login-logout flow with gmail', () => {
         cy.log("Logging into Choreo using google");
         cy.userLoginWithGmail();
         cy.get('.user-profile-name').should('exist');
