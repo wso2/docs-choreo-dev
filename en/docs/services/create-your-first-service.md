@@ -10,7 +10,7 @@ To create the service, follow the procedure below:
     
 2. Sign in using either your Google or GitHub credentials.
     
-3. In the **Services** page, click **Create**. You are directed to the low-code view
+3. In the **Services** page, click **Create**. You are directed to the low-code view.
 
 4. Under **Create with Choreo**, enter `covid-stats` as the name of your service.
 
