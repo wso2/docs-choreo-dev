@@ -19,3 +19,4 @@ export const APIS_TEXT = 'apis';
 export const DEVOPS_TEXT = 'devops';
 export const SETTINGS_TEXT = 'settings';
 export const SETTINGS_PATH = 'user-settings/organization/members';
+export const dataMapperTestURL = 'https://datamapper.choreo.dev';
