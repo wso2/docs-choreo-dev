@@ -32,7 +32,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
     })
 
-    it('create schedule trigger integration app', () => {
+    it.skip('create schedule trigger integration app', () => {
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
@@ -41,7 +41,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.createLogProperty("Info", "Hello world");
     })
 
-    it('run schedule trigger integration', () => {
+    it.skip('run schedule trigger integration', () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click();
         cy.log('Started test run');
@@ -50,7 +50,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Schedule trigger printed the log successfully');
     })
 
-    it('deploy schedule trigger integration', () => {
+    it.skip('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
         cy.log('Waiting 2 minutes before checking whether the scheduler ran');
         cy.wait(120000);
