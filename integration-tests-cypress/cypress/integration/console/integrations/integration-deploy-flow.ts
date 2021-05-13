@@ -28,14 +28,14 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements","addLog");
         cy.createLogProperty("Info", "Hello World");
-    }),
+    })
 
     after(() => {
         cy.goBacktoAppsList();
         cy.undeployApp("integration", appName, true);
         cy.deleteApp("integration", appName, true);
         cy.userLogout();
-    }),
+    })
 
     it.skip('test-run and deploy integration', () => {
         const loadRunTxt = "Running...";
@@ -49,4 +49,57 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.deployToChoreo("integration", appName);
         cy.get('#tabpanel-1').contains("Successfully deployed").should('exist');
     });
+});
+
+describe('Sample app test run and deployment', () => {
+    let appName:string
+
+    before(() => {
+        cy.log("Login into Choreo using Google");
+        cy.consoleUserLogin();
+    })
+
+    after(() => {
+        cy.goBacktoAppsList();
+        cy.cleanupApp(appName);
+        cy.userLogout();
+    })
+
+    it('test-run and deploy integration', () => {
+        let appSvcUrl = Cypress.env("appSvcURL");
+        let orgName = Cypress.env("selectedOrgHandle");
+        //This is the post call we are interested in capturing
+        cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps`).as('templateCall');
+
+        cy.navigateFromHomePage(INTEGRATIONS_TEXT);
+        cy.get('#try-out-samples-btn').should('exist').click();
+        cy.log("Samples page loaded successfully");
+        cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({force:true});
+
+        cy.wait('@templateCall',{timeout:30000}).then((interception) => {
+            appName = interception.response.body[`name`];
+            cy.log("Selected sample application with name: " + appName);
+            cy.waitTillWorkSpace();
+            cy.get('.diagram-canvas').should('exist');
+            cy.fillCalendarConfigs("test.user.choreo@gmail.com");
+            cy.fillTwilioConfigs("ACat9e5d3a348126a5fcabb03a03f1a1bb", "d976402933e8a4143015c4499e971a65", "+94786941431", "+94743149897");
+            cy.contains('Save').should('be.visible').click();
+
+            cy.get('#deploy-button').should('exist');
+            cy.get('#deploy-button').click();
+            cy.log('Deploying application...');
+            cy.contains('Starting').should('exist');
+            cy.contains('Initialize').parent().siblings('[src="/images/check.svg"]').should('exist');
+            cy.contains('Build').parent().siblings('[src="/images/check.svg"]').should('exist');
+            cy.contains('Deploy').parent().siblings('[src="/images/building.svg"]').should('exist');
+            cy.contains('Deploy').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+            cy.contains('Starting').should('not.exist');
+            cy.contains('Started').should('exist');
+            cy.log("Successfully deployed");
+            cy.get('#stop-button').should('exist').click();
+            cy.contains('Stopping').should('not.exist');
+            cy.log("Successfully un-deployed");
+            cy.get('#deploy-button').should('exist');
+        });
+    })
 });

@@ -185,6 +185,42 @@ Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionI
     cy.log("Configuration set to send Gmail message");
 }),
 
+/**
+ * Fill google calendar config form of prebuilt integrations
+ *
+ * @param calender - Calendar name
+ */
+Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
+    cy.log("Filling the calendar configuration");
+
+    // Selecting the manually added calendar connection (user - testuser-choreo)
+    cy.contains('Google Calendar Connection #1').click();
+    cy.get('[placeholder="Choose Calendar"]').siblings().children().get('.MuiAutocomplete-popupIndicator').click();
+    cy.get('#combo-box-demo-popup').should('exist');
+    cy.get('#combo-box-demo-popup').children().contains(calendar).click({force:true});
+    cy.get('[placeholder="Choose Calendar"]').should('have.value',calendar)
+    cy.log("Completed filling calendar configuration");
+})
+
+
+/**
+ * Fill twilio config form of prebuilt integrations
+ *
+ * @param accountSID - Twilio account SIO
+ * @param token - Twilio auth token
+ * @param senderNumber - SMS Sender's Phone Number
+ * @param recipientNumber - SMS Recipient's Phone Number
+ */
+Cypress.Commands.add('fillTwilioConfigs', (accountSID: string, token: string, senderNumber: string, recipientNumber: string) => {
+    cy.log("Filling the twilio configuration");
+
+    cy.get('[placeholder="Twilio Account SID"]').type(accountSID);
+    cy.get('[placeholder="Twilio Auth Token"]').type(token);
+    cy.get('[placeholder="SMS Sender\'s Phone Number"]').type(senderNumber);
+    cy.get('[placeholder="SMS Recipient\'s Phone Number"]').type(recipientNumber);
+    cy.log("Completed filling twilio configuration");
+})
+
 Cypress.Commands.add('selectManualTrigger', () => {
     const code = `public function main() returns error? { }`;
     cy.waitTillWorkSpace();
