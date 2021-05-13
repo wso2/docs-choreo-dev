@@ -19,7 +19,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
     let appName: string
 
     before(() => {
-        cy.log("Login into Choreo using Google");
+        cy.log("Login into Choreo using Github");
         cy.consoleUserLogin();
         appName = generateAppName("app");
         cy.log('app name: ', appName);
@@ -51,11 +51,11 @@ describe('Integrations test run and deployment from scratch', ()=>{
     });
 });
 
-describe('Sample app test run and deployment', () => {
+describe('Prebuilt integration test run and deployment', () => {
     let appName:string
 
     before(() => {
-        cy.log("Login into Choreo using Google");
+        cy.log("Login into Choreo using Github");
         cy.consoleUserLogin();
     })
 
@@ -73,12 +73,12 @@ describe('Sample app test run and deployment', () => {
 
         cy.navigateFromHomePage(INTEGRATIONS_TEXT);
         cy.get('#try-out-samples-btn').should('exist').click();
-        cy.log("Samples page loaded successfully");
+        cy.log("Prebuilt integrations page loaded successfully");
         cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({force:true});
 
         cy.wait('@templateCall',{timeout:30000}).then((interception) => {
             appName = interception.response.body[`name`];
-            cy.log("Selected sample application with name: " + appName);
+            cy.log("Selected prebuilt integration with name: " + appName);
             cy.waitTillWorkSpace();
             cy.get('.diagram-canvas').should('exist');
             cy.fillCalendarConfigs("test.user.choreo@gmail.com");
