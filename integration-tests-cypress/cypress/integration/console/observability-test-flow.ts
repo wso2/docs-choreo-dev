@@ -68,7 +68,7 @@ describe('Observability tests', () => {
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
-        cy.visit('/observe/app/' + obsId + '/' + version + '?isSample=true');
+        cy.visit(Cypress.env("baseUrl") + '/observe/app/' + obsId + '/' + version + '?isSample=true');
     });
 
     afterEach(() => {
