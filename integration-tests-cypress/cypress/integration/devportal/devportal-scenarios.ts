@@ -17,7 +17,7 @@ import { generateAppName } from "../../support/common/utils";
 
 describe('Devportal', () => {
     const appName = generateAppName('-e2etest');
-    const apiName = 'e2eTestApiDev';
+    const apiName = 'e2eTestDvApi';
 
     beforeEach(() => {
         cy.devportalLogin();
