@@ -11,10 +11,12 @@
  * associated services.
  */
 
+import { APIS_TEXT, SERVICES_TEXT } from '../../../support/common/constants';
+
 describe('API creation from choreo service', () => {
     let serviceName: string;
 
-    beforeEach(() => {
+    before(() => {
         cy.log("Login to Choreo using github");
         cy.consoleUserLogin();
     });
@@ -24,7 +26,7 @@ describe('API creation from choreo service', () => {
         const orgName = Cypress.env("selectedOrgHandle");
 
         cy.log("Starting API creation using choreo service");
-        cy.navigateFromHomePage("services");
+        cy.navigateFromHomePage(SERVICES_TEXT);
 
         // Intercepting the service creation call to capture the randomized service name
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`).as('createService');
@@ -47,7 +49,7 @@ describe('API creation from choreo service', () => {
             cy.wait(30000);
 
             cy.goBacktoAppsList();
-            cy.navigateFromHomePage("apis");
+            cy.navigateFromHomePage(APIS_TEXT);
             cy.searchApiFromListAndVisit(apiName);
             cy.verifyApiOverview(apiName, "1.0.0");
             cy.updateRuntimeConfiguration(true);
@@ -68,9 +70,9 @@ describe('API creation from choreo service', () => {
         });
     });
 
-    afterEach(() => {
-        cy.undeployAppViaRest(serviceName);
-        cy.cleanupApp("service", serviceName ,false);
+    after(() => {
+        cy.undeployAppViaRESTAPICall(serviceName);
+        cy.cleanupApp(serviceName);
         cy.log("Logout from Choreo");
         cy.userLogout();
     });
