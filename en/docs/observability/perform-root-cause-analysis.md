@@ -53,10 +53,10 @@ Follow the steps below.
 
 The latency graph shows the latencies of each request.
 
-With the sample data, you can observe spikes in the latency graph. By analyzing the latency graph, you can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors. 
+With the sample data, you can observe spikes in the latency graph. You can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors by analyzing the latency graph. 
 ![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png)
 
-Follow the steps below to learn how to analyze the latency graph.
+Follow the steps below.
 
 1. Hover over the latency graph and click on a high point.
    
