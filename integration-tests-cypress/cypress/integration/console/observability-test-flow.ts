@@ -108,6 +108,9 @@ describe('Observability tests', () => {
     })
 
     it('test observability overview', () => {
+        const employeeInfoNotFoundLog = 'employee information not found in the hr-service';
+        const httpStatusCodeRegexp = /[1-5]\d{2}/;
+        const responseTimeRegexp = /\d+\sms/;
         let d;
         let prevY
         let finalX
@@ -118,10 +121,14 @@ describe('Observability tests', () => {
         cy.get('[data-testid="preloader"]').should('not.exist');
         cy.get('.metrics-text').contains('100% Success', {timeout: 600000}).should('exist');
 
+        cy.log('Asserting the default log panel');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLog, {timeout: 600000}).should('exist');
+
         cy.get('[data-testid="histogram-throughput"]').get('g.recharts-layer.recharts-area').should('exist');
         cy.get('[data-testid="histogram-response-time"]').get('g.recharts-layer.recharts-area').should('exist');
 
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
+            cy.log('Getting coordinates to click on the latency graph');
             d = $path.attr('d');
             d = d.replace('Z', '')
             const newD = d.split("L")
@@ -138,8 +145,23 @@ describe('Observability tests', () => {
             cy.get('[data-testid="histogram-throughput"]').find('svg').click(Math.round(finalX), Math.round(finalY));
             cy.get('[data-testid="preloader"]').should('not.exist');
 
+            cy.log('Asserting the log panel after clicking on the graph');
+            cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLog, {timeout: 600000}).should('not.exist');
+
+            cy.log('Asserting the request list');
             cy.get('[data-testid="request-table"]').should('be.visible');
-            cy.get('[data-testid="log-panel"]').should('be.visible');
+            cy.get('[data-testid="request-information"]').its('length').should('be.gte', 1);
+
+            cy.get('[data-testid="request-information"]').eq(0).find('div>div').then(($elements) => {
+                expect($elements[0].textContent).to.match(responseTimeRegexp);
+                expect($elements[1].textContent).to.contain(':');
+                expect($elements[2].textContent).to.be.empty;
+            });
+            cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
+                expect($elements[0].textContent).to.match(responseTimeRegexp);
+                expect($elements[1].textContent).to.contain(':');
+                expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
+            });
          });
     })
 })
