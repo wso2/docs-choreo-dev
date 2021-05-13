@@ -9,7 +9,7 @@ A service in Choreo is a logical representation of a repeatable activity that ha
 A service sample in Choreo is a prebuilt service that performs a specific activity. Choreo provides a comprehensive set of service samples for you to clone, edit, and try out, depending on your requirement. 
 
 ## API Call
-An API call in Choreo allows you to connect to and interact with an external service through your service. You can use an API call to interact with generic protocol-based APIs and service-specific APIs.
+An API call in Choreo allows you to connect to and interact with an external service through your service. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
   
@@ -18,7 +18,7 @@ Following are the connections you can use to interact with generic protocol-base
  - **POP3**: To receive emails from a POP3 email server.  
  - **IMAP**: To receive emails from any email server that supports the IMAP protocol. 
 
-Following are the connections you can use to interact with service-specific APIs:
+Following are the connections you can use to interact with application-specific APIs:
 
  - **Twilio**: To interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.
  - **Slack**: To interact with the Slack API and perform required operations. 
