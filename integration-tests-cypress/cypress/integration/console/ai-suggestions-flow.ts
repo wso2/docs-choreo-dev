@@ -33,19 +33,16 @@ describe('Data Mapper AI suggestion', () => {
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("test");
+        cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click();
-        cy.get('[id=Plus_a]').eq(0).click({force: true});
         cy.get('[data-testid="api-options"]').click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
         cy.get('body').type('{enter}', {force: true});
-        cy.contains('label', 'GET').click();
         cy.get('[data-testid="http-save-next"]').click();
-        cy.contains('No Payload').click();
-        cy.get('[data-testid="http-save-done"]').click();
         cy.log("HTTP connector added successfully!");
 
         cy.get('[data-testid="diagram-loader"]').should('not.exist');

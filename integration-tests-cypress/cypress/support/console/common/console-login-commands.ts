@@ -177,6 +177,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                         isAuthenticated: true,
                         isAuthInProgress: false,
                         selectedOrgHandle: selectedOrgHandle,
+                        isOrgAdmin: true,
                         user: {
                             name: name,
                             email: email,
