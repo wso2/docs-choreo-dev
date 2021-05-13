@@ -11,5 +11,7 @@ images:
   newTag: master-811951c812b9f2035e9ceffad79197bb1e6780b9
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-8fd073fdf2412a71c332320e6defddd491dda3d5
+- name: choreoctrlplane.azurecr.io/choreoipaas/email-service
+  newTag: master-45e7f86e3b906888e221b77f8964fd39c87b96c3
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-api
   newTag: master-b80b9d373d03fd7b9acc4e5621d6548c07c647ce
