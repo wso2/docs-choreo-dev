@@ -27,6 +27,7 @@ declare namespace Cypress {
         goBacktoAppsList(): Chainable<Element>
         searchApps(name: string): Chainable<Element>
         resetAppSearch(): Chainable<Element>
+        undeployAppViaRest(appName: string): Chainable<Element>
         undeployApp(type:string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type:string, name: string, strict: boolean): Chainable<Element>
         cleanupApp(type:string, name: string, strict: boolean): Chainable<Element>

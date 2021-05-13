@@ -392,6 +392,21 @@ Cypress.Commands.add('cleanupApp', (type:string, name: string, strict: boolean) 
     });
 });
 
+Cypress.Commands.add('undeployAppViaRest', (appName: string) => {
+    let appSvcUrl = Cypress.env("appSvcURL");
+    let orgName = Cypress.env("selectedOrgHandle");
+
+    cy.request({
+        method: "POST",
+        url: `${appSvcUrl}/orgs/${orgName}/apps/${appName}/undeploy`,
+        timeout: 60000,
+        failOnStatusCode: false
+    }).then((resp) => {
+        expect(resp.status).to.eq(200);
+        cy.log("Successfully un-deployed the service: " + appName);
+    });
+});
+
 Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
     // Undeploy the app if active
     cy.undeployApp(type, name, strict);
