@@ -10,9 +10,12 @@ Performing root cause analysis is crucial in identifying and rectifying the unde
 1. Go to **Services** from the left navigation.
 2. Create a new service.
     1. **If this is your first service**, 
+    
            1. Enter a name for the service and click **Create**. 
-           ![Create a new service](../assets/img/observability/first-service-creation.png)                        
+           ![Create a new service](../assets/img/observability/first-service-creation.png)    
+                               
     2. **Else** (if you already have services created), 
+    
            1. Click **+ Create** to start creating a new service.
            2. Enter a name for the service and click **Create**.
            ![Create a new service](../assets/img/observability/service-creation.png)
