@@ -37,7 +37,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.userLogout();
     }),
 
-    it('test-run and deploy integration', () => {
+    it.skip('test-run and deploy integration', () => {
         const loadRunTxt = "Running...";
 
         cy.testRunApp();
