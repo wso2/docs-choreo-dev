@@ -12,8 +12,8 @@
  */
 import { generateAppName } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
-import {datamapperRequestBody} from '../../../fixtures/console/ai/datamapper-service-call-test-contants'
-import {datamapperExpectedResponseBody} from '../../../fixtures/console/ai/datamapper-service-call-test-contants'
+import {datamapperRequestBody} from '../../../fixtures/console/ai/datamapper-service-call-data'
+import {datamapperExpectedResponseBody} from '../../../fixtures/console/ai/datamapper-service-call-data'
 import {dataMapperTestURL} from '../../../support/common/constants'
 
 /// <reference types="cypress" />
