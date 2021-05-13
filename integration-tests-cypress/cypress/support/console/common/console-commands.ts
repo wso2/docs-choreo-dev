@@ -195,7 +195,6 @@ Cypress.Commands.add('selectManualTrigger', () => {
 }),
 
 Cypress.Commands.add('selectScheduleTrigger', () => {
-    const code = `public function main() returns error? { }`;
     cy.waitTillWorkSpace();
     cy.get('.trigger-wrapper').contains('Schedule').click();
     cy.get('[data-testid="undefinedMinute"]').invoke('text').then((availableText) => {
@@ -208,7 +207,6 @@ Cypress.Commands.add('selectScheduleTrigger', () => {
     cy.get('.MuiInputBase-input.MuiInput-input').eq(1).click().clear().type("1");
     cy.contains('button', 'Save').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(code);
     cy.log("selected & configured schedule trigger");
 }),
 
@@ -557,8 +555,8 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
         cy.get('#deploy-button').click();
     }
 
-    cy.log('Awaiting 15 minutes for the deployment to complete');
-    cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 900000}).should('exist');
+    cy.log('Awaiting 5 minutes for the deployment to complete');
+    cy.get('#tabpanel-1').contains("Recent Logs",{timeout: 300000}).should('exist');
     cy.log('Deployment successful!');
 }),
 

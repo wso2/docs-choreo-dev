@@ -75,19 +75,16 @@ describe('Schedule trigger test run and deployment', () => {
 
     it('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
-        cy.log('Waiting 2 minutes before checking whether the scheduler ran');
-        cy.wait(120000);
-        cy.log('2 Minutes wait completed');
-        cy.contains('button', 'Run & Test').click();
-        cy.contains('button', 'Go Live').click();
-        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 60000}).should('exist');
+        cy.log('Wait maximum of 90 seconds to check if the expected log is printed');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 90000}).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.deleteApp("schedule", appName, true);
-        cy.userLogout()
+        cy.undeployApp("integration", appName, true);
+        cy.deleteApp("integration", appName, true);
+        cy.userLogout();
     })
     
 })
