@@ -64,7 +64,7 @@ Follow the steps below.
         You can expand the graph by clicking and dragging the cursor over the period you want to drill down.
         
 2. Observe the latencies of each request listed in the low-code diagram.
-3. Click on one request shown on the low code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
+3. Click on one request shown on the low-code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
 
 ### Step 2: Drill into the analytics
 The Diagnostics view provides the capability to view errors, throughputs, latencies, CPU usage, memory usage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
