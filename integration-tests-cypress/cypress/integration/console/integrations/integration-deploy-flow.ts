@@ -47,6 +47,5 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.log('Expression is logged successfully');
 
         cy.deployToChoreo("integration", appName);
-        cy.get('#tabpanel-1').contains("Successfully deployed").should('exist');
     });
 });

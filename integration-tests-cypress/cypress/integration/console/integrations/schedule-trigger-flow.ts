@@ -38,15 +38,18 @@ describe('Schedule trigger test run and deployment', () => {
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Schedule");
+        cy.selectManualTriggerOptions("Statements","addLog");
         cy.createLogProperty("Info", "Hello world");
     })
 
     it('check LS diagnostics in expression editor', () => {
         const variable1Name = 'numVar';
         cy.log('Creating integer variable');
+        cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty('int', variable1Name, '1');
         
         cy.log('Assigning integer variable to string variable');
+        cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty('string', 'stringVar', variable1Name, false);
         
         cy.log('Checking expression editor diagnostics is visible');
@@ -75,8 +78,8 @@ describe('Schedule trigger test run and deployment', () => {
 
     it('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
-        cy.log('Wait maximum of 90 seconds to check if the expected log is printed');
-        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 90000}).should('exist');
+        cy.log('Awaiting 2 minutes to check if the expected log is printed');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 120000}).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
