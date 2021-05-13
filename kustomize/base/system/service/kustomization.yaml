@@ -2,4 +2,5 @@ resources:
   - testbase.yaml
   - obsapi.yaml
   - frontend.yaml
+  - email-service.yaml
 
