@@ -16,7 +16,7 @@ import { SETTINGS_TEXT } from '../../support/common/constants';
 /// <reference types="cypress" />
 
 describe('Invite members', () => {
-    const memberEmail = Cypress.env('username');
+    const memberEmail = Cypress.env('invitationEmail');
 
     before(() => {
         cy.log("Login into Choreo")
