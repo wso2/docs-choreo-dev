@@ -131,7 +131,7 @@ Cypress.Commands.add('userLogout', () => {
 })
 
 Cypress.Commands.add('consoleUserLogin', () => {
-    cy.visit('/');
+    cy.visit(Cypress.env('baseUrl'));
     const testURL = Cypress.env('testURL');
     const idpURL = Cypress.env('idpURL');
     const idpUsername = Cypress.env('idpUsername');
@@ -178,6 +178,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                         isAuthenticated: true,
                         isAuthInProgress: false,
                         selectedOrgHandle: selectedOrgHandle,
+                        isOrgAdmin: true,
                         user: {
                             name: name,
                             email: email,
@@ -205,7 +206,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                 }
             })
 
-            cy.visit('/');
+            cy.visit(Cypress.env('baseUrl'));
         })
     } catch (err) {
         throw new Error("Retrieving Access token failed : " + err);

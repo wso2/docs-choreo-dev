@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { generateAppName, integrationsText } from '../../../support/common/utils';
+import { generateAppName } from '../../../support/common/utils';
+import { INTEGRATIONS_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -31,17 +32,16 @@ describe('Schedule trigger test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
     })
 
-    it('create schedule trigger integration app', () => {
-        cy.preserveCookiesForTest(savedCookies);
+    it.skip('create schedule trigger integration app', () => {
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
-        cy.createNewApp(integrationsText, appName);
+        cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Schedule");
         cy.createLogProperty("Info", "Hello world");
     })
 
-    it('run schedule trigger integration', () => {
+    it.skip('run schedule trigger integration', () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click();
         cy.log('Started test run');
@@ -50,13 +50,14 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Schedule trigger printed the log successfully');
     })
 
-    it('deploy schedule trigger integration', () => {
+    it.skip('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
-        cy.log('Waiting 1 minute before checking whether the scheduler ran');
-        cy.wait(60000);
+        cy.log('Waiting 2 minutes before checking whether the scheduler ran');
+        cy.wait(120000);
+        cy.log('2 Minutes wait completed');
         cy.contains('button', 'Run & Test').click();
         cy.contains('button', 'Go Live').click();
-        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 600000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 60000}).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 

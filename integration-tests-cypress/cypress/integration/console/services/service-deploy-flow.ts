@@ -10,11 +10,12 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName, servicesText } from '../../../support/common/utils';
+import { generateAppName } from '../../../support/common/utils';
+import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
-describe('Service test run and deployment', () => {
+describe('Service test run and postman view', () => {
     let savedCookies
     let appName: string
 
@@ -34,7 +35,7 @@ describe('Service test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(servicesText, appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello");
         cy.selectManualTriggerOptions("Statements", "addVariable");
@@ -44,6 +45,7 @@ describe('Service test run and deployment', () => {
 
     afterEach(() => {
         cy.goBacktoAppsList();
+        cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
     });
 
@@ -74,20 +76,8 @@ describe('Service test run and deployment', () => {
         cy.get('[data-testid="api-key"]').type('dummyapikey');
         cy.get('[data-testid="api-key-error"]').should('exist');
         cy.log('Test phase successful!');
-    });
-
-    it('deploy hello world service', () => {
-        cy.deployToChoreo("service", appName);
-        cy.get('[data-testid="prod-url"]').invoke('text').then((appURL) => {
-            expect(appURL).not.to.equal('');
-            cy.log("test url: ", appURL);
-            expect(appURL).to.contain('https://');
-            cy.callExternalEndpoint((appURL + "/hello"), 3, "hello world");
-            cy.log('Hello world string recieved successfully!');
-            cy.log('Successfully invoked the deployed hello world service');
-        });
-    });
-});
+    })
+})
 
 describe('Test successful deployment of sample services', ()=>{
     let appName: string
@@ -99,7 +89,7 @@ describe('Test successful deployment of sample services', ()=>{
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.cleanupApp("service",appName,false);
+        cy.cleanupApp(appName);
         cy.userLogout();
     }),
 

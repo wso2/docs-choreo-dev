@@ -11,7 +11,8 @@
  * associated services.
  */
 
-import { generateAppName, servicesText } from '../../support/common/utils';
+import { generateAppName } from '../../support/common/utils';
+import { SERVICES_TEXT } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -29,22 +30,19 @@ describe('Data Mapper AI suggestion', () => {
         cy.log("Starting Data Mapper Low code form AI suggestion test...");
         const appName = generateAppName("datamapper");
         const urlName = "url"
-        cy.createNewApp(servicesText, appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("test");
+        cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click();
-        cy.get('[id=Plus_a]').eq(0).click({force: true});
         cy.get('[data-testid="api-options"]').click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
         cy.get('body').type('{enter}', {force: true});
-        cy.contains('label', 'GET').click();
         cy.get('[data-testid="http-save-next"]').click();
-        cy.contains('No Payload').click();
-        cy.get('[data-testid="http-save-done"]').click();
         cy.log("HTTP connector added successfully!");
 
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
@@ -52,6 +50,7 @@ describe('Data Mapper AI suggestion', () => {
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
         cy.goBacktoAppsList();
+        cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
     })
 })

@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import {generateAppName, integrationsText } from "../../../support/common/utils";
+import { generateAppName } from "../../../support/common/utils";
+import { INTEGRATIONS_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -22,7 +23,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.consoleUserLogin();
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp(integrationsText, appName);
+        cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements","addLog");
@@ -31,11 +32,12 @@ describe('Integrations test run and deployment from scratch', ()=>{
 
     after(() => {
         cy.goBacktoAppsList();
+        cy.undeployApp("integration", appName, true);
         cy.deleteApp("integration", appName, true);
         cy.userLogout();
     }),
 
-    it('test-run and deploy integration', () => {
+    it.skip('test-run and deploy integration', () => {
         const loadRunTxt = "Running...";
 
         cy.testRunApp();

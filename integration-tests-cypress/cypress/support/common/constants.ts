@@ -11,15 +11,12 @@
  * associated services.
  */
 
-/// <reference types="cypress" />
-
-describe('login-logout flow', () => {
-
-    it.skip('login-logout flow with gmail', () => {
-        cy.log("Logging into Choreo using google");
-        cy.userLoginWithGmail();
-        cy.get('.user-profile-name').should('exist');
-
-        cy.userLogout();
-    })
-})
+export const DAY = 86400000;
+export const MARKETPLACE_TEXT = 'marketplace';
+export const INTEGRATIONS_TEXT = 'integrations';
+export const SERVICES_TEXT = 'services';
+export const APIS_TEXT = 'apis';
+export const DEVOPS_TEXT = 'devops';
+export const SETTINGS_TEXT = 'settings';
+export const SETTINGS_PATH = 'user-settings/organization/members';
+export const dataMapperTestURL = 'https://datamapper.choreo.dev';
