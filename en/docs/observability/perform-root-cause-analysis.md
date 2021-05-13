@@ -65,7 +65,7 @@ Follow the steps below to learn how to analyze the latency graph.
 3. Click on one request shown on the low code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
 
 ### Step 2: Drill into the analytics
-The Diagnostics view provides the capability to view errors, throughputs, latencies, CPU, memory useage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
+The Diagnostics view provides the capability to view errors, throughputs, latencies, CPU usage, memory usage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
 
 ![Diagnostic View](../assets/img/observability/diagnostics-view.png)
 
