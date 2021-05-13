@@ -10,7 +10,7 @@
 
 openapi: 3.0.1
 info:
-  title: e2eTest_open_api_dv
+  title: e2eTestOpenApiDev
   contact:
     name: Test User
     email: test.user.choreo@gmail.com
