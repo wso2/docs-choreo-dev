@@ -32,7 +32,7 @@
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
            <div class="cIconContainer">
-          <img style= "height: 120px;" src="assets/img/home/api.svg"/>
+          <img style= "height: 115px;" src="assets/img/home/api.svg"/>
 	  <BR><BR><BR>	
           <h3>Manage APIs</h3>
            <a href="apis/create-and-publish-your-first-api/">Learn More</a>
