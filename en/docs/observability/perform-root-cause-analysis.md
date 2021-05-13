@@ -32,9 +32,9 @@ You can detect the anomalies of the usage of a service by observing the **Throug
 ### Step 1: Detect the anomalies
 
 #### Analyze the throughput graph
-The throughput graph will show the throughputs of requests per hour for a selected timestamp. 
+The throughput graph shows the throughput of requests per hour for a selected timestamp. 
 
-With the sample data, you will observe spikes in the throughput graph.  You can find the root cause for this by learning how to analyze the throughput graph.
+With the sample data, you can observe spikes in the throughput graph.  You can find the root cause for this by learning how to analyze the throughput graph.
 
 Follow the steps below. 
 
@@ -45,7 +45,7 @@ Follow the steps below.
         
 2. Click the graph on a high point.
 3. Observe the logs in the logs panel.
-4. Note multiple logs are mentioning a connection error with the hr-service.
+4. Note multiple logs are mentioning a connection error with the `hr-service`.
  
 ![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png)
  
@@ -53,7 +53,7 @@ Follow the steps below.
 
 The latency graph shows the latencies of each request.
 
-With the sample data, you will observe spikes in the latency graph. By analyzing the latency graph, you can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors. 
+With the sample data, you can observe spikes in the latency graph. By analyzing the latency graph, you can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors. 
 ![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png)
 
 Follow the steps below to learn how to analyze the latency graph.
@@ -74,7 +74,7 @@ The Diagnostics view provides the capability to view errors, throughputs, latenc
 We refer to a horizontal section of the graph for a particular period as the **bin**. A bin consists of the following.
 
 - **Start time and end time** - Denoted by the dotted lines separating each bin.
-- **Logs** - Any logs that appeared during the bin's time range are listed on the logs column, along with the timestamp the logs started to appear and the log count for each log. The logs are listed according to precedence. The error logs will be listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
+- **Logs** - Any logs that appeared during the bin's time range are listed on the logs column, along with the timestamp the logs started to appear and the log count for each log. The logs are listed according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
 - **Error** - Number of HTTP errors occurred at the selected time.
 - **TP** - Throughput of the requests at the selected time (req/s).  
 - **Latency** - Latency of the request at the selected time (ms).
@@ -86,7 +86,7 @@ Follow the steps below to learn how to drill down and confirm the root cause for
 1. Click on the **Diagnostics View** tab on the left panel. 
 
     !!!info
-        The time range selected for the **Throughput & Latency** graphs will be applied to the **Diagnostics View** by default. We recommend capturing the time range you want to analyze in detail from the **Throughput & Latency** graph and then navigate to the **Diagnostics View**.
+        The time range selected for the **Throughput & Latency** graphs is applied to the **Diagnostics View** by default. We recommend capturing the time range you want to analyze in detail from the **Throughput & Latency** graph and then navigate to the **Diagnostics View**.
         
 2. In the sample data, you can observe a couple of prominent errors appearing in the four bins.
 3. Select a bin that shows a higher occurrence of the error log "error while connecting to the hr-service”. Notice that this bin also includes other errors which occurred at a lesser frequency.
