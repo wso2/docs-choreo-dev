@@ -39,3 +39,8 @@ target
 
 # Choreo
 .choreoproject
+
+# Cypress
+screenshots
+reports
+videos

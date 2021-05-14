@@ -21,6 +21,13 @@ Cypress.Commands.add('devportalLogin', () => {
     cy.log('Successfully logged into Devportal');
 }),
 
+Cypress.Commands.add('devportalLogout', () => {
+    cy.log('Initiating logging out');
+    cy.get('[data-testid=signedin-user-menu-btn]').click();
+    cy.get('[data-testid=logout-item-btn]').click();
+    cy.log('Logged out successfully');
+});
+
 Cypress.Commands.add('navigateToOverviewInDevportal', (apiName: string) => {
     cy.log('Navigating to Overview');
     cy.wait(5000);
