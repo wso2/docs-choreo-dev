@@ -43,14 +43,14 @@ describe('Schedule trigger test run and deployment', () => {
     })
 
     it('check LS diagnostics in expression editor', () => {
-        const variable1Name = 'numVar';
+        const firstVariableName = 'numVar';
         cy.log('Creating integer variable');
         cy.selectManualTriggerOptions("Statements", "addVariable");
-        cy.createVariableProperty('int', variable1Name, '1');
+        cy.createVariableProperty('int', firstVariableName, '1');
         
         cy.log('Assigning integer variable to string variable');
         cy.selectManualTriggerOptions("Statements", "addVariable");
-        cy.createVariableProperty('string', 'stringVar', variable1Name, false);
+        cy.createVariableProperty('string', 'stringVar', firstVariableName, false);
         
         cy.log('Checking expression editor diagnostics is visible');
         cy.get('[data-testid="expr-diagnostics"]').should('be.visible');

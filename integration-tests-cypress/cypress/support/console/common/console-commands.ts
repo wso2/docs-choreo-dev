@@ -235,7 +235,8 @@ Cypress.Commands.add('selectSpecificOption', (option: string) => {
     cy.log('Selected option: ', option);
 }),
 
-Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string, withinQuotes: boolean, waitForEnable?: string, validExpression = true) => {
+Cypress.Commands.add('typeOnNthExpressionEditor', 
+    (n: number, expression: string, withinQuotes: boolean, waitForEnable?: string, validExpression = true) => {
     let expressionToType = expression;
     if (withinQuotes) {
         expressionToType = `\"${expression}\"`
@@ -244,7 +245,7 @@ Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string
     cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{backspace}{backspace}' + expressionToType);
 
     if (waitForEnable && validExpression) {
-        cy.get('[data-testid="' + waitForEnable + '"').should('not.have.attr', 'disabled');
+        cy.get('[data-testid="' + waitForEnable + '"]').should('not.have.attr', 'disabled');
     }
 
     cy.get('body').type('{esc}', {force: true});
@@ -266,7 +267,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
     cy.log('Creating variable: added variable name');
     cy.typeOnNthExpressionEditor(0, expression, false, "save-btn", validExpression);
 
-    if(validExpression){
+    if (validExpression) {
         cy.log("Creating variable: added variable expression");
         cy.get('[data-testid="save-btn"]').click();
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
