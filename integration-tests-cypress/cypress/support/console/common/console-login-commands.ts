@@ -119,7 +119,8 @@ Cypress.Commands.add('userLoginWithGithub', () => {
 Cypress.Commands.add('userLogout', () => {
     cy.log("Logout from Choreo");
     cy.get('[id="current-user"]').click({ force: true });
-    cy.contains('Logout').click();
+    cy.wait(2000);
+    cy.contains('Logout').click({ force: true });
     cy.url().should('include', '/login');
     cy.clearCookies();
     cy.clearLocalStorage();
