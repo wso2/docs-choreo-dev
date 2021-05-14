@@ -32,16 +32,42 @@ describe('Schedule trigger test run and deployment', () => {
         cy.preserveCookiesForTest(savedCookies);
     })
 
-    it.skip('create schedule trigger integration app', () => {
+    it('create schedule trigger integration app', () => {
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Schedule");
+        cy.selectManualTriggerOptions("Statements","addLog");
         cy.createLogProperty("Info", "Hello world");
     })
 
-    it.skip('run schedule trigger integration', () => {
+    it('check LS diagnostics in expression editor', () => {
+        const firstVariableName = 'numVar';
+        cy.log('Creating integer variable');
+        cy.selectManualTriggerOptions("Statements", "addVariable");
+        cy.createVariableProperty('int', firstVariableName, '1');
+        
+        cy.log('Assigning integer variable to string variable');
+        cy.selectManualTriggerOptions("Statements", "addVariable");
+        cy.createVariableProperty('string', 'stringVar', firstVariableName, false);
+        
+        cy.log('Checking expression editor diagnostics is visible');
+        cy.get('[data-testid="expr-diagnostics"]').should('be.visible');
+        
+        cy.log('Updating the input with a valid expression');
+        cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(0).click().type('.toString()');
+        
+        cy.log('Checking expression editor diagnostics is not visible and save button is enabled');
+        cy.get('[data-testid="save-btn"').should('not.have.attr', 'disabled');
+        cy.get('[data-testid="expr-diagnostics"]').should('not.exist');
+
+        cy.log("Creating variable with valid expression");
+        cy.get('[data-testid="save-btn"]').click();
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    })
+
+    it('run schedule trigger integration', () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click();
         cy.log('Started test run');
@@ -50,21 +76,18 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Schedule trigger printed the log successfully');
     })
 
-    it.skip('deploy schedule trigger integration', () => {
+    it('deploy schedule trigger integration', () => {
         cy.deployToChoreo("schedule", appName);
-        cy.log('Waiting 2 minutes before checking whether the scheduler ran');
-        cy.wait(120000);
-        cy.log('2 Minutes wait completed');
-        cy.contains('button', 'Run & Test').click();
-        cy.contains('button', 'Go Live').click();
-        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 60000}).should('exist');
+        cy.log('Awaiting 2 minutes to check if the expected log is printed');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 120000}).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.deleteApp("schedule", appName, true);
-        cy.userLogout()
+        cy.undeployApp("integration", appName, true);
+        cy.deleteApp("integration", appName, true);
+        cy.userLogout();
     })
     
 })
