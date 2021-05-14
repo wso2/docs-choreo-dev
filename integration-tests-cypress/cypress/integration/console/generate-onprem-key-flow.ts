@@ -29,37 +29,37 @@ describe('Generate on-prem keys', () => {
     })
 
     it('generate on-prem key', () => {
-        cy.contains('On-prem Keys').click();
-        cy.contains('button', 'Generate Key').should('exist').click();
+        cy.get('[data-testid="on-prem-keys-tab"]').click();
+        cy.get('[data-testid="generate-onprem-key-btn"]').should('exist').click();
         let keyName = generateKeyName("key");
-        cy.contains('Generate On-prem Key').should('exist');
+        cy.get('[data-testid="generate-key-dialog-content"]').should('exist');
         cy.get('[data-testid=api-name]').type(keyName);
-        cy.get('[data-testid="api-name"]').siblings().children().contains('Generate').click();
-        cy.contains('Generate On-prem Key').should('not.exist');
-        cy.contains('Copy On-prem Key').should('be.visible');
-        cy.get('[aria-label="close"]').eq(0).should('exist').click();
+        cy.get('[data-testid="generate-key-generate-btn"]').click();
+        cy.get('[data-testid="generate-key-dialog-content"]').should('not.exist');
+        cy.get('[data-testid="copy-key-dialog-content"]').should('be.visible');
+        cy.get('[data-testid="copy-key-close-btn"]').should('exist').click();
 
         //Edit on-prem key
         cy.get('tbody').should('be.visible');
-        cy.contains(keyName).parent().find('[data-testid="api-delete-btn"]').eq(0).click();
-        cy.contains('Edit On-prem Key').should('exist');
+        cy.contains(keyName).parent().find('[data-testid="key-edit-btn"]').click();
+        cy.get('[data-testid="edit-key-dialog-content"]').should('exist');
         keyName += "New";
         cy.get('[data-testid=api-name]').clear();
         cy.get('[data-testid=api-name]').type(keyName);
-        cy.get('[data-testid="api-name"]').siblings().children().contains('Save').click();
+        cy.get('[data-testid="edit-key-save-btn"]').click();
 
         //Regenerate on-prem key
         cy.get('tbody').should('be.visible');
-        cy.contains(keyName).parent().findByText('Regenerate').click();
-        cy.contains('Regenerate Key').should('exist');
+        cy.contains(keyName).parent().find('[data-testid="key-regenerate-btn"]').click();
+        cy.get('[data-testid="regenerate-key-dialog-content"]').should('exist');
         cy.get('.MuiDialogContent-root').findByText('Regenerate').click();
-        cy.contains('Copy On-prem Key').should('be.visible');
-        cy.get('[aria-label="close"]').eq(1).should('exist').click();
+        cy.get('[data-testid="copy-key-dialog-content"]').should('be.visible');
+        cy.get('[data-testid="copy-key-close-btn"]').should('exist').click();
 
         //Delete on-prem key
         cy.get('tbody').should('be.visible');
-        cy.contains(keyName).parent().find('[data-testid="api-delete-btn"]').eq(1).click();
-        cy.contains('Delete Key').should('exist');
+        cy.contains(keyName).parent().find('[data-testid="key-delete-btn"]').click();
+        cy.get('[data-testid="delete-key-dialog-content"]').should('exist');
         cy.get('.MuiDialogContent-root').findByText('Delete').click();
     })
 })
