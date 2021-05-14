@@ -21,8 +21,8 @@ declare namespace Cypress {
         configureGitHubTrigger(repoName: string, triggerEventType: string, triggerAction: string): Chainable<Element>
         setupGmailConnection(): Chainable<Element>
         sendGmailMessage(plusBtnIndex: number, gmailConnectionIndex: number,emailAddress: string, emailSubject: string, emailBody: string): Chainable<Element>
-        typeOnNthExpressionEditor(n: number, expression: string, withinQuotes: boolean, waitForEnable?: string): Chainable<Element>
-        createVariableProperty(type: string, name: string, expression: string): Chainable<Element>
+        typeOnNthExpressionEditor(n: number, expression: string, withinQuotes: boolean, waitForEnable?: string, validExpression?: boolean): Chainable<Element>
+        createVariableProperty(type: string, name: string, expression: string, validExpression?: boolean): Chainable<Element>
         createLogProperty(type: string, expression: string): Chainable<Element>
         goBacktoAppsList(): Chainable<Element>
         searchApps(name: string): Chainable<Element>

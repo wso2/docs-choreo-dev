@@ -75,14 +75,12 @@ Cypress.Commands.add('configureResource', (relativePath?: string, method?: strin
     if (!method) {
         method = "GET";
     }
-    const code = 'import ballerina/http; service / on new http:Listener(8090) { resource function ' + method.toLowerCase() + ' ' + relativePath + '(http:Caller caller, http:Request request) returns error? { }} '
     cy.log("Started resource configuration");
     cy.waitTillWorkSpace();
     cy.contains('button', method).click();
     cy.get('[data-testid="api-path"]').type(relativePath);
     cy.get('[data-testid="save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(code);
     cy.log("Configured resource successfully");
 }),
 
@@ -195,16 +193,13 @@ Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionI
 }),
 
 Cypress.Commands.add('selectManualTrigger', () => {
-    const code = `public function main() returns error? { }`;
     cy.waitTillWorkSpace();
     cy.get('.trigger-wrapper').contains('Manual').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(code);
     cy.log("selected Manual trigger");
 }),
 
 Cypress.Commands.add('selectScheduleTrigger', () => {
-    const code = `public function main() returns error? { }`;
     cy.waitTillWorkSpace();
     cy.get('.trigger-wrapper').contains('Schedule').click();
     cy.get('[data-testid="undefinedMinute"]').invoke('text').then((availableText) => {
@@ -217,7 +212,6 @@ Cypress.Commands.add('selectScheduleTrigger', () => {
     cy.get('.MuiInputBase-input.MuiInput-input').eq(1).click().clear().type("1");
     cy.contains('button', 'Save').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(code);
     cy.log("selected & configured schedule trigger");
 }),
 
@@ -250,7 +244,8 @@ Cypress.Commands.add('selectSpecificOption', (option: string) => {
     cy.log('Selected option: ', option);
 }),
 
-Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string, withinQuotes: boolean, waitForEnable?: string) => {
+Cypress.Commands.add('typeOnNthExpressionEditor', 
+    (n: number, expression: string, withinQuotes: boolean, waitForEnable?: string, validExpression = true) => {
     let expressionToType = expression;
     if (withinQuotes) {
         expressionToType = `\"${expression}\"`
@@ -258,20 +253,20 @@ Cypress.Commands.add('typeOnNthExpressionEditor', (n: number, expression: string
 
     cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{backspace}{backspace}' + expressionToType);
 
-    if (waitForEnable) {
-        cy.get('[data-testid="' + waitForEnable + '"').should('not.have.attr', 'disabled');
+    if (waitForEnable && validExpression) {
+        cy.get('[data-testid="' + waitForEnable + '"]').should('not.have.attr', 'disabled');
     }
 
     cy.get('body').type('{esc}', {force: true});
 }),
 
-Cypress.Commands.add('createVariableProperty', (type: string, name: string, expression: string) => {
+Cypress.Commands.add('createVariableProperty', (type: string, name: string, expression: string, validExpression = true) => {
     const variableSourceFields = type + ' ' + name + ' = ' + expression + ";";
     cy.log('Creating the variable with expression : '+ expression);
     cy.get('[data-testid="undefinedvar"]').invoke('text').then((availableText) => {
         if (!(availableText == type)) {
             cy.get('[data-testid="undefinedvar"]').click();
-            cy.contains(type).click();
+            cy.get('.MuiListItem-button').contains(type).click();
         }
     })
 
@@ -279,20 +274,21 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
     cy.get('[value="variable"]').click().clear().type(name);
 
     cy.log('Creating variable: added variable name');
-    cy.typeOnNthExpressionEditor(0, expression, false, "save-btn");
+    cy.typeOnNthExpressionEditor(0, expression, false, "save-btn", validExpression);
 
-    cy.log("Creating variable: added variable expression");
-    cy.get('[data-testid="save-btn"]').click();
-    cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(variableSourceFields);
+    if (validExpression) {
+        cy.log("Creating variable: added variable expression");
+        cy.get('[data-testid="save-btn"]').click();
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.checkSourceCodeForValidation(variableSourceFields);
 
-    cy.log('Successfully created the variable with expression : ', expression);
+        cy.log('Successfully created the variable with expression : ', expression);
+    }
 }),
 
 Cypress.Commands.add('createLogProperty', (type: string, expression: string) => {
     const variableSourceFields = "log:print(\"" + expression + "\");";
     cy.log('Creating the log with expression : '+ expression);
-    cy.selectSpecificOption('addLog');
     cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
         if (!(availableText == type)) {
             cy.get('[data-testid="Info"]').click();
@@ -548,8 +544,8 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
         cy.get('#deploy-button').click();
     }
 
-    cy.log('Awaiting 15 minutes for the deployment to complete');
-    cy.get('#tabpanel-1').contains("Successfully deployed",{timeout: 900000}).should('exist');
+    cy.log('Awaiting 5 minutes for the deployment to complete');
+    cy.get('#tabpanel-1').contains("Recent Logs",{timeout: 300000}).should('exist');
     cy.log('Deployment successful!');
 }),
 
@@ -582,6 +578,7 @@ Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
         method: "POST",
         url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
         timeout: 60000
+        failOnStatusCode: false
     }).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
