@@ -93,7 +93,7 @@ describe('Test successful deployment of sample services', ()=>{
         cy.userLogout();
     }),
 
-    it.only('Test deployment of sample:- echo service', () => {
+    it('Test deployment of sample:- echo service', () => {
         let appSvcUrl = Cypress.env("appSvcURL");
         let orgName = Cypress.env("selectedOrgHandle");
 
