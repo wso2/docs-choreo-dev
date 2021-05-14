@@ -24,14 +24,14 @@ describe('Observability tests', () => {
     let version: string
 
     before(() => {
-        cy.log("Login into Choreo using Google")
+        cy.log("Login into Choreo")
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
 
         appName = generateAppName("app");
-        cy.log('app name: ', appName);
+        cy.log('App name: ', appName);
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
 
@@ -66,44 +66,104 @@ describe('Observability tests', () => {
     })
     
     beforeEach(() => {
-        savedCookies.map((cookie) => {
-            cy.preserveCookiesForTest(savedCookies);
-        })
+        cy.preserveCookiesForTest(savedCookies);
+        cy.restoreLocalStorage();
+        cy.visit(Cypress.env("baseUrl") + '/observe/app/' + obsId + '/' + version + '?isSample=true');
+    });
 
-        cy.visit('/observe/app/' + obsId + '/' + version);
+    afterEach(() => {
+        cy.saveLocalStorage();
     });
 
     after(() => {
         cy.goBacktoAppsList();
-        cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
         cy.userLogout();
     })
 
     it('test logs view', () => {
-        const defaultLogEntry = 'error while connecting to the hr-service';
-        const logEntryToBeSearched = 'employee information not found in the hr-service';
-        const systemLogEntry = 'ballerina: started publishing metrics to Choreo'
-        const downloadedLogEntry = '[INFO] [ballerina/http] started HTTP/WS listener 0.0.0.0:8090'
+        // const connectionErrorLogEntry = 'error while connecting to the hr-service';
+        const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
+        // const systemLogEntry = 'ballerina: started publishing metrics to Choreo'
+        // const downloadedLogEntry = '[INFO] [ballerina/http] started HTTP/WS listener 0.0.0.0:8090'
 
         cy.get('[data-testid="panel-Logs-btn"]').should('be.visible');
         cy.get('[data-testid="panel-Logs-btn"]').click();
 
-        cy.log('asseting mandatory log entry without any filter');
-        cy.contains('[data-testid="log-panel"]', defaultLogEntry, {timeout: 600000}).should('exist');
+        cy.log('Asserting mandatory log entry without any filter');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('exist');
 
-        cy.log('asseting mandatory log entry by providing a search phrase');
-        cy.get('[data-testid="log-search"]').type(logEntryToBeSearched);
-        cy.get('[data-testid="log-search-btn"]').click();
-        cy.contains('[data-testid="log-panel"]', logEntryToBeSearched, {timeout: 600000}).should('exist');
-        cy.contains('[data-testid="log-panel"]', defaultLogEntry, {timeout: 600000}).should('not.exist');
+        // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4086 is fixed
+        // cy.log('Asserting mandatory log entry by providing a search phrase');
+        // cy.get('[data-testid="log-search"]').type(connectionErrorLogEntry);
+        // cy.get('[data-testid="log-search-btn"]').click();
+        // cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry, {timeout: 600000}).should('exist');
+        // cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
 
-        cy.log('asseting log download');
-        cy.get('[data-testid="log-search"]').click().clear().type("ballerina");
-        cy.get('[data-testid="log-search-btn"]').click();
-        cy.contains('[data-testid="log-panel"]', systemLogEntry, {timeout: 600000}).should('exist');
-        cy.contains('button', 'Download').click();
-        cy.get('[data-testid="log-download-btn"]').click();
-        cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
+        // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4058 is fixed
+        // cy.log('Asserting log download');
+        // cy.get('[data-testid="log-search"]').click().clear().type("ballerina");
+        // cy.get('[data-testid="log-search-btn"]').click();
+        // cy.contains('[data-testid="log-panel"]', systemLogEntry, {timeout: 600000}).should('exist');
+        // cy.get('[data-testid="log-download-btn"]').click();
+        // cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
+    })
+
+    it('test observability overview', () => {
+        const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
+        const httpStatusCodeRegexp = /[1-5]\d{2}/;
+        const responseTimeRegexp = /\d+\sms/;
+        let d;
+        let prevY;
+        let finalX;
+        let finalY;
+        cy.get('.diagram-canvas').should('exist');
+        cy.get('.worker-line').should('exist');
+        cy.get('[data-testid="refresh-btn"]').should('not.exist');
+        cy.get('[data-testid="preloader"]').should('not.exist');
+        cy.get('.metrics-text').contains('100% Success', {timeout: 600000}).should('exist');
+
+        cy.log('Asserting the default log panel');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('exist');
+
+        cy.get('[data-testid="histogram-throughput"]').get('g.recharts-layer.recharts-area').should('exist');
+        cy.get('[data-testid="histogram-response-time"]').get('g.recharts-layer.recharts-area').should('exist');
+
+        cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
+            cy.log('Getting coordinates to click on the latency graph');
+            d = $path.attr('d');
+            d = d.replace('Z', '')
+            const newD = d.split("L")
+            for (const v of newD) {
+                const arr = v.split(',')
+                if (prevY !== undefined && prevY !== arr[1]) {
+                    finalX = arr[0]
+                    finalY = arr[1]
+                    break
+                }
+                prevY = arr[1]
+            }
+
+            cy.get('[data-testid="histogram-throughput"]').find('svg').click(Math.round(finalX), Math.round(finalY));
+            cy.get('[data-testid="preloader"]').should('not.exist');
+
+            cy.log('Asserting the log panel after clicking on the graph');
+            cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
+
+            cy.log('Asserting the request list');
+            cy.get('[data-testid="request-table"]').should('be.visible');
+            cy.get('[data-testid="request-information"]').its('length').should('be.gte', 1);
+
+            cy.get('[data-testid="request-information"]').eq(0).find('div>div').then(($elements) => {
+                expect($elements[0].textContent).to.match(responseTimeRegexp);
+                expect($elements[1].textContent).to.contain(':');
+                expect($elements[2].textContent).to.be.empty;
+            });
+            cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
+                expect($elements[0].textContent).to.match(responseTimeRegexp);
+                expect($elements[1].textContent).to.contain(':');
+                expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
+            });
+         });
     })
 })

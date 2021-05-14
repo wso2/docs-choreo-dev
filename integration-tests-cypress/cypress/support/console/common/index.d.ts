@@ -9,6 +9,8 @@ declare namespace Cypress {
         userLoginWithGithub(): Chainable<Element>
         userLogout(): Chainable<Element>
         preserveCookiesForTest(cookies:Cookie[]): Chainable<Element>
+        saveLocalStorage(): Chainable<Element>
+        restoreLocalStorage(): Chainable<Element>
         waitTillWorkSpace(): Chainable<Element>
         createNewApp(type: string, name: string): Chainable<Element>
         checkSourceCodeForValidation(sourceLines: string): Chainable<Element>
