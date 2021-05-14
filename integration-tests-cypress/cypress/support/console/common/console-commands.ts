@@ -577,7 +577,7 @@ Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
     cy.request({
         method: "POST",
         url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
-        timeout: 60000
+        timeout: 60000,
         failOnStatusCode: false
     }).then((resp) => {
         // Status code is expected to be 200
