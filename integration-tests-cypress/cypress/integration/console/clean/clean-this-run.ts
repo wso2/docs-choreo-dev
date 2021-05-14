@@ -10,13 +10,12 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { isOldApp, appNamePrefix } from '../../../support/common/utils';
+import { isOldValue, appNamePrefix, keyNamePrefix } from '../../../support/common/utils';
+import { APP_SVC_URL, ORG_NAME } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
 describe('Cleaning up', () => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
 
     before(() => {
         cy.log("Login into Choreo");
@@ -31,17 +30,33 @@ describe('Cleaning up', () => {
         cy.request({
             method: "GET",
             form: true,
-            url: `${appSvcUrl}/orgs/${orgName}/apps/`
+            url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/`
         }).then((response) => {
             const data = response["body"];
             for (const value of data) {
                 let appName = value["name"];
-                if (isOldApp(appName) || appName.startsWith(appNamePrefix)) {
+                if (isOldValue(appName) || appName.startsWith(appNamePrefix)) {
                     let status = String(value['status']);
                     if (status == "running") {
                         cy.undeployAppViaRESTAPICall(appName);
                     }
                     cy.cleanupApp(appName);
+                }
+            }
+        })
+    })
+
+    it('delete on-prem keys that are old or created by this run', () => {
+        cy.request({
+            method: "GET",
+            form: true,
+            url: `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/`
+        }).then((response) => {
+            const data = response["body"];
+            for (const value of data) {
+                let keyName = value["displayName"];
+                if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
+                    cy.cleanOnPremKey(keyName);
                 }
             }
         })

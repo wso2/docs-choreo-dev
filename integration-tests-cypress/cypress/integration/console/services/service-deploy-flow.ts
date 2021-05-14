@@ -11,7 +11,7 @@
  * associated services.
  */
 import { generateAppName } from '../../../support/common/utils';
-import { SERVICES_TEXT } from '../../../support/common/constants';
+import {APP_SVC_URL, ORG_NAME, SERVICES_TEXT, SUCCESS_STATUS_CODE} from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -94,11 +94,8 @@ describe('Test successful deployment of sample services', ()=>{
     }),
 
     it('Test deployment of sample:- echo service', () => {
-        let appSvcUrl = Cypress.env("appSvcURL");
-        let orgName = Cypress.env("selectedOrgHandle");
-
         //This is the POST call we are interested in capturing to catch the app name handle of the created sample service
-        cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`).as('templateCall');
+        cy.intercept('POST', `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/template`).as('templateCall');
 
         cy.navigateFromHomePage(SERVICES_TEXT);
         cy.get('[id="backdrop-loader"').should('not.exist');
@@ -113,11 +110,11 @@ describe('Test successful deployment of sample services', ()=>{
             // Undeploy app via REST API call, because with UI the filtration of app name is not possible for samples.
             cy.request({
                 method: "POST",
-                url: `${appSvcUrl}/orgs/${orgName}/apps/${appName}/undeploy`,
+                url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
                 timeout: 60000
             }).then((resp) => {
                 // Status code is expected to be 200
-                expect(resp.status).to.eq(200);
+                expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
                 cy.log("Successfully undeployed the app: "+ appName);
                 cy.get('[data-testid="deploy"]').should('exist');
             });

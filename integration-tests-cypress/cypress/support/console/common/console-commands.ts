@@ -12,7 +12,16 @@
  */
 
 import { normalizeText } from '../../common/utils';
-import { MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT , SETTINGS_TEXT, SETTINGS_PATH } from '../../common/constants';
+import {
+    MARKETPLACE_TEXT,
+    INTEGRATIONS_TEXT,
+    SERVICES_TEXT,
+    APIS_TEXT,
+    DEVOPS_TEXT,
+    SETTINGS_TEXT,
+    SETTINGS_PATH,
+    APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE
+} from '../../common/constants';
 
 let LOCAL_STORAGE_MEMORY = {};
 
@@ -196,6 +205,43 @@ Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionI
     cy.waitTillWorkSpace();
     cy.log("Configuration set to send Gmail message");
 }),
+
+/**
+ * Fill google calendar config form of prebuilt integrations
+ *
+ * @param calender - Calendar name
+ */
+Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
+    cy.log("Filling the calendar configuration");
+
+    // Selecting the manually added calendar connection (user - testuser-choreo)
+    cy.contains('Google Calendar Connection #1').click();
+    cy.get('[placeholder="Choose Calendar"]').siblings().children().get('.MuiAutocomplete-popupIndicator').click();
+    cy.get('#combo-box-demo-popup').should('exist');
+    cy.get('#combo-box-demo-popup').children().contains(calendar).click({force:true});
+    cy.get('[placeholder="Choose Calendar"]').should('have.value',calendar)
+    cy.log("Completed filling calendar configuration");
+})
+
+
+/**
+ * Fill twilio config form of prebuilt integrations
+ *
+ * @param accountSID - Twilio account SIO
+ * @param token - Twilio auth token
+ * @param senderNumber - SMS Sender's Phone Number
+ * @param recipientNumber - SMS Recipient's Phone Number
+ */
+Cypress.Commands.add('fillTwilioConfigs',
+    (accountSID: string, token: string, senderNumber: string, recipientNumber: string) => {
+    cy.log("Filling the twilio configuration");
+
+    cy.get('[placeholder="Twilio Account SID"]').type(accountSID);
+    cy.get('[placeholder="Twilio Auth Token"]').type(token);
+    cy.get('[placeholder="SMS Sender\'s Phone Number"]').type(senderNumber);
+    cy.get('[placeholder="SMS Recipient\'s Phone Number"]').type(recipientNumber);
+    cy.log("Completed filling twilio configuration");
+})
 
 Cypress.Commands.add('selectManualTrigger', () => {
     cy.waitTillWorkSpace();
@@ -393,13 +439,10 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
 }),
 
 Cypress.Commands.add('cleanupApp', (name: string) => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
-
     cy.log("Cleaning up app: " + name);
-    cy.request("DELETE",`${appSvcUrl}/orgs/${orgName}/apps/${name}`).then((resp) => {
+    cy.request("DELETE",`${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${name}`).then((resp) => {
         // Status code is expected to be 200
-        expect(resp.status).to.eq(200);
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: "+ name);
     });
 });
@@ -563,7 +606,7 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
  *
  * @param pageName - page name that needs to be loaded
  */
- Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
+Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
     const pageNameArray = [MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT, SETTINGS_TEXT];
     let pathName = pageName;
     if (pageName == SETTINGS_TEXT) {
@@ -584,17 +627,23 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
 }),
 
 Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
-
     cy.request({
         method: "POST",
-        url: `${appSvcUrl}/orgs/${orgName}/apps/${appName}/undeploy`,
+        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
         timeout: 60000,
         failOnStatusCode: false
     }).then((resp) => {
         // Status code is expected to be 200
-        expect(resp.status).to.eq(200);
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully undeployed the app: " + appName);
     });
 })
+
+Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
+    cy.log("Cleaning up on-prem key: " + keyName);
+    cy.request("POST",`${APP_SVC_URL}/orgs/${ORG_NAME}/keys/${keyName}/revoke`).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
+        cy.log("Successfully cleaned up the on-prem key: " + keyName);
+    });
+});

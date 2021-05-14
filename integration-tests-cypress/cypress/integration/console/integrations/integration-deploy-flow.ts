@@ -19,7 +19,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
     let appName: string
 
     before(() => {
-        cy.log("Login into Choreo using Google");
+        cy.log("Login into Choreo using Github");
         cy.consoleUserLogin();
         appName = generateAppName("app");
         cy.log('app name: ', appName);
@@ -28,14 +28,14 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements","addLog");
         cy.createLogProperty("Info", "Hello World");
-    }),
+    })
 
     after(() => {
         cy.goBacktoAppsList();
         cy.undeployApp("integration", appName, true);
         cy.deleteApp("integration", appName, true);
         cy.userLogout();
-    }),
+    })
 
     it('test-run and deploy integration', () => {
         const loadRunTxt = "Running...";
@@ -48,4 +48,62 @@ describe('Integrations test run and deployment from scratch', ()=>{
 
         cy.deployToChoreo("integration", appName);
     });
+});
+
+describe('Prebuilt integration test run and deployment', () => {
+    let appName:string
+
+    before(() => {
+        cy.log("Login into Choreo using Github");
+        cy.consoleUserLogin();
+    })
+
+    after(() => {
+        cy.goBacktoAppsList();
+        cy.cleanupApp(appName);
+        cy.userLogout();
+    })
+
+    it('test-run and deploy integration', () => {
+        let appSvcUrl = Cypress.env("appSvcURL");
+        let orgName = Cypress.env("selectedOrgHandle");
+        const gmailAccount = Cypress.env("invitationEmail");
+        const fakeTwilioAccountSID = Cypress.env("fakeTwilioAccountSID");
+        const fakeTwilioToken = Cypress.env("fakeTwilioToken");
+        const fakeTwilioSenderNumber = Cypress.env("fakeTwilioSenderNumber");
+        const fakeTwilioRecipientNumber = Cypress.env("fakeTwilioRecipientNumber");
+
+        //This is the post call we are interested in capturing
+        cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps`).as('templateCall');
+
+        cy.navigateFromHomePage(INTEGRATIONS_TEXT);
+        cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
+        cy.log("Prebuilt integrations page loaded successfully");
+        cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({force:true});
+
+        cy.wait('@templateCall',{timeout:30000}).then((interception) => {
+            appName = interception.response.body[`name`];
+            cy.log("Selected prebuilt integration with name: " + appName);
+            cy.waitTillWorkSpace();
+            cy.get('.diagram-canvas').should('exist');
+            cy.fillCalendarConfigs(gmailAccount);
+            cy.fillTwilioConfigs(fakeTwilioAccountSID, fakeTwilioToken, fakeTwilioSenderNumber, fakeTwilioRecipientNumber);
+            cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
+
+            cy.get('[data-testid="deploy-start-button"]').should('exist').click();
+            cy.log('Deploying application...');
+            cy.contains('Starting').should('exist');
+            cy.get('[data-testid="initialize-stage-text"]').siblings('[src="/images/check.svg"]').should('exist');
+            cy.get('[data-testid="build-stage-text"]').siblings('[src="/images/check.svg"]').should('exist');
+            cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]').should('exist');
+            cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+            cy.contains('Starting').should('not.exist');
+            cy.contains('Started').should('exist');
+            cy.log("Successfully deployed");
+            cy.get('[data-testid="deploy-stop-button"]').should('exist').click();
+            cy.contains('Stopping').should('not.exist');
+            cy.log("Successfully un-deployed");
+            cy.get('[data-testid="deploy-start-button"]').should('exist');
+        });
+    })
 });
