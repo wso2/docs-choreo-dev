@@ -8,18 +8,18 @@ Integration in Choreo is the process of connecting APIs, events, and streams to 
 An integration template in Choreo is a prebuilt sample designed to address a common integration requirement. Choreo provides a comprehensive set of integration templates for you to select and use depending on your requirement.
 
 ## Trigger
-A trigger in Choreo is an event or an action that can cause a Choreo application to start executing.
+A trigger in Choreo integrations is an event or an action that can cause an integration to start executing.
 
 Choreo supports the following trigger types:
 
- - **Schedule**: To trigger an application based on a schedule that you set.
- - **Manual**: To run and test an application manually.
- - **Calendar**: To trigger an application based on events in a Google Calendar.
- - **GitHub**: To trigger an application based on GitHub events and actions.
- - **Salesforce**: To trigger an application based on topics in a Salesforce account. 
+ - **Schedule**: To trigger an integration based on a schedule that you set.
+ - **Manual**: To run and test an integration manually.
+ - **Calendar**: To trigger an integration based on events in a Google Calendar.
+ - **GitHub**: To trigger an integration based on GitHub events and actions.
+ - **Salesforce**: To trigger an integration based on topics in a Salesforce account. 
 
 ## API Call
-An API call in Choreo allows you to connect to and interact with an external service through your application. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
+An API call in Choreo integrations allows you to connect to and interact with an external service through your integration. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
   
@@ -40,16 +40,16 @@ Following are the connections you can use to interact with application-specific 
  - **NetSuite**: To interact with the NetSuite API and perform required operations. 
 
 ## Statement
-A statement is a syntactic unit that specifies the action to be carried out in a Choreo application. 
+A statement in Choreo integrations is a syntactic unit that specifies the action to be carried out in an integration. 
 
 Choreo supports the following statements:
 
- - **Log**: To add an entry to the application log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
+ - **Log**: To add an entry to the log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
  - **Variable**: To declare a variable of a preferred type depending on your requirement.
  - **If**: To perform a conditional check and evaluate whether a statement is true or false.   
  - **ForEach**: To iterate over a list of items to perform control flow. 
  - **While**: To iterate over a given condition to perform control flow. 
- - **Return**: To end the ongoing execution of a Choreo application and return control to the caller.
+ - **Return**: To end the ongoing execution of an integration and return control to the caller.
  - **Custom**: To specify a custom statement depending on your requirement.
 
 ## Expression Syntax

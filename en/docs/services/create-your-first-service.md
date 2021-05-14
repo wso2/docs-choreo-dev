@@ -103,13 +103,11 @@ To create the service, follow the procedure below:
     
 Now you have completed designing your service. It looks as follows.
 
-- In the Low Code View
+![No Code View](../assets/img/services/choreo-service-low-code-view.png)
 
-    ![Low Code View](../assets/img/services/choreo-service-low-code-view.png)
+The code view looks as follows.
 
-- In the Code View
-
-    ![Low Code View](../assets/img/services/choreo-service-code-view.png)
+![Code View](../assets/img/services/choreo-service-code-view.png)
 
     
 To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
