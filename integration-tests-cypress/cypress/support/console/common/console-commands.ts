@@ -525,6 +525,7 @@ Cypress.Commands.add('testRunApp', () => {
 })
 
 Cypress.Commands.add('switchToDeployView', (appName: string) => {
+    cy.get('[data-testid="deploy"]').should('be.visible');
     cy.get('[data-testid="deploy"]').click();
     cy.get('[id="backdrop-loader"').should('not.exist');
     cy.url().should('include', 'app/' + appName + '/deploy');

@@ -76,8 +76,8 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Schedule trigger printed the log successfully');
     })
 
-    it('deploy schedule trigger integration', {retries: 2}, () => {
-        cy.wait(5000);
+    it('deploy schedule trigger integration', () => {
+        cy.wait(10000);
         cy.deployToChoreo("schedule", appName);
         cy.log('Awaiting 2 minutes to check if the expected log is printed');
         cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 120000}).should('exist');
