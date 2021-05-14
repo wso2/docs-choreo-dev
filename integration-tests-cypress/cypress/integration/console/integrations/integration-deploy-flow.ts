@@ -67,6 +67,12 @@ describe('Prebuilt integration test run and deployment', () => {
     it('test-run and deploy integration', () => {
         let appSvcUrl = Cypress.env("appSvcURL");
         let orgName = Cypress.env("selectedOrgHandle");
+        const gmailAccount = Cypress.env("invitationEmail");
+        const fakeTwilioAccountSID = Cypress.env("fakeTwilioAccountSID");
+        const fakeTwilioToken = Cypress.env("fakeTwilioToken");
+        const fakeTwilioSenderNumber = Cypress.env("fakeTwilioSenderNumber");
+        const fakeTwilioRecipientNumber = Cypress.env("fakeTwilioRecipientNumber");
+
         //This is the post call we are interested in capturing
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps`).as('templateCall');
 
@@ -80,8 +86,8 @@ describe('Prebuilt integration test run and deployment', () => {
             cy.log("Selected prebuilt integration with name: " + appName);
             cy.waitTillWorkSpace();
             cy.get('.diagram-canvas').should('exist');
-            cy.fillCalendarConfigs("test.user.choreo@gmail.com");
-            cy.fillTwilioConfigs("ACat9e5d3a348126a5fcabb03a03f1a1bb", "d976402933e8a4143015c4499e971a65", "+94786941431", "+94743149897");
+            cy.fillCalendarConfigs(gmailAccount);
+            cy.fillTwilioConfigs(fakeTwilioAccountSID, fakeTwilioToken, fakeTwilioSenderNumber, fakeTwilioRecipientNumber);
             cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
 
             cy.get('[data-testid="deploy-start-button"]').should('exist').click();
