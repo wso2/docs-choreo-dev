@@ -14,6 +14,20 @@
 import { normalizeText } from '../../common/utils';
 import { MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT , SETTINGS_TEXT, SETTINGS_PATH } from '../../common/constants';
 
+let LOCAL_STORAGE_MEMORY = {};
+
+Cypress.Commands.add("saveLocalStorage", () => {
+    Object.keys(localStorage).forEach(key => {
+        LOCAL_STORAGE_MEMORY[key] = localStorage[key];
+    });
+});
+
+Cypress.Commands.add("restoreLocalStorage", () => {
+    Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
+        localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
+    });
+});
+
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
         cy.setCookie(cookie.name, cookie.value, {
