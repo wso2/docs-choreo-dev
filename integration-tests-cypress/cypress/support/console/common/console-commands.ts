@@ -12,7 +12,16 @@
  */
 
 import { normalizeText } from '../../common/utils';
-import { MARKETPLACE_TEXT, INTEGRATIONS_TEXT, SERVICES_TEXT, APIS_TEXT, DEVOPS_TEXT , SETTINGS_TEXT, SETTINGS_PATH } from '../../common/constants';
+import {
+    MARKETPLACE_TEXT,
+    INTEGRATIONS_TEXT,
+    SERVICES_TEXT,
+    APIS_TEXT,
+    DEVOPS_TEXT,
+    SETTINGS_TEXT,
+    SETTINGS_PATH,
+    APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE
+} from '../../common/constants';
 
 Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
     cookies.map((cookie) => {
@@ -383,13 +392,10 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
 }),
 
 Cypress.Commands.add('cleanupApp', (name: string) => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
-
     cy.log("Cleaning up app: " + name);
-    cy.request("DELETE",`${appSvcUrl}/orgs/${orgName}/apps/${name}`).then((resp) => {
+    cy.request("DELETE",`${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${name}`).then((resp) => {
         // Status code is expected to be 200
-        expect(resp.status).to.eq(200);
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: "+ name);
     });
 });
@@ -572,28 +578,22 @@ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
 }),
 
 Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
-
     cy.request({
         method: "POST",
-        url: `${appSvcUrl}/orgs/${orgName}/apps/${appName}/undeploy`,
+        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
         timeout: 60000
     }).then((resp) => {
         // Status code is expected to be 200
-        expect(resp.status).to.eq(200);
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully undeployed the app: " + appName);
     });
 })
 
 Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
-
     cy.log("Cleaning up on-prem key: " + keyName);
-    cy.request("POST",`${appSvcUrl}/orgs/${orgName}/keys/${keyName}/revoke`).then((resp) => {
+    cy.request("POST",`${APP_SVC_URL}/orgs/${ORG_NAME}/keys/${keyName}/revoke`).then((resp) => {
         // Status code is expected to be 200
-        expect(resp.status).to.eq(200);
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the on-prem key: " + keyName);
     });
 });

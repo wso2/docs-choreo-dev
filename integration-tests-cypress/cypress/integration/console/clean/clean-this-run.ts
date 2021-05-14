@@ -11,12 +11,11 @@
  * associated services.
  */
 import { isOldValue, appNamePrefix, keyNamePrefix } from '../../../support/common/utils';
+import { APP_SVC_URL, ORG_NAME } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
 describe('Cleaning up', () => {
-    let appSvcUrl = Cypress.env("appSvcURL");
-    let orgName = Cypress.env("selectedOrgHandle");
 
     before(() => {
         cy.log("Login into Choreo");
@@ -31,7 +30,7 @@ describe('Cleaning up', () => {
         cy.request({
             method: "GET",
             form: true,
-            url: `${appSvcUrl}/orgs/${orgName}/apps/`
+            url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/`
         }).then((response) => {
             const data = response["body"];
             for (const value of data) {
@@ -51,7 +50,7 @@ describe('Cleaning up', () => {
         cy.request({
             method: "GET",
             form: true,
-            url: `${appSvcUrl}/orgs/${orgName}/keys/`
+            url: `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/`
         }).then((response) => {
             const data = response["body"];
             for (const value of data) {

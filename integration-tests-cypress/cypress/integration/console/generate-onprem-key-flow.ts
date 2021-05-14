@@ -12,12 +12,11 @@
  */
 
 import { generateKeyName } from '../../support/common/utils';
-import {SETTINGS_TEXT} from "../../support/common/constants";
+import { SETTINGS_TEXT } from "../../support/common/constants";
 
 /// <reference types="cypress" />
 
 describe('Generate on-prem keys', () => {
-    let keyName: string
 
     before(() => {
         cy.log("Login into Choreo using Google");
@@ -32,9 +31,9 @@ describe('Generate on-prem keys', () => {
     it('generate on-prem key', () => {
         cy.contains('On-prem Keys').click();
         cy.contains('button', 'Generate Key').should('exist').click();
-        keyName = generateKeyName("key");
+        let keyName = generateKeyName("key");
         cy.contains('Generate On-prem Key').should('exist');
-        cy.contains('Key name').siblings().children().get('input').type(keyName);
+        cy.get('[data-testid=api-name]').type(keyName);
         cy.get('[data-testid="api-name"]').siblings().children().contains('Generate').click();
         cy.contains('Generate On-prem Key').should('not.exist');
         cy.contains('Copy On-prem Key').should('be.visible');
@@ -45,8 +44,8 @@ describe('Generate on-prem keys', () => {
         cy.contains(keyName).parent().find('[data-testid="api-delete-btn"]').eq(0).click();
         cy.contains('Edit On-prem Key').should('exist');
         keyName += "New";
-        cy.get('[data-testid=api-name] > .MuiInputBase-root > .MuiInputBase-input').clear();
-        cy.get('[data-testid=api-name] > .MuiInputBase-root > .MuiInputBase-input').type(keyName);
+        cy.get('[data-testid=api-name]').clear();
+        cy.get('[data-testid=api-name]').type(keyName);
         cy.get('[data-testid="api-name"]').siblings().children().contains('Save').click();
 
         //Regenerate on-prem key
