@@ -71,7 +71,7 @@ describe('Prebuilt integration test run and deployment', () => {
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps`).as('templateCall');
 
         cy.navigateFromHomePage(INTEGRATIONS_TEXT);
-        cy.get('#try-out-samples-btn').should('exist').click();
+        cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
         cy.log("Prebuilt integrations page loaded successfully");
         cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({force:true});
 
@@ -82,23 +82,22 @@ describe('Prebuilt integration test run and deployment', () => {
             cy.get('.diagram-canvas').should('exist');
             cy.fillCalendarConfigs("test.user.choreo@gmail.com");
             cy.fillTwilioConfigs("ACat9e5d3a348126a5fcabb03a03f1a1bb", "d976402933e8a4143015c4499e971a65", "+94786941431", "+94743149897");
-            cy.contains('[data-testid="config-save-btn"]').should('be.visible').click();
+            cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
 
-            cy.get('#deploy-button').should('exist');
-            cy.get('#deploy-button').click();
+            cy.get('[data-testid="deploy-start-button"]').should('exist').click();
             cy.log('Deploying application...');
             cy.contains('Starting').should('exist');
-            cy.contains('Initialize').parent().siblings('[src="/images/check.svg"]').should('exist');
-            cy.contains('Build').parent().siblings('[src="/images/check.svg"]').should('exist');
-            cy.contains('Deploy').parent().siblings('[src="/images/building.svg"]').should('exist');
-            cy.contains('Deploy').parent().siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+            cy.get('[data-testid="initialize-stage-text"]').siblings('[src="/images/check.svg"]').should('exist');
+            cy.get('[data-testid="build-stage-text"]').siblings('[src="/images/check.svg"]').should('exist');
+            cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]').should('exist');
+            cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
             cy.contains('Starting').should('not.exist');
             cy.contains('Started').should('exist');
             cy.log("Successfully deployed");
-            cy.get('#stop-button').should('exist').click();
+            cy.get('[data-testid="deploy-stop-button"]').should('exist').click();
             cy.contains('Stopping').should('not.exist');
             cy.log("Successfully un-deployed");
-            cy.get('#deploy-button').should('exist');
+            cy.get('[data-testid="deploy-start-button"]').should('exist');
         });
     })
 });
