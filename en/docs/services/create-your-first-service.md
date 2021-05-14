@@ -103,11 +103,11 @@ To create the service, follow the procedure below:
     
 Now you have completed designing your service. It looks as follows.
 
-- In the Low Code View
+- In the low-code View
 
     ![Low Code View](../assets/img/services/choreo-service-low-code-view.png)
 
-- In the Code View
+- In the code View
 
     ![Low Code View](../assets/img/services/choreo-service-code-view.png)
 
