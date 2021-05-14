@@ -54,7 +54,7 @@ describe('Invite members', () => {
             }
 
             cy.get('[data-testid="invite-email"]').within(() => {
-                cy.get('input').click({ force: true }).type(memberEmail+'{enter}', { force: true });
+                cy.get('input').type(memberEmail+'{enter}', { force: true });
             })
             cy.get('[data-testid="invite-btn"]').click();
             cy.contains('td', memberEmail).should('be.visible');
