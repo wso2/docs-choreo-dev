@@ -93,14 +93,14 @@ describe('Test successful deployment of sample services', ()=>{
         cy.userLogout();
     }),
 
-    it('Test deployment of sample:- echo service', () => {
+    it.only('Test deployment of sample:- echo service', () => {
         let appSvcUrl = Cypress.env("appSvcURL");
         let orgName = Cypress.env("selectedOrgHandle");
 
         //This is the POST call we are interested in capturing to catch the app name handle of the created sample service
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`).as('templateCall');
 
-        cy.visit('/services');
+        cy.navigateFromHomePage(SERVICES_TEXT);
         cy.get('[id="backdrop-loader"').should('not.exist');
         cy.get('#try-out-samples-btn').should('exist').click();
         cy.get('[data-testid="echo-service"]').should('exist').children().find('button').click({force:true});

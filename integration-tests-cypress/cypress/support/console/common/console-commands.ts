@@ -575,6 +575,7 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
     if (pageNameArray.includes(pageName)) {
         cy.get('[href="/' + pathName + '"]').click();
         cy.url().should('include', '/' + pathName);
+        cy.get('[id="backdrop-loader"]').should('not.exist');
         cy.log("Page loaded successfully");
     } else {
         cy.log('Page not found');
