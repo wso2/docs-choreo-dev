@@ -18,8 +18,8 @@ import { SETTINGS_TEXT } from '../../support/common/constants';
 describe('Invite members', () => {
     let savedCookies;
     const memberEmail = Cypress.env('invitationEmail');
-    const groupMemberEmail = Cypress.env('groupMemberEmail');
-    const groupMemberName = Cypress.env('groupMemberName');
+    const groupMemberEmail = 'udyogi@wso2.com';
+    const groupMemberName = 'Udyogi Munasinghe';
 
     before(() => {
         cy.log("Login into Choreo");
@@ -56,7 +56,7 @@ describe('Invite members', () => {
             cy.get('[data-testid="invite-email"]').within(() => {
                 cy.get('input').type(memberEmail+'{enter}', { force: true });
             })
-            cy.get('[data-testid="invite-btn"]').click();
+            cy.get('[data-testid="invite-btn"]').click({ force: true });
             cy.contains('td', memberEmail).should('be.visible');
             cy.log('Invitation sent successfully');
 
