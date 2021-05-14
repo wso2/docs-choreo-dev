@@ -40,11 +40,11 @@ Following are the connections you can use to interact with application-specific 
  - **NetSuite**: To interact with the NetSuite API and perform required operations. 
 
 ## Statement
-A statement is a syntactic unit that specifies the action to be carried out in an integration. 
+A statement in Choreo integrations is a syntactic unit that specifies the action to be carried out in an integration. 
 
 Choreo supports the following statements:
 
- - **Log**: To add an entry to the integration log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
+ - **Log**: To add an entry to the log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
  - **Variable**: To declare a variable of a preferred type depending on your requirement.
  - **If**: To perform a conditional check and evaluate whether a statement is true or false.   
  - **ForEach**: To iterate over a list of items to perform control flow. 

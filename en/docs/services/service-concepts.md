@@ -30,7 +30,7 @@ Following are the connections you can use to interact with application-specific 
  - **NetSuite**: To interact with the NetSuite API and perform required operations. 
 
 ## Statement
-A statement is a syntactic unit that specifies the action to be carried out in a Choreo service. 
+A statement in Choreo services is a syntactic unit that specifies the action to be carried out in a Choreo service. 
 
 Choreo supports the following statements:
 
