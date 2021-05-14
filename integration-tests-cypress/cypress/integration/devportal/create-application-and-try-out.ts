@@ -14,10 +14,11 @@
 /// <reference types="cypress" />
 
 import { generateAppName } from "../../support/common/utils";
+import { getApiName } from "../../support/devportal/utils";
 
-describe('Devportal', () => {
+describe('Application tryout scenario', () => {
     const appName = generateAppName('-e2etest');
-    const apiName = 'e2eTestApiDev';
+    const apiName = getApiName();
 
     beforeEach(() => {
         cy.devportalLogin();

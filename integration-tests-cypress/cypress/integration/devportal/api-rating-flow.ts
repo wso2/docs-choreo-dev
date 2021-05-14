@@ -13,9 +13,11 @@
 
 /// <reference types="cypress" />
 
-describe('Devportal', () => {
+import { getApiName } from "../../support/devportal/utils";
 
-    const apiName = 'e2eTestApiDev';
+describe('API overview rating scenario', () => {
+
+    const apiName = getApiName();
 
     before(() => {
         cy.devportalLogin();

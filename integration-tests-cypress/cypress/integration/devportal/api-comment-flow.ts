@@ -13,9 +13,11 @@
 
 /// <reference types="cypress" />
 
-describe('Devportal', () => {
+import { getApiName } from "../../support/devportal/utils";
 
-    const apiName = 'e2eTestApiDev';
+describe('API overview comment scenario', () => {
+
+    const apiName = getApiName();
 
     before(() => {
         cy.devportalLogin();
@@ -45,5 +47,4 @@ describe('Devportal', () => {
         cy.get('[data-testid=txt-no-comments]').should('exist');
         cy.log('Successfully deleted the comment');
     });
-
 });
