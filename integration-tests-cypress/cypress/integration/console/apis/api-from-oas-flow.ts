@@ -11,10 +11,14 @@
  * associated services.
  */
 
+import { generateApiName } from "../../../support/common/utils";
 import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../../support/console/apis/constants";
+import { APIS_TEXT } from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
-    beforeEach(() => {
+    const API_NAME = generateApiName('oas');
+
+    before(() => {
         cy.log("Login to Choreo using github");
         cy.consoleUserLogin();
     });
@@ -22,13 +26,16 @@ describe('Choreo APIM publisher scenarios', () => {
     it('Creating and publishing an API from open API specification', () => {
         const filepath = 'console/apis/generation_oas.yaml';
         cy.log("Starting API Creation using open API specification");
-        cy.navigateFromHomePage("apis");
+        cy.navigateFromHomePage(APIS_TEXT);
         cy.get('[data-testid="create-api-btn"]').click({ force: true });
         cy.wait(3000);
         cy.get('[data-testid="upload-open-api-definition"]').click();
         cy.get('[data-testid="open-api-file"]').click();
         cy.get('input[type="file"]').attachFile(filepath);
         cy.get('[id="create-API-from-openAPI-def-btn"]').click();
+        cy.get('[data-testid="api-name"]').findByRole('textbox').clear();
+        cy.wait(2000);
+        cy.get('[data-testid="api-name"]').findByRole('textbox').type(API_NAME);
         cy.get('[id="create-and-publish-api"]').click();
         cy.url().should('include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
         cy.get('[data-testid="go-to-dev-portal-btn"]').should('exist');
@@ -41,10 +48,14 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.updateSubscriptionPlans();
         cy.createAndDeployRevision();
         cy.testApiInPublisherTestConsole();
-        cy.deleteApiFromOverview();
     });
 
-    afterEach(() => {
+    after(() => {
+        cy.wait(30000);
+        cy.get('[data-testid="api-list"]').click({ force: true });
+        cy.wait(2000);
+        cy.searchApiFromListAndVisit(API_NAME);
+        cy.deleteApiFromOverview();
         cy.log("Logout from Choreo");
         cy.userLogout();
     });

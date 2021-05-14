@@ -74,7 +74,7 @@ Cypress.Commands.add('searchApiFromListAndVisit', (apiName: string) => {
     cy.get('[data-testid=apis-list-table]').within(() => {
         cy.contains(apiName).click();
     });
-})
+});
 
 Cypress.Commands.add('verifyApiOverview', (apiName: string, apiVersion: string) => {
     cy.log('Visiting API overview page');
@@ -83,7 +83,7 @@ Cypress.Commands.add('verifyApiOverview', (apiName: string, apiVersion: string) 
     cy.get('[data-testid=api-name-nav-label]').should('have.text', apiName);
     cy.get('[data-testid=api-version-nav-label]').should('have.text', '(' + apiVersion + ')');
     cy.get('[data-testid=resources-container]').should('be.visible', true);
-})
+});
 
 Cypress.Commands.add('updateDesignConfiguration', () => {
     cy.log('Visiting design configuration and update data');
@@ -93,13 +93,16 @@ Cypress.Commands.add('updateDesignConfiguration', () => {
     cy.get('[data-testid=toggle-add-tags]').click();
     cy.get('[data-testid=tag-input]').type('testTag{enter}');
     cy.get('[data-testid=design-config-save-btn]').click();
-})
+});
 
-Cypress.Commands.add('updateRuntimeConfiguration', () => {
+Cypress.Commands.add('updateRuntimeConfiguration', (isService?: boolean) => {
     cy.get('[data-testid="Runtime Configurations"]').click();
     cy.get('[data-testid=switch-cors-config]').click();
     cy.get('[data-testid=cors-config-label]').click();
-    cy.get('[data-testid=checkbox-allow-all-origins]').click();
+    if (!isService) {
+        cy.get('[data-testid=checkbox-allow-all-origins]').click();
+    }
+    cy.wait(2000);
     cy.get('[data-testid=addBtn-origin]').click();
     cy.get('[data-testid="type and press enter to add origins"]').type('localhost{enter}');
     cy.get('[data-testid=addBtn-header]').click();
@@ -123,7 +126,7 @@ Cypress.Commands.add('addApiDocument', () => {
     cy.get('[data-testid=create-document]').click();
     cy.wait(1000);
     cy.get('[data-testid=document-wrapper]').should('exist');
-})
+});
 
 Cypress.Commands.add('deployInitialRevision', () => {
     cy.log('Visiting deployment tab');
@@ -132,7 +135,7 @@ Cypress.Commands.add('deployInitialRevision', () => {
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
     });
-})
+});
 
 Cypress.Commands.add('publishApi', () => {
     cy.log('Visiting api publishing');

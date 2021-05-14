@@ -70,6 +70,7 @@ describe('Devportal', () => {
         cy.findByText(apiName).click();
         cy.wait(2000);
         cy.get('[data-testid="tryout-item-link"]').click();
+        cy.wait(5000);
         cy.findByRole('button', { name: /​/i }).click();
         cy.findByRole('option', { name: appName }).click();
         cy.get('[data-testid="get-test-key-btn"]').should('not.be.disabled');
