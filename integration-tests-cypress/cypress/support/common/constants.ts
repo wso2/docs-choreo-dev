@@ -20,3 +20,6 @@ export const DEVOPS_TEXT = 'devops';
 export const SETTINGS_TEXT = 'settings';
 export const SETTINGS_PATH = 'user-settings/organization/members';
 export const dataMapperTestURL = 'https://datamapper.choreo.dev';
+export const APP_SVC_URL = Cypress.env("appSvcURL");
+export const ORG_NAME = Cypress.env("selectedOrgHandle");
+export const SUCCESS_STATUS_CODE = 200;
