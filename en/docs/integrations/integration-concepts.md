@@ -8,7 +8,7 @@ Integration in Choreo is the process of connecting APIs, events, and streams to 
 An integration template in Choreo is a prebuilt sample designed to address a common integration requirement. Choreo provides a comprehensive set of integration templates for you to select and use depending on your requirement.
 
 ## Trigger
-A trigger in Choreo is an event or an action that can cause an integration to start executing.
+A trigger in Choreo integrations is an event or an action that can cause an integration to start executing.
 
 Choreo supports the following trigger types:
 
@@ -19,7 +19,7 @@ Choreo supports the following trigger types:
  - **Salesforce**: To trigger an integration based on topics in a Salesforce account. 
 
 ## API Call
-An API call in Choreo allows you to connect to and interact with an external service through your integration. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
+An API call in Choreo integrations allows you to connect to and interact with an external service through your integration. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
   

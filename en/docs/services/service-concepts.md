@@ -9,7 +9,7 @@ A service in Choreo is a logical representation of a repeatable activity that ha
 A service sample in Choreo is a prebuilt service that performs a specific activity. Choreo provides a comprehensive set of service samples for you to clone, edit, and try out, depending on your requirement. 
 
 ## API Call
-An API call in Choreo allows you to connect to and interact with an external service through your service. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
+An API call in Choreo services allows you to connect to and interact with an external service through your service. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
   
