@@ -6,7 +6,7 @@ To learn how to create a service, let's try a simple scenario. In this example, 
 
 To create the service, follow the procedure below: 
 
-1. Access the Choreo Development Console via https://console.choreo.dev/.
+1. Access the Choreo Console via https://console.choreo.dev/.
     
 2. Sign in using either your Google or GitHub credentials.
     
