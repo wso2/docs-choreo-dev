@@ -211,7 +211,8 @@ Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
  * @param senderNumber - SMS Sender's Phone Number
  * @param recipientNumber - SMS Recipient's Phone Number
  */
-Cypress.Commands.add('fillTwilioConfigs', (accountSID: string, token: string, senderNumber: string, recipientNumber: string) => {
+Cypress.Commands.add('fillTwilioConfigs',
+    (accountSID: string, token: string, senderNumber: string, recipientNumber: string) => {
     cy.log("Filling the twilio configuration");
 
     cy.get('[placeholder="Twilio Account SID"]').type(accountSID);

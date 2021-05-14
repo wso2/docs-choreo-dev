@@ -83,7 +83,7 @@ describe('Prebuilt integration test run and deployment', () => {
             cy.get('.diagram-canvas').should('exist');
             cy.fillCalendarConfigs("test.user.choreo@gmail.com");
             cy.fillTwilioConfigs("ACat9e5d3a348126a5fcabb03a03f1a1bb", "d976402933e8a4143015c4499e971a65", "+94786941431", "+94743149897");
-            cy.contains('Save').should('be.visible').click();
+            cy.contains('[data-testid="config-save-btn"]').should('be.visible').click();
 
             cy.get('#deploy-button').should('exist');
             cy.get('#deploy-button').click();
