@@ -32,11 +32,11 @@ describe('Invite members', () => {
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.navigateFromHomePage(SETTINGS_TEXT);
-        cy.get('.MuiCircularProgress-circle').should('not.exist');
+        cy.get('[role="progressbar"]').should('not.exist');
     })
 
     after(() => {
-        cy.userLogout()
+        cy.userLogout();
     })
 
     it('invite a member', () => {
@@ -72,13 +72,13 @@ describe('Invite members', () => {
         // Member should be already in the member list
         cy.contains(groupMemberEmail).should('be.visible');
 
-        cy.contains('button', 'Groups').click();
+        cy.get('[data-testid="/user-settings/organization/groups"]').click();
         cy.contains('td', 'Admin').click();
         cy.contains(groupMemberEmail).should('not.exist');
         cy.get('[id="tags-standard"]').click().type(groupMemberName);
         cy.contains('[id="tags-standard-popup"]', groupMemberName).should('be.visible');
         cy.contains('[id="tags-standard-popup"]', groupMemberName).click();
-        cy.contains('button', 'Add').click();
+        cy.get('[data-testid="add-member-btn"]').click();
         cy.contains('td', groupMemberEmail).should('be.visible');
         cy.log('Member added to the group successfully');
 
@@ -86,7 +86,7 @@ describe('Invite members', () => {
         cy.contains('tr', groupMemberEmail).within(() => {
             cy.get('[data-testid="api-delete-btn"]').click();
         })
-        cy.contains('h5', 'Delete').click();
+        cy.get('[data-testid="delete-member-btn"]').click();
         cy.log('Member removed from the group successfully');
     })
 })
