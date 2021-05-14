@@ -16,28 +16,30 @@ import { SETTINGS_TEXT } from '../../support/common/constants';
 /// <reference types="cypress" />
 
 describe('Invite members', () => {
+    let savedCookies;
     const memberEmail = Cypress.env('invitationEmail');
+    const groupMemberEmail = Cypress.env('groupMemberEmail');
+    const groupMemberName = Cypress.env('groupMemberName');
 
     before(() => {
-        cy.log("Login into Choreo")
-        cy.consoleUserLogin()
+        cy.log("Login into Choreo");
+        cy.consoleUserLogin();
+        cy.getCookies().then((cookies) => {
+            savedCookies = cookies;
+        })
+    })
+
+    beforeEach(() => {
+        cy.preserveCookiesForTest(savedCookies);
+        cy.navigateFromHomePage(SETTINGS_TEXT);
+        cy.get('[role="progressbar"]').should('not.exist');
     })
 
     after(() => {
-        cy.userLogout()
+        cy.userLogout();
     })
 
-    afterEach(() => {
-        cy.log('Deleting member invitation');
-        cy.contains('td', memberEmail).trigger('mouseover');
-        cy.get('[data-testid="api-delete-btn"]').click();
-        cy.get('[data-testid="delete-invitation-btn"]').click();
-        cy.log('Invitation deleted successfully');
-    })
-
-    it('invite a member to developer group', () => {
-        cy.navigateFromHomePage(SETTINGS_TEXT);
-        cy.get('.MuiCircularProgress-circle').should('not.exist');
+    it('invite a member', () => {
         cy.get('[data-testid="invite-members-btn"]').click();
         cy.get('[data-testid="group-select"]').invoke('text').then((groupText) => {
             if (groupText == '') {
@@ -51,10 +53,40 @@ describe('Invite members', () => {
                 cy.contains('Admin').click();
             }
 
-            cy.get('[data-testid="invite-email"]').children().children().children('input').click({ force: true }).type(memberEmail+'{enter}', { force: true });
+            cy.get('[data-testid="invite-email"]').within(() => {
+                cy.get('input').click({ force: true }).type(memberEmail+'{enter}', { force: true });
+            })
             cy.get('[data-testid="invite-btn"]').click();
             cy.contains('td', memberEmail).should('be.visible');
             cy.log('Invitation sent successfully');
+
+            cy.log('Deleting member invitation');
+            cy.contains('td', memberEmail).trigger('mouseover');
+            cy.get('[data-testid="api-delete-btn"]').click();
+            cy.get('[data-testid="delete-invitation-btn"]').click();
+            cy.log('Invitation deleted successfully');
         })
+    })
+
+    it('Add a member to a group', () => {
+        // Member should be already in the member list
+        cy.contains(groupMemberEmail).should('be.visible');
+
+        cy.get('[data-testid="/user-settings/organization/groups"]').click();
+        cy.contains('td', 'Admin').click();
+        cy.contains(groupMemberEmail).should('not.exist');
+        cy.get('[id="tags-standard"]').click().type(groupMemberName);
+        cy.contains('[id="tags-standard-popup"]', groupMemberName).should('be.visible');
+        cy.contains('[id="tags-standard-popup"]', groupMemberName).click();
+        cy.get('[data-testid="add-member-btn"]').click();
+        cy.contains('td', groupMemberEmail).should('be.visible');
+        cy.log('Member added to the group successfully');
+
+        cy.log('Removing member from the group');
+        cy.contains('tr', groupMemberEmail).within(() => {
+            cy.get('[data-testid="api-delete-btn"]').click();
+        })
+        cy.get('[data-testid="delete-member-btn"]').click();
+        cy.log('Member removed from the group successfully');
     })
 })
