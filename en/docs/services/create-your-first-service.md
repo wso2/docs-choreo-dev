@@ -45,7 +45,6 @@ To create the service, follow the procedure below:
         
     5. Enter information as follows:
         
-        ![Configure HTTP Connection](../assets/img/services/select-existing-connection.png)
         
         | **Field**               | **Value**                      |
         |-------------------------|--------------------------------|
