@@ -3,6 +3,10 @@ resources:
   - obsapi.yaml
   - frontend.yaml
   - email-service.yaml
+  - api-server.yaml
+  - app-service.yaml
+  - app-deployer.yaml
+  - workspace-manager.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587

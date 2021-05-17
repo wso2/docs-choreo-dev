@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: api-server
+  name: api-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: api-server
+  template:
+    metadata:
+      labels:
+        choreo.component: api-server
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/api-server:latest
+        name: api-server
+        env:
+        - name: IDP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: IDP_CLIENT_SECRET
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
+        ports:
+        - containerPort: 8080
+          name: http-port
+          protocol: TCP
+        readinessProbe:
+          initialDelaySeconds: 5
+          httpGet:
+            path: /readyz
+            port: http-port
+        livenessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 30
+          httpGet:
+            path: /livez
+            port: http-port
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
+        volumeMounts:
+        - mountPath: /api-server.yaml
+          name: config
+          subPath: api-server.yaml
+        - name: secret-idp
+          mountPath: /mnt/csi/secret-idp
+          readOnly: true
+        - name: secret-redis
+          mountPath: "/mnt/csi/secret-redis"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: cm-api-server
+      - name: secret-idp
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-idp
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default

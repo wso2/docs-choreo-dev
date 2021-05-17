@@ -3,4 +3,7 @@ resources:
   - obsapi.yaml
   - frontend.yaml
   - email-service.yaml
-
+  - api-server.yaml
+  - app-deployer.yaml
+  - app-service.yaml
+  - workspace-manager.yaml
