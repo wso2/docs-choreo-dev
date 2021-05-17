@@ -10,5 +10,6 @@
         "console/*.ts",
         "devportal/*.ts",
         "console/clean/clean-this-run.ts"
-    ]
+    ],
+    "videoUploadOnPasses": false
 }
