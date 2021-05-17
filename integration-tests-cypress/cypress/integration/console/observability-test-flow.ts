@@ -12,7 +12,7 @@
  */
 
 import { generateAppName } from '../../support/common/utils';
-import { SERVICES_TEXT } from '../../support/common/constants';
+import { SERVICES_TEXT, NO_OF_RETIRES } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -81,7 +81,7 @@ describe('Observability tests', () => {
         cy.userLogout();
     })
 
-    it('test logs view', () => {
+    it('test logs view', { retries: NO_OF_RETIRES }, () => {
         const connectionErrorLogEntry = 'error while connecting to the hr-service';
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         // const systemLogEntry = 'ballerina: started publishing metrics to Choreo'
@@ -108,7 +108,7 @@ describe('Observability tests', () => {
         // cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
     })
 
-    it('test observability overview', () => {
+    it('test observability overview', { retries: NO_OF_RETIRES }, () => {
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         const httpStatusCodeRegexp = /[1-5]\d{2}/;
         const responseTimeRegexp = /\d+\sms/;
