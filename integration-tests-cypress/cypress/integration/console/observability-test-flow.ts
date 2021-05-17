@@ -82,7 +82,7 @@ describe('Observability tests', () => {
     })
 
     it('test logs view', () => {
-        // const connectionErrorLogEntry = 'error while connecting to the hr-service';
+        const connectionErrorLogEntry = 'error while connecting to the hr-service';
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         // const systemLogEntry = 'ballerina: started publishing metrics to Choreo'
         // const downloadedLogEntry = '[INFO] [ballerina/http] started HTTP/WS listener 0.0.0.0:8090'
@@ -93,12 +93,11 @@ describe('Observability tests', () => {
         cy.log('Asserting mandatory log entry without any filter');
         cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('exist');
 
-        // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4086 is fixed
-        // cy.log('Asserting mandatory log entry by providing a search phrase');
-        // cy.get('[data-testid="log-search"]').type(connectionErrorLogEntry);
-        // cy.get('[data-testid="log-search-btn"]').click();
-        // cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry, {timeout: 600000}).should('exist');
-        // cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
+        cy.log('Asserting mandatory log entry by providing a search phrase');
+        cy.get('[data-testid="log-search"]').type(connectionErrorLogEntry);
+        cy.get('[data-testid="log-search-btn"]').click();
+        cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry, {timeout: 600000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
 
         // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4058 is fixed
         // cy.log('Asserting log download');
@@ -132,16 +131,16 @@ describe('Observability tests', () => {
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
             cy.log('Getting coordinates to click on the latency graph');
             d = $path.attr('d');
-            d = d.replace('Z', '')
-            const newD = d.split("L")
+            d = d.replace('Z', '');
+            const newD = d.split("L");
             for (const v of newD) {
-                const arr = v.split(',')
+                const arr = v.split(',');
                 if (prevY !== undefined && prevY !== arr[1]) {
-                    finalX = arr[0]
-                    finalY = arr[1]
-                    break
+                    finalX = arr[0];
+                    finalY = arr[1];
+                    break;
                 }
-                prevY = arr[1]
+                prevY = arr[1];
             }
 
             cy.get('[data-testid="histogram-throughput"]').find('svg').click(Math.round(finalX), Math.round(finalY));
