@@ -15,7 +15,7 @@
 
 import { getApiName } from "../../support/devportal/utils";
 
-describe('API tryout scenario', () => {
+describe('Credentials generation & API tryout scenario', () => {
 
     const apiName = getApiName();
 
@@ -75,5 +75,4 @@ describe('API tryout scenario', () => {
         cy.get('[data-testid="keys-info-cell"]').should('have.text', 'Production Key and Secret is not  generated for this application');
         cy.log("Successfully removed credentials");
     });
-
 });
