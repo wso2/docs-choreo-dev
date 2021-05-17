@@ -11,6 +11,12 @@ configMapGenerator:
   namespace: choreo-system
 
 images:
+- name: choreoctrlplane.azurecr.io/choreoipaas/api-server
+  newTag: master-e759742eca0e58bef3a4542ffea838e43cdfc9b5
+- name: choreoctrlplane.azurecr.io/choreoipaas/app-deployer
+  newTag: master-e759742eca0e58bef3a4542ffea838e43cdfc9b5
+- name: choreoctrlplane.azurecr.io/choreoipaas/app-service
+  newTag: master-e759742eca0e58bef3a4542ffea838e43cdfc9b5
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-93d60fda84d07f4b5d758e72e1deff562ca0eca1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
@@ -21,3 +27,5 @@ images:
   newTag: master-45e7f86e3b906888e221b77f8964fd39c87b96c3
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-api
   newTag: master-b80b9d373d03fd7b9acc4e5621d6548c07c647ce
+- name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
+  newTag: master-e759742eca0e58bef3a4542ffea838e43cdfc9b5
