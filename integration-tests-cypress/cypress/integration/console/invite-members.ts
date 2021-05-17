@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { SETTINGS_TEXT } from '../../support/common/constants';
+import { SETTINGS_TEXT, NO_OF_RETIRES } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -39,7 +39,7 @@ describe('Invite members', () => {
         cy.userLogout();
     })
 
-    it('invite a member', { retries: 2 }, () => {
+    it('invite a member', { retries: NO_OF_RETIRES }, () => {
         cy.get('[data-testid="invite-members-btn"]').click();
         cy.get('[data-testid="group-select"]').invoke('text').then((groupText) => {
             if (groupText == '') {
@@ -68,7 +68,7 @@ describe('Invite members', () => {
         })
     })
 
-    it('Add a member to a group', { retries: 2 }, () => {
+    it('Add a member to a group', { retries: NO_OF_RETIRES }, () => {
         // Member should be already in the member list
         cy.contains(groupMemberEmail).should('be.visible');
 
