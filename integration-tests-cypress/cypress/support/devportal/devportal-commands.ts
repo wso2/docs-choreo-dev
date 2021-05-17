@@ -10,28 +10,28 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { STANDARD_TIME_OUT } from '../common/constants';
 
 Cypress.Commands.add('devportalLogin', () => {
-    cy.log('Logging into Devportal');
+    cy.log('Initiating login');
     cy.visit(Cypress.env('devportalLoginURL'));
     cy.wait(5000);
     cy.get('#usernameUserInput').type(Cypress.env('devportalIdpUsername'));
     cy.get('#password').type(Cypress.env('devportalIdpPassword'));
     cy.get('.right > .ui').click();
-    cy.log('Successfully logged into Devportal');
-}),
+    cy.log('Successfully logged in');
+});
 
 Cypress.Commands.add('devportalLogout', () => {
-    cy.log('Initiating logging out');
-    cy.get('[data-testid=signedin-user-menu-btn]').click();
-    cy.get('[data-testid=logout-item-btn]').click();
-    cy.log('Logged out successfully');
+    cy.log('Initiating logout');
+    cy.get('[data-testid=signedin-user-menu-btn]', { timeout: STANDARD_TIME_OUT }).should('be.visible').click({ force: true });
+    cy.get('[data-testid=logout-item-btn]', { timeout: STANDARD_TIME_OUT }).should('be.visible').click();
+    cy.log('Successfully logged out');
 });
 
 Cypress.Commands.add('navigateToOverviewInDevportal', (apiName: string) => {
     cy.log('Navigating to Overview');
-    cy.wait(5000);
-    cy.get('[data-testid="apis-appbar-btn"]').click();
+    cy.get('[data-testid="apis-appbar-btn"]', { timeout: STANDARD_TIME_OUT }).should('be.visible').click();
     cy.get('[data-testid="apiCard-' + apiName + '"]').click();
     cy.log('Successfully navigated to Overview');
-})
+});

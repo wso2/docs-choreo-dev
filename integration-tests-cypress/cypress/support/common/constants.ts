@@ -23,4 +23,5 @@ export const dataMapperTestURL = 'https://datamapper.choreo.dev';
 export const APP_SVC_URL = Cypress.env("appSvcURL");
 export const ORG_NAME = Cypress.env("selectedOrgHandle");
 export const SUCCESS_STATUS_CODE = 200;
+export const STANDARD_TIME_OUT = 6000;
 export const NO_OF_RETIRES = 2;
