@@ -8,6 +8,7 @@ configMapGenerator:
 - envs:
   - common-env-variables.yaml
   name: common-env-variables
+  namespace: choreo-system
 
 images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
