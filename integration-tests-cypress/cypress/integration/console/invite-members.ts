@@ -39,7 +39,7 @@ describe('Invite members', () => {
         cy.userLogout();
     })
 
-    it('invite a member', () => {
+    it('invite a member', { retries: 2 }, () => {
         cy.get('[data-testid="invite-members-btn"]').click();
         cy.get('[data-testid="group-select"]').invoke('text').then((groupText) => {
             if (groupText == '') {
@@ -68,7 +68,7 @@ describe('Invite members', () => {
         })
     })
 
-    it('Add a member to a group', () => {
+    it('Add a member to a group', { retries: 2 }, () => {
         // Member should be already in the member list
         cy.contains(groupMemberEmail).should('be.visible');
 
