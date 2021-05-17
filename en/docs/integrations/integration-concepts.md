@@ -51,5 +51,5 @@ Choreo supports the following statements:
  - **Custom**: Is used to write a single or a multiline code snippet in your service.
 
 ## Expression Syntax
-The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)
+The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
 
