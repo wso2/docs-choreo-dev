@@ -12,6 +12,7 @@
  */
 
 import { generateAppName } from '../../../support/common/utils';
+import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -25,17 +26,19 @@ describe('Service deployment and delete deployed service', () => {
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
+    });
 
+    beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
-        cy.createNewApp("service", appName);
+        cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello");
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("var", "res", '"hello world"');
         cy.createRespond("res");
-    })
+    });
 
     after(() => {
         cy.goBacktoAppsList();
@@ -44,13 +47,6 @@ describe('Service deployment and delete deployed service', () => {
     })
 
     it('deploy hello world service', () => {
-        cy.deployToChoreo(appName);
-        cy.get('[data-testid="prod-url"]').invoke('text').then((appURL) => {
-            expect(appURL).not.to.equal('');
-            cy.log("test url: ", appURL);
-            expect(appURL).to.contain('https://');
-            cy.callExternalEndpoint((appURL + "/hello"), 3, "hello world");
-            cy.log('Hello world string recieved successfully!');
-        })
+        cy.deployToChoreo("service", appName);
     })
 })
