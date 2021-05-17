@@ -25,7 +25,7 @@ Cypress.Commands.add('devportalLogin', () => {
 Cypress.Commands.add('devportalLogout', () => {
     cy.log('Initiating logout');
     cy.get('[data-testid=signedin-user-menu-btn]', { timeout: STANDARD_TIME_OUT }).should('be.visible').click({ force: true });
-    cy.get('[data-testid=logout-item-btn]', { timeout: STANDARD_TIME_OUT }).should('be.visible').click();
+    cy.get('[data-testid=logout-item-btn]').click();
     cy.log('Successfully logged out');
 });
 
