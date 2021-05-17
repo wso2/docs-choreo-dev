@@ -12,7 +12,7 @@
  */
 
 import { generateAppName } from '../../../support/common/utils';
-import { INTEGRATIONS_TEXT, NO_OF_RETIRES } from '../../../support/common/constants';
+import { INTEGRATIONS_TEXT, NO_OF_RETRIES } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -67,7 +67,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
     })
 
-    it('run schedule trigger integration', { retries: NO_OF_RETIRES }, () => {
+    it('run schedule trigger integration', { retries: NO_OF_RETRIES }, () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click();
         cy.log('Started test run');
@@ -76,7 +76,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Schedule trigger printed the log successfully');
     })
 
-    it('deploy schedule trigger integration', { retries: NO_OF_RETIRES }, () => {
+    it('deploy schedule trigger integration', { retries: NO_OF_RETRIES }, () => {
         cy.wait(10000);
         cy.deployToChoreo("schedule", appName);
         cy.log('Awaiting 2 minutes to check if the expected log is printed');
