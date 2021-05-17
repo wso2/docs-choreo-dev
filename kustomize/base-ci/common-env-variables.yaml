@@ -1,0 +1,1 @@
+WORKSPACE_IMAGE=choreoctrlplane.azurecr.io/choreoipaas/workspace:latest
