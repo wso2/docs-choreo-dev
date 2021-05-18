@@ -15,14 +15,13 @@
 
 import { INTEGRATIONS_TEXT } from "../../../support/common/constants";
 
-describe('Colone and edit integrations', () => {
+describe('Clone and edit integrations', () => {
     let savedCookies;
     const gmailAccount = Cypress.env("invitationEmail");
     const fakeTwilioAccountSID = Cypress.env("fakeTwilioAccountSID");
     const fakeTwilioToken = Cypress.env("fakeTwilioToken");
     const fakeTwilioSenderNumber = Cypress.env("fakeTwilioSenderNumber");
     const fakeTwilioRecipientNumber = Cypress.env("fakeTwilioRecipientNumber");
-    // const appName = 'Google Calendar Event to Twilio SMS';
 
     before(() => {
         cy.log("Login into Choreo");
