@@ -69,6 +69,7 @@ describe("Group List View", () => {
             cy.get('[data-testid="api-delete-btn"]').click();
         });
         cy.get('[data-testid="delete-member-btn"]').click();
+        cy.contains("td",memberEmail).should('not.exist');
         cy.log("Member removed from the group successfully");
     });
 
@@ -76,9 +77,10 @@ describe("Group List View", () => {
         cy.searchApps(groupName);
         cy.log("Removing the group");
         cy.contains("td", groupName).should("be.visible");
-        cy.contains("tr", groupName).trigger("mouseover");
+        cy.contains("td", groupName).trigger("mouseover");
         cy.get('[data-testid="api-delete-btn"]').click();
         cy.get('[data-testid="group-delete-btn"]').click();
+        cy.contains("td",groupName).should('not.exist');
         cy.log("Group Removed successfully"!);
     });
 });

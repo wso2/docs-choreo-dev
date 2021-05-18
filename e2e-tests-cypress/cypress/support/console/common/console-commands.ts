@@ -369,7 +369,7 @@ Cypress.Commands.add('searchApps', (name: string) => {
             cy.get('[data-testid="search-btn"]').trigger('mouseover');
         }
     });
-    cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click().clear().type(name, { force: true});
+    cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click().clear().type(name, { force: true });
 }),
 
 Cypress.Commands.add('resetAppSearch', () => {
