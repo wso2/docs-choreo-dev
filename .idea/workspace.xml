@@ -26,7 +26,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23976e2c-4d70-407b-baf9-34bf375bbcdf" name="Default Changelist" comment="Revert changes" />
+    <list default="true" id="23976e2c-4d70-407b-baf9-34bf375bbcdf" name="Default Changelist" comment="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -244,14 +244,7 @@
       <option name="project" value="LOCAL" />
       <updated>1620999596344</updated>
     </task>
-    <task id="LOCAL-00028" summary="Revert changes">
-      <created>1621318550588</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1621318550588</updated>
-    </task>
-    <option name="localTasksCounter" value="29" />
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -279,6 +272,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Address merge conflicts." />
     <MESSAGE value="Resolve merge conflicts." />
     <MESSAGE value="Update images to reflect the latest UI changes." />
     <MESSAGE value="Remove unnecessary space." />
@@ -303,28 +297,19 @@
     <MESSAGE value="Change statement about statements to make it applicable to both Integrations and Services." />
     <MESSAGE value="Remove the reference to the diagram as &quot;low-code view.&quot;" />
     <MESSAGE value="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
-    <MESSAGE value="Revert changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="348" y="169" key="Git.Interactive.Rebase.Dialog" timestamp="1621319098122">
+    <state x="448" y="218" key="Vcs.Push.Dialog.v2" timestamp="1620999598186">
       <screen x="0" y="23" width="1680" height="944" />
     </state>
-    <state x="348" y="169" key="Git.Interactive.Rebase.Dialog/0.23.1680.944@0.23.1680.944" timestamp="1621319098122" />
-    <state x="448" y="218" key="Vcs.Push.Dialog.v2" timestamp="1621318553695">
-      <screen x="0" y="23" width="1680" height="944" />
-    </state>
-    <state x="448" y="218" key="Vcs.Push.Dialog.v2/0.23.1680.944@0.23.1680.944" timestamp="1621318553695" />
+    <state x="448" y="218" key="Vcs.Push.Dialog.v2/0.23.1680.944@0.23.1680.944" timestamp="1620999598186" />
     <state x="448" y="219" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1620895071165" />
-    <state x="519" y="273" key="git4idea.merge.GitPullDialog" timestamp="1621318499254">
+    <state x="519" y="273" key="git4idea.merge.GitPullDialog" timestamp="1620999563767">
       <screen x="0" y="23" width="1680" height="944" />
     </state>
-    <state x="519" y="273" key="git4idea.merge.GitPullDialog/0.23.1680.944@0.23.1680.944" timestamp="1621318499254" />
+    <state x="519" y="273" key="git4idea.merge.GitPullDialog/0.23.1680.944@0.23.1680.944" timestamp="1620999563767" />
     <state x="519" y="274" key="git4idea.merge.GitPullDialog/0.23.1680.947@0.23.1680.947" timestamp="1620803963082" />
-    <state x="601" y="347" key="git4idea.rebase.GitRebaseDialog" timestamp="1621319094293">
-      <screen x="0" y="23" width="1680" height="944" />
-    </state>
-    <state x="601" y="347" key="git4idea.rebase.GitRebaseDialog/0.23.1680.944@0.23.1680.944" timestamp="1621319094293" />
     <state x="623" y="375" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1620709774886">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
