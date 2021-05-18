@@ -47,7 +47,8 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
         cy.updateSubscriptionPlans();
         cy.createAndDeployRevision();
-        cy.testApiInPublisherTestConsole();
+        // TODO : Enable this test once the tryout 404 error fixed in dev
+        // cy.testApiInPublisherTestConsole();
     });
 
     after(() => {
