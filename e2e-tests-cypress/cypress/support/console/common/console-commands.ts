@@ -338,7 +338,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 }),
 
 Cypress.Commands.add('createLogProperty', (type: string, expression: string) => {
-    const variableSourceFields = "log:print(\"" + expression + "\");";
+    const variableSourceFields = `log:print${type}(\"${expression}\");`;
     cy.log('Creating the log with expression : '+ expression);
     cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
         if (!(availableText == type)) {
