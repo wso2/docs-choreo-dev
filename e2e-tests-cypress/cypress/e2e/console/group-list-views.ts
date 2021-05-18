@@ -26,7 +26,9 @@ describe("Group List View", () => {
     before(() => {
         cy.log("Login into Choreo");
         cy.consoleUserLogin();
-        cy.getCookies().then((cookies) => { savedCookies = cookies;});
+        cy.getCookies().then((cookies) => {
+            savedCookies = cookies;
+        });
     });
 
     beforeEach(() => {
