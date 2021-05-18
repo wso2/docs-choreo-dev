@@ -26,18 +26,14 @@ describe("Group List View", () => {
     before(() => {
         cy.log("Login into Choreo");
         cy.consoleUserLogin();
-        cy.getCookies().then((cookies) => {
-            savedCookies = cookies;
-        });
+        cy.getCookies().then((cookies) => { savedCookies = cookies;});
     });
 
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.navigateFromHomePage(SETTINGS_TEXT);
         cy.get('[role="progressbar"]').should("not.exist");
-        cy.get('[data-testid="/user-settings/organization/groups"]').click({
-            force: true,
-        });
+        cy.get('[data-testid="/user-settings/organization/groups"]').click({ force: true });
     });
 
     after(() => {
@@ -49,9 +45,7 @@ describe("Group List View", () => {
         cy.get('[data-testid="create-group-popup"]').should("be.visible");
         cy.log("Creating a group!");
         cy.get('[id="create-group-name"]').type(groupName, { force: true });
-        cy.get('[id="filled-multiline-static"]').type(groupDescription, {
-            force: true,
-        });
+        cy.get('[id="filled-multiline-static"]').type(groupDescription, { force: true });
         cy.get('[id="create-group-tag"]').type(groupTag, { force: true });
         cy.get('[data-testid="create-group"]').click({ force: true });
         cy.contains("td", groupName).should("be.visible");
@@ -63,9 +57,7 @@ describe("Group List View", () => {
         cy.get('[data-testid="/user-settings/organization/groups"]').click();
         cy.contains("td", groupName).click();
         cy.get('[id="tags-standard"]').click().type(memberName);
-        cy.contains('[id="tags-standard-popup"]', memberName).should(
-            "be.visible"
-        );
+        cy.contains('[id="tags-standard-popup"]', memberName).should("be.visible");
         cy.contains('[id="tags-standard-popup"]', memberName).click();
         cy.get('[data-testid="add-member-btn"]').click();
         cy.contains("td", memberEmail).should("be.visible");
