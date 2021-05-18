@@ -13,7 +13,8 @@
 
 /// <reference types="cypress" />
 
-import { INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER } from "../../../support/common/constants";
+import { INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, 
+    FAKE_TWILIO_RECIPIENT_NUMBER } from "../../../support/common/constants";
 
 describe('Clone and edit integrations', () => {
     let savedCookies;

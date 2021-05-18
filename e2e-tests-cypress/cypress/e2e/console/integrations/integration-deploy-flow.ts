@@ -11,7 +11,8 @@
  * associated services.
  */
 import { generateAppName } from "../../../support/common/utils";
-import { INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER } from '../../../support/common/constants';
+import { INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, 
+    FAKE_TWILIO_RECIPIENT_NUMBER } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
