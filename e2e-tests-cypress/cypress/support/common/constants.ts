@@ -24,4 +24,6 @@ export const APP_SVC_URL = Cypress.env("appSvcURL");
 export const ORG_NAME = Cypress.env("selectedOrgHandle");
 export const SUCCESS_STATUS_CODE = 200;
 export const STANDARD_TIME_OUT = 6000;
+export const MEDIUM_TIME_OUT = 10000;
+export const HIGH_TIME_OUT = 60000;
 export const NO_OF_RETRIES = 2;
