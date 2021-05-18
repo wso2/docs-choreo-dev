@@ -50,7 +50,8 @@ Cypress.Commands.add('createAndDeployRevision', () => {
 Cypress.Commands.add('testApiInPublisherTestConsole', () => {
     cy.get('[data-testid="test"]', {timeout: STANDARD_TIME_OUT}).click();
     cy.log("Invoking the API");
-    cy.get('.opblock-summary', {timeout: HIGH_TIME_OUT}).eq(0).click();
+    cy.wait(2000);
+    cy.get('.opblock-summary', {timeout: STANDARD_TIME_OUT}).eq(0).click();
     cy.get('.btn').click();
     cy.get('.execute-wrapper > .btn', {timeout: STANDARD_TIME_OUT}).click();
     cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status',
@@ -126,6 +127,7 @@ Cypress.Commands.add('addApiDocument', () => {
     cy.get('[data-testid=document-summary]').type('Test summary by test runner');
     cy.get('[data-testid=document-url]').type('https://www.example.com/how-to');
     cy.get('[data-testid=create-document]').click();
+    cy.get('#circular-loader', {timeout: STANDARD_TIME_OUT}).should('not.exist');
     cy.get('[data-testid=document-wrapper]', {timeout: STANDARD_TIME_OUT}).should('exist');
 });
 
