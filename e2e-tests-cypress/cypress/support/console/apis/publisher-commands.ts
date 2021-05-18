@@ -95,13 +95,11 @@ Cypress.Commands.add('updateDesignConfiguration', () => {
     cy.get('[data-testid=design-config-save-btn]').click();
 });
 
-Cypress.Commands.add('updateRuntimeConfiguration', (isService?: boolean) => {
+Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid="Runtime Configurations"]').click();
     cy.get('[data-testid=switch-cors-config]').click();
     cy.get('[data-testid=cors-config-label]').click();
-    if (!isService) {
-        cy.get('[data-testid=checkbox-allow-all-origins]').click();
-    }
+    cy.get('[data-testid=checkbox-allow-all-origins]').click();
     cy.wait(2000);
     cy.get('[data-testid=addBtn-origin]').click();
     cy.get('[data-testid="type and press enter to add origins"]').type('localhost{enter}');
