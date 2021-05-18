@@ -41,18 +41,15 @@ describe('API creation from choreo service', () => {
             // Deploy a sample service
             cy.url().should('include', `app/${serviceName}/develop`);
             cy.get('[data-testid="editor-run-btn"]').should('exist');
-            cy.switchToDeployView(serviceName);
-            cy.get('#deploy-button').should('exist');
-            cy.get('#deploy-button').click();
-            cy.get('[id="stop-button"]', { timeout: 600000 }).contains("Stop").should('exist');
+            cy.deployToChoreo("service", serviceName);
             cy.log('Service deployed successfully!');
-            cy.wait(30000);
+            cy.wait(60000);
 
             cy.goBacktoAppsList();
             cy.navigateFromHomePage(APIS_TEXT);
             cy.searchApiFromListAndVisit(apiName);
             cy.verifyApiOverview(apiName, "1.0.0");
-            cy.updateRuntimeConfiguration(true);
+            cy.updateRuntimeConfiguration();
 
             // Tries out the API proxies the sample service
             cy.wait(2000);

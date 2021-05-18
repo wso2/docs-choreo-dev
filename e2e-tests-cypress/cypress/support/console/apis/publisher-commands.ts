@@ -97,13 +97,13 @@ Cypress.Commands.add('updateDesignConfiguration', () => {
     cy.get('#circular-loader', {timeout: STANDARD_TIME_OUT}).should('not.exist');
 });
 
-Cypress.Commands.add('updateRuntimeConfiguration', (isService?: boolean) => {
+
+Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid="Runtime Configurations"]', {timeout: STANDARD_TIME_OUT}).click();
     cy.get('[data-testid=switch-cors-config]').click();
     cy.get('[data-testid=cors-config-label]').click();
-    if (!isService) {
-        cy.get('[data-testid=checkbox-allow-all-origins]').click();
-    }
+    cy.get('[data-testid=checkbox-allow-all-origins]').click();
+    cy.wait(2000);
     cy.get('[data-testid=addBtn-origin]', {timeout: STANDARD_TIME_OUT}).click();
     cy.get('[data-testid="type and press enter to add origins"]').type('localhost{enter}');
     cy.get('[data-testid=addBtn-header]').click();
