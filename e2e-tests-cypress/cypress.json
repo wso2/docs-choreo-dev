@@ -3,6 +3,7 @@
     "screenshotsFolder": "cypress/screenshots",
     "ignoreTestFiles": "**/examples/*.js",
     "chromeWebSecurity": false,
+    "integrationFolder": "cypress/e2e",
     "testFiles": [
         "console/apis/*.ts",
         "console/integrations/*.ts",
