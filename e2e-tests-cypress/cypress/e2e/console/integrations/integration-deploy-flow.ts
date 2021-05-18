@@ -64,7 +64,7 @@ describe('Prebuilt integration test run and deployment', () => {
         cy.userLogout();
     })
 
-    it.only('test-run and deploy integration', () => {
+    it('test-run and deploy integration', () => {
         let appSvcUrl = Cypress.env("appSvcURL");
         let orgName = Cypress.env("selectedOrgHandle");
         const gmailAccount = Cypress.env("invitationEmail");
