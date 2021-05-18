@@ -1,0 +1,1043 @@
+Index: en/docs/references/choreo-expression-syntax.md
+===================================================================
+--- en/docs/references/choreo-expression-syntax.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/references/choreo-expression-syntax.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
+@@ -1,385 +0,0 @@
+-# Choreo Expression Syntax
+-
+-Choreo expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you the common expressions that you can use while developing Choreo applications.
+-
+-## Supported Literals 
+-
+-### String
+-
+-A string is simply a sequence of characters. It is required to use double quotes (`"`)  to mark the boundary between the starting and ending characters.
+-
+-#### Examples
+-
+-  ```ballerina
+-  "Colombo"
+-  ```
+-  ```ballerina
+-  "12345"
+-  ```
+-  ```ballerina
+-  "Ballerina is a programming language intended for network-distributed applications."
+-  ```
+-
+-### Signed Integer
+-
+-Using this type, you can give numbers as an input to an expression-supported field.  You have the option to use `+` or `-` characters in the front to indicate the sign.  You can also define an integer by using only numerical characters without any delimiters. 
+-
+-#### Examples
+-
+-  ```ballerina
+-  1234
+-  ```
+-  ```ballerina
+-  -10
+-  ```
+-  ```ballerina
+-  +2020
+-  ```
+-
+-### Decimal Floating-Point Number
+-
+-A number with a decimal point falls under this data type. You have the option to use `+` or `-` characters in the front to indicate the sign.
+-
+-#### Examples
+-
+-  ```ballerina
+-  0.3353
+-  ```
+-  ```ballerina
+-  2044.24
+-  ```
+-  ```ballerina
+-  -8593.992
+-  ```
+-  ```ballerina
+-  +950.930
+-  ```
+-  ```ballerina
+-  10.0
+-  ```
+-
+-### Boolean Value
+-
+-This data type has one of two possible values, `true` and `false`.
+-
+-#### Examples
+-
+-  ```ballerina
+-  true
+-  ```
+-  ```ballerina
+-  false
+-  ```
+-
+-## Accessing Variables
+-
+-### Using the variable value
+-
+-Variables keep values in memory for later access. In an expression syntax-supported input field, you can refer to these variables directly using the variable name.
+-
+-#### Example
+-
+-  ```ballerina
+-  VariableName
+-  ```
+-
+-## Supported Operators
+-
+-### String Concatenation
+-
+-You can use the `+` operator to do string concatenations. The string value can come from a string literal or a variable.
+-
+-#### Examples
+-
+- - Concatenating two string literals.
+- 
+-  ```ballerina
+-  "Hello " + "world!" 
+-  ```
+- - Concatenating a string literal and a variable.
+- 
+-  ```ballerina
+-  "Hi " + nameVar
+-  ```
+- - Concatenating two string variables.
+- 
+-  ```ballerina
+-  firstNameString + lastNameString
+-  ```
+-
+-### Number Addition
+-You can use the  `+` operator for number addition. The number values can come from a literal or a variable.
+-
+-#### Examples
+-- Concatenating two integer literals.
+-
+-  ```ballerina
+-  10 + 20
+-  ```
+-- Concatenating two decimal literals.
+-
+-  ```ballerina
+-  0.56 + 1.84
+-  ```
+-- Concatenating a literal and a variable.
+-
+-  ```ballerina
+-  100 + nameVariable
+-  ```
+-- Concatenating two variables.
+-
+-  ```ballerina
+-  firstNumber + secondNumber
+-  ```
+-
+-### Number Subtraction
+-
+-You can use the `-` operator for number subtraction. The number values can come from a literal or a variable.
+-
+-#### Examples
+-- Subtracting two integer literals.
+-
+-  ```ballerina
+-  10 - 20
+-  ```
+-- Subtracting two decimal literals.
+-
+-  ```ballerina
+-  0.56 - 1.84
+-  ```
+-- Subtracting a literal and a variable.
+-
+-  ```ballerina
+-  100 - <named variable>
+-  ```
+-- Subtracting two variables.
+-
+-  ```ballerina
+-  <first number> - <second number>
+-  ```
+-
+-### Number Division
+-
+-You can use the `/` operator for number division. The number values can come from a literal or a variable.
+-
+-#### Examples
+-
+-- Division between two integer literals.
+-
+-  ```ballerina
+-  10 / 20
+-  ```
+-- Division between two decimal literals.
+-
+-  ```ballerina
+-  0.56 / 1.84
+-  ```
+-- Division between a literal and a variable.
+-
+-  ```ballerina
+-  100 / nameVariable
+-  ```
+-- Division between two variables.
+-
+-  ```ballerina
+-  firstNumber - secondNumber
+-  ```
+-
+-### Number Multiplication
+-
+-You can use the `*` operator for number multiplication. The number values can come from a literal or a variable.
+-
+-#### Examples
+-
+-- Multiplying two integer literals.
+-
+-  ```ballerina
+-  10 * 20
+-  ```
+-- Multiplying two decimal literals.
+-
+-  ```ballerina
+-  0.56 * 1.84
+-  ```
+-- Multiplying a literal and a variable.
+-
+-  ```ballerina
+-  100 * nameVariable
+-  ```
+-- Multiplying two variables.
+-
+-  ```ballerina
+-  firstNumber * secondNumber
+-  ```
+-
+-### Modulo Operation
+-
+-You can use the  `%` operator to get the remainder of a division. The number values can come from a literal or a variable.
+-
+-#### Examples
+-- Modulus of two integer literals.
+-
+-  ```ballerina
+-  10 % 4
+-  ```
+-- Modulus of a literal and a variable.
+-
+-  ```ballerina
+-  100 % nameVariable
+-  ```
+-- Modulus of two variables.
+-
+-  ```ballerina
+-  firstNumber % secondNumber
+-  ```
+-
+-### Checking The Equality of Basic Types 
+-
+-In the [Ballerina language](https://ballerina.io/), basic types are `string`, `int`, `float`, `decimal`, and `boolean`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or a variable. Similarly `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
+-
+-#### Examples
+-- Equality of two integer literals.
+-
+-  ```ballerina
+-  10 == 4
+-  ```
+-- Equality of two string literals.
+-
+-  ```ballerina
+-  "hi" == "hi"
+-  ```
+-- Equality of a literal and a variable.
+-
+-  ```ballerina
+-  100 == expectedValueVariable
+-  ```
+-- Equality of two variables.
+-
+-  ```ballerina
+-  firstNumber == secondNumber
+-  ```
+-- Inequality of two variables. The following returns true when the values of the two variables are different.
+-
+-  ```ballerina
+-  firstNumber != secondNumber
+-  ```
+-
+-### Checking the Type of Variable
+-
+-The `is` operator is used to assert the type of a variable.
+-
+-#### Examples
+-- Checking whether the variable is of JSON type.
+-
+-  ```ballerina
+-  payload is JSON
+-  ```
+-
+-### Numerical Value Comparisons
+-
+-The following operators are available in the expression editor for numeric value comparisons:
+-- `<` (less than)
+-- `>` (greater than)
+-- `<=` (less than or equal to)
+-- `>=` (greater than or equal to)
+-
+-#### Examples
+-- Checking if the value of a variable is greater than 10.
+-
+-  ```ballerina
+-  myVar > 10
+-  ```
+-  
+-- Comparing two variables.
+-
+-  ```ballerina
+-  myProperty <= limit
+-  ```
+-
+-## HTTP request related operations
+-
+-All the HTTP-related service applications created in Choreo have a variable called `req` (of type `http:Request`) which the developers can use to query information related to the HTTP request. Following is a list of use cases that an integration application developer would need more likely need to develop Choreo applications
+-
+-### Reading a header value in the request
+-A typical HTTP request contains many headers. Some of these headers are standard, and some are custom. In an expression-enabled input field, you can use the `req` variable's `getHeader` function to read a specific header value.
+-
+-#### Examples
+-- Reading the value of Access-Control-Allow-Origin HTTP header.
+-
+-  ```ballerina
+-  req.getHeader("Access-Control-Allow-Origin")
+-  
+-  ```
+-- Using a value stored in a variable as the header name. Please note the omission of the double quotes.
+-
+-  ```ballerina
+-  req.getHeader(headerName)
+-  ```
+-
+-### Checking whether a header is present in the request
+-
+-Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the  `hasHeader`  function in the `req` object for this purpose.
+-
+-#### Examples
+-- Checking whether the content-length property is available as a header.
+-
+-  ```ballerina
+-  req.hasHeader("content-length")
+-  ```
+-- Using a value stored in a variable as the query parameter name. Please note the omission of the double quotes.
+-
+-  ```ballerina
+-  req.hasHeader(myCustomeHeader)
+-  ```
+-
+-### Reading the JSON Payload of the request
+-
+-JSON is a common content type used for HTTP communication. The `req` variable’s `getJsonPayload` function can be used to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
+-
+-#### Examples
+-- Reading the JSON Payload of the HTTP request.
+-
+-  ```ballerina
+-  req.getJsonPayload()
+-  ```
+-
+-### Reading the Text Payload of the request
+-
+-Sometimes, content is sent as a string (plain text) with the HTTP request. The `req` variable’s `getTextPayload` function can be used to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
+-
+-#### Examples
+-- Reading the Text Payload of the HTTP request.
+-
+-  ```ballerina
+-  req.getTextPayload()
+-  ```
+-
+-### Reading the query parameter value
+-
+-Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the `req` variable's `getQueryParamValue` function to read the passed query parameter.
+-
+-#### Examples
+-- Reading the query parameter named category.
+-
+-  ```ballerina
+-  req.getQueryParamValue("category")
+-  ```
+-- Using a value stored in a variable as the query parameter name. Note the omission of the double quotes.
+-
+-  ```ballerina
+-  req.getQueryParamValue(queryParamName)
+-  ```
+-
+-### Reading the cookies available in the request
+-
+-HTTP Cookies keep stateful information against a client. You can use the `req` variable's `getCookies` function to read cookies present in the request as an array.
+-
+-#### Examples
+-- Reading all the cookies available in the request.
+-
+-  ```ballerina
+-  req.getCookies()
+-  ```
+-
+-
+-
+Index: en/docs/services/create-your-first-service.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Create Your First Service\n\nTo learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.\n\n## Step 1: Create the Choreo service\n\nTo create the Choreo service, follow the procedure below: \n\n1. Access the Choreo Development Console via the following URL.\n\n    `https://console.choreo.dev/`\n    \n    Sign in using either your Google or GitHub credentials.\n    \n2. In the **Services** page, click **Create**.\n\n3. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.\n\n4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.\n\n    ![Resource Configuration](../assets/img/services/configure-api-trigger.png)\n    \n    Then click **Save API**. Now you have saved the API trigger that starts your application.\n    \n5. In the next form that appears, do as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.\n\n    1. Click **Connections**.\n\n    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.\n    \n        ![New HTTP Connection](../assets/img/services/new-http-connection.png)\n        \n        Then click **Save & Next**.\n        \n    3. In the **Select Payload Type** field, select **JSON**.\n    \n        ![Select Payload Type](../assets/img/services/select-payload-type.png)\n        \n    4. Open the code view of the application by clicking the **<>** icon to the top right of the page.\n    \n        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get(\"/\");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get(\"/total/country/united-states\");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in the United States.\n        \n    5. Click **Save & Done**. Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.\n    \n6. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:\n\n    1. Click on the **+** icon below the JSON payload. \n\n        ![Add New Statement](../assets/img/services/add-new-statement.png)\n    \n    2. Then click the **+** icon again to select the new statement you need to add.\n    \n    3. In the form that appears, click **Custom Statement**.\n\n    4. In the **Custom Statement** form that appears, enter the following two lines as the statement.\n    \n        ```ballerina\n        json[] jsonArray = <json[]>jsonPayload;\n        json[] response = [];\n        ```\n\n        ![Add Custom Statement](../assets/img/services/custom-statement.png)\n    \n    5. Then click **Save**.\n    \n7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: \n\n    1. Click the last **+** icon that is visible in the low code view of the service in its current state.\n\n        ![Add Custom Statement](../assets/img/services/add-to-the-service.png)\n    \n    2. In the form that appears, click **ForEach**.\n\n    3. In the **ForEach** form, enter `jsonArray` as the iterable expression.\n\n        ![Add ForEach Statement](../assets/img/services/add-foreach-statement.png)\n    \n        Then click **Save**.\n    \n    4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.\n\n        ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png)\n    \n    5. In the form that appears, click **Custom Statement**. Then enter the following as the statement.\n\n        ```ballerina\n        int active = <int>(check item.Active);\n        if (active > 5000) {\n            response.push(item);\n        }\n        ```\n        \n        Then click **Save**.\n    \n8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.\n\n    ![Add Respond Statement](../assets/img/services/add-respond-statement.png)\n    \n    In the **Respond** form that appears, enter the following as the respond expression.\n\n    ```ballerina\n    response\n    ```\n    \n    ![Respond Expression](../assets/img/services/respond-expression.png)\n    \nNow you have completed designing your Choreo application. It looks as follows.\n\n- In the Low Code View\n\n    ![Low Code View](../assets/img/services/choreo-service-low-code-view.png)\n\n- In the Code View\n\n    ![Low Code View](../assets/img/services/choreo-service-code-view.png)\n\n    \nTo validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.\n\n![Service Started Log](../assets/img/services/service-started-notification.png)\n    \nCongratulations! You have successfully created your first Choreo service.\n   \n## Step 2: Test the Choreo service\n\nTo test the `covid-stats` Choreo application you created, follow the procedure below:\n\n1. Click the **Test** icon in the left pane.\n\n    ![Test Icon](../assets/img/services/test-icon.png)\n\n2. In the section that opens to the right of the page, click **GET**.\n\n3. Click **Try it out**, and then click **Execute**.\n\nThe search results for COVID-19 statistics of United States are displayed as the server response as shown below.\n\n![Server Response](../assets/img/services/server-response.png)\n\nNow you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.\n\n## Step 3: Deploy the Choreo service\n\nTo deploy the `covid-stats` service, follow the procedure below:\n\n1. Click the **Go Live** icon in the left pane.\n\n    ![Test Icon](../assets/img/services/deploy-icon.png)\n\n2. To deploy the service, click **Deploy**.\n\n    The following message appears to indicate that you have successfully deployed the service.\n\n    ![Successfully Deployed Notification](../assets/img/services/successfully-deployed-notification.png)\n\n3. Once the service is deployed, click on the **Go Live** tab below the low code design view. Then click **://cURL** and copy the CURL command that is displayed.\n\n    ![Get cURL command](../assets/img/services/copy-curl-command.png)\n    \n    Invoke the `covid-stats` service by issuing a few CURL commands using the Postman application.\n    \n    The responses are logged as shown below.\n    \n    ![covid-stats-log](../assets/img/services/covid-stats-log.png)\n\n    In the Choreo Development Console, **Go Live** tab, the requests are logged as follows.\n    \n    ![Execution History](../assets/img/services/execution-history.png)\n    \nTo observe the `covid-stats` service by checking the statistics generated as a result of the CURL commands you issued, proceed to Step 4. \n\n## Step 4: Observe the Choreo service.\n\nTo observe the `covid-stats` service, click the **Observe** icon in the left panel.\n![Test Icon](../assets/img/services/observe-icon.png)\n\nThe throughput and the latency of the `covid-stats` service are visualized as follows:\n![Visualization of Throughput and Latency](../assets/img/services/successfully-deployed-notification.png)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/docs/services/create-your-first-service.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/services/create-your-first-service.md	(date 1621324096005)
+@@ -1,87 +1,88 @@
+ # Create Your First Service
+ 
+-To learn how to create a Choreo service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
++To learn how to create a service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
+ 
+-## Step 1: Create the Choreo service
++## Step 1: Create the service
+ 
+-To create the Choreo service, follow the procedure below: 
++To create the service, follow the procedure below: 
+ 
+-1. Access the Choreo Development Console via the following URL.
+-
+-    `https://console.choreo.dev/`
++1. Access the Choreo Console via https://console.choreo.dev/.
+     
+-    Sign in using either your Google or GitHub credentials.
++2. Sign in using either your Google or GitHub credentials.
+     
+-2. In the **Services** page, click **Create**.
++3. In the **Services** page, click **Create**. You are directed to the low-code view.
+ 
+-3. Under **Create with Choreo**, enter `covid-stats` as the name of your Choreo service.
++4. Under **Create with Choreo**, enter `covid-stats` as the name of your service.
+ 
+-4. In the **Configure API Trigger** form, select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
++5. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
+ 
+     ![Resource Configuration](../assets/img/services/configure-api-trigger.png)
+     
+-    Then click **Save API**. Now you have saved the API trigger that starts your application.
++    Then click **Save API**. Now you have saved the API trigger that starts your service.
+     
+-5. In the next form that appears, do as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
++6. Click **API Calls**, and then enter information as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
+ 
+-    1. Click **Connections**.
+-
+-    2. In the **New HTTP Connection** form, enter `https://api.covid19api.com` as the URL and select **GET** as the operation.
+-    
+-        ![New HTTP Connection](../assets/img/services/new-http-connection.png)
+-        
+-        Then click **Save & Next**.
++    1. Click **HTTP**.
++    
++        ![Select HTTP Connection](../assets/img/services/select-http-connection.png)
++        
++    2. Enter information as follows:
++    
++        | **Field**           | **Value**                    |
++        |---------------------|------------------------------|
++        | **Connection Name** | `httpEndpoint`               |
++        | **URL**             | `"https://api.covid19api.com"` |
+         
+-    3. In the **Select Payload Type** field, select **JSON**.
+-    
+-        ![Select Payload Type](../assets/img/services/select-payload-type.png)
+-        
+-    4. Open the code view of the application by clicking the **<>** icon to the top right of the page.
+-    
+-        Update the `http:Response getResponse = <http:Response>check httpEndpoint->get("/");` line as `http:Response getResponse = <http:Response>check httpEndpoint->get("/total/country/united-states");`. This specifies that the GET statement in the HTTP connection invokes the public API to fetch the current number of active COVID-19 in the United States.
+-        
+-    5. Click **Save & Done**. Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
+-    
+-6. To cast all the data retrieved via the API connected to the application before further processing, add a new custom statement as follows:
+-
+-    1. Click on the **+** icon below the JSON payload. 
+-
+-        ![Add New Statement](../assets/img/services/add-new-statement.png)
+-    
+-    2. Then click the **+** icon again to select the new statement you need to add.
+-    
+-    3. In the form that appears, click **Custom Statement**.
+-
+-    4. In the **Custom Statement** form that appears, enter the following two lines as the statement.
+-    
+-        ```ballerina
++        Click **Save**.
++        
++    3. Click the **+** icon below the HTTP API call you added. 
++    
++        ![Update Existing Connection](../assets/img/services/update-existing-connection.png)
++        
++    4. Click **API Calls**, and then click on the existing connection.
++    
++        ![Select Existing connection](../assets/img/services/select-existing-connection.png)
++        
++    5. Enter information as follows:
++        
++        
++        | **Field**               | **Value**                      |
++        |-------------------------|--------------------------------|
++        | **OPERATION**           | **get**                        |
++        | **Resource Path**       | `/total/country/united-states` |
++        | **Select Payload Type** | **JSON**                       |
++        
++        Click **Save & Done**.
++        
++        Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
++    
++7. To cast all the data retrieved via the API connected to the service before further processing, add a new custom statement as follows:
++
++    1. Click the last **+** icon in your low-code diagram.
++
++        ![Add New Statement](../assets/img/services/add-custom-statement.png)
++    
++    2. Click **Other** and then enter the following in the **Statement** field.
++    
++        ```
+         json[] jsonArray = <json[]>jsonPayload;
+         json[] response = [];
+         ```
+-
+-        ![Add Custom Statement](../assets/img/services/custom-statement.png)
+-    
+-    5. Then click **Save**.
+-    
+-7. To filter the dates on which the active cases have exceeded 50,000, let's add a statement of the `ForEach` type as follows: 
+-
+-    1. Click the last **+** icon that is visible in the low code view of the service in its current state.
+-
+-        ![Add Custom Statement](../assets/img/services/add-to-the-service.png)
+-    
+-    2. In the form that appears, click **ForEach**.
+-
+-    3. In the **ForEach** form, enter `jsonArray` as the iterable expression.
+-
+-        ![Add ForEach Statement](../assets/img/services/add-foreach-statement.png)
+-    
+         Then click **Save**.
+     
++8. To filter the dates on which the active cases have exceeded 5,000, let's add a statement of the `ForEach` type as follows: 
++
++    1. Click the last **+** icon in your low-code diagram.
++    
++    2. Click **ForEach**.
++
++    3. In the **Iterable Expression** field, enter `jsonArray`. Then click **Save**.
++    
+     4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
+ 
+         ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png)
+     
+-    5. In the form that appears, click **Custom Statement**. Then enter the following as the statement.
++    5. In the form that appears, click **Other**. Then enter the following in the **Statement** field.
+ 
+         ```ballerina
+         int active = <int>(check item.Active);
+@@ -92,38 +93,31 @@
+         
+         Then click **Save**.
+     
+-8. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon that is visible in the low code view of the service in its current state.
++9. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low-code diagram.
+ 
+     ![Add Respond Statement](../assets/img/services/add-respond-statement.png)
+     
+-    In the **Respond** form that appears, enter the following as the respond expression.
++    In the **Respond Expression** field, enter `response`, and then click **Save**.
+ 
+-    ```ballerina
+-    response
+-    ```
+     
+-    ![Respond Expression](../assets/img/services/respond-expression.png)
+-    
+-Now you have completed designing your Choreo application. It looks as follows.
++Now you have completed designing your service. It looks as follows.
+ 
+-- In the Low Code View
++![No Code View](../assets/img/services/choreo-service-low-code-view.png)
+ 
+-    ![Low Code View](../assets/img/services/choreo-service-low-code-view.png)
++The code view looks as follows.
+ 
+-- In the Code View
++![Code View](../assets/img/services/choreo-service-code-view.png)
+ 
+-    ![Low Code View](../assets/img/services/choreo-service-code-view.png)
+-
+     
+-To validate the Choreo application, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
++To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
+ 
+ ![Service Started Log](../assets/img/services/service-started-notification.png)
+     
+-Congratulations! You have successfully created your first Choreo service.
++Congratulations! You have successfully created your first service.
+    
+-## Step 2: Test the Choreo service
++## Step 2: Test the service
+ 
+-To test the `covid-stats` Choreo application you created, follow the procedure below:
++To test the `covid-stats` service you created, follow the procedure below:
+ 
+ 1. Click the **Test** icon in the left pane.
+ 
+@@ -133,13 +127,13 @@
+ 
+ 3. Click **Try it out**, and then click **Execute**.
+ 
+-The search results for COVID-19 statistics of United States are displayed as the server response as shown below.
++The search results for COVID-19 statistics of the United States are displayed as the server response as shown below.
+ 
+ ![Server Response](../assets/img/services/server-response.png)
+ 
+ Now you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.
+ 
+-## Step 3: Deploy the Choreo service
++## Step 3: Deploy the service
+ 
+ To deploy the `covid-stats` service, follow the procedure below:
+ 
+@@ -149,15 +143,15 @@
+ 
+ 2. To deploy the service, click **Deploy**.
+ 
+-    The following message appears to indicate that you have successfully deployed the service.
++    The status of the service changes to **Deployed**, and the following logs appear to indicate that the product is successfully deployed.    
+ 
+-    ![Successfully Deployed Notification](../assets/img/services/successfully-deployed-notification.png)
++    ![Deployment Logs](../assets/img/services/deployment-logs.png)
+ 
+-3. Once the service is deployed, click on the **Go Live** tab below the low code design view. Then click **://cURL** and copy the CURL command that is displayed.
++3. Once the service is deployed, click on the **Go Live** tab below the low-code design view. Then click **://cURL** and copy the cURL command that is displayed.
+ 
+     ![Get cURL command](../assets/img/services/copy-curl-command.png)
+     
+-    Invoke the `covid-stats` service by issuing a few CURL commands using the Postman application.
++    Invoke the `covid-stats` service by issuing a few cURL commands using the Postman application.
+     
+     The responses are logged as shown below.
+     
+@@ -167,12 +161,16 @@
+     
+     ![Execution History](../assets/img/services/execution-history.png)
+     
+-To observe the `covid-stats` service by checking the statistics generated as a result of the CURL commands you issued, proceed to Step 4. 
++To observe the `covid-stats` service by checking the statistics generated as a result of the cURL commands you issued, proceed to Step 4. 
+ 
+-## Step 4: Observe the Choreo service.
++## Step 4: Observe the service
+ 
+ To observe the `covid-stats` service, click the **Observe** icon in the left panel.
+-![Test Icon](../assets/img/services/observe-icon.png)
++
++![Observe Icon](../assets/img/services/observe-icon.png)
+ 
+ The throughput and the latency of the `covid-stats` service are visualized as follows:
+-![Visualization of Throughput and Latency](../assets/img/services/successfully-deployed-notification.png)
++
++![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png)
++
++Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.
+Index: en/docs/services/service-concepts.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Service Concepts\n\nBefore you start creating services with Choreo, there are basic concepts that you need to understand. This section walks you through all the service concepts you need to know.\n \n## Service\nA service in Choreo is a logical representation of a repeatable activity that has a specified outcome.\n\n## Service Sample\nA service sample in Choreo is a prebuilt service that performs a specific activity. Choreo provides a comprehensive set of service samples for you to clone, edit, and try out, depending on your requirement. \n\n## Connection\nA connection in Choreo allows you to connect to and interact with an external service through your service. You can use a connection to interact with generic protocol-based APIs and service-specific APIs.\n\nFollowing are the connections you can use to interact with generic protocol-based APIs:\n  \n - **HTTP**: To interact with the HTTP API and communicate with an external endpoint via the HTTP protocol.   \n - **SMTP**: To send emails via the SMTP protocol.   \n - **POP3**: To receive emails from a POP3 email server.  \n - **IMAP**: To receive emails from any email server that supports the IMAP protocol. \n\nFollowing are the connections you can use to interact with service-specific APIs:\n\n - **Twilio**: To interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.\n - **Slack**: To interact with the Slack API and perform required operations. \n - **GitHub**: To interact with the GitHub API and  perform required operations. \n - **Gmail**: To interact with the Gmail API and perform operations such as creating, modifying, and sending emails.\n - **Google Calendar**: To interact with the Google Calendar API and perform required operations.\n - **Google Sheets**: To interact with the Google Sheets API and perform operations such as creating and listing spreadsheets.\n - **Salesforce**: To interact with the Salesforce API and perform required operations. \n - **NetSuite**: To interact with the NetSuite API and perform required operations. \n\n## Statement\nA statement is a syntactic unit that specifies the action to be carried out in a Choreo service. \n\nChoreo supports the following statements:\n\n - **Log**: To add an entry to the service log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   \n - **Variable**: To declare a variable of a preferred type depending on your requirement.\n - **If**: To perform a conditional check and evaluate whether a statement is true or false.   \n - **ForEach**: To iterate over a list of items to perform control flow. \n - **While**: To iterate over a given condition to perform control flow. \n - **Respond**: To send a response back to the client. For example, to get an API to respond with an `HTTP_OK` indicating that the request was processed successfully.\n - **Custom**: To specify a custom statement depending on your requirement.\n\n## Expression Syntax\nThe syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/docs/services/service-concepts.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/services/service-concepts.md	(date 1621324117670)
+@@ -8,8 +8,8 @@
+ ## Service Sample
+ A service sample in Choreo is a prebuilt service that performs a specific activity. Choreo provides a comprehensive set of service samples for you to clone, edit, and try out, depending on your requirement. 
+ 
+-## Connection
+-A connection in Choreo allows you to connect to and interact with an external service through your service. You can use a connection to interact with generic protocol-based APIs and service-specific APIs.
++## API Call
++An API call in Choreo services allows you to connect to and interact with an external service through your service. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
+ 
+ Following are the connections you can use to interact with generic protocol-based APIs:
+   
+@@ -18,7 +18,7 @@
+  - **POP3**: To receive emails from a POP3 email server.  
+  - **IMAP**: To receive emails from any email server that supports the IMAP protocol. 
+ 
+-Following are the connections you can use to interact with service-specific APIs:
++Following are the connections you can use to interact with application-specific APIs:
+ 
+  - **Twilio**: To interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.
+  - **Slack**: To interact with the Slack API and perform required operations. 
+@@ -30,7 +30,7 @@
+  - **NetSuite**: To interact with the NetSuite API and perform required operations. 
+ 
+ ## Statement
+-A statement is a syntactic unit that specifies the action to be carried out in a Choreo service. 
++A statement in Choreo services is a syntactic unit that specifies the action to be carried out in a Choreo service. 
+ 
+ Choreo supports the following statements:
+ 
+@@ -43,4 +43,4 @@
+  - **Custom**: To specify a custom statement depending on your requirement.
+ 
+ ## Expression Syntax
+-The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)
++The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)
+\ No newline at end of file
+Index: en/mkdocs.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\n# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.\n#\n# WSO2 Inc. licenses this file to you under the Apache License,\n# Version 2.0 (the \"License\"); you may not use this file except\n# in compliance with the License.\n# You may obtain a copy of the License at\n#\n# http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing,\n# software distributed under the License is distributed on an\n# \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n# KIND, either express or implied. See the License for the\n# specific language governing permissions and limitations\n# under the License.\n\n# Project information\nsite_name: Choreo Documentation\nsite_description: Choreo Learning Portal\nsite_author: WSO2\nsite_url: https://wso2.com/choreo/docs/en/\n\n# Repository\nrepo_name: wso2/docs-choreo-dev\nrepo_url: https://github.com/wso2/docs-choreo-dev/\nedit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/\ndev_addr: localhost:8000\n\n# Copyright\ncopyright: WSO2 Choreo - Dev-Documentation\n\n# Configuration\ntheme:\n    name: material\n    custom_dir: theme/material\n    palette:\n        primary: deep-orange\n        accent: deep-orange\n    logo: images/logo.svg\n    favicon: images/favicon.png\n    highlightjs: true\n    feature:\n        tabs: true\n    language: 'en'\n#Breaks build if there's a warning\nstrict: true\n# Navigation\nnav:\n    - Home: index.md\n    - Integrations: \n        - Integration Concepts: integrations/integration-concepts.md\n        - Build Your First Integration: integrations/build-your-first-integration.md\n    - Services:\n        - Service Concepts: services/service-concepts.md\n        - Create Your First Service: services/create-your-first-service.md\n    - APIs: \n        - API Concepts: apis/api-concepts.md\n        - Create and Publish Your First API: apis/create-and-publish-your-first-api.md\n    - Observability:\n          Perform Root Cause Analysis: observability/perform-root-cause-analysis.md\n    - Reference:\n          Choreo Expression Syntax: references/choreo-expression-syntax.md\n# Extensions\nmarkdown_extensions:\n    - markdown.extensions.admonition\n    - markdown.extensions.codehilite:\n          linenums: true\n          use_pygments: false\n    - markdown.extensions.def_list\n    - markdown.extensions.footnotes\n    - markdown.extensions.meta\n    - markdown.extensions.toc:\n          permalink: true\n    - pymdownx.arithmatex\n    - pymdownx.betterem:\n          smart_enable: all\n    - pymdownx.caret\n    - pymdownx.critic\n    - pymdownx.details\n    - pymdownx.emoji:\n          emoji_generator: !!python/name:pymdownx.emoji.to_svg\n    - pymdownx.inlinehilite\n    - pymdownx.keys\n    - pymdownx.mark\n    - pymdownx.smartsymbols\n    - pymdownx.superfences\n    - pymdownx.tasklist:\n          custom_checkbox: true\n    - pymdownx.tilde\n    - pymdownx.snippets:\n          base_path: docs\nplugins:\n    - search\n    - markdownextradata: {}\n    # Extra\nextra_css:\n    - assets/lib/highlightjs/default.min.css\n    - assets/css/theme.css\n    - assets/lib/json-formatter/json-formatter.css\nextra_javascript:\n    - assets/lib/json-formatter/json-formatter.umd.js\n    - assets/lib/highlightjs/highlight.min.js\n    - assets/js/theme.js\n    - assets/lib/backtotop/js/util.js\n    - assets/lib/backtotop/js/main.js\nextra:\n    social:\n        - type: github\n          link: https://github.com/wso2\n        - type: twitter\n          link: https://twitter.com/wso2\n        - type: linkedin\n          link: https://www.linkedin.com/company/wso2\n    site_version: 1.0.0\n    #base_path: http://localhost:8000\n    base_path: http://localhost:8000\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/mkdocs.yml	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/mkdocs.yml	(date 1621324095983)
+@@ -60,7 +60,7 @@
+     - Observability:
+           Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+     - Reference:
+-          Choreo Expression Syntax: references/choreo-expression-syntax.md
++          Ballerina Expression Syntax: references/ballerina-expression-syntax.md
+ # Extensions
+ markdown_extensions:
+     - markdown.extensions.admonition
+@@ -72,6 +72,7 @@
+     - markdown.extensions.meta
+     - markdown.extensions.toc:
+           permalink: true
++          toc_depth: 3
+     - pymdownx.arithmatex
+     - pymdownx.betterem:
+           smart_enable: all
+@@ -93,7 +94,6 @@
+ plugins:
+     - search
+     - markdownextradata: {}
+-    # Extra
+ extra_css:
+     - assets/lib/highlightjs/default.min.css
+     - assets/css/theme.css
+Index: en/docs/integrations/integration-concepts.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Integration Concepts\nBefore you start building integrations with Choreo, there are basic concepts that you need to understand. This section walks you through all the integration concepts you need to know. \n \n## Integration\nIntegration in Choreo is the process of connecting APIs, events, and streams to function as a single unit that can share information.\n\n## Integration Template\nAn integration template in Choreo is a prebuilt sample designed to address a common integration requirement. Choreo provides a comprehensive set of integration templates for you to select and use depending on your requirement.\n\n## Trigger\nA trigger in Choreo is an event or an action that can cause a Choreo application to start executing.\n\nChoreo supports the following trigger types:\n\n - **Schedule**: Allows you to trigger an application based on a schedule that you set.\n - **Manual**: Allows you to run and test an application manually.\n - **Calendar**: Allows you to trigger an application based on events in a Google Calendar.\n - **GitHub**: Allows you to trigger an application based on GitHub events and actions. Supported GitHub events and associated actions that can trigger a Choreo application are as follows:\n\n     | Event                       | Action                 | Application Trigger                      |\n     |-----------------------------|------------------------|------------------------------------------|\n     | issue_comment               | created                | Add a comment to an issue                |\n     |                             | edited                 | Edit a comment on an issue               |\n     |                             | deleted                | Delete a comment on an issue             |\n     | issues                      | assigned               | Assign an issue to a user                |\n     |                             | unassigned             | Unassign an issue from a user            |\n     |                             | labeled                | Add a label to an issue                  |\n     |                             | unlabeled              | Remove a label from an issue             |\n     |                             | opened                 | Open an issue                            |\n     |                             | edited                 | Edit an issue                            |\n     |                             | milestoned             | Add a milestone to an issue              |\n     |                             | demilestoned           | Remove a milestone from an issue         |\n     |                             | closed                 | Close an issue                           |\n     |                             | reopened               | Reopen an issue                          |\n     | label                       | created                | Create a label                           |\n     |                             | edited                 | Edit a label                             |\n     |                             | deleted                | Delete a label                           |\n     | milestone                   | created                | Create a milestone                       |\n     |                             | closed                 | Close a milestone                        |\n     |                             | opened                 | Open a milestone                         |\n     |                             | edited                 | Edit a milestone                         |\n     |                             | deleted                | Delete a milestone                       |\n     | pull_request                | assigned               | Assign a pull request to a user          |\n     |                             | unassigned             | Unassign a pull request from a user      |\n     |                             | review_requested       | Request a user to review a pull request  |\n     |                             | review_request_removed | Remove a reviewer from a pull request    |\n     |                             | labeled                | Add a label to a pull request            |\n     |                             | unlabeled              | Remove a label from a pull request       |\n     |                             | opened                 | Open a pull request                      |\n     |                             | edited                 | Edit a pull request                      |\n     |                             | closed                 | Close a pull request                     |\n     |                             | reopened               | Reopen a pull request                    |\n     | pull_request_review         | submitted              | Submit a pull request                    |\n     |                             | edited                 | Edit a pull request review               |\n     |                             | dismissed              | Dismiss a pull request review            |\n     | pull_request_review_comment | created                | Create a pull request review comment     |\n     |                             | edited                 | Edit a pull request review comment       |\n     |                             | deleted                | Delete a pull request review comment     | \n \n - **Salesforce**: Allows you to trigger an application based on topics in a Salesforce account. \n\n## Connection\nA connection in Choreo allows you to connect to and interact with an external service through your application. You can use a connection to interact with generic protocol-based APIs and application-specific APIs.\n\nFollowing are the connections you can use to interact with generic protocol-based APIs:\n  \n - **HTTP**: Allows your application to interact with the HTTP API and communicate with an external endpoint via the HTTP protocol.   \n - **SMTP**: Allows your application to send emails via the SMTP protocol.   \n - **POP3**: Allows your application to receive emails from a POP3 email server.  \n - **IMAP**: Allows your application to receive emails from any email server that supports the IMAP protocol. \n\nFollowing are the connections you can use to interact with application-specific APIs:\n\n - **Twilio**: Allows your application to interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.\n - **Slack**: Allows your application to interact with the Slack API and perform required operations. \n - **GitHub**: Allows your application to interact with the GitHub API and  perform required operations. \n - **Gmail**: Allows your application to interact with the Gmail API and perform operations such as creating, modifying, and sending emails.\n - **Google Calendar**: Allows your application to interact with the Google Calendar API and perform required operations.\n - **Google Sheets**: Allows your application to interact with the Google Sheets API and perform operations such as creating and listing spreadsheets.\n - **Salesforce**: Allows your application to interact with the Salesforce API and perform required operations. \n - **NetSuite**: Allows your application to interact with the NetSuite API and perform required operations. \n\n## Statement\nA statement is a syntactic unit that specifies the action to be carried out in a Choreo application. \n\nChoreo supports the following statements:\n\n - **Log**: Allows you to add an entry to the application log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   \n - **Variable**: Allows you to declare a variable of a preferred type depending on your requirement.\n - **If**: Allows you to perform a conditional check and evaluate whether a statement is true or false.   \n - **ForEach**: Allows you to iterate over a list of items to perform control flow. \n - **While**: Allows you to iterate over a given condition to perform control flow. \n - **Return**: Allows you to end the ongoing execution of a Choreo application and return control to the caller.\n - **Custom**: Allows you to specify a custom statement depending on your requirement.\n\n## Expression Syntax\nThe syntax to use when you want to input values for an expression when designing an integration using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/docs/integrations/integration-concepts.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/integrations/integration-concepts.md	(date 1621324095982)
+@@ -8,90 +8,49 @@
+ An integration template in Choreo is a prebuilt sample designed to address a common integration requirement. Choreo provides a comprehensive set of integration templates for you to select and use depending on your requirement.
+ 
+ ## Trigger
+-A trigger in Choreo is an event or an action that can cause a Choreo application to start executing.
++A trigger in Choreo integrations is an event or an action that can cause an integration to start executing.
+ 
+ Choreo supports the following trigger types:
+ 
+- - **Schedule**: Allows you to trigger an application based on a schedule that you set.
+- - **Manual**: Allows you to run and test an application manually.
+- - **Calendar**: Allows you to trigger an application based on events in a Google Calendar.
+- - **GitHub**: Allows you to trigger an application based on GitHub events and actions. Supported GitHub events and associated actions that can trigger a Choreo application are as follows:
++ - **Schedule**: To trigger an integration based on a schedule that you set.
++ - **Manual**: To run and test an integration manually.
++ - **Calendar**: To trigger an integration based on events in a Google Calendar.
++ - **GitHub**: To trigger an integration based on GitHub events and actions.
++ - **Salesforce**: To trigger an integration based on topics in a Salesforce account. 
+ 
+-     | Event                       | Action                 | Application Trigger                      |
+-     |-----------------------------|------------------------|------------------------------------------|
+-     | issue_comment               | created                | Add a comment to an issue                |
+-     |                             | edited                 | Edit a comment on an issue               |
+-     |                             | deleted                | Delete a comment on an issue             |
+-     | issues                      | assigned               | Assign an issue to a user                |
+-     |                             | unassigned             | Unassign an issue from a user            |
+-     |                             | labeled                | Add a label to an issue                  |
+-     |                             | unlabeled              | Remove a label from an issue             |
+-     |                             | opened                 | Open an issue                            |
+-     |                             | edited                 | Edit an issue                            |
+-     |                             | milestoned             | Add a milestone to an issue              |
+-     |                             | demilestoned           | Remove a milestone from an issue         |
+-     |                             | closed                 | Close an issue                           |
+-     |                             | reopened               | Reopen an issue                          |
+-     | label                       | created                | Create a label                           |
+-     |                             | edited                 | Edit a label                             |
+-     |                             | deleted                | Delete a label                           |
+-     | milestone                   | created                | Create a milestone                       |
+-     |                             | closed                 | Close a milestone                        |
+-     |                             | opened                 | Open a milestone                         |
+-     |                             | edited                 | Edit a milestone                         |
+-     |                             | deleted                | Delete a milestone                       |
+-     | pull_request                | assigned               | Assign a pull request to a user          |
+-     |                             | unassigned             | Unassign a pull request from a user      |
+-     |                             | review_requested       | Request a user to review a pull request  |
+-     |                             | review_request_removed | Remove a reviewer from a pull request    |
+-     |                             | labeled                | Add a label to a pull request            |
+-     |                             | unlabeled              | Remove a label from a pull request       |
+-     |                             | opened                 | Open a pull request                      |
+-     |                             | edited                 | Edit a pull request                      |
+-     |                             | closed                 | Close a pull request                     |
+-     |                             | reopened               | Reopen a pull request                    |
+-     | pull_request_review         | submitted              | Submit a pull request                    |
+-     |                             | edited                 | Edit a pull request review               |
+-     |                             | dismissed              | Dismiss a pull request review            |
+-     | pull_request_review_comment | created                | Create a pull request review comment     |
+-     |                             | edited                 | Edit a pull request review comment       |
+-     |                             | deleted                | Delete a pull request review comment     | 
+- 
+- - **Salesforce**: Allows you to trigger an application based on topics in a Salesforce account. 
++## API Call
++An API call in Choreo integrations allows you to connect to and interact with an external service through your integration. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
+ 
+-## Connection
+-A connection in Choreo allows you to connect to and interact with an external service through your application. You can use a connection to interact with generic protocol-based APIs and application-specific APIs.
+-
+ Following are the connections you can use to interact with generic protocol-based APIs:
+   
+- - **HTTP**: Allows your application to interact with the HTTP API and communicate with an external endpoint via the HTTP protocol.   
+- - **SMTP**: Allows your application to send emails via the SMTP protocol.   
+- - **POP3**: Allows your application to receive emails from a POP3 email server.  
+- - **IMAP**: Allows your application to receive emails from any email server that supports the IMAP protocol. 
++ - **HTTP**: To interact with the HTTP API and communicate with an external endpoint via the HTTP protocol.   
++ - **SMTP**: To send emails via the SMTP protocol.   
++ - **POP3**: To receive emails from a POP3 email server.  
++ - **IMAP**: To receive emails from any email server that supports the IMAP protocol. 
+ 
+ Following are the connections you can use to interact with application-specific APIs:
+ 
+- - **Twilio**: Allows your application to interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.
+- - **Slack**: Allows your application to interact with the Slack API and perform required operations. 
+- - **GitHub**: Allows your application to interact with the GitHub API and  perform required operations. 
+- - **Gmail**: Allows your application to interact with the Gmail API and perform operations such as creating, modifying, and sending emails.
+- - **Google Calendar**: Allows your application to interact with the Google Calendar API and perform required operations.
+- - **Google Sheets**: Allows your application to interact with the Google Sheets API and perform operations such as creating and listing spreadsheets.
+- - **Salesforce**: Allows your application to interact with the Salesforce API and perform required operations. 
+- - **NetSuite**: Allows your application to interact with the NetSuite API and perform required operations. 
++ - **Twilio**: To interact with the Twilio API and perform operations such as sending messages, WhatsApp messages, and making voice calls.
++ - **Slack**: To interact with the Slack API and perform required operations. 
++ - **GitHub**: To interact with the GitHub API and  perform required operations. 
++ - **Gmail**: To interact with the Gmail API and perform operations such as creating, modifying, and sending emails.
++ - **Google Calendar**: To interact with the Google Calendar API and perform required operations.
++ - **Google Sheets**: To interact with the Google Sheets API and perform operations such as creating and listing spreadsheets.
++ - **Salesforce**: To interact with the Salesforce API and perform required operations. 
++ - **NetSuite**: To interact with the NetSuite API and perform required operations. 
+ 
+ ## Statement
+-A statement is a syntactic unit that specifies the action to be carried out in a Choreo application. 
++A statement in Choreo integrations is a syntactic unit that specifies the action to be carried out in an integration. 
+ 
+ Choreo supports the following statements:
+ 
+- - **Log**: Allows you to add an entry to the application log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
+- - **Variable**: Allows you to declare a variable of a preferred type depending on your requirement.
+- - **If**: Allows you to perform a conditional check and evaluate whether a statement is true or false.   
+- - **ForEach**: Allows you to iterate over a list of items to perform control flow. 
+- - **While**: Allows you to iterate over a given condition to perform control flow. 
+- - **Return**: Allows you to end the ongoing execution of a Choreo application and return control to the caller.
+- - **Custom**: Allows you to specify a custom statement depending on your requirement.
++ - **Log**: To add an entry to the log at runtime. You can either add an **Info** log or an **Error** log depending on your requirement.   
++ - **Variable**: To declare a variable of a preferred type depending on your requirement.
++ - **If**: To perform a conditional check and evaluate whether a statement is true or false.   
++ - **ForEach**: To iterate over a list of items to perform control flow. 
++ - **While**: To iterate over a given condition to perform control flow. 
++ - **Return**: To end the ongoing execution of an integration and return control to the caller.
++ - **Custom**: To specify a custom statement depending on your requirement.
+ 
+ ## Expression Syntax
+ The syntax to use when you want to input values for an expression when designing an integration using Choreo. [Refer to the syntax.](../references/choreo-expression-syntax)
+Index: en/docs/index.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><div class=\"container cHeaderTop\">\n       <div class=\"row\">\n          <div class=\"col-sm-12 col-md-12 col-lg-12\">\n          <h1>Welcome to the Choreo Learning Portal</h1>\n          </div>\n          <div class=\"col-sm-12 col-md-6 col-lg-6\">\n             <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies building integrations, creating services, and managing APIs while ensuring best practices and secure coding guidelines.</p>\n          </div>\n          <div class=\"col-sm-12 col-md-6 col-lg-6\">\n            <iframe width=\"800\" height=\"250\" src=\"https://www.youtube.com/embed/gYMWJABtwkY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n          </div>\n       </div>\n</div>\n<div class=\"container cDocsContainer\">\n       <div class=\"container cDocsContainer\">\n       <div class=\"row\">\n          <div class=\"col-sm-12 col-md-4 col-lg-4\">\n          <div class=\"cIconContainer\">\n          <img src=\"assets/img/home/integrations.svg\"/>\n\t  <BR><BR><BR>\n          <h3>Build Integrations</h3>\n           <a href=\"integrations/build-your-first-integration/\">Learn More</a>\n          </div>\n          </div>\n          <div class=\"col-sm-12 col-md-4 col-lg-4\">\n           <div class=\"cIconContainer\">\n          <img style= \"height: 115px;\" src=\"assets/img/home/services.svg\"/>\n         <BR><BR><BR>\n          <h3>Create Services</h3>\n           <a href=\"services/create-your-first-service/\">Learn More</a>\n          </div>\n          </div>\n          <div class=\"col-sm-12 col-md-4 col-lg-4\">\n           <div class=\"cIconContainer\">\n          <img style= \"height: 120px;\" src=\"assets/img/home/api.svg\"/>\n\t  <BR><BR><BR>\t\n          <h3>Manage APIs</h3>\n           <a href=\"apis/create-and-publish-your-first-api/\">Learn More</a>\n          </div>\n          </div>\n       </div>\n</div>\n<!---\n<div class=\"container cDocsContainer\">\n       <div class=\"row\">\n        <div class=\"col-sm-12 col-md-6 col-lg-6\">\n<div class=\"cChoreoCards\">\n<h3>Lorem ipsum dolor sit amet</h3>\n<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n<a class=\"cChoreoDocsButtons\" href=\"\">Lorem ipsum dolor sit amet</a>\n</div>\n</div>\n        <div class=\"col-sm-12 col-md-6 col-lg-6\">\n<div class=\"cChoreoCards\">\n<h3>Lorem ipsum dolor sit amet</h3>\n<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n<a class=\"cChoreoDocsButtons\" href=\"\">Lorem ipsum dolor sit amet</a>\n</div>\n</div>\n        <div class=\"col-sm-12 col-md-6 col-lg-6\">\n<div class=\"cChoreoCards\">\n<h3>Lorem ipsum dolor sit amet</h3>\n<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n<a class=\"cChoreoDocsButtons\" href=\"\">Lorem ipsum dolor sit amet</a>\n</div>\n</div>\n        <div class=\"col-sm-12 col-md-6 col-lg-6\">\n<div class=\"cChoreoCards\">\n<h3>Lorem ipsum dolor sit amet</h3>\n<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n<a class=\"cChoreoDocsButtons\" href=\"\">Lorem ipsum dolor sit amet</a>\n</div>\n</div>\n </div>\n</div>\n<div class=\"container cDocsContainer\">\n       <div class=\"row\">\n        <div class=\"col-sm-12 col-md-12 col-lg-12\">\n         <h2>Watch Now</h2>\n         </div>\n        <div class=\"col-sm-12 col-md-4 col-lg-4\">\n            <img src=\"./images/video.jpg\" alt=\"\" class=\" ls-is-cached lazyloaded\">\n          </div>\n            <div class=\"col-sm-12 col-md-4 col-lg-4\">\n            <img src=\"./images/video.jpg\" alt=\"\" class=\" ls-is-cached lazyloaded\">\n          </div>\n            <div class=\"col-sm-12 col-md-4 col-lg-4\">\n            <img src=\"./images/video.jpg\" alt=\"\" class=\" ls-is-cached lazyloaded\">\n          </div>\n</div>\n</div>\n-->\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/docs/index.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/index.md	(date 1621324095980)
+@@ -32,7 +32,7 @@
+           </div>
+           <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="cIconContainer">
+-          <img style= "height: 120px;" src="assets/img/home/api.svg"/>
++          <img style= "height: 115px;" src="assets/img/home/api.svg"/>
+ 	  <BR><BR><BR>	
+           <h3>Manage APIs</h3>
+            <a href="apis/create-and-publish-your-first-api/">Learn More</a>
+Index: en/docs/integrations/build-your-first-integration.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Build Your First Integration\nChoreo allows you to efficiently build integrations by connecting APIs, events, and streams. Choreo also provides a comprehensive set of prebuilt integration templates that you can select and use depending on your requirement.\n\nThis quick start guide walks you through the steps to quickly configure and try out the **GitHub New Issue to Google Sheets Row** integration in Choreo.\n\n## Prerequisites to configure the integration:\n- A GitHub account.\n- A Google account.\n- In the Google account, create a blank spreadsheet named `Sample GitHub Integration` with its default worksheet named `Sheet1`. \n\n## Step 1: Configure and start the integration\nFollow the procedure below to configure and start the **GitHub New Issue to Google Sheets Row** integration:\n\n1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).\n2. Sign in using either your GitHub or Google credentials.\n3. Go to the **Integrations** card and click **Get Started**. Now you are on the **Integrations** page, where you can start with a prebuilt integration or create your own.\n4. Go to the **GitHub New Issue to Google Sheets Row** card and click **Use This**.\n5. In the **Configurations** panel, fill in the details as follows to configure the integration:\n    1. Click **Connect to GitHub**.\n    2. In the authorization request page that opens, click **Authorize wso2** to allow WSO2 to access your GitHub account. \n    3. In the GitHub access confirmation page that opens, enter your GitHub password and click **Confirm password**.\n    4. In the **GitHub Repository URL** field, select the repository for which you want to track new issues.\n    5. Click **Connect to Google Sheets**, and then click **Proceed**.\n    6. Select the Google account you want to use in the integration.\n    7. In the access request page that opens, click **Allow** to proceed with the selected Google account.\n    8. In the **Spreadsheet Name** field, select `Sample GitHub Integration`.\n    9. In the **Worksheet Name** field, enter `Sheet1`.\n6. Click **Save**.\n \n       ![Save Configuration](../assets/img/integrations/configurations-panel.png)\n    \n    Now you have configured the integration, and you are ready to start it.\n\n7. Click **Start**. \n   The following message indicates that the integration is starting:\n  \n       ![](../assets/img/integrations/integration-starting.png)\n    \n    The following message indicates that the integration has started and is running:\n\n       ![](../assets/img/integrations/integration-started.png)\n\nNow the **GitHub New Issue to Google Sheets Row** integration is successfully configured and running.\n\n## Step 2: Try out the integration \nFollow the procedure below to try out the integration:\n\n1. Go to the GitHub repository you specified when configuring the integration and create two new issues.\n2. Go to the Choreo Console and take a look at the **Execution History** of the configured integration.\n \n       ![Execution History](../assets/img/integrations/execution-history.png)\n\n     You can see two executions. These are a result of creating new issues in the GitHub repository.\n\n3. Go to the `Sample GitHub Integration` spreadsheet in your Google account and take a look at `Sheet1`.\n \n       ![](../assets/img/integrations/spreadsheet.png)\n\n     You can see two entries with details of the GitHub issues you created.\n\nCongratulations! Now you have successfully configured and tried out the **GitHub New Issue to Google Sheets Row** integration. \n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/docs/integrations/build-your-first-integration.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/integrations/build-your-first-integration.md	(date 1621324095981)
+@@ -3,7 +3,7 @@
+ 
+ This quick start guide walks you through the steps to quickly configure and try out the **GitHub New Issue to Google Sheets Row** integration in Choreo.
+ 
+-## Prerequisites to configure the integration:
++## Prerequisites:
+ - A GitHub account.
+ - A Google account.
+ - In the Google account, create a blank spreadsheet named `Sample GitHub Integration` with its default worksheet named `Sheet1`. 
+Index: en/docs/observability/perform-root-cause-analysis.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Perform Root Cause Analysis\n\nPerforming root cause analysis is crucial in identifying and rectifying the underlying problem for any anomalies detected in a system. Choreo Observability provides helpful insights out-of-the-box that assists in carrying out a root cause analysis for any service deployed on the Choreo platform.\n\n!!! info\n    For explanation, we are using the sample data available in the product.\n    \n## Get started with the sample service\n\n1. Go to **Services** from the left navigation.\n2. If this is your first service, then enter a name for the service and click **Create**. Skip step 3 and go to step 4.\n       ![Create a new service](../assets/img/observability/first-service-creation.png)\n3. Else, click **+ Create** to create a new service.\n       ![Create a new service](../assets/img/observability/service-creation.png)\n    1. Enter a name for the service and click **Create**.\n4. From the left-hand menu, click **Observe**.\n5. On the right-hand bottom, click the **Sample Service** icon.\n       ![Sample service popup](../assets/img/observability/sample-service-pop-up.png)\n6. Click **Try Sample Service**.\n\n       ![Try sample service](../assets/img/observability/try-sample-service.png)\n    \n## Detecting anomalies and performing root cause analysis\nYou can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latency of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.\n\n### Analyzing the throughput graph\nThe throughput graph will show the throughput of requests per hour for a selected timestamp. \n\nWith the sample data, you will observe spikes in the throughput graph. Let's see how you can find\nthe root cause by analyzing this data.\n\nFollow the steps below. \n\n1. Hover over the throughput graph at 01/04/2021 13:41:00. You can observe that 46.06 errors had occurred at the time. \n    \n    !!!tip\n        You can expand the graph by clicking and dragging the cursor over the period you want to drill down.\n        \n2. Click on the graph on 01/04/2021 at 13:41:00.\n3. Observe the logs in the logs panel.\n4. Note multiple logs are mentioning a connection error with the hr-service.\n \n![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png)\n \n### Analyzing the latency graph\n\nThe latency graph shows the latencies of each request.\n\nWith the sample data, you will observe spikes in the latency graph. By analyzing the latency graph, you can identify which API invocation caused the error.  Let's see how to find the\nroot cause by analyzing this data.\n![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png)\n\nFollow the steps below.\n\n1. Hover over the latency graph and click at 01/04/2021 13:41:00.\n2. Observe the latencies of each request listed in the low-code diagram.\n3. Click on one request shown on the low code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).\n\n### Diagnostics View\nThe Diagnostics view provides the capability to view errors, throughput, latency, CPU, memory, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.\n\n![Diagnostic View](../assets/img/observability/diagnostics-view.png)\n\nWe refer to a horizontal section of the graph for a particular period as the **bin**. A bin consists of the following.\n\n- **Start time and end time**- Denoted by the dotted lines separating each bin.\n- **Logs**- Any logs that appeared during the bin's time range are listed on the logs column, along with the timestamp the logs started to appear and the log count for each log. The logs are listed according to precedence. The error logs will be listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.\n- **Error**- Number of HTTP errors occurred at the selected time.\n- **TP**- Throughput of the requests at the selected time (req/s).  \n- **Latency**- Latency of the request at the selected time (ms).\n- **CPU**- CPU usage at the selected time (millicores).\n- **Memory**- Memory usage at the selected time (MiB).\n\nLet's see how to find the root cause by analyzing this data.\n\nFollow the steps below.\n\n1. Click on the **Diagnostics View** tab on the left panel. \n\n    !!!info\n        The time range selected for the **Throughput & Latency** graphs will be applied to the **Diagnostics View** by default. We recommend capturing the time range you want to analyze in detail from the **Throughput & Latency** graph and then navigate to the **Diagnostics View**.\n        \n2. In the sample data, you can observe a couple of prominent errors appearing in the four bins.\n3. In the second bin during the period 01/04/2021 13:28:59 to 01/04/2021 13:41:59, you can observe 2420 occurrences of the error log \"error while connecting to the hr-service”, along with other errors which occurred at a lesser frequency.\n\n    ![Diagnostic View - second bin(../assets/img/observability/second-bin.png/)\n](../assets/img/observability/second-bin.png/)\n\n4. Furthermore, when you look at the graphs at 17/02/2021 13:41:00, you can find a peak with 2221 error. At this exact timestamp, notice an increase in the throughput and a drop in latency. \n5. By analyzing the graphs as above, you can confirm that the cause for the latency drop and the throughput spike is the connectivity issue displayed by the error logs.\n6. Observe that the error graph is also fluctuating over time as the service logs errors.\n7.  You can observe similar behavior in the third and fourth bins as well.\n\n   ![Diagnostic View - other bin](../assets/img/observability/other-bins.png)\n   \n   \nTherefore, now you can conclude that the connectivity issue is the root cause for the intermittent anomalies detected in the throughput and the latencies of requests.\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- en/docs/observability/perform-root-cause-analysis.md	(revision 4e1a8175508959eeb48ab41f63d13458ab774662)
++++ en/docs/observability/perform-root-cause-analysis.md	(date 1621324095983)
+@@ -8,88 +8,97 @@
+ ## Get started with the sample service
+ 
+ 1. Go to **Services** from the left navigation.
+-2. If this is your first service, then enter a name for the service and click **Create**. Skip step 3 and go to step 4.
+-       ![Create a new service](../assets/img/observability/first-service-creation.png)
+-3. Else, click **+ Create** to create a new service.
+-       ![Create a new service](../assets/img/observability/service-creation.png)
+-    1. Enter a name for the service and click **Create**.
+-4. From the left-hand menu, click **Observe**.
+-5. On the right-hand bottom, click the **Sample Service** icon.
++2. Create a new service.
++    1. **If this is your first service**, 
++    
++        1. Enter a name for the service and click **Create**. 
++           ![Create a new service](../assets/img/observability/first-service-creation.png)
++           
++    2. **Else** (if you already have services created), 
++        
++        1. Click **+ Create** to start creating a new service.
++        2. Enter a name for the service and click **Create**.
++           ![Create a new service](../assets/img/observability/service-creation.png)
++
++3. From the left-hand menu, click **Observe**.
++4. On the right-hand bottom, click the **Sample Service** icon.
+        ![Sample service popup](../assets/img/observability/sample-service-pop-up.png)
+-6. Click **Try Sample Service**.
++5. Click **Try Sample Service**.
+ 
+        ![Try sample service](../assets/img/observability/try-sample-service.png)
+     
+-## Detecting anomalies and performing root cause analysis
+-You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latency of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
++## Detect anomalies and perform root cause analysis
++You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latencies of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
+ 
+-### Analyzing the throughput graph
+-The throughput graph will show the throughput of requests per hour for a selected timestamp. 
++### Step 1: Detect the anomalies
+ 
+-With the sample data, you will observe spikes in the throughput graph. Let's see how you can find
+-the root cause by analyzing this data.
++#### Analyze the throughput graph
++The throughput graph shows the throughput of requests per hour for a selected timestamp. 
++
++With the sample data, you can observe spikes in the throughput graph.  You can find the root cause for this by learning how to analyze the throughput graph.
+ 
+ Follow the steps below. 
+ 
+-1. Hover over the throughput graph at 01/04/2021 13:41:00. You can observe that 46.06 errors had occurred at the time. 
++1. Hover over the throughput graph where you see spikes. You can observe the number of errors that occurred at the time. 
+     
+     !!!tip
+         You can expand the graph by clicking and dragging the cursor over the period you want to drill down.
+         
+-2. Click on the graph on 01/04/2021 at 13:41:00.
++2. Click the graph on a high point.
+ 3. Observe the logs in the logs panel.
+-4. Note multiple logs are mentioning a connection error with the hr-service.
++4. Note multiple logs are mentioning a connection error with the `hr-service`.
+  
+ ![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png)
+  
+-### Analyzing the latency graph
++#### Analyze the latency graph
+ 
+ The latency graph shows the latencies of each request.
+ 
+-With the sample data, you will observe spikes in the latency graph. By analyzing the latency graph, you can identify which API invocation caused the error.  Let's see how to find the
+-root cause by analyzing this data.
++With the sample data, you can observe spikes in the latency graph. You can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors by analyzing the latency graph. 
+ ![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png)
+ 
+ Follow the steps below.
+ 
+-1. Hover over the latency graph and click at 01/04/2021 13:41:00.
++1. Hover over the latency graph and click on a high point.
++   
++    !!!tip
++        You can expand the graph by clicking and dragging the cursor over the period you want to drill down.
++        
+ 2. Observe the latencies of each request listed in the low-code diagram.
+-3. Click on one request shown on the low code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
++3. Click on one request shown on the low-code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
+ 
+-### Diagnostics View
+-The Diagnostics view provides the capability to view errors, throughput, latency, CPU, memory, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
++### Step 2: Drill into the analytics
++The Diagnostics view provides the capability to view errors, throughputs, latencies, CPU usage, memory usage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
+ 
+ ![Diagnostic View](../assets/img/observability/diagnostics-view.png)
+ 
+ We refer to a horizontal section of the graph for a particular period as the **bin**. A bin consists of the following.
+ 
+-- **Start time and end time**- Denoted by the dotted lines separating each bin.
+-- **Logs**- Any logs that appeared during the bin's time range are listed on the logs column, along with the timestamp the logs started to appear and the log count for each log. The logs are listed according to precedence. The error logs will be listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
+-- **Error**- Number of HTTP errors occurred at the selected time.
+-- **TP**- Throughput of the requests at the selected time (req/s).  
+-- **Latency**- Latency of the request at the selected time (ms).
+-- **CPU**- CPU usage at the selected time (millicores).
+-- **Memory**- Memory usage at the selected time (MiB).
++- **Start time and end time** - Denoted by the dotted lines separating each bin.
++- **Logs** - Any logs that appeared during the bin's time range are listed on the logs column, along with the timestamp the logs started to appear and the log count for each log. The logs are listed according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
++- **Error** - Number of HTTP errors occurred at the selected time.
++- **TP** - Throughput of the requests at the selected time (req/s).  
++- **Latency** - Latency of the request at the selected time (ms).
++- **CPU** - CPU usage at the selected time (millicores).
++- **Memory** - Memory usage at the selected time (MiB).
+ 
+-Let's see how to find the root cause by analyzing this data.
+-
+-Follow the steps below.
++Follow the steps below to learn how to drill down and confirm the root cause for the anomalies we detected in the **Latency and Throughput** graphs.
+ 
+ 1. Click on the **Diagnostics View** tab on the left panel. 
+ 
+     !!!info
+-        The time range selected for the **Throughput & Latency** graphs will be applied to the **Diagnostics View** by default. We recommend capturing the time range you want to analyze in detail from the **Throughput & Latency** graph and then navigate to the **Diagnostics View**.
++        The time range selected for the **Throughput & Latency** graphs is applied to the **Diagnostics View** by default. We recommend capturing the time range you want to analyze in detail from the **Throughput & Latency** graph and then navigate to the **Diagnostics View**.
+         
+ 2. In the sample data, you can observe a couple of prominent errors appearing in the four bins.
+-3. In the second bin during the period 01/04/2021 13:28:59 to 01/04/2021 13:41:59, you can observe 2420 occurrences of the error log "error while connecting to the hr-service”, along with other errors which occurred at a lesser frequency.
++3. Select a bin that shows a higher occurrence of the error log "error while connecting to the hr-service”. Notice that this bin also includes other errors which occurred at a lesser frequency.
+ 
+     ![Diagnostic View - second bin(../assets/img/observability/second-bin.png/)
+-](../assets/img/observability/second-bin.png/)
++](../assets/img/observability/second-bin.png)
+ 
+-4. Furthermore, when you look at the graphs at 17/02/2021 13:41:00, you can find a peak with 2221 error. At this exact timestamp, notice an increase in the throughput and a drop in latency. 
++4. Furthermore, when you analyze the graph, you can find a peak with a larger number of errors error. At this same time notice instances where you can see an increase in the throughput and a drop in latency. 
+ 5. By analyzing the graphs as above, you can confirm that the cause for the latency drop and the throughput spike is the connectivity issue displayed by the error logs.
+ 6. Observe that the error graph is also fluctuating over time as the service logs errors.
+-7.  You can observe similar behavior in the third and fourth bins as well.
++7.  You can observe similar behavior in the other bins as well.
+ 
+    ![Diagnostic View - other bin](../assets/img/observability/other-bins.png)
+    
