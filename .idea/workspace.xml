@@ -26,7 +26,13 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23976e2c-4d70-407b-baf9-34bf375bbcdf" name="Default Changelist" comment="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
+    <list default="true" id="23976e2c-4d70-407b-baf9-34bf375bbcdf" name="Default Changelist" comment="Undo unnecessary commits">
+      <change afterPath="$PROJECT_DIR$/.idea/docs-choreo-dev.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,8 +40,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="ProjectId" id="1sNOMZbgHZFqET8KE8nWrR1DgtO" />
+  <component name="ProjectId" id="1shPzgCyX6zWtGq2D8unOAgErmP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -49,207 +56,30 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="23976e2c-4d70-407b-baf9-34bf375bbcdf" name="Default Changelist" comment="" />
-      <created>1620709534031</created>
+      <changelist id="23976e2c-4d70-407b-baf9-34bf375bbcdf" name="Default Changelist" comment="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
+      <created>1621322111519</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1620709534031</updated>
+      <updated>1621322111519</updated>
     </task>
-    <task id="LOCAL-00001" summary="Address merge conflicts.">
-      <created>1620710262044</created>
+    <task id="LOCAL-00001" summary="Undo unnecessary commits">
+      <created>1621322981149</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1620710262044</updated>
+      <updated>1621322981149</updated>
     </task>
-    <task id="LOCAL-00002" summary="Resolve merge conflicts.">
-      <created>1620710705842</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1620710705842</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Update images to reflect the latest UI changes.">
-      <created>1620714049026</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1620714049026</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Remove unnecessary space.">
-      <created>1620715970932</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1620715970932</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Correct image links">
-      <created>1620716292268</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1620716292268</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Correct image links">
-      <created>1620717836476</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1620717836476</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Correct image links">
-      <created>1620722964566</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1620722964566</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Add a missing &quot;the&quot;.">
-      <created>1620728974419</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1620728974419</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Remove incorrect form name.">
-      <created>1620731716620</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1620731716620</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Correct starting steps to make the guide consistent with other guides.">
-      <created>1620732363651</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1620732363651</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Remove the word &quot;choreo&quot; from subheadings and other unnecessary places.">
-      <created>1620732887381</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1620732887381</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Replace &quot;application&quot; with &quot;service&quot;.">
-      <created>1620732953023</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1620732953023</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Fix incorrect placement of object.">
-      <created>1620796658869</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1620796658869</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Add a sentence to indicate what the user has achieved at the end of the guide.">
-      <created>1620797084719</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1620797084719</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Change &quot;low code&quot; to &quot;low-code&quot;.">
-      <created>1620797535368</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1620797535368</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Change &quot;Connection&quot; to &quot;API Call&quot;.">
-      <created>1620801396711</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1620801396711</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Correct number mentioned in filter description to match the code block.">
-      <created>1620801678116</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1620801678116</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Remove table with fine-grained details on Trigger.">
-      <created>1620802649007</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1620802649007</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Update the subheading for prerequisites to make it consistent with other guides.">
-      <created>1620804018093</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1620804018093</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Correct numbering issue.">
-      <created>1620831724876</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1620831724876</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Change &quot;Service-specific&quot; to &quot;application-specific&quot;.">
-      <created>1620895068403</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1620895068403</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Change &quot;application&quot; to &quot;integration&quot;.">
-      <created>1620982723871</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1620982723871</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Change &quot;Low Code&quot; to &quot;low-code&quot;.">
-      <created>1620983228945</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1620983228945</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Change statement about API call to make it applicable to both Integrations and Services.">
-      <created>1620987638522</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1620987638522</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Change statement about statements to make it applicable to both Integrations and Services.">
-      <created>1620987914919</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1620987914919</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Remove the reference to the diagram as &quot;low-code view.&quot;">
-      <created>1620988118509</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1620988118509</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;">
-      <created>1620999596344</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1620999596344</updated>
-    </task>
-    <option name="localTasksCounter" value="28" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -272,51 +102,21 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Address merge conflicts." />
-    <MESSAGE value="Resolve merge conflicts." />
-    <MESSAGE value="Update images to reflect the latest UI changes." />
-    <MESSAGE value="Remove unnecessary space." />
-    <MESSAGE value="Correct image links" />
-    <MESSAGE value="Add a missing &quot;the&quot;." />
-    <MESSAGE value="Remove incorrect form name." />
-    <MESSAGE value="Correct starting steps to make the guide consistent with other guides." />
-    <MESSAGE value="Remove the word &quot;choreo&quot; from subheadings and other unnecessary places." />
-    <MESSAGE value="Replace &quot;application&quot; with &quot;service&quot;." />
-    <MESSAGE value="Fix incorrect placement of object." />
-    <MESSAGE value="Add a sentence to indicate what the user has achieved at the end of the guide." />
-    <MESSAGE value="Change &quot;low code&quot; to &quot;low-code&quot;." />
-    <MESSAGE value="Change &quot;Connection&quot; to &quot;API Call&quot;." />
-    <MESSAGE value="Correct number mentioned in filter description to match the code block." />
-    <MESSAGE value="Remove table with fine-grained details on Trigger." />
-    <MESSAGE value="Update the subheading for prerequisites to make it consistent with other guides." />
-    <MESSAGE value="Correct numbering issue." />
-    <MESSAGE value="Change &quot;Service-specific&quot; to &quot;application-specific&quot;." />
-    <MESSAGE value="Change &quot;application&quot; to &quot;integration&quot;." />
-    <MESSAGE value="Change &quot;Low Code&quot; to &quot;low-code&quot;." />
-    <MESSAGE value="Change statement about API call to make it applicable to both Integrations and Services." />
-    <MESSAGE value="Change statement about statements to make it applicable to both Integrations and Services." />
-    <MESSAGE value="Remove the reference to the diagram as &quot;low-code view.&quot;" />
-    <MESSAGE value="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change &quot;Choreo Development Console&quot; to &quot;Choreo Console&quot;" />
+    <MESSAGE value="Undo unnecessary commits" />
+    <option name="LAST_COMMIT_MESSAGE" value="Undo unnecessary commits" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="448" y="218" key="Vcs.Push.Dialog.v2" timestamp="1620999598186">
+    <state x="607" y="188" key="RollbackChangesDialog" timestamp="1621322329601">
       <screen x="0" y="23" width="1680" height="944" />
     </state>
-    <state x="448" y="218" key="Vcs.Push.Dialog.v2/0.23.1680.944@0.23.1680.944" timestamp="1620999598186" />
-    <state x="448" y="219" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1620895071165" />
-    <state x="519" y="273" key="git4idea.merge.GitPullDialog" timestamp="1620999563767">
+    <state x="607" y="188" key="RollbackChangesDialog/0.23.1680.944@0.23.1680.944" timestamp="1621322329601" />
+    <state x="448" y="219" key="Vcs.Push.Dialog.v2" timestamp="1621322983243">
       <screen x="0" y="23" width="1680" height="944" />
     </state>
-    <state x="519" y="273" key="git4idea.merge.GitPullDialog/0.23.1680.944@0.23.1680.944" timestamp="1620999563767" />
-    <state x="519" y="274" key="git4idea.merge.GitPullDialog/0.23.1680.947@0.23.1680.947" timestamp="1620803963082" />
-    <state x="623" y="375" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1620709774886">
-      <screen x="0" y="23" width="1680" height="947" />
-    </state>
-    <state x="623" y="375" key="git4idea.remote.GitConfigureRemotesDialog/0.23.1680.947@0.23.1680.947" timestamp="1620709774886" />
-    <state x="513" y="222" width="670" height="676" key="search.everywhere.popup" timestamp="1621237559699">
+    <state x="448" y="219" key="Vcs.Push.Dialog.v2/0.23.1680.944@0.23.1680.944" timestamp="1621322983243" />
+    <state x="609" y="385" key="git4idea.ui.GitStashDialog" timestamp="1621322127047">
       <screen x="0" y="23" width="1680" height="944" />
     </state>
-    <state x="513" y="222" width="670" height="676" key="search.everywhere.popup/0.23.1680.944@0.23.1680.944" timestamp="1621237559699" />
+    <state x="609" y="385" key="git4idea.ui.GitStashDialog/0.23.1680.944@0.23.1680.944" timestamp="1621322127047" />
   </component>
 </project>
