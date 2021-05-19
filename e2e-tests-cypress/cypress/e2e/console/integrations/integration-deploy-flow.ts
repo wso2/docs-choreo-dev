@@ -11,12 +11,14 @@
  * associated services.
  */
 import { generateAppName } from "../../../support/common/utils";
-import { INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, 
-    FAKE_TWILIO_RECIPIENT_NUMBER } from '../../../support/common/constants';
+import {
+    INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL
+} from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
-describe('Integrations test run and deployment from scratch', ()=>{
+describe('Integrations test run and deployment from scratch', () => {
     let appName: string
 
     before(() => {
@@ -27,7 +29,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Manual");
-        cy.selectManualTriggerOptions("Statements","addLog");
+        cy.selectManualTriggerOptions("Statements", "addLog");
         cy.createLogProperty("Info", "Hello World");
     })
 
@@ -44,7 +46,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
         cy.testRunApp();
         cy.get('.product-tour-logs-panel').contains(loadRunTxt).should('exist');
         cy.get('.product-tour-logs-panel').contains(loadRunTxt).should('not.exist', 50000);
-        cy.get('[data-testid="log-panel"]').should('contains.text',"message = \"Hello World\"");
+        cy.get('[data-testid="log-panel"]').should('contains.text', "message = \"Hello World\"");
         cy.log('Expression is logged successfully');
 
         cy.deployToChoreo("integration", appName);
@@ -52,7 +54,7 @@ describe('Integrations test run and deployment from scratch', ()=>{
 });
 
 describe('Prebuilt integration test run and deployment', () => {
-    let appName:string
+    let appName: string
 
     before(() => {
         cy.log("Login into Choreo using Github");
@@ -68,7 +70,6 @@ describe('Prebuilt integration test run and deployment', () => {
     it('test-run and deploy integration', () => {
         let appSvcUrl = Cypress.env("appSvcURL");
         let orgName = Cypress.env("selectedOrgHandle");
-        const gmailAccount = Cypress.env("invitationEmail");
 
         //This is the post call we are interested in capturing
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps`).as('templateCall');
@@ -76,14 +77,14 @@ describe('Prebuilt integration test run and deployment', () => {
         cy.navigateFromHomePage(INTEGRATIONS_TEXT);
         cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
         cy.log("Prebuilt integrations page loaded successfully");
-        cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({force:true});
+        cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });
 
-        cy.wait('@templateCall',{timeout:30000}).then((interception) => {
+        cy.wait('@templateCall', { timeout: 30000 }).then((interception) => {
             appName = interception.response.body[`name`];
             cy.log("Selected prebuilt integration with name: " + appName);
             cy.waitTillWorkSpace();
             cy.get('.diagram-canvas').should('exist');
-            cy.fillCalendarConfigs(gmailAccount);
+            cy.fillCalendarConfigs(INVITATION_EMAIL);
             cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
             cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
 
@@ -93,7 +94,7 @@ describe('Prebuilt integration test run and deployment', () => {
             cy.get('[data-testid="initialize-stage-text"]').siblings('[src="/images/check.svg"]').should('exist');
             cy.get('[data-testid="build-stage-text"]').siblings('[src="/images/check.svg"]').should('exist');
             cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]').should('exist');
-            cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]', {timeout: 600000}).should('not.exist');
+            cy.get('[data-testid="deploy-stage-text"]').siblings('[src="/images/building.svg"]', { timeout: 600000 }).should('not.exist');
             cy.contains('Starting').should('not.exist');
             cy.contains('Started').should('exist');
             cy.log("Successfully deployed");
