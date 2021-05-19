@@ -10,6 +10,14 @@
 username
 password
 ```
+
+3. [Optional] If the `Choreo console` is running locally, update the following properties in `cypress.env.json`.
+
+```text
+loginURL
+baseUrl
+```
+
 ## Folder structure
 
 <p align="center">
@@ -48,7 +56,7 @@ password
 1. Use below commands to run tests in headless mode
 
 	* Run all the spec files in the project
-	> `npm run test`
+	> `npm run local`
 
 	* Run one spec file
 	> `npx cypress run --spec "cypress/e2e/<path/to/spec/file>"`
