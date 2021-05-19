@@ -13,12 +13,13 @@
 
 /// <reference types="cypress" />
 
-import { INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, 
-    FAKE_TWILIO_RECIPIENT_NUMBER } from "../../../support/common/constants";
+import {
+    INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL
+} from "../../../support/common/constants";
 
 describe('Clone and edit integrations', () => {
     let savedCookies;
-    const gmailAccount = Cypress.env("invitationEmail");
 
     before(() => {
         cy.log("Login into Choreo");
@@ -44,7 +45,7 @@ describe('Clone and edit integrations', () => {
         });
         cy.get('[data-testid="diagram-canvas"]').should('be.visible');
         cy.get('[data-testid="settings-btn"]').click();
-        cy.fillCalendarConfigs(gmailAccount);
+        cy.fillCalendarConfigs(INVITATION_EMAIL);
         cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
         cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
         cy.url().then((url) => {
