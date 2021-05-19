@@ -25,3 +25,7 @@ export const ORG_NAME = Cypress.env("selectedOrgHandle");
 export const SUCCESS_STATUS_CODE = 200;
 export const STANDARD_TIME_OUT = 6000;
 export const NO_OF_RETRIES = 2;
+export const FAKE_TWILIO_ACCOUNT_SID = 'ACat9e5d3a348126a5fcabb03a03f1a1bb';
+export const FAKE_TWILIO_TOKEN = 'd976402933e8a4143015c4499e971a65';
+export const FAKE_TWILIO_SENDER_NUMBER = '+94786941431';
+export const FAKE_TWILIO_RECIPIENT_NUMBER = '+94743149897';
