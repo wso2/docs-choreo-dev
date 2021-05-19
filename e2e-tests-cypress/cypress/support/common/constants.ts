@@ -31,3 +31,4 @@ export const FAKE_TWILIO_ACCOUNT_SID = 'ACat9e5d3a348126a5fcabb03a03f1a1bb';
 export const FAKE_TWILIO_TOKEN = 'd976402933e8a4143015c4499e971a65';
 export const FAKE_TWILIO_SENDER_NUMBER = '+94786941431';
 export const FAKE_TWILIO_RECIPIENT_NUMBER = '+94743149897';
+export const INVITATION_EMAIL= 'test.user.choreo@gmail.com';

@@ -11,13 +11,12 @@
  * associated services.
  */
 
-import { SETTINGS_TEXT, NO_OF_RETRIES } from '../../support/common/constants';
+import { SETTINGS_TEXT, NO_OF_RETRIES, INVITATION_EMAIL } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
 describe('Invite members', () => {
     let savedCookies;
-    const memberEmail = Cypress.env('invitationEmail');
     const groupMemberEmail = 'udyogi@wso2.com';
     const groupMemberName = 'Udyogi Munasinghe';
 
@@ -54,14 +53,14 @@ describe('Invite members', () => {
             }
 
             cy.get('[data-testid="invite-email"]').within(() => {
-                cy.get('input').type(memberEmail+'{enter}', { force: true });
+                cy.get('input').type(INVITATION_EMAIL+'{enter}', { force: true });
             })
             cy.get('[data-testid="invite-btn"]').click({ force: true });
-            cy.contains('td', memberEmail).should('be.visible');
+            cy.contains('td', INVITATION_EMAIL).should('be.visible');
             cy.log('Invitation sent successfully');
 
             cy.log('Deleting member invitation');
-            cy.contains('td', memberEmail).trigger('mouseover');
+            cy.contains('td', INVITATION_EMAIL).trigger('mouseover');
             cy.get('[data-testid="api-delete-btn"]').click();
             cy.get('[data-testid="delete-invitation-btn"]').click();
             cy.log('Invitation deleted successfully');

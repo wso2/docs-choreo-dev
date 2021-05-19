@@ -16,8 +16,8 @@ Cypress.Commands.add('devportalLogin', () => {
     cy.log('Initiating login');
     cy.visit(Cypress.env('devportalLoginURL'));
     cy.wait(5000);
-    cy.get('#usernameUserInput').type(Cypress.env('devportalIdpUsername'));
-    cy.get('#password').type(Cypress.env('devportalIdpPassword'));
+    cy.get('#usernameUserInput').type(Cypress.env('idpUsername'));
+    cy.get('#password').type(Cypress.env('idpPassword'));
     cy.get('.right > .ui').click();
     cy.log('Successfully logged in');
 });
