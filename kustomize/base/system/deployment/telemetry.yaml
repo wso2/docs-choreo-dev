@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: telemetry
+  name: telemetry
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      choreo.component: telemetry
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: telemetry
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - env:
+        - name: b7a_log_level
+          valueFrom:
+            configMapKeyRef:
+              key: B7A_LOG_LEVEL
+              name: cm-loglevel-telemetry
+        - name: EVENTHUB_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              key: EVENTHUB_NAMESPACE
+              name: cm-telemetry
+        - name: METRICS_EVENTHUB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: METRICS_EVENTHUB_NAME
+              name: cm-telemetry
+        - name: TRACES_EVENTHUB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: TRACES_EVENTHUB_NAME
+              name: cm-telemetry
+        - name: NEGOTIATOR_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: NEGOTIATOR_GRPC_ADDRESS
+              name: cm-telemetry
+        - name: NEGOTIATOR_HEALTHZ_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: NEGOTIATOR_HEALTHZ_ADDRESS
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_CAPACITY
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_CAPACITY
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_EVICTION_FACTOR
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_EVICTION_FACTOR
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_MAX_AGE
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_MAX_AGE
+              name: cm-telemetry
+        - name: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
+          valueFrom:
+            configMapKeyRef:
+              key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
+              name: cm-telemetry
+        - name: EVENTHUB_CONNECTION_STRING
+          valueFrom: 
+            secretKeyRef:
+              name: secret-telemetry
+              key: EVENTHUB_CONNECTION_STRING
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
+        name: telemetry
+        volumeMounts:
+        - name: secret-telemetry
+          mountPath: "/mnt/csi/secret-telemetry"
+          readOnly: true
+        ports:
+        - containerPort: 9090
+          name: telemetry-port
+          protocol: TCP
+        - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+          name: health
+          protocol: TCP
+        - containerPort: 9092      # To be used for public health check (external)
+          name: healthz
+          protocol: TCP
+        readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+             port: health
+             path: /health
+        livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+             port: health
+             path: /health
+        resources:
+          limits:
+            cpu: 500m
+            memory: 768Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
+      volumes:
+      - name: secret-telemetry
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-telemetry
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default

@@ -1,2 +1,5 @@
 resources:
   - obsapi.yaml
+  - telemetry.yaml
+  - sys-obsapi.yaml
+  - negotiator.yaml
