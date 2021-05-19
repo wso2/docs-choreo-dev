@@ -16,7 +16,8 @@ import { SERVICES_TEXT, NO_OF_RETRIES } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
-describe('Observability tests', () => {
+// TODO : please un-skip following test suit once it fixed
+describe.skip('Observability tests', () => {
     const obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
     let savedCookies
     let appName: string

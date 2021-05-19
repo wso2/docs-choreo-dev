@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
@@ -26,9 +27,8 @@ describe("API creation from an existing endpoint", () => {
     it("Create API from existing endpoint and deploy and publish", () => {
         cy.log("Visiting API listing");
         cy.navigateFromHomePage('apis');
-        cy.wait(10000);
 
-        cy.get('[data-testid=create-api-btn]').click();
+        cy.get('[data-testid=create-api-btn]', {timeout: MEDIUM_TIME_OUT}).click();
 
         cy.log('Opening API creation dialog');
         cy.contains('Create API').should('exist');
@@ -43,43 +43,30 @@ describe("API creation from an existing endpoint", () => {
         cy.get('#create-API-from-restEp-btn').click();
 
         cy.verifyApiOverview(API_NAME, API_VERSION);
-        cy.wait(5000);
-
         cy.updateDesignConfiguration();
-        cy.wait(5000);
-
         cy.addApiDocument();
-        cy.wait(5000);
-
         cy.updateRuntimeConfiguration();
-        cy.wait(5000);
 
         cy.log('Visiting and updating resources');
-        cy.get('[data-testid=Resources]').click();
+        cy.get('[data-testid=Resources]', {timeout: STANDARD_TIME_OUT}).click();
         cy.log('Deleting initial resources');
         cy.get('[data-testid=delete-all-operations-btn]').click();
         cy.get('#mui-component-select-verbs').click();
         cy.get('#menu-verbs').within(() => {
-            cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)').contains('GET').click();
-        })
+            cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)', { timeout: LONG_TIME_OUT })
+                .contains('GET').click();
+        });
         cy.get('body').type('{esc}');
         cy.get('#operation-target').type('search');
         cy.get('[data-testid=add-btn]').click();
         cy.get('button').contains('Save').click();
         cy.get('.MuiDialogContent-root').within(() => {
-            cy.get('button').contains('Save').click();
+            cy.get('button', {timeout: STANDARD_TIME_OUT}).contains('Save').click();
         });
-        cy.wait(5000);
-
+        cy.get('.MuiDialogContent-root', {timeout: STANDARD_TIME_OUT}).should('not.exist');
         cy.updateSubscriptionPlans();
-        cy.wait(3000);
-
         cy.deployInitialRevision();
-        cy.wait(5000);
-
         cy.testApiInPublisherTestConsole();
-        cy.wait(2000);
-
         cy.publishApi();
         cy.wait(2000);
     })
@@ -88,7 +75,6 @@ describe("API creation from an existing endpoint", () => {
         cy.contains('API list').click();
         cy.log("Visiting API listing");
         cy.navigateFromHomePage('apis');
-        cy.wait(10000);
 
         cy.searchApiFromListAndVisit(API_NAME);
 
