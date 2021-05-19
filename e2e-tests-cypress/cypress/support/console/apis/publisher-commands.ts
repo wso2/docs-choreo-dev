@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { HIGH_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../common/constants";
+import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../common/constants";
 import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "./constants";
 
 Cypress.Commands.add('updateSubscriptionPlans', () => {
@@ -55,7 +55,7 @@ Cypress.Commands.add('testApiInPublisherTestConsole', () => {
     cy.get('.btn').click();
     cy.get('.execute-wrapper > .btn', {timeout: STANDARD_TIME_OUT}).click();
     cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status',
-        { timeout: HIGH_TIME_OUT })
+        { timeout: LONG_TIME_OUT })
         .should('have.text', '200');
     cy.log('Invoked the API successfully');
 });

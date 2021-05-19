@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { HIGH_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
+import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
@@ -53,7 +53,7 @@ describe("API creation from an existing endpoint", () => {
         cy.get('[data-testid=delete-all-operations-btn]').click();
         cy.get('#mui-component-select-verbs').click();
         cy.get('#menu-verbs').within(() => {
-            cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)', { timeout: HIGH_TIME_OUT })
+            cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)', { timeout: LONG_TIME_OUT })
                 .contains('GET').click();
         });
         cy.get('body').type('{esc}');
