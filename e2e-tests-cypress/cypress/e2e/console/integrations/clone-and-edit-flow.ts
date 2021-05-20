@@ -15,7 +15,7 @@
 
 import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
-    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
 } from "../../../support/common/constants";
 
 describe('Clone and edit integrations', () => {
@@ -57,12 +57,11 @@ describe('Clone and edit integrations', () => {
 
         cy.testRunApp();
         cy.get('[data-testid="test-url"]').should('exist');
-        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: 180000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
         cy.log('Retrieving the test URL successful');
 
         cy.url().then((url) => {
-            let appName = url.split('app/').pop().split('/develop')[0];
-
+            const appName = url.split('app/').pop().split('/develop')[0];
             cy.goBacktoAppsList();
             cy.cleanupApp(appName);
         });
