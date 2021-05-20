@@ -10,74 +10,10 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName } from '../../../support/common/utils';
+
 import {APP_SVC_URL, ORG_NAME, SERVICES_TEXT, SUCCESS_STATUS_CODE} from '../../../support/common/constants';
 
 /// <reference types="cypress" />
-
-describe('Service test run and postman view', () => {
-    let savedCookies
-    let appName: string
-
-    before(() => {
-        cy.log("Login into Choreo using Google")
-        cy.consoleUserLogin()
-        cy.getCookies().then((cookies) => {
-            savedCookies = cookies
-        })
-    })
-
-    after(() => {
-        cy.userLogout()
-    });
-
-    beforeEach(() => {
-        cy.preserveCookiesForTest(savedCookies);
-        appName = generateAppName("app");
-        cy.log('app name: ', appName);
-        cy.createNewApp(SERVICES_TEXT, appName);
-        cy.url().should('include', 'app/' + appName + '/develop');
-        cy.configureResource("hello");
-        cy.selectManualTriggerOptions("Statements", "addVariable");
-        cy.createVariableProperty("var", "res", '"hello world"');
-        cy.createRespond("res");
-    });
-
-    afterEach(() => {
-        cy.goBacktoAppsList();
-        cy.undeployApp("service", appName, true);
-        cy.deleteApp("service", appName, true);
-    });
-
-    it('test run hello world service', () => {
-        cy.testRunApp();
-
-        cy.get('[data-testid="test-url"]').should('exist');
-        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: 600000}).should('exist');
-        cy.log('Retrieving the test URL successful');
-        
-        cy.get('[data-testid="test-url"]').invoke('text').then((testUrl) => {
-            cy.callExternalEndpoint((testUrl + "/hello"), 3, "hello world");
-            cy.log('Successfully invoked test endpoint');
-        });
-    });
-
-    it('test postman view', () => {
-        cy.get('[data-testid="test"]').click();
-        cy.get('[id="backdrop-loader"').should('not.exist');
-        cy.url().should('include', 'app/' + appName + '/test');
-
-        cy.log('Testing invalid API key validation attempt scenario');
-        cy.get('[data-testid="postman"]').should('exist');
-        cy.get('[data-testid="postman"]').eq(0).click();
-        cy.get('[data-testid="click-here"]').should('exist');
-        cy.get('[data-testid="click-here"]').click();
-        cy.get('[data-testid="api-key"]').should('exist');
-        cy.get('[data-testid="api-key"]').type('dummyapikey');
-        cy.get('[data-testid="api-key-error"]').should('exist');
-        cy.log('Test phase successful!');
-    })
-})
 
 describe('Test successful deployment of sample services', ()=>{
     let appName: string
