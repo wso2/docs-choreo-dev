@@ -31,7 +31,7 @@ describe('API creation from choreo service', () => {
         // Intercepting the service creation call to capture the randomized service name
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`).as('createService');
 
-        cy.get('[id="try-out-samples-btn"]', { timeout: 60000 }).should('exist').click();
+        cy.get('[data-testId="try-out-samples-btn"]', { timeout: 60000 }).should('exist').click();
         cy.get('[data-testid="service-chaining"]').should('exist').children().find('button').click({ force:true });
 
         cy.wait('@createService', { timeout: 60000 }).then((interception) => {

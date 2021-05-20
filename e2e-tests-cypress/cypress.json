@@ -5,12 +5,12 @@
     "chromeWebSecurity": false,
     "integrationFolder": "cypress/e2e",
     "testFiles": [
+        "console/clean/clean-previous-run.ts",
         "console/apis/*.ts",
         "console/integrations/*.ts",
         "console/services/*.ts",
         "console/*.ts",
-        "devportal/*.ts",
-        "console/clean/clean-this-run.ts"
+        "devportal/*.ts"
     ],
     "videoUploadOnPasses": false
 }
