@@ -21,6 +21,8 @@ images:
   newTag: main-93d60fda84d07f4b5d758e72e1deff562ca0eca1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
   newTag: master-9b5797fed326cd958f7c5f7bc12ded9e394febe2
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
+  newTag: master-b90a4544a8495c93e02ad2450e0248c04f84c4a3
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-5415b79a4d0d0f6c164e83fabe03bb1a8bd32465
 - name: choreoctrlplane.azurecr.io/choreoipaas/email-service
