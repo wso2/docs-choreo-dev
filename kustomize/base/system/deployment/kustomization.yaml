@@ -7,6 +7,9 @@ resources:
   - app-service.yaml
   - app-deployer.yaml
   - workspace-manager.yaml
+  - sys-obsapi.yaml
+  - telemetry.yaml
+  - negotiator.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
