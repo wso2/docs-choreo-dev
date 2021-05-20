@@ -140,6 +140,11 @@ spec:
             configMapKeyRef:
               key: APIM_GATEWAY_ENDPOINT_SUFFIX
               name: cm-frontend
+        - name: ANALYTICS_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              key: ANALYTICS_HOSTNAME
+              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
