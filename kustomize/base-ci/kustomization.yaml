@@ -26,7 +26,7 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-08e4ba99aa3fc21e3a8b7de40bb42bfa3627b4c1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
-  newTag: master-c51763934f000882e80c803338247cb3dc8aa260
+  newTag: master-aedbcd4061b3d961758e589616a823ffbb0eb1df
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-5415b79a4d0d0f6c164e83fabe03bb1a8bd32465
 - name: choreoctrlplane.azurecr.io/choreoipaas/email-service
