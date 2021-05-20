@@ -19,30 +19,30 @@ describe("Test successful deployment of sample services", () => {
     before(() => {
         cy.log("Login into Choreo");
         cy.consoleUserLogin();
-    }),
-        after(() => {
-            cy.userLogout();
-        }),
-        it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {
-            cy.navigateFromHomePage(SERVICES_TEXT);
-            cy.get('[id="backdrop-loader"').should("not.exist");
-            cy.get('[data-testId="try-out-samples-btn"]').should("exist").click({ force: true });
-            cy.log("Creating echo service");
-            cy.get('[data-testid="echo-service"]').should("exist").children().find("button").click({ force: true });
-            cy.wait(10000);
-            cy.get('[data-testid="diagram-loader"]').should("not.exist");
-            cy.get('[data-testid="diagram-canvas"]').should('be.visible');
-            cy.log("Created the echo service successfully!");
-            cy.testRunApp();
-            cy.get('[data-testid="test-url"]').should("exist");
-            cy.contains('[data-testid="log-panel"]', "started HTTP/WS listener", { timeout: EX_LONG_TIME_OUT }).should(
-                "exist"
-            );
-            cy.log("Tested the echo service successfully!");
-            cy.url().then((url) => {
-                const appName = url.split("app/").pop().split("/develop")[0];
-                cy.goBacktoAppsList();
-                cy.cleanupApp(appName);
-            });
+    });
+    after(() => {
+        cy.userLogout();
+    });
+    it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {
+        cy.navigateFromHomePage(SERVICES_TEXT);
+        cy.get('[id="backdrop-loader"').should("not.exist");
+        cy.get('[data-testId="try-out-samples-btn"]').should("exist").click({ force: true });
+        cy.log("Creating echo service!");
+        cy.get('[data-testid="echo-service"]').should("exist").children().find("button").click({ force: true });
+        cy.wait(10000);
+        cy.get('[data-testid="diagram-loader"]').should("not.exist");
+        cy.get('[data-testid="diagram-canvas"]').should("be.visible");
+        cy.log("Created the echo service successfully!");
+        cy.testRunApp();
+        cy.get('[data-testid="test-url"]').should("exist");
+        cy.contains('[data-testid="log-panel"]', "started HTTP/WS listener", { timeout: EX_LONG_TIME_OUT }).should(
+            "exist"
+        );
+        cy.log("Tested the echo service successfully!");
+        cy.url().then((url) => {
+            const appName = url.split("app/").pop().split("/develop")[0];
+            cy.goBacktoAppsList();
+            cy.cleanupApp(appName);
         });
+    });
 });
