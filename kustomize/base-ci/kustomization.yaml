@@ -21,6 +21,7 @@ images:
   newTag: main-93d60fda84d07f4b5d758e72e1deff562ca0eca1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
   newTag: master-1631396157c23d883807229b693e835f72764658
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-linker
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-01d9ea8f3cfc183e5d1c4647f479f671590de084
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi
