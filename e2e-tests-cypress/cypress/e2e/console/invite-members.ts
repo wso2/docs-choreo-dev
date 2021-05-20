@@ -66,27 +66,5 @@ describe('Invite members', () => {
             cy.get('[data-testid="delete-invitation-btn"]').click();
             cy.log('Invitation deleted successfully');
         })
-    })
-
-    it('Add a member to a group', { retries: NO_OF_RETRIES }, () => {
-        // Member should be already in the member list
-        cy.contains(groupMemberEmail).should('be.visible');
-
-        cy.get('[data-testid="/user-settings/organization/groups"]').click();
-        cy.contains('td', 'Admin').click();
-        cy.contains(groupMemberEmail).should('not.exist');
-        cy.get('[id="tags-standard"]').click().type(groupMemberName);
-        cy.contains('[id="tags-standard-popup"]', groupMemberName).should('be.visible');
-        cy.contains('[id="tags-standard-popup"]', groupMemberName).click();
-        cy.get('[data-testid="add-member-btn"]').click();
-        cy.contains('td', groupMemberEmail).should('be.visible');
-        cy.log('Member added to the group successfully');
-
-        cy.log('Removing member from the group');
-        cy.contains('tr', groupMemberEmail).within(() => {
-            cy.get('[data-testid="api-delete-btn"]').click();
-        })
-        cy.get('[data-testid="delete-member-btn"]').click();
-        cy.log('Member removed from the group successfully');
-    })
+    });
 })
