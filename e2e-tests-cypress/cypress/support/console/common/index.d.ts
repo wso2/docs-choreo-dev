@@ -43,5 +43,6 @@ declare namespace Cypress {
         navigateFromHomePage(pageName: string): Chainable<Element>
         undeployAppViaRESTAPICall(appName: string): Chainable<Element>
         cleanOnPremKey(keyName: string): Chainable<Element>
+        deleteAppWithoutUndeploy(name: string, strict: boolean): Chainable<Element>
     }
 }

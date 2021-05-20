@@ -10,46 +10,71 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+
 import { generateAppName } from '../../../support/common/utils';
-import {APP_SVC_URL, ORG_NAME, SERVICES_TEXT, SUCCESS_STATUS_CODE} from '../../../support/common/constants';
+import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
-describe('Service test run and postman view', () => {
-    let savedCookies
-    let appName: string
+describe('Service deployment and delete deployed service', () => {
+    let savedCookies;
+    let appName: string;
+    const urlName = "url";
 
     before(() => {
-        cy.log("Login into Choreo using Google")
-        cy.consoleUserLogin()
+        cy.log("Login into Choreo");
+        cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
-        })
-    })
+        });
 
-    after(() => {
-        cy.userLogout()
-    });
-
-    beforeEach(() => {
-        cy.preserveCookiesForTest(savedCookies);
         appName = generateAppName("app");
         cy.log('app name: ', appName);
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello");
-        cy.selectManualTriggerOptions("Statements", "addVariable");
-        cy.createVariableProperty("var", "res", '"hello world"');
-        cy.createRespond("res");
+    });
+
+    beforeEach(() => {
+        cy.preserveCookiesForTest(savedCookies);
+        cy.restoreLocalStorage();
     });
 
     afterEach(() => {
-        cy.goBacktoAppsList();
-        cy.undeployApp("service", appName, true);
-        cy.deleteApp("service", appName, true);
+        cy.saveLocalStorage();
     });
 
+    after(() => {
+        cy.undeployApp("service", appName, true);
+        cy.deleteApp("service", appName, true);
+        cy.userLogout();
+    })
+
+    it('low code form AI suggestions', () => {
+        const variableSourceFields = 'http:Client httpEndpoint = check new (url);';
+
+        cy.selectManualTriggerOptions("Statements", "addVariable");
+        cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
+        
+        cy.log('Adding HTTP connector with AI suggestion of previous variable');
+        cy.get('[id="SmallPlus"]').eq(0).click();
+        cy.get('[data-testid="api-options"]').click();
+        cy.get('[data-testid="http"]').click();
+        cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
+        cy.get('body').type('{enter}', {force: true});
+        cy.get('[data-testid="http-save-next"]').click();
+        cy.log("HTTP connector added successfully!");
+
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.checkSourceCodeForValidation(variableSourceFields);
+        cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
+    })
+
     it('test run hello world service', () => {
+        cy.selectManualTriggerOptions("Statements", "addVariable");
+        cy.createVariableProperty("var", "res", '"hello world"');
+        cy.createRespond("res");
+
         cy.testRunApp();
 
         cy.get('[data-testid="test-url"]').should('exist');
@@ -60,7 +85,7 @@ describe('Service test run and postman view', () => {
             cy.callExternalEndpoint((testUrl + "/hello"), 3, "hello world");
             cy.log('Successfully invoked test endpoint');
         });
-    });
+    })
 
     it('test postman view', () => {
         cy.get('[data-testid="test"]').click();
@@ -77,47 +102,11 @@ describe('Service test run and postman view', () => {
         cy.get('[data-testid="api-key-error"]').should('exist');
         cy.log('Test phase successful!');
     })
-})
 
-describe('Test successful deployment of sample services', ()=>{
-    let appName: string
+    it('deploy hello world service', () => {
+        cy.deployToChoreo("service", appName);
 
-    before(() => {
-        cy.log("Login into Choreo using Google");
-        cy.consoleUserLogin();
-    }),
-
-    after(() => {
         cy.goBacktoAppsList();
-        cy.cleanupApp(appName);
-        cy.userLogout();
-    }),
-
-    it('Test deployment of sample:- echo service', () => {
-        //This is the POST call we are interested in capturing to catch the app name handle of the created sample service
-        cy.intercept('POST', `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/template`).as('templateCall');
-
-        cy.navigateFromHomePage(SERVICES_TEXT);
-        cy.get('[id="backdrop-loader"').should('not.exist');
-        cy.get('#try-out-samples-btn').should('exist').click();
-        cy.get('[data-testid="echo-service"]').should('exist').children().find('button').click({force:true});
-
-        // Trying to capture the template call
-        cy.wait('@templateCall',{timeout:30000}).then((interception) => {
-            appName = interception.response.body[`name`];
-            cy.deployToChoreo("service", appName);
-
-            // Undeploy app via REST API call, because with UI the filtration of app name is not possible for samples.
-            cy.request({
-                method: "POST",
-                url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
-                timeout: 60000
-            }).then((resp) => {
-                // Status code is expected to be 200
-                expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
-                cy.log("Successfully undeployed the app: "+ appName);
-                cy.get('[data-testid="deploy"]').should('exist');
-            });
-        });
-    });
-});
+        cy.deleteAppWithoutUndeploy(appName, true);
+    })
+})
