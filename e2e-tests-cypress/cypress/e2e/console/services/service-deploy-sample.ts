@@ -11,15 +11,15 @@
  * associated services.
  */
 
-import {APP_SVC_URL, ORG_NAME, SERVICES_TEXT, SUCCESS_STATUS_CODE} from '../../../support/common/constants';
+import { APP_SVC_URL, ORG_NAME, SERVICES_TEXT, SUCCESS_STATUS_CODE } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
 describe('Test successful deployment of sample services', ()=>{
-    let appName: string
+    let appName: string;
 
     before(() => {
-        cy.log("Login into Choreo using Google");
+        cy.log("Login into Choreo");
         cy.consoleUserLogin();
     }),
 

@@ -51,6 +51,8 @@ describe('Service deployment and delete deployed service', () => {
     })
 
     it('low code form AI suggestions', () => {
+        const variableSourceFields = 'http:Client httpEndpoint = check new (url);';
+
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
         
@@ -64,7 +66,6 @@ describe('Service deployment and delete deployed service', () => {
         cy.log("HTTP connector added successfully!");
 
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
-        const variableSourceFields = 'http:Client httpEndpoint = check new (url);';
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
     })
