@@ -7,3 +7,7 @@ resources:
   - app-deployer.yaml
   - app-service.yaml
   - workspace-manager.yaml
+  - telemetry.yaml
+  - sys-obsapi.yaml
+  - negotiator.yaml
+  - linker.yaml

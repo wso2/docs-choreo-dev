@@ -7,6 +7,8 @@ resources:
   - hpa
   - pdb
   - rbac
+  - component/linker
+  - cron
 
 namespace: choreo-system
 
