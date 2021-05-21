@@ -16,8 +16,7 @@ import { SERVICES_TEXT, NO_OF_RETRIES } from '../../support/common/constants';
 
 /// <reference types="cypress" />
 
-// TODO : please un-skip following test suit once it fixed
-describe.skip('Observability tests', () => {
+describe('Observability tests', () => {
     const obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
     let savedCookies
     let appName: string
@@ -111,6 +110,7 @@ describe.skip('Observability tests', () => {
 
     it('test observability overview', { retries: NO_OF_RETRIES }, () => {
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
+        const emptyHistogramMessage = 'No requests received during the selected time period';
         const httpStatusCodeRegexp = /[1-5]\d{2}/;
         const responseTimeRegexp = /\d+\sms/;
         let d;
@@ -123,11 +123,13 @@ describe.skip('Observability tests', () => {
         cy.get('[data-testid="preloader"]').should('not.exist');
         cy.get('.metrics-text').contains('100% Success', {timeout: 600000}).should('exist');
 
-        cy.log('Asserting the default log panel');
-        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('exist');
-
+        cy.contains('[data-testid="histogram-throughput"]', emptyHistogramMessage).should('not.exist');
+        cy.contains('[data-testid="histogram-response-time"]', emptyHistogramMessage).should('not.exist');
         cy.get('[data-testid="histogram-throughput"]').get('g.recharts-layer.recharts-area').should('exist');
         cy.get('[data-testid="histogram-response-time"]').get('g.recharts-layer.recharts-area').should('exist');
+
+        cy.log('Asserting the default log panel');
+        cy.get('[data-testid="log-panel"]').should('exist');
 
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
             cy.log('Getting coordinates to click on the latency graph');
@@ -147,7 +149,7 @@ describe.skip('Observability tests', () => {
             cy.get('[data-testid="histogram-throughput"]').find('svg').click(Math.round(finalX), Math.round(finalY));
             cy.get('[data-testid="preloader"]').should('not.exist');
 
-            cy.log('Asserting the log panel after clicking on the graph');
+            cy.log('Asserting the log panel after clicking on the very first point in the latency graph');
             cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
 
             cy.log('Asserting the request list');
@@ -159,11 +161,12 @@ describe.skip('Observability tests', () => {
                 expect($elements[1].textContent).to.contain(':');
                 expect($elements[2].textContent).to.be.empty;
             });
-            cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
-                expect($elements[0].textContent).to.match(responseTimeRegexp);
-                expect($elements[1].textContent).to.contain(':');
-                expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
-            });
+            // TODO: Uncomment the following once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
+            // cy.get('[data-testid="request-information"]').eq(1).click().find('div>div').then(($elements) => {
+            //     expect($elements[0].textContent).to.match(responseTimeRegexp);
+            //     expect($elements[1].textContent).to.contain(':');
+            //     expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
+            // });
          });
     })
 })
