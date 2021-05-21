@@ -15,10 +15,10 @@
 
 import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
-    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT, NO_OF_RETRIES 
 } from "../../../support/common/constants";
 
-describe('Clone and edit integrations', () => {
+describe('Integration sample flow', () => {
     let savedCookies;
 
     before(() => {
@@ -34,6 +34,14 @@ describe('Clone and edit integrations', () => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
         cy.visit(Cypress.env("baseUrl") + '/' + INTEGRATIONS_TEXT);
+        cy.get('[id="backdrop-loader"]').should('not.exist');
+
+        cy.get('body').then($body => {
+            const preBuiltBtnAvailable = ($body.find('[data-testid="use-prebuilt-btn"]').length > 0) ? true : false;
+            if (preBuiltBtnAvailable) {
+                cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
+            }
+        })
     });
 
     afterEach(() => {
@@ -44,8 +52,7 @@ describe('Clone and edit integrations', () => {
         cy.userLogout();
     });
 
-    it('clone and edit Google calender to twilio SMS', () => {
-        cy.get('[data-testid="use-prebuilt-btn"]').click();
+    it('clone and edit Google calender to twilio SMS', { retries: NO_OF_RETRIES }, () => {
         cy.get('[data-testid="gcalendar-to-twilio"]').trigger('mouseover').within(() => {
             cy.contains('Clone & Edit').click({ force: true });
         });
@@ -58,10 +65,30 @@ describe('Clone and edit integrations', () => {
         cy.testRunApp();
         cy.get('[data-testid="test-url"]').should('exist');
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
-        cy.log('Retrieving the test URL successful');
+        cy.log('Retrieved the test URL successfully');
 
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/develop')[0];
+            cy.goBacktoAppsList();
+            cy.cleanupApp(appName);
+        });
+    })
+
+    it('test-run sample integration', { retries: NO_OF_RETRIES }, () => {
+        cy.log("Prebuilt integrations page loaded successfully");
+        cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });
+
+        cy.waitTillWorkSpace();
+        cy.get('.diagram-canvas').should('exist');
+        cy.fillCalendarConfigs(INVITATION_EMAIL);
+        cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
+        cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
+
+        cy.get('[data-testid="test-url"]').should('exist');
+        cy.log('Retrieved the test URL successfully');
+
+        cy.url().then((url) => {
+            const appName = url.split('app/').pop().split('/deploy')[0];
             cy.goBacktoAppsList();
             cy.cleanupApp(appName);
         });
