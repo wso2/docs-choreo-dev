@@ -3,7 +3,7 @@ Choreo allows you to efficiently build integrations by connecting APIs, events, 
 
 This quick start guide walks you through the steps to quickly configure and try out the **GitHub New Issue to Google Sheets Row** integration in Choreo.
 
-## Prerequisites to configure the integration:
+## Prerequisites:
 - A GitHub account.
 - A Google account.
 - In the Google account, create a blank spreadsheet named `Sample GitHub Integration` with its default worksheet named `Sheet1`. 
@@ -32,7 +32,7 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
     Now you have configured the integration, and you are ready to start it.
 
 7. Click **Start**. 
-   The following message indicates that the integration is starting:
+   The following logs appear to indicate that the integration is starting:
   
        ![](../assets/img/integrations/integration-starting.png)
     
