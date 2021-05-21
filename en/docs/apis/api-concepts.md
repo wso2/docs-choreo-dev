@@ -5,7 +5,7 @@ Choreo's API management capabilities allow you to create APIs, manage APIs, and 
 An API is an intermediate layer that acts as a communication protocol between a consumer and a service, simplifying the consumption of the service. In addition to hiding the underlying implementation details of a service, an API provides a secure, controlled, and well-documented approach to access an exposed service.
 
 ## API Management Components
-API management in Choreo is facilitated by the key components: [API Publisher](#api-publisher), [Developer Portal](#developer-portal), [API Key Manager](#api-key-manager),and [API Gateway](#api-gateway).  
+API management in Choreo is facilitated by the key components: [API Publisher](#api-publisher), [Developer Portal](#developer-portal), [API Key Manager](#api-key-manager),and [Choreo Connect](#choreo-connect).  
 
 ### API Publisher 
 The API Publisher is designed for API creators to develop, document, secure, test, and version APIs with ease. It also caters to more API management-related tasks, such as allowing API Publishers to deploy and publish APIs and applying rate-limiting policies.
@@ -20,12 +20,32 @@ In Choreo, tokens are bound to an application. The Key manager provides a token 
 
 The Key Manager performs scope validation as well.
 
-### API Gateway
-API Gateway acts as the entry point for an API request. It secures, protects, manages, and scales API calls. 
+### Choreo Connect
 
-The API Gateway does the JWT token validation by validating the signature, issuer, expiry time, and subscription. The subscription is validated using the in-memory map. This in-memory map includes API-related information, application-related information, subscription-related information, etc., and is updated each time an artifact (API/application) is updated.
+Choreo Connect is an API gateway designed for microservices that is cloud-native, decentralized, and developer-centric. This API gateway is a lightweight message processor for APIs that facilitates message security, transport security, routing, and other API Management functions such as throttling, rate-limiting, etc.
 
-Once the token is validated, the API Gateway acts upon the API request before sending it to the backend. It first processes the message to a pre-configured format (e.g., JSON, XML, CSV, etc.). It then applies security policies, rate-limiting policies, collects statistics, etc., via its handlers. The mediators then act upon the API payload based on the mediation logic developed. Then, the message is formatted to a pre-configured format (e.g., JSON, XML, CSV, etc.) and sent to the backend. 
+Choreo Connect consists of three components: Router, Enforcer, and Adapter.
+
+![Choreo Connect](../assets/img/apis/choreo-connect.png){:style="height:75%;width:90%"}
+
+#### Router
+
+Router in Choreo Connect uses the [Envoy Proxy](https://www.envoyproxy.io/) and is primarily responsible for routing traffic to the relevant endpoints. The Router is also capable of exposing the APIs in Choreo and thereby making them discoverable.
+
+#### Enforcer
+
+Enforcer is responsible for carrying out API management-related tasks such as controlling access, enabling security, publishing analytics, etc. When the Router receives a request, it sends it to the Enforcer. The Enforcer performs the relevant API management-related tasks on the request and replies to the Router. Based on the Router's response, the Enforcer will decide to allow or deny the request to pass to the backend.
+
+#### Adapter 
+
+The Adapter is responsible for converting the API definition to a format understood by the Router and the Enforcer. The Adapter will pass the data to and from the Router and Enforcer. 
+
+### Traffic Manager 
+
+The Traffic Manager helps regulate API traffic, make APIs and applications available to consumers at different service levels, and secure APIs against security attacks. The Traffic Manager features a dynamic throttling engine that processes rate-limiting policies in real-time. 
+
+Additionally,  the Traffic Manager keeps the API Gateway's in-memory map, which it uses for key validation, up-to-date via a JMS topic. The Traffic Manager publishes artifact (API/application) update events that it receives from the API Publisher and API Developer Portal to a JMS topic. The API Gateway receives these events via the JMS topic and updates its in-memory map.
+
 
 ## API Lifecycle
 API lifecycle comprises of the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked`, and `Retired`.
