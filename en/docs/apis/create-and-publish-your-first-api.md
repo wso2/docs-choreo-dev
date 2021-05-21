@@ -7,7 +7,7 @@ This quick start guide walks you through the steps to quickly create and publish
 - A mock REST service to use when creating the API. 
     
     !!!note
-        In this quick start guide, we use the mock service at [http://www.mocky.io/v2/5185415ba171ea3a00704eed](http://www.mocky.io/v2/5185415ba171ea3a00704eed), which is made available by [https://www.mocky.io/](https://www.mocky.io/). Click the mock service URL to test the service. You'll see the following JSON message:**{"hello": "world"}**.
+        In this quick start guide, we use the mock service at [http://www.mocky.io/v2/5185415ba171ea3a00704eed](http://www.mocky.io/v2/5185415ba171ea3a00704eed), which is made available by [https://www.mocky.io/](https://www.mocky.io/). Click the mock service URL to test the service. You'll see the following JSON message: **{"hello": "world"}**.
  
 ## Step 1: Create an API from scratch
 Follow this procedure to create an API using the mock REST service you tested in the prerequisites section:
