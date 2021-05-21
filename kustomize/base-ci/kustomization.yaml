@@ -22,7 +22,7 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-464790515f02eead1cc8b3d7f2d9d78418f7490b
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
-  newTag: master-50d30e00f44256d172f9dea8d1b3b5116eed4d31
+  newTag: master-b5c8b75ffb4445e59aee85ebf4fd8da0eb02028b
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-linker
   newTag: master-fe2d673c811cee29544744b554f537e7d6476313
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
