@@ -17,8 +17,6 @@ import { SETTINGS_TEXT, NO_OF_RETRIES, INVITATION_EMAIL } from '../../support/co
 
 describe('Invite members', () => {
     let savedCookies;
-    const groupMemberEmail = 'udyogi@wso2.com';
-    const groupMemberName = 'Udyogi Munasinghe';
 
     before(() => {
         cy.log("Login into Choreo");
