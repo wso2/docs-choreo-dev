@@ -47,20 +47,10 @@ describe("Integrations test run and deployment from scratch", () => {
         cy.deployToChoreo("integration", appName);
     });
 
-    it("Undeploy app from UI", () => {
+    it("Undeploy app from UI and delete the app", () => {
         cy.goBacktoAppsList();
-        cy.searchApps(appName);
-        cy.contains("td", appName).should("be.visible").trigger("mouseover");
-        cy.log("delete button should be disable.");
-        cy.get('[data-testid="delete-btn"]').should("be.disabled");
-        cy.contains("td", appName).click({ force: true });
-        cy.get('[data-testid="deploy-stop-button"]').should("exist").click({ force: true });
-        cy.contains("Stopping").should("not.exist");
-        cy.log('App undeployed successfully!');
-    });
-
-    it("Delete app from UI", () => {
-        cy.goBacktoAppsList();
+        cy.deleteAppWithoutUndeploy(appName, true);
+        cy.undeployApp("integration", appName, true)
         cy.deleteApp("integration", appName, true);
         cy.log("App deleted successfully!")
     });
