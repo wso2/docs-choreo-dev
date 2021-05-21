@@ -32,7 +32,7 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
     Now you have configured the integration, and you are ready to start it.
 
 7. Click **Start**. 
-   The following message indicates that the integration is starting:
+   The following logs appear to indicate that the integration is starting:
   
        ![](../assets/img/integrations/integration-starting.png)
     
