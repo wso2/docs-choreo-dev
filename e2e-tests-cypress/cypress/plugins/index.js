@@ -40,6 +40,11 @@ module.exports = (on, config) => {
   })
 }
 
+module.exports = (on, config) => {
+  // register cypress-grep plugin code
+  require('cypress-grep/src/plugin')(config)
+}
+
 // put all cy.log() messages to console output
 module.exports = on => {
   on('task', {
