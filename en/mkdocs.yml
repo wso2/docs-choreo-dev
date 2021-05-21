@@ -91,6 +91,7 @@ markdown_extensions:
     - pymdownx.tilde
     - pymdownx.snippets:
           base_path: docs
+    - attr_list
 plugins:
     - search
     - markdownextradata: {}
