@@ -58,7 +58,7 @@ Follow this procedure to test the API revision that you deployed:
 
       ![](../assets/img/apis/response.png)
 
-Now you are ready to publish the API to the Choreo Develope Portal so that external consumers can consume the API.
+Now you are ready to publish the API to the Choreo Developer Portal so that external consumers can consume the API.
 
 ## Step 4: Publish the API
 Follow this procedure to publish the API and view the published API on the Choreo Developer Portal:
