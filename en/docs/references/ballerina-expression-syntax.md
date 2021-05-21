@@ -255,7 +255,7 @@ You can use the **%** operator to get the remainder of a division. The number va
 
 ### Checking the equality of basic types 
 
-In the [Ballerina language](https://ballerina.io/), basic types are **string**, **int**, **float**, **decimal**, **boolean**, and **nil**. You can compare the values of these types using the **==** binary operator. The values can come from a literal or from a variable. Similarly the **!=** operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
+In the [Ballerina language](https://ballerina.io/), basic types are **string**, **int**, **float**, **decimal**, **boolean**, and **nil**. You can compare the values of these types using the **==** binary operator. The values can come from a literal or from a variable. Similarly, the **!=** operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
 
 #### Examples
 
@@ -417,6 +417,5 @@ HTTP cookies keep stateful information about a client. You can use the request v
   ```ballerina
   request.getCookies()
   ```
-
 
 
