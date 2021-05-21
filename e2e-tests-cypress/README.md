@@ -20,21 +20,36 @@ baseUrl
 
 ## Folder structure
 
-<p align="center">
-   <img src="images/folder-structure.png" height="400" alt="Folder structure">
-</p>
+The organization of the folder structure is based on the recomedations found at https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests
 
-1. **Fixtures** are external pieces of static data that can be used by your tests. We should not hard code data in the test case. It should drive from an external source like CSV, HTML, or JSON. They will be majorly used with the cy.fixture() command when you need to stub the network calls.
+```
+e2e-tests-cypress
+|	cypress.env.json [1]
+|	cypress.json [2]
+|
+└───cypress
+│	└───e2e [3]
+│	└───fixtures [4]
+│	└───plugins [5]
+│	└───support [6]
+└───node_modules [7]
+```
 
-2. **Integration** folder provides a place that writes out test cases. It can be used to add new test cases. We can also create our own folder under this directory and add out test cases under that. In `choreo-control-plane`, this folder is renamed as **e2e**.
+1. **cypress.env.json** is used to define variables that are accessible via `Cypress.env` in e2e tests(https://docs.cypress.io/guides/guides/environment-variables#Option-2-cypress-env-json).
 
-3. **Plugins** contain the plugins or listeners. By default, Cypress will automatically include the plugins file “cypress/plugins/index.js” before every test it runs. You can programmatically alter the resolved configuration and environment variables using plugins, Eg. If we have to inject customized options to browsers like accepting the certificate, or do any activity on test case pass or fail or to handle any other events like handling screenshots. They enable you to extend or modify the existing behavior of Cypress.
+2. **cypress.json** is used to store Cypress runtime configurations(https://docs.cypress.io/guides/references/configuration#cypress-json) for tweaking the behavior of Cypress. The custom test folder structure is defined here enabling Cyprus to execute the tests.
 
-4. **Support** writes customized commands or reusable methods that are available for usage in all of your spec/test files. This file runs before every single spec file. That’s why you don’t have to import this file in every single one of your spec files.  The “support” file is a great place to put reusable behavior such as Custom Commands or global overrides that you want to be applied and available to all of your spec files.
+3. **e2e** Contains the End to End test cases. New test cases must be added to this directory and can be further organized into subdirectories for better organization.
 
-5. **Node_Modules** is the folder where NPM installs all the project dependencies.
+4. **fixtures** are external pieces of static data that can be used by your tests. We should not hard code data in the test case. It should drive from an external source like CSV, HTML or JSON(https://docs.cypress.io/api/commands/fixture).
 
-6. **Cypress.json** is used to store different configurations. E.g., timeout, base URL, test files, or any other configuration that we want to override for tweaking the behavior of Cypress. We can also manage the customized folder structure because it is part of by default Cypress Configurations.
+5. **plugins** contain the plugins or listeners. By default, Cypress will automatically include the plugins file “cypress/plugins/index.js” before every test it runs. You can programmatically alter the resolved configuration and environment variables using plugins, Eg. If we have to inject customized options to browsers like accepting the certificate, or do any activity on test case pass or fail or to handle any other events like handling screenshots. They enable you to extend or modify the existing behavior of Cypress(https://docs.cypress.io/guides/tooling/plugins-guide).
+
+6. **support** writes customized commands or reusable methods that are available for usage in all of your spec/test files. This file runs before every single spec file. That’s why you don’t have to import this file in every single one of your spec files.  The “support” file is a great place to put reusable behavior such as Custom Commands or global overrides that you want to be applied and available to all of your spec files.
+
+7. **node_modules** is the folder where NPM installs all the project dependencies.
+
+
 
 ## Test execution
 
