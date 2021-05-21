@@ -52,6 +52,7 @@ describe('Choreo APIM publisher scenarios', () => {
     });
 
     after(() => {
+        // TODO remove this once the mondoDB indexing delay is addressed
         cy.wait(60000);
         cy.get('[data-testid="api-list"]').click({ force: true });
         cy.wait(2000);
