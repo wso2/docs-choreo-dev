@@ -11,41 +11,47 @@
  * associated services.
  */
 import { generateAppName } from "../../../support/common/utils";
-import { INTEGRATIONS_TEXT } from '../../../support/common/constants';
+import { INTEGRATIONS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
-describe('Integrations test run and deployment from scratch', () => {
+describe("Integrations test run and deployment from scratch", () => {
     let appName: string;
 
     before(() => {
         cy.log("Login into Choreo using Github");
         cy.consoleUserLogin();
+    });
+
+    after(() => {
+        cy.userLogout();
+    });
+
+    it("Create an intergration app", () => {
         appName = generateAppName("app");
-        cy.log('Generated application name: ' + appName);
+        cy.log("app name: ", appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should('include', 'app/' + appName + '/develop');
+        cy.url().should("include", "app/" + appName + "/develop");
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements", "addLog");
         cy.createLogProperty("Info", "Hello World");
-    })
+    });
 
-    after(() => {
-        cy.goBacktoAppsList();
-        cy.undeployApp("integration", appName, true);
-        cy.deleteApp("integration", appName, true);
-        cy.userLogout();
-    })
-
-    it('test-run and deploy integration', () => {
+    it("Test-run and deploy integration", () => {
         const loadRunTxt = "Running...";
-
         cy.testRunApp();
-        cy.get('.product-tour-logs-panel').contains(loadRunTxt).should('exist');
-        cy.get('.product-tour-logs-panel').contains(loadRunTxt).should('not.exist', 50000);
-        cy.get('[data-testid="log-panel"]').should('contains.text', "message = \"Hello World\"");
-        cy.log('Expression is logged successfully');
-
+        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("exist");
+        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);
+        cy.get('[data-testid="log-panel"]').should("contains.text", 'message = "Hello World"');
+        cy.log("Expression is logged successfully");
         cy.deployToChoreo("integration", appName);
+    });
+
+    it("Undeploy app from UI and delete the app", () => {
+        cy.goBacktoAppsList();
+        cy.deleteAppWithoutUndeploy(appName, true);
+        cy.undeployApp("integration", appName, true)
+        cy.deleteApp("integration", appName, true);
+        cy.log("App deleted successfully!")
     });
 });
