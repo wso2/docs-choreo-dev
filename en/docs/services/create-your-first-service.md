@@ -14,7 +14,7 @@ To create the service, follow this procedure:
 
 4. Under **Create with Choreo**, enter **covid-stats** as the name of your service.
 
-5. Select **GET** as the HTTP method and enter **activecases** as the relative path from host.
+5. Select **GET** as the HTTP method and enter **activecases** as the relative path from the host.
 
      ![Resource Configuration](../assets/img/services/configure-api-trigger.png)
 
