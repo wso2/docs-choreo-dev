@@ -20,9 +20,11 @@ describe("Test successful deployment of sample services", () => {
         cy.log("Login into Choreo");
         cy.consoleUserLogin();
     });
+
     after(() => {
         cy.userLogout();
     });
+
     it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {
         cy.navigateFromHomePage(SERVICES_TEXT);
         cy.get('[id="backdrop-loader"').should("not.exist");
