@@ -5,7 +5,7 @@ Choreo's API management capabilities allow you to create APIs, manage APIs, and 
 An API is an intermediate layer that acts as a communication protocol between a consumer and a service, simplifying the consumption of the service. In addition to hiding the underlying implementation details of a service, an API provides a secure, controlled, and well-documented approach to access an exposed service.
 
 ## API Management Components
-API management in Choreo is facilitated by the key components: [API Publisher](#api-publisher), [Developer Portal](#developer-portal), [API Key Manager](#api-key-manager),and [Choreo Connect](#choreo-connect).  
+API management in Choreo is facilitated by the key components: [API Publisher](#api-publisher), [Developer Portal](#developer-portal), [API Key Manager](#api-key-manager), [Choreo Connect](#choreo-connect), and [Traffic Manager](#traffic-manager).  
 
 ### API Publisher 
 The API Publisher is designed for API creators to develop, document, secure, test, and version APIs with ease. It also caters to more API management-related tasks, such as allowing API Publishers to deploy and publish APIs and applying rate-limiting policies.
