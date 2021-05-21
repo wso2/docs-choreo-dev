@@ -45,12 +45,17 @@ To create the service, follow the procedure below:
         
     5. Enter information as follows:
         
+        ![Configure HTTP Connection](../assets/img/services/select-existing-connection.png)
         
         | **Field**               | **Value**                      |
         |-------------------------|--------------------------------|
         | **OPERATION**           | **get**                        |
-        | **Resource Path**       | `/total/country/united-states` |
+        | **Resource Path**       | `"/total/country/united-states"` |
         | **Select Payload Type** | **JSON**                       |
+        
+        !!! info
+            To select **JSON** as the payload type, you need to click **Do you want to extract a payload?**.
+            ![Do you want to extract a payload button](../assets/img/services/enable-payload.png)
         
         Click **Save & Done**.
         
