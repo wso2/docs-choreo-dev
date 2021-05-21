@@ -11,49 +11,40 @@
  * associated services.
  */
 
-import { APP_SVC_URL, ORG_NAME, SERVICES_TEXT, SUCCESS_STATUS_CODE } from '../../../support/common/constants';
+import { SERVICES_TEXT, EX_LONG_TIME_OUT, NO_OF_RETRIES } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
-describe('Test successful deployment of sample services', ()=>{
-    let appName: string;
-
+describe("Test successful deployment of sample services", () => {
     before(() => {
         cy.log("Login into Choreo");
         cy.consoleUserLogin();
-    }),
+    });
 
     after(() => {
-        cy.goBacktoAppsList();
-        cy.cleanupApp(appName);
         cy.userLogout();
-    }),
+    });
 
-    it('Test deployment of sample:- echo service', () => {
-        //This is the POST call we are interested in capturing to catch the app name handle of the created sample service
-        cy.intercept('POST', `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/template`).as('templateCall');
-
+    it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {
         cy.navigateFromHomePage(SERVICES_TEXT);
-        cy.get('[id="backdrop-loader"').should('not.exist');
-        cy.get('#try-out-samples-btn').should('exist').click();
-        cy.get('[data-testid="echo-service"]').should('exist').children().find('button').click({force:true});
-
-        // Trying to capture the template call
-        cy.wait('@templateCall',{timeout:30000}).then((interception) => {
-            appName = interception.response.body[`name`];
-            cy.deployToChoreo("service", appName);
-
-            // Undeploy app via REST API call, because with UI the filtration of app name is not possible for samples.
-            cy.request({
-                method: "POST",
-                url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
-                timeout: 60000
-            }).then((resp) => {
-                // Status code is expected to be 200
-                expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
-                cy.log("Successfully undeployed the app: "+ appName);
-                cy.get('[data-testid="deploy"]').should('exist');
-            });
+        cy.get('[id="backdrop-loader"').should("not.exist");
+        cy.get('[data-testId="try-out-samples-btn"]').should("exist").click({ force: true });
+        cy.log("Creating echo service!");
+        cy.get('[data-testid="echo-service"]').should("exist").children().find("button").click({ force: true });
+        cy.wait(10000);
+        cy.get('[data-testid="diagram-loader"]').should("not.exist");
+        cy.get('[data-testid="diagram-canvas"]').should("be.visible");
+        cy.log("Created the echo service successfully!");
+        cy.testRunApp();
+        cy.get('[data-testid="test-url"]').should("exist");
+        cy.contains('[data-testid="log-panel"]', "started HTTP/WS listener", { timeout: EX_LONG_TIME_OUT }).should(
+            "exist"
+        );
+        cy.log("Tested the echo service successfully!");
+        cy.url().then((url) => {
+            const appName = url.split("app/").pop().split("/develop")[0];
+            cy.goBacktoAppsList();
+            cy.cleanupApp(appName);
         });
     });
 });
