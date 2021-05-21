@@ -22,7 +22,7 @@ describe('Integrations test run and deployment from scratch', () => {
         cy.log("Login into Choreo using Github");
         cy.consoleUserLogin();
         appName = generateAppName("app");
-        cy.log('app name: ', appName);
+        cy.log('Generated application name: ' + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.selectTrigger("Manual");

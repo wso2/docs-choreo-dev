@@ -37,7 +37,7 @@ describe('Integration sample flow', () => {
         cy.get('[id="backdrop-loader"]').should('not.exist');
 
         cy.get('body').then($body => {
-            let preBuiltBtnAvailable = ($body.find('[data-testid="use-prebuilt-btn"]').length > 0) ? true : false;
+            const preBuiltBtnAvailable = ($body.find('[data-testid="use-prebuilt-btn"]').length > 0) ? true : false;
             if (preBuiltBtnAvailable) {
                 cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
             }
@@ -65,7 +65,7 @@ describe('Integration sample flow', () => {
         cy.testRunApp();
         cy.get('[data-testid="test-url"]').should('exist');
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
-        cy.log('Retrieving the test URL successful');
+        cy.log('Retrieved the test URL successfully');
 
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/develop')[0];
@@ -85,7 +85,7 @@ describe('Integration sample flow', () => {
         cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
 
         cy.get('[data-testid="test-url"]').should('exist');
-        cy.log('Retrieving the test URL successful');
+        cy.log('Retrieved the test URL successfully');
 
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/deploy')[0];
