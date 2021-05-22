@@ -39,8 +39,8 @@ images:
   newTag: master-c2ea2ded58e952f3b15700bbd7c52ba3999e6bd5
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
   newTag: master-cc9050a07fd2189c5755c051e3d5ea011e1549d3
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim
-  newTag: v4.0.0-r08032021.1
+- name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
+  newTag: v4.0.0-r21052021.1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-adapter
   newTag: dd919445-20210518.2
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-enforcer
