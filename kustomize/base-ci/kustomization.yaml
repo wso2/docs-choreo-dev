@@ -22,11 +22,19 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-e5ddec2b2cac674105a9b072504c90ca94d29ec2
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-console
-  newTag: master-03c9057051f60d102969bcfb7cb5c5ee4cb5b931
+  newTag: master-261f04729a3bedef8a5cd680d6fbe21047729f41
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-linker
   newTag: master-fe2d673c811cee29544744b554f537e7d6476313
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-adapter
+  newTag: dd919445-20210518.2
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-enforcer
+  newTag: dd919445-20210518.1
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-router
+  newTag: dd919445-20210518.2
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-01d9ea8f3cfc183e5d1c4647f479f671590de084
+- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim
+  newTag: v4.0.0-r21052021.1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-08e4ba99aa3fc21e3a8b7de40bb42bfa3627b4c1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
@@ -39,11 +47,3 @@ images:
   newTag: master-c2ea2ded58e952f3b15700bbd7c52ba3999e6bd5
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
   newTag: master-cc9050a07fd2189c5755c051e3d5ea011e1549d3
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim
-  newTag: v4.0.0-r21052021.1
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-adapter
-  newTag: dd919445-20210518.2
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-enforcer
-  newTag: dd919445-20210518.1
-- name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-router
-  newTag: dd919445-20210518.2
