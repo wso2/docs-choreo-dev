@@ -6,5 +6,6 @@ resources:
   - service
   - hpa
   - pdb
+  - rbac
 
 namespace: choreo-apim
