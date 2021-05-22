@@ -12,5 +12,6 @@
         "console/*.ts",
         "devportal/*.ts"
     ],
-    "videoUploadOnPasses": false
+    "videoUploadOnPasses": false,
+    "videoCompression": false
 }
