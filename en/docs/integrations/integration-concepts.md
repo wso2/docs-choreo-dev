@@ -2,10 +2,10 @@
 Choreo integrations allow you to create enterprise integrations to automate workflows in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo integrations as you develop your integrations in the [Choreo Console]({{choreo_console}}).
   
 ## Integration
-Integration in Choreo is a process for connecting APIs, events, and streams to function as a single unit. Choreo provides an integration template which is a prebuilt sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
+Integration in Choreo is a process that connects APIs, events, and streams to function as a single unit. Choreo provides an integration template which is a pre-built sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
 
 ## Trigger
-A trigger in Choreo integrations is an event or an action that can cause an integration to start executing.
+A trigger in Choreo integrations is an event or an action that can cause the integration to start executing.
 
 Choreo supports the following trigger types:
 
@@ -38,7 +38,7 @@ Following are the connections you can use to interact with application-specific 
 
 ## Statement
 
-A statement is a collection of code fragments that specifies the actions to be carried out by a Choreo integration. Choreo statements can also be composed of expressions. These expressions are written based on the [Ballerina Expression Syntax](#ballerina-expression-syntax).
+A statement is a collection of code fragments that specifies the actions a Choreo integration will carry out. Choreo statements can also be composed of expressions. These expressions are written based on the [Ballerina Expression Syntax](#ballerina-expression-syntax).
 
 Choreo supports the following statements:
 
@@ -48,8 +48,7 @@ Choreo supports the following statements:
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
  - **While**: Continuously executes a block of statements in a loop as long as the specified condition is TRUE. 
  - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
- - **Custom**: Is used to write a single or a multiline code snippet in your service.
+ - **Custom**: Allows to write a single or a multiline code snippet in your service.
 
 ## Ballerina Expression Syntax
 The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
-

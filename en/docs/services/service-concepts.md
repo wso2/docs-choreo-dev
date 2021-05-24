@@ -1,6 +1,6 @@
 # Service Concepts
 
-Choreo services allows you to create enterprise integration services incorporating complex business logic in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo services as you develop your services in the [Choreo Console]({{choreo_console}}).
+Choreo services allow you to create enterprise integration services incorporating complex business logic in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo services as you develop your services in the [Choreo Console]({{choreo_console}}).
  
 ## Service
 A service in Choreo is an enterprise integration service exposed via a REST API. Choreo provides a comprehensive set of pre-built service samples for you to clone, edit, and try out, depending on your requirement. 
@@ -11,7 +11,7 @@ An API call in Choreo allows you to connect to an external service through your 
 Following are the connections you can use to interact with generic protocol-based APIs:
   
  - **HTTP**: Communicates with external endpoints over HTTP.   
- - **SMTP**: Performs email related operations over SMTP. 
+ - **SMTP**: Performs email-related operations over SMTP. 
  - **POP3**: Retrieves emails from a mail server over POP3. 
  - **IMAP**: Retrieves emails from a mail server over a TCP/IP connection.
 
@@ -37,7 +37,7 @@ Choreo supports the following statements:
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
  - **While**: Continuously executes a block of statements in a loop as long as the specified condition is TRUE. 
  - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
- - **Custom**: Is used to write a single or a multiline code snippet in your service.
+ - **Custom**: Allows to write a single or a multiline code snippet in your service.
 
 ## Ballerina Expression Syntax
 The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
