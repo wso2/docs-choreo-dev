@@ -22,8 +22,8 @@ Following are the connections you can use to interact with generic protocol-base
   
  - **HTTP**: Communicates with external endpoints over HTTP.   
  - **SMTP**: Performs email related operations over SMTP. 
- - **POP3**: Retrieve emails over POP3. 
- - **IMAP**: Retrieve emails from a mail server over a TCP/IP connection.
+ - **POP3**: Retrieves emails over POP3. 
+ - **IMAP**: Retrieves emails from a mail server over a TCP/IP connection.
 
 Following are the connections you can use to interact with application-specific APIs:
 
@@ -50,6 +50,6 @@ Choreo supports the following statements:
  - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
  - **Custom**: Is used to write a single or a multiline code snippet in your service.
 
-## Expression Syntax
+## Ballerina Expression Syntax
 The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
 
