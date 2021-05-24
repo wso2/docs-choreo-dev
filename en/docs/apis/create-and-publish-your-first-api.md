@@ -12,23 +12,22 @@ This quick start guide walks you through the steps to quickly create and publish
 ## Step 1: Create an API from scratch
 Follow this procedure to create an API using the mock REST service you tested in the prerequisites section:
 
-1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
-2. Sign in using either your GitHub or Google credentials.
-3. Go to the **APIs** card and click **Get Started**. This takes you to the **Create API** page. 
+1. Access the Choreo Console via https://console.choreo.dev/ and sign in using your Google or GitHub credentials.
+2. Go to the **APIs** card and click **Get Started**. This takes you to the **Create API** page. 
     
     !!!note
         If this is not the first API you are creating, you must click **+ Create** to go to the **Create API** page.
 
-4. On the **Create API** page, go to the **Start from scratch card** and click **Next**.
-5. In the **Create API from REST API** form, fill in the details as follows:
+3. On the **Create API** page, go to the **Start from scratch card** and click **Next**.
+4. In the **Create API from REST API** form, fill in the details as follows:
     - **API Name**: `HelloWorld`
     - **API Version**: `1.0.0`
     - **Endpoint**: `http://www.mocky.io/v2/5185415ba171ea3a00704eed`
-6. Click **Create**. This displays an overview of the API.
+5. Click **Create**. This displays an overview of the API.
 
       ![API Overview](../assets/img/apis/api-overview.png)
        
-7. Under **API Configuration**, click **Resources**. Then follow this procedure to add a resource to the API:
+6. Under **API Configuration**, click **Resources**. Then follow this procedure to add a resource to the API:
     1. Select **GET** as the HTTP verb.
     2. Enter `hello` as the URI pattern.
     3. Click the **+** icon to add the resource.
