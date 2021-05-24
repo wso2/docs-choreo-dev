@@ -28,3 +28,6 @@ import './console/services/service-commands'
 
 // Overwrite log command to use task to put all cy.log() messages to console output
 Cypress.Commands.overwrite('log', (subject, message) => cy.task('log', message));
+
+// load and register the grep feature
+require('cypress-grep')()
