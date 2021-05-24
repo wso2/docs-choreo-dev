@@ -32,7 +32,7 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
     Now you have configured the integration, and you are ready to start it.
 
 7. Click **Start**. 
-   The following message indicates that the integration is starting:
+   The following logs appear to indicate that the integration is starting:
   
        ![](../assets/img/integrations/integration-starting.png)
     
@@ -48,7 +48,7 @@ Follow the procedure below to try out the integration:
 1. Go to the GitHub repository you specified when configuring the integration and create two new issues.
 2. Go to the Choreo Console and take a look at the **Execution History** of the configured integration.
  
-       ![Execution History](../assets/img/integrations/execution-history.png)
+       ![Execution History](../assets/img/integrations/execution-history.png){: style="height:75%;width:80%"}
 
      You can see two executions. These are a result of creating new issues in the GitHub repository.
 
