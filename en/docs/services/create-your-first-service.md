@@ -29,7 +29,7 @@ To create the service, follow this procedure:
         | **Field**           | **Value**                      |
         |---------------------|--------------------------------|
         | **Connection Name** | `httpEndpoint`                 |
-        | **URL**             | `https://api.covid19api.com` |
+        | **URL**             | `https://api.covid19api.com`   |
          
     3. Click the **+** icon below the HTTP API call you added. 
     
@@ -41,12 +41,16 @@ To create the service, follow this procedure:
         
     5. Enter the following information:
         
-        | **Field**               | **Value**                      |
-        |-------------------------|--------------------------------|
-        | **OPERATION**           | **get**                        |
-        | **Resource Path**       | `/total/country/united-states` |
-        | **Select Payload Type** | **JSON**                       |
-      
+        | **Field**               | **Value**                       |
+        |-------------------------|---------------------------------|
+        | **OPERATION**           | **get**                         |
+        | **Resource Path**       | `"/total/country/united-states"`|
+        | **Select Payload Type** | **JSON**                        |
+
+        !!! info
+            To select **JSON** as the payload type, you need to click **Do you want to extract a payload?**.
+            ![Do you want to extract a payload button](../assets/img/services/enable-payload.png)
+            
     6. Click **Save & Done**.
     
        Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
