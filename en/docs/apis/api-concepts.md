@@ -2,7 +2,31 @@
 Choreo's API management capabilities allow you to create APIs, manage APIs, and expose services and external APIs as managed APIs. Here are some basic concepts which will help you understand API management in Choreo as you create and manage your APIs in the [Choreo Console]({{choreo_console}}).
  
 ## API
-An API is an intermediate layer that acts as a communication protocol between a consumer and a service, simplifying the consumption of the service. In addition to hiding the underlying implementation details of a service, an API provides a secure, controlled, and well-documented approach to access an exposed service.
+An API is an intermediate layer that acts as a communication protocol between a consumer and a service, simplifying the consumption of the service. In addition to hiding the underlying implementation details of a service, an API provides a secure, controlled, and a well-documented approach to access an exposed service.
+
+## API Format
+Open API Specification (OAS, a.k.a Swagger) format is the underneath representation of an API in Choreo. A Swagger definition can be used to import an API to the Publisher Portal. In addition, a user can view, edit, import, or download an API definition in OAS format via the API Publisher Portal.
+
+## API Resource path and HTTP Methods
+An API is made up of one or more resources, each of which has a unique resource path (URI). An API Resource has a set of HTTP methods that operates on it. The supported HTTP methods are: GET, POST, PUT, DELETE, PATCH, HEAD, and OPTIONS
+
+## API Lifecycle
+API lifecycle comprises of the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked`, `Deployed`, and `Retired`.
+
+## Application
+The logical representation of a physical application such as a mobile app, web app, device, etc. For an application to use an API, the application should subscribe to the relevant APIs it intends to use. A subscription to an API happens over a selected business plan, which determines the usage quota the application gets. An application has a consumer-key and a consumer-secret, which acts as the credentials of the application.
+
+## Access Token
+Choreo uses OAuth2.0 bearer token-based authentication to allow a consumer to access an API. It is a string that is passed as an HTTP header of an API request. Choreo supports JWT formatted self-contained access tokens.
+
+## Rate Limiting
+Rate limiting allows you to limit the number of permitted requests to an API for a given time window. Rate limiting can be useful to:
+
+   - Protect your APIs from common types of security attacks such as certain types of Denial of Service (DoS) attacks.
+   - Regulate traffic according to infrastructure availability.
+   
+##  Tags
+Tags allow API providers to categorize APIs that have similar attributes. When a tagged API gets published to the API Developer Portal, its tags appear as clickable links. API consumers can use the link to navigate to a category of interest. API consumers can also search APIs that match a particular tag on the Developer Portal.
 
 ## API Management Components
 API management in Choreo is facilitated by the key components: [API Publisher](#api-publisher), [Developer Portal](#developer-portal), [API Key Manager](#api-key-manager), [Choreo Connect](#choreo-connect), and [Traffic Manager](#traffic-manager).  
@@ -18,11 +42,9 @@ The API Key Manager is the identity provider for Choreo and acts as the Secure T
 
 In Choreo, tokens are bound to an application. The Key manager provides a token API to generate access tokens. Clients can use these tokens to invoke APIs exposed by Choreo. The Key Manager also exposes a revoke token API that clients can use to revoke an access token. A client can generate an OAuth2.0 access token by invoking the token API directly or via the Developer Portal UI. Alternatively, a client can generate an API Key through the Developer Portal without calling the Key Manager. The API Key is a self-signed JWT token. When a client invokes an API with an OAuth2.0 access token or an API Key, the Gateway validates the token by validating its signature and subscription.
 
-The Key Manager performs scope validation as well.
-
 ### Choreo Connect
 
-Choreo Connect is an API gateway designed for microservices that is cloud-native, decentralized, and developer-centric. This API gateway is a lightweight message processor for APIs that facilitates message security, transport security, routing, and other API Management functions such as throttling, rate-limiting, etc.
+Choreo Connect is an API gateway designed for microservices that is cloud-native, decentralized, and developer-centric. This API gateway is a lightweight message processor for APIs that facilitates message security, transport security, routing, and other API Management-related quality of services such as throttling, rate-limiting, etc.
 
 Choreo Connect consists of three components: Router, Enforcer, and Adapter.
 
@@ -30,15 +52,15 @@ Choreo Connect consists of three components: Router, Enforcer, and Adapter.
 
 #### Router
 
-Router in Choreo Connect uses the [Envoy Proxy](https://www.envoyproxy.io/) and is primarily responsible for routing traffic to the relevant endpoints. The Router is also capable of exposing the APIs in Choreo and thereby making them discoverable.
+Router in Choreo Connect uses the [Envoy Proxy](https://www.envoyproxy.io/) and is primarily responsible for routing traffic to the relevant endpoints. The Router is also capable of exposing the APIs in Choreo to make them discoverable.
 
 #### Enforcer
 
-Enforcer is responsible for carrying out API management-related tasks such as controlling access, enabling security, publishing analytics, etc. When the Router receives a request, it sends it to the Enforcer. The Enforcer performs the relevant API management-related tasks on the request and replies to the Router. Based on the Router's response, the Enforcer will decide to allow or deny the request to pass to the backend.
+Enforcer is responsible for carrying out API management-related tasks such as controlling access, enabling security, publishing analytics, etc. When the Router receives a request, it sends it to the Enforcer. The Enforcer performs the relevant API management-related quality of services on the request and replies to the Router. Based on the Router's response, the Enforcer will decide to allow or deny the request to pass to the backend.
 
 #### Adapter 
 
-The Adapter is responsible for converting the API definition to a format understood by the Router and the Enforcer. The Adapter will pass the data to and from the Router and Enforcer. 
+The Adapter is responsible for converting the API definition to the relevant format understood by the Router and the Enforcer. The Adapter will pass the data to and from the Router and Enforcer.
 
 ### Traffic Manager 
 
@@ -47,6 +69,5 @@ The Traffic Manager helps regulate API traffic, make APIs and applications avail
 Additionally,  the Traffic Manager keeps the API Gateway's in-memory map, which it uses for key validation, up-to-date via a JMS topic. The Traffic Manager publishes artifact (API/application) update events that it receives from the API Publisher and API Developer Portal to a JMS topic. The API Gateway receives these events via the JMS topic and updates its in-memory map.
 
 
-## API Lifecycle
-API lifecycle comprises of the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked`, and `Retired`.
+
 
