@@ -56,7 +56,7 @@ Router in Choreo Connect uses the [Envoy Proxy](https://www.envoyproxy.io/) and 
 
 #### Enforcer
 
-Enforcer is responsible for carrying out API management-related tasks such as controlling access, enabling security, publishing analytics, etc. When the Router receives a request, it sends it to the Enforcer. The Enforcer performs the relevant API management-related quality of services on the request and replies to the Router. Based on the Router's response, the Enforcer will decide to allow or deny the request to pass to the backend.
+Enforcer is responsible for carrying out API management-related quality of services such as controlling access, enabling security, publishing analytics, etc. When the Router receives a request, it sends it to the Enforcer. The Enforcer performs the relevant API management-related quality of services on the request and replies to the Router. Based on the Router's response, the Enforcer will decide to allow or deny the request to pass to the backend.
 
 #### Adapter 
 
