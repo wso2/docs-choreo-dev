@@ -22,7 +22,7 @@ A string is simply a sequence of characters. Double quotes (`"`) are required to
 
 ### Signed integer
 
-A signed integer is an integer with a  **+** or **-** character preceding the number, indicating a positive or negative number. You can also define a positive integer or zero using only numeric characters without the sign. Using the signed integer type, you can provide positive integers, negative integers, and zeros as input to an expression-supported field.
+A signed integer is an integer with a  `+` or `-` character preceding the number, indicating a positive or negative number. You can also define a positive integer or zero using only numeric characters without the sign. Using the signed integer type, you can provide positive integers, negative integers, and zeros as input to an expression-supported field.
 
 #### Examples
 
@@ -38,7 +38,7 @@ A signed integer is an integer with a  **+** or **-** character preceding the nu
 
 ### Decimal floating-point number
 
-A decimal floating-point number is a number with a decimal point. You can precede the numbers with the + or - characters to indicate the sign.
+A decimal floating-point number is a number with a decimal point. You can precede the numbers with a `+` or `-` character to indicate the sign.
 
 #### Examples
 
@@ -60,7 +60,7 @@ A decimal floating-point number is a number with a decimal point. You can preced
 
 ### Boolean 
 
-The boolean data type has one of two possible values: **true** or **false**.
+The boolean data type has one of two possible values: `true` or `false`.
 
 #### Examples
 
@@ -79,7 +79,7 @@ Variables keep values in memory for later access. In an expression syntax-suppor
 
 #### Example
 
-- This converts the value of an integer variable (**total**) to a string:
+- This converts the value of an integer variable (`total`) to a string:
   ```ballerina
   total.toString()
   ```
@@ -88,7 +88,7 @@ Variables keep values in memory for later access. In an expression syntax-suppor
 
 ### String concatenation
 
-You can use the **+** operator for string concatenations. The string value can come from a string literal or a variable.
+You can use the `+` operator for string concatenations. The string value can come from a string literal or a variable.
 
 #### Examples
 
@@ -98,20 +98,20 @@ You can use the **+** operator for string concatenations. The string value can c
   "Hello " + "world!" 
   ```
   
-- Concatenates a string literal and a variable (**name**):
+- Concatenates a string literal and a variable (`name`):
  
   ```ballerina
   "Hi " + name
   ```
   
-- Concatenates two string variables (**firstName** and **lastName**):
+- Concatenates two string variables (`firstName` and `lastName`):
  
   ```ballerina
   firstName + lastName
   ```
 
 ### Numeric addition
-You can use the **+** operator for numeric addition. The number values can come from a literal or from a variable.
+You can use the `+` operator for numeric addition. The number values can come from a literal or from a variable.
 
 #### Examples
 
@@ -127,13 +127,13 @@ You can use the **+** operator for numeric addition. The number values can come 
   0.56 + 1.84
   ```
   
-- Adds a literal and a numerical variable (**firstNumber**):
+- Adds a literal and a numerical variable (`firstNumber`):
 
   ```ballerina
   firstNumber + 100
   ```
   
-- Adds two numerical variables (**firstNumber** and **secondNumber**):
+- Adds two numerical variables (`firstNumber` and `secondNumber`):
 
   ```ballerina
   firstNumber + secondNumber
@@ -141,7 +141,7 @@ You can use the **+** operator for numeric addition. The number values can come 
 
 ### Numeric subtraction
 
-You can use the **-** operator for numeric subtraction. The number values can come from a literal or from a variable.
+You can use the `-` operator for numeric subtraction. The number values can come from a literal or from a variable.
 
 #### Examples
 
@@ -157,13 +157,13 @@ You can use the **-** operator for numeric subtraction. The number values can co
   1.84 - 0.56  
   ```
   
-- Subtracts a literal from a numerical variable (**firstNumber**):
+- Subtracts a literal from a numerical variable (`firstNumber`):
 
   ```ballerina
   firstNumber - 100
   ```
   
-- Subtracts a numeric variable (**secondNumber**) from another numeric variable (**firstNumber**):
+- Subtracts a numeric variable (`secondNumber`) from another numeric variable (`firstNumber`):
 
   ```ballerina
   firstNumber - secondNumber
@@ -171,7 +171,7 @@ You can use the **-** operator for numeric subtraction. The number values can co
 
 ### Numeric division
 
-You can use the **/** operator for numeric division. The number values can come from a literal or from a variable.
+You can use the `/` operator for numeric division. The number values can come from a literal or from a variable.
 
 #### Examples
 
@@ -187,13 +187,13 @@ You can use the **/** operator for numeric division. The number values can come 
   1.84 / 0.56  
   ```
   
-- Divides a numeric variable (**firstNumber**) by a literal:
+- Divides a numeric variable (`firstNumber`) by a literal:
 
   ```ballerina
   firstNumber / 100
   ```
   
-- Divides a numeric variable (**firstNumber**) by another numeric variable (**secondNumber**):
+- Divides a numeric variable (`firstNumber`) by another numeric variable (`secondNumber`):
 
   ```ballerina
   firstNumber / secondNumber
@@ -201,7 +201,7 @@ You can use the **/** operator for numeric division. The number values can come 
 
 ### Numeric multiplication
 
-You can use the ***** (asterisk) operator for numeric multiplication. The number values can come from a literal or from a variable.
+You can use the `*` (asterisk) operator for numeric multiplication. The number values can come from a literal or from a variable.
 
 #### Examples
 
@@ -217,13 +217,13 @@ You can use the ***** (asterisk) operator for numeric multiplication. The number
   0.56 * 1.84
   ```
   
-- Multiplies a numeric variable (**firstNumber**) by a literal:
+- Multiplies a numeric variable (`firstNumber`) by a literal:
 
   ```ballerina
   firstNumber * 100
   ```
   
-- Multiplies a numeric variable (**firstNumber**) by another numeric variable (**secondNumber**):
+- Multiplies a numeric variable (`firstNumber`) by another numeric variable (`secondNumber`):
 
   ```ballerina
   firstNumber * secondNumber
@@ -231,7 +231,7 @@ You can use the ***** (asterisk) operator for numeric multiplication. The number
 
 ### Modulo operation
 
-You can use the **%** operator to get the remainder of a division. The number values can come from a literal or from a variable.
+You can use the `%` operator to get the remainder of a division. The number values can come from a literal or from a variable.
 
 #### Examples
 
@@ -241,13 +241,13 @@ You can use the **%** operator to get the remainder of a division. The number va
   10 % 4
   ```
   
-- Calculates the modulus of a literal and a variable (**firstNumber**):
+- Calculates the modulus of a literal and a variable (`firstNumber`):
 
   ```ballerina
   firstNumber % 100 
   ```
   
-- Calculates the modulus of two numeric variables (**firstNumber** and **secondNumber**):
+- Calculates the modulus of two numeric variables (`firstNumber` and `secondNumber`):
 
   ```ballerina
   firstNumber % secondNumber
@@ -255,7 +255,7 @@ You can use the **%** operator to get the remainder of a division. The number va
 
 ### Checking the equality of basic types 
 
-In the [Ballerina language](https://ballerina.io/), basic types are **string**, **int**, **float**, **decimal**, **boolean**, and **nil**. You can compare the values of these types using the **==** binary operator. The values can come from a literal or from a variable. Similarly, the **!=** operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
+In the [Ballerina language](https://ballerina.io/), basic types are `string`, `int`, `float`, `decimal`, `boolean`, and `nil`. You can compare the values of these types using the `==` binary operator. The values can come from a literal or from a variable. Similarly, the `!=` operator is used to check the inequality. Note that the resulting value from these operators is always of `boolean` type. 
 
 #### Examples
 
@@ -271,19 +271,19 @@ In the [Ballerina language](https://ballerina.io/), basic types are **string**, 
   "hi" == "hi"
   ```
   
-- Checks if the literal and the value of a variable (**firstNumber**) is equal:
+- Checks if the literal and the value of a variable (`firstNumber`) is equal:
 
   ```ballerina
    firstNumber == 100
   ```
   
-- Checks if the values of two variables (**firstNumber** and **secondNumber**) are equal. The following returns true when the value of the two variables is equal:
+- Checks if the values of two variables (`firstNumber` and `secondNumber`) are equal. The following returns true when the value of the two variables is equal:
 
   ```ballerina
   firstNumber == secondNumber
   ```
   
-- Checks if the values of two variables (**firstNumber** and **secondNumber**) are **not** equal. The following returns true when the value of the two variables are different:
+- Checks if the values of two variables (`firstNumber` and `secondNumber`) are **not** equal. The following returns true when the value of the two variables are different:
 
   ```ballerina
   firstNumber != secondNumber
@@ -291,11 +291,11 @@ In the [Ballerina language](https://ballerina.io/), basic types are **string**, 
 
 ### Checking the type of variable
 
-The **is** operator asserts the type of a variable.
+The `is` operator asserts the type of a variable.
 
 #### Example
 
-- Checks if a variable (**payload**) is of JSON type:
+- Checks if a variable (`payload`) is of JSON type:
 
   ```ballerina
   payload is json
@@ -305,20 +305,20 @@ The **is** operator asserts the type of a variable.
 
 The following operators are available in the expression editor for numeric value comparisons:
 
-- **<** (less than)
-- **>** (greater than)
-- **<=** (less than or equal to)
-- **>=** (greater than or equal to)
+- `<` (less than)
+- `>` (greater than)
+- `<=` (less than or equal to)
+- `>=` (greater than or equal to)
 
 #### Examples
 
-- Checks if the value of a variable (**firstNumber**) is greater than a literal:
+- Checks if the value of a variable (`firstNumber`) is greater than a literal:
 
   ```ballerina
   firstNumber > 10
   ```
   
-- Checks if the value of a variable (**firstNumber**) is less than or equal to the value of another variable (**secondNumber**):
+- Checks if the value of a variable (`firstNumber`) is less than or equal to the value of another variable (`secondNumber`):
 
   ```ballerina
   firstNumber <= secondNumber
@@ -326,21 +326,21 @@ The following operators are available in the expression editor for numeric value
 
 ## HTTP request related operations
 
-All HTTP-related service applications created in Choreo have a variable called **request** (of type **http:Request**), which you can use to query information related to an HTTP request. Following is a list of such common use cases:
+All HTTP-related service applications created in Choreo have a variable called `request` (of type `http:Request`), which you can use to query information related to an HTTP request. Following is a list of such common use cases:
 
 ### Reading a header value in the request
-A typical HTTP request contains many headers.  These include standard and custom headers. You can use the request variable's **getHeader** function to read a specific header value in any expression-enabled input field.
+A typical HTTP request contains many headers.  These include standard and custom headers. You can use the request variable's `getHeader` function to read a specific header value in any expression-enabled input field.
 
 #### Examples
 
-- Reads the value of an HTTP header by passing the header name (**Access-Control-Allow-Origin**):
+- Reads the value of an HTTP header on passing the header name (`Access-Control-Allow-Origin`):
 
   ```ballerina
   check request.getHeader("Access-Control-Allow-Origin")
   
   ```
   
-- Reads the value of an HTTP header by passing a variable that contains the header name (**headerName**). Note the omission of the double quotes:
+- Reads the value of an HTTP header on passing a variable that contains the header name (`headerName`). Note the omission of the double quotes:
 
   ```ballerina
   check request.getHeader(headerName)
@@ -348,25 +348,25 @@ A typical HTTP request contains many headers.  These include standard and custom
 
 ### Checking whether a header is present in the request
 
-Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the **hasHeader**  function in the request object for this purpose.
+Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader`  function in the request object for this purpose.
 
 #### Examples
 
-- Checks if a particular HTTP header (**content-length**) exists, given the header name:
+- Checks if a particular HTTP header (`content-length`) exists, given the header name:
 
   ```ballerina
   request.hasHeader("content-length")
   ```
   
-- Checks if a particular HTTP header (**content-length**) exists by passing a variable (**contentLength**) containing the header name. Note the omission of the double quotes:
+- Checks if a particular HTTP header (`content-length`) exists by passing a variable (`contentLength`) containing the header name. Note the omission of the double quotes:
 
   ```ballerina
   request.hasHeader(contentLength)
   ```
 
-### Reading the JSON Payload of the request
+### Reading the JSON payload of the request
 
-JSON is a common content type used for HTTP communication. You can use the request variable’s **getJsonPayload** function to read the JSON payload sent with the HTTP request. Note that the **getJsonPayload** function’s return type is **json|ClientError**.
+JSON is a common content type used for HTTP communication. You can use the request variable’s `getJsonPayload` function to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
 
 #### Example
 
@@ -378,7 +378,7 @@ JSON is a common content type used for HTTP communication. You can use the reque
 
 ### Reading the text payload of the request
 
-Sometimes content is sent as a string (plain text) with the HTTP request. You can use the request variable’s **getTextPayload** function to read the text payload sent with the HTTP request. Note that the **getTextPayload** function’s return type is **string|ClientError**.
+Sometimes content is sent as a string (plain text) with the HTTP request. You can use the request variable’s `getTextPayload` function to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
 
 #### Example
 
@@ -390,11 +390,11 @@ Sometimes content is sent as a string (plain text) with the HTTP request. You ca
 
 ### Reading the query parameter value
 
-Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the request variable's **getQueryParamValue** function to read the passed query parameter.
+Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the request variable's `getQueryParamValue` function to read query parameter values that are passed.
 
 #### Examples
 
-- Reads the query parameter value given the query parameter name (**category**):
+- Reads the query parameter value given the query parameter name (`category`):
 
   ```ballerina
   request.getQueryParamValue("category")
@@ -408,7 +408,7 @@ Query parameters are used in an HTTP request to send additional inputs to consid
 
 ### Reading the cookies available in the request
 
-HTTP cookies keep stateful information about a client. You can use the request variable's **getCookies** function to read cookies present in the request as an array.
+HTTP cookies keep stateful information about a client. You can use the request variable's `getCookies` function to read cookies present in the request as an array.
 
 #### Example
 
