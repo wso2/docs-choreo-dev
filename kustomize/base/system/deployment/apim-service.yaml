@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: apim-service
+  name: apim-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: apim-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        choreo.component: apim-service
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-service:latest
+          securityContext:
+            runAsUser: 1100
+            runAsGroup: 2000
+          name: apim-service
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /health
+          ports:
+            - containerPort: 9090
+              name: http
+              protocol: TCP
+            - containerPort: 9091
+              name: health
+              protocol: TCP
+          env:
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: ADMIN_PASSWORD
+                  name: secret-apim-service
+            - name: APIM_REST_API_CONSUMER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: APIM_REST_API_CONSUMER_SECRET
+                  name: secret-apim-service
+            - name: IDP_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: IDP_ADMIN_PASSWORD
+                  name: secret-apim-service
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          volumeMounts:
+            - name: ballerina-conf
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-apim-service
+              mountPath: /mnt/csi/secret-apim-service
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: ballerina-conf
+          configMap:
+            name: cm-choreo-apim-service
+        - name: secret-apim-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default

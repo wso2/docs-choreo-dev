@@ -1,0 +1,49 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: observability-data-generator
+  labels:
+    choreo.component: observability-data-generator
+spec:
+  schedule: 30 20 1,15 * *
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: observability-data-generator
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: observability-data-generator
+              image: choreoctrlplane.azurecr.io/choreoipaas/observability-data-generator:latest
+              securityContext:
+                runAsUser: 1000
+                runAsGroup: 3000
+              env:
+                - name: APP_DEPLOYER_ADDRESS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: APP_DEPLOYER_ADDRESS
+                      name: cm-observability-data-generator
+                - name: APP_SERVICE_ADDRESS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: APP_SERVICE_ADDRESS
+                      name: cm-observability-data-generator
+                - name: DEMO_USER_IDP_ID
+                  valueFrom:
+                    configMapKeyRef:
+                      key: DEMO_USER_IDP_ID
+                      name: cm-observability-data-generator
+              resources:
+                limits:
+                  cpu: 300m
+                  memory: 1024Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+          serviceAccountName: sa-choreo-default
