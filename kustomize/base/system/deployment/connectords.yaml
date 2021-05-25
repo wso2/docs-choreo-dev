@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: connectords
+  name: connectords
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: connectords
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: connectords
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - env:
+        - name: IDP_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_ISSUER
+              name: cm-idp-replica
+        - name: IDP_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_CLIENT_ID
+              name: cm-idp-replica              
+        - name: IDP_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_HOST
+              name: cm-idp-replica   
+        - name: IDP_JWKS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: IDP_JWKS_ENDPOINT
+              name: cm-idp-replica
+        - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_APP_SERVICE_GRPC_ADDRESS
+              name: cm-connectords
+        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-connectords:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 2000
+          capabilities:
+            drop:
+              - NET_RAW
+        name: connectords
+        readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+             port: health
+             path: /health
+        livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+             port: health
+             path: /health
+        ports:
+        - containerPort: 9090
+          name: cds-sport
+          protocol: TCP
+        - containerPort: 9091
+          name: health
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 768Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /home/ballerina/Config.toml
+          name: bal-config-volume
+          subPath: Config.toml
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      volumes:
+      - configMap:
+          name: cm-connectords
+        name: bal-config-volume
