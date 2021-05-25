@@ -16,5 +16,7 @@
         "devportal/*.ts"
     ],
     "videoUploadOnPasses": false,
-    "videoCompression": false
+    "videoCompression": false,
+    "viewportWidth": 1280,
+    "viewportHeight": 1000
 }
