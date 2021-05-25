@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { SETTINGS_TEXT, NO_OF_RETRIES } from "../../support/common/constants";
+import { SETTINGS_TEXT, NO_OF_RETRIES } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 

@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { generateAppName } from '../../support/common/utils';
-import { SERVICES_TEXT, NO_OF_RETRIES } from '../../support/common/constants';
+import { generateAppName } from '../../../support/common/utils';
+import { SERVICES_TEXT, NO_OF_RETRIES } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
