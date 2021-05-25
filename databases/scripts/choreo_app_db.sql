@@ -85,6 +85,90 @@ CREATE TABLE beta_invitation
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+CREATE TABLE `group`
+(
+    id                  int      NOT NULL AUTO_INCREMENT,
+    display_name        varchar(255) NOT NULL,
+    handle              varchar(255) NOT NULL,
+    description         varchar(255),
+    default_group       boolean NOT NULL DEFAULT FALSE,
+    organization_id     int NOT NULL,
+    created_by          int      NOT NULL,
+    updated_by          int,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT group_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id),
+    CONSTRAINT group_key_created_by_fk FOREIGN KEY (created_by) REFERENCES user(id),
+    CONSTRAINT group_key_updated_by_fk FOREIGN KEY (updated_by) REFERENCES user(id),
+    CONSTRAINT unique_group_handle   UNIQUE    KEY (organization_id,handle)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE group_member_mapping
+(
+    id                  int      NOT NULL AUTO_INCREMENT,
+    group_id            int NOT NULL,
+    user_id             int NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT group_member_mapping_group_id_fk FOREIGN KEY (group_id) REFERENCES `group`(id) ON DELETE CASCADE,
+    CONSTRAINT group_member_mapping_user_id_fk FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT unique_group_user_mapping   UNIQUE    KEY (group_id,user_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE group_tag
+(
+    id                  int      NOT NULL AUTO_INCREMENT,
+    group_id            int NOT NULL,
+    organization_id     int NOT NULL,
+    handle              varchar(255) NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_by          int      NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT tag_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id) ON DELETE CASCADE,
+    CONSTRAINT tag_group_id_fk FOREIGN KEY (group_id) REFERENCES `group`(id) ON DELETE CASCADE,
+    CONSTRAINT tag_group_key_created_by_fk FOREIGN KEY (created_by) REFERENCES user(id),
+    CONSTRAINT unique_group_tag_mapping   UNIQUE    KEY (group_id,handle)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE role
+(
+    id                  int      NOT NULL AUTO_INCREMENT,
+    display_name        varchar(255) NOT NULL,
+    handle              varchar(255) NOT NULL,
+    description         varchar(255),
+    organization_id     int NOT NULL,
+    created_by          int      NOT NULL,
+    updated_by          int,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT role_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id),
+    CONSTRAINT role_key_created_by_fk FOREIGN KEY (created_by) REFERENCES user(id),
+    CONSTRAINT role_key_updated_by_fk FOREIGN KEY (updated_by) REFERENCES user(id),
+    CONSTRAINT unique_role_handle   UNIQUE    KEY (organization_id,handle)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE group_role_mapping
+(
+    id                  int      NOT NULL AUTO_INCREMENT,
+    group_id            int NOT NULL,
+    role_id             int NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+    CONSTRAINT group_id_fk FOREIGN KEY (group_id) REFERENCES `group`(id) ON DELETE CASCADE,
+    CONSTRAINT unique_group_role_mapping   UNIQUE    KEY (group_id,role_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE environment
 (
     id                  INT AUTO_INCREMENT,
@@ -135,7 +219,7 @@ CREATE TABLE onprem_key
     display_name        varchar(255) NOT NULL,
     handle              varchar(255) NOT NULL,
     key_value               varchar(255) NOT NULL,
-    status ENUM('ACTIVE', 'REVOKED') DEFAULT 'ACTIVE',
+    status ENUM('ACTIVE', 'REVOKED', 'EXPIRED') DEFAULT 'ACTIVE',
     organization_id     int(11),
     created_by          int(11)      NOT NULL,
     updated_by          int(11),
@@ -149,18 +233,35 @@ CREATE TABLE onprem_key
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-CREATE TABLE member_invitation (
+CREATE TABLE onprem_key_subscription
+(
+    id                  int(11)      NOT NULL AUTO_INCREMENT,
+    status ENUM('ACTIVE', 'INACTIVE') DEFAULT 'ACTIVE',
+    plan  varchar(255)  NOT NULL,
+    organization_id     int(11),
+    start_date          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    end_date            timestamp    NOT NULL,
+    updated_date        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT subscription_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS member_invitation
+(
+    invitation_id     int NOT NULL AUTO_INCREMENT,
     uuid                VARCHAR(255) NOT NULL,
     organization_id     int          NOT NULL,
     user_email          VARCHAR(255) NOT NULL,
-    invited_roles       VARCHAR(255) DEFAULT "member",
+    invited_groups       VARCHAR(255) NOT NULL,
     invited_application VARCHAR(255) NOT NULL,
     created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_email, organization_id, invited_application),
+    PRIMARY KEY (invitation_id),
+    UNIQUE KEY email_org_unique (user_email, organization_id, invited_application),
     CONSTRAINT inv_organization_id_fk
         FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
-) ENGINE=InnoDB
+) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
 CREATE TABLE configuration
@@ -180,6 +281,8 @@ CREATE TABLE configuration
 
 ALTER TABLE `configuration`
     ADD COLUMN `configuration_group_id` INT NOT NULL DEFAULT 0 AFTER `organization_id`;
+ALTER TABLE `configuration`
+    ADD COLUMN `encrypt_key_version` VARCHAR(255) NULL DEFAULT '' AFTER `type`;
 
 CREATE TABLE configuration_group
 (
@@ -212,6 +315,10 @@ CREATE TABLE connection_info
   DEFAULT CHARSET = utf8;
 
 ALTER TABLE `connection_info` ADD COLUMN `user_account_identifier` VARCHAR(4000) NULL DEFAULT '' AFTER `display_name`;
+ALTER TABLE `connection_info` ADD COLUMN `owner_id` INT NOT NULL DEFAULT 0 AFTER `connector_name`;
+ALTER TABLE `connection_info` ADD COLUMN `is_shared` BOOLEAN NOT NULL DEFAULT FALSE AFTER `owner_id`;
+
+ALTER TABLE `connection_info` ADD COLUMN `encrypt_key_version` VARCHAR(255) NULL DEFAULT '' AFTER `user_account_identifier`;
 
 ALTER TABLE `app_environment_mapping` DROP FOREIGN KEY `fk_app_env_app_id`;
 ALTER TABLE `app_environment_mapping` DROP INDEX `fk_app_env_app_id`;

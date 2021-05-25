@@ -4,7 +4,7 @@
 {
     echo "Usage: $0 -d azure-deploy.properties [-n namespace]"; \
     echo "   -d=azuredfile  - azure deployment properties file"; \
-    echo "   -n=namespace  - namespace for which sealed secrets are generated"; \
+    echo "   -n=namespace  - namespace for which the deployment is done"; \
     echo; \
     echo "   e.g. $0 -d=azure-deploy.properties -n=dev-choreo-system "; \
     exit 1;
@@ -177,6 +177,9 @@ kubectl create secret generic csi-secret-store-azure --from-literal clientid="${
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
+
+echo "--- Add OMS Agent Config"
+kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
