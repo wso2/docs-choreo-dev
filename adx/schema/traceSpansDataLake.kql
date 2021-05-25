@@ -31,7 +31,7 @@ dataformat=csv
 )
 with (includeHeaders = "All")
 
-.create-or-alter continuous-export <continuous-export-name>
+.create-or-alter continuous-export TraceSpansDataLakeCE
 over (traceSpans)
 to table TraceSpansDataLake
 with
