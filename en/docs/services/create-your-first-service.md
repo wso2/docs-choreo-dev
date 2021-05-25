@@ -101,7 +101,7 @@ To create the service, follow this procedure:
 
 Now you have completed designing your service. It looks as follows.
 
-- In the low-code diagram
+- In the low-code view
 
    ![No Code View](../assets/img/services/choreo-service-low-code-view.png)
 
