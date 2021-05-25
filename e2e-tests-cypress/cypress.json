@@ -5,10 +5,13 @@
     "chromeWebSecurity": false,
     "integrationFolder": "cypress/e2e",
     "testFiles": [
-        "console/clean/clean-previous-run.ts",
-        "console/apis/*.ts",
-        "console/integrations/*.ts",
-        "console/services/*.ts",
+        "console/0-clean/0.1-clean-previous-run.ts",
+        "console/1-integrations/*.ts",
+        "console/2-services/*.ts",
+        "console/3-apis/*.ts",
+        "console/4-observability/*.ts",
+        "console/5-settings/*.ts",
+        "console/6-other/*.ts",
         "console/*.ts",
         "devportal/*.ts"
     ],

@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { generateKeyName } from '../../support/common/utils';
-import { SETTINGS_TEXT } from "../../support/common/constants";
+import { generateKeyName } from '../../../support/common/utils';
+import { SETTINGS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 

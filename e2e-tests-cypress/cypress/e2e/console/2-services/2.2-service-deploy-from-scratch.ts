@@ -101,11 +101,10 @@ describe('Service deployment and delete deployed service', () => {
         cy.get('[data-testid="api-key"]').type('dummyapikey');
         cy.get('[data-testid="api-key-error"]').should('exist');
         cy.log('Test phase successful!');
-    })
+    });
 
     it('deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
-
         cy.goBacktoAppsList();
         cy.deleteAppWithoutUndeploy(appName, true);
     })
