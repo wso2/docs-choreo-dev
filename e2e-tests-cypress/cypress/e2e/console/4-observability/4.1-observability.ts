@@ -176,9 +176,11 @@ describe('Observability tests', () => {
         const binTwoMandatoryLog = 'error while connecting to the hr-service';
         const binThreeMandatoryLog = 'employee information not found in the hr-service';
 
+        cy.log('Waiting for the diagram to be rendered');
         cy.get('.diagram-canvas').should('exist');
         cy.get('[data-testid="diagnostics-view-tab"]').should('be.visible');
 
+        cy.log('Accessing the diagnostics view');
         cy.get('[data-testid="diagnostics-view-tab"]').click().then(() => {
             cy.get('[data-testid="time-interval-loader"]').should('not.exist');
             cy.get('[data-testid="logs-loader"]').should('not.exist');
@@ -188,17 +190,20 @@ describe('Observability tests', () => {
             cy.get('[data-testid="cpu-graph-loader"]').should('not.exist');
             cy.get('[data-testid="memory-graph-loader"]').should('not.exist');
 
-            for(var i = 0; i < numberOfBins; i++){
+            cy.log('Asserting the Date/Time and Logs columns');
+            for (let i = 0; i < numberOfBins; i++) {
                 cy.contains('[data-testid="time-interval-' + i + '"]', timestampRegex).should('exist');
                 cy.get('[data-testid="logs-partition-' + i + '"]').should('exist');
             }
             cy.get('[data-testid="time-interval-5"]').should('not.exist');
             cy.get('[data-testid="logs-partition-5"]').should('not.exist');
 
+            cy.log('Asserting mandatory logs in expected partitions');
             cy.contains('[data-testid="logs-partition-0"]', binOneMandatoryLog).should('exist');
             cy.contains('[data-testid="logs-partition-1"]', binTwoMandatoryLog).should('exist');
             cy.contains('[data-testid="logs-partition-2"]', binThreeMandatoryLog).should('exist');
 
+            cy.log('Verifying whether all the graphs are rendered');
             cy.get('[data-testid="error-graph"]').should('exist');
             cy.get('[data-testid="throughput-graph"]').should('exist');
             cy.get('[data-testid="latency-graph"]').should('exist');
@@ -207,12 +212,39 @@ describe('Observability tests', () => {
 
             cy.get('[data-testid="diagnostics-view-slider"]').should('be.visible');
 
-            cy.get('[data-testid="diagnostics-view-slider"]').then(($el) => {
-                cy.wrap($el)
-                    .trigger('mousedown', { button: 0 })
-                    .trigger('mousemove', { clientX: 0, clientY: 460 })
-                    .trigger('mouseup', { force: true })
-            })
+            cy.log('Finding the position to move the slider for accessing the flame graph');
+            cy.get('[data-testid="bin-divider-1"]').invoke('position').then((d1) => {
+                cy.get('[data-testid="bin-divider-2"]').invoke('position').then((d2) => {
+
+                    let middleOfdiv1Ndiv2 = d1.top + Math.round((d2.top - d1.top)/2);
+
+                    cy.log('Dragging the diagnostics view slider');
+                    cy.get('[data-testid="diagnostics-view-slider"]').then(($el) => {
+                        cy.wrap($el)
+                            .trigger('mousedown', { button: 0 })
+                            .trigger('mousemove', { clientX: 0, clientY: middleOfdiv1Ndiv2 })
+                            .trigger('mouseup', { force: true })
+                    })
+
+                    cy.log('Asserting the flame graph');
+                    cy.get('[data-testid="flame-graph-btn"]').should('exist');
+                    cy.get('[data-testid="flame-graph-btn"]').click().then(() => {
+                        cy.get('[data-testid="flame-graph-loader"]').should('not.exist');
+                        cy.get('[data-testid="flame-graph-message-container"]').should('not.exist');
+
+                        cy.get('[data-testid="flame-graph"]').should('exist');
+                        cy.get('[data-testid="latencies-for-flame-graph"]').should('exist');
+                        cy.get('[data-testid="flame-graph-slider"]').should('be.visible');
+
+                        cy.log('Close the flame graph and navigate to the diagnostics view again');
+                        cy.get('[data-testid="flame-graph-close-btn"]').should('be.visible');
+                        cy.get('[data-testid="flame-graph-close-btn"]').click().then(() => {
+                            cy.get('[data-testid="cpu-graph-loader"]').should('not.exist');
+                            cy.get('[data-testid="cpu-graph"]').should('exist');
+                        });
+                    });
+                });
+            });
         });
     })
 })
