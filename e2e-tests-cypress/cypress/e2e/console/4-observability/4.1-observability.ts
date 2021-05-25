@@ -12,7 +12,7 @@
  */
 
 import { generateAppName } from '../../../support/common/utils';
-import { SERVICES_TEXT, NO_OF_RETRIES } from '../../../support/common/constants';
+import { SERVICES_TEXT, NO_OF_RETRIES, STANDARD_TIME_OUT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -131,7 +131,7 @@ describe('Observability tests', () => {
         cy.get('[data-testid="log-panel"]').should('exist');
 
         cy.log('Waiting on graphs to be expanded');
-        cy.wait(5000);
+        cy.wait(STANDARD_TIME_OUT);
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
             cy.log('Getting coordinates to click on the latency graph');
             d = $path.attr('d');
