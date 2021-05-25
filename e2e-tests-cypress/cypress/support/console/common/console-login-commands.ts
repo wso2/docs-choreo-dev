@@ -131,6 +131,7 @@ Cypress.Commands.add('userLogout', () => {
 })
 
 Cypress.Commands.add('consoleUserLogin', () => {
+    cy.log('Initiating login');
     cy.visit(Cypress.env('baseUrl'));
     const testURL = Cypress.env('testURL');
     const idpURL = Cypress.env('idpURL');
@@ -207,6 +208,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
             })
 
             cy.visit(Cypress.env('baseUrl'));
+            cy.log('Successfully logged in');
         })
     } catch (err) {
         throw new Error("Retrieving Access token failed : " + err);

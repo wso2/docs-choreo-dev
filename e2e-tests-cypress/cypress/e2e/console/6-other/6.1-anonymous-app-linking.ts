@@ -18,7 +18,6 @@ import {generateAppName} from "../../../support/common/utils";
 describe('anonymous-app-linking', () => {
 
     before(() => {
-        cy.log("Login into Choreo using Google");
         cy.consoleUserLogin();
     });
 

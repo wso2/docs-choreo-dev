@@ -19,7 +19,6 @@ describe('Choreo APIM publisher scenarios', () => {
     const API_NAME = generateApiName('oas');
 
     before(() => {
-        cy.log("Login to Choreo using github");
         cy.consoleUserLogin();
     });
 

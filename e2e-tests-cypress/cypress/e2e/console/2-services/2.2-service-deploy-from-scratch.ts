@@ -22,31 +22,19 @@ describe('Service deployment and delete deployed service', () => {
     const urlName = "url";
 
     before(() => {
-        cy.log("Login into Choreo");
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         });
 
         appName = generateAppName("app");
-        cy.log('app name: ', appName);
+        cy.log('app name: '+ appName);
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello");
     });
 
-    beforeEach(() => {
-        cy.preserveCookiesForTest(savedCookies);
-        cy.restoreLocalStorage();
-    });
-
-    afterEach(() => {
-        cy.saveLocalStorage();
-    });
-
     after(() => {
-        cy.undeployApp("service", appName, true);
-        cy.deleteApp("service", appName, true);
         cy.userLogout();
     })
 
@@ -55,13 +43,13 @@ describe('Service deployment and delete deployed service', () => {
 
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
-        
+
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click();
         cy.get('[data-testid="api-options"]').click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
-        cy.get('body').type('{enter}', {force: true});
+        cy.get('body').type('{enter}', { force: true });
         cy.get('[data-testid="http-save-next"]').click();
         cy.log("HTTP connector added successfully!");
 
@@ -78,9 +66,9 @@ describe('Service deployment and delete deployed service', () => {
         cy.testRunApp();
 
         cy.get('[data-testid="test-url"]').should('exist');
-        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: 600000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 600000 }).should('exist');
         cy.log('Retrieving the test URL successful');
-        
+
         cy.get('[data-testid="test-url"]').invoke('text').then((testUrl) => {
             cy.callExternalEndpoint((testUrl + "/hello"), 3, "hello world");
             cy.log('Successfully invoked test endpoint');
@@ -103,9 +91,14 @@ describe('Service deployment and delete deployed service', () => {
         cy.log('Test phase successful!');
     });
 
-    it('deploy hello world service', () => {
+    it('Deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
+    });
+
+    it('Undeploy from UI and delete the service', () => {
         cy.goBacktoAppsList();
         cy.deleteAppWithoutUndeploy(appName, true);
-    })
+        cy.undeployApp("service", appName, true);
+        cy.deleteApp("service", appName, true);
+    });
 })

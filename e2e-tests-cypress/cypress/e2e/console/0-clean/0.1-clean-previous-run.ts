@@ -19,7 +19,6 @@ import { getApiName } from "../../../support/devportal/utils";
 describe('Cleaning up', () => {
 
     before(() => {
-        cy.log("Login into Choreo");
         cy.consoleUserLogin();
     });
 

@@ -24,7 +24,6 @@ describe('Observability tests', () => {
     let version: string
 
     before(() => {
-        cy.log("Login into Choreo")
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies

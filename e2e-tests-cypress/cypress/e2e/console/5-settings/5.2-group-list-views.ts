@@ -24,7 +24,6 @@ describe("Group List View", () => {
     const groupTag = "testGroupTag";
 
     before(() => {
-        cy.log("Login into Choreo");
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
