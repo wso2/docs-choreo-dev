@@ -13,7 +13,7 @@
 
 /// <reference types="cypress" />
 
-import {generateAppName} from "../../support/common/utils";
+import {generateAppName} from "../../../support/common/utils";
 
 describe('anonymous-app-linking', () => {
 

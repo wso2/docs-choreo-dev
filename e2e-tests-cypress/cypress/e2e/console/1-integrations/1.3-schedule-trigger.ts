@@ -69,7 +69,7 @@ describe('Schedule trigger test run and deployment', () => {
 
     it('run schedule trigger integration', { retries: NO_OF_RETRIES }, () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
-        cy.get('[data-testid="editor-run-btn"]').click();
+        cy.get('[data-testid="editor-run-btn"]').click({force: true});
         cy.log('Started test run');
 
         cy.contains('[data-testid="log-panel"]', 'Hello world', {timeout: 600000}).should('exist');
