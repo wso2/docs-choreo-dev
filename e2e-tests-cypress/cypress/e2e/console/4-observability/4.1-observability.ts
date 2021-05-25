@@ -154,7 +154,7 @@ describe('Observability tests', () => {
             cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
 
             cy.log('Asserting the request list');
-            cy.get('[data-testid="request-table"]').should('be.visible');
+            cy.get('[data-testid="request-table"]').should('exist');
             cy.get('[data-testid="request-information"]').its('length').should('be.gte', 1);
 
             cy.get('[data-testid="request-information"]').eq(0).find('div>div').then(($elements) => {
