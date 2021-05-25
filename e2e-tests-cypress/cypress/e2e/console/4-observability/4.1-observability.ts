@@ -168,4 +168,51 @@ describe('Observability tests', () => {
             // });
          });
     })
+    
+    it('test diagnostics view', { retries: NO_OF_RETRIES }, () => {
+        const timestampRegex = /(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}\s([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/;
+        const numberOfBins = 5;
+        const binOneMandatoryLog = 'ballerina: started publishing metrics to Choreo';
+        const binTwoMandatoryLog = 'error while connecting to the hr-service';
+        const binThreeMandatoryLog = 'employee information not found in the hr-service';
+
+        cy.get('.diagram-canvas').should('exist');
+        cy.get('[data-testid="diagnostics-view-tab"]').should('be.visible');
+
+        cy.get('[data-testid="diagnostics-view-tab"]').click().then(() => {
+            cy.get('[data-testid="time-interval-loader"]').should('not.exist');
+            cy.get('[data-testid="logs-loader"]').should('not.exist');
+            cy.get('[data-testid="error-graph-loader"]').should('not.exist');
+            cy.get('[data-testid="throughput-graph-loader"]').should('not.exist');
+            cy.get('[data-testid="latency-graph-loader"]').should('not.exist');
+            cy.get('[data-testid="cpu-graph-loader"]').should('not.exist');
+            cy.get('[data-testid="memory-graph-loader"]').should('not.exist');
+
+            for(var i = 0; i < numberOfBins; i++){
+                cy.contains('[data-testid="time-interval-' + i + '"]', timestampRegex).should('exist');
+                cy.get('[data-testid="logs-partition-' + i + '"]').should('exist');
+            }
+            cy.get('[data-testid="time-interval-5"]').should('not.exist');
+            cy.get('[data-testid="logs-partition-5"]').should('not.exist');
+
+            cy.contains('[data-testid="logs-partition-0"]', binOneMandatoryLog).should('exist');
+            cy.contains('[data-testid="logs-partition-1"]', binTwoMandatoryLog).should('exist');
+            cy.contains('[data-testid="logs-partition-2"]', binThreeMandatoryLog).should('exist');
+
+            cy.get('[data-testid="error-graph"]').should('exist');
+            cy.get('[data-testid="throughput-graph"]').should('exist');
+            cy.get('[data-testid="latency-graph"]').should('exist');
+            cy.get('[data-testid="cpu-graph"]').should('exist');
+            cy.get('[data-testid="memory-graph"]').should('exist');
+
+            cy.get('[data-testid="diagnostics-view-slider"]').should('be.visible');
+
+            cy.get('[data-testid="diagnostics-view-slider"]').then(($el) => {
+                cy.wrap($el)
+                    .trigger('mousedown', { button: 0 })
+                    .trigger('mousemove', { clientX: 0, clientY: 460 })
+                    .trigger('mouseup', { force: true })
+            })
+        });
+    })
 })
