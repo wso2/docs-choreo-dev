@@ -19,7 +19,6 @@ import { SETTINGS_TEXT } from "../../../support/common/constants";
 describe('Generate on-prem keys', () => {
 
     before(() => {
-        cy.log("Login into Choreo using Google");
         cy.consoleUserLogin();
         cy.navigateFromHomePage(SETTINGS_TEXT);
     })
