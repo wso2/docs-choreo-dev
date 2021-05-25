@@ -130,6 +130,8 @@ describe('Observability tests', () => {
         cy.log('Asserting the default log panel');
         cy.get('[data-testid="log-panel"]').should('exist');
 
+        cy.log('Waiting on graphs to be expanded');
+        cy.wait(5000);
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
             cy.log('Getting coordinates to click on the latency graph');
             d = $path.attr('d');
