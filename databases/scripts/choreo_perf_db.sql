@@ -23,3 +23,21 @@ CREATE TABLE ml_models (
   `min_process_time`  float        NOT NULL,
   PRIMARY KEY (`api_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER table ml_models add column api_id int first;
+ALTER table ml_models drop primary key;
+ALTER table ml_models modify column api_id int not null primary key auto_increment;
+
+ALTER table ml_models add constraint api_name_unique unique(api_name);
+
+CREATE TABLE IF NOT EXISTS model_store (
+`api_id` int NOT NULL,
+`model_type` smallint NOT NULL DEFAULT 1,
+`model` longblob NOT NULL,
+`model_score` float NOT NULL,
+PRIMARY KEY (`api_id`, `model_type`), FOREIGN KEY (`api_id`) REFERENCES ml_models(api_id) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+ALTER table ml_models drop column model_score;
+
+ALTER table ml_models drop column model;

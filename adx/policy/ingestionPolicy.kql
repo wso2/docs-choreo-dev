@@ -9,4 +9,4 @@
 //
 // --------------------------------------------------------------------------------------
 
-.alter database ['DB_NAME'] policy ingestionbatching @'{"MaximumBatchingTimeSpan":"00:00:10", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}';
+.alter database ['observability'] policy ingestionbatching @'{"MaximumBatchingTimeSpan":"00:00:10", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}';
