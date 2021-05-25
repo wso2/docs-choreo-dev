@@ -80,6 +80,7 @@ Variables keep values in memory for later access. In an expression syntax-suppor
 #### Example
 
 - This converts the value of an integer variable (`total`) to a string:
+
   ```ballerina
   total.toString()
   ```
