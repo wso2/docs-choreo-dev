@@ -17,7 +17,6 @@ describe('API creation from choreo service', () => {
     let serviceName: string;
 
     before(() => {
-        cy.log("Login to Choreo using github");
         cy.consoleUserLogin();
     });
 

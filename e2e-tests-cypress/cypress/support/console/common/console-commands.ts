@@ -292,7 +292,7 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option:string)
 Cypress.Commands.add('selectSpecificOption', (option: string) => {
     cy.log('Selecting ' + option + ' option from options panel');
     cy.get('[data-testid="' + option + '"]').click({force: true});
-    cy.log('Selected option: ', option);
+    cy.log('Selected option: '+ option);
 }),
 
 Cypress.Commands.add('typeOnNthExpressionEditor', 

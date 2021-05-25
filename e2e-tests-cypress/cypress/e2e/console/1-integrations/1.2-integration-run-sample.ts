@@ -22,7 +22,6 @@ describe('Integration sample flow', () => {
     let savedCookies;
 
     before(() => {
-        cy.log("Login into Choreo");
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
