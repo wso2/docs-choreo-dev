@@ -68,9 +68,9 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
-#            - name: secret-mgw-analytics
-#              mountPath: /mnt/csi/secret-mgw-analytics
-#              readOnly: true 
+            - name: secret-mgw-analytics
+              mountPath: /mnt/csi/secret-mgw-analytics
+              readOnly: true 
           image: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           env:
@@ -101,11 +101,11 @@ spec:
                 secretKeyRef:
                   key: SUPER_ADMIN_PSWD
                   name: secret-apim
-#            - name: analytics_authToken
-#              valueFrom:
-#                secretKeyRef:
-#                  key: ANALYTICS_AUTH_TOKEN
-#                  name: secret-mgw-analytics
+            - name: analytics_authToken
+              valueFrom:
+                secretKeyRef:
+                  key: ANALYTICS_AUTH_TOKEN
+                  name: secret-mgw-analytics
           resources:
             requests:
               memory: "1000Mi"
@@ -169,6 +169,8 @@ spec:
               value: "127.0.0.1"
             - name: ENFORCER_PORT
               value: "8081"
+            - name: ENFORCER_ANALYTICS_HOST
+              value: "127.0.0.1"
             - name: ENFORCER_ANALYTICS_RECEIVER_PORT
               value: "18090"
             - name: ENFORCER_CA_CERT_PATH
@@ -262,12 +264,12 @@ spec:
               secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
-#        - name: secret-mgw-analytics
-#          csi:
-#            driver: secrets-store.csi.k8s.io
-#            readOnly: true
-#            volumeAttributes:
-#              secretProviderClass: secret-mgw-analytics
-#            nodePublishSecretRef:
-#              name: csi-secret-store-azure
+        - name: secret-mgw-analytics
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-analytics
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
