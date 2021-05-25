@@ -11,3 +11,7 @@ resources:
   - sys-obsapi.yaml
   - negotiator.yaml
   - linker.yaml
+  - loggingapi.yaml
+  - connectords.yaml
+  - apim-service.yaml
+  - language-server.yaml

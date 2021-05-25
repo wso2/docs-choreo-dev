@@ -1,2 +1,3 @@
 resources:
   - ast-archiver.yaml
+  - observability-data-generator.yaml

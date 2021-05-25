@@ -10,6 +10,10 @@ resources:
   - sys-obsapi.yaml
   - telemetry.yaml
   - negotiator.yaml
+  - connectords.yaml
+  - loggingapi.yaml
+  - apim-service.yaml
+  - language-server.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
