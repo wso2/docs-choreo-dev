@@ -330,7 +330,7 @@ The following operators are available in the expression editor for numeric value
 All HTTP-related service applications created in Choreo have a variable called `request` (of type `http:Request`), which you can use to query information related to an HTTP request. Following is a list of such common use cases:
 
 ### Reading a header value in the request
-A typical HTTP request contains many headers.  These include standard and custom headers. You can use the request variable's `getHeader` function to read a specific header value in any expression-enabled input field.
+A typical HTTP request contains many headers.  These include standard and custom headers. You can use the `getHeader` function of the `request` variable to read a specific header value in any expression-enabled input field.
 
 #### Examples
 
@@ -349,7 +349,7 @@ A typical HTTP request contains many headers.  These include standard and custom
 
 ### Checking whether a header is present in the request
 
-Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader`  function in the request object for this purpose.
+Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader`  function of the `request` object for this purpose.
 
 #### Examples
 
@@ -367,9 +367,9 @@ Applications sometimes need to check the availability of a header before proceed
 
 ### Reading the JSON payload of the request
 
-JSON is a common content type used for HTTP communication. You can use the request variable’s `getJsonPayload` function to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
+JSON is a common content type used for HTTP communication. You can use the `getJsonPayload` function of the `request` variable to read the JSON payload sent with the HTTP request. Note that the return type of the `getJsonPayload` function is `json|ClientError`.
 
-#### Example
+#### Example 
 
 - Reads the JSON payload of the HTTP request:
 
@@ -379,7 +379,7 @@ JSON is a common content type used for HTTP communication. You can use the reque
 
 ### Reading the text payload of the request
 
-Sometimes content is sent as a string (plain text) with the HTTP request. You can use the request variable’s `getTextPayload` function to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
+Sometimes content is sent as a string (plain text) with the HTTP request. You can use the `getTextPayload` function of the `request` variable to read the text payload sent with the HTTP request. Note that the return type of the `getTextPayload` function is `string|ClientError`.
 
 #### Example
 
@@ -391,7 +391,7 @@ Sometimes content is sent as a string (plain text) with the HTTP request. You ca
 
 ### Reading the query parameter value
 
-Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the request variable's `getQueryParamValue` function to read query parameter values that are passed.
+Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the `getQueryParamValue` function of the `request` variable to read query parameter values that are passed.
 
 #### Examples
 
@@ -409,7 +409,7 @@ Query parameters are used in an HTTP request to send additional inputs to consid
 
 ### Reading the cookies available in the request
 
-HTTP cookies keep stateful information about a client. You can use the request variable's `getCookies` function to read cookies present in the request as an array.
+HTTP cookies keep stateful information about a client. You can use the `getCookies` function of the `request` variable to read cookies present in the request as an array.
 
 #### Example
 
