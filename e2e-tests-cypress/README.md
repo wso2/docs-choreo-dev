@@ -374,7 +374,7 @@ Scenarios covered by the End to End tests.
 				6) Click Test & run button <br/>
 				7) Assert the test URL <br/>
 			</td>
-			<td>deploy-run-sample.ts</td>
+			<td>integration-run-sample.ts</td>
 		</tr>
 		<tr>
 			<td>26. Groups list view</td>
