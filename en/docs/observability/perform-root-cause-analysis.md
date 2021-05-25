@@ -68,19 +68,8 @@ Follow the steps below.
 3. Click on one request shown on the low-code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
 
 ### Step 2: Drill into the analytics
-The Diagnostics view provides the capability to view errors, throughputs, latencies, CPU usage, memory usage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
 
 ![Diagnostic View](../assets/img/observability/diagnostics-view.png)
-
-We refer to a horizontal section of the graph for a particular period as the **bin**. A bin consists of the following.
-
-- **Start time and end time** - Denoted by the dotted lines separating each bin.
-- **Logs** - Any logs that appeared during the bin's time range are listed on the logs column, along with the timestamp the logs started to appear and the log count for each log. The logs are listed according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
-- **Error** - Number of HTTP errors occurred at the selected time.
-- **TP** - Throughput of the requests at the selected time (req/s).  
-- **Latency** - Latency of the request at the selected time (ms).
-- **CPU** - CPU usage at the selected time (millicores).
-- **Memory** - Memory usage at the selected time (MiB).
 
 Follow the steps below to learn how to drill down and confirm the root cause for the anomalies we detected in the **Latency and Throughput** graphs.
 
