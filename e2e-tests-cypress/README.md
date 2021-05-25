@@ -1,7 +1,7 @@
 # e2e-tests-cypress
 
 ## Setup
-1. Proceed to `e2e-tests-cypress` and run 
+1. Proceed to `e2e-tests-cypress` and run
 `npm install`
 
 2. [Optional] Configure the following properties in `cypress.env.json`, only if you need to execute `cypress/e2e/console/login-logout-flow.ts`.
@@ -20,21 +20,33 @@ baseUrl
 
 ## Folder structure
 
-<p align="center">
-   <img src="images/folder-structure.png" height="400" alt="Folder structure">
-</p>
+The organization of the folder structure is based on the recommendations found at https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests
 
-1. **Fixtures** are external pieces of static data that can be used by your tests. We should not hard code data in the test case. It should drive from an external source like CSV, HTML, or JSON. They will be majorly used with the cy.fixture() command when you need to stub the network calls.
+```
+e2e-tests-cypress
+|	cypress.env.json [1]
+|	cypress.json [2]
+|
+└───cypress
+	└───e2e [3]
+	└───fixtures [4]
+	└───plugins [5]
+	└───support [6]
+```
 
-2. **Integration** folder provides a place that writes out test cases. It can be used to add new test cases. We can also create our own folder under this directory and add out test cases under that. In `choreo-control-plane`, this folder is renamed as **e2e**.
+1. **cypress.env.json** is used to define variables that are accessible via `Cypress.env` in e2e tests(https://docs.cypress.io/guides/guides/environment-variables#Option-2-cypress-env-json).
 
-3. **Plugins** contain the plugins or listeners. By default, Cypress will automatically include the plugins file “cypress/plugins/index.js” before every test it runs. You can programmatically alter the resolved configuration and environment variables using plugins, Eg. If we have to inject customized options to browsers like accepting the certificate, or do any activity on test case pass or fail or to handle any other events like handling screenshots. They enable you to extend or modify the existing behavior of Cypress.
+2. **cypress.json** is used to store Cypress runtime configurations(https://docs.cypress.io/guides/references/configuration#cypress-json) for tweaking the behavior of Cypress. The custom test folder structure is defined here enabling Cypress to execute the tests.
 
-4. **Support** writes customized commands or reusable methods that are available for usage in all of your spec/test files. This file runs before every single spec file. That’s why you don’t have to import this file in every single one of your spec files.  The “support” file is a great place to put reusable behavior such as Custom Commands or global overrides that you want to be applied and available to all of your spec files.
+3. **e2e** Contains the End to End test cases. New test cases must be added to this directory and can be further organized into subdirectories for better organization.
 
-5. **Node_Modules** is the folder where NPM installs all the project dependencies.
+4. **fixtures** are external static data that can be used by your tests. We should not hard code data in the test case. It should drive from an external source like CSV, HTML or JSON(https://docs.cypress.io/api/commands/fixture).
 
-6. **Cypress.json** is used to store different configurations. E.g., timeout, base URL, test files, or any other configuration that we want to override for tweaking the behavior of Cypress. We can also manage the customized folder structure because it is part of by default Cypress Configurations.
+5. **plugins** contain the plugins or listeners. By default, Cypress will automatically include the plugins file “cypress/plugins/index.js” before every test it runs. You can programmatically alter the resolved configuration and environment variables using plugins, Eg. If we have to inject customized options to browsers like accepting the certificate, or do any activity on test case pass or fail or to handle any other events like handling screenshots. They enable you to extend or modify the existing behavior of Cypress(https://docs.cypress.io/guides/tooling/plugins-guide).
+
+6. **support** writes customized commands or reusable methods that are available for usage in all of your spec/test files. This file runs before every single spec file. That’s why you don’t have to import this file in every single one of your spec files.  The “support” file is a great place to put reusable behavior such as Custom Commands or global overrides that you want to be applied and available to all of your spec files.
+
+
 
 ## Test execution
 
@@ -75,9 +87,309 @@ baseUrl
 
 3. After running the tests in headless mode, following artifacts can be found
 
-- videos - for each spec file, a seperate video will be created
+- videos - for each spec file, a separate video will be created
 	- Location: `cypress/videos`
 - screenshots - screenshot will be captured when a failure happens during a test run
 	- Location: `cypress/screenshots`
 - reports - reports will be generated only if the `npm run test` is used
 	- Location: `cypress/reports`
+
+
+## Scenarios
+Scenarios covered by the End to End tests.
+
+<table>
+	<thead>
+		<tr>
+			<th align="left">Scenario</th>
+			<th align="left">Work flow</th>
+			<th align="left">Cypress Spec Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1. Login & logout Choreo</td>
+			<td>
+				1) Login to Choreo with valid credential (gmail) <br/>
+				2) Logout <br/>
+			</td>
+			<td>login-logout-flow.ts</td>
+		</tr>
+		<tr>
+			<td>2. Service from scratch</td>
+			<td>
+				1) Create a service "hello world" <br/>
+				2) Run & Test
+				3) Deploy <br/>
+				4) Back to list <br/>
+				5) Delete (Cannot delete active app) <br/>
+				6) Go to app again (develop view) <br/>
+				7) Go to deploy view <br/>
+				8) Stop deploy (from UI) <br/>
+				9) Back to list <br/>
+				10) Delete (from UI) <br/>
+			</td>
+			<td>service-deploy-from-scratch.ts</td>
+		</tr>
+		<tr>
+			<td>3. Service from sample</td>
+			<td>
+				1) Create from sample (Echo service) <br/>
+				2) Run & Test <br/>
+				3) Back to list <br/>
+				4) Delete(from API call) <br/>
+			</td>
+			<td>service-deploy-sample.ts</td>
+		</tr>
+		<tr>
+			<td>4. Integration from scratch</td>
+			<td>
+				1) Create an integration "Send a message in gmail when an issue in github is commented" <br/>
+				2) Run & Test <br/>
+				3) Deploy <br/>
+				4) Back to list <br/>
+				5) Delete (Cannot delete active app) <br/>
+				6) Go to app again (develop view) <br/>
+				7) Go to deploy view <br/>
+				8) Stop deploy (from UI) <br/>
+				9) Back to list <br/>
+				10) Delete (from UI) <br/>
+			</td>
+			<td>integration-deploy-from-scratch.ts</td>
+		</tr>
+		<tr>
+			<td>5. Integration from sample</td>
+			<td>
+				1) Create from sample "G calender event to twilio SMS" <br/>
+				2) Run & Test <br/>
+				3) Back to list <br/>
+				4) Delete(from API call) <br/>
+			</td>
+			<td>integration-run-sample.ts</td>
+		</tr>
+		<tr>
+			<td>6. Trigger (Schedule)</td>
+			<td>
+				1) Create a schedule trigger that runs every minute <br/>
+				2) Add a hello world log <br/>
+				3) Check expression editor diagnostics <br/>
+				4) Run the app and check whether the log prints <br/>
+				5) Deploy the app and check whether the log prints once	<br/>
+				6) Stop deploy <br/>
+				7) Delete App <br/>
+			</td>
+			<td>schedule-trigger-flow.ts</td>
+		</tr>
+		<tr>
+			<td>7. Dev portal - API comments</td>
+			<td>
+				1) Visit API Overview <br/>
+				2) Add rating <br/>
+				3) Update rating <br/>
+			</td>
+			<td>api-comment-flow.ts</td>
+		</tr>
+		<tr>
+			<td>8. Dev Portal - API ratings</td>
+			<td>
+				1) Visit API Overview <br/>
+				2) Add comment <br/>
+				3) Delete comment <br/>
+			</td>
+			<td>api-rating-flow.ts</td>
+		</tr>
+		<tr>
+			<td>9. Devportal - Credentials and Try out</td>
+			<td>
+				1) Visit API Overview <br/>
+				2) Visit API Credentials <br/>
+				3) Select contract <br/>
+				4) Generate Credentials <br/>
+				5) Visit TryOut	<br/>
+				6) Click "Get Test Key" <br/>
+				7) Try out API <br/>
+				8) Visit Credentials <br/>
+				9) Remove credentials <br/>
+			</td>
+			<td>credentials-try-out-flow.ts</td>
+		</tr>
+		<tr>
+			<td>10. Devportal - Applications, Subscriptions and Try out</td>
+			<td>
+				1) Visit Application	<br/>
+				2) Create application <br/>
+				3) Generate OAuth2 token <br/>
+				4) Generate API Key <br/>
+				5) Add a subscription to API <br/>
+				6) Visit API TryOut	<br/>
+				7) Select Application <br/>
+				8) Click "Get Test Key" <br/>
+				9) Try out API <br/>
+			</td>
+			<td>application-try-out-flow.ts</td>
+		</tr>
+		<tr>
+			<td>11. Cleanup</td>
+			<td>
+				1) Cleanup test Application and test API <br/>
+				2) Cleanup created subscriptions <br/>
+			</td>
+			<td>clean-this-run.ts</td>
+		</tr>
+		<tr>
+			<td>12. API from Service</td>
+			<td>
+				1) Create an API from service(sample app) <br/>
+				2) Verify Overview page	<br/>
+				3) Change & update runtime configs <br/>
+				4) Try test console	<br/>
+				5) Delete using REST API <br/>
+			</td>
+			<td>api-from-choreo-service.ts</td>
+		</tr>
+		<tr>
+			<td>13. API from REST endpoint</td>
+			<td>
+				1) Create an API by providing a REST endpoint <br/>
+				2) Verify Overview page <br/>
+				3) Change Resources <br/>
+				4) Quick deploy and revision <br/>
+				5) Publish <br/>
+				6) Try test console <br/>
+				7) Delete API from overview <br/>
+			</td>
+			<td>api-from-rest-endpoint-flow.ts</td>
+		</tr>
+		<tr>
+			<td>14. API from OAS</td>
+			<td>
+				1) Create & publish API from OAS <br/>
+				2) Verify Overview page	<br/>
+				3) Change endpoint <br/>
+				4) Change subscriptions <br/>
+				5) Create revision from + button and deploy <br/>
+				6) Try  test console <br/>
+				7) Delete API from overview <br/>
+			</td>
+			<td>api-from-oas-flow.ts </td>
+		</tr>
+		<tr>
+			<td>
+				15. Observability overview ( Throughput/Latency graphs and tracing a request) <br/> <br/>
+				16. Logs view
+			</td>
+			<td>
+				1) Create a service <br/>
+				2) Navigate to Observability view <br/>
+				3) Access the sample service <br/>
+				4) Verify the Throughput / Latency graphs. <br/>
+				5) Trace a single request and verify the status code, avg Latency. <br/>
+				6) Assert available logs, test log searching and logs download <br/>
+				7) Delete(from API call) <br/>
+			</td>
+			<td>observability-test-flow.ts</td>
+		</tr>
+		<tr>
+			<td>
+				17. Low code form AI suggestions <br/> <br/>
+				18. Test run hello world service <br/> <br/>
+				19. Test postman view
+			</td>
+			<td>
+				1) Create a service <br/>
+				2) Create variable property <br/>
+				3) Add HTTP connector with AI suggestion of previous variable <br/>
+				4) Assert the code to check if AI suggestion is added to low code form  <br/>
+				5) Create a respond to the service <br/>
+				6) Click Test & run button <br/>
+				7) Assert the test URL <br/>
+				8) Navigate to test view <br/>
+				9) Access the postman view <br/>
+				10) Insert an invalid API key <br/>
+				11) Assert for the API key error <br/>
+				12) Delete (from API call) <br/>
+			</td>
+			<td>service-deploy-from-scratch.ts</td>
+		</tr>
+		<tr>
+			<td>20. Delete Apps and APIs that are old or created by this run</td>
+			<td>Cleanup all the apps that are created before 7 days or created in the current test run</td>
+			<td>clean-this-run.ts</td>
+		</tr>
+		<tr>
+			<td>21. Invite members</td>
+			<td>
+				1) Go to settings <br/>
+				2) Go to Invite members <br/>
+				3) Add developer group and add email -> Invite <br/>
+				4) Check pending invitations <br/>
+			</td>
+			<td>invite-members.ts</td>
+		</tr>
+		<tr>
+			<td>22. Add members to groups</td>
+			<td>
+				1) Go to settings <br/>
+				2) Go to groups tab <br/>
+				3) Select Admin group <br/>
+				4) Search the member and add <br/>
+				5) Check the member list <br/>
+			</td>
+			<td>group-list-views.ts</td>
+		</tr>
+		<tr>
+			<td>23. Test Anonymous app linking (via "Add to Choreo")</td>
+			<td>
+				1) Navigate to Home page after Login <br/>
+				2) Run a Ballerina project in the background with Choreo enabled <br/>
+				3) capture and navigate to ObsURL <br/>
+				4) Add to Choreo with creation of a new app <br/>
+				5) Copy the linking command <br/>
+				6) Run the linking command in background <br/>
+				7) Check for successful linking <br/>
+				8) Clean up the created app	<br/>
+			</td>
+			<td>anonymous-app-linking.ts</td>
+		</tr>
+		<tr>
+			<td>24. Generate on-prem key</td>
+			<td>
+				1) Go to settings <br/>
+				2) Go to on-prem keys tab <br/>
+				3) Generate key <br/>
+				4) Edit the key name <br/>
+				5) Regenerate key <br/>
+				6) Delete the key <br/>
+			</td>
+			<td>generate-onprem-key-flow.ts</td>
+		</tr>
+		<tr>
+			<td>25. Clone and edit integrations</td>
+			<td>
+				1) Go to integrations <br/>
+				2) Go to "Use Prebuilt" <br/>
+				3) Select "Google calendar to twilio msg" sample <br/>
+				4) Clone and Edit <br/>
+				5) Fill calender and Twilio configs <br/>
+				6) Click Test & run button <br/>
+				7) Assert the test URL <br/>
+			</td>
+			<td>integration-run-sample.ts</td>
+		</tr>
+		<tr>
+			<td>26. Groups list view</td>
+			<td>
+				1) Go to settings. <br/>
+				2) Go to Organization->Groups tab <br/>
+				3) Click "Add group" button and add a group giving the details <br/>
+				4) Search the group from search field <br/>
+				5) Click the group and type a existing member name in the search field <br/>
+				6) Add the member <br/>
+				7) Remove the added member <br/>
+				8) Go back to groups <br/>
+				9) Delete the new group <br/>
+			</td>
+			<td>group-list-views.ts</td>
+		</tr>
+	</tbody>
+</table>
