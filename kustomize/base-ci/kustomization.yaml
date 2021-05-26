@@ -50,7 +50,7 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/email-service
   newTag: master-45e7f86e3b906888e221b77f8964fd39c87b96c3
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-api
-  newTag: master-c2ea2ded58e952f3b15700bbd7c52ba3999e6bd5
+  newTag: master-f7637238a4c13d062af934bbbfce24de32527914
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-data-generator
   newTag: master-114269ed7f997814aedbd2bcc4ef58e66b6063b8
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
