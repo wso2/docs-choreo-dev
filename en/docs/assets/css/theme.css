@@ -749,7 +749,7 @@ html .md-footer-meta.md-typeset a,
     width: 40px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
     background: url(../lib/backtotop/img/cd-top-arrow.svg) no-repeat center 50%;
-    background-color: hsla(5, 76%, 62%, 0.8);
+    background-color: hsla(237, 80%, 63%, 0.8);
 }
 
 .js .cd-top {
@@ -768,7 +768,7 @@ html .md-footer-meta.md-typeset a,
 }
 
 .js .cd-top:hover {
-    background-color: hsl(5, 76%, 62%);
+    background-color: hsl(237, 80%, 63%);
     opacity: 1
 }
 
