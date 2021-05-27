@@ -4,46 +4,47 @@ Choreo's API management capabilities allow you to create APIs, manage APIs, and 
 ## API
 An API is an intermediate layer that acts as a communication protocol between a consumer and a service, simplifying the consumption of the service. In addition to hiding the underlying implementation details of a service, an API provides a secure, controlled, and well-documented approach to access an exposed service.
 
-## API Format
-Open API Specification (OAS, a.k.a Swagger) format is the underlying representation of an API in Choreo. You can import an API using a Swagger definition in the Publisher Portal. Additionally, a user can view, edit, import, or download an API definition in OAS format via the API Publisher Portal.
+## API format
+OpenAPI Specification (OAS, a.k.a Swagger) format is the underlying representation of an API in Choreo. You can import an API using a Swagger definition in the Publisher Portal. Additionally, a user can view, edit, import, or download an API definition in OAS format via the API Publisher Portal.
 
-## API Resource path and HTTP Methods
+## API resource path and HTTP methods
 An API comprises one or more resources, each of which has a unique resource path (URI). An API Resource has a set of HTTP methods that operates on it. The supported HTTP methods are GET, POST, PUT, DELETE, PATCH, HEAD, and OPTIONS.
 
-## API Lifecycle
-API lifecycle comprises of the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked`, `Deployed`, and `Retired`.
+## API lifecycle
+An API lifecycle comprises the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are: Created, Prototyped, Published, Deprecated, Blocked, Deployed, and Retired.
 
 ## Application
 An Application in Choreo is the logical representation of a physical application such as a mobile app, web app, device, etc. For an application to use an API, the application should subscribe to the relevant APIs it intends to use. A subscription to an API happens over a selected business plan.  The business plan determines the usage quota the application gets. An application has a consumer key and a consumer secret which acts as the credentials of the application.
 
-## Access Token
+## Access token
 Choreo uses the OAuth2.0 bearer token-based authentication mechanism to allow a consumer to access an API.  
 The access token is a string that the consumer passes in an HTTP header of the API request. Choreo supports JWT formatted self-contained access tokens.
 
-## Rate Limiting
-Rate limiting allows you to limit the number of permitted requests to an API for a given time window. Rate limiting provides you to:
+## Rate limiting
+Rate limiting makes it possible to limit the number of permitted requests to an API for a given time window.
+Thereby it allows you to:
 
    - Protect your APIs from common types of security attacks, such as certain types of Denial of Service (DoS) attacks.
    - Regulate traffic according to infrastructure availability.
    
-##  Tags
+## Tags
 Tags allow API providers to categorize APIs that have similar attributes. When a tagged API gets published to the API Developer Portal, its tags appear as clickable links. API consumers can use the link to navigate to a category of interest. API consumers can also search APIs that match a particular tag on the Developer Portal.
 
-## API Management Components
+## API management components
 API management in Choreo is facilitated by the key components: [API Publisher](#api-publisher), [Developer Portal](#developer-portal), [API Key Manager](#api-key-manager), [Choreo Connect](#choreo-connect), and [Traffic Manager](#traffic-manager).  
 
-### API Publisher 
+### API publisher 
 The API Publisher is designed for API creators to develop, document, secure, test, and version APIs with ease. It also caters to more API management-related tasks, such as allowing API Publishers to deploy and publish APIs and applying rate-limiting policies.
 
-### Developer Portal
-The Developer portal allows API publishers to host and advertise their APIs and API consumers to discover, evaluate, subscribe to, and consume APIs securely.
+### Developer portal
+The Developer Portal allows API publishers to host and advertise their APIs and API consumers to discover, evaluate, subscribe to, and consume APIs securely.
 
-### API Key Manager
+### API key manager
 The API Key Manager is the identity provider for Choreo and acts as the Secure Token Service (STS). Choreo's API management supports OAuth2.0 and API-Key-based authentication mechanisms.
 
 In Choreo, tokens are bound to an application. The Key manager provides a token API to generate access tokens. Clients can use these tokens to invoke APIs exposed by Choreo. The Key Manager also exposes a revoke token API that clients can use to revoke an access token. A client can generate an OAuth2.0 access token by invoking the token API directly or via the Developer Portal UI. Alternatively, a client can generate an API Key through the Developer Portal without calling the Key Manager. The API Key is a self-signed JWT token. When a client invokes an API with an OAuth2.0 access token or an API Key, the Gateway validates the token by validating its signature and subscription.
 
-### Choreo Connect
+### Choreo connect
 
 Choreo Connect is an API gateway designed for microservices that is cloud-native, decentralized, and developer-centric. This API gateway is a lightweight message processor for APIs that facilitates message security, transport security, routing, and other API Management-related quality of services such as throttling, rate-limiting, etc.
 
@@ -63,8 +64,8 @@ The Enforcer is responsible for carrying out API management-related quality-of-s
 
 The Adapter is responsible for converting the API definition to the respective format understood by the Router and the Enforcer. The Adapter will pass the data to and from the Router and Enforcer.
 
-### Traffic Manager 
+### Traffic manager 
 
-The Traffic Manager helps regulate API traffic, make APIs and applications available to consumers at different service levels, and secure APIs against security attacks. The Traffic Manager features a dynamic throttling engine that processes rate-limiting policies in real-time. 
+The Traffic Manager helps regulate API traffic, makes APIs and applications available to consumers at different service levels, and secures APIs against security attacks. The Traffic Manager features a dynamic throttling engine that processes rate-limiting policies in real-time. 
 
 Additionally,  the Traffic Manager keeps the API Gateway's in-memory map, which it uses for key validation, up-to-date via a JMS topic. The Traffic Manager publishes artifact (API/application) update events that it receives from the API Publisher and API Developer Portal to a JMS topic. The API Gateway receives these events via the JMS topic and updates its in-memory map.

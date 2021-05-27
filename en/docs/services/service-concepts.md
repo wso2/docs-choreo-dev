@@ -5,7 +5,7 @@ Choreo services allow you to create enterprise integration services incorporatin
 ## Service
 A service in Choreo is an enterprise integration service exposed via a REST API. Choreo provides a comprehensive set of pre-built service samples for you to clone, edit, and try out, depending on your requirement. 
 
-## API Call
+## API call
 An API call in Choreo allows you to connect to an external service through your Choreo service. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
 Following are the connections you can use to interact with generic protocol-based APIs:
@@ -32,12 +32,12 @@ A statement is a collection of code fragments that specifies the actions to be c
 Choreo supports the following statements:
 
  - **Log**: Logs an event with an information statement or an error that occurs in your service.    
- - **Variable**: Declares a variable and a value of a preferred data type (string, integer, etc.) to use later in the logical process of the service.
- - **If**: Specifies two blocks of logical components so that the system can decide which block to execute based on whether the provided condition is true or false.   
+ - **Variable**: Declares a variable and a value of a preferred data type (**string**, **int**, etc.) to use later in the logical process of the service.
+ - **If**: Performs conditional execution. 
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
- - **While**: Continuously executes a block of statements in a loop as long as the specified condition is TRUE. 
- - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
+ - **While**: Continuously executes a block of statements in a loop based on a given **boolean** condition. 
+ - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an **HTTP_OK**.
  - **Custom**: Allows to write a single or a multiline code snippet in your service.
 
-## Ballerina Expression Syntax
-The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
+## Ballerina expression syntax
+The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)

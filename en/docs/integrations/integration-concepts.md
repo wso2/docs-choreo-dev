@@ -2,27 +2,27 @@
 Choreo integrations allow you to create enterprise integrations to automate workflows in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo integrations as you develop your integrations in the [Choreo Console]({{choreo_console}}).
   
 ## Integration
-Integration in Choreo is a process that connects APIs, events, and streams to function as a single unit. Choreo provides an integration template which is a pre-built sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
+Integration in Choreo is a process that connects APIs, events, and streams allowing these to function as a single unit. Choreo provides an integration template which is a pre-built sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
 
 ## Trigger
-A trigger in Choreo integrations is an event or an action that can cause the integration to start executing.
+A trigger in Choreo integrations is an event or an action that causes a Choreo integration to start executing.
 
 Choreo supports the following trigger types:
 
  - **Schedule**: Triggers execution according to a given schedule.
- - **Manual**: Triggers execution manually by clicking 'Run & Test'.
+ - **Manual**: Triggers execution manually.
  - **Calendar**: Triggers execution based on events in a Google Calendar.
  - **GitHub**: Triggers execution based on GitHub events and actions.
  - **Salesforce**: Triggers execution based on Salesforce events. 
 
-## API Call
+## API call
 An API call in Choreo allows you to connect to an external service through your Choreo integration. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
-Following are the connections you can use to interact with generic protocol-based APIs:
+The following lists the connections you can use to interact with generic protocol-based APIs:
   
  - **HTTP**: Communicates with external endpoints over HTTP.   
- - **SMTP**: Performs email related operations over SMTP. 
- - **POP3**: Retrieves emails over POP3. 
+ - **SMTP**: Performs email-related operations over SMTP. 
+ - **POP3**: Retrieves emails from a mail server over POP3. 
  - **IMAP**: Retrieves emails from a mail server over a TCP/IP connection.
 
 Following are the connections you can use to interact with application-specific APIs:
@@ -43,12 +43,12 @@ A statement is a collection of code fragments that specifies the actions a Chore
 Choreo supports the following statements:
 
  - **Log**: Logs an event with an information statement or an error that occurs in your service.    
- - **Variable**: Declares a variable and a value of a preferred data type (string, integer, etc.) to use later in the logical process of the service.
- - **If**: Specifies two blocks of logical components so that the system can decide which block to execute based on whether the provided condition is true or false.   
+ - **Variable**: Declares a variable and a value of a preferred data type (**string**, **int**, etc.) to use later in the logical process of the service.
+ - **If**: Performs conditional execution.
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
- - **While**: Continuously executes a block of statements in a loop as long as the specified condition is TRUE. 
- - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
+ - **While**: Continuously executes a block of statements in a loop based on a given **boolean** condition. 
+ - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an **HTTP_OK**.
  - **Custom**: Allows to write a single or a multiline code snippet in your service.
 
-## Ballerina Expression Syntax
-The syntax to use when you want to input values for an expression when designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
+## Ballerina expression syntax
+The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
