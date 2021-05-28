@@ -18,7 +18,8 @@ describe("API creation from an existing endpoint", () => {
 
     const API_NAME = generateApiName('CYE2E');
     const API_VERSION = 'V0.0.1';
-    const API_ENDPOINT = 'https://api.domainsdb.info/v1/domains';
+    const API_ENDPOINT = 'https://jsonplaceholder.typicode.com';
+    const OPERATION_TARGET = '/users';
 
     before(() => {
         cy.consoleUserLogin();
@@ -28,7 +29,7 @@ describe("API creation from an existing endpoint", () => {
         cy.log("Visiting API listing");
         cy.navigateFromHomePage('apis');
 
-        cy.get('[data-testid=create-api-btn]', {timeout: MEDIUM_TIME_OUT}).click();
+        cy.get('[data-testid=create-api-btn]', { timeout: MEDIUM_TIME_OUT }).click();
 
         cy.log('Opening API creation dialog');
         cy.contains('Create API').should('exist');
@@ -48,7 +49,7 @@ describe("API creation from an existing endpoint", () => {
         cy.updateRuntimeConfiguration();
 
         cy.log('Visiting and updating resources');
-        cy.get('[data-testid=Resources]', {timeout: STANDARD_TIME_OUT}).click();
+        cy.get('[data-testid=Resources]', { timeout: STANDARD_TIME_OUT }).click();
         cy.log('Deleting initial resources');
         cy.get('[data-testid=delete-all-operations-btn]').click();
         cy.get('#mui-component-select-verbs').click();
@@ -57,13 +58,13 @@ describe("API creation from an existing endpoint", () => {
                 .contains('GET').click();
         });
         cy.get('body').type('{esc}');
-        cy.get('#operation-target').type('search');
+        cy.get('#operation-target').type(OPERATION_TARGET);
         cy.get('[data-testid=add-btn]').click();
         cy.get('button').contains('Save').click();
         cy.get('.MuiDialogContent-root').within(() => {
-            cy.get('button', {timeout: STANDARD_TIME_OUT}).contains('Save').click();
+            cy.get('button', { timeout: STANDARD_TIME_OUT }).contains('Save').click();
         });
-        cy.get('.MuiDialogContent-root', {timeout: STANDARD_TIME_OUT}).should('not.exist');
+        cy.get('.MuiDialogContent-root', { timeout: STANDARD_TIME_OUT }).should('not.exist');
         cy.updateSubscriptionPlans();
         cy.deployInitialRevision();
         cy.testApiInPublisherTestConsole();
@@ -80,7 +81,7 @@ describe("API creation from an existing endpoint", () => {
 
         cy.get('[data-testid=go-to-dev-portal-btn]').should('be.enabled');
         cy.get('[data-testid=resources-container]').within(() => {
-            cy.get('[data-testid="resource-/search"]').should('exist');
+            cy.get('[data-testid="resource-' + OPERATION_TARGET + '"]').should('exist');
         })
         cy.deleteApiFromOverview();
     });
