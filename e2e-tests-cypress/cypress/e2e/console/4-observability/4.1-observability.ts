@@ -238,6 +238,8 @@ describe('Observability tests', () => {
                         cy.get('[data-testid="latencies-for-flame-graph"]').should('exist');
                         cy.get('[data-testid="flame-graph-slider"]').should('be.visible');
 
+                        // TODO: Move the flame graph slider and assert the flame graph once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
+
                         cy.log('Close the flame graph and navigate to the diagnostics view again');
                         cy.get('[data-testid="flame-graph-close-btn"]').should('be.visible');
                         cy.get('[data-testid="flame-graph-close-btn"]').click().then(() => {
