@@ -5,7 +5,7 @@ Observability in Choreo provides the capability to visualize and monitor the per
 ## Dashboard
 Choreo observability dashboard gives you more than one way to monitor your services. This section will introduce the dashboards. 
 
-### Dashboard Overview
+### Dashboard overview
 
 ![Dashboard Overview](../assets/img/observability/overview-overall.png){: style="height:55%;width:95%"}
 
@@ -18,11 +18,11 @@ The Observability dashboard allows you to:
 5.  Trace requests.
 
 !!! note
-    By default, the observability view is private and is only visible to the service owner. If you need to share it, toggle the **Share On** switch and share the observability URL.
+    By default, the observability view is private and is only visible to the service owner. If you need to share it, toggle the **Share On** switch, copy the observability URL and share it with the required parties.
     
     ![Options Bar](../assets/img/observability/options-bar.png){: style="height:120%;width:90%"}
 
-### Throughput and Latency Graphs
+### Throughput and latency graphs
 
 ![Throughput and Latency Graph](../assets/img/observability/throughput-and-latency.png){: style="height:45%;width:70%"}
 
@@ -36,36 +36,37 @@ You can view the Choreo service logs in the **Logs**  view below the graph. Clic
 
  ![Logs View](../assets/img/observability/logs.png){: style="height:55%;width:70%"} 
 
-### Diagnostics View
-
-![Diagnostic-view](../assets/img/observability/diagnostic-view.png){: style="height:55%;width:70%"}
+### Diagnostics view
 
 The **Diagnostics view** provides the capability to view errors, throughput, latencies, CPU usage, memory usage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the **Diagnostics view**.
 
-By default, the time range selected for the **Throughput & Latency** graphs is the same time range used for the **Diagnostics View**. 
+By default, the time range selected for the **Throughput & Latency** graphs is the same time range used for the **Diagnostics View**.
 
+![Diagnostic-view](../assets/img/observability/diagnostic-view.png){: style="height:55%;width:70%"}
+
+ 
 A **bin** is a horizontal section of the graph for a particular period. A bin consists of the following:
 
-- **Start time and end time** - Denoted by the dotted lines separating each bin.
-- **Logs** - Log events that occurred during the bin's time range appear in the **Logs** column, along with the timestamp the log entries started to appear and the log count. These log entries appear according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
-- **Error** - Number of HTTP errors occurred at the selected time.
-- **TP** - Throughput of the requests at the selected time (req/s).  
-- **Latency** - Latency of the request at the selected time (ms).
-- **CPU** - CPU usage at the selected time (millicores).
-- **Memory** - Memory usage at the selected time (MiB).
+- **Start time and end time**: Denoted by the dotted lines separating each bin.
+- **Logs**:  List of log events that occurred within the respective bins time frame. Each entry in this column includes the timestamp the log entries started to appear and the total log count. These log entries appear according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
+- **Error**: The number of HTTP errors that occurred at the selected time..
+- **TP**: Throughput of the requests at the selected time (req/s).  
+- **Latency**: Latency of the request at the selected time (ms).
+- **CPU**: CPU usage at the selected time (millicores).
+- **Memory**: Memory usage at the selected time (MiB).
 
 
-### Trace Requests
+### Trace requests
 
-You can trace requests received by your service at a given timestamp by clicking on a point in the time axis of either the throughput or the latency graph.  The low-code view shows the received requests, along with each of its request time, latencies, and its status. Furthermore, you can view the status code and the request latency when you click on a particular request.
+You can trace requests received by your service at a given timestamp by clicking on a point in the time axis of either the throughput or the latency graph.  The low-code view shows the received requests. For each request, it displays the request time, the latency, and the status. Furthermore, you can view the status code and the request latency when you click on a particular request.
 
-The low-code diagram will also display the average request latency and the success rate for each client request corresponding to the time selected from the graphs. 
+The low-code diagram also displays the average request latency and the success rate for each client request corresponding to the selected time interval. 
 
 
-## View and Filter All Logs
+## View and filter all logs
 
 ![Logs Panel](../assets/img/observability/logs-panel.png){: style="height:45%;width:70%"}
 
 The **Logs** panel includes all logs generated by the service. You can filter it based on time or based on text. 
 
-You can also download the log entries using the download button. It will save the log entries as a .zip file in your preferred location.
+To download the log entries, click **Download**. As a result, the log entries are saved as a .zip file in the location you specify.
