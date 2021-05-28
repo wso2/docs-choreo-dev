@@ -57,7 +57,7 @@ describe('API creation from choreo service', () => {
             cy.log("Invoking the API");
             cy.get('.opblock-summary').click();
             cy.get('.btn').click();
-            cy.get('input').type("1");
+            cy.get('input[type=text]').type("1");
             cy.wait(2000);
             cy.get('.execute-wrapper > .btn').click();
             cy.wait(2000);
