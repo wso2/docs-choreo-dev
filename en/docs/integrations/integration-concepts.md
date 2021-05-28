@@ -27,14 +27,14 @@ The following lists the connections you can use to interact with generic protoco
 
 Following are the connections you can use to interact with application-specific APIs:
 
- - **Twilio**: Connects your service to Twilio API to perform operations such as sending messages, WhatsApp messages, and making voice calls.
- - **Slack**: Connects your service to Slack API to perform operations in Slack, such as sending a message to a channel, deleting a message, etc.
- - **GitHub**: Connects your service to GitHub API to perform operations in GitHub, such as creating an issue, creating a pull request, etc. 
- - **Gmail**: Connects your service to Gmail API to perform email operations such as sending an email, receiving an email, etc.
- - **Google Calendar**: Connects your service to Google Calendar API to perform operations in Google Calendar such as creating an event, deleting an event, etc.
- - **Google Sheets**: Connects your service to Google Sheets API to perform operations in Google Sheets such as reading data, formatting data, etc.
- - **Salesforce**: Connects your service to Salesforce API to perform Salesforce operations such as obtaining organization information, creating a record, etc.
- - **NetSuite**: Connects your service to Netsuite API to perform Netsuite operations such as creating a record instance, creating a sublist, etc. 
+ - **Twilio**: Integrate with Twilio to perform operations such as sending messages, WhatsApp messages, and making voice calls.
+ - **Slack**: Integrate with Slack to perform operations such as sending a message to a channel, deleting a message, etc.
+ - **GitHub**: Integrate with GitHub to perform operations such as creating an issue, creating a pull request, etc. 
+ - **Gmail**: Integrate with Gmail to perform operations such as sending an email, receiving an email, etc.
+ - **Google Calendar**: Integrate with Google Calendar to perform operations such as creating an event, deleting an event, etc.
+ - **Google Sheets**: Integrate with Google Sheets to perform operations such as reading data, formatting data, etc.
+ - **Salesforce**: Integrate with Salesforce to perform operations such as obtaining organization information, creating a record, etc.
+ - **NetSuite**: Integrate with Netsuite to perform operations such as creating a record instance, creating a sublist, etc. 
 
 ## Statement
 
@@ -43,11 +43,11 @@ A statement is a collection of code fragments that specifies the actions a Chore
 Choreo supports the following statements:
 
  - **Log**: Logs an event with an information statement or an error that occurs in your service.    
- - **Variable**: Declares a variable and a value of a preferred data type (**string**, **int**, etc.) to use later in the logical process of the service.
+ - **Variable**: Declares a variable and a value of a preferred data type (`string`, `int`, etc.) to use later in the logical process of the service.
  - **If**: Performs conditional execution.
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
- - **While**: Continuously executes a block of statements in a loop based on a given **boolean** condition. 
- - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an **HTTP_OK**.
+ - **While**: Continuously executes a block of statements in a loop based on a given `boolean` condition. 
+ - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
  - **Custom**: Allows to write a single or a multiline code snippet in your service.
 
 ## Ballerina expression syntax
