@@ -12,20 +12,23 @@ Performing root cause analysis is crucial in identifying and rectifying the unde
     1. **If this is your first service**, 
     
         1. Enter a name for the service and click **Create**. 
-           ![Create a new service](../assets/img/observability/first-service-creation.png)
+           
+           ![Create a new service](../assets/img/observability/first-service-creation.png){.cInlineImage-full}
            
     2. **Else** (if you already have services created), 
         
         1. Click **+ Create** to start creating a new service.
         2. Enter a name for the service and click **Create**.
-           ![Create a new service](../assets/img/observability/service-creation.png)
+           
+           ![Create a new service](../assets/img/observability/service-creation.png){.cInlineImage-full}
 
 3. From the left-hand menu, click **Observe**.
 4. On the right-hand bottom, click the **Sample Service** icon.
-       ![Sample service popup](../assets/img/observability/sample-service-pop-up.png)
+   
+       ![Sample service popup](../assets/img/observability/sample-service-pop-up.png){.cInlineImage-full}
 5. Click **Try Sample Service**.
 
-       ![Try sample service](../assets/img/observability/try-sample-service.png)
+       ![Try sample service](../assets/img/observability/try-sample-service.png){.cInlineImage-half}
     
 ## Detect anomalies and perform root cause analysis
 You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latencies of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
@@ -48,14 +51,15 @@ Follow the steps below.
 3. Observe the logs in the logs panel.
 4. Note multiple logs are mentioning a connection error with the `hr-service`.
  
-![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png)
+![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png){.cInlineImage-full}
  
 #### Analyze the latency graph
 
 The latency graph shows the latencies of each request.
 
-With the sample data, you can observe spikes in the latency graph. You can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors by analyzing the latency graph. 
-![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png)
+With the sample data, you can observe spikes in the latency graph. You can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors by analyzing the latency graph.
+
+![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png){.cInlineImage-full}
 
 Follow the steps below.
 
@@ -70,7 +74,7 @@ Follow the steps below.
 ### Step 2: Drill into the analytics
 The Diagnostics view provides the capability to view errors, throughputs, latencies, CPU usage, memory usage, and logs simultaneously for a particular event. You can detect and analyze errors and anomalies in detail via the diagnostics view.
 
-![Diagnostic View](../assets/img/observability/diagnostics-view.png)
+![Diagnostic View](../assets/img/observability/diagnostics-view.png){.cInlineImage-full}
 
 We refer to a horizontal section of the graph for a particular period as the **bin**. A bin consists of the following.
 
@@ -92,15 +96,14 @@ Follow the steps below to learn how to drill down and confirm the root cause for
 2. In the sample data, you can observe a couple of prominent errors appearing in the four bins.
 3. Select a bin that shows a higher occurrence of the error log "error while connecting to the hr-service”. Notice that this bin also includes other errors which occurred at a lesser frequency.
 
-    ![Diagnostic View - second bin(../assets/img/observability/second-bin.png/)
-](../assets/img/observability/second-bin.png)
+    ![Diagnostic View - second bin](../assets/img/observability/second-bin.png){.cInlineImage-full}
 
 4. Furthermore, when you analyze the graph, you can find a peak with a larger number of errors error. At this same time notice instances where you can see an increase in the throughput and a drop in latency. 
 5. By analyzing the graphs as above, you can confirm that the cause for the latency drop and the throughput spike is the connectivity issue displayed by the error logs.
 6. Observe that the error graph is also fluctuating over time as the service logs errors.
 7.  You can observe similar behavior in the other bins as well.
 
-   ![Diagnostic View - other bin](../assets/img/observability/other-bins.png)
+   ![Diagnostic View - other bin](../assets/img/observability/other-bins.png){.cInlineImage-full}
    
    
 Therefore, now you can conclude that the connectivity issue is the root cause for the intermittent anomalies detected in the throughput and the latencies of requests.
