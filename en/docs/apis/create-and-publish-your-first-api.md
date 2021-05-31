@@ -53,7 +53,7 @@ Follow the procedure below to test the API revision that you deployed:
 1. Click **Test** in the left pane.
 2. Click on the `GET` resource you added to expand it.
 
-       ![API resource](../assets/img/apis/api-resource.png){.cInlineImage-full}
+       ![API GET resource](../assets/img/apis/api-resource.png){.cInlineImage-full}
 
 3. Click **Try it out**, and then click **Execute**. You can see `{"hello": "world"}` as the response from the API.
 
@@ -67,11 +67,11 @@ Follow the procedure below to publish the API and view the published API on the 
 1. Click **Publish** in the left pane.
 2. On the **Lifecycle Management** page, click **Publish**.
 
-       ![Publish](../assets/img/apis/publish.png){.cInlineImage-full}
+       ![Publish the API](../assets/img/apis/publish.png){.cInlineImage-full}
 
 3. Click **Go to Devportal**.
 
-       ![Go to DevPortal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
+       ![Go to API Developer Portal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
 
      You can see the published API in the Choreo Devportal.
 
