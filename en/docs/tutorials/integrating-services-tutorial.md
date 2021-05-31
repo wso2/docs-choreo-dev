@@ -345,7 +345,7 @@ To create this service, follow the procedure below:
                         
                     2. Click **Other**.
                     
-                    3. In the **Statement** field, enter `respondMessages.push("Sucessfully updated the item: " + itemIDString);`
+                    3. In the **Statement** field, enter `respondMessages.push("Successfully updated the item: " + itemIDString);`
                     
                     4. Click **Save**.
             
