@@ -9,7 +9,7 @@ This quick start guide walks you through the steps to quickly configure and try 
 - In the Google account, create a blank spreadsheet named `Sample GitHub Integration` with its default worksheet named `Sheet1`. 
 
 ## Step 1: Configure and start the integration
-Follow the procedure below to configure and start the **GitHub New Issue to Google Sheets Row** integration:
+HHFollow the procedure below to configure and start the **GitHub New Issue to Google Sheets Row** integration:
 
 1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
 2. Sign in using either your GitHub or Google credentials.
