@@ -26,7 +26,7 @@ Follow the procedure below to create an API using the mock REST service you test
     - **Endpoint**: http://www.mocky.io/v2/5185415ba171ea3a00704eed
 6. Click **Create**. This displays an overview of the API.
 
-       ![API Overview](../assets/img/apis/api-overview.png){.cInlineImage-full}
+       ![API overview](../assets/img/apis/api-overview.png){.cInlineImage-full}
        
 7. Under **API Configuration**, click **Resources**.
 8. Follow the procedure below to add a resource to the API:
@@ -57,7 +57,7 @@ Follow the procedure below to test the API revision that you deployed:
 
 3. Click **Try it out**, and then click **Execute**. You can see `{"hello": "world"}` as the response from the API.
 
-       ![Response](../assets/img/apis/response.png){.cInlineImage-full}
+       ![Response received from the service execution](../assets/img/apis/response.png){.cInlineImage-full}
 
 Now you are ready to publish the API to the Choreo Devportal so that external consumers can consume the API.
 
@@ -75,6 +75,6 @@ Follow the procedure below to publish the API and view the published API on the 
 
      You can see the published API in the Choreo Devportal.
 
-       ![DevPortal](../assets/img/apis/devportal.png){.cInlineImage-full}
+       ![List of published APIs in the API Developer Portal](../assets/img/apis/devportal.png){.cInlineImage-full}
 
 Congratulations! You have successfully created an API and published it on the Choreo Devportal.
