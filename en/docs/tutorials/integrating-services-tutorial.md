@@ -283,7 +283,7 @@ To create this service, follow the procedure below:
                 
             3. Click **Save**.                  
         
-        5. To specify the action that the service should perform based on whether the cell value (i.e., the available stock) is greater that the quantity ordered or not, add an if statement as follows:
+        5. To specify the action that the service should perform based on whether the cell value (i.e., the available stock) is greater than the quantity ordered or not, add an if statement as follows:
         
             1. Click the **+** icon below the `intcellValue` variable statement you added.
             
