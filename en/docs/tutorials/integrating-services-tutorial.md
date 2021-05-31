@@ -758,7 +758,7 @@ In this step, you will test the `orders` service and deploy it if it works as ex
         The following response is returned.
         
         ```
-        ["Sucessfully updated the item: trainers"]
+        ["Successfully updated the item: trainers"]
         ```
       
       This also reduces the count displayed in the B2 cell of the `inventory` Google sheet from `100` to `90`.
