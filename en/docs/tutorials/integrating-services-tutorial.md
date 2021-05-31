@@ -101,7 +101,7 @@ To create this service, follow the procedure below:
         |----------------------------|-----------------------------------------------------------------------------------------------------------------|
         | **SpreadsheetId**x         | The ID of your google sheet.                                                                                    |  
         | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
-        | **Column**                 | The ID of column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
+        | **Column**                 | The ID of the column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
         | **Response Variable Name** | `itemIDs`                                                                                                       |
         
         Here, you are adding a connection that retrieves the number of items currently available in the column `A`, `Sheet1` of the `inventory` Google Sheet.
