@@ -4,7 +4,7 @@ Choreo’s API management capabilities allow you to create, publish, and manage 
 This quick start guide walks you through the steps to quickly create and publish an API using Choreo. 
 
 ## Prerequisites:
-- A mock REST service to use when creating the API. 
+- A mock REST services to use when creating the API. 
     
     !!!note
         In this quick start guide, let's use the mock service [http://www.mocky.io/v2/5185415ba171ea3a00704eed](http://www.mocky.io/v2/5185415ba171ea3a00704eed) that is made available by [https://www.mocky.io/](https://www.mocky.io/). Click the mock service URL to test the service. You can see the following JSON message:`{"hello": "world"}`
