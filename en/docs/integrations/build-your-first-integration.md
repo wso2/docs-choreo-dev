@@ -34,11 +34,11 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
 7. Click **Start**. 
    The following logs appear to indicate that the integration is starting:
   
-       ![Integration is starting](../assets/img/integrations/integration-starting.png){.cInlineImage-half}
+       ![Starting the integration(../assets/img/integrations/integration-starting.png){.cInlineImage-half}
     
     The following message indicates that the integration has started and is running:
 
-       ![Integration Started](../assets/img/integrations/integration-started.png){.cInlineImage-full}
+       ![Integration started](../assets/img/integrations/integration-started.png){.cInlineImage-full}
 
 Now the **GitHub New Issue to Google Sheets Row** integration is successfully configured and running.
 
