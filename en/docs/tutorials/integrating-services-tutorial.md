@@ -625,7 +625,7 @@ First, let's create a service that captures the online orders as follows:
         |----------------|-------------------------------------------------------|
         | **Type**       | `var`                                                 |
         | **Name**       | `index`                                               |
-        | **Expression** | `textPayload.indexOf("Sucessfully updated the item")` |
+        | **Expression** | `textPayload.indexOf("Successfully updated the item")` |
     
     3. Click **Save**.
     
