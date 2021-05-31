@@ -34,7 +34,7 @@ Follow the procedure below to configure and start the **GitHub New Issue to Goog
 7. Click **Start**. 
    The following logs appear to indicate that the integration is starting:
   
-       ![Integration is Starting](../assets/img/integrations/integration-starting.png){.cInlineImage-half}
+       ![Integration is starting](../assets/img/integrations/integration-starting.png){.cInlineImage-half}
     
     The following message indicates that the integration has started and is running:
 
@@ -54,7 +54,7 @@ Follow the procedure below to try out the integration:
 
 3. Go to the `Sample GitHub Integration` spreadsheet in your Google account and take a look at `Sheet1`.
  
-       ![Spreadsheet](../assets/img/integrations/spreadsheet.png){.cInlineImage-full}
+       ![Sample GitHub integration spreadsheet](../assets/img/integrations/spreadsheet.png){.cInlineImage-full}
 
      You can see two entries with details of the GitHub issues you created.
 
