@@ -25,7 +25,7 @@ The following lists the connections you can use to interact with generic protoco
  - **POP3**: Retrieves emails from a mail server over POP3. 
  - **IMAP**: Retrieves emails from a mail server over a TCP/IP connection.
 
-Following are the connections you can use to interact with application-specific APIs:
+The following lists the connections you can use to interact with application-specific APIs:
 
  - **Twilio**: Integrate with Twilio to perform operations such as sending messages, WhatsApp messages, and making voice calls.
  - **Slack**: Integrate with Slack to perform operations such as sending a message to a channel, deleting a message, etc.

@@ -8,14 +8,14 @@ A service in Choreo is an enterprise integration service exposed via a REST API.
 ## API call
 An API call in Choreo allows you to connect to an external service through your Choreo service. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
 
-Following are the connections you can use to interact with generic protocol-based APIs:
+The following lists the connections you can use to interact with generic protocol-based APIs:
   
  - **HTTP**: Communicates with external endpoints over HTTP.   
  - **SMTP**: Performs email-related operations over SMTP. 
  - **POP3**: Retrieves emails from a mail server over POP3. 
  - **IMAP**: Retrieves emails from a mail server over a TCP/IP connection.
 
-Following are the connections you can use to interact with application-specific APIs:
+The following lists the connections you can use to interact with application-specific APIs:
 
  - **Twilio**: Integrate with Twilio to perform operations such as sending messages, WhatsApp messages, and making voice calls.
  - **Slack**: Integrate with Slack to perform operations such as sending a message to a channel, deleting a message, etc.

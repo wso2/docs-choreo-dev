@@ -8,7 +8,7 @@ An API is an intermediate layer that acts as a communication protocol between a 
 OpenAPI Specification (OAS, a.k.a Swagger) format is the underlying representation of an API in Choreo. You can import an API using a Swagger definition in the Choreo console. Additionally, a user can view, edit, import, or download an API definition in OAS format via the Choreo console.
 
 ## API resource path and HTTP methods
-An API comprises one or more resources, each of which has a unique resource path (URI). An API Resource has a set of HTTP methods that operates on it. The supported HTTP methods are `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, and `OPTIONS`.
+An API comprises one or more resources, each of which has a URI. An API Resource has a set of HTTP methods that operates on it. The supported HTTP methods are `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, and `OPTIONS`.
 
 ## API lifecycle
 An API lifecycle comprises the stages an API goes through from creation to retirement. API lifecycle is independent of its backend service. The lifecycle states are: `Created`, `Prototyped`, `Published`, `Deprecated`, `Blocked`, `Deployed`, and `Retired`.
@@ -21,12 +21,13 @@ Choreo uses the OAuth2.0 bearer token-based authentication mechanism to allow a 
 The access token is a string that the consumer passes in an HTTP header of the API request. Choreo supports JWT formatted self-contained access tokens.
 
 ## Rate limiting
-Rate limiting makes it possible to limit the number of permitted requests to an API for a given time window.
-Thereby it allows you to:
-
-   - Protect your APIs from common types of security attacks, such as certain types of Denial of Service (DoS) attacks.
-   - Regulate traffic according to infrastructure availability.
-   
+Rate limiting limits the number of permitted requests to an API within a specified timeframe. You can use a rate-limiting strategy for the following use cases:
+    - Protect your APIs from common types of security attacks, such as certain types of Denial of Service (DoS) attacks 
+    - Regulate traffic according 
+    
+    
+    to infrastructure availability.
+    
 ## Tags
 Tags allow API providers to categorize APIs that have similar attributes. When a tagged API gets published to the API Developer Portal, its tags appear as clickable links. API consumers can use the link to navigate to a category of interest. API consumers can also search APIs that match a particular tag on the Developer Portal.
 
