@@ -1,6 +1,6 @@
 # Integrating Services
 
-In this tutorial, you can learn how to integrate multiple services via Choreo. Here, let's consider a simple example where an online shoe store needs an application that captures online orders. For each order, the store also needs to generate a notification for the sales manager as well as update the inventory records.
+In this tutorial, you can learn how to integrate multiple services via Choreo. Here, let's consider a simple example where an online shoe store uses an application that captures online orders. For each order, the application also needs to generate a notification for the sales manager as well as update the inventory recordsinventory records and notify the status to the client who places the order.
 
 ## Before you begin
 
@@ -20,181 +20,181 @@ The following are required to try out this tutorial:
 
 ## Step 1: Create a service to manage inventory records
 
-In this step, you are creating a service that consumes the orders captured by the `orders` service that you will be creating later, and then updates the inventory records based on the number of items ordered.
+In this step, you are creating a service that does the following:
+
+- Reading order requests captured by the `orders` service that you will be creating later (i.e., in step 3).
+- Determining whether the order request can be met by checking the inventory records in the `inventory` Google sheet.
+- Responding to each order request based on the status (i.e., whether the requested item is available and whether the available quantity is adequate to match the quantity requested).
 
 To create this service, follow the procedure below:
 
-1. Access the Choreo Development Console and click **Services**. Then click **Create**.
+1. Access the Choreo Console and click **Services**. Then click **Create**.
 
 2. Enter `inventory` as the name and click **Create**.
 
-3. Click **PUT**, enter `/inventory` in the **Path** field, and then click **Save API**.
+3. To define the API that triggers your service, click **PUT**, enter `/inventory` in the **Path** field, and then click **Save API**.
 
     ![Resource Configuration](../assets/img/tutorials/inventory-service-api-trigger.png)
-
-4. Click **Variable**. Then enter information as follows:
-
-    | **Field**         | **Value**                     |
-    |-------------------|-------------------------------|
-    | **Type**          | **string**                    |     
-    | **Name**          | `responseString`              |
-    | **Expression**    | `""`                    |
-
-    Click **Save**.
     
-5. To define a variable for query parameters, add another variable statement as follows:
+4. To read and update the information in the order, define the required parameters.
 
-    1. Click the **+** icon below the last `responseString` variable statement you added and then click **Variable**. 
+    In this scenario, the information derived from each order are the names of the item ordered and the quantity required.
     
-    2. Enter information for the variable as follows:
-
+    Therefore, let's define the parameters via variables as follows:
+    
+    1. First, define a variable to contain the variables that define the parameters.
+    
+        To do this, click the **+** icon below the last `responseString` statement you added and then click **Variable**.
+        
+        Enter the following information:
+        
         | **Field**         | **Value**                  |
         |-------------------|----------------------------|
         | **Type**          | **other**                  |     
         | **Other Type**    | `map<string[]>`            |
         | **Name**          | `queryParams`              |
         | **Expression**    | `request.getQueryParams()` |
+        
+        Click **Save**.
 
-    3. Click **Save**.
+    2. To allow the service to identify the name of the item ordered, define another variable.
     
-6. To enable Choreo to read the value for the `item` parameter in the order request, add another variable statement as follows:
-
-    1. Click the **+** below the `queryParams` variable statement you added, and then click **Variable**. 
+        Click the **+** icon below the `queryParams`statement you added, and then click **Variable**.
+        
+        Enter the following information:
     
-    2. Enter information for the variable as follows:
-
         | **Field**         | **Value**                    |
         |-------------------|------------------------------|
         | **Type**          | **string**                   |     
         | **Name**          | `inventoryItemId`            |
         | **Expression**    | `queryParams.get("item")[0]` |
+        
+        Click **Save**.
+        
+    3. To allow the service to identify the quantity ordered, define another variable.
     
-    3. Click **Save**.
-    
-7. To enable Choreo to read the value for the `quantity` parameter in the order request, add another variable statement as follows:
-
-    1. Click the **+** icon below the `inventoryItemId` variable statement you added, and then click **Variable**. 
-    
-    2. Enter information for the variable as follows:
-
+        Click the **+** icon below the `inventoryItemId` variable statement you added, and then click **Variable**.
+        
+        Enter the following information:
+        
         | **Field**         | **Value**                                           |
         |-------------------|-----------------------------------------------------|
         | **Type**          | **int**                                             |     
         | **Name**          | `quantity`                                          |
         | **Expression**    | `check int:fromString(queryParams.get("count")[0])` |
         
-    3. Click **Save**.
+        Click **Save**.
      
- 8. To connect to the Google sheet where inventory records are maintained, add an API call as follows: 
+ 5. To connect to the Google sheet where inventory records are maintained, add an API call as follows: 
             
-    1. Click the **+** below the `quantity` variable statement you added, and then click **API Calls**.
+    Click the **+** icon below the `quantity` variable statement you added, and then click **API Calls**. Then click **Google Sheets**.
     
-    2. Click **Google Sheets**
+    To access the specific account you need to use for this scenario, click **Connect to Google Sheets**, and then click **Proceed**. Click on the Google Account of your choice and click **Allow** too allow Choreo to access it as described in the page. Then click **Save**.
     
-    3. Click **Connect to Google Sheets**, and then click **Proceed**. Click on the Google Account of your choice and click **Allow** too allow Choreo to access it as described in the page. Then click **Save**.
+    Now you can configure the Google sheets Google account you selected to receive API calls. 
     
-    4. Click the **+** icon below the Google Sheets connection you just added. Click **API Calls**, and then click **sheetsEndpoint** under **Choose existing connection**.
+    To do this, click the **+** icon below the Google Sheets connection you just added. Click **API Calls**, and then click **sheetsEndpoint** under **Choose existing connection**.
     
-    5. In the **Operation** field, select **Get values from a column**. Then enter information as follows in the rest of the fields that appear:
+    In the **Operation** field, select **Get values from a column**. Then enter the following information in the rest of the fields that appear:
     
-        | **Field**                  | **Value**                                                                                                       |
-        |----------------------------|-----------------------------------------------------------------------------------------------------------------|
-        | **SpreadsheetId**x         | The ID of your google sheet.                                                                                    |  
-        | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
-        | **Column**                 | The ID of the column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
-        | **Response Variable Name** | `itemIDs`                                                                                                       |
+    | **Field**                  | **Value**                                                                                                       |
+    |----------------------------|-----------------------------------------------------------------------------------------------------------------|
+    | **SpreadsheetId**x         | The ID of your google sheet.                                                                                    |  
+    | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
+    | **Column**                 | The ID of column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
+    | **Response Variable Name** | `itemIDs`                                                                                                       |
         
-        Here, you are adding a connection that retrieves the number of items currently available in the column `A`, `Sheet1` of the `inventory` Google Sheet.
+    Here, you are adding a connection that retrieves the number of items currently available in the column `A`, `Sheet1` of the `inventory` Google Sheet.
         
-    6. Click **Save**.
+    Click **Save**.
         
- 9. To cast the response received, add another variable statement as follows:
+ 6. For the service to cast the information it retrieved from the Google sheet as a response to the order, add a variable.
  
-    1. Click the **+** below the Google Sheet connection you added, and then click **Variable**.
+    To do this, click the **+** icon below the Google Sheet connection you added, and then click **Variable**.
     
-    2. Enter information for the variable as follows:
+    Enter the following information:
     
-        | **Field**         | **Value**        |
-        |-------------------|------------------|
-        | **Type**          | **other**        |     
-        | **Other Type**    | `string[]`       |
-        | **Name**          | `respondMessages`|
-        | **Expression**    | `[]`             |
+    | **Field**         | **Value**        |
+    |-------------------|------------------|
+    | **Type**          | **other**        |     
+    | **Other Type**    | `string[]`       |
+    | **Name**          | `respondMessages`|
+    | **Expression**    | `[]`             |
         
-    3. Click **Save**.
+    Click **Save**.
         
- 10. To log the response, add a `log` statement as follows:
+ 7. Once the response is received, the service needs to log it.
  
-    1. Click the **+** below the `respondMessages` variable statement you added, and then click **Log**.
+    To do this, click the **+** below the `respondMessages` variable statement you added, and then click **Log**.
     
-    2. In the **Expression** field, enter `"itemIDs.toJsonString()`. 
+    In the **Expression** field, enter `"itemIDs.toJsonString()`.
     
-    3. Click **Save**.    
+    Click **Save**.    
     
-11. To define a parameter for the inventory record, add a new variable as follows:
-
-    1. Click the **+** below the log statement you added, and then click **Variable**.
-    
-    2. Enter information for the variable as follows:
-    
+ 8. To iterate over the rows in the Google sheet that you connected to the service and match the information with that in the order, add statements as follows:
+ 
+    1. To iterate over the list of items that are currently available in the `inventory` Google sheet, add a variable.
+ 
+        Click the **+** below the log statement you added, and then click **Variable**.
+        
+        Enter the following information:
+        
         | **Field**      | **Value** |
         |----------------|-----------|
         | **Type**       | **int**   |     
         | **Name**       | `i`       |
         | **Expression** | `1`       |
         
-    3. Click **Save**.
+        Click **Save**.
+ 
+    2. To add an index where the shoe type requested via the order is found, add another variable.
+    
+        Click the **+** below the log statement you added, and then click **Variable**.
         
-12. To define a parameter for the inventory index, add a new variable as follows:
-    
-    1. Click the **+** icon below the last `i` variable statement you added, and then click **Variable**.
-    
-    2. Enter information for the variable as follows:
-    
+        Enter the following information:
+        
         | **Field**      | **Value** |
         |----------------|-----------|
         | **Type**       | **int**   |     
         | **Name**       | `index`   |
         | **Expression** | `-1`      |
         
-    3. Click **Save**.
+        Click **Save**.    
         
-13. To define a parameter for the item ID, add a string variable as follows:   
-
-    1. Click the **+** icon below the last `index` variable statement you added, and then click **Variable**.
-    
-    2. Enter information for the variable as follows:  
- 
-         | **Field**      | **Value**      |
-         |----------------|----------------|
-         | **Type**       | **string**     |     
-         | **Name**       | `itemIDString` |
-         | **Expression** | `""`           | 
+    3. To find the item in the Google sheet that matches the item requested in the order, add another variable.
+        
+        Click the **+** icon below the last `index` statement you added, and then click **Variable**.
+        
+        Enter the following information: 
+     
+        | **Field**      | **Value**      |
+        |----------------|----------------|
+        | **Type**       | **string**     |     
+        | **Name**       | `itemIDString` |
+        | **Expression** | `""`           | 
+             
+        Click **Save**.
          
-    3. Click **Save**.
-         
-14. Add a `foreach` statement as follows:
+ 9. Define the process to be followed by the `inventory` service for each order request sent by following this procedure:
    
-    1. Click the **+** below the last `itemIDString` variable statement you added, and then click **ForEach**.
+    1. To add a `ForEach` statement that iterates over a list of items, click the **+** icon below the last `itemIDString` statement you added, and then click **ForEach**.
     
-    2. Enter information for the ForEach statement as follows:
+        Enter the following information:
     
          | **Field**                  | **Value**   |
          |----------------------------|-------------|
          | **Current Value Variable** | **ItemID**  |     
          | **Iterable Expression**    | `itemIDs`   |
          
-    3.Click **Save**.
+        Click **Save**.
          
-    4. To specify the action to be iterated for each order request, add a custom statement within the ForEach statement as follows:
+    2. To specify the action to be iterated for each order request, add a custom statement within the `ForEach` statement.
      
-        1. Click the **+** icon below the `foreach` statement you added.
+        Click the **+** icon below the `Foreach` statement you added.
         
-            ![Custom Statement](../assets/img/tutorials/inventory-service-add-custom-statement.png)
+        ![Custom Statement](../assets/img/tutorials/inventory-service-add-custom-statement.png)
             
-        2. Click **Custom**.
-        
-        3. In the **Statement** field, enter the following statement.
+        Then click **Other**, and enter the following in the **Statement** field.
         
             ```
             itemIDString = <string>itemID;
@@ -204,190 +204,182 @@ To create this service, follow the procedure below:
             } 
             i = i + 1;
             ```       
-        4. Click **Save**.
+        Click **Save**.
                        
-15. To define the action to be taken based on whether the requested item exists in stock or not, add an `if` statement as follows:
+10. Define the action to be taken based on whether the requested item exists in stock or not as follows:
 
-    1. Click the last **+** icon in the diagram of your low code view.
+    1. First, let's add an `If` statement to define the condition where the `inventory` Google sheet has the item that matches the item mentioned in the order.
+    
+        To do this, click the last **+** icon in the diagram of your low code view.
     
         ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement.png)
     
-    2. Click **If**.
+        Click **If**, and in the **Condition** field, enter `index > 0`.
+        
+        Here, you are checking whether the index that you previously added as a variable has a value greater that zero. If this condition is met, it means that a matching item is available and the index is updated.
     
-    3. In the **Condition** field, enter `index > 0`.
+        Click **Save**.
+        
+    2. Define the actions that the service needs to perform if the given condition is met by adding the following statements:
     
-    4. Click **Save**.
+        1. To derive the available stock for the requested item from the specified cell in the google sheet, add a variable statement. 
         
-    5. Define the actions that the service needs to perform if the given condition is met by adding the following statements:
+            Click the **+** icon below the last if statement you added.
     
-        1. To get the available stock for the requested item from the specified cell in the google sheet, add a variable statement as follows: 
+            ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-if.png)
         
-            1. Click the **+** icon below the last if statement you added.
-    
-                ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-if.png)
+            Then click **Variable** and enter information as follows:
+            
+            | **Field**      | **Value**                |
+            |----------------|--------------------------|
+            | **Type**       | **string**               |     
+            | **Name**       | `cellName`               |
+            | **Expression** | `"B" + index.toString()` | 
+            
+            The above expression directs the service to check the value in the `B` column cell which is in the same row as the item ordered (i.e., identified via the index).
+                
+            Click **Save**.
+            
+        2. To get the cell value, add an API call.           
         
-            2. Then click **Variable** and enter information as follows:
+           Click the **+** icon below the `cellName` variable statement you added.
             
-                | **Field**      | **Value**                |
-                |----------------|--------------------------|
-                | **Type**       | **string**               |     
-                | **Name**       | `cellName`               |
-                | **Expression** | `"B" + index.toString()` | 
+            ![API Call](../assets/img/tutorials/inventory-service-add-api-call.png)
                 
-            3. Click **Save**.
+           Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
             
-        2. To get the cell value, add an API call as follows:            
-        
-            1. Click the **+** icon below the `cellName` variable statement you added.
+           In the **Operation** field, select **Get value in a cell**. Then enter information as follows in the rest of the fields that appear.
             
-                ![API Call](../assets/img/tutorials/inventory-service-add-api-call.png)
-                
-            2. Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
-            
-            3. In the **Operation** field, select **Get value in a cell**. Then enter information as follows in the rest of the fields that appear.
-            
-                | **Field**                          | **Value**                                                                                                       |
-                |------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-                | **SpreadsheetId**x                 | The ID of your google sheet.                                                                                    |  
-                | **Worksheet Name**                 | The name of the sheet with the inventory records.                                                               |
-                | **Required Cell in A1 Annotation** | `cellName`                                                                                                      |
-                | **Response Variable Name**         | `cellValue`                                                                                                     |
-                
-            4. Click **Save**.
-            
-        3. To log the cell value obtained, add a log statement as follows:
-        
-            1. Click the **+** icon below the last API call you added. 
-            
-                ![Log Statement](../assets/img/tutorials/inventory-service-add-log-statement.png)
-                
-            2. Click **Log**.
-            
-            3. In the **Expression** field, enter `cellValue.toJsonString()`.
-            
-            4. Click **Save**.
-            
-        4. To compare the cell value with the quantity ordered, add a variable statement as follows:
-            
-            1. Click the **+** icon below the last log statement you added.
-    
-                ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-log.png)
-        
-            2. Then click **Variable** and enter information as follows:
-            
-                | **Field**      | **Value**                                         |
-                |----------------|---------------------------------------------------|
-                | **Type**       | **int**                                           |     
-                | **Name**       | `intCellValue`                                    |
-                | **Expression** | `check 'int:fromString(cellValue.toJsonString())` | 
-                
-            3. Click **Save**.                  
-        
-        5. To specify the action that the service should perform based on whether the cell value (i.e., the available stock) is greater than the quantity ordered or not, add an if statement as follows:
-        
-            1. Click the **+** icon below the `intcellValue` variable statement you added.
-            
-                ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement-2.png)
-                
-            2. Click **If**.
-            
-            3. In the **Condition** field, enter `intCellValue > quantity`.
-            
-                This checks whether the value in the cell is greater than the quantity specified in the order.
-                
-            4. Click **Save**.
-            
-            5. To specify the action to perform when the condition is met, add statements as follows.
+            | **Field**                          | **Value**                                                                                                       |
+            |------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+            | **SpreadsheetId**x                 | The ID of your google sheet.                                                                                    |  
+            | **Worksheet Name**                 | The name of the sheet with the inventory records.                                                               |
+            | **Required Cell in A1 Annotation** | `cellName`                                                                                                      |
+            | **Response Variable Name**         | `cellValue`                                                                                                     |
                
-                1. To deduct the quantity ordered from the existing stock, add a variable statement as follows:
-                
-                    1. Click the **+** icon on the **then** path of the if statement you added.
-                
-                        ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-4.png)
-               
-                    2. Click **Variable**.
-                    
-                    3. Enter information for the variable as follows.
-                    
-                        | **Field**      | **Value**                 |
-                        |----------------|---------------------------|
-                        | **Type**       | **int**                   |     
-                        | **Name**       | `newStockValue`           |
-                        | **Expression** | `intCellValue - quantity` |
-                        
-                    4. Click **Save**.
-                    
-                2. To set the value derived via the `newStockValue` variable statement in the google sheet cell that has the current stock, add an API call as follows:
-                
-                    1. Click the **+** icon below the `newStockValue` variable statement you added.
-                    
-                        ![API Call](../assets/img/tutorials/inventory-service-add-setvalue-api-call.png)
-                        
-                    2. Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
-                    
-                    3. In the **Operation** field, select **Set value to a cell**. Then enter information as follows in the rest of the fields that appear.
-                    
-                        | **Field**                          | **Value**                                           |
-                        |------------------------------------|-----------------------------------------------------|
-                        | **SpreadsheetId**x                 | The ID of your google sheet.                        |  
-                        | **Worksheet Name**                 | The name of the sheet with the inventory records.   |
-                        | **Required Cell in A1 Annotation** | **cellName**                                        |
-                        | **Value Of The Cell To Set**       | **newStockValue**                                   |
-                        | **Response Variable Name**         | `respondMessages`                                   |
-                        
-                    4. Click **Save**.
-                    
-                3. To generate a message that confirms that the current inventory record is updated, add a custom message as follows:
-                
-                    1. Click the **+** icon below the last API call you added.                     
+            Here, you are connecting the `inventory` Google sheet to the service so that it can apply the previous `cellName` variable statement to it.
             
-                        ![Notification](../assets/img/tutorials/inventory-service-add-response.png)
-                        
-                    2. Click **Other**.
-                    
-                    3. In the **Statement** field, enter `respondMessages.push("Successfully updated the item: " + itemIDString);`
-                    
-                    4. Click **Save**.
+            Click **Save**.
             
-            6. To specify the action to perform when the `intCellValue > quantity` condition is not met, add a custom statement as follows.
-            
-                1. Click the **+** icon on the **else** path of the `intCellValue > quantity` if statement.
-                
-                    ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-1.png)
-                    
-                2. Click **Other**.
-                
-                3. In the **Statement** field, enter `respondMessages.push("Stock is not enough for the Item: " + itemIDString);`.
-                
-                    Here, you are configuring a message stating that the stock is not enough to be returned if the available stock is less than the quantity requested.
-                    
-                4. Click **Save**.
-                
-        6. To specify the action to perform if the `index > 0` condition is not met, add a custom statement as follows:
+        3. To log the cell value obtained, add a `Log` statement.
         
-            1. Click the **+** icon on the **else** path of the `index > 0` if statement.
+            Click the **+** icon below the last API call you added. 
             
-                ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-2.png)
+            ![Log Statement](../assets/img/tutorials/inventory-service-add-log-statement.png)
                 
-            2. Click **Other**.
+            Then click **Log**, and in the **Expression** field, enter `cellValue.toJsonString()`.
             
-            3. In the **Statement** field, enter `respondMessages.push("Cannot find the item: " + itemIDString);`.
+            Click **Save**.
             
-                Here, you are configuring a message stating that the requested item cannot be found when the item name in the order request is not available in the Google sheet.
+        4. To cast the cell value derived as the available stock of the requested item, add a variable.
+            
+           Click the **+** icon below the last log statement you added.
+    
+            ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-log.png)
+        
+           Then click **Variable** and enter the following information:
+            
+            | **Field**      | **Value**                                         |
+            |----------------|---------------------------------------------------|
+            | **Type**       | **int**                                           |     
+            | **Name**       | `intCellValue`                                    |
+            | **Expression** | `check 'int:fromString(cellValue.toJsonString())` | 
                 
-            4. Click **Save**.
+            Click **Save**.                  
+        
+        5. To specify the action that the service should perform based on whether the cell value (i.e., the available stock) is greater that the quantity ordered or not, add an `If` statement.
+        
+            Click the **+** icon below the `intcellValue` statement you added.
+            
+            ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement-2.png)
+                
+            Click **If**, and in the **Condition** field, enter `intCellValue > quantity`.
+            
+            This checks whether the value derived from the cell (i.e., the current stock) is greater than the quantity specified in the order.
+                
+            Click **Save**.
+            
+        6. To specify the action to perform when the condition is met, add statements as follows.
                
-16. To send the final response after processing the complete flow of the service, add a respond statement as follows:
+            1. To deduct the quantity ordered from the existing stock, add a variable statement.
+                
+                Click the **+** icon on the **then** path of the if statement you added.
+                
+                ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-4.png)
+               
+                Click **Variable**, and enter the following information:
+                    
+                | **Field**      | **Value**                 |
+                |----------------|---------------------------|
+                | **Type**       | **int**                   |     
+                | **Name**       | `newStockValue`           |
+                | **Expression** | `intCellValue - quantity` |
+                        
+                Click **Save**.
+                    
+            2. To set the value derived via the `newStockValue` variable statement as the current stock, add an API call as follows:
+                
+                Click the **+** icon below the `newStockValue` statement you added.
+                    
+                ![API Call](../assets/img/tutorials/inventory-service-add-setvalue-api-call.png)
+                        
+                Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
+                    
+                In the **Operation** field, select **Set value to a cell**. Then enter the following information in the rest of the fields that appear.
+                    
+                | **Field**                          | **Value**                                           |
+                |------------------------------------|-----------------------------------------------------|
+                | **SpreadsheetId**x                 | The ID of your google sheet.                        |  
+                | **Worksheet Name**                 | The name of the sheet with the inventory records.   |
+                | **Required Cell in A1 Annotation** | **cellName**                                        |
+                | **Value Of The Cell To Set**       | **newStockValue**                                   |
+                | **Response Variable Name**         | `respondMessages`                                   |
+                        
+                Click **Save**.
+                    
+            3. To generate a message that confirms that the current inventory record is updated, add a custom message.
+                
+                Click the **+** icon below the last API call you added.                     
+        
+                ![Notification](../assets/img/tutorials/inventory-service-add-response.png)
+                    
+                Click **Other**, and in the **Statement** field, enter `respondMessages.push("Sucessfully updated the item: " + itemIDString);`
+                
+                Click **Save**.
+            
+        7. To specify the action to perform when the `intCellValue > quantity` condition is not met, add a custom statement.
+            
+           Click the **+** icon on the **else** path of the `intCellValue > quantity` if statement.
+                
+            ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-1.png)
+                    
+            Click **Other**, and in the **Statement** field, enter `respondMessages.push("Stock is not enough for the Item: " + itemIDString);`.
+                
+            Here, you are configuring a message stating that the stock is not enough to be returned if the available stock is less than the quantity requested.
+                    
+            Click **Save**.
+                
+        6. To specify the action to perform if the `index > 0` condition is not met, add another custom statement.
+        
+            Click the **+** icon on the **else** path of the `index > 0` if statement.
+            
+            ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-2.png)
+                
+            Click **Other**, and in the **Statement** field, enter `respondMessages.push("Cannot find the item: " + itemIDString);`.
+            
+            Here, you are configuring a message stating that the requested item cannot be found when the item name in the order request is not available in the Google sheet.
+                
+            Click **Save**.
+               
+11. To send the final response after processing the complete flow of the service, add a respond statement.
 
-    1. Click the last **+** icon in the diagram. Then click **+** again.
+    Click the last **+** icon in the diagram. Then click **+** again.
     
-        ![Respond Statement](../assets/img/tutorials/inventory-service-add-respond-statement.png)
+    ![Respond Statement](../assets/img/tutorials/inventory-service-add-respond-statement.png)
     
-    2. Click **Respond**.
+    Click **Respond**, and in the **Respond Expression** field, enter `respondMessages`. 
     
-    3. In the **Respond Expression** field, enter `respondMessages`. 
-    
-    4. Click **Save**.
+    Click **Save**.
     
 Now you have finished developing the `inventory` service. Now you can test it and deploy it if it works as expected.
 
