@@ -25,10 +25,11 @@ Performing root cause analysis is crucial in identifying and rectifying the unde
 3. From the left-hand menu, click **Observe**.
 4. On the right-hand bottom, click the **Sample Service** icon.
    
-       ![Sample service popup](../assets/img/observability/sample-service-pop-up.png){.cInlineImage-full}
+    ![Sample service popup](../assets/img/observability/sample-service-pop-up.png){.cInlineImage-full}
+   
 5. Click **Try Sample Service**.
 
-       ![Try sample service](../assets/img/observability/try-sample-service.png){.cInlineImage-half}
+    ![Try sample service](../assets/img/observability/try-sample-service.png){.cInlineImage-half}
     
 ## Detect anomalies and perform root cause analysis
 You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latencies of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
@@ -51,7 +52,7 @@ Follow the steps below.
 3. Observe the logs in the logs panel.
 4. Note multiple logs are mentioning a connection error with the `hr-service`.
  
-![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png){.cInlineImage-full}
+    ![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png){.cInlineImage-full}
  
 #### Analyze the latency graph
 
@@ -103,7 +104,6 @@ Follow the steps below to learn how to drill down and confirm the root cause for
 6. Observe that the error graph is also fluctuating over time as the service logs errors.
 7.  You can observe similar behavior in the other bins as well.
 
-   ![Diagnostic View - other bin](../assets/img/observability/other-bins.png){.cInlineImage-full}
-   
+    ![Diagnostic View - other bin](../assets/img/observability/other-bins.png){.cInlineImage-full}
    
 Therefore, now you can conclude that the connectivity issue is the root cause for the intermittent anomalies detected in the throughput and the latencies of requests.
