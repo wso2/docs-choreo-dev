@@ -19,7 +19,6 @@ The Observability dashboard allows you to:
 
 !!! note
     By default, the observability view is private and is only visible to the service owner. If you need to share it, toggle the **Share On** switch, copy the observability URL and share it with the required parties.
-    
     ![Options Bar](../assets/img/observability/options-bar.png){: style="height:120%;width:90%"}
 
 ### Throughput and latency graphs
@@ -32,7 +31,7 @@ By default, Choreo renders this graph for the data generated within the past 24 
 
 You can expand the graph by clicking and dragging the cursor over the period you want to drill down.
 
-You can view the Choreo service logs in the **Logs**  view below the graph. Clicking on either graph will update the **Logs** view to contain the corresponding log entries generated at that time. You can use these logs to identify any evident reasons for any latency and throughput anomalies you detect using the graph. 
+You can view the Choreo service logs in the **Logs**  view below the graph. Clicking on either graph will update the **Logs** view to contain the corresponding log entries generated at that time. You can use these logs to identify the evident reasons for any latency and throughput anomalies you detect using the graph. 
 
  ![Logs View](../assets/img/observability/logs.png){: style="height:55%;width:70%"} 
 
@@ -47,9 +46,9 @@ By default, the time range selected for the **Throughput & Latency** graphs is t
  
 A **bin** is a horizontal section of the graph for a particular period. A bin consists of the following:
 
-- **Start time and end time**: Denoted by the dotted lines separating each bin.
-- **Logs**:  List of log events that occurred within the respective bins time frame. Each entry in this column includes the timestamp the log entries started to appear and the total log count. These log entries appear according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
-- **Error**: The number of HTTP errors that occurred at the selected time..
+- **Date/Time**: The timestamp the log entries started to appear.
+- **Logs**:  List of log entries and their respective log count that occurred within the bins time frame. These log entries appear according to precedence. The error logs are listed first, followed by the info logs. Each bin shows a maximum of five log entries sorted based on the log count.
+- **Error**: The number of HTTP errors that occurred at the selected time.
 - **TP**: Throughput of the requests at the selected time (req/s).  
 - **Latency**: Latency of the request at the selected time (ms).
 - **CPU**: CPU usage at the selected time (millicores).
