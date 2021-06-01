@@ -145,6 +145,16 @@ spec:
             configMapKeyRef:
               key: ANALYTICS_HOSTNAME
               name: cm-frontend
+        - name: CHOREO_DOCS
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DOCS
+              name: cm-frontend
+        - name: BALLERINA_DOCS
+          valueFrom:
+            configMapKeyRef:
+              key: BALLERINA_DOCS
+              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
@@ -164,15 +174,5 @@ spec:
           requests:
             cpu: 200m
             memory: 256Mi
-        - name: CHOREO_DOCS
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DOCS
-              name: cm-frontend
-        - name: BALLERINA_DOCS
-          valueFrom:
-            configMapKeyRef:
-              key: BALLERINA_DOCS
-              name: cm-frontend
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
