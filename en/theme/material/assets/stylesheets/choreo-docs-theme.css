@@ -298,6 +298,26 @@ a.cChoreoDocsButtons.localLink {
 	height: 200px;
 }
 
+.cInlineImage-full {
+    display: inline-block;
+    text-align: center;
+    height:75%;
+    width:90%;
+    border: 1px solid gray;
+}
+
+.cInlineImage-half {
+    display: inline-block;
+    text-align: center;
+    width:50%;
+    border: 1px solid gray;
+}
+
+.cInlineImage-bordered {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid gray;
+}
 
 @media screen and (max-width: 1540px) {
 
