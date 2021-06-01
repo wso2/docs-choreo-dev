@@ -25,9 +25,6 @@ Rate limiting limits the number of permitted requests to an API within a specifi
     - Protect your APIs from common types of security attacks, such as certain types of Denial of Service (DoS) attacks 
     - Regulate traffic according 
     
-    
-    to infrastructure availability.
-    
 ## Tags
 Tags allow API providers to categorize APIs that have similar attributes. When a tagged API gets published to the API Developer Portal, its tags appear as clickable links. API consumers can use the link to navigate to a category of interest. API consumers can also search APIs that match a particular tag on the Developer Portal.
 
