@@ -150,11 +150,6 @@ spec:
             configMapKeyRef:
               key: CHOREO_DOCS
               name: cm-frontend
-        - name: BALLERINA_DOCS
-          valueFrom:
-            configMapKeyRef:
-              key: BALLERINA_DOCS
-              name: cm-frontend
         image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
