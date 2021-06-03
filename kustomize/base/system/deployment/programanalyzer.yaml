@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: programanalyzer
+  name: programanalyzer
+spec:
+  selector:
+    matchLabels:
+      choreo.component: programanalyzer
+  template:
+    metadata:
+      labels:
+        choreo.component: programanalyzer
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer:latest
+        securityContext:
+          runAsUser: 100
+          runAsGroup: 1000
+          capabilities:
+            drop:
+              - NET_RAW
+        name: programanalyzer
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: progan-port
+            path: /readiness
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: progan-port
+            path: /liveness
+        ports:
+        - containerPort: 9000
+          name: progan-port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 768Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: '/home/ballerina/config'
+          name: programanalyzer-config
+        - mountPath: /repo
+          name: pvc-userappstorage
+        - mountPath: /home/user-ai
+          name: ballerina-home-dir
+        - name: secret-azure-storage-account
+          mountPath: "/mnt/csi/secret-azure-storage-account"
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: ballerina-home-dir
+        emptyDir: {}
+      - name: programanalyzer-config
+        configMap:
+          defaultMode: 420
+          name: cm-programanalyzer
+      - name: pvc-userappstorage
+        persistentVolumeClaim:
+          claimName: pvc-userappstorage
+          readOnly: true
+      - name: secret-azure-storage-account
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-azure-storage-account
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
