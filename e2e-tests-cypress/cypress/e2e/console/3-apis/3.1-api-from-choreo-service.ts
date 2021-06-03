@@ -35,7 +35,8 @@ describe('API creation from choreo service', () => {
 
         cy.wait('@createService', { timeout: 60000 }).then((interception) => {
             serviceName = interception.response.body[`name`];
-            const apiName = serviceName.replace(/-/g,"_");
+            const displayName = interception.response.body[`displayName`];
+            const apiName = displayName.replace(/\s+/g, '');
 
             // Deploy a sample service
             cy.url().should('include', `app/${serviceName}/develop`);
