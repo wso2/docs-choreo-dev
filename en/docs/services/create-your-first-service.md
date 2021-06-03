@@ -80,9 +80,9 @@ To design the service to fetch the current active COVID-19 cases in the United S
     
     2. Click **ForEach**.
 
-    3. In the **Iterable Expression** field, enter `jsonArray`. Then click **Save**.
+    3. In the **Iterable Expression** field, enter `jsonArray`and then click **Save**.
     
-    4. To apply the filter, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
+    4. Click the **+** icon just below the last ForEach statement you added.
 
         ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png){.cInlineImage-half}
     
