@@ -9,6 +9,7 @@ The following are required to try out this tutorial:
 - A Google account. In this Google account, open the Google Drive and create a Google sheet named `inventory` with the following table:
 
     ![Google Sheet Extract](../assets/img/tutorials/inventory-service-google-sheet-extract.png){.cInlineImage-half}
+    
     | **item**    | **count** |
     |-------------|-----------|
     | trainers    | 100       |
@@ -22,9 +23,9 @@ The following are required to try out this tutorial:
 
 In this step, you are creating a service that does the following:
 
-- Reading order requests captured by the `orders` service that you will be creating later (i.e., in step 3).
+- Reading order requests captured by the `orders` service that you will create in step 3.
 - Determining whether the order request can be met by checking the inventory records in the `inventory` Google sheet.
-- Responding to each order request based on the status (i.e., whether the requested item is available and whether the available quantity is adequate to match the quantity requested).
+- Generating a response for each order request based on the status (i.e., whether the requested item is available and whether the available quantity is adequate to match the quantity requested).
 
 To create this service, follow the procedure below:
 
@@ -36,15 +37,15 @@ To create this service, follow the procedure below:
 
     ![Resource Configuration](../assets/img/tutorials/inventory-service-api-trigger.png){.cInlineImage-half}
     
-4. To read and update the information in the order, define the required parameters.
+4. To read the information in the order, define the required parameters.
 
-    In this scenario, the information derived from each order are the names of the item ordered and the quantity required.
+    In this scenario, the information derived from each order includes the name of the item ordered, and the quantity required.
     
     Therefore, let's define the parameters via variables as follows:
     
     1. First, define a variable to contain the variables that define the parameters.
     
-        To do this, click **Variable**.
+        To do this,  click **Variable**.
         
         Enter the following information:
         
@@ -59,7 +60,7 @@ To create this service, follow the procedure below:
 
     2. To allow the service to identify the name of the item ordered, define another variable.
     
-        Click the **+** icon below the `queryParams`statement you added, and then click **Variable**.
+        Click the **+** icon below the `queryParams`statement, and then click **Variable**.
         
         Enter the following information:
     
@@ -73,7 +74,7 @@ To create this service, follow the procedure below:
         
     3. To allow the service to identify the quantity ordered, define another variable.
     
-        Click the **+** icon below the `inventoryItemId` variable statement you added, and then click **Variable**.
+        Click the **+** icon below the `inventoryItemId` variable statement, and then click **Variable**.
         
         Enter the following information:
         
@@ -87,9 +88,9 @@ To create this service, follow the procedure below:
      
  5. To connect to the Google sheet where inventory records are maintained, add an API call as follows: 
             
-    Click the **+** icon below the `quantity` variable statement you added, and then click **API Calls**. Then click **Google Sheets**.
+    Click the **+** icon below the `quantity` variable statement, and then click **API Calls**. Then click **Google Sheets**.
     
-    To access the specific account you need to use for this scenario, click **Connect to Google Sheets**, and then click **Proceed**. Click on the Google Account of your choice and click **Allow** too allow Choreo to access it as described in the page. Then click **Save**.
+    To access the specific account you need to use for this scenario, click **Connect to Google Sheets**, and then click **Proceed**. Click on the Google Account of your choice and click **Allow** to allow Choreo to access it as described on the page. Then click **Save**.
     
     Now you can configure the Google sheets Google account you selected to receive API calls. 
     
@@ -101,16 +102,16 @@ To create this service, follow the procedure below:
     |----------------------------|-----------------------------------------------------------------------------------------------------------------|
     | **SpreadsheetId**x         | The ID of your google sheet.                                                                                    |  
     | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
-    | **Column**                 | The ID of column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
+    | **Column**                 | The ID of the column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
     | **Response Variable Name** | `itemIDs`                                                                                                       |
         
-    Here, you are adding a connection that retrieves the number of items currently available in the column `A`, `Sheet1` of the `inventory` Google Sheet.
+    Here, you are adding a connection that retrieves the number of items currently available on column `A`, `Sheet1` of the `inventory` Google Sheet.
         
     Click **Save**.
         
- 6. For the service to cast the information it retrieved from the Google sheet as a response to the order, add a variable.
+ 6. For the service to cast the information is retrieved from the Google sheet as a response to the order, add a variable.
  
-    To do this, click the **+** icon below the Google Sheet connection you added, and then click **Variable**.
+    To do this, click the **+** icon below the Google Sheet connection, and then click **Variable**.
     
     Enter the following information:
     
@@ -125,7 +126,7 @@ To create this service, follow the procedure below:
         
  7. Once the response is received, the service needs to log it.
  
-    To do this, click the **+** below the `respondMessages` variable statement you added, and then click **Log**.
+    To do this, click the **+** below the `respondMessages` variable statement, and then click **Log**.
     
     In the **Expression** field, enter `"itemIDs.toJsonString()`.
     
@@ -135,7 +136,7 @@ To create this service, follow the procedure below:
  
     1. To iterate over the list of items that are currently available in the `inventory` Google sheet, add a variable.
  
-        Click the **+** below the log statement you added, and then click **Variable**.
+        Click the **+** below the log statement, and then click **Variable**.
         
         Enter the following information:
         
@@ -149,7 +150,7 @@ To create this service, follow the procedure below:
  
     2. To add an index where the shoe type requested via the order is found, add another variable.
     
-        Click the **+** below the log statement you added, and then click **Variable**.
+        Click the **+** below the log statement, and then click **Variable**.
         
         Enter the following information:
         
@@ -163,7 +164,7 @@ To create this service, follow the procedure below:
         
     3. To find the item in the Google sheet that matches the item requested in the order, add another variable.
         
-        Click the **+** icon below the last `index` statement you added, and then click **Variable**.
+        Click the **+** icon below the last `index` statement, and then click **Variable**.
         
         Enter the following information: 
      
@@ -177,7 +178,7 @@ To create this service, follow the procedure below:
          
  9. Define the process to be followed by the `inventory` service for each order request sent by following this procedure:
    
-    1. To add a `ForEach` statement that iterates over a list of items, click the **+** icon below the last `itemIDString` statement you added, and then click **ForEach**.
+    1. To add a `ForEach` statement that iterates over a list of items, click the **+** icon below the last `itemIDString` statement, and then click **ForEach**.
     
         Enter the following information:
     
@@ -190,7 +191,7 @@ To create this service, follow the procedure below:
          
     2. To specify the action to be iterated for each order request, add a custom statement within the `ForEach` statement.
      
-        Click the **+** icon below the `Foreach` statement you added.
+        Click the **+** icon below the `Foreach` statement.
         
         ![Custom Statement](../assets/img/tutorials/inventory-service-add-custom-statement.png){.cInlineImage-half}
             
@@ -216,7 +217,7 @@ To create this service, follow the procedure below:
     
         Click **If**, and in the **Condition** field, enter `index > 0`.
         
-        Here, you are checking whether the index that you previously added as a variable has a value greater that zero. If this condition is met, it means that a matching item is available and the index is updated.
+        Here, you are checking whether the index that you previously added as a variable has a value greater than zero. If this condition is met, it means that a matching item is available and the index is updated.
     
         Click **Save**.
         
@@ -224,7 +225,7 @@ To create this service, follow the procedure below:
     
         1. To derive the available stock for the requested item from the specified cell in the google sheet, add a variable statement. 
         
-            Click the **+** icon below the last if statement you added.
+            Click the **+** icon below the last `If` statement.
     
             ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-if.png){.cInlineImage-half}
         
@@ -242,7 +243,7 @@ To create this service, follow the procedure below:
             
         2. To get the cell value, add an API call.           
         
-           Click the **+** icon below the `cellName` variable statement you added.
+           Click the **+** icon below the `cellName` variable statement.
             
             ![API Call](../assets/img/tutorials/inventory-service-add-api-call.png){.cInlineImage-half}
                 
@@ -263,7 +264,7 @@ To create this service, follow the procedure below:
             
         3. To log the cell value obtained, add a `Log` statement.
         
-            Click the **+** icon below the last API call you added. 
+            Click the **+** icon below the last API call. 
             
             ![Log Statement](../assets/img/tutorials/inventory-service-add-log-statement.png){.cInlineImage-half}
                 
@@ -273,7 +274,7 @@ To create this service, follow the procedure below:
             
         4. To cast the cell value derived as the available stock of the requested item, add a variable.
             
-           Click the **+** icon below the last log statement you added.
+           Click the **+** icon below the last log statement.
     
             ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-log.png){.cInlineImage-half}
         
@@ -287,9 +288,9 @@ To create this service, follow the procedure below:
                 
             Click **Save**.                  
         
-        5. To specify the action that the service should perform based on whether the cell value (i.e., the available stock) is greater that the quantity ordered or not, add an `If` statement.
+        5. To specify the action that the service should perform based on whether the cell value (i.e., the available stock) is greater than the quantity ordered or not, add an `If` statement.
         
-            Click the **+** icon below the `intcellValue` statement you added.
+            Click the **+** icon below the `intcellValue` statement.
             
             ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement-2.png){.cInlineImage-half}
                 
@@ -303,7 +304,7 @@ To create this service, follow the procedure below:
                
             1. To deduct the quantity ordered from the existing stock, add a variable statement.
                 
-                Click the **+** icon on the **then** path of the if statement you added.
+                Click the **+** icon on the **then** path of the if statement.
                 
                 ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-4.png){.cInlineImage-half}
                
@@ -319,7 +320,7 @@ To create this service, follow the procedure below:
                     
             2. To set the value derived via the `newStockValue` variable statement as the current stock, add an API call as follows:
                 
-                Click the **+** icon below the `newStockValue` statement you added.
+                Click the **+** icon below the `newStockValue` statement.
                     
                 ![API Call](../assets/img/tutorials/inventory-service-add-setvalue-api-call.png){.cInlineImage-half}
                         
@@ -339,11 +340,11 @@ To create this service, follow the procedure below:
                     
             3. To generate a message that confirms that the current inventory record is updated, add a custom message.
                 
-                Click the **+** icon below the last API call you added.                     
+                Click the **+** icon below the last API call.                     
         
                 ![Notification](../assets/img/tutorials/inventory-service-add-response.png){.cInlineImage-half}
                     
-                Click **Other**, and in the **Statement** field, enter `respondMessages.push("Sucessfully updated the item: " + itemIDString);`
+                Click **Other**, and in the **Statement** field, enter `respondMessages.push("Successfully updated the item: " + itemIDString);`
                 
                 Click **Save**.
             
@@ -371,7 +372,7 @@ To create this service, follow the procedure below:
                 
             Click **Save**.
                
-11. To send the final response after processing the complete flow of the service, add a respond statement.
+11. To send the final response after processing the complete flow of the service, add a `Respond` statement.
 
     Click the last **+** icon in the diagram. Then click **+** again.
     
@@ -406,7 +407,7 @@ In this step, you will test the `inventory` service and deploy it if it works as
 4. Update your cURL command to add a payload and issue it as given below. 
 
     !!! note
-        For the purpose of demonstration in the scenarios given below, let's assume that the cURL command you copied is `curl "https://inventory-choreodeveloper-test.choreo.dev/inventory" -X PUT`
+        To demonstrate how the service works in the scenarios given below, let's assume that the cURL command you copied is `curl "https://inventory-choreodeveloper-test.choreo.dev/inventory" -X PUT`
 
     - **Scenario 1:** A sufficient quantity is available of the requested item
     
@@ -455,7 +456,7 @@ In this step, you will test the `inventory` service and deploy it if it works as
     
 5. To deploy the service, click **Go Live** for the service.
 
-    ![Deploy Icon](../assets/img/services/deploy-icon.png)
+    ![Deploy Icon](../assets/img/services/deploy-icon.png){.cInlineImage-half}
     
 6. Click **Deploy**.
 
@@ -504,7 +505,7 @@ In this step, you will create a service that performs the following functions of
     
     2. To identify the parameter that represents the number of items ordered, add another `Variable` statement.
 
-        To do this,click the **+** icon below the `queryParams` variable statement you added, and click **Variable**. 
+        To do this, click the **+** icon below the `queryParams` variable statement, and click **Variable**. 
         
         Enter the following information:
         
@@ -518,7 +519,7 @@ In this step, you will create a service that performs the following functions of
     
     3. To identify the parameter that represents the name of the item ordered, add another `Variable` statement.
 
-        Click the **+** icon below the `count` variable statement you added, and then click **Variable**.
+        Click the **+** icon below the `count` variable statement, and then click **Variable**.
         
         Enter information as follows.
         
@@ -530,9 +531,9 @@ In this step, you will create a service that performs the following functions of
         
         Click **Save**.
     
-6. Filter only requests that specify a number of items to be purchased via an `If`statement
+6. Filter only requests that specify the number of items to be purchased via an `If` statement
 
-    To do this, click the **+** icon below the `item` variable statement you added, and then click **If**.
+    To do this, click the **+** icon below the `item` variable, and then click **If**.
     
     In the **Condition** field, enter `queryParams.hasKey("count")`.
         
@@ -542,7 +543,7 @@ In this step, you will create a service that performs the following functions of
     
 7. Specify the action to be carried out if the given condition is met. 
     
-    To do this, click the **+** icon on the **then** line of the if statement you added.
+    To do this, click the **+** icon on the **then** line of the `If` statement.
         
     ![Add Custom statement to If statement 1](../assets/img/tutorials/order-service-add-custom-statement-to-if-statement-1.png){.cInlineImage-half}
     
@@ -554,7 +555,7 @@ In this step, you will create a service that performs the following functions of
             
 8. Once requests are filtered as specified above, further filter them so that only requests that specify an item are selected for further processing.
                       
-    Similar to how you filtered requests that specify the count, you can add another `If` statement followed by a statement that defines the action to be followed when the `if` condition is met.
+    Similar to how you filtered requests that specify the count, you can add another `If` statement followed by a statement that defines the action to be followed when the `If` condition is met.
     
     1. To add the `If` statement, click the last **+** icon in the current low code view.
     
@@ -564,9 +565,9 @@ In this step, you will create a service that performs the following functions of
         
         Then click **Save**.
         
-    2. To add the statement to get the item ordered, click the **+** icon on the **then** line of the `if` statement you added.
+    2. To add the statement to get the item ordered, click the **+** icon on the **then** line of the `if` statement.
     
-        ![Add Custom statement to If statement 2](../assets/img/tutorials/order-service-add-custom-statement-for-if-statement-2.png){.cInlineImage-half}
+        ![Add Custom statement to If statement 2](../assets/img/tutorials/order-service-custom-statement-for-if-statement-2.png){.cInlineImage-half}
         
         Click **Other**, and in the **Statement** field, enter `item = queryParams.get("item")[0];`.
         
@@ -587,7 +588,7 @@ In this step, you will create a service that performs the following functions of
         
         Click **Save**.
         
-    2. To configure the `HTTP` endpoint you added, click the last **+** icon in the current low code view, and then click **API Calls**.
+    2. To configure the `HTTP` endpoint, click the last **+** icon in the current low code view, and then click **API Calls**.
     
         Under **Choose existing connection**, click **inventoryEndpoint** to open the `HTTP` endpoint you created.
     
@@ -628,7 +629,9 @@ In this step, you will create a service that performs the following functions of
         
     2. To send a message via Twillio if the condition given above is met, add an API call and then configure it.
     
-        1. To add the API call, click on the **+** icon just below the last `If` statement that you added.
+        1. To add the API call, click on the **+** icon just below the last `If` statement.
+        
+            ![Add Twillio Connection](../assets/img/tutorials/order-service-add-twillio-api-call.png){.cInlineImage-half}
         
             Click **API Calls**, and then click **Twillio**. Then enter the following information:
             
@@ -639,7 +642,7 @@ In this step, you will create a service that performs the following functions of
             
             Click **Save**.
             
-        2. To configure the API call you added, click the **+** icon after the Twillio API call you added.
+        2. To configure the API call, click the **+** icon after the Twillio API call.
         
             Under **Choose existing connection**, click **twillioEndpoint**.
             
@@ -656,7 +659,7 @@ In this step, you will create a service that performs the following functions of
     
         3. To log the WhatsApp message sent, add a `log` statement.
         
-            Click on the **+** icon just below the last Twillio connection that you added.
+            Click on the **+** icon just below the last Twillio connection.
             
             ![Log Statement](../assets/img/tutorials/order-service-add-log.png){.cInlineImage-half}
             
@@ -666,7 +669,7 @@ In this step, you will create a service that performs the following functions of
     
         4. To send an email informing the client confirming the order, add and configure another API call.
         
-            1. To add the API Call, click the **+** icon just below the last log statement that you added.
+            1. To add the API Call, click the **+** icon just below the last log statement.
             
                 ![Gmail API Call](../assets/img/tutorials/order-service-add-gmail-connector.png){.cInlineImage-half}
             
@@ -674,7 +677,7 @@ In this step, you will create a service that performs the following functions of
             
                 Click **Connect Another Account**, and then click **Proceed**. Click on the Gmail account of your choice, and then click **Allow**. Then click **Save** to save the connection.
                 
-            2. To configure the API call you added, click the **+** icon after the last Gmail connection you added, and then click **API Calls**.
+            2. To configure the API call, click the **+** icon after the last Gmail connection, and then click **API Calls**.
             
                 ![Configure Gmail API Call](../assets/img/tutorials/order-service-configure-gmail-connector.png){.cInlineImage-half}
             
@@ -696,7 +699,7 @@ In this step, you will create a service that performs the following functions of
                 
                 Click **Save**.
     
-12. To send a response after the service successfully executes all it's tasks, add a `respond` statement.
+12. To send a response after the service successfully executes all its tasks, add a `respond` statement.
 
     Click the last **+** icon in the current low code view.
     
@@ -714,7 +717,8 @@ In this step, you will test the `orders` service and deploy it if it works as ex
 
 1. Click **Run & Test** for your service.
 
-    ![Run & Test](../assets/img/tutorials/run-and-test.png){.cInlineImage-half}
+    ![Run & Test](../assets/img/tutorials/run-and-test.png)
+    
     
     Once the service has started, you will see the following log.
     
@@ -731,7 +735,7 @@ In this step, you will test the `orders` service and deploy it if it works as ex
 4. Update your cURL command to add a payload and issue it as given below. 
 
     !!! note
-        For the purpose of demonstration in the scenarios given below, let's assume that the cURL command you copied is `curl "https://orders-choreodeveloper-test.choreo.dev/orders" -X PUT`
+        To demonstrate how the service works in the scenarios given below, let's assume that the cURL command you copied is `curl "https://orders-choreodeveloper-test.choreo.dev/orders" -X PUT`
 
     - **Scenario 1:** A sufficient quantity is available of the requested item
     
