@@ -1,6 +1,6 @@
 # Ballerina Expression Syntax
 
-Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you with the common expressions that you can use while developing Choreo applications.
+Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for function invocations, declaring a variable using literals and tuples, typecasting, etc. This document presents you with the common expressions that you can use while developing in the Choreo console.
 
 ## Variables
 A variable statement holds a value of a specific data type (`string`, `integer`, etc.).  You can declare a variable and use it later in the logical process of your service or the integration.
