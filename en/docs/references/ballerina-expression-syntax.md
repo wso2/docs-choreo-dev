@@ -146,7 +146,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     (n % 3) > 2
     ```
 
-### Value/Type Operators
+### Value/type operators
 
 - Equality 
 
@@ -195,7 +195,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
 All the HTTP-related service applications created in Choreo have a variable called `request` (of type `http:Request`) which the developers can use to query information related to the HTTP request. Following is a list of such use cases.
 
-### Reading a header value in the request
+### Read a header value in the request
 A typical HTTP request contains many headers.  These include standard and custom headers. You can use the `request` variable's `getHeader` function to read a specific header value in any expression-enabled input field.
 
 ###### Examples:
@@ -213,7 +213,7 @@ To read the value of an HTTP header by passing a variable that contains the head
   check request.getHeader(headerName)
   ```
 
-### Checking whether a header is present in the request
+### Check whether a header is present in the request
 
 Applications sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the  `hasHeader`  function in the `request` object for this purpose.
 
@@ -230,7 +230,7 @@ To check if the HTTP header `content-length` exists by passing the header name i
   ```ballerina
   request.hasHeader(contentLength)
   ```
-### Reading the JSON Payload of the request
+### Read the JSON Payload of the request
 
 JSON is a common content type used for HTTP communication. You can use the `request` variable’s `getJsonPayload` function to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` function’s return type is `json|ClientError`.
 
@@ -242,7 +242,7 @@ To read the JSON Payload of the HTTP request, use the following expression:
   request.getJsonPayload()
   ```
 
-### Reading the Text Payload of the request
+### Read the Text Payload of the request
 
 Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable’s `getTextPayload` function to read the text payload sent with the HTTP request. Note that the `getTextPayload` function’s return type is `string|ClientError`.
 
@@ -254,7 +254,7 @@ To read the text payload of the HTTP request, use the following expression:
   check request.getTextPayload()
   ```
 
-### Reading the value of a query parameter 
+### Read the value of a query parameter 
 
 Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the `request` variable's `getQueryParamValue` function to read the passed query parameter.
 
@@ -272,7 +272,7 @@ To read the value of the query parameter passing the query parameter name as a v
   request.getQueryParamValue(queryParamName)
   ```
 
-### Reading the cookies available in the request
+### Read the cookies available in the request
 
 HTTP cookies keep stateful information against a client. You can use the `request` variable's `getCookies` function to read cookies present in the request as an array.
 
@@ -458,7 +458,7 @@ You can use the field access(.) and optional field access (?.) to access the `js
     check person?.address?.city;
     ```
 
-### JSON/Record/Map Conversion
+### JSON/Record/Map conversion
 
 Ballerina records, maps, and JSON objects hold records. Records are collections of fields, and you can access each field value by a key. You can write expressions converting from one type to another.
 
