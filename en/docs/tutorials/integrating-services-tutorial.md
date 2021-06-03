@@ -8,7 +8,7 @@ The following are required to try out this tutorial:
 
 - A Google account. In this Google account, open the Google Drive and create a Google sheet named `inventory` with the following table:
 
-    ![Google Sheet Extract](../assets/img/tutorials/inventory-service-google-sheet-extract.png)
+    ![Google Sheet Extract](../assets/img/tutorials/inventory-service-google-sheet-extract.png){.cInlineImage-half}
     | **item**    | **count** |
     |-------------|-----------|
     | trainers    | 100       |
@@ -34,7 +34,7 @@ To create this service, follow the procedure below:
 
 3. To define the API that triggers your service, click **PUT**, enter `/inventory` in the **Path** field, and then click **Save API**.
 
-    ![Resource Configuration](../assets/img/tutorials/inventory-service-api-trigger.png)
+    ![Resource Configuration](../assets/img/tutorials/inventory-service-api-trigger.png){.cInlineImage-half}
     
 4. To read and update the information in the order, define the required parameters.
 
@@ -192,7 +192,7 @@ To create this service, follow the procedure below:
      
         Click the **+** icon below the `Foreach` statement you added.
         
-        ![Custom Statement](../assets/img/tutorials/inventory-service-add-custom-statement.png)
+        ![Custom Statement](../assets/img/tutorials/inventory-service-add-custom-statement.png){.cInlineImage-half}
             
         Then click **Other**, and enter the following in the **Statement** field.
         
@@ -212,7 +212,7 @@ To create this service, follow the procedure below:
     
         To do this, click the last **+** icon in the diagram of your low code view.
     
-        ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement.png)
+        ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement.png){.cInlineImage-half}
     
         Click **If**, and in the **Condition** field, enter `index > 0`.
         
@@ -226,7 +226,7 @@ To create this service, follow the procedure below:
         
             Click the **+** icon below the last if statement you added.
     
-            ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-if.png)
+            ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-if.png){.cInlineImage-half}
         
             Then click **Variable** and enter information as follows:
             
@@ -244,7 +244,7 @@ To create this service, follow the procedure below:
         
            Click the **+** icon below the `cellName` variable statement you added.
             
-            ![API Call](../assets/img/tutorials/inventory-service-add-api-call.png)
+            ![API Call](../assets/img/tutorials/inventory-service-add-api-call.png){.cInlineImage-half}
                 
            Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
             
@@ -265,7 +265,7 @@ To create this service, follow the procedure below:
         
             Click the **+** icon below the last API call you added. 
             
-            ![Log Statement](../assets/img/tutorials/inventory-service-add-log-statement.png)
+            ![Log Statement](../assets/img/tutorials/inventory-service-add-log-statement.png){.cInlineImage-half}
                 
             Then click **Log**, and in the **Expression** field, enter `cellValue.toJsonString()`.
             
@@ -275,7 +275,7 @@ To create this service, follow the procedure below:
             
            Click the **+** icon below the last log statement you added.
     
-            ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-log.png)
+            ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-log.png){.cInlineImage-half}
         
            Then click **Variable** and enter the following information:
             
@@ -291,7 +291,7 @@ To create this service, follow the procedure below:
         
             Click the **+** icon below the `intcellValue` statement you added.
             
-            ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement-2.png)
+            ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement-2.png){.cInlineImage-half}
                 
             Click **If**, and in the **Condition** field, enter `intCellValue > quantity`.
             
@@ -305,7 +305,7 @@ To create this service, follow the procedure below:
                 
                 Click the **+** icon on the **then** path of the if statement you added.
                 
-                ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-4.png)
+                ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-4.png){.cInlineImage-half}
                
                 Click **Variable**, and enter the following information:
                     
@@ -321,7 +321,7 @@ To create this service, follow the procedure below:
                 
                 Click the **+** icon below the `newStockValue` statement you added.
                     
-                ![API Call](../assets/img/tutorials/inventory-service-add-setvalue-api-call.png)
+                ![API Call](../assets/img/tutorials/inventory-service-add-setvalue-api-call.png){.cInlineImage-half}
                         
                 Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
                     
@@ -341,7 +341,7 @@ To create this service, follow the procedure below:
                 
                 Click the **+** icon below the last API call you added.                     
         
-                ![Notification](../assets/img/tutorials/inventory-service-add-response.png)
+                ![Notification](../assets/img/tutorials/inventory-service-add-response.png){.cInlineImage-half}
                     
                 Click **Other**, and in the **Statement** field, enter `respondMessages.push("Sucessfully updated the item: " + itemIDString);`
                 
@@ -351,7 +351,7 @@ To create this service, follow the procedure below:
             
            Click the **+** icon on the **else** path of the `intCellValue > quantity` if statement.
                 
-            ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-1.png)
+            ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-1.png){.cInlineImage-half}
                     
             Click **Other**, and in the **Statement** field, enter `respondMessages.push("Stock is not enough for the Item: " + itemIDString);`.
                 
@@ -363,7 +363,7 @@ To create this service, follow the procedure below:
         
             Click the **+** icon on the **else** path of the `index > 0` if statement.
             
-            ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-2.png)
+            ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-2.png){.cInlineImage-half}
                 
             Click **Other**, and in the **Statement** field, enter `respondMessages.push("Cannot find the item: " + itemIDString);`.
             
@@ -375,7 +375,7 @@ To create this service, follow the procedure below:
 
     Click the last **+** icon in the diagram. Then click **+** again.
     
-    ![Respond Statement](../assets/img/tutorials/inventory-service-add-respond-statement.png)
+    ![Respond Statement](../assets/img/tutorials/inventory-service-add-respond-statement.png){.cInlineImage-half}
     
     Click **Respond**, and in the **Respond Expression** field, enter `respondMessages`. 
     
@@ -389,7 +389,7 @@ In this step, you will test the `inventory` service and deploy it if it works as
 
 1. Click **Run & Test** for your service.
 
-    ![Run & Test](../assets/img/tutorials/run-and-test.png)
+    ![Run & Test](../assets/img/tutorials/run-and-test.png){.cInlineImage-half}
     
     Once the service has started, you will see the following log.
     
@@ -399,7 +399,7 @@ In this step, you will test the `inventory` service and deploy it if it works as
     
 2. In the **Run & Test** tab, click **://cURL**.
 
-    ![Click cURL](../assets/img/tutorials/copy-curl-command.png)
+    ![Click cURL](../assets/img/tutorials/copy-curl-command.png){.cInlineImage-half}
     
 3. Copy the cURL command displayed.
 
@@ -485,7 +485,7 @@ In this step, you will create a service that performs the following functions of
 
 4. To create the API that triggers the `orders` service, select **POST** as the HTTP method, and then click **Save API**.
 
-    ![Resource Configuration](../assets/img/tutorials/order-service-api-trigger.png)
+    ![Resource Configuration](../assets/img/tutorials/order-service-api-trigger.png){.cInlineImage-half}
 
 5. For the service to read the parameter values in each order request, add variables that define those parameters:
 
@@ -544,7 +544,7 @@ In this step, you will create a service that performs the following functions of
     
     To do this, click the **+** icon on the **then** line of the if statement you added.
         
-    ![Add Custom statement to If statement 1](../assets/img/tutorials/order-service-add-custom-statement-to-if-statement-1.png)
+    ![Add Custom statement to If statement 1](../assets/img/tutorials/order-service-add-custom-statement-to-if-statement-1.png){.cInlineImage-half}
     
     Click **Other**, and in the **Statement** field, enter `count = check int:fromString(queryParams.get("count")[0]);`.
     
@@ -558,7 +558,7 @@ In this step, you will create a service that performs the following functions of
     
     1. To add the `If` statement, click the last **+** icon in the current low code view.
     
-        ![Add If statement 2](../assets/img/tutorials/order-service-add-if-statement-2.png)
+        ![Add If statement 2](../assets/img/tutorials/order-service-add-if-statement-2.png){.cInlineImage-half}
         
         Click **If**, and in the **Statement** field, enter `queryParams.hasKey("item")`.
         
@@ -566,7 +566,7 @@ In this step, you will create a service that performs the following functions of
         
     2. To add the statement to get the item ordered, click the **+** icon on the **then** line of the `if` statement you added.
     
-        ![Add Custom statement to If statement 2](../assets/img/tutorials/order-service-add-custom-statement-for-if-statement-2.png)
+        ![Add Custom statement to If statement 2](../assets/img/tutorials/order-service-add-custom-statement-for-if-statement-2.png){.cInlineImage-half}
         
         Click **Other**, and in the **Statement** field, enter `item = queryParams.get("item")[0];`.
         
@@ -576,7 +576,7 @@ In this step, you will create a service that performs the following functions of
 
     1. To add the API Call, click the last **+** icon in the current low code view.
     
-        ![Add HTTP Connection](../assets/img/tutorials/order-service-add-http-connection.png)
+        ![Add HTTP Connection](../assets/img/tutorials/order-service-add-http-connection.png){.cInlineImage-half}
     
         Click **API Calls**, and then click **HTTP**. Then enter the following information:   
     
@@ -658,7 +658,7 @@ In this step, you will create a service that performs the following functions of
         
             Click on the **+** icon just below the last Twillio connection that you added.
             
-            ![Log Statement](../assets/img/tutorials/order-service-add-log.png)
+            ![Log Statement](../assets/img/tutorials/order-service-add-log.png){.cInlineImage-half}
             
             Click **Log**, and in the **Expression** field, enter `"WhatsApp message sent"`. 
             
@@ -668,7 +668,7 @@ In this step, you will create a service that performs the following functions of
         
             1. To add the API Call, click the **+** icon just below the last log statement that you added.
             
-                ![Gmail API Call](../assets/img/tutorials/order-service-add-gmail-connector.png) 
+                ![Gmail API Call](../assets/img/tutorials/order-service-add-gmail-connector.png){.cInlineImage-half}
             
                 Click **API Calls**, and then click **Gmail**.
             
@@ -676,7 +676,7 @@ In this step, you will create a service that performs the following functions of
                 
             2. To configure the API call you added, click the **+** icon after the last Gmail connection you added, and then click **API Calls**.
             
-                ![Configure Gmail API Call](../assets/img/tutorials/order-service-configure-gmail-connector.png)
+                ![Configure Gmail API Call](../assets/img/tutorials/order-service-configure-gmail-connector.png){.cInlineImage-half}
             
                 Under **Choose existing connection**, click  **gmailEndpoint**. 
             
@@ -700,7 +700,7 @@ In this step, you will create a service that performs the following functions of
 
     Click the last **+** icon in the current low code view.
     
-    ![Configure Gmail API Call](../assets/img/tutorials/order-service-add-final-respose-statement.png)
+    ![Configure Gmail API Call](../assets/img/tutorials/order-service-add-final-respose-statement.png){.cInlineImage-half}
 
     Click **Respond**, and in the **Respond Expression** field, enter `textPayload`.
     
@@ -714,7 +714,7 @@ In this step, you will test the `orders` service and deploy it if it works as ex
 
 1. Click **Run & Test** for your service.
 
-    ![Run & Test](../assets/img/tutorials/run-and-test.png)
+    ![Run & Test](../assets/img/tutorials/run-and-test.png){.cInlineImage-half}
     
     Once the service has started, you will see the following log.
     
@@ -724,7 +724,7 @@ In this step, you will test the `orders` service and deploy it if it works as ex
     
 2. In the **Run & Test** tab, click **://cURL**.
 
-    ![Click cURL](../assets/img/tutorials/copy-curl-command.png)
+    ![Click cURL](../assets/img/tutorials/copy-curl-command.png){.cInlineImage-half}
     
 3. Copy the cURL command displayed.
 
@@ -780,7 +780,7 @@ In this step, you will test the `orders` service and deploy it if it works as ex
     
 5. To deploy the service, click **Go Live** for the service.
 
-    ![Deploy Icon](../assets/img/services/deploy-icon.png)
+    ![Deploy Icon](../assets/img/services/deploy-icon.png){.cInlineImage-half}
     
 6. Click **Deploy**.
 
