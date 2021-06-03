@@ -793,10 +793,3 @@ In this step, you will test the `orders` service and deploy it if it works as ex
     ```
     Deployed successfully. Note that the service will automatically undeploy in 12 hours.
     ```
-    
-        
-
-    
-
-        
-              
