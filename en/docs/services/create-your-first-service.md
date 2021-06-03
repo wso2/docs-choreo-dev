@@ -1,82 +1,80 @@
 # Create Your First Service
 
-To learn how to create a service, let's try a simple scenario. In this example, you are creating a service that consumes a public API that fetches the current active COVID-19 cases in a specified country, testing it, deploying it, and then observing its performance.
+To learn how to create a service, let's look at a simple scenario. In this example, you'll create and design a service that consumes a public API that fetches the current active COVID-19 cases in the United States. Then you'll test it, deploy it, and observe its performance.
 
 ## Step 1: Create the service
 
-To create the service, follow the procedure below: 
+To create the service, follow this procedure:
 
-1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
     
-2. Sign in using either your Google or GitHub credentials.
-    
-3. In the **Services** page, click **Create**. You are directed to the low-code view.
+2. On the **Services** page, click **Create**. You are directed to the **Create Service** page.
 
-4. Under **Create with Choreo**, enter `covid-stats` as the name of your service.
+3. Under **Create with Choreo**, enter `covid-stats` as the name of your service, and then click **Create**. You are directed to the low-code view to design the service.
 
-5. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
+## Step 2: Design the service
+
+To design the service to fetch the current active COVID-19 cases in the United States, follow this procedure:
+
+1. Select **GET** as the HTTP method and enter `activecases` as the relative path from the host.
 
     ![Resource Configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
     
-    Then click **Save API**. Now you have saved the API trigger that starts your service.
-    
-6. Click **API Calls**, and then enter information as follows to configure the HTTP connection that connects the public API used in this scenario to the API trigger you configured.
+2. Click **Save API**.  
 
-    1. Click **HTTP**.
+3. Click **API Calls** and complete the following steps to create a new HTTP connection:
+
+    1. Click **HTTP** and enter the details as follows:
+    
+        | **Field**           | **Value**                      |
+        |---------------------|--------------------------------|
+        | **Connection Name** | `httpEndpoint`                 |
+        | **URL**             | `https://api.covid19api.com`   |
     
         ![Select HTTP Connection](../assets/img/services/select-http-connection.png){.cInlineImage-half}
         
-    2. Enter information as follows:
-    
-        | **Field**           | **Value**                    |
-        |---------------------|------------------------------|
-        | **Connection Name** | `httpEndpoint`               |
-        | **URL**             | `"https://api.covid19api.com"` |
-        
-        Click **Save**.
+    2. Click **Save**.
         
     3. Click the **+** icon below the HTTP API call you added. 
     
         ![Update Existing Connection](../assets/img/services/update-existing-connection.png){.cInlineImage-half}
         
-    4. Click **API Calls**, and then click on the existing connection.
+    4. Click **API Calls** and then click the existing connection.
     
         ![Select Existing connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
         
-    5. Enter information as follows:
+    5. Enter the details as follows:
         
-        ![Configure HTTP Connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
-        
-        | **Field**               | **Value**                      |
-        |-------------------------|--------------------------------|
-        | **OPERATION**           | **get**                        |
-        | **Resource Path**       | `"/total/country/united-states"` |
-        | **Select Payload Type** | **JSON**                       |
+        | **Field**               | **Value**                       |
+        |-------------------------|---------------------------------|
+        | **OPERATION**           | **get**                         |
+        | **Resource Path**       | `"/total/country/united-states"`|
+        | **Select Payload Type** | **JSON**                        |
         
         !!! info
-            To select **JSON** as the payload type, you need to click **Do you want to extract a payload?**.
-       
+            To select **JSON** as the payload type, you must enable **Do you want to extract a payload?**.
             ![Do you want to extract a payload button](../assets/img/services/enable-payload.png){.cInlineImage-half}
+
+    6. Click **Save & Done**.
         
-        Click **Save & Done**.
-        
-        Now your API trigger is connected to the public API that fetches the active COVID-19 cases in the selected country.
+   Now you have designed the service to fetch the active COVID-19 cases in the United States.
     
-7. To cast all the data retrieved via the API connected to the service before further processing, add a new custom statement as follows:
+4. To store the response from the public API to your service, follow this procedure:
 
     1. Click the last **+** icon in your low-code diagram.
 
         ![Add New Statement](../assets/img/services/add-custom-statement.png){.cInlineImage-half}
     
-    2. Click **Other** and then enter the following in the **Statement** field.
+    2. Click **Other** and then enter the following in the **Statement** field:
     
         ```
         json[] jsonArray = <json[]>jsonPayload;
         json[] response = [];
         ```
-        Then click **Save**.
+        
+    3. Click **Save**.
     
-8. To filter the dates on which the active cases have exceeded 5,000, let's add a statement of the `ForEach` type as follows: 
+5. To filter the dates on which the active cases have exceeded 5,000, follow this procedure: 
 
     1. Click the last **+** icon in your low-code diagram.
     
@@ -84,11 +82,11 @@ To create the service, follow the procedure below:
 
     3. In the **Iterable Expression** field, enter `jsonArray`. Then click **Save**.
     
-    4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
+    4. To apply the filter, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
 
         ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png){.cInlineImage-half}
     
-    5. In the form that appears, click **Other**. Then enter the following in the **Statement** field.
+    5. In the form that appears, click **Other**. Then enter the following in the **Statement** field:
 
         ```ballerina
         int active = <int>(check item.Active);
@@ -96,34 +94,36 @@ To create the service, follow the procedure below:
             response.push(item);
         }
         ```
-        
-        Then click **Save**.
+    6. Click **Save**.
     
-9. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low-code diagram.
+6. To ensure that the data retrieved is returned as a response, follow this procedure: 
 
-    ![Add Respond Statement](../assets/img/services/add-respond-statement.png){.cInlineImage-half}
+    1. Click the last **+** icon in your low-code diagram.
+
+        ![Add Respond Statement](../assets/img/services/add-respond-statement.png){.cInlineImage-half}
     
-    In the **Respond Expression** field, enter `response`, and then click **Save**.
+    2. In the **Respond Expression** field, enter a response and then click **Save**.
 
-    
-Now you have completed designing your service. It looks as follows.
+Now you have completed designing the service. It looks as follows:
 
-![No Code View](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
+- In the low-code view
 
-The code view looks as follows.
+  ![No Code View](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
 
-![Code View](../assets/img/services/choreo-service-code-view.png){.cInlineImage-full}
+- In the code view
+
+  ![Code View](../assets/img/services/choreo-service-code-view.png){.cInlineImage-full}
 
     
 To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
 ![Service Started Log](../assets/img/services/service-started-notification.png){.cInlineImage-half}
     
-Congratulations! You have successfully created your first service.
+Now you are ready to test the service.
    
-## Step 2: Test the service
+## Step 3: Test the service
 
-To test the `covid-stats` service you created, follow the procedure below:
+To test the `covid-stats` service, follow this procedure:
 
 1. Click the **Test** icon in the left pane.
 
@@ -133,15 +133,15 @@ To test the `covid-stats` service you created, follow the procedure below:
 
 3. Click **Try it out**, and then click **Execute**.
 
-The search results for COVID-19 statistics of the United States are displayed as the server response as shown below.
+The following figure shows the server response to the search results for the United States COVID-19 statistics:
 
 ![Server Response](../assets/img/services/server-response.png){.cInlineImage-half}
 
-Now you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.
+Now that you have verified that the `covid-stats` service works as expected, you can deploy it.
 
-## Step 3: Deploy the service
+## Step 4: Deploy the service
 
-To deploy the `covid-stats` service, follow the procedure below:
+To deploy the `covid-stats` service, follow this procedure:
 
 1. Click the **Go Live** icon in the left pane.
 
@@ -149,27 +149,25 @@ To deploy the `covid-stats` service, follow the procedure below:
 
 2. To deploy the service, click **Deploy**.
 
-    The status of the service changes to **Deployed**, and the following logs appear to indicate that the product is successfully deployed.    
+    The status of the service changes to **Deployed**, and the following logs show that the service is successfully deployed:    
 
     ![Deployment Logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
 
-3. Once the service is deployed, click on the **Go Live** tab below the low-code design view. Then click **://cURL** and copy the cURL command that is displayed.
+3. Once the service is deployed, click the **Go Live** tab below the low-code diagram. Then click **://cURL** and copy the cURL command.
 
     ![Get cURL command](../assets/img/services/copy-curl-command.png){.cInlineImage-full}
     
-    Invoke the `covid-stats` service by issuing a few cURL commands using the Postman application.
-    
-    The responses are logged as shown below.
+4. Invoke the `covid-stats` service by issuing a few cURL commands using the Postman application. The responses are logged as shown below:
     
     ![covid-stats-log](../assets/img/services/covid-stats-log.png){.cInlineImage-half}
-
-    In the Choreo Development Console, **Go Live** tab, the requests are logged as follows.
+    
+5. On the Choreo Console **Go Live** tab, the requests are logged as follows:
     
     ![Execution History](../assets/img/services/execution-history.png){.cInlineImage-half}
     
-To observe the `covid-stats` service by checking the statistics generated as a result of the cURL commands you issued, proceed to Step 4. 
+Now you are ready to observe the `covid-stats` service based on the statistics generated as a result of the cURL commands you issued. 
 
-## Step 4: Observe the service
+## Step 5: Observe the service
 
 To observe the `covid-stats` service, click the **Observe** icon in the left panel.
 
