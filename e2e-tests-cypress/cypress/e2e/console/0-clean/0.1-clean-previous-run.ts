@@ -12,8 +12,7 @@
  */
 
 import { isOldValue, keyNamePrefix } from '../../../support/common/utils';
-import { APIM_RESOURCE_PATH, APP_SVC_URL, ORG_NAME } from "../../../support/common/constants";
-import { PATH_SEPARATOR } from "../../../support/console/apis/constants";
+import { APIM_RESOURCE_PATH, APP_SVC_URL, ORG_NAME, PATH_SEPARATOR } from "../../../support/common/constants";
 import { getApiName } from "../../../support/devportal/utils";
 
 describe('Cleaning up', () => {

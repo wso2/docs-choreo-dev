@@ -11,8 +11,10 @@
  * associated services.
  */
 
-import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../common/constants";
-import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "./constants";
+import {
+    LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT, DEVELOP,
+    OVERVIEW, PATH_SEPARATOR
+} from "../../common/constants";
 
 Cypress.Commands.add('updateSubscriptionPlans', () => {
     cy.get('[data-testid="Subscriptions"]', { timeout: STANDARD_TIME_OUT }).click();
@@ -53,7 +55,7 @@ Cypress.Commands.add('testApiInPublisherTestConsole', () => {
     cy.get('[data-testid="get-test-key-btn"]').click();
     cy.get('[data-testid=accessTokenInput]').should('not.be.empty');
     cy.log("Successfully generated an access token");
-  
+
     cy.log("Invoking the API");
     cy.wait(2000);
     cy.get('.opblock-summary', { timeout: STANDARD_TIME_OUT }).eq(0).click();

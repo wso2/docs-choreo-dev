@@ -12,8 +12,7 @@
  */
 
 import { generateApiName } from "../../../support/common/utils";
-import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "../../../support/console/apis/constants";
-import { APIS_TEXT } from '../../../support/common/constants';
+import { APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
     const API_NAME = generateApiName('oas');
