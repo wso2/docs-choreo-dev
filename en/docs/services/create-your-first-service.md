@@ -6,7 +6,7 @@ To learn how to create a service, let's try a simple scenario. In this example, 
 
 To create the service, follow the procedure below: 
 
-1. Access the Choreo Console via https://console.choreo.dev/.
+1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
     
 2. Sign in using either your Google or GitHub credentials.
     
@@ -16,7 +16,7 @@ To create the service, follow the procedure below:
 
 5. Select **GET** as the HTTP method, and enter `activecases` as the relative path from host.
 
-    ![Resource Configuration](../assets/img/services/configure-api-trigger.png)
+    ![Resource Configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
     
     Then click **Save API**. Now you have saved the API trigger that starts your service.
     
@@ -24,7 +24,7 @@ To create the service, follow the procedure below:
 
     1. Click **HTTP**.
     
-        ![Select HTTP Connection](../assets/img/services/select-http-connection.png)
+        ![Select HTTP Connection](../assets/img/services/select-http-connection.png){.cInlineImage-half}
         
     2. Enter information as follows:
     
@@ -37,15 +37,15 @@ To create the service, follow the procedure below:
         
     3. Click the **+** icon below the HTTP API call you added. 
     
-        ![Update Existing Connection](../assets/img/services/update-existing-connection.png)
+        ![Update Existing Connection](../assets/img/services/update-existing-connection.png){.cInlineImage-half}
         
     4. Click **API Calls**, and then click on the existing connection.
     
-        ![Select Existing connection](../assets/img/services/select-existing-connection.png)
+        ![Select Existing connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
         
     5. Enter information as follows:
         
-        ![Configure HTTP Connection](../assets/img/services/select-existing-connection.png)
+        ![Configure HTTP Connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
         
         | **Field**               | **Value**                      |
         |-------------------------|--------------------------------|
@@ -55,7 +55,8 @@ To create the service, follow the procedure below:
         
         !!! info
             To select **JSON** as the payload type, you need to click **Do you want to extract a payload?**.
-            ![Do you want to extract a payload button](../assets/img/services/enable-payload.png)
+       
+            ![Do you want to extract a payload button](../assets/img/services/enable-payload.png){.cInlineImage-half}
         
         Click **Save & Done**.
         
@@ -65,7 +66,7 @@ To create the service, follow the procedure below:
 
     1. Click the last **+** icon in your low-code diagram.
 
-        ![Add New Statement](../assets/img/services/add-custom-statement.png)
+        ![Add New Statement](../assets/img/services/add-custom-statement.png){.cInlineImage-half}
     
     2. Click **Other** and then enter the following in the **Statement** field.
     
@@ -85,7 +86,7 @@ To create the service, follow the procedure below:
     
     4. To apply the filter mentioned, add a custom statement within the ForEach statement. To do this, click the **+** icon just below the last ForEach statement you added.
 
-        ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png)
+        ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png){.cInlineImage-half}
     
     5. In the form that appears, click **Other**. Then enter the following in the **Statement** field.
 
@@ -100,23 +101,23 @@ To create the service, follow the procedure below:
     
 9. To add a statement of the `Respond` type so that the result of the above processing is returned as a response, click the last **+** icon in your low-code diagram.
 
-    ![Add Respond Statement](../assets/img/services/add-respond-statement.png)
+    ![Add Respond Statement](../assets/img/services/add-respond-statement.png){.cInlineImage-half}
     
     In the **Respond Expression** field, enter `response`, and then click **Save**.
 
     
 Now you have completed designing your service. It looks as follows.
 
-![No Code View](../assets/img/services/choreo-service-low-code-view.png)
+![No Code View](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
 
 The code view looks as follows.
 
-![Code View](../assets/img/services/choreo-service-code-view.png)
+![Code View](../assets/img/services/choreo-service-code-view.png){.cInlineImage-full}
 
     
 To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
-![Service Started Log](../assets/img/services/service-started-notification.png)
+![Service Started Log](../assets/img/services/service-started-notification.png){.cInlineImage-half}
     
 Congratulations! You have successfully created your first service.
    
@@ -126,7 +127,7 @@ To test the `covid-stats` service you created, follow the procedure below:
 
 1. Click the **Test** icon in the left pane.
 
-    ![Test Icon](../assets/img/services/test-icon.png)
+    ![Test Icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
 
 2. In the section that opens to the right of the page, click **GET**.
 
@@ -134,7 +135,7 @@ To test the `covid-stats` service you created, follow the procedure below:
 
 The search results for COVID-19 statistics of the United States are displayed as the server response as shown below.
 
-![Server Response](../assets/img/services/server-response.png)
+![Server Response](../assets/img/services/server-response.png){.cInlineImage-half}
 
 Now you have verified that the `covid-stats` service works as expected. Therefore, you can deploy it.
 
@@ -144,27 +145,27 @@ To deploy the `covid-stats` service, follow the procedure below:
 
 1. Click the **Go Live** icon in the left pane.
 
-    ![Test Icon](../assets/img/services/deploy-icon.png)
+    ![Test Icon](../assets/img/services/deploy-icon.png){.cInlineImage-bordered}
 
 2. To deploy the service, click **Deploy**.
 
     The status of the service changes to **Deployed**, and the following logs appear to indicate that the product is successfully deployed.    
 
-    ![Deployment Logs](../assets/img/services/deployment-logs.png)
+    ![Deployment Logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
 
 3. Once the service is deployed, click on the **Go Live** tab below the low-code design view. Then click **://cURL** and copy the cURL command that is displayed.
 
-    ![Get cURL command](../assets/img/services/copy-curl-command.png)
+    ![Get cURL command](../assets/img/services/copy-curl-command.png){.cInlineImage-full}
     
     Invoke the `covid-stats` service by issuing a few cURL commands using the Postman application.
     
     The responses are logged as shown below.
     
-    ![covid-stats-log](../assets/img/services/covid-stats-log.png)
+    ![covid-stats-log](../assets/img/services/covid-stats-log.png){.cInlineImage-half}
 
     In the Choreo Development Console, **Go Live** tab, the requests are logged as follows.
     
-    ![Execution History](../assets/img/services/execution-history.png)
+    ![Execution History](../assets/img/services/execution-history.png){.cInlineImage-half}
     
 To observe the `covid-stats` service by checking the statistics generated as a result of the cURL commands you issued, proceed to Step 4. 
 
@@ -172,10 +173,10 @@ To observe the `covid-stats` service by checking the statistics generated as a r
 
 To observe the `covid-stats` service, click the **Observe** icon in the left panel.
 
-![Observe Icon](../assets/img/services/observe-icon.png)
+![Observe Icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
 
-![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png)
+![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
 
 Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.

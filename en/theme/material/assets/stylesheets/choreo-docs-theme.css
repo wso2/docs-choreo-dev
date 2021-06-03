@@ -46,15 +46,16 @@ display: inline-block;
 width: 100%;
 padding: 0;
 margin: 0;
-margin-top: 50px;
+margin-top: 25px;
 }
 
 .wy-breadcrumbs li {
     display: inline-block;
     float: left;
     list-style: none;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     padding-right: 10px;
+    margin-bottom: -1em;
 }
 
 /* .wy-breadcrumbs li a {
@@ -297,6 +298,26 @@ a.cChoreoDocsButtons.localLink {
 	height: 200px;
 }
 
+.cInlineImage-full {
+    display: inline-block;
+    text-align: center;
+    height:75%;
+    width:90%;
+    border: 1px solid gray;
+}
+
+.cInlineImage-half {
+    display: inline-block;
+    text-align: center;
+    width:50%;
+    border: 1px solid gray;
+}
+
+.cInlineImage-bordered {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid gray;
+}
 
 @media screen and (max-width: 1540px) {
 

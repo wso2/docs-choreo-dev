@@ -58,9 +58,10 @@ nav:
         - API Concepts: apis/api-concepts.md
         - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
     - Observability:
-          Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+        - Observability Overview: observability/observability-overview.md
+        -  Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
     - Reference:
-          Ballerina Expression Syntax: references/ballerina-expression-syntax.md
+        - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
@@ -93,7 +94,6 @@ markdown_extensions:
           base_path: docs
     - attr_list
 plugins:
-    - search
     - markdownextradata: {}
 extra_css:
     - assets/lib/highlightjs/default.min.css
