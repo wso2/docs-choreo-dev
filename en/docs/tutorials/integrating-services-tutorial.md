@@ -211,7 +211,7 @@ To create this service, follow the procedure below:
 
     1. First, let's add an `If` statement to define the condition where the `inventory` Google sheet has the item that matches the item mentioned in the order.
     
-        To do this, click the last **+** icon in the diagram of your low code view.
+        To do this, click the last **+** icon in the diagram of your low code diagram.
     
         ![If Statement](../assets/img/tutorials/inventory-service-add-if-statement.png){.cInlineImage-half}
     
@@ -557,7 +557,7 @@ In this step, you will create a service that performs the following functions of
                       
     Similar to how you filtered requests that specify the count, you can add another `If` statement followed by a statement that defines the action to be followed when the `If` condition is met.
     
-    1. To add the `If` statement, click the last **+** icon in the current low code view.
+    1. To add the `If` statement, click the last **+** icon in the current low code diagram.
     
         ![Add If statement 2](../assets/img/tutorials/order-service-add-if-statement-2.png){.cInlineImage-half}
         
@@ -575,7 +575,7 @@ In this step, you will create a service that performs the following functions of
     
 9. To connect your service to an endpoint, add an `HTTP` API call and then configure it.
 
-    1. To add the API Call, click the last **+** icon in the current low code view.
+    1. To add the API Call, click the last **+** icon in the current low code diagram.
     
         ![Add HTTP Connection](../assets/img/tutorials/order-service-add-http-connection.png){.cInlineImage-half}
     
@@ -588,7 +588,7 @@ In this step, you will create a service that performs the following functions of
         
         Click **Save**.
         
-    2. To configure the `HTTP` endpoint, click the last **+** icon in the current low code view, and then click **API Calls**.
+    2. To configure the `HTTP` endpoint, click the last **+** icon in the current low code diagram, and then click **API Calls**.
     
         Under **Choose existing connection**, click **inventoryEndpoint** to open the `HTTP` endpoint you created.
     
@@ -605,7 +605,7 @@ In this step, you will create a service that performs the following functions of
     
 10. To index an occurrence where the requested item was available in sufficient quantities and the `inventory` service deducted the ordered quantity from the stock, add a variable.
 
-    Click the last **+** icon in the current low code view, and then click **Variable**.
+    Click the last **+** icon in the current low code diagram, and then click **Variable**.
     
     Enter information as follows:
     
@@ -619,7 +619,7 @@ In this step, you will create a service that performs the following functions of
     
 11. Define the action to be performed by the `orders` service if an index is created to indicate that the `inventory` service has updated the stock record for an order. To do this, add the following statements.
 
-    1. To define the condition where an index is created as mentioned above, click the last **+** icon in the current low code view. 
+    1. To define the condition where an index is created as mentioned above, click the last **+** icon in the current low code diagram. 
     
         Click **If**, and in the **Condition** field, enter `index is int && index > 0`.
         
@@ -701,7 +701,7 @@ In this step, you will create a service that performs the following functions of
     
 12. To send a response after the service successfully executes all its tasks, add a `respond` statement.
 
-    Click the last **+** icon in the current low code view.
+    Click the last **+** icon in the current low code diagram.
     
     ![Configure Gmail API Call](../assets/img/tutorials/order-service-add-final-respose-statement.png){.cInlineImage-half}
 
