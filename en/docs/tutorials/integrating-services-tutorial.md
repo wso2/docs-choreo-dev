@@ -100,7 +100,7 @@ To create this service, follow the procedure below:
     
     | **Field**                  | **Value**                                                                                                       |
     |----------------------------|-----------------------------------------------------------------------------------------------------------------|
-    | **SpreadsheetId**        | The ID of your google sheet.                                                                                    |  
+    | **SpreadsheetId**          | The ID of your Google sheet. This can be derived from the URL of your Google sheet. e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q/edit#gid=0`, the google sheet ID is `1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q`. |                                                                                  |  
     | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
     | **Column**                 | The ID of the column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
     | **Response Variable Name** | `itemIDs`                                                                                                       |
@@ -223,7 +223,7 @@ To create this service, follow the procedure below:
         
     2. Define the actions that the service needs to perform if the given condition is met by adding the following statements:
     
-        1. To derive the available stock for the requested item from the specified cell in the google sheet, add a variable statement. 
+        1. To derive the available stock for the requested item from the specified cell in the Google sheet, add a variable statement. 
         
             Click the **+** icon below the last `If` statement.
     
@@ -253,7 +253,7 @@ To create this service, follow the procedure below:
             
             | **Field**                          | **Value**                                                                                                       |
             |------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-            | **SpreadsheetId**x                 | The ID of your google sheet.                                                                                    |  
+            | **SpreadsheetId**x                 | The ID of your Google sheet. This can be derived from the URL of your Google sheet. e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q/edit#gid=0`, the google sheet ID is `1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q`. |  
             | **Worksheet Name**                 | The name of the sheet with the inventory records.                                                               |
             | **Required Cell in A1 Annotation** | `cellName`                                                                                                      |
             | **Response Variable Name**         | `cellValue`                                                                                                     |
@@ -330,7 +330,7 @@ To create this service, follow the procedure below:
                     
                 | **Field**                          | **Value**                                           |
                 |------------------------------------|-----------------------------------------------------|
-                | **SpreadsheetId**x                 | The ID of your google sheet.                        |  
+                | **SpreadsheetId**x                 | The ID of your Google sheet. This can be derived from the URL of your Google sheet. e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q/edit#gid=0`, the google sheet ID is `1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q`.|  
                 | **Worksheet Name**                 | The name of the sheet with the inventory records.   |
                 | **Required Cell in A1 Annotation** | **cellName**                                        |
                 | **Value Of The Cell To Set**       | **newStockValue**                                   |
