@@ -34,3 +34,8 @@ export const FAKE_TWILIO_TOKEN = 'd976402933e8a4143015c4499e971a65';
 export const FAKE_TWILIO_SENDER_NUMBER = '+94786941431';
 export const FAKE_TWILIO_RECIPIENT_NUMBER = '+94743149897';
 export const INVITATION_EMAIL= 'test.user.choreo@gmail.com';
+export const PATH_SEPARATOR = '/';
+
+//API Management
+export const DEVELOP = '/develop';
+export const OVERVIEW  = '/overview';
