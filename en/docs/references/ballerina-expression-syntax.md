@@ -11,10 +11,11 @@ Ballerina allows you to declare variables using the `var` keyword instead of spe
 
 ###### Examples:
 
+To initialize a `var` in Choreo, you can use one of the following;
 ```ballerina
-    var varOfTypeInt = 5;
+    5
     
-    var varOfTypeString = "Hello!";
+   "Hello!"
 ```
 
 ### int
@@ -23,12 +24,14 @@ An integer is a positive number, a negative number, or zero that does not includ
 
 ###### Examples:
 
+To initialize an `int` in Choreo, you can use one of the following;
+
   ```ballerina
-  int nonSignedInteger = 1234;
+  1234
   
-  int negativeSignedInteger = -10;
+  -10
   
-  int positiveSignedInteger = +2020;
+  +2020
   ```
 
 ### float
@@ -37,12 +40,13 @@ A float is a number with a decimal point. You have the option to use `+` or `-` 
 
 ###### Examples:
 
+To initialize a `float` in Choreo, you can use one of the following;
   ```ballerina
-  float nonSignedFloat = 0.3353;
+  0.3353
   
-  float negativeSignedFloat = -8593.992;
+  -8593.992
   
-  float positiveSignedFloat = +950.930;
+  +950.930
   ```
 
 ### boolean
@@ -55,10 +59,11 @@ A string is a sequence of characters. It is required to use double quotes (`"`) 
 
 ###### Examples:
 
+To initialize a `float` in Choreo, you can use one of the following;
   ```ballerina
-  string language = "Ballerina";
+  "Ballerina"
   
-  string description = "Ballerina is a programming language intended for network-distributed applications."
+  "Ballerina is a programming language intended for network-distributed applications."
   ```
 
 ## Value/type operations
@@ -74,7 +79,7 @@ A string is a sequence of characters. It is required to use double quotes (`"`) 
     To concatenate the string `Hi` and a string variable `name`, you can use the following expression:
 
     ```ballerina
-      println("Hi " + name);
+     "Hi " + name;
     ```
 
 ### Arithmetic operators
@@ -87,10 +92,10 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Example:
 
-    To add an integer constant (`20`) and an integer variable `number1` and store it in an integer variable `sum`, you can use the following expression:
+    To add an integer literal (`20`) and an integer variable `number1` and store it in an integer variable `sum`, you can use the following expression:
 
     ```ballerina
-    int sum = number1 + 20;
+    number1 + 20;
     ```
 
 - Subtraction 
@@ -99,11 +104,10 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Example:
 
-    To subtract two integers, integer variable `yearOfBirth` from integer constant `2022` and print the result, you can use the following expression:
-
+    To subtract two integers, integer variable `yearOfBirth` from integer literal `2022` and print the result, you can use the following expression:
 
     ```ballerina
-      println(2022 - yearOfBirth);
+    2022 - yearOfBirth;
     ```
  
 - Division
@@ -112,10 +116,10 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Example:
 
-    To divide an integer variable `totalNumberOfStudents` from integer constant `5` and store it in an integer variable `numberOfStudentsPerClass`, you can use the following expression:
+    To divide an integer variable `totalNumberOfStudents` from integer literal `5` and store it in an integer variable `numberOfStudentsPerClass`, you can use the following expression:
 
     ```ballerina
-      int numberOfStudentsPerClass = totalNumberOfStudents / 5; 
+      totalNumberOfStudents / 5; 
     ```
  
 - Multiplication
@@ -127,7 +131,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     To multiply two float constants `60` by `5` and store it in a float variable `numberOfMinsIn5Hours`, you can use the following expression:
 
     ```ballerina
-      float numberOfMinsIn5Hours = 60 * 5;
+      60 * 5;
     ```
 
 - Modulo 
@@ -136,10 +140,10 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Example:
 
-    To get the remainder of the division between an integer variable `n` and an integer constant `3` for an if statement evaluation, you can use the following expression:
+    To get the remainder of the division between an integer variable `n` and an integer literal `3`, you can use the following expression:
   
     ```ballerina
-    if ((n % 3) > 2)
+    (n % 3) > 2
     ```
 
 ### Value/Type Operators
@@ -156,13 +160,13 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Examples:
 
-    To compare an integer constant `10` with an integer variable `firstNumber`, you can use the following expression:
+    To compare an integer literal `10` with an integer variable `firstNumber`, you can use the following expression:
     
     ```ballerina
     10 == firstNumber
     ```
 
-    To compare a string variable `username`  with  a string constant `admin`, use the following expression:  
+    To compare a string variable `username`  with  a string literal `admin`, use the following expression:  
 
     ```ballerina
     username != "admin" 
@@ -179,7 +183,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Examples:
 
-    To compare the value of the integer variable `firstNumber` to the integer constant `10`, use the following expressions:
+    To compare the value of the integer variable `firstNumber` to the integer literal `10`, use the following expressions:
 
     ```ballerina
     firstNumber > 10
@@ -290,52 +294,51 @@ Ballerina has a single type named `json` that can represent any JSON value. You 
 
 ###### Examples:
 
+To initialize a `json` type variable, you can use the following:
 ```ballerina
-    json jsonString = "Alex";
+    "Alex"
 
-    json jsonFloat = 5.36;
+    5.36
     
-    json jsonBoolean = false;
+    false
     
-    json jsonArray = [1, false, null, "foo", {first: "Alex", last: "John"}];
+    [1, false, null, "foo", {first: "Alex", last: "John"}]
     
-    json jsonMap = {name: "Alex", age: null, marks: {math: 90, language: 95}};
+    {name: "Alex", age: null, marks: {math: 90, language: 95}}
     
-    json jsonNull= null;
+     null
 ```
-For more information, refer to [Ballerina JSON](https://ballerina.io/learn/by-example/json.html)
 
 ### JSON Objects
 
-Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any JSON type (`string`, `number`, `boolean`, `object`, `array`, or `null`). 
+Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). A JSON object can be declared in two ways:
+    -  Using the variable type `json`.
+    -  Using the variable type `other` and `map<json>` as the `other type`.
 
 ###### Examples:
 
-To declare a JSON object, use one of the following:
+
+To declare a JSON object, use the following:
 
 ```ballerina
-     map<json> fruitDetailObject = {name: "apple", color: "red", price: "20.0"}
-     
-     json fruitDetail = {name: "apple", color: "red", price: "20.0"};
+     {name: "apple", color: "red", price: "20.0"}    
 ```
 
-To create an empty `json` object, use one of the following:
+To create an empty JSON object, use the following:
 
 ```ballerina
-     map<json> emptyObject = {}
-     
-     json empty = {};
+    {}
 ```
 
-To cast a the `json` type variable `fruitDetail` to a `map<json>` type variable `fruitDetailObject`, use the following:
+To cast a `json` type variable `fruitDetail` to a `map<json>` type variable, use the following:
 
 ```ballerina
 
- map<json> fruitDetailObject =  <map<json>>fruitDetail;
+<map<json>>fruitDetail
  
 ```
 
-To access or change a field the JSON object `fruitDetailObject`, use one of the following:
+To access or change a field of the JSON object `fruitDetailObject`, use one of the following:
 
 !!! note
     If you define the JSON object using a `json` type variable, you need to cast it to a `map<json>` first.
@@ -343,7 +346,7 @@ To access or change a field the JSON object `fruitDetailObject`, use one of the 
 ```ballerina
    fruitDetailObject["color"] = "orange"; 
    
-   json fruitName = fruitDetailObject["name"];
+   fruitDetailObject["name"];
 ```
 
 To create a nested JSON object, use the following:
@@ -359,41 +362,41 @@ To create a nested JSON object, use the following:
            }
        };
 ```
-For more information refer to [Ballerina JSON Objects](https://ballerina.io/learn/by-example/json-objects.html)
 
 ### JSON Arrays
 
-JSON array values must be of any of the JSON types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array using a `json[]` type variable or a [`json` type variable](#simple-values-in-JSON).  JSON array elements can be accessed by index.
+JSON array values must be of any of the json types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
+    - Using a [`json` type variable](#simple-values-in-JSON).  
+    - Using the variable type `other` and `json[]` as the `other type`.
+JSON array elements can be accessed by index.
 
 ###### Examples:
 
-To declare a JSON array, use one of the following:
+To declare a JSON array, use the following:
 
 ```ballerina
- json[]  personRecordArray = [1, false, null, "foo", {first: "Alex", last: "John"}];
+ [1, false, null, "foo", {first: "Alex", last: "John"}]
  
- json personRecord = [1, false, null, "foo", {first: "Alex", last: "John"}]; 
-
 ```
-To cast a the `json` type variable `personRecord` to a `json[]` type variable `personRecordArray`, use the following:
+To cast the `json` type variable `personRecord` to a `json[]` type variable, use the following:
 
 ```ballerina
- json[]  personRecordArray =  <json[]>personRecord;
+<json[]>personRecord;
 ```
 
 To access elements the 4th element in the JSON array `personRecordArray`, use one of the following:
 
 !!! note
-    If you define the JSON array using a `json` type variable, you need to cast it to a json[] first.
+    If you define the JSON array using a `json` type variable, you need to cast it to a `json[]` type first.
     
 ```ballerina
-   json jsonStringName = personRecordArray[4]; 
+personRecordArray[4]; 
 ```
 
 To add a JSON array in an object literal, use the following:
 
 ```ballerina
- map<json> family = {
+    {
         fname: "Alex",
         lname: "Stallone",
         family: [
@@ -402,15 +405,14 @@ To add a JSON array in an object literal, use the following:
             {fname: "Kyle", lname: "Stallone"},
             {fname: "Taylor", lname: "Stallone"}
         ]
-    };
+    }
 ```
 
 To get the length of a JSON array, use the following:
 
 ```ballerina
-   int length = personRecordArray.length(); 
+personRecordArray.length(); 
 ```
-For more information, refer to [Ballerina JSON Arrays](https://ballerina.io/learn/by-example/json-arrays.html)
 
 ### JSON access
 
@@ -440,12 +442,12 @@ You can use the field access(.) and optional field access (?.) to access the `js
     To access a field, use the following:    
 
     ```ballerina
-       json|error firstName = person.fname;
+       check person.fname;
     ```
     To access a field in a nested level, use the following:
  
      ```ballerina
-        json|error city = person.address.city;
+        check person.address.city;
      ```
 
 - Optional field access (?.) 
@@ -453,48 +455,8 @@ You can use the field access(.) and optional field access (?.) to access the `js
     You can use the optional field access operator to access record fields, including any optional fields. If the key is invalid or the field access occurs on `null`, it returns `null ` or `()`.
 
     ```ballerina
-    json|error year = j1?.age?.year;
+    check person?.address?.city;
     ```
-
-For more information, refer to [Ballerina JSON Access](https://ballerina.io/learn/by-example/json-access.html)
- 
-### JSON to XML
-
-You can convert JSON to using the `xmldata:fromJson()` function. This function takes a `xmldata:JsonOptions` record as an argument. The `JsonOptions` record has two fields: the `attributePrefix` and the `arrayEntryTag`. 
- - `attributePrefix`: A prefix that you use to identify the XML attributes. The default value of the `attributePrefix` option is `@`. 
- - `arrayEntryTag`: The name of the tag you add to each entry of the JSON array. The default value of the arrayEntryTag option is `root`.
-
-!!! info
-    The examples in this section will assume the following json is already defined.
-    
-    ```ballerina
-    json storeDetails = {
-         "Store": {
-             "@id": "AST",
-             "name": "Alex
-             "address": {
-                 "street": "Main",
-                 "city": "94"
-             },
-             "codes": ["4", "8"]
-         }
-    };
-    ``` 
-###### Examples: 
-
-To convert the JSON object to XML using the default `attributePrefix` and the default `arrayEntryTag`, use the following:   
-    
-```ballerina
-   var xmlConverted = xmldata:fromJson(storeDetails);
-```    
-
-To convert the JSON object to XML using a custom `attributePrefix` (i.e. the `#` character) and a custom `arrayEntryTag` (i.e. `wrapper`), use the following:
-
-```ballerina
-   var xmlConverted = xmldata:fromJson(storeDetails, {attributePrefix: "#", arrayEntryTag: "wrapper"});
-```    
-
-For more information refer to [Ballerina JSON to XML Conversions](https://ballerina.io/learn/by-example/json-to-xml-conversion.html)
 
 ### JSON/Record/Map Conversion
 
@@ -502,23 +464,22 @@ Ballerina records, maps, and JSON objects hold records. Records are collections 
 
 ###### Examples:
 
-To convert the record `movieTheRevenant` to json, use the following:
+To convert the record `movieTheRevenant` to `json`, use the following:
 
 ```ballerina
-      json|error theRevenantJson = movieTheRevenant.cloneWithType(json);
+      check movieTheRevenant.cloneWithType(json);
       
 ```
 
 To convert the json `theRevenantJson` to record `Movie`, use the following:
 
 ```ballerina
-     Movie|error theRevenantRecord = movieTheRevenant.cloneWithType(movie);
+     check movieTheRevenant.cloneWithType(movie);
 ```
 
 To convert the record `movieTheRevenant` to a  map type `MapAnydata map<anydata>`, use the following:
 
 ```ballerina
-      map<anydata>|error theRevenantMap = movieTheRevenant.cloneWithType(MapAnydata);
+     check movieTheRevenant.cloneWithType(MapAnydata);
 ```
 
-For more information refer to [Ballerina JSON/Record/Map Conversions](https://ballerina.io/learn/by-example/json-record-map-conversion.html)
