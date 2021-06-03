@@ -44,7 +44,7 @@ To create this service, follow the procedure below:
     
     1. First, define a variable to contain the variables that define the parameters.
     
-        To do this, click the **+** icon below the last `responseString` statement you added and then click **Variable**.
+        To do this, click **Variable**.
         
         Enter the following information:
         
