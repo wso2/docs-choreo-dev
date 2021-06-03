@@ -100,7 +100,7 @@ To create this service, follow the procedure below:
     
     | **Field**                  | **Value**                                                                                                       |
     |----------------------------|-----------------------------------------------------------------------------------------------------------------|
-    | **SpreadsheetId**x         | The ID of your google sheet.                                                                                    |  
+    | **SpreadsheetId**        | The ID of your google sheet.                                                                                    |  
     | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
     | **Column**                 | The ID of the column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
     | **Response Variable Name** | `itemIDs`                                                                                                       |
