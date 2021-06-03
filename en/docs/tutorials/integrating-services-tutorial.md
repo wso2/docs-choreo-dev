@@ -128,7 +128,7 @@ To create this service, follow the procedure below:
  
     To do this, click the **+** below the `respondMessages` variable statement, and then click **Log**.
     
-    In the **Expression** field, enter `"itemIDs.toJsonString()`.
+    In the **Expression** field, enter `itemIDs.toJsonString()`.
     
     Click **Save**.    
     
@@ -792,4 +792,4 @@ In this step, you will test the `orders` service and deploy it if it works as ex
     
     ```
     Deployed successfully. Note that the service will automatically undeploy in 12 hours.
-    ```
+    ```         
