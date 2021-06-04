@@ -1,3 +1,4 @@
 resources:
   - ast-archiver.yaml
   - observability-data-generator.yaml
+  - perfanalyzer-updater.yaml
