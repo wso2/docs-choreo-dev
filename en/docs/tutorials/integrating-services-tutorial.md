@@ -2,7 +2,7 @@
 
 In this tutorial, you can learn how to integrate multiple services via Choreo. Here, let's consider a simple example where an online shoe store uses an application that captures online orders. For each order, the application also needs to generate a notification for the sales manager as well as update the inventory recordsinventory records and notify the status to the client who places the order.
 
-## Before you begin
+## Prerequisites
 
 The following are required to try out this tutorial:
 
@@ -17,23 +17,27 @@ The following are required to try out this tutorial:
     | kittenheels | 60        |
     | maryjanes   | 40        |
                             
-- A Twilio account
+- A Twilio account.
 
 ## Step 1: Create a service to manage inventory records
 
 In this step, you are creating a service that does the following:
 
 - Reading order requests captured by the `orders` service that you will create in step 3.
-- Determining whether the order request can be met by checking the inventory records in the `inventory` Google sheet.
+- Determining whether the order request can be met by checking the inventory records in the `inventory` Google Sheet.
 - Generating a response for each order request based on the status (i.e., whether the requested item is available and whether the available quantity is adequate to match the quantity requested).
 
 To create this service, follow the procedure below:
 
-1. Access the Choreo Console and click **Services**. Then click **Create**.
+1. Access the Choreo Console via `https://console.choreo.dev/`.
+
+    Sign in using either your Google or GitHub credentials.
+    
+    Click **Services**, and then click **Create**.
 
 2. Enter `inventory` as the name and click **Create**.
 
-3. To define the API that triggers your service, click **PUT**, enter `/inventory` in the **Path** field, and then click **Save API**.
+3. To define the API that triggers your service, click **PUT** under **HTTP Method**. Then enter `/inventory` in the **Path** field, and click **Save API**.
 
     ![Resource Configuration](../assets/img/tutorials/inventory-service-api-trigger.png){.cInlineImage-half}
     
@@ -86,28 +90,33 @@ To create this service, follow the procedure below:
         
         Click **Save**.
      
- 5. To connect to the Google sheet where inventory records are maintained, add an API call as follows: 
+ 5. The inventory records are maintained in the `Inventory` Google Sheet that you previously created. To manage them, connect to this Google Sheet by adding and configuring an API call.
+ 
+    1. First, the `inventory` service needs to integrate with the Google Sheets application. To do this, add an API call.
             
-    Click the **+** icon below the `quantity` variable statement, and then click **API Calls**. Then click **Google Sheets**.
-    
-    To access the specific account you need to use for this scenario, click **Connect to Google Sheets**, and then click **Proceed**. Click on the Google Account of your choice and click **Allow** to allow Choreo to access it as described on the page. Then click **Save**.
-    
-    Now you can configure the Google sheets Google account you selected to receive API calls. 
-    
-    To do this, click the **+** icon below the Google Sheets connection you just added. Click **API Calls**, and then click **sheetsEndpoint** under **Choose existing connection**.
-    
-    In the **Operation** field, select **Get values from a column**. Then enter the following information in the rest of the fields that appear:
-    
-    | **Field**                  | **Value**                                                                                                       |
-    |----------------------------|-----------------------------------------------------------------------------------------------------------------|
-    | **SpreadsheetId**          | The ID of your Google sheet. This can be derived from the URL of your Google sheet. e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q/edit#gid=0`, the google sheet ID is `1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q`. |                                                                                  |  
-    | **Worksheet Name**         | The name of the sheet with the inventory records.                                                               |
-    | **Column**                 | The ID of the column in which you have added values for the `item` variable (i.e., `A` in the given example image). |
-    | **Response Variable Name** | `itemIDs`                                                                                                       |
+        Click the **+** icon below the `quantity` variable statement, and then click **API Calls**. Then click **Google Sheets**.
         
-    Here, you are adding a connection that retrieves the number of items currently available on column `A`, `Sheet1` of the `inventory` Google Sheet.
+        To access the specific account you need to use for this scenario, click **Connect to Google Sheets**, and then click **Proceed**. Click on the Google Account of your choice and click **Allow** to allow Choreo to access it as described on the page. Then click **Save**.
+    
+    2. Configure the API call you added to connect to the `Inventory` Google sheet.
+    
+        To do this, click the **+** icon below the Google Sheets connection you just added. Click **API Calls**, and then click **sheetsEndpoint** under **Choose existing connection**.
         
-    Click **Save**.
+        In the **Operation** field, select **Get values from a column**. Then enter information as follows in the rest of the fields that appear:
+        
+        1. In the **SpreadsheetId** field, enter the ID of the `Inventory` Google Sheet within inverted commas. This can be derived from the URL of the Google sheet.
+        
+            e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/<SPREADSHEET_ID>>/edit#gid=0`, the value you must enter is `"<SPREADSHEET_ID>"`.
+            
+        2. In the **Worksheet Name** field, enter the name of the sheet with the inventory records. This must be entered within inverted commas.
+        
+            e.g., `"Sheet1"`
+            
+        3. In the **Column** field, enter the name of the column in which you have added the item names. This must be entered within inverted commas.
+        
+            e.g., `"A"`
+            
+        Click **Save**.
         
  6. For the service to cast the information is retrieved from the Google sheet as a response to the order, add a variable.
  
@@ -124,11 +133,11 @@ To create this service, follow the procedure below:
         
     Click **Save**.
         
- 7. Once the response is received, the service needs to log it.
+ 7. Once the response is cast, the service needs to log it.
  
     To do this, click the **+** below the `respondMessages` variable statement, and then click **Log**.
     
-    In the **Expression** field, enter `itemIDs.toJsonString()`.
+    In the **Expression** field, enter `"itemIDs.toJsonString()"`.
     
     Click **Save**.    
     
@@ -184,12 +193,14 @@ To create this service, follow the procedure below:
     
          | **Field**                  | **Value**   |
          |----------------------------|-------------|
-         | **Current Value Variable** | **ItemID**  |     
+         | **Current Value Variable** | **itemID**  |     
          | **Iterable Expression**    | `itemIDs`   |
          
         Click **Save**.
          
     2. To specify the action to be iterated for each order request, add a custom statement within the `ForEach` statement.
+    
+        Here, the action to be iterated is to check whether the `Inventory` Google Sheet has an item that is the same as the ordered item, and if it does, to create an index.
      
         Click the **+** icon below the `Foreach` statement.
         
@@ -197,19 +208,23 @@ To create this service, follow the procedure below:
             
         Then click **Other**, and enter the following in the **Statement** field.
         
-            ```
-            itemIDString = <string>itemID;
-            if (itemIDString == inventoryItemId) {
-                index = i;
-                break;
-            } 
-            i = i + 1;
-            ```       
+        ```
+        itemIDString = <string>itemID;
+        if (itemIDString == inventoryItemId) {
+            index = i;
+            break;
+        } 
+        i = i + 1;
+        ```
+        Here, `i = i + 1` means `1` is added to the index each time a matching item is found.
+        
         Click **Save**.
                        
 10. Define the action to be taken based on whether the requested item exists in stock or not as follows:
 
     1. First, let's add an `If` statement to define the condition where the `inventory` Google sheet has the item that matches the item mentioned in the order.
+    
+        To do this, you can check whether the index you previously specified to be added when an order has a matching item in the `Inventory` Google Sheet. When this index has a value greater than 0, it means 
     
         To do this, click the last **+** icon in the diagram of your low code diagram.
     
@@ -241,26 +256,27 @@ To create this service, follow the procedure below:
                 
             Click **Save**.
             
-        2. To get the cell value, add an API call.           
+        2. To get the cell value, add an API call that connects to the `Inventory` Google Sheet.         
         
-           Click the **+** icon below the `cellName` variable statement.
+            Click the **+** icon below the `cellName` variable statement.
             
             ![API Call](../assets/img/tutorials/inventory-service-add-api-call.png){.cInlineImage-half}
                 
-           Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
+            Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
             
-           In the **Operation** field, select **Get value in a cell**. Then enter information as follows in the rest of the fields that appear.
+            In the **Operation** field, select **Get value in a cell**. Then enter information as follows in the rest of the fields that appear:
             
-            | **Field**                          | **Value**                                                                                                       |
-            |------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-            | **SpreadsheetId**x                 | The ID of your Google sheet. This can be derived from the URL of your Google sheet. e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q/edit#gid=0`, the google sheet ID is `1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q`. |  
-            | **Worksheet Name**                 | The name of the sheet with the inventory records.                                                               |
-            | **Required Cell in A1 Annotation** | `cellName`                                                                                                      |
-            | **Response Variable Name**         | `cellValue`                                                                                                     |
-               
-            Here, you are connecting the `inventory` Google sheet to the service so that it can apply the previous `cellName` variable statement to it.
+            1. In the **SpreadsheetId** field, enter the ID of the `Inventory` Google Sheet within inverted commas. This can be derived from the URL of the Google sheet.
             
-            Click **Save**.
+                e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/<SPREADSHEET_ID>>/edit#gid=0`, the value you must enter is `"<SPREADSHEET_ID>"`.
+                
+            2. In the **Worksheet Name** field, enter the name of the sheet with the inventory records. This must be entered within inverted commas.
+            
+                e.g., `"Sheet1"`
+                
+            3.  To apply the `cellName` variable statement that you added to the Google sheet, enter `cellName` in the **Column** field.
+            
+                Click **Save**.
             
         3. To log the cell value obtained, add a `Log` statement.
         
@@ -268,17 +284,17 @@ To create this service, follow the procedure below:
             
             ![Log Statement](../assets/img/tutorials/inventory-service-add-log-statement.png){.cInlineImage-half}
                 
-            Then click **Log**, and in the **Expression** field, enter `cellValue.toJsonString()`.
+            Then click **Log**, and in the **Expression** field, enter `"cellValue.toJsonString()"`.
             
             Click **Save**.
             
         4. To cast the cell value derived as the available stock of the requested item, add a variable.
             
-           Click the **+** icon below the last log statement.
-    
+            Click the **+** icon below the last log statement.
+            
             ![Variable Statement](../assets/img/tutorials/inventory-service-add-variable-statement-after-log.png){.cInlineImage-half}
-        
-           Then click **Variable** and enter the following information:
+            
+            Then click **Variable** and enter the following information:
             
             | **Field**      | **Value**                                         |
             |----------------|---------------------------------------------------|
@@ -474,13 +490,12 @@ In this step, you will create a service that performs the following functions of
 - Responding to each order request by forwarding the response message generated by the `inventory` service to the customers as WhatsApp messages via Twillio.
 - Sending a mail to the Sales Manager with details about the order.
 
-1. Access the Choreo Development Console via the following URL.
-
-    `https://console.choreo.dev/`
+1. Access the Choreo Console via `https://console.choreo.dev/`.
+   
+   Sign in using either your Google or GitHub credentials.
+       
     
-    Sign in using either your Google or GitHub credentials.
-    
-2. In the **Services** page, click **Create**.
+2. Click **Services**, and then click **Create**.
 
 3. Under **Create with Choreo**, enter `orders` as the name of your Choreo service.
 
