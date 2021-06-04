@@ -53,6 +53,8 @@ images:
   newTag: master-132da18f13d009062c04c4a8d773af10987557d2
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-data-generator
   newTag: master-114269ed7f997814aedbd2bcc4ef58e66b6063b8
+- name: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
+  newTag: master-2a8db346a117c6870fa220c627c9b4e6e9b7645e
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
   newTag: master-c031a1ba1d6f94084b45879162bca90888e44a22
 - name: choreoipaas/lang-server
