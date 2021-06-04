@@ -366,7 +366,7 @@ To create this service, follow the procedure below:
             
         7. To specify the action to perform when the `intCellValue > quantity` condition is not met, add a custom statement.
             
-           Click the **+** icon on the **else** path of the `intCellValue > quantity` if statement.
+            Click the **+** icon on the **else** path of the `intCellValue > quantity` if statement.
                 
             ![Inventory not sufficient](../assets/img/tutorials/inventory-service-else-path-1.png){.cInlineImage-half}
                     
