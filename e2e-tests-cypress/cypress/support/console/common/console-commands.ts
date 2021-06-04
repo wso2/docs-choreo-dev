@@ -658,8 +658,14 @@ Cypress.Commands.add('testPerformanceAnalyzerLocalStorage', (localStorageKey: st
     const localStorageContent = localStorage.getItem(localStorageKey)
 
     cy.log("Testing Performance Drill Down Banner data...");
-    const { obsViewState: { analysisInfo: { bannerData: { tps } } } }: { obsViewState: { analysisInfo: { bannerData: { tps: number } } } } = JSON.parse(localStorageContent);
-    const { obsViewState: { analysisInfo: { bannerData: { latency } } } }: { obsViewState: { analysisInfo: { bannerData: { latency: number } } } } = JSON.parse(localStorageContent);
+    const { obsViewState: { analysisInfo: { bannerData: { tps } } } }: 
+          { obsViewState: { analysisInfo: { bannerData: { tps: number } } } } 
+          = JSON.parse(localStorageContent);
+
+    const { obsViewState: { analysisInfo: { bannerData: { latency } } } }: 
+          { obsViewState: { analysisInfo: { bannerData: { latency: number } } } } 
+          = JSON.parse(localStorageContent);
+
     expect(tps.toFixed(2)).eql(EXPECTED_BANNER_TPS.toFixed(2));
     cy.log("Expected banner TPS matches actual TPS (TPS(req/s): " + tps + ")");
     expect(latency.toFixed(2)).eql(EXPECTED_BANNER_LATENCY.toFixed(2));
@@ -667,7 +673,10 @@ Cypress.Commands.add('testPerformanceAnalyzerLocalStorage', (localStorageKey: st
 
 
     cy.log("Testing Performance Drill Down graph data...");
-    const { obsViewState: { analysisInfo: { graphData } } }: { obsViewState: { analysisInfo: { graphData: object[] } } }  = JSON.parse(localStorageContent);
+    const { obsViewState: { analysisInfo: { graphData } } }: 
+          { obsViewState: { analysisInfo: { graphData: object[] } } }  
+          = JSON.parse(localStorageContent);
+          
     var actualTps, actualLatency, concurrency, thinkTime;
     for (let i=0; i<5; i++) {
         actualTps = graphData[i]["tps"];

@@ -20,11 +20,17 @@ describe('Performance drill down test', () => {
     let appName: string
 
     before(() => {
-        cy.log("Login into Choreo using Google")
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
+    });
+
+    after(() => {
+        cy.goBacktoAppsList();
+        cy.undeployApp("service", appName, true);
+        cy.deleteApp("service", appName, true);
+        cy.userLogout()
     });
 
     beforeEach(() => {
@@ -41,29 +47,22 @@ describe('Performance drill down test', () => {
         cy.get('[data-testid=api-options]').click();
         cy.get('[data-testid=http] > .connector-details').click();
         cy.get('.exp-editor > .react-monaco-editor-container > .no-user-select ' +
-        '> .overflow-guard > .monaco-scrollable-element > .lines-content ' +
-        '> .view-lines > .view-line').click()
+                '> .overflow-guard > .monaco-scrollable-element > .lines-content ' +
+                '> .view-lines > .view-line').click()
         .type('"https://int-test-endpoint-t2puhg9-nilushancosta.dv.choreoapps.dev/hello"');
 
         cy.get('[data-testid=http-save-next]').click();
        
         //Add get call to the existing http connector
         cy.get(':nth-child(1) > .main-plus-wrapper > :nth-child(2) > [data-testid=plus-button] ' +
-        '> :nth-child(1) > .plus-holder > #SmallPlus > .product-tour-small-plus ' +
-        '> #Oval_Copy_15-2 > [r="6"]').click({force: true });
+                '> :nth-child(1) > .plus-holder > #SmallPlus > .product-tour-small-plus ' +
+                '> #Oval_Copy_15-2 > [r="6"]').click({force: true });
 
         cy.get('[data-testid=api-options]').click();
         cy.get('.existing-connector-name').click({ force: true });
         cy.get('#combo-box-demo').type('get{enter}');
 
         cy.get('[data-testid=http-save-done]').click({ force: true });
-    });
-
-    after(() => {
-        cy.goBacktoAppsList();
-        cy.undeployApp("service", appName, true);
-        cy.deleteApp("service", appName, true);
-        cy.userLogout()
     });
 
     it('Performance drill down', () => {
