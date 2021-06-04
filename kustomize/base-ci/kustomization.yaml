@@ -32,11 +32,11 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging
   newTag: master-ca42418229de17a30cd9c5c9cec22267f7999d4c
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-adapter
-  newTag: master-8a41000acca15cc00ae7b0c3543e080a9e45c3cc
+  newTag: master-5b72b2d88fa80bffaab607938ee793bbb2273323
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-enforcer
-  newTag: master-8a41000acca15cc00ae7b0c3543e080a9e45c3cc
+  newTag: master-5b72b2d88fa80bffaab607938ee793bbb2273323
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-router
-  newTag: master-8a41000acca15cc00ae7b0c3543e080a9e45c3cc
+  newTag: master-5b72b2d88fa80bffaab607938ee793bbb2273323
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-01d9ea8f3cfc183e5d1c4647f479f671590de084
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim
