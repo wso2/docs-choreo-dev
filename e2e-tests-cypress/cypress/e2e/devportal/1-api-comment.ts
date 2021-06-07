@@ -20,14 +20,12 @@ describe('API overview comment scenario', () => {
     const apiName = getApiName();
 
     before(() => {
-        cy.recordHar();
         cy.devportalLogin();
         cy.navigateToOverviewInDevportal(apiName);
     });
 
     after(() => {
         cy.devportalLogout();
-        cy.saveHar();
     });
 
     it('Adding and deleting comment for the API', () => {

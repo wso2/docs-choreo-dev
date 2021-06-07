@@ -20,14 +20,11 @@ describe('API overview rating scenario', () => {
     const apiName = getApiName();
 
     before(() => {
-      
         cy.devportalLogin();
         cy.navigateToOverviewInDevportal(apiName);
-        cy.recordHar({ content: false });
     });
 
     after(() => {
-        cy.saveHar();
         cy.devportalLogout();
       
     });
