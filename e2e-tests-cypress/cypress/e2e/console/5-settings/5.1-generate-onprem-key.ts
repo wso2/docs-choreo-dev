@@ -13,18 +13,21 @@
 
 import { generateKeyName } from '../../../support/common/utils';
 import { SETTINGS_TEXT } from "../../../support/common/constants";
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
 describe('Generate on-prem keys', () => {
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
         cy.navigateFromHomePage(SETTINGS_TEXT);
     })
 
     after(() => {
         cy.userLogout();
+        saveHar();
     })
 
     it('generate on-prem key', () => {

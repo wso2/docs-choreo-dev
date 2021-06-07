@@ -13,6 +13,7 @@
 
 import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName } from "../../../support/common/utils";
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 describe("API creation from an existing endpoint", () => {
 
@@ -22,7 +23,12 @@ describe("API creation from an existing endpoint", () => {
     const OPERATION_TARGET = '/users';
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
+    });
+
+    after(() => {
+        saveHar();
     });
 
     it("Create API from existing endpoint and deploy and publish", () => {

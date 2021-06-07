@@ -13,6 +13,7 @@
 
 import { generateAppName } from '../../../support/common/utils';
 import { SERVICES_TEXT, NO_OF_RETRIES, STANDARD_TIME_OUT } from '../../../support/common/constants';
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -24,6 +25,7 @@ describe('Observability tests', () => {
     let version: string
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
@@ -79,6 +81,7 @@ describe('Observability tests', () => {
         cy.goBacktoAppsList();
         cy.deleteApp("service", appName, true);
         cy.userLogout();
+        saveHar();
     })
 
     it('test logs view', { retries: NO_OF_RETRIES }, () => {
