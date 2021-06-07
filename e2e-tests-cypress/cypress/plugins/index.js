@@ -26,6 +26,7 @@
 // the project's config changing)
 
 const { GoogleSocialLogin, GitHubSocialLogin } = require('cypress-social-logins').plugins
+const { install, ensureBrowserFlags } = require('@neuralegion/cypress-har-generator');
 
 /**
  * @type {Cypress.PluginConfig}
@@ -45,8 +46,16 @@ module.exports = (on, config) => {
   require('cypress-grep/src/plugin')(config)
 }
 
+
+module.exports = (on, config) => {
+  install(on, config);
+  
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    ensureBrowserFlags(browser, launchOptions);
+    return launchOptions;
+  });
+
 // put all cy.log() messages to console output
-module.exports = on => {
   on('task', {
     log(message) {
       console.log(message);

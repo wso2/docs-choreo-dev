@@ -12,16 +12,19 @@
  */
 
 import { SERVICES_TEXT, EX_LONG_TIME_OUT, NO_OF_RETRIES } from "../../../support/common/constants";
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
 describe("Test successful deployment of sample services", () => {
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
     });
 
     after(() => {
         cy.userLogout();
+        saveHar();
     });
 
     it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {

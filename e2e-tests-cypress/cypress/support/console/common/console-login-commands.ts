@@ -195,7 +195,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
             cy.setCookie('cbearer', cbearer);
             cy.setCookie('token', token);
             cy.setCookie('id_token', data["id_token"]);
-            cy.log('Local storage set successful!, navigating to URL: ', testURL)
+            cy.log('Local storage set successful!, navigating to URL: '+ testURL)
             cy.intercept(/choreo.dev/, (req) => {
                 
                 if (req.url.includes("/linkersec/checklink")) {

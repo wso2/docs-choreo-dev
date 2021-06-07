@@ -13,6 +13,7 @@
 
 import { generateAppName } from '../../../support/common/utils';
 import { INTEGRATIONS_TEXT, NO_OF_RETRIES } from '../../../support/common/constants';
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -21,10 +22,16 @@ describe('Schedule trigger test run and deployment', () => {
     let appName: string
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
+    })
+
+    after(() => {
+        cy.userLogout();
+        saveHar();
     })
 
     beforeEach(() => {
@@ -83,11 +90,9 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
-    after(() => {
+    it("Undeploy app and delete the app", () => {
         cy.goBacktoAppsList();
         cy.undeployApp("integration", appName, true);
         cy.deleteApp("integration", appName, true);
-        cy.userLogout();
-    })
-
+    });
 })

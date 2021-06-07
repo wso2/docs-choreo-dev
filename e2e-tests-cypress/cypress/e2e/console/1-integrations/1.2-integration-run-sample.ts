@@ -17,11 +17,13 @@ import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
     FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT, NO_OF_RETRIES 
 } from "../../../support/common/constants";
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 describe('Integration sample flow', () => {
     let savedCookies;
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
@@ -49,6 +51,7 @@ describe('Integration sample flow', () => {
 
     after(() => {
         cy.userLogout();
+        saveHar();
     });
 
     it('clone and edit Google calender to twilio SMS', { retries: NO_OF_RETRIES }, () => {

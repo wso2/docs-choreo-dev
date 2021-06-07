@@ -12,9 +12,10 @@
  */
 import { generateAppName } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
-import {datamapperRequestBody} from '../../../fixtures/console/ai/datamapper-service-call-data'
-import {datamapperExpectedResponseBody} from '../../../fixtures/console/ai/datamapper-service-call-data'
-import {dataMapperTestURL} from '../../../support/common/constants'
+import { datamapperRequestBody } from '../../../fixtures/console/ai/datamapper-service-call-data';
+import { datamapperExpectedResponseBody } from '../../../fixtures/console/ai/datamapper-service-call-data';
+import { dataMapperTestURL } from '../../../support/common/constants';
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -23,6 +24,7 @@ describe('Data Mapper service call Test', () => {
     let appName: string
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
@@ -30,7 +32,8 @@ describe('Data Mapper service call Test', () => {
     })
 
     after(() => {
-        cy.userLogout()
+        cy.userLogout();
+        saveHar();
     });
 
     beforeEach(() => {
@@ -53,11 +56,11 @@ describe('Data Mapper service call Test', () => {
         cy.log('Starting Datamapper service call');
 
         cy.request('POST', dataMapperTestURL + '/map/1.0.0', datamapperRequestBody).then(
-        (response) => {
+            (response) => {
 
-            cy.log("Response from Data Mapper service: " + JSON.stringify(response.body));
-            expect(response.body).to.deep.equal(datamapperExpectedResponseBody) 
-        });
+                cy.log("Response from Data Mapper service: " + JSON.stringify(response.body));
+                expect(response.body).to.deep.equal(datamapperExpectedResponseBody)
+            });
 
         cy.log("Expected response received successfully!");
     })

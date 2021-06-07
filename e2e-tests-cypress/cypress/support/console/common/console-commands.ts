@@ -60,7 +60,7 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
 Cypress.Commands.add('createNewApp', (type: string, name: string) => {
     cy.navigateFromHomePage(type);
 
-    cy.log("Creating a new application with name : ", name);
+    cy.log("Creating a new application with name : " + name);
     cy.contains('button', 'Create').click();
     cy.get('input').type(name);
     cy.contains('button', 'Create').click();
@@ -333,7 +333,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
         cy.checkSourceCodeForValidation(variableSourceFields);
 
-        cy.log('Successfully created the variable with expression : ', expression);
+        cy.log('Successfully created the variable with expression : ' + expression);
     }
 }),
 
@@ -353,7 +353,7 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.get('[data-testid="log-save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.checkSourceCodeForValidation(variableSourceFields);
-    cy.log('Successfully created the log with expression : ', expression);
+    cy.log('Successfully created the log with expression : ' + expression);
 }),
 
 Cypress.Commands.add('goBacktoAppsList', () => {
