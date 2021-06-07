@@ -331,10 +331,12 @@ To create this service, follow the procedure below:
                 | **Type**       | **int**                   |     
                 | **Name**       | `newStockValue`           |
                 | **Expression** | `intCellValue - quantity` |
+                
+                Here, `intCellValue` refers to the cell with the current stock for the requested item. This is identified via the variable that you previously added. The value in the `quantity` parameter of the order is deducted from this.
                         
                 Click **Save**.
                     
-            2. To set the value derived via the `newStockValue` variable statement as the current stock, add an API call as follows:
+            2. To set the value derived via the `newStockValue` variable statement as the current stock, the service needs to connect to the `Inventory` Google Sheet again. To do this, add an API call and configure it.
                 
                 Click the **+** icon below the `newStockValue` statement.
                     
@@ -342,17 +344,21 @@ To create this service, follow the procedure below:
                         
                 Click **API Call**, and then click **sheetsEndpoint** under **Choose existing connection**.
                     
-                In the **Operation** field, select **Set value to a cell**. Then enter the following information in the rest of the fields that appear.
+                In the **Operation** field, select **Set value to a cell**. Then enter the following information in the rest of the fields that appear as follows:
+                
+                1. In the **SpreadsheetId** field, enter the ID of the `Inventory` Google Sheet within inverted commas. This can be derived from the URL of the Google sheet.
+                
+                    e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/<SPREADSHEET_ID>>/edit#gid=0`, the value you must enter is `"<SPREADSHEET_ID>"`.
                     
-                | **Field**                          | **Value**                                           |
-                |------------------------------------|-----------------------------------------------------|
-                | **SpreadsheetId**x                 | The ID of your Google sheet. This can be derived from the URL of your Google sheet. e.g., If the Google Sheet URL is `https://docs.google.com/spreadsheets/d/1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q/edit#gid=0`, the google sheet ID is `1wHOdJgJzN6V9-vBQVSLEYxpYDp5XnpIcNqgj-h9pX4Q`.|  
-                | **Worksheet Name**                 | The name of the sheet with the inventory records.   |
-                | **Required Cell in A1 Annotation** | **cellName**                                        |
-                | **Value Of The Cell To Set**       | **newStockValue**                                   |
-                | **Response Variable Name**         | `respondMessages`                                   |
+                2. In the **Worksheet Name** field, enter the name of the sheet with the inventory records. This must be entered within inverted commas.
+                
+                    e.g., `"Sheet1"`
+                    
+                3. To apply the `cellName` variable statement that you added to the Google sheet so that the service can identify the cell to which it should set the new value, enter `cellName` in the **Required Cell in A1 Annotation** field.
+                
+                4. To set the value derived via the `newStockValue` variable as the new value in the identified cell, select **newStockValue** in the **Value Of The Cell To Set** field.                    
                         
-                Click **Save**.
+                    Click **Save**.
                     
             3. To generate a message that confirms that the current inventory record is updated, add a custom message.
                 
