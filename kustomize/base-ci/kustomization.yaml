@@ -12,11 +12,11 @@ configMapGenerator:
 
 images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/api-server
-  newTag: master-c031a1ba1d6f94084b45879162bca90888e44a22
+  newTag: master-dbd641af19803fda51a034600c0f057849b1bdec
 - name: choreoctrlplane.azurecr.io/choreoipaas/app-deployer
-  newTag: master-c031a1ba1d6f94084b45879162bca90888e44a22
+  newTag: master-dbd641af19803fda51a034600c0f057849b1bdec
 - name: choreoctrlplane.azurecr.io/choreoipaas/app-service
-  newTag: master-c031a1ba1d6f94084b45879162bca90888e44a22
+  newTag: master-dbd641af19803fda51a034600c0f057849b1bdec
 - name: choreoctrlplane.azurecr.io/choreoipaas/ast-archiver
   newTag: master-dccd3e3b849adf740cd22b541c1caeb16edc6f82
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
@@ -60,6 +60,6 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer
   newTag: master-2a8db346a117c6870fa220c627c9b4e6e9b7645e
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
-  newTag: master-c031a1ba1d6f94084b45879162bca90888e44a22
+  newTag: master-dbd641af19803fda51a034600c0f057849b1bdec
 - name: choreoipaas/lang-server
   newTag: master-e683317cb4b6f61bfa27ef3934d2041e0fc751da
