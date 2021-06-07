@@ -12,11 +12,13 @@
  */
 
 import { APIS_TEXT, SERVICES_TEXT } from '../../../support/common/constants';
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 describe('API creation from choreo service', () => {
     let serviceName: string;
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
     });
 
@@ -72,5 +74,6 @@ describe('API creation from choreo service', () => {
         cy.cleanupApp(serviceName);
         cy.log("Logout from Choreo");
         cy.userLogout();
+        saveHar();
     });
 });

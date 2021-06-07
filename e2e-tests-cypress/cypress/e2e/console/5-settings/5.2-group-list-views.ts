@@ -12,6 +12,7 @@
  */
 
 import { SETTINGS_TEXT, NO_OF_RETRIES } from "../../../support/common/constants";
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -24,6 +25,7 @@ describe("Group List View", () => {
     const groupTag = "testGroupTag";
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
@@ -39,6 +41,7 @@ describe("Group List View", () => {
 
     after(() => {
         cy.userLogout();
+        saveHar();
     });
 
     it("Create a group", { retries: NO_OF_RETRIES }, () => {

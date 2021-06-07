@@ -13,11 +13,13 @@
 
 import { generateApiName } from "../../../support/common/utils";
 import { APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
+import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 describe('Choreo APIM publisher scenarios', () => {
     const API_NAME = generateApiName('oas');
 
     before(() => {
+        recordHar();
         cy.consoleUserLogin();
     });
 
@@ -58,5 +60,6 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.deleteApiFromOverview();
         cy.log("Logout from Choreo");
         cy.userLogout();
+        saveHar();
     });
 });
