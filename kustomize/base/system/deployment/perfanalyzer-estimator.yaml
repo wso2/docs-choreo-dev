@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: perfanalyzer-estimator
+  name: perfanalyzer-estimator
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: perfanalyzer-estimator
+  template:
+    metadata:
+      labels:
+        choreo.component: perfanalyzer-estimator
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
+        securityContext:
+          runAsUser: 500
+          runAsGroup: 500
+          capabilities:
+            drop:
+              - NET_RAW
+        name: perfanalyzer-estimator
+        env:
+          - name: CHOREO_PERF_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: CHOREO_PERF_DB_PASSWORD
+                name: secret-perfanalyzer
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: perfan-port
+            path: /readiness
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: perfan-port
+            path: /liveness
+        ports:
+        - containerPort: 5005
+          name: perfan-port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1100m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 768Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - name: perfanalyzer-config
+          mountPath: /home/python-ai/perf-analyzer/config/
+        - name: secret-perfanalyzer
+          mountPath: "/mnt/csi/secret-perfanalyzer"
+          readOnly: true
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: cm-perfanalyzer
+        name: perfanalyzer-config
+      - name: secret-perfanalyzer
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-perfanalyzer
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
