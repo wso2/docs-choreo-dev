@@ -46,17 +46,12 @@ describe('Application tryout scenario', () => {
         cy.log('Application created successfully!');
         cy.wait(2000);
 
-        // Create OAuth tokens and API Key
+        // Create OAuth tokens
         cy.get('[data-testid="oauth-key"]').click();
         cy.wait(2000);
         cy.get('[data-testid="generate-token-btn"]').should('not.exist');
         cy.get('[data-testid="generate-oauth-key"]').click();
         cy.get('[data-testid="generate-token-btn"]').should('exist');
-        cy.get('[data-testid="apikey"]').click();
-        cy.get('[data-testid="generate-apikey-button"]').click();
-        cy.get('[data-testid="apikey-dialog-generate-btn"]').click();
-        cy.get('[data-testid="apikey-dialog-close-btn"]').click();
-        cy.log('Keys generated successfully');
         cy.wait(2000);
 
         // Add an API to the application
