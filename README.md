@@ -1,12 +1,12 @@
 # Choreo Documentation
 
-This is the Choreo documentation repository.
+This is the Choreo documentation repository. This repository is open and we welcome your contributions! 
 
-This repository is open and we welcome your contributions! 
+To see the Choreo documentation site, go to [https://wso2.com/choreo/docs/](https://wso2.com/choreo/docs/)
 
 ## Contribute to Choreo documentation
 
-Before you contribute, read the following contribution guidelines to understand how you can start contributing to documentation.
+Before you contribute, read the following guidelines to understand how you can start contributing:
 
 1. Accept the contributor license agreement (CLA)
 
@@ -15,6 +15,8 @@ Before you contribute, read the following contribution guidelines to understand 
     If the CLA changes for some (unlikely) reason, you'll have to accept the new CLA text when you send your first PR after the change.
 
 2. Fork this repository, make your changes, and send in a pull request. 
+
+   For an overview of the general voice, tone, content style, and text formatting to follow when contributing to Choreo documentation, see [Choreo Documentation Guidelines and Best Practices](https://github.com/wso2/docs-choreo-dev/wiki/Choreo-Documentation-Guidelines-and-Best-Practices)
 
 We look forward to your contributions.
 
@@ -38,7 +40,7 @@ Once you are done, you should see two versions of Python on your machine; python
 
 Python 3 is pre-installed in these versions, which you can verify using the `python3 -V` command. Run `sudo apt install -y python3-pip` to install `pip` and verify using `pip3 -V`.
 
-### Step 2 - Install Pip
+### Step 2 - Install pip
 >
 > **INFO**
 >
