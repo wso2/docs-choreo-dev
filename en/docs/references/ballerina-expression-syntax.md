@@ -5,20 +5,6 @@ Ballerina expressions comprise a powerful expression syntax based on the [Baller
 ## Variables
 A variable declaration statement declares a value of a specific type (`string`, `integer`, etc.).  You can use a previously declared variable at a later phase in the logical process of your service or integration.
 
-### var
-
-Ballerina allows you to declare variables using the `var` keyword. Here, Ballerina infers the type of the declared variable based on the right-hand side expression.
-
-###### Examples:
-
-To initialize a variable of type `var` in Choreo, you can use one of the following expressions:
-
-```ballerina
-5
-    
-"Hello!"
-```
-
 ### int
 
 The `int` type is 64-bit signed integers (same as long in Java). A signed integer is an integer with the  `+` or `-` character in the front. However, You can also define a positive integer or zero using only numerical characters. The `int` type supports the usual [arithmetic operators: + - / %](#arithmetic-operators). The operator precedence is the same as C. Integer overflow is a runtime error in Ballerina. 
@@ -67,6 +53,20 @@ To initialize a variable of type `string` in Choreo, you can use one of the foll
   
   "Ballerina is a programming language intended for network-distributed applications."
   ```
+
+### var
+
+Ballerina allows you to declare variables using the `var` keyword. Here, Ballerina infers the type of the declared variable based on the right-hand side expression.
+
+###### Examples:
+
+To initialize a variable of type `var` in Choreo, you can use one of the following expressions:
+
+```ballerina
+5
+    
+"Hello!"
+```
 
 ## Operators
 
