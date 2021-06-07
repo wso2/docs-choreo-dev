@@ -597,7 +597,7 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
     }
 
     cy.log('Awaiting 5 minutes for the deployment to complete');
-    cy.get('#tabpanel-1').contains(/Logs/,{timeout: 300000}).should('exist');
+    cy.get('[data-testid="deploy-stop-button"]',{timeout: 300000}).should('exist');
     cy.log('Deployment successful!');
 }),
 
