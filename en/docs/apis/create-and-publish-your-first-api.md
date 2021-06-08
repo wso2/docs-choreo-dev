@@ -19,8 +19,9 @@ Follow this procedure to create an API using the mock REST service you tested in
         If this is not the first API you are creating, you must click **+ Create** to go to the **Create API** page.
 
 3. On the **Create API** page, go to the **Start from scratch card** and click **Next**.
-4. In the **Create API from REST API** form, enter the details as follows:    
-    | **Field**        | **Value**                                        |
+4. In the **Create API from REST API** form, enter the details as follows:
+    
+        | **Field**        | **Value**                                        |
     |------------------|--------------------------------------------------|
     | **API Name**     | `HelloWorld`                                     |
     | **API Version**  | `1.0.0`                                          |
