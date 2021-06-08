@@ -67,7 +67,7 @@ To design the service to fetch the current active COVID-19 cases in the United S
     
     2. Click **Other** and then enter the following in the **Statement** field:
     
-        ```
+        ```ballerina
         json[] jsonArray = <json[]>jsonPayload;
         json[] response = [];
         ```
