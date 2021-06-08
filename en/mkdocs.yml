@@ -44,7 +44,7 @@ theme:
         tabs: true
     language: 'en'
 #Breaks build if there's a warning
-strict: true
+strict: false
 # Navigation
 nav:
     - Home: index.md
@@ -98,11 +98,14 @@ plugins:
 extra_css:
     - assets/lib/highlightjs/default.min.css
     - assets/css/theme.css
+    - assets/css/prism.css
     - assets/lib/json-formatter/json-formatter.css
 extra_javascript:
     - assets/lib/json-formatter/json-formatter.umd.js
     - assets/lib/highlightjs/highlight.min.js
+    - assets/lib/prism/prism.js
     - assets/js/theme.js
+    - assets/js/prism-ballerina.js
     - assets/lib/backtotop/js/util.js
     - assets/lib/backtotop/js/main.js
 extra:
