@@ -1,0 +1,21 @@
+configMapGenerator:
+  - name: cm-deploymentoptimizer-model-metadata
+    behavior: create
+    files:
+      - deploymentoptimizer/models.properties
+  - name: cm-anomalydetector-model-metadata
+    behavior: create
+    files:
+      - anomalydetector/models.properties
+  - name: cm-datamapper
+    behavior: create
+    files:
+      - datamapper/models.properties
+  - name: cm-capacity-planner
+    behavior: create
+    files:
+      - capacityplanner/models.properties
+  - name: cm-test-assistant
+    behavior: create
+    files:
+      - test-assistant/models.properties

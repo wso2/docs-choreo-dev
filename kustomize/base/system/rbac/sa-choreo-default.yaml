@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-choreo-default
+
+# NOTE: Disabling automounting results in Linkerd failure since it expects the SA token
+#automountServiceAccountToken: false
