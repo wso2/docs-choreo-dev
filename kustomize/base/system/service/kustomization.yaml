@@ -16,3 +16,6 @@ resources:
   - language-server.yaml
   - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
+  - datamapper.yaml
+  - capacityplanner.yaml
+  - test-assistant.yaml
