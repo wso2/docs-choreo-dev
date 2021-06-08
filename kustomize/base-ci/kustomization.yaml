@@ -23,6 +23,10 @@ images:
   newTag: master-5790bd99ad02021e600e87cc5608d2ee125d8ffb
 - name: choreoctrlplane.azurecr.io/choreoipaas/ast-archiver
   newTag: master-8c4fe2ca39632874facdd7e8ccffef1d65534a6e
+- name: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner
+  newTag: master-7024d29880a219c7f85df335666a38b4db31f98b
+- name: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner-init
+  newTag: master-7024d29880a219c7f85df335666a38b4db31f98b
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-61f5ef877caccd782be6c60e1cb34b0a15a9cbce
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-service
