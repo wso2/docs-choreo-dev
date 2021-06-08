@@ -1131,14 +1131,14 @@ html .md-footer-meta.md-typeset a,
 
   /* Highlighted text */
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    color: #f47b20 !important;
-    background-color: #ffaa001f !important
+    color: #545CEC !important;
+    background-color: #f1f1f1 !important
   }
 
   .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion.suggestion-layout-simple {
-    background-color: #ffaa001f !important;
+    background-color: #f1f1f1 !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content {
-    background-color: #ffaa001f !important;
+    background-color: #f1f1f1 !important;
   }
