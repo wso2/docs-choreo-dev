@@ -9,6 +9,7 @@ resources:
   - rbac
   - component/linker
   - cron
+  - config
 
 namespace: choreo-system
 
