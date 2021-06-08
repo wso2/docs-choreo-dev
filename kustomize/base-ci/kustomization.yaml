@@ -11,6 +11,10 @@ configMapGenerator:
   namespace: choreo-system
 
 images:
+- name: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector
+  newTag: master-831212b641b14b735aaeee537dadda70f09b27e9
+- name: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector-init
+  newTag: master-831212b641b14b735aaeee537dadda70f09b27e9
 - name: choreoctrlplane.azurecr.io/choreoipaas/api-server
   newTag: master-5790bd99ad02021e600e87cc5608d2ee125d8ffb
 - name: choreoctrlplane.azurecr.io/choreoipaas/app-deployer
