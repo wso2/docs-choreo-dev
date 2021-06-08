@@ -51,12 +51,10 @@ images:
   newTag: master-aedbcd4061b3d961758e589616a823ffbb0eb1df
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-b93d122b6515c85269465a7fd00ced410e87dfd2
-- name: choreoctrlplane.azurecr.io/choreoipaas/datamapper
-  newTag: master-395f3fb1f950a3fa9fb2ad19f0660bfa1dbff0e3
-- name: choreoctrlplane.azurecr.io/choreoipaas/datamapper-balo-extractor
-  newTag: master-395f3fb1f950a3fa9fb2ad19f0660bfa1dbff0e3
-- name: choreoctrlplane.azurecr.io/choreoipaas/datamapper-init
-  newTag: master-395f3fb1f950a3fa9fb2ad19f0660bfa1dbff0e3
+- name: choreoctrlplane.azurecr.io/choreoipaas/deployment-optimizer
+  newTag: master-29edde01bb37723612bf03fe9764a51106e95404
+- name: choreoctrlplane.azurecr.io/choreoipaas/deployment-optimizer-init
+  newTag: master-29edde01bb37723612bf03fe9764a51106e95404
 - name: choreoctrlplane.azurecr.io/choreoipaas/email-service
   newTag: master-45e7f86e3b906888e221b77f8964fd39c87b96c3
 - name: choreoctrlplane.azurecr.io/choreoipaas/observability-api
