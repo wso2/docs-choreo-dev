@@ -1,6 +1,11 @@
 # Integrating Services
 
-In this tutorial, you can learn how to integrate multiple services via Choreo. Here, let's consider a simple example where an online shoe store uses an application that captures online orders. For each order, the application also needs to generate a notification for the sales manager as well as update the inventory recordsinventory records and notify the status to the client who places the order.
+In this tutorial, you can learn how to integrate multiple services via Choreo. Here, let's consider a simple example where an online shoe store uses an application that captures online orders. For each order, the application also needs to generate a notification for the sales manager as well as update the inventory records and notify the status to the client who places the order.
+
+The application comprises of two services as follows:
+
+- The `inventory` service that manages the inventory records.
+- The `orders` service that manages the orders.
 
 ## Prerequisites
 
@@ -21,7 +26,7 @@ The following are required to try out this tutorial:
 
 ## Step 1: Create a service to manage inventory records
 
-In this step, you are creating a service that does the following:
+In this step, you are creating the `inventory` service to manage the inventory records. Managing inventory records involve
 
 - Reading order requests captured by the `orders` service that you will create in step 3.
 - Determining whether the order request can be met by checking the inventory records in the `inventory` Google Sheet.
@@ -29,66 +34,29 @@ In this step, you are creating a service that does the following:
 
 To create this service, follow the procedure below:
 
-1. Access the Choreo Console via `https://console.choreo.dev/`.
+1. Access the Choreo Console via [https://console.choreo.dev/]().
 
     Sign in using either your Google or GitHub credentials.
     
     Click **Services**, and then click **Create**.
+    
+    Enter `inventory` as the name and click **Create**.
 
-2. Enter `inventory` as the name and click **Create**.
+2. First, define the API that each order request invokes in order to trigger the service. 
 
-3. To define the API that triggers your service, click **PUT** under **HTTP Method**. Then enter `/inventory` in the **Path** field, and click **Save API**.
+    To do this, click **PUT** under **HTTP Method** and enter `/inventory` in the **Path** field. Then click **Save API**.
+    
+3. Next, define the variables to match the parameters of the order request so that the service can extract the values of those parameters for further processing.
 
-    ![Resource Configuration](../assets/img/tutorials/inventory-service-api-trigger.png){.cInlineImage-half}
+    The variables you need to define are as follows:
     
-4. To read the information in the order, define the required parameters.
-
-    In this scenario, the information derived from each order includes the name of the item ordered, and the quantity required.
+    | **Variable**             | **Purpose**                                                                           |
+    |--------------------------|---------------------------------------------------------------------------------------|
+    | **Name**: `queryParams`<br/><br/>**Type**: `map<string[]>`<br/><br/>**Expression**:`request.getQueryParams()` | This contains the information relating to the item ordered and the count. |
+    | **Name**: `inventoryItemId`<br/><br/>**Type**: `string`<br/><br/>**Expression**:`queryParams.get("item")[0]` | This allows the service to identify the name of the item ordered. |
+    | **Name**: `quantity`<br/><br/>**Type**: `int`<br/><br/>**Expression**:`check int:fromString(queryParams.get("count")[0])` | This the service to identify the quantity ordered. |
     
-    Therefore, let's define the parameters via variables as follows:
-    
-    1. First, define a variable to contain the variables that define the parameters.
-    
-        To do this,  click **Variable**.
-        
-        Enter the following information:
-        
-        | **Field**         | **Value**                  |
-        |-------------------|----------------------------|
-        | **Type**          | **other**                  |     
-        | **Other Type**    | `map<string[]>`            |
-        | **Name**          | `queryParams`              |
-        | **Expression**    | `request.getQueryParams()` |
-        
-        Click **Save**.
-
-    2. To allow the service to identify the name of the item ordered, define another variable.
-    
-        Click the **+** icon below the `queryParams`statement, and then click **Variable**.
-        
-        Enter the following information:
-    
-        | **Field**         | **Value**                    |
-        |-------------------|------------------------------|
-        | **Type**          | **string**                   |     
-        | **Name**          | `inventoryItemId`            |
-        | **Expression**    | `queryParams.get("item")[0]` |
-        
-        Click **Save**.
-        
-    3. To allow the service to identify the quantity ordered, define another variable.
-    
-        Click the **+** icon below the `inventoryItemId` variable statement, and then click **Variable**.
-        
-        Enter the following information:
-        
-        | **Field**         | **Value**                                           |
-        |-------------------|-----------------------------------------------------|
-        | **Type**          | **int**                                             |     
-        | **Name**          | `quantity`                                          |
-        | **Expression**    | `check int:fromString(queryParams.get("count")[0])` |
-        
-        Click **Save**.
+    To each of the above variables in the given order, click the last **+** icon in the low-code diagram and then click **Variable** Then enter information for each variable as given above and save.
      
  5. The inventory records are maintained in the `Inventory` Google Sheet that you previously created. To manage them, connect to this Google Sheet by adding and configuring an API call.
  
