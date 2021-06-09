@@ -13,9 +13,8 @@ body.cChoreoBody {
     max-width: 100%;
 }
 
-.md-sidebar--secondary {
-
-    margin-left: 100vw;
+.md-sidebar--secondary { 
+    margin-left: 100%;
 }
 
 .md-sidebar--secondary ul li a {
@@ -330,6 +329,12 @@ a.cChoreoDocsButtons.localLink {
 
     .container {
         max-width: 770px;
+    }
+}
+@media screen and (max-width: 1300px) {
+
+    .container {
+        max-width: 670px;
     }
 }
 
