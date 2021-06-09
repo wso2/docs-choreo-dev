@@ -31,6 +31,9 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: common-env-variables
         ports:
         - containerPort: 8080
           name: grpc-port
