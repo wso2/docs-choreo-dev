@@ -151,7 +151,7 @@ To deploy the `covid-stats` service, follow this procedure:
 
     The status of the service changes to **Deployed**, and the following logs show that the service is successfully deployed:    
 
-    ![Deployment Logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
+    ![Deployment logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
 
 3. Once the service is deployed, click on **://cURL**.
 
