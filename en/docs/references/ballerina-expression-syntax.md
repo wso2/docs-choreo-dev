@@ -7,7 +7,7 @@ A variable declaration statement declares a value of a specific type (`string`, 
 
 ### int
 
-The `int` type is 64-bit signed integers (same as long in Java). A signed integer is an integer with the  `+` or `-` character in the front. However, You can also define a positive integer or zero using only numerical characters. The `int` type supports the usual [arithmetic operators: + - / %](#arithmetic-operators). The operator precedence is the same as C. Integer overflow is a runtime error in Ballerina. 
+The `int` type is a 64-bit two's complement integer (similar to `long` in Java). A signed integer is an integer with the  `+` or `-` character in the front. However, you can also define a positive integer or zero using only numerical characters. The `int` type supports the usual [arithmetic operators: + - / %](#arithmetic-operators). The operator precedence is the same as C. Integer overflow is a runtime error in Ballerina. 
 
 ###### Examples:
 
@@ -23,7 +23,7 @@ To initialize a variable of type `int` in Choreo, you can use one of the followi
 
 ### float
 
-The `float` type is IEEE 64-bit binary floating-point (same as double in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
+The `float` type is a IEEE 64-bit two's complement floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
 
 ###### Examples:
 
@@ -43,7 +43,7 @@ The boolean data type has one of the two possible values, `true` or `false`.
 
 ### string
 
-The `string` type represents an immutable sequence of zero or more Unicode characters. In Ballerina, there is no character type. Instead, a string of length is one represents a character. Two string values are considered equal (==) if both sequences have the same characters. You can use <, <=, >, and >= operators on string values. They work by comparing code points. Unpaired surrogates are not allowed.
+The `string` type represents an immutable sequence of zero or more Unicode characters. In Ballerina, there is no character type. Instead, a string of length one represents a character. Two string values are considered equal (==) if both sequences have the same characters. You can use <, <=, >, and >= operators on string values. They work by comparing code points. Unpaired surrogates are not allowed.
 
 ###### Examples:
 
@@ -152,7 +152,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
 - Equality 
 
-    You can use the equality operators to check the equality of [Ballerina's](https://ballerina.io/) basic type literals. These values can come from a literal or a variable. **Note** that the resulting value from these operators is always of `boolean` type.   
+    You can use the equality operators to check the equality of [Ballerina's](https://ballerina.io/) basic type literals. These values can come from a literal or a variable. The resulting value from these operators is always of `boolean` type.   
     
     Ballerina provides the following equality operators: 
     
@@ -198,7 +198,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     ```ballerina
     greeting == "Hi"    
     ```
-    To compare an array variable `arrayWithTwoElements` with an array literal `arrayWithOneElement`, use the following expression:
+    To compare an array variable `arrayWithTwoElements` with an array variable `arrayWithOneElement`, use the following expression:
     
      ```ballerina
      arrayWithTwoElements <  arrayWithOneElement
@@ -209,7 +209,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 All the HTTP-related services created in Choreo have a variable called `request` (of type `http:Request`) which developers can use to query information related to the HTTP request. Following is a list of such use cases.
 
 ### Read a header value in the request
-A typical HTTP request contains many headers.  These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field.
+A typical HTTP request contains many headers. These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field.
 
 ###### Examples:
 
@@ -227,11 +227,11 @@ check request.getHeader(headerName)
 
 ### Check whether a header is present in the request
 
-Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the  `hasHeader`  method in the `request` object for this purpose.
+Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader` method in the `request` object for this purpose.
 
 ###### Examples:
 
-To check if the HTTP header `content-length` exists given the header name, use the following expression:
+To check if the HTTP header `content-length` exists by passing the header name, use the following expression:
 
 ```ballerina
 request.hasHeader("content-length")
@@ -303,7 +303,7 @@ JSON is a textual format for representing a collection of values: a simple value
 
 ### Simple values in JSON 
 
-Ballerina has a single type named `json` that can represent any JSON value. You can use `json` which is a built-in union type in Ballerina, to store values of the types `nil` (as the null value), `boolean`, `int`, `float`, `decimal`, `string`, `json[]`, and `map<json>`. 
+Ballerina has a single type named `json` that can represent any JSON value. You can use `json` which is a built-in union type in Ballerina to store values of the types `nil` (as the null value), `boolean`, `int`, `float`, `decimal`, `string`, `json[]`, and `map<json>`. 
 
 ###### Examples:
 
@@ -431,7 +431,7 @@ personRecordArray.length();
 You can use the field access(.) and optional field access (?.) to access the `json` type in Ballerina. In this case, the type checking happens at runtime. The return type of this operation is a union of `json` and `error`. 
     
 !!! info
-    The examples in this section will assume the following json is already defined.
+    The examples in this section assume that the following `json` type variable `person` is already defined.
     
     ```ballerina
          json person = {
