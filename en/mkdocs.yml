@@ -94,6 +94,7 @@ markdown_extensions:
           base_path: docs
     - attr_list
 plugins:
+    - search
     - markdownextradata: {}
 extra_css:
     - assets/lib/highlightjs/default.min.css
