@@ -61,10 +61,10 @@ Follow this procedure to test the API revision that you deployed:
 
     ![Response received from the service execution](../assets/img/apis/response.png){.cInlineImage-full}
 
-Now you are ready to publish the API to the Choreo API Developer Portal so that external consumers can consume the API.
+Now you are ready to publish the API to the API Developer Portal so that external consumers can consume the API.
 
 ## Step 4: Publish the API
-Follow this procedure to publish the API and view the published API on the Choreo API Developer Portal:
+Follow this procedure to publish the API and view the published API on the API Developer Portal:
 
 1. Click **Publish** in the left pane.
 2. On the **Lifecycle Management** page, click **Publish**.
@@ -75,8 +75,8 @@ Follow this procedure to publish the API and view the published API on the Chore
 
     ![Go to API Developer Portal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
 
-     You can see the published API in the Choreo API Developer Portal.
+     You can see the published API in the API Developer Portal.
 
     ![List of published APIs in the API Developer Portal](../assets/img/apis/devportal.png){.cInlineImage-full}
 
-Congratulations! You have successfully created a REST API and published it on the Choreo API Developer Portal.
+Congratulations! You have successfully created a REST API and published it on the API Developer Portal.
