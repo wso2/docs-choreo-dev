@@ -19,7 +19,7 @@
 site_name: Choreo Documentation
 site_description: Choreo Learning Portal
 site_author: WSO2
-site_url: https://wso2.com/choreo/docs/en/
+site_url: https://wso2.com/choreo/docs
 
 # Repository
 repo_name: wso2/docs-choreo-dev
@@ -94,15 +94,19 @@ markdown_extensions:
           base_path: docs
     - attr_list
 plugins:
+    - search
     - markdownextradata: {}
 extra_css:
     - assets/lib/highlightjs/default.min.css
     - assets/css/theme.css
+    - assets/css/prism.css
     - assets/lib/json-formatter/json-formatter.css
 extra_javascript:
     - assets/lib/json-formatter/json-formatter.umd.js
     - assets/lib/highlightjs/highlight.min.js
+    - assets/lib/prism/prism.js
     - assets/js/theme.js
+    - assets/js/prism-ballerina.js
     - assets/lib/backtotop/js/util.js
     - assets/lib/backtotop/js/main.js
 extra:
