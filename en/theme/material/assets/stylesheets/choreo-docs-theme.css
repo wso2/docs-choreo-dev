@@ -116,14 +116,14 @@ h1, h2, h3, h4 {
 }
 
 .cChoreoBody h3 {
-    font-size: 20px;
+    font-size: 23px;
     font-style: normal;
     font-family: Gilmer;
     font-weight: 600;
     line-height: normal;
     font-stretch: normal;
     letter-spacing: normal;
-    margin-top: 0;
+    margin-top: 1rem;
 }
 
 .cChoreoBody h4 {
@@ -134,6 +134,16 @@ h1, h2, h3, h4 {
     line-height: normal;
     font-stretch: normal;
     letter-spacing: normal;
+}
+
+.cChoreoBody h6{
+    font-size: 17px;
+    font-style: normal;
+    font-family: Gilmer;
+    line-height: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: gray;
 }
 
 [data-md-color-primary="deep-orange"] .md-header {
