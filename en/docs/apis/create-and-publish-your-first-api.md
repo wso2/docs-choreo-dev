@@ -71,7 +71,7 @@ Follow this procedure to publish the API and view the published API on the API D
 
     ![Publish the API](../assets/img/apis/publish.png){.cInlineImage-full}
 
-3. Click **Go to Devportal**.
+3. Click **Go to Developer Portal**.
 
     ![Go to API Developer Portal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
 
