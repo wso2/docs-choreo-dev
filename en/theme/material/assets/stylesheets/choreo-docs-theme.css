@@ -240,6 +240,14 @@ ul.md-nav__list  ul.md-nav__list {
 .container.cHeaderTop {
 padding-bottom: 2rem;
 }
+
+.container.cHomeContainer {
+ text-align: justify;
+ }
+
+.md-footer-copyright.cChoreoCopyrght{
+ margin: 0 0.9rem;
+}
 .md-typeset h3 {
     border: none;
 }
