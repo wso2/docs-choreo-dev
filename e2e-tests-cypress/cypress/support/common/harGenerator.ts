@@ -12,9 +12,9 @@
  */
 
 export const recordHar = () => {
-    cy.recordHar();
+    
 };
 
 export const saveHar = () => {
-    cy.saveHar();
+    
 };
