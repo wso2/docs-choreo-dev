@@ -13,7 +13,6 @@
 
 import { generateAppName } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
-import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -23,7 +22,6 @@ describe('Service deployment and delete deployed service', () => {
     const urlName = "url";
 
     before(() => {
-        recordHar();
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
@@ -38,7 +36,6 @@ describe('Service deployment and delete deployed service', () => {
 
     after(() => {
         cy.userLogout();
-        saveHar();
     })
 
     it('low code form AI suggestions', () => {

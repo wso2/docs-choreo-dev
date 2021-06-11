@@ -12,7 +12,6 @@
  */
 import { generateAppName } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
-import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -21,7 +20,6 @@ describe('Performance drill down test', () => {
     let appName: string
 
     before(() => {
-        recordHar();
         cy.consoleUserLogin()
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
@@ -33,7 +31,6 @@ describe('Performance drill down test', () => {
         cy.undeployApp("service", appName, true);
         cy.deleteApp("service", appName, true);
         cy.userLogout();
-        saveHar();
     });
 
     beforeEach(() => {
