@@ -2,7 +2,7 @@
 
 Choreo provides insightful observability features to drill down to the request level and confirm the root cause for anomalies you detect.
 
-This quick start guide describes how you can detect anomalies and perform root cause analysis on a service deployed in Choreo. For demonstration, let’s use the observability sample service in Choreo.
+This guide describes how you can detect anomalies and perform root cause analysis on a service deployed in Choreo. For demonstration, let’s use the observability sample service available in Choreo.
 
     
 ## Step 1: Get started with the sample service
