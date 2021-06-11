@@ -1,4 +1,4 @@
-<div class="container cHeaderTop">
+<div class="container cHeaderTop cHomeContainer">
        <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-12">
           <h1>Welcome to the Choreo Learning Portal</h1>
