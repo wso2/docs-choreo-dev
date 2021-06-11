@@ -28,12 +28,12 @@ spec:
       - image: choreoctrlplane.azurecr.io/choreoipaas/test-assistant-init:latest
         name: test-assistant-init
         resources:
-          limits: 
-            cpu: 300m 
-            memory: 512Mi 
-          requests: 
-            cpu: 200m 
-            memory: 256Mi 
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
         volumeMounts:
         - name: test-assistant-models
           mountPath: "/home/python-ai/choreo-ai-test-assistant/models"
@@ -47,9 +47,6 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-              drop:
-                - NET_RAW
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/test-assistant:latest
         name: test-assistant
@@ -89,9 +86,6 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - NET_RAW
       volumes:
       - name: test-assistant-models
         emptyDir: {}

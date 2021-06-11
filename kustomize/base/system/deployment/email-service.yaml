@@ -65,9 +65,6 @@ spec:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
-            capabilities:
-              drop:
-                - NET_RAW
           ports:
             - containerPort: 8082
               name: email-port
