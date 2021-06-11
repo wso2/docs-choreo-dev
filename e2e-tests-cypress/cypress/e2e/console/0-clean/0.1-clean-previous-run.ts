@@ -14,18 +14,15 @@
 import { isOldValue, keyNamePrefix } from '../../../support/common/utils';
 import { APIM_RESOURCE_PATH, APP_SVC_URL, ORG_NAME, PATH_SEPARATOR } from "../../../support/common/constants";
 import { getApiName } from "../../../support/devportal/utils";
-import { recordHar, saveHar } from "../../../support/common/harGenerator"
 
 describe('Cleaning up', () => {
 
     before(() => {
-        recordHar();
         cy.consoleUserLogin();
     });
 
     after(() => {
         cy.userLogout();
-        saveHar();
     });
 
     it('Delete Apps that are created by previous run', () => {

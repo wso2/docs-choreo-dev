@@ -12,7 +12,6 @@
  */
 
 import { SETTINGS_TEXT, NO_OF_RETRIES, INVITATION_EMAIL } from '../../../support/common/constants';
-import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -20,7 +19,6 @@ describe('Invite members', () => {
     let savedCookies;
 
     before(() => {
-        recordHar();
         cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
@@ -35,7 +33,6 @@ describe('Invite members', () => {
 
     after(() => {
         cy.userLogout();
-        saveHar();
     })
 
     it('invite a member', { retries: NO_OF_RETRIES }, () => {

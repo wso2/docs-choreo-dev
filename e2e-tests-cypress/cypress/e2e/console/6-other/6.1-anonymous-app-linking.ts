@@ -14,18 +14,15 @@
 /// <reference types="cypress" />
 
 import {generateAppName} from "../../../support/common/utils";
-import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 describe('anonymous-app-linking', () => {
 
     before(() => {
-        recordHar();
         cy.consoleUserLogin();
     });
 
     after(() => {
         cy.userLogout();
-        saveHar();
     });
 
     it('linking-app', () => {

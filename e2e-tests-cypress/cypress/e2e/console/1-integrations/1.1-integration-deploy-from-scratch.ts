@@ -12,7 +12,6 @@
  */
 import { generateAppName } from "../../../support/common/utils";
 import { INTEGRATIONS_TEXT } from "../../../support/common/constants";
-import { recordHar, saveHar } from "../../../support/common/harGenerator";
 
 /// <reference types="cypress" />
 
@@ -20,13 +19,11 @@ describe("Integrations test run and deployment from scratch", () => {
     let appName: string;
 
     before(() => {
-        recordHar();
         cy.consoleUserLogin();
     });
 
     after(() => {
         cy.userLogout();
-        saveHar();
     });
 
     it("Create an intergration app", () => {

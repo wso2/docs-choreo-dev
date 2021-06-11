@@ -31,6 +31,3 @@ Cypress.Commands.overwrite('log', (subject, message) => cy.task('log', message))
 
 // load and register the grep feature
 require('cypress-grep')()
-
-// load and register the HAR generator
-require('@neuralegion/cypress-har-generator/commands');
