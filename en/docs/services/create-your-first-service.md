@@ -29,19 +29,18 @@ To design the service to fetch the current active COVID-19 cases in the United S
         | **Field**           | **Value**                      |
         |---------------------|--------------------------------|
         | **Connection Name** | `httpEndpoint`                 |
-        | **URL**             | `https://api.covid19api.com`   |
+        | **URL**             | `"https://api.covid19api.com"` |
     
-        ![Select HTTP Connection](../assets/img/services/select-http-connection.png){.cInlineImage-half}
         
     2. Click **Save**.
         
     3. Click the **+** icon below the HTTP API call you added. 
     
-        ![Update Existing Connection](../assets/img/services/update-existing-connection.png){.cInlineImage-half}
+        ![Update existing connection](../assets/img/services/update-existing-connection.png){.cInlineImage-half}
         
     4. Click **API Calls** and then click the existing connection.
     
-        ![Select Existing connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
+        ![Select existing connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
         
     5. Enter the details as follows:
         
