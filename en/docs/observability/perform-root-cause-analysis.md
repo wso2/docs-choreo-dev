@@ -1,96 +1,81 @@
 # Perform Root Cause Analysis
 
-Performing root cause analysis is crucial in identifying and rectifying the underlying problem for any anomalies detected in a system. Choreo Observability provides helpful insights out-of-the-box that assists in carrying out a root cause analysis for any service deployed on the Choreo platform.
+Choreo provides insightful observability features to drill down to the request level and confirm the root cause for anomalies you detect.
 
-!!! info
-    For explanation, we are using the sample data available in the product.
+This quick start guide describes how you can detect anomalies and perform root cause analysis on a service deployed in Choreo. For demonstration, let’s use the observability sample service in Choreo.
+
     
-## Get started with the sample service
+## Step 1: Get started with the sample service
+Follow this procedure to try out the sample service:
 
-1. Go to **Services** from the left navigation.
-2. Create a new service.
-    1. **If this is your first service**, 
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+2. Go to the **Observability** card and click **Try Now**. This takes you to the Observability page. 
+3. Click **Try Sample**. You are directed to the sample service low-code view where you can see the following:
+    - Low-code diagram
+    - Throughput graph   
+    - Latency graph
+    - Logs
+    - Diagnostic data
+
+Now you are ready to detect anomalies and perform root cause analysis on the sample service.
     
-        1. Enter a name for the service and click **Create**. 
-           
-           ![Create a new service](../assets/img/observability/first-service-creation.png){.cInlineImage-full}
-           
-    2. **Else** (if you already have services created), 
-        
-        1. Click **+ Create** to start creating a new service.
-        2. Enter a name for the service and click **Create**.
-           
-           ![Create a new service](../assets/img/observability/service-creation.png){.cInlineImage-full}
+## Step 2: Detect anomalies and perform root cause analysis
 
-3. From the left-hand menu, click **Observe**.
-4. On the right-hand bottom, click the **Sample Service** icon.
-   
-    ![Sample service popup](../assets/img/observability/sample-service-pop-up.png){.cInlineImage-full}
-   
-5. Click **Try Sample Service**.
+To detect anomalies of the service, you must trace its executions from the code statement level to the machine it runs in. You can analyze observability data and logs to troubleshoot and identify the root cause for the anomalies you detect. 
 
-    ![Try sample service](../assets/img/observability/try-sample-service.png){.cInlineImage-half}
-    
-## Detect anomalies and perform root cause analysis
-You can detect the anomalies of the usage of a service by observing the **Throughput & Latency** graphs. The throughput graph shows the successful and erroneous requests that occurred during a period. The latency graph shows the latencies of each request. You can observe these graphs at a lower granularity by choosing a shorter time range, which gives you a better understanding of the incidents.
+### Analyze the throughput graph
+The throughput graph depicts successful and erroneous requests to the service during a selected time interval. You can analyze the spikes in the throughput graph to identify the root cause for requests that result in an error.
 
-### Step 1: Detect the anomalies
+Follow this procedure to analyze the throughput graph:
 
-#### Analyze the throughput graph
-The throughput graph shows the throughput of requests per hour for a selected timestamp. 
-
-With the sample data, you can observe spikes in the throughput graph.  You can find the root cause for this by learning how to analyze the throughput graph.
-
-Follow the steps below. 
-
-1. Hover over the throughput graph where you see spikes. You can observe the number of errors that occurred at the time. 
+1. Go to the throughput graph under the **Throughput & Latency** tab and hold the pointer over data points where you see spikes. You can observe the number of errors for the corresponding fluctuations.
     
     !!!tip
-        You can expand the graph by clicking and dragging the cursor over the period you want to drill down.
+        You can expand the graph by clicking and dragging the cursor over the period you want to drill down. The default graph displays data for a custom time range where the data points are at a lower granularity. This allows the effective detection of anomalies.
         
-2. Click the graph on a high point.
-3. Observe the logs in the logs panel.
-4. Note multiple logs are mentioning a connection error with the `hr-service`.
+2. Click on a data point where there is a spike and observe the log entries in the **Logs** pane.
  
-    ![Analyzing the throughput graph](../assets/img/observability/throughput-graph-analysis.png){.cInlineImage-full}
+    ![Analyze the throughput graph](../assets/img/observability/throughput-graph-analysis.png){.cInlineImage-full}
+
+   Here, the log displays multiple entries indicating an error in connecting to the `hr-service`.
+
  
-#### Analyze the latency graph
+### Analyze the latency graph
 
-The latency graph shows the latencies of each request.
+The latency graph depicts the latency of requests over a selected time interval. You can analyze the spikes in the latency graph to identify the API invocations that result in error status.
 
-With the sample data, you can observe spikes in the latency graph. You can identify the errors that caused the spikes and the exact API invocation(s) that caused the errors by analyzing the latency graph.
+Follow this procedure to analyze the latency graph:
 
-![Analyzing the latency graph](../assets/img/observability/latency-graph-analysis.png){.cInlineImage-full}
-
-Follow the steps below.
-
-1. Hover over the latency graph and click on a high point.
+1. Go to the latency graph under the **Throughput & Latency** tab and click on a data point where there is a spike. This displays the latency, start time, and status of the corresponding requests just above the low-code diagram.
    
     !!!tip
-        You can expand the graph by clicking and dragging the cursor over the period you want to drill down.
+        If you want to drill down to view details at a higher granularity, drag the cursor over a time range to view the graph for the selected period.
         
-2. Observe the latencies of each request listed in the low-code diagram.
-3. Click on one request shown on the low-code diagram (latencies). You can observe the status code for that request and thereby identify the exact API invocation that caused any error(s).
+2. Click on a latency value to observe the status code for that request.
+ 
+    ![Analyze the latency graph](../assets/img/observability/latency-graph-analysis.png){.cInlineImage-full}
 
-### Step 2: Drill into the analytics
+   Here, the status code is `500`, which means the request resulted in an error state.
 
-![Diagnostic View](../assets/img/observability/diagnostics-view.png){.cInlineImage-full}
+### Analyze diagnostic data
 
-Follow the steps below to learn how to drill down and confirm the root cause for the anomalies we detected in the **Latency and Throughput** graphs.
+The **Diagnostic View** allows you to simultaneously analyze observability data to identify possible root causes for anomalies of a service.
 
-1. Click on the **Diagnostics View** tab on the left panel. 
+Follow this procedure to analyze diagnostic data:
+
+1. Click the **Diagnostics View** tab.
+ 
+    ![Diagnostic data](../assets/img/observability/diagnostics-view.png){.cInlineImage-full}
 
     !!!info
-        The time range selected for the **Throughput & Latency** graphs is applied to the **Diagnostics View** by default. We recommend capturing the time range you want to analyze in detail from the **Throughput & Latency** graph and then navigate to the **Diagnostics View**.
+        The time range applied to the **Diagnostics View** by default is the same time range for which you viewed the **Throughput & Latency**. 
         
-2. In the sample data, you can observe a couple of prominent errors appearing in the four bins.
-3. Select a bin that shows a higher occurrence of the error log "error while connecting to the hr-service”. Notice that this bin may include other errors which occurred at a lesser frequency.
+2. Hold the pointer over a section where you see fluctuations in multiple bins.
 
-    ![Diagnostic View - second bin](../assets/img/observability/second-bin.png){.cInlineImage-bordered}
+    ![Diagnostic View - second bin](../assets/img/observability/second-bin.png){.cInlineImage-full}
 
-4. Furthermore, when you analyze the graph, you can find a peak with a larger number of errors error. At this same time notice instances where you can see an increase in the throughput and a drop in latency. 
-5. By analyzing the graphs as above, you can confirm that the cause for the latency drop and the throughput spike is the connectivity issue displayed by the error logs.
-6. Observe that the error graph is also fluctuating over time as the service logs errors.
-7.  You can observe similar behavior in the other bins as well.
+    Here, the logs indicate a higher occurrence of `error while connecting to the hr-service`. Although there are other errors also displayed, those error counts are comparatively much lower.
+
+    If you further analyze the sample diagnostic data, you can identify the connectivity error as the most common error.  In such error timestamps, you can also see an increase in the throughput and a drop in latency. 
    
-Therefore, now you can conclude that the connectivity issue is the root cause for the intermittent anomalies detected in the throughput and the latencies of requests.
+Therefore, the conclusion on the root cause for the anomalous throughput and latencies in the sample service here is the connectivity issue.
