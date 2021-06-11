@@ -34,12 +34,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica              
+              name: cm-idp-replica
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:
               key: IDP_HOST
-              name: cm-idp-replica   
+              name: cm-idp-replica
         - name: IDP_JWKS_ENDPOINT
           valueFrom:
             configMapKeyRef:
@@ -89,9 +89,6 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
-          capabilities:
-            drop:
-              - NET_RAW
         name: testbase
         volumeMounts:
         - name: secret-testbase-db

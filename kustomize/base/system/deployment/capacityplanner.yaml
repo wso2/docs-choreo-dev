@@ -45,9 +45,6 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-              drop:
-                - NET_RAW
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner:latest
         name: capacity-planner
@@ -85,9 +82,6 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-capacity-planner/model/"
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - NET_RAW
       volumes:
       - name: capacity-planner-model
         emptyDir: {}
@@ -105,4 +99,3 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
-

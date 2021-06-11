@@ -61,9 +61,6 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
-          capabilities:
-            drop:
-              - NET_RAW
         volumeMounts:
         - mountPath: /api-server.yaml
           name: config

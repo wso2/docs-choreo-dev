@@ -28,9 +28,6 @@ spec:
           securityContext:
             runAsUser: 101
             runAsGroup: 101
-            capabilities:
-              drop:
-                - NET_RAW
           name: apim-devportal
           readinessProbe:
             initialDelaySeconds: 15

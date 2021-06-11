@@ -44,9 +44,6 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-              drop:
-                - NET_RAW
         resources:
           limits:
             cpu: 200m
@@ -97,9 +94,6 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/config/"
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - NET_RAW
       volumes:
       - name: anomalydetector-models
         emptyDir: {}

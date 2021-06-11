@@ -45,9 +45,6 @@ spec:
           mountPath: "/mnt/csi/secret-deploymentoptimizer"
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-              drop:
-                - NET_RAW
         resources:
           limits:
             cpu: 200m
@@ -115,9 +112,6 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - NET_RAW
       volumes:
       - name: deploymentoptimizer-models
         emptyDir: {}

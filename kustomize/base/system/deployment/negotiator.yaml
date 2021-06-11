@@ -46,7 +46,7 @@ spec:
               key: CHOREO_DB_NAME
               name: cm-choreo-program-db
         - name: CHOREO_DB_PASSWORD
-          valueFrom: 
+          valueFrom:
            secretKeyRef:
              name: secret-program-db
              key: CHOREO_DB_PASSWORD
@@ -64,9 +64,6 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
-          capabilities:
-            drop:
-              - NET_RAW
         name: negotiator
         readinessProbe:
             initialDelaySeconds: 5
