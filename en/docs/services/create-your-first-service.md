@@ -151,11 +151,13 @@ To deploy the `covid-stats` service, follow this procedure:
 
     The status of the service changes to **Deployed**, and the following logs show that the service is successfully deployed:    
 
-    ![Deployment Logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
+    ![Deployment logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
 
-3. Once the service is deployed, click the **Go Live** tab below the low-code diagram. Then click **://cURL** and copy the cURL command.
+3. Once the service is deployed, click on **://cURL**.
 
     ![Get cURL command](../assets/img/services/copy-curl-command.png){.cInlineImage-full}
+    
+    Copy the cURL command that is displayed.
     
 4. Invoke the `covid-stats` service by issuing a few cURL commands using the Postman application. The responses are logged as shown below:
     
