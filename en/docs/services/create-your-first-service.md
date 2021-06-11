@@ -18,7 +18,7 @@ To design the service to fetch the current active COVID-19 cases in the United S
 
 1. Select **GET** as the HTTP method and enter `activecases` as the relative path from the host.
 
-    ![Resource Configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
+    ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
     
 2. Click **Save API**.  
 
@@ -56,18 +56,19 @@ To design the service to fetch the current active COVID-19 cases in the United S
 
     6. Click **Save & Done**.
         
-   Now you have designed the service to fetch the active COVID-19 cases in the United States.
+        Now you have configured the service to fetch the active COVID-19 cases in the United States.
+        
     
 4. To store the response from the public API to your service, follow this procedure:
 
     1. Click the last **+** icon in your low-code diagram.
 
-        ![Add New Statement](../assets/img/services/add-custom-statement.png){.cInlineImage-half}
+        ![Add new statement](../assets/img/services/add-custom-statement.png){.cInlineImage-half}
     
     2. Click **Other** and then enter the following in the **Statement** field:
     
         ```ballerina
-        json[] jsonArray = <json[]>jsonPayload;
+        json[] jsonArray = <json[]>getResponse;
         json[] response = [];
         ```
         
@@ -83,7 +84,7 @@ To design the service to fetch the current active COVID-19 cases in the United S
     
     4. Click the **+** icon just below the last ForEach statement you added.
 
-        ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png){.cInlineImage-half}
+        ![Add custom statement after foreach statement](../assets/img/services/add-custom-statement-after-foreach-statement.png){.cInlineImage-half}
     
     5. In the form that appears, click **Other**. Then enter the following in the **Statement** field:
 
@@ -99,24 +100,24 @@ To design the service to fetch the current active COVID-19 cases in the United S
 
     1. Click the last **+** icon in your low-code diagram.
 
-        ![Add Respond Statement](../assets/img/services/add-respond-statement.png){.cInlineImage-half}
+        ![Add respond statement](../assets/img/services/add-respond-statement.png){.cInlineImage-half}
     
-    2. In the **Respond Expression** field, enter a response and then click **Save**.
+    2. In the **Respond Expression** field, select **response** and then click **Save**.
 
 Now you have completed designing the service. It looks as follows:
 
-- In the low-code view
+- The low code diagram
 
-  ![No Code View](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
+  ![No code view](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
 
 - In the code view
 
-  ![Code View](../assets/img/services/choreo-service-code-view.png){.cInlineImage-full}
+  ![Code view](../assets/img/services/choreo-service-code-view.png){.cInlineImage-full}
 
     
 To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
 
-![Service Started Log](../assets/img/services/service-started-notification.png){.cInlineImage-half}
+![Service started log](../assets/img/services/service-started-notification.png){.cInlineImage-half}
     
 Now you are ready to test the service.
    
@@ -126,7 +127,7 @@ To test the `covid-stats` service, follow this procedure:
 
 1. Click the **Test** icon in the left pane.
 
-    ![Test Icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
+    ![Test icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
 
 2. In the section that opens to the right of the page, click **GET**.
 
@@ -134,7 +135,7 @@ To test the `covid-stats` service, follow this procedure:
 
 The following figure shows the server response to the search results for the United States COVID-19 statistics:
 
-![Server Response](../assets/img/services/server-response.png){.cInlineImage-half}
+![Server response](../assets/img/services/server-response.png){.cInlineImage-half}
 
 Now that you have verified that the `covid-stats` service works as expected, you can deploy it.
 
@@ -144,7 +145,7 @@ To deploy the `covid-stats` service, follow this procedure:
 
 1. Click the **Go Live** icon in the left pane.
 
-    ![Test Icon](../assets/img/services/deploy-icon.png){.cInlineImage-bordered}
+    ![Test icon](../assets/img/services/deploy-icon.png){.cInlineImage-bordered}
 
 2. To deploy the service, click **Deploy**.
 
