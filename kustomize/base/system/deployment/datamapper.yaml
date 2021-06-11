@@ -51,9 +51,6 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-              drop:
-                - NET_RAW
       containers:
       - image: choreoctrlplane.azurecr.io/choreoipaas/datamapper:latest
         name: datamapper
@@ -91,9 +88,6 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - NET_RAW
       volumes:
       - name: datamapper-models
         emptyDir: {}
