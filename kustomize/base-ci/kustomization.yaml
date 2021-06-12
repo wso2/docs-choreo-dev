@@ -84,4 +84,4 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
   newTag: master-6cfb19d951c84c9ce575b3a29d1e8b06b4edd225
 - name: choreoipaas/lang-server
-  newTag: master-df18dd48d4e48d1cce09783f6b35dc0c85382833
+  newTag: master-b693567f40016846808a0e4ded4c4c648d6aea4f
