@@ -365,3 +365,5 @@ CREATE TABLE config_mapping
 
 ALTER TABLE `config_mapping` DROP FOREIGN KEY config_id_fk;
 ALTER TABLE `config_mapping` DROP INDEX config_id_fk;
+
+ALTER TABLE `connection_info` ADD COLUMN `type` VARCHAR(255) NOT NULL DEFAULT 'sso' AFTER `configuration_group_id`;
