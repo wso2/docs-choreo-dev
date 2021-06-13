@@ -23,7 +23,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/workspace-manager:latest
         name: workspace-manager
         env:
         - name: REDIS_PASSWORD

@@ -23,7 +23,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/app-service:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/app-service:latest
         name: app-service
         env:
         - name: CHOREO_DB_PASSWORD

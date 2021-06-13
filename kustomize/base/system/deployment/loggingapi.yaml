@@ -95,7 +95,7 @@ spec:
                 secretKeyRef:
                   name: secret-loggingapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-logging:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
           securityContext:
             runAsUser: 100
             runAsGroup: 1000

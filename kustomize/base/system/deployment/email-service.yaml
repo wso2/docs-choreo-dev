@@ -24,7 +24,7 @@ spec:
       containers:
         - name: email-service
           imagePullPolicy: Always
-          image: choreoctrlplane.azurecr.io/choreoipaas/email-service:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/email-service:latest
           resources:
             limits:
               cpu: 800m

@@ -24,7 +24,7 @@ spec:
           terminationGracePeriodSeconds: 30
           containers:
           - name: datamapper-balo-extractor
-            image: choreoctrlplane.azurecr.io/choreoipaas/datamapper-balo-extractor:latest
+            image: choreocontrolplane.azurecr.io/choreoipaas/datamapper-balo-extractor:latest
             securityContext:
               runAsUser: 500
               runAsGroup: 500
