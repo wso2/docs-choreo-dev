@@ -22,7 +22,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/programanalyzer:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/programanalyzer:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000

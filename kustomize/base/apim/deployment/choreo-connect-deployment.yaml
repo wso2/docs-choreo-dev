@@ -71,7 +71,7 @@ spec:
             - name: secret-mgw-analytics
               mountPath: /mnt/csi/secret-mgw-analytics
               readOnly: true 
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
@@ -144,7 +144,7 @@ spec:
               name: secret-mgw-router-truststore
               readOnly: true
               subPath: ROUTER_TRUSTSTORE
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           env:
             - name: ROUTER_ADMIN_HOST

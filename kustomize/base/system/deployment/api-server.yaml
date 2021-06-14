@@ -23,7 +23,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/api-server:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/api-server:latest
         name: api-server
         env:
         - name: IDP_CLIENT_SECRET

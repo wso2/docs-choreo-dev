@@ -24,7 +24,7 @@ spec:
         linkerd.io/inject: enabled
     spec:
       containers:
-        - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-service:latest
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-service:latest
           securityContext:
             runAsUser: 1100
             runAsGroup: 2000

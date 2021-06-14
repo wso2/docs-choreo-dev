@@ -24,7 +24,7 @@ spec:
           terminationGracePeriodSeconds: 30
           containers:
           - name: ast-archiver
-            image: choreoctrlplane.azurecr.io/choreoipaas/ast-archiver:latest
+            image: choreocontrolplane.azurecr.io/choreoipaas/ast-archiver:latest
             securityContext:
               runAsUser: 500
               runAsGroup: 500

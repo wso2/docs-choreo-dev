@@ -42,7 +42,7 @@ spec:
         allowPrivilegeEscalation: false
       containers:
         - name: wso2am
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r14062021.2
           livenessProbe:
             httpGet:
               path: /services/Version

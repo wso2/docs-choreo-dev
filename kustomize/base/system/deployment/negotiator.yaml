@@ -60,7 +60,7 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator:latest
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
