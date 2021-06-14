@@ -155,6 +155,18 @@ spec:
             configMapKeyRef:
               key: CHOREO_DOCS
               name: cm-frontend
+        - name: ENV
+          valueFrom:
+            configMapKeyRef:
+              key: ENV
+              name: cm-frontend
+              optional: true
+        - name: SENTRY_DSN
+          valueFrom:
+            configMapKeyRef:
+              key: SENTRY_DSN
+              name: cm-frontend
+              optional: true
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
