@@ -25,7 +25,7 @@ Follow this procedure to configure and start the **GitHub New Issue to Google Sh
     8. Enter `Sheet1` as the **Worksheet Name**.
 5. Click **Save**.
  
-    ![Save Configuration](../assets/img/integrations/configurations-panel.png){.cInlineImage-half}
+    ![Save configuration](../assets/img/integrations/configurations-panel.png){.cInlineImage-half}
     
     Now you have configured the integration and you are ready to start it.
 
@@ -46,7 +46,7 @@ Follow this procedure to try out the integration:
 1. Go to the GitHub repository you specified when configuring the integration and create two new issues.
 2. Go to the Choreo Console and take a look at the **Execution History** of the configured integration.
  
-    ![Execution History](../assets/img/integrations/execution-history.png){.cInlineImage-full}
+    ![Execution history](../assets/img/integrations/execution-history.png){.cInlineImage-full}
 
      You can see two executions. These are a result of creating new issues in the GitHub repository.
 

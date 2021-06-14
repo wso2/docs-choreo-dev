@@ -48,7 +48,7 @@ Choreo Connect is an API gateway designed for microservices that is cloud-native
 
 Choreo Connect consists of three components: Router, Enforcer, and Adapter.
 
-![Choreo Connect](../assets/img/apis/choreo-connect.png){.cInlineImage-full}
+![Choreo Connect gateway](../assets/img/apis/choreo-connect.png){.cInlineImage-full}
 
 #### Router
 
