@@ -90,6 +90,16 @@ spec:
                 configMapKeyRef:
                   key: LOG_WORKSPACE_ID
                   name: cm-loganalytics-replica
+            - name: NEGOTIATOR_GRPC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: NEGOTIATOR_GRPC_ADDRESS
+                  name: cm-loggingapi
+            - name: APP_SERVICE_GRPC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: APP_SERVICE_GRPC_ADDRESS
+                  name: cm-loggingapi
             - name: AAD_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
