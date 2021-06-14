@@ -25,6 +25,8 @@ images:
   newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
   newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
+- name: choreocontrolplane.azurecr.io/choreoipaas/observability-data-generator
+  newTag: master-ec266f5016c09e2cb13e1d0b18d686d9e15ca2bd
 - name: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector
   newTag: master-831212b641b14b735aaeee537dadda70f09b27e9
 - name: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector-init
