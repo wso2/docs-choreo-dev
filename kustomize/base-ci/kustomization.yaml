@@ -16,11 +16,11 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector-init
   newTag: master-831212b641b14b735aaeee537dadda70f09b27e9
 - name: choreoctrlplane.azurecr.io/choreoipaas/api-server
-  newTag: master-6cfb19d951c84c9ce575b3a29d1e8b06b4edd225
+  newTag: master-059025b302fd31b55dab358271f3c3575bf93502
 - name: choreoctrlplane.azurecr.io/choreoipaas/app-deployer
-  newTag: master-6cfb19d951c84c9ce575b3a29d1e8b06b4edd225
+  newTag: master-059025b302fd31b55dab358271f3c3575bf93502
 - name: choreoctrlplane.azurecr.io/choreoipaas/app-service
-  newTag: master-6cfb19d951c84c9ce575b3a29d1e8b06b4edd225
+  newTag: master-059025b302fd31b55dab358271f3c3575bf93502
 - name: choreoctrlplane.azurecr.io/choreoipaas/ast-archiver
   newTag: master-8c4fe2ca39632874facdd7e8ccffef1d65534a6e
 - name: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner
@@ -82,6 +82,6 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/test-assistant-init
   newTag: main-35feaf33de1ce86fa293ef05645ea087a497262f
 - name: choreoctrlplane.azurecr.io/choreoipaas/workspace-manager
-  newTag: master-6cfb19d951c84c9ce575b3a29d1e8b06b4edd225
+  newTag: master-059025b302fd31b55dab358271f3c3575bf93502
 - name: choreoipaas/lang-server
   newTag: master-8bdc767febd7a9cda3c27b02d5520cc848d9eb61
