@@ -57,6 +57,7 @@ Follow this procedure to analyze the latency graph:
 
    Here, the status code is `500`, which means the request resulted in an error state.
 
+
 ### Analyze diagnostic data
 
 The **Diagnostic View** allows you to simultaneously analyze observability data to identify possible root causes for anomalies of a service.
