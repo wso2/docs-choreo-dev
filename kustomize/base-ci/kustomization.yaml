@@ -26,7 +26,9 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords
   newTag: master-07cf031075ebfc723636724b370abae79cf65fc8
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console
-  newTag: master-abbff0016ba923805db814756a9781000044d941
+  newTag: master-64a1de8fdaf6a341543961f910e09c1428f2e979
+- name: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging
+  newTag: master-646354469e7bef6166dcdf45745419c39c0beb3c
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-90201022bf27bfa9fc442838cf365000477af14e
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
@@ -76,7 +78,7 @@ images:
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-7dde7fb2e8bc5241392389af701553c7efd8004a
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim
-  newTag: v4.0.0-r13062021.1
+  newTag: v4.0.0-r14062021.1
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-1c3d85accfefbf8a5a572435930ede413cafab05
 - name: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry
