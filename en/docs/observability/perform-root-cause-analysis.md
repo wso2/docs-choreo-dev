@@ -74,7 +74,7 @@ Follow the steps below.
 
 ### Step 2: Drill into the analytics
 
-![Diagnostic View](../assets/img/observability/diagnostics-view.png){.cInlineImage-full}
+![Diagnostic view](../assets/img/observability/diagnostics-view.png){.cInlineImage-full}
 
 Follow the steps below to learn how to drill down and confirm the root cause for the anomalies we detected in the **Latency and Throughput** graphs.
 
@@ -86,7 +86,7 @@ Follow the steps below to learn how to drill down and confirm the root cause for
 2. In the sample data, you can observe a couple of prominent errors appearing in the four bins.
 3. Select a bin that shows a higher occurrence of the error log "error while connecting to the hr-service”. Notice that this bin may include other errors which occurred at a lesser frequency.
 
-    ![Diagnostic View - second bin](../assets/img/observability/second-bin.png){.cInlineImage-bordered}
+    ![Diagnostic view - second bin](../assets/img/observability/second-bin.png){.cInlineImage-bordered}
 
 4. Furthermore, when you analyze the graph, you can find a peak with a larger number of errors error. At this same time notice instances where you can see an increase in the throughput and a drop in latency. 
 5. By analyzing the graphs as above, you can confirm that the cause for the latency drop and the throughput spike is the connectivity issue displayed by the error logs.
