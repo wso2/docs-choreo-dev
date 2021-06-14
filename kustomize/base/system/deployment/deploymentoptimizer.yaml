@@ -33,7 +33,7 @@ spec:
             secretKeyRef:
               name: secret-deploymentoptimizer
               key: MODEL_STORAGE_CONNECTION_STRING
-        image: choreoctrlplane.azurecr.io/choreoipaas/deployment-optimizer-init:latest
+        image: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init:latest
         name: deploymentoptimizer-init
         volumeMounts:
         - name: deploymentoptimizer-models
@@ -53,7 +53,7 @@ spec:
             cpu: 100m
             memory: 300Mi
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/deployment-optimizer:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer:latest
         name: deploymentoptimizer
         env:
           - name: AZURE_CHECKPOINT_STORAGE_CONNECTION_STRING

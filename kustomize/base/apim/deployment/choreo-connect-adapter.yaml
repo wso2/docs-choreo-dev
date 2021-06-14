@@ -71,7 +71,7 @@ spec:
             - name: secret-mgw
               mountPath: /mnt/csi/secret-mgw
               readOnly: true 
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always                           
           env: 
             - name: ADAPTER_PRIVATE_KEY_PATH

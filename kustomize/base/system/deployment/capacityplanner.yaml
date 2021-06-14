@@ -25,7 +25,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       initContainers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner-init:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/capacity-planner-init:latest
         name: capacity-planner-init
         resources:
           limits:
@@ -46,7 +46,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/capacity-planner:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/capacity-planner:latest
         name: capacity-planner
         readinessProbe:
           initialDelaySeconds: 5

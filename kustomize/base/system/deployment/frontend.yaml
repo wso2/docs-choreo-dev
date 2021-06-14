@@ -150,7 +150,7 @@ spec:
             configMapKeyRef:
               key: CHOREO_DOCS
               name: cm-frontend
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-console:latest
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
           runAsGroup: 101

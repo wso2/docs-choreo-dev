@@ -31,7 +31,7 @@ spec:
             secretKeyRef:
               name: secret-datamapper
               key: ACCESS_KEY
-        image: choreoctrlplane.azurecr.io/choreoipaas/datamapper-init:latest
+        image: choreocontrolplane.azurecr.io/choreoipaas/datamapper-init:latest
         name: datamapper-init
         resources:
           limits:
@@ -52,7 +52,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/datamapper:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/datamapper:latest
         name: datamapper
         readinessProbe:
           initialDelaySeconds: 5

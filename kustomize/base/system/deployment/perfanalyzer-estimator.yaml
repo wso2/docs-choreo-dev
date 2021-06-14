@@ -24,7 +24,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:
           runAsUser: 500
           runAsGroup: 500

@@ -85,7 +85,7 @@ spec:
            secretKeyRef:
              name: secret-testbase-db
              key: CHOREO_DB_PASSWORD
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-testbase:v0.7.2
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase:v0.7.2
         securityContext:
           runAsUser: 100
           runAsGroup: 1000

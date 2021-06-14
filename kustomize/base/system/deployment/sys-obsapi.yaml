@@ -96,7 +96,7 @@ spec:
                 secretKeyRef:
                   name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
             runAsUser: 100
             runAsGroup: 1000
