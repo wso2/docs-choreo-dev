@@ -31,6 +31,8 @@ images:
   newTag: master-646354469e7bef6166dcdf45745419c39c0beb3c
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-90201022bf27bfa9fc442838cf365000477af14e
+- name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
+  newTag: master-83f010e71e4f37259242fa0bcd7adba09c3a6146
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
   newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
