@@ -21,12 +21,16 @@ images:
   newTag: master-b3d9ea16d6149b9a4c3f533cc32bc363bb33754f
 - name: choreocontrolplane.azurecr.io/choreoipaas/capacity-planner-init
   newTag: master-b3d9ea16d6149b9a4c3f533cc32bc363bb33754f
+- name: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal
+  newTag: main-860ea50583d050558ee917215f3e08a38282790a
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords
   newTag: master-07cf031075ebfc723636724b370abae79cf65fc8
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
   newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
   newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
+- name: choreocontrolplane.azurecr.io/choreoipaas/email-service
+  newTag: master-5b5157d3a6328ae54563334fb2c2b77381b93477
 - name: choreocontrolplane.azurecr.io/choreoipaas/programanalyzer
   newTag: master-69f3e3977f9e604b27f4996e42b5f02a9d3aa640
 - name: choreoctrlplane.azurecr.io/choreoipaas/anomaly-detector
