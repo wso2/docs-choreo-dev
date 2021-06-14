@@ -106,7 +106,7 @@ To design the service to fetch the current active COVID-19 cases in the United S
 
 Now you have completed designing the service. It looks as follows:
 
-- The low code diagram
+- The low-code diagram
 
   ![No code view](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
 
