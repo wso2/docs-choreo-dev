@@ -9,7 +9,7 @@ This guide describes how you can detect anomalies and perform root cause analysi
 Follow this procedure to try out the sample service:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
-2. Go to the **Observability** card and click **Try Now**. This takes you to the Observability page. 
+2. Go to the **Observability** card and click **Try Now**. This takes you to the **Observability** page. 
 3. Click **Try Sample**. You are directed to the sample service low-code view where you can see the following:
     - Low-code diagram
     - Throughput graph   
@@ -72,7 +72,7 @@ Follow this procedure to analyze diagnostic data:
         
 2. Hold the pointer over a section where you see fluctuations in multiple bins.
 
-    ![Diagnostic View - second bin](../assets/img/observability/second-bin.png){.cInlineImage-full}
+    ![Fluctuations in diagnostic data](../assets/img/observability/second-bin.png){.cInlineImage-full}
 
     Here, the logs indicate a higher occurrence of `error while connecting to the hr-service`. Although there are other errors also displayed, those error counts are comparatively much lower.
 
