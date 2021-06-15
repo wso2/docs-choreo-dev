@@ -124,7 +124,6 @@ Now you have successfully created and configured the integration. It looks as fo
     ![Code view](../assets/img/integrations/code-view.png){.cInlineImage-full}
 
 ## Step 7: Try out the integration
-Follow this procedure to try out the integration:
 
 1. Click **Run & Test**. This starts the integration and sends an email to the recipient you specified when configuring the integration.
 2. Go to the inbox of the email recipient and take a look at the COVID-19 statistics summary mail. 
