@@ -143,6 +143,37 @@ To build the JSON payload and respond, follow these steps:
     
 Now you have completed designing the `CovidStatus` service.
 
+The low-code diagram looks as follows:
+
+![Completed low-code diagram](../assets/img/services/completed-low-code-diagram.png){.cInlineImage-bordered}
+
+The code view looks as follows:
+
+```ballerina
+import ballerinax/worldbank;
+import ballerinax/covid19;
+import ballerina/http;
+
+service / on new http:Listener(8090) {
+    resource function get stats/[string country]/[string date](http:Caller caller, http:Request request) returns error? {
+
+        covid19:Client covid19Client = check new ();
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
+        var totalCases = statusByCountry?.cases ?: 0d;
+        worldbank:Client worldBankClient = check new ();
+        worldbank:CountryPopulationArr? populationByCountry = check worldBankClient->getPopulationByCountry(country, 
+        date, format = "json");
+
+        int population = 
+        (populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000;
+        var totalCasesPerMillion = totalCases / population;
+        json payload = {TotalCasesPerMillion: totalCasesPerMillion};
+        check caller->respond(payload);
+    }
+}
+
+```
+
 ## Step 6: Test the service
 
 To test the `CovidStatus` service you created, follow the procedure below:
