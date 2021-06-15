@@ -176,7 +176,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
     ![Response in the test view](../assets/img/services/test-view-response.png){.cInlineImage-bordered}
 
 
-## Step 3: Deploy the service
+## Step 7: Deploy the service
 
 To deploy the `CovidStatus` service, follow the procedure below:
 
@@ -211,7 +211,7 @@ To deploy the `CovidStatus` service, follow the procedure below:
       
 Now you are ready to observe the `CovidStatus` service based on the statistics generated as a result of the cURL commands you issued. 
 
-## Step 4: Observe the service
+## Step 8: Observe the service
 
 To observe the `CovidStatus` service, click the **Observe** icon in the left panel.
 
