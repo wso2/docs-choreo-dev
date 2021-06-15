@@ -140,6 +140,11 @@ spec:
             configMapKeyRef:
               key: APIM_GATEWAY_ENDPOINT_SUFFIX
               name: cm-frontend
+        - name: APIM_SAMPLE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: APIM_SAMPLE_URL
+              name: cm-frontend
         - name: ANALYTICS_HOSTNAME
           valueFrom:
             configMapKeyRef:
