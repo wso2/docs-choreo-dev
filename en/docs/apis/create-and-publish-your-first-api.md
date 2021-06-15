@@ -56,7 +56,7 @@ Follow this procedure to test the API revision that you deployed:
 2. Click the `GET` resource you added to expand it.
 
     ![API GET resource](../assets/img/apis/api-resource.png){.cInlineImage-full}
-
+3. Click **GET TEST KEY** to obtain an access token.
 3. Click **Try it out** and then click **Execute**. You can see `{"hello": "world"}` as the response from the API.
 
     ![Response received from the service execution](../assets/img/apis/response.png){.cInlineImage-full}
@@ -80,3 +80,15 @@ Follow this procedure to publish the API and view the published API on the API D
     ![List of published APIs in the API Developer Portal](../assets/img/apis/devportal.png){.cInlineImage-full}
 
 Congratulations! You have successfully created a REST API and published it on the API Developer Portal.
+
+## Step 5: Invoke the API 
+Follow this procedure to invoke the API from the API Developer Portal:
+
+1. Click **Credentials** in the left pane.
+2. On the **Credentials** page, click **GENERATE ACCESS TOKEN**. Copy the generated access token.
+3. Click **Try Out** in the left pane. 
+4. Paste the copied access token in the **Access Token** field.
+5. Click the `GET` resource you added to expand it.
+6. Click **Try it out** and then click **Execute**. You can see `{"hello": "world"}` as the response from the API.
+
+ 
