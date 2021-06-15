@@ -204,7 +204,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
     The response is displayed as follows:
 
-    ![Response in the test view](../assets/img/services/test-view-response.png){.cInlineImage-bordered}
+     ![Response in the test view](../assets/img/services/test-view-response.png){.cInlineImage-bordered}
 
 
 ## Step 7: Deploy the service
