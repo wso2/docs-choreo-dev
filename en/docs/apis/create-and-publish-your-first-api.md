@@ -23,23 +23,23 @@ Follow this procedure to create an API:
 
 5. Click **Create**. This displays an overview of the API.
 
-    ![API overview](../assets/img/apis/api-overview.png){.cInlineImage-full}
+    ![API overview](../assets/img/apis/api-overview.png){.cInlineImage-bordered}
        
 6. Under **API Configuration**, click **Resources**. Then follow this procedure to add a resource to the API:
-    1. Select `GET` as the HTTP verb.
-    2. Enter `/v3/covid-19/states` as the URI pattern.
+    1. Select `GET` as the **HTTP verb**.
+    2. Enter `/v3/covid-19/states` as the **URI pattern**.
     3. Click the **+** icon to add the resource.
     4. Click **Save**. You can see a confirmation message to proceed with the changes.
     5. Click **Save** to proceed.
 
-Now you have created the API and added a GET resource to it.
+Now you have created the API and added a `GET` resource to it.
 
 ## Step 2: Deploy the API
 Follow this procedure to create a revision of the API and deploy it so that you can try it out:
 
 1. Click **Deploy** in the left pane.
 2. On the **Deployments** page, click **Create Revision and Deploy**.
-3. In the **Create Revision and Deploy** form, enter `Demo revision` as the description and then click **Deploy**.
+3. In the **Create a Revision and Deploy** form, enter `Demo revision` as the description and then click **Deploy**.
 
 Now you are ready to test the deployed API.
 
@@ -47,12 +47,11 @@ Now you are ready to test the deployed API.
 Follow this procedure to test the API revision that you deployed:
 
 1. Click **Test** in the left pane.
-2. Click the `GET` resource you added to expand it.
+2. Click **GET TEST KEY** to obtain an access token.
+3. Click the `GET` resource you added to expand it.
 
     ![API GET resource](../assets/img/apis/api-resource.png){.cInlineImage-full}
-    
-3. Click **GET TEST KEY** to obtain an access token.
-3. Click **Try it out** and then click **Execute**. You can see the Covid-19 totals for all US states as the response from the API.
+4. Click **Try it out** and then click **Execute**. You can see the COVID-19 totals for all US states as the response from the API.
 
     ![Response received from the service execution](../assets/img/apis/response.png){.cInlineImage-full}
 
@@ -81,4 +80,4 @@ Follow this procedure to invoke the API from the API Developer Portal:
 3. Click **Try Out** in the left pane. 
 4. Paste the copied access token in the **Access Token** field.
 5. Click the `GET` resource you added to expand it.
-6. Click **Try it out** and then click **Execute**. You can see the Covid-19 totals for all US states as the response from the API.
+6. Click **Try it out** and then click **Execute**. You can see the COVID-19 totals for all US states as the response from the API.
