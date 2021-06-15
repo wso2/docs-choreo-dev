@@ -1,7 +1,7 @@
 # Build Your First Integration
 Choreo allows you to efficiently build integrations by connecting APIs, events, and streams. Choreo also provides a comprehensive set of prebuilt integration templates that you can select from and use depending on your requirement.
 
-This quick start guide walks you through the steps to quickly create an integration to get the current COVID-19 status of the USA. It will,
+This quick start guide walks you through the steps to quickly create an integration to get the current COVID-19 status in the United States. It will,
 
   - Connect to the COVID-19 data API to get COVID-19 statistics.
   - Connect to the world bank data API to get population data.
