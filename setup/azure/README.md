@@ -1,23 +1,27 @@
 sample azure-deploy.properties file
+
 ```bash
-RESOURCE_GROUP_NAME=CHOREO-DNS-RG
-SUBSCRIPTION_ID=xxxxxxxxxxxxxxxxxxxx
-TENANT_ID=xxxxxxxxxxxxxxxxxx
-SERVICE_PRINCIPLE_CLIENT_ID=xxxxxxxxxxxxxxxx
-HOSTED_ZONE_NAME=choreo.dev
-SERVICE_PRINCIPLE_CLIENT_SECRET=xxxxxxxxxxxxx
-WILDCARD_DOMAIN=choreo.dev
-LOADBALANCER_IP=xxx.xxx.xxx.xxx
-LOADBALANCER_IP_RG=xxx.xxx.xxx.xxx
+SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
+APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+IDP_NAMESPACE=xxxxxxxxxxxxxxxxx
+USERAPPS_NAMESPACE=xxxxxxxxxxxxxxxxx
+SYSTEM_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+USERAPPS_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+IDP_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+LOADBALANCER_SUBNET=xxxxxxxxxxxxxxxxx
+LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
+SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
-CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 EOF
 ```
 
 Running the script
 ```bash
- bash azure-setup.sh -d=azure-deploy.properties -n=prod-choreo-system
+ bash setup.sh -d=azure-deploy.properties
 ```
 
 To Obtain Let's Encrypt Certs [follow](Lets-encrypt-certs)
