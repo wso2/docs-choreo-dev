@@ -9,6 +9,7 @@ resources:
   - rbac
   - component/linker
   - cron
+  - netpol
 
 namespace: choreo-system
 

@@ -1,4 +1,5 @@
 resources:
+  - namespace.yaml
   - obsapi.yaml
   - telemetry.yaml
   - sys-obsapi.yaml

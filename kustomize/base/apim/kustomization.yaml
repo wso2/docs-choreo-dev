@@ -7,5 +7,6 @@ resources:
   - hpa
   - pdb
   - rbac
+  - netpol
 
 namespace: choreo-apim
