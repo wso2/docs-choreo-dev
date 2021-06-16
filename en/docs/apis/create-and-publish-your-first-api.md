@@ -70,8 +70,6 @@ Follow this procedure to publish the API and view the published API on the API D
     
     ![List of published APIs in the API Developer Portal](../assets/img/apis/devportal.png){.cInlineImage-full}
 
-Congratulations! You have successfully created a REST API and published it on the API Developer Portal.
-
 ## Step 5: Invoke the API 
 Follow this procedure to invoke the API from the API Developer Portal:
 
@@ -81,3 +79,5 @@ Follow this procedure to invoke the API from the API Developer Portal:
 4. Paste the copied access token in the **Access Token** field.
 5. Click the `GET` resource you added to expand it.
 6. Click **Try it out** and then click **Execute**. You can see the COVID-19 totals for all US states as the response from the API.
+
+Congratulations! You have successfully created a REST API, published it on the API Developer Portal, and finally invoked the API via the API Developer Portal.
