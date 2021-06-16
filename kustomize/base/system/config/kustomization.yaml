@@ -11,10 +11,6 @@ configMapGenerator:
     behavior: create
     files:
       - datamapper/models.properties
-  - name: cm-capacity-planner
-    behavior: create
-    files:
-      - capacityplanner/models.properties
   - name: cm-test-assistant
     behavior: create
     files:
