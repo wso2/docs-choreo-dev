@@ -1,7 +1,7 @@
 resources:
   - namespace.yaml
-  - obsapi.yaml
-  - telemetry.yaml
-  - sys-obsapi.yaml
-  - negotiator.yaml
-  - loggingapi.yaml
+ # - obsapi.yaml
+ # - telemetry.yaml
+ # - sys-obsapi.yaml
+ # - negotiator.yaml
+ # - loggingapi.yaml
