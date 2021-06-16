@@ -20,7 +20,7 @@ To create the API resource via which the service is invoked, follow these steps.
 
 4. In the **Create with Choreo** card, enter the service name as `CovidStatus` and click **Create**.
 
-5. Select **GET** as the HTTP method, and enter `stats/[string country]/[string date]` in the **Path** field.
+5. Select **GET** as the HTTP method, and enter `stats/[string country]` in the **Path** field.
 
     ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
     
@@ -79,7 +79,7 @@ To get the population data via the **World Bank API** connector so that it can b
 
     1. In the **Country Code** field, enter `country`.
     
-    2. In the **Date** field, enter `date`.
+    2. In the **Date** field, enter `"2019"`.
     
     3. Click **Optional**, and in the **Format** field, enter `json`.
 
@@ -125,6 +125,19 @@ To build the JSON payload to be sent as the response and then send the response,
 
     Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
     
+    1. In the **Type** field, enter `json`.
+    
+    2. In the **Name** field, enter `payload`.
+    
+    3. In the **Expression** field, enter the following expression.
+    
+        ```
+        {
+            country: country,
+            totalCasesPerMillion: totalCasesPerMillion
+        }
+        ```
+    
     | **Field**      | **Value**                                         |
     |----------------|---------------------------------------------------|
     | **Type**       | `json`                                            |
@@ -155,23 +168,25 @@ import ballerinax/covid19;
 import ballerina/http;
 
 service / on new http:Listener(8090) {
-    resource function get stats/[string country]/[string date](http:Caller caller, http:Request request) returns error? {
-
+    resource function get stats/[string country](http:Caller caller, http:Request request) returns error? {
         covid19:Client covid19Client = check new ();
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
         var totalCases = statusByCountry?.cases ?: 0d;
         worldbank:Client worldBankClient = check new ();
         worldbank:CountryPopulationArr? populationByCountry = check worldBankClient->getPopulationByCountry(country, 
-        date, format = "json");
-
-        int population = 
+        "2019", format = "json");
+        var population = 
         (populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000;
+
         var totalCasesPerMillion = totalCases / population;
-        json payload = {TotalCasesPerMillion: totalCasesPerMillion};
+        var payload = {
+            country: country,
+            totalCasesPerMillion: totalCasesPerMillion
+        };
+
         check caller->respond(payload);
     }
 }
-
 ```
 
 ## Step 6: Test the service
@@ -193,12 +208,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
 3. In the test view that opens to the right of the page, click **GET**.
 
-4. Click **Try it out**, and then enter the following information in the fields that appear.
-
-    | **Field**     | **Value**                                         |
-    |---------------|---------------------------------------------------|
-    | **country**   | `USA`                                            |
-    | **date**      | `2019`                                         |
+4. Click **Try it out**, and in the **country** field, enter `USA`.
    
 5. Click **Execute**.
 
@@ -235,8 +245,8 @@ To deploy the `CovidStatus` service, follow these steps:
     
     !!! tip
         The cURL command will be something as given in the example below:<br/><br/>
-        `curl "https://covidstatus-johndoe-test.dv.choreo.dev/stats/USA/2019" -X GET`<br/><br/>
-        The values for the **country** and **date** parameters can be changed as required.
+        `curl "https://johndoe.dv.choreoapis.dev/covidstatus/1.0.0/stats/{country}" -H 'API-Key: <API_KEY>>' -X GET<br/><br/>
+        The value for the **country** parameter can be changed as required.
         
 4. Invoke the service a few times via the terminal by issuing the cURL command you copied.
       
