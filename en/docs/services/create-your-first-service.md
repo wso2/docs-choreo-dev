@@ -219,7 +219,7 @@ To deploy the `CovidStatus` service, follow the procedure below:
 
     The status of the service changes to **Deployed**, and the following logs appear to indicate that the product is successfully deployed.    
 
-    ![Deployment logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
+    ![Deployment logs](../assets/img/services/view-deployment-logs.png){.cInlineImage-full}
     
     In addition, the following message appears:
     
@@ -229,7 +229,7 @@ To deploy the `CovidStatus` service, follow the procedure below:
    
 3. Once the service is deployed, click on **://cURL**.
 
-    ![Get cURL command](../assets/img/services/copy-curl-command.png){.cInlineImage-full}
+    ![Get cURL command](../assets/img/services/get-curl-command.png){.cInlineImage-full}
     
     Copy the cURL command that is displayed.
     
