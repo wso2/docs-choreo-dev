@@ -38,7 +38,7 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
 
     | **Field**                  | **Value**         |
     |----------------------------|-------------------|
-    | **Country**                | `"USA"`           |
+    | **Country**                | `country`           |
     | **Response Variable Name** | `statusByCountry` |
 
 6. Click **Save**.
