@@ -12,7 +12,7 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
 echo "--- Installing nginx ingress using Helm 3..."
-helm upgrade --install ${SYSTEM_NAMESPACE} ingress-nginx/ingress-nginx \
+helm upgrade --install "${SYSTEM_NAMESPACE}" ingress-nginx/ingress-nginx \
   --namespace "${SYSTEM_NAMESPACE}-nginx-ingress" \
   --version 3.8.0 \
   --set controller.replicaCount=2 \
@@ -41,7 +41,7 @@ kubectl annotate namespace "${USERAPPS_NAMESPACE}-nginx-ingress" config.linkerd.
 
 echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install ${USERAPPS_NAMESPACE} ingress-nginx/ingress-nginx \
+helm upgrade --install "${USERAPPS_NAMESPACE}" ingress-nginx/ingress-nginx \
   --namespace "${USERAPPS_NAMESPACE}-nginx-ingress" \
   --version 3.8.0 \
   --set controller.replicaCount=2 \
@@ -70,7 +70,7 @@ kubectl annotate namespace "${IDP_NAMESPACE}" config.linkerd.io/skip-inbound-por
 
 echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install ${IDP_NAMESPACE} ingress-nginx/ingress-nginx \
+helm upgrade --install "${IDP_NAMESPACE}" ingress-nginx/ingress-nginx \
   --namespace "${IDP_NAMESPACE}-nginx-ingress" \
   --version 3.8.0 \
   --set controller.replicaCount=2 \
