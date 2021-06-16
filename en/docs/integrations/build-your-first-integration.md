@@ -108,7 +108,7 @@ Follow this procedure to send an email with the summary of statistics to a speci
 
     1. In the **Operation** drop-down list, select `Send Mail`.
     2. In the **Recipient** field, enter the email address to which you want to send the email. For example, `"test@gmail.com"`
-    3. In the **Subject** field, enter `"Total COVID -19 Cases in the USA"`
+    3. In the **Subject** field, enter `"Total COVID-19 Cases in the USA"`
     4. In the **Message Body** drop-down list, select `mailBody`.
 
 7. Click **Save**.
@@ -144,7 +144,7 @@ Now you have successfully created and configured the integration. It looks as fo
              string mailBody = string `Total Cases Per Million : ${totalCasesPerMillion}`;
 
              sendemail:Client sendemailEndpoint = check new ();
-             string sendEmailResponse = check sendemailEndpoint->sendEmail(“test@wso2.com", "Total COVID -19 Cases in the USA", 
+             string sendEmailResponse = check sendemailEndpoint->sendEmail(“test@wso2.com", "Total COVID-19 Cases in the USA", 
              mailBody);
         }
       ```
