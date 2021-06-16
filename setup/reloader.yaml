@@ -10,7 +10,7 @@ metadata:
     release: "reloader"
     heritage: "Tiller"
   name: reloader-reloader-role
-  namespace: kube-system
+  namespace: reloader
 rules:
   - apiGroups:
       - ""
@@ -55,7 +55,7 @@ metadata:
     release: "reloader"
     heritage: "Tiller"
   name: reloader-reloader-role-binding
-  namespace: kube-system
+  namespace: reloader
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -63,7 +63,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: reloader-reloader
-    namespace: kube-system
+    namespace: reloader
 
 ---
 # Source: reloader/templates/deployment.yaml
@@ -80,6 +80,7 @@ metadata:
     version: v0.0.58
     
   name: reloader-reloader
+  namespace: reloader
 spec:
   replicas: 1
   revisionHistoryLimit: 2
@@ -130,4 +131,4 @@ metadata:
     release: "reloader"
     heritage: "Tiller"
   name: reloader-reloader
-
+  namespace: reloader
