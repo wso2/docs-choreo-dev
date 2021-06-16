@@ -12,13 +12,13 @@ Once you develop and test the service, you can deploy it and observe its statist
 
 To create the API resource via which the service is invoked, follow these steps.
 
-1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
     
-2. Sign in using either your Google or GitHub credentials.
+2. Go to the **Services** card and click **Get Started**. Now you are on the **Services** page, where you can try out sample services or create your own.
     
-3. On the **Services** page, click **Create**. You are directed to the low-code view.
+3. Click Create to create a service from scratch.
 
-4. Under **Create with Choreo**, enter `CovidStatus` as the name of your service.
+4. In the **Create with Choreo** card, enter the service name as `CovidStatus` and click **Create**.
 
 5. Select **GET** as the HTTP method, and enter `stats/[string country]/[string date]` in the **Path** field.
 
