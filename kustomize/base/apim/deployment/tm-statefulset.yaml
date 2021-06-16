@@ -38,7 +38,7 @@ spec:
         allowPrivilegeEscalation: false
       containers:
         - name: wso2am
-          image: choreoctrlplane.azurecr.io/choreoipaas/choreo-product-apim:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r14062021.2
           livenessProbe:
             exec:
               command:
@@ -168,9 +168,6 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
-            - name: secret-azure-storage-account
-              mountPath: /mnt/csi/secret-azure-storage-account
-              readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: wso2am-conf
@@ -225,11 +222,4 @@ spec:
               secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - name: secret-azure-storage-account
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-azure-storage-account
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
+

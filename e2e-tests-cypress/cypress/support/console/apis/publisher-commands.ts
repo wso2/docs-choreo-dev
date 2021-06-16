@@ -11,11 +11,13 @@
  * associated services.
  */
 
-import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../common/constants";
-import { DEVELOP, OVERVIEW, PATH_SEPARATOR } from "./constants";
+import {
+    LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT, DEVELOP,
+    OVERVIEW, PATH_SEPARATOR
+} from "../../common/constants";
 
 Cypress.Commands.add('updateSubscriptionPlans', () => {
-    cy.get('[data-testid="Subscriptions"]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid="Subscriptions"]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid="checkbox-Bronze"]').click();
     cy.get('[data-testid="checkbox-Gold"]').click();
     cy.get('[data-testid="subscription-save-btn"]').click();
@@ -48,12 +50,17 @@ Cypress.Commands.add('createAndDeployRevision', () => {
 });
 
 Cypress.Commands.add('testApiInPublisherTestConsole', () => {
-    cy.get('[data-testid="test"]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid="test"]', { timeout: STANDARD_TIME_OUT }).click();
+    cy.log("Generating an access token");
+    cy.get('[data-testid="get-test-key-btn"]').click();
+    cy.get('[data-testid=accessTokenInput]').should('not.be.empty');
+    cy.log("Successfully generated an access token");
+
     cy.log("Invoking the API");
     cy.wait(2000);
-    cy.get('.opblock-summary', {timeout: STANDARD_TIME_OUT}).eq(0).click();
+    cy.get('.opblock-summary', { timeout: STANDARD_TIME_OUT }).eq(0).click();
     cy.get('.btn').click();
-    cy.get('.execute-wrapper > .btn', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('.execute-wrapper > .btn', { timeout: STANDARD_TIME_OUT }).click();
     cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status',
         { timeout: LONG_TIME_OUT })
         .should('have.text', '200');
@@ -71,7 +78,7 @@ Cypress.Commands.add('deleteApiFromOverview', () => {
 
 Cypress.Commands.add('searchApiFromListAndVisit', (apiName: string) => {
     cy.log('Searching the api from the table');
-    cy.get('[data-testid=api-search-btn]', {timeout: MEDIUM_TIME_OUT}).click();
+    cy.get('[data-testid=api-search-btn]', { timeout: MEDIUM_TIME_OUT }).click();
     cy.get('[data-testid=api-search-text-field]').type(apiName);
     cy.get('[data-testid=apis-list-table]').within(() => {
         cy.contains(apiName).click();
@@ -80,7 +87,7 @@ Cypress.Commands.add('searchApiFromListAndVisit', (apiName: string) => {
 
 Cypress.Commands.add('verifyApiOverview', (apiName: string, apiVersion: string) => {
     cy.log('Visiting API overview page');
-    cy.get('[data-testid=overview-title]', {timeout: STANDARD_TIME_OUT}).should('exist');
+    cy.get('[data-testid=overview-title]', { timeout: STANDARD_TIME_OUT }).should('exist');
     cy.get('[data-testid=go-to-dev-portal-btn]').should('not.be.enabled');
     cy.get('[data-testid=api-name-nav-label]').should('have.text', apiName);
     cy.get('[data-testid=api-version-nav-label]').should('have.text', '(' + apiVersion + ')');
@@ -95,17 +102,17 @@ Cypress.Commands.add('updateDesignConfiguration', () => {
     cy.get('[data-testid=toggle-add-tags]').click();
     cy.get('[data-testid=tag-input]').type('testTag{enter}');
     cy.get('[data-testid=design-config-save-btn]').click();
-    cy.get('#circular-loader', {timeout: STANDARD_TIME_OUT}).should('not.exist');
+    cy.get('#circular-loader', { timeout: STANDARD_TIME_OUT }).should('not.exist');
 });
 
 
 Cypress.Commands.add('updateRuntimeConfiguration', () => {
-    cy.get('[data-testid="Runtime Configurations"]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid="Runtime Configurations"]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid=switch-cors-config]').click();
     cy.get('[data-testid=cors-config-label]').click();
     cy.get('[data-testid=checkbox-allow-all-origins]').click();
     cy.wait(2000);
-    cy.get('[data-testid=addBtn-origin]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid=addBtn-origin]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid="type and press enter to add origins"]').type('localhost{enter}');
     cy.get('[data-testid=addBtn-header]').click();
     cy.get('[data-testid="type and press enter to add headers"]').type('tenantId{enter}');
@@ -115,25 +122,25 @@ Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid=access-control-method-select]').click();
     cy.get('[data-testid=access-c-method-CONNECT]').click();
     cy.get('[data-testid=runtime-config-save-btn]').click();
-    cy.get('#circular-loader', {timeout: STANDARD_TIME_OUT}).should('not.exist');
+    cy.get('#circular-loader', { timeout: STANDARD_TIME_OUT }).should('not.exist');
 });
 
 Cypress.Commands.add('addApiDocument', () => {
     cy.log('Visiting Documents page');
-    cy.get('[data-testid=Documents]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid=Documents]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid=add-new-doc]').click();
     cy.get('[data-testid=page-header]').contains('Add New Document').should('be.visible', true);
     cy.get('[data-testid=document-name]').type('Test document by test runner');
     cy.get('[data-testid=document-summary]').type('Test summary by test runner');
     cy.get('[data-testid=document-url]').type('https://www.example.com/how-to');
     cy.get('[data-testid=create-document]').click();
-    cy.get('#circular-loader', {timeout: STANDARD_TIME_OUT}).should('not.exist');
-    cy.get('[data-testid=document-wrapper]', {timeout: STANDARD_TIME_OUT}).should('exist');
+    cy.get('#circular-loader', { timeout: STANDARD_TIME_OUT }).should('not.exist');
+    cy.get('[data-testid=document-wrapper]', { timeout: STANDARD_TIME_OUT }).should('exist');
 });
 
 Cypress.Commands.add('deployInitialRevision', () => {
     cy.log('Visiting deployment tab');
-    cy.get('[data-testid=deployments]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid=deployments]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid=create-deploy-revision-btn]').click();
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
@@ -142,6 +149,6 @@ Cypress.Commands.add('deployInitialRevision', () => {
 
 Cypress.Commands.add('publishApi', () => {
     cy.log('Visiting api publishing');
-    cy.get('[data-testid=lifecycle-management]', {timeout: STANDARD_TIME_OUT}).click();
+    cy.get('[data-testid=lifecycle-management]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid=Publish-lc-btn]').click();
 });

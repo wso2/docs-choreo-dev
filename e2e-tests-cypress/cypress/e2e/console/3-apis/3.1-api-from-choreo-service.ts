@@ -35,7 +35,8 @@ describe('API creation from choreo service', () => {
 
         cy.wait('@createService', { timeout: 60000 }).then((interception) => {
             serviceName = interception.response.body[`name`];
-            const apiName = serviceName.replace(/-/g,"_");
+            const displayName = interception.response.body[`displayName`];
+            const apiName = displayName.replace(/\s+/g, '');
 
             // Deploy a sample service
             cy.url().should('include', `app/${serviceName}/develop`);
@@ -57,7 +58,7 @@ describe('API creation from choreo service', () => {
             cy.log("Invoking the API");
             cy.get('.opblock-summary').click();
             cy.get('.btn').click();
-            cy.get('input').type("1");
+            cy.get('input[type=text]').type("1");
             cy.wait(2000);
             cy.get('.execute-wrapper > .btn').click();
             cy.wait(2000);

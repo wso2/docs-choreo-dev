@@ -23,7 +23,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoctrlplane.azurecr.io/choreoipaas/app-deployer:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/app-deployer:latest
         name: app-deployer
         env:
         - name: CHOREO_DB_PASSWORD
@@ -77,9 +77,6 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
-          capabilities:
-            drop:
-              - NET_RAW
         volumeMounts:
         - mountPath: /app-deployer.yaml
           name: config

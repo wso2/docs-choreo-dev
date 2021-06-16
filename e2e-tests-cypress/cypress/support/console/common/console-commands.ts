@@ -60,7 +60,7 @@ Cypress.Commands.add('waitTillWorkSpace', () => {
 Cypress.Commands.add('createNewApp', (type: string, name: string) => {
     cy.navigateFromHomePage(type);
 
-    cy.log("Creating a new application with name : ", name);
+    cy.log("Creating a new application with name : " + name);
     cy.contains('button', 'Create').click();
     cy.get('input').type(name);
     cy.contains('button', 'Create').click();
@@ -333,7 +333,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
         cy.checkSourceCodeForValidation(variableSourceFields);
 
-        cy.log('Successfully created the variable with expression : ', expression);
+        cy.log('Successfully created the variable with expression : ' + expression);
     }
 }),
 
@@ -353,7 +353,7 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.get('[data-testid="log-save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.checkSourceCodeForValidation(variableSourceFields);
-    cy.log('Successfully created the log with expression : ', expression);
+    cy.log('Successfully created the log with expression : ' + expression);
 }),
 
 Cypress.Commands.add('goBacktoAppsList', () => {
@@ -597,7 +597,7 @@ Cypress.Commands.add('deployToChoreo', (type:string, appName: string) => {
     }
 
     cy.log('Awaiting 5 minutes for the deployment to complete');
-    cy.get('#tabpanel-1').contains("Recent Logs",{timeout: 300000}).should('exist');
+    cy.get('[data-testid="deploy-stop-button"]',{timeout: 300000}).should('exist');
     cy.log('Deployment successful!');
 }),
 
@@ -646,4 +646,50 @@ Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the on-prem key: " + keyName);
     });
+});
+
+Cypress.Commands.add('testPerformanceAnalyzerLocalStorage', (localStorageKey: string) => {
+    const EXPECTED_BANNER_TPS = 17.95496832638558;
+    const EXPECTED_BANNER_LATENCY = 55.69489078576976;
+    const EXPECTED_GRAPH_DATA_LATENCY = [55.69489078576976, 2344.706675125377, 51451.48375937038, 114422.17912381537, 202222.8434781003];
+    const EXPECTED_GRAPH_DATA_TPS = [17.95496832638558, 4.264925803337544, 0.9717892730526739, 0.6554673278756828, 0.49450397531785023];
+
+    expect(localStorage.getItem(localStorageKey)).to.exist;
+    const localStorageContent = localStorage.getItem(localStorageKey)
+
+    cy.log("Testing Performance Drill Down Banner data...");
+    const { obsViewState: { analysisInfo: { bannerData: { tps } } } }: 
+          { obsViewState: { analysisInfo: { bannerData: { tps: number } } } } 
+          = JSON.parse(localStorageContent);
+
+    const { obsViewState: { analysisInfo: { bannerData: { latency } } } }: 
+          { obsViewState: { analysisInfo: { bannerData: { latency: number } } } } 
+          = JSON.parse(localStorageContent);
+
+    expect(tps.toFixed(2)).eql(EXPECTED_BANNER_TPS.toFixed(2));
+    cy.log("Expected banner TPS matches actual TPS (TPS(req/s): " + tps + ")");
+    expect(latency.toFixed(2)).eql(EXPECTED_BANNER_LATENCY.toFixed(2));
+    cy.log("Expected banner latency matches actual latency (Latency(ms): " + latency + ")");
+
+
+    cy.log("Testing Performance Drill Down graph data...");
+    const { obsViewState: { analysisInfo: { graphData } } }: 
+          { obsViewState: { analysisInfo: { graphData: object[] } } }  
+          = JSON.parse(localStorageContent);
+          
+    var actualTps, actualLatency, concurrency, thinkTime;
+    for (let i=0; i<5; i++) {
+        actualTps = graphData[i]["tps"];
+        actualLatency = graphData[i]["latency"];
+        concurrency = graphData[i]["concurrency"];
+        thinkTime = graphData[i]["thinkTime"];
+
+        expect(actualLatency.toFixed(2)).eql(EXPECTED_GRAPH_DATA_LATENCY[i].toFixed(2));
+        expect(actualTps.toFixed(2)).eql(EXPECTED_GRAPH_DATA_TPS[i].toFixed(2));
+        cy.log("Expected and actual graph data values for concurrency " + concurrency
+                    + " and thinkTime " + thinkTime + " match!"
+                    + " [TPS(req/s): " + actualTps + ", "
+                    + "Latency(ms): " + actualLatency + "]");
+    }
+  cy.log("Performance Analyzer Performance Drill Down test completed successfully!");
 });

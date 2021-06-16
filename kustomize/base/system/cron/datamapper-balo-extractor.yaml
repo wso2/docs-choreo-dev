@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: datamapper-balo-extractor
+  labels:
+    choreo.component: datamapper-balo-extractor
+spec:
+  schedule: 30 20 * * *
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: datamapper-balo-extractor
+        spec:
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+          - name: datamapper-balo-extractor
+            image: choreocontrolplane.azurecr.io/choreoipaas/datamapper-balo-extractor:latest
+            securityContext:
+              runAsUser: 500
+              runAsGroup: 500
+            resources:
+              limits:
+                cpu: 300m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+          serviceAccountName: sa-choreo-default

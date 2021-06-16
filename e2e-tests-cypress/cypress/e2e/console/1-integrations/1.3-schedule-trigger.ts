@@ -27,6 +27,10 @@ describe('Schedule trigger test run and deployment', () => {
         })
     })
 
+    after(() => {
+        cy.userLogout();
+    })
+
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
     })
@@ -83,11 +87,9 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
-    after(() => {
+    it("Undeploy app and delete the app", () => {
         cy.goBacktoAppsList();
         cy.undeployApp("integration", appName, true);
         cy.deleteApp("integration", appName, true);
-        cy.userLogout();
-    })
-
+    });
 })

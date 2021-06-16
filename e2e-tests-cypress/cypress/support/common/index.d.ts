@@ -11,6 +11,11 @@
  * associated services.
  */
 
-export const DEVELOP = '/develop';
-export const OVERVIEW  = '/overview';
-export const PATH_SEPARATOR = '/';
+/// <reference types="cypress-grep" />
+
+declare namespace Cypress {
+    interface Chainable {
+        recordHar(): Chainable<Element>
+        saveHar(): Chainable<Element>
+    }
+}

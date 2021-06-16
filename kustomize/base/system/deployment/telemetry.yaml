@@ -7,7 +7,7 @@ metadata:
     choreo.component: telemetry
   name: telemetry
 spec:
-  replicas: 1 
+  replicas: 1
   selector:
     matchLabels:
       choreo.component: telemetry
@@ -76,17 +76,14 @@ spec:
               key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
               name: cm-telemetry
         - name: EVENTHUB_CONNECTION_STRING
-          valueFrom: 
+          valueFrom:
             secretKeyRef:
               name: secret-telemetry
               key: EVENTHUB_CONNECTION_STRING
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-telemetry:latest
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry:latest
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
-          capabilities:
-            drop:
-              - NET_RAW
         name: telemetry
         volumeMounts:
         - name: secret-telemetry

@@ -24,7 +24,7 @@ spec:
       containers:
         - name: email-service
           imagePullPolicy: Always
-          image: choreoctrlplane.azurecr.io/choreoipaas/email-service:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/email-service:latest
           resources:
             limits:
               cpu: 800m
@@ -65,9 +65,6 @@ spec:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
-            capabilities:
-              drop:
-                - NET_RAW
           ports:
             - containerPort: 8082
               name: email-port

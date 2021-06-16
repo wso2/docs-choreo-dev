@@ -34,12 +34,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica              
+              name: cm-idp-replica
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:
               key: IDP_HOST
-              name: cm-idp-replica   
+              name: cm-idp-replica
         - name: IDP_JWKS_ENDPOINT
           valueFrom:
             configMapKeyRef:
@@ -50,13 +50,10 @@ spec:
             configMapKeyRef:
               key: CHOREO_APP_SERVICE_GRPC_ADDRESS
               name: cm-connectords
-        image: choreoctrlplane.azurecr.io/choreoipaas/choreo-connectords:latest
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
         securityContext:
           runAsUser: 1000
           runAsGroup: 2000
-          capabilities:
-            drop:
-              - NET_RAW
         name: connectords
         readinessProbe:
             initialDelaySeconds: 5

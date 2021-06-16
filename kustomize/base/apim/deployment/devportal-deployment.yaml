@@ -24,13 +24,10 @@ spec:
         linkerd.io/inject: enabled
     spec:
       containers:
-        - image: choreoctrlplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
           securityContext:
             runAsUser: 101
             runAsGroup: 101
-            capabilities:
-              drop:
-                - NET_RAW
           name: apim-devportal
           readinessProbe:
             initialDelaySeconds: 15

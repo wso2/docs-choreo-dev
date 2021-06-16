@@ -26,6 +26,7 @@ describe('API overview rating scenario', () => {
 
     after(() => {
         cy.devportalLogout();
+      
     });
 
     it('Adding and modifying the ratings of the API', () => {
