@@ -129,6 +129,9 @@ helm upgrade --install linkerd2 --wait \
 echo "--- Creating namespace ${namespace}-nginx-ingress..."
 kubectl create namespace "${namespace}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
+# Add label to Nginx ingress namespace
+kubectl label namespace "${namespace}-nginx-ingress" purpose="${namespace}-ingress-traffic"
+
 # Annotate Nginx ingress namespace for linker mTLS
 kubectl annotate namespace "${namespace}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${namespace}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
