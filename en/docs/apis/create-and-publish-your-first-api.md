@@ -62,12 +62,12 @@ Follow this procedure to publish the API and view the published API on the API D
 
 1. Click **Publish** in the left pane.
 2. On the **Lifecycle Management** page, click **Publish**.
-3. Click **Go to Developer Portal** the select your account and proceed to sign in to the API developer portal.
+3. Click **Go to Developer Portal**. Then select an account and proceed to sign in to the API developer portal.
 
     ![Go to API Developer Portal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
-
-     You can see the published API in the API Developer Portal.
-
+     
+    You can see the published API in the API Developer Portal.
+    
     ![List of published APIs in the API Developer Portal](../assets/img/apis/devportal.png){.cInlineImage-full}
 
 Congratulations! You have successfully created a REST API and published it on the API Developer Portal.
