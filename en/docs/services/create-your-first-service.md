@@ -1,182 +1,242 @@
 # Create Your First Service
 
-To learn how to create a service, let's look at a simple scenario. In this example, you'll create and design a service that consumes a public API that fetches the current active COVID-19 cases in the United States. Then you'll test it, deploy it, and observe its performance.
+This quick start guide walks you through the steps to create a service that gets the current COVID-19 status of a given country. It will:
 
-## Step 1: Create the service
+- Connect to the COVID-19 data API to get COVID-19 statistics.
+- Connect to the world bank data API to get population data.
+- Send a response back with further processed COVID-19 data.
 
-To create the service, follow this procedure:
+Once you develop and test the service, you can deploy it and observe its statistics to evaluate its performance.
+
+## Step 1: Create the service resources
+
+To create the API resource via which the service is invoked, follow this procedure:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
     
-2. On the **Services** page, click **Create**. You are directed to the **Create Service** page.
-
-3. Under **Create with Choreo**, enter `covid-stats` as the name of your service, and then click **Create**. You are directed to the low-code view to design the service.
-
-## Step 2: Design the service
-
-To design the service to fetch the current active COVID-19 cases in the United States, follow this procedure:
-
-1. Select **GET** as the HTTP method and enter `activecases` as the relative path from the host.
-
-    ![Resource Configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
+2. Go to the **Services** card and click **Get Started**. Now you are on the **Services** page, where you can try out sample services or create your own.
     
-2. Click **Save API**.  
+3. Click **Create** to create a service from scratch.
 
-3. Click **API Calls** and complete the following steps to create a new HTTP connection:
+4. In the **Create with Choreo** card, enter the service name as `CovidStatus` and click **Create**.
 
-    1. Click **HTTP** and enter the details as follows:
-    
-        | **Field**           | **Value**                      |
-        |---------------------|--------------------------------|
-        | **Connection Name** | `httpEndpoint`                 |
-        | **URL**             | `https://api.covid19api.com`   |
-    
-        ![Select HTTP Connection](../assets/img/services/select-http-connection.png){.cInlineImage-half}
-        
-    2. Click **Save**.
-        
-    3. Click the **+** icon below the HTTP API call you added. 
-    
-        ![Update Existing Connection](../assets/img/services/update-existing-connection.png){.cInlineImage-half}
-        
-    4. Click **API Calls** and then click the existing connection.
-    
-        ![Select Existing connection](../assets/img/services/select-existing-connection.png){.cInlineImage-half}
-        
-    5. Enter the details as follows:
-        
-        | **Field**               | **Value**                       |
-        |-------------------------|---------------------------------|
-        | **OPERATION**           | **get**                         |
-        | **Resource Path**       | `"/total/country/united-states"`|
-        | **Select Payload Type** | **JSON**                        |
-        
-        !!! info
-            To select **JSON** as the payload type, you must enable **Do you want to extract a payload?**.
-            ![Do you want to extract a payload button](../assets/img/services/enable-payload.png){.cInlineImage-half}
+5. Select **GET** as the HTTP method, and enter `stats/[string country]` in the **Path** field.
 
-    6. Click **Save & Done**.
-        
-   Now you have designed the service to fetch the active COVID-19 cases in the United States.
+    ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
     
-4. To store the response from the public API to your service, follow this procedure:
+    Then click **Save API**. 
+    
+## Step 2: Get COVID-19 data
 
-    1. Click the last **+** icon in your low-code diagram.
+Follow this procedure to connect to the COVID-19 API and retrieve data:
 
-        ![Add New Statement](../assets/img/services/add-custom-statement.png){.cInlineImage-half}
-    
-    2. Click **Other** and then enter the following in the **Statement** field:
-    
-        ```ballerina
-        json[] jsonArray = <json[]>jsonPayload;
-        json[] response = [];
-        ```
-        
+1. Click **API Calls** and then select **Covid19 API**.
+2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Save**.
+3. Click the last **+** icon in the low-code diagram and click **API Calls**.
+4. Under **Choose existing connection**, select **covid19Client**.
+5. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
+
+    | **Field**                  | **Value**         |
+    |----------------------------|-------------------|
+    | **Country**                | `country`           |
+    | **Response Variable Name** | `statusByCountry` |
+
+6. Click **Save**.
+7. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure: 
+
+    1. Click the last **+** icon in the low-code diagram.
+    2. Under **Statements**, select **Variable** and enter details as follows:
+
+        | **Field**      | **Value**                     |
+        |----------------|-------------------------------|
+        | **Type**       | `var`                         |
+        | **Name**       | `totalCases`                  |
+        | **Expression** | `statusByCountry?.cases ?: 0d`|
+
     3. Click **Save**.
     
-5. To filter the dates on which the active cases have exceeded 5,000, follow this procedure: 
+## Step 3: Get the population data
 
-    1. Click the last **+** icon in your low-code diagram.
+Follow this procedure to connect to the world bank API and retrieve population data:
+
+1. Click the last **+** icon in the low-code diagram.
+2. Click **API Calls** and then select **World Bank API**.
+3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Save**.
+4. Click the last **+** icon in the low-code diagram and click **API Calls**.
+5. Under **Choose existing connection**, select **worldBankClient**.
+6. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
+
+    1. In the **Country Code** field, enter `country`.
+    2. In the **Date** field, enter `"2019"`.
+    3. Click **Optional**, and  enter `"json"` as the **Format**.
+    4. In the **Response Variable Name** field, enter `populationByCountry`.
+
+7. Click **Save**.
+8. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
+
+    1. Click the last **+** icon in the low-code diagram.
+    2. Under **Statements**, select **Variable** and enter details as follows:
+
+        | **Field**      | **Value**                     |
+        |----------------|-------------------------------|
+        | **Type**       | `int`                         |
+        | **Name**       | `population`                  |
+        | **Expression** | `(populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000`       |
+
+    3. Click **Save**.
     
-    2. Click **ForEach**.
+## Step 4: Calculate the total COVID-19 case count by population
 
-    3. In the **Iterable Expression** field, enter `jsonArray`and then click **Save**.
+Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
+
+1. Click the last **+** icon in the low-code diagram.
+2. Under **Statements**, select **Variable** and enter details as follows:
+
+    | **Field**      | **Value**                     |
+    |----------------|-------------------------------|
+    | **Type**       | `var`                         |
+    | **Name**       | `totalCasesPerMillion`        |
+    | **Expression** | `totalCases / population`     |
+
+3. Click **Save**.
+
+## Step 5: Build the JSON payload and respond
+
+To build the JSON payload to be sent as the response and then send the response, follow this procedure:
+
+1. To build the `json` payload with data of the total cases per million in the population, add a variable.
+
+    Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
     
-    4. Click the **+** icon just below the last ForEach statement you added.
-
-        ![Add Custom Statement After Foreach Statement](../assets/img/services/add-custom-statement-after-foreach-statement.png){.cInlineImage-half}
+    1. In the **Type** field, enter `json`.
     
-    5. In the form that appears, click **Other**. Then enter the following in the **Statement** field:
-
-        ```ballerina
-        int active = <int>(check item.Active);
-        if (active > 5000) {
-            response.push(item);
+    2. In the **Name** field, enter `payload`.
+    
+    3. In the **Expression** field, enter the following expression.
+    
+        ```
+        {
+            country: country,
+            totalCasesPerMillion: totalCasesPerMillion
         }
         ```
-    6. Click **Save**.
     
-6. To ensure that the data retrieved is returned as a response, follow this procedure: 
-
-    1. Click the last **+** icon in your low-code diagram.
-
-        ![Add Respond Statement](../assets/img/services/add-respond-statement.png){.cInlineImage-half}
+    Save the information.
     
-    2. In the **Respond Expression** field, enter a response and then click **Save**.
+2. To respond with the JSON payload, add a `Respond` statement.
 
-Now you have completed designing the service. It looks as follows:
-
-- In the low-code view
-
-  ![No Code View](../assets/img/services/choreo-service-low-code-view.png){.cInlineImage-half}
-
-- In the code view
-
-  ![Code View](../assets/img/services/choreo-service-code-view.png){.cInlineImage-full}
-
+    Click the last **+** icon in the low-code diagram and click **Respond**.
     
-To validate the service, click **Run & Test**. The following is logged to indicate that you have successfully started the service.
-
-![Service Started Log](../assets/img/services/service-started-notification.png){.cInlineImage-half}
+    In the **Respond Expression** field, enter `payload`.
     
-Now you are ready to test the service.
+    Save the information.
+    
+Now you have completed designing the `CovidStatus` service.
+
+The low-code diagram looks as follows:
+
+![Completed low-code diagram](../assets/img/services/completed-low-code-diagram.png){.cInlineImage-bordered}
+
+The code view looks as follows:
+
+```ballerina
+import ballerinax/worldbank;
+import ballerinax/covid19;
+import ballerina/http;
+
+service / on new http:Listener(8090) {
+    resource function get stats/[string country](http:Caller caller, http:Request request) returns error? {
+        covid19:Client covid19Client = check new ();
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
+        var totalCases = statusByCountry?.cases ?: 0d;
+        worldbank:Client worldBankClient = check new ();
+        worldbank:CountryPopulationArr? populationByCountry = check worldBankClient->getPopulationByCountry(country, 
+        "2019", format = "json");
+        var population = 
+        (populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000;
+
+        var totalCasesPerMillion = totalCases / population;
+        var payload = {
+            country: country,
+            totalCasesPerMillion: totalCasesPerMillion
+        };
+
+        check caller->respond(payload);
+    }
+}
+```
+
+## Step 6: Test the service
+
+To test the `CovidStatus` service you created, follow the procedure below:
+
+1. Click **Run & Test**.
+
+    The following logs appear to indicate that the service has successfully started.
+    
+    ```
+    Starting application...
+    [ballerina/http] started HTTP/WS listener 0.0.0.0:8090
+    ```
    
-## Step 3: Test the service
+2. Click the **Test** icon in the left pane.
 
-To test the `covid-stats` service, follow this procedure:
+    ![Test icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
 
-1. Click the **Test** icon in the left pane.
+3. In the test view that opens to the right of the page, click **GET**.
 
-    ![Test Icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
+4. Click **Try it out**, and in the **country** field, enter `USA`.
+   
+5. Click **Execute**.
 
-2. In the section that opens to the right of the page, click **GET**.
+    The response is displayed as follows:
 
-3. Click **Try it out**, and then click **Execute**.
+    ![Response in the test view](../assets/img/services/test-view-response.png){.cInlineImage-bordered}
 
-The following figure shows the server response to the search results for the United States COVID-19 statistics:
 
-![Server Response](../assets/img/services/server-response.png){.cInlineImage-half}
+## Step 7: Deploy the service
 
-Now that you have verified that the `covid-stats` service works as expected, you can deploy it.
-
-## Step 4: Deploy the service
-
-To deploy the `covid-stats` service, follow this procedure:
+To deploy the `CovidStatus` service, follow this procedure:
 
 1. Click the **Go Live** icon in the left pane.
 
-    ![Test Icon](../assets/img/services/deploy-icon.png){.cInlineImage-bordered}
+    ![Deploy icon](../assets/img/services/deploy-icon.png){.cInlineImage-bordered}
 
 2. To deploy the service, click **Deploy**.
 
-    The status of the service changes to **Deployed**, and the following logs show that the service is successfully deployed:    
+    The status of the service changes to **Deployed**, and the following logs appear to indicate that the product is successfully deployed.    
 
-    ![Deployment logs](../assets/img/services/deployment-logs.png){.cInlineImage-full}
-
+    ![Deployment logs](../assets/img/services/view-deployment-logs.png){.cInlineImage-full}
+    
+    In addition, the following message appears:
+    
+    ```
+    Deployed successfully. Note that the service will automatically undeploy in 12 hours.
+    ```
+   
 3. Once the service is deployed, click on **://cURL**.
 
-    ![Get cURL command](../assets/img/services/copy-curl-command.png){.cInlineImage-full}
+    ![Get cURL command](../assets/img/services/get-curl-command.png){.cInlineImage-full}
     
     Copy the cURL command that is displayed.
     
-4. Invoke the `covid-stats` service by issuing a few cURL commands using the Postman application. The responses are logged as shown below:
-    
-    ![covid-stats-log](../assets/img/services/covid-stats-log.png){.cInlineImage-half}
-    
-5. On the Choreo Console **Go Live** tab, the requests are logged as follows:
-    
-    ![Execution History](../assets/img/services/execution-history.png){.cInlineImage-half}
-    
-Now you are ready to observe the `covid-stats` service based on the statistics generated as a result of the cURL commands you issued. 
+    !!! tip
+        The cURL command will be something as given in the example below:<br/><br/>
+        `curl "https://johndoe.dv.choreoapis.dev/covidstatus/1.0.0/stats/{country}" -H 'API-Key: <API_KEY>>' -X GET<br/><br/>
+        The value for the **country** parameter can be changed as required.
+        
+4. Invoke the service a few times via the terminal by issuing the cURL command you copied.
+      
+Now you are ready to observe the `CovidStatus` service based on the statistics generated as a result of the cURL commands you issued. 
 
-## Step 5: Observe the service
+## Step 8: Observe the service
 
-To observe the `covid-stats` service, click the **Observe** icon in the left panel.
+To observe the `CovidStatus` service, click the **Observe** icon in the left panel.
 
-![Observe Icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
+![Observe icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
 
-![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
+![Visualization of throughput and latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
 
 Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.
