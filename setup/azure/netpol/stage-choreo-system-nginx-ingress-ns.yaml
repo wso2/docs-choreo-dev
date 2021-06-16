@@ -33,4 +33,3 @@ spec:
     - port: 443
   egress:
   - {}
-  
