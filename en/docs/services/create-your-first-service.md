@@ -121,12 +121,6 @@ To build the JSON payload to be sent as the response and then send the response,
         }
         ```
     
-    | **Field**      | **Value**                                         |
-    |----------------|---------------------------------------------------|
-    | **Type**       | `json`                                            |
-    | **Name**       | `payload`                                         |
-    | **Expression** | `{ TotalCasesPerMillion : totalCasesPerMillion }` |
-    
     Save the information.
     
 2. To respond with the JSON payload, add a `Respond` statement.
