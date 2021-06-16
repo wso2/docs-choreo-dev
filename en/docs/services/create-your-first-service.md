@@ -30,7 +30,7 @@ To create the service resources:
 
 To get COVID-19 data:
 
-1. Click on the **API Calls** tab and then click on **Covid19 API** in the available connection list.
+1. Click on the **API Calls** tab and then select on **Covid19 API** in the available connection list.
 
 2. In the **Connection Name** field, enter `covid19Client`, and save.
 
