@@ -16,7 +16,7 @@ To create the API resource via which the service is invoked, follow these steps.
     
 2. Go to the **Services** card and click **Get Started**. Now you are on the **Services** page, where you can try out sample services or create your own.
     
-3. Click Create to create a service from scratch.
+3. Click **Create** to create a service from scratch.
 
 4. In the **Create with Choreo** card, enter the service name as `CovidStatus` and click **Create**.
 
