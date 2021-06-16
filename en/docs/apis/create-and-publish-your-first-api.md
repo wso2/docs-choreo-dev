@@ -62,7 +62,7 @@ Follow this procedure to publish the API and view the published API on the API D
 
 1. Click **Publish** in the left pane.
 2. On the **Lifecycle Management** page, click **Publish**.
-3. Click **Go to Developer Portal**.
+3. Click **Go to Developer Portal** the select your account and proceed to sign in to the API developer portal.
 
     ![Go to API Developer Portal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
 
