@@ -28,94 +28,77 @@ To create the API resource via which the service is invoked, follow these steps.
     
 ## Step 2: Get COVID-19 data
 
-To get statistics related to COVID-19 via the **Covid19 API** connector, follow these steps:
+Follow this procedure to connect to the COVID-19 API and retrieve data:
 
-1. Click on the **API Calls** tab and then select on **Covid19 API** in the available connection list.
-
-2. In the **Connection Name** field, enter `covid19Client`, and save.
-
+1. Click **API Calls** and then select **Covid19 API**.
+2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Save**.
 3. Click the last **+** icon in the low-code diagram and click **API Calls**.
-
 4. Under **Choose existing connection**, select **covid19Client**.
+5. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
-5. In the **Operation** field, select **Country Status**. Then enter the following information in the other fields that appear.
+    | **Field**                  | **Value**         |
+    |----------------------------|-------------------|
+    | **Country**                | `"USA"`           |
+    | **Response Variable Name** | `statusByCountry` |
 
-    | **Field**                 | **Value**         |
-    |---------------------------|-------------------|
-    | **Country**               | `country`         |
-    | **Response VariableName** | `statusByCountry` |
-    
-    Save the information.
-    
-6. Now let’s extract the current total cases count from the response and store it in a variable.
+6. Click **Save**.
+7. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure: 
 
-    To do this, click the last **+** icon in the low-code diagram and click **Variable**.
-    
-    Enter information as follows:
-    
-    | **Field**      | **Value**                      |
-    |----------------|--------------------------------|
-    | **Type**       | `var`                          |
-    | **Name**       | `totalCases`                   |
-    | **Expression** | `statusByCountry?.cases ?: 0d` |
-    
-    Save the information.
+    1. Click the last **+** icon in the low-code diagram.
+    2. Under **Statements**, select **Variable** and enter details as follows:
+
+        | **Field**      | **Value**                     |
+        |----------------|-------------------------------|
+        | **Type**       | `var`                         |
+        | **Name**       | `totalCases`                  |
+        | **Expression** | `statusByCountry?.cases ?: 0d`|
+
+    3. Click **Save**.
     
 ## Step 3: Get the population data
 
-To get the population data via the **World Bank API** connector so that it can be used to further process COVID-19 statistics, follow these steps:
+Follow this procedure to connect to the world bank API and retrieve population data:
 
-1. Click the last **+** icon in the low-code diagram and click **API Calls**.
-
-2. Select on **World Bank API** in the available connection list.
-
-3. In the **Connection Name** field, enter `worldBankClient`, and save.
-
+1. Click the last **+** icon in the low-code diagram.
+2. Click **API Calls** and then select **World Bank API**.
+3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Save**.
 4. Click the last **+** icon in the low-code diagram and click **API Calls**.
-
 5. Under **Choose existing connection**, select **worldBankClient**.
+6. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
 
-6. In the **Operation** field, select **Get Country Population**. Then enter the following information in the other fields that appear.
-
-    1. In the **Country Code** field, enter `country`.
-    
+    1. In the **Country Code** field, enter `"USA"`.
     2. In the **Date** field, enter `"2019"`.
+    3. Click **Optional**, and  enter `"json"` as the **Format**.
+    4. In the **Response Variable Name** field, enter `populationByCountry`.
+
+7. Click **Save**.
+8. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
+
+    1. Click the last **+** icon in the low-code diagram.
+    2. Under **Statements**, select **Variable** and enter details as follows:
+
+        | **Field**      | **Value**                     |
+        |----------------|-------------------------------|
+        | **Type**       | `int`                         |
+        | **Name**       | `population`                  |
+        | **Expression** | `(populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000`       |
+
+    3. Click **Save**.
     
-    3. Click **Optional**, and in the **Format** field, enter `json`.
+## Step 4: Calculate the total COVID-19 case count by population
 
-    4. In the **Response Variable Name** field, enter `populationByCountry`
+Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
-    Save the information.
+1. Click the last **+** icon in the low-code diagram.
+2. Under **Statements**, select **Variable** and enter details as follows:
 
-7. Now let’s extract the population from the response and store it in a variable.
+    | **Field**      | **Value**                     |
+    |----------------|-------------------------------|
+    | **Type**       | `var`                         |
+    | **Name**       | `totalCasesPerMillion`        |
+    | **Expression** | `totalCases / population`     |
 
-    To do this, click the last **+** icon in the low-code diagram and click **Variable**.
-    
-    Enter information as follows:
-    
-    | **Field**      | **Value**                      |
-    |----------------|--------------------------------|
-    | **Type**       | `int`                          |
-    | **Name**       | `population`                   |
-    | **Expression** | `(populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000` |
-    
-    Save the information.
-    
-## Step 4: Calculate the summary of the COVID-19 cases
-
-Now let’s calculate the total cases per million in the population based on the COVID-19 statistics and the population data that you have collected. 
-
-To do this, click the last **+** icon in the low-code diagram and click **Variable**.
-
-Enter information as follows:
-
-| **Field**      | **Value**                  |
-|----------------|----------------------------|
-| **Type**       | `var`                      |
-| **Name**       | `totalCasesPerMillion`     |
-| **Expression** | `totalCases / population`  |
-
-Save the information.
+3. Click **Save**.
 
 ## Step 5: Build the JSON payload and respond
 
