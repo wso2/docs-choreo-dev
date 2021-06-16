@@ -10,7 +10,7 @@ Once you develop and test the service, you can deploy it and observe its statist
 
 ## Step 1: Create the service resources
 
-To create the service resources:
+To create the API resource via which the service is invoked, follow these steps.
 
 1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
     
@@ -24,11 +24,11 @@ To create the service resources:
 
     ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
     
-    Then click **Save API**. Now you have saved the API resource that starts your service.
+    Then click **Save API**. 
     
 ## Step 2: Get COVID-19 data
 
-To get COVID-19 data:
+To get statistics related to COVID-19 via the **Covid19 API** connector, follow these steps:
 
 1. Click on the **API Calls** tab and then select on **Covid19 API** in the available connection list.
 
@@ -63,7 +63,7 @@ To get COVID-19 data:
     
 ## Step 3: Get the population data
 
-To get the population data:
+To get the population data via the **World Bank API** connector so that it can be used to further process COVID-19 statistics, follow these steps:
 
 1. Click the last **+** icon in the low-code diagram and click **API Calls**.
 
@@ -119,7 +119,7 @@ Save the information.
 
 ## Step 5: Build the JSON payload and respond
 
-To build the JSON payload and respond, follow these steps:
+To build the JSON payload to be sent as the response and then send the response, follow these steps:
 
 1. To build the `json` payload with data of the total cases per million in the population, add a variable.
 
@@ -209,7 +209,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
 ## Step 7: Deploy the service
 
-To deploy the `CovidStatus` service, follow the procedure below:
+To deploy the `CovidStatus` service, follow these steps:
 
 1. Click the **Go Live** icon in the left pane.
 
