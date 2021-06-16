@@ -17,5 +17,4 @@ resources:
   - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
   - datamapper.yaml
-  - capacityplanner.yaml
   - test-assistant.yaml

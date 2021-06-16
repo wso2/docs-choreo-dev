@@ -19,7 +19,6 @@ resources:
   - anomalydetector.yaml
   - datamapper.yaml
   - deploymentoptimizer.yaml
-  - capacityplanner.yaml
   - test-assistant.yaml
 
 commonAnnotations:
