@@ -73,7 +73,7 @@ To get the population data:
 
 4. Click the last **+** icon in the low-code diagram and click **API Calls**.
 
-5. Under **Choose existing connection**, click **worldBankClient**.
+5. Under **Choose existing connection**, select **worldBankClient**.
 
 6. In the **Operation** field, select **Get Country Population**. Then enter the following information in the other fields that appear.
 
