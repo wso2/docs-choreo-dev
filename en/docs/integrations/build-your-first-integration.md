@@ -14,7 +14,7 @@ Follow this procedure to create an integration from scratch:
 2. Go to the **Integrations** card and click **Get Started**. This takes you to the **Integrations** page.
 3. Click **Create**. This takes you to the **Create Integration** page.
 4. Go to the **Create with Choreo** card, enter `USACovidStatus` as the integration name, and then click **Create**.
-5. In the **Select Trigger** window, click **Manual**. This creates an integration that you can manually trigger.
+5. In the **Select Trigger** window, select **Manual**. This creates an integration that you can manually trigger.
   
 
 ## Step 2: Get the COVID-19 data 
@@ -23,7 +23,7 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
 1. Click **API Calls** and then select **Covid19 API**.
 2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Save**.
 3. Click the last **+** icon in the low-code diagram and click **API Calls**.
-4. Under **Choose existing connection**, click **covid19Client**.
+4. Under **Choose existing connection**, select **covid19Client**.
 5. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
     | **Field**                  | **Value**         |
@@ -35,7 +35,7 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
 7. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure: 
 
     1. Click the last **+** icon in the low-code diagram.
-    2. Under **Statements**, click **Variable** and enter details as follows:
+    2. Under **Statements**, select **Variable** and enter details as follows:
 
         | **Field**      | **Value**                     |
         |----------------|-------------------------------|
@@ -49,10 +49,10 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
 Follow this procedure to connect to the world bank API and retrieve population data:
 
 1. Click the last **+** icon in the low-code diagram.
-2. Click **API Calls** and then click **World Bank API**.
+2. Click **API Calls** and then select **World Bank API**.
 3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Save**.
 4. Click the last **+** icon in the low-code diagram and click **API Calls**.
-5. Under **Choose existing connection**, click **worldBankClient**.
+5. Under **Choose existing connection**, select **worldBankClient**.
 6. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
 
     1. In the **Country Code** field, enter `"USA"`.
@@ -64,7 +64,7 @@ Follow this procedure to connect to the world bank API and retrieve population d
 8. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
 
     1. Click the last **+** icon in the low-code diagram.
-    2. Under **Statements**, click **Variable** and enter details as follows:
+    2. Under **Statements**, select **Variable** and enter details as follows:
 
         | **Field**      | **Value**                     |
         |----------------|-------------------------------|
@@ -79,7 +79,7 @@ Follow this procedure to connect to the world bank API and retrieve population d
 Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
 1. Click the last **+** icon in the low-code diagram.
-2. Under **Statements**, click **Variable** and enter details as follows:
+2. Under **Statements**, select **Variable** and enter details as follows:
 
     | **Field**      | **Value**                     |
     |----------------|-------------------------------|
@@ -93,17 +93,17 @@ Now let’s calculate the total COVID-19 case count per million in the populatio
 Follow this procedure to send an email with the summary of statistics to a specified email address:
 
 1. Click the last **+** icon in the low-code diagram.
-2. Under **Statements**, click **Variable** and enter details as follows:
+2. Under **Statements**, select **Variable** and enter details as follows:
 
     | **Field**      | **Value**                     |
     |----------------|-------------------------------|
     | **Type**       | `string`                      |
     | **Name**       | `mailBody`                    |
-    | **Expression** | `"Per Million Data: Total Cases" + totalCasesPerMillion.toString()`|
+    | **Expression** | string `` `Total Cases Per Million : ${totalCasesPerMillion}` ``|
 
 3. Click **Save**.
 4. Click the last **+** icon in the low-code diagram.
-5. Click **API Calls** and then click **Mail by Choreo**.
+5. Click **API Calls** and then select **Mail by Choreo**.
 6. In the **Mail by Choreo Connection** window, enter details as follows: 
 
     1. In the **Operation** drop-down list, select `Send Mail`.
@@ -120,14 +120,40 @@ Now you have successfully created and configured the integration. It looks as fo
     ![Low-code view](../assets/img/integrations/low-code-view.png){.cInlineImage-full}
 
 - In the code view
-  
-    ![Code view](../assets/img/integrations/code-view.png){.cInlineImage-full}
+    
+      ```ballerina
+         import wso2/choreo.sendemail;
+         import ballerinax/worldbank;
+         import ballerinax/covid19;
+
+         public function main() returns error? {
+
+             covid19:Client covid19Client = check new ();
+             covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
+             var totalCases = statusByCountry?.cases ?: 0d;
+             worldbank:Client worldBankClient = check new ();
+
+             worldbank:CountryPopulationArr? populationByCountry = check worldBankClient->getPopulationByCountry("USA", "2019", 
+             format = "json");
+
+             int population = 
+             (populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000;
+
+             var totalCasesPerMillion = totalCases / population;
+ 
+             string mailBody = string `Total Cases Per Million : ${totalCasesPerMillion}`;
+
+             sendemail:Client sendemailEndpoint = check new ();
+             string sendEmailResponse = check sendemailEndpoint->sendEmail(“test@wso2.com", "Total COVID -19 Cases in the USA", 
+             mailBody);
+        }
+      ```
 
 ## Step 7: Try out the integration
 
 1. Click **Run & Test**. This starts the integration and sends an email to the recipient you specified when configuring the integration.
 2. Go to the inbox of the email recipient and take a look at the COVID-19 statistics summary mail. 
 
-     ![Summary email](../assets/img/integrations/summary-email.png){.cInlineImage-full}
+     ![Summary email](../assets/img/integrations/summary-email.png){.cInlineImage-half}
 
 Congratulations! Now you have successfully created an integration from scratch and tried it out.
