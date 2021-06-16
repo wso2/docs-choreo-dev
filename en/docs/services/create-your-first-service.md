@@ -66,7 +66,7 @@ Follow this procedure to connect to the world bank API and retrieve population d
 5. Under **Choose existing connection**, select **worldBankClient**.
 6. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
 
-    1. In the **Country Code** field, enter `"USA"`.
+    1. In the **Country Code** field, enter `country`.
     2. In the **Date** field, enter `"2019"`.
     3. Click **Optional**, and  enter `"json"` as the **Format**.
     4. In the **Response Variable Name** field, enter `populationByCountry`.
