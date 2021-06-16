@@ -36,7 +36,7 @@ To get COVID-19 data:
 
 3. Click the last **+** icon in the low-code diagram and click **API Calls**.
 
-4. Under **Choose existing connection**, click **covid19Client**.
+4. Under **Choose existing connection**, select **covid19Client**.
 
 5. In the **Operation** field, select **Country Status**. Then enter the following information in the other fields that appear.
 
