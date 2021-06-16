@@ -149,7 +149,7 @@ Now you have successfully created and configured the integration. It looks as fo
         }
       ```
 
-## Step 7: Try out the integration
+## Step 6: Try out the integration
 
 1. Click **Run & Test**. This starts the integration and sends an email to the recipient you specified when configuring the integration.
 2. Go to the inbox of the email recipient and take a look at the COVID-19 statistics summary mail. 
