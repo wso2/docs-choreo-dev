@@ -20,7 +20,7 @@ Follow this procedure to create an integration from scratch:
 ## Step 2: Get the COVID-19 data 
 Follow this procedure to connect to the COVID-19 API and retrieve data:
 
-1. Click **API Calls** and then click **Covid19 API**.
+1. Click **API Calls** and then select **Covid19 API**.
 2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Save**.
 3. Click the last **+** icon in the low-code diagram and click **API Calls**.
 4. Under **Choose existing connection**, click **covid19Client**.
