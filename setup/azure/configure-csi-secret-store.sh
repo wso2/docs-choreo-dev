@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ################ Install CSI Secret Store Driver ########
 echo "--- Creating namespace csi-secret-store-driver..."
 kubectl create namespace csi-secret-store-driver --dry-run=client -o yaml | kubectl apply -f -

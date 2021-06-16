@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ############### Install System Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace prod-choreo-system-nginx-ingress..."
@@ -28,9 +28,9 @@ helm upgrade --install "${SYSTEM_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.image.digest=null \
   --set-string controller.config.server-tokens=false \
   --set controller.admissionWebhooks.enabled=false \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group"="${LOADBALANCER_IP_RG}" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"="true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"="${LOADBALANCER_SUBNET}"
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group = ${LOADBALANCER_IP_RG}" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal = true" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet = ${LOADBALANCER_SUBNET}"
 
 ############### Install Userapps Nginx Ingress Controller using Helm 3
 echo "--- Creating namespace ${USERAPPS_NAMESPACE}-nginx-ingress..."
