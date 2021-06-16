@@ -187,7 +187,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
    
 2. Click the **Test** icon in the left pane.
 
-    ![Test Icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
+    ![Test icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
 
 3. In the test view that opens to the right of the page, click **GET**.
 
@@ -239,10 +239,10 @@ Now you are ready to observe the `CovidStatus` service based on the statistics g
 
 To observe the `CovidStatus` service, click the **Observe** icon in the left panel.
 
-![Observe Icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
+![Observe icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
 
 The throughput and the latency of the `covid-stats` service are visualized as follows:
 
-![Visualization of Throughput and Latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
+![Visualization of throughput and latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
 
 Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.
