@@ -99,7 +99,7 @@ Follow this procedure to send an email with the summary of statistics to a speci
     |----------------|-------------------------------|
     | **Type**       | `string`                      |
     | **Name**       | `mailBody`                    |
-    | **Expression** | string `` `Total Cases Per Million : ${totalCasesPerMillion}` ``|
+    | **Expression** | `string` `` `Total Cases Per Million : ${totalCasesPerMillion}` ``|
 
 3. Click **Save**.
 4. Click the last **+** icon in the low-code diagram.
