@@ -91,6 +91,9 @@ helm install \
   -n cert-manager \
   --set installCRDs=true
 
+echo "-- Creating secrets for DNS-01 challenge"
+kubectl create secret generic choreo-secret-azuredns-config clientsecret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager
+
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
 kubectl create namespace linkerd
