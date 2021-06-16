@@ -136,6 +136,8 @@ kubectl label namespace "${namespace}-nginx-ingress" purpose="${namespace}-ingre
 kubectl annotate namespace "${namespace}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${namespace}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
+kubectl apply -f ./netpol/"${namespace}-nginx-ingress-ns.yaml"
+
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 helm repo update
