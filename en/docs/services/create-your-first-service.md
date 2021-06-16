@@ -67,7 +67,7 @@ To get the population data:
 
 1. Click the last **+** icon in the low-code diagram and click **API Calls**.
 
-2. Click on **World Bank API** in the available connection list.
+2. Select on **World Bank API** in the available connection list.
 
 3. In the **Connection Name** field, enter `worldBankClient`, and save.
 
