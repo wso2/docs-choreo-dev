@@ -10,7 +10,7 @@ Once you develop and test the service, you can deploy it and observe its statist
 
 ## Step 1: Create the service resources
 
-To create the API resource via which the service is invoked, follow these steps.
+To create the API resource via which the service is invoked, follow this procedure:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
     
@@ -102,7 +102,7 @@ Now let’s calculate the total COVID-19 case count per million in the populatio
 
 ## Step 5: Build the JSON payload and respond
 
-To build the JSON payload to be sent as the response and then send the response, follow these steps:
+To build the JSON payload to be sent as the response and then send the response, follow this procedure:
 
 1. To build the `json` payload with data of the total cases per million in the population, add a variable.
 
@@ -202,7 +202,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
 ## Step 7: Deploy the service
 
-To deploy the `CovidStatus` service, follow these steps:
+To deploy the `CovidStatus` service, follow this procedure:
 
 1. Click the **Go Live** icon in the left pane.
 
