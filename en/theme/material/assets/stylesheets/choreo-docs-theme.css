@@ -335,17 +335,12 @@ a.cChoreoDocsButtons.localLink {
     text-align: center;
     border: 1px solid gray;
 }
-@media screen and (min-width: 1541px) {
 
-    .container {
-        max-width: 920px;
-    }
-} 
 @media screen and (max-width: 1540px) {
 
-    .container {
-        max-width: 920px;
-    }
+.container {
+	max-width: 970px;
+}
 } 
 
 @media screen and (max-width: 1400px) {
