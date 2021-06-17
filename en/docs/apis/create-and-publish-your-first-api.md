@@ -38,7 +38,7 @@ Now you have created the API and added a `GET` resource to it.
 Follow this procedure to create a revision of the API and deploy it so that you can try it out:
 
 1. Click **Deploy** in the left pane.
-2. On the **Deployments** page, click **Create Revision and Deploy**.
+2. On the **Deployments** page, click **Create a Revision and Deploy**.
 3. In the **Create a Revision and Deploy** form, enter `Demo revision` as the description and then click **Deploy**.
 
 Now you are ready to test the deployed API.
@@ -51,6 +51,7 @@ Follow this procedure to test the API revision that you deployed:
 3. Click the `GET` resource you added to expand it.
 
     ![API GET resource](../assets/img/apis/api-resource.png){.cInlineImage-full}
+    
 4. Click **Try it out** and then click **Execute**. You can see the COVID-19 totals for all US states as the response from the API.
 
     ![Response received from the service execution](../assets/img/apis/response.png){.cInlineImage-full}
@@ -62,7 +63,7 @@ Follow this procedure to publish the API and view the published API on the API D
 
 1. Click **Publish** in the left pane.
 2. On the **Lifecycle Management** page, click **Publish**.
-3. Click **Go to Developer Portal**. Then select an account and proceed to sign in to the API developer portal.
+3. Click **Go to Developer Portal**. This signs you in to the API Developer Portal.
 
     ![Go to API Developer Portal](../assets/img/apis/go-to-devportal.png){.cInlineImage-full}
      
@@ -74,7 +75,8 @@ Follow this procedure to publish the API and view the published API on the API D
 Follow this procedure to invoke the API from the API Developer Portal:
 
 1. Click **Credentials** in the left pane.
-2. On the **Credentials** page, click **GENERATE ACCESS TOKEN**. Copy the generated access token.
+2. On the **Credentials** page, click **Generate Credentials**. This creates credential for an internal application and subscribes this API to that internal application.
+2. Click **GENERATE ACCESS TOKEN**. Copy the generated access token.
 3. Click **Try Out** in the left pane. 
 4. Paste the copied access token in the **Access Token** field.
 5. Click the `GET` resource you added to expand it.
