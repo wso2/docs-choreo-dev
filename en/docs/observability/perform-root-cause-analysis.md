@@ -5,7 +5,7 @@ Choreo provides insightful observability features to drill down to the request l
 This guide describes how you can detect anomalies and perform root cause analysis on a service deployed in Choreo. 
 
     
-## Accessing observability data of a service
+## Access observability data of a service
 
 Follow this procedure to try out the sample service:
 
@@ -25,51 +25,51 @@ Follow this procedure to try out the sample service:
 
 Here, you can detect anomalies and perform root cause analysis on the sample service.
     
-## Detecting anomalies and performing root cause analysis
+## Detect anomalies and perform root cause analysis
 
 To detect anomalies of the service, you must trace its executions from the code statement level to the machine it runs in. You can analyze observability data and logs to troubleshoot and identify the root cause for the anomalies you detect. 
 
 
-### Analyzing the throughput graph
+### Analyze the throughput graph
 
 The throughput graph depicts the total throughput of the service (which includes both successful and erroneous requests) during a selected time interval. You can analyze the spikes in the throughput graph to identify the root cause for requests that result in an error.
 
-The following image is an example of a throughput graph
+The following image is an example of a throughput graph:
 
 ![Analyze the throughput graph](../assets/img/observability/throughput-graph-analysis.png){.cInlineImage-full}
 
 The actions you can perform are as follows:
 
-- **Viewing the number of successful requests and errors**
+- **View the number of successful requests and errors**
 
     To do this, hold the pointer over the area of the graph that shows the required time interval. The Observability view displays the number of successes over the graph as shown in the above image (in this example it displays 296 successes and 2512.43 errors). The success rate of each connector is shown in the low-code diagram area.
     
-- **Viewing log entries**
+- **View log entries**
 
     If you click on the required area on the graph, the log entries applicable for that time period are displayed in the **Logs** pane. In this example, the log displays multiple entries indicating an error in connecting to the `hr-service`.
     
-- **Viewing data for a custom time range**
+- **View data for a custom time range**
 
     You can expand the graph by clicking and dragging the pointer over the period you want to drill down. The default graph displays data for a custom time range where the data points are at a lower granularity.
 
  
-### Analyzing the latency graph
+### Analyze the latency graph
 
 The latency graph depicts the latency of requests over a selected time interval. You can analyze the spikes in the latency graph to identify the API invocations that result in error status.
 
 The actions you can perform are as follows:
 
-- **Viewing details of a latency that has occurred**
+- **View details of a latency that has occurred**
 
     To do this, go to the latency graph under the **Throughput & Latency** tab and click on a data point where there is a spike. This displays the latency, start time, and status of the corresponding requests just above the low-code diagram as shown in the image below:
 
     ![View latency details](../assets/img/observability/latency-details.png)
     
-- **Viewing details at a higher granularity**
+- **View details at a higher granularity**
    
     If you want to drill down to view details at a higher granularity, drag the pointer over a time range to view the graph for the selected period.
     
-- **Checking the status code of a request that has caused a latency**
+- **Check the status code of a request that has caused a latency**
 
     To do this, click on the relevant latency value. In this example, the status code is `500`, which means the request resulted in an error state.
 
