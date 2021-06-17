@@ -31,14 +31,12 @@ To create the API resource via which the service is invoked, follow this procedu
 Follow this procedure to connect to the COVID-19 API and retrieve data:
 
 1. Click **API Calls** and then select **Covid19 API**.
-2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Save**.
-3. Click the last **+** icon in the low-code diagram and click **API Calls**.
-4. Under **Choose existing connection**, select **covid19Client**.
-5. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
+2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
-    | **Field**                  | **Value**         |
-    |----------------------------|-------------------|
-    | **Country**                | `country`           |
+    | **Field**                  | **Value**            |
+    |----------------------------|----------------------|
+    | **Country**                | `country`            |
     | **Response Variable Name** | `statusByCountry` |
 
 6. Click **Save**.
@@ -61,15 +59,12 @@ Follow this procedure to connect to the world bank API and retrieve population d
 
 1. Click the last **+** icon in the low-code diagram.
 2. Click **API Calls** and then select **World Bank API**.
-3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Save**.
-4. Click the last **+** icon in the low-code diagram and click **API Calls**.
-5. Under **Choose existing connection**, select **worldBankClient**.
-6. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
+3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
+4. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
 
     1. In the **Country Code** field, enter `country`.
     2. In the **Date** field, enter `"2019"`.
-    3. Click **Optional**, and  enter `"json"` as the **Format**.
-    4. In the **Response Variable Name** field, enter `populationByCountry`.
+    3. In the **Response Variable Name** field, enter `populationByCountry`.
 
 7. Click **Save**.
 8. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
@@ -77,11 +72,11 @@ Follow this procedure to connect to the world bank API and retrieve population d
     1. Click the last **+** icon in the low-code diagram.
     2. Under **Statements**, select **Variable** and enter details as follows:
 
-        | **Field**      | **Value**                     |
-        |----------------|-------------------------------|
-        | **Type**       | `int`                         |
-        | **Name**       | `population`                  |
-        | **Expression** | `(populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000`       |
+        | **Field**      | **Value**                                     |
+        |----------------|-----------------------------------------------|
+        | **Type**       | `int`                                         |
+        | **Name**       | `population`                                  |
+        | **Expression** | `populationByCountry[0]?.value ?: 0 /1000000` |
 
     3. Click **Save**.
     
