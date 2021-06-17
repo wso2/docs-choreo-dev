@@ -34,9 +34,9 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
 2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
-    | **Field**                  | **Value**            |
-    |----------------------------|----------------------|
-    | **Country**                | `country`            |
+    | **Field**                  | **Value**         |
+    |----------------------------|-------------------|
+    | **Country**                | `country`         |
     | **Response Variable Name** | `statusByCountry` |
 
 6. Click **Save**.
@@ -230,8 +230,10 @@ To observe the `CovidStatus` service, click the **Observe** icon in the left pan
 
 ![Observe icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
 
-The throughput and the latency of the `covid-stats` service are visualized as follows:
+You can view statistics related to the service as follows:
 
 ![Visualization of throughput and latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
+
+The low-code diagram displays the success rate and the latency for each connector. The observability view to the right of the low-code diagram displays graphs that depict the throughput and the latency. You can move the pointer over the throughput graph to view details relevant for specific times. If you want to drill down the statistics further, click on the **Diagnostics View** tab.  
 
 Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.
