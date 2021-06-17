@@ -23,7 +23,7 @@ Follow this procedure to create an API:
 
 5. Click **Create**. This displays an overview of the API.
 
-    ![API overview](../assets/img/apis/api-overview.png){.cInlineImage-bordered}
+    ![API overview](../assets/img/apis/api-overview.png){.cInlineImage-full}
        
 6. Under **API Configuration**, click **Resources**. Then follow this procedure to add a resource to the API:
     1. Select `GET` as the **HTTP verb**.
