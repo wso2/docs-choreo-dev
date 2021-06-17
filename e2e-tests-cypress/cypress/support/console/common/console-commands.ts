@@ -322,7 +322,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
     })
 
     cy.log('Creating variable: selected variable type');
-    cy.get('[value="variable"]').click().clear().type(name);
+    cy.get('[data-testid="variable-name"]').click().type(name);
 
     cy.log('Creating variable: added variable name');
     cy.typeOnNthExpressionEditor(0, expression, false, "save-btn", validExpression);
