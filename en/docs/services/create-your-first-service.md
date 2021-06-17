@@ -145,17 +145,11 @@ service / on new http:Listener(8090) {
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
         var totalCases = statusByCountry?.cases ?: 0d;
         worldbank:Client worldBankClient = check new ();
-        worldbank:CountryPopulationArr? populationByCountry = check worldBankClient->getPopulationByCountry(country, 
-        "2019", format = "json");
-        var population = 
-        (populationByCountry is worldbank:CountryPopulationArr ? populationByCountry[0]?.value ?: 0 : 0) / 1000000;
-
+        worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry(country, 
+        "2019");
+        int population = populationByCountry[0]?.value ?: 0 /1000000;
         var totalCasesPerMillion = totalCases / population;
-        var payload = {
-            country: country,
-            totalCasesPerMillion: totalCasesPerMillion
-        };
-
+        json payload = {country : country, totalCasesPerMillion : totalCasesPerMillion};
         check caller->respond(payload);
     }
 }
