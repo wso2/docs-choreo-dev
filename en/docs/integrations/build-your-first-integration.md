@@ -100,7 +100,7 @@ Follow this procedure to send an email with the summary of statistics to a speci
     |----------------|-------------------------------|
     | **Type**       | `string`                      |
     | **Name**       | `mailBody`                    |
-    | **Expression** | `string` `` `Total Cases Per Million : ${totalCasesPerMillion}` ``|
+    | **Expression** | `"Total Cases Per Million : " + totalCasesPerMillion.toString()`|
 
 3. Click **Save**.
 4. Click the last **+** icon in the low-code diagram.
@@ -136,7 +136,7 @@ Now you have successfully created and configured the integration. It looks as fo
          worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA", "2019");
          int population = (populationByCountry[0]?.value ?: 0) / 1000000;
          var totalCasesPerMillion = totalCases / population;
-         string mailBody = string `Total Cases Per Million : ${totalCasesPerMillion}`;
+         string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
          sendemail:Client sendemailEndpoint = check new ();
          string sendEmailResponse = check sendemailEndpoint->sendEmail("test@wso2.com", "Total COVID-19 Cases in the USA", mailBody);
       }
