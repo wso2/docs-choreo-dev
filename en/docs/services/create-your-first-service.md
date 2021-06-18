@@ -62,14 +62,14 @@ Follow this procedure to connect to the World Bank API and retrieve population d
 3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
 4. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
 
-   | **Field**                  | **Value**            |
-   |----------------------------|----------------------|
-   | **Country Code**           | `country`              |
-   | **Date**                   | `"2019"`             |
-   | **Response Variable Name** | `populationByCountry`|
+    | **Field**                  | **Value**            |
+    |----------------------------|----------------------|
+    | **Country Code**           | `country`            |
+    | **Date**                   | `"2019"`             |
+    | **Response Variable Name** | `populationByCountry`|
 
-7. Click **Save**.
-8. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
+5. Click **Save**.
+6. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
 
     1. Click the last **+** icon in the low-code diagram.
     2. Under **Statements**, select **Variable** and enter details as follows:
@@ -105,11 +105,11 @@ To build the JSON payload to be sent as the response and then send the response,
 
     Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
    
-   | **Field**      | **Value**                     |
-   |----------------|-------------------------------|
-   | **Type**       | `json`                        |
-   | **Name**       | `payload`                     |
-   | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}`     |
+    | **Field**      | **Value**                     |
+    |----------------|-------------------------------|
+    | **Type**       | `json`                        |
+    | **Name**       | `payload`                     |
+    | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}`     |
 
 2. Click **Save**.
     
@@ -125,7 +125,7 @@ Now you have completed designing the `CovidStatus` service.
 
 The low-code diagram looks as follows:
 
-![Completed low-code diagram](../assets/img/services/complete-low-code-diagram.png){.cInlineImage-bordered}
+![Completed low-code diagram](../assets/img/services/complete-low-code-diagram.png){.cInlineImage-full}
 
 The code view looks as follows:
 
