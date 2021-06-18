@@ -9,6 +9,8 @@ spec:
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      backoffLimit: 3
+      ttlSecondsAfterFinished: 86400
       template:
         metadata:
           annotations:

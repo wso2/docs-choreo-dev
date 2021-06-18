@@ -51,7 +51,7 @@ describe('Performance drill down test', () => {
                 '> .view-lines > .view-line').click()
         .type('"https://int-test-endpoint-t2puhg9-nilushancosta.dv.choreoapps.dev/hello"');
 
-        cy.get('[data-testid=http-save-next]').click();
+        cy.get('[data-testid=http-save]').click();
        
         //Add get call to the existing http connector
         cy.get(':nth-child(1) > .main-plus-wrapper > :nth-child(2) > [data-testid=plus-button] ' +
@@ -74,10 +74,8 @@ describe('Performance drill down test', () => {
         cy.get('.MuiTypography-root.jss1917.MuiTypography-body1').should('not.exist');
 
         //Check graph to exist
-        cy.get(':nth-child(8) > .recharts-layer > .recharts-area-area').should('exist');
-
-        //Check local storage for performance analyzer predictions 
-        cy.testPerformanceAnalyzerLocalStorage('PORTAL_STATE');
+        cy.get('[data-testid=analyze-graph] > :nth-child(1) > .recharts-wrapper' +
+                '> .recharts-surface > .recharts-area > .recharts-layer > .recharts-area-area').should('exist');
     })
 })
 
