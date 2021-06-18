@@ -37,7 +37,7 @@ Choreo supports the following statements:
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
  - **While**: Continuously executes a block of statements in a loop based on a given `boolean` condition. 
  - **Respond**: Sends a specific response back to the client. For example, if the request was processed successfully,  responding to the client with an `HTTP_OK`.
- - **Custom**: Allows to write a single or a multiline code snippet in your service.
+ - **Other**: Allows to write a single or a multiline code snippet in your service.
 
 ## Ballerina expression syntax
 The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
