@@ -648,3 +648,6 @@ Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
     });
 });
 
+Cypress.Commands.add('hideWelcomeMessage', () => {
+    localStorage.setItem("HAS_SEEN_WELCOME_MESSAGE", "YES");
+});
