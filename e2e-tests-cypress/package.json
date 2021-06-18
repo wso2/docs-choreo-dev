@@ -22,7 +22,7 @@
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
     "e2etest:headless": "npx cypress run --headless",
-    "devportal-e2etest:headless": "npx cypress run --headless --record --spec 'cypress/e2e/devportal/*.ts'",
+    "devportal-e2etest:headless": "npx cypress run --headless --parellel --ci-build-id $(Date:yyyyMMdd).$(Rev:r) --record --spec 'cypress/e2e/devportal/*.ts'",
     "smoke-devportal": "npx cypress run --env grepTags=-@regression --headless --spec cypress/e2e/devportal/*.ts",
     "console-e2etest:headless": "npx cypress run --headless --record --spec 'cypress/e2e/console/**/*'",
     "smoke-console": "npx cypress run --env grepTags=-@regression --headless --spec 'cypress/e2e/console/**/*'",
