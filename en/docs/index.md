@@ -4,7 +4,7 @@
           <h1>Welcome to the Choreo Learning Portal</h1>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
-             <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies building integrations, creating services, and managing APIs while ensuring best practices and secure coding guidelines.</p>
+             <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies creating services, managing APIs, and building integrations while ensuring best practices and secure coding guidelines.</p>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
             <iframe width="800" height="250" src="https://www.youtube.com/embed/gYMWJABtwkY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
