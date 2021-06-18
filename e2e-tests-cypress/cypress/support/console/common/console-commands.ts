@@ -693,3 +693,7 @@ Cypress.Commands.add('testPerformanceAnalyzerLocalStorage', (localStorageKey: st
     }
   cy.log("Performance Analyzer Performance Drill Down test completed successfully!");
 });
+
+Cypress.Commands.add('hideWelcomeMessage', () => {
+    localStorage.setItem("HAS_SEEN_WELCOME_MESSAGE", "YES");
+})

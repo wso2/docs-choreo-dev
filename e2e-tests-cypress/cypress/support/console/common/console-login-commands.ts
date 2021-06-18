@@ -60,6 +60,7 @@ Cypress.Commands.add('userLoginWithGmail', () => {
             Object.keys(lsd).forEach(key => window.localStorage.setItem(key, lsd[key]))
         })
 
+        cy.hideWelcomeMessage();
         cy.log('login successful. Visiting to choreo')
         cy.visit('/')
 
@@ -112,6 +113,7 @@ Cypress.Commands.add('userLoginWithGithub', () => {
         })
 
         cy.log('login successful. Visiting to choreo');
+        cy.hideWelcomeMessage();
         cy.visit('/');
     })
 }),
@@ -206,7 +208,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     req.headers['authentication'] = "Bearer " + data["id_token"];
                 }
             })
-
+            cy.hideWelcomeMessage();
             cy.visit(Cypress.env('baseUrl'));
             cy.log('Successfully logged in');
         })
