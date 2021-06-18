@@ -378,27 +378,4 @@ a.cChoreoDocsButtons.localLink {
         background-color: #fafafc;
         box-shadow: inset 0 .05rem 0 rgba(0,0,0,.07);
     }
-} 
-.topBarActionsCont{
-   
-   vertical-align: middle;
 }
-.topBarActions{
-    padding-right: 30px;
-    padding-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
- 
-  .topBarActions .actionLink  {
-    display: flex;
-    align-items: center;  
-    margin-left:50px;
-  }
-  .topBarActions .actionLink .text {
-      font-size: 14px; 
-      white-space: nowrap;
-      margin-left: 10px;
-      color: #222228;
-  }
- 
