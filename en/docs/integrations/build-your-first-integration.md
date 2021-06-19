@@ -61,7 +61,7 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     | **Response Variable Name** | `populationByCountry`|
 
 5. Click **Save**.
-6. Now let’s extract the population from the response and store it in a variable. Follow this procedure:
+6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
     2. Under **Statements**, select **Variable** and enter details as follows:
