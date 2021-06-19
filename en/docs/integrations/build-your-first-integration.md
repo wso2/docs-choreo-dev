@@ -133,7 +133,7 @@ Now you have successfully created and configured the integration. It looks as fo
          var totalCases = statusByCountry?.cases ?: 0d;
          worldbank:Client worldBankClient = check new ();
          worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA", "2019");
-         int population = (populationByCountry[0]?.value ?: 0) / 1000000;
+         int population = populationByCountry[0]?.value ?: 0 / 1000000;
          var totalCasesPerMillion = totalCases / population;
          string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
          sendemail:Client sendemailEndpoint = check new ();
