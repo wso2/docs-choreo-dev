@@ -401,4 +401,7 @@ a.cChoreoDocsButtons.localLink {
       margin-left: 10px;
       color: #222228;
   }
- 
+  .topBarActions .actionLink .actionImg{
+    width: auto; 
+    height: 18px;
+ }

@@ -38,6 +38,8 @@ theme:
         primary: deep-orange
         accent: deep-orange
     logo: images/logo.svg
+    slack: images/help-slack-icon.svg
+    choreo_logo: images/choreo-logo-icon.svg
     favicon: images/favicon.png
     highlightjs: true
     feature:
