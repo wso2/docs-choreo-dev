@@ -77,8 +77,8 @@ Cypress.Commands.add('createNewApp', (type: string, name: string) => {
  * @param sourceLines
  */
 Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
-    cy.get('[data-testid="code-view-btn"]').should('not.have.attr', 'disabled').click();
-    // cy.get('[data-testid="product-tour-code-view"]').click();
+    cy.get('[data-testid="code-view-btn"]').should('not.have.attr', 'disabled');
+    cy.get('.product-tour-code-view').click();
     cy.get('.view-line').invoke('text').then((line) => {
         const normalizedText = normalizeText(line);
         expect(normalizedText).to.contain(normalizeText(sourceLines));
