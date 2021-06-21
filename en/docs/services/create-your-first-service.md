@@ -69,16 +69,16 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     | **Response Variable Name** | `populationByCountry`|
 
 5. Click **Save**.
-6. Now let’s extract the population from the response and store it in a variable. Follow this procedure: 
+6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
     2. Under **Statements**, select **Variable** and enter details as follows:
 
-        | **Field**      | **Value**                                     |
-        |----------------|-----------------------------------------------|
-        | **Type**       | `int`                                         |
-        | **Name**       | `population`                                  |
-        | **Expression** | `populationByCountry[0]?.value ?: 0 /1000000` |
+        | **Field**      | **Value**                                         |
+        |----------------|---------------------------------------------------|
+        | **Type**       | `int`                                             |
+        | **Name**       | `population`                                      |
+        | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
 
     3. Click **Save**.
     
@@ -125,7 +125,7 @@ Now you have completed designing the `CovidStatus` service.
 
 The low-code diagram looks as follows:
 
-![Completed low-code diagram](../assets/img/services/complete-low-code-diagram.png){.cInlineImage-full}
+![Completed low-code diagram](../assets/img/services/service-low-code-view.png){.cInlineImage-full}
 
 The code view looks as follows:
 
@@ -143,7 +143,7 @@ service / on new http:Listener(8090) {
         worldbank:Client worldBankClient = check new ();
         worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry(country, 
         "2019");
-        int population = populationByCountry[0]?.value ?: 0 / 1000000;
+        int population = (populationByCountry[0]?.value ?: 0) / 1000000;
         var totalCasesPerMillion = totalCases / population;
         json payload = {
             country: country,
@@ -179,7 +179,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
     The response is displayed as follows:
 
-    ![Response in the test view](../assets/img/services/test-view-response.png){.cInlineImage-bordered}
+    ![Response in the test view](../assets/img/services/service-response.png){.cInlineImage-bordered}
 
 
 ## Step 7: Deploy the service

@@ -61,7 +61,7 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     | **Response Variable Name** | `populationByCountry`|
 
 5. Click **Save**.
-6. Now let’s extract the population from the response and store it in a variable. Follow this procedure:
+6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
     2. Under **Statements**, select **Variable** and enter details as follows:
@@ -70,7 +70,7 @@ Follow this procedure to connect to the World Bank API and retrieve population d
         |----------------|-------------------------------|
         | **Type**       | `int`                         |
         | **Name**       | `population`                  |
-        | **Expression** | `populationByCountry[0]?.value ?: 0 /1000000`|
+        | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`|
 
     3. Click **Save**.
 
@@ -117,7 +117,7 @@ Now you have successfully created and configured the integration. It looks as fo
 
 - In the low-code view
 
-    ![Low-code view](../assets/img/integrations/low-code-view.png){.cInlineImage-full}
+    ![Low-code view](../assets/img/integrations/integration-low-code-view.png){.cInlineImage-full}
 
 - In the code view
     
@@ -133,7 +133,7 @@ Now you have successfully created and configured the integration. It looks as fo
          var totalCases = statusByCountry?.cases ?: 0d;
          worldbank:Client worldBankClient = check new ();
          worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA", "2019");
-         int population = populationByCountry[0]?.value ?: 0 / 1000000;
+         int population = (populationByCountry[0]?.value ?: 0) / 1000000;
          var totalCasesPerMillion = totalCases / population;
          string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
          sendemail:Client sendemailEndpoint = check new ();
@@ -146,6 +146,6 @@ Now you have successfully created and configured the integration. It looks as fo
 1. Click **Run & Test**. This starts the integration and sends an email to the recipient you specified when configuring the integration.
 2. Go to the inbox of the email recipient and take a look at the COVID-19 statistics summary mail. 
 
-     ![Summary email](../assets/img/integrations/covid-summary-mail.png){.cInlineImage-half}
+     ![Summary email](../assets/img/integrations/covid-summary-email.png){.cInlineImage-half}
 
 Congratulations! Now you have successfully created an integration from scratch and tried it out.
