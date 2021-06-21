@@ -108,8 +108,8 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "1000Mi"
-              cpu: "1000m"
+              memory: "1500Mi"
+              cpu: "1500m"
             limits:
               memory: "1500Mi"
               cpu: "1500m"
