@@ -20,7 +20,8 @@ import {
     DEVOPS_TEXT,
     SETTINGS_TEXT,
     SETTINGS_PATH,
-    APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE
+    APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE,
+    GMAIL_CONNECTION_NAME,
 } from '../../common/constants';
 
 let LOCAL_STORAGE_MEMORY = {};
@@ -76,8 +77,8 @@ Cypress.Commands.add('createNewApp', (type: string, name: string) => {
  * @param sourceLines
  */
 Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
-    cy.get('[data-testid="code-view-btn"]').should('not.have.attr', 'disabled');
-    cy.get('.product-tour-code-view').click();
+    cy.get('[data-testid="code-view-btn"]').should('not.have.attr', 'disabled').click();
+    // cy.get('[data-testid="product-tour-code-view"]').click();
     cy.get('.view-line').invoke('text').then((line) => {
         const normalizedText = normalizeText(line);
         expect(normalizedText).to.contain(normalizeText(sourceLines));
@@ -215,7 +216,7 @@ Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
     cy.log("Filling the calendar configuration");
 
     // Selecting the manually added calendar connection (user - testuser-choreo)
-    cy.contains('Google Calendar Connection #1').click();
+    cy.contains(GMAIL_CONNECTION_NAME).click();
     cy.get('[placeholder="Choose Calendar"]').siblings().children().get('.MuiAutocomplete-popupIndicator').click();
     cy.get('#combo-box-demo-popup').should('exist');
     cy.get('#combo-box-demo-popup').children().contains(calendar).click({force:true});

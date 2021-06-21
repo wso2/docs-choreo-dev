@@ -51,27 +51,27 @@ describe('Integration sample flow', () => {
         cy.userLogout();
     });
 
-    it('clone and edit Google calender to twilio SMS', { retries: NO_OF_RETRIES }, () => {
-        cy.get('[data-testid="gcalendar-to-twilio"]').trigger('mouseover').within(() => {
-            cy.contains('Clone & Edit').click({ force: true });
-        });
-        cy.get('[data-testid="diagram-canvas"]').should('be.visible');
-        cy.get('[data-testid="settings-btn"]').click();
-        cy.fillCalendarConfigs(INVITATION_EMAIL);
-        cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
-        cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
+    // it('clone and edit Google calender to twilio SMS', { retries: NO_OF_RETRIES }, () => {
+    //     cy.get('[data-testid="gcalendar-to-twilio"]').trigger('mouseover').within(() => {
+    //         cy.contains('Clone & Edit').click({ force: true });
+    //     });
+    //     cy.get('[data-testid="diagram-canvas"]').should('be.visible');
+    //     cy.get('[data-testid="settings-btn"]').click();
+    //     cy.fillCalendarConfigs(INVITATION_EMAIL);
+    //     cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
+    //     cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
 
-        cy.testRunApp();
-        cy.get('[data-testid="test-url"]').should('exist');
-        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
-        cy.log('Retrieved the test URL successfully');
+    //     cy.testRunApp();
+    //     cy.get('[data-testid="test-url"]').should('exist');
+    //     cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
+    //     cy.log('Retrieved the test URL successfully');
 
-        cy.url().then((url) => {
-            const appName = url.split('app/').pop().split('/develop')[0];
-            cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
-        });
-    })
+    //     cy.url().then((url) => {
+    //         const appName = url.split('app/').pop().split('/test')[0];
+    //         cy.goBacktoAppsList();
+    //         cy.cleanupApp(appName);
+    //     });
+    // })
 
     it('test-run sample integration', { retries: NO_OF_RETRIES }, () => {
         cy.log("Prebuilt integrations page loaded successfully");
