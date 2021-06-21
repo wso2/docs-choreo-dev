@@ -245,7 +245,7 @@ Cypress.Commands.add('fillTwilioConfigs',
 
 Cypress.Commands.add('selectManualTrigger', () => {
     cy.waitTillWorkSpace();
-    cy.get('.trigger-wrapper').contains('Manual').click();
+    cy.get('.trigger-wrapper').contains('Manual').click({force: true});
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.log("selected Manual trigger");
 }),
@@ -350,7 +350,7 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.log('Creating log: added log type');
     cy.typeOnNthExpressionEditor(0, expression, true, "log-save-btn");
     cy.log("Creating log: added log expression");
-    cy.get('[data-testid="log-save-btn"]').click();
+    cy.get('[data-testid="log-save-btn"]').click({force: true});
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.checkSourceCodeForValidation(variableSourceFields);
     cy.log('Successfully created the log with expression : ' + expression);
