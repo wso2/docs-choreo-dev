@@ -95,7 +95,7 @@ spec:
             - name: XDS_MAX_RETRIES
               value: "3"
             - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms512m -Xmx512m"
+              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -108,10 +108,10 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "1500Mi"
+              memory: "2Gi"
               cpu: "1500m"
             limits:
-              memory: "1500Mi"
+              memory: "2Gi"
               cpu: "1500m"
           ports:
             - containerPort: 8081
