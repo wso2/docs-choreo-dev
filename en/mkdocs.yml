@@ -65,6 +65,9 @@ nav:
           - Observability Overview: observability/observability-overview.md
           - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
           - Performance Analysis: observability/analyze-performance.md
+    - Identity Providers:
+        - Overview: identity-providers/overview.md
+        - Registering an External Identity Provider (IdP): identity-providers/registering-an-external-identity-provider.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
