@@ -95,7 +95,7 @@ spec:
             - name: XDS_MAX_RETRIES
               value: "3"
             - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms512m -Xmx512m"
+              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -108,10 +108,10 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "1000Mi"
-              cpu: "1000m"
+              memory: "2Gi"
+              cpu: "1500m"
             limits:
-              memory: "1500Mi"
+              memory: "2Gi"
               cpu: "1500m"
           ports:
             - containerPort: 8081
@@ -177,11 +177,11 @@ spec:
               value: "/home/wso2/security/truststore/mg.pem"
           resources:
             requests:
-              memory: "500Mi"
-              cpu: "1000m"
+              memory: "2Gi"
+              cpu: "2000m"
             limits:
-              memory: "750Mi"
-              cpu: "1500m"
+              memory: "2Gi"
+              cpu: "2000m"
           ports:
             - containerPort: 9000
             - containerPort: 9095

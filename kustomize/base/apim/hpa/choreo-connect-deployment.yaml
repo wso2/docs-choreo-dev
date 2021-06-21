@@ -7,7 +7,7 @@ metadata:
     choreo.component: choreo-connect-deployment
   name: choreo-connect-deployment
 spec:
-  maxReplicas: 3
+  maxReplicas: 10
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
