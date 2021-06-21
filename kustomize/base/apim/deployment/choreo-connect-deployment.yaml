@@ -177,11 +177,11 @@ spec:
               value: "/home/wso2/security/truststore/mg.pem"
           resources:
             requests:
-              memory: "500Mi"
-              cpu: "1000m"
+              memory: "2Gi"
+              cpu: "2000m"
             limits:
-              memory: "750Mi"
-              cpu: "1500m"
+              memory: "2Gi"
+              cpu: "2000m"
           ports:
             - containerPort: 9000
             - containerPort: 9095
