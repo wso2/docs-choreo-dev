@@ -7,7 +7,7 @@ metadata:
     choreo.component: choreo-connect-adapter
   name: choreo-connect-adapter
 spec:
-  maxReplicas: 10
+  maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
