@@ -19,6 +19,7 @@ spec:
         choreo.component: deploymentoptimizer
       annotations:
         linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
         runAsUser: 500
