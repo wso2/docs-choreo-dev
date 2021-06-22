@@ -147,8 +147,8 @@ spec:
               value: traffic-manager
           volumeMounts:
             - name: wso2am-conf
-              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
-              subPath: deployment.toml
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
+              subPath: tm-2-deployment.toml
             - name: apim-docker-entrypoint
               mountPath: /home/wso2carbon/docker-entrypoint.sh
               subPath: docker-entrypoint.sh
