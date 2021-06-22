@@ -168,6 +168,18 @@ spec:
               key: SENTRY_DSN
               name: cm-frontend
               optional: true
+        - name: GOOGLE_CAPTCHA_SITE_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: GOOGLE_CAPTCHA_SITE_KEY
+              name: cm-frontend
+              optional: true
+        - name: FEATURE_FLAG_ANONYMOUS_LOGIN
+          valueFrom:
+            configMapKeyRef:
+              key: FEATURE_FLAG_ANONYMOUS_LOGIN
+              name: cm-feature-flags
+              optional: true
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
