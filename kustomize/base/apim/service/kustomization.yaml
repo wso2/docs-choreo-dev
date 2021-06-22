@@ -1,7 +1,9 @@
 resources:
 - devportal-service.yaml
 - am-service.yaml
+- eventhub-headless-service.yaml
 - eventhub-service.yaml
+- tm-headless-service.yaml
 - eventhub-1-service.yaml
 - eventhub-2-service.yaml
 - tm-1-service.yaml
