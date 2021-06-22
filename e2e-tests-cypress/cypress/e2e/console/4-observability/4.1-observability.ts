@@ -77,6 +77,7 @@ describe('Observability tests', () => {
 
     after(() => {
         cy.goBacktoAppsList();
+        cy.get('[href="/' + SERVICES_TEXT + '"]').click();
         cy.deleteApp("service", appName, true);
         cy.userLogout();
     })
