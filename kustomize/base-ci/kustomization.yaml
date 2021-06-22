@@ -50,7 +50,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
   newTag: v4.0.0-r17062021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
-  newTag: master-356b65fc8130d5fb4018e15896a8c9068c1d8628
+  newTag: master-a220678b0e5812611a58e1487f7d376dffa1203a
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
   newTag: master-95ac76a683ea51a69c6ddaae412b7294fbec62e2
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase
