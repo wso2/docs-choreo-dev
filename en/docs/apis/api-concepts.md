@@ -46,22 +46,6 @@ In Choreo, tokens are bound to an application. The Key manager provides a token 
 
 Choreo Connect is an API gateway designed for microservices that is cloud-native, decentralized, and developer-centric. This API gateway is a lightweight message processor for APIs that facilitates message security, transport security, routing, and other API Management-related quality of services such as throttling, rate-limiting, etc.
 
-Choreo Connect consists of three components: Router, Enforcer, and Adapter.
-
-![Choreo Connect gateway](../assets/img/apis/choreo-connect.png){.cInlineImage-full}
-
-#### Router
-
-The Router in Choreo Connect uses the [Envoy Proxy](https://www.envoyproxy.io/) and is primarily responsible for routing traffic to the relevant endpoints. The Router is also capable of exposing the APIs in Choreo to make them discoverable.
-
-#### Enforcer
-
-The Enforcer is responsible for carrying out API management-related quality-of-services such as controlling access, enabling security, publishing analytics, etc. When the Router receives a request, it sends it to the Enforcer. The Enforcer performs the relevant API management-related quality of services on the request and replies to the Router. Based on the Enforcer's response, the Router will decide to allow or deny the request to pass to the backend.
-
-#### Adapter 
-
-The Adapter is responsible for converting the API definition to the respective format understood by the Router and the Enforcer. The Adapter gets notified when a change occurs in the control plane, and it passes these changes to the Enforcer and the Router via the XDS protocol.
-
 ### Traffic manager 
 
 The Traffic Manager helps regulate API traffic, makes APIs and applications available to consumers at different service levels, and secures APIs against security attacks. The Traffic Manager features a dynamic throttling engine that processes rate-limiting policies in real-time. 
