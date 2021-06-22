@@ -17,8 +17,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    choreo.component: apim-am
-  name: choreo-apim-am-deployment
+    choreo.component: apim-tm
+  name: choreo-apim-tm-2-deployment
 spec:
   replicas: 1
   strategy:
@@ -28,12 +28,12 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      deployment: choreo-am
+      deployment: choreo-tm-2
   template:
     metadata:
       labels:
-        deployment: choreo-am
-        choreo.component: apim-am
+        deployment: choreo-tm-2
+        choreo.component: apim-tm
       annotations:
         linkerd.io/inject: enabled
     spec:
@@ -46,16 +46,20 @@ spec:
         - name: wso2am
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r14062021.2
           livenessProbe:
-            httpGet:
-              path: /services/Version
-              port: 9763
-            initialDelaySeconds: 180
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - nc -z localhost 9611
+            initialDelaySeconds: 120
             periodSeconds: 10
           readinessProbe:
-            httpGet:
-              path: /services/Version
-              port: 9763
-            initialDelaySeconds: 180
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - nc -z localhost 9611
+            initialDelaySeconds: 120
             periodSeconds: 10
           lifecycle:
             preStop:
@@ -72,15 +76,21 @@ spec:
             runAsUser: 802
             runAsGroup: 802
           ports:
-            - containerPort: 9763
+            - containerPort: 9711
               protocol: "TCP"
-            - containerPort: 9443
+            - containerPort: 9611
+              protocol: "TCP"
+            - containerPort: 5672
               protocol: "TCP"
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: NODE_ID
+              valueFrom:
+                fieldRef:
+                    fieldPath: metadata.name
             - name: PRIMARY_KEYSTORE_PSWD
               valueFrom:
                 secretKeyRef:
@@ -121,21 +131,6 @@ spec:
                 secretKeyRef:
                   key: H2_SHARED_DB_PSWD
                   name: secret-apim
-            - name: CHOREO_APIM_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: CHOREO_APIM_DB_PASSWORD
-                  name: secret-apim-db
-            - name: CHOREO_APIM_SHARED_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: CHOREO_APIM_SHARED_DB_PASSWORD
-                  name: secret-apim-shared-db
-            - name: CHOREO_APIM_USER_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: CHOREO_APIM_USER_DB_PASSWORD
-                  name: secret-apim-user-db
             - name: SUPER_ADMIN_PSWD
               valueFrom:
                 secretKeyRef:
@@ -145,26 +140,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: CHOREO_IS_ADMIN_PSWD
-                  name: secret-apim
-            - name: MONGO_DB_PSWD
-              valueFrom:
-                secretKeyRef:
-                    key: MONGO_DB_PSWD
-                    name: secret-apim-mongodb
-            - name: MONGO_DB_ATLAS_PRIVATE_KEY
-              valueFrom:
-                secretKeyRef:
-                    key: MONGO_DB_ATLAS_PRIVATE_KEY
-                    name: secret-apim-mongodb
-            - name: MONGO_DB_ATLAS_PUBLIC_KEY
-              valueFrom:
-                secretKeyRef:
-                    key: MONGO_DB_ATLAS_PUBLIC_KEY
-                    name: secret-apim-mongodb   
+                  name: secret-apim 
             - name: JVM_MEM_OPTS
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
-              value: control-plane
+              value: traffic-manager
           volumeMounts:
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
@@ -194,23 +174,11 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
-            - name: secret-apim-db
-              mountPath: /mnt/csi/secret-apim-db
-              readOnly: true
-            - name: secret-apim-shared-db
-              mountPath: /mnt/csi/secret-apim-shared-db
-              readOnly: true
-            - name: secret-apim-user-db
-              mountPath: /mnt/csi/secret-apim-user-db
-              readOnly: true
-            - name: secret-apim-mongodb
-              mountPath: /mnt/csi/secret-apim-mongodb
-              readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: wso2am-conf
           configMap:
-            name: choreo-apim-am-conf
+            name: choreo-apim-tm-conf
         - name: apim-docker-entrypoint
           configMap:
             name: choreo-apim-docker-entrypoint
@@ -258,38 +226,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-db
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-db
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-shared-db
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-shared-db
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-user-db
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-user-db
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-mongodb
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-mongodb
             nodePublishSecretRef:
               name: csi-secret-store-azure
 
