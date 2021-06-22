@@ -40,4 +40,4 @@ Choreo supports the following statements:
  - **Other**: Allows to write a single or a multiline code snippet in your service.
 
 ## Ballerina expression syntax
-The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
+The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax.md)
