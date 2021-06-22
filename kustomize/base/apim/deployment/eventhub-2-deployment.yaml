@@ -17,8 +17,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    choreo.component: apim-am
-  name: choreo-apim-am-deployment
+    choreo.component: apim-eventhub
+  name: choreo-apim-eventhub-2-deployment
 spec:
   replicas: 1
   strategy:
@@ -28,12 +28,14 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      deployment: choreo-am
+      deployment: choreo-eventhub
+      node: choreo-eventhub-2
   template:
     metadata:
       labels:
-        deployment: choreo-am
-        choreo.component: apim-am
+        deployment: choreo-eventhub
+        node: choreo-eventhub-2
+        choreo.component: apim-eventhub
       annotations:
         linkerd.io/inject: enabled
     spec:
@@ -49,13 +51,13 @@ spec:
             httpGet:
               path: /services/Version
               port: 9763
-            initialDelaySeconds: 180
+            initialDelaySeconds: 120
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /services/Version
               port: 9763
-            initialDelaySeconds: 180
+            initialDelaySeconds: 120
             periodSeconds: 10
           lifecycle:
             preStop:
@@ -76,11 +78,21 @@ spec:
               protocol: "TCP"
             - containerPort: 9443
               protocol: "TCP"
+            - containerPort: 9711
+              protocol: "TCP"
+            - containerPort: 9611
+              protocol: "TCP"
+            - containerPort: 5672
+              protocol: "TCP"
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: NODE_ID
+              valueFrom:
+                fieldRef:
+                    fieldPath: metadata.name
             - name: PRIMARY_KEYSTORE_PSWD
               valueFrom:
                 secretKeyRef:
@@ -164,7 +176,7 @@ spec:
             - name: JVM_MEM_OPTS
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
-              value: control-plane
+              value: traffic-manager
           volumeMounts:
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
@@ -210,7 +222,7 @@ spec:
       volumes:
         - name: wso2am-conf
           configMap:
-            name: choreo-apim-am-conf
+            name: choreo-apim-eventhub-conf
         - name: apim-docker-entrypoint
           configMap:
             name: choreo-apim-docker-entrypoint
