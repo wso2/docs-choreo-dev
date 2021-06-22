@@ -78,12 +78,12 @@ Cypress.Commands.add('createNewApp', (type: string, name: string) => {
  */
 Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
     cy.get('[data-testid="code-view-btn"]').should('not.have.attr', 'disabled');
-    cy.get('.product-tour-code-view').click();
+    cy.get('[data-testid="code-view-btn"]').click({force: true});
     cy.get('.view-line').invoke('text').then((line) => {
         const normalizedText = normalizeText(line);
         expect(normalizedText).to.contain(normalizeText(sourceLines));
     })
-    cy.get('[data-testid="vertical-close-btn"]').click();
+    cy.get('[data-testid="code-view-btn"]').click({force: true});
 }),
 
 Cypress.Commands.add('configureResource', (relativePath?: string, method?: string) => {
