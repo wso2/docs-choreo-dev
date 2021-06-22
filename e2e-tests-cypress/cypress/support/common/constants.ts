@@ -35,6 +35,7 @@ export const FAKE_TWILIO_SENDER_NUMBER = '+94786941431';
 export const FAKE_TWILIO_RECIPIENT_NUMBER = '+94743149897';
 export const INVITATION_EMAIL= 'test.user.choreo@gmail.com';
 export const PATH_SEPARATOR = '/';
+export const GMAIL_CONNECTION_NAME = 'test.user.choreo@gmail.com';
 
 //API Management
 export const DEVELOP = '/develop';

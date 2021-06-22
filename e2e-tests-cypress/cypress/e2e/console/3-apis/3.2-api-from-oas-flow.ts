@@ -26,7 +26,6 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.log("Starting API Creation using open API specification");
         cy.navigateFromHomePage(APIS_TEXT);
         cy.get('[data-testid="create-api-btn"]').click({ force: true });
-        cy.wait(3000);
         cy.get('[data-testid="upload-open-api-definition"]').click();
         cy.get('[data-testid="open-api-file"]').click();
         cy.get('input[type="file"]').attachFile(filepath);
@@ -34,6 +33,9 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('[data-testid="api-name"]').findByRole('textbox').clear();
         cy.wait(2000);
         cy.get('[data-testid="api-name"]').findByRole('textbox').type(API_NAME);
+        cy.get('[data-testid="api-basepath"]').within(() => {
+            cy.get('input').clear().type(API_NAME);
+        })
         cy.get('[id="create-and-publish-api"]').click();
         cy.url().should('include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
         cy.get('[data-testid="go-to-dev-portal-btn"]').should('exist');
@@ -50,8 +52,7 @@ describe('Choreo APIM publisher scenarios', () => {
     });
 
     after(() => {
-        // TODO remove this once the mondoDB indexing delay is addressed
-        cy.wait(60000);
+        cy.wait(1000);
         cy.get('[data-testid="api-list"]').click({ force: true });
         cy.wait(2000);
         cy.searchApiFromListAndVisit(API_NAME);
