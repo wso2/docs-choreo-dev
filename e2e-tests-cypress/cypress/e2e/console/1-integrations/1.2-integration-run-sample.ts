@@ -67,7 +67,7 @@ describe('Integration sample flow', () => {
         cy.log('Retrieved the test URL successfully');
 
         cy.url().then((url) => {
-            const appName = url.split('app/').pop().split('/develop')[0];
+            const appName = url.split('app/').pop().split('/test')[0];
             cy.goBacktoAppsList();
             cy.cleanupApp(appName);
         });

@@ -29,7 +29,9 @@ Cypress.Commands.add('updateSubscriptionPlans', () => {
 
 Cypress.Commands.add('updateEndpointConfiguration', (newEndpoint: string) => {
     cy.get('[data-testid="Endpoint Configuration"]').click();
-    cy.get('[data-testid="api-endpoint"]').type(newEndpoint);
+    cy.get('[data-testid="api-endpoint"]').within(() => {
+        cy.get('input').clear().type(newEndpoint);
+    });
     cy.get('[data-testid="endpoint-config-save-btn"]').click();
     cy.get('[id="circular-loader"]').should('not.exist');
     cy.get('[data-testid="api-endpoint"]').within(() => {
