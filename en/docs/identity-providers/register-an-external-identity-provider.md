@@ -1,8 +1,8 @@
 # Registering an External Identity Provider (IdP) for Choreo API Management
 
-Choreo uses an in-built Identity Provider (IdP) to manage the OAuth clients and generate tokens that are required for Choreo APIs by default. However, it is possible to add one or more external IdP(s) for your Choreo organization, so that you can exchange access tokens from that IdP with Choreo access tokens and use those to invoke APIs. 
+Choreo uses an in-built Identity Provider (IdP) to manage the OAuth clients and generate tokens that are required for Choreo APIs by default. However, it is possible to add one or more external IdP(s) for your Choreo organization, so that you can exchange access tokens from that IdP with Choreo access tokens and use those to invoke APIs (See [Exchange an Access Token from an Identity Provider]({{base_path}}/identity-providers/exchange-an-access-token-from-an-identity-provider) for more information). 
 
-Follow this procedure to to add/register an external IdP to your Choreo organization.
+Follow this procedure to add/register an external IdP to your Choreo organization.
 
 !!! note
     You need to be an `Admin` user to add an external IdP using the Choreo Console.
