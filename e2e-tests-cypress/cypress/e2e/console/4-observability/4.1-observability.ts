@@ -48,7 +48,7 @@ describe('Observability tests', () => {
         cy.get('[data-testid="skip-sample-service-btn"]').click();
 
         cy.get('[data-testid="sample-service-popup"]').should('not.exist');
-        
+
         cy.get('[data-testid="sample-service-accessor"]').should('be.visible');
         cy.get('[data-testid="sample-service-accessor"]').click();
 
@@ -63,7 +63,7 @@ describe('Observability tests', () => {
             version = obsUrlRegexMatch[2];
         })
     })
-    
+
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
@@ -76,7 +76,7 @@ describe('Observability tests', () => {
     });
 
     after(() => {
-        cy.goBacktoAppsList();
+        cy.get('.MuiToolbar-root > .MuiIconButton-root').click();
         cy.get('[href="/' + SERVICES_TEXT + '"]').click();
         cy.deleteApp("service", appName, true);
         cy.userLogout();
@@ -170,7 +170,7 @@ describe('Observability tests', () => {
             //     expect($elements[1].textContent).to.contain(':');
             //     expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
             // });
-         });
+        });
     })
 
     it('test diagnostics view', { retries: NO_OF_RETRIES }, () => {
