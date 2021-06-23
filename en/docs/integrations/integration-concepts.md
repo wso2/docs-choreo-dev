@@ -1,5 +1,5 @@
 # Integration Concepts
-Choreo integrations allow you to create enterprise integrations to automate workflows in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo integrations as you develop your integrations in the [Choreo Console]({{choreo_console}}).
+Choreo integrations allow you to create enterprise integrations to automate workflows in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo integrations as you develop your integrations in the [Choreo Console](https://console.choreo.dev/login/).
   
 ## Integration
 Integration in Choreo is a process that connects APIs, events, and streams allowing these to function as a single unit. Choreo provides an integration template which is a pre-built sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
@@ -39,4 +39,4 @@ Choreo supports the following statements:
  - **Other**: Allows to write a single or a multiline code snippet in your Choreo integration.
 
 ## Ballerina expression syntax
-The syntax to use when you want to input values for an expression while designing an integration using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
+The syntax to use when you want to input values for an expression while designing an integration using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax.md)
