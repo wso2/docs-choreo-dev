@@ -34,8 +34,6 @@ spec:
       labels:
         deployment: choreo-tm-2
         choreo.component: apim-tm
-      annotations:
-        linkerd.io/inject: enabled
     spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
