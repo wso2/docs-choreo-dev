@@ -22,7 +22,7 @@ The following lists the connections you can use to interact with application-spe
  - **Azure CosmosDB**: Integrate with Azure CosmosDB to manage documents and stored procedures. You can perform operations for documents and stored procedures such as getting, creating, querying, replacing, deleting, etc.
  - **MongoDB**: Integrate with MongoDB to manage databases, collections, and documents. You can perform operations such as getting databases, collections, and documents, inserting, updating, and deleting documents, closing the client, listing indices, etc. 
  - **Redis**: Integrate with Redis to manage different data structures. You can perform a range of operations depending on the data structure.
- - **AWS S3**: Integrate with AWS S3 to manage cloud storages. You can perform operations such as creating, listing and deleting buckets as well as objects.
+ - **AWS S3**: Integrate with AWS S3 to manage cloud storages. You can perform operations such as creating, listing, and deleting buckets as well as objects.
  - **AWS SQS**: Integrate with AWS SQS to manage messages and queues. You can perform operations such as creating queues, receiving messages, sending messages, deleting messages, and deleting queues.
  - **COVID 19 API**: Integrate with the COVID 19 API to retrieve statistics relating to COVID-19. The GET operations you can perform include retrieving the status relating to the spread of COVID-19 and relating to the vaccine coverage per province, country, and continent. You can also retrieve global data. 
  - **Weather API**: Integrate with the weather API to retrieve weather forecasts as well as information about the current weather.
