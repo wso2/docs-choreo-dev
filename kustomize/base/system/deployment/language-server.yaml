@@ -73,7 +73,7 @@ spec:
             cpu: "2"
             memory: 4Gi
           requests:
-            cpu: 500m
+            cpu: "2"
             memory: 1Gi
         securityContext:
           runAsUser: 0
