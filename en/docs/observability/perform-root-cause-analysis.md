@@ -89,8 +89,8 @@ If you hold the pointer over a section where you see fluctuations in multiple bi
 
 ![Fluctuations in diagnostic data](../assets/img/observability/second-bin.png){.cInlineImage-full}
 
-In this example, the logs indicate a higher occurrence of `error while connecting to the hr-service`. Although there are other errors also displayed, those error counts are comparatively much lower.
+In this example, the logs indicate a higher occurrence of `error while connecting to the hr-service`. Although there another error is also displayed, its error count is comparatively much lower (i.e., it has occured only 810 times whereas the `error while connecting to the hr-service` has occurred 1608 times).
 
-In the same example, if you further analyze the sample diagnostic data, you can identify the connectivity error as the most common error.  In such error timestamps, you can also see an increase in the throughput and a drop in latency. 
+In the same example, if you further analyze the sample diagnostic data, you can identify the connectivity error as the most common error.  
    
 Based on this, you can conclude that the root cause of the anomalous throughput and latencies is the connectivity issue.
