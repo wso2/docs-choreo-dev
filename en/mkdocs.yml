@@ -66,7 +66,6 @@ nav:
           - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
-          - Choreo Connectors: references/choreo-connectors.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
@@ -100,7 +99,6 @@ markdown_extensions:
     - attr_list
     - markdown_include.include:
           base_path: docs
-
 plugins:
     - search
     - markdownextradata: {}
@@ -128,5 +126,3 @@ extra:
     site_version: 1.0.0
     #base_path: http://localhost:8000
     base_path: http://localhost:8000
-
-
