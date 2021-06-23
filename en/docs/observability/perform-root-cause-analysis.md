@@ -27,7 +27,7 @@ Here, you can detect anomalies and perform root cause analysis on the sample ser
     
 ## Detect anomalies and perform root cause analysis
 
-To detect anomalies of the service, you must trace its executions from the code statement level to the machine it runs in. You can analyze observability data and logs to troubleshoot and identify the root cause for the anomalies you detect. 
+Anomalies may occur for a service due to errors that occur at the code statement level or at the CPU level. You can analyze observability data and logs to troubleshoot and identify the root cause for the anomalies you detect. 
 
 
 ### Analyze the throughput graph
