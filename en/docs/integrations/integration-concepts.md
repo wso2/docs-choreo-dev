@@ -11,9 +11,12 @@ Choreo supports the following trigger types:
 
  - **Schedule**: Triggers execution according to a given schedule.
  - **Manual**: Triggers execution manually.
- - **Calendar**: Triggers execution based on events in a Google Calendar.
  - **GitHub**: Triggers execution based on GitHub events and actions.
- - **Salesforce**: Triggers execution based on Salesforce events. 
+ - **Calendar**: Triggers execution based on events in a Google Calendar.
+ - **Sheet**: Triggers execution based on the actions carried out in a Google Sheet
+ - **Salesforce**: Triggers execution based on Salesforce events.
+ - **Slack**: Triggers execution based on events in a Slack channel.
+ - **Azue SB**: Triggers execution based on the activities carried out in an Azure service Bus queue.
  
 ## API call
 
