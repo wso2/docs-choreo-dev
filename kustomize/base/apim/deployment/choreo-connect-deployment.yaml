@@ -34,8 +34,6 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-deployment
-      annotations:
-        linkerd.io/inject: enabled
     spec:
       initContainers:
         - name: init-adapter-service
