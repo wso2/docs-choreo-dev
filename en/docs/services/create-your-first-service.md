@@ -65,7 +65,6 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     | **Field**                  | **Value**            |
     |----------------------------|----------------------|
     | **Country Code**           | `country`            |
-    | **Date**                   | `"2019"`             |
     | **Response Variable Name** | `populationByCountry`|
 
 5. Click **Save**.
