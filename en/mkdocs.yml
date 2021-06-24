@@ -39,8 +39,6 @@ theme:
         accent: deep-orange
     logo: images/logo.svg
     favicon: images/favicon.png
-    slack: images/help-slack-icon.svg
-    choreo_logo: images/choreo-logo-icon.svg
     highlightjs: true
     feature:
         tabs: true
@@ -66,6 +64,7 @@ nav:
           -  Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
+          - Data Mapping: references/data-mapping.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
