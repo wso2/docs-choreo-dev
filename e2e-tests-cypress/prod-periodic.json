@@ -1,0 +1,17 @@
+{
+    "defaultCommandTimeout": 30000,
+    "screenshotsFolder": "cypress/screenshots",
+    "ignoreTestFiles": "**/examples/*.js",
+    "chromeWebSecurity": false,
+    "integrationFolder": "cypress/e2e",
+    "testFiles": [
+        "console/0-clean/0.1-clean-previous-run.ts",
+        "console/4-observability/*.ts",
+        "console/5-settings/*.ts",
+        "console/6-other/*.ts"
+    ],
+    "videoUploadOnPasses": false,
+    "videoCompression": false,
+    "viewportWidth": 1920,
+    "viewportHeight": 1080
+}

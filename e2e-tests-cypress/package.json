@@ -25,6 +25,7 @@
     "devportal-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e/devportal/*.ts'",
     "smoke-devportal": "npx cypress run --env grepTags=-@regression --headless --spec cypress/e2e/devportal/*.ts",
     "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e/console/**/*'",
+    "console-prod-periodic-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e/console/**/*' --config-file prod-periodic.json",
     "smoke-console": "npx cypress run --env grepTags=-@regression --headless --spec 'cypress/e2e/console/**/*'",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
     "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
