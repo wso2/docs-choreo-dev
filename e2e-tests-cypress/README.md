@@ -1,8 +1,34 @@
 # e2e-tests-cypress
 
+## Quick Start
+
+### Setup & Run
+
+1. Navigate to the `e2e-tests-cypress` directory
+2. run `npm install` - only for first time
+3. change
+    - loginURL
+    - appSvcURL
+    - baseUrl
+      that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
+4. run `npm run e2etest:headless`
+
+-   This will run test cases in [headless mode](#headless-mode).
+
+### Debugging
+
+-   You can find screen shot of failured test cases in `e2e-tests-cypress/screenshots` directory
+
+-   There are videos created for all the success and failed test cases in `e2e-tests-cypress/videos` directory.
+
+-   You can check a error is already reported or not by filtering issues contains `Type/e2eTestFailure` lable on github.
+
+-   You can check identified errors in [interactive mode](#interactive-mode) to get more idea on visualized manner.
+
 ## Setup
+
 1. Proceed to `e2e-tests-cypress` and run
-`npm install`
+   `npm install`
 
 2. [Optional] Configure the following properties in `cypress.env.json`, only if you need to execute `cypress/e2e/console/login-logout-flow.ts`.
 
@@ -44,15 +70,14 @@ e2e-tests-cypress
 
 5. **plugins** contain the plugins or listeners. By default, Cypress will automatically include the plugins file “cypress/plugins/index.js” before every test it runs. You can programmatically alter the resolved configuration and environment variables using plugins, Eg. If we have to inject customized options to browsers like accepting the certificate, or do any activity on test case pass or fail or to handle any other events like handling screenshots. They enable you to extend or modify the existing behavior of Cypress(https://docs.cypress.io/guides/tooling/plugins-guide).
 
-6. **support** writes customized commands or reusable methods that are available for usage in all of your spec/test files. This file runs before every single spec file. That’s why you don’t have to import this file in every single one of your spec files.  The “support” file is a great place to put reusable behavior such as Custom Commands or global overrides that you want to be applied and available to all of your spec files.
-
-
+6. **support** writes customized commands or reusable methods that are available for usage in all of your spec/test files. This file runs before every single spec file. That’s why you don’t have to import this file in every single one of your spec files. The “support” file is a great place to put reusable behavior such as Custom Commands or global overrides that you want to be applied and available to all of your spec files.
 
 ## Test execution
 
 ### Interactive mode
+
 1. Run the following command to open the Cypress app
-`npx cypress open`
+   `npx cypress open`
 
 <p align="center">
    <img src="images/cypress-app.png" height="400" alt="cypress-app">
@@ -65,37 +90,42 @@ e2e-tests-cypress
 </p>
 
 ### Headless mode
-1. Use below commands to run tests in headless mode
 
-	* Run all the spec files in the project
-	> `npm run local`
+1.  Use below commands to run tests in headless mode
 
-	* Run one spec file
-	> `npx cypress run --spec "cypress/e2e/<path/to/spec/file>"`
+    -   Run all the spec files in the project
 
-		ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts"`
+        > `npm run local`
 
-	* Run multiple spec files
-	> `npx cypress run --spec "cypress/e2e/<path/to/spec/file1>,cypress/e2e/<path/to/spec/file2>"`
+    -   Run one spec file
 
-		ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts,cypress/e2e/console/integrations/clone-and-edit-flow.ts"`
+        > `npx cypress run --spec "cypress/e2e/<path/to/spec/file>"`
 
-	* Run all spec files in a folder
-	> `npx cypress run --spec "cypress/e2e/<path/to/folder>/**/*"`
+            ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts"`
 
-		ex: `npx cypress run --spec "cypress/e2e/console/integrations/**/*"`
+    -   Run multiple spec files
 
-3. After running the tests in headless mode, following artifacts can be found
+        > `npx cypress run --spec "cypress/e2e/<path/to/spec/file1>,cypress/e2e/<path/to/spec/file2>"`
 
-- videos - for each spec file, a separate video will be created
-	- Location: `cypress/videos`
-- screenshots - screenshot will be captured when a failure happens during a test run
-	- Location: `cypress/screenshots`
-- reports - reports will be generated only if the `npm run test` is used
-	- Location: `cypress/reports`
+            ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts,cypress/e2e/console/integrations/clone-and-edit-flow.ts"`
 
+    -   Run all spec files in a folder
+
+        > `npx cypress run --spec "cypress/e2e/<path/to/folder>/**/*"`
+
+            ex: `npx cypress run --spec "cypress/e2e/console/integrations/**/*"`
+
+2.  After running the tests in headless mode, following artifacts can be found
+
+-   videos - for each spec file, a separate video will be created
+    -   Location: `cypress/videos`
+-   screenshots - screenshot will be captured when a failure happens during a test run
+    -   Location: `cypress/screenshots`
+-   reports - reports will be generated only if the `npm run test` is used
+    -   Location: `cypress/reports`
 
 ## Scenarios
+
 Scenarios covered by the End to End tests.
 
 <table>
