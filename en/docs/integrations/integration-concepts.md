@@ -38,7 +38,7 @@ The following lists the connections you can use to interact with application-spe
 
 ## Statement
 
-A statement is a collection of code fragments that specifies the actions to be carried out by a Choreo integration. Choreo statements can also be composed of expressions. These expressions are written based on the [Ballerina Expression Syntax](#ballerina-expression-syntax).
+A statement is a collection of code fragments that specifies the actions to be carried out by a Choreo integration. 
 
 Choreo supports the following statements:
 
@@ -51,4 +51,5 @@ Choreo supports the following statements:
  - **Other**: Allows to write a single or a multiline code snippet in your Choreo integration.
 
 ## Ballerina expression syntax
-The syntax to use when you want to input values for an expression while designing an integration using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax.md)
+
+Choreo statements can also be composed of expressions. For the syntax to use when you want to input values for an expression while designing an integration using Choreo, see [Ballerina Expression Syntax](../references/ballerina-expression-syntax.md).
