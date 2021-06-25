@@ -45,5 +45,5 @@ Now you can do the following depending on your requirement:
 
 - Click the **<>** icon of the connectors in the middle and edit expressions.
 
-  ![Data mapping update expressions](../assets/img/references/datamapping/update-expressions.png){.cInlineImage-full}
+     ![Data mapping update expressions](../assets/img/references/datamapping/update-expressions.png){.cInlineImage-full}
  
