@@ -17,6 +17,7 @@ Choreo supports the following statements:
 
  - **Log**: Logs an event with an information statement or an error that occurs in your service.    
  - **Variable**: Declares a variable and a value of a preferred data type (`string`, `int`, etc.) to use later in the logical process of the service.
+ - **Data Mapping**: Allows to create variables by visually mapping one or more variables. For more information see [Data Mapping](../references/data-mapping.md).
  - **If**: Performs conditional execution. 
  - **ForEach**: Includes a control flow statement in your service to iterate over a list of items.
  - **While**: Continuously executes a block of statements in a loop based on a given `boolean` condition. 

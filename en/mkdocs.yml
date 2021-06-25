@@ -67,6 +67,7 @@ nav:
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
+          - Data Mapping: references/data-mapping.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
