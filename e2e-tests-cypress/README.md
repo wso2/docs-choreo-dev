@@ -2,28 +2,28 @@
 
 ## Quick Start
 
-### Setup & Run
+-   ### Setup & Run
 
-1. Navigate to the `e2e-tests-cypress` directory
-2. run `npm install` - only for first time
-3. change
-    - loginURL
-    - appSvcURL
-    - baseUrl
-      that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
-4. run `npm run e2etest:headless`
+    1.  Navigate to the `e2e-tests-cypress` directory
+    2.  Run `npm install` - only for first time
+    3.  Change
+        -   loginURL
+        -   appSvcURL
+        -   baseUrl
+            that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
+    4.  Run `npm run e2etest:headless`
 
--   This will run test cases in [headless mode](#headless-mode).
+    -   This will run test cases in [headless mode](#headless-mode).
 
-### Debugging
+-   ### Debugging
 
--   You can find screen shot of failured test cases in `e2e-tests-cypress/screenshots` directory
+    -   You can find screen shot of failured test cases in `e2e-tests-cypress/screenshots` directory
 
--   There are videos created for all the success and failed test cases in `e2e-tests-cypress/videos` directory.
+    -   There are videos created for all the success and failed test cases in `e2e-tests-cypress/videos` directory.
 
--   You can check a error is already reported or not by filtering issues contains `Type/e2eTestFailure` lable on github.
+    -   You can check a error is already reported or not by filtering issues contains `Type/e2eTestFailure` lable on github.
 
--   You can check identified errors in [interactive mode](#interactive-mode) to get more idea on visualized manner.
+    -   You can check identified errors in [interactive mode](#interactive-mode) to get more idea on visualized manner.
 
 ## Setup
 
