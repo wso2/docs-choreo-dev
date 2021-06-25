@@ -63,7 +63,7 @@ nav:
           - Build Your First Integration: integrations/build-your-first-integration.md
     - Observability:
           - Observability Overview: observability/observability-overview.md
-          -  Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+          - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
 # Extensions
@@ -97,6 +97,8 @@ markdown_extensions:
     - pymdownx.snippets:
           base_path: docs
     - attr_list
+    - markdown_include.include:
+          base_path: docs
 plugins:
     - search
     - markdownextradata: {}
