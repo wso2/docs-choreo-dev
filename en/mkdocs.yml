@@ -98,6 +98,8 @@ markdown_extensions:
     - pymdownx.snippets:
           base_path: docs
     - attr_list
+    - markdown_include.include:
+          base_path: docs
 plugins:
     - search
     - markdownextradata: {}
