@@ -93,4 +93,4 @@ Follow the steps below to learn how to drill down and confirm the root cause for
 6. Observe that the error graph is also fluctuating over time as the service logs errors.
 7.  You can observe similar behavior in the other bins as well.
    
-Therefore, now you can conclude that the connectivity issue is the root cause for the intermittent anomalies detected in the throughput and the latencies of requests.
+Therefore, now you can conclude that the connectivity issue is the root cause for the intermittent anomalies detected in the throughput and the latencies of requests.  
