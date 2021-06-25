@@ -1,6 +1,6 @@
 # Data Mapping
 
-A data mapping statement can be used to create an object using several other variables. The most common use of data 
+A data mapping statement can be used to create variables by visually mapping one or more variables. The most common use of data 
 mapping is to map the data from a response of an API call to a JSON. 
 
 1. In the **Statements window**, select **Data Mapping**.
