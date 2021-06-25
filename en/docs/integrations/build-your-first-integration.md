@@ -120,26 +120,26 @@ Now you have successfully created and configured the integration. It looks as fo
 
 - In the code view
     
-     ```ballerina
-        import wso2/choreo.sendemail;
-        import ballerinax/worldbank;
-        import ballerinax/covid19;
-        
-        public function main() returns error? {
-        
-            covid19:Client covid19Client = check new ();
-            covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
-            var totalCases = statusByCountry?.cases ?: 0d;
-            worldbank:Client worldBankClient = check new ();
-            worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA");
-            int population = (populationByCountry[0]?.value ?: 0) / 1000000;
-            var totalCasesPerMillion = totalCases / population;
-            string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
-            sendemail:Client sendemailEndpoint = check new ();
-            string sendEmailResponse = check sendemailEndpoint->sendEmail("rukshani@wso2.com", "Total COVID-19 Cases in the USA", 
-            mailBody);
+    ```ballerina
+    import wso2/choreo.sendemail;
+    import ballerinax/worldbank;
+    import ballerinax/covid19;
+    
+    public function main() returns error? {
+    
+        covid19:Client covid19Client = check new ();
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
+        var totalCases = statusByCountry?.cases ?: 0d;
+        worldbank:Client worldBankClient = check new ();
+        worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA");
+        int population = (populationByCountry[0]?.value ?: 0) / 1000000;
+        var totalCasesPerMillion = totalCases / population;
+        string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
+        sendemail:Client sendemailEndpoint = check new ();
+        string sendEmailResponse = check sendemailEndpoint->sendEmail("rukshani@wso2.com", "Total COVID-19 Cases in the USA", 
+        mailBody);
         }
-     ```
+    ```
 
 ## Step 6: Try out the integration
 
