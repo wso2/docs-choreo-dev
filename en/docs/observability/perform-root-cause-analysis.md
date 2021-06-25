@@ -10,7 +10,7 @@ This guide describes how you can detect anomalies and perform root cause analysi
 Follow this procedure to try out the sample service:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
-2. Click **Observability**, and then click **Try Now**. This takes you to the **Observability** page. 
+2. Go to the **Observability** card and then click **Try Now**. This takes you to the **Observability** page. 
 3. Move the pointer to the right-end of the row for an active service, and then click **Observe**. If you do not have any active services, you can click **Try Sample**. 
 
     ![Access the Observability view](../assets/img/observability/access-observability.png){.cInlineImage-full}
@@ -71,7 +71,9 @@ The actions you can perform are as follows:
     
 - **Check the status code of a request that has caused a latency**
 
-    To do this, click on the relevant latency value. In this example, the status code is `500`, which means the request resulted in an error state.
+    To do this, click on the relevant latency value. In the following example, the status code is `500`, which means the request resulted in an error state.
+    
+    ![Check error status code](../assets/img/observability/check-error-status-code.png){.cInlineImage-full}
 
 
 ### Analyze diagnostic data
