@@ -6,7 +6,7 @@
 
     1.  Navigate to the `e2e-tests-cypress` directory
     2.  Run `npm install` - only for first time
-    3.  Change
+    3.  Change the following in `cypress.env.json`
         -   loginURL
         -   appSvcURL
         -   baseUrl
