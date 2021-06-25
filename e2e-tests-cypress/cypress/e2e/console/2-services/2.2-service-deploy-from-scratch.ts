@@ -39,13 +39,13 @@ describe('Service deployment and delete deployed service', () => {
     })
 
     it('low code form AI suggestions', () => {
-        const variableSourceFields = 'http:Client httpEndpoint = check new (url);';
+        const variableSourceFields = 'string url = "https://postman-echo.com/get"';
 
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
-        cy.get('[id="SmallPlus"]').eq(0).click();
+        cy.get('[id="SmallPlus"]').eq(0).click({force: true});
         cy.get('[data-testid="api-options"]').click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);

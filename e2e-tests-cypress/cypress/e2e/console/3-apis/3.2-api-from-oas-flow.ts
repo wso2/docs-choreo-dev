@@ -35,13 +35,12 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('[data-testid="api-name"]').findByRole('textbox').type(API_NAME);
         cy.get('[data-testid="api-basepath"]').within(() => {
             cy.get('input').clear().type(API_NAME);
-        })
+        });
         cy.get('[id="create-and-publish-api"]').click();
         cy.url().should('include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
         cy.get('[data-testid="go-to-dev-portal-btn"]').should('exist');
         cy.get('[data-testid="go-to-dev-portal-btn"]').should('not.be.disabled');
         cy.get('[data-testid="overview-item-State"]').should('have.text', 'Published');
-        cy.get('[data-testid="overview-item-Business Plans"]').should('have.text', 'Unlimited');
         cy.log('Successfully created API from open API specification');
 
         cy.updateEndpointConfiguration('https://api.carbonintensity.org.uk');

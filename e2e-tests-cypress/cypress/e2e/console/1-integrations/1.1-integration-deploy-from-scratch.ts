@@ -49,7 +49,8 @@ describe("Integrations test run and deployment from scratch", () => {
     it("Undeploy app from UI and delete the app", () => {
         cy.goBacktoAppsList();
         cy.deleteAppWithoutUndeploy(appName, true);
-        cy.undeployApp("integration", appName, true)
+        cy.undeployApp("integration", appName, true);
+        cy.hideWelcomeMessage();
         cy.deleteApp("integration", appName, true);
         cy.log("App deleted successfully!")
     });
