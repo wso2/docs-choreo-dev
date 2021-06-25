@@ -1,6 +1,6 @@
 # Service Concepts
 
-Choreo services allow you to create enterprise integration services incorporating complex business logic in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo services as you develop your services in the [Choreo Console]({{choreo_console}}).
+Choreo services allow you to create enterprise integration services incorporating complex business logic in a user-friendly low-code environment. Here are some basic concepts which will help you understand Choreo services as you develop your services in the [Choreo Console](https://console.choreo.dev/login/).
  
 ## Service
 A service in Choreo is an enterprise integration service exposed via a REST API. Choreo provides a comprehensive set of pre-built service samples for you to clone, edit, and try out, depending on your requirement. 
@@ -40,4 +40,4 @@ Choreo supports the following statements:
  - **Other**: Allows to write a single or a multiline code snippet in your service.
 
 ## Ballerina expression syntax
-The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax)
+The syntax to use when you want to input values for an expression while designing a service using Choreo. [Refer to the syntax.](../references/ballerina-expression-syntax.md)
