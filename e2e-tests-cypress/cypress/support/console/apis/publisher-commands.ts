@@ -22,8 +22,6 @@ Cypress.Commands.add('updateSubscriptionPlans', () => {
     cy.get('[data-testid="checkbox-Gold"]').click();
     cy.get('[data-testid="subscription-save-btn"]').click();
     cy.get('[id="circular-loader"]').should('not.exist');
-    cy.get('[data-testid="Overview"]').click();
-    cy.get('[data-testid="overview-item-Business Plans"]').should('have.text', 'Bronze, Gold, Unlimited');
     cy.log('Subscriptions updated successfully');
 });
 

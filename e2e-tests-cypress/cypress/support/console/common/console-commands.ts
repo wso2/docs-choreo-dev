@@ -277,7 +277,7 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option:string)
     cy.get('body').then($body => {
         let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
         if (!statementOptionsAvailable) {
-            cy.get('[id="SmallPlus"]').eq(0).click();
+            cy.get('[id="SmallPlus"]').eq(0).click({force: true});
         }
         if(type == 'Statements'){
             cy.get('[data-testid="statement-options"]').click();
@@ -532,7 +532,7 @@ Cypress.Commands.add('createRespond', (expression: string, skipSmallPlus?: boole
     cy.get('body').then($body => {
         let statementOptionsAvailable = ($body.find('[data-testid="statement-options"]').length > 0) ? true : false;
         if (!statementOptionsAvailable) {
-            cy.get('[id="SmallPlus"]').eq(0).click();
+            cy.get('[id="SmallPlus"]').eq(0).click({force: true});
         }
         cy.selectSpecificOption('addrespond');
 
