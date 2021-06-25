@@ -1,32 +1,49 @@
 # Data Mapping
 
-A data mapping statement can be used to create variables by visually mapping one or more variables. The most common use of data 
-mapping is to map the data from a response of an API call to a JSON. 
+You can use a data mapping statement in Choreo to create variables by visually mapping one or more variables.  The most common use of data mapping in Choreo is to map data from an API call response to JSON format. 
 
-1. In the **Statements window**, select **Data Mapping**.
-   
-2. You can see the **Input** and **Output** windows as follows.
+Follow this procedure if you want to add a data mapping statement to your integration or service:
+
+1. Go to the **Statements** tab and select **Data Mapping**. You can see the **Input** and **Output** panes.
 
      ![Data mapping input output windows](../assets/img/references/datamapping/input-output-windows.png){.cInlineImage-full}
    
-3. To select the variable to use as the input, click **Add Variable** in the **Input** window on the left-hand side 
-   and select the input type from the drop-down menu.
+2. To add an input variable, follow this procedure:
 
-4. To select the variable to use as the output, select an existing variable or create a new variable in the **Output** 
-   window on the right-hand side. For the JSON output types, you can specify a sample JSON like 
-   `{country: "", cases:0}` instead of `{}` if needed. 
+    1. In the **Input** pane, click **Add Variable**.
+    2. Select a required input type from the **Select Input Type** drop-down list.
+    3. Click **Add**.
 
-5. After you have selected both sides the connectors in the middle will appear.
+3. To add an output variable, you can either select an existing variable or create a new variable via the **Output** pane. 
 
-     ![Data mapping connections](../assets/img/references/datamapping/data-mapping-connections.png){.cInlineImage-full}
+    - To create a new variable, follow this procedure in the **Output** pane: 
+
+        !!! tip
+            If you want to create a new output variable that is optional, click the **Create Optional Variable** toggle to enable it.
+            
+         1. Enter a value as the **Variable Name**.
+         2. Select a variable type from the **Select Variable Type** drop-down list.
+         3. Click **Save**.
+
+    - To use an existing variable, follow this procedure in the **Output** pane:         
+         1. Click the **Use Existing Variable** toggle to enable it.
+         2. Select a variable from the **Select Output Variable** drop-down list.
+         3. Click **Save**.
+  
+
+   Once you add the input and output variables, the connectors in the middle are displayed.
+
+    ![Data mapping connections](../assets/img/references/datamapping/data-mapping-connections.png){.cInlineImage-full}
    
-    The **Input** window shows constant values (e.g. `0`) and the input variables.
+   The **Input** pane displays constant values (e.g. `0`) and the input variables.
+ 
+Now you can do the following depending on your requirement:
 
-6. For the outputs of type `JSON`, you can add new fields to the output by selecting **Add value field** or 
-   **Add complex field** icons next to the variable name.
+- Add new fields to outputs of type `JSON` by selecting **Add value field** or **Add complex field** icons next to the variable name.
 
-7. You can map data by connecting the terminals from the **Input** window to the terminals in the middle connectors. 
+- Map data by connecting the terminals from the **Input** pane to the terminals in the middle connectors. 
 
-8. You can edit the expressions by clicking on the **<>** icon in the middle connectors.
+- Click the **<>** icon of the connectors in the middle and edit expressions.
 
-     ![Data mapping update expressions](../assets/img/references/datamapping/update-expressions.png){.cInlineImage-full}
+  ![Data mapping update expressions](../assets/img/references/datamapping/update-expressions.png){.cInlineImage-full}
+ 
