@@ -27,7 +27,7 @@ The following lists the connections you can use to interact with application-spe
  - **NetSuite**: Integrate with Netsuite to perform operations such as creating a record instance, creating a sublist, etc.
 
 ## Statement
-A statement is a collection of code fragments that specifies the actions to be carried out by a Choreo service. Choreo statements can also be composed of expressions. These expressions are written based on the [Ballerina Expression Syntax](#ballerina-expression-syntax.md).
+A statement is a collection of code fragments that specifies the actions to be carried out by a Choreo service. Choreo statements can also be composed of expressions. These expressions are written based on the [Ballerina Expression Syntax](#ballerina-expression-syntax).
 
 Choreo supports the following statements:
 
