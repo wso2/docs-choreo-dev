@@ -13,7 +13,7 @@ The following lists the connections you can use to interact with application-spe
 |---------------------|------------------------------------------------------------------------------------------------|
 | **Mail by Choreo**  | Send email via Choreo to a specific address with a specific subject and a message body.        |
 | **SMS by Choreo**   | Send SMS via Choreo to a specific telephone number with a specific message body.               |
-| **COVID-19 API**    | Integrate with the COVID-19 API to retrieve statistics relating to the spread of COVID-19 disease. You can perform operations such as retrieving the number of new cases in a specific country, retrieve details relating to the vaccine coverage in a continent, etc. |
+| **COVID-19 API**    | Integrate with the COVID-19 API to retrieve the statistics related to the spread of the disease, such as number of new cases in a specific country, vaccine coverage data, etc. |
 | **World Bank API**  | Integrate with the World Bank API to retrieve information relating to population, literacy rate, Gross Domestic Product (GDP), government expenditure, etc., in different countries. |
 | **GitHub**          | Integrate with GitHub to perform operations such as creating an issue, creating a pull request, etc. |
 | **Weather API**     | Integrate with the weather API to retrieve weather forecasts as well as information about the current weather. |
