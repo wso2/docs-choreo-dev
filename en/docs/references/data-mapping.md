@@ -33,7 +33,7 @@ Follow this procedure if you want to add a data mapping statement to your integr
 
    Once you add the input and output variables, the connectors in the middle are displayed.
 
-    ![Data mapping connections](../assets/img/references/datamapping/data-mapping-connections.png){.cInlineImage-full}
+   ![Data mapping connections](../assets/img/references/datamapping/data-mapping-connections.png){.cInlineImage-full}
    
    The **Input** pane displays constant values (e.g. `0`) and the input variables.
  
