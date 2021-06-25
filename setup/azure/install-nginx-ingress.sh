@@ -22,6 +22,7 @@ helm upgrade --install "${SYSTEM_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.resources.requests."memory"=500Mi \
   --set controller.resources.requests."cpu"=500m \
   --set controller.resources.limits."cpu"=1000m \
+  --set controller.resources.limits."memory"=1Gi \
   --set controller.ingressClass="${SYSTEM_INGRESS_CLASS}" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
   --set controller.image.tag="v0.41.2" \
@@ -51,6 +52,7 @@ helm upgrade --install "${USERAPPS_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.resources.requests."memory"=500Mi \
   --set controller.resources.requests."cpu"=500m \
   --set controller.resources.limits."cpu"=1000m \
+  --set controller.resources.limits."memory"=1Gi \
   --set controller.ingressClass="${USERAPPS_INGRESS_CLASS}" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
   --set controller.image.tag="v0.41.2" \
@@ -80,6 +82,7 @@ helm upgrade --install "${IDP_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.resources.requests."memory"=500Mi \
   --set controller.resources.requests."cpu"=500m \
   --set controller.resources.limits."cpu"=1000m \
+  --set controller.resources.limits."memory"=1Gi \
   --set controller.ingressClass="${IDP_INGRESS_CLASS}" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
   --set controller.image.tag="v0.41.2" \
