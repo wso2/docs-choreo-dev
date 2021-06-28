@@ -87,6 +87,7 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
       volumes:
       - name: test-assistant-models
         emptyDir: {}
