@@ -22,8 +22,8 @@ Follow this procedure to create an integration from scratch:
 
 Follow this procedure to connect to the COVID-19 API and retrieve data:
 
-1. Click **API Calls** and then select **Covid19 API**.
-2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+1. Click **API Calls** and then select **COVID-19 API**.
+2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
     | **Field**                  | **Value**         |
@@ -57,7 +57,6 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     | **Field**                  | **Value**            |
     |----------------------------|----------------------|
     | **Country Code**           | `"USA"`              |
-    | **Date**                   | `"2019"`             |
     | **Response Variable Name** | `populationByCountry`|
 
 5. Click **Save**.
@@ -119,27 +118,27 @@ Now you have successfully created and configured the integration. It looks as fo
 
     ![Low-code view](../assets/img/integrations/integration-low-code-view.png){.cInlineImage-full}
 
-- In the code view
+- In the code view    
+   ```ballerina
+    import wso2/choreo.sendemail;
+    import ballerinax/worldbank;
+    import ballerinax/covid19;
     
-     ```ballerina
-      import wso2/choreo.sendemail;
-      import ballerinax/worldbank;
-      import ballerinax/covid19;
-
-      public function main() returns error? {
-
-         covid19:Client covid19Client = check new ();
-         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
-         var totalCases = statusByCountry?.cases ?: 0d;
-         worldbank:Client worldBankClient = check new ();
-         worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA", "2019");
-         int population = (populationByCountry[0]?.value ?: 0) / 1000000;
-         var totalCasesPerMillion = totalCases / population;
-         string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
-         sendemail:Client sendemailEndpoint = check new ();
-         string sendEmailResponse = check sendemailEndpoint->sendEmail("test@gmail.com", "Total COVID-19 Cases in the USA", mailBody);
-      }
-     ```
+    public function main() returns error? {
+    
+        covid19:Client covid19Client = check new ();
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
+        var totalCases = statusByCountry?.cases ?: 0d;
+        worldbank:Client worldBankClient = check new ();
+        worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA");
+        int population = (populationByCountry[0]?.value ?: 0) / 1000000;
+        var totalCasesPerMillion = totalCases / population;
+        string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
+        sendemail:Client sendemailEndpoint = check new ();
+        string sendEmailResponse = check sendemailEndpoint->sendEmail("rukshani@wso2.com", "Total COVID-19 Cases in the USA", 
+        mailBody);
+        }
+   ```
 
 ## Step 6: Try out the integration
 

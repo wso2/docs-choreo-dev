@@ -30,8 +30,8 @@ To create the resource via which the service is invoked, follow this procedure:
 
 Follow this procedure to connect to the COVID-19 API and retrieve data:
 
-1. Click **API Calls** and then select **Covid19 API**.
-2. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+1. Click **API Calls** and then select **COVID-19 API**.
+2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
     | **Field**                  | **Value**         |
@@ -65,7 +65,6 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     | **Field**                  | **Value**            |
     |----------------------------|----------------------|
     | **Country Code**           | `country`            |
-    | **Date**                   | `"2019"`             |
     | **Response Variable Name** | `populationByCountry`|
 
 5. Click **Save**.
@@ -138,11 +137,11 @@ service / on new http:Listener(8090) {
     resource function get stats/[string country](http:Caller caller, http:Request request) returns error? {
 
         covid19:Client covid19Client = check new ();
+
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
         var totalCases = statusByCountry?.cases ?: 0d;
         worldbank:Client worldBankClient = check new ();
-        worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry(country, 
-        "2019");
+        worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry(country);
         int population = (populationByCountry[0]?.value ?: 0) / 1000000;
         var totalCasesPerMillion = totalCases / population;
         json payload = {

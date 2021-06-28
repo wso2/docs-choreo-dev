@@ -20,21 +20,7 @@ An API call in Choreo allows you to connect to an external service through your 
 
 The following lists the connections you can use to interact with generic protocol-based APIs:
   
- - **HTTP**: Communicates with external endpoints over HTTP.   
- - **SMTP**: Performs email-related operations over SMTP. 
- - **POP3**: Retrieves emails from a mail server over POP3. 
- - **IMAP**: Retrieves emails from a mail server over a TCP/IP connection.
-
-The following lists the connections you can use to interact with application-specific APIs:
-
- - **Twilio**: Integrate with Twilio to perform operations such as sending messages, WhatsApp messages, and making voice calls.
- - **Slack**: Integrate with Slack to perform operations such as sending a message to a channel, deleting a message, etc.
- - **GitHub**: Integrate with GitHub to perform operations such as creating an issue, creating a pull request, etc. 
- - **Gmail**: Integrate with Gmail to perform operations such as sending an email, receiving an email, etc.
- - **Google Calendar**: Integrate with Google Calendar to perform operations such as creating an event, deleting an event, etc.
- - **Google Sheets**: Integrate with Google Sheets to perform operations such as reading data, formatting data, etc.
- - **Salesforce**: Integrate with Salesforce to perform operations such as obtaining organization information, creating a record, etc.
- - **NetSuite**: Integrate with Netsuite to perform operations such as creating a record instance, creating a sublist, etc. 
+{!reusable-components/choreo-connectors-list.md!} 
 
 ## Statement
 
@@ -44,6 +30,7 @@ Choreo supports the following statements:
 
  - **Log**: Logs an event with an information statement or an error that occurs in your Choreo integration.
  - **Variable**: Declares a variable and a value of a preferred data type (`string`, `int`, etc.) to use later in the logical process of the Choreo integration.
+ - **Data Mapping**: Allows to create variables by visually mapping one or more variables. For more information see [Data Mapping](../references/data-mapping.md).
  - **If**: Performs conditional execution.
  - **ForEach**: Includes a control flow statement in your Choreo integration to iterate over a list of items.
  - **While**: Continuously executes a block of statements in a loop based on a given `boolean` condition. 
