@@ -120,7 +120,7 @@ Now you have successfully created and configured the integration. It looks as fo
 
 - In the code view
     
-    ```ballerina
+   ```ballerina
     import wso2/choreo.sendemail;
     import ballerinax/worldbank;
     import ballerinax/covid19;
@@ -139,7 +139,7 @@ Now you have successfully created and configured the integration. It looks as fo
         string sendEmailResponse = check sendemailEndpoint->sendEmail("rukshani@wso2.com", "Total COVID-19 Cases in the USA", 
         mailBody);
         }
-    ```
+   ```
 
 ## Step 6: Try out the integration
 
