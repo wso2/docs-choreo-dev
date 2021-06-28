@@ -27,7 +27,7 @@ describe("Data Mapper", () => {
         cy.userLogout();
         });
 
-    it("Create DataMapping", () => {
+    it.skip("Create DataMapping", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
