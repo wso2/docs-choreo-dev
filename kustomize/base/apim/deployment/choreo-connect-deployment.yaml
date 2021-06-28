@@ -39,8 +39,6 @@ spec:
         - name: init-adapter-service
           image: busybox:1.31
           command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
-          securityContext:
-            readOnlyRootFilesystem: true
       containers:
         - name: choreo-connect-enforcer
           volumeMounts:
@@ -75,8 +73,6 @@ spec:
               readOnly: true 
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
-          securityContext:
-            readOnlyRootFilesystem: true
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -150,8 +146,6 @@ spec:
               subPath: ROUTER_TRUSTSTORE
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
-          securityContext:
-            readOnlyRootFilesystem: true
           env:
             - name: ROUTER_ADMIN_HOST
               value: "0.0.0.0"
