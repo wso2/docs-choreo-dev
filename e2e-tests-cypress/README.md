@@ -216,7 +216,6 @@ Scenarios covered by the End to End tests.
 				1) Visit API Overview <br/>
 				2) Add comment <br/>
 				3) Delete comment <br/>
-				
 			</td>
 			<td>api-comment-flow.ts</td>
 		</tr>
@@ -261,17 +260,17 @@ Scenarios covered by the End to End tests.
 		</tr>
 		<tr>
 			<td>11. Delete Apps and APIs that are old or created by this run</td>
-			<td>Cleanup all the apps that are created before 7 days or created in the current test run</td>
+			<td>Cleanup all the apps that are created before 7 days or created in the current test run <br/>
+			</td>
 			<td>clean-this-run.ts</td>
-
 		</tr>
 		<tr>
 			<td>12. API from Service</td>
 			<td>
 				1) Create an API from service(sample app) <br/>
-				2) Verify Overview page	<br/>
+				2) Verify Overview page <br/>
 				3) Change & update runtime configs <br/>
-				4) Try test console	<br/>
+				4) Try test console <br/>
 				5) Delete using REST API <br/>
 			</td>
 			<td>api-from-choreo-service.ts</td>
@@ -317,8 +316,7 @@ Scenarios covered by the End to End tests.
 			<td>observability-test-flow.ts</td>
 		</tr>
 		<tr>
-			<td>
-				16. Low code form AI suggestions, Test run hello world service, Test postman view </td>
+			<td> 16. Low code form AI suggestions, Test run hello world service, Test postman view </td>
 			<td>
 				1) Create a service <br/>
 				2) Create variable property <br/>
