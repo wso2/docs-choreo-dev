@@ -24,7 +24,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreoipaas/lang-server:latest
+      - image: choreocontrolplane.azurecr.io/choreoipaas/lang-server:latest
         name: language-server
         env:
         - name: REDIS_PASSWORD
@@ -73,8 +73,8 @@ spec:
             cpu: "2"
             memory: 4Gi
           requests:
-            cpu: 500m
-            memory: 1Gi
+            cpu: "2"
+            memory: 4Gi
         securityContext:
           runAsUser: 0
           runAsGroup: 0
