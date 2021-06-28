@@ -71,7 +71,7 @@ Follow this procedure to publish and view the API to the API Developer Portal so
 Follow this procedure to invoke the API from the API Developer Portal:
 
 1. Click **Credentials** in the left pane.
-2. Click **Generate Credentials**. This creates credential for an internal application and subscribes this API to that internal application.
+2. Click **Generate Credentials**. This creates credentials for an internal application and subscribes this API to that internal application.
 2. Click **GENERATE ACCESS TOKEN**. Copy the generated access token.
 3. Click **Try Out** in the left pane. 
 4. Paste the copied access token in the **Access Token** field.
