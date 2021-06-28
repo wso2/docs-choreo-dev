@@ -118,8 +118,7 @@ Now you have successfully created and configured the integration. It looks as fo
 
     ![Low-code view](../assets/img/integrations/integration-low-code-view.png){.cInlineImage-full}
 
-- In the code view
-    
+- In the code view    
    ```ballerina
     import wso2/choreo.sendemail;
     import ballerinax/worldbank;
