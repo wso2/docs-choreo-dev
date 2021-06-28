@@ -71,7 +71,6 @@ spec:
           securityContext:
             runAsUser: 802
             runAsGroup: 802
-            readOnlyRootFilesystem: true
           ports:
             - containerPort: 9763
               protocol: "TCP"
