@@ -121,6 +121,9 @@ helm upgrade --install linkerd2 --wait \
   --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
   -n linkerd --version 2.10.0
 
+echo "--- Installing linkerd viz extension... "
+helm install linkerd-viz linkerd/linkerd-viz
+
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
