@@ -23,8 +23,8 @@ Follow this procedure to create an API:
        
 6. To add a resource to the API, follow this procedure:
     1. Under **API Configuration**, click **Resources**.
-    2. Select `GET` as the **HTTP verb** drop-down list.
-    3. Enter `/v3/covid-19/states` as the **URI pattern** and click the **+** icon next to the text to add the resource.
+    2. Select **GET** from the **HTTP Verb** drop-down list.
+    3. In the **URI Pattern** field, enter `/v3/covid-19/states` and then click the **+** icon next to the text to add the resource.
     4. Click **Save**.
     5. You can see a confirmation message to proceed with the changes. Click **Save** to proceed.
 
