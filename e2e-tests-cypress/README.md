@@ -214,8 +214,9 @@ Scenarios covered by the End to End tests.
 			<td>7. Dev portal - API comments</td>
 			<td>
 				1) Visit API Overview <br/>
-				2) Add rating <br/>
-				3) Update rating <br/>
+				2) Add comment <br/>
+				3) Delete comment <br/>
+				
 			</td>
 			<td>api-comment-flow.ts</td>
 		</tr>
@@ -223,8 +224,8 @@ Scenarios covered by the End to End tests.
 			<td>8. Dev Portal - API ratings</td>
 			<td>
 				1) Visit API Overview <br/>
-				2) Add comment <br/>
-				3) Delete comment <br/>
+				2) Add rating <br/>
+				3) Update rating <br/>
 			</td>
 			<td>api-rating-flow.ts</td>
 		</tr>
@@ -259,12 +260,10 @@ Scenarios covered by the End to End tests.
 			<td>application-try-out-flow.ts</td>
 		</tr>
 		<tr>
-			<td>11. Cleanup</td>
-			<td>
-				1) Cleanup test Application and test API <br/>
-				2) Cleanup created subscriptions <br/>
-			</td>
+			<td>11. Delete Apps and APIs that are old or created by this run</td>
+			<td>Cleanup all the apps that are created before 7 days or created in the current test run</td>
 			<td>clean-this-run.ts</td>
+
 		</tr>
 		<tr>
 			<td>12. API from Service</td>
@@ -305,9 +304,7 @@ Scenarios covered by the End to End tests.
 		</tr>
 		<tr>
 			<td>
-				15. Observability overview ( Throughput/Latency graphs and tracing a request) <br/> <br/>
-				16. Logs view
-			</td>
+				15. Observability overview ( Throughput/Latency graphs and tracing a request/log view)</td>
 			<td>
 				1) Create a service <br/>
 				2) Navigate to Observability view <br/>
@@ -321,10 +318,7 @@ Scenarios covered by the End to End tests.
 		</tr>
 		<tr>
 			<td>
-				17. Low code form AI suggestions <br/> <br/>
-				18. Test run hello world service <br/> <br/>
-				19. Test postman view
-			</td>
+				16. Low code form AI suggestions, Test run hello world service, Test postman view </td>
 			<td>
 				1) Create a service <br/>
 				2) Create variable property <br/>
@@ -342,12 +336,7 @@ Scenarios covered by the End to End tests.
 			<td>service-deploy-from-scratch.ts</td>
 		</tr>
 		<tr>
-			<td>20. Delete Apps and APIs that are old or created by this run</td>
-			<td>Cleanup all the apps that are created before 7 days or created in the current test run</td>
-			<td>clean-this-run.ts</td>
-		</tr>
-		<tr>
-			<td>21. Invite members</td>
+			<td>18. Invite members</td>
 			<td>
 				1) Go to settings <br/>
 				2) Go to Invite members <br/>
@@ -357,57 +346,7 @@ Scenarios covered by the End to End tests.
 			<td>invite-members.ts</td>
 		</tr>
 		<tr>
-			<td>22. Add members to groups</td>
-			<td>
-				1) Go to settings <br/>
-				2) Go to groups tab <br/>
-				3) Select Admin group <br/>
-				4) Search the member and add <br/>
-				5) Check the member list <br/>
-			</td>
-			<td>group-list-views.ts</td>
-		</tr>
-		<tr>
-			<td>23. Test Anonymous app linking (via "Add to Choreo")</td>
-			<td>
-				1) Navigate to Home page after Login <br/>
-				2) Run a Ballerina project in the background with Choreo enabled <br/>
-				3) capture and navigate to ObsURL <br/>
-				4) Add to Choreo with creation of a new app <br/>
-				5) Copy the linking command <br/>
-				6) Run the linking command in background <br/>
-				7) Check for successful linking <br/>
-				8) Clean up the created app	<br/>
-			</td>
-			<td>anonymous-app-linking.ts</td>
-		</tr>
-		<tr>
-			<td>24. Generate on-prem key</td>
-			<td>
-				1) Go to settings <br/>
-				2) Go to on-prem keys tab <br/>
-				3) Generate key <br/>
-				4) Edit the key name <br/>
-				5) Regenerate key <br/>
-				6) Delete the key <br/>
-			</td>
-			<td>generate-onprem-key-flow.ts</td>
-		</tr>
-		<tr>
-			<td>25. Clone and edit integrations</td>
-			<td>
-				1) Go to integrations <br/>
-				2) Go to "Use Prebuilt" <br/>
-				3) Select "Google calendar to twilio msg" sample <br/>
-				4) Clone and Edit <br/>
-				5) Fill calender and Twilio configs <br/>
-				6) Click Test & run button <br/>
-				7) Assert the test URL <br/>
-			</td>
-			<td>integration-run-sample.ts</td>
-		</tr>
-		<tr>
-			<td>26. Groups list view</td>
+			<td>19. Create a group, add member to group and delete member from group, delete group</td>
 			<td>
 				1) Go to settings. <br/>
 				2) Go to Organization->Groups tab <br/>
@@ -421,5 +360,45 @@ Scenarios covered by the End to End tests.
 			</td>
 			<td>group-list-views.ts</td>
 		</tr>
+		<tr>
+			<td>20. Test Anonymous app linking (via "Add to Choreo")</td>
+			<td>
+				1) Navigate to Home page after Login <br/>
+				2) Run a Ballerina project in the background with Choreo enabled <br/>
+				3) capture and navigate to ObsURL <br/>
+				4) Add to Choreo with creation of a new app <br/>
+				5) Copy the linking command <br/>
+				6) Run the linking command in background <br/>
+				7) Check for successful linking <br/>
+				8) Clean up the created app	<br/>
+			</td>
+			<td>anonymous-app-linking.ts</td>
+		</tr>
+		<tr>
+			<td>21. Generate on-prem key</td>
+			<td>
+				1) Go to settings <br/>
+				2) Go to on-prem keys tab <br/>
+				3) Generate key <br/>
+				4) Edit the key name <br/>
+				5) Regenerate key <br/>
+				6) Delete the key <br/>
+			</td>
+			<td>generate-onprem-key-flow.ts</td>
+		</tr>
+		<tr>
+			<td>22. Clone and edit integrations</td>
+			<td>
+				1) Go to integrations <br/>
+				2) Go to "Use Prebuilt" <br/>
+				3) Select "Google calendar to twilio msg" sample <br/>
+				4) Clone and Edit <br/>
+				5) Fill calender and Twilio configs <br/>
+				6) Click Test & run button <br/>
+				7) Assert the test URL <br/>
+			</td>
+			<td>integration-run-sample.ts</td>
+		</tr>
+
 	</tbody>
 </table>
