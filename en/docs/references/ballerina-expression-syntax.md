@@ -469,26 +469,27 @@ You can use the field access(.) and optional field access (?.) to access the `js
     check person?.address?.city;
     ```
 
-### JSON/Record/Map conversion
+### User-Defined type to JSON type conversion
 
-Ballerina records and maps (including `map<json>` which represents JSON objects) are mappings that contain a collection of fields. You can access these fields using a key. You can write expressions converting from one type to another.
+Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of anydata to a json value using `toJson`.
+
 
 ###### Examples:
 
 To convert the record `movieTheRevenant` to `json`, use the following:
 
 ```ballerina
-check movieTheRevenant.cloneWithType(json);     
+movieTheRevenant.toJson();     
 ```
+
+### JSON to User-Defined conversion
+
+You can cast a json value to an application-specific, user-defined subtype of anydata by using the `cloneWithType` function.
+
+###### Examples:
 
 To convert the `theRevenantJson` variable of type `json` to the record `Movie`, use the following:
 
 ```ballerina
-check movieTheRevenant.cloneWithType(movie);
-```
-
-To convert the record `movieTheRevenant` to a map type `MapAnydata map<anydata>`, use the following:
-
-```ballerina
-check movieTheRevenant.cloneWithType(MapAnydata);
+check theRevenantJson.cloneWithType(movie);
 ```
