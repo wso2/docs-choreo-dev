@@ -78,6 +78,7 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
+          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /app-deployer.yaml
           name: config
