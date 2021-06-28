@@ -48,6 +48,7 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
         name: test-assistant
@@ -87,6 +88,7 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
       volumes:
       - name: test-assistant-models
         emptyDir: {}
