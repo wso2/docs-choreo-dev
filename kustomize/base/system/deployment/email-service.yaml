@@ -66,7 +66,6 @@ spec:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
-            readOnlyRootFilesystem: true
           ports:
             - containerPort: 8082
               name: email-port
