@@ -91,7 +91,7 @@ If you hold the pointer over a section where you see fluctuations in multiple bi
 
 ![Fluctuations in diagnostic data](../assets/img/observability/second-bin.png){.cInlineImage-full}
 
-In this example, the logs indicate a higher occurrence of `error while connecting to the hr-service`. Although there another error is also displayed, its error count is comparatively much lower (i.e., it has occured only 810 times whereas the `error while connecting to the hr-service` has occurred 1608 times).
+In this example, the logs indicate a higher occurrence of `error while connecting to the hr-service`. Although there is another error also displayed, its error count is comparatively much lower (i.e., it has occurred only 810 times whereas the `error while connecting to the hr-service` has occurred 1608 times).
 
 In the same example, if you further analyze the sample diagnostic data, you can identify the connectivity error as the most common error.  
    
