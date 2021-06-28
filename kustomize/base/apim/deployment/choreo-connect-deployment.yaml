@@ -73,6 +73,8 @@ spec:
               readOnly: true 
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
+          securityContext:
+            readOnlyRootFilesystem: true
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
