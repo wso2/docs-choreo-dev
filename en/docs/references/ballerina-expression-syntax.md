@@ -227,7 +227,7 @@ check request.getHeader(headerName)
 
 ### Check whether a header is present in the request
 
-Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader` method in the `request` object for this purpose. 
+Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader` method in the `request` object for this purpose.
 
 ###### Examples:
 
