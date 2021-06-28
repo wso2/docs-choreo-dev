@@ -378,8 +378,9 @@ To create a nested JSON object, use the following:
 ### JSON Arrays
 
 JSON array values must be of any of the json types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
-    - Using a [`json` type variable](#simple-values-in-JSON).  
-    - Using the variable type `other` and `json[]` as the `Other Type`.
+   - Using a [`json` type variable](#simple-values-in-JSON).  
+   - Using the variable type `other` and `json[]` as the `Other Type`.
+   
 You can access JSON array elements using the index.
 
 ###### Examples:
