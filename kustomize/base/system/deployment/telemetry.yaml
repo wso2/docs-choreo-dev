@@ -85,6 +85,7 @@ spec:
         securityContext:
           runAsUser: 100
           runAsGroup: 1000
+          readOnlyRootFilesystem: true
         name: telemetry
         volumeMounts:
         - name: secret-telemetry
