@@ -5,7 +5,7 @@ echo "--- Creating namespace prod-choreo-system-nginx-ingress..."
 kubectl create namespace "${SYSTEM_NAMESPACE}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
 # Add label to Nginx ingress namespace
-kubectl label namespace "${SYSTEM_NAMESPACE}-nginx-ingress" purpose="${namespace}-ingress-traffic"
+kubectl label namespace "${SYSTEM_NAMESPACE}-nginx-ingress" purpose="${SYSTEM_NAMESPACE}-ingress-traffic"
 
 # Annotate Nginx ingress namespace for linker mTLS
 kubectl annotate namespace "${SYSTEM_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
