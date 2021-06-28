@@ -48,6 +48,7 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
         name: test-assistant
