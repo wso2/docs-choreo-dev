@@ -28,6 +28,7 @@ spec:
           securityContext:
             runAsUser: 101
             runAsGroup: 101
+            readOnlyRootFilesystem: true
           name: apim-devportal
           readinessProbe:
             initialDelaySeconds: 15

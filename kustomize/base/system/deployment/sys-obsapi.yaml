@@ -101,6 +101,7 @@ spec:
           securityContext:
             runAsUser: 100
             runAsGroup: 1000
+            readOnlyRootFilesystem: true
           name: sys-obsapi
           volumeMounts:
           - name: secret-sys-obsapi
