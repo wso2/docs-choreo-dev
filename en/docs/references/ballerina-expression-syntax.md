@@ -209,7 +209,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 All the HTTP-related services created in Choreo have a variable called `request` (of type `http:Request`) which developers can use to query information related to the HTTP request. Following is a list of such use cases.
 
 ### Read a header value in the request
-A typical HTTP request contains many headers. These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field.
+A typical HTTP request contains many headers. These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field. Note that the `getHeader` method's return type is `string|error`.
 
 ###### Examples:
 
@@ -227,7 +227,7 @@ check request.getHeader(headerName)
 
 ### Check whether a header is present in the request
 
-Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader` method in the `request` object for this purpose.
+Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader` method in the `request` object for this purpose. 
 
 ###### Examples:
 
@@ -244,20 +244,19 @@ request.hasHeader(contentLength)
 ```
 ### Read the JSON Payload of the request
 
-JSON is a common content type used for HTTP communication. You can use the `request` variable's `getJsonPayload` method to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` method's return type is `json|http:
-ClientError`.
+JSON is a common content type used for HTTP communication. You can use the `request` variable's `getJsonPayload` method to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` method's return type is `json|error`.
 
 ###### Example:
 
 To read the JSON Payload of the HTTP request, use the following expression:
 
 ```ballerina
-request.getJsonPayload()
+check request.getJsonPayload()
 ```
 
 ### Read the Text Payload of the request
 
-Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable's `getTextPayload` method to read the text payload sent with the HTTP request. Note that the `getTextPayload` method's return type is `string|http:ClientError`.
+Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable's `getTextPayload` method to read the text payload sent with the HTTP request. Note that the `getTextPayload` method's return type is `string|error`.
 
 ###### Example:
 
@@ -326,7 +325,7 @@ null
 
 Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). You can declare a  JSON object in two ways:
     -  Using the variable type `json`.
-    -  Using the variable type `other` and `map<json>` as the `other type`.
+    -  Using the variable type `other` and `map<json>` as the `Other Type`.
 
 ###### Examples:
 
@@ -380,7 +379,7 @@ To create a nested JSON object, use the following:
 
 JSON array values must be of any of the json types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
     - Using a [`json` type variable](#simple-values-in-JSON).  
-    - Using the variable type `other` and `json[]` as the `other type`.
+    - Using the variable type `other` and `json[]` as the `Other Type`.
 You can access JSON array elements using the index.
 
 ###### Examples:
