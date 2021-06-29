@@ -23,7 +23,7 @@ To initialize a variable of type `int` in Choreo, you can use one of the followi
 
 ### float
 
-The `float` type is a IEEE 64-bit two's complement floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
+The `float` type is an IEEE 64-bit two's complement floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
 
 ###### Examples:
 
@@ -242,7 +242,7 @@ To check if the HTTP header `content-length` exists by passing the header name i
 ```ballerina
 request.hasHeader(contentLength)
 ```
-### Read the JSON Payload of the request
+### Read the JSON payload of the request
 
 JSON is a common content type used for HTTP communication. You can use the `request` variable's `getJsonPayload` method to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` method's return type is `json|error`.
 
@@ -254,7 +254,7 @@ To read the JSON Payload of the HTTP request, use the following expression:
 check request.getJsonPayload()
 ```
 
-### Read the Text Payload of the request
+### Read the text payload of the request
 
 Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable's `getTextPayload` method to read the text payload sent with the HTTP request. Note that the `getTextPayload` method's return type is `string|error`.
 
@@ -306,7 +306,7 @@ Ballerina has a single type named `json` that can represent any JSON value. You 
 
 ###### Examples:
 
-To initialize a variable of type `json` variable, you can use the following:
+To initialize a variable of type `json`, you can use the following:
 ```ballerina
 "Alex"
 
@@ -321,11 +321,9 @@ false
 null
 ```
 
-### JSON Objects
+### JSON objects
 
-Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). You can declare a  JSON object in two ways:
-    -  Using the variable type `json`.
-    -  Using the variable type `other` and `map<json>` as the `Other Type`.
+Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). You can use the variable type `json` to declare a  JSON object.
 
 ###### Examples:
 
@@ -375,7 +373,7 @@ To create a nested JSON object, use the following:
        };
 ```
 
-### JSON Arrays
+### JSON arrays
 
 JSON array values must be of any of the json types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
    - Using a [`json` type variable](#simple-values-in-JSON).  
@@ -470,9 +468,9 @@ You can use the field access(.) and optional field access (?.) to access the `js
     check person?.address?.city;
     ```
 
-### User-Defined type to JSON type conversion
+### User-defined type to JSON type conversion
 
-Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of anydata to a json value using `toJson`.
+Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of `anydata` to a json value using `toJson`.
 
 
 ###### Examples:
@@ -483,9 +481,9 @@ To convert the record `movieTheRevenant` to `json`, use the following:
 movieTheRevenant.toJson();     
 ```
 
-### JSON to User-Defined conversion
+### JSON to user-defined conversion
 
-You can cast a json value to an application-specific, user-defined subtype of anydata by using the `cloneWithType` function.
+You can cast a json value to an application-specific, user-defined subtype of `anydata` by using the `cloneWithType` function.
 
 ###### Examples:
 
