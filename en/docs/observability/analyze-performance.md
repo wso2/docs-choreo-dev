@@ -4,7 +4,7 @@ The performance Analyzer tool is an AI-based tool that generates intelligent est
 
 Making accurate performance estimations before releasing an application you developed is important due to the following reasons:
 
-- When you create Service-level Agreements (SLAs) for your application, an accurate forecast of performance allows you to provide valuable insights relating to the scalability of the application and the ways to optimize its performance.
+- When you create service-level agreements (SLAs) for your application, an accurate forecast of performance allows you to provide valuable insights relating to the scalability of the application and the ways to optimize its performance.
 - You can avoid missing important performance characteristics as a result of combining multiple applications including external ones.
 - You can correctly assess the cost and feasibility of running the application in a production environment.
 
@@ -37,7 +37,7 @@ You can derive insights about the performance as follows:
     - **Throughput**: 4.90 requests per second.
     - **Latency**: 20.42 seconds per request.
 
-- The **Throughput** graph shows the throughput forecasted by the Performance Analyzer for different user counts. You can hold the pointer over a specific user count to view the forecasted throughput for that user count
+- The **Throughput** graph shows the throughput forecasted by the Performance Analyzer for different user counts. You can hold the pointer over a specific user count to view the forecasted throughput for that user count.
 
     ![Throughput forecast](../assets/img/perf-analyzer/throughput-forecast.png)
     
@@ -53,8 +53,4 @@ You can derive insights about the performance as follows:
 
     ![Latency per connector forecast](../assets/img/perf-analyzer/latency-per-connector-forecast.png){.cInlineImage-full}
     
-    In the above example, the operation for creating the queue takes 9.901 seconds and the operation for sending a message takes 468.64 milliseconds per request. 
-
-
-
-
+    In the above example, the operation for creating the queue takes 9.901 seconds and the operation for sending a message takes 468.64 milliseconds per request.
