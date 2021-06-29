@@ -53,6 +53,4 @@ You can derive insights about the performance as follows:
 
     ![Latency per connector forecast](../assets/img/perf-analyzer/latency-per-connector-forecast.png){.cInlineImage-full}
     
-    In the above example, the operation for creating the queue takes 9.901 seconds and the operation for sending a message takes 468.64 milliseconds per request. 
-
-
+    In the above example, the operation for creating the queue takes 9.901 seconds and the operation for sending a message takes 468.64 milliseconds per request.
