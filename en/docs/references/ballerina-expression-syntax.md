@@ -7,7 +7,7 @@ A variable declaration statement declares a value of a specific type (`string`, 
 
 ### int
 
-The `int` type is a 64-bit two's complement integer (similar to `long` in Java). A signed integer is an integer with the  `+` or `-` character in the front. However, you can also define a positive integer or zero using only numerical characters. The `int` type supports the usual [arithmetic operators: + - / %](#arithmetic-operators). The operator precedence is the same as C. Integer overflow is a runtime error in Ballerina. 
+The `int` type is a 64-bit two's complement integer (similar to `long` in Java). A signed integer is an integer with the  `+` or `-` character in the front. However, you can also define a positive integer or zero using only numerical characters. The `int` type supports the usual [arithmetic operators:](#arithmetic-operators) `+`, `-`, `/`, `*`, %`. The operator precedence is the same as C. Integer overflow is a runtime error in Ballerina.
 
 ###### Examples:
 
@@ -23,7 +23,7 @@ To initialize a variable of type `int` in Choreo, you can use one of the followi
 
 ### float
 
-The `float` type is a IEEE 64-bit two's complement floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
+The `float` type is an IEEE 64-bit binary (radix 2) floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
 
 ###### Examples:
 
@@ -43,7 +43,7 @@ The boolean data type has one of the two possible values, `true` or `false`.
 
 ### string
 
-The `string` type represents an immutable sequence of zero or more Unicode characters. In Ballerina, there is no character type. Instead, a string of length one represents a character. Two string values are considered equal (==) if both sequences have the same characters. You can use <, <=, >, and >= operators on string values. They work by comparing code points. Unpaired surrogates are not allowed.
+The `string` type represents an immutable sequence of zero or more Unicode characters. In Ballerina, there is no character type. Instead, a string of length one represents a character. Two string values are considered equal (`==`) if both sequences have the same characters. You can use `<`, `<=`, `>`, and `>=` operators on string values. They work by comparing code points. Unpaired surrogates are not allowed.
 
 ###### Examples:
 
@@ -94,10 +94,10 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     ###### Example:
 
-    To add an integer literal (`20`) and an integer variable `number1`, you can use the following expression:
+    To add an integer literal (`20`) and an integer variable `number`, you can use the following expression:
 
     ```ballerina
-    number1 + 20;
+    number + 20;
     ```
 
 - Subtraction 
@@ -145,20 +145,20 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     To get the remainder of the division between an integer variable `n` and an integer literal `3`, you can use the following expression:
   
     ```ballerina
-    (n % 3) > 2
+    n % 3
     ```
 
 ### Value/type operators
 
 - Equality 
 
-    You can use the equality operators to check the equality of [Ballerina's](https://ballerina.io/) basic type literals. These values can come from a literal or a variable. The resulting value from these operators is always of `boolean` type.   
+    You can use the equality operators to check the equality of [Ballerina](https://ballerina.io/) basic type literals. These values can come from a literal or a variable. The resulting value from these operators is always of `boolean` type.
     
     Ballerina provides the following equality operators: 
     
     - `==`: For deep value equality of `anydata` typed values.
     - `===`: For reference equality. 
-    - `!= `and `!==`: For negations.
+    - `!=` and `!==`: For negations.
 
     ###### Examples:
 
@@ -209,7 +209,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 All the HTTP-related services created in Choreo have a variable called `request` (of type `http:Request`) which developers can use to query information related to the HTTP request. Following is a list of such use cases.
 
 ### Read a header value in the request
-A typical HTTP request contains many headers. These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field.
+A typical HTTP request contains many headers. These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field. Note that the `getHeader` method's return type is `string|error`.
 
 ###### Examples:
 
@@ -242,22 +242,21 @@ To check if the HTTP header `content-length` exists by passing the header name i
 ```ballerina
 request.hasHeader(contentLength)
 ```
-### Read the JSON Payload of the request
+### Read the JSON payload of the request
 
-JSON is a common content type used for HTTP communication. You can use the `request` variable's `getJsonPayload` method to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` method's return type is `json|http:
-ClientError`.
+JSON is a common content type used for HTTP communication. You can use the `request` variable's `getJsonPayload` method to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` method's return type is `json|error`.
 
 ###### Example:
 
 To read the JSON Payload of the HTTP request, use the following expression:
 
 ```ballerina
-request.getJsonPayload()
+check request.getJsonPayload()
 ```
 
-### Read the Text Payload of the request
+### Read the text payload of the request
 
-Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable's `getTextPayload` method to read the text payload sent with the HTTP request. Note that the `getTextPayload` method's return type is `string|http:ClientError`.
+Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable's `getTextPayload` method to read the text payload sent with the HTTP request. Note that the `getTextPayload` method's return type is `string|error`.
 
 ###### Example:
 
@@ -307,7 +306,7 @@ Ballerina has a single type named `json` that can represent any JSON value. You 
 
 ###### Examples:
 
-To initialize a variable of type `json` variable, you can use the following:
+To initialize a variable of type `json`, you can use the following:
 ```ballerina
 "Alex"
 
@@ -322,11 +321,9 @@ false
 null
 ```
 
-### JSON Objects
+### JSON objects
 
-Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). You can declare a  JSON object in two ways:
-    -  Using the variable type `json`.
-    -  Using the variable type `other` and `map<json>` as the `other type`.
+Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). You can use the variable type `json` to declare a  JSON object.
 
 ###### Examples:
 
@@ -334,7 +331,7 @@ Ballerina represents JSON objects as maps. You can define a JSON object to hold 
 To declare a JSON object, use the following:
 
 ```ballerina
-{name: "apple", color: "red", price: "20.0"}    
+{name: "apple", color: "red", price: "20.0"}
 ```
 
 To create an empty JSON object, use the following:
@@ -365,22 +362,23 @@ fruitDetailObject["name"];
 To create a nested JSON object, use the following:
 
 ```ballerina
-    map<json> family = {
-           fname: "Alex",
-           lname: "Stallone",
-           address: {
-               line: "20 Palm Grove",
-               city: "Colombo 03",
-               country: "Sri Lanka"
-           }
-       };
+map<json> family = {
+    fname: "Alex",
+    lname: "Stallone",
+    address: {
+        line: "20 Palm Grove",
+        city: "Colombo 03",
+        country: "Sri Lanka"
+    }
+};
 ```
 
-### JSON Arrays
+### JSON arrays
 
 JSON array values must be of any of the json types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
-    - Using a [`json` type variable](#simple-values-in-JSON).  
-    - Using the variable type `other` and `json[]` as the `other type`.
+   - Using a [`json` type variable](#simple-values-in-JSON).  
+   - Selecting the variable **Type** as `other` and `json[]` as the **Other Type** in the variable statement form.
+   
 You can access JSON array elements using the index.
 
 ###### Examples:
@@ -388,12 +386,12 @@ You can access JSON array elements using the index.
 To declare a JSON array, use the following:
 
 ```ballerina
-[1, false, null, "foo", {first: "Alex", last: "John"}] 
+[1, false, null, "foo", {first:  "Alex" , last: "John" }]
 ```
 To cast the `json` type variable `personRecord` to a `json[]` type variable, use the following:
 
 ```ballerina
-<json[]>personRecord;
+<json[]> personRecord;
 ```
 
 To access elements the fourth element in the JSON array `personRecordArray`, use one of the following:
@@ -408,16 +406,16 @@ personRecordArray[4];
 To add a JSON array in an object literal, use the following:
 
 ```ballerina
-    {
-        fname: "Alex",
-        lname: "Stallone",
-        family: [
+{
+    fname: "Alex",
+    lname: "Stallone",
+    family: [
             {fname: "James", lname: "Stallone"},
             {fname: "Blake", lname: "Stallone"},
             {fname: "Kyle", lname: "Stallone"},
             {fname: "Taylor", lname: "Stallone"}
         ]
-    }
+}
 ```
 
 To get the length of a JSON array, use the following:
@@ -470,26 +468,27 @@ You can use the field access(.) and optional field access (?.) to access the `js
     check person?.address?.city;
     ```
 
-### JSON/Record/Map conversion
+### User-defined type to JSON type conversion
 
-Ballerina records and maps (including `map<json>` which represents JSON objects) are mappings that contain a collection of fields. You can access these fields using a key. You can write expressions converting from one type to another.
+Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of `anydata` to a json value using `toJson`.
+
 
 ###### Examples:
 
 To convert the record `movieTheRevenant` to `json`, use the following:
 
 ```ballerina
-check movieTheRevenant.cloneWithType(json);     
+movieTheRevenant.toJson();     
 ```
+
+### JSON type to user-defined type conversion
+
+You can cast a json value to an application-specific, user-defined subtype of `anydata` by using the `cloneWithType` function.
+
+###### Examples:
 
 To convert the `theRevenantJson` variable of type `json` to the record `Movie`, use the following:
 
 ```ballerina
-check movieTheRevenant.cloneWithType(movie);
-```
-
-To convert the record `movieTheRevenant` to a map type `MapAnydata map<anydata>`, use the following:
-
-```ballerina
-check movieTheRevenant.cloneWithType(MapAnydata);
+check theRevenantJson.cloneWithType(Movie);
 ```

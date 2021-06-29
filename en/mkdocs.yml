@@ -64,6 +64,7 @@ nav:
     - Observability:
           - Observability Overview: observability/observability-overview.md
           - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+          - Performance Analysis: observability/analyze-performance.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
