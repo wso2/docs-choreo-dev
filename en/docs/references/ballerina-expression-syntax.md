@@ -490,5 +490,5 @@ You can cast a json value to an application-specific, user-defined subtype of `a
 To convert the `theRevenantJson` variable of type `json` to the record `Movie`, use the following:
 
 ```ballerina
-check theRevenantJson.cloneWithType(movie);
+check theRevenantJson.cloneWithType(Movie);
 ```
