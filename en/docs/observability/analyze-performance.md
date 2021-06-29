@@ -39,13 +39,13 @@ You can derive insights about the performance as follows:
 
 - The **Throughput** graph shows the throughput forecasted by the Performance Analyzer for different user counts. You can hold the pointer over a specific user count to view the forecasted throughput for that user count.
 
-    ![Throughput forecast](../assets/img/perf-analyzer/throughput-forecast.png)
+    ![Throughput forecast](../assets/img/perf-analyzer/throughput-forecast.png){.cInlineImage-full}
     
     In the above example, the **Throughput** graph indicates that when the user count is 50 (i.e., 50 users are using the service simultaneously), the forecasted throughput is 4.82 requests per second.
     
 - The **Latency** graph shows the latency forecasted by the Performance Analyzer for different user counts. You can hold the pointer over a specific user count to view the forecasted latency for that user count.
 
-    ![Latency forecast](../assets/img/perf-analyzer/latency-forecast.png)
+    ![Latency forecast](../assets/img/perf-analyzer/latency-forecast.png){.cInlineImage-full}
     
     In the above example, the **Latency** graph indicates that when the user count is 50, the forecasted time taken to process one request is 10.37 seconds.
     
