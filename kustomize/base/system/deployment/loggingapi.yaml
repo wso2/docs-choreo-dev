@@ -110,6 +110,7 @@ spec:
           securityContext:
             runAsUser: 100
             runAsGroup: 1000
+            readOnlyRootFilesystem: true
           name: loggingapi
           volumeMounts:
           - name: secret-loggingapi
