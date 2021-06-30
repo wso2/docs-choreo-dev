@@ -82,6 +82,11 @@ spec:
             configMapKeyRef:
               key: "APPSERVICE_GRPC_ADDRESS"
               name: "cm-linker"
+        - name: "PERISCOPE_HOSTNAME"
+          valueFrom:
+            configMapKeyRef:
+              key: "PERISCOPE_HOSTNAME"
+              name: "cm-linker"
         image: "choreocontrolplane.azurecr.io/choreoipaas/choreo-linker:latest"
         imagePullPolicy: "IfNotPresent"
         lifecycle:
