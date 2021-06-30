@@ -55,7 +55,7 @@ In this step, you will be connecting your service to your Postman account by add
    
 6. Click **Save**. 
 
-Now you can proceed to create a new workspace to link to your service, or select an existing workspace in your Postman account.
+Now you can proceed to create a new workspace to link to your service or select an existing workspace in your Postman account.
 
 ## Step 3: Link a workspace to your service
 
@@ -110,7 +110,7 @@ To create a request, follow this procedure:
 
 3. Enter a request name (e.g., `test1`)
 
-4. Select the required HTTP method. You can also add the query parameters, the header and the request body as required.
+4. Select the required HTTP method. You can also add the query parameters, the header, and the request body as required.
 
     In this example, you can select **GET** as the HTTP method and add `country` as a query parameter.
     
