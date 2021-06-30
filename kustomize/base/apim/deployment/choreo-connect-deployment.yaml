@@ -150,6 +150,8 @@ spec:
               subPath: ROUTER_TRUSTSTORE
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
+          securityContext:
+            readOnlyRootFilesystem: true
           env:
             - name: ROUTER_ADMIN_HOST
               value: "0.0.0.0"
