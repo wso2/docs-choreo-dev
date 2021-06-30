@@ -74,7 +74,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always  
           securityContext:
-            readOnlyRootFilesystem: true                          
+            readOnlyRootFilesystem: true
           env: 
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
