@@ -86,14 +86,23 @@ Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
     cy.get('[data-testid="code-view-btn"]').click({force: true});
 }),
 
-Cypress.Commands.add('configureResource', (relativePath?: string, method?: string) => {
+Cypress.Commands.add('configureResource', (relativePath?: string, method?: string, returnType?: string) => {
     if (!method) {
         method = "GET";
     }
     cy.log("Started resource configuration");
     cy.waitTillWorkSpace();
-    cy.contains('button', method).click();
+    cy.get('[data-testid="undefinedGET"]').invoke('text').then((availableText) => {
+        if (!(availableText == method)) {
+            cy.get('[data-testid="undefinedGET"]').click();
+            cy.get('.MuiListItem-button').contains(method).click();
+        }
+    })
     cy.get('[data-testid="api-path"]').type(relativePath);
+    cy.get('[data-testid="api-return-type"]').type(returnType);
+    cy.get('[data-testid="advanced-path-config"]').click();
+    cy.get('[data-testid="select-caller-btn"]').click();
+    cy.get('[data-testid="select-request-btn"]').click();
     cy.get('[data-testid="save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.log("Configured resource successfully");
