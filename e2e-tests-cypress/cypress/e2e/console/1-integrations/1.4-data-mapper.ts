@@ -27,7 +27,7 @@ describe("Data Mapper", () => {
         cy.userLogout();
         });
 
-    it.skip("Create DataMapping", () => {
+    it("Create DataMapping", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
@@ -43,22 +43,25 @@ describe("Data Mapper", () => {
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty('int', 'age', '30');
 
+        cy.get('[data-testid="product-tour-code-view"]').click();
+
         cy.selectManualTriggerOptions("Statements", "addDataMapping");
  
-        cy.get ('[data-testid="datamapper-variable-name"]').click().clear().type('emp');
+        cy.get('[data-testid="datamapper-variable-name"]').find('input').first()
+            .click({ force: true }).clear().type('emp');
         cy.get('[data-testid = "Select Typestring"]').click();
         cy.contains('json').click({force: true});
         cy.get ('[data-testid="datamapper-output-config-save-btn"]'). click ();
 
-        cy.get('[data-testid="datamapper-add-json-attribute-field-btn"]').click();
-        cy.get ('[data-testid = "datamapper-json-draft-field-form-txt"]').click().type('empName');
-        cy.get('[data-testid = "datamapper-json-draft-field-check-btn"]').click();
-        cy.contains('empName: string').should('be.visible');
+        cy.get('[data-testid="datamapper-add-json-attribute-field-btn"]').click({ force: true });
+        cy.get ('[data-testid = "datamapper-json-draft-field-form-txt"]').click({ force: true }).type('empName');
+        cy.get('[data-testid = "datamapper-json-draft-field-check-btn"]').click({ force: true });
+        cy.contains('empName: json').should('be.visible');
 
-        cy.get('[data-testid="datamapper-add-json-attribute-field-btn"]').click();
-        cy.get('[data-testid = "datamapper-json-draft-field-form-txt"]').click().type('empAge');
-        cy.get('[data-testid = "datamapper-json-draft-field-check-btn"]').click();
-        cy.contains('empAge: string').should('be.visible');
+        cy.get('[data-testid="datamapper-add-json-attribute-field-btn"]').click({ force: true });
+        cy.get('[data-testid = "datamapper-json-draft-field-form-txt"]').click({ force: true }).type('empAge');
+        cy.get('[data-testid = "datamapper-json-draft-field-check-btn"]').click({ force: true });
+        cy.contains('empAge: json').should('be.visible');
 
         cy.get('[data-testid="datamapper-json-input-configure-btn"]').click();
         cy.get('[data-testid = "datamapper-input-var-select"]').click();
@@ -79,7 +82,7 @@ describe("Data Mapper", () => {
         cy.contains('age: int').should('be.visible');
 
         cy.get('[data-testid="datamapper-expression-box"]').eq(0).click({force: true});
-        cy.get('.view-lines').eq(0).click().type('{backspace}{backspace}fName+lName');
+        cy.get('.exp-editor').click().type('{backspace}{backspace}fName+lName'); 
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -89,7 +92,7 @@ describe("Data Mapper", () => {
         // cy.get('[data-testid="datamapper-target-mapping-circle2"]').click();
 
         cy.get('[data-testid="datamapper-expression-box"]').eq(1).click({force: true});
-        cy.get('.view-lines').eq(0).click().type('{backspace}{backspace}"age"');
+        cy.get('.exp-editor').click().type('{backspace}{backspace}"age"');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -98,14 +101,26 @@ describe("Data Mapper", () => {
 
         const loadRunTxt = "Running...";
         cy.testRunApp();
+        cy.url().should("include", "app/" + appName + "/test");
         cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("exist");
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);      
+        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);
+        cy.get('[data-testid="product-tour-log-panel"]').contains('Application exited');      
         cy.log("DataMapper created successfully!");
 
+        cy.log('Switch to Develop View');
+        cy.get('[data-testid="develop"]').within(()=>{
+            cy.get('[id="develop"]').click({force:true});
+        });
+        cy.url().should("include", "app/" + appName + "/develop");
+        cy.waitTillWorkSpace();
+
         
-        cy.get('g:nth-child(9) > .statement:nth-child(1) > g:nth-child(1) > g:nth-child(1) .main-process-wrapper:nth-child(1) > .process-options-wrapper:nth-child(4) > .edit-icon-wrapper:nth-child(3) #Edit-Button #EditGroup > rect:nth-child(2)').click({force:true});
+        cy.log('Editing DataMapper');
+        cy.get('[data-testid="data-processor-block"]').eq(3).trigger('mouseover').within(() => {
+           cy.get('[data-testid="editBtn"]').click({force:true});
+        });
         cy.get('[data-testid="datamapper-expression-box"]').eq(1).click({force: true});
-        cy.get('.view-lines').eq(0).click().type('{backspace}{backspace}{backspace}"0"');
+        cy.get('.exp-editor').click().type('{backspace}{backspace}{backspace}{backspace}{backspace}"0"');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -116,6 +131,7 @@ describe("Data Mapper", () => {
         cy.log("DataMapper edited successfully!");
 
 
+        cy.log('Deleting DataMapper');
         cy.get('g:nth-child(9) #DeleteIcon').click({force:true});
         cy.get('[data-testid="delete-logic-block-btn"] > .MuiButton-label').click({force:true});
         cy.get('[data-testid=product-tour-code-view]').click();
