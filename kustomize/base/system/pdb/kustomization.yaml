@@ -19,3 +19,4 @@ resources:
   - programanalyzer.yaml
   - datamapper.yaml
   - test-assistant.yaml
+  - analytics-subscription.yaml
