@@ -1,4 +1,4 @@
-{{- /*
+---
 # -------------------------------------------------------------------------------------
 #
 # Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
@@ -9,7 +9,6 @@
 # You may not alter or remove any copyright or other notice from copies of this content.
 #
 # --------------------------------------------------------------------------------------
-*/ -}}
 
 apiVersion: batch/v1
 kind: Job
