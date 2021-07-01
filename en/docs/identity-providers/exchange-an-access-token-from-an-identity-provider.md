@@ -1,6 +1,6 @@
 # Exchange an Access Token from an Identity Provider (IdP)
 
-After you have [Register an External Identity Provider (IdP)]({{base_path}}/identity-providers/register-an-external-identity-provider) you can exchange access tokens from that IdP with Choreo access tokens and use those to invoke APIs. 
+After you have [Register an External Identity Provider (IdP)]({{base_path}}/identity-providers/register-an-external-identity-provider) you can exchange access tokens from that IdP to Choreo access tokens and use those to invoke APIs. 
 
 Follow this procedure to exchange an access token from an external IdP in your Choreo organization.
 
@@ -15,25 +15,29 @@ Follow this procedure to exchange an access token from an external IdP in your C
 5. If the Consumer Key and the Consumer Secret have not been generated before, the following page will be displayed. Click on **Generate Keys** to generate the Consumer Key and the Consumer Secret.
 
     ![OAuth2 Tokens](){.cInlineImage-full}
-    
-    !!! note
-        The tab named **Identity Providers** will look like below if you navigate to it directly before generating the Consumer Key and the Consumer Secret. Hence, in order to view the existing IdPs available in your Choreo organization (in the next step - Step 6) you need to generate the Consumer Key and the Consumer Secret as mentioned earlier.
 
-        ![Identity Providers Tab Before Generating Keys](){.cInlineImage-full}
+    !!! tip
+        The **User Keys** tab will be disabled if you try to access it before generating the keys or if you try to generate the keys without enabling the **Token Exchange** grant type. Hence, you need to make sure the **Token Exchange** grant type is enabled when generating the keys. You can click on **Advanced Configurations** to check whether the **Token Exchange** grant type is enabled (By default this value will be enabled). 
+        
+        ![OAuth2 Tokens Expaned Advanced Configurations](){.cInlineImage-full}
 
-6. Click on the **Identity Providers** tab of the application.
+6. Click on the **User Keys**.
 
-    ![Identity Providers Tab](){.cInlineImage-full}
+    ![User Keys Tab](){.cInlineImage-full}
 
-7. Select an IdP from the dropdown under the field **Identity Provider**. Now the following screen will be displyed which includes two (2) steps.
+7. Select an IdP from the dropdown under the field **Identity Provider**.
 
-    ![Identity Providers Tab Dropdown](){.cInlineImage-full}
+    ![User Keys Tab Dropdown](){.cInlineImage-full}
 
-8. As mentioned in the **Step 1**, first you need to obtain an access token from the external IdP.
-     Refer to [Obtain an Access Token from Your External Identity Provider]() to get an access token from your choice of IdP. 
+8. Now the following screen will be displayed which includes two (2) steps.
+
+    ![User Keys Full Page](){.cInlineImage-full}
+
+9. As mentioned in **Step 1**, first you need to obtain an access token from the external IdP that you selected.
+     Refer to the **documentation** pointed from the same step to get an access token from your choice of IdP.
      
-9. To obtain the Choreo access token as mentioned in the **Step 2** you need to paste the above obtained token from your IdP in the text box in front of **External Identity Provider Token** field. 
+10. To obtain a Choreo access token as mentioned in the **Step 2**, you need to paste the above obtained token from your IdP in the text box in front of the field **<Your_IdP_name> Token** (Example: Okta Token field). 
 
-10. You can click on the button **CURL TO GENERATE CHOREO ACCESS TOKEN** to get the cURL command to obtain the Choreo access token or you can click on the button named **GENERATE CHOREO ACCESS TOKEN** to get the Choreo access token from the UI.
+11. You can click on the button **Curl** to get the cURL command to obtain the Choreo access token or you can click on the button named **Generate Test Token** to get the Choreo access token from the UI.
 
-11. You can use this generated Choreo access token to invoke APIs as you wish.
+12. You can use this generated Choreo access token to invoke APIs as you wish.
