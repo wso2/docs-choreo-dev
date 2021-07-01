@@ -85,7 +85,7 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/models/"
         - name: test-assistant-data
           mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
-        - name: cm-test-assistant-config
+        - name: test-assistant-config
           mountPath: "/home/python-ai/choreo-ai-test-assistant/config/"
         securityContext:
           allowPrivilegeEscalation: false
