@@ -48,7 +48,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-941d42f7f8b908f6fc0940c5ad410c1f7573d822
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
-  newTag: v4.0.0-r17062021.1
+  newTag: v4.0.0-r01072021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-881fe897022cbf4121d6b96425c3d4106597d254
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
