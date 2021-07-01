@@ -68,7 +68,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/email-service
   newTag: master-5b5157d3a6328ae54563334fb2c2b77381b93477
 - name: choreocontrolplane.azurecr.io/choreoipaas/lang-server
-  newTag: master-fa9d98a5cff8cb8600e8729295f2ba5ce524c2ff
+  newTag: master-e4647aa12634851b5cdfbb6abc1273c18ed52784
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-api
   newTag: master-03dd3ea41c4a18cdc81dd85365792abaeaed630b
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-data-generator
