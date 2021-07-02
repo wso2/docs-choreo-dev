@@ -39,7 +39,7 @@ describe('Observability tests', () => {
     cy.restoreLocalStorage();
     cy.viewport(1536, 683);
     cy.get('body').then($body => {
-      let appExists = ($body.find('.MuiTableRow-root.MuiTableRow-hover').length > 0) ? true : false;
+      let appExists = ($body.find('.MuiTableRow-root.MuiTableRow-hover').length > 0);
       if (appExists) {
         cy.get('[data-testid="connect-remote-app-btn"]').should('be.visible');
         cy.get('[data-testid="connect-remote-app-btn"]').click();
@@ -81,7 +81,6 @@ describe('Observability tests', () => {
     cy.contains('button', 'Done').click();
     cy.get('body').contains(appName);
   })
-
 
   it('test create new project', {retries: NO_OF_RETRIES}, () => {
 
