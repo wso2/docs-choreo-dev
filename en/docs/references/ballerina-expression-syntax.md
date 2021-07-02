@@ -468,7 +468,7 @@ You can use the field access(.) and optional field access (?.) to access the `js
     check person?.address?.city;
     ```
 
-### User-defined type to JSON type conversions
+### User-defined type to JSON type conversion
 
 Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of `anydata` to a json value using `toJson`.
 
@@ -481,7 +481,7 @@ To convert the record `movieTheRevenant` to `json`, use the following:
 movieTheRevenant.toJson();     
 ```
 
-### JSON type to user-defined type conversions
+### JSON type to user-defined type conversion
 
 You can cast a json value to an application-specific, user-defined subtype of `anydata` by using the `cloneWithType` function.
 
