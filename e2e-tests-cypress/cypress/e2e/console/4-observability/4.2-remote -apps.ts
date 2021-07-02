@@ -21,7 +21,6 @@ describe('Observability tests', () => {
   let appName: string
   const pathName = "remote-apps"
 
-
   before(() => {
     cy.consoleUserLogin()
     cy.getCookies().then((cookies) => {
