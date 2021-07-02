@@ -18,3 +18,4 @@ resources:
   - perfanalyzer-estimator.yaml
   - datamapper.yaml
   - test-assistant.yaml
+  - analytics-subscription.yaml
