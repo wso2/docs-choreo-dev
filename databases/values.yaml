@@ -42,8 +42,7 @@ database:
   # Database client side configurations
   client:
     image:
-      repository: choreocontrolplane.azurecr.io/imega/mysql-client
-      digest: "sha256:1c83aa76adafb2cad41794c044af9610bd2506dd2b010addc28f0c1c998e0375"
+      repository: choreocontrolplane.azurecr.io/imega/mysql-client:latest
       pullPolicy: "Always"
     resources:
       requests:

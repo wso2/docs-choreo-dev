@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: database-client
-          image: {{ .Values.database.client.image.repository }}@{{ .Values.database.client.image.digest }}
+          image: {{.Values.database.client.image.repository}}
           imagePullPolicy: {{ .Values.database.client.image.pullPolicy }}
           env:
             - name: AZURE_DB_SERVICE_HOST
