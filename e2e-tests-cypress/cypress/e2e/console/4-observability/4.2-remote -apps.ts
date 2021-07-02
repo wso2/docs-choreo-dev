@@ -78,7 +78,7 @@ describe('Observability tests', () => {
 
     cy.contains('button', 'Done').should('be.visible');
     cy.contains('button', 'Done').click();
-    cy.get('body').contains(appName);
+    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', appName);
   })
 
   it('test create new project', {retries: NO_OF_RETRIES}, () => {
@@ -103,6 +103,6 @@ describe('Observability tests', () => {
 
     cy.contains('button', 'Done').should('be.visible');
     cy.contains('button', 'Done').click();
-    cy.get('body').contains(appName);
+    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', appName);
   })
 });
