@@ -30,27 +30,27 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo-program-db
+              name: cm-choreo-app-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-program-db
+              name: cm-choreo-app-db
         - name: CHOREO_DB_PASSWORD
           valueFrom:
-           secretKeyRef:
-             name: secret-program-db
-             key: CHOREO_DB_PASSWORD
+            secretKeyRef:
+              name: secret-app-db
+              key: CHOREO_DB_PASSWORD
         - name: CHOREO_DB_PORT
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo-program-db
+              name: cm-choreo-app-db
         - name: CHOREO_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo-program-db
+              name: cm-choreo-app-db
         image: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt:latest
         securityContext:
           runAsUser: 100
@@ -86,17 +86,17 @@ spec:
             cpu: 300m
             memory: 512Mi
         volumeMounts:
-        - mountPath: /mnt/csi/secret-program-db
-          name: secret-program-db
+        - mountPath: /mnt/csi/secret-app-db
+          name: secret-app-db
           readOnly: true
       restartPolicy: Always
       volumes:
-      - name: secret-program-db
+      - name: secret-app-db
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: secret-program-db
+            secretProviderClass: secret-app-db
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
