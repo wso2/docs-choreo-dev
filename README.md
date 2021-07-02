@@ -1,114 +1,18 @@
 # choreo-control-plane
-The Choreo control plane repo contains all Kubernetes scripts which are related to cluster setup & configuration.
-The `setup` directory contains scripts required to initial cluster setup, sealed secret generation and sealed ingress
-certificate generation. The `kustomize` directory contains the `base` Kubernetes scripts, in addition to the
-environment specific scripts for the `prod`, `stage`, `dev` & `local` environments.
 
-This is the central gitops repo for the Kubernetes artifacts.
+## Introduction
+This repository contains base configs of the choreo control plane.
 
-## Setup
-### First time setup
-1. Copy secret properties file to the relevant directory
-   For example, copy the files to `setup/secret/loc` if you want to setup local environment.
-   The following files need to be there. Contact @dhananjaya@wso2.com to obtain the values.
+## Building an environment
+In order to build an environment, the following prerequisites must be satisfied.
 
-#### app-db.properties
-```text
-CHOREO_DB_PASSWORD=xxx
-```
+1. [choreo-control-plane](https://github.com/wso2-enterprise/choreo-control-plane) and [choreo-cp-env-overlay](https://github.com/wso2-enterprise/choreo-cp-env-overlay) repositories are cloned in the same directory level.
+2. [main-ci](https://github.com/wso2-enterprise/choreo-control-plane/tree/main-ci) branch is checked out in choreo-control-plane repository.
+    - If you want to use the [main](https://github.com/wso2-enterprise/choreo-control-plane/tree/main) branch instead, please remove the `-ci` from the https://github.com/wso2-enterprise/choreo-cp-env-overlay/blob/dev/kustomize/dev/kustomization.yaml#L5 or respective environment.
+3. Related environment branch (dev, stage, or prod) is checked out in [choreo-cp-env-overlay](https://github.com/wso2-enterprise/choreo-cp-env-overlay).
 
-#### appservice.properties
-```text
-PLATFORMER_RUDDER_PASSWORD=xxx
-IDP_CLIENT_SECRET=xxx
-GITHUB_TOKEN=xxx
-REDIS_PASSWORD=xxx
-```
+Once you have met all the prerequisites, you can build the kustomize/env branch in choreo-cp-env-overlay folder.
+Ex: kustomize build kustomize/dev
 
-#### datamapper.properties
-```text
-ACCESS_KEY=xxx
-```
-
-#### idp.properties
-```text
-IDP_CLIENT_SECRET=xxx
-```
-
-#### loggingapi.properties
-```text
-AZURE_ACTIVEDIRECTORY_CLIENT_SECRET=xxx
-```
-
-#### obsapi.properties
-```text
-AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET=xxx
-```
-
-#### perfanalyzer.properties
-```text
-AZURE_TIMESERIESINSIGHTS_CLIENT_SECRET=xxx
-CHOREO_PERF_DB_PASSWORD=xxx
-```
-
-#### program-db.properties
-```text
-CHOREO_DB_PASSWORD=xxx
-```
-
-#### telemetry.properties
-```text
-EVENTHUB_CONNECTION_STRING=xxx
-```
-
-2. Run `setup.sh` by providing the secret directory as the argument.
-
-    ex: `./setup.sh -d=secret/loc -e=loc -i=true` for local setup with secret properties files in the directory as given
-    in step 1, and with the -i=true option to create ingresses.
-
-3. *(Local setup only)* run `dockersecretgen.sh` to generate docker image pull sealed secrets.
-
-     ex: `./dockersecretgen.sh -e=<your-name>@wso2ipaasoutlook.onmicrosoft.com -u=xxx -p=xxxxx`
-     Contact dhananjaya@wso2.com to get the details.
-
-4. *(Local setup only)* Add the following entries to your /etc/hosts file
-
-   ex:
-    ```text
-    192.168.64.6    datamapper.dev.choreo.local programanalyzer.dev.choreo.local periscope.dev.choreo.local dev.choreo.local
-    ```
-
-   Use the proper node IP address.
-
-5. Run `kustomize build <env> | kubectl apply -f -` to generate and apply K8s artifacts related to a particular environment.
-
-   ex: `kustomize build loc | kubectl apply -f -`
-
-6. Test whether everything is working fine by running the hello-service sample in
-    [https://github.com/wso2-enterprise/choreo.git](https://github.com/wso2-enterprise/choreo.git)
-
-    For local setup, add the following to the ballerina.conf of the sample:
-    ```text
-    [b7a.observability]
-    enabled=true
-    provider="choreo"
-
-    [b7a.observability.tracing.choreo.reporter]
-    hostname="periscope.dev.choreo.local"
-    port=443
-    ```
-
-That is it! All set!
-
-## Change secrets
-If you wish to change a secret, edit the relevant secret properties file and run `secretgen.sh` for the relevant environment
-   ex: `./secretgen.sh -d=secret/loc -n=loc-choreo-system -o=../kustomize/loc/secret`
-
-Next, run `kustomize build <env> | kubectl apply -f -`
-
-## Change config
-If you wish to change config in the relevant kustomize.yaml file which contains the configMapGenerator section,
-and run `kustomize build <env> | kubectl apply -f -`
-
-## TODO
-
+## Sending changes
+Please refer [this](process.md)
