@@ -73,7 +73,7 @@ spec:
              path: /subsmgt/healthz
         ports:
         - containerPort: 9090
-          name: analytics-subs-port
+          name: anl-sub-port
           protocol: TCP
         - containerPort: 9093      # To be used for public health check (external)
           name: healthz
