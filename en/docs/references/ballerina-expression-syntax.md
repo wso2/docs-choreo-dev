@@ -481,7 +481,7 @@ To convert the record `movieTheRevenant` to `json`, use the following:
 movieTheRevenant.toJson();     
 ```
 
-### JSON type to user-defined type conversion
+### JSON type to user-defined type conversions
 
 You can cast a json value to an application-specific, user-defined subtype of `anydata` by using the `cloneWithType` function.
 
