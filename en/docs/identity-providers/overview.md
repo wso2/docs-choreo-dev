@@ -1,6 +1,6 @@
 # External Identity Provider (IdP) Support for Choreo API Management
 
-Choreo provides an admin functionality for admins to configure different authorization servers as Identity Providers (IdPs) from the Choreo Console. This brings the capability of supporting multiple IdPs for a given API. Hence, you can generate keys by selecting an IdP using the Token Exchange Grant Type.
+Choreo provides admin permissions to privileged users to configure different authorization servers as Identity Providers (IdPs) from the Choreo Console. This brings the capability of supporting multiple IdPs for a given API. Hence, users in these external userbases can get authenticated with Choreo by exchanging the external IdP token .
 
 ## Token exchange
 
