@@ -468,7 +468,7 @@ You can use the field access(.) and optional field access (?.) to access the `js
     check person?.address?.city;
     ```
 
-### User-defined type to JSON type conversion
+### User-defined type to JSON type conversions
 
 Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of `anydata` to a json value using `toJson`.
 
