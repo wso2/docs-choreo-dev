@@ -72,7 +72,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-api
   newTag: master-03dd3ea41c4a18cdc81dd85365792abaeaed630b
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-data-generator
-  newTag: master-e55e0408c852a84afa40401be3e6ba2b933a36ee
+  newTag: master-c778f3bd3991cec38084d5fa6f3faf6c1d8a2775
 - name: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-estimator
   newTag: master-2f8cbcab2163709312fd70e2db59b57d3735270f
 - name: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater
