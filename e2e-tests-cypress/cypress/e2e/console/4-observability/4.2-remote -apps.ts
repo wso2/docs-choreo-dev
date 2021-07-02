@@ -48,7 +48,6 @@ describe('Observability tests', () => {
         cy.get('[data-testid="connect-first-remote-app-btn"]').click();
       }
     })
-
   });
 
   afterEach(() => {
@@ -60,7 +59,7 @@ describe('Observability tests', () => {
     cy.userLogout();
   })
 
-  it('test ling existing project', {retries: NO_OF_RETRIES}, () => {
+  it('test connect existing project', {retries: NO_OF_RETRIES}, () => {
 
     cy.get('[data-testid="connect-remote-apps-title"]').should('have.text', 'Connect remote app');
     cy.get('[data-testid="connect-remote-apps-existing-container"]').should('be.visible');
