@@ -61,10 +61,7 @@ describe("API creation from an existing endpoint", () => {
         cy.get('#operation-target').type(OPERATION_TARGET);
         cy.get('[data-testid=add-btn]').click();
         cy.get('button').contains('Save').click();
-        cy.get('.MuiDialogContent-root').within(() => {
-            cy.get('button', { timeout: STANDARD_TIME_OUT }).contains('Save').click();
-        });
-        cy.get('.MuiDialogContent-root', { timeout: STANDARD_TIME_OUT }).should('not.exist');
+        cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
         cy.updateSubscriptionPlans();
         cy.deployInitialRevision();
         cy.testApiInPublisherTestConsole();
