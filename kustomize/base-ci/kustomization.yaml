@@ -62,9 +62,9 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-init
   newTag: master-a33986e083a69ed3503a45fc9e5ff0ee6ac28801
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
-  newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
+  newTag: master-045ba94568e2a090997c5732eeecc6466a2be548
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
-  newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
+  newTag: master-045ba94568e2a090997c5732eeecc6466a2be548
 - name: choreocontrolplane.azurecr.io/choreoipaas/email-service
   newTag: master-5b5157d3a6328ae54563334fb2c2b77381b93477
 - name: choreocontrolplane.azurecr.io/choreoipaas/lang-server
