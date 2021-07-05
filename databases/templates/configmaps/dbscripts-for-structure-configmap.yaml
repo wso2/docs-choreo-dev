@@ -17,13 +17,13 @@ metadata:
   name: dbscripts-for-structure-configmap
   namespace: {{.Release.Namespace}}
 data:
-  {{$file := .Files}}
-  {{range $path, $byte := .Files.Glob "scripts/*"}}
-  {{$list := $path | splitList "/"}}
-  {{$length := len $list}}
-  {{$last := add $length -1}}
-  {{index $list $last}}: |-
-    {{range $file.Lines $path}}
-    {{tpl ( . ) $}}
-    {{end}}
-  {{end}}
+  {{- $file := .Files }}
+  {{- range $path, $byte := .Files.Glob "scripts/*" }}
+  {{- $list := $path | splitList "/"}}
+  {{- $length := len $list }}
+  {{- $last := add $length -1 }}
+  {{ index $list $last }}: |-
+    {{- range $file.Lines $path }}
+    {{ tpl ( . ) $ }}
+    {{- end }}
+  {{- end }}
