@@ -12,9 +12,9 @@ configMapGenerator:
 
 images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector
-  newTag: master-cda0ef8cd29bba9144f68ba86a4099378c5e4660
+  newTag: master-a04d068eeb8ff4ff5b73d96caad8411a4e6ff8ef
 - name: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector-init
-  newTag: master-cda0ef8cd29bba9144f68ba86a4099378c5e4660
+  newTag: master-a04d068eeb8ff4ff5b73d96caad8411a4e6ff8ef
 - name: choreocontrolplane.azurecr.io/choreoipaas/api-server
   newTag: master-1e5d63f001339a1ab3d04ebc3e9b425efda709f8
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-deployer
