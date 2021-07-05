@@ -127,7 +127,7 @@ helm install linkerd-viz linkerd/linkerd-viz
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
-helm upgrade --install reflector emberstack/reflector --namespace kube-system --version 5.4.17
+helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
 echo "--- Creating AKS view cluster role binding to AAD"
 kubectl apply -f conf/view-cluster-role-binding.yaml
