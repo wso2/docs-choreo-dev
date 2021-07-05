@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
+import {APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT} from "../../../support/common/constants";
 import { generateApiName } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
@@ -27,13 +27,14 @@ describe("API creation from an existing endpoint", () => {
 
     it("Create API from existing endpoint and deploy and publish", () => {
         cy.log("Visiting API listing");
-        cy.navigateFromHomePage('apis');
+        cy.navigateFromHomePage(APIS_TEXT);
 
         cy.get('[data-testid=create-api-btn]', { timeout: MEDIUM_TIME_OUT }).click();
 
         cy.log('Opening API creation dialog');
         cy.contains('Create API').should('exist');
-        cy.get('button').contains('Next').first().click({ force: true });
+        cy.get('[data-testid="proxy-btn"]').click();
+        cy.get('[data-testid="upload-rest-definition"]').click();
 
         cy.log('Filling API creation form data');
         cy.get('[data-testid=api-name]').type(API_NAME);
