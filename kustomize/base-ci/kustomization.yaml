@@ -12,9 +12,9 @@ configMapGenerator:
 
 images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector
-  newTag: master-cda0ef8cd29bba9144f68ba86a4099378c5e4660
+  newTag: master-a04d068eeb8ff4ff5b73d96caad8411a4e6ff8ef
 - name: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector-init
-  newTag: master-cda0ef8cd29bba9144f68ba86a4099378c5e4660
+  newTag: master-a04d068eeb8ff4ff5b73d96caad8411a4e6ff8ef
 - name: choreocontrolplane.azurecr.io/choreoipaas/api-server
   newTag: master-1e5d63f001339a1ab3d04ebc3e9b425efda709f8
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-deployer
@@ -52,7 +52,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-881fe897022cbf4121d6b96425c3d4106597d254
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
-  newTag: master-af08f6c227d170fd8d1de9564340387cccc105eb
+  newTag: master-bb325c9489e38edf35ff51b026eec930b75a911e
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-fed9e0bb86388249327591cd5aa0b717f5677e9c
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper
@@ -62,11 +62,11 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-init
   newTag: master-a33986e083a69ed3503a45fc9e5ff0ee6ac28801
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
-  newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
+  newTag: master-045ba94568e2a090997c5732eeecc6466a2be548
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
-  newTag: master-a3f809ad314fd7d0695763ee65dbb08d3079d41e
+  newTag: master-045ba94568e2a090997c5732eeecc6466a2be548
 - name: choreocontrolplane.azurecr.io/choreoipaas/email-service
-  newTag: master-5b5157d3a6328ae54563334fb2c2b77381b93477
+  newTag: master-b4f448ac5eb0e1f5a2a80e625189c49b0449136f
 - name: choreocontrolplane.azurecr.io/choreoipaas/lang-server
   newTag: master-5500b6c800fec1dfdb4b40de8564fdb739769aa5
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-api
@@ -80,8 +80,8 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/programanalyzer
   newTag: master-7487d699b797561dd11a1e42bbfc27cbfa5a7a66
 - name: choreocontrolplane.azurecr.io/choreoipaas/test-assistant
-  newTag: main-485d2b74c931eb8ad800d5a2769ae07f430ffc56
+  newTag: main-b20ece7451438288528ffeca933c51f4f55eb37f
 - name: choreocontrolplane.azurecr.io/choreoipaas/test-assistant-init
-  newTag: main-485d2b74c931eb8ad800d5a2769ae07f430ffc56
+  newTag: main-b20ece7451438288528ffeca933c51f4f55eb37f
 - name: choreocontrolplane.azurecr.io/choreoipaas/workspace-manager
   newTag: master-1e5d63f001339a1ab3d04ebc3e9b425efda709f8
