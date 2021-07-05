@@ -135,7 +135,9 @@ Cypress.Commands.add('addApiDocument', () => {
     cy.get('[data-testid=document-url]').type('https://www.example.com/how-to');
     cy.get('[data-testid=create-document]').click();
     cy.get('#circular-loader', { timeout: STANDARD_TIME_OUT }).should('not.exist');
-    cy.get('[data-testid=document-wrapper]', { timeout: STANDARD_TIME_OUT }).should('exist');
+    cy.get('[data-testid=document-name]').should('have.value', '');
+    cy.get('[data-testid=document-summary]').should('have.value', '');
+    cy.get('[data-testid=document-url').should('have.value', '');
 });
 
 Cypress.Commands.add('deployInitialRevision', () => {
