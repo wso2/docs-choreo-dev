@@ -39,7 +39,7 @@ describe('Data Mapper service call Test', () => {
         cy.log('app name: ', appName);
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
-        cy.configureResource("hello", "POST", "error ?");
+        cy.configureResource("hello", "POST", "string ?");
     });
 
     afterEach(() => {
