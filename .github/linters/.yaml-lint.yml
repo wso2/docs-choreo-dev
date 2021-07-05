@@ -6,6 +6,11 @@
 # You can disable line with:              #
 # # yamllint disable-line                 #
 ###########################################
+
+ignore: |
+  databases/templates/configmaps/dbscripts-for-structure-configmap.yaml
+  databases/templates/configmaps/dbscripts-for-structure-idp-configmap.yaml
+
 rules:
   braces:
     level: warning
@@ -57,7 +62,3 @@ rules:
   new-lines:
     type: unix
   trailing-spaces: disable
-
-ignore: |
-  databases/templates/configmaps/dbscripts-for-structure-configmap.yaml
-  databases/templates/configmaps/dbscripts-for-structure-idp-configmap.yaml
