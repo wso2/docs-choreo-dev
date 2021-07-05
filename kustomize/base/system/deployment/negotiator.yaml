@@ -63,6 +63,7 @@ spec:
               name: cm-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
           readOnlyRootFilesystem: true
