@@ -36,7 +36,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console
   newTag: master-2fa21f38f8b71b2ef9005045c586ee600e046f8b
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-linker
-  newTag: master-704d696bf1e5326f60dc26a0b038cf9e4a44d4fc
+  newTag: master-a72de324da49548c817803e5e96bdfcb97aaf911
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging
   newTag: master-ee25f808b21671a288e53086ee51f0926c90b87a
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter
