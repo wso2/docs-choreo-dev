@@ -79,6 +79,10 @@ spec:
              path: /health/readiness
         livenessProbe:
             initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
              port: health
              path: /health/liveness
