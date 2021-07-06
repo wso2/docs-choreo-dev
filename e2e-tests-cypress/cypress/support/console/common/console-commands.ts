@@ -22,6 +22,8 @@ import {
     SETTINGS_PATH,
     APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE,
     GMAIL_CONNECTION_NAME,
+    APIM_RESOURCE_PATH,
+    PATH_SEPARATOR,
 } from '../../common/constants';
 
 let LOCAL_STORAGE_MEMORY = {};
@@ -445,6 +447,51 @@ Cypress.Commands.add('cleanupApp', (name: string) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: "+ name);
+    });
+});
+
+Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
+    let token;
+    const organizationId = Cypress.env('orgs')[0].uuid;
+    const query = `?organizationId=${organizationId}&query=applicationId:${id}`
+    cy.getCookie('token').should('exist').then((c) => {
+        token = c;
+        cy.log("GET API for applicationId: " + id);
+        cy.request({
+            method: "GET",
+            url: APP_SVC_URL + APIM_RESOURCE_PATH +  query,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value
+            },
+            timeout: 60000
+        }).then((res) => {
+            expect(res.status).to.eq(SUCCESS_STATUS_CODE);
+            const data = res["body"]["list"];
+            expect(data).to.have.length(1);
+
+            const apiId = data[0].id;
+            cy.log(`Delete API id: ${apiId}`);
+            if(!apiId){
+                throw new Error('API id cannot be empty');
+            }
+
+            cy.request({
+                method: "DELETE",
+                url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token.value
+                },
+                qs: {
+                    'organizationId': organizationId,
+                },
+            }).then((res) => {
+                expect(res.status).to.eq(SUCCESS_STATUS_CODE);
+                cy.log("Successfully deleted API: ");
+            });;
+
+        })
     });
 });
 

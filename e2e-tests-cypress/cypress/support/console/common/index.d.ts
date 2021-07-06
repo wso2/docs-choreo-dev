@@ -46,5 +46,6 @@ declare namespace Cypress {
         deleteAppWithoutUndeploy(name: string, strict: boolean): Chainable<Element>
         testPerformanceAnalyzerLocalStorage(localStorageKey: string): Chainable<Element>
         hideWelcomeMessage(): Chainable<Element>
+        deleteApiByApplicationId(id: string): Chainable<Element>
     }
 }
