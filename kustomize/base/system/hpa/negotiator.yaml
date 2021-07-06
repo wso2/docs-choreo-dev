@@ -7,7 +7,7 @@ metadata:
     choreo.component: negotiator
   name: negotiator
 spec:
-  maxReplicas: 3
+  maxReplicas: 5
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
