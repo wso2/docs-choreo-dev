@@ -108,7 +108,7 @@ spec:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
             - name: AZURE_K8S_API_SERVER_URL
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   name: cm-loggingapi
                   key: AZURE_K8S_API_SERVER_URL  
             - name: AZURE_K8S_SERVICE_TOKEN
