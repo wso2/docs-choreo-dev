@@ -16,7 +16,7 @@ The Performance Analyzer tool generates forecasts based on the following assumpt
 
 - For service-based applications the overhead of non-I/O operations is negligible.
 - The service being evaluated is allocated sufficient resources, and therefore, it is not a bottleneck.
-- Sufficient historical data is available for each service operation or connector call considered during the analysis.
+- Sufficient historical data is available for each service operation or API call considered during the analysis.
 
 ## Access the Performance Analyzer tool
 
