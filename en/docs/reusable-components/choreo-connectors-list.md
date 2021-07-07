@@ -22,7 +22,7 @@ The following lists the connections you can use to interact with application-spe
 | **Salesforce**      | Integrate with the People API to manage your contacts. You can perform operations such as getting, listing, creating, deleting, and updating contacts. |
 | **NetSuite**        | Integrate with Netsuite to perform operations such as creating a record instance, creating a sublist, etc. |
 | **Azure EventHub**  | Integrate with Azure to manage consumer groups, event hubs, events, publishers, and partitions. You can perform many operations such as creating and listing event hubs and consumer groups, etc. |
-| **Azure CosmosDB**  | Integrate with Azure CosmosDB to manage documents and stored procedures. You can perform operations such as creating documents, executing stored procedures, etc. |
+| **Azure Cosmos DB** | Integrate with Azure CosmosDB to manage documents and stored procedures. You can perform operations such as creating documents, executing stored procedures, etc. |
 | **MongoDB**         | Integrate with MongoDB to manage databases, collections, and documents. You can perform operations such as getting databases, inserting documents, etc. |
 | **Redis**           | Integrate with Redis to manage different data structures. You can perform a range of operations depending on the data structure. |
 | **AWS S3**          | Integrate with AWS S3 to manage cloud storages. You can perform operations such as creating, listing, and deleting buckets as well as objects. |
