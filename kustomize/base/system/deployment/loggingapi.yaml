@@ -141,7 +141,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: health
-              path: /health
+              path: /readiness
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -150,7 +150,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: health
-              path: /health
+              path: /liveness
           resources:
             limits:
               cpu: 500m
