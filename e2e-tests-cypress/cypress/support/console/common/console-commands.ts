@@ -86,7 +86,7 @@ Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
     cy.get('[data-testid="code-view-btn"]').click({force: true});
 }),
 
-Cypress.Commands.add('configureResource', (relativePath?: string, method?: string, returnType?: string) => {
+Cypress.Commands.add('configureResource', (relativePath: string | null, method: string | null, returnType: string | null) => {
     if (!method) {
         method = "GET";
     }

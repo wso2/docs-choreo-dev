@@ -31,7 +31,7 @@ describe('Service deployment and delete deployed service', () => {
         cy.log('app name: '+ appName);
         cy.createNewApp(SERVICES_TEXT, appName);
         cy.url().should('include', 'app/' + appName + '/develop');
-        cy.configureResource("hello", undefined, "string ?");
+        cy.configureResource("hello", null, "string ?");
     });
 
     after(() => {
