@@ -109,7 +109,9 @@ Cypress.Commands.add('updateDesignConfiguration', () => {
 Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid="Runtime Configurations"]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid=switch-cors-config]').click();
+    cy.wait(2000);
     cy.get('[data-testid=cors-config-label]').click();
+    cy.wait(2000);
     cy.get('[data-testid=checkbox-allow-all-origins]').click();
     cy.wait(2000);
     cy.get('[data-testid=addBtn-origin]', { timeout: STANDARD_TIME_OUT }).click();
@@ -122,7 +124,7 @@ Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid=access-control-method-select]').click();
     cy.get('[data-testid=access-c-method-CONNECT]').click();
     cy.get('[data-testid=runtime-config-save-btn]').click();
-    cy.get('#circular-loader', { timeout: STANDARD_TIME_OUT }).should('not.exist');
+    cy.get('[id="circular-loader"]', { timeout: 1000 * 30 }).should('not.exist');
 });
 
 Cypress.Commands.add('addApiDocument', () => {
