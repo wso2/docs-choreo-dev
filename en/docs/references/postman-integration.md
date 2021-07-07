@@ -1,4 +1,4 @@
-# Postman Integration
+# Test Your Service via Postman
 
 The Postman Editor allows you to integrate with your Postman account to easily test your services.
 
