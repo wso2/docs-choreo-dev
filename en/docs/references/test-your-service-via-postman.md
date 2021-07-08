@@ -104,6 +104,8 @@ As a result, the collection is created and displayed under **Collections** in th
 
 ## Step 5: Create a request
 
+In this step, let's create a request that you can send via Postman to invoke your service
+
 To create a request, follow this procedure:
 
 1. In the **Postman** panel, click on the **>** icon of the collection that you created. This opens the **Requests** section.
