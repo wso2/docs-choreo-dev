@@ -58,12 +58,4 @@ describe("Integrations test run and deployment from scratch", () => {
         cy.deleteApp("integration", appName, true);
         cy.log("App deleted successfully!")
     });
-
-    /* it("Test-run and deploy integration", () => {
-
-    });
-
-    it("Undeploy app from UI and delete the app", () => {
-
-    }); */
 });
