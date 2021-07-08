@@ -37,6 +37,16 @@ spec:
             configMapKeyRef:
               name: cm-language-server
               key: JMX
+        - name: JFR_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: cm-language-server
+              key: JFR_ENABLED
+        - name: JFR_DURATION
+          valueFrom:
+            configMapKeyRef:
+              name: cm-language-server
+              key: JFR_DURATION
         ports:
         - containerPort: 9090
           name: http-port
@@ -76,6 +86,7 @@ spec:
             cpu: "2"
             memory: 4Gi
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 0
           runAsGroup: 0
       volumes:

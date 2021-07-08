@@ -116,8 +116,8 @@ spec:
               protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
-            timeoutSeconds: 15
-            periodSeconds: 10
+            timeoutSeconds: 60
+            periodSeconds: 60
             failureThreshold: 3
             successThreshold: 1
             httpGet:

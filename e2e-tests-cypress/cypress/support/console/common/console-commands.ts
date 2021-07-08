@@ -22,6 +22,8 @@ import {
     SETTINGS_PATH,
     APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE,
     GMAIL_CONNECTION_NAME,
+    APIM_RESOURCE_PATH,
+    PATH_SEPARATOR,
 } from '../../common/constants';
 
 let LOCAL_STORAGE_MEMORY = {};
@@ -86,14 +88,22 @@ Cypress.Commands.add('checkSourceCodeForValidation', (sourceLines: string) => {
     cy.get('[data-testid="code-view-btn"]').click({force: true});
 }),
 
-Cypress.Commands.add('configureResource', (relativePath?: string, method?: string) => {
+Cypress.Commands.add('configureResource', (relativePath: string | null, method: string | null, returnType: string | null) => {
     if (!method) {
         method = "GET";
     }
     cy.log("Started resource configuration");
     cy.waitTillWorkSpace();
-    cy.contains('button', method).click();
+    cy.get('[data-testid="undefinedGET"]').invoke('text').then((availableText) => {
+        if (!(availableText == method)) {
+            cy.get('[data-testid="undefinedGET"]').click();
+            cy.get('.MuiListItem-button').contains(method).click();
+        }
+    })
     cy.get('[data-testid="api-path"]').type(relativePath);
+    cy.get('[data-testid="api-return-type"]').type(returnType);
+    cy.get('[data-testid="advanced-path-config"]').click();
+    cy.get('[data-testid="select-request-btn"]').click();
     cy.get('[data-testid="save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
     cy.log("Configured resource successfully");
@@ -445,6 +455,51 @@ Cypress.Commands.add('cleanupApp', (name: string) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: "+ name);
+    });
+});
+
+Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
+    let token;
+    const organizationId = Cypress.env('orgs')[0].uuid;
+    const query = `?organizationId=${organizationId}&query=applicationId:${id}`
+    cy.getCookie('token').should('exist').then((c) => {
+        token = c;
+        cy.log("GET API for applicationId: " + id);
+        cy.request({
+            method: "GET",
+            url: APP_SVC_URL + APIM_RESOURCE_PATH +  query,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value
+            },
+            timeout: 60000
+        }).then((res) => {
+            expect(res.status).to.eq(SUCCESS_STATUS_CODE);
+            const data = res["body"]["list"];
+            expect(data).to.have.length(1);
+
+            const apiId = data[0].id;
+            cy.log(`Delete API id: ${apiId}`);
+            if(!apiId){
+                throw new Error('API id cannot be empty');
+            }
+
+            cy.request({
+                method: "DELETE",
+                url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token.value
+                },
+                qs: {
+                    'organizationId': organizationId,
+                },
+            }).then((res) => {
+                expect(res.status).to.eq(SUCCESS_STATUS_CODE);
+                cy.log("Successfully deleted API: ");
+            });;
+
+        })
     });
 });
 

@@ -14,7 +14,7 @@ declare namespace Cypress {
         waitTillWorkSpace(): Chainable<Element>
         createNewApp(type: string, name: string): Chainable<Element>
         checkSourceCodeForValidation(sourceLines: string): Chainable<Element>
-        configureResource(relativePath?: string, method?: string): Chainable<Element>
+        configureResource(relativePath: string | null, method: string | null, returnType: string | null): Chainable<Element>
         selectTrigger(type: string): Chainable<Element>
         selectManualTrigger(): Chainable<Element>
         selectManualTriggerOptions(type: string, option:string): Chainable<Element>
@@ -46,5 +46,6 @@ declare namespace Cypress {
         deleteAppWithoutUndeploy(name: string, strict: boolean): Chainable<Element>
         testPerformanceAnalyzerLocalStorage(localStorageKey: string): Chainable<Element>
         hideWelcomeMessage(): Chainable<Element>
+        deleteApiByApplicationId(id: string): Chainable<Element>
     }
 }

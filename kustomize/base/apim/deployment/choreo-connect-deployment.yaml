@@ -76,7 +76,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           securityContext:
-            readOnlyRootFilesystem: true 
+            readOnlyRootFilesystem: false 
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -99,7 +99,7 @@ spec:
             - name: XDS_MAX_RETRIES
               value: "3"
             - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m"
+              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m -XX:StartFlightRecording=disk=true,delay=2h,duration=30m,name=Profiling,filename=/home/wso2/recording.jfr,settings=profile,path-to-gc-roots=true -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=11391 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=11391"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -194,7 +194,7 @@ spec:
           startupProbe:
             httpGet:
               port: 9095
-              path: /health
+              path: /ready
               scheme: HTTPS
               httpHeaders:
                 - name: Host
@@ -214,7 +214,7 @@ spec:
           readinessProbe:
             httpGet:
               port: 9095
-              path: /health
+              path: /ready
               scheme: HTTPS
               httpHeaders:
                 - name: Host
