@@ -49,7 +49,7 @@ You can derive insights about the performance as follows:
     
     In the above example, the **Latency** graph indicates that when the user count is 50, the forecasted time taken to process one request is 10.37 seconds.
     
-- If you want to check the forecasted latency per connector call operation for a specific user count, click over that user count in either the **Throughput** or **Latency** graph.
+- If you want to check the forecasted latency per API call operation for a specific user count, click over that user count in either the **Throughput** or **Latency** graph.
 
     ![Latency per connector forecast](../assets/img/perf-analyzer/latency-per-connector-forecast.png){.cInlineImage-full}
     
