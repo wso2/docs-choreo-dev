@@ -4,7 +4,7 @@ When you create a service, you need to configure an API to invoke it. This confi
 
 ![Path field](../assets/img/references/path/path-field.png){.cInlineImage-half}
 
-e.g., Create a service named sample with an API trigger.
+e.g., Create a service named `sample` with an API trigger.
 
 Once you deploy the service, you receive a hostname as follows.
 
