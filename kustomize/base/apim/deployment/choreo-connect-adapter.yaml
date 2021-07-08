@@ -74,6 +74,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always  
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
           env: 
             - name: ADAPTER_PRIVATE_KEY_PATH
