@@ -52,6 +52,6 @@ If you specify a path parameter, it could be read from within your service. This
 
 e.g.,
 
-| **Path**                   | **URL to invoke the service**                                                           |
-|----------------------------|-----------------------------------------------------------------------------------------|
-| `/[int date]/[string day]` | `https://sample-username.choreoapps.dev/8/monday` <br/><br/> This allows you to read the value of the date (e.g., `8`) and the day (e.g., `Monday` from within your service |
+| **Path**                    | **URL to invoke the service**                                                          |
+|-----------------------------|----------------------------------------------------------------------------------------|
+| `/[int id]/[string branch]` | `https://sample-username.choreoapps.dev/01/Chicago` <br/><br/> This allows you to read the ID (in this example,`01`) and the branch (in this example, `Chicago`) from within your service. |
