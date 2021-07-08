@@ -53,6 +53,7 @@ spec:
               name: cm-connectords
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 1000
           runAsGroup: 2000
           readOnlyRootFilesystem: true
@@ -65,7 +66,7 @@ spec:
             successThreshold: 1
             httpGet:
              port: health
-             path: /healthz
+             path: /health
         livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 15
@@ -74,7 +75,7 @@ spec:
             successThreshold: 1
             httpGet:
              port: health
-             path: /healthz
+             path: /health
         ports:
         - containerPort: 9090
           name: cds-sport

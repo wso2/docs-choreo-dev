@@ -15,6 +15,7 @@ import { APIS_TEXT, SERVICES_TEXT } from '../../../support/common/constants';
 
 describe('API creation from choreo service', () => {
     let serviceName: string;
+    let applicationId: string;
 
     before(() => {
         cy.consoleUserLogin();
@@ -31,12 +32,15 @@ describe('API creation from choreo service', () => {
         cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`).as('createService');
 
         cy.get('[data-testId="try-out-samples-btn"]', { timeout: 60000 }).should('exist').click();
-        cy.get('[data-testid="service-chaining"]').should('exist').children().find('button').click({ force:true });
+        cy.get('[data-testid="worldbank-data-to-covid19-statistics"]').should('exist').children().find('button').click({ force: true });
 
         cy.wait('@createService', { timeout: 60000 }).then((interception) => {
             serviceName = interception.response.body[`name`];
+            applicationId = interception.response.body[`id`];
+            cy.log(`serviceName: ${serviceName}`);
+            cy.log(`applicationId: ${applicationId}`);
             const displayName = interception.response.body[`displayName`];
-            const apiName = displayName.replace(/\s+/g, '');
+            const apiName = displayName.replace(/\s+/g, '').replace(/-/g, '_');
 
             // Deploy a sample service
             cy.url().should('include', `app/${serviceName}/develop`);
@@ -48,6 +52,7 @@ describe('API creation from choreo service', () => {
             cy.goBacktoAppsList();
             cy.navigateFromHomePage(APIS_TEXT);
             cy.searchApiFromListAndVisit(apiName);
+            cy.get('[data-testid="backdrop-loader"]').should('not.exist');
             cy.verifyApiOverview(apiName, "1.0.0");
             cy.updateRuntimeConfiguration();
 
@@ -56,12 +61,13 @@ describe('API creation from choreo service', () => {
             cy.get('[data-testid="test"]').click();
             cy.wait(3000);
             cy.log("Invoking the API");
-            cy.get('.opblock-summary').click();
-            cy.get('.btn').click();
-            cy.get('input[type=text]').type("1");
-            cy.wait(2000);
-            cy.get('.execute-wrapper > .btn').click();
-            cy.wait(2000);
+            cy.get('[data-testid="backdrop-loader"]').should('not.exist');
+            cy.get('[data-testid="swagger-ui"]').within(() => {
+                cy.get('.opblock-summary').click();
+                cy.get('button').contains('Try it out').should('exist').click();
+                cy.get('input[type="text"]').should('exist').type('1');
+                cy.get('button').contains('Execute').should('exist').click();
+            });
             // TODO - add assertion for response once the domain name issue is resolved
             cy.log('Invoked the API successfully');
         });
@@ -70,7 +76,7 @@ describe('API creation from choreo service', () => {
     after(() => {
         cy.undeployAppViaRESTAPICall(serviceName);
         cy.cleanupApp(serviceName);
-        cy.log("Logout from Choreo");
+        cy.deleteApiByApplicationId(applicationId);
         cy.userLogout();
     });
 });

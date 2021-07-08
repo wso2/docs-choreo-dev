@@ -63,6 +63,7 @@ spec:
               name: cm-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
           readOnlyRootFilesystem: true
@@ -78,6 +79,10 @@ spec:
              path: /health/readiness
         livenessProbe:
             initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
              port: health
              path: /health/liveness
