@@ -25,11 +25,11 @@ spec:
   tls:
     - hosts:
         - "metrics{{.Values.env_url}}.choreo.dev"
-      secretName: {{.Values.env}}-choreo-system-wildcard-tls
+      secretName: '{{.Values.env}}-choreo-system-wildcard-tls'
   rules:
     - host: "metrics{{.Values.env_url}}.choreo.dev"
       http:
         paths:
-        - backend:
-            serviceName: web
-            servicePort: 8084
+          - backend:
+              serviceName: web
+              servicePort: 8084
