@@ -104,7 +104,7 @@ As a result, the collection is created and displayed under **Collections** in th
 
 ## Step 5: Create a request
 
-In this step, let's create a request that you can send via Postman to invoke your service
+In this step, let's create a request that you can send via Postman to invoke your service.
 
 To create a request, follow this procedure:
 
