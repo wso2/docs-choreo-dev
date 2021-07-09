@@ -20,7 +20,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/service-upstream: "true"
-    nginx.ingress.kubernetes.io/whitelist-source-range: 203.94.95.0/24,52.191.100.80/31,119.235.10.0/28,172.16.194.0/24
+    nginx.ingress.kubernetes.io/whitelist-source-range: 172.16.194.0/24
 spec:
   tls:
     - hosts:
