@@ -57,7 +57,7 @@ You can now create a new workspace to link to your service or select an existing
 
 ## Step 3: Link a workspace to your service
 
-In this step, let's connect a workspace to your service. You can use workspaces in Postman to manage your Postman components for different tasks. In this example, you can create a workspace to have the collections you create for testing the `World Bank Data to COVID-19 Statistics` service. For more information about workspaces, see [Postman Documentation - Using and managing workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/).
+In this step, let's connect a workspace to your service. You can use workspaces in Postman to manage your Postman components for different tasks. In this example, you can create a workspace to have the collections you create for testing the **World Bank Data to COVID-19 Statistics** service. For more information about workspaces, see [Postman Documentation - Using and managing workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/).
 
 To create a workspace for your service, follow this procedure:
 
@@ -73,12 +73,12 @@ To create a workspace for your service, follow this procedure:
 
     | **Field**       | **Value**                       |
     |-----------------|---------------------------------|
-    | **Name**        | `covid-Status`                  |
+    | **Name**        | `COVID Service Workspace`       |
     | **Description** | `Test the covid-Status service` |
     
 4. Click **Create & Link**.
 
-Now you have linked your service to the new workspace named `covid-Status`.
+Now you have linked your service to the new workspace named `COVID Service Workspace`.
 
 ## Step 4: Create a collection
 
@@ -95,7 +95,7 @@ To create a collection, follow this procedure:
 
     | **Field**       | **Value**                             |
     |-----------------|---------------------------------------|
-    | **Name**        | `invoke-covid-status service`         |
+    | **Name**        | `COVID Service Test Collection`       |
     | **Description** | `Collection for covid-status service` |
     
 3. Click **Create**.
@@ -112,7 +112,7 @@ To create a request, follow this procedure:
 
 2. Click **+ Add**.
 
-3. Enter a request name (e.g., `covid-status-request-1`).
+3. Enter a request name (e.g., `COVID Country Status Request`).
 
 4. Select the required HTTP method. You can also add the query parameters, headers, and the request body as required.
 
@@ -143,3 +143,5 @@ To test your service, send a request from your Postman account by following this
     The response is logged as shown below.
 
     ![Response](../assets/img/postman/response.png){.cInlineImage-full}
+    
+Now you have successfully tested a service via Postman.
