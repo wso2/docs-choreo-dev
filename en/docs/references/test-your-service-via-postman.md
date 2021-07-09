@@ -82,7 +82,7 @@ Now you have linked your service to the new workspace named `covid-Status`.
 
 ## Step 4: Create a collection
 
-In this step, you will be creating a collection. The collection runner in Postman runs multiple requests in a specified sequence and logs the results. Each collection represents one request. For more information about collections, see [Postman Documentation - Collection Runner](https://learning.postman.com/docs/running-collections/intro-to-collection-runs/)
+In this step, you will be creating a collection. The collection runner in Postman runs multiple requests in a specified sequence and logs the results. Each collection represents one request. For more information about collections, see [Postman Documentation - Collection Runner](https://learning.postman.com/docs/running-collections/intro-to-collection-runs/).
 
 !!! tip
     If you linked an existing workspace to the service and that workspace has existing collections, you can skip this step.
