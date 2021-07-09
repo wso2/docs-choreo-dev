@@ -19,7 +19,7 @@ To generate the Postman API key so that you can connect your Postman account to 
 
 1. Sign in to your Postman account.
 
-2. Go to your profile, and click **Account Settings**. Then click **Postman API Keys**
+2. Go to your profile, and click **Account Settings**. Then click **Postman API Keys**.
 
 3. Click **Generate API Key**.
 
