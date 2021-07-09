@@ -4,12 +4,12 @@ When you create a service, you need to configure an API to invoke it. This confi
 
 ![Path field](../assets/img/references/path/path-field.png){.cInlineImage-half}
 
-e.g., Create a service named `sample` with an API trigger.
+e.g., Create a service named `myservice` with an API trigger.
 
 Once you deploy the service, you receive a hostname as follows.
 
 ```
-https://sample-<USERNAME>.choreoapps.dev
+https://myservice-<USERNAME>.choreoapps.dev
 ```
 
 The URL that you need to invoke to trigger the service changes based on the relative path from the host that you specify in the **Path** field of the API configuration.
@@ -24,7 +24,7 @@ e.g.,
 
 | **Path**      | **URL to invoke the service**            |
 |---------------|------------------------------------------|
-| Not specified | `https://sample-username.choreoapps.dev` |
+| Not specified | `https://myservice-username.choreoapps.dev` |
 
 ## Single path
 
@@ -34,7 +34,7 @@ e.g.,
 
 | **Path**  | **URL to invoke the service**                  |
 |-----------|------------------------------------------------|
-| `/path1`  | `https://sample-username.choreoapps.dev/path1` |
+| `/path1`  | `https://myservice-username.choreoapps.dev/path1` |
 
 ## Multiple path strings
 
@@ -44,7 +44,7 @@ e.g.,
 
 | **Path**             | **URL to invoke the service**                              |
 |----------------------|------------------------------------------------------------|
-| `/path1/path2/path3` | `https://sample-username.choreoapps.dev/path1/path2/path3` |
+| `/path1/path2/path3` | `https://myservice-username.choreoapps.dev/path1/path2/path3` |
 
 ## Path parameters
 
@@ -54,6 +54,6 @@ e.g.,
 
 | **Path**                    | **URL to invoke the service**                       |
 |-----------------------------|-----------------------------------------------------|
-| `/[int id]/[string branch]` | `https://sample-username.choreoapps.dev/01/Chicago` |
+| `/[int id]/[string branch]` | `https://myservice-username.choreoapps.dev/01/Chicago` |
 
 In this example, the path allows you to read the ID (in this example,`01`) and the branch (in this example, `Chicago`) from within your service.
