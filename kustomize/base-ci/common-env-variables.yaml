@@ -1,1 +1,1 @@
-WORKSPACE_IMAGE=choreocontrolplane.azurecr.io/choreoipaas/workspace:master-9c555dba5a2031a3a9bce28e0ce4e3d05cc8dddf
+WORKSPACE_IMAGE=choreocontrolplane.azurecr.io/choreoipaas/workspace:master-3866a7fc8977cfd7e89deb349d9aab7389401192
