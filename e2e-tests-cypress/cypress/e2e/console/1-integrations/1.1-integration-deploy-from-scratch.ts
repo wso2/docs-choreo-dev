@@ -26,17 +26,22 @@ describe("Integrations test run and deployment from scratch", () => {
         cy.userLogout();
     });
 
-    it("Create an intergration app", () => {
+    it("Test Integration app", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should("include", "app/" + appName + "/develop");
+        cy.url().should("include", "app/" + appName + "/develop"); 
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements", "addLog");
-        cy.createLogProperty("Info", "Hello World");
-    });
+        cy.createLogProperty("Info", "Hello World"); 
+        cy.get('[id="SmallPlus"]').eq(1).click({force: true});
+        cy.get('[data-testid="api-options"]').click();
+        cy.get('[data-testid="covid 19 api"]').click({force:true});
+        cy.contains('Save Connection').click()
+        cy.waitTillWorkSpace();
 
-    it("Test-run and deploy integration", () => {
+        // Test-run and deploy integration
+        cy.log('Test app:' + appName);
         const loadRunTxt = "Running...";
         cy.testRunApp();
         cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("exist");
@@ -44,9 +49,8 @@ describe("Integrations test run and deployment from scratch", () => {
         cy.get('[data-testid="log-panel"]').should("contains.text", 'message = "Hello World"');
         cy.log("Expression is logged successfully");
         cy.deployToChoreo("integration", appName);
-    });
 
-    it("Undeploy app from UI and delete the app", () => {
+        // Undeploy app from UI and delete the app
         cy.goBacktoAppsList();
         cy.deleteAppWithoutUndeploy(appName, true);
         cy.undeployApp("integration", appName, true);
