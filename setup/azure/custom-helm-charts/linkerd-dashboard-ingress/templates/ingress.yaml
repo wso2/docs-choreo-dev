@@ -30,7 +30,6 @@ spec:
     - host: "metrics{{.Values.env_url}}.choreo.dev"
       http:
         paths:
-          - backend:
-              serviceName: web
-              servicePort: 8084
-              
+        - backend:
+            serviceName: web
+            servicePort: 8084
