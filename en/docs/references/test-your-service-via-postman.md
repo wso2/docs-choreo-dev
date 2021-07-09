@@ -112,7 +112,7 @@ To create a request, follow this procedure:
 
 2. Click **+ Add**.
 
-3. Enter a request name (e.g., `covid-status-request-1`)
+3. Enter a request name (e.g., `covid-status-request-1`).
 
 4. Select the required HTTP method. You can also add the query parameters, headers, and the request body as required.
 
