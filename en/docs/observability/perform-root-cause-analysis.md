@@ -42,7 +42,7 @@ The actions you can perform are as follows:
 
 - **View the number of successful requests and errors**
 
-    To do this, hold the pointer over the area of the graph that shows the required time interval. The throughput graph displays the number of successes over the graph as shown in the above image (in this example it displays 296 successes and 2512.43 errors). The low-code diagram displays the success rate for each connector.
+    To do this, hold the pointer over the area of the graph that shows the required time interval. The throughput graph displays the number of successes over the graph as shown in the above image (in this example it displays 296 successes and 2512.43 errors). The low-code diagram displays the success rate for each API call.
     
 - **View log entries**
 
