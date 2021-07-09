@@ -140,7 +140,6 @@ service / on new http:Listener(8090) {
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
         var totalCases = statusByCountry?.cases ?: 0d;
         worldbank:Client worldbankClient = check new ();
-
         worldbank:CountryPopulation[] populationByCountry = check worldbankClient->getPopulationByCountry(country);
         int population = (populationByCountry[0]?.value ?: 0) / 1000000;
         var totalCasesPerMillion = totalCases / population;
