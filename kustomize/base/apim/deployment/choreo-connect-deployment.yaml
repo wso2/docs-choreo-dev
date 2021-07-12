@@ -78,7 +78,7 @@ spec:
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: false 
+            readOnlyRootFilesystem: true 
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -101,7 +101,7 @@ spec:
             - name: XDS_MAX_RETRIES
               value: "3"
             - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m -XX:StartFlightRecording=disk=true,delay=2h,duration=30m,name=Profiling,filename=/home/wso2/recording.jfr,settings=profile,path-to-gc-roots=true -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=11391 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=11391"
+              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
