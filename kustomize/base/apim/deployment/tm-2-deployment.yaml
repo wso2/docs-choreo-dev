@@ -71,6 +71,7 @@ spec:
               memory: 4Gi
               cpu: 3000m
           securityContext:
+            allowPrivilegeEscalation: false
             runAsUser: 802
             runAsGroup: 802
           ports:
