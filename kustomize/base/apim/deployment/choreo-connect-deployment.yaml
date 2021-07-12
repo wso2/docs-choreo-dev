@@ -45,6 +45,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
       containers:
         - name: choreo-connect-enforcer
           volumeMounts:
