@@ -69,7 +69,7 @@ nav:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
           - Data Mapping: references/data-mapping.md
-          - Test Your Service via Postman: references/postman-integration.md
+          - Test Your Service via Postman: references/test-your-service-via-postman.md
           - API Path: references/api-path.md
 # Extensions
 markdown_extensions:

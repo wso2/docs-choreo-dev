@@ -6,7 +6,7 @@ This guide explains how to test your services by connecting them to your Postman
 
 To use the Postman Editor:
 
-- Make sure you have logged into the Choreo console and created a service. For instructions to create a service, see [Create Your First Service](../services/create-your-first-service.md).
+- Make sure you have logged into the Choreo Console and created a service. For instructions to create a service, see [Create Your First Service](../services/create-your-first-service.md).
 
     !!! tip
         This guide uses the service created in the **World Bank Data to COVID-19 Statistics** sample as an example.
