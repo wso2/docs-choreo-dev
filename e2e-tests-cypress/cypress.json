@@ -1,9 +1,10 @@
 {
     "defaultCommandTimeout": 30000,
-    "screenshotsFolder": "cypress/screenshots",
+    "screenshotsFolder": "cypress/screenshots/e2e-smoke",
+    "videosFolder": "cypress/videos/e2e-smoke",
     "ignoreTestFiles": "**/examples/*.js",
     "chromeWebSecurity": false,
-    "integrationFolder": "cypress/e2e",
+    "integrationFolder": "cypress/e2e-smoke",
     "testFiles": [
         "console/0-clean/0.1-clean-previous-run.ts",
         "console/1-integrations/*.ts",
