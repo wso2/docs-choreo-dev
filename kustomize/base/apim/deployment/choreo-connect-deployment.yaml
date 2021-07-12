@@ -38,6 +38,10 @@ spec:
       securityContext:
         runAsUser: 10500
         runAsGroup: 10500
+        capabilities:
+          drop:
+            - all
+          add: ["NET_RAW"]
       initContainers:
         - name: init-adapter-service
           image: busybox:1.31
@@ -45,6 +49,10 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
       containers:
         - name: choreo-connect-enforcer
           volumeMounts:
@@ -81,7 +89,11 @@ spec:
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true 
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -158,6 +170,10 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
           env:
             - name: ROUTER_ADMIN_HOST
               value: "0.0.0.0"

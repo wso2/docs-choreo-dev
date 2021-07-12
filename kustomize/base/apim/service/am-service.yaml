@@ -18,6 +18,16 @@ kind: Service
 metadata:
   name: choreo-am-service
 spec:
+  template:
+    spec:
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+            - NET_RAW
   # label keys and values that must match in order to receive traffic for this service
   selector:
     deployment: choreo-am
