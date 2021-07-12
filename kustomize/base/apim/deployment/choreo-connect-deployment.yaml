@@ -40,6 +40,7 @@ spec:
           image: busybox:1.31
           command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
       containers:
         - name: choreo-connect-enforcer
@@ -76,6 +77,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false 
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
@@ -151,6 +153,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
           env:
             - name: ROUTER_ADMIN_HOST
