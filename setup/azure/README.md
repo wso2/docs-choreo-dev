@@ -16,6 +16,12 @@ APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ENV=xxxxx
+LINKERD_VIZ_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+LINKERD_VIZ_INGRESS_CLASS=xxxxxxxxxxxxxxxxx
+LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
+LOADBALANCER_SUBNET=xxxxxxxxxxxxxxxxx
+LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD=xxxxxxxxxxxxxxxxx
 EOF
 ```
 
