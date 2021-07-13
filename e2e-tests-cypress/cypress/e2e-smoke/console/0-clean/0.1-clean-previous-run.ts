@@ -10,7 +10,6 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-
 import { isOldValue, keyNamePrefix } from '../../../support/common/utils';
 import { APIM_RESOURCE_PATH, APP_SVC_URL, ORG_NAME, PATH_SEPARATOR } from "../../../support/common/constants";
 import { getApiName } from "../../../support/devportal/utils";
@@ -25,41 +24,53 @@ describe('Cleaning up', () => {
         cy.userLogout();
     });
 
-    it('Delete Apps that are created by previous run', () => {
+    it('Delete test data that are created by previous run', () => {
+        cy.log("Deleting apps...");
         cy.request({
             method: "GET",
             form: true,
             url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/`
         }).then((response) => {
-            const data = response["body"];
-            for (const value of data) {
-                const appName = value["name"];
-                const status = String(value['status']);
-                if (status == "running") {
-                    cy.undeployAppViaRESTAPICall(appName);
+            const data = response["body"] as [];
+            if (data.length) {
+                cy.log(`apps found : ${data.length}`);
+                for (const value of data) {
+                    const appName = value["name"] as string;
+                    const status = value['status'] as string;
+                    if (status == "running") {
+                        cy.undeployAppViaRESTAPICall(appName);
+                    }
+                    cy.cleanupApp(appName);
                 }
-                cy.cleanupApp(appName);
+                cy.log("Successfully deleted all apps");
+            } else {
+                cy.log('No apps found');
             }
-        })
-    });
+        });
 
-    it('Delete on-prem keys that are created by previous run', () => {
+        cy.log('Deleting on-prem keys...');
         cy.request({
             method: "GET",
             form: true,
             url: `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/`
         }).then((response) => {
-            const data = response["body"];
-            for (const value of data) {
-                const keyName = value["displayName"];
-                if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
-                    cy.cleanOnPremKey(keyName);
-                }
-            }
-        })
-    });
+            const data = response["body"] as [];
 
-    it('Delete APIs that are created by previous run', () => {
+            if (data.length) {
+                cy.log(`on-prem keys found : ${data.length}`);
+                for (const value of data) {
+                    const keyName = value["displayName"] as string;
+                    if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
+                        cy.cleanOnPremKey(keyName);
+                    }
+                }
+                cy.log("Successfully deleted all on-prem keys");
+            } else {
+                cy.log('No on-prem keys found')
+            }
+        });
+
+        cy.log('Deleting APIs...');
         let token;
         const organizationId = Cypress.env('orgs')[0].uuid;
         cy.getCookie('token').should('exist').then((c) => {
@@ -77,22 +88,28 @@ describe('Cleaning up', () => {
                 },
                 timeout: 60000
             }).then((response) => {
-                const data = response["body"]["list"];
-                for (const value of data) {
-                    const apiName = value["name"];
-                    if (!apiName.includes(getApiName())) {
-                        cy.request({
-                            method: "DELETE",
-                            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + value["id"],
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + token.value
-                            },
-                            qs: {
-                                'organizationId': organizationId,
-                            },
-                        })
+                const data = response["body"]["list"] as [];
+                if (data.length) {
+                    cy.log(`APIs found : ${data.length}`);
+                    for (const value of data) {
+                        const apiName = value["name"] as string;
+                        if (!apiName.includes(getApiName())) {
+                            cy.request({
+                                method: "DELETE",
+                                url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + value["id"],
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + token.value
+                                },
+                                qs: {
+                                    'organizationId': organizationId,
+                                },
+                            })
+                        }
                     }
+                    cy.log("Successfully deleted all APIs");
+                } else {
+                    cy.log('No APIs found');
                 }
             })
         });
