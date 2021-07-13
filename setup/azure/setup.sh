@@ -38,6 +38,26 @@ else
     echo "File ${azuredfile} not found"; exit 1
 fi
 
+############## Set additional parameters
+case $ENV in
+
+  dev)
+    ENV_URL=".dv"
+    ;;
+
+  stage)
+    ENV_URL=".st"
+    ;;
+
+  prod)
+    ENV_URL=""
+    ;;
+
+  *)
+    echo "Invalid environment. Found ${ENV}. Valid environments are dev,stage and prod"; exit 1
+    ;;
+esac
+
 ############## Install Reloader
 echo "--- Installing Reloader..."
 if [[ -f "../reloader.yaml" ]]; then
@@ -121,8 +141,46 @@ helm upgrade --install linkerd2 --wait \
   --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
   -n linkerd --version 2.10.0
 
+# Installing extensions
 echo "--- Installing linkerd viz extension... "
-helm install linkerd-viz linkerd/linkerd-viz
+helm upgrade --install linkerd-viz linkerd/linkerd-viz -f linkerd-viz/custom-values.yaml
+helm upgrade --install linkerd-viz-persistent-prometheus custom-helm-charts/linkerd-viz-persistent-prometheus \
+  --set env=${ENV} \
+  --set persistentVolume.azureSecretNamespace="${ENV}-choreo-system"
+
+# Create nginx-ingress
+# Create Namespace for linkerd-nginx
+kubectl create ns "linkerd-viz-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
+# Install helm chart for nginx
+helm upgrade --install "linkerd-viz-ingress" ingress-nginx/ingress-nginx \
+  --namespace "linkerd-viz-nginx-ingress" \
+  --version 3.8.0 \
+  --set controller.replicaCount=2 \
+  --set controller.service.loadBalancerIP="${LINKERD_VIZ_LOADBALANCER_IP}"\
+  --set rbac.create=true \
+  --set controller.service.externalTrafficPolicy=Local \
+  --set controller.resources.requests."memory"=500Mi \
+  --set controller.resources.requests."cpu"=500m \
+  --set controller.resources.limits."cpu"=1000m \
+  --set controller.ingressClass="${LINKERD_VIZ_INGRESS_CLASS}" \
+  --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
+  --set controller.image.tag="v0.41.2" \
+  --set controller.image.digest=null \
+  --set-string controller.config.server-tokens=false \
+  --set controller.admissionWebhooks.enabled=false \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}"
+
+# Install nginx-ingress for linkerd extensions
+
+# Add Secret to get username and password for basic auth
+kubectl create secret generic web-ingress-auth --from-literal auth=${LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD} -n "linkerd-viz"
+
+helm upgrade --install linkerd-dashboard-ingress custom-helm-charts/linkerd-dashboard-ingress \
+  --set env_url=${ENV_URL} \
+  --set ingress.class="${LINKERD_VIZ_INGRESS_CLASS}"\
+  --set env=${ENV}
 
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
