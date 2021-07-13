@@ -1,8 +1,6 @@
 resources:
 - devportal-deployment.yaml
 - am-deployment.yaml
-- eventhub-statefulset.yaml
-- tm-statefulset.yaml
 - eventhub-1-deployment.yaml
 - eventhub-2-deployment.yaml
 - tm-1-deployment.yaml
