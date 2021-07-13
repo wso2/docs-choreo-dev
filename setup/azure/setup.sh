@@ -145,7 +145,7 @@ helm upgrade --install linkerd2 --wait \
 echo "--- Installing linkerd viz extension... "
 helm upgrade --install linkerd-viz linkerd/linkerd-viz -f linkerd-viz/custom-values.yaml
 helm upgrade --install linkerd-viz-persistent-prometheus custom-helm-charts/linkerd-viz-persistent-prometheus \
-  --set env=${ENV} \
+  --set env="${ENV}" \
   --set persistentVolume.azureSecretNamespace="${ENV}-choreo-system"
 
 # Create nginx-ingress
@@ -175,12 +175,12 @@ helm upgrade --install "linkerd-viz-ingress" ingress-nginx/ingress-nginx \
 # Install nginx-ingress for linkerd extensions
 
 # Add Secret to get username and password for basic auth
-kubectl create secret generic web-ingress-auth --from-literal auth=${LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD} -n "linkerd-viz"
+kubectl create secret generic web-ingress-auth --from-literal auth="${LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD}" -n "linkerd-viz"
 
 helm upgrade --install linkerd-dashboard-ingress custom-helm-charts/linkerd-dashboard-ingress \
-  --set env_url=${ENV_URL} \
+  --set env_url="${ENV_URL}" \
   --set ingress.class="${LINKERD_VIZ_INGRESS_CLASS}"\
-  --set env=${ENV}
+  --set env="${ENV}"
 
 ################ Install emberstack refrector ########
 helm repo add emberstack https://emberstack.github.io/helm-charts
