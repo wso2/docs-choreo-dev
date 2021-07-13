@@ -32,11 +32,6 @@ spec:
             secretKeyRef:
               name: secret-app-db
               key: CHOREO_DB_PASSWORD
-        - name: CHOREO_MSSQL_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-app-mssql-db
-              key: CHOREO_MSSQL_DB_PASSWORD
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -133,9 +128,6 @@ spec:
         - name: secret-app-db
           mountPath: "/mnt/csi/secret-app-db"
           readOnly: true
-        - name: secret-app-mssql-db
-          mountPath: "/mnt/csi/secret-app-mssql-db"
-          readOnly: true
         - name: secret-app-service
           mountPath: "/mnt/csi/secret-app-service"
           readOnly: true
@@ -177,14 +169,6 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-app-db
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      - name: secret-app-mssql-db
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-app-mssql-db
           nodePublishSecretRef:
             name: csi-secret-store-azure
       - name: secret-app-service

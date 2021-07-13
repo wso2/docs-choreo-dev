@@ -35,11 +35,15 @@ spec:
       labels:
         choreo.component: choreo-connect-deployment
     spec:
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
       initContainers:
         - name: init-adapter-service
           image: busybox:1.31
           command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
       containers:
         - name: choreo-connect-enforcer
@@ -76,7 +80,12 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           securityContext:
-            readOnlyRootFilesystem: false 
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -99,7 +108,7 @@ spec:
             - name: XDS_MAX_RETRIES
               value: "3"
             - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m -XX:StartFlightRecording=disk=true,delay=2h,duration=30m,name=Profiling,filename=/home/wso2/recording.jfr,settings=profile,path-to-gc-roots=true -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=11391 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=11391"
+              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -151,7 +160,12 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
           env:
             - name: ROUTER_ADMIN_HOST
               value: "0.0.0.0"

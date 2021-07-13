@@ -26,8 +26,11 @@ spec:
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
           securityContext:
-            runAsUser: 101
-            runAsGroup: 101
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
           name: apim-devportal
           readinessProbe:
             initialDelaySeconds: 15

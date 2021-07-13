@@ -35,6 +35,9 @@ spec:
       labels:
         choreo.component: choreo-connect-adapter
     spec:
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
       containers:
         - name: choreo-connect-adapter
           volumeMounts:
@@ -74,7 +77,12 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always  
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
           env: 
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"

@@ -129,8 +129,9 @@ spec:
             memory: 4Gi
             cpu: 3000m
         securityContext:
-          runAsUser: 802
-          runAsGroup: 802
+          allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
         ports:
         - containerPort: 8280
           protocol: TCP
