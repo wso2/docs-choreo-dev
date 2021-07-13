@@ -38,6 +38,7 @@ spec:
         choreo.component: apim-eventhub
       annotations:
         linkerd.io/inject: enabled
+        config.linkerd.io/skip-outbound-ports: "3306"
     spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
