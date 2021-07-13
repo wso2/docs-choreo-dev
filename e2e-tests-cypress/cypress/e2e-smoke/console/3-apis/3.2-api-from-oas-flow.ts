@@ -26,6 +26,7 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.log("Starting API Creation using open API specification");
         cy.navigateFromHomePage(APIS_TEXT);
         cy.get('[data-testid="create-api-btn"]').click({ force: true });
+        cy.get('[data-testid="proxy-btn"]').click();
         cy.get('[data-testid="upload-open-api-definition"]').click();
         cy.get('[data-testid="open-api-file"]').click();
         cy.get('input[type="file"]').attachFile(filepath);
