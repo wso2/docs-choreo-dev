@@ -23,6 +23,9 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
           securityContext:
