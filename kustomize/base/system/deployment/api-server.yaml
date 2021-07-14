@@ -62,6 +62,11 @@ spec:
             configMapKeyRef:
               name: cm-runtime-env
               key: API_SERVER_IDP_COOKIES_SECURE
+        - name: API_SERVER_REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_REDIS_HOST
         ports:
         - containerPort: 8080
           name: http-port
