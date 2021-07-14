@@ -38,6 +38,8 @@ spec:
       securityContext:
         runAsUser: 10500
         runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: choreo-connect-adapter
           volumeMounts:
@@ -83,7 +85,7 @@ spec:
               drop:
                 - all
               add: ["NET_RAW"]
-          env: 
+          env:
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ADAPTER_PUBLIC_CERT_PATH
