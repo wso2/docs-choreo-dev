@@ -32,6 +32,11 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        - name: AZURE_INSIGHTS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: AZURE_INSIGHTS_KEY
+              name: secret-azure-insights
         envFrom:
         - configMapRef:
             name: common-env-variables
@@ -67,6 +72,9 @@ spec:
         - name: secret-redis
           mountPath: "/mnt/csi/secret-redis"
           readOnly: true
+        - mountPath: /mnt/csi/secret-azure-insights
+          name: secret-azure-insights
+          readOnly: true
         - name: secret-azure-storage-account
           mountPath: "/mnt/csi/secret-azure-storage-account"
           readOnly: true
@@ -85,6 +93,14 @@ spec:
             secretProviderClass: secret-redis
           nodePublishSecretRef:
             name: csi-secret-store-azure
+      - name: secret-azure-insights
+        csi:
+          driver: secrets-store.csi.k8s.io
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-azure-insights
       - name: secret-azure-storage-account
         csi:
           driver: secrets-store.csi.k8s.io
