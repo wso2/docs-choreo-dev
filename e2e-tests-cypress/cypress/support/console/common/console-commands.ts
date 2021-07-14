@@ -349,7 +349,6 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 }),
 
 Cypress.Commands.add('createLogProperty', (type: string, expression: string) => {
-    const variableSourceFields = `log:print${type}(\"${expression}\");`;
     cy.log('Creating the log with expression : '+ expression);
     cy.get('[data-testid="Info"]').invoke('text').then((availableText) => {
         if (!(availableText == type)) {
@@ -363,7 +362,6 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.log("Creating log: added log expression");
     cy.get('[data-testid="log-save-btn"]').click({force: true});
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
-    cy.checkSourceCodeForValidation(variableSourceFields);
     cy.log('Successfully created the log with expression : ' + expression);
 }),
 
