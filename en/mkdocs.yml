@@ -68,7 +68,7 @@ nav:
     - Identity Providers:
           - Overview: identity-providers/overview.md
           - Register an External Identity Provider (IdP): identity-providers/register-an-external-identity-provider.md
-          - Exchange an Access Token from an Identity Provider: identity-providers/exchange-an-access-token-from-an-identity-provider.md
+          - Exchange an Access Token from an External Identity Provider (IdP): identity-providers/exchange-an-access-token-from-an-external-identity-provider.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
