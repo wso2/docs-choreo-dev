@@ -74,16 +74,15 @@ describe('Schedule trigger test run and deployment', () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click({ force: true });
         cy.log('Started test run');
-
-        cy.contains('[data-testid="log-panel"]', 'Hello world', { timeout: 600000 }).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', { timeout: 1000 * 60 * 10 }).should('exist');
         cy.log('Schedule trigger printed the log successfully');
     })
 
     it('deploy schedule trigger integration', () => {
         cy.wait(10000);
         cy.deployToChoreo("schedule", appName);
-        cy.log('Awaiting 2 minutes to check if the expected log is printed');
-        cy.contains('[data-testid="log-panel"]', 'Hello world', { timeout: 120000 }).should('exist');
+        cy.log('Awaiting 10 minutes to check if the expected log is printed');
+        cy.contains('[data-testid="log-panel-entry"]', 'Hello world', { timeout: 1000 * 60 * 10 }).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
