@@ -4,12 +4,12 @@ When you create a service, you need to configure an API to invoke it. This confi
 
 ![Path field](../assets/img/references/path/path-field.png){.cInlineImage-half}
 
-e.g., Create a service named `myservice` with an API trigger.
+e.g., Create a service named `myservice`.
 
 Once you deploy the service, you receive a hostname as follows.
 
 ```
-https://myservice-<USERNAME>.choreoapps.dev
+https://<USERNAME>.choreoapis.dev/myservice/<VERSION>
 ```
 
 The URL that you need to invoke to trigger the service changes based on the relative path from the host that you specify in the **Path** field of the API configuration.
@@ -22,9 +22,9 @@ If you do not specify a relative path from the host, invoking the hostname invok
 
 e.g.,
 
-| **Path**      | **URL to invoke the service**            |
-|---------------|------------------------------------------|
-| Not specified | `https://myservice-username.choreoapps.dev` |
+| **Path**      | **URL to invoke the service**                           |
+|---------------|---------------------------------------------------------|
+| Not specified | `https://<USERNAME>.choreoapis.dev/myservice/<VERSION>` |
 
 ## Single path
 
@@ -32,9 +32,9 @@ If you provide a single path in this field, you need to append it to the hostnam
 
 e.g.,
 
-| **Path**  | **URL to invoke the service**                  |
-|-----------|------------------------------------------------|
-| `/path1`  | `https://myservice-username.choreoapps.dev/path1` |
+| **Path**  | **URL to invoke the service**                                 |
+|-----------|---------------------------------------------------------------|
+| `/path1`  | `https://<USERNAME>.choreoapis.dev/myservice/<VERSION>/path1` |
 
 ## Multiple path strings
 
@@ -42,9 +42,9 @@ You could also provide multiple paths for this field. If you do so, you need to 
 
 e.g.,
 
-| **Path**             | **URL to invoke the service**                              |
-|----------------------|------------------------------------------------------------|
-| `/path1/path2/path3` | `https://myservice-username.choreoapps.dev/path1/path2/path3` |
+| **Path**             | **URL to invoke the service**                                             |
+|----------------------|---------------------------------------------------------------------------|
+| `/path1/path2/path3` | `https://<USERNAME>.choreoapis.dev/myservice/<VERSION>/path1/path2/path3` |
 
 ## Path parameters
 
@@ -52,8 +52,8 @@ If you specify a path parameter, it could be read from within your service. This
 
 e.g.,
 
-| **Path**                    | **URL to invoke the service**                       |
-|-----------------------------|-----------------------------------------------------|
-| `/[int id]/[string branch]` | `https://myservice-username.choreoapps.dev/01/Chicago` |
+| **Path**                    | **URL to invoke the service**                                      |
+|-----------------------------|--------------------------------------------------------------------|
+| `/[int id]/[string branch]` | `https://<USERNAME>.choreoapis.dev/myservice/<VERSION>/01/Chicago` |
 
 In this example, the path allows you to read the ID (in this example,`01`) and the branch (in this example, `Chicago`) from within your service.
