@@ -6,7 +6,7 @@ When you create a service, you need to configure an API to invoke it. This confi
 
 e.g., Create a service named `myservice`.
 
-Once you deploy the service, you receive a hostname as follows.
+Once you deploy the service, you receive a hostname as follows:
 
 ```
 https://<USERNAME>.choreoapis.dev/myservice/<VERSION>
