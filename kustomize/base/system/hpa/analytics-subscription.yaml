@@ -7,8 +7,8 @@ metadata:
     choreo.component: analytics-subs
   name: analytics-subs
 spec:
-  maxReplicas: 2
-  minReplicas: 1
+  maxReplicas: 3
+  minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
