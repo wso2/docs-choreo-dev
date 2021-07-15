@@ -31,7 +31,7 @@ To create the resource via which the service is invoked, follow this procedure:
 Follow this procedure to connect to the COVID-19 API and retrieve data:
 
 1. Click **API Calls** and then select **COVID-19 API**.
-2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
 3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
     | **Field**                  | **Value**         |
@@ -59,7 +59,7 @@ Follow this procedure to connect to the World Bank API and retrieve population d
 
 1. Click the last **+** icon in the low-code diagram.
 2. Click **API Calls** and then select **World Bank API**.
-3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
+3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Endpoint Name** and click **Continue to Invoke API**.
 4. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
 
     | **Field**                  | **Value**            |
@@ -177,7 +177,7 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
     The response is displayed as follows:
 
-    ![Response in the test view](../assets/img/services/service-response.png){.cInlineImage-bordered}
+    ![Response in the test view](../assets/img/services/service-response.png){.cInlineImage-half}
 
 
 ## Step 7: Deploy the service
@@ -197,7 +197,7 @@ To deploy the `CovidStatus` service, follow the procedure below:
     
     !!! tip
         The cURL command will be something as given in the example below:<br/><br/>
-        `curl "https://johndoe.dv.choreoapis.dev/covidstatus/1.0.0/stats/{country}" -H 'API-Key: <API_KEY>>' -X GET<br/><br/>
+        `curl "https://test.choreoapis.dev/covidstatus/1.0.0/stats/{country}" -H 'API-Key:<API_KEY>' -X GET`<br/><br/>
         The value for the **country** parameter can be changed as required.
         
 3. Invoke the service a few times via the terminal by issuing the cURL command you copied.
