@@ -8,7 +8,7 @@ Follow this procedure to create an API:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 2. Go to the **APIs** card and click **Get Started**. This takes you to the **Create API** page.
-3. On the **Create API** page, go to the **Create an API Proxy** card and click **Next**.
+3. On the **Create API** page, go to the **Create an API proxy** card and click **Next**.
 4. Under **Design a new REST API**, click **Next**.
 5. In the Create API from REST API form, enter the details as follows:
     
