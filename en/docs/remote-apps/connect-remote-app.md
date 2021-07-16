@@ -4,7 +4,7 @@ If you need to observe an external application that you have written in Ballerin
 
 ## Prerequisites
 
-Create an external application in Ballerina programming language and run it. For instructions, see [Ballerina Documentation - Writing Your First Ballerina Program](https://ballerina.io/learn/user-guide/getting-started/writing-your-first-ballerina-program/).
+Create an external application in Ballerina programming language. For instructions, see [Ballerina Documentation - Writing Your First Ballerina Program](https://ballerina.io/learn/user-guide/getting-started/writing-your-first-ballerina-program/).
 
 !!! Tip
     In this guide, we are using the same Ballerina application that is created in the guide linked above.
