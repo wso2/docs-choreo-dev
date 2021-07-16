@@ -87,19 +87,25 @@ describe('Observability tests', () => {
     cy.get('[data-testid="remoteApp-new-app-button"]').should('be.visible');
     cy.get('[data-testid="remoteApp-new-app-button"]').click();
 
-    const curl = `curl -sL -H x-platform:Unix`
-
+    const curl_unix = `curl -sL -H x-platform:Unix`;
+    const curl_windows = `Invoke-Command -ScriptBlock {Invoke-Expression (curl -H @{'x-platform'='Windows'}`;
     // Testing mac
     cy.get('[data-testid="Mac-button"]').should("be.visible");
     cy.get('[data-testid="Mac-button"]').click();
 
-    cy.get('[data-testid="app-linking-command"]').find("input").should("contain.value", curl);
+    cy.get('[data-testid="app-linking-command"]').find("input").should("contain.value", curl_unix);
 
     // Testing Linux
     cy.get('[data-testid="Linux-button"]').should("be.visible");
     cy.get('[data-testid="Linux-button"]').click();
 
-    cy.get('[data-testid="app-linking-command"]').find("input").should("contain.value", curl);
+    cy.get('[data-testid="app-linking-command"]').find("input").should("contain.value", curl_unix);
+
+    // Testing Windows
+    cy.get('[data-testid="Windows-button"]').should("be.visible");
+    cy.get('[data-testid="Windows-button"]').click();
+
+    cy.get('[data-testid="app-linking-command"]').find("input").should("contain.value", curl_windows);
 
     cy.contains('button', 'Done').should('be.visible');
     cy.contains('button', 'Done').click();
