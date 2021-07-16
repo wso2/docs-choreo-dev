@@ -105,18 +105,14 @@ After sending a few requests, you can proceed to the next step to view the obser
 
 To view the observability statistics generated for your remote Ballerina application, click on the link provided for observability data in the startup logs of your remote application. Ah shown in the startup logs generated in [Step 3](step-3-build-the-ballerina-project), the link in this example is `http://console.choreo.dev/observe/app/91e9750f-e2e1-11eb-90ce-de6d84510939/dd9780a8-e2e2-11eb-90ce-de6d84510939`.
 
-Alternatively, you can navigate to the same page in the Choreo Console as follows:
+Observability data is displayed as shown in the example below.
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+![View observability data](../assets/img/remote-apps/remote-service-observability.png)
 
-2. Go to the **Remote Apps** card, and click **Connect App**.
-
-3. Click on your remote Ballerina application to open it.
-
-    Observability data is displayed as shown in the example below.
-    
-    ![View observability data](../assets/img/remote-apps/remote-service-observability.png)
-    
-    Congratulations! You have successfully connected a remote application to Choreo and viewed its observability statistics in the Choreo Console.
+!!! tip
+    Alternatively, you can navigate to the same page in the Choreo Console as follows:<br/><br/>
+    1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).<br/><br/>   
+    2. Go to the **Remote Apps** card, and click **Connect App**.<br/><br/>
+    3. Click on your remote Ballerina application to open it.
    
-
+Congratulations! You have successfully connected a remote application to Choreo and viewed its observability statistics in the Choreo Console.
