@@ -35,6 +35,7 @@ spec:
       labels:
         choreo.component: choreo-connect-adapter
     spec:
+      automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500
         runAsGroup: 10500
