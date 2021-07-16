@@ -85,9 +85,6 @@ In this step, you will build and run your Ballerina project.
     ballerina: started publishing metrics to Choreo
     [ballerina/http] started HTTP/WS listener 0.0.0.0:9090
     ballerina: started publishing traces to Choreo
-    ballerina: sending all remaining traces to Choreo
-    [ballerina/http] stopped HTTP/WS listener 0.0.0.0:9090
-    ballerina: sending metrics to Choreo
     ```
    
     These logs indicate that your Ballerina application is connected to Choreo and that it is publishing data to it. Now you can invoke it and generate some observability data.
