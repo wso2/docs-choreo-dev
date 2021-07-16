@@ -70,7 +70,7 @@ Cypress.Commands.add('testApiInPublisherTestConsole', () => {
 Cypress.Commands.add('deleteApiFromOverview', () => {
     cy.get('[data-testid="develop"]').click();
     cy.get('[data-testid="Overview"]').click();
-    cy.get('[data-testid="delete-api-btn"]').click();
+    cy.get('[data-testid="delete-api-btn"]').click({force: true });
     cy.get('[data-testid="delete-api"]').click();
     cy.url().should('not.include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
     cy.log('API deleted successfully');
