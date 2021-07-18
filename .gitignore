@@ -3,6 +3,7 @@
 
 # Package Files #
 *.jar
+!applinking_test.jar
 *.war
 *.nar
 *.ear
