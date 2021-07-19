@@ -1,20 +1,20 @@
 # Create Your First Service
 
-This quick start guide walks you through the steps to create a service that gets the current COVID-19 status of a given country. It will:
+This quick start guide walks you through the steps to create a service that gets the current COVID-19 status of a given country. It
 
-- Connect to the COVID-19 data API to get COVID-19 statistics.
-- Connect to the World Bank data API to get population data.
-- Send a response with further processed COVID-19 data.
+- Connects to the COVID-19 data API to get COVID-19 statistics
+- Connects to the World Bank data API to get population data
+- Sends a response with further processed COVID-19 data
 
 Once you develop and test the service, you can deploy it and observe its statistics to evaluate its performance.
 
 ## Step 1: Create the service resources
 
-To create the resource via which the service is invoked, follow this procedure:
+To create the resource to invoke the service, follow this procedure:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
     
-2. Go to the **Services** card and click **Get Started**. Now you are on the **Services** page, where you can try out sample services or create your own.
+2. Go to the **Services** card and click **Get Started**. This takes you to the **Services** page, where you can try out sample services or create your own.
     
 3. Click **Create** to create a service from scratch.
 
@@ -28,22 +28,22 @@ To create the resource via which the service is invoked, follow this procedure:
     
 ## Step 2: Get COVID-19 data
 
-Follow this procedure to connect to the COVID-19 API and retrieve data:
+Follow this procedure to connect to the COVID-19 API and retrieve the data:
 
 1. Click **API Calls** and then select **COVID-19 API**.
 2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
-3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
+3. In the **Operation** drop-down list, select **Country Status** and enter these details:
 
     | **Field**                  | **Value**         |
     |----------------------------|-------------------|
     | **Country**                | `country`         |
     | **Response Variable Name** | `statusByCountry` |
 
-6. Click **Save**.
-7. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure: 
+4. Click **Save**.
+5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure: 
 
     1. Click the last **+** icon in the low-code diagram.
-    2. Under **Statements**, select **Variable** and enter details as follows:
+    2. Under **Statements**, select **Variable** and enter the details as follows:
 
         | **Field**      | **Value**                     |
         |----------------|-------------------------------|
@@ -55,12 +55,12 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
     
 ## Step 3: Get the population data
 
-Follow this procedure to connect to the World Bank API and retrieve population data:
+Follow this procedure to connect to the World Bank API and retrieve the population data:
 
 1. Click the last **+** icon in the low-code diagram.
 2. Click **API Calls** and then select **World Bank API**.
 3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Endpoint Name** and click **Continue to Invoke API**.
-4. In the **Operation** drop-down list, select **Get Country Population** and enter details as follows in the other fields: 
+4. In the **Operation** drop-down list, select **Get Country Population** and enter these details: 
 
     | **Field**                  | **Value**            |
     |----------------------------|----------------------|
@@ -71,7 +71,7 @@ Follow this procedure to connect to the World Bank API and retrieve population d
 6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
-    2. Under **Statements**, select **Variable** and enter details as follows:
+    2. Under **Statements**, select **Variable** and enter the details as follows:
 
         | **Field**      | **Value**                                         |
         |----------------|---------------------------------------------------|
@@ -83,10 +83,10 @@ Follow this procedure to connect to the World Bank API and retrieve population d
     
 ## Step 4: Calculate the total COVID-19 case count by population
 
-Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
+In this step, you'll calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you retrieved. Follow this procedure:
 
 1. Click the last **+** icon in the low-code diagram.
-2. Under **Statements**, select **Variable** and enter details as follows:
+2. Under **Statements**, select **Variable** and enter these details:
 
     | **Field**      | **Value**                     |
     |----------------|-------------------------------|
@@ -98,11 +98,11 @@ Now let’s calculate the total COVID-19 case count per million in the populatio
 
 ## Step 5: Build the JSON payload and respond
 
-To build the JSON payload to be sent as the response and then send the response, follow this procedure:
+To build the JSON payload to be sent as the response and then to send the response, follow this procedure:
 
 1. To build the `json` payload with data of the total cases per million in the population, add a variable.
 
-    Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
+    Click the last **+** icon in the low-code diagram and click **Variable**. Then enter these details:
    
     | **Field**      | **Value**                     |
     |----------------|-------------------------------|
@@ -112,21 +112,21 @@ To build the JSON payload to be sent as the response and then send the response,
 
 2. Click **Save**.
     
-3. To respond with the JSON payload, add a `Respond` statement.
+3. To respond with the JSON payload, add a `Respond` statement:
 
-    Click the last **+** icon in the low-code diagram and click **Respond**.
+    1. Click the last **+** icon in the low-code diagram and click **Respond**.
     
-    In the **Respond Expression** field, enter `payload`.
+    2. In the **Respond Expression** field, enter `payload`.
     
-    Save the information.
+    3. Save the information.
     
 Now you have completed designing the `CovidStatus` service.
 
-The low-code diagram looks as follows:
+The low-code diagram looks like the following:
 
 ![Completed low-code diagram](../assets/img/services/service-low-code-view.png){.cInlineImage-full}
 
-The code view looks as follows:
+The code view looks like this:
 
 ```ballerina
 import ballerinax/worldbank;
@@ -154,11 +154,11 @@ service / on new http:Listener(8090) {
 
 ## Step 6: Test the service
 
-To test the `CovidStatus` service you created, follow the procedure below:
+To test the `CovidStatus` service you created, follow this procedure:
 
 1. Click **Run & Test**.
 
-    The following logs appear to indicate that the service has successfully started.
+    The following logs appear, indicating that the service has successfully started.
     
     ```
     Starting application...
@@ -173,16 +173,14 @@ To test the `CovidStatus` service you created, follow the procedure below:
 
 4. Click **Try it out**, and in the **country** field, enter `USA`.
    
-5. Click **Execute**.
-
-    The response is displayed as follows:
+5. Click **Execute**. The response is displayed as follows:
 
     ![Response in the test view](../assets/img/services/service-response.png){.cInlineImage-half}
 
 
 ## Step 7: Deploy the service
 
-To deploy the `CovidStatus` service, follow the procedure below:
+To deploy the `CovidStatus` service, follow this procedure:
 
 1. Click the **Go Live** icon in the left pane.
 
@@ -190,13 +188,14 @@ To deploy the `CovidStatus` service, follow the procedure below:
 
 2. To deploy the service, click **Deploy**.
 
-    The status of the service changes to **Deployed**, and the following logs appear to indicate that the service is successfully deployed.
-    Then, click on **://cURL**. Copy the cURL command that is displayed.
+    The status of the service changes to **Deployed**, and the following logs appear, indicating that the service is successfully deployed.
 
     ![Get cURL command](../assets/img/services/get-curl-command.png){.cInlineImage-full}
     
+    Then click **://cURL** and copy the cURL command that is displayed.
+    
     !!! tip
-        The cURL command will be something as given in the example below:<br/><br/>
+        The following shows an example of what the cURL command might look like:<br/><br/>
         `curl "https://test.choreoapis.dev/covidstatus/1.0.0/stats/{country}" -H 'API-Key:<API_KEY>' -X GET`<br/><br/>
         The value for the **country** parameter can be changed as required.
         
@@ -210,13 +209,13 @@ To observe the `CovidStatus` service, click the **Observe** icon in the left pan
 
 ![Observe icon](../assets/img/services/observe-icon.png){.cInlineImage-bordered}
 
-You can view statistics related to the service as follows:
+You can view statistics related to the service as the following diagram illustrates:
 
 ![Visualization of throughput and latency](../assets/img/services/visualization-of-statistics.png){.cInlineImage-full}
 
 The low-code diagram displays the success rate and the latency for each connector. 
-The observability view to the right of the low-code diagram displays graphs that depict the throughput and the latency. You can move 
-the pointer over the throughput graph to view details relevant for specific times. If you want to drill down the statistics further, 
-click on the **Diagnostics View** tab.  
+The Observability view to the right of the low-code diagram displays graphs that depict the throughput and the latency. You can move 
+the pointer over the throughput graph to view details relevant for specific times. If you want to drill down further, 
+click the **Diagnostics View** tab.  
 
-Congratulations! Now you have successfully created a service, tested it, deployed it, and observed its statistics.
+Congratulations! You have now successfully created a service, tested it, deployed it, and observed its statistics.
