@@ -33,8 +33,8 @@ describe("API creation from an existing endpoint", () => {
 
         cy.log('Opening API creation dialog');
         cy.contains('Create API').should('exist');
-        cy.get('[data-testid="proxy-btn"]').click();
-        cy.get('[data-testid="upload-rest-definition"]').click();
+        cy.get('[data-testid="create-api-from-proxy-btn"]').click();
+        cy.get('[data-testid="create-api-from-rest-api-btn"]').click();
 
         cy.log('Filling API creation form data');
         cy.get('[data-testid=api-name]').type(API_NAME);
