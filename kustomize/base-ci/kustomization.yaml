@@ -48,7 +48,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router
   newTag: master-a0e2d70161b345935743ea7bbac311aae296f974
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
-  newTag: master-9b1cc19035598e08457c5c7a8408c31181280e72
+  newTag: master-b02097b9833b544279286dbf854d2a7d2b1addaf
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
   newTag: v4.0.0-r19072021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
