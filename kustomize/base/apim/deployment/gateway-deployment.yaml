@@ -45,6 +45,9 @@ spec:
       containers:
       - name: wso2am-gateway
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r14062021.2
+        envFrom:
+        - configMapRef:
+            name: cm-feature-flags
         env:
         - name: PROFILE_NAME
           value: gateway-worker
