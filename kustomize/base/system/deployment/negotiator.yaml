@@ -61,6 +61,11 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
+        - name: CHOREO_DB_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_DRIVER
+              name: cm-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           allowPrivilegeEscalation: false
