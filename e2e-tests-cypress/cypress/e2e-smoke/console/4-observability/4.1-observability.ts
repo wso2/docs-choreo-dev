@@ -176,7 +176,6 @@ describe('Observability tests', () => {
     it('test diagnostics view', { retries: NO_OF_RETRIES }, () => {
         const timestampRegex = /(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}\s([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/;
         const numberOfBins = 5;
-        const binOneMandatoryLog = 'ballerina: started publishing metrics to Choreo';
 
         cy.log('Waiting for the diagram to be rendered');
         cy.get('.diagram-canvas').should('exist');
@@ -199,9 +198,6 @@ describe('Observability tests', () => {
             }
             cy.get('[data-testid="time-interval-5"]').should('not.exist');
             cy.get('[data-testid="logs-partition-5"]').should('not.exist');
-
-            cy.log('Asserting mandatory log in the first partition');
-            cy.contains('[data-testid="logs-partition-0"]', binOneMandatoryLog).should('exist');
 
             cy.log('Verifying whether all the graphs are rendered');
             cy.get('[data-testid="error-graph"]').should('exist');
