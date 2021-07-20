@@ -96,6 +96,12 @@ spec:
             httpGet:
              port: health
              path: /health/liveness
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - "sleep"
+              - "20"
         ports:
         - containerPort: 9090
           name: handshake-port
