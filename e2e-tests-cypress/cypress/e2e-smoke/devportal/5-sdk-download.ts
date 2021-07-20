@@ -16,7 +16,7 @@
 import { LONG_TIME_OUT, STANDARD_TIME_OUT } from "../../support/common/constants";
 import { getApiName } from "../../support/devportal/utils";
 
-describe('Donwloading the API SDK scenario', () => {
+describe('Downloading the API SDK scenario', () => {
 
     const apiName = getApiName();
     const sdkFile = apiName + "_1.0.0_android.zip";
@@ -42,7 +42,7 @@ describe('Donwloading the API SDK scenario', () => {
     })
 
     it('Verify the downloaded SDK file', () => {
-        cy.log(" Looking for the SDK file under downloads folder : ", sdkFile);
+        cy.log(" Looking for the SDK file under downloads folder : " +  sdkFile);
         const downloadsFolder = Cypress.config("downloadsFolder");
         cy.readFile(path.join(downloadsFolder, sdkFile)).should("exist", {timeout: LONG_TIME_OUT});
      });
