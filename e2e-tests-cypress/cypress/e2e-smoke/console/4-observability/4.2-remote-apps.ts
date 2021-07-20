@@ -61,7 +61,7 @@ describe('Observability tests', () => {
 
   it('test connect existing project', {retries: NO_OF_RETRIES}, () => {
 
-    cy.get('[data-testid="connect-remote-apps-title"]').should('have.text', 'Connect remote app');
+    cy.get('[data-testid="connect-remote-apps-title"]').should('have.text', 'Connect remote application');
     cy.get('[data-testid="connect-remote-apps-existing-container"]').should('be.visible');
     cy.get('[data-testid="connect-remote-apps-existing-container"]').within(() => {
       cy.contains('Connect existing app').should('be.visible');
