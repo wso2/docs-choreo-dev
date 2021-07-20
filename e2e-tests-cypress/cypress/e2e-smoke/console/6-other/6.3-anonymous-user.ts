@@ -61,10 +61,10 @@ if (Cypress.env("isDev")) {
             //Create and publish an OAS API 
             cy.log("Starting API creation using choreo service");
             cy.navigateFromHomePage(APIS_TEXT);
-            cy.getByTestId("change-to-create-service").should('be.visible').click({ force: true });
+            cy.getByTestId("create-api-from-scratch-btn").should('be.visible').click({ force: true });
             cy.get('button').contains('Next').first().click({ force: true });
             cy.log('Filling API creation form data');
-            cy.getByTestId("upload-open-api-definition").click();
+            cy.getByTestId("create-api-from-open-api-btn").click();
             cy.getByTestId("open-api-file").click();
             cy.get('input[type="file"]').attachFile(filepath);
             cy.get('[id="create-API-from-openAPI-def-btn"]').click();
