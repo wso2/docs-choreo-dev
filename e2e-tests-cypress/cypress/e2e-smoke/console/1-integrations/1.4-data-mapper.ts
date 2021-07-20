@@ -49,6 +49,8 @@ describe("Data Mapper", () => {
  
         cy.get('[data-testid="datamapper-variable-name"]').find('input').first()
             .click({ force: true }).clear().type('emp');
+        cy.get('[data-testid=product-tour-code-view]').click();
+        cy.get('[data-testid="vertical-close-btn"]').click();
         cy.get('[data-testid = "Select Typestring"]').click();
         cy.contains('json').click({force: true});
         cy.get ('[data-testid="datamapper-output-config-save-btn"]'). click ();
