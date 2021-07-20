@@ -93,6 +93,9 @@ spec:
               protocol: "TCP"
             - containerPort: 5672
               protocol: "TCP"
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
           env:
             - name: NODE_IP
               valueFrom:
