@@ -174,18 +174,15 @@ spec:
               key: GOOGLE_CAPTCHA_SITE_KEY
               name: cm-frontend
               optional: true
-        - name: FEATURE_FLAG_ANONYMOUS_LOGIN
-          valueFrom:
-            configMapKeyRef:
-              key: FEATURE_FLAG_ANONYMOUS_LOGIN
-              name: cm-feature-flags
-              optional: true
         - name: DISABLE_GOOGLE_CAPTCHA
           valueFrom:
             configMapKeyRef:
               key: DISABLE_GOOGLE_CAPTCHA
               name: cm-frontend
               optional: true
+        envFrom:
+        - configMapRef:
+            name: cm-feature-flags
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
