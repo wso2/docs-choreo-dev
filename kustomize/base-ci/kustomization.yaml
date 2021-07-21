@@ -80,7 +80,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater
   newTag: master-bd22649db21d8d05a7ed2295b920af193b237129
 - name: choreocontrolplane.azurecr.io/choreoipaas/programanalyzer
-  newTag: master-78b5f2fa2b2dc684e69d591162f0b9973cbab331
+  newTag: master-94fd19e8ddc86cc29dfffc73c366e55e62cb34b0
 - name: choreocontrolplane.azurecr.io/choreoipaas/test-assistant
   newTag: main-b20ece7451438288528ffeca933c51f4f55eb37f
 - name: choreocontrolplane.azurecr.io/choreoipaas/test-assistant-init
