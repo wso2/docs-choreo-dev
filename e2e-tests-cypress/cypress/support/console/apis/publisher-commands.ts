@@ -156,3 +156,12 @@ Cypress.Commands.add('publishApi', () => {
     cy.get('[data-testid=lifecycle-management]', { timeout: STANDARD_TIME_OUT }).click();
     cy.get('[data-testid=Publish-lc-btn]').click();
 });
+
+Cypress.Commands.add('checkApiListAvailabilityAndVisitCreate', () => {
+    cy.get('#container').then((container) => {
+        if (container.find('[data-testid="create-api-btn"]').length > 0)  {
+            cy.log("API list available");
+            cy.get('[data-testid="create-api-btn"]', { timeout: MEDIUM_TIME_OUT }).click();
+        }
+    });
+});

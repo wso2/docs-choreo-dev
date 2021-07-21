@@ -26,12 +26,8 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.log("Starting API Creation using open API specification");
         cy.navigateFromHomePage(APIS_TEXT);
 
-        cy.get('#container').then((container) => {
-            if (container.find('[data-testid="create-api-btn"]').length > 0)  {
-                cy.log("API list available");
-                cy.get('[data-testid="create-api-btn"]', { timeout: MEDIUM_TIME_OUT }).click();
-            }
-        });
+        cy.log("Checking availability of the API list");
+        cy.checkApiListAvailabilityAndVisitCreate();
 
         cy.get('[data-testid="create-api-from-proxy-btn"]').click();
         cy.get('[data-testid="create-api-from-open-api-btn"]').click();

@@ -29,12 +29,8 @@ describe("API creation from an existing endpoint", () => {
         cy.log("Visiting API listing");
         cy.navigateFromHomePage(APIS_TEXT);
 
-        cy.get('#container').then((container) => {
-            if (container.find('[data-testid="create-api-btn"]').length > 0)  {
-                cy.log("API list available");
-                cy.get('[data-testid="create-api-btn"]', { timeout: MEDIUM_TIME_OUT }).click();
-            }
-        });
+        cy.log("Checking availability of the API list");
+        cy.checkApiListAvailabilityAndVisitCreate();
 
         cy.log('Opening API creation dialog');
         cy.contains('Create API').should('exist');
