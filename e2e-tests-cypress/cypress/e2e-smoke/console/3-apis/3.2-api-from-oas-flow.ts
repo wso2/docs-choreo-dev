@@ -12,7 +12,7 @@
  */
 
 import { generateApiName } from "../../../support/common/utils";
-import { APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
+import {APIS_TEXT, DEVELOP, MEDIUM_TIME_OUT, OVERVIEW, PATH_SEPARATOR} from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
     const API_NAME = generateApiName('oas');
@@ -25,7 +25,10 @@ describe('Choreo APIM publisher scenarios', () => {
         const filepath = 'console/apis/generation_oas.yaml';
         cy.log("Starting API Creation using open API specification");
         cy.navigateFromHomePage(APIS_TEXT);
-        cy.get('[data-testid="create-api-btn"]').click({ force: true });
+
+        cy.log("Checking availability of the API list");
+        cy.checkApiListAvailabilityAndVisitCreate();
+
         cy.get('[data-testid="create-api-from-proxy-btn"]').click();
         cy.get('[data-testid="create-api-from-open-api-btn"]').click();
         cy.get('[data-testid="open-api-file"]').click();
