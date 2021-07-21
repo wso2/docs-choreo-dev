@@ -62,7 +62,7 @@ nav:
           - Integration Concepts: integrations/integration-concepts.md
           - Build Your First Integration: integrations/build-your-first-integration.md
     - Remote Apps:
-          - Connect Remote Applications: remote-apps/connect-remote-app.md
+          - Connect Remote Applications: remote-apps/connect-remote-applications.md
     - Observability:
           - Observability Overview: observability/observability-overview.md
           - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
