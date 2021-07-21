@@ -12,10 +12,11 @@
  */
 
 import { generateApiName } from "../../../support/common/utils";
-import { APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
+import { APIM_RESOURCE_PATH, APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
     const API_NAME = generateApiName('oas');
+    let apiId: string;
 
     before(() => {
         cy.consoleUserLogin();
@@ -23,8 +24,10 @@ describe('Choreo APIM publisher scenarios', () => {
 
     it('Creating and publishing an API from open API specification', () => {
         const filepath = 'console/apis/generation_oas.yaml';
+
         cy.log("Starting API Creation using open API specification");
         cy.navigateFromHomePage(APIS_TEXT);
+
         cy.get('[data-testid="create-api-btn"]').click({ force: true });
         cy.get('[data-testid="create-api-from-proxy-btn"]').click();
         cy.get('[data-testid="create-api-from-open-api-btn"]').click();
@@ -37,27 +40,34 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('[data-testid="api-basepath"]').within(() => {
             cy.get('input').clear().type(API_NAME);
         });
-        cy.get('[id="create-and-publish-api"]').click();
-        cy.url().should('include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
-        cy.get('[data-testid="go-to-dev-portal-btn"]').should('exist');
-        cy.get('[data-testid="go-to-dev-portal-btn"]').should('not.be.disabled');
-        cy.get('[data-testid="overview-item-State"]').should('have.text', 'Published');
-        cy.log('Successfully created API from open API specification');
 
-        cy.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
-        cy.updateSubscriptionPlans();
-        cy.createAndDeployRevision();
-        // TODO : Enable this test once the tryout 404 error fixed in dev
-        // cy.testApiInPublisherTestConsole();
+        cy.intercept({
+            method: "POST",
+            pathname: APIM_RESOURCE_PATH + PATH_SEPARATOR + "import-openapi",
+        }).as("createApi");
+
+        cy.get('[id="create-and-publish-api"]').click();
+
+        cy.wait('@createApi', { timeout: 20000 }).then((interception) => {
+            apiId = interception.response.body[`id`];
+
+            cy.url().should('include', DEVELOP + OVERVIEW + PATH_SEPARATOR);
+            cy.get('[data-testid="go-to-dev-portal-btn"]').should('exist');
+            cy.get('[data-testid="go-to-dev-portal-btn"]').should('not.be.disabled');
+            cy.get('[data-testid="overview-item-State"]').should('have.text', 'Published');
+            cy.log('Successfully created API from open API specification');
+
+            cy.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
+            cy.updateSubscriptionPlans();
+            cy.createAndDeployRevision();
+            // TODO : Enable this test once the tryout 404 error fixed in dev
+            // cy.testApiInPublisherTestConsole();
+        });
     });
 
     after(() => {
         cy.wait(1000);
-        cy.get('[data-testid="api-list"]').click({ force: true });
-        cy.wait(2000);
-        cy.searchApiFromListAndVisit(API_NAME);
-        cy.deleteApiFromOverview();
-        cy.log("Logout from Choreo");
+        cy.deleteApiByApiId(apiId);
         cy.userLogout();
     });
 });
