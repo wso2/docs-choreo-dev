@@ -11,15 +11,15 @@
  * associated services.
  */
 
-import {APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT} from "../../../support/common/constants";
+import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, PATH_SEPARATOR, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
-
     const API_NAME = generateApiName('CYE2E');
     const API_VERSION = 'V0.0.1';
     const API_ENDPOINT = 'https://jsonplaceholder.typicode.com';
     const OPERATION_TARGET = '/users';
+    let apiId: string;
 
     before(() => {
         cy.consoleUserLogin();
@@ -43,45 +43,49 @@ describe("API creation from an existing endpoint", () => {
         cy.get('[data-testid=api-version]').type(API_VERSION);
         cy.get('[data-testid=api-endpoint]').type(API_ENDPOINT);
         cy.get('#create-API-from-restEp-btn').should('be.enabled');
+
+        cy.intercept({
+            method: "POST",
+            pathname: APIM_RESOURCE_PATH
+        }).as("createApi");
+
         cy.get('#create-API-from-restEp-btn').click();
 
-        cy.verifyApiOverview(API_NAME, API_VERSION);
-        cy.updateDesignConfiguration();
-        cy.addApiDocument();
-        cy.updateRuntimeConfiguration();
+        cy.wait('@createApi', { timeout: 20000 }).then((interception) => {
+            apiId = interception.response.body[ `id` ];
 
-        cy.log('Visiting and updating resources');
-        cy.get('[data-testid=Resources]', { timeout: STANDARD_TIME_OUT }).click();
-        cy.log('Deleting initial resources');
-        cy.get('[data-testid=delete-all-operations-btn]').click();
-        cy.get('#mui-component-select-verbs').click();
-        cy.get('#menu-verbs').within(() => {
-            cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)', { timeout: LONG_TIME_OUT })
-                .contains('GET').click();
+            cy.verifyApiOverview(API_NAME, API_VERSION);
+            cy.updateDesignConfiguration();
+            cy.addApiDocument();
+            cy.updateRuntimeConfiguration();
+
+            cy.log('Visiting and updating resources');
+            cy.get('[data-testid=Resources]', { timeout: STANDARD_TIME_OUT }).click();
+            cy.log('Deleting initial resources');
+            cy.get('[data-testid=delete-all-operations-btn]').click();
+            cy.get('#mui-component-select-verbs').click();
+            cy.get('#menu-verbs').within(() => {
+                cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)', { timeout: LONG_TIME_OUT })
+                    .contains('GET').click();
+            });
+            cy.get('body').type('{esc}');
+            cy.get('#operation-target').type(OPERATION_TARGET);
+            cy.get('[data-testid=add-btn]').click();
+            cy.get('button').contains('Save').click();
+            cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
+            cy.updateSubscriptionPlans();
+            cy.deployInitialRevision();
+            cy.testApiInPublisherTestConsole();
+            cy.publishApi();
+            cy.wait(2000);
         });
-        cy.get('body').type('{esc}');
-        cy.get('#operation-target').type(OPERATION_TARGET);
-        cy.get('[data-testid=add-btn]').click();
-        cy.get('button').contains('Save').click();
-        cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
-        cy.updateSubscriptionPlans();
-        cy.deployInitialRevision();
-        cy.testApiInPublisherTestConsole();
-        cy.publishApi();
-        cy.wait(2000);
-    })
+    });
 
-    it('Deleting the created API', () => {
-        cy.contains('API list').click();
-        cy.log("Visiting API listing");
-        cy.navigateFromHomePage('apis');
+    // TODO: add test case to check API delete flow
 
-        cy.searchApiFromListAndVisit(API_NAME);
-
-        cy.get('[data-testid=go-to-dev-portal-btn]').should('be.enabled');
-        cy.get('[data-testid=resources-container]').within(() => {
-            cy.get('[data-testid="resource-' + OPERATION_TARGET + '"]').should('exist');
-        })
-        cy.deleteApiFromOverview();
+    after(() => {
+        cy.wait(1000);
+        cy.deleteApiByApiId(apiId);
+        cy.userLogout();
     });
 });

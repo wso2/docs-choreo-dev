@@ -501,6 +501,27 @@ Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
     });
 });
 
+Cypress.Commands.add('deleteApiByApiId', (id: string) => {
+    const organizationId = Cypress.env('orgs')[ 0 ].uuid;
+    cy.getCookie('token').should('exist').then((token) => {
+        cy.request({
+            method: "DELETE",
+            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value
+            },
+            qs: {
+                'organizationId': organizationId,
+            }
+        }).then((resp) => {
+            // Status code is expected to be 200
+            expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
+            cy.log("Successfully deleted API: " + id);
+        });
+    });
+});
+
 Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
     // Check if apps are listed
     cy.get('[id="backdrop-loader"').should('not.exist');
@@ -572,7 +593,8 @@ Cypress.Commands.add('deleteAppWithoutUndeploy', (name: string, strict: boolean)
                     cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', name);
                 }
                 cy.get('[style="color: inherit; width: 35%; box-sizing: border-box; font-size: 1rem; font-family: inherit; font-weight: inherit;"]').trigger('mouseover');
-                cy.get('[title="Undeploy the app to delete"]').should('exist');
+                cy.getByTestId("disabled-delete-btn-msg").should('be.visible');
+                cy.get('[title="Undeploy the application to delete"]').should('exist');
                 cy.log("Cannot delete a deployed app");
             } 
         }
