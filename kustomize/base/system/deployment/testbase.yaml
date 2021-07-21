@@ -66,6 +66,16 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-testbase-db
+        - name: CHOREO_DB_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_DRIVER
+              name: cm-choreo-testbase-db
+        - name: CHOREO_DB_MAX_POOL
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_MAX_POOL
+              name: cm-choreo-testbase-db    
         - name: CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
