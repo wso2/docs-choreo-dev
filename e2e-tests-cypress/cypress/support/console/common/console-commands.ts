@@ -572,7 +572,8 @@ Cypress.Commands.add('deleteAppWithoutUndeploy', (name: string, strict: boolean)
                     cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', name);
                 }
                 cy.get('[style="color: inherit; width: 35%; box-sizing: border-box; font-size: 1rem; font-family: inherit; font-weight: inherit;"]').trigger('mouseover');
-                cy.get('[title="Undeploy the app to delete"]').should('exist');
+                cy.getByTestId("disabled-delete-btn-msg").should('be.visible');
+                cy.get('[title="Undeploy the application to delete"]').should('exist');
                 cy.log("Cannot delete a deployed app");
             } 
         }
