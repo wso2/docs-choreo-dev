@@ -56,7 +56,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
   newTag: master-b83ed66a31d1682de854b21a8b3531854a8a7cd5
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase
-  newTag: master-25f00f938dca28a4a18685a5f06d05e532e904e5
+  newTag: master-e085fc60ad20bfd08464eea5835ecd046842de4e
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper
   newTag: master-9ab2b037699e4bffab361e34ec8e7f331d510ffd
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-balo-extractor
