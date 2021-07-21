@@ -89,6 +89,9 @@ spec:
               drop:
                 - all
               add: ["NET_RAW"]
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -169,6 +172,9 @@ spec:
               drop:
                 - all
               add: ["NET_RAW"]
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
           env:
             - name: ROUTER_ADMIN_HOST
               value: "0.0.0.0"
