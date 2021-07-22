@@ -68,21 +68,32 @@ describe('Schedule trigger test run and deployment', () => {
         cy.log("Creating variable with valid expression");
         cy.get('[data-testid="save-btn"]').click();
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
+
+        // this hack will add a sleep to the code using editor. This make sure the cronjob pod is not killed immediately
+        cy.get('#EditCodeIcon').click();
+        cy.get( '[data-testid="code-editor"] .monaco-editor textarea:first' ).click().focused()
+            .type('{pageup}').type('import ballerina/lang.runtime;{enter}')
+            .type('{downarrow}{downarrow}{downarrow}{downarrow}{downarrow}{downarrow}{end}{enter}')
+            .type('runtime:sleep(30);{enter}');
+        cy.get('#CommitCodeIcon_Default').click();
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
     })
 
     it('run schedule trigger integration', { retries: NO_OF_RETRIES }, () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click({ force: true });
         cy.log('Started test run');
-        cy.contains('[data-testid="log-panel"]', 'Hello world', { timeout: 1000 * 60 * 10 }).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'Hello world', { timeout: 1000 * 60 * 2 }).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'Application exited', { timeout: 1000 * 60 * 2 }).should('exist');
+
         cy.log('Schedule trigger printed the log successfully');
     })
 
     it('deploy schedule trigger integration', () => {
         cy.wait(10000);
         cy.deployToChoreo("schedule", appName);
-        cy.log('Awaiting 10 minutes to check if the expected log is printed');
-        cy.contains('[data-testid="log-panel-entry"]', 'Hello world', { timeout: 1000 * 60 * 10 }).should('exist');
+        cy.log('Awaiting 5 minutes to check if the expected log is printed');
+        cy.contains('[data-testid="log-panel-entry"]', 'Hello world', { timeout: 1000 * 60 * 5 }).should('exist');
         cy.log('Deployed Scheduler ran successfully and  printed the log');
     })
 
