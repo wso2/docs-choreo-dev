@@ -32,6 +32,11 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        - name: AZURE_INSIGHTS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-azure-insights
+              key: AZURE_INSIGHTS_KEY
         - name: JMX
           valueFrom:
             configMapKeyRef:
@@ -78,6 +83,9 @@ spec:
         - name: secret-azure-storage-account
           mountPath: "/mnt/csi/secret-azure-storage-account"
           readOnly: true
+        - name: secret-azure-insights
+          mountPath: /mnt/csi/secret-azure-insights
+          readOnly: true
         resources:
           limits:
             cpu: "2"
@@ -110,6 +118,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-azure-storage-account
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-azure-insights
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-azure-insights
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
