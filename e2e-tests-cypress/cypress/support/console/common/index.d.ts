@@ -8,7 +8,7 @@ declare namespace Cypress {
         userLoginWithGmail(): Chainable<Element>
         userLoginWithGithub(): Chainable<Element>
         userLogout(): Chainable<Element>
-        preserveCookiesForTest(cookies:Cookie[]): Chainable<Element>
+        preserveCookiesForTest(cookies: Cookie[]): Chainable<Element>
         saveLocalStorage(): Chainable<Element>
         restoreLocalStorage(): Chainable<Element>
         waitTillWorkSpace(): Chainable<Element>
@@ -17,12 +17,12 @@ declare namespace Cypress {
         configureResource(relativePath: string | null, method: string | null, returnType: string | null): Chainable<Element>
         selectTrigger(type: string): Chainable<Element>
         selectManualTrigger(): Chainable<Element>
-        selectManualTriggerOptions(type: string, option:string): Chainable<Element>
+        selectManualTriggerOptions(type: string, option: string): Chainable<Element>
         selectSpecificOption(option: string): Chainable<Element>
         selectGitHubTrigger(): Chainable<Element>
         configureGitHubTrigger(repoName: string, triggerEventType: string, triggerAction: string): Chainable<Element>
         setupGmailConnection(): Chainable<Element>
-        sendGmailMessage(plusBtnIndex: number, gmailConnectionIndex: number,emailAddress: string, emailSubject: string, emailBody: string): Chainable<Element>
+        sendGmailMessage(plusBtnIndex: number, gmailConnectionIndex: number, emailAddress: string, emailSubject: string, emailBody: string): Chainable<Element>
         fillCalendarConfigs(calendar: string): Chainable<Element>
         fillTwilioConfigs(accountSID: string, token: string, senderNumber: string, recipientNumber: string): Chainable<Element>
         typeOnNthExpressionEditor(n: number, expression: string, withinQuotes: boolean, waitForEnable?: string, validExpression?: boolean): Chainable<Element>
@@ -31,13 +31,13 @@ declare namespace Cypress {
         goBacktoAppsList(): Chainable<Element>
         searchApps(name: string): Chainable<Element>
         resetAppSearch(): Chainable<Element>
-        undeployApp(type:string, name: string, strict: boolean): Chainable<Element>
-        deleteApp(type:string, name: string, strict: boolean): Chainable<Element>
+        undeployApp(type: string, name: string, strict: boolean): Chainable<Element>
+        deleteApp(type: string, name: string, strict: boolean): Chainable<Element>
         cleanupApp(name: string): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>
-        deployToChoreo(type:string, appName: string): Chainable<Element>
+        deployToChoreo(type: string, appName: string): Chainable<Element>
         testRunApp(): Chainable<Element>
         selectScheduleTrigger(): Chainable<Element>
         navigateFromHomePage(pageName: string): Chainable<Element>
@@ -48,5 +48,6 @@ declare namespace Cypress {
         hideWelcomeMessage(): Chainable<Element>
         getByTestId(id: string): Chainable<Element>
         deleteApiByApplicationId(id: string): Chainable<Element>
+        deleteApiByApiId(id: string): Chainable<Element>
     }
 }

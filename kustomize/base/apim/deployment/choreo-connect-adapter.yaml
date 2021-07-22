@@ -86,6 +86,9 @@ spec:
               drop:
                 - all
               add: ["NET_RAW"]
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
           env:
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"

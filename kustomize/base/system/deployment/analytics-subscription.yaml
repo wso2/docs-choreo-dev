@@ -51,6 +51,11 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-app-db
+        - name: CHOREO_DB_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_DRIVER
+              name: cm-choreo-app-db
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:

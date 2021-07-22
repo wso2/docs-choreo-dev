@@ -9,7 +9,8 @@
         "console/0-clean/0.1-clean-previous-run.ts",
         "console/4-observability/*.ts",
         "console/5-settings/*.ts",
-        "console/6-other/*.ts"
+        "console/6-other/6.1-anonymous-app-linking.ts",
+        "console/6-other/6.2-login-logout.ts"
     ],
     "videoUploadOnPasses": false,
     "videoCompression": false,

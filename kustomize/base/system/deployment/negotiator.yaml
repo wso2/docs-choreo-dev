@@ -61,6 +61,16 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
               name: cm-choreo-program-db
+        - name: CHOREO_DB_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_DRIVER
+              name: cm-choreo-program-db
+        - name: CHOREO_DB_MAX_POOL
+          valueFrom:
+            configMapKeyRef:
+              key: CHOREO_DB_MAX_POOL
+              name: cm-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           allowPrivilegeEscalation: false
@@ -86,6 +96,12 @@ spec:
             httpGet:
              port: health
              path: /health/liveness
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - "sleep"
+              - "20"
         ports:
         - containerPort: 9090
           name: handshake-port

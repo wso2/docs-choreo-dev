@@ -25,5 +25,6 @@ declare namespace Cypress {
         searchApiFromListAndVisit(apiName: string):  Chainable<Element>
         deployInitialRevision():  Chainable<Element>
         publishApi():  Chainable<Element>
+        checkApiListAvailabilityAndVisitCreate(): Chainable<Element>
     }
 }

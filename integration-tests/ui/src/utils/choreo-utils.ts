@@ -960,9 +960,9 @@ export const createApiFromRestEp = async (t: TestController, apiName: string, ep
     await t.click(getElementFromSelectorTestId("create-api-btn"));
   }
 
-  await getElementFromSelectorTestId("upload-rest-definition").exists;
+  await getElementFromSelectorTestId("create-api-from-rest-api-btn").exists;
   await t
-    .click(getElementFromSelectorTestId("upload-rest-definition"))
+    .click(getElementFromSelectorTestId("create-api-from-rest-api-btn"))
     .expect(Selector("#backdrop-loader").exists).notOk({ timeout: WAIT_TIME_SHORT });
   await screen.findAllByText("Create API From REST API");
   logger.info("Create API From REST API form load successful!");

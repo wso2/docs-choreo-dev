@@ -36,6 +36,9 @@ spec:
                 - all
               add: ["NET_RAW"]
           name: apim-devportal
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
           readinessProbe:
             initialDelaySeconds: 15
             timeoutSeconds: 15
