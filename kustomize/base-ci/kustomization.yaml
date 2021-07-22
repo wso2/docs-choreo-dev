@@ -14,9 +14,9 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt
   newTag: master-1e9eb5c268af4e528dd438671b0997c81f64d540
 - name: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector
-  newTag: master-a04d068eeb8ff4ff5b73d96caad8411a4e6ff8ef
+  newTag: master-8cffdd30fe9162231ae8d0d6a41774f9c8c98099
 - name: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector-init
-  newTag: master-a04d068eeb8ff4ff5b73d96caad8411a4e6ff8ef
+  newTag: master-8cffdd30fe9162231ae8d0d6a41774f9c8c98099
 - name: choreocontrolplane.azurecr.io/choreoipaas/api-server
   newTag: master-708231d08ef69221187e65547df9ffe58339ecfa
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-deployer
