@@ -48,6 +48,6 @@ declare namespace Cypress {
         hideWelcomeMessage(): Chainable<Element>
         getByTestId(id: string): Chainable<Element>
         deleteApiByApplicationId(id: string): Chainable<Element>
-
+        deleteApiByApiId(id: string): Chainable<Element>
     }
 }
