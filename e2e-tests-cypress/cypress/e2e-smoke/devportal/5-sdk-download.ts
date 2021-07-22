@@ -35,10 +35,10 @@ describe('Downloading the API SDK scenario', () => {
         cy.wait(5000)
         cy.url().should('not.include', 'undefined',{ timeout: STANDARD_TIME_OUT })
         cy.get('[data-testid=sdks-item-link]')
-        .should("be.visible", { timeout: STANDARD_TIME_OUT }).click({ force: true });
+            .should("be.visible", { timeout: STANDARD_TIME_OUT }).click({ force: true });
         cy.log("clicking for download Android SDK ");
         cy.get('[data-testid=sdk-android-button]')
-        .should("be.visible", { timeout: STANDARD_TIME_OUT }).click()
+            .should("be.visible", { timeout: STANDARD_TIME_OUT }).click()
     })
 
     it('Verify the downloaded SDK file', () => {
