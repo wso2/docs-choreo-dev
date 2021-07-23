@@ -28,6 +28,7 @@ spec:
         capabilities:
           drop:
             - all
+          add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
