@@ -41,6 +41,11 @@ spec:
                     configMapKeyRef:
                       key: DEMO_USER_IDP_ID
                       name: cm-observability-data-generator
+                - name: WS_MANAGER_SERVICE_ADDRESS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: WS_MANAGER_SERVICE_ADDRESS
+                      name: cm-observability-data-generator
               resources:
                 limits:
                   cpu: 300m
