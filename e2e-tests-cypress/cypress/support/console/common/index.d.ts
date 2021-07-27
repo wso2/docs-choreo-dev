@@ -49,5 +49,9 @@ declare namespace Cypress {
         getByTestId(id: string): Chainable<Element>
         deleteApiByApplicationId(id: string): Chainable<Element>
         deleteApiByApiId(id: string): Chainable<Element>
+        createVariableOtherTypeProperty(custom_type: string, name: string, expression: string, validExpression?: boolean): Chainable<Element>
+        findPlusButton(plusBtnIndex: number, selector: string[]): Chainable<Element>
+        addWeatherForecastAPI(plusBtnIndex: number, endpointName: string, responseVarName: string, lat: string, lon: string, exclude?: string, units?: string, lang?: string): Chainable<Element>
+        sendChoreoSMS(recipientNumber: string, textMessage: string, responseVariableName?: string): Chainable<Element>
     }
 }
