@@ -7,7 +7,7 @@ Follow this procedure if you want to add a data mapping statement to your integr
 
      ![Data mapping input output windows](../assets/img/references/datamapping/input-output-windows.png){.cInlineImage-full}
    
-2. To add an input variable:
+2. To add an input variable, follow this procedure:
 
     1. In the **Input** pane, click **Add Variable**.
     2. Select a required input type from the **Select Input Type** drop-down list.
@@ -15,7 +15,7 @@ Follow this procedure if you want to add a data mapping statement to your integr
 
 3. To add an output variable, you can either select an existing variable or create a new variable via the **Output** pane. 
 
-    - To create a new variable in the **Output** pane: 
+    - To create a new variable in the **Output** pane, follow this procedure: 
 
         !!! tip
             If you want to create a new optional output variable, click the **Create Optional Variable** toggle to enable it.
@@ -24,7 +24,7 @@ Follow this procedure if you want to add a data mapping statement to your integr
          2. Select a variable type from the **Select Variable Type** drop-down list.
          3. Click **Save**.
 
-    - To use an existing variable in the **Output** pane:         
+    - To use an existing variable in the **Output** pane, follow this procedure:         
          1. Click the **Use Existing Variable** toggle to enable it.
          2. Select a variable from the **Select Output Variable** drop-down list.
          3. Click **Save**.
