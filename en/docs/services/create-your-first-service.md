@@ -195,7 +195,7 @@ To deploy the `CovidStatus` service, follow this procedure:
     Then click **://cURL** and copy the cURL command that is displayed.
     
     !!! tip
-        The following shows an example of what the cURL command might look like:<br/><br/>
+        The following shows an example of what the cURL command would look like:<br/><br/>
         `curl "https://test.choreoapis.dev/covidstatus/1.0.0/stats/{country}" -H 'API-Key:<API_KEY>' -X GET`<br/><br/>
         The value for the **country** parameter can be changed as required.
         
