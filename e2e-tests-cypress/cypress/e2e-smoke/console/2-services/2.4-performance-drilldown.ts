@@ -41,7 +41,7 @@ describe('Performance drill down test', () => {
         cy.url().should('include', 'app/' + appName + '/develop');
         cy.configureResource("hello", null, "string ?");
         
-        //Create new http connector
+        // Create new http connector
         cy.log('creating http connection');
 
         cy.get('[data-testid=api-options]').click();
@@ -53,7 +53,7 @@ describe('Performance drill down test', () => {
 
         cy.get('[data-testid=http-save]').click();
        
-        //Add get call to the existing http connector
+        // Add get call to the existing http connector
         cy.get(':nth-child(1) > .main-plus-wrapper > :nth-child(2) > [data-testid=plus-button] ' +
                 '> :nth-child(1) > .plus-holder > #SmallPlus > .product-tour-small-plus ' +
                 '> #Oval_Copy_15-2 > [r="6"]').click({force: true });
@@ -62,18 +62,23 @@ describe('Performance drill down test', () => {
         cy.get('.existing-connector-name').click({ force: true });
         cy.get('#combo-box-demo').type('get{enter}');
 
-        cy.get('[data-testid=http-save-done]').click({ force: true });
+        // Select payload type to json
+        cy.get('[data-testid="Select TypeString"]').click();
+        cy.get('[data-testid=connector-payload-json]').click();
+
+        // Save HTTP call
+        cy.get('[data-testid=http-save-done]').click();
     });
 
     it('Performance drill down', () => {
         cy.log('Starting performance drill down test');
-        //Open performance forecast view
+        // Open performance forecast view
         cy.get('[data-testid=analyze-btn]').click();
 
-        //Check for "performance forecast not available" element not present
+        // Check for "performance forecast not available" element not present
         cy.get('.MuiTypography-root.jss1917.MuiTypography-body1').should('not.exist');
 
-        //Check graph to exist
+        // Check graph to exist
         cy.get('[data-testid=analyze-graph] > :nth-child(1) > .recharts-wrapper' +
                 '> .recharts-surface > .recharts-area > .recharts-layer > .recharts-area-area').should('exist');
     })
