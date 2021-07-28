@@ -24,6 +24,6 @@ Choreo supports the following statements:
  - **Respond:** Sends a specific response back to the client. For example, if the request was processed successfully, it responds to the client with an `HTTP_OK`.
  - **Other:** Allows you to write a single or a multiline code snippet in your service.
 
-## Expression
+## Expression syntax
 
 Choreo statements can also be composed of expressions. For the syntax to use when you want to input values for an expression while designing a service using Choreo, see [Ballerina Expression Syntax](../references/ballerina-expression-syntax.md).
