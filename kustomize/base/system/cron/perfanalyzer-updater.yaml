@@ -2,6 +2,8 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: perfanalyzer-updater
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
   labels:
     choreo.component: perfanalyzer-updater
 spec:
