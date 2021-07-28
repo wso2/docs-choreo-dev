@@ -22,6 +22,7 @@ spec:
         choreo.component: apim-devportal
       annotations:
         linkerd.io/inject: enabled
+        checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     spec:
       securityContext:
         seccompProfile:
