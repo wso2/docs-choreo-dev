@@ -62,7 +62,12 @@ describe('Performance drill down test', () => {
         cy.get('.existing-connector-name').click({ force: true });
         cy.get('#combo-box-demo').type('get{enter}');
 
-        cy.get('[data-testid=http-save-done]').click({ force: true });
+        //Select payload type to json
+        cy.get('[data-testid="Select TypeString"]').click();
+        cy.get('.product-tour-payload-json').click();
+
+        //Save HTTP call
+        cy.get('[data-testid=http-save-done]').click();
     });
 
     it('Performance drill down', () => {
