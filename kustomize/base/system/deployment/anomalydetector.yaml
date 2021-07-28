@@ -54,10 +54,10 @@ spec:
           allowPrivilegeEscalation: false
         resources:
           limits:
-            cpu: 200m
+            cpu: 300m
             memory: 500Mi
           requests:
-            cpu: 100m
+            cpu: 200m
             memory: 300Mi
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/anomaly-detector:latest
