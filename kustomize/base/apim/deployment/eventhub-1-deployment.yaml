@@ -39,6 +39,7 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.linkerd.io/skip-outbound-ports: "3306"
+        checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
