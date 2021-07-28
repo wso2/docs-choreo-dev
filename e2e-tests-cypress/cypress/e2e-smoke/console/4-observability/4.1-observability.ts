@@ -24,7 +24,8 @@ describe('Observability tests', () => {
     let version: string
 
     before(() => {
-        cy.consoleUserLogin()
+        cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })

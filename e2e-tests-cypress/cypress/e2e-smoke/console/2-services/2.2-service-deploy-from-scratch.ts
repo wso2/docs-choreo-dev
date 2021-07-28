@@ -23,6 +23,7 @@ describe('Service deployment and delete deployed service', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         });

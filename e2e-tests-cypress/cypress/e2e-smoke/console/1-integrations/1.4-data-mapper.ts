@@ -20,12 +20,13 @@ describe("Data Mapper", () => {
 
     before(() => {
         cy.consoleUserLogin();
-        });
-    
+        cy.clearAllTestData();
+    });
+
 
     after(() => {
         cy.userLogout();
-        });
+    });
 
     it("Create DataMapping", () => {
         appName = generateAppName("app");

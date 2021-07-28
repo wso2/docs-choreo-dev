@@ -21,7 +21,8 @@ describe('Schedule trigger test run and deployment', () => {
     let appName: string
 
     before(() => {
-        cy.consoleUserLogin()
+        cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })

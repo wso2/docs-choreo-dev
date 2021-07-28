@@ -18,6 +18,7 @@ import { SERVICES_TEXT, EX_LONG_TIME_OUT, NO_OF_RETRIES } from "../../../support
 describe("Test successful deployment of sample services", () => {
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     after(() => {

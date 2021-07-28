@@ -20,7 +20,8 @@ describe('Performance drill down test', () => {
     let appName: string
 
     before(() => {
-        cy.consoleUserLogin()
+        cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })

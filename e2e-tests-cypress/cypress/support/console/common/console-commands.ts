@@ -24,6 +24,9 @@ import {
     GMAIL_CONNECTION_NAME,
     APIM_RESOURCE_PATH,
     PATH_SEPARATOR,
+    USER_CONNECTIONS_PATH,
+    GOOGLE_CALENDAR_CONNECTOR,
+    USER_CONFIGURATIONS_PATH,
 } from '../../common/constants';
 import { getApiName } from '../../devportal/utils';
 
@@ -58,7 +61,7 @@ Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
 });
 
 Cypress.Commands.add('waitTillWorkSpace', () => {
-    cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
+    cy.get('[data-testid="setting-up-workspace"]', { timeout: 1000 * 60 }).should('not.exist');
 });
 
 Cypress.Commands.add('createNewApp', (type: string, name: string) => {
@@ -505,7 +508,7 @@ Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
 });
 
 Cypress.Commands.add('deleteApiByApiId', (id: string) => {
-    const organizationId = Cypress.env('orgs')[ 0 ].uuid;
+    const organizationId = Cypress.env('orgs')[0].uuid;
     cy.getCookie('token').should('exist').then((token) => {
         cy.request({
             method: "DELETE",
@@ -525,7 +528,7 @@ Cypress.Commands.add('deleteApiByApiId', (id: string) => {
     });
 });
 
-Cypress.Commands.add('deleteApp', (type:string, name: string, strict: boolean) => {
+Cypress.Commands.add('deleteApp', (type: string, name: string, strict: boolean) => {
     // Check if apps are listed
     cy.get('[id="backdrop-loader"').should('not.exist');
     cy.get('body').then($body => {
@@ -729,4 +732,160 @@ Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
 
 Cypress.Commands.add('hideWelcomeMessage', () => {
     localStorage.setItem("HAS_SEEN_WELCOME_MESSAGE", "YES");
+});
+
+Cypress.Commands.add('clearConnections', () => {
+    cy.log('Deleting connections...');
+    cy.request({
+        method: "GET",
+        url: APP_SVC_URL + USER_CONNECTIONS_PATH
+    }).then((response) => {
+        expect(response.status).to.eq(SUCCESS_STATUS_CODE);
+        const connectionList = response["body"] as any[];
+        for (const connection of connectionList) {
+            const connectorName: string = connection.connectorName;
+            const connectorId: string = connection.handle;
+
+            if (connectorName != GOOGLE_CALENDAR_CONNECTOR) {
+                const deleteURL = APP_SVC_URL + USER_CONNECTIONS_PATH + PATH_SEPARATOR + connectorId;
+                cy.request({
+                    method: "DELETE",
+                    url: deleteURL
+                }).then((deleteResponse) => {
+                    expect(deleteResponse.status).to.eq(SUCCESS_STATUS_CODE);
+                }).wait(200);;
+            }
+        }
+    });
+});
+
+Cypress.Commands.add('clearConfigurations', () => {
+    cy.log('Deleting Configurations...');
+    cy.request({
+        method: "GET",
+        url: APP_SVC_URL + USER_CONFIGURATIONS_PATH
+    }).then((response) => {
+        expect(response.status).to.eq(SUCCESS_STATUS_CODE);
+        const configurationList = response["body"] as any[];
+
+        for (const conf of configurationList) {
+            const confKey: string = conf.key;
+            const confScope: string = conf.scope;
+            const deleteConfigurationsURL = APP_SVC_URL + USER_CONFIGURATIONS_PATH + PATH_SEPARATOR + confKey;
+            cy.request({
+                method: "DELETE",
+                url: deleteConfigurationsURL,
+                qs: {
+                    'scope': confScope,
+                }
+            }).then((deleteResponse) => {
+                expect(deleteResponse.status).to.eq(SUCCESS_STATUS_CODE);
+            }).wait(200);
+        }
+    });
+});
+
+Cypress.Commands.add('clearApps', () => {
+    cy.log("Deleting apps...");
+    cy.request({
+        method: "GET",
+        form: true,
+        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/`
+    }).then((response) => {
+        const data = response["body"] as [];
+        if (data.length) {
+            cy.log(`apps found : ${data.length}`);
+            for (const value of data) {
+                const appName = value["name"] as string;
+                const status = value['status'] as string;
+                if (status == "running") {
+                    cy.undeployAppViaRESTAPICall(appName);
+                }
+                cy.cleanupApp(appName);
+            }
+            cy.log("Successfully deleted all apps");
+        } else {
+            cy.log('No apps found');
+        }
+    });
+});
+
+Cypress.Commands.add('clearOnPremKeys', () => {
+    cy.log('Deleting on-prem keys...');
+    cy.request({
+        method: "GET",
+        form: true,
+        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/`
+    }).then((response) => {
+        const data = response["body"] as [];
+
+        if (data.length) {
+            cy.log(`on-prem keys found : ${data.length}`);
+            for (const value of data) {
+                const keyName = value["displayName"] as string;
+                if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
+                    cy.cleanOnPremKey(keyName);
+                }
+            }
+            cy.log("Successfully deleted all on-prem keys");
+        } else {
+            cy.log('No on-prem keys found')
+        }
+    });
+});
+
+Cypress.Commands.add('clearAPIs', () => {
+    cy.log('Deleting APIs...');
+    let token;
+    const organizationId = Cypress.env('orgs')[0].uuid;
+    cy.getCookie('token').should('exist').then((c) => {
+        token = c;
+        cy.request({
+            method: "GET",
+            url: APP_SVC_URL + APIM_RESOURCE_PATH,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value
+            },
+            qs: {
+                'organizationId': organizationId,
+                'limit': 200
+            },
+            timeout: 60000
+        }).then((response) => {
+            const data = response["body"]["list"] as [];
+            if (data.length) {
+                cy.log(`APIs found : ${data.length}`);
+                for (const value of data) {
+                    const apiName = value["name"] as string;
+                    if (!apiName.includes(getApiName())) {
+                        cy.request({
+                            method: "DELETE",
+                            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + value["id"],
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + token.value
+                            },
+                            qs: {
+                                'organizationId': organizationId,
+                            },
+                        });
+                    }
+                }
+                cy.log("Successfully deleted all APIs");
+            } else {
+                cy.log('No APIs found');
+            }
+        });
+    });
+});
+
+
+Cypress.Commands.add('clearAllTestData', () => {
+    cy.log('Deleting all test data...');
+    cy.clearApps();
+    cy.clearOnPremKeys();
+    cy.clearAPIs();
+    cy.clearConnections();
+    cy.clearConfigurations();
 });

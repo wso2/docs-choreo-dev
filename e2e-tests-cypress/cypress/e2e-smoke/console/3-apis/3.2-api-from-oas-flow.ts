@@ -20,6 +20,7 @@ describe('Choreo APIM publisher scenarios', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     it('Creating and publishing an API from open API specification', () => {

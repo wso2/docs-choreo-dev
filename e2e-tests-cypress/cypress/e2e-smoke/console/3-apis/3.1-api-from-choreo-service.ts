@@ -19,6 +19,7 @@ describe('API creation from choreo service', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     it('Creating and trying out an API from choreo service', () => {

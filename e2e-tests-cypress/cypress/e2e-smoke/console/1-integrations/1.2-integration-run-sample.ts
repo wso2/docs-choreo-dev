@@ -23,6 +23,7 @@ describe('Integration sample flow', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });

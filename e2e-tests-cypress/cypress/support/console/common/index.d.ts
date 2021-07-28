@@ -49,5 +49,11 @@ declare namespace Cypress {
         getByTestId(id: string): Chainable<Element>
         deleteApiByApplicationId(id: string): Chainable<Element>
         deleteApiByApiId(id: string): Chainable<Element>
+        clearAllTestData(): Chainable<Element>
+        clearAPIs(): Chainable<Element>
+        clearApps(): Chainable<Element>
+        clearConfigurations(): Chainable<Element>
+        clearConnections(): Chainable<Element>
+        clearOnPremKeys(): Chainable<Element>
     }
 }

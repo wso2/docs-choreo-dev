@@ -23,6 +23,7 @@ describe("API creation from an existing endpoint", () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     it("Create API from existing endpoint and deploy and publish", () => {
