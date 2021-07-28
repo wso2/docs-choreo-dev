@@ -2,6 +2,8 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: observability-data-generator
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
   labels:
     choreo.component: observability-data-generator
 spec:
@@ -15,7 +17,6 @@ spec:
         metadata:
           annotations:
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
-            checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
           labels:
             choreo.component: observability-data-generator
         spec:

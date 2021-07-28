@@ -16,6 +16,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
   labels:
     choreo.component: apim-tm
   name: choreo-apim-tm-1-deployment
@@ -34,8 +36,6 @@ spec:
       labels:
         deployment: choreo-tm-1
         choreo.component: apim-tm
-      annotations:
-        checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:

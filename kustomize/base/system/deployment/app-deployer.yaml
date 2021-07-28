@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
   labels:
     choreo.component: app-deployer
   name: app-deployer
@@ -18,7 +19,6 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
-        checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     spec:
       securityContext:
         allowPrivilegeEscalation: false

@@ -2,6 +2,8 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: datamapper-balo-extractor
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
   labels:
     choreo.component: datamapper-balo-extractor
 spec:
@@ -13,7 +15,6 @@ spec:
         metadata:
           annotations:
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
-            checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
           labels:
             choreo.component: datamapper-balo-extractor
         spec:
