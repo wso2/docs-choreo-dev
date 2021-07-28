@@ -64,7 +64,7 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 
     ![Go to API Developer Portal](../assets/img/apis/go-to-developer-portal.png){.cInlineImage-full}
      
-    You will see the published API in the API Developer Portal, which looks something like this:
+    You can see the published API in the API Developer Portal, which looks something like this:
     
     ![List of published APIs in the API Developer Portal](../assets/img/apis/developer-portal.png){.cInlineImage-full}
 
