@@ -14,6 +14,7 @@ spec:
         metadata:
           annotations:
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+            checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
           labels:
             choreo.component: perfanalyzer-updater
         spec:
