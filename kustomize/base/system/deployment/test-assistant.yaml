@@ -27,9 +27,9 @@ spec:
         runAsGroup: 10500
         readOnlyRootFilesystem: true
         capabilities:
-            drop:
-              - all
-            add: [ "NET_RAW" ]
+          drop:
+            - all
+          add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
