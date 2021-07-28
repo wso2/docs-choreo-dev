@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   annotations:
       reloader.stakater.com/auto: "true"
+      checkov.io/skip1: CKV_K8S_43=On hold ,not an high priority issue, requires some CI/CD workflow changes
+      checkov.io/skip2: CKV_K8S_25=On hold ,not an high priority issue, requires some CI/CD workflow changes
   labels:
     choreo.component: test-assistant
   name: test-assistant
@@ -19,9 +21,15 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      automountServiceAccountToken: false
       securityContext:
-        runAsUser: 500
-        runAsGroup: 500
+        runAsUser: 10500
+        runAsGroup: 10500
+        readOnlyRootFilesystem: true
+        capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
@@ -89,6 +97,10 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/config/"
         securityContext:
           allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       volumes:
       - name: test-assistant-models
         emptyDir: {}
