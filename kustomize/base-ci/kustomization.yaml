@@ -84,8 +84,8 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/programanalyzer
   newTag: master-94fd19e8ddc86cc29dfffc73c366e55e62cb34b0
 - name: choreocontrolplane.azurecr.io/choreoipaas/test-assistant
-  newTag: main-3cce3367e7c0b6ed990beae3e30712c5049c827f
+  newTag: main-8b76bb9c693cc140a1ee1904eea5d18ff2e09488
 - name: choreocontrolplane.azurecr.io/choreoipaas/test-assistant-init
-  newTag: main-3cce3367e7c0b6ed990beae3e30712c5049c827f
+  newTag: main-8b76bb9c693cc140a1ee1904eea5d18ff2e09488
 - name: choreocontrolplane.azurecr.io/choreoipaas/workspace-manager
   newTag: master-50c27a0a1714a1377a73d1ce618a3a038bf8995e
