@@ -75,9 +75,6 @@ describe('API creation from choreo service', () => {
     });
 
     after(() => {
-        cy.undeployAppViaRESTAPICall(serviceName);
-        cy.cleanupApp(serviceName);
-        cy.deleteApiByApplicationId(applicationId);
         cy.userLogout();
     });
 });

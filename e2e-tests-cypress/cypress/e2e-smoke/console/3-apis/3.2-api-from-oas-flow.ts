@@ -69,8 +69,6 @@ describe('Choreo APIM publisher scenarios', () => {
     });
 
     after(() => {
-        cy.wait(1000);
-        cy.deleteApiByApiId(apiId);
         cy.userLogout();
     });
 });
