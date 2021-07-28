@@ -96,10 +96,6 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/config/"
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - all
-            add: [ "NET_RAW" ]
       volumes:
       - name: test-assistant-models
         emptyDir: {}
