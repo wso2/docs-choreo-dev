@@ -9,11 +9,11 @@ Create an application in the Ballerina programming language. For instructions, s
 !!! Tip
     In this guide, we are using the same Ballerina application that is created in the guide linked above.
 
-## Step 1: Generate and copy the Ballerina configurations
+## Step 1: Generate and copy the Ballerina configuration
 
-In this step, you will generate the Ballerina configurations that include an application secret to link the remote application to Choreo.
+In this step, you will generate the Ballerina configuration that includes an application secret to link the remote application to Choreo.
 
-To get these configurations, follow this procedure:
+To get this configuration, follow this procedure:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
@@ -23,9 +23,9 @@ To get these configurations, follow this procedure:
 
 4. In the **Connect existing application** card, enter a name for the remote application (e.g., `HelloService`).
 
-5. Click **Next**. The Ballerina configurations with the application secret generated for the remote application are displayed.
+5. Click **Next**. The Ballerina configuration with the application secret generated for the remote application is displayed.
 
-6. Copy the Ballerina configurations.
+6. Copy the Ballerina configuration.
 
 Now you have the application secret that you need to set up the Ballerina project of your remote application.
 
