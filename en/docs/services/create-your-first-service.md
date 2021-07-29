@@ -158,22 +158,20 @@ To test the `CovidStatus` service you created, follow this procedure:
 
 1. Click **Run & Test**.
 
-    The following logs appear, indicating that the service has successfully started.
+    The **Test** tab opens, and the following logs appear to indicate that the service has successfully started.
     
     ```
     Starting application...
     [ballerina/http] started HTTP/WS listener 0.0.0.0:8090
     ```
+
+2. In the test view that opens to the right of the page, click **GET**.
+
+3. Click **Try it out**, and in the **country** field, enter `USA`.
    
-2. Now you are in the **Test** tab.
+4. Click **Execute**.
 
-    ![Test icon](../assets/img/services/test-icon.png){.cInlineImage-bordered}
-
-3. In the test view that opens to the right of the page, click **GET**.
-
-4. Click **Try it out**, and in the **country** field, enter `USA`.
-   
-5. Click **Execute**. The response is displayed as follows:
+    The response is displayed as follows:
 
     ![Response in the test view](../assets/img/services/service-response.png){.cInlineImage-half}
 

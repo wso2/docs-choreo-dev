@@ -123,9 +123,9 @@ You have successfully created and configured the integration. It should look som
     import wso2/choreo.sendemail;
     import ballerinax/worldbank;
     import ballerinax/covid19;
-    
+
     public function main() returns error? {
-    
+
         covid19:Client covid19Client = check new ();
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
         var totalCases = statusByCountry?.cases ?: 0d;
@@ -135,9 +135,9 @@ You have successfully created and configured the integration. It should look som
         var totalCasesPerMillion = totalCases / population;
         string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
         sendemail:Client sendemailEndpoint = check new ();
-        string sendEmailResponse = check sendemailEndpoint->sendEmail("rukshani@wso2.com", "Total COVID-19 Cases in the USA", 
+        string sendEmailResponse = check sendemailEndpoint->sendEmail("test@gmail.com", "Total COVID-19 Cases in the USA", 
         mailBody);
-        }
+    }
    ```
 
 ## Step 6: Try out the integration
