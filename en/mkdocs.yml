@@ -61,6 +61,8 @@ nav:
     - Integrations:
           - Integration Concepts: integrations/integration-concepts.md
           - Build Your First Integration: integrations/build-your-first-integration.md
+    - Remote Apps:
+          - Connect Remote Applications: remote-apps/connect-remote-applications.md
     - Observability:
           - Observability Overview: observability/observability-overview.md
           - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
@@ -69,6 +71,8 @@ nav:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
           - Data Mapping: references/data-mapping.md
+          - Test Your Service via Postman: references/test-your-service-via-postman.md
+          - API Path: references/api-path.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
