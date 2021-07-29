@@ -23,8 +23,8 @@ Follow this procedure to create an integration from scratch:
 Follow this procedure to connect to the COVID-19 API and retrieve data:
 
 1. Click **API Calls** and then select **COVID-19 API**.
-2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Connection Name** and then click **Continue to Invoke API**.
-3. In the **Operation** drop-down list, select **Country Status** and enter these details:
+2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
+3. In the **Operation** drop-down list, select **Country Status** and enter details as follows in the other fields:
 
     | **Field**                  | **Value**         |
     |----------------------------|-------------------|
