@@ -55,7 +55,7 @@ To set up the Ballerina project:
     import ballerinax/choreo as _;
     ```
    
-Now you have completed setting up your Ballerina project. It will connect to Choreo once you build and run it.
+Now you have set up your Ballerina project to connect to Choreo once you build and run it.
 
 ## Step 3: Build the Ballerina project
 
