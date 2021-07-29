@@ -1,6 +1,6 @@
 # Connect Remote Applications
 
-If you need to observe an external application that you have written in [Ballerina programming language](https://ballerina.io/), you can connect it to Choreo.
+If you need to observe an external application that you have written in the [Ballerina programming language](https://ballerina.io/), you can connect it to Choreo.
 
 ## Prerequisites
 
