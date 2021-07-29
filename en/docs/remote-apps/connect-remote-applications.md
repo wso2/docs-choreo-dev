@@ -33,9 +33,9 @@ Now you have the application secret that you need to set up the Ballerina projec
 
 In this step, you will set up your Ballerina project with the configurations that connect the Ballerina application to Choreo. Here, the Ballerina project is the directory that contains the definition of your Ballerina application in a `.bal` file and all the configuration files required to run it.
 
-To set up the Ballerina Project:
+To set up the Ballerina project:
 
-1. Create a directory in your machine (e.g., named `HelloWorld`) and move your file with the remote ballerina application (in this example the `hello_service.bal` file) to it.
+1. Create a directory in your machine (e.g., named `HelloWorld`) and move your file with the remote Ballerina application (in this example the `hello_service.bal` file) to it.
 
     !!! info
         This directory will be referred to as `<BALLERINA_PROJECT>`from here onward.
@@ -49,7 +49,7 @@ To set up the Ballerina Project:
     observabilityIncluded = true
     ```
    
-4. For the Ballerina application to import the `ballerinax/choreo` module, open the `.bal` file (in this example, `hello_service.bal`) and at the following line at the top.
+4. For the Ballerina application to import the `ballerinax/choreo` module, open the `.bal` file (in this example, `hello_service.bal`) and add the following line at the top.
 
     ```ballerina
     import ballerinax/choreo as _;
@@ -67,7 +67,7 @@ In this step, you will build and run your Ballerina project.
     bal build
     ```
    
-    This creates a `JAR` in the `<BALLERINA_PROJECT>/target/bin` sub directory.
+    This creates a `JAR` in the `<BALLERINA_PROJECT>/target/bin` subdirectory.
    
 2. To run the Ballerina application, issue the following command from the `<BALLERINA_PROJECT>`.
 
@@ -103,7 +103,7 @@ After sending a few requests, you can proceed to the next step to view the obser
 
 ## Step 5: View observability statistics
 
-To view the observability statistics generated for your remote Ballerina application, click on the link provided for observability data in the startup logs of your remote application. Ah shown in the startup logs generated in [Step 3](step-3-build-the-ballerina-project), the link in this example is `http://console.choreo.dev/observe/app/91e9750f-e2e1-11eb-90ce-de6d84510939/dd9780a8-e2e2-11eb-90ce-de6d84510939`.
+To view the observability statistics generated for your remote Ballerina application, click the link provided for observability data in the startup logs of your remote application. As shown in the startup logs generated in [Step 3](step-3-build-the-ballerina-project), the link in this example is `http://console.choreo.dev/observe/app/91e9750f-e2e1-11eb-90ce-de6d84510939/dd9780a8-e2e2-11eb-90ce-de6d84510939`.
 
 Observability data is displayed as shown in the example below.
 
