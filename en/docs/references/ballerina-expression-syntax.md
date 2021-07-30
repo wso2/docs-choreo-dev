@@ -37,6 +37,26 @@ To initialize a variable of type `float` in Choreo, you can use one of the follo
   +950.930
   ```
 
+### decimal
+
+The `decimal` type supports integer values with up to 34 decimal points, and supports the same arithmetic operators as `int`. When entering literals, you can use `d` as the suffix.
+
+This type does not support `infinity`, `NaN` or negative zero.
+
+The `decimal` type is a separate basic type, and therefore counts as `anydata`.
+
+###### Examples:
+
+To initialize a variable of type `decimal` in Choreo, you can use one of the following expressions:
+
+  ```ballerina
+  0.33536363363636391745284629571635428
+  
+  -8593.9926666666666666663333333333
+  
+  +950.930999999992727272777777777774
+  ```
+
 ### boolean
 
 The boolean data type has one of the two possible values, `true` or `false`.
@@ -67,6 +87,50 @@ To initialize a variable of type `var` in Choreo, you can use one of the followi
     
 "Hello!"
 ```
+
+### error
+
+The `error` type supports error values that include a string message. The expressions to initialize this variable type needs to be entered in the `error("<ERROR_STRING>")` format.
+
+###### Examples:
+
+To initialize a variable of type `error` in Choreo, you can enter an expression as follows:
+
+```ballerina
+error("The item requested is not found.")
+```
+
+### any
+
+The any type can represent a variable of any type except the error type. When you do not have prior knowledge of the type of a variable, you can assign it to a variable of type any. Values of these variables can come from dynamic content such as the request and response message references and reference variable types.
+
+###### Examples:
+
+To initialize a variable of type `any` in Choreo, you can enter expressions as follows:
+
+
+    ```ballerina
+        The prices are as follows:
+  
+        123
+  
+        349.76
+    ```
+    
+
+### anydata
+
+The `anydata` type consists of pure values whose basic type is not `error`.
+
+###### Examples:
+
+To initialize a variable of type `anydata` in Choreo, you can enter expressions as follows:
+
+    ```ballerina
+        x2 = x1.clone();
+        
+        eq = (x1 == x2);
+    ```
 
 ## Operators
 
@@ -491,4 +555,32 @@ To convert the `theRevenantJson` variable of type `json` to the record `Movie`, 
 
 ```ballerina
 check theRevenantJson.cloneWithType(Movie);
+```
+
+## XML
+
+XML is a textual format for representing a string or an XML object. The following topics describe these values.
+
+### String values in XML
+
+Ballerina allows you to cast a string value in XML via variables of type `xml`.
+
+###### Examples:
+
+To initialize a variable of type `xml`, you can enter an expression as follows:
+
+```ballerina
+    xml `"Dear customer,"`
+```
+
+### XML objects
+
+You can define an XML object to hold XML values.
+
+###### Examples:
+
+To declare a JSON object, you can enter an expression as follows:
+
+```ballerina
+    xml `<product><name>block</name></product>`
 ```
