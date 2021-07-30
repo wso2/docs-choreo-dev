@@ -31,14 +31,27 @@ describe("Integrations test run and deployment from scratch", () => {
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should("include", "app/" + appName + "/develop"); 
+
+        // add a log statement
         cy.selectTrigger("Manual");
         cy.selectManualTriggerOptions("Statements", "addLog");
         cy.createLogProperty("Info", "Hello World"); 
+        cy.waitTillWorkSpace();
+        cy.log("log statement added successfully");
+
+        // add covid-19 connector with operation
         cy.get('[id="SmallPlus"]').eq(1).click({force: true});
         cy.get('[data-testid="api-options"]').click();
         cy.get('[data-testid="covid 19 api"]').click({force:true});
-        cy.contains('Save Connection').click()
+        // check accordion form
+        cy.get(".MuiButtonBase-root.MuiIconButton-root.MuiExpansionPanelSummary-expandIcon.MuiIconButton-edgeEnd").click();
+        cy.getByTestId("save-and-continue-connection-btn").click();
+
+        cy.getByTestId("operation-list").click().type("Global Status");
+        cy.get(".MuiAutocomplete-popper li[data-option-index='0']").click();
+        cy.getByTestId("save-operation-btn").should("be.enabled").click();
         cy.waitTillWorkSpace();
+        cy.log("covid-19 connector added successfully");
 
         // Test-run and deploy integration
         cy.log('Test app:' + appName);
@@ -48,6 +61,7 @@ describe("Integrations test run and deployment from scratch", () => {
         cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);
         cy.get('[data-testid="log-panel"]').should("contains.text", 'message = "Hello World"');
         cy.log("Expression is logged successfully");
+
         cy.deployToChoreo("integration", appName);
 
         // Undeploy app from UI and delete the app
