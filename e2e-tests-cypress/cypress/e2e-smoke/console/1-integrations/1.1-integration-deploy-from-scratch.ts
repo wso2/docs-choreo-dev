@@ -42,10 +42,8 @@ describe("Integrations test run and deployment from scratch", () => {
 
         // Test-run and deploy integration
         cy.log('Test app:' + appName);
-        const loadRunTxt = "Running...";
         cy.testRunApp();
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("exist");
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);
+        cy.get('[data-testid="log-panel"]').should("contains.text", 'Starting application');
         cy.get('[data-testid="log-panel"]').should("contains.text", 'message = "Hello World"');
         cy.log("Expression is logged successfully");
         cy.deployToChoreo("integration", appName);

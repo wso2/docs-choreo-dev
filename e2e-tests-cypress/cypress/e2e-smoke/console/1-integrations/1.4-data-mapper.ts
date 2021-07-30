@@ -101,11 +101,9 @@ describe("Data Mapper", () => {
         
         cy.get('[data-testid="datamapper-diagram-switch"]').click();
 
-        const loadRunTxt = "Running...";
         cy.testRunApp();
         cy.url().should("include", "app/" + appName + "/test");
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("exist");
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);
+        cy.get('[data-testid="product-tour-log-panel"]').contains('Starting application');
         cy.get('[data-testid="product-tour-log-panel"]').contains('Application exited');      
         cy.log("DataMapper created successfully!");
 
