@@ -658,6 +658,11 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
 
     cy.switchToDeployView(appName);
 
+    cy.intercept({
+        method: "POST",
+        pathname: `**/deploy`,
+    }).as("deployApp");
+    
     cy.log('Deploying application...');
     if (type === 'schedule') {
         cy.contains('button', 'Schedule').click();
@@ -674,6 +679,8 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
         cy.get('#deploy-button').should('exist');
         cy.get('#deploy-button').click();
     }
+
+    cy.wait('@deployApp', { timeout: 60000 }).its('response.statusCode').should('eq', SUCCESS_STATUS_CODE);
 
     cy.log('Awaiting 5 minutes for the deployment to complete');
     cy.get('[data-testid="deploy-stop-button"]', { timeout: 1000 * 60 * 5 }).should('exist');
