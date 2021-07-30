@@ -42,6 +42,36 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        - name: API_SERVER_IDP_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_IDP_CLIENT_ID
+        - name: API_SERVER_IDP_TOKEN_URL
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_IDP_TOKEN_URL
+        - name: API_SERVER_IDP_JWKS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_IDP_JWKS_URL
+        - name: API_SERVER_IDP_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_IDP_ISSUER
+        - name: API_SERVER_IDP_COOKIES_SECURE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_IDP_COOKIES_SECURE
+        - name: API_SERVER_REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: cm-runtime-env
+              key: API_SERVER_REDIS_HOST
         envFrom:
           - configMapRef:
               name: env-api-server
