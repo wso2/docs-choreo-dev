@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: perfanalyzer-updater
   annotations:
-    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
+    checkov.io/skip1: CKV_K8S_43=On hold ,not an high priority issue, requires some CI/CD workflow changes
   labels:
     choreo.component: perfanalyzer-updater
 spec:
@@ -19,7 +19,13 @@ spec:
           labels:
             choreo.component: perfanalyzer-updater
         spec:
+          automountServiceAccountToken: false
           securityContext:
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: [ "NET_RAW" ]
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
@@ -29,8 +35,8 @@ spec:
           - name: perfanalyzer-updater
             image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
             securityContext:
-              runAsUser: 500
-              runAsGroup: 500
+              runAsUser: 10500
+              runAsGroup: 10500
             env:
               - name: AZURE_ADX_CLIENT_SECRET
                 valueFrom:
