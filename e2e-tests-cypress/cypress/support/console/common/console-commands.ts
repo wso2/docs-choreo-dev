@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { isOldValue, keyNamePrefix, normalizeText } from '../../common/utils';
+import { normalizeText } from '../../common/utils';
 import {
     MARKETPLACE_TEXT,
     INTEGRATIONS_TEXT,
