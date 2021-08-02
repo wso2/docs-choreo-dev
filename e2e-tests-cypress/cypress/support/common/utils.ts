@@ -13,9 +13,9 @@
 
 import { DAY } from './constants';
 
-export const appNamePrefix = "e2e-app-";
-export const apiNamePrefix = "e2e-api-";
-export const keyNamePrefix = "e2e-key-";
+export const appNamePrefix = "e2eapp";
+export const apiNamePrefix = "e2eapi";
+export const keyNamePrefix = "e2ekey";
 
 /**
  * Create name for app.
@@ -32,7 +32,7 @@ export const generateAppName = (name: string) => {
  * @returns true name for a new api
  */
 export const generateApiName = (name: string) => {
-    return apiNamePrefix + Date.now() + "-" + name;
+    return apiNamePrefix + Date.now() + name;
 }
 
 /**
@@ -41,7 +41,7 @@ export const generateApiName = (name: string) => {
  * @returns true name for a new on-prem key
  */
 export const generateKeyName = (name: string) => {
-    return keyNamePrefix + Date.now() + "-" + name;
+    return keyNamePrefix + Date.now() + name;
 }
 
 export const normalizeText = (s: string) => {
