@@ -97,6 +97,9 @@ spec:
             secretKeyRef:
               name: secret-service-now
               key: SERVICE_NOW_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: env-app-service
         ports:
         - containerPort: 8080
           name: grpc-port
