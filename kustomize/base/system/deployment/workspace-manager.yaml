@@ -45,6 +45,8 @@ spec:
         envFrom:
         - configMapRef:
             name: common-env-variables
+        - configMapRef:
+            name: env-workspace-manager
         ports:
         - containerPort: 8080
           name: grpc-port

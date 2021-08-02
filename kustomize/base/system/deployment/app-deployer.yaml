@@ -63,6 +63,9 @@ spec:
             secretKeyRef:
               name: secret-app-deployer
               key: APIM_CLIENT_SECRET
+        envFrom:
+          - configMapRef:
+              name: env-app-deployer
         ports:
         - containerPort: 8080
           name: grpc-port
