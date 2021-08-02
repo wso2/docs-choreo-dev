@@ -11,8 +11,8 @@
         -   appSvcURL
         -   baseUrl
             that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
-		-   apimBasePath
-		    that contains ` ` to `/apimanagement`
+        -   apimBasePath
+            that contains empty value to `/apimanagement`
     4.  Run `npm run e2etest:headless`
 
     -   This will run test cases in [headless mode](#headless-mode).
