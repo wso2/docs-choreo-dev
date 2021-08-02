@@ -343,6 +343,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 
     if (validExpression) {
         cy.log("Creating variable: added variable expression");
+        cy.getByTestId("fit-to-screen-btn").click();
         cy.get('[data-testid="save-btn"]').click();
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
         cy.checkSourceCodeForValidation(variableSourceFields);
