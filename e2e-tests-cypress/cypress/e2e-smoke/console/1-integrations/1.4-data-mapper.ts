@@ -102,7 +102,7 @@ describe("Data Mapper", () => {
 
         cy.testRunApp();
         cy.url().should("include", "app/" + appName + "/test");
-        cy.get('[data-testid="product-tour-log-panel"]').contains('Starting application');
+        cy.get('[data-testid="product-tour-log-panel"]').contains('Starting application', {timeout:300000});
         cy.get('[data-testid="product-tour-log-panel"]').contains('Application exited');      
         cy.log("DataMapper created successfully!");
 
