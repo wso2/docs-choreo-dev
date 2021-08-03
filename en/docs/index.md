@@ -7,7 +7,7 @@
              <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies creating services, managing APIs, and building integrations while ensuring best practices and secure coding guidelines.</p>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
-            <iframe width="800" height="250" src="https://www.youtube.com/embed/7Bue8C-ab0E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="800" height="250" src="https://www.youtube.com/embed/65cXAAyeJX0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
        </div>
 </div>
