@@ -183,6 +183,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                         selectedOrgHandle: selectedOrgHandle,
                         isOrgAdmin: true,
                         user: {
+                            id: orgs[0].id,
                             name: name,
                             email: email,
                             token: token,
