@@ -43,7 +43,7 @@ describe("Integrations test run and deployment from scratch", () => {
         // Test-run and deploy integration
         cy.log('Test app:' + appName);
         cy.testRunApp();
-        cy.get('[data-testid="log-panel"]', {timeout:60000}).should("contains.text", 'Starting application');
+        cy.get('[data-testid="log-panel"]', { timeout: 60000 }).should("contains.text", 'Starting application');
         cy.get('[data-testid="log-panel"]').should("contains.text", 'message = "Hello World"');
         cy.log("Expression is logged successfully");
         cy.deployToChoreo("integration", appName);
