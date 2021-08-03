@@ -111,8 +111,8 @@ Observability data is displayed as shown in the example below.
 
 !!! Tip
     Alternatively, you can navigate to the same page in the Choreo Console as follows:<br/><br/>
-    1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).<br/><br/>
-    2. Go to the **Remote Apps** card, and click **Connect App**.<br/><br/>
+    1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).<br/>
+    2. Go to the **Remote Apps** card, and click **Connect App**.<br/>
     3. Click on your remote Ballerina application to open it.
    
 Congratulations! You have successfully connected a remote application to Choreo and viewed its observability statistics in the Choreo Console.
