@@ -158,6 +158,7 @@ Cypress.Commands.add('publishApi', () => {
 });
 
 Cypress.Commands.add('checkApiListAvailabilityAndVisitCreate', () => {
+    cy.get('[data-testid="apis-list-table-loader"]').should('not.exist');
     cy.get('#container').then((container) => {
         if (container.find('[data-testid="create-api-btn"]').length > 0)  {
             cy.log("API list available");
