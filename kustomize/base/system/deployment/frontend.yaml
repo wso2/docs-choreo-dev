@@ -201,12 +201,14 @@ spec:
           protocol: TCP
         readinessProbe:
           initialDelaySeconds: 10
+          timeoutSeconds: 15
           periodSeconds: 5
           httpGet:
             path: /index.html
             port: 8080
         livenessProbe:
           initialDelaySeconds: 20
+          timeoutSeconds: 15
           periodSeconds: 10
           httpGet:
             path: /index.html
