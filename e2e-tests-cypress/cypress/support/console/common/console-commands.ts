@@ -294,6 +294,7 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option: string
             cy.get('[id="SmallPlus"]').eq(0).click({ force: true });
         }
         if (type == 'Statements') {
+            cy.getByTestId("fit-to-screen-btn").click();
             cy.get('[data-testid="statement-options"]').click();
             cy.log('Selected statement category');
         } else if (type == 'Connections') {
