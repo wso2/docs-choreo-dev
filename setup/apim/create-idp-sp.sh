@@ -1,23 +1,33 @@
 #!/bin/bash
 
+while getopts e: flag
+do
+    case "${flag}" in
+        e) env=${OPTARG};;
+        *) exit 1;
+    esac
+done
+
 APIM_URL="https://localhost:9443"
 APIM_ADMIN_USERNAME="admin"
 APIM_ADMIN_PASSWORD="admin"
 
 split_results(){
-  export BODY=$(echo $HTTP_RESPONSE | sed -e 's/HTTPSTATUS\:.*//g')
-  export STATUS=$(echo $HTTP_RESPONSE | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+  BODY=$(echo "$HTTP_RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
+  STATUS=$(echo "$HTTP_RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+  export BODY
+  export STATUS
 }
 
 echo_results () {
   split_results
-  if [ $STATUS -eq 200 ]; then
+  if [ "$STATUS" -eq 200 ]; then
     tput setaf 2;
-    echo $1
+    echo "$1"
     tput sgr0;
   elif [[ $BODY == *"already exists"* ]]; then
     tput setaf 2;
-    echo $3
+    echo "$3"
   else
     tput setaf 1;
     echo "$2 , Status code : $STATUS"
@@ -28,7 +38,24 @@ echo_results () {
 
 ######################################## Choreo idp #########################################
 
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: text/xml;charset=UTF-8" --header "SOAPAction:urn:addIdp" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data @idp/choreo-idp.xml ${APIM_URL}/services/IdentityProviderMgtService.IdentityProviderMgtServiceHttpsSoap11Endpoint -k)
+case "$env" in
+  "dev")
+    jwksUri="https://id.dv.choreo.dev/oauth2/jwks"
+    idpIssuerName="https://id.dv.choreo.dev:443/oauth2/token"
+    ;;
+  "stage")
+    jwksUri="https://id.st.choreo.dev/oauth2/jwks"
+    idpIssuerName="https://id.st.choreo.dev:443/oauth2/token"
+    ;;
+  "prod")
+    jwksUri="https://id.choreo.dev/oauth2/jwks"
+    idpIssuerName="https://id.choreo.dev:443/oauth2/token"
+    ;;
+esac
+
+choreo_idp=$(cat idp/choreo-idp.xml | sed "s#{JWKS_URI}#${jwksUri}#g" | sed "s#{IDP_ISSUER_NAME}#${idpIssuerName}#g")
+
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: text/xml;charset=UTF-8" --header "SOAPAction:urn:addIdp" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "${choreo_idp}" ${APIM_URL}/services/IdentityProviderMgtService.IdentityProviderMgtServiceHttpsSoap11Endpoint -k)
 echo_results "Choreo idp added successfully" "Error while adding Choreo idp" "Choreo idp already exists"
 
 
@@ -48,12 +75,11 @@ HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Co
 echo_results "Console SP id retrieved" "Error while getting Console SP app Id"
 
 appId=$(echo "$BODY" | xmllint --format - | perl -ne 'if (/applicationID/){ s/.*?>//; s/<.*//;print;}')
-update_portal_application=$(cat sp/update-console-sp.xml)
-export update_portal_application=$(echo $update_portal_application | sed "s#{APP_ID}#${appId}#g")
+update_console_sp=$(cat sp/update-console-sp.xml | sed "s#{APP_ID}#${appId}#g")
 
 # Update OAuth2 app
 
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:updateApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$update_portal_application" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:updateApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$update_console_sp" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
 echo_results "Console service provider updated with OAuth2 app" "Error while updating Console service provider with OAuth2 app"
 
 
@@ -73,10 +99,9 @@ HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Co
 echo_results "Devportal SP id retrieved" "Error while getting Devportal SP app Id"
 
 appId=$(echo "$BODY" | xmllint --format - | perl -ne 'if (/applicationID/){ s/.*?>//; s/<.*//;print;}')
-update_portal_application=$(cat sp/update-devportal-sp.xml)
-export update_portal_application=$(echo $update_portal_application | sed "s#{APP_ID}#${appId}#g")
+update_devportal_sp=$(cat sp/update-devportal-sp.xml | sed "s#{APP_ID}#${appId}#g")
 
 # Update OAuth2 app
 
-HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:updateApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$update_portal_application" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: application/soap+xml;charset=UTF-8" --header "SOAPAction:urn:updateApplication" -u ${APIM_ADMIN_USERNAME}:${APIM_ADMIN_PASSWORD} --data "$update_devportal_sp" ${APIM_URL}/services/IdentityApplicationManagementService.IdentityApplicationManagementServiceHttpsSoap12Endpoint/ -k)
 echo_results "Devportal service provider updated with OAuth2 app" "Error while updating Devportal service provider with OAuth2 app"

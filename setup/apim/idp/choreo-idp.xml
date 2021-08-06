@@ -13,17 +13,16 @@
             <xsd:displayName>choreoidp</xsd:displayName>
             <xsd:enable>true</xsd:enable>
             <xsd:federationHub>false</xsd:federationHub>
-            <xsd:identityProviderDescription>choreo idp registered in choreo apim</xsd:identityProviderDescription>
             <xsd:identityProviderName>choreoidp</xsd:identityProviderName>
             <xsd:alias>choreoportalapplication</xsd:alias>
             <xsd:idpProperties>
                <xsd:displayName>Identity Provider's JWKS Endpoint</xsd:displayName>
                <xsd:name>jwksUri</xsd:name>
-               <xsd:value>https://id.dv.choreo.dev/oauth2/jwks</xsd:value>
+               <xsd:value>{JWKS_URI}</xsd:value>
             </xsd:idpProperties>
             <xsd:idpProperties>
                <xsd:name>idpIssuerName</xsd:name>
-               <xsd:value>https://id.dv.choreo.dev:443/oauth2/token</xsd:value>
+               <xsd:value>{IDP_ISSUER_NAME}</xsd:value>
             </xsd:idpProperties>
             <xsd:justInTimeProvisioningConfig>
                <xsd:dumbMode>false</xsd:dumbMode>

@@ -5,6 +5,7 @@
             <xsd:serviceProvider>
                 <xsd:applicationID>{APP_ID}</xsd:applicationID>
                 <xsd:applicationName>choreoconsole</xsd:applicationName>
+                <xsd:description>Service Provider for application Choreo Console</xsd:description>
                 <xsd1:claimConfig>
                     <xsd1:alwaysSendMappedLocalSubjectId>false</xsd1:alwaysSendMappedLocalSubjectId>
                     <xsd1:localClaimDialect>true</xsd1:localClaimDialect>
