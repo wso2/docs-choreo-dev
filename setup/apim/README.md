@@ -1,3 +1,4 @@
+
 ## APIM Service provider and IdP setup script
 
 ### Description
@@ -9,8 +10,16 @@ Execute `run.sh` to perform the following.
  4. Create a service provider for the application choreo apim devportal
 
 ### Usage
+Export following environmental variables.
 ```bash
-sh run -e environment
+export APIM_URL="https://localhost:9443"
+export APIM_ADMIN_USERNAME="admin"
+export APIM_ADMIN_PASSWORD="admin"
+```
+Execute `run.sh`  script.
+
+```bash
+sh run.sh -e environment
 ```
 Where `environment` is one of the following.
 `dev`, `stage`, `prod`
