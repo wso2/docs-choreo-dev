@@ -1,0 +1,40 @@
+<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope' xmlns:xsd='http://org.apache.axis2/xsd' xmlns:xsd1='http://model.common.application.identity.carbon.wso2.org/xsd'>
+    <soap:Header />
+    <soap:Body>
+        <xsd:updateApplication>
+            <xsd:serviceProvider>
+                <xsd:applicationID>{APP_ID}</xsd:applicationID>
+                <xsd:applicationName>choreodevportal</xsd:applicationName>
+                <xsd1:claimConfig>
+                    <xsd1:alwaysSendMappedLocalSubjectId>false</xsd1:alwaysSendMappedLocalSubjectId>
+                    <xsd1:localClaimDialect>true</xsd1:localClaimDialect>
+                    <xsd1:roleClaimURI />
+                </xsd1:claimConfig>
+                <xsd1:inboundAuthenticationConfig>
+                    <xsd1:inboundAuthenticationRequestConfigs>
+                        <xsd1:inboundAuthKey>choreodevportal</xsd1:inboundAuthKey>
+                        <xsd1:inboundAuthType>oauth2</xsd1:inboundAuthType>
+                        <xsd1:properties>
+                            <xsd1:confidential>false</xsd1:confidential>
+                            <xsd1:name>oauthConsumerSecret</xsd1:name>
+                            <xsd1:required>false</xsd1:required>
+                            <xsd1:type xsd:nil='true' />
+                            <xsd1:value>xxxxxxxx</xsd1:value>
+                        </xsd1:properties>
+                    </xsd1:inboundAuthenticationRequestConfigs>
+                </xsd1:inboundAuthenticationConfig>
+                <xsd1:localAndOutBoundAuthenticationConfig>
+                    <xsd1:alwaysSendBackAuthenticatedListOfIdPs>false</xsd1:alwaysSendBackAuthenticatedListOfIdPs>
+                    <xsd1:authenticationType>default</xsd1:authenticationType>
+                    <xsd1:enableAuthorization>false</xsd1:enableAuthorization>
+                    <xsd1:skipConsent>false</xsd1:skipConsent>
+                    <xsd1:skipLogoutConsent>false</xsd1:skipLogoutConsent>
+                    <xsd1:useTenantDomainInLocalSubjectIdentifier>false</xsd1:useTenantDomainInLocalSubjectIdentifier>
+                    <xsd1:useUserstoreDomainInLocalSubjectIdentifier>false</xsd1:useUserstoreDomainInLocalSubjectIdentifier>
+                    <xsd1:useUserstoreDomainInRoles>true</xsd1:useUserstoreDomainInRoles>
+                </xsd1:localAndOutBoundAuthenticationConfig>
+                <xsd:description />
+            </xsd:serviceProvider>
+        </xsd:updateApplication>
+    </soap:Body>
+</soap:Envelope>
