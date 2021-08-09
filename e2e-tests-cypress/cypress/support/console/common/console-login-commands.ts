@@ -141,9 +141,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
     const idpPassword = Cypress.env('idpPassword');
     const idpAuthHeader = Cypress.env('idpAuthHeader');
     const selectedOrgHandle = Cypress.env('selectedOrgHandle');
-    const name =  Cypress.env('name');
-    const email = Cypress.env('email');
-    const picURL = Cypress.env('picURL');
     const orgs = Cypress.env('orgs');
     try {
         cy.request({
@@ -172,8 +169,9 @@ Cypress.Commands.add('consoleUserLogin', () => {
             Cypress.Cookies.defaults({
                 preserve: ['cwatf', 'cbearer', 'id_token', 'token']
             });
-            
+
             const STORAGE_KEY = "PORTAL_STATE";
+            const jwtPayload = JSON.parse(atob(fragments[1]));
             localStorage.setItem(
                 STORAGE_KEY,
                 JSON.stringify({
@@ -183,12 +181,15 @@ Cypress.Commands.add('consoleUserLogin', () => {
                         selectedOrgHandle: selectedOrgHandle,
                         isOrgAdmin: true,
                         user: {
-                            id: orgs[0].id,
-                            name: name,
-                            email: email,
+                            id: orgs[0].id.toString(),
+                            name: jwtPayload.name,
+                            uuid: jwtPayload.sub,
+                            email: jwtPayload.email,
                             token: token,
-                            picURL: picURL,
+                            picURL: jwtPayload.avatar_url,
                             orgs: orgs,
+                            createdAt: new Date(jwtPayload.iat * 1000).toISOString(),
+                            expiredAt: new Date(jwtPayload.exp * 1000).toISOString(),
                         },
                     },
                 })
@@ -200,7 +201,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
             cy.setCookie('id_token', data["id_token"]);
             cy.log('Local storage set successful!, navigating to URL: '+ testURL)
             cy.intercept(/choreo.dev/, (req) => {
-                
                 if (req.url.includes("/linkersec/checklink")) {
                     req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
                     req.headers['authentication'] = "Bearer " + data["id_token"];
