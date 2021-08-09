@@ -228,7 +228,7 @@ Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionI
  */
 Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
     cy.log("Filling the calendar configuration");
-    cy.contains("Connect to Google Calendar").click();
+    cy.getByTestId("google-calendar-connect-btn").click();
     // Selecting the manually added calendar connection (user - testuser-choreo)
     cy.contains(GMAIL_CONNECTION_NAME).click();
     cy.get('[placeholder="Choose Calendar"]').siblings().children().get('.MuiAutocomplete-popupIndicator').click();
