@@ -145,6 +145,8 @@ Cypress.Commands.add('deployInitialRevision', () => {
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
     });
+    // Adding a delay to wait for deploying to gateways 
+    cy.wait(5000);
 });
 
 Cypress.Commands.add('publishApi', () => {
