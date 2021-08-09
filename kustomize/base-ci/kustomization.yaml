@@ -54,7 +54,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
   newTag: v4.0.0-r06082021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter
-  newTag: main-85f7b5765a417319b7e579aa7291ade7388b02e8
+  newTag: main-c31b9ab56a48aed46c9369ad3510c81f9349b5b4
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-0f89a50687168f057cbc6ee3a2045c40497bf5b7
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
