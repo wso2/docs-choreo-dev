@@ -28,6 +28,7 @@ export const STANDARD_TIME_OUT = 6000;
 export const MEDIUM_TIME_OUT = 10000;
 export const LONG_TIME_OUT = 60000;
 export const EX_LONG_TIME_OUT = 180000;
+export const DEPLOYMENT_TIME_OUT = 120000;
 export const NO_OF_RETRIES = 2;
 export const FAKE_TWILIO_ACCOUNT_SID = 'ACat9e5d3a348126a5fcabb03a03f1a1bb';
 export const FAKE_TWILIO_TOKEN = 'd976402933e8a4143015c4499e971a65';
