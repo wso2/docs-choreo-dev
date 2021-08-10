@@ -11,8 +11,6 @@
  * associated services.
  */
 
-import { STANDARD_TIME_OUT, LONG_TIME_OUT } from '../../../support/common/constants';
-
 /// <reference types="cypress" />
 
 describe('Observability tests', () => {
@@ -28,7 +26,7 @@ describe('Observability tests', () => {
         });
         cy.visit(Cypress.env("baseUrl") + "/observability");
         cy.get('[data-testid="btn-observability-try-sample"]').should('be.visible').click();
-        cy.url({ timeout: LONG_TIME_OUT * 10}).should('contain', '/observe/app/').then(url => {
+        cy.url().should('contain', '/observe/app/').then(url => {
             let obsUrlRegexMatch = url.match(obsUrlRegexp);
             expect(obsUrlRegexMatch).to.have.lengthOf(3);
             obsId = obsUrlRegexMatch[1];
@@ -61,13 +59,13 @@ describe('Observability tests', () => {
         cy.get('[data-testid="panel-Logs-btn"]').click();
 
         cy.log('Asserting mandatory log entry without any filter');
-        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, { timeout: 600000 }).should('exist');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry).should('exist');
 
         cy.log('Asserting mandatory log entry by providing a search phrase');
         cy.get('[data-testid="log-search"]').type(connectionErrorLogEntry);
         cy.get('[data-testid="log-search-btn"]').click();
-        cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry, { timeout: 600000 }).should('exist');
-        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, { timeout: 600000 }).should('not.exist');
+        cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry).should('exist');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry).should('not.exist');
 
         // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4058 is fixed
         // cy.log('Asserting log download');
@@ -91,7 +89,7 @@ describe('Observability tests', () => {
         cy.get('.worker-line').should('exist');
         cy.get('[data-testid="refresh-btn"]').should('not.exist');
         cy.get('[data-testid="preloader"]').should('not.exist');
-        cy.get('.metrics-text').contains('100% Success', { timeout: 600000 }).should('exist');
+        cy.get('.metrics-text').contains('100% Success').should('exist');
 
         cy.contains('[data-testid="histogram-throughput"]', emptyHistogramMessage).should('not.exist');
         cy.contains('[data-testid="histogram-response-time"]', emptyHistogramMessage).should('not.exist');
@@ -102,7 +100,6 @@ describe('Observability tests', () => {
         cy.get('[data-testid="log-panel"]').should('exist');
 
         cy.log('Waiting on graphs to be expanded');
-        cy.wait(STANDARD_TIME_OUT);
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
             cy.log('Getting coordinates to click on the latency graph');
             d = $path.attr('d');
@@ -122,7 +119,7 @@ describe('Observability tests', () => {
             cy.get('[data-testid="preloader"]').should('not.exist');
 
             cy.log('Asserting the log panel after clicking on the very first point in the latency graph');
-            cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, { timeout: 600000 }).should('not.exist');
+            cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry).should('not.exist');
 
             cy.log('Asserting the request list');
             cy.get('[data-testid="request-table"]').should('exist');
