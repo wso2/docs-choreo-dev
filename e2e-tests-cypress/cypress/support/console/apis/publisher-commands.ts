@@ -12,7 +12,7 @@
  */
 
 import {
-    LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT, DEVELOP,
+    LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT, DEPLOYMENT_TIME_OUT, DEVELOP,
     OVERVIEW, PATH_SEPARATOR
 } from "../../common/constants";
 
@@ -149,6 +149,7 @@ Cypress.Commands.add('deployInitialRevision', () => {
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
     });
+    cy.get('[data-testid=deployment-loader]', { timeout: DEPLOYMENT_TIME_OUT }).should('not.exist');
 });
 
 Cypress.Commands.add('publishApi', () => {

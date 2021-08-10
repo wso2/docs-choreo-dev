@@ -228,7 +228,7 @@ Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionI
  */
 Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
     cy.log("Filling the calendar configuration");
-
+    cy.getByTestId("google-calendar-connect-btn").click();
     // Selecting the manually added calendar connection (user - testuser-choreo)
     cy.contains(GMAIL_CONNECTION_NAME).click();
     cy.get('[placeholder="Choose Calendar"]').siblings().children().get('.MuiAutocomplete-popupIndicator').click();
@@ -294,6 +294,7 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option: string
             cy.get('[id="SmallPlus"]').eq(0).click({ force: true });
         }
         if (type == 'Statements') {
+            cy.getByTestId("fit-to-screen-btn").click();
             cy.get('[data-testid="statement-options"]').click();
             cy.log('Selected statement category');
         } else if (type == 'Connections') {
