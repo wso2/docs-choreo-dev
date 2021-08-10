@@ -187,6 +187,21 @@ spec:
               key: DISABLE_GOOGLE_CAPTCHA
               name: cm-frontend
               optional: true
+        - name: ANALYTICS_PORTAL_QUERY_API
+          valueFrom:
+            configMapKeyRef:
+              key: ANALYTICS_PORTAL_QUERY_API
+              name: cm-frontend
+        - name: ANALYTICS_PORTAL_ALERT_API
+          valueFrom:
+            configMapKeyRef:
+              key: ANALYTICS_PORTAL_ALERT_API
+              name: cm-frontend
+        - name: ANALYTICS_PORTAL_DOCUMENTATION
+          valueFrom:
+            configMapKeyRef:
+              key: ANALYTICS_PORTAL_DOCUMENTATION
+              name: cm-frontend
         envFrom:
         - configMapRef:
             name: cm-feature-flags
@@ -201,14 +216,14 @@ spec:
           protocol: TCP
         readinessProbe:
           initialDelaySeconds: 10
-          timeoutSeconds: 15
+          timeoutSeconds: 5
           periodSeconds: 5
           httpGet:
             path: /index.html
             port: 8080
         livenessProbe:
           initialDelaySeconds: 20
-          timeoutSeconds: 15
+          timeoutSeconds: 5
           periodSeconds: 10
           httpGet:
             path: /index.html
