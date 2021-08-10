@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { NO_OF_RETRIES, STANDARD_TIME_OUT, LONG_TIME_OUT } from '../../../support/common/constants';
+import { STANDARD_TIME_OUT, LONG_TIME_OUT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -51,7 +51,7 @@ describe('Observability tests', () => {
         cy.userLogout();
     });
 
-    it('test logs view', { retries: NO_OF_RETRIES }, () => {
+    it('test logs view', () => {
         const connectionErrorLogEntry = 'error while connecting to the hr-service';
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         // const systemLogEntry = 'ballerina: started publishing metrics to Choreo'
@@ -78,7 +78,7 @@ describe('Observability tests', () => {
         // cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
     })
 
-    it('test observability overview', { retries: NO_OF_RETRIES }, () => {
+    it('test observability overview', () => {
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         const emptyHistogramMessage = 'No requests received during the selected time period';
         const httpStatusCodeRegexp = /[1-5]\d{2}/;
@@ -142,7 +142,7 @@ describe('Observability tests', () => {
         });
     });
 
-    it('test diagnostics view', { retries: NO_OF_RETRIES }, () => {
+    it('test diagnostics view', () => {
         const timestampRegex = /(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}\s([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/;
         const numberOfBins = 5;
 
