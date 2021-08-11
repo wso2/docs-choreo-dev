@@ -79,7 +79,7 @@ describe('Schedule trigger test run and deployment', () => {
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
     })
 
-    it('run schedule trigger integration', { retries: NO_OF_RETRIES }, () => {
+    it('run schedule trigger integration', () => {
         cy.get('[data-testid="editor-run-btn"]').should('be.visible');
         cy.get('[data-testid="editor-run-btn"]').click({ force: true });
         cy.log('Started test run');
