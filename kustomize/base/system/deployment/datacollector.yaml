@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip6: CKV_K8S_20=Temporarily suppressing till fixing
+  labels:
+    choreo.component: datacollector
+  name: datacollector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: datacollector
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: datacollector
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - env:
+            - name: IDP_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_CLIENT_ID
+                  name: cm-idp-replica
+            - name: IDP_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_ISSUER
+                  name: cm-idp-replica
+            - name: IDP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_HOST
+                  name: cm-idp-replica
+            - name: IDP_JWKS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_JWKS_ENDPOINT
+                  name: cm-idp-replica
+            - name: EVENTHUB_NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  key: EVENTHUB_NAMESPACE
+                  name: cm-datacollector
+            - name: DATAMAPPER_EVENTHUB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DATAMAPPER_EVENTHUB_NAME
+                  name: cm-datacollector
+            - name: CODESUGGESTIONS_EVENTHUB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: CODESUGGESTIONS_EVENTHUB_NAME
+                  name: cm-datacollector
+            - name: EVENTHUB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-datacollector
+                  key: EVENTHUB_CONNECTION_STRING
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-datacollector:latest
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+          name: datacollector
+          volumeMounts:
+            - name: secret-datacollector
+              mountPath: "/mnt/csi/secret-datacollector"
+              readOnly: true
+          ports:
+            - containerPort: 9090
+              name: datacollector-port
+              protocol: TCP
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+              protocol: TCP
+            - containerPort: 9092      # To be used for public health check (external)
+              name: healthz
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+      volumes:
+        - name: secret-datacollector
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-datacollector
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default

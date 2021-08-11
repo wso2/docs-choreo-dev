@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: datacollector
+  name: datacollector
+spec:
+  ports:
+  - name: datacollector-port
+    port: 9090
+    targetPort: datacollector-port
+  - name: healthz
+    port: 9092
+    targetPort: healthz
+  selector:
+    choreo.component: datacollector
