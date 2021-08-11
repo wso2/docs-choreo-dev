@@ -72,7 +72,7 @@ spec:
                 secretKeyRef:
                   name: secret-datacollector
                   key: EVENTHUB_CONNECTION_STRING
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-datacollector:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/data-collector:latest
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
