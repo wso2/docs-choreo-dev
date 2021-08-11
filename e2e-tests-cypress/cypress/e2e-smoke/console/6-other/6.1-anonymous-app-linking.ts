@@ -33,7 +33,7 @@ describe('anonymous-app-linking', () => {
             const obsUrl = /visit (http[^\s]+)/i.exec(result.stdout)[1].replace('http://','https://');
             cy.log("Retrieved Observability URL for the anonymous app: " + obsUrl);
             cy.visit(obsUrl);
-            cy.contains('Add to Choreo').should('be.visible').click();
+            cy.get('[data-testid=link-to-choreo]').should('be.visible').click();
             cy.get('[data-testid="link-app-name"]').should('be.visible');
             cy.log("Created a Choreo app for connection:- " + appName);
             cy.get('[data-testid="link-app-name"]').type(appName);

@@ -34,6 +34,7 @@ describe("Data Mapper", () => {
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
         cy.url().should("include", "app/" + appName + "/develop");
         cy.selectTrigger("Manual");
+        cy.get('[data-testid="vertical-close-btn"]').click();
 
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty('string', 'fName', '"John"');
@@ -44,13 +45,11 @@ describe("Data Mapper", () => {
         cy.selectManualTriggerOptions("Statements", "addVariable");
         cy.createVariableProperty('int', 'age', '30');
 
-        cy.get('[data-testid="product-tour-code-view"]').click();
 
         cy.selectManualTriggerOptions("Statements", "addDataMapping");
  
         cy.get('[data-testid="datamapper-variable-name"]').find('input').first()
             .click({ force: true }).clear().type('emp');
-        cy.get('[data-testid=product-tour-code-view]').click();
         cy.get('[data-testid="vertical-close-btn"]').click();
         cy.get('[data-testid = "Select Typestring"]').click();
         cy.contains('json').click({force: true});
@@ -102,11 +101,9 @@ describe("Data Mapper", () => {
         
         cy.get('[data-testid="datamapper-diagram-switch"]').click();
 
-        const loadRunTxt = "Running...";
         cy.testRunApp();
         cy.url().should("include", "app/" + appName + "/test");
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("exist");
-        cy.get(".product-tour-logs-panel").contains(loadRunTxt).should("not.exist", 50000);
+        cy.get('[data-testid="product-tour-log-panel"]').contains('Starting application', { timeout: 60000 });
         cy.get('[data-testid="product-tour-log-panel"]').contains('Application exited');      
         cy.log("DataMapper created successfully!");
 
@@ -116,7 +113,7 @@ describe("Data Mapper", () => {
         });
         cy.url().should("include", "app/" + appName + "/develop");
         cy.waitTillWorkSpace();
-
+        cy.get('[data-testid="vertical-close-btn"]').click();
         
         cy.log('Editing DataMapper');
         cy.get('[data-testid="data-processor-block"]').eq(3).trigger('mouseover').within(() => {
@@ -128,8 +125,6 @@ describe("Data Mapper", () => {
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
 
-        cy.get('[data-testid=product-tour-code-view]').click();
-        cy.get('[data-testid="vertical-close-btn"]').click();
         cy.get('[data-testid=datamapper-diagram-switch]').click();
         cy.log("DataMapper edited successfully!");
 
@@ -137,8 +132,6 @@ describe("Data Mapper", () => {
         cy.log('Deleting DataMapper');
         cy.get('g:nth-child(9) #DeleteIcon').click({force:true});
         cy.get('[data-testid="delete-logic-block-btn"] > .MuiButton-label').click({force:true});
-        cy.get('[data-testid=product-tour-code-view]').click();
-        cy.get('[data-testid="vertical-close-btn"]').click();
         cy.log("DataMapper deleted successfully!");
            
 

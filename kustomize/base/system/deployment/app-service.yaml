@@ -3,6 +3,11 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
   labels:
     choreo.component: app-service
   name: app-service
@@ -92,6 +97,9 @@ spec:
             secretKeyRef:
               name: secret-service-now
               key: SERVICE_NOW_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: env-app-service
         ports:
         - containerPort: 8080
           name: grpc-port

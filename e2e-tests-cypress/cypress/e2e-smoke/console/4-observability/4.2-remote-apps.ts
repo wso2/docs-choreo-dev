@@ -30,7 +30,7 @@ describe('Observability tests', () => {
 
     appName = generateAppName("app");
     cy.log('App name: ', appName);
-
+    cy.get('[data-testid="expand-button"]').click();
     cy.get('[href="/' + pathName + '"]').click();
     cy.get('[id="backdrop-loader"]').should('not.exist');
   })

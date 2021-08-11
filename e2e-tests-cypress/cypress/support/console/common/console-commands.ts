@@ -27,6 +27,7 @@ import {
     USER_CONNECTIONS_PATH,
     GOOGLE_CALENDAR_CONNECTOR,
     USER_CONFIGURATIONS_PATH,
+    OPENWEATHERMAP_APPID,
 } from '../../common/constants';
 import { getApiName } from '../../devportal/utils';
 
@@ -230,7 +231,7 @@ Cypress.Commands.add('sendGmailMessage', (plusBtnIndex: number, gmailConnectionI
  */
 Cypress.Commands.add('fillCalendarConfigs', (calendar: string) => {
     cy.log("Filling the calendar configuration");
-
+    cy.getByTestId("google-calendar-connect-btn").click();
     // Selecting the manually added calendar connection (user - testuser-choreo)
     cy.contains(GMAIL_CONNECTION_NAME).click();
     cy.get('[placeholder="Choose Calendar"]').siblings().children().get('.MuiAutocomplete-popupIndicator').click();
@@ -296,6 +297,7 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option: string
             cy.get('[id="SmallPlus"]').eq(0).click({ force: true });
         }
         if (type == 'Statements') {
+            cy.getByTestId("fit-to-screen-btn").click();
             cy.get('[data-testid="statement-options"]').click();
             cy.log('Selected statement category');
         } else if (type == 'Connections') {
@@ -346,6 +348,7 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 
     if (validExpression) {
         cy.log("Creating variable: added variable expression");
+        cy.getByTestId("fit-to-screen-btn").click();
         cy.get('[data-testid="save-btn"]').click();
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
         cy.checkSourceCodeForValidation(variableSourceFields);
@@ -661,6 +664,11 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
 
     cy.switchToDeployView(appName);
 
+    cy.intercept({
+        method: "POST",
+        pathname: `**/deploy`,
+    }).as("deployApp");
+
     cy.log('Deploying application...');
     if (type === 'schedule') {
         cy.contains('button', 'Schedule').click();
@@ -677,6 +685,8 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
         cy.get('#deploy-button').should('exist');
         cy.get('#deploy-button').click();
     }
+
+    cy.wait('@deployApp', { timeout: 60000 }).its('response.statusCode').should('eq', SUCCESS_STATUS_CODE);
 
     cy.log('Awaiting 5 minutes for the deployment to complete');
     cy.get('[data-testid="deploy-stop-button"]', { timeout: 1000 * 60 * 5 }).should('exist');
@@ -733,6 +743,131 @@ Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
 Cypress.Commands.add('hideWelcomeMessage', () => {
     localStorage.setItem("HAS_SEEN_WELCOME_MESSAGE", "YES");
 });
+
+/**
+    * Selects the Variable Property with other type (Statements,Variable,Other)
+    *
+    * @param custom_type - Option under 'Other Type'
+    * @param name - name of the variable
+    * @param expression - expression
+    */
+Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, name: string, expression: string, validExpression = true) => {
+    const variableSourceFields = custom_type + ' ' + name + ' = ' + expression + ";";
+    cy.log('Creating the variable with expression : ' + expression);
+    cy.get('[data-testid="undefinedvar"]').invoke('text').then((availableText) => {
+        if (!(availableText == 'other')) {
+            cy.wait(3000);
+            cy.get('[data-testid="undefinedvar"]').click();
+            cy.get('.MuiListItem-button').contains('other').click();
+        }
+    })
+    cy.get('[placeholder="Enter type"]').clear().type(custom_type);
+    cy.log('Creating variable: selected variable type');
+
+    cy.get('[data-testid="variable-name"]').click().type(name);
+    cy.log('Creating variable: added variable name');
+
+    cy.typeOnNthExpressionEditor(0, expression, false, "save-btn", validExpression);
+
+    if (validExpression) {
+        cy.log("Creating variable: added variable expression");
+        cy.wait(2000);
+        cy.get('[data-testid="save-btn"]').click({ force: true });
+
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.checkSourceCodeForValidation(variableSourceFields);
+        cy.log('Successfully created the variable with expression : ' + expression);
+    }
+}),
+
+    /**
+     * Find the element plus icon in inner classes in the Low code editor 
+     *
+     * @param plusBtnIndex - Index of the element plus icon with id `SmallPlus` in the Low code editor
+     * @param selector - Array of class elements
+     */
+    Cypress.Commands.add('findPlusButton', (plusBtnIndex: number, selector: string[]) => {
+        cy.log("Find the element plus icon");
+        cy.get(selector[0]).within(() => {
+            for (var i = 1; i < selector.length; i++) {
+                cy.get(selector[i]);
+            }
+            cy.get('[id="SmallPlus"]').should('exist').eq(plusBtnIndex).click({ force: true });
+        });
+    }),
+
+    /**
+    * Add Weather Forecast API Connector
+    *
+    * @param plusBtnIndex - Index of the element plus icon with id `SmallPlus` in the Low code editor
+    * @param endpointName: string
+    * @param responseVarName: string
+    * @param lat : Latitude
+    * @param lon : Longtitude
+    * @param exclude : Exclude parts of the weather data from the API response.
+    * @param units : Temperature units
+    * @param lang : Language 
+    */
+    Cypress.Commands.add('addWeatherForecastAPI', (plusBtnIndex: number, endpointName: string,
+        responseVarName: string, lat: string, lon: string, exclude?: string, units?: string, lang?: string) => {
+        cy.log('Adding Weather API Connector');
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.get('[id=SmallPlus]').eq(plusBtnIndex).click({ force: true });
+        cy.get('[data-testid="api-options"]').click();
+        cy.get('[data-testid="weather api"]').click();
+        cy.get('[placeholder="Enter endpoint name"]').clear().type(endpointName);
+        cy.get('.exp-editor').eq(2).type('{"appid": "' + OPENWEATHERMAP_APPID + '"}', { parseSpecialCharSequences: false });
+        cy.contains('Continue to Invoke API').should('be.visible').click();
+        cy.get('[id="combo-box-demo"]').type('Weather Forecast' + '{enter}');
+
+        cy.get('.exp-editor').eq(0).type(lat);
+        cy.wait(2000);
+        cy.get('.exp-editor').eq(1).type(lon);
+        cy.wait(2000);
+        if (exclude || units || lang != null) {
+            cy.get('#panel1bh-header').click();
+            cy.get('.exp-editor').eq(2).type(exclude);
+            cy.wait(2000);
+            cy.get('.exp-editor').eq(3).type(units);
+            cy.wait(2000);
+            cy.get('.exp-editor').eq(4).type(lang);
+            cy.wait(2000);
+        }
+        cy.get('[placeholder="Enter response variable name"]').clear().type(responseVarName);
+        cy.contains('button', 'Save').click({ force: true });
+        cy.get('[data-testid=product-tour-code-view]').click();
+        cy.wait(2000);
+        cy.log("Added Weather API connector");
+
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.waitTillWorkSpace();
+    }),
+
+
+    /**
+    * Send Choreo SMS
+    *
+    * @param recipientNumber - SMS Recipient's Phone Number
+    * @param textMessage 
+    * @param responseVariableName - optional
+    */
+    Cypress.Commands.add('sendChoreoSMS', (recipientNumber: string, textMessage: string, responseVariableName?: string) => {
+        cy.log("Adding a Choreo sms connector");
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        cy.get('[data-testid="api-options"]').click({ force: true });
+        cy.get('[data-testid="sms by choreo"]').click({ force: true });
+        cy.get('.exp-editor').eq(0).type(recipientNumber);
+        cy.get('.exp-editor').eq(1).type(textMessage);
+        cy.wait(2000);
+        if (responseVariableName != null) {
+            cy.get('[ placeholder="Enter response variable name"]').clear().type(responseVariableName);
+        }
+        cy.wait(1000);
+        cy.get('button').contains('Save').should('exist').click({ force: true });
+        cy.get('[data-testid=product-tour-code-view]').click({ force: true });
+        cy.wait(2000);
+        cy.log("SMS by Choreo connector added successfully!");
+    });
 
 Cypress.Commands.add('clearConnections', () => {
     cy.log('Deleting connections...');
@@ -879,7 +1014,6 @@ Cypress.Commands.add('clearAPIs', () => {
         });
     });
 });
-
 
 Cypress.Commands.add('clearAllTestData', () => {
     cy.log('Deleting all test data...');

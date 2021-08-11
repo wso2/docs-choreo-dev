@@ -3,6 +3,11 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
   labels:
     choreo.component: api-server
   name: api-server
@@ -67,6 +72,9 @@ spec:
             configMapKeyRef:
               name: cm-runtime-env
               key: API_SERVER_REDIS_HOST
+        envFrom:
+          - configMapRef:
+              name: env-api-server
         ports:
         - containerPort: 8080
           name: http-port

@@ -48,6 +48,7 @@ describe('Service deployment and delete deployed service', () => {
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
         cy.get('[id="SmallPlus"]').eq(0).click({force: true});
         cy.get('[data-testid="api-options"]').click();
+        cy.getByTestId("fit-to-screen-btn").click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
         cy.get('body').type('{enter}', { force: true });
