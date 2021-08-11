@@ -84,7 +84,7 @@ spec:
               readOnly: true
           ports:
             - containerPort: 9090
-              name: datacollector-port
+              name: collector-port
               protocol: TCP
             - containerPort: 9091      # To be used for readiness/liveness probes (internal)
               name: health

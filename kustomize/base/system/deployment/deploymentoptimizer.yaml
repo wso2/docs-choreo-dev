@@ -90,6 +90,9 @@ spec:
               secretKeyRef:
                 name: secret-ai-storage-table
                 key: TABLE_CONNECTION_STRING
+        envFrom:
+          - configMapRef:
+              name: env-deployment-optimizer
         resources:
           limits:
             cpu: 200m
