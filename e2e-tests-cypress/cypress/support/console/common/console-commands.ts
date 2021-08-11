@@ -294,7 +294,6 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option: string
             cy.get('[id="SmallPlus"]').eq(0).click({ force: true });
         }
         if (type == 'Statements') {
-            cy.getByTestId("fit-to-screen-btn").click();
             cy.get('[data-testid="statement-options"]').click();
             cy.log('Selected statement category');
         } else if (type == 'Connections') {
@@ -345,7 +344,6 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 
     if (validExpression) {
         cy.log("Creating variable: added variable expression");
-        cy.getByTestId("fit-to-screen-btn").click();
         cy.get('[data-testid="save-btn"]').click();
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
         cy.checkSourceCodeForValidation(variableSourceFields);
