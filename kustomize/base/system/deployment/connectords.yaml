@@ -56,6 +56,9 @@ spec:
             configMapKeyRef:
               key: CHOREO_APP_SERVICE_GRPC_ADDRESS
               name: cm-connectords
+        envFrom:
+          configMapRef:
+            name: env-connectords
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
         securityContext:
           allowPrivilegeEscalation: false

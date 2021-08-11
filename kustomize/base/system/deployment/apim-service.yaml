@@ -84,6 +84,9 @@ spec:
                 secretKeyRef:
                   key: IDP_ADMIN_PASSWORD
                   name: secret-apim-service
+          envFrom:
+            - configMapRef:
+                - name: env-apim-service
           resources:
             limits:
               cpu: 500m
