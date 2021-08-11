@@ -55,6 +55,7 @@ spec:
       containers:
         - name: wso2am
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r14062021.2
+          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               path: /services/Version
