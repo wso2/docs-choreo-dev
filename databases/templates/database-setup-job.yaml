@@ -14,7 +14,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: choreo-datasource-setup-job
+  namespace: {{ .Values.namespace }}
   annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
 spec:
   ttlSecondsAfterFinished: 100
   template:
@@ -40,6 +42,13 @@ spec:
           command:
             - sh
             - /setup.sh
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10005
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: structure-dbscripts-config-volume
               mountPath: /sql-scripts/structure
@@ -82,3 +91,4 @@ spec:
           secret:
             secretName: {{ .Values.azure.database.azureDatabaseCACertSecretName }}
       restartPolicy: Never
+      automountServiceAccountToken: false
