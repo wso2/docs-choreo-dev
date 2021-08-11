@@ -3,9 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-#    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
-#    checkov.io/skip2: CKV_K8S_40=Temporarily suppressing till fixing
-#    checkov.io/skip3: CKV_K8S_23=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     checkov.io/skip4: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip5: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
   labels:
@@ -44,7 +42,6 @@ spec:
               drop:
                 - all
               add: ["NET_RAW"]
-            readOnlyRootFilesystem: true
           name: apim-devportal
           envFrom:
           - configMapRef:
