@@ -246,18 +246,15 @@ To generate credentials for the `CovidStatus` API and invoke it, follow this pro
 
 3. Click **Generate Credentials**. As a result, **Consumer Key** and **Consumer Secret** fields are populated with the newly generated tokens.
 
-4. Click **://Curl**. Then copy the cURL command template that is displayed.
+4. Click **://Curl**. Then copy the cURL command that is displayed.
+
+    !!! tip
+        Click the button to copy the cURL command. Do not manually copy it because the displayed command is a template, and it does not include the generated credentials.
 
 5. Close the **Get cURL to Generate Access Token** card. Then click **Update**.
 
     A message appears to confirm that the keys are successfully updated.
     
-The cURL command you copied is of the following format
-
-```text
-curl -k -X POST https://devportal.choreo.dev/oauth2/token -d "grant_type=client_credentials"
--H "Authorization: Basic Base64(consumer-key:consumer-secret)"
-```
 You can replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the Developer Portal.
 
 Congratulations! You have now successfully created a service, tested it, deployed it, observed its statistics, and published its API.
