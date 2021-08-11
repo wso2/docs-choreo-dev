@@ -57,6 +57,9 @@ spec:
                   secretKeyRef:
                     key: CHOREO_DB_PASSWORD
                     name: secret-app-db
+            envFrom:
+              - configMapRef:
+                  name: env-perf-analyzer
             resources:
               limits:
                 cpu: 300m

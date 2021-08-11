@@ -43,6 +43,9 @@ spec:
               secretKeyRef:
                 key: CHOREO_PERF_DB_PASSWORD
                 name: secret-perfanalyzer
+        envFrom:
+          - configMapRef:
+              name: env-perf-analyzer
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 15
