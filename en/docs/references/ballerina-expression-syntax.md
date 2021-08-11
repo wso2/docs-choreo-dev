@@ -1,15 +1,15 @@
 # Ballerina Expression Syntax
 
-Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for method invocations, declaring a variable, etc. This document presents you with the common expressions that you can use while developing in the Choreo console.
+Ballerina expressions comprise a powerful expression syntax based on the [Ballerina language](https://ballerina.io/) for method invocations, declaring a variable, etc. This topic presents the common expressions you can use while developing in the Choreo Console.
 
 ## Variables
 A variable declaration statement declares a value of a specific type (`string`, `integer`, etc.).  You can use a previously declared variable at a later phase in the logical process of your service or integration.
 
 ### int
 
-The `int` type is a 64-bit two's complement integer (similar to `long` in Java). A signed integer is an integer with the  `+` or `-` character in the front. However, you can also define a positive integer or zero using only numerical characters. The `int` type supports the usual [arithmetic operators:](#arithmetic-operators) `+`, `-`, `/`, `*`, %`. The operator precedence is the same as C. Integer overflow is a runtime error in Ballerina.
+The `int` type is a 64-bit two's complement integer (similar to `long` in Java). A signed integer is an integer with the  `+` or `-` character preceding the integer. However, you can also define a positive integer or zero using only numeric characters. The `int` type supports the usual [arithmetic operators:](#arithmetic-operators) `+`, `-`, `/`, `*`,` %`. The operator precedence is the same as C. Note that integer overflow is a runtime error in Ballerina.
 
-###### Examples:
+###### Examples
 
 To initialize a variable of type `int` in Choreo, you can use one of the following expressions:
 
@@ -23,9 +23,9 @@ To initialize a variable of type `int` in Choreo, you can use one of the followi
 
 ### float
 
-The `float` type is an IEEE 64-bit binary (radix 2) floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use `+` or `-` characters in the front to indicate the sign.
+The `float` type is an IEEE 64-bit binary (radix 2) floating-point (similar to `double` in Java) and supports the same arithmetic operators as `int`. You have the option to use the `+` or `-` characters in the front of the integer to indicate the sign.
 
-###### Examples:
+###### Examples
 
 To initialize a variable of type `float` in Choreo, you can use one of the following expressions:
 
@@ -59,13 +59,13 @@ To initialize a variable of type `decimal` in Choreo, you can use one of the fol
 
 ### boolean
 
-The boolean data type has one of the two possible values, `true` or `false`.
+The boolean data type has one of the two possible values: `true` or `false`.
 
 ### string
 
-The `string` type represents an immutable sequence of zero or more Unicode characters. In Ballerina, there is no character type. Instead, a string of length one represents a character. Two string values are considered equal (`==`) if both sequences have the same characters. You can use `<`, `<=`, `>`, and `>=` operators on string values. They work by comparing code points. Unpaired surrogates are not allowed.
+The `string` type represents an immutable sequence of zero or more Unicode characters. In Ballerina, there is no character type. Instead, a string of length one represents a character. Two string values are considered equal (`==`) if both sequences have the same characters. You can use the `<`, `<=`, `>`, and `>=` operators on string values. These work by comparing code points. Unpaired surrogates are not allowed.
 
-###### Examples:
+###### Examples
 
 To initialize a variable of type `string` in Choreo, you can use one of the following expressions:
   ```ballerina
@@ -76,9 +76,9 @@ To initialize a variable of type `string` in Choreo, you can use one of the foll
 
 ### var
 
-Ballerina allows you to declare variables using the `var` keyword. Here, Ballerina infers the type of the declared variable based on the right-hand side expression.
+Ballerina allows you to declare variables using the `var` keyword. Here, Ballerina infers the type of the declared variable based on the right-hand side of the expression.
 
-###### Examples:
+###### Examples
 
 To initialize a variable of type `var` in Choreo, you can use one of the following expressions:
 
@@ -138,9 +138,9 @@ To initialize a variable of type `anydata` in Choreo, you can enter expressions 
 
 - Concatenation
 
-    You can use the `+` operator to do string concatenations. The string value can come from a string literal or a variable.
+    You can use the `+` operator to concatenate strings. The string value can come from a string literal or a variable.
 
-    ###### Example:
+    ###### Example
 
     To concatenate the string `Hi` and a string variable `name`, you can use the following expression:
 
@@ -150,13 +150,13 @@ To initialize a variable of type `anydata` in Choreo, you can enter expressions 
 
 ### Arithmetic operators
 
-Arithmetic operators perform addition, subtraction, multiplication, division, and modulo on numerical values. You can use literals or variables of type `int` or `float` as the numerical values in Ballerina expressions.
+Arithmetic operators perform addition, subtraction, multiplication, division, and modulo on numeric values. You can use literals or variables of type `int` or `float` as numeric values in Ballerina expressions. Here is a list of the Ballerina arithmetic operators.
 
 - Addition
 
-    You can use the `+` operator for number addition. 
+    You can use the `+` operator to add numbers. 
 
-    ###### Example:
+    ###### Example
 
     To add an integer literal (`20`) and an integer variable `number`, you can use the following expression:
 
@@ -166,11 +166,11 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
 - Subtraction 
 
-    You can use the `-` operator for number subtraction. 
+    You can use the `-` operator to subtract numbers. 
 
-    ###### Example:
+    ###### Example
 
-    To subtract two integers, integer variable `yearOfBirth` from integer literal `2022`, you can use the following expression:
+    To subtract two integers (an integer variable `yearOfBirth` from an integer literal `2022`), you can use the following expression:
 
     ```ballerina
     2022 - yearOfBirth;
@@ -178,11 +178,11 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
  
 - Division
 
-    You can use the `/` operator for number division. 
+    You can use the `/` operator to divide numbers. 
 
-    ###### Example:
+    ###### Example
 
-    To divide an integer variable `totalNumberOfStudents` from integer literal `5`, you can use the following expression:
+    To divide an integer variable `totalNumberOfStudents` from an integer literal `5`, you can use the following expression:
 
     ```ballerina
     totalNumberOfStudents / 5; 
@@ -190,11 +190,11 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
  
 - Multiplication
 
-    You can use the `*` operator for number multiplication. 
+    You can use the `*` operator to multiply numbers. 
 
-    ###### Example:
+    ###### Example
 
-    To multiply two float constants `60` by `5`, you can use the following expression:
+    To multiply two float constants (for example, `60` by `5`), you can use the following expression:
 
     ```ballerina
     60 * 5;
@@ -204,7 +204,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
 
     You can use the  `%` operator to get the remainder of a division. 
 
-    ###### Example:
+    ###### Example
 
     To get the remainder of the division between an integer variable `n` and an integer literal `3`, you can use the following expression:
   
@@ -220,11 +220,14 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     
     Ballerina provides the following equality operators: 
     
-    - `==`: For deep value equality of `anydata` typed values.
-    - `===`: For reference equality. 
-    - `!=` and `!==`: For negations.
+    | **Operator**     | **Purpose**                                      |
+    |------------------|--------------------------------------------------|
+    | `==`             | For deep value equality of `anydata` typed values|
+    | `===`            | For reference equality                           |
+    | `!=` and `!==`   | For negations.                                   |
+    
 
-    ###### Examples:
+    ###### Examples
 
     To compare an integer literal `10` with an integer variable `firstNumber`, you can use the following expression:
     
@@ -232,7 +235,7 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     10 == firstNumber
     ```
 
-    To compare a string variable `username`  with  a string literal `admin`, use the following expression:  
+    To compare a string variable `username`  with  a string literal `admin`, you can use the following expression:  
 
     ```ballerina
     username != "admin" 
@@ -247,9 +250,9 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     - `<=`: Less than or equal to
     - `>=`: Greater than or equal to
 
-    ###### Examples:
+    ###### Examples
 
-    To compare the value of the integer variable `firstNumber` to the integer literal `10`, use one of the following expressions:
+    To compare the value of the integer variable `firstNumber` to the integer literal `10`, you can use one of the following expressions:
 
     ```ballerina
     firstNumber > 10
@@ -257,12 +260,12 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     firstNumber <= 10
     ```
 
-    To compare the value of the string variable `greeting` to the string literal `Hi`, use the following expression:
+    To compare the value of the string variable `greeting` to the string literal `Hi`, you can use the following expression:
    
     ```ballerina
     greeting == "Hi"    
     ```
-    To compare an array variable `arrayWithTwoElements` with an array variable `arrayWithOneElement`, use the following expression:
+    To compare an array variable `arrayWithTwoElements` with an array variable `arrayWithOneElement`, you can use the following expression:
     
      ```ballerina
      arrayWithTwoElements <  arrayWithOneElement
@@ -270,20 +273,20 @@ Arithmetic operators perform addition, subtraction, multiplication, division, an
     
 ## HTTP 
 
-All the HTTP-related services created in Choreo have a variable called `request` (of type `http:Request`) which developers can use to query information related to the HTTP request. Following is a list of such use cases.
+All the HTTP-related services created in Choreo have a variable called `request` (of type `http:Request`), which developers can use to query information related to the HTTP request. The following topics present a list of such use cases.
 
 ### Read a header value in the request
 A typical HTTP request contains many headers. These include standard and custom headers. You can use the `request` variable's `getHeader` method to read a specific header value in any expression-enabled input field. Note that the `getHeader` method's return type is `string|error`.
 
-###### Examples:
+###### Examples
 
-To read the value of an HTTP header `Access-Control-Allow-Origin`, use the following expression:
+To read the value of an HTTP header `Access-Control-Allow-Origin`, you can use the following expression:
 
 ```ballerina
 check request.getHeader("Access-Control-Allow-Origin")
 ```
   
-To read the value of an HTTP header by passing a variable that contains the header name `headerName`, use the following expression:
+To read the value of an HTTP header by passing a variable that contains the header name `headerName`, you can use the following expression:
 
 ```ballerina
 check request.getHeader(headerName)
@@ -293,15 +296,15 @@ check request.getHeader(headerName)
 
 Services or integrations in Choreo sometimes need to check the availability of a header before proceeding to something like reading the header value. You can use the `hasHeader` method in the `request` object for this purpose.
 
-###### Examples:
+###### Examples
 
-To check if the HTTP header `content-length` exists by passing the header name, use the following expression:
+To check if the HTTP header `content-length` exists by passing the header name, you can use the following expression:
 
 ```ballerina
 request.hasHeader("content-length")
 ```
   
-To check if the HTTP header `content-length` exists by passing the header name in the string variable `contentLength`, use the following expression: 
+To check if the HTTP header `content-length` exists by passing the header name in the string variable `contentLength`, you can use the following expression: 
 
 ```ballerina
 request.hasHeader(contentLength)
@@ -310,9 +313,9 @@ request.hasHeader(contentLength)
 
 JSON is a common content type used for HTTP communication. You can use the `request` variable's `getJsonPayload` method to read the JSON payload sent with the HTTP request. Note that the `getJsonPayload` method's return type is `json|error`.
 
-###### Example:
+###### Example
 
-To read the JSON Payload of the HTTP request, use the following expression:
+To read the JSON payload of the HTTP request, you. can use the following expression:
 
 ```ballerina
 check request.getJsonPayload()
@@ -322,9 +325,9 @@ check request.getJsonPayload()
 
 Sometimes, content is sent as a string (plain text) with the HTTP request. You can use the `request` variable's `getTextPayload` method to read the text payload sent with the HTTP request. Note that the `getTextPayload` method's return type is `string|error`.
 
-###### Example:
+###### Example
 
-To read the text payload of the HTTP request, use the following expression:
+To read the text payload of the HTTP request, you can use the following expression:
 
 ```ballerina
 check request.getTextPayload()
@@ -334,15 +337,15 @@ check request.getTextPayload()
 
 Query parameters are used in an HTTP request to send additional inputs to consider when processing the request. You can use the `request` variable's `getQueryParamValue` method to read the passed query parameter.
 
-###### Examples:
+###### Examples
 
-To read the value of the query parameter `category`, use the following expression:
+To read the value of the query parameter `category`, you can use the following expression:
 
 ```ballerina
 request.getQueryParamValue("category")
 ```
   
-To read the value of the query parameter passing the query parameter name as a variable, use the following expression:
+To read the value of the query parameter passing the query parameter name as a variable, you can use the following expression:
 
 ```ballerina
 request.getQueryParamValue(queryParamName)
@@ -352,9 +355,9 @@ request.getQueryParamValue(queryParamName)
 
 HTTP cookies keep stateful information against a client. You can use the `request` variable's `getCookies` method to read cookies present in the request as an array.
 
-###### Example:
+###### Example
 
-To read all the cookies available in the request, use the following expression:
+To read all the cookies available in the request, you can use the following expression:
 
 ```ballerina
 request.getCookies()
@@ -362,13 +365,13 @@ request.getCookies()
 
 ## JSON
 
-JSON is a textual format for representing a collection of values: a simple value, an array of values, or an object. 
+JSON is a textual format for representing a collection of values: a simple value, an array of values, or an object. The. following topics describe these values.
 
 ### Simple values in JSON 
 
-Ballerina has a single type named `json` that can represent any JSON value. You can use `json` which is a built-in union type in Ballerina to store values of the types `nil` (as the null value), `boolean`, `int`, `float`, `decimal`, `string`, `json[]`, and `map<json>`. 
+Ballerina has a single type named `json` that can represent any JSON value. You can use `json`, a built-in union type in Ballerina, to store the values of the types `nil` (as the null value), `boolean`, `int`, `float`, `decimal`, `string`, `json[]`, and `map<json>`. 
 
-###### Examples:
+###### Examples
 
 To initialize a variable of type `json`, you can use the following:
 ```ballerina
@@ -389,22 +392,22 @@ null
 
 Ballerina represents JSON objects as maps. You can define a JSON object to hold values of any `json` type (`string`, `number`, `boolean`, `object`, `array`, or `null`). You can use the variable type `json` to declare a  JSON object.
 
-###### Examples:
+###### Examples
 
 
-To declare a JSON object, use the following:
+To declare a JSON object, you can use the following:
 
 ```ballerina
 {name: "apple", color: "red", price: "20.0"}
 ```
 
-To create an empty JSON object, use the following:
+To create an empty JSON object, you can use the following:
 
 ```ballerina
 {}
 ```
 
-To cast a `json` type variable `fruitDetail` to a `map<json>` type variable, use the following:
+To cast a `json` type variable `fruitDetail` to a `map<json>` type variable, you can use the following:
 
 ```ballerina
 
@@ -412,7 +415,7 @@ To cast a `json` type variable `fruitDetail` to a `map<json>` type variable, use
  
 ```
 
-To access or change a field of the JSON object `fruitDetailObject`, use one of the following:
+To access or change a field of the JSON object `fruitDetailObject`, you can use one of the following:
 
 !!! note
     If you define the JSON object using a `json` type variable, you need to cast it to a `map<json>` first.
@@ -423,7 +426,7 @@ fruitDetailObject["color"] = "orange";
 fruitDetailObject["name"];
 ```
 
-To create a nested JSON object, use the following:
+To create a nested JSON object, you can use the following:
 
 ```ballerina
 map<json> family = {
@@ -439,26 +442,26 @@ map<json> family = {
 
 ### JSON arrays
 
-JSON array values must be of any of the json types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
+JSON array values must be of any of the JSON types: `string`, `number`, `boolean`, `object`, `array`, or `null`. You can define a JSON array in one of the following two ways:
    - Using a [`json` type variable](#simple-values-in-JSON).  
    - Selecting the variable **Type** as `other` and `json[]` as the **Other Type** in the variable statement form.
    
 You can access JSON array elements using the index.
 
-###### Examples:
+###### Examples
 
-To declare a JSON array, use the following:
+To declare a JSON array, you can use the following:
 
 ```ballerina
 [1, false, null, "foo", {first:  "Alex" , last: "John" }]
 ```
-To cast the `json` type variable `personRecord` to a `json[]` type variable, use the following:
+To cast the `json` type variable `personRecord` to a `json[]` type variable, you can use the following:
 
 ```ballerina
 <json[]> personRecord;
 ```
 
-To access elements the fourth element in the JSON array `personRecordArray`, use one of the following:
+To access elements the fourth element in the JSON array `personRecordArray`, you can use one of the following:
 
 !!! note
     If you define the JSON array using a `json` type variable, you need to cast it to a `json[]` type first.
@@ -467,7 +470,7 @@ To access elements the fourth element in the JSON array `personRecordArray`, use
 personRecordArray[4]; 
 ```
 
-To add a JSON array in an object literal, use the following:
+To add a JSON array in an object literal, you can use the following:
 
 ```ballerina
 {
@@ -482,7 +485,7 @@ To add a JSON array in an object literal, use the following:
 }
 ```
 
-To get the length of a JSON array, use the following:
+To get the length of a JSON array, you can use the following:
 
 ```ballerina
 personRecordArray.length(); 
@@ -490,10 +493,10 @@ personRecordArray.length();
 
 ### JSON access
 
-You can use the field access(.) and optional field access (?.) to access the `json` type in Ballerina. In this case, the type checking happens at runtime. The return type of this operation is a union of `json` and `error`. 
+You can use the field access(.) and optional field access (?.) operators to access the `json` type in Ballerina. In this case, the type checking happens at runtime. The return type of this operation is a union of `json` and `error`. The following topics describe the field access operators.
     
 !!! info
-    The examples in this section assume that the following `json` type variable `person` is already defined.
+    The examples in this section assume that the following `json` type variable `person` is already defined as
     
     ```ballerina
          json person = {
@@ -509,16 +512,16 @@ You can use the field access(.) and optional field access (?.) to access the `js
 
 - Field access(.) 
 
-    You can use the field access operator to access a JSON object stored in a `json` type variable. If the value stored in the `json` type variable is not a JSON object, or if the key is invalid, the field access operation returns an error at runtime.
+    You can use the field access operator to access a JSON object stored in a `json` type variable. If the value stored in the `json` type variable is not a JSON object or if the key is invalid, the field access operation returns an error at runtime.
    
-    ###### Examples:
+    ###### Examples
 
-    To access a field, use the following:    
+    To access a field, you can use the following:    
 
     ```ballerina
     check person.fname;
     ```
-    To access a field in a nested level, use the following:
+    To access a field in a nested level, you can use the following:
  
     ```ballerina
     check person.address.city;
@@ -527,31 +530,33 @@ You can use the field access(.) and optional field access (?.) to access the `js
 - Optional field access (?.) 
 
     You can use the optional field access operator to access a JSON object stored in a `json` type variable. If the value stored in the `json` type variable is not null and not a JSON object, optional field access returns an error. If the value is a JSON object and the key is invalid, the field access operation returns a `null` or `()` at runtime.
+    
+    ###### Example
 
     ```ballerina
     check person?.address?.city;
     ```
 
-### User-defined type to JSON type conversion
+### User-defined type to JSON type conversions
 
-Conversion from json value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of `anydata` to a json value using `toJson`.
+Conversion from a JSON value to JSON format is straightforward. You can convert an application-specific, user-defined subtype of `anydata` to a JSON value using `toJson`.
 
 
-###### Examples:
+###### Example
 
-To convert the record `movieTheRevenant` to `json`, use the following:
+To convert the record `movieTheRevenant` to `json`, you can use the following:
 
 ```ballerina
 movieTheRevenant.toJson();     
 ```
 
-### JSON type to user-defined type conversion
+### JSON type to user-defined type conversions
 
-You can cast a json value to an application-specific, user-defined subtype of `anydata` by using the `cloneWithType` function.
+You can cast a JSON value to an application-specific, user-defined subtype of `anydata` by using the `cloneWithType` function.
 
-###### Examples:
+###### Example
 
-To convert the `theRevenantJson` variable of type `json` to the record `Movie`, use the following:
+To convert the `theRevenantJson` variable of type `json` to the record `Movie`, you can use the following:
 
 ```ballerina
 check theRevenantJson.cloneWithType(Movie);

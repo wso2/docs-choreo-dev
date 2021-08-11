@@ -13,7 +13,7 @@ body.cChoreoBody {
     max-width: 100%;
 }
 
-.md-sidebar--secondary { 
+.md-sidebar--secondary {
     margin-left: 100%;
 }
 
@@ -40,6 +40,7 @@ body.cChoreoBody {
     border-right: 1px solid #e5e8ed;
 
 }
+
 .wy-breadcrumbs {
 display: inline-block;
 width: 100%;
@@ -57,11 +58,6 @@ margin-top: 25px;
     margin-bottom: -1em;
 }
 
-/* .wy-breadcrumbs li a {
-    line-height: 2rem;
-} */
-
-
 .wy-breadcrumbs  .md-icon.md-icon--arrow-forward.md-footer-nav__button {
 font-size: 0.6rem;
 padding: 0;
@@ -70,10 +66,6 @@ line-height: 1rem;
 color: #40404a;
 }
 
-
-/* .md-main .md-content {
-    background: #F6F5FA;
-} */
 [data-md-color-accent="deep-orange"] .md-nav__link:focus, [data-md-color-accent="deep-orange"] .md-nav__link:hover, [data-md-color-accent="deep-orange"] .md-typeset .footnote li:hover .footnote-backref:hover, [data-md-color-accent="deep-orange"] .md-typeset .footnote li:target .footnote-backref, [data-md-color-accent="deep-orange"] .md-typeset .md-clipboard:active::before, [data-md-color-accent="deep-orange"] .md-typeset .md-clipboard:hover::before, [data-md-color-accent="deep-orange"] .md-typeset [id] .headerlink:focus, [data-md-color-accent="deep-orange"] .md-typeset [id]:hover .headerlink:hover, [data-md-color-accent="deep-orange"] .md-typeset [id]:target .headerlink {
     color: #545CEC;
 }
@@ -157,19 +149,6 @@ h1, h2, h3, h4 {
 .md-nav__list {
 
 margin-top: 100px;
-    /* padding: 24px;
-
-    box-shadow: 0 10px 40px -20px rgb(76 77 82 / 10%), 0 20px 50px 0 rgb(123 123 123 / 10%);
-    margin-top: 0px;
-    min-height: none;
- 
-    border-radius: 12px;
-    background-color: #FFFFFF;
-    width: 100%; */
-
-
-
-    
 }
 
 .md-header[data-md-state="shadow"] {
@@ -212,13 +191,6 @@ ul.md-nav__list  ul.md-nav__list {
     border-top-color: #e4e8ee7d;
 }
 
-
-/* .md-sidebar__scrollwrap {
-    color: #545CEC;
-    z-index: 1201;
-    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 8%), inset 0 -1px 0 0 #e1e2e7;
-    background-color: #ffffff;
-} */
 .md-main__inner {
     padding-top: 0;
 }
@@ -281,7 +253,7 @@ padding-bottom: 2rem;
 
 
 a.cChoreoDocsButtons.localLink {
- 
+
     font-size: 14px;
     box-shadow: inset 0 0 0 1px rgb(0 0 0 / 6%), 0 1px 2px 0 rgb(0 0 0 / 15%);
     text-transform: capitalize;

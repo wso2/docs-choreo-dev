@@ -19,7 +19,7 @@ The following lists the connections you can use to interact with application-spe
 | **Weather API**     | Integrate with the weather API to retrieve weather forecasts as well as information about the current weather. |
 | **Twilio**          | Integrate with Twilio to perform operations such as sending messages, WhatsApp messages, and making voice calls. |
 | **Slack**           | Integrate with Slack to perform operations such as sending a message to a channel, deleting a message, etc. |
-| **Salesforce**      | Integrate with the People API to manage your contacts. You can perform operations such as getting, listing, creating, deleting, and updating contacts. |
+| **Salesforce**      | Integrate with the Salesforce API to perform Salesforce operations. You can create, read, update, and delete (CRUD) records, search or query your data, retrieve object metadata, etc. |
 | **NetSuite**        | Integrate with Netsuite to perform operations such as creating a record instance, creating a sublist, etc. |
 | **Azure EventHub**  | Integrate with Azure to manage consumer groups, event hubs, events, publishers, and partitions. You can perform many operations such as creating and listing event hubs and consumer groups, etc. |
 | **Azure Cosmos DB** | Integrate with Azure Cosmos DB to manage documents and stored procedures. You can perform operations such as creating documents, executing stored procedures, etc. |
