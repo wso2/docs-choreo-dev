@@ -15,7 +15,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dbscripts-for-structure-idp-configmap
-  namespace: {{.Release.Namespace}}
+  namespace: {{ .Values.namespace }}
 data:
   {{- $file := .Files }}
   {{- range $path, $byte := .Files.Glob "idp-scripts/*" }}
