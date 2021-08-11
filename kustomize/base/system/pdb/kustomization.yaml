@@ -20,3 +20,4 @@ resources:
   - datamapper.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
+  - datacollector.yaml
