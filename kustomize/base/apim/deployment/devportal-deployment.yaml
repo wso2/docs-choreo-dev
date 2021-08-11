@@ -4,6 +4,8 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
+    checkov.io/skip2: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_23=Temporarily suppressing till fixing
     checkov.io/skip4: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip5: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
   labels:
@@ -34,9 +36,6 @@ spec:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
           imagePullPolicy: Always
           securityContext:
-            runAsNonRoot: true
-            runAsUser: 10500
-            runAsGroup: 10500
             allowPrivilegeEscalation: false
             capabilities:
               drop:
