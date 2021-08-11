@@ -42,7 +42,6 @@ spec:
             capabilities:
               drop:
                 - ALL
-                - NET_RAW
           name: apim-service
           readinessProbe:
             initialDelaySeconds: 15
