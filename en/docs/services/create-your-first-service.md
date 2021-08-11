@@ -214,6 +214,50 @@ You can view statistics related to the service as the following diagram illustra
 The low-code diagram displays the success rate and the latency for each connector. 
 The Observability view to the right of the low-code diagram displays graphs that depict the throughput and the latency. You can move 
 the pointer over the throughput graph to view details relevant for specific times. If you want to drill down further, 
-click the **Diagnostics View** tab.  
+click the **Diagnostics View** tab.
 
-Congratulations! You have now successfully created a service, tested it, deployed it, and observed its statistics.
+The requests you sent to generate the above statistics use the temporary API key created when you deploy the service. To access the API of the `CovidStatus` service, users of the service need to generate their credentials. To allow this, proceed to the next step and publish the API.
+
+## Step 9: Publish the service API
+
+To publish the API of the `CovidStatus` service, follow this procedure:
+
+1. Open the left navigator and click **APIs**.
+
+2. Click on the `CovidStatus` API (i.e., the API of the `CovidStatus` service).
+
+3. Click the **Publish** icon in the left pane.
+
+4. On the **Lifecycle Management** page, click **Publish**.
+
+    ![Publish API](../assets/img/services/publish-api.png){.cInlineImage-full}
+    
+    The status of the API changes to **Published**.
+    
+Now you have published the API of the `CovidStatus` service. To understand how a user can generate credentials for it and then invoke it, proceed to the next step.
+
+## Step 10: Generate API credentials
+
+To generate credentials for the `CovidStatus` API and invoke it, follow this procedure:
+
+1. In the **Lifecycle Management** page, click **Go to Developer Portal**.
+
+2. Once you are signed in to the Developer Portal, click **Credentials** in the navigator.
+
+3. Click **Generate Credentials**. As a result, **Consumer Key** and **Consumer Secret** fields are populated with the newly generated tokens.
+
+4. Click **://Curl**. Then copy the cURL command template that is displayed.
+
+5. Close the **Get cURL to Generate Access Token** card. Then click **Update**.
+
+    A message appears to confirm that the keys are successfully updated.
+    
+The cURL command you copied is of the following format
+
+```text
+curl -k -X POST https://devportal.choreo.dev/oauth2/token -d "grant_type=client_credentials"
+-H "Authorization: Basic Base64(consumer-key:consumer-secret)"
+```
+You can replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the Developer Portal.
+
+Congratulations! You have now successfully created a service, tested it, deployed it, observed its statistics, and published its API.
