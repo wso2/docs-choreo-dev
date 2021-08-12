@@ -50,7 +50,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router
   newTag: master-255df42e93c39ce20a0489218532c778d3995297
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
-  newTag: master-b02097b9833b544279286dbf854d2a7d2b1addaf
+  newTag: master-ad6295464fe9cb7db14ab8aed357e98a1861ab26
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
   newTag: v4.0.0-r11082021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter
