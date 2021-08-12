@@ -60,8 +60,8 @@ A **bin** is a horizontal section of the graph for a particular period. A bin co
 ### Trace requests
 
 You can trace requests received by your service at a given timestamp by clicking a point in the time axis of either the throughput or the latency graphs.  The low-code view shows the received requests. 
-For each request in the low-code view, it displays the request time, the latency, and the status. Furthermore, you can view the status code and the request latency when you click a particular request.
-The low-code diagram also displays the average request latency and the success rate for each client request that corresponds to the selected time interval. 
+For each request in the low-code view, it displays the request time, the latency, and the status. Furthermore, when you click on a specific request, you can view the status code, request latency, the path (control flow) followed to execute the request, and the execution time per `if`, `while`, and `foreach` body.
+The low-code diagram also displays the average request latency, and the success rate for each client request that corresponds to the selected time interval. 
 
 
 ## View and filter all logs
