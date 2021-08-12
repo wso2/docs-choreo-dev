@@ -13,9 +13,25 @@
             that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
         -   apimBasePath
             that contains empty value to `/apimanagement`
+        -   idpUsername and idpPassword (refer to bellow section on how to get them)
     4.  Run `npm run e2etest:headless`
 
     -   This will run test cases in [headless mode](#headless-mode).
+
+-   ### Getting idpUsername and idpPassword
+
+    1. Logout of Choreo dev and goto `https://console.dv.choreo.dev`
+    2. Open browser dev tools and open network tab (and tick "Preserve log" checkbox)
+    3. Login to Choreo
+    4. Observe network tab in dev tools and locate "token" response
+    5. Copy cwatf and cbearer cookies from Response Headers
+       <p align="center">
+            <img src="images/token-response.png" height="400" alt="token-response">
+       </p>
+    6. Do a curl as follows replacing <CWATF_COOKIE> and <CBEARER_COOKIE> (Mind the `;` and space)
+        ```
+       curl --cookie "cwatf=<CWATF_COOKIE>; cbearer=<CBEARER_COOKIE>" -L app.dv.choreo.dev/internaltools/resetIdpPassword
+       ```
 
 -   ### Debugging
 
