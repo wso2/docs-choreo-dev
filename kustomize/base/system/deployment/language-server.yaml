@@ -59,6 +59,9 @@ spec:
             configMapKeyRef:
               name: cm-language-server
               key: JFR_DURATION
+        envFrom:
+          - configMapRef:
+              name: env-language-server
         ports:
         - containerPort: 9090
           name: http-port

@@ -18,5 +18,6 @@
     "videoUploadOnPasses": false,
     "videoCompression": false,
     "viewportWidth": 1920,
-    "viewportHeight": 1080
+    "viewportHeight": 1080,
+    "scrollBehavior": "center"
 }

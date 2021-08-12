@@ -35,6 +35,9 @@ spec:
           runAsUser: 100
           runAsGroup: 1000
         name: programanalyzer
+        envFrom:
+          - configMapRef:
+              name: env-program-analyzer
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 15

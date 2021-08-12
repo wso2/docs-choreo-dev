@@ -61,6 +61,9 @@ spec:
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
         name: test-assistant
+        envFrom:
+          - configMapRef:
+              name: env-test-assistant
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 15
