@@ -12,7 +12,6 @@
  */
 
 import {generateAppName} from '../../../support/common/utils';
-import {NO_OF_RETRIES, SERVICES_TEXT} from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -59,7 +58,7 @@ describe('Observability tests', () => {
     cy.userLogout();
   })
 
-  it('test connect existing project', {retries: NO_OF_RETRIES}, () => {
+  it('test connect existing project', () => {
 
     cy.get('[data-testid="connect-remote-apps-title"]').should('have.text', 'Connect remote application');
     cy.get('[data-testid="connect-remote-apps-existing-container"]').should('be.visible');
@@ -81,7 +80,7 @@ describe('Observability tests', () => {
     cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').eq(0).should('have.text', appName);
   })
 
-  it('test create new project', {retries: NO_OF_RETRIES}, () => {
+  it('test create new project', () => {
 
     cy.get('[data-testid="remoteApp-new-app-name-input"]').type(appName);
     cy.get('[data-testid="remoteApp-new-app-button"]').should('be.visible');
