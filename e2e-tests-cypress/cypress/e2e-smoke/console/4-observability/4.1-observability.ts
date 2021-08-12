@@ -24,10 +24,13 @@ describe('Observability tests', () => {
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         });
+        cy.saveLocalStorage();
+    
         cy.visit(Cypress.env("baseUrl") + "/observability");
         cy.get('[data-testid="btn-observability-try-sample"]').should('be.visible').click();
+
         cy.url().should('contain', '/observe/app/').then(url => {
-            let obsUrlRegexMatch = url.match(obsUrlRegexp);
+            const obsUrlRegexMatch = url.match(obsUrlRegexp);
             expect(obsUrlRegexMatch).to.have.lengthOf(3);
             obsId = obsUrlRegexMatch[1];
             version = obsUrlRegexMatch[2];
@@ -37,12 +40,14 @@ describe('Observability tests', () => {
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
-        cy.visit(Cypress.env("baseUrl") + '/observe/app/' + obsId + '/' + version + '?isSample=true');
-        cy.viewport(1536, 683);
+        const observabilityViewUrl = Cypress.env("baseUrl") + '/observe/app/' + obsId + '/' + version + '?isSample=true';
+        cy.visit(observabilityViewUrl);
+        cy.url().should('eq', observabilityViewUrl);
+        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
     });
 
     afterEach(() => {
-        cy.saveLocalStorage();
+        cy.visit(Cypress.env('baseUrl'));
     });
 
     after(() => {
