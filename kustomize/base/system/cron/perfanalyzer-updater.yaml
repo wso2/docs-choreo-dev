@@ -23,13 +23,7 @@ spec:
           labels:
             choreo.component: perfanalyzer-updater
         spec:
-          automountServiceAccountToken: false
           securityContext:
-            capabilities:
-              drop:
-                - all
-              add: [ "NET_RAW" ]
-            allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
           restartPolicy: Never
@@ -37,10 +31,16 @@ spec:
           containers:
           - name: perfanalyzer-updater
             image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
+            automountServiceAccountToken: false
             securityContext:
               readOnlyRootFilesystem: true
               runAsUser: 10500
               runAsGroup: 10500
+              capabilities:
+                drop:
+                  - all
+                add: [ "NET_RAW" ]
+              allowPrivilegeEscalation: false
             env:
               - name: AZURE_ADX_CLIENT_SECRET
                 valueFrom:
