@@ -22,6 +22,7 @@ resources:
   - test-assistant.yaml
   - analytics-subscription.yaml
   - datacollector.yaml
+  - dp-utility-api.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
