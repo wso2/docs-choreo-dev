@@ -36,7 +36,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
@@ -51,17 +51,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: CHOREO_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: CHOREO_DB_DRIVER
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_DRIVER
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:
@@ -91,7 +91,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_ANALYTICS_ORG_UUID
-              name: cm-analytics-subsmgt                      
+              name: cm-analytics-subsmgt
         image: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt:latest
         securityContext:
           runAsUser: 100
