@@ -58,7 +58,7 @@ The actions you can perform in a throughput graph are as follows:
    
     - If an error has occurred, the error code is displayed near the relevant API call. In this example, the `500` error code has occurred when the request was processed by an API call.
     - The path (control flow) in which the service executed the request is highlighted in green. In this example, the highlighted path indicates that the selected request was processed on the `else` path of the first `if` statement, and on the `then` path of the second `if` statement.
-    - The execution time is displayed per `if`, `while`, and `foreach` body. In this example, the execution time displayed for the `if` body is `603 μs`.
+    - The execution time is displayed per `if`, `while`, and `foreach` body. In this example, the execution time taken for the `if` body is `603 μs`.
     
 ### Analyze the latency graph
 
@@ -76,7 +76,7 @@ The actions you can perform are as follows:
     
 - **View details per request:**
 
-    Similar to the throughput graph, latency graph allows you to view details for each individual request that the service received during a selected custom time range. For details, see [Analyze the throughput graph](#analyze-the-throughput-graph) - **View details per request** bullet point.
+    The latency graph allows you to view details for each individual request that the service received during a selected custom time range. For details, see [Analyze the throughput graph](#analyze-the-throughput-graph) - **View details per request** bullet point.
 
 
 ### Analyze diagnostic data
