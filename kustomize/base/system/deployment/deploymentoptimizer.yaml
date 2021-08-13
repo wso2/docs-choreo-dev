@@ -3,9 +3,10 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_43=Risk Accpted
+    checkov.io/skip1: CKV_K8S_43=Risk Accepted
     checkov.io/skip2: CKV_K8S_8=Temporarily suppressing till fixing
     checkov.io/skip3: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_22=Risk Accepted
   labels:
     choreo.component: deploymentoptimizer
   name: deploymentoptimizer
@@ -50,7 +51,6 @@ spec:
           allowPrivilegeEscalation: false
           runAsUser: 10500
           runAsGroup: 10500
-          readOnlyRootFilesystem: true
           capabilities:
             drop:
               - all
@@ -127,7 +127,6 @@ spec:
           allowPrivilegeEscalation: false
           runAsUser: 10500
           runAsGroup: 10500
-          readOnlyRootFilesystem: true
           capabilities:
             drop:
               - all
