@@ -85,9 +85,9 @@ spec:
                 secretKeyRef:
                   name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-            envFrom:
-              - configMapRef:
-                  name: env-k8sservice-replica
+          envFrom:
+            - configMapRef:
+                name: env-k8sservice-replica
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
             runAsUser: 100
