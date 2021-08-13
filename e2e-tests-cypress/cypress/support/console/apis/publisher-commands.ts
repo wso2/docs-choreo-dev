@@ -78,8 +78,11 @@ Cypress.Commands.add('deleteApiFromOverview', () => {
 
 Cypress.Commands.add('searchApiFromListAndVisit', (apiName: string) => {
     cy.log('Searching the api from the table');
+    cy.get('[data-testid="apis-list-table-loader"]', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
     cy.get('[data-testid=api-search-btn]', { timeout: MEDIUM_TIME_OUT }).click();
     cy.get('[data-testid=api-search-text-field]').type(apiName);
+    cy.wait(3000);
+    cy.get('[data-testid="apis-list-table-loader"]').should('not.exist');
     cy.get('[data-testid=apis-list-table]').within(() => {
         cy.contains(apiName).click();
     });
