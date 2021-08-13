@@ -1021,6 +1021,6 @@ Cypress.Commands.add('clearAllTestData', () => {
     cy.clearApps();
     cy.clearOnPremKeys();
     cy.clearAPIs();
-    cy.clearConnections();
-    cy.clearConfigurations();
+    // cy.clearConnections();
+    // cy.clearConfigurations();
 });
