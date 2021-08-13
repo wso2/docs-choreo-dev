@@ -44,21 +44,6 @@ spec:
             secretKeyRef:
               name: secret-azure-insights
               key: AZURE_INSIGHTS_KEY
-        - name: JMX
-          valueFrom:
-            configMapKeyRef:
-              name: cm-language-server
-              key: JMX
-        - name: JFR_ENABLED
-          valueFrom:
-            configMapKeyRef:
-              name: cm-language-server
-              key: JFR_ENABLED
-        - name: JFR_DURATION
-          valueFrom:
-            configMapKeyRef:
-              name: cm-language-server
-              key: JFR_DURATION
         envFrom:
           - configMapRef:
               name: env-language-server
