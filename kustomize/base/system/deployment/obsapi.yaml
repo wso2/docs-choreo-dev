@@ -34,34 +34,6 @@ spec:
       containers:
       - env:
         # --------------------------------------------------------
-          # INTERNAL
-        - name: AST_CACHE_MAX_SIZE_MB
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AST_CACHE_MAX_SIZE_MB
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: LOG_LEVEL
-        - name: SKIP_AUTH
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: SKIP_AUTH
-          # NEGOTIATOR
-        - name: NEGOTIATOR_GRPC_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: NEGOTIATOR_GRPC_ADDRESS
-          # APPSERVICE
-        - name: APPSERVICE_GRPC_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: APPSERVICE_GRPC_ADDRESS
           # IDP
         - name: IDP_URL
           valueFrom:
@@ -84,41 +56,16 @@ spec:
               name: env-idp-replica
               key: IDP_CLIENT_ID
           # AZURE ADX
-        - name: AZURE_ADX_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AZURE_ADX_CLIENT_ID
-        - name: AZURE_ADX_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AZURE_ADX_ENDPOINT
-        - name: AZURE_ADX_DB
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AZURE_ADX_DB
-        - name: AZURE_ADX_TENANT_ID
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AZURE_ADX_TENANT_ID
-        - name: AZURE_ADX_METRIC_TABLE
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AZURE_ADX_METRIC_TABLE
-        - name: AZURE_ADX_TRACE_TABLE
-          valueFrom:
-            configMapKeyRef:
-              name: cm-obsapi
-              key: AZURE_ADX_TRACE_TABLE
         - name: AZURE_ADX_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: secret-obsapi
               key: AZURE_ADX_CLIENT_SECRET
+        envFrom:
+          - configMapRef:
+              name: cm-obsapi
+          - configMapRef:
+              name: env-obsapi
         # --------------------------------------------------------
         image: choreocontrolplane.azurecr.io/choreoipaas/observability-api:latest
         securityContext:
