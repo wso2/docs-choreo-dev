@@ -64,7 +64,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: cm-sys-obsapi
+                  name: env-sys-obsapi
             - name: USER_APPS_NAMESPACE
               valueFrom:
                 configMapKeyRef:
