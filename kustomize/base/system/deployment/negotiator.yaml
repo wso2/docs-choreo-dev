@@ -36,11 +36,6 @@ spec:
             configMapKeyRef:
               key: B7A_LOG_LEVEL
               name: cm-loglevel-negotiator
-        - name: CHOREO_APP_URL
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_APP_URL
-              name: cm-negotiator
         - name: CHOREO_DB_HOST
           valueFrom:
             configMapKeyRef:
@@ -101,6 +96,9 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: env-negotiator
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           allowPrivilegeEscalation: false
