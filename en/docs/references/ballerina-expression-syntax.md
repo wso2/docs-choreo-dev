@@ -102,7 +102,7 @@ error("The item requested is not found.")
 
 ### any
 
-The any type can represent a variable of any type except the error type. When you do not have prior knowledge of the type of a variable, you can assign it to a variable of type any. Values of these variables can come from dynamic content such as the request and response message references and reference variable types.
+The `any` type can represent a variable of any type except the error type. When you do not have prior knowledge of the type of a variable, you can assign it to a variable of type any. Values of these variables can come from dynamic content such as the request and response message references and reference variable types.
 
 ###### Examples:
 
@@ -120,7 +120,7 @@ To initialize a variable of type `any` in Choreo, you can enter expressions as f
 
 ### anydata
 
-The `anydata` type consists of pure values whose basic type is not `error`.
+The `anydata` type consists of pure values of which the basic type is not `error`.
 
 ###### Examples:
 
