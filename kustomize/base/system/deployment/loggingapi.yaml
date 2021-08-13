@@ -98,11 +98,11 @@ spec:
                 secretKeyRef:
                   name: secret-loggingapi
                   key: AZURE_K8S_API_SERVER_ACCESS_TOKEN
-            envFrom:
-              - configMapRef:
-                  name: env-k8sservice-replica
-              - configMapRef:
-                  name: env-loganalytics-replica
+          envFrom:
+            - configMapRef:
+                name: env-k8sservice-replica
+            - configMapRef:
+                name: env-loganalytics-replica
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
           securityContext:
             runAsUser: 100

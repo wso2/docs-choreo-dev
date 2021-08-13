@@ -57,9 +57,9 @@ spec:
                 secretKeyRef:
                   name: secret-datacollector
                   key: EVENTHUB_CONNECTION_STRING
-            envFrom:
-              - configMapRef:
-                  name: env-datacollector
+          envFrom:
+            - configMapRef:
+                name: env-datacollector
           image: choreocontrolplane.azurecr.io/choreoipaas/data-collector:latest
           securityContext:
             runAsUser: 10500

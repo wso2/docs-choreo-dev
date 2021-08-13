@@ -88,9 +88,9 @@ spec:
                     secretKeyRef:
                       key: CHOREO_DB_PASSWORD
                       name: secret-program-db
-                envFrom:
-                  - configMapRef:
-                      name: env-datalake-ast
+              envFrom:
+                - configMapRef:
+                    name: env-datalake-ast
               resources:
                 limits:
                   cpu: 300m

@@ -51,9 +51,9 @@ spec:
                     configMapKeyRef:
                       key: WS_MANAGER_SERVICE_ADDRESS
                       name: cm-observability-data-generator
-                envFrom:
-                  - configMapRef:
-                      name: env-observability-data-generator
+              envFrom:
+                - configMapRef:
+                    name: env-observability-data-generator
               resources:
                 limits:
                   cpu: 300m
