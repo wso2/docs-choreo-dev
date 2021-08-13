@@ -1,6 +1,6 @@
-###How to run Key Vault Secrets/Certs uploader script
+### How to run Key Vault Secrets/Certs uploader script
 
-#####Step 1
+##### Step 1
 
 This script comes up with 4 properties files.
 
@@ -28,7 +28,7 @@ This script comes up with 4 properties files.
   >
   >Here the dummy cert file path `/path/to/certificate` should be replace with the actual file path.
 
-#####Step 2
+##### Step 2
 
 Run the bash scripts as shown as below with suitable arguments.
 
@@ -64,6 +64,9 @@ Example:-
 Once the command is successfully executed, object versions of the created secrets will be printed in the output file in below format.
 
 > --- Object versions of the secrets/certificates ---
-secret5=2203ea3d2f994765bd7b77610bd5d8b7
-secret6=866d89360e9a43a781b51fc60cc3eecc
-secret7=1a324546f2b14612bc217d826c7213b3
+> 
+> secret5=2203ea3d2f994765bd7b77610bd5d8b7
+> 
+> secret6=866d89360e9a43a781b51fc60cc3eecc
+> 
+> secret7=1a324546f2b14612bc217d826c7213b3
