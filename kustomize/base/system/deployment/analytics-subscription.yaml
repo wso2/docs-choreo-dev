@@ -66,7 +66,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_HOST
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_JWKS_ENDPOINT
           valueFrom:
             configMapKeyRef:
@@ -76,12 +76,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_ISSUER
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: ORG_API
           valueFrom:
             configMapKeyRef:

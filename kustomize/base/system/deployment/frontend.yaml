@@ -97,17 +97,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_URL
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_REDIRECT_URL
           valueFrom:
             configMapKeyRef:
               key: IDP_REDIRECT_URL
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: APP_INSIGHTS_KEY
           valueFrom:
             configMapKeyRef:

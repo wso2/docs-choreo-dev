@@ -66,7 +66,7 @@ spec:
         - name: IDP_URL
           valueFrom:
             configMapKeyRef:
-              name: cm-idp-replica
+              name: env-idp-replica
               key: IDP_URL
         - name: IDP_TOKEN_ENDPOINT
           valueFrom:
@@ -81,7 +81,7 @@ spec:
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
-              name: cm-idp-replica
+              name: env-idp-replica
               key: IDP_CLIENT_ID
           # AZURE ADX
         - name: AZURE_ADX_CLIENT_ID
