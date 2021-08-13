@@ -65,26 +65,6 @@ spec:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
                   name: env-sys-obsapi
-            - name: USER_APPS_NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  key: USER_APPS_NAMESPACE
-                  name: cm-k8sservice-replica
-            - name: K8S_SERVICE_SUBSCRIPTION_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: K8S_SERVICE_SUBSCRIPTION_ID
-                  name: cm-k8sservice-replica
-            - name: RESOURCE_GROUP
-              valueFrom:
-                configMapKeyRef:
-                  key: RESOURCE_GROUP
-                  name: cm-k8sservice-replica
-            - name: CLUSTER_NAME
-              valueFrom:
-               configMapKeyRef:
-                 key: CLUSTER_NAME
-                 name: cm-k8sservice-replica
             - name: AZURE_LA_WORKSPACE_ID
               valueFrom:
                 configMapKeyRef:
@@ -105,6 +85,9 @@ spec:
                 secretKeyRef:
                   name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+            envFrom:
+              - configMapRef:
+                  name: env-k8sservice-replica
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
             runAsUser: 100
