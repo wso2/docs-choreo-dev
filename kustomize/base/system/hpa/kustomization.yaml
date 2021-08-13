@@ -20,3 +20,4 @@ resources:
   - test-assistant.yaml
   - analytics-subscription.yaml
   - datacollector.yaml
+  - dp-mizzen.yaml
