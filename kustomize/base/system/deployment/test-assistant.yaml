@@ -25,13 +25,6 @@ spec:
     spec:
       automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10500
-        runAsGroup: 10500
-        readOnlyRootFilesystem: true
-        capabilities:
-          drop:
-            - all
-          add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
@@ -58,6 +51,13 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
         name: test-assistant
@@ -102,6 +102,13 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/config/"
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       volumes:
       - name: test-assistant-models
         emptyDir: {}
