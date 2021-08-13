@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: dp-cicd
+    choreo.dataplane: true
+  name: dp-cicd
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      choreo.component: dp-cicd
+  template:
+    metadata:
+      labels:
+        choreo.component: dp-cicd
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: dp-cicd
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd:latest
+          resources:
+            limits:
+              cpu: 550m
+              memory: 550Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: DB_PORT
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: DB_NAME
+            - name: DB_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: DB_TYPE
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 8080
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          volumeMounts:
+            - name: cicd-config
+              mountPath: cicd-config.yaml
+              subPath: cicd-config.yaml
+      volumes:
+      - name: cicd-config
+        configMap:
+          name: cm-dp-cicd
+      - name: secret-cicd
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-dp-cicd
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dp-cicd
+  labels:
+    choreo.component: dp-cicd
+    choreo.dataplane: true
+spec:
+  ports:
+    - name: dp-cicd-port-http
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: dp-cicd
+    choreo.dataplane: true
