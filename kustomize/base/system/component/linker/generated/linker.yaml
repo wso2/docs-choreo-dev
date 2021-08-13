@@ -72,21 +72,14 @@ spec:
             configMapKeyRef:
               key: "JWKS_ENDPOINT_PROTOCOL"
               name: "cm-linker"
-        - name: "LINKER_INGRESS_ADDRESS"
-          valueFrom:
-            configMapKeyRef:
-              key: "LINKER_INGRESS_ADDRESS"
-              name: "cm-linker"
         - name: "APPSERVICE_GRPC_ADDRESS"
           valueFrom:
             configMapKeyRef:
               key: "APPSERVICE_GRPC_ADDRESS"
               name: "cm-linker"
-        - name: "PERISCOPE_HOSTNAME"
-          valueFrom:
-            configMapKeyRef:
-              key: "PERISCOPE_HOSTNAME"
-              name: "cm-linker"
+        envFrom:
+          - configMapRef:
+              name: env-linker
         image: "choreocontrolplane.azurecr.io/choreoipaas/choreo-linker:latest"
         imagePullPolicy: "IfNotPresent"
         lifecycle:
