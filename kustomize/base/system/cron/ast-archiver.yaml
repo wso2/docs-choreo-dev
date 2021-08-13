@@ -31,95 +31,95 @@ spec:
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
-          - name: ast-archiver
-            image: choreocontrolplane.azurecr.io/choreoipaas/ast-archiver:latest
-            securityContext:
-              runAsUser: 500
-              runAsGroup: 500
-              readOnlyRootFilesystem: true
-            env:
-              - name: AZURE_DL_TENANT_ID
-                valueFrom:
-                  configMapKeyRef:
-                    key: AZURE_DL_TENANT_ID
-                    name: cm-datalake-ast
-              - name: AZURE_DL_CONTAINER_NAME
-                valueFrom:
-                  configMapKeyRef:
-                    key: AZURE_DL_CONTAINER_NAME
-                    name: cm-datalake-ast
-              - name: AZURE_DL_CLIENT_SECRET
-                valueFrom:
-                  secretKeyRef:
-                    key: AZURE_DL_AST_CLIENT_SECRET
-                    name: secret-datalake
-              - name: LAST_ACTIVE_DURATION_IN_DAYS
-                valueFrom:
-                  configMapKeyRef:
-                    key: LAST_ACTIVE_DURATION_IN_DAYS
-                    name: cm-datalake-ast
-              - name: CHOREO_PROGRAM_DB_NAME
-                valueFrom:
-                  configMapKeyRef:
-                    key: CHOREO_DB_NAME
-                    name: cm-choreo-program-db
-              - name: CHOREO_PROGRAM_DB_USERNAME
-                valueFrom:
-                  configMapKeyRef:
-                    key: CHOREO_DB_USERNAME
-                    name: env-choreo-program-db
-              - name: CHOREO_DB_DRIVER
-                valueFrom:
-                  configMapKeyRef:
-                    key: CHOREO_DB_DRIVER
-                    name: env-choreo-program-db
-              - name: CHOREO_PROGRAM_DB_HOST
-                valueFrom:
-                  configMapKeyRef:
-                    key: CHOREO_DB_HOST
-                    name: env-choreo-program-db
-              - name: CHOREO_PROGRAM_DB_PORT
-                valueFrom:
-                  configMapKeyRef:
-                    key: CHOREO_DB_PORT
-                    name: env-choreo-program-db
-              - name: CHOREO_PROGRAM_DB_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: CHOREO_DB_PASSWORD
-                    name: secret-program-db
-              envFrom:
-                - configMapRef:
-                    name: env-datalake-ast
-            resources:
-              limits:
-                cpu: 300m
-                memory: 1024Mi
-              requests:
-                cpu: 200m
-                memory: 512Mi
-            volumeMounts:
-            - mountPath: /mnt/csi/secret-program-db
-              name: secret-program-db
-              readOnly: true
-            - mountPath: /mnt/csi/secret-datalake
-              name: secret-datalake
-              readOnly: true
+            - name: ast-archiver
+              image: choreocontrolplane.azurecr.io/choreoipaas/ast-archiver:latest
+              securityContext:
+                runAsUser: 500
+                runAsGroup: 500
+                readOnlyRootFilesystem: true
+              env:
+                - name: AZURE_DL_TENANT_ID
+                  valueFrom:
+                    configMapKeyRef:
+                      key: AZURE_DL_TENANT_ID
+                      name: cm-datalake-ast
+                - name: AZURE_DL_CONTAINER_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      key: AZURE_DL_CONTAINER_NAME
+                      name: cm-datalake-ast
+                - name: AZURE_DL_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: AZURE_DL_AST_CLIENT_SECRET
+                      name: secret-datalake
+                - name: LAST_ACTIVE_DURATION_IN_DAYS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: LAST_ACTIVE_DURATION_IN_DAYS
+                      name: cm-datalake-ast
+                - name: CHOREO_PROGRAM_DB_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      key: CHOREO_DB_NAME
+                      name: cm-choreo-program-db
+                - name: CHOREO_PROGRAM_DB_USERNAME
+                  valueFrom:
+                    configMapKeyRef:
+                      key: CHOREO_DB_USERNAME
+                      name: env-choreo-program-db
+                - name: CHOREO_DB_DRIVER
+                  valueFrom:
+                    configMapKeyRef:
+                      key: CHOREO_DB_DRIVER
+                      name: env-choreo-program-db
+                - name: CHOREO_PROGRAM_DB_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      key: CHOREO_DB_HOST
+                      name: env-choreo-program-db
+                - name: CHOREO_PROGRAM_DB_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      key: CHOREO_DB_PORT
+                      name: env-choreo-program-db
+                - name: CHOREO_PROGRAM_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: CHOREO_DB_PASSWORD
+                      name: secret-program-db
+                envFrom:
+                  - configMapRef:
+                      name: env-datalake-ast
+              resources:
+                limits:
+                  cpu: 300m
+                  memory: 1024Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+              volumeMounts:
+                - mountPath: /mnt/csi/secret-program-db
+                  name: secret-program-db
+                  readOnly: true
+                - mountPath: /mnt/csi/secret-datalake
+                  name: secret-datalake
+                  readOnly: true
           volumes:
-          - name: secret-program-db
-            csi:
-              driver: secrets-store.csi.k8s.io
-              readOnly: true
-              volumeAttributes:
-                secretProviderClass: secret-program-db
-              nodePublishSecretRef:
-                name: csi-secret-store-azure
-          - name: secret-datalake
-            csi:
-              driver: secrets-store.csi.k8s.io
-              readOnly: true
-              volumeAttributes:
-                secretProviderClass: secret-datalake
-              nodePublishSecretRef:
-                name: csi-secret-store-azure
+            - name: secret-program-db
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-program-db
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+            - name: secret-datalake
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-datalake
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
           serviceAccountName: sa-choreo-default
