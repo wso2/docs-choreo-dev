@@ -66,6 +66,16 @@ spec:
                 secretKeyRef:
                   name: secret-cicd
                   key: DB_TYPE
+            - name: CICD_CLUSTER_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: CICD_CLUSTER_ID
+            - name: CICD_NAMESPACE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cicd
+                  key: CICD_NAMESPACE
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
