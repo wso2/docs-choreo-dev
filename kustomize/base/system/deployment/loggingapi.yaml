@@ -17,7 +17,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: loggingapi
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -91,7 +91,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: env-loggingapi
-                  key: AZURE_K8S_API_SERVER_URL  
+                  key: AZURE_K8S_API_SERVER_URL
             - name: AZURE_K8S_SERVICE_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -109,9 +109,9 @@ spec:
             readOnlyRootFilesystem: true
           name: loggingapi
           volumeMounts:
-          - name: secret-loggingapi
-            mountPath: "/mnt/csi/secret-loggingapi"
-            readOnly: true
+            - name: secret-loggingapi
+              mountPath: "/mnt/csi/secret-loggingapi"
+              readOnly: true
           ports:
             - containerPort: 9097
               name: logapi-port
@@ -145,13 +145,13 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
-      - name: secret-loggingapi
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-loggingapi
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-loggingapi
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-loggingapi
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
