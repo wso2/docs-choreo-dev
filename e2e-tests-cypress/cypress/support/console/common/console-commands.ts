@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { isOldValue, keyNamePrefix, normalizeText } from '../../common/utils';
+import { apiNamePrefix, appNamePrefix, isOldValue, keyNamePrefix, normalizeText } from '../../common/utils';
 import {
     MARKETPLACE_TEXT,
     INTEGRATIONS_TEXT,
@@ -926,16 +926,18 @@ Cypress.Commands.add('clearApps', () => {
         form: true,
         url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/`
     }).then((response) => {
-        const data = response["body"] as [];
-        if (data.length) {
-            cy.log(`apps found : ${data.length}`);
-            for (const value of data) {
-                const appName = value["name"] as string;
-                const status = value['status'] as string;
-                if (status == "running") {
-                    cy.undeployAppViaRESTAPICall(appName);
+        const apps = response["body"] as { name: string, displayName: string, status: string }[];
+        const e2eApps = apps.filter(app => app.displayName.startsWith(appNamePrefix));
+
+        if (e2eApps.length) {
+            cy.log(`E2E test apps found : ${e2eApps.length}`);
+            for (const app of e2eApps) {
+                const { name, status } = app;
+                if (status === "running") {
+                    cy.undeployAppViaRESTAPICall(name);
                 }
-                cy.cleanupApp(appName);
+                cy.cleanupApp(name);
+                cy.wait(300);
             }
             cy.log("Successfully deleted all e2e apps");
         } else {
@@ -988,25 +990,24 @@ Cypress.Commands.add('clearAPIs', () => {
             },
             timeout: 60000
         }).then((response) => {
-            const data = response["body"]["list"] as [];
-            if (data.length) {
-                cy.log(`APIs found : ${data.length}`);
-                for (const value of data) {
-                    const apiName = value["name"] as string;
-                    if (!apiName.includes(getApiName())) {
-                        cy.request({
-                            method: "DELETE",
-                            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + value["id"],
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + token.value
-                            },
-                            qs: {
-                                'organizationId': organizationId,
-                            },
-                        });
+            const apis = response["body"]["list"] as { id: string, name: string, }[];
+            const e2eApis = apis.filter(({ name }) => name.startsWith(apiNamePrefix) || name.startsWith(appNamePrefix));
+            if (e2eApis.length) {
+                cy.log(`e2e test APIs found : ${e2eApis.length}`);
+                for (const api of e2eApis) {
+                    cy.request({
+                        method: "DELETE",
+                        url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + api.id,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token.value
+                        },
+                        qs: {
+                            'organizationId': organizationId,
+                        },
+                    });
                     cy.wait(300);
-                    }
+                }
                 cy.log("Successfully deleted all e2e test APIs");
             } else {
                 cy.log('No e2e test APIs found');
