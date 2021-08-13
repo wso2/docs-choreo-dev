@@ -93,7 +93,7 @@ describe('Service deployment and delete deployed service', () => {
 
     it('Deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
-        cy.wait(120000);
+        cy.wait(150000);
     });
 
     it('Undeploy from UI and delete the service', () => {
