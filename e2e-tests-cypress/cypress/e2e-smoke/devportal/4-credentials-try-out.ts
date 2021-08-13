@@ -69,10 +69,11 @@ describe('Credentials generation & API tryout scenario', () => {
         cy.wait(5000);
         cy.get('[data-testid="credentials-item-link"]').click();
         cy.url().should('include', '/credentials');
+        cy.getByTestId("keys-info-cell").should("not.exist");
         cy.get('[data-testid="remove-creds-btn"]').click();
         cy.get('[data-testid="remove-creds-confirmation-ok"]').click();
         cy.wait(4000);
-        cy.get('[data-testid="keys-info-cell"]').should('have.text', 'Production Key and Secret is not  generated for this application');
+        cy.getByTestId("keys-info-cell").should("be.visible");
         cy.log("Successfully removed credentials");
     });
 });
