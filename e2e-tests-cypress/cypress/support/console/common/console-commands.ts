@@ -682,7 +682,7 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
         cy.get('#deploy-button').click();
     }
 
-    cy.wait('@deployApp', { timeout: 60000 }).its('response.statusCode').should('eq', SUCCESS_STATUS_CODE);
+    cy.wait('@deployApp', { timeout: 1000 * 60 * 2 }).its('response.statusCode').should('eq', SUCCESS_STATUS_CODE);
 
     cy.log('Awaiting 5 minutes for the deployment to complete');
     cy.get('[data-testid="deploy-stop-button"]', { timeout: 1000 * 60 * 5 }).should('exist');
