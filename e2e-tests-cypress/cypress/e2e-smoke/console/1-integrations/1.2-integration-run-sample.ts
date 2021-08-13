@@ -15,7 +15,7 @@
 
 import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
-    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT, NO_OF_RETRIES 
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
 } from "../../../support/common/constants";
 
 describe('Integration sample flow', () => {
@@ -51,7 +51,7 @@ describe('Integration sample flow', () => {
         cy.userLogout();
     });
 
-    it('clone and edit Google calender to twilio SMS', { retries: NO_OF_RETRIES }, () => {
+    it('clone and edit Google calender to twilio SMS', () => {
         cy.get('[data-testid="gcalendar-to-twilio"]').trigger('mouseover').within(() => {
             cy.contains('Clone & Edit').click({ force: true });
         });
@@ -73,7 +73,7 @@ describe('Integration sample flow', () => {
         });
     })
 
-    it('test-run sample integration', { retries: NO_OF_RETRIES }, () => {
+    it('test-run sample integration', () => {
         cy.log("Prebuilt integrations page loaded successfully");
         cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });
 

@@ -60,10 +60,11 @@ esac
 
 ############## Install Reloader
 echo "--- Installing Reloader..."
+kubectl create ns reloader
 if [[ -f "../reloader.yaml" ]]; then
-    kubectl apply -n kube-system -f ../reloader.yaml
+    kubectl apply -n reloader -f ../reloader.yaml
 else
-    kubectl apply -n kube-system -f reloader.yaml
+    kubectl apply -n reloader -f reloader.yaml
 fi
 
 ############### Install Helm 3

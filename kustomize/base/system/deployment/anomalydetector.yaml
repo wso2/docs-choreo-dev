@@ -81,6 +81,9 @@ spec:
               secretKeyRef:
                 name: secret-anomalydetector
                 key: ALERTS_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+        envFrom:
+          - configMapRef:
+              name: env-anomaly-detector
         resources:
           limits:
             cpu: 200m

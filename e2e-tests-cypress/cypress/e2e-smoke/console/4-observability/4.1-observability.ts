@@ -11,78 +11,50 @@
  * associated services.
  */
 
-import { generateAppName } from '../../../support/common/utils';
-import { SERVICES_TEXT, NO_OF_RETRIES, STANDARD_TIME_OUT } from '../../../support/common/constants';
-
 /// <reference types="cypress" />
 
 describe('Observability tests', () => {
     const obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
     let savedCookies
-    let appName: string
     let obsId: string
     let version: string
 
     before(() => {
-        cy.consoleUserLogin()
+        cy.consoleUserLogin();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
-        })
+        });
+        cy.saveLocalStorage();
+    
+        cy.visit(Cypress.env("baseUrl") + "/observability");
+        cy.get('[data-testid="btn-observability-try-sample"]').should('be.visible').click();
 
-        appName = generateAppName("app");
-        cy.log('App name: ', appName);
-        cy.createNewApp(SERVICES_TEXT, appName);
-        cy.url().should('include', 'app/' + appName + '/develop');
-
-        cy.get('[data-testid="observe"]').should('be.visible');
-        cy.get('[data-testid="observe"]').click();
-
-        let obsUrl: string
-        cy.window().then((win) => {
-            cy.stub(win, 'open').as('windowOpen').callsFake(url => {
-                obsUrl = url;
-            });
-        })
-
-        cy.get('[data-testid="skip-sample-service-btn"]').should('be.visible');
-        cy.get('[data-testid="skip-sample-service-btn"]').click();
-
-        cy.get('[data-testid="sample-service-popup"]').should('not.exist');
-
-        cy.get('[data-testid="sample-service-accessor"]').should('be.visible');
-        cy.get('[data-testid="sample-service-accessor"]').click();
-
-        cy.get('[data-testid="try-sample-service-btn"]').should('be.visible');
-        cy.get('[data-testid="try-sample-service-btn"]').click();
-
-        cy.get('@windowOpen').should('be.called');
-        cy.wait(1000).then(() => {
-            let obsUrlRegexMatch = obsUrl.match(obsUrlRegexp);
+        cy.url().should('contain', '/observe/app/').then(url => {
+            const obsUrlRegexMatch = url.match(obsUrlRegexp);
             expect(obsUrlRegexMatch).to.have.lengthOf(3);
             obsId = obsUrlRegexMatch[1];
             version = obsUrlRegexMatch[2];
-        })
-    })
+        });
+    });
 
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
-        cy.visit(Cypress.env("baseUrl") + '/observe/app/' + obsId + '/' + version + '?isSample=true');
-        cy.viewport(1536, 683);
+        const observabilityViewUrl = Cypress.env("baseUrl") + '/observe/app/' + obsId + '/' + version + '?isSample=true';
+        cy.visit(observabilityViewUrl);
+        cy.url().should('eq', observabilityViewUrl);
+        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
     });
 
     afterEach(() => {
-        cy.saveLocalStorage();
+        cy.visit(Cypress.env('baseUrl'));
     });
 
     after(() => {
-        cy.get('.MuiToolbar-root > .MuiIconButton-root').click();
-        cy.get('[href="/' + SERVICES_TEXT + '"]').click();
-        cy.deleteApp("service", appName, true);
         cy.userLogout();
-    })
+    });
 
-    it('test logs view', { retries: NO_OF_RETRIES }, () => {
+    it('test logs view', () => {
         const connectionErrorLogEntry = 'error while connecting to the hr-service';
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         // const systemLogEntry = 'ballerina: started publishing metrics to Choreo'
@@ -92,13 +64,13 @@ describe('Observability tests', () => {
         cy.get('[data-testid="panel-Logs-btn"]').click();
 
         cy.log('Asserting mandatory log entry without any filter');
-        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('exist');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry).should('exist');
 
         cy.log('Asserting mandatory log entry by providing a search phrase');
         cy.get('[data-testid="log-search"]').type(connectionErrorLogEntry);
         cy.get('[data-testid="log-search-btn"]').click();
-        cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry, {timeout: 600000}).should('exist');
-        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
+        cy.contains('[data-testid="log-panel"]', connectionErrorLogEntry).should('exist');
+        cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry).should('not.exist');
 
         // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4058 is fixed
         // cy.log('Asserting log download');
@@ -109,7 +81,7 @@ describe('Observability tests', () => {
         // cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
     })
 
-    it('test observability overview', { retries: NO_OF_RETRIES }, () => {
+    it('test observability overview', () => {
         const employeeInfoNotFoundLogEntry = 'employee information not found in the hr-service';
         const emptyHistogramMessage = 'No requests received during the selected time period';
         const httpStatusCodeRegexp = /[1-5]\d{2}/;
@@ -122,7 +94,7 @@ describe('Observability tests', () => {
         cy.get('.worker-line').should('exist');
         cy.get('[data-testid="refresh-btn"]').should('not.exist');
         cy.get('[data-testid="preloader"]').should('not.exist');
-        cy.get('.metrics-text').contains('100% Success', {timeout: 600000}).should('exist');
+        cy.get('.metrics-text').contains('100% Success').should('exist');
 
         cy.contains('[data-testid="histogram-throughput"]', emptyHistogramMessage).should('not.exist');
         cy.contains('[data-testid="histogram-response-time"]', emptyHistogramMessage).should('not.exist');
@@ -133,7 +105,6 @@ describe('Observability tests', () => {
         cy.get('[data-testid="log-panel"]').should('exist');
 
         cy.log('Waiting on graphs to be expanded');
-        cy.wait(STANDARD_TIME_OUT);
         cy.get('[data-testid="histogram-response-time"]').find('g.recharts-layer.recharts-area').find('path').then(($path) => {
             cy.log('Getting coordinates to click on the latency graph');
             d = $path.attr('d');
@@ -153,7 +124,7 @@ describe('Observability tests', () => {
             cy.get('[data-testid="preloader"]').should('not.exist');
 
             cy.log('Asserting the log panel after clicking on the very first point in the latency graph');
-            cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry, {timeout: 600000}).should('not.exist');
+            cy.contains('[data-testid="log-panel"]', employeeInfoNotFoundLogEntry).should('not.exist');
 
             cy.log('Asserting the request list');
             cy.get('[data-testid="request-table"]').should('exist');
@@ -171,9 +142,9 @@ describe('Observability tests', () => {
             //     expect($elements[2].textContent).to.match(httpStatusCodeRegexp);
             // });
         });
-    })
+    });
 
-    it('test diagnostics view', { retries: NO_OF_RETRIES }, () => {
+    it('test diagnostics view', () => {
         const timestampRegex = /(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}\s([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/;
         const numberOfBins = 5;
 
@@ -212,7 +183,7 @@ describe('Observability tests', () => {
             cy.get('[data-testid="bin-divider-1"]').invoke('position').then((d1) => {
                 cy.get('[data-testid="bin-divider-2"]').invoke('position').then((d2) => {
 
-                    let middleOfdiv1Ndiv2 = d1.top + Math.round((d2.top - d1.top)/2);
+                    let middleOfdiv1Ndiv2 = d1.top + Math.round((d2.top - d1.top) / 2);
 
                     cy.log('Dragging the diagnostics view slider');
                     cy.get('[data-testid="diagnostics-view-slider"]').then(($el) => {
@@ -245,4 +216,4 @@ describe('Observability tests', () => {
             });
         });
     })
-})
+});

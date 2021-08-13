@@ -12,7 +12,7 @@
  */
 
 import {
-    LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT, DEVELOP,
+    LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT, DEPLOYMENT_TIME_OUT, DEVELOP,
     OVERVIEW, PATH_SEPARATOR
 } from "../../common/constants";
 
@@ -149,6 +149,7 @@ Cypress.Commands.add('deployInitialRevision', () => {
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
     });
+    cy.get('[data-testid=deployment-loader]', { timeout: DEPLOYMENT_TIME_OUT }).should('not.exist');
 });
 
 Cypress.Commands.add('publishApi', () => {
@@ -158,6 +159,7 @@ Cypress.Commands.add('publishApi', () => {
 });
 
 Cypress.Commands.add('checkApiListAvailabilityAndVisitCreate', () => {
+    cy.get('[data-testid="apis-list-table-loader"]').should('not.exist');
     cy.get('#container').then((container) => {
         if (container.find('[data-testid="create-api-btn"]').length > 0)  {
             cy.log("API list available");
