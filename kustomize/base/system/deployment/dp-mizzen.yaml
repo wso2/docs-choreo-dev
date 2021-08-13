@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: dp-mizzen
+    choreo.dataplane: true
+  name: dp-mizzen
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      choreo.component: dp-mizzen
+  template:
+    metadata:
+      labels:
+        choreo.component: dp-mizzen
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen:latest
+          name: dp-mizzen
+          env:
+            - name: IDP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-idp
+                  key: IDP_CLIENT_SECRET
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-redis
+                  key: REDIS_PASSWORD
+            - name: API_SERVER_IDP_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-runtime-env
+                  key: API_SERVER_IDP_CLIENT_ID
+            - name: API_SERVER_IDP_TOKEN_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-runtime-env
+                  key: API_SERVER_IDP_TOKEN_URL
+            - name: API_SERVER_IDP_JWKS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-runtime-env
+                  key: API_SERVER_IDP_JWKS_URL
+            - name: API_SERVER_IDP_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-runtime-env
+                  key: API_SERVER_IDP_ISSUER
+            - name: API_SERVER_IDP_COOKIES_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-runtime-env
+                  key: API_SERVER_IDP_COOKIES_SECURE
+            - name: API_SERVER_REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-runtime-env
+                  key: API_SERVER_REDIS_HOST
+          envFrom:
+            - configMapRef:
+                name: env-dp-mizzen
+          ports:
+            - containerPort: 8080
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            httpGet:
+              path: /healthz
+              port: http-port
+          resources:
+            limits:
+              cpu: 350m
+              memory: 750Mi
+            requests:
+              cpu: 250m
+              memory: 400Mi
+
+          volumeMounts:
+            - mountPath: /config.yaml
+              name: config
+              subPath: config.yaml
+            - name: secret-mizzen
+              mountPath: /mnt/csi/secret-mizzen
+              readOnly: true
+
+      volumes:
+        - name: config
+          configMap:
+            name: cm-dp-mizzen
+        - name: secret-mizzen
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-mizzen
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+
+      serviceAccountName: sa-choreo-default
