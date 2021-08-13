@@ -94,8 +94,8 @@ describe('Service deployment and delete deployed service', () => {
 
     it('Deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
-        // TODO: Please remove this wait after moving create API task to develop step
-        cy.wait(150000);
+       // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
+        cy.wait(2.5 * 60 * 1000);
     });
 
     it('Undeploy from UI and delete the service', () => {
