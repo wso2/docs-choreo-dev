@@ -20,6 +20,7 @@ describe('Generate on-prem keys', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.navigateFromHomePage(SETTINGS_TEXT);
     })
 

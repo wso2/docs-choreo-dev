@@ -12,23 +12,29 @@
  */
 
 import { SERVICES_TEXT, EX_LONG_TIME_OUT, NO_OF_RETRIES } from "../../../support/common/constants";
+import { appNamePrefix } from "../../../support/common/utils";
 
 /// <reference types="cypress" />
 
 describe("Test successful deployment of sample services", () => {
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     after(() => {
         cy.userLogout();
     });
 
-    it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {
+    it("Test deployment of sample:- echo service", () => {
         cy.navigateFromHomePage(SERVICES_TEXT);
         cy.get('[id="backdrop-loader"').should("not.exist");
         cy.get('[data-testId="try-out-samples-btn"]').should("exist").click({ force: true });
         cy.log("Creating echo service!");
+        cy.intercept('POST', '**/apps/template', (req) => {
+            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
+        });
+
         cy.get('[data-testid="echo-service"]').should("exist").children().find("button").click({ force: true });
         cy.wait(10000);
         cy.get('[data-testid="diagram-loader"]').should("not.exist");
