@@ -51,30 +51,10 @@ spec:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
               name: cm-idp-replica
-        - name: CHOREO_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-testbase-db
-        - name: CHOREO_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-testbase-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-testbase-db
-        - name: CHOREO_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-testbase-db
-        - name: CHOREO_DB_DRIVER
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_DRIVER
               name: cm-choreo-testbase-db
         - name: CHOREO_DB_MAX_POOL
           valueFrom:
@@ -101,6 +81,9 @@ spec:
            secretKeyRef:
              name: secret-testbase-db
              key: CHOREO_DB_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: env-choreo-testbase-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase:v0.7.2
         securityContext:
           allowPrivilegeEscalation: false
