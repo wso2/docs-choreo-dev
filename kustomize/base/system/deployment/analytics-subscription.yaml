@@ -87,11 +87,9 @@ spec:
             configMapKeyRef:
               key: ORG_API
               name: env-frontend
-        - name: CHOREO_ANALYTICS_ORG_UUID
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_ANALYTICS_ORG_UUID
-              name: cm-analytics-subsmgt
+        envFrom:
+          - configMapRef:
+              name: env-analytics-subsmgt
         image: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt:latest
         securityContext:
           runAsUser: 100
