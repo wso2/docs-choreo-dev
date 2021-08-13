@@ -31,7 +31,8 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - env:
+        - name: loggingapi
+          env:
             - name: b7a_log_level
               valueFrom:
                 configMapKeyRef:
@@ -107,7 +108,6 @@ spec:
             runAsUser: 100
             runAsGroup: 1000
             readOnlyRootFilesystem: true
-          name: loggingapi
           volumeMounts:
             - name: secret-loggingapi
               mountPath: "/mnt/csi/secret-loggingapi"
