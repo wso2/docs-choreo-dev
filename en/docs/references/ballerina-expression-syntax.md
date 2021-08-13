@@ -39,7 +39,7 @@ To initialize a variable of type `float` in Choreo, you can use one of the follo
 
 ### decimal
 
-The `decimal` type supports integer values with up to 34 decimal points, and supports the same arithmetic operators as `int`. When entering literals, you can use `d` as the suffix.
+The `decimal` type supports integer values with up to 34 decimal points and supports the same arithmetic operators as `int`. When entering literals, you can use `d` as the suffix.
 
 This type does not support `infinity`, `NaN`, or negative zero.
 
