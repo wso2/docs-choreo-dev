@@ -86,7 +86,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: ORG_API
-              name: cm-frontend
+              name: env-frontend
         - name: CHOREO_ANALYTICS_ORG_UUID
           valueFrom:
             configMapKeyRef:
