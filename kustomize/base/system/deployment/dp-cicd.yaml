@@ -121,4 +121,3 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
-      
