@@ -52,26 +52,14 @@ spec:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp-replica
-            - name: EVENTHUB_NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  key: EVENTHUB_NAMESPACE
-                  name: cm-datacollector
-            - name: DATAMAPPER_EVENTHUB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: DATAMAPPER_EVENTHUB_NAME
-                  name: cm-datacollector
-            - name: CODESUGGESTIONS_EVENTHUB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: CODESUGGESTIONS_EVENTHUB_NAME
-                  name: cm-datacollector
             - name: EVENTHUB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
                   name: secret-datacollector
                   key: EVENTHUB_CONNECTION_STRING
+            envFrom:
+              - configMapRef:
+                  name: env-datacollector
           image: choreocontrolplane.azurecr.io/choreoipaas/data-collector:latest
           securityContext:
             runAsUser: 10500
