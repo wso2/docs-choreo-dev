@@ -320,7 +320,8 @@ Cypress.Commands.add('typeOnNthExpressionEditor',
             expressionToType = `\"${expression}\"`
         }
 
-        cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{backspace}{backspace}' + expressionToType);
+        cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click()
+            .type('{backspace}{backspace}' + expressionToType + '{esc}');
 
         if (waitForEnable && validExpression) {
             cy.get('[data-testid="' + waitForEnable + '"]').should('not.have.attr', 'disabled');
