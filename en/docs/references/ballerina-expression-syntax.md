@@ -43,7 +43,7 @@ The `decimal` type supports integer values with up to 34 decimal points, and sup
 
 This type does not support `infinity`, `NaN`, or negative zero.
 
-The `decimal` type is a separate basic type, and therefore counts as `anydata`.
+The `decimal` type is a separate basic type and therefore counts as `anydata`.
 
 ###### Examples:
 
