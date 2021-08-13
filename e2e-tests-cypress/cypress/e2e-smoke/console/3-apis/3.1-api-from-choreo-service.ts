@@ -51,7 +51,8 @@ describe('API creation from choreo service', () => {
             cy.get('[data-testid="editor-run-btn"]').should('exist');
             cy.deployToChoreo("service", serviceName);
             cy.log('Service deployed successfully!');
-            cy.wait(60000);
+            // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
+            cy.wait(2.5 * 60 * 1000);
 
             cy.goBacktoAppsList();
             cy.navigateFromHomePage(APIS_TEXT);
