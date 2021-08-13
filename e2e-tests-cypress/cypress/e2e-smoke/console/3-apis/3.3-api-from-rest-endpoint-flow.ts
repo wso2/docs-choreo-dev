@@ -76,7 +76,7 @@ describe("API creation from an existing endpoint", () => {
             cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
             cy.updateSubscriptionPlans();
             cy.deployInitialRevision();
-            cy.get('[data-testid=api-revision-deploy-success]').should("be.visible");
+            cy.get('[data-testid="api-revision-deploy-successful"]').should("be.visible");
             cy.testApiInPublisherTestConsole();
             cy.publishApi();
             cy.wait(2000);
