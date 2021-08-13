@@ -23,6 +23,7 @@ spec:
           labels:
             choreo.component: perfanalyzer-updater
         spec:
+          automountServiceAccountToken: false
           securityContext:
             seccompProfile:
               type: RuntimeDefault
@@ -31,7 +32,6 @@ spec:
           containers:
           - name: perfanalyzer-updater
             image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
-            automountServiceAccountToken: false
             securityContext:
               readOnlyRootFilesystem: true
               runAsUser: 10500
