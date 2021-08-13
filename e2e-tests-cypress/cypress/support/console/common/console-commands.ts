@@ -887,7 +887,7 @@ Cypress.Commands.add('clearConnections', () => {
                     url: deleteURL
                 }).then((deleteResponse) => {
                     expect(deleteResponse.status).to.eq(SUCCESS_STATUS_CODE);
-                }).wait(200);;
+                }).wait(200);
             }
         }
     });
@@ -937,9 +937,9 @@ Cypress.Commands.add('clearApps', () => {
                 }
                 cy.cleanupApp(appName);
             }
-            cy.log("Successfully deleted all apps");
+            cy.log("Successfully deleted all e2e apps");
         } else {
-            cy.log('No apps found');
+            cy.log('No e2e apps found');
         }
     });
 });
@@ -954,16 +954,17 @@ Cypress.Commands.add('clearOnPremKeys', () => {
         const data = response["body"] as [];
 
         if (data.length) {
-            cy.log(`on-prem keys found : ${data.length}`);
+            cy.log(`e2e test on-prem keys found : ${data.length}`);
             for (const value of data) {
                 const keyName = value["displayName"] as string;
                 if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
                     cy.cleanOnPremKey(keyName);
+                    cy.wait(300);
                 }
             }
-            cy.log("Successfully deleted all on-prem keys");
+            cy.log("Successfully deleted all e2e test on-prem keys");
         } else {
-            cy.log('No on-prem keys found')
+            cy.log('No e2e test on-prem keys found')
         }
     });
 });
@@ -1004,11 +1005,11 @@ Cypress.Commands.add('clearAPIs', () => {
                                 'organizationId': organizationId,
                             },
                         });
+                    cy.wait(300);
                     }
-                }
-                cy.log("Successfully deleted all APIs");
+                cy.log("Successfully deleted all e2e test APIs");
             } else {
-                cy.log('No APIs found');
+                cy.log('No e2e test APIs found');
             }
         });
     });
