@@ -72,11 +72,6 @@ spec:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
                   name: cm-loggingapi
-            - name: LOG_WORKSPACE_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: LOG_WORKSPACE_ID
-                  name: cm-loganalytics-replica
             - name: NEGOTIATOR_GRPC_ADDRESS
               valueFrom:
                 configMapKeyRef:
@@ -105,6 +100,8 @@ spec:
             envFrom:
               - configMapRef:
                   name: env-k8sservice-replica
+              - configMapRef:
+                  name: env-loganalytics-replica
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
           securityContext:
             runAsUser: 100

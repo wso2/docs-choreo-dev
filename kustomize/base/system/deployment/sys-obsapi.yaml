@@ -69,7 +69,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: LOG_WORKSPACE_ID
-                  name: cm-loganalytics-replica
+                  name: env-loganalytics-replica
             - name: NEGOTIATOR_GRPC_ADDRESS
               valueFrom:
                 configMapKeyRef:
