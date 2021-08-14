@@ -12,7 +12,7 @@
  */
 
 import { generateApiName } from "../../../support/common/utils";
-import { APIM_RESOURCE_PATH, APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
+import { APIM_RESOURCE_PATH, APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR, SELECTED_ORG_HANDLE } from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
     const API_NAME = generateApiName('oas');
@@ -20,8 +20,7 @@ describe('Choreo APIM publisher scenarios', () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
-            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            const orgId = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE).uuid;
             cy.clearAllTestData(orgId);
         });
     });

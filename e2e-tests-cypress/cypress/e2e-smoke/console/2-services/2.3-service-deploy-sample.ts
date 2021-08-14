@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { SERVICES_TEXT, EX_LONG_TIME_OUT, NO_OF_RETRIES } from "../../../support/common/constants";
+import { SERVICES_TEXT, EX_LONG_TIME_OUT, SELECTED_ORG_HANDLE } from "../../../support/common/constants";
 import { appNamePrefix } from "../../../support/common/utils";
 
 /// <reference types="cypress" />
@@ -19,8 +19,7 @@ import { appNamePrefix } from "../../../support/common/utils";
 describe("Test successful deployment of sample services", () => {
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
-            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            const orgId = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE).uuid;
             cy.clearAllTestData(orgId);
         });
     });

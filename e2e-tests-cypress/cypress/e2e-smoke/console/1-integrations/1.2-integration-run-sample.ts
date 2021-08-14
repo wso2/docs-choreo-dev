@@ -15,7 +15,7 @@
 
 import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
-    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT, SELECTED_ORG_HANDLE 
 } from "../../../support/common/constants";
 import { appNamePrefix } from "../../../support/common/utils";
 
@@ -24,8 +24,7 @@ describe('Integration sample flow', () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
-            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            const orgId = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE).uuid;
             cy.clearAllTestData(orgId);
         });
         cy.getCookies().then((cookies) => {
@@ -83,7 +82,7 @@ describe('Integration sample flow', () => {
 
     it('test-run sample integration', () => {
         cy.log("Prebuilt integrations page loaded successfully");
-        cy.intercept('POST', `**/${Cypress.env("selectedOrgHandle")}/apps`, (req) => {
+        cy.intercept('POST', `**/${SELECTED_ORG_HANDLE}/apps`, (req) => {
             req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
         });
         cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });

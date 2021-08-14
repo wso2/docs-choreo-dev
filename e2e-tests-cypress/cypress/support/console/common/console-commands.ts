@@ -20,7 +20,7 @@ import {
     DEVOPS_TEXT,
     SETTINGS_TEXT,
     SETTINGS_PATH,
-    APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE,
+    APP_SVC_URL, SELECTED_ORG_HANDLE, SUCCESS_STATUS_CODE,
     GMAIL_CONNECTION_NAME,
     APIM_RESOURCE_PATH,
     PATH_SEPARATOR,
@@ -457,7 +457,7 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
 
 Cypress.Commands.add('cleanupApp', (name: string) => {
     cy.log("Cleaning up app: " + name);
-    cy.request("DELETE", `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${name}`).then((resp) => {
+    cy.request("DELETE", `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/${name}`).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: " + name);
@@ -717,7 +717,7 @@ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
 Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
     cy.request({
         method: "POST",
-        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
+        url: `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/${appName}/undeploy`,
         timeout: 60000,
         failOnStatusCode: false
     }).then((resp) => {
@@ -729,7 +729,7 @@ Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
 
 Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
     cy.log("Cleaning up on-prem key: " + keyName);
-    cy.request("POST", `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/${keyName}/revoke`).then((resp) => {
+    cy.request("POST", `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/keys/${keyName}/revoke`).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the on-prem key: " + keyName);
@@ -921,7 +921,7 @@ Cypress.Commands.add('clearApps', () => {
     cy.request({
         method: "GET",
         form: true,
-        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/`
+        url: `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/`
     }).then((response) => {
         const apps = response["body"] as { name: string, displayName: string, status: string }[];
         const e2eApps = apps.filter(app => app.displayName.startsWith(appNamePrefix));
@@ -948,7 +948,7 @@ Cypress.Commands.add('clearOnPremKeys', () => {
     cy.request({
         method: "GET",
         form: true,
-        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/`
+        url: `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/keys/`
     }).then((response) => {
         const data = response["body"] as [];
 

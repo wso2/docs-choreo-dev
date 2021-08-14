@@ -11,7 +11,7 @@
  * associated services.
  */
 import { generateAppName } from '../../../support/common/utils';
-import { SERVICES_TEXT } from '../../../support/common/constants';
+import { SELECTED_ORG_HANDLE, SERVICES_TEXT } from '../../../support/common/constants';
 import { datamapperRequestBody } from '../../../fixtures/console/ai/datamapper-service-call-data';
 import { datamapperExpectedResponseBody } from '../../../fixtures/console/ai/datamapper-service-call-data';
 import { dataMapperTestURL } from '../../../support/common/constants';
@@ -24,8 +24,7 @@ describe('Data Mapper service call Test', () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
-            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            const orgId = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE).uuid;
             cy.clearAllTestData(orgId);
         });
         cy.getCookies().then((cookies) => {

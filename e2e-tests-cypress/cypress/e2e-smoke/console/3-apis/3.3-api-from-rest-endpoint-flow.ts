@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, PATH_SEPARATOR, STANDARD_TIME_OUT } from "../../../support/common/constants";
+import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, SELECTED_ORG_HANDLE, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
@@ -23,8 +23,7 @@ describe("API creation from an existing endpoint", () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
-            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            const orgId = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE).uuid;
             cy.clearAllTestData(orgId);
         });
     });
