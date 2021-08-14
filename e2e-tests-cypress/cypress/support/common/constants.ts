@@ -37,11 +37,9 @@ export const FAKE_TWILIO_RECIPIENT_NUMBER = '+94743149897';
 export const INVITATION_EMAIL= 'test.user.choreo@gmail.com';
 export const PATH_SEPARATOR = '/';
 export const GMAIL_CONNECTION_NAME = 'test.user.choreo@gmail.com';
-export const USER_CONNECTIONS_PATH = '/orgs/' + SELECTED_ORG_HANDLE + '/connections';
-export const USER_CONFIGURATIONS_PATH = '/orgs/'+ SELECTED_ORG_HANDLE + '/configurations';
 export const GOOGLE_CALENDAR_CONNECTOR = 'Google Calendar';
 export const OPENWEATHERMAP_APPID = '1077cad615109804aeac077793122585';
 
-//API Management
+// API Management
 export const DEVELOP = '/develop';
 export const OVERVIEW  = '/overview';

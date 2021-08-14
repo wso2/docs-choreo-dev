@@ -74,11 +74,11 @@ declare namespace Cypress {
         findPlusButton(plusBtnIndex: number, selector: string[]): Chainable<Element>
         addWeatherForecastAPI(plusBtnIndex: number, endpointName: string, responseVarName: string, lat: string, lon: string, exclude?: string, units?: string, lang?: string): Chainable<Element>
         sendChoreoSMS(recipientNumber: string, textMessage: string, responseVariableName?: string): Chainable<Element>
-        clearAllTestData(orgId: string): Chainable<Element>
+        clearAllTestData(org: { uuid: string, handle: string }): Chainable<Element>
         clearAPIs(orgId: string): Chainable<Element>
-        clearApps(): Chainable<Element>
-        clearConfigurations(): Chainable<Element>
-        clearConnections(): Chainable<Element>
-        clearOnPremKeys(): Chainable<Element>
+        clearApps(orgHandle: string): Chainable<Element>
+        clearConfigurations(orgHandle: string): Chainable<Element>
+        clearConnections(orgHandle: string): Chainable<Element>
+        clearOnPremKeys(orgHandle: string): Chainable<Element>
     }
 }

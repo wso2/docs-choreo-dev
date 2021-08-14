@@ -20,8 +20,8 @@ describe('Generate on-prem keys', () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const orgId = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE).uuid;
-            cy.clearAllTestData(orgId);
+            const org = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE);
+            cy.clearAllTestData(org);
         });
         cy.navigateFromHomePage(SETTINGS_TEXT);
     })

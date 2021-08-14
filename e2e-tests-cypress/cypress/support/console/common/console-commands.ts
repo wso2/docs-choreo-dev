@@ -24,9 +24,7 @@ import {
     GMAIL_CONNECTION_NAME,
     APIM_RESOURCE_PATH,
     PATH_SEPARATOR,
-    USER_CONNECTIONS_PATH,
     GOOGLE_CALENDAR_CONNECTOR,
-    USER_CONFIGURATIONS_PATH,
     OPENWEATHERMAP_APPID,
 } from '../../common/constants';
 import { getApiName } from '../../devportal/utils';
@@ -865,11 +863,12 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
         cy.log("SMS by Choreo connector added successfully!");
     });
 
-Cypress.Commands.add('clearConnections', () => {
+Cypress.Commands.add('clearConnections', (orgHandle: string) => {
     cy.log('Deleting connections...');
+    const connectionsUrl = `${APP_SVC_URL}/orgs/${orgHandle}/connections`;
     cy.request({
         method: "GET",
-        url: APP_SVC_URL + USER_CONNECTIONS_PATH
+        url: connectionsUrl
     }).then((response) => {
         expect(response.status).to.eq(SUCCESS_STATUS_CODE);
         const connectionList = response["body"] as any[];
@@ -878,7 +877,7 @@ Cypress.Commands.add('clearConnections', () => {
             const connectorId: string = connection.handle;
 
             if (connectorName != GOOGLE_CALENDAR_CONNECTOR) {
-                const deleteURL = APP_SVC_URL + USER_CONNECTIONS_PATH + PATH_SEPARATOR + connectorId;
+                const deleteURL = `${connectionsUrl}/${connectorId}`;
                 cy.request({
                     method: "DELETE",
                     url: deleteURL
@@ -890,11 +889,12 @@ Cypress.Commands.add('clearConnections', () => {
     });
 });
 
-Cypress.Commands.add('clearConfigurations', () => {
+Cypress.Commands.add('clearConfigurations', (orgHandle: string) => {
     cy.log('Deleting Configurations...');
+    const configurationsUrl = `${APP_SVC_URL}/orgs/${orgHandle}/configurations`;
     cy.request({
         method: "GET",
-        url: APP_SVC_URL + USER_CONFIGURATIONS_PATH
+        url: configurationsUrl
     }).then((response) => {
         expect(response.status).to.eq(SUCCESS_STATUS_CODE);
         const configurationList = response["body"] as any[];
@@ -902,7 +902,7 @@ Cypress.Commands.add('clearConfigurations', () => {
         for (const conf of configurationList) {
             const confKey: string = conf.key;
             const confScope: string = conf.scope;
-            const deleteConfigurationsURL = APP_SVC_URL + USER_CONFIGURATIONS_PATH + PATH_SEPARATOR + confKey;
+            const deleteConfigurationsURL = `${configurationsUrl}/${confKey}`;
             cy.request({
                 method: "DELETE",
                 url: deleteConfigurationsURL,
@@ -916,12 +916,12 @@ Cypress.Commands.add('clearConfigurations', () => {
     });
 });
 
-Cypress.Commands.add('clearApps', () => {
+Cypress.Commands.add('clearApps', (orgHandle: string) => {
     cy.log("Deleting apps...");
     cy.request({
         method: "GET",
         form: true,
-        url: `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/`
+        url: `${APP_SVC_URL}/orgs/${orgHandle}/apps/`
     }).then((response) => {
         const apps = response["body"] as { name: string, displayName: string, status: string }[];
         const e2eApps = apps.filter(app => app.displayName.startsWith(appNamePrefix));
@@ -943,12 +943,12 @@ Cypress.Commands.add('clearApps', () => {
     });
 });
 
-Cypress.Commands.add('clearOnPremKeys', () => {
+Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
     cy.log('Deleting on-prem keys...');
     cy.request({
         method: "GET",
         form: true,
-        url: `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/keys/`
+        url: `${APP_SVC_URL}/orgs/${orgHandle}/keys/`
     }).then((response) => {
         const data = response["body"] as [];
 
@@ -1012,11 +1012,11 @@ Cypress.Commands.add('clearAPIs', (orgId: string) => {
     });
 });
 
-Cypress.Commands.add('clearAllTestData', (orgId: string) => {
+Cypress.Commands.add('clearAllTestData', (org: { uuid: string, handle: string }) => {
     cy.log('Deleting all test data...');
-    cy.clearApps();
-    cy.clearOnPremKeys();
-    cy.clearAPIs(orgId);
-    // cy.clearConnections();
-    // cy.clearConfigurations();
+    cy.clearApps(org.handle);
+    cy.clearOnPremKeys(org.handle);
+    cy.clearAPIs(org.uuid);
+    // cy.clearConnections(org.handle);
+    // cy.clearConfigurations(org.handle);
 });
