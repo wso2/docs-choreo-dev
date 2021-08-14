@@ -35,16 +35,34 @@ spec:
             requests:
               cpu: 300m
               memory: 300Mi
-          envFrom:
-            - configMapRef:
-                name: cm-dp-rudder
+          env:
+          - name: DATABASE_MSSQL_HOST
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: DATABASE_MSSQL_HOST
+          - name: DATABASE_MSSQL_PORT
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: DATABASE_MSSQL_PORT
+          - name: DATABASE_MSSQL_USER
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: DATABASE_MSSQL_USER
+          - name: DATABASE_MSSQL_DBNAME
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: DATABASE_MSSQL_DBNAME
+          - name: DATABASE_MSSQL_PASSWORD
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: DATABASE_MSSQL_PASSWORD
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
             readOnlyRootFilesystem: true
           ports:
-            - containerPort: 8000
+            - containerPort: 3000
               name: http-port
               protocol: TCP
           readinessProbe:
@@ -63,7 +81,25 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /api/v1/healthz
+              path: /healthz
               port: http-port
+      volumeMounts:
+      - mountPath: /config/config.json
+        name: config
+      - name: secret-dp-rudder
+        mountPath: /mnt/csi/secret-dp-rudder
+        readonly: true
+      volumes:
+      - name: config
+        configMap: 
+          name: cm-dp-rudder
+      - name: secret-dp-rudder
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-dp-rudder
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: dp-rudder
+    choreo.dataplane: true
+  name: dp-rudder
+spec:
+  ports:
+  - name: dp-rudder-port
+    port: 80
+    protocol: TCP
+    targetPort: http-port
+  selector:
+    choreo.component: dp-rudder
+    choreo.dataplane: true
