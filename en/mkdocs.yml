@@ -73,6 +73,7 @@ nav:
           - Data Mapping: references/data-mapping.md
           - Test Your Service via Postman: references/test-your-service-via-postman.md
           - API Path: references/api-path.md
+          - Connectors : references/connectors.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
