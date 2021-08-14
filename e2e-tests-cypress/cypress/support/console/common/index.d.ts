@@ -2,9 +2,30 @@
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
 
+interface Organization {
+    id: number;
+    name: string;
+    handle: string;
+    uuid: string;
+}
+
+interface User {
+    id: string;
+    name: string;
+    uuid: string;
+    email: string;
+    token: string;
+    picURL: string;
+    orgs: Organization[];
+    fidp?: string;
+    isAnonymous?: boolean;
+    createdAt?: Date;
+    expiredAt?: Date;
+}
+
 declare namespace Cypress {
     interface Chainable {
-        consoleUserLogin(): Chainable<Element>
+        consoleUserLogin(): Chainable<User>
         userLoginWithGmail(): Chainable<Element>
         userLoginWithGithub(): Chainable<Element>
         userLogout(): Chainable<Element>
@@ -47,14 +68,14 @@ declare namespace Cypress {
         testPerformanceAnalyzerLocalStorage(localStorageKey: string): Chainable<Element>
         hideWelcomeMessage(): Chainable<Element>
         getByTestId(id: string): Chainable<Element>
-        deleteApiByApplicationId(id: string): Chainable<Element>
-        deleteApiByApiId(id: string): Chainable<Element>
+        deleteApiByApplicationId(id: string, orgId: string): Chainable<Element>
+        deleteApiByApiId(id: string, orgId: string): Chainable<Element>
         createVariableOtherTypeProperty(custom_type: string, name: string, expression: string, validExpression?: boolean): Chainable<Element>
         findPlusButton(plusBtnIndex: number, selector: string[]): Chainable<Element>
         addWeatherForecastAPI(plusBtnIndex: number, endpointName: string, responseVarName: string, lat: string, lon: string, exclude?: string, units?: string, lang?: string): Chainable<Element>
         sendChoreoSMS(recipientNumber: string, textMessage: string, responseVariableName?: string): Chainable<Element>
-        clearAllTestData(): Chainable<Element>
-        clearAPIs(): Chainable<Element>
+        clearAllTestData(orgId: string): Chainable<Element>
+        clearAPIs(orgId: string): Chainable<Element>
         clearApps(): Chainable<Element>
         clearConfigurations(): Chainable<Element>
         clearConnections(): Chainable<Element>

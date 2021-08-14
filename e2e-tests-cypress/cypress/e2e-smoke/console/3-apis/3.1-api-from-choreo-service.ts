@@ -19,8 +19,11 @@ describe('API creation from choreo service', () => {
     let applicationId: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
+            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            cy.clearAllTestData(orgId);
+        });
     });
 
     it('Creating and trying out an API from choreo service', () => {

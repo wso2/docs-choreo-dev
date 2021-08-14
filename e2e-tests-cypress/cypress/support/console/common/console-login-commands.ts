@@ -193,6 +193,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     createdAt: new Date(jwtPayload.iat * 1000),
                     expiredAt: new Date(jwtPayload.exp * 1000),
                 };
+                cy.wrap(user).as("loggedInUser");
                 localStorage.setItem(
                     STORAGE_KEY,
                     JSON.stringify({
@@ -228,4 +229,5 @@ Cypress.Commands.add('consoleUserLogin', () => {
     } catch (err) {
         throw new Error("Retrieving Access token failed : " + err);
     }
+    return cy.get("@loggedInUser");
 })

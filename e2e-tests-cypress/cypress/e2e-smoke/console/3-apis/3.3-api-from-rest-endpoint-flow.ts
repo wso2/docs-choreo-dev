@@ -22,8 +22,11 @@ describe("API creation from an existing endpoint", () => {
     let apiId: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
+            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            cy.clearAllTestData(orgId);
+        });
     });
 
     it("Create API from existing endpoint and deploy and publish", () => {

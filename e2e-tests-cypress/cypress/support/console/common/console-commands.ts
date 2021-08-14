@@ -464,10 +464,9 @@ Cypress.Commands.add('cleanupApp', (name: string) => {
     });
 });
 
-Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
+Cypress.Commands.add('deleteApiByApplicationId', (id: string, orgId: string) => {
     let token;
-    const organizationId = Cypress.env('orgs')[0].uuid;
-    const query = `?organizationId=${organizationId}&query=applicationId:${id}`
+    const query = `?organizationId=${orgId}&query=applicationId:${id}`
     cy.getCookie('token').should('exist').then((c) => {
         token = c;
         cy.log("GET API for applicationId: " + id);
@@ -498,19 +497,17 @@ Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
                     'Authorization': 'Bearer ' + token.value
                 },
                 qs: {
-                    'organizationId': organizationId,
+                    'organizationId': orgId,
                 },
             }).then((res) => {
                 expect(res.status).to.eq(SUCCESS_STATUS_CODE);
                 cy.log("Successfully deleted API: ");
-            });;
-
+            });
         })
     });
 });
 
-Cypress.Commands.add('deleteApiByApiId', (id: string) => {
-    const organizationId = Cypress.env('orgs')[0].uuid;
+Cypress.Commands.add('deleteApiByApiId', (id: string, orgId: string) => {
     cy.getCookie('token').should('exist').then((token) => {
         cy.request({
             method: "DELETE",
@@ -520,7 +517,7 @@ Cypress.Commands.add('deleteApiByApiId', (id: string) => {
                 'Authorization': 'Bearer ' + token.value
             },
             qs: {
-                'organizationId': organizationId,
+                'organizationId': orgId,
             }
         }).then((resp) => {
             // Status code is expected to be 200
@@ -971,10 +968,9 @@ Cypress.Commands.add('clearOnPremKeys', () => {
     });
 });
 
-Cypress.Commands.add('clearAPIs', () => {
+Cypress.Commands.add('clearAPIs', (orgId: string) => {
     cy.log('Deleting APIs...');
     let token;
-    const organizationId = Cypress.env('orgs')[0].uuid;
     cy.getCookie('token').should('exist').then((c) => {
         token = c;
         cy.request({
@@ -985,7 +981,7 @@ Cypress.Commands.add('clearAPIs', () => {
                 'Authorization': 'Bearer ' + token.value
             },
             qs: {
-                'organizationId': organizationId,
+                'organizationId': orgId,
                 'limit': 200
             },
             timeout: 60000
@@ -1003,7 +999,7 @@ Cypress.Commands.add('clearAPIs', () => {
                             'Authorization': 'Bearer ' + token.value
                         },
                         qs: {
-                            'organizationId': organizationId,
+                            'organizationId': orgId,
                         },
                     });
                     cy.wait(300);
@@ -1016,11 +1012,11 @@ Cypress.Commands.add('clearAPIs', () => {
     });
 });
 
-Cypress.Commands.add('clearAllTestData', () => {
+Cypress.Commands.add('clearAllTestData', (orgId: string) => {
     cy.log('Deleting all test data...');
     cy.clearApps();
     cy.clearOnPremKeys();
-    cy.clearAPIs();
+    cy.clearAPIs(orgId);
     // cy.clearConnections();
     // cy.clearConfigurations();
 });

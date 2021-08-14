@@ -19,8 +19,11 @@ import { SETTINGS_TEXT } from "../../../support/common/constants";
 describe('Generate on-prem keys', () => {
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
+            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            cy.clearAllTestData(orgId);
+        });
         cy.navigateFromHomePage(SETTINGS_TEXT);
     })
 

@@ -23,8 +23,11 @@ describe('Data Mapper service call Test', () => {
     let appName: string
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const selectedOrgHandle = Cypress.env("selectedOrgHandle");
+            const orgId = user?.orgs.find((org) => org.handle === selectedOrgHandle).uuid;
+            cy.clearAllTestData(orgId);
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
