@@ -384,7 +384,7 @@ Cypress.Commands.add('searchApps', (name: string) => {
             cy.get('[data-testid="search-btn"]').trigger('mouseover');
         }
     });
-    cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click().clear().type(name, { force: true });
+    cy.get('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').eq(0).click().clear().type(name, { force: true });
 });
 
 Cypress.Commands.add('resetAppSearch', () => {
@@ -395,9 +395,9 @@ Cypress.Commands.add('resetAppSearch', () => {
         }
     });
     cy.get('body').then($body => {
-        let searchBoxExists = ($body.find('.MuiInputBase-input.MuiInput-input').length > 0) ? true : false;
+        let searchBoxExists = ($body.find('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').length > 0) ? true : false;
         if (searchBoxExists) {
-            cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click().clear();
+            cy.get('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').eq(0).click().clear();
         }
     });
 });
