@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: dp-rudder
+    choreo.dataplane: true
+  name: dp-rudder
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      choreo.component: dp-rudder
+  template:
+    metadata:
+      labels:
+        choreo.component: dp-rudder
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: dp-rudder
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
+          resources:
+            limits:
+              cpu: 350m
+              memory: 400Mi
+            requests:
+              cpu: 300m
+              memory: 300Mi
+          envFrom:
+            - configMapRef:
+                name: cm-dp-rudder
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 8000
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /api/v1/healthz
+              port: http-port
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
