@@ -17,16 +17,16 @@ import { SETTINGS_TEXT } from "../../../support/common/constants";
 
 describe("Group List View", () => {
     let savedCookies;
-    let memberEmail;
-    let memberName;
+    let memberEmail: string;
+    let memberName: string;
     const groupName = "testGroup";
     const groupDescription = "This is a test group.";
     const groupTag = "testGroupTag"
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            memberName = loggedInUser?.name;
-            memberEmail = loggedInUser?.email;
+            memberName = user?.name;
+            memberEmail = user?.email;
         });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
