@@ -152,6 +152,7 @@ Cypress.Commands.add('deployInitialRevision', () => {
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
     });
+    cy.wait(3000);
     cy.get('[data-testid=deployment-loader]', { timeout: DEPLOYMENT_TIME_OUT }).should('not.exist');
 });
 
