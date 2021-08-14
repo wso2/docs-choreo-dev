@@ -77,6 +77,7 @@ describe("API creation from an existing endpoint", () => {
             cy.updateSubscriptionPlans();
             cy.deployInitialRevision();
             cy.get('[data-testid="api-revision-deploy-successful"]').should("be.visible");
+            cy.get('[fill="green"]').should("be.visible");
             cy.testApiInPublisherTestConsole();
             cy.publishApi();
             cy.wait(2000);
