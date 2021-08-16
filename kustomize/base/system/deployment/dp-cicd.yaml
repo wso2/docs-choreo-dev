@@ -107,6 +107,9 @@ spec:
             - name: cicd-config
               mountPath: cicd-config.yaml
               subPath: cicd-config.yaml
+            - name: secret-dp-cicd
+              mountPath: "/mnt/csi/secret-dp-cicd"
+              readOnly: true
       volumes:
       - name: cicd-config
         configMap:

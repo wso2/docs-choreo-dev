@@ -14,4 +14,3 @@ spec:
      kind: Deployment
      name: dp-cicd
    targetCPUUtilizationPercentage: 75
-   
