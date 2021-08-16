@@ -21,3 +21,4 @@ resources:
   - analytics-subscription.yaml
   - datacollector.yaml
   - dp-utility-api.yaml
+  
