@@ -14,4 +14,3 @@ spec:
     kind: Deployment
     name: "${SYSTEM_NAMESPACE}"-ingress-nginx-controller
   targetCPUUtilizationPercentage: 75
-  
