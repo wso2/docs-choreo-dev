@@ -40,22 +40,22 @@ spec:
             valueFrom:
               secretKeyRef: secret-dp-rudder
               key: DATABASE_MSSQL_HOST
-          - name: DATABASE_MSSQL_PORT
-            valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: DATABASE_MSSQL_PORT
           - name: DATABASE_MSSQL_USER
             valueFrom:
               secretKeyRef: secret-dp-rudder
               key: DATABASE_MSSQL_USER
-          - name: DATABASE_MSSQL_DBNAME
-            valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: DATABASE_MSSQL_DBNAME
           - name: DATABASE_MSSQL_PASSWORD
             valueFrom:
               secretKeyRef: secret-dp-rudder
               key: DATABASE_MSSQL_PASSWORD
+          - name: MIZZEN_SERVICE_TOKEN
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: MIZZEN_SERVICE_TOKEN
+          - name: AUTH_TOKEN
+            valueFrom:
+              secretKeyRef: secret-dp-rudder
+              key: AUTH_TOKEN
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -86,6 +86,7 @@ spec:
       volumeMounts:
       - mountPath: /config/config.json
         name: config
+        subPath: config.json
       - name: secret-dp-rudder
         mountPath: /mnt/csi/secret-dp-rudder
         readonly: true
