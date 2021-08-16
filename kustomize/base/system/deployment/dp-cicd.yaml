@@ -38,44 +38,28 @@ spec:
           env:
             - name: DB_HOST
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: DB_HOST
+                envName: DB_HOST
             - name: DB_PORT
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: DB_PORT
+                envName: DB_PORT
             - name: DB_USER
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: DB_USER
+                envName: DB_USER
             - name: DB_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: DB_PASSWORD
+                envName: DB_PASSWORD
             - name: DB_NAME
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: DB_NAME
+                envName: DB_NAME
             - name: DB_TYPE
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: DB_TYPE
+                envName: DB_TYPE
             - name: CICD_CLUSTER_ID
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: CICD_CLUSTER_ID
+                envName: CICD_CLUSTER_ID
             - name: CICD_NAMESPACE
               valueFrom:
-                secretKeyRef:
-                  name: secret-cicd
-                  key: CICD_NAMESPACE
+                envName: CICD_NAMESPACE
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -114,7 +98,7 @@ spec:
       - name: cicd-config
         configMap:
           name: cm-dp-cicd
-      - name: secret-cicd
+      - name: secret-dp-cicd
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
