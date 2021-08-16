@@ -35,31 +35,47 @@ spec:
             requests:
               cpu: 500m
               memory: 500Mi
-          env:
+          env:  
             - name: DB_HOST
               valueFrom:
-                envName: DB_HOST
+                secretKeyRef:
+                  key: DB_HOST
+                  name: secret-dp-cicd
             - name: DB_PORT
               valueFrom:
-                envName: DB_PORT
+                secretKeyRef:
+                  key: DB_PORT
+                  name: secret-dp-cicd
             - name: DB_USER
               valueFrom:
-                envName: DB_USER
+                secretKeyRef:
+                  key: DB_USER
+                  name: secret-dp-cicd
             - name: DB_PASSWORD
               valueFrom:
-                envName: DB_PASSWORD
+                secretKeyRef:
+                  key: DB_PASSWORD
+                  name: secret-dp-cicd
             - name: DB_NAME
               valueFrom:
-                envName: DB_NAME
+                secretKeyRef:
+                  key: DB_NAME
+                  name: secret-dp-cicd
             - name: DB_TYPE
               valueFrom:
-                envName: DB_TYPE
+                secretKeyRef:
+                  key: DB_TYPE
+                  name: secret-dp-cicd
             - name: CICD_CLUSTER_ID
               valueFrom:
-                envName: CICD_CLUSTER_ID
+                secretKeyRef:
+                  key: CICD_CLUSTER_ID
+                  name: secret-dp-cicd
             - name: CICD_NAMESPACE
               valueFrom:
-                envName: CICD_NAMESPACE
+                secretKeyRef:
+                  key: CICD_NAMESPACE
+                  name: secret-dp-cicd
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
