@@ -99,7 +99,7 @@ Follow this procedure to send an email with the summary of statistics to a speci
     |----------------|-------------------------------|
     | **Type**       | `string`                      |
     | **Name**       | `mailBody`                    |
-    | **Expression** | `"Total Cases Per Million : " + totalCasesPerMillion.toString()`|
+    | **Expression** | string `` `Total Cases Per Million : ${totalCasesPerMillion}` ``|
 
 3. Click **Save**.
 4. Click the last **+** icon in the low-code diagram.
@@ -133,7 +133,7 @@ You have successfully created and configured the integration. It should look som
         worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA");
         int population = (populationByCountry[0]?.value ?: 0) / 1000000;
         var totalCasesPerMillion = totalCases / population;
-        string mailBody = "Total Cases Per Million : " + totalCasesPerMillion.toString();
+        string mailBody = string `Total Cases Per Million : ${totalCasesPerMillion}`;
         sendemail:Client sendemailEndpoint = check new ();
         string sendEmailResponse = check sendemailEndpoint->sendEmail("test@gmail.com", "Total COVID-19 Cases in the USA", 
         mailBody);
