@@ -21,6 +21,7 @@ describe('Observability tests', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         });

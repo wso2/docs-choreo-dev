@@ -33,6 +33,12 @@ case $key in
 esac
 done
 
+if [ ! "$vault" ] || [ ! "$inputFilePath" ] || [ ! "$outputFilePath" ] || [ ! "$type" ]
+then
+    echo "Mandatory arguments are missing"
+    exit 1
+fi
+
 echo "--- Creating secrets/certificates..."
 echo "--- Secrets/certificates will be added to the ${vault} key vault"
 echo "" >> "${outputFilePath}"

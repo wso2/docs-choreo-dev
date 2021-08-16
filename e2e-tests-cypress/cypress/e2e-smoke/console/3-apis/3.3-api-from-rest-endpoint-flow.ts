@@ -23,6 +23,7 @@ describe("API creation from an existing endpoint", () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     it("Create API from existing endpoint and deploy and publish", () => {
@@ -75,6 +76,8 @@ describe("API creation from an existing endpoint", () => {
             cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
             cy.updateSubscriptionPlans();
             cy.deployInitialRevision();
+            cy.get('[data-testid="api-revision-deploy-successful"]').should("be.visible");
+            cy.get('[fill="green"]').should("be.visible");
             cy.testApiInPublisherTestConsole();
             cy.publishApi();
             cy.wait(2000);
@@ -84,8 +87,6 @@ describe("API creation from an existing endpoint", () => {
     // TODO: add test case to check API delete flow
 
     after(() => {
-        cy.wait(1000);
-        cy.deleteApiByApiId(apiId);
         cy.userLogout();
     });
 });
