@@ -195,6 +195,8 @@ spec:
             - name: PROFILE_NAME
               value: traffic-manager
           volumeMounts:
+            - name: apim-vol
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT            
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
               subPath: eventhub-1-deployment.toml
@@ -238,6 +240,8 @@ spec:
               readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
+        - name: apim-vol
+          emptyDir: {}
         - name: wso2am-conf
           configMap:
             name: choreo-apim-eventhub-1-conf
