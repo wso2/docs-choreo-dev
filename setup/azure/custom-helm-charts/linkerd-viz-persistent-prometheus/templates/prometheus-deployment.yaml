@@ -11,6 +11,8 @@ metadata:
     namespace: {{.Values.namespace}}
   name: prometheus
   namespace: {{.Values.namespace}}
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
 spec:
   replicas: 1
   selector:
@@ -27,6 +29,7 @@ spec:
         component: prometheus
         namespace: {{.Values.namespace}}
     spec:
+#      automountServiceAccountToken: false
       nodeSelector:
         beta.kubernetes.io/os: linux
       securityContext:
@@ -57,9 +60,13 @@ spec:
           timeoutSeconds: 30
         resources:
         securityContext:
+          allowPrivilegeEscalation: false
           runAsNonRoot: true
           runAsUser: {{.Values.persistentVolume.userID}}
           runAsGroup: {{.Values.persistentVolume.groupID}}
+          capabilities:
+            drop:
+              - ALL
         volumeMounts:
         - mountPath: /data
           name: data
@@ -75,4 +82,3 @@ spec:
       - configMap:
           name: prometheus-config
         name: prometheus-config
-        
