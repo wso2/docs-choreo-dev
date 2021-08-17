@@ -23,6 +23,8 @@ resources:
   - analytics-subscription.yaml
   - datacollector.yaml
   - dp-rudder.yaml
+  - quota-limiter.yaml
+  - subscriptions.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587

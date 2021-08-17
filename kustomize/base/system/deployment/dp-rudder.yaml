@@ -3,6 +3,11 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_43=Temporarily suppressing till fixing
   labels:
     choreo.component: dp-rudder
     choreo.dataplane: true
@@ -38,28 +43,35 @@ spec:
           env:
           - name: DATABASE_MSSQL_HOST
             valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: DATABASE_MSSQL_HOST
+              secretKeyRef: 
+                name: secret-dp-rudder
+                key: DATABASE_MSSQL_HOST
           - name: DATABASE_MSSQL_USER
             valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: DATABASE_MSSQL_USER
+              secretKeyRef: 
+                name: secret-dp-rudder
+                key: DATABASE_MSSQL_USER
           - name: DATABASE_MSSQL_PASSWORD
             valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: DATABASE_MSSQL_PASSWORD
+              secretKeyRef: 
+                name: secret-dp-rudder
+                key: DATABASE_MSSQL_PASSWORD
           - name: MIZZEN_SERVICE_TOKEN
             valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: MIZZEN_SERVICE_TOKEN
+              secretKeyRef: 
+                name: secret-dp-rudder
+                key: MIZZEN_SERVICE_TOKEN
           - name: AUTH_TOKEN
             valueFrom:
-              secretKeyRef: secret-dp-rudder
-              key: AUTH_TOKEN
+              secretKeyRef: 
+                name: secret-dp-rudder
+                key: AUTH_TOKEN
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
+            runAsUser: 1000
+            runAsGroup: 1000
             readOnlyRootFilesystem: true
           ports:
             - containerPort: 3000
