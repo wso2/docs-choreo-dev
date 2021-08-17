@@ -148,6 +148,7 @@ spec:
               cpu: "1500m"
           ports:
             - containerPort: 8081
+            - containerPort: 9001
           startupProbe:
             exec:
               command: [ "sh", "check_health.sh" ]

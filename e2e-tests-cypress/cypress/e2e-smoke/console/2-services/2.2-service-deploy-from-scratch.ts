@@ -23,6 +23,7 @@ describe('Service deployment and delete deployed service', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         });
@@ -93,6 +94,8 @@ describe('Service deployment and delete deployed service', () => {
 
     it('Deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
+       // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
+        cy.wait(2.5 * 60 * 1000);
     });
 
     it('Undeploy from UI and delete the service', () => {

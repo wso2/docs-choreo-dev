@@ -23,7 +23,8 @@ describe('Data Mapper service call Test', () => {
     let appName: string
 
     before(() => {
-        cy.consoleUserLogin()
+        cy.consoleUserLogin();
+        cy.clearAllTestData();
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
