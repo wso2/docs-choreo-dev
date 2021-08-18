@@ -40,9 +40,6 @@ Run the bash scripts as shown as below with suitable arguments.
 * -i or --input 
 
   Path of the properties file created in Step 1
-* -o or --output
-
-  Path of the output file to which obeject versions of created secrets/certs will get printed
 
 * -t or --type
 
@@ -57,16 +54,12 @@ Run the bash scripts as shown as below with suitable arguments.
 
 Example:-
 
-```bash kv-secret-uploader.sh -v dev-csi-64 -i choreo-system-secrets.properties -o object-versions.txt -t secret```
+```bash kv-secret-uploader.sh -v dev-csi-64 -i choreo-system-secrets.properties -t secret```
 
 <br>
 
-Once the command is successfully executed, object versions of the created secrets will be printed in the output file in below format.
+Once the command is successfully executed, object versions of the created secrets will be printed to a new file named object_versions.txt in below format.
 
-> --- Object versions of the secrets/certificates ---
-> 
 > secret5=2203ea3d2f994765bd7b77610bd5d8b7
-> 
 > secret6=866d89360e9a43a781b51fc60cc3eecc
-> 
 > secret7=1a324546f2b14612bc217d826c7213b3
