@@ -11,16 +11,18 @@
  * associated services.
  */
 
-import { APIS_TEXT, APP_SVC_URL, SELECTED_ORG_HANDLE, SERVICES_TEXT } from '../../../support/common/constants';
-import { appNamePrefix } from '../../../support/common/utils';
+import { APIS_TEXT, APP_SVC_URL, SERVICES_TEXT } from '../../../support/common/constants';
+import { appNamePrefix, getSelectedOrgHandle } from '../../../support/common/utils';
 
 describe('API creation from choreo service', () => {
     let serviceName: string;
     let applicationId: string;
+    let selectedOrgHandle: string;
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const org = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE);
+            selectedOrgHandle = getSelectedOrgHandle(user);
+            const org = user?.orgs.find((org) => org.handle === selectedOrgHandle);
             cy.clearAllTestData(org);
         });
     });
@@ -30,7 +32,7 @@ describe('API creation from choreo service', () => {
         cy.navigateFromHomePage(SERVICES_TEXT);
 
         // Intercepting the service creation call to capture the randomized service name
-        cy.intercept('POST', `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/template`,(req) => {
+        cy.intercept('POST', `${APP_SVC_URL}/orgs/${selectedOrgHandle}/apps/template`,(req) => {
             req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
         }).as('createService');
 

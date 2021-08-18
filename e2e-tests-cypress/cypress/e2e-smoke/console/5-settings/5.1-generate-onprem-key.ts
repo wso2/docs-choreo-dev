@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { generateKeyName } from '../../../support/common/utils';
-import { SELECTED_ORG_HANDLE, SETTINGS_TEXT } from "../../../support/common/constants";
+import { generateKeyName, getSelectedOrgHandle } from '../../../support/common/utils';
+import { SETTINGS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
@@ -20,7 +20,7 @@ describe('Generate on-prem keys', () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const org = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE);
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
             cy.clearAllTestData(org);
         });
         cy.navigateFromHomePage(SETTINGS_TEXT);

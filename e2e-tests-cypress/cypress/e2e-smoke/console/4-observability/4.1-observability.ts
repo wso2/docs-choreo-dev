@@ -13,7 +13,7 @@
 
 /// <reference types="cypress" />
 
-import { SELECTED_ORG_HANDLE } from "../../../support/common/constants";
+import { getSelectedOrgHandle } from "../../../support/common/utils";
 
 describe('Observability tests', () => {
     const obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
@@ -23,7 +23,7 @@ describe('Observability tests', () => {
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const org = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE);
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
             cy.clearAllTestData(org);
         });
         cy.getCookies().then((cookies) => {

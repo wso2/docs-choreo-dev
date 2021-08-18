@@ -13,6 +13,7 @@
 
 import qs from 'qs';
 import { APP_SVC_URL } from '../../common/constants';
+import { getSelectedOrgHandle } from '../../common/utils';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     console.log(err);
@@ -141,7 +142,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
     const idpUsername = Cypress.env('idpUsername');
     const idpPassword = Cypress.env('idpPassword');
     const idpAuthHeader = Cypress.env('idpAuthHeader');
-    const selectedOrgHandle = Cypress.env('selectedOrgHandle');
     try {
         cy.request({
             method: 'POST',
@@ -177,10 +177,8 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     Cookie: `cwatf=${cwatf}`
                 }
             }).then((response) => {
-                const orgs = response.body;
-                cy.wrap(orgs.map(org => org.handle)).should("include", selectedOrgHandle);
+                const orgs = response.body as Organization[];
 
-                const STORAGE_KEY = "PORTAL_STATE";
                 const jwtPayload = JSON.parse(atob(fragments[1]));
                 const user: User = {
                     id: orgs[0].id.toString(),
@@ -193,6 +191,15 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     createdAt: new Date(jwtPayload.iat * 1000),
                     expiredAt: new Date(jwtPayload.exp * 1000),
                 };
+
+                const selectedOrgHandleEnv = Cypress.env('selectedOrgHandle');
+                if (selectedOrgHandleEnv) {
+                    cy.wrap(orgs.map(org => org.handle)).should("include", selectedOrgHandleEnv);
+                }
+                const selectedOrgHandle = getSelectedOrgHandle(user);
+                cy.log("Selected org handle for running tests: " + selectedOrgHandle)
+
+                const STORAGE_KEY = "PORTAL_STATE";
                 cy.wrap(user).as("loggedInUser");
                 localStorage.setItem(
                     STORAGE_KEY,

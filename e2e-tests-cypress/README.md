@@ -14,7 +14,7 @@
 	    -   `apimBasePath` value to `/apimanagement`
     4.  Update user information in `cypress.env.json`
 	    -   `idpUsername` and `idpPassword` (Refer the section section below on how to get them)
-	    -   `selectedOrgHandle` to your organization handle
+	    -   (Optional) `selectedOrgHandle` to your organization handle (If this is not set, it will get the first organization in the orgs list)
     5.  Run `npm run e2etest:headless` to run test cases in [headless mode](#headless-mode)
 
 -   ### Getting idpUsername and idpPassword

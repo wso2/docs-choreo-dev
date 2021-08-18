@@ -11,19 +11,19 @@
  * associated services.
  */
 
-import { generateAppName } from '../../../support/common/utils';
-import { SELECTED_ORG_HANDLE, SERVICES_TEXT } from '../../../support/common/constants';
+import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
+import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
 describe('Service deployment and delete deployed service', () => {
-    let savedCookies;
+    let savedCookies: Cypress.Cookie[];
     let appName: string;
     const urlName = "url";
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const org = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE);
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
             cy.clearAllTestData(org);
         });
         cy.getCookies().then((cookies) => {

@@ -11,15 +11,18 @@
  * associated services.
  */
 
-import { SERVICES_TEXT, EX_LONG_TIME_OUT, SELECTED_ORG_HANDLE } from "../../../support/common/constants";
-import { appNamePrefix } from "../../../support/common/utils";
+import { SERVICES_TEXT, EX_LONG_TIME_OUT } from "../../../support/common/constants";
+import { appNamePrefix, getSelectedOrgHandle } from "../../../support/common/utils";
 
 /// <reference types="cypress" />
 
 describe("Test successful deployment of sample services", () => {
+    let selectedOrgHandle: string;
+
     before(() => {
         cy.consoleUserLogin().then((user) => {
-            const org = user?.orgs.find((org) => org.handle === SELECTED_ORG_HANDLE);
+            selectedOrgHandle = getSelectedOrgHandle(user);
+            const org = user?.orgs.find((org) => org.handle === selectedOrgHandle);
             cy.clearAllTestData(org);
         });
     });
@@ -51,7 +54,7 @@ describe("Test successful deployment of sample services", () => {
         cy.url().then((url) => {
             const appName = url.split("app/").pop().split("/test")[0];
             cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
+            cy.cleanupApp(appName, selectedOrgHandle);
         });
     });
 });

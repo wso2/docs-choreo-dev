@@ -20,7 +20,8 @@ import {
     DEVOPS_TEXT,
     SETTINGS_TEXT,
     SETTINGS_PATH,
-    APP_SVC_URL, SELECTED_ORG_HANDLE, SUCCESS_STATUS_CODE,
+    APP_SVC_URL,
+    SUCCESS_STATUS_CODE,
     GMAIL_CONNECTION_NAME,
     APIM_RESOURCE_PATH,
     PATH_SEPARATOR,
@@ -453,9 +454,9 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
     })
 });
 
-Cypress.Commands.add('cleanupApp', (name: string) => {
+Cypress.Commands.add('cleanupApp', (name: string, orgHandle: string) => {
     cy.log("Cleaning up app: " + name);
-    cy.request("DELETE", `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/${name}`).then((resp) => {
+    cy.request("DELETE", `${APP_SVC_URL}/orgs/${orgHandle}/apps/${name}`).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: " + name);
@@ -712,10 +713,10 @@ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
     }
 });
 
-Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
+Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string, orgHandle: string) => {
     cy.request({
         method: "POST",
-        url: `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/apps/${appName}/undeploy`,
+        url: `${APP_SVC_URL}/orgs/${orgHandle}/apps/${appName}/undeploy`,
         timeout: 60000,
         failOnStatusCode: false
     }).then((resp) => {
@@ -725,9 +726,9 @@ Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
     });
 });
 
-Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
+Cypress.Commands.add('cleanOnPremKey', (keyName: string, orgHandle: string) => {
     cy.log("Cleaning up on-prem key: " + keyName);
-    cy.request("POST", `${APP_SVC_URL}/orgs/${SELECTED_ORG_HANDLE}/keys/${keyName}/revoke`).then((resp) => {
+    cy.request("POST", `${APP_SVC_URL}/orgs/${orgHandle}/keys/${keyName}/revoke`).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the on-prem key: " + keyName);
@@ -931,9 +932,9 @@ Cypress.Commands.add('clearApps', (orgHandle: string) => {
             for (const app of e2eApps) {
                 const { name, status } = app;
                 if (status === "running") {
-                    cy.undeployAppViaRESTAPICall(name);
+                    cy.undeployAppViaRESTAPICall(name, orgHandle);
                 }
-                cy.cleanupApp(name);
+                cy.cleanupApp(name, orgHandle);
                 cy.wait(300);
             }
             cy.log("Successfully deleted all e2e apps");
@@ -957,7 +958,7 @@ Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
             for (const value of data) {
                 const keyName = value["displayName"] as string;
                 if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
-                    cy.cleanOnPremKey(keyName);
+                    cy.cleanOnPremKey(keyName, orgHandle);
                     cy.wait(300);
                 }
             }
