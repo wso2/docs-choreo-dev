@@ -98,7 +98,14 @@ spec:
             requests:
               cpu: 250m
               memory: 400Mi
-
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1000
+            runAsGroup: 1000
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+            
           volumeMounts:
             - mountPath: /config.yaml
               name: config
