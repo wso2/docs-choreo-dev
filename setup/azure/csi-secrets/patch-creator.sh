@@ -51,11 +51,14 @@ while read -r line || [ -n "$line" ]; do
     printf "%s\n""$temp" >> temp_1.txt
 done <"${inputFilePath}"
 
+# SC1091 check disabled because subjected file is temporary created
+# shellcheck disable=SC1091
 source temp_1.txt
 ( echo "cat <<EOF >secret-provider-class-patch.yaml";
   cat patch_template.yaml;
   echo "EOF";
 ) >temp_2.yaml
+# shellcheck disable=SC1091
 . temp_2.yaml
 
 rm -f patch_template.yaml temp_1.txt temp_2.yaml
