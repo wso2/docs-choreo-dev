@@ -126,23 +126,23 @@ spec:
               path: /healthz
               port: http-port
       volumeMounts:
-      - mountPath: /config/app.config.json
-        name: config
-        subPath: app.config.json
-      - name: secret-dp-cloud-manager
-        mountPath: /mnt/csi/secret-dp-cloud-manager
-        readonly: true
+        - mountPath: /config/app.config.json
+          name: config
+          subPath: app.config.json
+        - name: secret-dp-cloud-manager
+          mountPath: /mnt/csi/secret-dp-cloud-manager
+          readonly: true
       volumes:
-      - name: config
-        configMap: 
-          name: cm-dp-cloud-manager
-      - name: secret-dp-cloud-manager
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-dp-cloud-manager
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: config
+          configMap: 
+            name: cm-dp-cloud-manager
+        - name: secret-dp-cloud-manager
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-cloud-manager
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
