@@ -16,11 +16,6 @@ case $key in
     shift
     shift
     ;;
-    -o|--output)
-    outputFilePath="$2"
-    shift
-    shift
-    ;;
     -t|--type)
     type="$2"
     shift
@@ -33,16 +28,15 @@ case $key in
 esac
 done
 
-if [ ! "$vault" ] || [ ! "$inputFilePath" ] || [ ! "$outputFilePath" ] || [ ! "$type" ]
+if [ ! "$vault" ] || [ ! "$inputFilePath" ] || [ ! "$type" ]
 then
     echo "Mandatory arguments are missing"
     exit 1
 fi
 
+rm -f object_versions.txt
 echo "--- Creating secrets/certificates..."
 echo "--- Secrets/certificates will be added to the ${vault} key vault"
-echo "" >> "${outputFilePath}"
-echo "--- Object versions of the secrets/certificates ---" >> "${outputFilePath}"
 
 counter=0
 while read -r line || [ -n "$line" ]; do
@@ -69,12 +63,11 @@ while read -r line || [ -n "$line" ]; do
     output="${output%\"}"
     output="${output#\"}"
     id=${output##*/}
-    echo "${secretName}=${id}" >> "${outputFilePath}"
+    echo "${secretName}=${id}" >> object_versions.txt
     echo "--- ${secretName} is created"
     counter=$((counter+1))
 done <"${inputFilePath}"
 
 echo "--- Secrets creation/certificates is completed"
 echo "--- Total of ${counter} secrets/certificates added"
-echo "--- Object versions can be found in ${outputFilePath} file"
-echo "-------------------------------------" >> "${outputFilePath}"
+echo "--- Object versions can be found in object_versions.txt file"
