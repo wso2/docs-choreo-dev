@@ -69,7 +69,7 @@ Cypress.Commands.add('createNewApp', (type: string, name: string) => {
 
     cy.log("Creating a new application with name : " + name);
     cy.contains('button', 'Create').click();
-    cy.get('input').type(name);
+    cy.get('[data-testid="application-name"] input').type(name);
     cy.contains('button', 'Create').click();
 
     cy.waitTillWorkSpace();
