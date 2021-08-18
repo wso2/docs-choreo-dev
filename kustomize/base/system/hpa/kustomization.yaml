@@ -22,4 +22,3 @@ resources:
   - datacollector.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
-  - dp-mizzen.yaml

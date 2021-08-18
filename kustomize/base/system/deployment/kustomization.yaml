@@ -24,6 +24,7 @@ resources:
   - datacollector.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
+  - dp-mizzen.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
