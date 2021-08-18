@@ -17,7 +17,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
     checkov.io/skip3: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
   labels:
@@ -81,6 +80,7 @@ spec:
               cpu: 3000m
           securityContext:
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             runAsUser: 10500
             runAsGroup: 10500
             capabilities:
@@ -195,6 +195,8 @@ spec:
             - name: PROFILE_NAME
               value: traffic-manager
           volumeMounts:
+            - name: apim-vol
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
               subPath: eventhub-2-deployment.toml
@@ -238,6 +240,8 @@ spec:
               readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
+        - name: apim-vol
+          emptyDir: {}
         - name: wso2am-conf
           configMap:
             name: choreo-apim-eventhub-2-conf
