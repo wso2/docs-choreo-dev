@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_43=Temporarily suppressing till fixing
+  labels:
+    choreo.component: dp-cloud-manager
+    choreo.dataplane: true
+  name: dp-cloud-manager
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      choreo.component: dp-cloud-manager
+  template:
+    metadata:
+      labels:
+        choreo.component: dp-cloud-manager
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: dp-cloud-manager
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-cloud-manager:latest
+          resources:
+            limits:
+              cpu: 550m
+              memory: 550Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: DB_HOST
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: DB_PORT
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: DB_PASSWORD
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: DB_NAME
+          - name: DB_TYPE
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: DB_TYPE
+          - name: CLOUD_MANAGER_THIRD_PARTY_KEY
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: CLOUD_MANAGER_THIRD_PARTY_KEY
+          - name: CLOUD_MANAGER_SERVER_KEY
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: CLOUD_MANAGER_SERVER_KEY
+          - name: CLOUD_MANAGER_GCP_SECRET
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: CLOUD_MANAGER_GCP_SECRET
+          - name: CLOUD_MANAGER_GCP_TOKEN
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: CLOUD_MANAGER_GCP_TOKEN
+          - name: CLOUD_MANAGER_GCP_POLICIES
+            valueFrom:
+              secretKeyRef: secret-dp-cloud-manager
+              key: CLOUD_MANAGER_GCP_POLICIES           
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1000
+            runAsGroup: 1000
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 3200
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+      volumeMounts:
+      - mountPath: /config/app.config.json
+        name: config
+        subPath: app.config.json
+      - name: secret-dp-cloud-manager
+        mountPath: /mnt/csi/secret-dp-cloud-manager
+        readonly: true
+      volumes:
+      - name: config
+        configMap: 
+          name: cm-dp-cloud-manager
+      - name: secret-dp-cloud-manager
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-dp-cloud-manager
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
