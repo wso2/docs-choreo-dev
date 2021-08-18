@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 positional=()
 while [[ $# -gt 0 ]]
 do
