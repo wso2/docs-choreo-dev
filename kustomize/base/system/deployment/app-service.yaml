@@ -51,6 +51,11 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - name: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
         - name: IDP_BACKEND_API_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
