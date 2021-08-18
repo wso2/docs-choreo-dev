@@ -971,9 +971,7 @@ Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
 
 Cypress.Commands.add('clearAPIs', (orgId: string) => {
     cy.log('Deleting APIs...');
-    let token;
-    cy.getCookie('token').should('exist').then((c) => {
-        token = c;
+    cy.getCookie('token').should('exist').then((token) => {
         cy.request({
             method: "GET",
             url: APP_SVC_URL + APIM_RESOURCE_PATH,
@@ -982,8 +980,7 @@ Cypress.Commands.add('clearAPIs', (orgId: string) => {
                 'Authorization': 'Bearer ' + token.value
             },
             qs: {
-                'organizationId': orgId,
-                'limit': 200
+                'organizationId': orgId
             },
             timeout: 60000
         }).then((response) => {
@@ -992,18 +989,20 @@ Cypress.Commands.add('clearAPIs', (orgId: string) => {
             if (e2eApis.length) {
                 cy.log(`e2e test APIs found : ${e2eApis.length}`);
                 for (const api of e2eApis) {
-                    cy.request({
-                        method: "DELETE",
-                        url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + api.id,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token.value
-                        },
-                        qs: {
-                            'organizationId': orgId,
-                        },
-                    });
-                    cy.wait(300);
+                    if (api.name.startsWith(apiNamePrefix)) {
+                        cy.request({
+                            method: "DELETE",
+                            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + api.id,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + token.value
+                            },
+                            qs: {
+                                'organizationId': orgId,
+                            },
+                        });
+                        cy.wait(300);
+                    }
                 }
                 cy.log("Successfully deleted all e2e test APIs");
             } else {
