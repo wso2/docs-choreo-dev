@@ -20,6 +20,7 @@ describe("Integrations test run and deployment from scratch", () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     after(() => {

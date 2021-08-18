@@ -12,6 +12,7 @@
  */
 
 import { APIS_TEXT, SERVICES_TEXT } from '../../../support/common/constants';
+import { appNamePrefix } from '../../../support/common/utils';
 
 describe('API creation from choreo service', () => {
     let serviceName: string;
@@ -19,6 +20,7 @@ describe('API creation from choreo service', () => {
 
     before(() => {
         cy.consoleUserLogin();
+        cy.clearAllTestData();
     });
 
     it('Creating and trying out an API from choreo service', () => {
@@ -29,7 +31,9 @@ describe('API creation from choreo service', () => {
         cy.navigateFromHomePage(SERVICES_TEXT);
 
         // Intercepting the service creation call to capture the randomized service name
-        cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`).as('createService');
+        cy.intercept('POST', `${appSvcUrl}/orgs/${orgName}/apps/template`,(req) => {
+            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
+        }).as('createService');
 
         cy.get('[data-testId="try-out-samples-btn"]', { timeout: 60000 }).should('exist').click();
         cy.get('[data-testid="worldbank-data-to-covid19-statistics"]').should('exist').children().find('button').click({ force: true });
@@ -47,7 +51,8 @@ describe('API creation from choreo service', () => {
             cy.get('[data-testid="editor-run-btn"]').should('exist');
             cy.deployToChoreo("service", serviceName);
             cy.log('Service deployed successfully!');
-            cy.wait(60000);
+            // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
+            cy.wait(2.5 * 60 * 1000);
 
             cy.goBacktoAppsList();
             cy.navigateFromHomePage(APIS_TEXT);
@@ -74,9 +79,6 @@ describe('API creation from choreo service', () => {
     });
 
     after(() => {
-        cy.undeployAppViaRESTAPICall(serviceName);
-        cy.cleanupApp(serviceName);
-        cy.deleteApiByApplicationId(applicationId);
         cy.userLogout();
     });
 });
