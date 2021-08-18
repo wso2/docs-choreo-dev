@@ -13,6 +13,7 @@
 
 /// <reference types="cypress" />
 
+import { MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../support/common/constants";
 import { getApiName } from "../../support/devportal/utils";
 
 describe('API overview comment scenario', () => {
@@ -29,12 +30,11 @@ describe('API overview comment scenario', () => {
     });
 
     it('Adding and deleting comment for the API', () => {
-        cy.get('button').contains('Add comment').click({ force: true });
+        cy.getByTestId("btn-add-comment-open-close").click();
         cy.log('Opened the comment box');
-        cy.get('[name="newComment"]').type('Test comment from Cypress Test Runner');
-        cy.get('[type="submit"]').contains('Add Comment').click({ force: true });
-        cy.wait(2000);
-        cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (1)");
+        cy.get('[name="newComment"]').type('Test comment from Cypress Test Runner').wait(STANDARD_TIME_OUT);
+        cy.getByTestId("btn-add-comment").click();
+        cy.get('[data-testid="txt-comments-count"]').should("have.text", "Comments (1)",  { timeout: MEDIUM_TIME_OUT});
         cy.get('[data-testid=txt-no-comments]').should('not.exist');
         cy.log('Comment added successfully');
 
