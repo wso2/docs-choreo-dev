@@ -45,7 +45,7 @@ It supports the same arithmetic operations as `int` and `float`. When entering l
 
 This type does not support `infinity`, `NaN`, or negative zero.
 
-The `decimal` type is a separate basic type and therefore counts as `anydata`.
+The `decimal` type is a separate basic type and is a subtype of `anydata`.
 
 ###### Examples:
 
