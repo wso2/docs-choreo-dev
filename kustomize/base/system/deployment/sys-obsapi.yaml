@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
     checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
     checkov.io/skip8: CKV_K8S_29=Temporarily suppressing till fixing
@@ -87,8 +86,8 @@ spec:
                 name: env-k8sservice-replica
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
-            runAsUser: 100
-            runAsGroup: 1000
+            runAsUser: 10500
+            runAsGroup: 10500
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
