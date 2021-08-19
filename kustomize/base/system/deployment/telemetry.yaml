@@ -5,8 +5,6 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
   labels:
     choreo.component: telemetry
   name: telemetry
@@ -79,6 +77,9 @@ spec:
           runAsGroup: 1000
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         name: telemetry
         volumeMounts:
         - name: secret-telemetry

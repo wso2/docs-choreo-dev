@@ -4,8 +4,6 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
     checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
   name: ast-archiver
   labels:
@@ -36,6 +34,9 @@ spec:
                 runAsGroup: 500
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                  - all
               env:
                 - name: AZURE_DL_TENANT_ID
                   valueFrom:
