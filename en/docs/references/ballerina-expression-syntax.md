@@ -92,7 +92,7 @@ To initialize a variable of type `var` in Choreo, you can use one of the followi
 
 ### error
 
-The `error` type supports error values that include a string message. The expressions to initialize this variable type needs to be entered in the `error("<ERROR_STRING>")` format.
+The `error` type represents error values. Error values contain a message of the `string` type, a `cause`(optional),  and additional details about the error. The expressions to initialize a variable of the `error` type need to be entered in the `error("<MESSAGE>")` format.
 
 ###### Examples:
 
