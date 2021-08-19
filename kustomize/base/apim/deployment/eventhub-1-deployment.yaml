@@ -20,6 +20,7 @@ metadata:
     checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
     checkov.io/skip3: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip4: CKV_K8S_38=Service account token is required when using Linkerd
   labels:
     choreo.component: apim-eventhub
   name: choreo-apim-eventhub-1-deployment
@@ -47,7 +48,7 @@ spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
