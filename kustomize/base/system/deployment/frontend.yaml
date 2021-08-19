@@ -33,170 +33,37 @@ spec:
           type: RuntimeDefault
       containers:
       - env:
-        - name: LOGS_API
-          valueFrom:
-            configMapKeyRef:
-              key: LOGS_API
-              name: cm-frontend
-        - name: OBSERVE_API
-          valueFrom:
-            configMapKeyRef:
-              key: OBSERVE_API
-              name: cm-frontend
-        - name: LOG_COLLECTION_API
-          valueFrom:
-            configMapKeyRef:
-              key: LOG_COLLECTION_API
-              name: cm-frontend
-        - name: SYS_OBSAPI
-          valueFrom:
-            configMapKeyRef:
-              key: SYS_OBSAPI
-              name: cm-frontend
-        - name: ANALYZE_API
-          valueFrom:
-            configMapKeyRef:
-              key: ANALYZE_API
-              name: cm-frontend
-        - name: APP_API
-          valueFrom:
-            configMapKeyRef:
-              key: APP_API
-              name: cm-frontend
-        - name: ORG_API
-          valueFrom:
-            configMapKeyRef:
-              key: ORG_API
-              name: cm-frontend
-        - name: LINKER_API_WS
-          valueFrom:
-            configMapKeyRef:
-              key: LINKER_API_WS
-              name: cm-frontend
-        - name: LINKER_API
-          valueFrom:
-            configMapKeyRef:
-              key: LINKER_API
-              name: cm-frontend
-        - name: VWO_ACCOUNT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: VWO_ACCOUNT_ID
-              name: cm-frontend
-        - name: TESTBASE_API
-          valueFrom:
-            configMapKeyRef:
-              key: TESTBASE_API
-              name: cm-frontend
-        - name: AI_API
-          valueFrom:
-            configMapKeyRef:
-              key: AI_API
-              name: cm-frontend
         - name: IDP_URL
           valueFrom:
             configMapKeyRef:
               key: IDP_URL
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_REDIRECT_URL
           valueFrom:
             configMapKeyRef:
               key: IDP_REDIRECT_URL
-              name: cm-idp-replica
-        - name: APP_INSIGHTS_KEY
-          valueFrom:
-            configMapKeyRef:
-              key: APP_INSIGHTS_KEY
-              name: cm-frontend
-        - name: BETA_PROGRAM_WIDGET_URL
-          valueFrom:
-            configMapKeyRef:
-              key: BETA_PROGRAM_WIDGET_URL
-              name: cm-frontend
-        - name: BETA_PROGRAM_PROJECT_CODE
-          valueFrom:
-            configMapKeyRef:
-              key: BETA_PROGRAM_PROJECT_CODE
-              name: cm-frontend
-        - name: HELP_CENTER_URL
-          valueFrom:
-            configMapKeyRef:
-              key: HELP_CENTER_URL
-              name: cm-frontend
-        - name: APIM_API
-          valueFrom:
-            configMapKeyRef:
-              key: APIM_API
-              name: cm-frontend
-        - name: DEVPORTAL_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              key: DEVPORTAL_HOSTNAME
-              name: cm-frontend
+              name: env-idp-replica
         - name: DISABLE_ON_PREMISE_APPS
           valueFrom:
             configMapKeyRef:
               key: DISABLE_ON_PREMISE_APPS
-              name: cm-frontend
-        - name: APIM_GATEWAY_ENDPOINT_SUFFIX
-          valueFrom:
-            configMapKeyRef:
-              key: APIM_GATEWAY_ENDPOINT_SUFFIX
               name: cm-frontend
         - name: APIM_SAMPLE_URL
           valueFrom:
             configMapKeyRef:
               key: APIM_SAMPLE_URL
               name: cm-frontend
-        - name: ANALYTICS_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              key: ANALYTICS_HOSTNAME
-              name: cm-frontend
-        - name: CHOREO_DOCS
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DOCS
-              name: cm-frontend
-        - name: ENV
-          valueFrom:
-            configMapKeyRef:
-              key: ENV
-              name: cm-frontend
-              optional: true
         - name: SENTRY_DSN
           valueFrom:
             configMapKeyRef:
               key: SENTRY_DSN
               name: cm-frontend
               optional: true
-        - name: GOOGLE_CAPTCHA_SITE_KEY
-          valueFrom:
-            configMapKeyRef:
-              key: GOOGLE_CAPTCHA_SITE_KEY
-              name: cm-frontend
-              optional: true
-        - name: DISABLE_GOOGLE_CAPTCHA
-          valueFrom:
-            configMapKeyRef:
-              key: DISABLE_GOOGLE_CAPTCHA
-              name: cm-frontend
-              optional: true
-        - name: ANALYTICS_PORTAL_QUERY_API
-          valueFrom:
-            configMapKeyRef:
-              key: ANALYTICS_PORTAL_QUERY_API
-              name: cm-frontend
-        - name: ANALYTICS_PORTAL_ALERT_API
-          valueFrom:
-            configMapKeyRef:
-              key: ANALYTICS_PORTAL_ALERT_API
-              name: cm-frontend
         - name: ANALYTICS_PORTAL_DOCUMENTATION
           valueFrom:
             configMapKeyRef:
@@ -205,6 +72,8 @@ spec:
         envFrom:
         - configMapRef:
             name: cm-feature-flags
+        - configMapRef:
+            name: env-frontend
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
           runAsUser: 101
