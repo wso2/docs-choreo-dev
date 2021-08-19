@@ -9,7 +9,6 @@ metadata:
     checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
     checkov.io/skip5: CKV_K8S_28=Temporarily suppressing till fixing
     checkov.io/skip6: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_20=Temporarily suppressing till fixing
     checkov.io/skip8: CKV_K8S_31=Temporarily suppressing till fixing
     checkov.io/skip9: CKV_K8S_29=Temporarily suppressing till fixing
   labels:
@@ -35,6 +34,7 @@ spec:
               securityContext:
                 runAsUser: 1000
                 runAsGroup: 3000
+                allowPrivilegeEscalation: false
               env:
                 - name: APP_DEPLOYER_ADDRESS
                   valueFrom:
