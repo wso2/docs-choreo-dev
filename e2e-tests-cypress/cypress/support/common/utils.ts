@@ -61,6 +61,11 @@ export const isOldValue = (name: string) => {
     return true;
 }
 
+export const getSelectedOrgHandle = (user: User): string => {
+    const selectedOrgHandleEnv = Cypress.env("selectedOrgHandle");
+    return selectedOrgHandleEnv ? selectedOrgHandleEnv : user.orgs[0].handle;
+}
+
 Cypress.Commands.add('getByTestId', (selector) => {
     return cy.get(`[data-testid=${selector}]`);
 });
