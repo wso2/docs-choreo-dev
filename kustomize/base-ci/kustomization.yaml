@@ -78,7 +78,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
   newTag: master-52b66b62c62d9ac2fa2b87fd365f5b31281a246a
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-secret-manager
-  newTag: master-e1a8434c102633221d272c6e0147f8c084625ecb
+  newTag: master-ea75401e2a642a3253c823dd3205faee2e30de93
 - name: choreocontrolplane.azurecr.io/choreoipaas/email-service
   newTag: master-383a669ebacdce65bd5d6d3da49b781bb31de133
 - name: choreocontrolplane.azurecr.io/choreoipaas/lang-server
