@@ -2,7 +2,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   annotations:
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
   name: ast-archiver
   labels:
     choreo.component: ast-archiver
