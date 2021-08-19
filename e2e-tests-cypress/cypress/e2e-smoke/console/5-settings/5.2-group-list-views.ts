@@ -17,14 +17,17 @@ import { SETTINGS_TEXT } from "../../../support/common/constants";
 
 describe("Group List View", () => {
     let savedCookies;
-    const memberEmail = Cypress.env("email");
-    const memberName = Cypress.env("memberName");
+    let memberEmail: string;
+    let memberName: string;
     const groupName = "testGroup";
     const groupDescription = "This is a test group.";
-    const groupTag = "testGroupTag";
+    const groupTag = "testGroupTag"
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            memberName = user?.name;
+            memberEmail = user?.email;
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });

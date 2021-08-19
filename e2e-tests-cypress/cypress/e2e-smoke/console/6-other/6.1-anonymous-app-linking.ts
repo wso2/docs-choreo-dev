@@ -13,12 +13,15 @@
 
 /// <reference types="cypress" />
 
-import {generateAppName} from "../../../support/common/utils";
+import { generateAppName, getSelectedOrgHandle } from "../../../support/common/utils";
 
 describe('anonymous-app-linking', () => {
+    let selectedOrgHandle: string;
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            selectedOrgHandle = getSelectedOrgHandle(user);
+        });
     });
 
     after(() => {
@@ -48,6 +51,6 @@ describe('anonymous-app-linking', () => {
             });
         });
         cy.visit(Cypress.env("baseUrl"));
-        cy.cleanupApp(appName);
+        cy.cleanupApp(appName, selectedOrgHandle);
     });
 });
