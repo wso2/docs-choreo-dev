@@ -3,7 +3,6 @@ kind: CronJob
 metadata:
   annotations:
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
   name: ast-archiver
   labels:
     choreo.component: ast-archiver
@@ -15,6 +14,7 @@ spec:
       template:
         metadata:
           annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
             choreo.component: ast-archiver

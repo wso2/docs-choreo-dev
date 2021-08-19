@@ -5,7 +5,6 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
     checkov.io/skip3: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_31=Temporarily suppressing till fixing
     checkov.io/skip9: CKV_K8S_29=Temporarily suppressing till fixing
   labels:
     choreo.component: observability-data-generator
@@ -19,11 +18,15 @@ spec:
       template:
         metadata:
           annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
             choreo.component: observability-data-generator
         spec:
           automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
           restartPolicy: Never
           containers:
             - name: observability-data-generator
