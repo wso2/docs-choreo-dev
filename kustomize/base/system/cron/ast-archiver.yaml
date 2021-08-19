@@ -4,7 +4,6 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
     checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
     checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
     checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
@@ -23,6 +22,7 @@ spec:
           labels:
             choreo.component: ast-archiver
         spec:
+          automountServiceAccountToken: false
           securityContext:
             seccompProfile:
               type: RuntimeDefault
