@@ -38,62 +38,15 @@ spec:
             requests:
               cpu: 500m
               memory: 500Mi
+          envFrom:
+            - configMapRef:
+                name: env-dp-cloud-manager
           env:
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef: 
-                  key: DB_HOST
-                  name: secret-dp-cloud-manager
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef: 
-                  key: DB_PORT
-                  name: secret-dp-cloud-manager
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef: 
-                  key: DB_USER
-                  name: secret-dp-cloud-manager
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef: 
                   key: DB_PASSWORD
-                  name: secret-dp-cloud-manager
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef: 
-                  key: DB_NAME
-                  name: secret-dp-cloud-manager
-            - name: DB_TYPE
-              valueFrom:
-                secretKeyRef: 
-                  key: DB_TYPE
-                  name: secret-dp-cloud-manager
-            - name: CLOUD_MANAGER_THIRD_PARTY_KEY
-              valueFrom:
-                secretKeyRef: 
-                  key: CLOUD_MANAGER_THIRD_PARTY_KEY
-                  name: secret-dp-cloud-manager
-            - name: CLOUD_MANAGER_SERVER_KEY
-              valueFrom:
-                secretKeyRef: 
-                  key: CLOUD_MANAGER_SERVER_KEY
-                  name: secret-dp-cloud-manager
-            - name: CLOUD_MANAGER_GCP_SECRET
-              valueFrom:
-                secretKeyRef: 
-                  key: CLOUD_MANAGER_GCP_SECRET
-                  name: secret-dp-cloud-manager
-            - name: CLOUD_MANAGER_GCP_TOKEN
-              valueFrom:
-                secretKeyRef: 
-                  key: CLOUD_MANAGER_GCP_TOKEN
-                  name: secret-dp-cloud-manager
-            - name: CLOUD_MANAGER_GCP_POLICIES
-              valueFrom:
-                secretKeyRef: 
-                  key: CLOUD_MANAGER_GCP_POLICIES 
-                  name: secret-dp-cloud-manager          
+                  name: secret-dp-cloud-manager       
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
@@ -104,7 +57,7 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+                - "NET_RAW"
           ports:
             - containerPort: 3200
               name: http-port
