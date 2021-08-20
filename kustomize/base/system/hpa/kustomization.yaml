@@ -23,3 +23,4 @@ resources:
   - dp-utility-api.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
+  - dp-secret-manager.yaml

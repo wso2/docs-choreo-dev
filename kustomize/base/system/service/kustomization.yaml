@@ -21,5 +21,6 @@ resources:
   - analytics-subscription.yaml
   - datacollector.yaml
   - dp-utility-api.yaml
+  - dp-secret-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
