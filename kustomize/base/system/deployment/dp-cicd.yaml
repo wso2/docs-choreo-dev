@@ -3,16 +3,14 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_43=Risk accepted
+    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
     choreo.component: dp-cicd
-    choreo.dataplane: true
+    choreo.dataplane: "true"
   name: dp-cicd
 spec:
+  automountServiceAccountToken: false
   replicas: 0
   selector:
     matchLabels:
@@ -27,8 +25,6 @@ spec:
     spec:
       securityContext:
         allowPrivilegeEscalation: false
-        runAsUser: 1000
-        runAsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -42,52 +38,26 @@ spec:
             requests:
               cpu: 500m
               memory: 500Mi
+          envFrom:
+            - configMapRef:
+                name: env-dp-cicd
           env:  
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  key: DB_HOST
-                  name: secret-dp-cicd
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  key: DB_PORT
-                  name: secret-dp-cicd
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  key: DB_USER
-                  name: secret-dp-cicd
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: DB_PASSWORD
                   name: secret-dp-cicd
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  key: DB_NAME
-                  name: secret-dp-cicd
-            - name: DB_TYPE
-              valueFrom:
-                secretKeyRef:
-                  key: DB_TYPE
-                  name: secret-dp-cicd
-            - name: CICD_CLUSTER_ID
-              valueFrom:
-                secretKeyRef:
-                  key: CICD_CLUSTER_ID
-                  name: secret-dp-cicd
-            - name: CICD_NAMESPACE
-              valueFrom:
-                secretKeyRef:
-                  key: CICD_NAMESPACE
-                  name: secret-dp-cicd
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+                - "NET_RAW"
           ports:
             - containerPort: 8080
               name: http-port
