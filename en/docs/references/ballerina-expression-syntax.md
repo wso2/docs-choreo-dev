@@ -106,7 +106,7 @@ error("The item requested is not found.")
 
 ### any
 
-The `any` type can represent a variable of any type except the error type. When you do not have prior knowledge of the type of a variable, you can assign it to a variable of type any. Values of these variables can come from dynamic content such as the request and response message references and reference variable types.
+The `any` type represents any value that is not an error. Values assigned to a variable of `any` type can come from dynamic content such as the request and response message references and reference variable types.
 
 ###### Examples:
 
