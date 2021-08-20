@@ -25,6 +25,7 @@ resources:
   - dp-secret-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
+  - dp-auth-module.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
