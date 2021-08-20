@@ -57,6 +57,8 @@ To initialize a variable of type `decimal` in Choreo, you can use one of the fol
   -8593.9926666666666666663333333333
   
   +950.930999999992727272777777777774
+
+  1.3636336363639174528462957163542834d
   ```
 
 ### boolean
@@ -117,21 +119,22 @@ To initialize a variable of type `any` in Choreo, you can enter expressions as f
         123
   
         349.76
-    ```
-    
+    ```   
 
 ### anydata
 
 The `anydata` type consists of pure values of which the basic type is not `error`.
+
+It is a union of   () | boolean | int | float | decimal | string | xml | anydata[] | map<anydata> | table<map<anydata>>
 
 ###### Examples:
 
 To initialize a variable of type `anydata` in Choreo, you can enter expressions as follows:
 
     ```ballerina
-        x2 = x1.clone();
+        x1.clone();
         
-        eq = (x1 == x2);
+        (x1 == x2);
     ```
 
 ## Operators
@@ -566,28 +569,34 @@ check theRevenantJson.cloneWithType(Movie);
 
 ## XML
 
-XML is a textual format for representing a string or an XML object. The following topics describe these values.
+Ballerina allows you to consider an XML value as a sequence representing parsed XML, such as the content of an XML element. Variable statements of the `xml` type can pass the following as expressions:
 
-### String values in XML
+- Elements
 
-Ballerina allows you to cast a string value in XML via variables of type `xml`.
+    e.g.,
+    
+    ```ballerina
+        xml `<product><name>block</name></product>`
+    ```
+- processing instruction
 
-###### Examples:
+    e.g.,
+    
+    ```ballerina
+        xml `?target data?`
+    ```
+- comment
 
-To initialize a variable of type `xml`, you can enter an expression as follows:
+    e.g.,
+    
+    ```ballerina
+        xml `!--This is a comment--`
+    ```
 
-```ballerina
-    xml `"Dear customer,"`
-```
+- text
 
-### XML objects
-
-You can define an XML object to hold XML values.
-
-###### Examples:
-
-To declare a JSON object, you can enter an expression as follows:
-
-```ballerina
-    xml `<product><name>block</name></product>`
-```
+    e.g.,
+    
+    ```ballerina
+        xml `"Dear customer,"`
+    ```
