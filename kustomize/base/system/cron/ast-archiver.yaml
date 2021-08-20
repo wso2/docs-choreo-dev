@@ -2,13 +2,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   annotations:
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_20=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
   name: ast-archiver
   labels:
     choreo.component: ast-archiver
@@ -20,12 +14,13 @@ spec:
       template:
         metadata:
           annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
             choreo.component: ast-archiver
         spec:
+          automountServiceAccountToken: false
           securityContext:
-            allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
           restartPolicy: Never
@@ -34,9 +29,13 @@ spec:
             - name: ast-archiver
               image: choreocontrolplane.azurecr.io/choreoipaas/ast-archiver:latest
               securityContext:
-                runAsUser: 500
-                runAsGroup: 500
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                  - all
               env:
                 - name: AZURE_DL_TENANT_ID
                   valueFrom:

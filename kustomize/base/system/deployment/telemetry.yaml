@@ -3,12 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: telemetry
   name: telemetry
@@ -27,7 +23,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -77,9 +72,13 @@ spec:
               name: env-telemetry
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry:latest
         securityContext:
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 10500
+          runAsGroup: 10500
+          allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         name: telemetry
         volumeMounts:
         - name: secret-telemetry
