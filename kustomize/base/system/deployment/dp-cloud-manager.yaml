@@ -3,11 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_43=Risk accepted
+    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
     choreo.component: dp-cloud-manager
     choreo.dataplane: true
@@ -25,6 +22,7 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      automountServiceAccountToken: false
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
@@ -98,11 +96,15 @@ spec:
                   name: secret-dp-cloud-manager          
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 1000
-            runAsGroup: 1000
+            runAsUser: 10001
+            runAsGroup: 10001
             seccompProfile:
               type: RuntimeDefault
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: [ "NET_RAW" ]
           ports:
             - containerPort: 3200
               name: http-port
@@ -125,17 +127,11 @@ spec:
             httpGet:
               path: /healthz
               port: http-port
-      volumeMounts:
-        - mountPath: /config/app.config.json
-          name: config
-          subPath: app.config.json
-        - name: secret-dp-cloud-manager
-          mountPath: /mnt/csi/secret-dp-cloud-manager
-          readonly: true
+          volumeMounts:
+            - name: secret-dp-cloud-manager
+              mountPath: /mnt/csi/secret-dp-cloud-manager
+              readonly: true
       volumes:
-        - name: config
-          configMap: 
-            name: cm-dp-cloud-manager
         - name: secret-dp-cloud-manager
           csi:
             driver: secrets-store.csi.k8s.io
