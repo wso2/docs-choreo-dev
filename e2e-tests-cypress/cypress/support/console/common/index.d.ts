@@ -2,9 +2,30 @@
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
 
+interface Organization {
+    id: number;
+    name: string;
+    handle: string;
+    uuid: string;
+}
+
+interface User {
+    id: string;
+    name: string;
+    uuid: string;
+    email: string;
+    token: string;
+    picURL: string;
+    orgs: Organization[];
+    fidp?: string;
+    isAnonymous?: boolean;
+    createdAt?: Date;
+    expiredAt?: Date;
+}
+
 declare namespace Cypress {
     interface Chainable {
-        consoleUserLogin(): Chainable<Element>
+        consoleUserLogin(): Chainable<User>
         userLoginWithGmail(): Chainable<Element>
         userLoginWithGithub(): Chainable<Element>
         userLogout(): Chainable<Element>
@@ -33,7 +54,7 @@ declare namespace Cypress {
         resetAppSearch(): Chainable<Element>
         undeployApp(type: string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type: string, name: string, strict: boolean): Chainable<Element>
-        cleanupApp(name: string): Chainable<Element>
+        cleanupApp(name: string, orgHandle: string): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>
@@ -41,23 +62,23 @@ declare namespace Cypress {
         testRunApp(): Chainable<Element>
         selectScheduleTrigger(): Chainable<Element>
         navigateFromHomePage(pageName: string): Chainable<Element>
-        undeployAppViaRESTAPICall(appName: string): Chainable<Element>
-        cleanOnPremKey(keyName: string): Chainable<Element>
+        undeployAppViaRESTAPICall(appName: string, orgHandle: string): Chainable<Element>
+        cleanOnPremKey(keyName: string, orgHandle: string): Chainable<Element>
         deleteAppWithoutUndeploy(name: string, strict: boolean): Chainable<Element>
         testPerformanceAnalyzerLocalStorage(localStorageKey: string): Chainable<Element>
         hideWelcomeMessage(): Chainable<Element>
         getByTestId(id: string): Chainable<Element>
-        deleteApiByApplicationId(id: string): Chainable<Element>
-        deleteApiByApiId(id: string): Chainable<Element>
+        deleteApiByApplicationId(id: string, orgId: string): Chainable<Element>
+        deleteApiByApiId(id: string, orgId: string): Chainable<Element>
         createVariableOtherTypeProperty(custom_type: string, name: string, expression: string, validExpression?: boolean): Chainable<Element>
         findPlusButton(plusBtnIndex: number, selector: string[]): Chainable<Element>
         addWeatherForecastAPI(plusBtnIndex: number, endpointName: string, responseVarName: string, lat: string, lon: string, exclude?: string, units?: string, lang?: string): Chainable<Element>
         sendChoreoSMS(recipientNumber: string, textMessage: string, responseVariableName?: string): Chainable<Element>
-        clearAllTestData(): Chainable<Element>
-        clearAPIs(): Chainable<Element>
-        clearApps(): Chainable<Element>
-        clearConfigurations(): Chainable<Element>
-        clearConnections(): Chainable<Element>
-        clearOnPremKeys(): Chainable<Element>
+        clearAllTestData(org: { uuid: string, handle: string }): Chainable<Element>
+        clearAPIs(orgId: string): Chainable<Element>
+        clearApps(orgHandle: string): Chainable<Element>
+        clearConfigurations(orgHandle: string): Chainable<Element>
+        clearConnections(orgHandle: string): Chainable<Element>
+        clearOnPremKeys(orgHandle: string): Chainable<Element>
     }
 }

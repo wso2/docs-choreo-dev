@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateApiName } from "../../../support/common/utils";
+import { generateApiName, getSelectedOrgHandle } from "../../../support/common/utils";
 import { APIM_RESOURCE_PATH, APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
@@ -19,8 +19,10 @@ describe('Choreo APIM publisher scenarios', () => {
     let apiId: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
     });
 
     it('Creating and publishing an API from open API specification', () => {

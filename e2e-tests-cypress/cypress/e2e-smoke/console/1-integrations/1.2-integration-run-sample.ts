@@ -17,14 +17,18 @@ import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
     FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
 } from "../../../support/common/constants";
-import { appNamePrefix } from "../../../support/common/utils";
+import { appNamePrefix, getSelectedOrgHandle } from "../../../support/common/utils";
 
 describe('Integration sample flow', () => {
-    let savedCookies;
+    let savedCookies: Cypress.Cookie[];
+    let selectedOrgHandle: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            selectedOrgHandle = getSelectedOrgHandle(user);
+            const org = user?.orgs.find((org) => org.handle === selectedOrgHandle);
+            cy.clearAllTestData(org);
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });
@@ -74,13 +78,13 @@ describe('Integration sample flow', () => {
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/test')[0];
             cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
+            cy.cleanupApp(appName, selectedOrgHandle);
         });
     })
 
     it('test-run sample integration', () => {
         cy.log("Prebuilt integrations page loaded successfully");
-        cy.intercept('POST', `**/${Cypress.env("selectedOrgHandle")}/apps`, (req) => {
+        cy.intercept('POST', `**/${selectedOrgHandle}/apps`, (req) => {
             req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
         });
         cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });
@@ -97,7 +101,7 @@ describe('Integration sample flow', () => {
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/deploy')[0];
             cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
+            cy.cleanupApp(appName, selectedOrgHandle);
         });
     })
 })

@@ -118,7 +118,7 @@ Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid=checkbox-allow-all-origins]').click();
     cy.wait(2000);
     cy.get('[data-testid=addBtn-origin]', { timeout: STANDARD_TIME_OUT }).click();
-    cy.get('[data-testid="type and press enter to add origins"]').type('localhost{enter}');
+    cy.get('[data-testid="type and press enter to add origins"]').type('http://127.0.0.1{enter}');
     cy.get('[data-testid=addBtn-header]').click();
     cy.get('[data-testid="type and press enter to add headers"]').type('tenantId{enter}');
     cy.get('[data-testid=addBtn-method]').click();

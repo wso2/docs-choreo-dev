@@ -1,5 +1,10 @@
 ### How to run Pipeline Variable Groups setup script
 
+##### Prerequisites
+
+1. You should have an access policy set to your AD account with permissions to create secrets. This can be done under "Settings/Access policies" tab in the particular Key Vault's page in Azure portal.
+2. You should have whitelisted your pubic ip to access the Key Vault. This can be done in "Settings/Networking" tab in the particular Key Vault's page in Azure portal.
+
 ##### Step 1
 
 There are several properties files related to this setup.

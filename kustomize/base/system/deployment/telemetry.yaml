@@ -37,21 +37,6 @@ spec:
             configMapKeyRef:
               key: B7A_LOG_LEVEL
               name: cm-loglevel-telemetry
-        - name: EVENTHUB_NAMESPACE
-          valueFrom:
-            configMapKeyRef:
-              key: EVENTHUB_NAMESPACE
-              name: cm-telemetry
-        - name: METRICS_EVENTHUB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: METRICS_EVENTHUB_NAME
-              name: cm-telemetry
-        - name: TRACES_EVENTHUB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: TRACES_EVENTHUB_NAME
-              name: cm-telemetry
         - name: NEGOTIATOR_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
@@ -87,6 +72,9 @@ spec:
             secretKeyRef:
               name: secret-telemetry
               key: EVENTHUB_CONNECTION_STRING
+        envFrom:
+          - configMapRef:
+              name: env-telemetry
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry:latest
         securityContext:
           runAsUser: 100
