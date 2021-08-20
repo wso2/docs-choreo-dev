@@ -7,7 +7,7 @@ metadata:
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
     choreo.component: dp-rudder
-    choreo.dataplane: true
+    choreo.dataplane: "true"
   name: dp-rudder
 spec:
   replicas: 0
@@ -38,22 +38,15 @@ spec:
             requests:
               cpu: 300m
               memory: 300Mi
+          envFrom:
+            - configMapRef:
+                name: env-dp-rudder
           env:
-          - name: DATABASE_MSSQL_HOST
+          - name: MSSQL_PASSWORD
             valueFrom:
               secretKeyRef: 
                 name: secret-dp-rudder
-                key: DATABASE_MSSQL_HOST
-          - name: DATABASE_MSSQL_USER
-            valueFrom:
-              secretKeyRef: 
-                name: secret-dp-rudder
-                key: DATABASE_MSSQL_USER
-          - name: DATABASE_MSSQL_PASSWORD
-            valueFrom:
-              secretKeyRef: 
-                name: secret-dp-rudder
-                key: DATABASE_MSSQL_PASSWORD
+                key: MSSQL_PASSWORD
           - name: MIZZEN_SERVICE_TOKEN
             valueFrom:
               secretKeyRef: 
@@ -74,7 +67,7 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+                - "NET_RAW"
           ports:
             - containerPort: 3000
               name: http-port
@@ -97,17 +90,11 @@ spec:
             httpGet:
               path: /healthz
               port: http-port
-      volumeMounts:
-      - mountPath: /config/config.json
-        name: config
-        subPath: config.json
-      - name: secret-dp-rudder
-        mountPath: /mnt/csi/secret-dp-rudder
-        readonly: true
+          volumeMounts:
+          - name: secret-dp-rudder
+            mountPath: /mnt/csi/secret-dp-rudder
+            readonly: true
       volumes:
-      - name: config
-        configMap: 
-          name: cm-dp-rudder
       - name: secret-dp-rudder
         csi:
           driver: secrets-store.csi.k8s.io
