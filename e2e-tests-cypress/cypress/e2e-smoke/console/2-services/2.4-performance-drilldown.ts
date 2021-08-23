@@ -10,18 +10,20 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName } from '../../../support/common/utils';
+import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
 describe('Performance drill down test', () => {
-    let savedCookies
-    let appName: string
+    let savedCookies: Cypress.Cookie[];
+    let appName: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })

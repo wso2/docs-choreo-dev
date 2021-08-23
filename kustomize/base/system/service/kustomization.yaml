@@ -20,6 +20,9 @@ resources:
   - test-assistant.yaml
   - analytics-subscription.yaml
   - datacollector.yaml
+  - dp-rudder.yaml
+  - dp-secret-manager.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
+  - dp-utility-api.yaml
   - dp-cicd.yaml

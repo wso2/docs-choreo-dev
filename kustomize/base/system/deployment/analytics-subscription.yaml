@@ -36,7 +36,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_HOST
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
@@ -51,22 +51,22 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: CHOREO_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: CHOREO_DB_DRIVER
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_DRIVER
-              name: cm-choreo-app-db
+              name: env-choreo-app-db
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:
               key: IDP_HOST
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_JWKS_ENDPOINT
           valueFrom:
             configMapKeyRef:
@@ -76,22 +76,20 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_ISSUER
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: ORG_API
           valueFrom:
             configMapKeyRef:
               key: ORG_API
-              name: cm-frontend
-        - name: CHOREO_ANALYTICS_ORG_UUID
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_ANALYTICS_ORG_UUID
-              name: cm-analytics-subsmgt                      
+              name: env-frontend
+        envFrom:
+          - configMapRef:
+              name: env-analytics-subsmgt
         image: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt:latest
         securityContext:
           runAsUser: 100
