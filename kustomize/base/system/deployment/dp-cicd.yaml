@@ -10,7 +10,6 @@ metadata:
     choreo.dataplane: "true"
   name: dp-cicd
 spec:
-  # automountServiceAccountToken: false
   replicas: 0
   selector:
     matchLabels:
@@ -23,8 +22,8 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      automountServiceAccountToken: false
       securityContext:
-        automountServiceAccountToken: false
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
