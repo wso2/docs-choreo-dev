@@ -24,4 +24,3 @@ resources:
   - subscriptions.yaml
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
-  - dp-cicd.yaml
