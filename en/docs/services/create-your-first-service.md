@@ -240,7 +240,7 @@ Now you have published the API of the `CovidStatus` service. To understand how a
 
 To generate credentials for the `CovidStatus` API and invoke it, follow this procedure:
 
-1. In the **Lifecycle Management** page, click **Go to Developer Portal**.
+1. On the **Lifecycle Management** page, click **Go to Developer Portal**.
 
 2. Once you are signed in to the API Developer Portal, click **Credentials** in the navigator.
 
