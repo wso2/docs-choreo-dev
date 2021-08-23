@@ -7,7 +7,7 @@ metadata:
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
     choreo.component: dp-auth-module
-    choreo.dataplane: true
+    choreo.dataplane: "true"
   name: dp-auth-module
 spec:
   replicas: 0

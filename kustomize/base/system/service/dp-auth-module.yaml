@@ -4,7 +4,7 @@ metadata:
   name: dp-auth-module
   labels:
     choreo.component: dp-auth-module
-    choreo.dataplane: true
+    choreo.dataplane: "true"
 spec:
   ports:
     - name: dp-auth-module-port-http
@@ -13,4 +13,4 @@ spec:
       targetPort: http-port
   selector:
     choreo.component: dp-auth-module
-    choreo.dataplane: true
+    choreo.dataplane: "true"
