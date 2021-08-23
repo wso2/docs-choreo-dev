@@ -4,7 +4,7 @@ metadata:
   name: dp-cicd
   labels:
     choreo.component: dp-cicd
-    choreo.dataplane: true
+    choreo.dataplane: "true"
 spec:
   ports:
     - name: dp-cicd-port-http
@@ -13,4 +13,4 @@ spec:
       targetPort: http-port
   selector:
     choreo.component: dp-cicd
-    choreo.dataplane: true
+    choreo.dataplane: "true"
