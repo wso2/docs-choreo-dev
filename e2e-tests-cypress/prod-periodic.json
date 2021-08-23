@@ -8,7 +8,7 @@
     "testFiles": [
         "console/4-observability/4.2-remote-apps.ts",
         "console/5-settings/5.1-generate-onprem-key.ts",
-        "console/5-settings/5.2-group-list-views.ts",
+        "console/5-settings/5.3-invite-members.ts",
         "console/6-other/6.1-anonymous-app-linking.ts",
         "console/6-other/6.2-login-logout.ts"
     ],
