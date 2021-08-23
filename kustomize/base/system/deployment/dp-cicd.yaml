@@ -24,6 +24,7 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
+        automountServiceAccountToken: false
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
