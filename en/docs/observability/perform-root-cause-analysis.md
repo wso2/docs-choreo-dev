@@ -45,8 +45,21 @@ The actions you can perform in a throughput graph are as follows:
      
 - **View data for a custom time range:**
   You can expand the graph by clicking and dragging the pointer over the period you want to drill down. The default graph displays data for a custom time range where the data points are at a lower granularity.
+  
+- **View details per request** 
 
- 
+    Once you view data for a custom time range, each request that was sent during the selected time range is displayed in a pane above the low-code diagram as shown below.
+    
+    ![Trace Requests](../assets/img/observability/view-details-per-request.png){.cInlineImage-full}
+
+    This pane displays the latency, the time at which the service received the request, and the status.
+    
+    When you click on a specific request, the low-code diagram displays the following:
+   
+    - If an error has occurred, the error code is displayed near the relevant API call. In this example, the `500` error code has occurred when the request was processed by an API call.
+    - The path (control flow) in which the service executed the request is highlighted in green. In this example, the highlighted path indicates that the selected request was processed on the `else` path of the first `if` statement, and on the `then` path of the second `if` statement.
+    - The execution time is displayed per `if`, `while`, and `foreach` body. In this example, the execution time taken for the `if` body is `603 μs`.
+    
 ### Analyze the latency graph
 
 The latency graph depicts the latency of requests over a selected time interval. You can analyze the spikes in the latency graph to identify the API invocations that result in error status.
@@ -57,15 +70,13 @@ The actions you can perform are as follows:
 
     ![View latency details](../assets/img/observability/latency-details.png)
     
-- **View details at a higher granularity:**
+- **View details for a custom time range:**
    
     If you want to drill down to view details at a higher granularity, drag the pointer over a time range to view the graph for the selected period.
     
-- **Check the status code of a request that has caused a latency:**
+- **View details per request:**
 
-    To do this, click the relevant latency value. In the following figure, the status code is `500`, which means the request resulted in an error state:
-    
-    ![Check error status code](../assets/img/observability/check-error-status-code.png){.cInlineImage-full}
+    The latency graph allows you to view details for each individual request that the service received during a selected custom time range. For details, see [Analyze the throughput graph](#analyze-the-throughput-graph) - **View details per request** bullet point.
 
 
 ### Analyze diagnostic data
