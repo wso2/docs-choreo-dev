@@ -216,7 +216,7 @@ The Observability view to the right of the low-code diagram displays graphs that
 the pointer over the throughput graph to view details relevant for specific times. If you want to drill down further, 
 click the **Diagnostics View** tab.
 
-The requests you sent to generate the above statistics use the temporary API key created when you deploy the service. To access the API of the `CovidStatus` service, users of the service need to generate their credentials. To allow this, proceed to the next step and publish the API.
+The requests you sent to generate the above statistics use the temporary API key created when you deploy the service. To access the API of the `CovidStatus` service, consumers of the service need to generate their credentials. To allow this, proceed to the next step and publish the API.
 
 ## Step 9: Publish the service API
 
@@ -242,7 +242,7 @@ To generate credentials for the `CovidStatus` API and invoke it, follow this pro
 
 1. In the **Lifecycle Management** page, click **Go to Developer Portal**.
 
-2. Once you are signed in to the Developer Portal, click **Credentials** in the navigator.
+2. Once you are signed in to the API Developer Portal, click **Credentials** in the navigator.
 
 3. Click **Generate Credentials**. As a result, **Consumer Key** and **Consumer Secret** fields are populated with the newly generated tokens.
 
@@ -255,6 +255,6 @@ To generate credentials for the `CovidStatus` API and invoke it, follow this pro
 
     A message appears to confirm that the keys are successfully updated.
     
-You can replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the Developer Portal.
+You can replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the API Developer Portal.
 
 Congratulations! You have now successfully created a service, tested it, deployed it, observed its statistics, and published its API.
