@@ -12,7 +12,6 @@ metadata:
   name: prometheus
   namespace: {{.Values.namespace}}
   annotations:
-    seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     checkov.io/skip1: CKV_K8S_22=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
 spec:
@@ -26,6 +25,7 @@ spec:
     metadata:
       annotations:
         linkerd.io/created-by: linkerd/helm stable-2.10.2
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
       labels:
         linkerd.io/extension: viz
         component: prometheus
