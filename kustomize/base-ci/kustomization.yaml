@@ -24,7 +24,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-service
   newTag: master-f0973e591775480afc8c752bd5a4e46fead9a1c0
 - name: choreocontrolplane.azurecr.io/choreoipaas/ast-archiver
-  newTag: master-0ef2eefa077d72da0beeaa040810cac1fec59e1c
+  newTag: master-d7be5d8e0a26a673539d62d077e69c6cf3cb635e
 - name: choreocontrolplane.azurecr.io/choreoipaas/capacity-planner
   newTag: master-b3d9ea16d6149b9a4c3f533cc32bc363bb33754f
 - name: choreocontrolplane.azurecr.io/choreoipaas/capacity-planner-init
