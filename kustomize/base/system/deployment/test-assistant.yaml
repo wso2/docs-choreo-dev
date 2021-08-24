@@ -96,8 +96,6 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-test-assistant/models/"
         - name: test-assistant-data
           mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
-        - name: test-assistant-config
-          mountPath: "/home/python-ai/choreo-ai-test-assistant/config/"
         securityContext:
           allowPrivilegeEscalation: false
           runAsUser: 10500
@@ -115,10 +113,6 @@ spec:
         configMap:
           defaultMode: 420
           name: cm-test-assistant
-      - name: test-assistant-config
-        configMap:
-          defaultMode: 420
-          name: cm-test-assistant-config
       - name: secret-test-assistant
         csi:
           driver: secrets-store.csi.k8s.io
