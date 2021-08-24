@@ -42,6 +42,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-email-service
+            - configMapRef:
+                name: env-email-service
           env:
             - name: MAIL_SMTP_AUTH_PASSWORD
               valueFrom:

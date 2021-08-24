@@ -19,3 +19,8 @@ resources:
   - datamapper.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
+  - datacollector.yaml
+  - quota-limiter.yaml
+  - subscriptions.yaml
+  - dp-secret-manager.yaml
+  - dp-utility-api.yaml

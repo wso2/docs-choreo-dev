@@ -36,16 +36,6 @@ spec:
             configMapKeyRef:
               key: B7A_LOG_LEVEL
               name: cm-loglevel-negotiator
-        - name: CHOREO_APP_URL
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_APP_URL
-              name: cm-negotiator
-        - name: CHOREO_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-program-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
@@ -56,26 +46,41 @@ spec:
            secretKeyRef:
              name: secret-program-db
              key: CHOREO_DB_PASSWORD
-        - name: CHOREO_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-program-db
-        - name: CHOREO_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-program-db
-        - name: CHOREO_DB_DRIVER
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_DRIVER
-              name: cm-choreo-program-db
         - name: CHOREO_DB_MAX_POOL
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_MAX_POOL
               name: cm-choreo-program-db
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: cm-negotiator
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PORT
+              name: cm-negotiator
+        - name: REDIS_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_SSL
+              name: cm-negotiator
+        - name: REDIS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_DATABASE
+              name: cm-negotiator
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: env-negotiator
+          - configMapRef:
+              name: env-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           allowPrivilegeEscalation: false
@@ -131,6 +136,9 @@ spec:
         - mountPath: /mnt/csi/secret-program-db
           name: secret-program-db
           readOnly: true
+        - name: secret-redis
+          mountPath: "/mnt/csi/secret-redis"
+          readOnly: true
       restartPolicy: Always
       volumes:
       - name: secret-program-db
@@ -139,6 +147,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-program-db
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

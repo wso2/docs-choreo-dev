@@ -3,13 +3,10 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_43=On hold ,not an high priority issue, requires some CI/CD workflow changes
+    checkov.io/skip1: CKV_K8S_43=Risk Accepted
     checkov.io/skip2: CKV_K8S_8=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_22=Risk Accepted
   labels:
     choreo.component: deploymentoptimizer
   name: deploymentoptimizer
@@ -30,13 +27,6 @@ spec:
     spec:
       automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10500
-        runAsGroup: 10500
-        readOnlyRootFilesystem: true
-        capabilities:
-          drop:
-            - all
-          add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
@@ -59,6 +49,12 @@ spec:
           mountPath: "/mnt/csi/secret-deploymentoptimizer"
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
         resources:
           limits:
             cpu: 200m
@@ -90,6 +86,9 @@ spec:
               secretKeyRef:
                 name: secret-ai-storage-table
                 key: TABLE_CONNECTION_STRING
+        envFrom:
+          - configMapRef:
+              name: env-deployment-optimizer
         resources:
           limits:
             cpu: 200m
@@ -126,6 +125,12 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       volumes:
       - name: deploymentoptimizer-models
         emptyDir: {}

@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName } from '../../../support/common/utils';
+import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
 import { datamapperRequestBody } from '../../../fixtures/console/ai/datamapper-service-call-data';
 import { datamapperExpectedResponseBody } from '../../../fixtures/console/ai/datamapper-service-call-data';
@@ -19,11 +19,14 @@ import { dataMapperTestURL } from '../../../support/common/constants';
 /// <reference types="cypress" />
 
 describe('Data Mapper service call Test', () => {
-    let savedCookies
-    let appName: string
+    let savedCookies: Cypress.Cookie[];
+    let appName: string;
 
     before(() => {
-        cy.consoleUserLogin()
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })

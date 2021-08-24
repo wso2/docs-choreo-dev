@@ -78,8 +78,11 @@ Cypress.Commands.add('deleteApiFromOverview', () => {
 
 Cypress.Commands.add('searchApiFromListAndVisit', (apiName: string) => {
     cy.log('Searching the api from the table');
+    cy.get('[data-testid="apis-list-table-loader"]', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
     cy.get('[data-testid=api-search-btn]', { timeout: MEDIUM_TIME_OUT }).click();
     cy.get('[data-testid=api-search-text-field]').type(apiName);
+    cy.wait(3000);
+    cy.get('[data-testid="apis-list-table-loader"]').should('not.exist');
     cy.get('[data-testid=apis-list-table]').within(() => {
         cy.contains(apiName).click();
     });
@@ -115,7 +118,7 @@ Cypress.Commands.add('updateRuntimeConfiguration', () => {
     cy.get('[data-testid=checkbox-allow-all-origins]').click();
     cy.wait(2000);
     cy.get('[data-testid=addBtn-origin]', { timeout: STANDARD_TIME_OUT }).click();
-    cy.get('[data-testid="type and press enter to add origins"]').type('localhost{enter}');
+    cy.get('[data-testid="type and press enter to add origins"]').type('http://127.0.0.1{enter}');
     cy.get('[data-testid=addBtn-header]').click();
     cy.get('[data-testid="type and press enter to add headers"]').type('tenantId{enter}');
     cy.get('[data-testid=addBtn-method]').click();
@@ -149,6 +152,7 @@ Cypress.Commands.add('deployInitialRevision', () => {
     cy.get('.MuiDialogContent-root').within(() => {
         cy.get('button').contains('Deploy').click();
     });
+    cy.get('.MuiDialogContent-root', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
     cy.get('[data-testid=deployment-loader]', { timeout: DEPLOYMENT_TIME_OUT }).should('not.exist');
 });
 

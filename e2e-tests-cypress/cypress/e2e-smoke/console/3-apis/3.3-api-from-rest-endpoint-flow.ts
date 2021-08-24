@@ -11,8 +11,8 @@
  * associated services.
  */
 
-import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, PATH_SEPARATOR, STANDARD_TIME_OUT } from "../../../support/common/constants";
-import { generateApiName } from "../../../support/common/utils";
+import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
+import { generateApiName, getSelectedOrgHandle } from "../../../support/common/utils";
 
 describe("API creation from an existing endpoint", () => {
     const API_NAME = generateApiName('CYE2E');
@@ -22,7 +22,10 @@ describe("API creation from an existing endpoint", () => {
     let apiId: string;
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
     });
 
     it("Create API from existing endpoint and deploy and publish", () => {
@@ -75,6 +78,8 @@ describe("API creation from an existing endpoint", () => {
             cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
             cy.updateSubscriptionPlans();
             cy.deployInitialRevision();
+            cy.get('[data-testid="api-revision-deploy-successful"]').should("be.visible");
+            cy.get('[fill="green"]').should("be.visible");
             cy.testApiInPublisherTestConsole();
             cy.publishApi();
             cy.wait(2000);
@@ -84,8 +89,6 @@ describe("API creation from an existing endpoint", () => {
     // TODO: add test case to check API delete flow
 
     after(() => {
-        cy.wait(1000);
-        cy.deleteApiByApiId(apiId);
         cy.userLogout();
     });
 });

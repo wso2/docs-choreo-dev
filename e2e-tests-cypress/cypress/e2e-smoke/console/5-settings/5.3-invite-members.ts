@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { SETTINGS_TEXT, NO_OF_RETRIES, INVITATION_EMAIL } from '../../../support/common/constants';
+import { SETTINGS_TEXT, INVITATION_EMAIL } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
@@ -35,7 +35,7 @@ describe('Invite members', () => {
         cy.userLogout();
     })
 
-    it('invite a member', { retries: NO_OF_RETRIES }, () => {
+    it('invite a member', () => {
         cy.get('[data-testid="invite-members-btn"]').click();
         cy.get('[data-testid="group-select"]').invoke('text').then((groupText) => {
             if (groupText == '') {

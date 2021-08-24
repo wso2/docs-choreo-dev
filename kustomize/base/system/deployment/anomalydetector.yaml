@@ -4,10 +4,9 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
-    checkov.io/skip2: CKV_K8S_43=On hold ,not an high priority issue, requires some CI/CD workflow changes
+    checkov.io/skip2: CKV_K8S_43=Risk accpeted
     checkov.io/skip3: CKV_K8S_8=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
     choreo.component: anomalydetector
   name: anomalydetector
@@ -26,12 +25,6 @@ spec:
     spec:
       automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10500
-        runAsGroup: 10500
-        capabilities:
-          drop:
-            - all
-          add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
@@ -55,6 +48,12 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
         resources:
           limits:
             cpu: 300m
@@ -81,6 +80,9 @@ spec:
               secretKeyRef:
                 name: secret-anomalydetector
                 key: ALERTS_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
+        envFrom:
+          - configMapRef:
+              name: env-anomaly-detector
         resources:
           limits:
             cpu: 200m
@@ -105,6 +107,12 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-anomaly-detector/config/"
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       volumes:
       - name: anomalydetector-models
         emptyDir: {}

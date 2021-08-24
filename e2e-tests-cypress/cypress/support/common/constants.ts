@@ -20,9 +20,8 @@ export const DEVOPS_TEXT = 'devops';
 export const SETTINGS_TEXT = 'settings';
 export const SETTINGS_PATH = 'user-settings/organization/members';
 export const dataMapperTestURL = 'https://datamapper.choreo.dev';
-export const APP_SVC_URL = Cypress.env("appSvcURL");
+export const APP_SVC_URL: string = Cypress.env("appSvcURL");
 export const APIM_RESOURCE_PATH = Cypress.env("apimBasePath") + "/apim/proxy/api/am/publisher/v2/apis";
-export const ORG_NAME = Cypress.env("selectedOrgHandle");
 export const SUCCESS_STATUS_CODE = 200;
 export const STANDARD_TIME_OUT = 6000;
 export const MEDIUM_TIME_OUT = 10000;
@@ -37,8 +36,9 @@ export const FAKE_TWILIO_RECIPIENT_NUMBER = '+94743149897';
 export const INVITATION_EMAIL= 'test.user.choreo@gmail.com';
 export const PATH_SEPARATOR = '/';
 export const GMAIL_CONNECTION_NAME = 'test.user.choreo@gmail.com';
+export const GOOGLE_CALENDAR_CONNECTOR = 'Google Calendar';
 export const OPENWEATHERMAP_APPID = '1077cad615109804aeac077793122585';
 
-//API Management
+// API Management
 export const DEVELOP = '/develop';
 export const OVERVIEW  = '/overview';

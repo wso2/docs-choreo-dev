@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { normalizeText } from '../../common/utils';
+import { apiNamePrefix, appNamePrefix, isOldValue, keyNamePrefix, normalizeText } from '../../common/utils';
 import {
     MARKETPLACE_TEXT,
     INTEGRATIONS_TEXT,
@@ -20,10 +20,12 @@ import {
     DEVOPS_TEXT,
     SETTINGS_TEXT,
     SETTINGS_PATH,
-    APP_SVC_URL, ORG_NAME, SUCCESS_STATUS_CODE,
+    APP_SVC_URL,
+    SUCCESS_STATUS_CODE,
     GMAIL_CONNECTION_NAME,
     APIM_RESOURCE_PATH,
     PATH_SEPARATOR,
+    GOOGLE_CALENDAR_CONNECTOR,
     OPENWEATHERMAP_APPID,
 } from '../../common/constants';
 import { getApiName } from '../../devportal/utils';
@@ -59,7 +61,7 @@ Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
 });
 
 Cypress.Commands.add('waitTillWorkSpace', () => {
-    cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
+    cy.get('[data-testid="setting-up-workspace"]', { timeout: 1000 * 60 }).should('not.exist');
 });
 
 Cypress.Commands.add('createNewApp', (type: string, name: string) => {
@@ -67,7 +69,7 @@ Cypress.Commands.add('createNewApp', (type: string, name: string) => {
 
     cy.log("Creating a new application with name : " + name);
     cy.contains('button', 'Create').click();
-    cy.get('input').type(name);
+    cy.get('[data-testid="application-name"] input').type(name);
     cy.contains('button', 'Create').click();
 
     cy.waitTillWorkSpace();
@@ -294,7 +296,6 @@ Cypress.Commands.add('selectManualTriggerOptions', (type: string, option: string
             cy.get('[id="SmallPlus"]').eq(0).click({ force: true });
         }
         if (type == 'Statements') {
-            cy.getByTestId("fit-to-screen-btn").click();
             cy.get('[data-testid="statement-options"]').click();
             cy.log('Selected statement category');
         } else if (type == 'Connections') {
@@ -318,7 +319,8 @@ Cypress.Commands.add('typeOnNthExpressionEditor',
             expressionToType = `\"${expression}\"`
         }
 
-        cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click().type('{backspace}{backspace}' + expressionToType);
+        cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click()
+            .type('{backspace}{backspace}' + expressionToType + '{esc}');
 
         if (waitForEnable && validExpression) {
             cy.get('[data-testid="' + waitForEnable + '"]').should('not.have.attr', 'disabled');
@@ -345,7 +347,6 @@ Cypress.Commands.add('createVariableProperty', (type: string, name: string, expr
 
     if (validExpression) {
         cy.log("Creating variable: added variable expression");
-        cy.getByTestId("fit-to-screen-btn").click();
         cy.get('[data-testid="save-btn"]').click();
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
         cy.checkSourceCodeForValidation(variableSourceFields);
@@ -384,7 +385,7 @@ Cypress.Commands.add('searchApps', (name: string) => {
             cy.get('[data-testid="search-btn"]').trigger('mouseover');
         }
     });
-    cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click().clear().type(name, { force: true });
+    cy.get('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').eq(0).click().clear().type(name, { force: true });
 });
 
 Cypress.Commands.add('resetAppSearch', () => {
@@ -395,9 +396,9 @@ Cypress.Commands.add('resetAppSearch', () => {
         }
     });
     cy.get('body').then($body => {
-        let searchBoxExists = ($body.find('.MuiInputBase-input.MuiInput-input').length > 0) ? true : false;
+        let searchBoxExists = ($body.find('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').length > 0) ? true : false;
         if (searchBoxExists) {
-            cy.get('.MuiInputBase-input.MuiInput-input').eq(0).click().clear();
+            cy.get('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').eq(0).click().clear();
         }
     });
 });
@@ -453,19 +454,18 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
     })
 });
 
-Cypress.Commands.add('cleanupApp', (name: string) => {
+Cypress.Commands.add('cleanupApp', (name: string, orgHandle: string) => {
     cy.log("Cleaning up app: " + name);
-    cy.request("DELETE", `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${name}`).then((resp) => {
+    cy.request("DELETE", `${APP_SVC_URL}/orgs/${orgHandle}/apps/${name}`).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the app: " + name);
     });
 });
 
-Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
+Cypress.Commands.add('deleteApiByApplicationId', (id: string, orgId: string) => {
     let token;
-    const organizationId = Cypress.env('orgs')[0].uuid;
-    const query = `?organizationId=${organizationId}&query=applicationId:${id}`
+    const query = `?organizationId=${orgId}&query=applicationId:${id}`
     cy.getCookie('token').should('exist').then((c) => {
         token = c;
         cy.log("GET API for applicationId: " + id);
@@ -496,19 +496,17 @@ Cypress.Commands.add('deleteApiByApplicationId', (id: string) => {
                     'Authorization': 'Bearer ' + token.value
                 },
                 qs: {
-                    'organizationId': organizationId,
+                    'organizationId': orgId,
                 },
             }).then((res) => {
                 expect(res.status).to.eq(SUCCESS_STATUS_CODE);
                 cy.log("Successfully deleted API: ");
-            });;
-
+            });
         })
     });
 });
 
-Cypress.Commands.add('deleteApiByApiId', (id: string) => {
-    const organizationId = Cypress.env('orgs')[0].uuid;
+Cypress.Commands.add('deleteApiByApiId', (id: string, orgId: string) => {
     cy.getCookie('token').should('exist').then((token) => {
         cy.request({
             method: "DELETE",
@@ -518,7 +516,7 @@ Cypress.Commands.add('deleteApiByApiId', (id: string) => {
                 'Authorization': 'Bearer ' + token.value
             },
             qs: {
-                'organizationId': organizationId,
+                'organizationId': orgId,
             }
         }).then((resp) => {
             // Status code is expected to be 200
@@ -665,7 +663,7 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
         method: "POST",
         pathname: `**/deploy`,
     }).as("deployApp");
-    
+
     cy.log('Deploying application...');
     if (type === 'schedule') {
         cy.contains('button', 'Schedule').click();
@@ -683,7 +681,7 @@ Cypress.Commands.add('deployToChoreo', (type: string, appName: string) => {
         cy.get('#deploy-button').click();
     }
 
-    cy.wait('@deployApp', { timeout: 60000 }).its('response.statusCode').should('eq', SUCCESS_STATUS_CODE);
+    cy.wait('@deployApp', { timeout: 1000 * 60 * 2 }).its('response.statusCode').should('eq', SUCCESS_STATUS_CODE);
 
     cy.log('Awaiting 5 minutes for the deployment to complete');
     cy.get('[data-testid="deploy-stop-button"]', { timeout: 1000 * 60 * 5 }).should('exist');
@@ -715,10 +713,10 @@ Cypress.Commands.add('navigateFromHomePage', (pageName: string) => {
     }
 });
 
-Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
+Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string, orgHandle: string) => {
     cy.request({
         method: "POST",
-        url: `${APP_SVC_URL}/orgs/${ORG_NAME}/apps/${appName}/undeploy`,
+        url: `${APP_SVC_URL}/orgs/${orgHandle}/apps/${appName}/undeploy`,
         timeout: 60000,
         failOnStatusCode: false
     }).then((resp) => {
@@ -728,9 +726,9 @@ Cypress.Commands.add('undeployAppViaRESTAPICall', (appName: string) => {
     });
 });
 
-Cypress.Commands.add('cleanOnPremKey', (keyName: string) => {
+Cypress.Commands.add('cleanOnPremKey', (keyName: string, orgHandle: string) => {
     cy.log("Cleaning up on-prem key: " + keyName);
-    cy.request("POST", `${APP_SVC_URL}/orgs/${ORG_NAME}/keys/${keyName}/revoke`).then((resp) => {
+    cy.request("POST", `${APP_SVC_URL}/orgs/${orgHandle}/keys/${keyName}/revoke`).then((resp) => {
         // Status code is expected to be 200
         expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
         cy.log("Successfully cleaned up the on-prem key: " + keyName);
@@ -821,14 +819,14 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
         cy.wait(2000);
         cy.get('.exp-editor').eq(1).type(lon);
         cy.wait(2000);
-        if(exclude || units || lang != null){
-        cy.get('#panel1bh-header').click();
-        cy.get('.exp-editor').eq(2).type(exclude);
-        cy.wait(2000);
-        cy.get('.exp-editor').eq(3).type(units);
-        cy.wait(2000);
-        cy.get('.exp-editor').eq(4).type(lang);
-        cy.wait(2000);
+        if (exclude || units || lang != null) {
+            cy.get('#panel1bh-header').click();
+            cy.get('.exp-editor').eq(2).type(exclude);
+            cy.wait(2000);
+            cy.get('.exp-editor').eq(3).type(units);
+            cy.wait(2000);
+            cy.get('.exp-editor').eq(4).type(lang);
+            cy.wait(2000);
         }
         cy.get('[placeholder="Enter response variable name"]').clear().type(responseVarName);
         cy.contains('button', 'Save').click({ force: true });
@@ -866,5 +864,159 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
         cy.log("SMS by Choreo connector added successfully!");
     });
 
+Cypress.Commands.add('clearConnections', (orgHandle: string) => {
+    cy.log('Deleting connections...');
+    const connectionsUrl = `${APP_SVC_URL}/orgs/${orgHandle}/connections`;
+    cy.request({
+        method: "GET",
+        url: connectionsUrl
+    }).then((response) => {
+        expect(response.status).to.eq(SUCCESS_STATUS_CODE);
+        const connectionList = response["body"] as any[];
+        for (const connection of connectionList) {
+            const connectorName: string = connection.connectorName;
+            const connectorId: string = connection.handle;
 
+            if (connectorName != GOOGLE_CALENDAR_CONNECTOR) {
+                const deleteURL = `${connectionsUrl}/${connectorId}`;
+                cy.request({
+                    method: "DELETE",
+                    url: deleteURL
+                }).then((deleteResponse) => {
+                    expect(deleteResponse.status).to.eq(SUCCESS_STATUS_CODE);
+                }).wait(200);
+            }
+        }
+    });
+});
 
+Cypress.Commands.add('clearConfigurations', (orgHandle: string) => {
+    cy.log('Deleting Configurations...');
+    const configurationsUrl = `${APP_SVC_URL}/orgs/${orgHandle}/configurations`;
+    cy.request({
+        method: "GET",
+        url: configurationsUrl
+    }).then((response) => {
+        expect(response.status).to.eq(SUCCESS_STATUS_CODE);
+        const configurationList = response["body"] as any[];
+
+        for (const conf of configurationList) {
+            const confKey: string = conf.key;
+            const confScope: string = conf.scope;
+            const deleteConfigurationsURL = `${configurationsUrl}/${confKey}`;
+            cy.request({
+                method: "DELETE",
+                url: deleteConfigurationsURL,
+                qs: {
+                    'scope': confScope,
+                }
+            }).then((deleteResponse) => {
+                expect(deleteResponse.status).to.eq(SUCCESS_STATUS_CODE);
+            }).wait(200);
+        }
+    });
+});
+
+Cypress.Commands.add('clearApps', (orgHandle: string) => {
+    cy.log("Deleting apps...");
+    cy.request({
+        method: "GET",
+        form: true,
+        url: `${APP_SVC_URL}/orgs/${orgHandle}/apps/`
+    }).then((response) => {
+        const apps = response["body"] as { name: string, displayName: string, status: string }[];
+        const e2eApps = apps.filter(app => app.displayName.startsWith(appNamePrefix));
+
+        if (e2eApps.length) {
+            cy.log(`E2E test apps found : ${e2eApps.length}`);
+            for (const app of e2eApps) {
+                const { name, status } = app;
+                if (status === "running") {
+                    cy.undeployAppViaRESTAPICall(name, orgHandle);
+                }
+                cy.cleanupApp(name, orgHandle);
+                cy.wait(300);
+            }
+            cy.log("Successfully deleted all e2e apps");
+        } else {
+            cy.log('No e2e apps found');
+        }
+    });
+});
+
+Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
+    cy.log('Deleting on-prem keys...');
+    cy.request({
+        method: "GET",
+        form: true,
+        url: `${APP_SVC_URL}/orgs/${orgHandle}/keys/`
+    }).then((response) => {
+        const data = response["body"] as [];
+
+        if (data.length) {
+            cy.log(`e2e test on-prem keys found : ${data.length}`);
+            for (const value of data) {
+                const keyName = value["displayName"] as string;
+                if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
+                    cy.cleanOnPremKey(keyName, orgHandle);
+                    cy.wait(300);
+                }
+            }
+            cy.log("Successfully deleted all e2e test on-prem keys");
+        } else {
+            cy.log('No e2e test on-prem keys found')
+        }
+    });
+});
+
+Cypress.Commands.add('clearAPIs', (orgId: string) => {
+    cy.log('Deleting APIs...');
+    cy.getCookie('token').should('exist').then((token) => {
+        cy.request({
+            method: "GET",
+            url: APP_SVC_URL + APIM_RESOURCE_PATH,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value
+            },
+            qs: {
+                'organizationId': orgId
+            },
+            timeout: 60000
+        }).then((response) => {
+            const apis = response["body"]["list"] as { id: string, name: string, }[];
+            const e2eApis = apis.filter(({ name }) => name.startsWith(apiNamePrefix) || name.startsWith(appNamePrefix));
+            if (e2eApis.length) {
+                cy.log(`e2e test APIs found : ${e2eApis.length}`);
+                for (const api of e2eApis) {
+                    if (api.name.startsWith(apiNamePrefix)) {
+                        cy.request({
+                            method: "DELETE",
+                            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + api.id,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + token.value
+                            },
+                            qs: {
+                                'organizationId': orgId,
+                            },
+                        });
+                        cy.wait(300);
+                    }
+                }
+                cy.log("Successfully deleted all e2e test APIs");
+            } else {
+                cy.log('No e2e test APIs found');
+            }
+        });
+    });
+});
+
+Cypress.Commands.add('clearAllTestData', (org: { uuid: string, handle: string }) => {
+    cy.log('Deleting all test data...');
+    cy.clearApps(org.handle);
+    cy.clearOnPremKeys(org.handle);
+    cy.clearAPIs(org.uuid);
+    // cy.clearConnections(org.handle);
+    // cy.clearConfigurations(org.handle);
+});
