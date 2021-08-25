@@ -34,7 +34,6 @@ describe("Data Mapper", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        //cy.url().should("include", "app/" + appName + "/develop");
         cy.verifyAppName(appName);
         cy.selectTrigger("Manual");
         cy.get('[data-testid="vertical-close-btn"]').click();
