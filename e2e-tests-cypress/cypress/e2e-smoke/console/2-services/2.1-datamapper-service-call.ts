@@ -41,7 +41,7 @@ describe('Data Mapper service call Test', () => {
         appName = generateAppName("app");
         cy.log('app name: ', appName);
         cy.createNewApp(SERVICES_TEXT, appName);
-        cy.url().should('include', 'app/' + appName + '/develop');
+        cy.verifyAppName(appName);
         cy.configureResource("hello", "POST", "string ?");
     });
 

@@ -81,5 +81,6 @@ declare namespace Cypress {
         clearConfigurations(orgHandle: string): Chainable<Element>
         clearConnections(orgHandle: string): Chainable<Element>
         clearOnPremKeys(orgHandle: string): Chainable<Element>
+        verifyAppName(appName): Chainable<Element>
     }
 }

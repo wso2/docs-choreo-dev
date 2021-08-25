@@ -1039,3 +1039,11 @@ Cypress.Commands.add('clearAllTestData', (org: { uuid: string, handle: string })
     // cy.clearConnections(org.handle);
     // cy.clearConfigurations(org.handle);
 });
+
+// Verify the App Name
+Cypress.Commands.add('verifyAppName', (appName) => {
+    cy.get('h4.MuiTypography-root').invoke('text').then((text) =>{
+        cy.log("App Name From Choreo :: ${text}");
+        expect(text.trim()).eq(appName)
+    });
+});
