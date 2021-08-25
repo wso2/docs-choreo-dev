@@ -44,11 +44,6 @@ spec:
             - configMapRef:
                 name: env-dp-auth-module
           env:
-            - name: SERVICE_ACCOUNT_RS256_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-auth-module
-                  key: SERVICE_ACCOUNT_RS256_PASS
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
