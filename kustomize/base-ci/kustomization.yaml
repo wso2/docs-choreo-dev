@@ -84,7 +84,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
   newTag: master-62d48c4b5c4116eb520c3468fd9a183204a8a37d
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cloud-manager
-  newTag: master-77167efbf3aa308d2da890ef007de1bffeaab534
+  newTag: master-17c0af002d78f6c05e9033b9c61d63ae9ecd84cf
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
   newTag: master-b48bd0f243543b75969b6808fc1a79f8e46f926a
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-secret-manager
