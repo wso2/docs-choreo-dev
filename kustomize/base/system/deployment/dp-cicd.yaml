@@ -81,16 +81,10 @@ spec:
               path: /healthz
               port: http-port
           volumeMounts:
-            - name: cicd-config
-              mountPath: cicd-config.yaml
-              subPath: cicd-config.yaml
             - name: secret-dp-cicd
               mountPath: "/mnt/csi/secret-dp-cicd"
               readOnly: true
       volumes:
-      - name: cicd-config
-        configMap:
-          name: cm-dp-cicd
       - name: secret-dp-cicd
         csi:
           driver: secrets-store.csi.k8s.io
