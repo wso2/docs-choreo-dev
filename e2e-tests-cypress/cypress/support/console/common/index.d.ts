@@ -55,6 +55,7 @@ declare namespace Cypress {
         undeployApp(type: string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type: string, name: string, strict: boolean): Chainable<Element>
         cleanupApp(name: string, orgHandle: string): Chainable<Element>
+        cleanupApi(apiId: string, orgId: string, token: string): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>
