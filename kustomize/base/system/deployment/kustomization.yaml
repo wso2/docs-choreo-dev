@@ -28,5 +28,7 @@ resources:
   - subscriptions.yaml
   - dp-utility-api.yaml
   - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587

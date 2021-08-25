@@ -26,3 +26,4 @@ resources:
   - subscriptions.yaml
   - dp-utility-api.yaml
   - dp-cicd.yaml
+  - dp-cloud-manager.yaml
