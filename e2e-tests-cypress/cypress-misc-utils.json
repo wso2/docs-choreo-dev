@@ -1,0 +1,15 @@
+{
+    "defaultCommandTimeout": 30000,
+    "screenshotsFolder": "cypress/screenshots/misc-utils",
+    "videosFolder": "cypress/videos/misc-utils",
+    "ignoreTestFiles": "**/examples/*.js",
+    "chromeWebSecurity": false,
+    "integrationFolder": "cypress/misc-utils",
+    "testFiles": [
+        "**/*.*"
+    ],
+    "videoUploadOnPasses": false,
+    "videoCompression": false,
+    "viewportWidth": 1920,
+    "viewportHeight": 1080
+}
