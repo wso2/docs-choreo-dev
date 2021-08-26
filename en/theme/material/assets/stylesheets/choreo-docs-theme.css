@@ -192,6 +192,10 @@ ul.md-nav__list  ul.md-nav__list {
     border-top-color: #e4e8ee7d;
 }
 
+.md-main{
+position: relative !important;
+}
+
 .md-main__inner {
     padding-top: 0;
 }
@@ -300,6 +304,7 @@ a.cChoreoDocsButtons.localLink {
 
 .md-container{
 padding-bottom:15px;
+position: relative;
 }
 .md-footer{
   z-index: 1;
