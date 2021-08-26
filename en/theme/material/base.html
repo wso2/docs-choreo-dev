@@ -64,7 +64,7 @@
       {% if palette.primary %}
         {% import "partials/palette.html" as map %}
         {% set primary = map.primary(
-          palette.primary | replace(" ", "-") | lower
+          palette.primary | lower
         ) %}
         <meta name="theme-color" content="{{ primary }}">
       {% endif %}
@@ -105,13 +105,15 @@
 
     <link rel="stylesheet" href="{{ 'assets/stylesheets/choreo-docs-theme.css' | url }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+
   </head>
+
   {% if palette.primary or palette.accent %}
     {% set primary = palette.primary | replace(" ", "-") | lower %}
     {% set accent  = palette.accent  | replace(" ", "-") | lower %}
-    <body dir="{{ lang.t('direction') }}" data-md-color-primary="{{ primary }}" data-md-color-accent="{{ accent }}" class="cChoreoBody">
+   <body dir="{{ lang.t('direction') }}" data-md-color-primary="{{ primary }}" data-md-color-accent="{{ accent }}" class="cChoreoBody">
   {% else %}
-    <body dir="{{ lang.t('direction') }}" class="cChoreoBody">
+  <body dir="{{ lang.t('direction') }}" class="cChoreoBody">
   {% endif %}
     <svg class="md-svg">
       <defs>
@@ -133,17 +135,13 @@
         {{ lang.t('skip.link.title') }}
       </a>
     {% endif %}
-    {% block header %}
-      {% include "partials/header.html" %}
-    {% endblock %}
+
     <div class="md-container">
-      {% block hero %}
-        {% if page and page.meta and page.meta.hero %}
-          {% include "partials/hero.html" with context %}
-        {% endif %}
-      {% endblock %}
-      {% if feature.tabs %}
-      {% endif %}
+      <div>
+        {% block header %}
+        {% include "partials/header.html" %}
+        {% endblock %}
+      </div>
       <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           {% block site_nav %}
@@ -240,10 +238,10 @@
           </div>
         </div>
       </main>
-      {% block footer %}
-        {% include "partials/footer.html" %}
-      {% endblock %}
     </div>
+  <div>
+
+  </div>
     {% block scripts %}
       <script src="{{ 'assets/javascripts/application.198c86c7.js' | url }}"></script>
       {% if lang.t("search.language") != "en" %}
@@ -272,6 +270,11 @@
       {% endfor %}
     {% endblock %}
   </body>
+  <footer>
+  {% block footer %}
+  {% include "partials/footer.html" %}
+  {% endblock %}
+    </footer>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
   <script type="text/javascript"> docsearch({
     apiKey: 'c4c6e2af60050262289542d4687eeb6c',
