@@ -64,11 +64,9 @@ spec:
                   cpu: 200m
                   memory: 512Mi
               volumeMounts:
-                - name: working-dir-volume
-                  # Used for passing values from Java program to the calling bash script
-                  mountPath: /choreo-data-generator/employee-service-url-file.txt
-                  subPath: employee-service-url-file.txt
+                - name: app-deployer-manager-output-volume  # Used for passing values from Java program to the calling bash script
+                  mountPath: /choreo-data-generator/output
           serviceAccountName: sa-choreo-default
           volumes:
-            - name: working-dir-volume
+            - name: app-deployer-manager-output-volume
               emptyDir: {}
