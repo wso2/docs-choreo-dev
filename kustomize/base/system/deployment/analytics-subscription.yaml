@@ -95,7 +95,6 @@ spec:
           capabilities:
             drop:
               - ALL
-              - NET_RAW
         name: analytics-subs
         readinessProbe:
             initialDelaySeconds: 5
