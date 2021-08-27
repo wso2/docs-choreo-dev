@@ -64,9 +64,9 @@ spec:
                   cpu: 200m
                   memory: 512Mi
               volumeMounts:
-                - name: app-deployer-manager-output-volume  # Used for passing values from Java program to the calling bash script
+                - name: output-volume  # Used for storing the content written during execution
                   mountPath: /choreo-data-generator/output
           serviceAccountName: sa-choreo-default
           volumes:
-            - name: app-deployer-manager-output-volume
+            - name: output-volume
               emptyDir: {}
