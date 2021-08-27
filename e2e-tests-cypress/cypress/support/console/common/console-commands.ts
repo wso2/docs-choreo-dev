@@ -58,6 +58,7 @@ Cypress.Commands.add('preserveCookiesForTest', (cookies) => {
             preserve: cookie.name
         })
     })
+    cy.hideWelcomeMessage();
 });
 
 Cypress.Commands.add('waitTillWorkSpace', () => {
