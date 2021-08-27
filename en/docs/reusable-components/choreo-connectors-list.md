@@ -20,7 +20,7 @@ The following lists the connections you can use to interact with application-spe
 | **Twilio**          | Integrates with Twilio to perform operations such as sending messages, WhatsApp messages, and making voice calls. |
 | **Slack**           | Integrates with Slack to perform operations such as sending a message to a channel, deleting a message, etc. |
 | **Salesforce**      | Integrates with the Salesforce API to perform Salesforce operations. You can create, read, update, and delete (CRUD) records, search or query your data, retrieve object metadata, etc. |
-| **NetSuite**        | Integrates with Netsuite to perform operations such as creating a record instance, creating a sublist, etc. |
+| **NetSuite**        | Integrates with NetSuite to perform operations such as creating a record instance, creating a sublist, etc. |
 | **Azure EventHub**  | Integrates with Azure to manage consumer groups, event hubs, events, publishers, and partitions. You can perform many operations such as creating and listing event hubs and consumer groups, etc. |
 | **Azure Cosmos DB** | Integrates with Azure Cosmos DB to manage documents and stored procedures. You can perform operations such as creating documents, executing stored procedures, etc. |
 | **MongoDB**         | Integrates with MongoDB to manage databases, collections, and documents. You can perform operations such as getting databases, inserting documents, etc. |

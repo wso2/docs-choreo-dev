@@ -2,7 +2,7 @@
 Choreo integrations allow you to create enterprise integrations to automate workflows in a user-friendly, low-code environment. Here are some basic concepts to help you understand Choreo integrations as you develop those in the [Choreo Console](https://console.choreo.dev/login/).
   
 ## Integration
-Integration in Choreo is a process that connects APIs, events, and streams allowing these to function as a single unit. Choreo provides an integration template that is a pre built sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
+Integration in Choreo is a process that connects APIs, events, and streams allowing these to function as a single unit. Choreo provides an integration template that is a prebuilt sample designed to address a common integration requirement. Choreo includes a set of comprehensive integration templates for you to select and use.
 
 ## Trigger
 A trigger in Choreo integrations is an event or an action that causes a Choreo integration to start executing.
