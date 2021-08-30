@@ -42,7 +42,7 @@ describe('Schedule trigger test run and deployment', () => {
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should('include', 'app/' + appName + '/develop');
+        cy.verifyAppName(appName);
         cy.selectTrigger("Schedule");
         cy.selectManualTriggerOptions("Statements", "addLog");
         cy.createLogProperty("Info", "Hello world");

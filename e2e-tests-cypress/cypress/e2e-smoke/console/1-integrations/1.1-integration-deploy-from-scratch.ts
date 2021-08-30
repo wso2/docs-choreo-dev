@@ -33,7 +33,7 @@ describe("Integrations test run and deployment from scratch", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should("include", "app/" + appName + "/develop"); 
+        cy.verifyAppName(appName);
 
         // add a log statement
         cy.selectTrigger("Manual");
