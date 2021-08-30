@@ -80,7 +80,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
   newTag: master-52b66b62c62d9ac2fa2b87fd365f5b31281a246a
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-auth-module
-  newTag: master-8afc6c99e52580e2bf1d659fafbda502b5f0faa3
+  newTag: master-a236cb633885447dc25620297b82be10c33be691
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
   newTag: master-62d48c4b5c4116eb520c3468fd9a183204a8a37d
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cloud-manager
