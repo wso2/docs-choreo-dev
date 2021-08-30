@@ -54,7 +54,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-org-cleanup-service
   newTag: main-063ced1d1d9d089d2a59f56658a2283d78f44727
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
-  newTag: v4.0.0-r27082021.1
+  newTag: v4.0.0-r30082021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter
   newTag: main-c31b9ab56a48aed46c9369ad3510c81f9349b5b4
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-subscriptions
