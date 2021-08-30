@@ -21,7 +21,6 @@ spec:
           labels:
             choreo.component: perfanalyzer-updater
         spec:
-          automountServiceAccountToken: false
           securityContext:
             seccompProfile:
               type: RuntimeDefault

@@ -22,7 +22,6 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
-      automountServiceAccountToken: false
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
