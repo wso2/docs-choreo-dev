@@ -52,7 +52,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-2cbf9f8b12470408d356a6d2912c9cd9415557cc
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-org-cleanup-service
-  newTag: main-d67de5200076e5bcb19ef8e64b7ed24ec299c9e9
+  newTag: main-063ced1d1d9d089d2a59f56658a2283d78f44727
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
   newTag: v4.0.0-r27082021.1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter
