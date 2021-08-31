@@ -10,7 +10,7 @@ metadata:
     choreo.dataplane: "true"
   name: dp-garbage-collector
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       choreo.component: dp-garbage-collector
