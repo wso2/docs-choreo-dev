@@ -43,6 +43,16 @@ spec:
                 secretKeyRef:
                   name: secret-subscriptions
                   key: MSSQL_PASSWORD
+            - name: APIM_PUBLISHER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-apim
+                  key: APIM_CLEINT_ID
+            - name: APIM_PUBLISHER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-apim
+                  key: APIM_CLIENT_SECRET
           ports:
             - containerPort: 9090
               name: grpc-port
@@ -90,6 +100,9 @@ spec:
             - name: secret-redis
               mountPath: "/mnt/csi/secret-redis"
               readOnly: true
+            - name: secret-apim
+              mountPath: "/mnt/csi/secret-apim"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
@@ -109,6 +122,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-redis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
