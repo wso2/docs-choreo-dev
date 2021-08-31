@@ -61,7 +61,7 @@ spec:
                 - all
                 - "NET_RAW"
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
               name: http-port
               protocol: TCP
           readinessProbe:
