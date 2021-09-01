@@ -12,7 +12,7 @@ Once you access the Analytics Portal, you can view the following information.
 
 ### Overview
 
-This page gives you a quick overview of the whole management system. The targeted audiences for the page are managers and business users who need quick insight. Also, this page can be used as a dashboard to view the current system status.
+This page gives you a quick overview of the whole system. The targeted audiences for the page are managers and business users who need quick insight. Also, this page can be used as a dashboard to view the current system status.
 
 ![Overview](../assets/img/insights/overview.png){.cInlineImage-full}
 
