@@ -209,7 +209,7 @@ The information displayed is as follows:
     
 ### Alerts
 
-This page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies or errors in your published APIs. See the topics given below to get details of the available widgets and understand how to use them to the best effect.
+This page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them to the best effect.
 
 **Prerequisites**
 
