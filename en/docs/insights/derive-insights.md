@@ -4,7 +4,7 @@ This section explains how you can derive insights about the APIs deployed in you
 
 ## Access the Analytics Portal
 
-To access the Analytics Portal, into the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Try now** on the **Insights** card.
+To access the Analytics Portal, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Try now** on the **Insights** card, or click **Insights** in the left navigation menu.
 
 ## Analyzing statistics
 
