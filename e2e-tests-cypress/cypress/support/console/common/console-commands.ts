@@ -390,6 +390,10 @@ Cypress.Commands.add('searchApps', (name: string) => {
 
 Cypress.Commands.add('resetAppSearch', () => {
     cy.get('body').then($body => {
+        let tourPopupExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
+        if (tourPopupExists) {
+            cy.get('[data-testid="product-tour-initial-close-btn"]').click();
+        }
         let searchButtonExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
         if (searchButtonExists) {
             cy.get('[data-testid="search-btn"]').trigger('mouseover');
