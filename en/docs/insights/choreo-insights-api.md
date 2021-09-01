@@ -1,6 +1,6 @@
 # Choreo Insights API
 
-Choreo Insights API is a GraphQL API. It offers the flexibility and the ability to define precisely the data you want to fetch. This guide walks you through to find out what data you can call:
+Choreo Insights API is a GraphQL API. It offers the flexibility and the ability to define precisely the data you want to fetch. This guide walks you through to find out what data you can retrieve:
  
  - **Allowed operations:** [Queries](#query)
  - **Schema defined types:** [Objects](#objects), [Inputs](#inputs), [Enums](#enums) and [Scalars](#scalars)
@@ -215,7 +215,7 @@ Data filter
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
-Returns the overall response latency(95th percentile value) for a given time range and by provided tenant Id,
+Returns the overall response latency(95th percentile value) for a given time range by provided tenant Id,
 environment Id and organization Id.
 
 </td>
@@ -283,8 +283,8 @@ Data filter
 <td>
 
 Returns the number of successful(2xx response code) hit count for each time interval(which is calculated according
-to the granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. If
-the optional field of granularity is not provided, default granularity value will be used for time interval
+to the granularity value) for a given time range by provided tenant Id, environment Id and organization Id. If the
+optional field of granularity is not provided, default granularity value will be used for time interval
 calculation.
 
 </td>
@@ -322,8 +322,8 @@ Granularity value
 <td>
 
 Returns the number of unsuccessful(total of both 4xx and 5xx response codes) hit count for each time interval(which
-is calculated according to the granularity value) for a given time range and by provided tenant Id, environment Id
-and organization Id. If the optional field of granularity is not provided, default granularity value will be used
+is calculated according to the granularity value) for a given time range by provided tenant Id, environment Id and
+organization Id. If the optional field of granularity is not provided, default granularity value will be used
 for time interval calculation.
 
 </td>
@@ -361,8 +361,8 @@ Granularity value
 <td>
 
 Returns the number of proxy errors(total of both 4xx and 5xx response codes) hit count by each error category for
-each time interval(which is calculated according to the granularity value) for a given time range and by the
-provided tenant Id, environment Id and organization Id. If the optional field of errorsByCategoryFilter is provided,
+each time interval(which is calculated according to the granularity value) for a given time range by the provided
+tenant Id, environment Id and organization Id. If the optional field of errorsByCategoryFilter is provided,
 result set will be further filtered by the given errors by category filter.
 
 </td>
@@ -552,7 +552,7 @@ API Id
 <td valign="top">[<a href="#apiusageovertime">APIUsageOverTime</a>]</td>
 <td>
 
-Returns a list of each API usage over the time for each time interval(which is calculated according to the
+Returns a list of each API usage over time for each time interval(which is calculated according to the
 granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. If the
 optional field of apiUsageOvertimeFilter is provided, the result set will be further filtered by the given api
 usage overtime filter.
@@ -591,7 +591,7 @@ Data filter
 <td valign="top"><a href="#apiusagebyappovertime">APIUsageByAppOverTime</a></td>
 <td>
 
-Returns API usage by each application over the time for each time interval(which is calculated according to the
+Returns API usage by each application over time for each time interval(which is calculated according to the
 granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. If the
 optional field of apiUsageOvertimeFilter is provided, the result set will be further filtered by the given api
 usage overtime filter.
@@ -630,7 +630,7 @@ Data filter
 <td valign="top"><a href="#apiusagebybackendovertime">APIUsageByBackendOverTime</a></td>
 <td>
 
-Returns API usage by each backend over the time for each time interval(which is calculated according to the
+Returns API usage by each backend over time for each time interval(which is calculated according to the
 granularity value)for a given time range and by provided tenant Id, environment Id and organization Id. If the
 optional field of apiUsageByBackendOverTimeFilter is provided, the result set will be further filtered by the given
 api usage by backend overtime filter.
@@ -782,7 +782,7 @@ Limit for the slow APIs list
 <td valign="top"><a href="#apilatency">APILatency</a></td>
 <td>
 
-Returns different latency category values(95th percentile values) for a given API over the time for each time
+Returns different latency category values(95th percentile values) for a given API over time for each time
 interval(which is calculated according to the granularity value)for a given time range and by provided tenant Id,
 environment Id and organization Id.
 
@@ -858,8 +858,8 @@ API Id
 <td valign="top"><a href="#cachehits">CacheHits</a></td>
 <td>
 
-Return the total number of response cache hits, misses and hit percentage for an API over the time for each time
-interval(which is calculated according to the granularity value) for a given time range and by provided tenant Id,
+Return the total number of response cache hits, misses and hit percentage for an API over time for each time
+interval(which is calculated according to the granularity value) for a given time range by provided tenant Id,
 environment Id and organization Id.
 
 </td>
@@ -1215,7 +1215,7 @@ API provider name.
 
 ### APILatency
 
-Represents latency values for a single API over the time.
+Represents latency values for a single API over time.
 
 <table>
 <thead>
@@ -1232,7 +1232,7 @@ Represents latency values for a single API over the time.
 <td valign="top">[<a href="#latency">Latency</a>]</td>
 <td>
 
-List containing latency category values over the time. Returns an empty array if no data available.
+List containing latency category values over time. Returns an empty array if no data available.
 
 </td>
 </tr>
@@ -1341,7 +1341,7 @@ List containing the APIs usage values. Returns an empty array if no data availab
 
 ### APIUsageByAppOverTime
 
-Represents API usage across APIs by applications over the time.
+Represents API usage across APIs by applications over time.
 
 <table>
 <thead>
@@ -1473,7 +1473,7 @@ List containing the APIs usage values. Returns an empty array if no data availab
 
 ### APIUsageByBackendOverTime
 
-Represents API usage across APIs by each backend over the time.
+Represents API usage across APIs by each backend over time.
 
 <table>
 <thead>
@@ -1508,7 +1508,7 @@ Granularity value used for data retrieval.
 
 ### APIUsageByGeoLocation
 
-Represent a single API usage across different countries.
+Represents a single API usage across different countries.
 
 <table>
 <thead>
@@ -1543,7 +1543,7 @@ List containing usages of API in different countries. Returns an empty array if 
 
 ### APIUsageOverTime
 
-Represent a single API usage over the time.
+Represents a single API usage over time.
 
 <table>
 <thead>
@@ -1622,7 +1622,7 @@ Pagination details.
 
 ### AlertSummary
 
-Represent a summary for an alert.
+Represents a summary for an alert.
 
 <table>
 <thead>
@@ -1740,7 +1740,7 @@ Application owner name.
 
 ### CacheHit
 
-Represent response cache hits and misses values for a single timestamp. Timestamp is calculated according to the
+Represents response cache hits and misses values for a single timestamp. Timestamp is calculated according to the
 provided granularity value.
 
 <table>
@@ -1797,7 +1797,7 @@ Response cache hits as a percentage to total of hits and misses.
 
 ### CacheHits
 
-Represents response cache hits and misses over the time.
+Represents response cache hits and misses over time.
 
 <table>
 <thead>
@@ -1814,7 +1814,7 @@ Represents response cache hits and misses over the time.
 <td valign="top">[<a href="#cachehit">CacheHit</a>]</td>
 <td>
 
-List containing cache hits, misses and hit percentage over the time. Returns an empty array if no data available.
+List containing cache hits, misses and hit percentage over time. Returns an empty array if no data available.
 
 </td>
 </tr>
@@ -1832,7 +1832,7 @@ Granularity value used for data retrieval.
 
 ### DetailsOfErrors
 
-Represent error details over the time.
+Represents error details over time.
 
 <table>
 <thead>
@@ -1849,7 +1849,7 @@ Represent error details over the time.
 <td valign="top">[<a href="#errordetails">ErrorDetails</a>]!</td>
 <td>
 
-List containing error details over the time. Returns an empty array if no data available.
+List containing error details over time. Returns an empty array if no data available.
 
 </td>
 </tr>
@@ -1867,7 +1867,7 @@ Pagination details.
 
 ### Environment
 
-Represent an environment.
+Represents an environment.
 
 <table>
 <thead>
@@ -1979,7 +1979,7 @@ Other errors count.
 
 ### ErrorCountByCode
 
-Represent error count for a single error status code.
+Represents error count for a single error status code.
 
 <table>
 <thead>
@@ -2049,7 +2049,7 @@ List containing error count for each error status code. Returns an empty array i
 
 ### ErrorDetails
 
-Represent details of an error for a single timestamp. Timestamp is calculated according to the provided granularity
+Represents details of an error for a single timestamp. Timestamp is calculated according to the provided granularity
 value.
 
 <table>
@@ -2133,7 +2133,7 @@ Error count.
 
 ### ErrorStatusCodeCategoryCounts
 
-Represent errors by main status code category(4xx or 5xx) and the total error count.
+Represents errors by main status code category(4xx or 5xx) and the total error count.
 
 <table>
 <thead>
@@ -2212,7 +2212,7 @@ Granularity value used for data retrieval.
 
 ### ErrorValue
 
-Represent unsuccessful request count(4xx and 5xx response code) for a single timestamp. Timestamp is calculated
+Represents unsuccessful request count(4xx and 5xx response code) for a single timestamp. Timestamp is calculated
 according to the provided granularity value.
 
 <table>
@@ -2251,7 +2251,7 @@ Represents error request count.
 
 ### ErrorsByCategory
 
-Represents errors by category over the time for error categories.
+Represents errors by category over time for error categories.
 
 <table>
 <thead>
@@ -2268,7 +2268,7 @@ Represents errors by category over the time for error categories.
 <td valign="top">[<a href="#errorcountbycategory">ErrorCountByCategory</a>]</td>
 <td>
 
-List containing error count for each error category over the time. Returns an empty array if no data available.
+List containing error count for each error category over time. Returns an empty array if no data available.
 
 </td>
 </tr>
@@ -2321,7 +2321,7 @@ Pagination details.
 
 ### ErrorsByStatusCodeCategory
 
-Represent error category values(as 4xx, 5xx and total) for both proxy and target errors for a single timestamp.
+Represents error category values(as 4xx, 5xx and total) for both proxy and target errors for a single timestamp.
 Timestamp is calculated according to the provided granularity value.
 
 <table>
@@ -2351,8 +2351,8 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#errorstatuscodecategorycounts">ErrorStatusCodeCategoryCounts</a></td>
 <td>
 
-Represent proxy related errors categorized as client errors(4xx response codes) or server errors(5xx response codes)
-and total of both categories.
+Represents proxy related errors categorized as client errors(4xx response codes) or server errors(5xx response
+codes) and total of both categories.
 
 </td>
 </tr>
@@ -2361,7 +2361,7 @@ and total of both categories.
 <td valign="top"><a href="#errorstatuscodecategorycounts">ErrorStatusCodeCategoryCounts</a></td>
 <td>
 
-Represent target related errors categorized as client errors(4xx response codes) or server errors(5xx response
+Represents target related errors categorized as client errors(4xx response codes) or server errors(5xx response
 codes) and total of both categories.
 
 </td>
@@ -2371,7 +2371,7 @@ codes) and total of both categories.
 
 ### Latency
 
-Represent latency values for each latency category for a single timestamp. Timestamp is calculated according to the
+Represents latency values for each latency category for a single timestamp. Timestamp is calculated according to the
 provided granularity value.
 
 <table>
@@ -2508,7 +2508,7 @@ Granularity value used for data retrieval.
 
 ### LatencyValue
 
-Represent latency value for a single timestamp. Timestamp is calculated according to the provided granularity value.
+Represents latency value for a single timestamp. Timestamp is calculated according to the provided granularity value.
 
 <table>
 <thead>
@@ -2546,7 +2546,7 @@ Represents Latency(95th percentile) time in milliseconds(ms).
 
 ### OverallLatency
 
-Represent overall latency values.
+Represents overall latency values.
 
 <table>
 <thead>
@@ -2634,7 +2634,7 @@ Result set sort by order(asc or desc).
 
 ### Platform
 
-Represent a platform.
+Represents a platform.
 
 <table>
 <thead>
@@ -2695,7 +2695,7 @@ API provider name.
 
 ### ResourceUsage
 
-Represent usage of a single API resource.
+Represents usage of a single API resource.
 
 <table>
 <thead>
@@ -2844,7 +2844,7 @@ API subscriber name.
 
 ### SuccessAPIUsageByApplication
 
-Represent successful(2xx response code) usages of an API by an application.
+Represents successful(2xx response code) usages of an API by an application.
 
 <table>
 <thead>
@@ -2964,7 +2964,7 @@ Granularity value used for data retrieval.
 
 ### SuccessValue
 
-Represent successful request count(2xx response code) for a single timestamp. Timestamp is calculated according to the
+Represents successful request count(2xx response code) for a single timestamp. Timestamp is calculated according to the
 provided granularity value.
 
 <table>
@@ -3038,7 +3038,7 @@ Alert count.
 
 ### TopAPIsByAlertCount
 
-Represent top APIs by alert count.
+Represents top APIs by alert count.
 
 <table>
 <thead>
@@ -3073,7 +3073,7 @@ Pagination details.
 
 ### TotalError
 
-Represent total errors.
+Represents total errors.
 
 <table>
 <thead>
