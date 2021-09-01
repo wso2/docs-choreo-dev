@@ -372,11 +372,12 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.log('Successfully created the log with expression : ' + expression);
 }),
 
-    Cypress.Commands.add('goBacktoAppsList', () => {
-        cy.get('[data-testid="app-list-btn"]').click();
-        cy.get('[id="backdrop-loader"').should('not.exist');
-        cy.log('App List Page loaded successfully');
-    });
+Cypress.Commands.add('goBacktoAppsList', () => {
+    cy.closeInitialTourPopup();
+    cy.get('[data-testid="app-list-btn"]').click();
+    cy.get('[id="backdrop-loader"').should('not.exist');
+    cy.log('App List Page loaded successfully');
+});
 
 Cypress.Commands.add('searchApps', (name: string) => {
     cy.get('body').then($body => {
@@ -389,11 +390,8 @@ Cypress.Commands.add('searchApps', (name: string) => {
 });
 
 Cypress.Commands.add('resetAppSearch', () => {
+    cy.closeInitialTourPopup();
     cy.get('body').then($body => {
-        let tourPopupExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
-        if (tourPopupExists) {
-            cy.get('[data-testid="product-tour-initial-close-btn"]').click();
-        }
         let searchButtonExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
         if (searchButtonExists) {
             cy.get('[data-testid="search-btn"]').trigger('mouseover');
@@ -403,6 +401,15 @@ Cypress.Commands.add('resetAppSearch', () => {
         let searchBoxExists = ($body.find('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').length > 0) ? true : false;
         if (searchBoxExists) {
             cy.get('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').eq(0).click().clear();
+        }
+    });
+});
+
+Cypress.Commands.add('closeInitialTourPopup', () => {
+    cy.get('body').then($body => {
+        let tourPopupExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
+        if (tourPopupExists) {
+            cy.get('[data-testid="product-tour-initial-close-btn"]').click();
         }
     });
 });
