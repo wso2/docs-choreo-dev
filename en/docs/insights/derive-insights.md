@@ -2,13 +2,13 @@
 
 This section explains how you can derive insights about the APIs deployed in your organization. 
 
-## Access the Analytics Portal
+## Access the Insights Portal
 
-To access the Analytics Portal, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Insights** in the left navigation menu.
+To access the Insights Portal, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Insights** in the left navigation menu.
 
 ## Analyzing statistics
 
-Once you access the Analytics Portal, you can view the following information.
+Once you access the Insights Portal, you can view the following information.
 
 ### Overview
 
@@ -306,7 +306,7 @@ Configure latency alerts to be notified if the response latency of APIs is great
 
 To configure a new latency alert, follow the steps below:
 
-1. In the Analytics Portal, click **Alert Configuration** to open the **Alert Configuration** page.
+1. In the Insights Portal, click **Alert Configuration** to open the **Alert Configuration** page.
 
     The **Latency** tab is open by default.
 
@@ -339,7 +339,7 @@ Configure Traffic alerts to identify if the request count of APIs is greater tha
 
 To configure a new latency alert, follow the steps below:
 
-1. In the Analytics Portal, click **Alert Configuration** to open the **Alert Configuration** page.
+1. In the Insights Portal, click **Alert Configuration** to open the **Alert Configuration** page.
 
 2. Click **Traffic** to open the **Traffic** tab.
 
