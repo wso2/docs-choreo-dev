@@ -3,7 +3,7 @@
 Choreo services allow you to create enterprise integration services, incorporating complex business logic in a user-friendly, low-code environment. The following topics provide some basic concepts to help you understand Choreo services as you develop your services in the [Choreo Console](https://console.choreo.dev/login/).
  
 ## Service
-A service in Choreo is an enterprise integration service exposed via a REST API. Choreo provides a comprehensive set of pre built service samples for you to clone, edit, and try out, depending on your requirement. 
+A service in Choreo is an enterprise integration service exposed via a REST API. Choreo provides a comprehensive set of prebuilt service samples for you to clone, edit, and try out, depending on your requirement. 
 
 ## API call
 An API call in Choreo allows you to connect to an external service through your Choreo integration. You can use an API call to interact with generic protocol-based APIs and application-specific APIs.
