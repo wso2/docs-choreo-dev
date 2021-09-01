@@ -51,11 +51,6 @@ spec:
             configMapKeyRef:
               key: CHOREO_DB_MAX_POOL
               name: cm-choreo-program-db
-        - name: REDIS_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: REDIS_HOST
-              name: cm-negotiator
         - name: REDIS_PORT
           valueFrom:
             configMapKeyRef:
