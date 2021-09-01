@@ -6,18 +6,18 @@ metadata:
     checkov.io/skip1: CKV_K8S_43=Risk accepted
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
-    choreo.component: dp-auth-module
+    choreo.component: dp-garbage-collector
     choreo.dataplane: "true"
-  name: dp-auth-module
+  name: dp-garbage-collector
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: dp-auth-module
+      choreo.component: dp-garbage-collector
   template:
     metadata:
       labels:
-        choreo.component: dp-auth-module
+        choreo.component: dp-garbage-collector
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -30,9 +30,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dp-auth-module
+        - name: dp-garbage-collector
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-auth-module:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-garbage-collector:latest
           resources:
             limits:
               cpu: 350m
@@ -42,12 +42,12 @@ spec:
               memory: 300Mi
           envFrom:
             - configMapRef:
-                name: env-dp-auth-module
+                name: env-dp-garbage-collector
           env:
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-dp-auth-module
+                  name: secret-dp-garbage-collector
                   key: MONGODB_PASSWORD
           securityContext:
             allowPrivilegeEscalation: false
@@ -61,7 +61,7 @@ spec:
                 - all
                 - "NET_RAW"
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
               name: http-port
               protocol: TCP
           readinessProbe:
@@ -83,16 +83,16 @@ spec:
               path: /healthz
               port: http-port
           volumeMounts:
-            - name: secret-dp-auth-module
-              mountPath: "/mnt/csi/secret-dp-auth-module"
+            - name: secret-dp-garbage-collector
+              mountPath: "/mnt/csi/secret-dp-garbage-collector"
               readOnly: true
       volumes:
-        - name: secret-dp-auth-module
+        - name: secret-dp-garbage-collector
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-dp-auth-module
+              secretProviderClass: secret-dp-garbage-collector
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
