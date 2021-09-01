@@ -1,6 +1,6 @@
 # Derive Insights
 
-This section explains how you can derive insights about the performance of your Choreo instance via the Analytics Portal.
+This section explains how you can derive insights about the APIs deployed in your organization. 
 
 ## Access the Analytics Portal
 
