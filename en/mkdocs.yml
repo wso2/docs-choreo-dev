@@ -58,6 +58,8 @@ nav:
     - APIs:
           - API Concepts: apis/api-concepts.md
           - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
+          - Advanced Topics:
+            - Connect to an External Identity Provider: apis/advanced-topics/connect-to-an-external-identity-provider.md
     - Integrations:
           - Integration Concepts: integrations/integration-concepts.md
           - Build Your First Integration: integrations/build-your-first-integration.md
