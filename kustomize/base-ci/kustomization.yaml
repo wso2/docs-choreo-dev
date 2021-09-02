@@ -34,7 +34,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-service
   newTag: master-825a0e9918c146ba603a1e9d3543e7af30dc7dbe
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter
-  newTag: master-1197f153a15158be7f723e7848c5fcaec3f36559
+  newTag: master-d2cc008de87ee9b8e61f10c78a034a879e7763f9
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords
   newTag: master-5e8c1ef1edb8f8d1c44eb7d6d377f386005a2294
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console
