@@ -1,7 +1,7 @@
 # Choreo Insights API
 
-Choreo Insights API is a GraphQL API. It offers the flexibility and the ability to define precisely the data you want to fetch. This guide walks you through to find out what data you can retrieve:
- 
+Choreo Insights API is a GraphQL API that allows you to fetch data in a flexible manner by defining the criteria with precision. This guide explains the different ways in which you can fetch data via this API.
+
  - **Allowed operations:** [Queries](#query)
  - **Schema defined types:** [Objects](#objects), [Inputs](#inputs), [Enums](#enums) and [Scalars](#scalars)
 
@@ -23,8 +23,8 @@ The query root of the Choreo Insights GraphQL API.
 <td valign="top">[<a href="#api">API</a>]</td>
 <td>
 
-Fetches all the APIs by tenant Id, environment Id and organization Id. If the optional field of provider is given,
-API list will be further filtered by the given provider name.
+Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
+can configure the `provider` parameter to further filter the APIs by a specific provider.
 
 </td>
 </tr>
@@ -33,7 +33,7 @@ API list will be further filtered by the given provider name.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API provider name
+The name of the API provider
 
 </td>
 </tr>
@@ -51,8 +51,8 @@ Data Filter
 <td valign="top">[<a href="#application">Application</a>]</td>
 <td>
 
-Fetches all the applications by tenant Id, environment Id and organization Id. If the optional field of
-applicationFilter is provided, application list will be further filtered by the given application filter.
+Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
+can configure the `applicationFilter` parameter to further filter the Applications by a specific application filter.
 
 </td>
 </tr>
@@ -79,7 +79,7 @@ Data Filter
 <td valign="top">[<a href="#provider">Provider</a>]</td>
 <td>
 
-Fetches all the API providers by tenant Id, environment Id and organization Id.
+Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -97,8 +97,8 @@ Data Filter
 <td valign="top">[<a href="#subscriber">Subscriber</a>]</td>
 <td>
 
-Fetches all the API subscribers by tenant Id, environment Id and organization Id. If the optional field of
-subscriberFilter is provided, subscriber list will be further filtered by the given subscriber filter.
+Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
+can configure the `subscriberFilter` parameter to further filter the subscribers.
 
 </td>
 </tr>
@@ -143,7 +143,7 @@ Organization filter
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-Fetches all the tenants by environment Id and organization Id.
+Fetches all the tenants with the given combination of environment ID and organization ID.
 
 </td>
 </tr>
@@ -161,7 +161,8 @@ Tenant Filter
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Returns the total traffic for a given time range and by provided tenant Id, environment Id and organization Id.
+Returns the total traffic during the given time range for the specified combination of tenant ID, environment ID,
+and organization ID.
 
 </td>
 </tr>
@@ -188,7 +189,8 @@ Data filter
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Returns the total errors for a given time range and by provided tenant Id, environment Id and organization Id.
+Returns the total number of errors that occurred during the given time range for the specified combination of tenant
+ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -215,8 +217,8 @@ Data filter
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
-Returns the overall response latency(95th percentile value) for a given time range by provided tenant Id,
-environment Id and organization Id.
+Returns the overall response latency (95th percentile value) during the given time range for the specified
+combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -243,10 +245,9 @@ Data filter
 <td valign="top"><a href="#latencysummary">LatencySummary</a></td>
 <td>
 
-Returns response latency value(95th percentile value) for each time interval(which is calculated according to the
-granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. If
-the optional field of latencySummaryFilter is provided, result set will be further filtered by the given latency
-summary filter.
+Returns the response latency value (95th percentile value) for each time interval (calculates according to the
+granularity value) within the specified time range for the given combination of tenant ID, environment ID, and
+organization ID. Optionally, you can configure the `latencySummaryFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -282,10 +283,10 @@ Data filter
 <td valign="top"><a href="#successsummary">SuccessSummary</a></td>
 <td>
 
-Returns the number of successful(2xx response code) hit count for each time interval(which is calculated according
-to the granularity value) for a given time range by provided tenant Id, environment Id and organization Id. If the
-optional field of granularity is not provided, default granularity value will be used for time interval
-calculation.
+Returns the number of successful (2xx response code) hit count for each time interval (calculates according to the
+granularity value) within the specified time range for the given combination of tenant ID, environment ID, and
+organization ID. Optionally, you can configure the `granularity` parameter to override the default granularity
+value.
 
 </td>
 </tr>
@@ -321,10 +322,10 @@ Granularity value
 <td valign="top"><a href="#errorsummary">ErrorSummary</a></td>
 <td>
 
-Returns the number of unsuccessful(total of both 4xx and 5xx response codes) hit count for each time interval(which
-is calculated according to the granularity value) for a given time range by provided tenant Id, environment Id and
-organization Id. If the optional field of granularity is not provided, default granularity value will be used
-for time interval calculation.
+Returns the number of unsuccessful (total of both 4xx and 5xx response codes) hit count for each time interval (
+calculates according to the granularity value) within the specified time range for the given combination of tenant
+ID, environment ID, and organization ID. Optionally, you can configure the `granularity` parameter to override the
+default granularity value.
 
 </td>
 </tr>
@@ -360,10 +361,10 @@ Granularity value
 <td valign="top"><a href="#errorsbycategory">ErrorsByCategory</a></td>
 <td>
 
-Returns the number of proxy errors(total of both 4xx and 5xx response codes) hit count by each error category for
-each time interval(which is calculated according to the granularity value) for a given time range by the provided
-tenant Id, environment Id and organization Id. If the optional field of errorsByCategoryFilter is provided,
-result set will be further filtered by the given errors by category filter.
+Returns the number of proxy errors (total of both 4xx and 5xx response codes) hit count by each error category for
+each time interval (calculates according to the granularity value) within the specified time range for the given
+combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`errorsByCategoryFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -399,9 +400,9 @@ Data filter
 <td valign="top"><a href="#detailsoferrors">DetailsOfErrors</a></td>
 <td>
 
-Returns details of each proxy error(for both 4xx and 5xx response codes) for a given time range by the provided
-tenant Id, environment Id and organization Id. If the optional field of errorsDetailsFilter is provided, result set
-will be further filtered by the given error details filter.
+Returns details of each proxy error (for both 4xx and 5xx response codes) within the specified time range for the
+given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`errorsDetailsFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -437,11 +438,10 @@ Data filter
 <td valign="top">[<a href="#errorsbystatuscodecategory">ErrorsByStatusCodeCategory</a>]</td>
 <td>
 
-Returns a list of hit counts for proxy and target errors by each time interval(which is calculated according to the
-granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. Each proxy
-and target error category result set contains breakdown of errors as 4xx, 5xx and total. If the optional field of
-errorsByStatusCodeFilter is provided, the result set will be further filtered by the given errors by status code
-filter.
+Returns a list of hit counts for proxy and target errors by each time interval (calculates according to the
+granularity value) within the specified time range for the given combination of tenant ID, environment ID, and
+organization ID. Each proxy and target error category result set contains breakdown of errors as 4xx, 5xx and total.
+Optionally, you can configure the `errorsByStatusCodeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -477,8 +477,8 @@ Data filter
 <td valign="top"><a href="#errorsbystatuscode">ErrorsByStatusCode</a></td>
 <td>
 
-Returns hit count for each error response code(401, 404, 500, etc.) for each API for a given time range and by
-provided tenant Id, environment Id and organization Id.
+Returns hit count for each error response code (401, 404, 500, etc.) for each API within the specified time range
+for the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -514,9 +514,9 @@ Data filter
 <td valign="top"><a href="#totalerror">TotalError</a></td>
 <td>
 
-Returns the total proxy error hit count for an API across all the data available time range and by provided tenant
-Id, environment Id and organization Id. If the optional time filter is provided, that time range will be used to
-filter the error count.
+Returns the total proxy error hit count for an API across all the data available time range for the given
+combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the `filter` parameter
+to further filter the results by a time range.
 
 </td>
 </tr>
@@ -552,10 +552,9 @@ API Id
 <td valign="top">[<a href="#apiusageovertime">APIUsageOverTime</a>]</td>
 <td>
 
-Returns a list of each API usage over time for each time interval(which is calculated according to the
-granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. If the
-optional field of apiUsageOvertimeFilter is provided, the result set will be further filtered by the given api
-usage overtime filter.
+Returns a list of each API usage over time for each time interval (calculates according to the granularity value)
+within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
+Optionally, you can configure the `apiUsageOvertimeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -591,10 +590,9 @@ Data filter
 <td valign="top"><a href="#apiusagebyappovertime">APIUsageByAppOverTime</a></td>
 <td>
 
-Returns API usage by each application over time for each time interval(which is calculated according to the
-granularity value) for a given time range and by provided tenant Id, environment Id and organization Id. If the
-optional field of apiUsageOvertimeFilter is provided, the result set will be further filtered by the given api
-usage overtime filter.
+Returns API usage by each application over time for each time interval (calculates according to the granularity
+value) within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
+Optionally, you can configure the `apiUsageOvertimeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -630,10 +628,9 @@ Data filter
 <td valign="top"><a href="#apiusagebybackendovertime">APIUsageByBackendOverTime</a></td>
 <td>
 
-Returns API usage by each backend over time for each time interval(which is calculated according to the
-granularity value)for a given time range and by provided tenant Id, environment Id and organization Id. If the
-optional field of apiUsageByBackendOverTimeFilter is provided, the result set will be further filtered by the given
-api usage by backend overtime filter.
+Returns API usage by each backend over time for each time interval (calculates according to the granularity value)
+within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
+Optionally, you can configure the `apiUsageByBackendOverTimeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -669,9 +666,9 @@ Data filter
 <td valign="top"><a href="#resourceusages">ResourceUsages</a></td>
 <td>
 
-Returns API usage by resource for a given time range and by provided tenant Id, environment Id and organization Id.
-If the optional field of resourceUsageFilter is provided, the result set will be further filtered by the given
-resource usage filter.
+Returns API usage by resource within the specified time range for the given combination of tenant ID, environment
+ID, and organization ID. Optionally, you can configure the `resourceUsageFilter` parameter to further filter the
+results.
 
 </td>
 </tr>
@@ -707,9 +704,9 @@ Data filter
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Returns the total hit count for an API across all the data available time range and by provided tenant Id,
-environment Id and organization Id. If the optional time filter is provided, that time range will be used to filter
-the hit count.
+Returns the total hit count for an API across all the data available time range for the given combination of tenant
+ID, environment ID, and organization ID. Optionally, you can configure the `filter` parameter to further filter the
+results by a time range.
 
 </td>
 </tr>
@@ -745,8 +742,8 @@ API Id
 <td valign="top">[<a href="#slowapi">SlowAPI</a>]</td>
 <td>
 
-Returns a list of top slowest APIs by the response latency(95th percentile value) for a given time range and by
-provided tenant Id, environment Id and organization Id.
+Returns a list of top slowest APIs by the response latency (95th percentile value) within the specified time range
+for the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -782,9 +779,9 @@ Limit for the slow APIs list
 <td valign="top"><a href="#apilatency">APILatency</a></td>
 <td>
 
-Returns different latency category values(95th percentile values) for a given API over time for each time
-interval(which is calculated according to the granularity value)for a given time range and by provided tenant Id,
-environment Id and organization Id.
+Returns different latency category values (95th percentile values) for a given API over time for each time
+interval (calculates according to the granularity value) within the specified time range for the given combination
+of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -820,9 +817,9 @@ Data filter
 <td valign="top"><a href="#overalllatency">OverallLatency</a></td>
 <td>
 
-Returns the overall response latency(95th percentile value) for an API across all the data available time range and
-by provided tenant Id, environment Id and organization Id. If the optional time filter is provided, that time range
-will be used to filter the latency value.
+Returns the overall response latency (95th percentile value) for an API across all the data available time range for
+the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the `filter`
+parameter to further filter the results by a time range.
 
 </td>
 </tr>
@@ -859,8 +856,8 @@ API Id
 <td>
 
 Return the total number of response cache hits, misses and hit percentage for an API over time for each time
-interval(which is calculated according to the granularity value) for a given time range by provided tenant Id,
-environment Id and organization Id.
+interval (calculates according to the granularity value) within the specified time range for the given combination
+of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -896,10 +893,10 @@ Data filter
 <td valign="top">[<a href="#platform">Platform</a>]</td>
 <td>
 
-Returns a list of top platforms by hit count for a given time range and by provided tenant Id, environment Id and
-organization Id. The returned list will include top 9 platforms with the respective hit count and all the other
-platforms labelled as 'Other' with the respective cumulated hit count. If the optional field of deviceFilter
-is provided, the result set will be further filtered by the given device filter.
+Returns a list of top platforms by hit count within the specified time range for the given combination of tenant ID,
+environment ID, and organization ID. The result list will include top 9 platforms with the respective hit count
+and all the other platforms labelled as 'Other' with the respective cumulated hit count. Optionally, you can
+configure the `deviceFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -935,10 +932,10 @@ Data filter
 <td valign="top">[<a href="#useragent">UserAgent</a>]</td>
 <td>
 
-Returns a list of top user agent by hit count for a given time range and by provided tenant Id, environment Id and
-organization Id. The returned list will include top 9 user agents with the respective hit count and all the other
-user agents labelled as 'Other' with the respective cumulated hit count. If the optional field of deviceFilter
-is provided, the result set will be further filtered by the given device filter.
+Returns a list of top user agent by hit count within the specified time range for the given combination of tenant
+ID, environment ID, and organization ID. The result list will include top 9 user agents with the respective hit
+count and all the other user agents labelled as 'Other' with the respective cumulated hit count. Optionally, you can
+configure the `deviceFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -974,12 +971,11 @@ Data filter
 <td valign="top"><a href="#apiusagebygeolocation">APIUsageByGeoLocation</a></td>
 <td>
 
-NOTE: The required data for this operation is not yet collected in the database. Hence, this operation will not
-return empty results.
+NOTE: The data required for this operation is not yet collected in the database. Hence, this operation will return
+empty results.
 
-Returns API usage by country for a given time range and by provided tenant Id, environment Id and organization Id.
-If the optional field of geoLocationFilter is provided, the result set will be further filtered by the given
-geolocation filter.
+Returns API usage by country within the specified time range for the given combination of tenant ID, environment ID,
+and organization ID. Optionally, you can configure the `geoLocationFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -1015,9 +1011,9 @@ Data filter
 <td valign="top">[<a href="#apiusagebyapplication">APIUsageByApplication</a>]</td>
 <td>
 
-Returns a list of each API usage by each application for a given time range and by provided tenant Id, environment
-Id and organization Id. If the optional field of apiUsageByAppFilter is provided, the result set will be further
-filtered by the given api usage by app filter.
+Returns a list of each API usage by each application within the specified time range for the given combination of
+tenant ID, environment ID, and organization ID. Optionally, you can configure the `apiUsageByAppFilter` parameter to
+further filter the results.
 
 </td>
 </tr>
@@ -1053,9 +1049,9 @@ Data filter
 <td valign="top"><a href="#topapisbyalertcount">TopAPIsByAlertCount</a></td>
 <td>
 
-Returns top APIs by the alert count for a given time range and by provided tenant Id, environment Id and
-organization Id. If the optional field of topAPIsByAlertCountFilter is provided, the result set will be further
-filtered by the given top APIs by alert count filter.
+Returns top APIs by the alert count within the specified time range for the given combination of tenant ID,
+environment ID, and organization ID. Optionally, you can configure the `topAPIsByAlertCountFilter` parameter to
+further filter the results.
 
 </td>
 </tr>
@@ -1070,7 +1066,7 @@ Time filter
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">topAPIsByAlertCountFilter</td>
-<td valign="top"><a href="#topapisbyalertcountfilter">TopAPIsByAlertCountFilter</a>!</td>
+<td valign="top"><a href="#topapisbyalertcountfilter">TopAPIsByAlertCountFilter</a></td>
 <td>
 
 Top APIs by alert count filter
@@ -1091,9 +1087,9 @@ Data filter
 <td valign="top"><a href="#alertsummaries">AlertSummaries</a></td>
 <td>
 
-Returns a summary of each alerts for a given time range and by provided tenant Id, environment Id and organization
-Id. If the optional field of alertSummaryFilter is provided, the result set will be further filtered by the given
-alert summary filter.
+Returns a summary of each alert for within the specified time range for the given combination of tenant ID,
+environment ID, and organization ID. Optionally, you can configure the `alertSummaryFilter` parameter to further
+filter the results.
 
 </td>
 </tr>
@@ -1108,7 +1104,7 @@ Time filter
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">alertSummaryFilter</td>
-<td valign="top"><a href="#alertsummaryfilter">AlertSummaryFilter</a>!</td>
+<td valign="top"><a href="#alertsummaryfilter">AlertSummaryFilter</a></td>
 <td>
 
 Alert summary filter
@@ -1129,11 +1125,10 @@ Data filter
 <td valign="top">[<a href="#successapiusagebyapplication">SuccessAPIUsageByApplication</a>]</td>
 <td>
 
-NOTE: This operations can be invoked only via using an on-prem key as the authentication header.
+NOTE: This operations can only be invoked via using an on-prem key as the authentication header.
 
-Returns a list of successful(2xx response codes) hit counts for each API by each application for a given time range.
-If the optional field of successAPIUsageByAppFilter is provided, the result set will be further filtered by the
-given success API usage by app filter.
+Returns a list of successful(2xx response codes) hit counts for each API by each application within the specified
+time range. Optionally, you can configure the `successAPIUsageByAppFilter` parameter to further filter the results.
 
 </td>
 </tr>
