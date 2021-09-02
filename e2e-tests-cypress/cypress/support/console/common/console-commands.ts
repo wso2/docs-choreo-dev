@@ -449,16 +449,13 @@ Cypress.Commands.add('undeployApp', (type: string, name: string, strict: boolean
                             cy.contains('Stopping', { timeout: 120000 }).should('not.exist');
                             cy.wait(30000);
                             cy.goBacktoAppsList();
-                            cy.get('body').then($body => {
-                                appExist = ($body.find('.MuiTableRow-root.MuiTableRow-hover').length > 0) ? true : false;
 
-                                if (strict && appExist) {
-                                    cy.searchApps(name);
-                                    cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').get('[data-testid="active-status"]').invoke('text').then((activeStatus) => {
-                                        expect(activeStatus).not.to.equal('Active', 'App should be undeployed')
-                                    })
-                                }
-                            });
+                            if (strict) {
+                                cy.searchApps(name);
+                                cy.get('.MuiTableRow-root.MuiTableRow-hover').children('td').get('[data-testid="active-status"]').invoke('text').then((activeStatus) => {
+                                    expect(activeStatus).not.to.equal('Active', 'App should be undeployed')
+                                })
+                            }
                         }
                     })
                 }
