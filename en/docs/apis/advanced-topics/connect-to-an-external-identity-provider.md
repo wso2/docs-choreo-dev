@@ -18,7 +18,7 @@ Now that you understand the token exchange flow, you can go ahead and add an ext
 Follow this procedure to add an external IdP to your Choreo organization:
 
 !!! note
-    You must be an organization admin to add an external IdP.
+    You must have organization administrator privileges to add an external IdP.
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
