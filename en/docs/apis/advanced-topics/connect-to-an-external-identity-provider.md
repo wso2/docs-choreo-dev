@@ -8,7 +8,7 @@ Choreo supports the token exchange grant type to exchange a JSON web token (JWT)
 
 ![Token exchange flow](../../assets/img/apis/advanced-topics/external-identity-providers/token-exchange-flow.png){.cInlineImage-full}
 
-When you provide a JWT access token (referred to as the `subject_token` in the preceding diagram), a request is sent to the Choreo token endpoint to exchange the JWT with a Choreo JWT. On validation of the request sent, the corresponding IDP configuration is retrieved based on the issuer. Then the `subject_token` validation (signature and expiry time validation) takes place. Successful validation generates a Choreo access token and returns it to you.
+When you provide a JWT access token (referred to as the `subject_token` in the preceding diagram), a request is sent to the Choreo token endpoint to exchange the JWT with a Choreo JWT. On validation of the request sent, the corresponding IdP configuration is retrieved based on the issuer. Then the `subject_token` validation (signature and expiry time validation) takes place. Successful validation generates a Choreo access token and returns it to you.
 
 Now that you understand the token exchange flow, you can go ahead and add an external identity provider depending on your requirement. 
 
