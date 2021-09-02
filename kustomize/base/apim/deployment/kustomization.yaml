@@ -7,3 +7,4 @@ resources:
 - tm-2-deployment.yaml
 - choreo-connect-adapter.yaml
 - choreo-connect-deployment.yaml
+- choreo-connect-global-adapter.yaml
