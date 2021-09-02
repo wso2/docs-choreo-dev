@@ -112,7 +112,7 @@ Follow this procedure to obtain an access token from an external IdP and exchang
 
 4. In the left navigation menu, click **OAuth2 Tokens** under **Production Keys**. This displays the following page if you have not generated the **Consumer Key** and **Consumer Secret**:
 
-   ![Generate credentials](../../assets/img/apis/advanced-topics/external-identity-providers/generate-credentials.png){.cInlineImage-full}
+    ![Generate credentials](../../assets/img/apis/advanced-topics/external-identity-providers/generate-credentials.png){.cInlineImage-full}
 
 5. Click **Generate Credentials** to generate the **Consumer Key** and **Consumer Secret**.
 
@@ -124,7 +124,7 @@ Follow this procedure to obtain an access token from an external IdP and exchang
     !!! tip
         The **User Keys** tab is only enabled if you meet the following prerequisites:</br>
           - Have at least one external IdP added to your organization.</br>
-          - Generate credentials and ensure you select the **Token Exchange** grant type when generating the credentials. You can click **Advanced Configurations** and make sure you have selected **Token Exchange** as a **Grant Type**.  
+          - Before you click **Generate Credentials**, click **Advanced Configurations** and make sure you select **Token Exchange** as a **Grant Type**.  
 
            ![Application keys advanced configuration](../../assets/img/apis/advanced-topics/external-identity-providers/application-keys-advanced-configuration.png){.cInlineImage-half}
     
