@@ -24,7 +24,7 @@ The query root of the Choreo Insights GraphQL API.
 <td>
 
 Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
-can configure the `provider` parameter to further filter the APIs by a specific provider.
+can configure the <code>provider</code> parameter to further filter the APIs by a specific provider.
 
 </td>
 </tr>
@@ -52,7 +52,7 @@ Data Filter
 <td>
 
 Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
-can configure the `applicationFilter` parameter to further filter the Applications by a specific application filter.
+can configure the <code>applicationFilter</code> parameter to further filter the Applications by a specific application filter.
 
 </td>
 </tr>
@@ -98,7 +98,7 @@ Data Filter
 <td>
 
 Fetches all the APIs with the given combination of tenant ID, environment ID, and organization ID. Optionally, you
-can configure the `subscriberFilter` parameter to further filter the subscribers.
+can configure the <code>subscriberFilter</code> parameter to further filter the subscribers.
 
 </td>
 </tr>
@@ -247,7 +247,7 @@ Data filter
 
 Returns the response latency value (95th percentile value) for each time granularity within the specified time range
 for the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`latencySummaryFilter` parameter to further filter the results.
+<code>latencySummaryFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -285,7 +285,7 @@ Data filter
 
 Returns the number of successful (2xx response code) hit count for each time granularity within the specified time
 range for the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`granularity` parameter to override the default granularity value.
+<code>granularity</code> parameter to override the default granularity value.
 
 </td>
 </tr>
@@ -323,7 +323,7 @@ Granularity value
 
 Returns the number of unsuccessful (total of both 4xx and 5xx response codes) hit count for each time granularity
 within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
-Optionally, you can configure the `granularity` parameter to override the default granularity value.
+Optionally, you can configure the <code>granularity</code> parameter to override the default granularity value.
 
 </td>
 </tr>
@@ -361,7 +361,7 @@ Granularity value
 
 Returns the number of proxy errors (total of both 4xx and 5xx response codes) hit count by each error category for
 each time granularity within the specified time range for the given combination of tenant ID, environment ID, and
-organization ID. Optionally, you can configure the `errorsByCategoryFilter` parameter to further filter the results.
+organization ID. Optionally, you can configure the <code>errorsByCategoryFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -399,7 +399,7 @@ Data filter
 
 Returns details of each proxy error (for both 4xx and 5xx response codes) within the specified time range for the
 given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`errorsDetailsFilter` parameter to further filter the results.
+<code>errorsDetailsFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -437,7 +437,7 @@ Data filter
 
 Returns a list of hit counts for proxy and target errors for each time granularity within the specified time range
 for the given combination of tenant ID, environment ID, and organization ID. The errors in each proxy and target
-result set are grouped as `4xx`, `5xx`, and `total`. Optionally, you can configure the `errorsByStatusCodeFilter`
+result set are grouped as <code>4xx</code>, <code>5xx</code>, and <code>total</code>. Optionally, you can configure the <code>errorsByStatusCodeFilter</code>
 parameter to further filter the results.
 
 </td>
@@ -512,7 +512,7 @@ Data filter
 <td>
 
 Returns the total proxy error hit count for an API across for the given combination of tenant ID, environment ID,
-and organization ID. Optionally, you can configure the `filter` parameter to further filter the results by a given
+and organization ID. Optionally, you can configure the <code>filter</code> parameter to further filter the results by a given
 time range.
 
 </td>
@@ -551,7 +551,7 @@ API Id
 
 Returns a list of usage details for each API over time for each time granularity within the specified time range for
 the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`apiUsageOvertimeFilter` parameter to further filter the results.
+<code>apiUsageOvertimeFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -589,7 +589,7 @@ Data filter
 
 Returns API usage by each application over time for each time granularity within the specified time range for the
 given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`apiUsageOvertimeFilter` parameter to further filter the results.
+<code>apiUsageOvertimeFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -627,7 +627,7 @@ Data filter
 
 Returns API usage by each backend over time for each time granularity within the specified time range for the given
 combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`apiUsageByBackendOverTimeFilter` parameter to further filter the results.
+<code>apiUsageByBackendOverTimeFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -664,7 +664,7 @@ Data filter
 <td>
 
 Returns API usage by resource within the specified time range for the given combination of tenant ID, environment
-ID, and organization ID. Optionally, you can configure the `resourceUsageFilter` parameter to further filter the
+ID, and organization ID. Optionally, you can configure the <code>resourceUsageFilter</code> parameter to further filter the
 results.
 
 </td>
@@ -702,7 +702,7 @@ Data filter
 <td>
 
 Returns the total hit count for an API for the given combination of tenant ID, environment ID, and organization ID.
-Optionally, you can configure the `filter` parameter to further filter the results by a given time range.
+Optionally, you can configure the <code>filter</code> parameter to further filter the results by a given time range.
 
 </td>
 </tr>
@@ -814,7 +814,7 @@ Data filter
 <td>
 
 Returns the overall response latency (95th percentile value) for an API for the given combination of tenant ID,
-environment ID, and organization ID. Optionally, you can configure the `filter` parameter to further filter the
+environment ID, and organization ID. Optionally, you can configure the <code>filter</code> parameter to further filter the
 results by a given time range.
 
 </td>
@@ -892,7 +892,7 @@ Data filter
 Returns a list of top platforms ranked based on the hit count within the specified time range for the given
 combination of tenant ID, environment ID, and organization ID. The result list includes the top nine platforms with
 the respective hit count, and all the rest of the platforms are labelled as **Other** with the cumulated hit count.
-Optionally, you can configure the `deviceFilter` parameter to further filter the results.
+Optionally, you can configure the <code>deviceFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -931,7 +931,7 @@ Data filter
 Returns a list of top user agents ranked based on the hit count within the specified time range for the given
 combination of tenant ID, environment ID, and organization ID. The result list includes the top nine user agents
 with the respective hit count, and all the rest of the platforms are labelled as **Other** with the cumulated hit
-count. Optionally, you can configure the `deviceFilter` parameter to further filter the results.
+count. Optionally, you can configure the <code>deviceFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -971,7 +971,7 @@ NOTE: The data required for this operation is not yet collected in the database.
 empty results.
 
 Returns API usage by country within the specified time range for the given combination of tenant ID, environment ID,
-and organization ID. Optionally, you can configure the `geoLocationFilter` parameter to further filter the results.
+and organization ID. Optionally, you can configure the <code>geoLocationFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -1008,7 +1008,7 @@ Data filter
 <td>
 
 Returns usage details of each API by application within the specified time range for the given combination of
-tenant ID, environment ID, and organization ID. Optionally, you can configure the `apiUsageByAppFilter` parameter to
+tenant ID, environment ID, and organization ID. Optionally, you can configure the <code>apiUsageByAppFilter</code> parameter to
 further filter the results.
 
 </td>
@@ -1046,7 +1046,7 @@ Data filter
 <td>
 
 Returns top APIs ranked based on the alert count within the specified time range for the given combination of tenant
-ID, environment ID, and organization ID. Optionally, you can configure the `topAPIsByAlertCountFilter` parameter to
+ID, environment ID, and organization ID. Optionally, you can configure the <code>topAPIsByAlertCountFilter</code> parameter to
 further filter the results.
 
 </td>
@@ -1084,7 +1084,7 @@ Data filter
 <td>
 
 Returns a summary for each alert within the specified time range for the given combination of tenant ID,
-environment ID, and organization ID. Optionally, you can configure the `alertSummaryFilter` parameter to further
+environment ID, and organization ID. Optionally, you can configure the <code>alertSummaryFilter</code> parameter to further
 filter the results.
 
 </td>
@@ -1124,7 +1124,7 @@ Data filter
 NOTE: This operations can only be invoked via using an on-prem key as the authentication header.
 
 Returns a list of successful hit counts (i.e., 2xx response codes) within the specified time range for each API,
-grouped by each application. Optionally, you can configure the `successAPIUsageByAppFilter` parameter to further
+grouped by each application. Optionally, you can configure the <code>successAPIUsageByAppFilter</code> parameter to further
 filter the results.
 
 </td>
@@ -1260,7 +1260,7 @@ Represents the API usage for a single timestamp. The timestamp is calculated bas
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -1642,7 +1642,7 @@ The ID of the API.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -1653,7 +1653,7 @@ e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The alert category. Possible values are `LATENCY` and `TRAFFIC`.
+The alert category. Possible values are <code>LATENCY</code> and <code>TRAFFIC</code>.
 
 </td>
 </tr>
@@ -1662,7 +1662,7 @@ The alert category. Possible values are `LATENCY` and `TRAFFIC`.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The alert metric. Possible values are `RESPONSE_LATENCY` and `TOTAL_TRAFFIC`.
+The alert metric. Possible values are <code>RESPONSE_LATENCY</code> and <code>TOTAL_TRAFFIC</code>.
 
 </td>
 </tr>
@@ -1671,7 +1671,7 @@ The alert metric. Possible values are `RESPONSE_LATENCY` and `TOTAL_TRAFFIC`.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The severity level of the alert. Possible values are `LOW`, `MEDIUM`, and `HIGH`.
+The severity level of the alert. Possible values are <code>LOW</code>, <code>MEDIUM</code>, and <code>HIGH</code>.
 
 </td>
 </tr>
@@ -1752,7 +1752,7 @@ granularity value provided.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -1896,8 +1896,8 @@ The environment name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The environment type. A Choreo environment is labelled as `CHOREO`, and the on premise environment is labelled as
-`ON_PREM`.
+The environment type. A Choreo environment is labelled as <code>CHOREO</code>, and the on premise environment is labelled as
+<code>ON_PREM</code>.
 
 </td>
 </tr>
@@ -1908,7 +1908,7 @@ The environment type. A Choreo environment is labelled as `CHOREO`, and the on p
 
 Represents the number of errors from each category for a single timestamp. The timestamp is calculated according to the
 provided granularity value. If you select some categories, the error counts are retrieved only for those categories,
-and a `null` value is shown for the other categories that are not selected.
+and a <code>null</code> value is shown for the other categories that are not selected.
 
 <table>
 <thead>
@@ -1926,7 +1926,7 @@ and a `null` value is shown for the other categories that are not selected.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -2071,7 +2071,7 @@ The ID of the API.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -2225,7 +2225,7 @@ calculated based on the granularity value provided.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -2315,7 +2315,7 @@ Pagination details.
 
 ### ErrorsByStatusCodeCategory
 
-Represents the error category values (grouped as `4xx`, `5xx`, and `total`) for both proxy and target errors for a
+Represents the error category values (grouped as <code>4xx</code>, <code>5xx</code>, and <code>total</code>) for both proxy and target errors for a
 single timestamp. The timestamp is calculated based on the granularity value provided.
 
 <table>
@@ -2334,7 +2334,7 @@ single timestamp. The timestamp is calculated based on the granularity value pro
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -2345,7 +2345,7 @@ e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#errorstatuscodecategorycounts">ErrorStatusCodeCategoryCounts</a></td>
 <td>
 
-Represents proxy-related errors categorized as client errors (`4xx` response codes) or server errors (`5xx` response
+Represents proxy-related errors categorized as client errors (<code>4xx</code> response codes) or server errors (<code>5xx</code> response
 codes), and the total of both categories.
 
 </td>
@@ -2355,7 +2355,7 @@ codes), and the total of both categories.
 <td valign="top"><a href="#errorstatuscodecategorycounts">ErrorStatusCodeCategoryCounts</a></td>
 <td>
 
-Represents target-related errors categorized as client errors (`4xx` response codes) or server errors (`5xx`
+Represents target-related errors categorized as client errors (<code>4xx</code> response codes) or server errors (<code>5xx</code>
 response codes), and the total of both categories.
 
 </td>
@@ -2384,7 +2384,7 @@ granularity value provided.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -2521,7 +2521,7 @@ value.
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -2620,7 +2620,7 @@ The sorting column name of the result set.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The sorting order of the result set. Possible values are `asc` and `desc`.
+The sorting order of the result set. Possible values are <code>asc</code> and <code>desc</code>.
 
 </td>
 </tr>
@@ -2839,7 +2839,7 @@ The name of the API subscriber.
 
 ### SuccessAPIUsageByApplication
 
-Represents successful usages(that have resulted in the `2xx` response code) of an API by an application.
+Represents successful usages(that have resulted in the <code>2xx</code> response code) of an API by an application.
 
 <table>
 <thead>
@@ -2959,7 +2959,7 @@ The granularity value for which data is retrieved.
 
 ### SuccessValue
 
-Represents the successful request count (i.e., requests that have received the `2xx` response code) for a single
+Represents the successful request count (i.e., requests that have received the <code>2xx</code> response code) for a single
 timestamp. The timestamp is calculated according to the granularity value provided.
 
 <table>
@@ -2978,7 +2978,7 @@ timestamp. The timestamp is calculated according to the granularity value provid
 <td>
 
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
 e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
@@ -3242,7 +3242,7 @@ an optional parameter that can be used if there is a requirement to filter resul
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3290,7 +3290,7 @@ applications.
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3413,7 +3413,7 @@ The results are filtered by the API ID specified here. This is an optional param
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3586,7 +3586,7 @@ filtering by this attribute, omit the field.
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3622,7 +3622,7 @@ The results are filtered by the API ID specified here. This is an optional param
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3679,7 +3679,7 @@ filtering by this attribute, omit the field.
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3760,7 +3760,7 @@ The results are filtered by the API ID specified here. It is required to specify
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3796,7 +3796,7 @@ The results are filtered by the API ID specified here. This is an optional param
 
 The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
 set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
+specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -4197,21 +4197,21 @@ Target related errors.
 
 ### Boolean
 
-The `Boolean` scalar type represents `true` or `false`.
+The <code>Boolean</code> scalar type represents <code>true</code> or <code>false</code>.
 
 ### Float
 
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+The <code>Float</code> scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 
 ### ID
 
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The <code>ID</code> scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as <code>"4"</code>) or integer (such as <code>4</code>) input value will be accepted as an ID.
 
 ### Int
 
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+The <code>Int</code> scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 
 ### String
 
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The <code>String</code> scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 
