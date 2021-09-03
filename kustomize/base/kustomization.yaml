@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - apim
 - apim-analytics
+- choreo-connect
 - system
 
 commonLabels:

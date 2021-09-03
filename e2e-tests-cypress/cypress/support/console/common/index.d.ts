@@ -52,9 +52,11 @@ declare namespace Cypress {
         goBacktoAppsList(): Chainable<Element>
         searchApps(name: string): Chainable<Element>
         resetAppSearch(): Chainable<Element>
+        closeInitialTourPopup(): Chainable<Element>
         undeployApp(type: string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type: string, name: string, strict: boolean): Chainable<Element>
         cleanupApp(name: string, orgHandle: string): Chainable<Element>
+        cleanupApi(apiId: string, orgId: string, token: string): Chainable<Element>
         createRespond(expression: string, skipSmallPlus?: boolean): Chainable<Element>
         callExternalEndpoint(URL: string, attempts: number, expectedRes: string): Chainable<Element>
         switchToDeployView(appName: string): Chainable<Element>
@@ -80,5 +82,6 @@ declare namespace Cypress {
         clearConfigurations(orgHandle: string): Chainable<Element>
         clearConnections(orgHandle: string): Chainable<Element>
         clearOnPremKeys(orgHandle: string): Chainable<Element>
+        verifyAppName(appName): Chainable<Element>
     }
 }

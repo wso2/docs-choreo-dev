@@ -372,11 +372,12 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.log('Successfully created the log with expression : ' + expression);
 }),
 
-    Cypress.Commands.add('goBacktoAppsList', () => {
-        cy.get('[data-testid="app-list-btn"]').click();
-        cy.get('[id="backdrop-loader"').should('not.exist');
-        cy.log('App List Page loaded successfully');
-    });
+Cypress.Commands.add('goBacktoAppsList', () => {
+    cy.closeInitialTourPopup();
+    cy.get('[data-testid="app-list-btn"]').click();
+    cy.get('[id="backdrop-loader"').should('not.exist');
+    cy.log('App List Page loaded successfully');
+});
 
 Cypress.Commands.add('searchApps', (name: string) => {
     cy.get('body').then($body => {
@@ -389,6 +390,7 @@ Cypress.Commands.add('searchApps', (name: string) => {
 });
 
 Cypress.Commands.add('resetAppSearch', () => {
+    cy.closeInitialTourPopup();
     cy.get('body').then($body => {
         let searchButtonExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
         if (searchButtonExists) {
@@ -399,6 +401,15 @@ Cypress.Commands.add('resetAppSearch', () => {
         let searchBoxExists = ($body.find('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').length > 0) ? true : false;
         if (searchBoxExists) {
             cy.get('[data-testid="search-app"] .MuiInputBase-input.MuiInput-input').eq(0).click().clear();
+        }
+    });
+});
+
+Cypress.Commands.add('closeInitialTourPopup', () => {
+    cy.get('body').then($body => {
+        let tourPopupExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
+        if (tourPopupExists) {
+            cy.get('[data-testid="product-tour-initial-close-btn"]').click();
         }
     });
 });
@@ -462,6 +473,25 @@ Cypress.Commands.add('cleanupApp', (name: string, orgHandle: string) => {
         cy.log("Successfully cleaned up the app: " + name);
     });
 });
+
+Cypress.Commands.add('cleanupApi', (apiId: string, orgId: string, token: string) => {
+    cy.request({
+        method: "DELETE",
+        url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        qs: {
+            'organizationId': orgId,
+        },
+    }).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
+        cy.log("Successfully cleaned up the api: " + apiId);
+    });
+});
+
 
 Cypress.Commands.add('deleteApiByApplicationId', (id: string, orgId: string) => {
     let token;
@@ -776,7 +806,7 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
 }),
 
     /**
-     * Find the element plus icon in inner classes in the Low code editor 
+     * Find the element plus icon in inner classes in the Low code editor
      *
      * @param plusBtnIndex - Index of the element plus icon with id `SmallPlus` in the Low code editor
      * @param selector - Array of class elements
@@ -801,7 +831,7 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
     * @param lon : Longtitude
     * @param exclude : Exclude parts of the weather data from the API response.
     * @param units : Temperature units
-    * @param lang : Language 
+    * @param lang : Language
     */
     Cypress.Commands.add('addWeatherForecastAPI', (plusBtnIndex: number, endpointName: string,
         responseVarName: string, lat: string, lon: string, exclude?: string, units?: string, lang?: string) => {
@@ -843,7 +873,7 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
     * Send Choreo SMS
     *
     * @param recipientNumber - SMS Recipient's Phone Number
-    * @param textMessage 
+    * @param textMessage
     * @param responseVariableName - optional
     */
     Cypress.Commands.add('sendChoreoSMS', (recipientNumber: string, textMessage: string, responseVariableName?: string) => {
@@ -927,8 +957,10 @@ Cypress.Commands.add('clearApps', (orgHandle: string) => {
         const apps = response["body"] as { name: string, displayName: string, status: string }[];
         const e2eApps = apps.filter(app => app.displayName.startsWith(appNamePrefix));
 
+        cy.log(`Total apps found : ${apps.length}`);
+        cy.log(`E2E test apps found : ${e2eApps.length}`);
+
         if (e2eApps.length) {
-            cy.log(`E2E test apps found : ${e2eApps.length}`);
             for (const app of e2eApps) {
                 const { name, status } = app;
                 if (status === "running") {
@@ -951,16 +983,23 @@ Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
         form: true,
         url: `${APP_SVC_URL}/orgs/${orgHandle}/keys/`
     }).then((response) => {
-        const data = response["body"] as [];
+        const keys = response["body"] as { displayName: string }[];
+	    const e2eKeys = keys.filter(({displayName}) => {
+		    if (isOldValue(displayName) || displayName.startsWith(keyNamePrefix)) {
+			    return true;
+		    }
+		    return false;
+	    });
 
-        if (data.length) {
-            cy.log(`e2e test on-prem keys found : ${data.length}`);
-            for (const value of data) {
-                const keyName = value["displayName"] as string;
-                if (isOldValue(keyName) || keyName.startsWith(keyNamePrefix)) {
-                    cy.cleanOnPremKey(keyName, orgHandle);
-                    cy.wait(300);
-                }
+	    cy.log(`Total on-prem keys found : ${keys.length}`);
+	    cy.log(`E2E test on-prem keys found : ${e2eKeys.length}`);
+
+        if (e2eKeys.length) {
+            for (const key of e2eKeys) {
+                const { displayName } = key;
+
+		        cy.cleanOnPremKey(displayName, orgHandle);
+		        cy.wait(300);
             }
             cy.log("Successfully deleted all e2e test on-prem keys");
         } else {
@@ -986,23 +1025,14 @@ Cypress.Commands.add('clearAPIs', (orgId: string) => {
         }).then((response) => {
             const apis = response["body"]["list"] as { id: string, name: string, }[];
             const e2eApis = apis.filter(({ name }) => name.startsWith(apiNamePrefix) || name.startsWith(appNamePrefix));
+
+            cy.log(`Total APIs found : ${apis.length}`);
+            cy.log(`E2E test APIs found : ${e2eApis.length}`);
+
             if (e2eApis.length) {
-                cy.log(`e2e test APIs found : ${e2eApis.length}`);
                 for (const api of e2eApis) {
-                    if (api.name.startsWith(apiNamePrefix)) {
-                        cy.request({
-                            method: "DELETE",
-                            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + api.id,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + token.value
-                            },
-                            qs: {
-                                'organizationId': orgId,
-                            },
-                        });
-                        cy.wait(300);
-                    }
+                    cy.cleanupApi(api.id, orgId, token.value);
+                    cy.wait(300);
                 }
                 cy.log("Successfully deleted all e2e test APIs");
             } else {
@@ -1019,4 +1049,12 @@ Cypress.Commands.add('clearAllTestData', (org: { uuid: string, handle: string })
     cy.clearAPIs(org.uuid);
     // cy.clearConnections(org.handle);
     // cy.clearConfigurations(org.handle);
+});
+
+// Verify the App Name
+Cypress.Commands.add('verifyAppName', (appName) => {
+    cy.get('h4.MuiTypography-root').invoke('text').then((text) =>{
+        cy.log("App Name From Choreo :: ${text}");
+        expect(text.trim()).eq(appName)
+    });
 });
