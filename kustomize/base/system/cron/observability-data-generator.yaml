@@ -53,11 +53,6 @@ spec:
                     configMapKeyRef:
                       key: WS_MANAGER_SERVICE_ADDRESS
                       name: cm-observability-data-generator
-                - name: APIM_SERVICE_URL
-                  valueFrom:
-                    configMapKeyRef:
-                      key: APIM_SERVICE_URL
-                      name: cm-observability-data-generator
                 - name: APIM_CLIENT_ID
                   valueFrom:
                     secretKeyRef:
