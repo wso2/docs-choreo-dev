@@ -11,18 +11,20 @@
  * associated services.
  */
 
-import { generateAppName } from '../../../support/common/utils';
+import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
 import { INTEGRATIONS_TEXT } from '../../../support/common/constants';
 
 /// <reference types="cypress" />
 
 describe('Schedule trigger test run and deployment', () => {
-    let savedCookies
-    let appName: string
+    let savedCookies: Cypress.Cookie[];
+    let appName: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         })
@@ -40,7 +42,7 @@ describe('Schedule trigger test run and deployment', () => {
         appName = generateAppName("app");
         cy.log('Generated application name: ', appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should('include', 'app/' + appName + '/develop');
+        cy.verifyAppName(appName);
         cy.selectTrigger("Schedule");
         cy.selectManualTriggerOptions("Statements", "addLog");
         cy.createLogProperty("Info", "Hello world");

@@ -6,17 +6,17 @@
 
     1.  Navigate to the `e2e-tests-cypress` directory
     2.  Run `npm install` - only for first time
-    3.  Change the following in `cypress.env.json`
-        -   loginURL
-        -   appSvcURL
-        -   baseUrl
-            that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
-        -   apimBasePath
-            that contains empty value to `/apimanagement`
-        -   idpUsername and idpPassword (refer to bellow section on how to get them)
-    4.  Run `npm run e2etest:headless`
+    3.  Change the following in `cypress.env.json` if you are working on front-end local dev server
+	    -   URLs that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
+	        -   `loginURL`
+	        -   `appSvcURL`
+	        -   `baseUrl`
+	    -   `apimBasePath` value to `/apimanagement`
+    4.  Update user information in `cypress.env.json`
+	    -   `idpUsername` and `idpPassword` (Refer the section section below on how to get them)
+	    -   (Optional) If the user is associated with multiple organizations, the specific organization handle to be considered in the test execution can be set in the `selectedOrgHandle`. By default this is not set, which will result in the first organization value returned in the users orgs list being considered.
 
-    -   This will run test cases in [headless mode](#headless-mode).
+    5.  Run `npm run e2etest:headless` to run test cases in [headless mode](#headless-mode)
 
 -   ### Getting idpUsername and idpPassword
 

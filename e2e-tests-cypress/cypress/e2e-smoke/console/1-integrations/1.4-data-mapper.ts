@@ -10,8 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName } from "../../../support/common/utils";
-import { INTEGRATIONS_TEXT,EX_LONG_TIME_OUT} from "../../../support/common/constants";
+import { generateAppName, getSelectedOrgHandle } from "../../../support/common/utils";
+import { INTEGRATIONS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
@@ -19,8 +19,10 @@ describe("Data Mapper", () => {
     let appName: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
     });
 
 
@@ -32,7 +34,7 @@ describe("Data Mapper", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should("include", "app/" + appName + "/develop");
+        cy.verifyAppName(appName);
         cy.selectTrigger("Manual");
         cy.get('[data-testid="vertical-close-btn"]').click();
 

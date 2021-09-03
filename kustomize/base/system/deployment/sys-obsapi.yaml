@@ -3,14 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_20=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_29=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: sys-obsapi
   name: sys-obsapi
@@ -28,6 +22,9 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - env:
             - name: b7a_log_level
@@ -39,17 +36,17 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: IDP_ISSUER
-                  name: cm-idp-replica
+                  name: env-idp-replica
             - name: IDP_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: IDP_CLIENT_ID
-                  name: cm-idp-replica
+                  name: env-idp-replica
             - name: IDP_HOST
               valueFrom:
                 configMapKeyRef:
                   key: IDP_HOST
-                  name: cm-idp-replica
+                  name: env-idp-replica
             - name: IDP_JWKS_ENDPOINT
               valueFrom:
                 configMapKeyRef:
@@ -64,32 +61,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: cm-sys-obsapi
-            - name: USER_APPS_NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  key: USER_APPS_NAMESPACE
-                  name: cm-k8sservice-replica
-            - name: K8S_SERVICE_SUBSCRIPTION_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: K8S_SERVICE_SUBSCRIPTION_ID
-                  name: cm-k8sservice-replica
-            - name: RESOURCE_GROUP
-              valueFrom:
-                configMapKeyRef:
-                  key: RESOURCE_GROUP
-                  name: cm-k8sservice-replica
-            - name: CLUSTER_NAME
-              valueFrom:
-               configMapKeyRef:
-                 key: CLUSTER_NAME
-                 name: cm-k8sservice-replica
+                  name: env-sys-obsapi
             - name: AZURE_LA_WORKSPACE_ID
               valueFrom:
                 configMapKeyRef:
                   key: LOG_WORKSPACE_ID
-                  name: cm-loganalytics-replica
+                  name: env-loganalytics-replica
             - name: NEGOTIATOR_GRPC_ADDRESS
               valueFrom:
                 configMapKeyRef:
@@ -105,11 +82,18 @@ spec:
                 secretKeyRef:
                   name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
+          envFrom:
+            - configMapRef:
+                name: env-k8sservice-replica
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
-            runAsUser: 100
-            runAsGroup: 1000
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+              - all
           name: sys-obsapi
           volumeMounts:
           - name: secret-sys-obsapi
