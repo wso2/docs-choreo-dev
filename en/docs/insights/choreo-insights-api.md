@@ -245,9 +245,9 @@ Data filter
 <td valign="top"><a href="#latencysummary">LatencySummary</a></td>
 <td>
 
-Returns the response latency value (95th percentile value) for each time interval (calculates according to the
-granularity value) within the specified time range for the given combination of tenant ID, environment ID, and
-organization ID. Optionally, you can configure the `latencySummaryFilter` parameter to further filter the results.
+Returns the response latency value (95th percentile value) for each time granularity within the specified time range
+for the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`latencySummaryFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -283,10 +283,9 @@ Data filter
 <td valign="top"><a href="#successsummary">SuccessSummary</a></td>
 <td>
 
-Returns the number of successful (2xx response code) hit count for each time interval (calculates according to the
-granularity value) within the specified time range for the given combination of tenant ID, environment ID, and
-organization ID. Optionally, you can configure the `granularity` parameter to override the default granularity
-value.
+Returns the number of successful (2xx response code) hit count for each time granularity within the specified time
+range for the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`granularity` parameter to override the default granularity value.
 
 </td>
 </tr>
@@ -322,10 +321,9 @@ Granularity value
 <td valign="top"><a href="#errorsummary">ErrorSummary</a></td>
 <td>
 
-Returns the number of unsuccessful (total of both 4xx and 5xx response codes) hit count for each time interval (
-calculates according to the granularity value) within the specified time range for the given combination of tenant
-ID, environment ID, and organization ID. Optionally, you can configure the `granularity` parameter to override the
-default granularity value.
+Returns the number of unsuccessful (total of both 4xx and 5xx response codes) hit count for each time granularity
+within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
+Optionally, you can configure the `granularity` parameter to override the default granularity value.
 
 </td>
 </tr>
@@ -362,9 +360,8 @@ Granularity value
 <td>
 
 Returns the number of proxy errors (total of both 4xx and 5xx response codes) hit count by each error category for
-each time interval (calculates according to the granularity value) within the specified time range for the given
-combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-`errorsByCategoryFilter` parameter to further filter the results.
+each time granularity within the specified time range for the given combination of tenant ID, environment ID, and
+organization ID. Optionally, you can configure the `errorsByCategoryFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -438,10 +435,10 @@ Data filter
 <td valign="top">[<a href="#errorsbystatuscodecategory">ErrorsByStatusCodeCategory</a>]</td>
 <td>
 
-Returns a list of hit counts for proxy and target errors by each time interval (calculates according to the
-granularity value) within the specified time range for the given combination of tenant ID, environment ID, and
-organization ID. Each proxy and target error category result set contains breakdown of errors as 4xx, 5xx and total.
-Optionally, you can configure the `errorsByStatusCodeFilter` parameter to further filter the results.
+Returns a list of hit counts for proxy and target errors for each time granularity within the specified time range
+for the given combination of tenant ID, environment ID, and organization ID. The errors in each proxy and target
+result set are grouped as `4xx`, `5xx`, and `total`. Optionally, you can configure the `errorsByStatusCodeFilter`
+parameter to further filter the results.
 
 </td>
 </tr>
@@ -477,8 +474,8 @@ Data filter
 <td valign="top"><a href="#errorsbystatuscode">ErrorsByStatusCode</a></td>
 <td>
 
-Returns hit count for each error response code (401, 404, 500, etc.) for each API within the specified time range
-for the given combination of tenant ID, environment ID, and organization ID.
+Returns the hit count for each error response code (401, 404, and 500 etc.,) for each API within the specified time
+range for the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -514,9 +511,9 @@ Data filter
 <td valign="top"><a href="#totalerror">TotalError</a></td>
 <td>
 
-Returns the total proxy error hit count for an API across all the data available time range for the given
-combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the `filter` parameter
-to further filter the results by a time range.
+Returns the total proxy error hit count for an API across for the given combination of tenant ID, environment ID,
+and organization ID. Optionally, you can configure the `filter` parameter to further filter the results by a given
+time range.
 
 </td>
 </tr>
@@ -552,9 +549,9 @@ API Id
 <td valign="top">[<a href="#apiusageovertime">APIUsageOverTime</a>]</td>
 <td>
 
-Returns a list of each API usage over time for each time interval (calculates according to the granularity value)
-within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
-Optionally, you can configure the `apiUsageOvertimeFilter` parameter to further filter the results.
+Returns a list of usage details for each API over time for each time granularity within the specified time range for
+the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`apiUsageOvertimeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -590,9 +587,9 @@ Data filter
 <td valign="top"><a href="#apiusagebyappovertime">APIUsageByAppOverTime</a></td>
 <td>
 
-Returns API usage by each application over time for each time interval (calculates according to the granularity
-value) within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
-Optionally, you can configure the `apiUsageOvertimeFilter` parameter to further filter the results.
+Returns API usage by each application over time for each time granularity within the specified time range for the
+given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`apiUsageOvertimeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -628,9 +625,9 @@ Data filter
 <td valign="top"><a href="#apiusagebybackendovertime">APIUsageByBackendOverTime</a></td>
 <td>
 
-Returns API usage by each backend over time for each time interval (calculates according to the granularity value)
-within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
-Optionally, you can configure the `apiUsageByBackendOverTimeFilter` parameter to further filter the results.
+Returns API usage by each backend over time for each time granularity within the specified time range for the given
+combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+`apiUsageByBackendOverTimeFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -704,9 +701,8 @@ Data filter
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Returns the total hit count for an API across all the data available time range for the given combination of tenant
-ID, environment ID, and organization ID. Optionally, you can configure the `filter` parameter to further filter the
-results by a time range.
+Returns the total hit count for an API for the given combination of tenant ID, environment ID, and organization ID.
+Optionally, you can configure the `filter` parameter to further filter the results by a given time range.
 
 </td>
 </tr>
@@ -742,8 +738,8 @@ API Id
 <td valign="top">[<a href="#slowapi">SlowAPI</a>]</td>
 <td>
 
-Returns a list of top slowest APIs by the response latency (95th percentile value) within the specified time range
-for the given combination of tenant ID, environment ID, and organization ID.
+Returns a list of top slowest APIs based on the response latency (95th percentile value) within the specified time
+range for the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
@@ -780,8 +776,8 @@ Limit for the slow APIs list
 <td>
 
 Returns different latency category values (95th percentile values) for a given API over time for each time
-interval (calculates according to the granularity value) within the specified time range for the given combination
-of tenant ID, environment ID, and organization ID.
+granularity within the specified time range for the given combination of tenant ID, environment ID, and organization
+ID.
 
 </td>
 </tr>
@@ -817,9 +813,9 @@ Data filter
 <td valign="top"><a href="#overalllatency">OverallLatency</a></td>
 <td>
 
-Returns the overall response latency (95th percentile value) for an API across all the data available time range for
-the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the `filter`
-parameter to further filter the results by a time range.
+Returns the overall response latency (95th percentile value) for an API for the given combination of tenant ID,
+environment ID, and organization ID. Optionally, you can configure the `filter` parameter to further filter the
+results by a given time range.
 
 </td>
 </tr>
@@ -856,8 +852,8 @@ API Id
 <td>
 
 Return the total number of response cache hits, misses and hit percentage for an API over time for each time
-interval (calculates according to the granularity value) within the specified time range for the given combination
-of tenant ID, environment ID, and organization ID.
+granularity within the specified time range for the given combination of tenant ID, environment ID, and
+organization ID.
 
 </td>
 </tr>
@@ -893,10 +889,10 @@ Data filter
 <td valign="top">[<a href="#platform">Platform</a>]</td>
 <td>
 
-Returns a list of top platforms by hit count within the specified time range for the given combination of tenant ID,
-environment ID, and organization ID. The result list will include top 9 platforms with the respective hit count
-and all the other platforms labelled as 'Other' with the respective cumulated hit count. Optionally, you can
-configure the `deviceFilter` parameter to further filter the results.
+Returns a list of top platforms ranked based on the hit count within the specified time range for the given
+combination of tenant ID, environment ID, and organization ID. The result list includes the top nine platforms with
+the respective hit count, and all the rest of the platforms are labelled as **Other** with the cumulated hit count.
+Optionally, you can configure the `deviceFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -932,10 +928,10 @@ Data filter
 <td valign="top">[<a href="#useragent">UserAgent</a>]</td>
 <td>
 
-Returns a list of top user agent by hit count within the specified time range for the given combination of tenant
-ID, environment ID, and organization ID. The result list will include top 9 user agents with the respective hit
-count and all the other user agents labelled as 'Other' with the respective cumulated hit count. Optionally, you can
-configure the `deviceFilter` parameter to further filter the results.
+Returns a list of top user agents ranked based on the hit count within the specified time range for the given
+combination of tenant ID, environment ID, and organization ID. The result list includes the top nine user agents
+with the respective hit count, and all the rest of the platforms are labelled as **Other** with the cumulated hit
+count. Optionally, you can configure the `deviceFilter` parameter to further filter the results.
 
 </td>
 </tr>
@@ -1011,7 +1007,7 @@ Data filter
 <td valign="top">[<a href="#apiusagebyapplication">APIUsageByApplication</a>]</td>
 <td>
 
-Returns a list of each API usage by each application within the specified time range for the given combination of
+Returns usage details of each API by application within the specified time range for the given combination of
 tenant ID, environment ID, and organization ID. Optionally, you can configure the `apiUsageByAppFilter` parameter to
 further filter the results.
 
@@ -1049,8 +1045,8 @@ Data filter
 <td valign="top"><a href="#topapisbyalertcount">TopAPIsByAlertCount</a></td>
 <td>
 
-Returns top APIs by the alert count within the specified time range for the given combination of tenant ID,
-environment ID, and organization ID. Optionally, you can configure the `topAPIsByAlertCountFilter` parameter to
+Returns top APIs ranked based on the alert count within the specified time range for the given combination of tenant
+ID, environment ID, and organization ID. Optionally, you can configure the `topAPIsByAlertCountFilter` parameter to
 further filter the results.
 
 </td>
@@ -1087,7 +1083,7 @@ Data filter
 <td valign="top"><a href="#alertsummaries">AlertSummaries</a></td>
 <td>
 
-Returns a summary of each alert for within the specified time range for the given combination of tenant ID,
+Returns a summary for each alert within the specified time range for the given combination of tenant ID,
 environment ID, and organization ID. Optionally, you can configure the `alertSummaryFilter` parameter to further
 filter the results.
 
@@ -1127,8 +1123,9 @@ Data filter
 
 NOTE: This operations can only be invoked via using an on-prem key as the authentication header.
 
-Returns a list of successful(2xx response codes) hit counts for each API by each application within the specified
-time range. Optionally, you can configure the `successAPIUsageByAppFilter` parameter to further filter the results.
+Returns a list of successful hit counts (i.e., 2xx response codes) within the specified time range for each API,
+grouped by each application. Optionally, you can configure the `successAPIUsageByAppFilter` parameter to further
+filter the results.
 
 </td>
 </tr>
@@ -1174,7 +1171,7 @@ Represents API details.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -1201,7 +1198,7 @@ API version.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API provider name.
+The API provider name.
 
 </td>
 </tr>
@@ -1227,7 +1224,7 @@ Represents latency values for a single API over time.
 <td valign="top">[<a href="#latency">Latency</a>]</td>
 <td>
 
-List containing latency category values over time. Returns an empty array if no data available.
+A list containing latency category values over time. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1236,7 +1233,7 @@ List containing latency category values over time. Returns an empty array if no 
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -1245,7 +1242,7 @@ Granularity value used for data retrieval.
 
 ### APIUsage
 
-Represents API usage for a single timestamp. Timestamp is calculated according to the provided granularity value.
+Represents the API usage for a single timestamp. The timestamp is calculated based on the granularity value provided.
 
 <table>
 <thead>
@@ -1262,10 +1259,10 @@ Represents API usage for a single timestamp. Timestamp is calculated according t
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -1274,7 +1271,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-API usage count.
+The API usage count.
 
 </td>
 </tr>
@@ -1300,7 +1297,7 @@ Represents API usage across APIs by a single application.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-Application Id.
+The application ID.
 
 </td>
 </tr>
@@ -1309,7 +1306,7 @@ Application Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application name.
+The application name.
 
 </td>
 </tr>
@@ -1318,7 +1315,7 @@ Application name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application owner name.
+The name of the application owner.
 
 </td>
 </tr>
@@ -1327,7 +1324,7 @@ Application owner name.
 <td valign="top">[<a href="#apiusage">APIUsage</a>]</td>
 <td>
 
-List containing the APIs usage values. Returns an empty array if no data available.
+A list containing the APIs usage values. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1353,7 +1350,8 @@ Represents API usage across APIs by applications over time.
 <td valign="top">[<a href="#apiusagebyapp">APIUsageByApp</a>]</td>
 <td>
 
-List containing the API usage values across APIs by each application. Returns an empty array if no data available.
+A list containing the API usage values across APIs by each application. Returns an empty array if no data is
+available.
 
 </td>
 </tr>
@@ -1362,7 +1360,7 @@ List containing the API usage values across APIs by each application. Returns an
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -1388,7 +1386,7 @@ Represents a single API usage by a single application.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -1397,7 +1395,7 @@ API Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application Id.
+The Application Id.
 
 </td>
 </tr>
@@ -1406,7 +1404,7 @@ Application Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application name.
+The application name.
 
 </td>
 </tr>
@@ -1415,7 +1413,7 @@ Application name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application owner name.
+The name of the application owner.
 
 </td>
 </tr>
@@ -1424,7 +1422,7 @@ Application owner name.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Usage of API by the application.
+The usage of the API by the application.
 
 </td>
 </tr>
@@ -1450,7 +1448,7 @@ Represents API usage across APIs by a single backend.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Backend name.
+The name of the backend.
 
 </td>
 </tr>
@@ -1459,7 +1457,7 @@ Backend name.
 <td valign="top">[<a href="#apiusage">APIUsage</a>]</td>
 <td>
 
-List containing the APIs usage values. Returns an empty array if no data available.
+A list containing the APIs usage values. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1485,7 +1483,7 @@ Represents API usage across APIs by each backend over time.
 <td valign="top">[<a href="#apiusagebybackend">APIUsageByBackend</a>]</td>
 <td>
 
-List containing the API usage values across APIs by each backend. Returns an empty array if no data available.
+A list containing the API usage values across APIs by each backend. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1494,7 +1492,7 @@ List containing the API usage values across APIs by each backend. Returns an emp
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -1520,7 +1518,7 @@ Represents a single API usage across different countries.
 <td valign="top"><a href="#id">ID</a></td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -1529,7 +1527,7 @@ API Id.
 <td valign="top">[<a href="#usagebygeolocation">UsageByGeoLocation</a>]</td>
 <td>
 
-List containing usages of API in different countries. Returns an empty array if no data available.
+A List containing usages of API in different countries. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1555,7 +1553,7 @@ Represents a single API usage over time.
 <td valign="top"><a href="#id">ID</a></td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -1564,7 +1562,7 @@ API Id.
 <td valign="top">[<a href="#apiusage">APIUsage</a>]</td>
 <td>
 
-List containing the API usage values. Returns an empty array if no data available.
+A list containing the API usage values. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1573,7 +1571,7 @@ List containing the API usage values. Returns an empty array if no data availabl
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -1599,7 +1597,7 @@ Represents alert summaries.
 <td valign="top">[<a href="#alertsummary">AlertSummary</a>]</td>
 <td>
 
-List containing alert summary for each alert. Returns an empty array if no data available.
+A list containing alert summary for each alert. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1634,7 +1632,7 @@ Represents a summary for an alert.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -1643,10 +1641,10 @@ API Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -1655,7 +1653,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Alert category(Latency or Traffic).
+The alert category. Possible values are `LATENCY` and `TRAFFIC`.
 
 </td>
 </tr>
@@ -1664,7 +1662,7 @@ Alert category(Latency or Traffic).
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Alert metric(Response Latency or Total Traffic).
+The alert metric. Possible values are `RESPONSE_LATENCY` and `TOTAL_TRAFFIC`.
 
 </td>
 </tr>
@@ -1673,7 +1671,7 @@ Alert metric(Response Latency or Total Traffic).
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Severity level of the alert(Low, Moderate or High)
+The severity level of the alert. Possible values are `LOW`, `MEDIUM`, and `HIGH`.
 
 </td>
 </tr>
@@ -1691,7 +1689,7 @@ Alert details.
 
 ### Application
 
-Represents Application details.
+Represents application details.
 
 <table>
 <thead>
@@ -1708,7 +1706,7 @@ Represents Application details.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-Application Id.
+The Application ID.
 
 </td>
 </tr>
@@ -1717,7 +1715,7 @@ Application Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application name.
+The application name.
 
 </td>
 </tr>
@@ -1726,7 +1724,7 @@ Application name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application owner name.
+The name of the application owner.
 
 </td>
 </tr>
@@ -1735,8 +1733,8 @@ Application owner name.
 
 ### CacheHit
 
-Represents response cache hits and misses values for a single timestamp. Timestamp is calculated according to the
-provided granularity value.
+Represents the response cache hits and misses for a single timestamp. The timestamp is calculated based on the
+granularity value provided.
 
 <table>
 <thead>
@@ -1753,10 +1751,10 @@ provided granularity value.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -1765,7 +1763,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Number of times response cache hit .
+The number of times the response cache was hit.
 
 </td>
 </tr>
@@ -1774,7 +1772,7 @@ Number of times response cache hit .
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Number of times response cache missed.
+The number of times the response cache was missed.
 
 </td>
 </tr>
@@ -1783,7 +1781,7 @@ Number of times response cache missed.
 <td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
-Response cache hits as a percentage to total of hits and misses.
+The response cache hits as a percentage of the sum of hits and misses.
 
 </td>
 </tr>
@@ -1792,7 +1790,7 @@ Response cache hits as a percentage to total of hits and misses.
 
 ### CacheHits
 
-Represents response cache hits and misses over time.
+Represents the response cache hits and misses over time.
 
 <table>
 <thead>
@@ -1809,7 +1807,8 @@ Represents response cache hits and misses over time.
 <td valign="top">[<a href="#cachehit">CacheHit</a>]</td>
 <td>
 
-List containing cache hits, misses and hit percentage over time. Returns an empty array if no data available.
+A list containing cache hits, misses, and the hit percentage over time. Returns an empty array if no data is
+available.
 
 </td>
 </tr>
@@ -1818,7 +1817,7 @@ List containing cache hits, misses and hit percentage over time. Returns an empt
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -1844,7 +1843,7 @@ Represents error details over time.
 <td valign="top">[<a href="#errordetails">ErrorDetails</a>]!</td>
 <td>
 
-List containing error details over time. Returns an empty array if no data available.
+A list containing error details over time. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1879,7 +1878,7 @@ Represents an environment.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Environment Id.
+The environment ID.
 
 </td>
 </tr>
@@ -1888,7 +1887,7 @@ Environment Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Environment name.
+The environment name.
 
 </td>
 </tr>
@@ -1897,8 +1896,8 @@ Environment name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Environment type. Choreo environment will be labelled as 'CHOREO' and on premise environments will be labelled as
-'ON_PREM'.
+The environment type. A Choreo environment is labelled as `CHOREO`, and the on premise environment is labelled as
+`ON_PREM`.
 
 </td>
 </tr>
@@ -1907,9 +1906,9 @@ Environment type. Choreo environment will be labelled as 'CHOREO' and on premise
 
 ### ErrorCountByCategory
 
-Represents number of errors for each category for a single timestamp. Timestamp is calculated according to the provided
-granularity value. If categories are selected, then unselected category field will have null as the value while other
-selected categories containing error count.
+Represents the number of errors from each category for a single timestamp. The timestamp is calculated according to the
+provided granularity value. If you select some categories, the error counts are retrieved only for those categories,
+and a `null` value is shown for the other categories that are not selected.
 
 <table>
 <thead>
@@ -1926,10 +1925,10 @@ selected categories containing error count.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -1938,7 +1937,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Authorization related error count.
+The count of authorization errors.
 
 </td>
 </tr>
@@ -1947,7 +1946,7 @@ Authorization related error count.
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Target Connectivity related error count.
+The count of target connectivity errors.
 
 </td>
 </tr>
@@ -1956,7 +1955,7 @@ Target Connectivity related error count.
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Throttling related error count.
+The count of throttling errors.
 
 </td>
 </tr>
@@ -1965,7 +1964,7 @@ Throttling related error count.
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Other errors count.
+The count of other errors.
 
 </td>
 </tr>
@@ -1974,7 +1973,7 @@ Other errors count.
 
 ### ErrorCountByCode
 
-Represents error count for a single error status code.
+Represents the error count for a single error status code.
 
 <table>
 <thead>
@@ -1991,7 +1990,7 @@ Represents error count for a single error status code.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Error status code.
+The error status code.
 
 </td>
 </tr>
@@ -2000,7 +1999,7 @@ Error status code.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Error count.
+The error count.
 
 </td>
 </tr>
@@ -2009,7 +2008,7 @@ Error count.
 
 ### ErrorCountByCodeForAPI
 
-Represents error count for each status code for a single API.
+Represents the error count for each status code for a single API.
 
 <table>
 <thead>
@@ -2026,7 +2025,7 @@ Represents error count for each status code for a single API.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-Api Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -2035,7 +2034,7 @@ Api Id.
 <td valign="top">[<a href="#errorcountbycode">ErrorCountByCode</a>]</td>
 <td>
 
-List containing error count for each error status code. Returns an empty array if no data available.
+A list containing the error count for each error status code. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2044,8 +2043,8 @@ List containing error count for each error status code. Returns an empty array i
 
 ### ErrorDetails
 
-Represents details of an error for a single timestamp. Timestamp is calculated according to the provided granularity
-value.
+Represents details of an error for a single timestamp. The timestamp is calculated according to the granularity value
+provided.
 
 <table>
 <thead>
@@ -2062,7 +2061,7 @@ value.
 <td valign="top"><a href="#id">ID</a></td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -2071,10 +2070,10 @@ API Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -2083,7 +2082,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Application Id.
+The Application ID.
 
 </td>
 </tr>
@@ -2092,7 +2091,7 @@ Application Id.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Application name.
+The application name.
 
 </td>
 </tr>
@@ -2101,7 +2100,7 @@ Application name.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Application owner name.
+The name of the application owner.
 
 </td>
 </tr>
@@ -2110,7 +2109,7 @@ Application owner name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Error reason.
+The reason for the error.
 
 </td>
 </tr>
@@ -2119,7 +2118,7 @@ Error reason.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Error count.
+The error count.
 
 </td>
 </tr>
@@ -2128,7 +2127,7 @@ Error count.
 
 ### ErrorStatusCodeCategoryCounts
 
-Represents errors by main status code category(4xx or 5xx) and the total error count.
+Represents errors by the main status code (4xx or 5xx) and the total error count.
 
 <table>
 <thead>
@@ -2145,7 +2144,7 @@ Represents errors by main status code category(4xx or 5xx) and the total error c
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Number of client errors(4xx response codes).
+The number of client errors.
 
 </td>
 </tr>
@@ -2154,7 +2153,7 @@ Number of client errors(4xx response codes).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Number of server errors(5xx response codes).
+The number of server errors.
 
 </td>
 </tr>
@@ -2163,7 +2162,7 @@ Number of server errors(5xx response codes).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Total of client and server errors.
+The total number of client and server errors.
 
 </td>
 </tr>
@@ -2172,7 +2171,7 @@ Total of client and server errors.
 
 ### ErrorSummary
 
-Provides unsuccessful(4xx and 5xx response code) usage summary across all the APIs.
+Provides the unsuccessful usage (i.e., 4xx and 5xx response codes) summary across all APIs.
 
 <table>
 <thead>
@@ -2189,7 +2188,7 @@ Provides unsuccessful(4xx and 5xx response code) usage summary across all the AP
 <td valign="top">[<a href="#errorvalue">ErrorValue</a>]!</td>
 <td>
 
-List containing unsuccessful usage values. Returns an empty array if no data available.
+A list containing unsuccessful usage values. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2198,7 +2197,7 @@ List containing unsuccessful usage values. Returns an empty array if no data ava
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -2207,8 +2206,8 @@ Granularity value used for data retrieval.
 
 ### ErrorValue
 
-Represents unsuccessful request count(4xx and 5xx response code) for a single timestamp. Timestamp is calculated
-according to the provided granularity value.
+Represents the unsuccessful request count (i.e., 4xx and 5xx response codes) for a single timestamp. The timestamp is
+calculated based on the granularity value provided.
 
 <table>
 <thead>
@@ -2225,10 +2224,10 @@ according to the provided granularity value.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -2237,7 +2236,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Represents error request count.
+Represents the error request count.
 
 </td>
 </tr>
@@ -2246,7 +2245,7 @@ Represents error request count.
 
 ### ErrorsByCategory
 
-Represents errors by category over time for error categories.
+Represents the errors by category over time.
 
 <table>
 <thead>
@@ -2263,7 +2262,7 @@ Represents errors by category over time for error categories.
 <td valign="top">[<a href="#errorcountbycategory">ErrorCountByCategory</a>]</td>
 <td>
 
-List containing error count for each error category over time. Returns an empty array if no data available.
+A list containing the error count for each error category over time. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2272,7 +2271,7 @@ List containing error count for each error category over time. Returns an empty 
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -2281,7 +2280,7 @@ Granularity value used for data retrieval.
 
 ### ErrorsByStatusCode
 
-Represents error counts for each status code for each API for all the APIs.
+Represents the error counts grouped by status code for each API.
 
 <table>
 <thead>
@@ -2298,7 +2297,7 @@ Represents error counts for each status code for each API for all the APIs.
 <td valign="top">[<a href="#errorcountbycodeforapi">ErrorCountByCodeForAPI</a>]!</td>
 <td>
 
-List containing error count for each status code for each API. Returns an empty array if no data available.
+A list containing the error count for each status code of each API. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2316,8 +2315,8 @@ Pagination details.
 
 ### ErrorsByStatusCodeCategory
 
-Represents error category values(as 4xx, 5xx and total) for both proxy and target errors for a single timestamp.
-Timestamp is calculated according to the provided granularity value.
+Represents the error category values (grouped as `4xx`, `5xx`, and `total`) for both proxy and target errors for a
+single timestamp. The timestamp is calculated based on the granularity value provided.
 
 <table>
 <thead>
@@ -2334,10 +2333,10 @@ Timestamp is calculated according to the provided granularity value.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -2346,8 +2345,8 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#errorstatuscodecategorycounts">ErrorStatusCodeCategoryCounts</a></td>
 <td>
 
-Represents proxy related errors categorized as client errors(4xx response codes) or server errors(5xx response
-codes) and total of both categories.
+Represents proxy-related errors categorized as client errors (`4xx` response codes) or server errors (`5xx` response
+codes), and the total of both categories.
 
 </td>
 </tr>
@@ -2356,8 +2355,8 @@ codes) and total of both categories.
 <td valign="top"><a href="#errorstatuscodecategorycounts">ErrorStatusCodeCategoryCounts</a></td>
 <td>
 
-Represents target related errors categorized as client errors(4xx response codes) or server errors(5xx response
-codes) and total of both categories.
+Represents target-related errors categorized as client errors (`4xx` response codes) or server errors (`5xx`
+response codes), and the total of both categories.
 
 </td>
 </tr>
@@ -2366,8 +2365,8 @@ codes) and total of both categories.
 
 ### Latency
 
-Represents latency values for each latency category for a single timestamp. Timestamp is calculated according to the
-provided granularity value.
+Represents latency values for each latency category for a single timestamp. The timestamp is calculated based on the
+granularity value provided.
 
 <table>
 <thead>
@@ -2384,10 +2383,10 @@ provided granularity value.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -2396,7 +2395,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Response latency(95th percentile) in milliseconds(ms).
+The response latency (95th percentile) in milliseconds (ms).
 
 </td>
 </tr>
@@ -2405,7 +2404,7 @@ Response latency(95th percentile) in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Backend latency(95th percentile) in milliseconds(ms).
+The backend latency (95th percentile) in milliseconds (ms).
 
 </td>
 </tr>
@@ -2414,7 +2413,7 @@ Backend latency(95th percentile) in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Request mediation latency(95th percentile) in milliseconds(ms).
+The request mediation latency (95th percentile) in milliseconds (ms).
 
 </td>
 </tr>
@@ -2423,7 +2422,7 @@ Request mediation latency(95th percentile) in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Response mediation latency(95th percentile) in milliseconds(ms).
+The response mediation latency (95th percentile) in milliseconds (ms).
 
 </td>
 </tr>
@@ -2432,7 +2431,7 @@ Response mediation latency(95th percentile) in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Median(50th percentile) of the response latency in milliseconds(ms).
+The median (50th percentile) of the response latency in milliseconds (ms).
 
 </td>
 </tr>
@@ -2441,7 +2440,7 @@ Median(50th percentile) of the response latency in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Median(50th percentile) of the backend latency in milliseconds(ms).
+The median (50th percentile) of the backend latency in milliseconds (ms).
 
 </td>
 </tr>
@@ -2450,7 +2449,7 @@ Median(50th percentile) of the backend latency in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Median(50th percentile) of the request mediation latency in milliseconds(ms).
+The median (50th percentile) of the request mediation latency in milliseconds (ms).
 
 </td>
 </tr>
@@ -2459,7 +2458,7 @@ Median(50th percentile) of the request mediation latency in milliseconds(ms).
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Median(50th percentile) of the response mediation latency in milliseconds(ms).
+The median (50th percentile) of the response mediation latency in milliseconds (ms).
 
 </td>
 </tr>
@@ -2468,7 +2467,7 @@ Median(50th percentile) of the response mediation latency in milliseconds(ms).
 
 ### LatencySummary
 
-Provides latency summary.
+Provides the latency summary.
 
 <table>
 <thead>
@@ -2485,7 +2484,7 @@ Provides latency summary.
 <td valign="top">[<a href="#latencyvalue">LatencyValue</a>]!</td>
 <td>
 
-List containing latency values. Returns an empty array if no data available.
+A list containing latency values. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2494,7 +2493,7 @@ List containing latency values. Returns an empty array if no data available.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -2503,7 +2502,8 @@ Granularity value used for data retrieval.
 
 ### LatencyValue
 
-Represents latency value for a single timestamp. Timestamp is calculated according to the provided granularity value.
+Represents the latency value for a single timestamp. The timestamp is calculated according to the provided granularity
+value.
 
 <table>
 <thead>
@@ -2520,10 +2520,10 @@ Represents latency value for a single timestamp. Timestamp is calculated accordi
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -2532,7 +2532,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
-Represents Latency(95th percentile) time in milliseconds(ms).
+Represents the latency (95th percentile) time in milliseconds (ms).
 
 </td>
 </tr>
@@ -2541,7 +2541,7 @@ Represents Latency(95th percentile) time in milliseconds(ms).
 
 ### OverallLatency
 
-Represents overall latency values.
+Represents the overall latency values.
 
 <table>
 <thead>
@@ -2558,7 +2558,7 @@ Represents overall latency values.
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
-Response latency(95th percentile value) in milliseconds(ms).
+The response latency (95th percentile value) in milliseconds (ms).
 
 </td>
 </tr>
@@ -2584,7 +2584,7 @@ Represents pagination details.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Total number of results.
+The total number of results.
 
 </td>
 </tr>
@@ -2593,7 +2593,7 @@ Total number of results.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Number of items in ht result set.
+The number of items in the result set.
 
 </td>
 </tr>
@@ -2602,7 +2602,7 @@ Number of items in ht result set.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Offset value for the result set.
+The offset value for the result set.
 
 </td>
 </tr>
@@ -2611,7 +2611,7 @@ Offset value for the result set.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Result set sort by column name.
+The sorting column name of the result set.
 
 </td>
 </tr>
@@ -2620,7 +2620,7 @@ Result set sort by column name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Result set sort by order(asc or desc).
+The sorting order of the result set. Possible values are `asc` and `desc`.
 
 </td>
 </tr>
@@ -2646,7 +2646,7 @@ Represents a platform.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Platform name.
+The name of the platform.
 
 </td>
 </tr>
@@ -2655,7 +2655,7 @@ Platform name.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Usage of platform.
+The usage of the platform.
 
 </td>
 </tr>
@@ -2681,7 +2681,7 @@ Represents API Provider details.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API provider name.
+The API provider name.
 
 </td>
 </tr>
@@ -2690,7 +2690,7 @@ API provider name.
 
 ### ResourceUsage
 
-Represents usage of a single API resource.
+Represents the usage of a single API resource.
 
 <table>
 <thead>
@@ -2707,7 +2707,7 @@ Represents usage of a single API resource.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -2716,7 +2716,7 @@ API Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API resource template.
+The API resource template.
 
 </td>
 </tr>
@@ -2725,7 +2725,7 @@ API resource template.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API method.
+The API method.
 
 </td>
 </tr>
@@ -2734,7 +2734,7 @@ API method.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Usage of API resource.
+The usage of the API resource.
 
 </td>
 </tr>
@@ -2760,7 +2760,7 @@ Represents API resource usages.
 <td valign="top">[<a href="#resourceusage">ResourceUsage</a>]</td>
 <td>
 
-List containing usages of each resource of APIs. Returns an empty array if no data available.
+A list with the usage of each API resource. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2778,7 +2778,7 @@ Pagination details.
 
 ### SlowAPI
 
-A slow API calculated according to the response latency(95th percentile).
+A slow API identified based on the response latency (95th percentile).
 
 <table>
 <thead>
@@ -2795,7 +2795,7 @@ A slow API calculated according to the response latency(95th percentile).
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -2804,7 +2804,7 @@ API Id.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Represents Latency(95th percentile) time in milliseconds(ms).
+Represents the latency (95th percentile) time in milliseconds (ms).
 
 </td>
 </tr>
@@ -2830,7 +2830,7 @@ Represents API Subscriber details.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API subscriber name.
+The name of the API subscriber.
 
 </td>
 </tr>
@@ -2839,7 +2839,7 @@ API subscriber name.
 
 ### SuccessAPIUsageByApplication
 
-Represents successful(2xx response code) usages of an API by an application.
+Represents successful usages(that have resulted in the `2xx` response code) of an API by an application.
 
 <table>
 <thead>
@@ -2856,7 +2856,7 @@ Represents successful(2xx response code) usages of an API by an application.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -2865,7 +2865,7 @@ API Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API name.
+The name of the API.
 
 </td>
 </tr>
@@ -2874,7 +2874,7 @@ API name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API version.
+The version of the API.
 
 </td>
 </tr>
@@ -2883,7 +2883,7 @@ API version.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Tenant domain of the API creator.
+The tenant domain of the API creator.
 
 </td>
 </tr>
@@ -2892,7 +2892,7 @@ Tenant domain of the API creator.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application Id.
+The application ID.
 
 </td>
 </tr>
@@ -2901,7 +2901,7 @@ Application Id.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application name.
+The name of the application.
 
 </td>
 </tr>
@@ -2910,7 +2910,7 @@ Application name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Application name owner.
+The name of the application owner.
 
 </td>
 </tr>
@@ -2924,7 +2924,7 @@ Application name owner.
 
 ### SuccessSummary
 
-Provides successful(2xx response code) usage summary across all the APIs.
+Provides the successful (2xx response code) usage summary across all the APIs.
 
 <table>
 <thead>
@@ -2941,7 +2941,7 @@ Provides successful(2xx response code) usage summary across all the APIs.
 <td valign="top">[<a href="#successvalue">SuccessValue</a>]!</td>
 <td>
 
-List containing successful usage values. Returns an empty array if no data available.
+A list containing successful usage values. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2950,7 +2950,7 @@ List containing successful usage values. Returns an empty array if no data avail
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Granularity value used for data retrieval.
+The granularity value for which data is retrieved.
 
 </td>
 </tr>
@@ -2959,8 +2959,8 @@ Granularity value used for data retrieval.
 
 ### SuccessValue
 
-Represents successful request count(2xx response code) for a single timestamp. Timestamp is calculated according to the
-provided granularity value.
+Represents the successful request count (i.e., requests that have received the `2xx` response code) for a single
+timestamp. The timestamp is calculated according to the granularity value provided.
 
 <table>
 <thead>
@@ -2977,10 +2977,10 @@ provided granularity value.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value calculated according to the used granularity value. For an example if the used
-granularity value is '1d', timeSpan will represents start of the day calculated adhering to the timezone provided in
-the TimeFilter.
-Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
+value is `1d`, the timestamp represents the start of the day calculated adhering to the timezone provided in the
+time filter.
+e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 
 </td>
 </tr>
@@ -2989,7 +2989,7 @@ Ex: timeSpan: '2021-06-21T00:00:00.0000000+05:30'
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Represents successful request count.
+Represents the successful request count.
 
 </td>
 </tr>
@@ -3015,7 +3015,7 @@ Represents a top API by alert count.
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id.
+The ID of the API.
 
 </td>
 </tr>
@@ -3024,7 +3024,7 @@ API Id.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Alert count.
+The alert count.
 
 </td>
 </tr>
@@ -3033,7 +3033,7 @@ Alert count.
 
 ### TopAPIsByAlertCount
 
-Represents top APIs by alert count.
+Represents the top APIs by alert count.
 
 <table>
 <thead>
@@ -3050,7 +3050,7 @@ Represents top APIs by alert count.
 <td valign="top">[<a href="#topapibyalertcount">TopAPIByAlertCount</a>]</td>
 <td>
 
-List containing top APIs by alert count. Returns an empty array if no data available.
+A list containing top APIs by alert count. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -3068,7 +3068,7 @@ Pagination details.
 
 ### TotalError
 
-Represents total errors.
+Represents the total errors.
 
 <table>
 <thead>
@@ -3085,7 +3085,7 @@ Represents total errors.
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Proxy related error count.
+The proxy-related error count.
 
 </td>
 </tr>
@@ -3094,7 +3094,7 @@ Proxy related error count.
 
 ### UsageByGeoLocation
 
-Represents usage of a single API in a single country.
+Represents the usage of a single API in a single country.
 
 <table>
 <thead>
@@ -3111,7 +3111,7 @@ Represents usage of a single API in a single country.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Country name.
+The name of the country.
 
 </td>
 </tr>
@@ -3120,7 +3120,7 @@ Country name.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Usage of API.
+The usage of the API.
 
 </td>
 </tr>
@@ -3146,7 +3146,7 @@ Represents a user agent.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-User agent name.
+The name of the user agent.
 
 </td>
 </tr>
@@ -3155,7 +3155,7 @@ User agent name.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Usage of user agent.
+The usage of the user agent.
 
 </td>
 </tr>
@@ -3166,7 +3166,7 @@ Usage of user agent.
 
 ### APIUsageByAppFilter
 
-Filters API usage by application results.
+Filters the API usage by application results.
 
 <table>
 <thead>
@@ -3182,8 +3182,8 @@ Filters API usage by application results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for selected APIs.
 
 </td>
 </tr>
@@ -3192,9 +3192,9 @@ limited to 5. This field is optional. Hence, if there is no need of filtering by
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of application Ids where the results needs to be filtered with. The maximum number of application Ids that can
-be defined is limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit
-the field.
+The results are filtered for the list of applications you specify here. A maximum of five application IDs can be
+defined. This is an optional parameter that can be used if there is a requirement to filter results for selected
+applications.
 
 </td>
 </tr>
@@ -3203,9 +3203,9 @@ the field.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of names od subscribers where the results needs to be filtered with. The maximum number of subscribers that
-can be defined is limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute,
-omit the field.
+The results are filtered for the list of subscribers you specify here. A maximum of five subscriber IDs can be
+defined. This is an optional parameter that can be used if there is a requirement to filter results for selected
+subscribers.
 
 </td>
 </tr>
@@ -3214,7 +3214,7 @@ omit the field.
 
 ### APIUsageByBackendOverTimeFilter
 
-Filters API usage by backend overtime results.
+Filters the results for API usage by backend over time.
 
 <table>
 <thead>
@@ -3230,8 +3230,8 @@ Filters API usage by backend overtime results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
 
 </td>
 </tr>
@@ -3240,9 +3240,9 @@ limited to 5. This field is optional. Hence, if there is no need of filtering by
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3251,7 +3251,7 @@ set, default granularity for the related time range will be applied. Granularity
 
 ### APIUsageOverTimeFilter
 
-Filters API usage overtime results.
+Filters the results for API usage over time.
 
 <table>
 <thead>
@@ -3267,8 +3267,8 @@ Filters API usage overtime results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
 
 </td>
 </tr>
@@ -3277,9 +3277,9 @@ limited to 5. This field is optional. Hence, if there is no need of filtering by
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of application Ids where the results needs to be filtered with. The maximum number of application Ids that can
-be defined is limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit
-the field.
+The results are filtered for the list of applications you specify here. A maximum of five application IDs can be
+defined. This is an optional parameter that can be used if there is a requirement to filter results for selected
+applications.
 
 </td>
 </tr>
@@ -3288,9 +3288,9 @@ the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3299,7 +3299,7 @@ set, default granularity for the related time range will be applied. Granularity
 
 ### AlertSummaryFilter
 
-Filters alerts summary results.
+Filters the alerts summary results.
 
 <table>
 <thead>
@@ -3315,8 +3315,8 @@ Filters alerts summary results.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-Pagination filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field
-.
+The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
+parameter, omit this parameter.
 
 </td>
 </tr>
@@ -3325,7 +3325,8 @@ Pagination filter. This field is optional. Hence, if there is no need of filteri
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-Search filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
+omit this parameter.
 
 </td>
 </tr>
@@ -3334,8 +3335,8 @@ Search filter. This field is optional. Hence, if there is no need of filtering b
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
 
 </td>
 </tr>
@@ -3354,7 +3355,7 @@ values. This field is optional. Hence, if there is no need of filtering by this 
 
 ### ApplicationFilter
 
-Filter applications by application owner and API Ids.
+Filters applications by the application owner and API IDs.
 
 <table>
 <thead>
@@ -3375,8 +3376,8 @@ Filter applications by application owner and API Ids.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
 
 </td>
 </tr>
@@ -3401,8 +3402,7 @@ Filters response cache results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of filtering
-by this attribute, omit the field.
+The results are filtered by the API ID specified here. This is an optional parameter.
 
 </td>
 </tr>
@@ -3411,9 +3411,9 @@ by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3438,7 +3438,7 @@ Filters results by organization, environment and tenant.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Organization id where the results needs to be filtered with. This is a required field.
+The organization by which the results need to be filtered. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -3447,7 +3447,7 @@ Organization id where the results needs to be filtered with. This is a required 
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Environment id where the results needs to be filtered with. This is a required field.
+Environment ID where the results needs to be filtered with. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -3456,7 +3456,8 @@ Environment id where the results needs to be filtered with. This is a required f
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Tenant name where the results needs to be filtered with. This is a required field.
+The name of the tenant by which the results need to be filtered. It is required to specify a value for this
+parameter.
 
 </td>
 </tr>
@@ -3465,7 +3466,7 @@ Tenant name where the results needs to be filtered with. This is a required fiel
 
 ### DeviceFilter
 
-Filters devices related results.
+Filters results related to devices.
 
 <table>
 <thead>
@@ -3481,8 +3482,8 @@ Filters devices related results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
 
 </td>
 </tr>
@@ -3491,7 +3492,7 @@ limited to 5. This field is optional. Hence, if there is no need of filtering by
 
 ### ErrorCountByStatusCodeFilter
 
-Filters error by status code results.
+Filters errors by status code results.
 
 <table>
 <thead>
@@ -3507,8 +3508,7 @@ Filters error by status code results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of filtering
-by this attribute, omit the field.
+The results are filtered by the API ID specified here. This is an optional parameter.
 
 </td>
 </tr>
@@ -3517,7 +3517,7 @@ by this attribute, omit the field.
 <td valign="top"><a href="#errortype">ErrorType</a>!</td>
 <td>
 
-Error type. This is a required field.
+The type of the error. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -3537,8 +3537,8 @@ server related error response codes.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-Pagination filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field
-.
+The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
+parameter, omit this parameter.
 
 </td>
 </tr>
@@ -3563,7 +3563,8 @@ Filters errors by category results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The ID of the API. This field is optional. Hence, if there is no need of filtering by this attribute, omit the
+field.
 
 </td>
 </tr>
@@ -3583,9 +3584,9 @@ filtering by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3610,8 +3611,7 @@ Filters errors by status code results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of filtering
-by this attribute, omit the field.
+The results are filtered by the API ID specified here. This is an optional parameter.
 
 </td>
 </tr>
@@ -3620,9 +3620,9 @@ by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3647,8 +3647,7 @@ Filters error details results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of filtering
-by this attribute, omit the field.
+The results are filtered by the API ID specified here. This is an optional parameter.
 
 </td>
 </tr>
@@ -3657,7 +3656,7 @@ by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Application Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of
+Application ID where the results needs to be filtered with. This field is optional. Hence, if there is no need of
 filtering by this attribute, omit the field.
 
 </td>
@@ -3678,9 +3677,9 @@ filtering by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3689,8 +3688,8 @@ set, default granularity for the related time range will be applied. Granularity
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-Pagination filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field
-.
+The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
+parameter, omit this parameter.
 
 </td>
 </tr>
@@ -3699,7 +3698,8 @@ Pagination filter. This field is optional. Hence, if there is no need of filteri
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-Search filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
+omit this parameter.
 
 </td>
 </tr>
@@ -3724,8 +3724,7 @@ Filters API usage by geolocation results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of filtering
-by this attribute, omit the field.
+The results are filtered by the API ID specified here. This is an optional parameter.
 
 </td>
 </tr>
@@ -3750,7 +3749,7 @@ Filters latency results.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API Id where the results needs to be filtered with. This field is required.
+The results are filtered by the API ID specified here. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -3759,9 +3758,9 @@ API Id where the results needs to be filtered with. This field is required.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3786,8 +3785,7 @@ Filters latency summary results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-API Id where the results needs to be filtered with. This field is optional. Hence, if there is no need of filtering
-by this attribute, omit the field.
+The results are filtered by the API ID specified here. This is an optional parameter.
 
 </td>
 </tr>
@@ -3796,9 +3794,9 @@ by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value which will be used in data retrieval. This field is optional. Hence, if granularity value is not
-set, default granularity for the related time range will be applied. Granularity value must be one of '1m', '15m',
-'1h', '1d' or '7d' values.
+The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
+set, the default granularity for the related time range is applied. The possible granularity values that you can
+specify are `1m`, `15m`, `1h`, `1d`, and `7d`.
 
 </td>
 </tr>
@@ -3823,7 +3821,8 @@ Filters results by organization.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Organization id where the results needs to be filtered with. This is a required field.
+The ID of the organization by which the results need to be filtered. It is required to specify a value for this
+parameter.
 
 </td>
 </tr>
@@ -3909,8 +3908,8 @@ Filters resource usage results.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-Pagination filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field
-.
+The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
+parameter, omit this parameter.
 
 </td>
 </tr>
@@ -3919,7 +3918,8 @@ Pagination filter. This field is optional. Hence, if there is no need of filteri
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-Search filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
+omit this parameter.
 
 </td>
 </tr>
@@ -3928,7 +3928,7 @@ Search filter. This field is optional. Hence, if there is no need of filtering b
 
 ### SearchFilter
 
-Filter results by searching matching results for the provided search text.
+Filters results by searching matching results for the provided search text.
 
 <table>
 <thead>
@@ -3955,7 +3955,7 @@ only without a search text in the search filter.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Text which needs to be searched among the results. This field is required.
+Text which needs to be searched among the results. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -3964,7 +3964,7 @@ Text which needs to be searched among the results. This field is required.
 
 ### SubscriberFilter
 
-Filter subscribers results.
+Filters subscribers results.
 
 <table>
 <thead>
@@ -3980,8 +3980,8 @@ Filter subscribers results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. The maximum number of API Ids that can be defined is
-limited to 5. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
+an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
 
 </td>
 </tr>
@@ -4042,7 +4042,8 @@ Filters results by tenant.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Organization id where the results needs to be filtered with. This is a required field.
+The ID of the organization by which the results need to be filtered. It is required to specify a value for this
+parameter.
 
 </td>
 </tr>
@@ -4051,7 +4052,8 @@ Organization id where the results needs to be filtered with. This is a required 
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Environment id where the results needs to be filtered with. This is a required field.
+The ID of the environment by which the results need to be filtered. It is required to specify a value for this
+parameter.
 
 </td>
 </tr>
@@ -4078,7 +4080,7 @@ Filters results by the provided date range.
 
 Start date of the time range. This 'from' date must be a date before the date defined in 'to'. If the defined date
 time entry does not have a timezone, UTC time zone(z) will be used. Example value: '2021-08-16T12:30:00.000+05:30'.
-This is a required field.
+It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -4088,7 +4090,7 @@ This is a required field.
 <td>
 
 End date of the time range. If the defined date time entry does not have a timezone, UTC time zone(z) will be used.
-Example value: '2021-08-16T12:30:00.000+05:30'. This is a required field.
+Example value: '2021-08-16T12:30:00.000+05:30'. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -4113,8 +4115,8 @@ Filters top APIs by alert count results.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-Pagination filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field
-.
+The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
+parameter, omit this parameter.
 
 </td>
 </tr>
@@ -4123,7 +4125,8 @@ Pagination filter. This field is optional. Hence, if there is no need of filteri
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-Search filter. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
+omit this parameter.
 
 </td>
 </tr>
