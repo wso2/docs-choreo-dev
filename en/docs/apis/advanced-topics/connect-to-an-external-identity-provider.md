@@ -4,7 +4,7 @@ Choreo uses an in-built Identity Provider (IdP) by default to manage OAuth clien
 
 ## Token exchange
 
-Choreo supports the token exchange grant type to exchange a JSON Web Token (JWT) issued by an external IdP for a Choreo token. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693), which describes how to request and obtain security tokens from OAuth 2.0 authorization servers and exchange a security token for another type of token. The following diagram depicts the token exchange flow in Choreo:
+Choreo supports the token exchange grant type to exchange a JSON Web Token (JWT) issued by an external IdP for a Choreo token. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693), which describes how to request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
 
 ![Token exchange flow](../../assets/img/apis/advanced-topics/external-identity-providers/token-exchange-flow.png){.cInlineImage-full}
 
@@ -34,7 +34,7 @@ Follow this procedure to add an external IdP to your Choreo organization:
 
 5. Click on the IdP you want to add. This displays a form where you must enter details to set up the IdP. <br/> This example walks you through the steps to add **Okta** as the IdP. The details you need to fill in are similar for other IdPs as well.
 
-6. Enter appropriate values for each of the fields and click Next. The following table describes each field in detail: 
+6. Enter appropriate values for each of the fields and click **Next**. The following table describes each field in detail: 
 
     <table>
     <tr class="header">
