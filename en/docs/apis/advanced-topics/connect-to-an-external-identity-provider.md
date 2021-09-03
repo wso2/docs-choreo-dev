@@ -42,15 +42,15 @@ Follow this procedure to add an external IdP to your Choreo organization:
     <th><b>Description</b></th>
     </tr>
     <tr class="odd">
-    <td>**Name**</td>
+        <td><b>Name</b></td>
     <td>The name of the IdP. You cannot modify the value after you add the IdP.</td>
     </tr>
     <tr class="even">
-    <td>**Description**</td>
+        <td><b>Description</b></td>
     <td>A brief description of the IdP.</td>
     </tr>
     <tr class="odd">
-    <td>**Allowed Token Audience**</td>
+        <td><b>Allowed Token Audience</b></td>
     <td><b>Okta:</b><br>The audience of the authorization server for which the access token is necessary.<br>
         You can update this default value via the Okta authorization server by navigating to the following path:<br>
         Security → API → Authorization Server → Your Authorization Server → Settings → Audience<br><br>
@@ -63,37 +63,37 @@ This value should be the application ID URI of the application in Azure Active D
     </td>
     </tr>
     <tr class="even">
-    <td>**Well-Known URL**</td>
+        <td><b>Well-Known URL</b></td>
     <td><p>The OpenID Connect discovery endpoint URL. This returns the metadata related to the OpenID Provider's configuration.</p>
     </td>
     </tr>
     </table>
 
-     ![Add an identity provider](../../assets/img/apis/advanced-topics/external-identity-providers/add-an-identity-provider.png){.cInlineImage-half} 
+   ![Add an identity provider](../../assets/img/apis/advanced-topics/external-identity-providers/add-an-identity-provider.png){.cInlineImage-half} 
 
-     When you specify the **Well-Known URL**, the values for the **Issuer**, **Token Endpoint**, and **JWKS Endpoint** fields are filled in automatically in the next screen. Depending on your requirement, you can either keep the values as it is or manually change the values. The following table describes each field in detail:
+   When you specify the **Well-Known URL**, the values for the **Issuer**, **Token Endpoint**, and **JWKS Endpoint** fields are filled in automatically in the next screen. Depending on your requirement, you can either keep the values as it is or manually change the values. The following table describes each field in detail:
 
-    <table>
-    <tr class="header">
-    <th><b>Field</b></th>
-    <th><b>Description</b></th>
-    </tr>
-    <tr class="odd">
-    <td>**Issuer**</td>
-    <td>The issuer identifier of the IdP, which is in the `iss` claim of the JWT issued.</td>
-    </tr>
-    <tr class="even">
-    <td>**Token Endpoint**</td>
-    <td>The token endpoint URL of the IdP from where the OAuth client can get an access token.</td>
-    </tr>
-    <tr class="odd">
-    <td>**JWKS Endpoint**</td>
-    <td>The URL that returns the JSON web key (JWK) set of the IdP. This returns a collection of JSON Web Keys used to verify the signature of the JWT tokens.
-    </td>
-    </tr>
-    </table>
+   <table>
+   <tr class="header">
+   <th><b>Field</b></th>
+   <th><b>Description</b></th>
+   </tr>
+   <tr class="odd">
+       <td><b>Issuer</b></td>
+   <td>The issuer identifier of the IdP, which is in the `iss` claim of the JWT issued.</td>
+   </tr>
+   <tr class="even">
+       <td><b>Token Endpoint</b></td>
+   <td>The token endpoint URL of the IdP from where the OAuth client can get an access token.</td>
+   </tr>
+   <tr class="odd">
+       <td><b>JWKS Endpoint</b></td>
+   <td>The URL that returns the JSON Web Key (JWK) set of the IdP. This returns a collection of JWKs used to verify the signature of the JWT tokens.
+   </td>
+   </tr>
+   </table>
 
-     ![Identity provider details](../../assets/img/apis/advanced-topics/external-identity-providers/identity-provider-details.png){.cInlineImage-half}
+  ![Identity provider details](../../assets/img/apis/advanced-topics/external-identity-providers/identity-provider-details.png){.cInlineImage-half}
 
 8.  Click **Add**. This adds Okta IdP to the list of existing identity providers in your organization.
 
