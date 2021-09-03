@@ -88,10 +88,10 @@ spec:
             - name: output-volume
               emptyDir: {}
             - name: secret-observability-data-generator
-                csi:
-                  driver: secrets-store.csi.k8s.io
-                  readOnly: true
-                  volumeAttributes:
-                    secretProviderClass: secret-observability-data-generator
-                  nodePublishSecretRef:
-                    name: csi-secret-store-azure
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-observability-data-generator
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
