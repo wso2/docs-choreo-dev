@@ -70,9 +70,6 @@ spec:
         - name: secret-cc-ga-credentials
           mountPath: /mnt/csi/secret-cc-ga-credentials
           readOnly: true
-        - name: secret-asb
-          mountPath: /mnt/csi/secret-asb
-          readOnly: true
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter:latest
         imagePullPolicy: Always
         securityContext:
@@ -116,11 +113,6 @@ spec:
             secretKeyRef:
               key: SUPER_ADMIN_PSWD
               name: secret-apim
-        - name: ASB_CONNECTION_STRING
-          valueFrom:
-            secretKeyRef:
-              name: secret-asb
-              key: ASB_CONNECTION_STRING
         resources:
           requests:
             memory: "250Mi"
@@ -189,14 +181,6 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-redis
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      - name: secret-asb
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-asb
           nodePublishSecretRef:
             name: csi-secret-store-azure
       restartPolicy: Always
