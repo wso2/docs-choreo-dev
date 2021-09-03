@@ -71,7 +71,7 @@ This value should be the application ID URI of the application in Azure Active D
 
    ![Add an identity provider](../../assets/img/apis/advanced-topics/external-identity-providers/add-an-identity-provider.png){.cInlineImage-half} 
 
-   When you specify the **Well-Known URL**, the values for the **Issuer**, **Token Endpoint**, and **JWKS Endpoint** fields are filled in automatically in the next screen. Depending on your requirement, you can either keep the values as it is or manually change the values. The following table describes each field in detail:
+   When you specify the **Well-Known URL**, the values for **Issuer**, **Token Endpoint**, and **JWKS Endpoint** get autopopulated. You can either choose to keep the values or manually change them. The following table describes each field in detail:
 
    <table>
    <tr class="header">
@@ -95,7 +95,7 @@ This value should be the application ID URI of the application in Azure Active D
 
   ![Identity provider details](../../assets/img/apis/advanced-topics/external-identity-providers/identity-provider-details.png){.cInlineImage-half}
 
-8.  Click **Add**. This adds Okta IdP to the list of existing identity providers in your organization.
+8.  Click **Add**. This adds Okta as an external IdP to your Choreo Organization.
 
 Now that you have added an external IdP, you can go ahead and obtain access tokens from that IdP to exchange and get Choreo access tokens to invoke APIs.
 
