@@ -5,14 +5,6 @@
 -- herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'choreo_subscriptions_db')
-    BEGIN
-        CREATE DATABASE choreo_subscriptions_db;
-    END
-GO
-USE choreo_subscriptions_db;
-GO
-
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='tier' and xtype='U')
 BEGIN
     CREATE TABLE tier (
