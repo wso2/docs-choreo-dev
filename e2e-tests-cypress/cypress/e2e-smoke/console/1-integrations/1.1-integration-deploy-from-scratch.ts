@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName } from "../../../support/common/utils";
+import { generateAppName, getSelectedOrgHandle } from "../../../support/common/utils";
 import { INTEGRATIONS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
@@ -19,7 +19,10 @@ describe("Integrations test run and deployment from scratch", () => {
     let appName: string;
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
     });
 
     after(() => {
@@ -30,7 +33,7 @@ describe("Integrations test run and deployment from scratch", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should("include", "app/" + appName + "/develop"); 
+        cy.verifyAppName(appName);
 
         // add a log statement
         cy.selectTrigger("Manual");

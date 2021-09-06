@@ -19,9 +19,9 @@ metadata:
   name: choreo-am-service
   annotations:
     checkov.io/skip1: CKV_K8S_29=securityContext is not defined for services.
-    checkov.io/skip2: CKV_K8S_31=seccompProfile property cannot be applied as securityContext is not defined for services.
     checkov.io/skip3: CKV_K8S_37=capabilities property cannot be applied as securityContext is not defined for services.
     checkov.io/skip4: CKV_K8S_38=automountServiceAccountToken property cannot be applied as template is not defined for services.
+    seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
 spec:
   # label keys and values that must match in order to receive traffic for this service
   selector:

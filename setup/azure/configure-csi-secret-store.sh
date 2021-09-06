@@ -14,3 +14,6 @@ kubectl create secret generic csi-secret-store-azure --from-literal clientid="${
 
 kubectl  create namespace "${APIM_NAMESPACE}"
 kubectl create secret generic csi-secret-store-azure --from-literal clientid="${APIM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${APIM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${APIM_NAMESPACE}"
+
+kubectl create namespace "${IDP_NAMESPACE}"
+kubectl create secret generic csi-secret-store-azure --from-literal clientid="${IDP_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${IDP_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${IDP_NAMESPACE}"

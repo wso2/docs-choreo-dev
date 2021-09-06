@@ -12,6 +12,8 @@
  */
 
 import qs from 'qs';
+import { APP_SVC_URL } from '../../common/constants';
+import { getSelectedOrgHandle } from '../../common/utils';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     console.log(err);
@@ -140,11 +142,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
     const idpUsername = Cypress.env('idpUsername');
     const idpPassword = Cypress.env('idpPassword');
     const idpAuthHeader = Cypress.env('idpAuthHeader');
-    const selectedOrgHandle = Cypress.env('selectedOrgHandle');
-    const name =  Cypress.env('name');
-    const email = Cypress.env('email');
-    const picURL = Cypress.env('picURL');
-    const orgs = Cypress.env('orgs');
     try {
         cy.request({
             method: 'POST',
@@ -159,8 +156,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
             headers: {
                 Authorization: idpAuthHeader,
             }
-        }
-        ).then((response) => {
+        }).then((response) => {
             const data = response["body"];
             cy.log('Data received from the IDP');
             const fragments = data["id_token"].split(".");
@@ -172,48 +168,86 @@ Cypress.Commands.add('consoleUserLogin', () => {
             Cypress.Cookies.defaults({
                 preserve: ['cwatf', 'cbearer', 'id_token', 'token']
             });
-            
-            const STORAGE_KEY = "PORTAL_STATE";
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify({
-                    userInfo: {
-                        isAuthenticated: true,
-                        isAuthInProgress: false,
-                        selectedOrgHandle: selectedOrgHandle,
-                        isOrgAdmin: true,
-                        user: {
-                            id: orgs[0].id,
-                            name: name,
-                            email: email,
-                            token: token,
-                            picURL: picURL,
-                            orgs: orgs,
-                        },
-                    },
-                })
-            );
 
-            cy.setCookie('cwatf', cwatf);
-            cy.setCookie('cbearer', cbearer);
-            cy.setCookie('token', token);
-            cy.setCookie('id_token', data["id_token"]);
-            cy.log('Local storage set successful!, navigating to URL: '+ testURL)
-            cy.intercept(/choreo.dev/, (req) => {
-                
-                if (req.url.includes("/linkersec/checklink")) {
-                    req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
-                    req.headers['authentication'] = "Bearer " + data["id_token"];
-                } else {
-                    req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
-                    req.headers['authentication'] = "Bearer " + data["id_token"];
+            cy.request({
+                method: 'GET',
+                url: APP_SVC_URL + "/orgs",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Cookie: `cwatf=${cwatf}`
                 }
-            })
-            cy.hideWelcomeMessage();
-            cy.visit(Cypress.env('baseUrl'));
-            cy.log('Successfully logged in');
+            }).then((response) => {
+                const orgs = response.body as Organization[];
+
+                const jwtPayload = JSON.parse(atob(fragments[1]));
+                const idpId = jwtPayload.sub;
+                const user: User = {
+                    id: orgs[0].id.toString(),
+                    name: jwtPayload.name,
+                    uuid: idpId,
+                    email: jwtPayload.email,
+                    token: token,
+                    picURL: jwtPayload.avatar_url,
+                    orgs: orgs,
+                    createdAt: new Date(jwtPayload.iat * 1000),
+                    expiredAt: new Date(jwtPayload.exp * 1000),
+                };
+
+                const selectedOrgHandleEnv = Cypress.env('selectedOrgHandle');
+                if (selectedOrgHandleEnv) {
+                    cy.wrap(orgs.map(org => org.handle)).should("include", selectedOrgHandleEnv);
+                }
+                const selectedOrgHandle = getSelectedOrgHandle(user);
+                cy.log("Selected org handle for running tests: " + selectedOrgHandle);
+
+                cy.request({
+                    method: 'GET',
+                    url: `${APP_SVC_URL}/orgs/${selectedOrgHandle}/users`,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Cookie: `cwatf=${cwatf}`
+                    }
+                }).then((response) => {
+                    const returnedUser = response.body.find(user => user.idpId === idpId);
+                    user.id = returnedUser.id;
+
+                    const STORAGE_KEY = "PORTAL_STATE";
+                    cy.wrap(user).as("loggedInUser");
+                    localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify({
+                            userInfo: {
+                                isAuthenticated: true,
+                                isAuthInProgress: false,
+                                selectedOrgHandle: selectedOrgHandle,
+                                isOrgAdmin: true,
+                                user: user,
+                            },
+                        })
+                    );
+
+                    cy.setCookie('cwatf', cwatf);
+                    cy.setCookie('cbearer', cbearer);
+                    cy.setCookie('token', token);
+                    cy.setCookie('id_token', data["id_token"]);
+                    cy.log('Local storage set successful!, navigating to URL: '+ testURL)
+                    cy.intercept(/choreo.dev/, (req) => {
+                        if (req.url.includes("/linkersec/checklink")) {
+                            req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
+                            req.headers['authentication'] = "Bearer " + data["id_token"];
+                        } else {
+                            req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
+                            req.headers['authentication'] = "Bearer " + data["id_token"];
+                        }
+                    });
+                    cy.hideWelcomeMessage();
+                    cy.visit(Cypress.env('baseUrl'));
+                    cy.log('Successfully logged in');
+                });
+            });
         })
     } catch (err) {
         throw new Error("Retrieving Access token failed : " + err);
     }
+    return cy.get("@loggedInUser");
 })

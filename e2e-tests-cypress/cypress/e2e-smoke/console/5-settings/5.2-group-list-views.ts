@@ -11,20 +11,23 @@
  * associated services.
  */
 
-import { SETTINGS_TEXT, NO_OF_RETRIES } from "../../../support/common/constants";
+import { SETTINGS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
 describe("Group List View", () => {
     let savedCookies;
-    const memberEmail = Cypress.env("email");
-    const memberName = Cypress.env("memberName");
+    let memberEmail: string;
+    let memberName: string;
     const groupName = "testGroup";
     const groupDescription = "This is a test group.";
-    const groupTag = "testGroupTag";
+    const groupTag = "testGroupTag"
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            memberName = user?.name;
+            memberEmail = user?.email;
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });
@@ -41,7 +44,7 @@ describe("Group List View", () => {
         cy.userLogout();
     });
 
-    it("Create a group", { retries: NO_OF_RETRIES }, () => {
+    it("Create a group", () => {
         cy.get('[data-testid="create-group-btn"]').click();
         cy.get('[data-testid="create-group-popup"]').should("be.visible");
         cy.log("Creating a group!");
@@ -54,7 +57,7 @@ describe("Group List View", () => {
         cy.log("Group created successfully!");
     });
 
-    it("Add a member to a group", { retries: NO_OF_RETRIES }, () => {
+    it("Add a member to a group", () => {
         cy.get('[data-testid="/user-settings/organization/groups"]').click();
         cy.contains("td", groupName).click();
         cy.get('[id="tags-standard"]').click().type(memberName);
@@ -72,7 +75,7 @@ describe("Group List View", () => {
         cy.log("Member removed from the group successfully");
     });
 
-    it("Delete created group", { retries: NO_OF_RETRIES }, () => {
+    it("Delete created group", () => {
         cy.searchApps(groupName);
         cy.log("Removing the group");
         cy.contains("td", groupName).should("be.visible");

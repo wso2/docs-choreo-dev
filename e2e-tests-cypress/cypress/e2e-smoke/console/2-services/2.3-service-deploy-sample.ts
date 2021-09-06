@@ -11,24 +11,35 @@
  * associated services.
  */
 
-import { SERVICES_TEXT, EX_LONG_TIME_OUT, NO_OF_RETRIES } from "../../../support/common/constants";
+import { SERVICES_TEXT, EX_LONG_TIME_OUT } from "../../../support/common/constants";
+import { appNamePrefix, getSelectedOrgHandle } from "../../../support/common/utils";
 
 /// <reference types="cypress" />
 
 describe("Test successful deployment of sample services", () => {
+    let selectedOrgHandle: string;
+
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            selectedOrgHandle = getSelectedOrgHandle(user);
+            const org = user?.orgs.find((org) => org.handle === selectedOrgHandle);
+            cy.clearAllTestData(org);
+        });
     });
 
     after(() => {
         cy.userLogout();
     });
 
-    it("Test deployment of sample:- echo service", { retries: NO_OF_RETRIES }, () => {
+    it("Test deployment of sample:- echo service", () => {
         cy.navigateFromHomePage(SERVICES_TEXT);
         cy.get('[id="backdrop-loader"').should("not.exist");
         cy.get('[data-testId="try-out-samples-btn"]').should("exist").click({ force: true });
         cy.log("Creating echo service!");
+        cy.intercept('POST', '**/apps/template', (req) => {
+            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
+        });
+
         cy.get('[data-testid="echo-service"]').should("exist").children().find("button").click({ force: true });
         cy.wait(10000);
         cy.get('[data-testid="diagram-loader"]').should("not.exist");
@@ -43,7 +54,7 @@ describe("Test successful deployment of sample services", () => {
         cy.url().then((url) => {
             const appName = url.split("app/").pop().split("/test")[0];
             cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
+            cy.cleanupApp(appName, selectedOrgHandle);
         });
     });
 });

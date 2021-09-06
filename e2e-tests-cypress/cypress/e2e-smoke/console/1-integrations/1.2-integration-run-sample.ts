@@ -15,14 +15,20 @@
 
 import {
     INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
-    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT, NO_OF_RETRIES 
+    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
 } from "../../../support/common/constants";
+import { appNamePrefix, getSelectedOrgHandle } from "../../../support/common/utils";
 
 describe('Integration sample flow', () => {
-    let savedCookies;
+    let savedCookies: Cypress.Cookie[];
+    let selectedOrgHandle: string;
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            selectedOrgHandle = getSelectedOrgHandle(user);
+            const org = user?.orgs.find((org) => org.handle === selectedOrgHandle);
+            cy.clearAllTestData(org);
+        });
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });
@@ -40,7 +46,7 @@ describe('Integration sample flow', () => {
             if (preBuiltBtnAvailable) {
                 cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
             }
-        })
+        });
     });
 
     afterEach(() => {
@@ -51,7 +57,10 @@ describe('Integration sample flow', () => {
         cy.userLogout();
     });
 
-    it('clone and edit Google calender to twilio SMS', { retries: NO_OF_RETRIES }, () => {
+    it('clone and edit Google calender to twilio SMS', () => {
+        cy.intercept('POST', '**/apps/template', (req) => {
+            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
+        });
         cy.get('[data-testid="gcalendar-to-twilio"]').trigger('mouseover').within(() => {
             cy.contains('Clone & Edit').click({ force: true });
         });
@@ -69,12 +78,15 @@ describe('Integration sample flow', () => {
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/test')[0];
             cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
+            cy.cleanupApp(appName, selectedOrgHandle);
         });
     })
 
-    it('test-run sample integration', { retries: NO_OF_RETRIES }, () => {
+    it('test-run sample integration', () => {
         cy.log("Prebuilt integrations page loaded successfully");
+        cy.intercept('POST', `**/${selectedOrgHandle}/apps`, (req) => {
+            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
+        });
         cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });
 
         cy.waitTillWorkSpace();
@@ -89,7 +101,7 @@ describe('Integration sample flow', () => {
         cy.url().then((url) => {
             const appName = url.split('app/').pop().split('/deploy')[0];
             cy.goBacktoAppsList();
-            cy.cleanupApp(appName);
+            cy.cleanupApp(appName, selectedOrgHandle);
         });
     })
 })

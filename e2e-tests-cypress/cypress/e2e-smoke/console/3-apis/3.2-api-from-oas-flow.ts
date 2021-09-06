@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { generateApiName } from "../../../support/common/utils";
+import { generateApiName, getSelectedOrgHandle } from "../../../support/common/utils";
 import { APIM_RESOURCE_PATH, APIS_TEXT, DEVELOP, OVERVIEW, PATH_SEPARATOR } from '../../../support/common/constants';
 
 describe('Choreo APIM publisher scenarios', () => {
@@ -19,7 +19,10 @@ describe('Choreo APIM publisher scenarios', () => {
     let apiId: string;
 
     before(() => {
-        cy.consoleUserLogin();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
     });
 
     it('Creating and publishing an API from open API specification', () => {
@@ -41,6 +44,9 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('[data-testid="api-name"]').findByRole('textbox').type(API_NAME);
         cy.get('[data-testid="api-basepath"]').within(() => {
             cy.get('input').clear().type(API_NAME);
+        });
+        cy.get('[data-testid="api-endpoint"]').within(() => {
+            cy.get('p').contains('Mui-error').should('not.exist');
         });
 
         cy.intercept({
@@ -68,8 +74,6 @@ describe('Choreo APIM publisher scenarios', () => {
     });
 
     after(() => {
-        cy.wait(1000);
-        cy.deleteApiByApiId(apiId);
         cy.userLogout();
     });
 });

@@ -4,13 +4,9 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
-    checkov.io/skip2: CKV_K8S_43=On hold ,not an high priority issue, requires some CI/CD workflow changes
-    checkov.io/skip3: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_31=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_43=Risk accpeted
+    checkov.io/skip4: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: datamapper
   name: datamapper
@@ -27,14 +23,7 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
-      automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10500
-        runAsGroup: 10500
-        capabilities:
-          drop:
-            - all
-          add: [ "NET_RAW" ]
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
@@ -65,6 +54,12 @@ spec:
           readOnly: true
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/datamapper:latest
         name: datamapper
@@ -102,6 +97,12 @@ spec:
           mountPath: "/home/python-ai/choreo-ai-data-mapper/models/"
         securityContext:
           allowPrivilegeEscalation: false
+          runAsUser: 10500
+          runAsGroup: 10500
+          capabilities:
+            drop:
+              - all
+            add: [ "NET_RAW" ]
       volumes:
       - name: datamapper-models
         emptyDir: {}

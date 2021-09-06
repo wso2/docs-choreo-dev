@@ -3,11 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip5: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: connectords
   name: connectords
@@ -30,22 +27,8 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - env:
-        - name: IDP_ISSUER
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_ISSUER
-              name: cm-idp-replica
-        - name: IDP_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_CLIENT_ID
-              name: cm-idp-replica
-        - name: IDP_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_HOST
-              name: cm-idp-replica
+      - name: connectords
+        env:
         - name: IDP_JWKS_ENDPOINT
           valueFrom:
             configMapKeyRef:
@@ -56,13 +39,18 @@ spec:
             configMapKeyRef:
               key: CHOREO_APP_SERVICE_GRPC_ADDRESS
               name: cm-connectords
+        envFrom:
+        - configMapRef:
+            name: env-connectords
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
         securityContext:
           allowPrivilegeEscalation: false
-          runAsUser: 1000
-          runAsGroup: 2000
+          runAsUser: 12000
+          runAsGroup: 12000
           readOnlyRootFilesystem: true
-        name: connectords
+          capabilities:
+            drop:
+            - all
         readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15

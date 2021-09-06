@@ -3,11 +3,9 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_40=Chaning the UID will restrict accessing data in volume mount due to file ownership
+    checkov.io/skip3: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: workspace-manager
   name: workspace-manager
@@ -70,6 +68,9 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         volumeMounts:
         - mountPath: /workspace-manager.yaml
           name: config

@@ -9,6 +9,8 @@
 #
 # --------------------------------------------------------------------------------------
 
+namespace: reloader
+
 # Azure service configurations
 azure:
   database:
