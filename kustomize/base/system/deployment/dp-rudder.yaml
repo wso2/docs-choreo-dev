@@ -10,7 +10,7 @@ metadata:
     choreo.dataplane: "true"
   name: dp-rudder
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       choreo.component: dp-rudder

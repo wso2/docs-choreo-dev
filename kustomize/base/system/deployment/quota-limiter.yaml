@@ -32,6 +32,17 @@ spec:
       containers:
         - name: quota-limiter
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter:latest
+          env:
+            - name: APIM_PUBLISHER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-quota-limiter
+                  key: QUOTA_LIMITER_APIM_CLEINT_ID
+            - name: APIM_PUBLISHER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-quota-limiter
+                  key: QUOTA_LIMITER_APIM_CLIENT_SECRET
           ports:
             - containerPort: 9090
               name: grpc-port
@@ -73,9 +84,20 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
+            - name: secret-quota-limiter
+              mountPath: "/mnt/csi/secret-quota-limiter"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-quota-limiter-config
+        - name: secret-quota-limiter
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-quota-limiter
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

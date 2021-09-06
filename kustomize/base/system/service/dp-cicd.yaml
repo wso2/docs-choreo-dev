@@ -13,4 +13,3 @@ spec:
       targetPort: http-port
   selector:
     choreo.component: dp-cicd
-    choreo.dataplane: "true"

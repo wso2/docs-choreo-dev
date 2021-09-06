@@ -45,6 +45,9 @@ describe('Choreo APIM publisher scenarios', () => {
         cy.get('[data-testid="api-basepath"]').within(() => {
             cy.get('input').clear().type(API_NAME);
         });
+        cy.get('[data-testid="api-endpoint"]').within(() => {
+            cy.get('p').contains('Mui-error').should('not.exist');
+        });
 
         cy.intercept({
             method: "POST",

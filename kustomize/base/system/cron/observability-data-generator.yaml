@@ -3,15 +3,7 @@ kind: CronJob
 metadata:
   name: observability-data-generator
   annotations:
-    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
-    checkov.io/skip2: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip7: CKV_K8S_20=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_31=Temporarily suppressing till fixing
-    checkov.io/skip9: CKV_K8S_29=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: observability-data-generator
 spec:
@@ -24,17 +16,27 @@ spec:
       template:
         metadata:
           annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
             choreo.component: observability-data-generator
         spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
           restartPolicy: Never
           containers:
             - name: observability-data-generator
               image: choreocontrolplane.azurecr.io/choreoipaas/observability-data-generator:latest
               securityContext:
-                runAsUser: 1000
-                runAsGroup: 3000
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                  - all
               env:
                 - name: APP_DEPLOYER_ADDRESS
                   valueFrom:
@@ -51,6 +53,16 @@ spec:
                     configMapKeyRef:
                       key: WS_MANAGER_SERVICE_ADDRESS
                       name: cm-observability-data-generator
+                - name: APIM_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      key: APIM_CLIENT_ID
+                      name: secret-observability-data-generator
+                - name: APIM_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: APIM_CLIENT_SECRET
+                      name: secret-observability-data-generator
               envFrom:
                 - configMapRef:
                     name: env-observability-data-generator
@@ -61,4 +73,20 @@ spec:
                 requests:
                   cpu: 200m
                   memory: 512Mi
+              volumeMounts:
+                - name: output-volume  # Used for storing the content written during execution
+                  mountPath: /choreo-data-generator/output
+                - name: secret-observability-data-generator
+                  mountPath: "/mnt/csi/secret-observability-data-generator"
           serviceAccountName: sa-choreo-default
+          volumes:
+            - name: output-volume
+              emptyDir: {}
+            - name: secret-observability-data-generator
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-observability-data-generator
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
