@@ -113,13 +113,13 @@ The following widgets are available for monitoring errors when you have selected
     
 - **Errors by Category** (table)
 
-    This table provides further information about the errors such as application details and the error reason. For some authentication errors, the application name is not available. You can use this table to get more concrete information about the errors related to your APIs and then start the problem isolation process.
+    This table provides further information about the errors such as application details and the error reason. For some authentication errors, the application name is not available. You can use this table to get more concrete information about the errors related to your APIs and then start the problem identification.
  
     ![Errors by category table](../assets/img/insights/error-category-table.png){.cInlineImage-full}
     
 #### Status code mode
     
-The following widgets are available for monitoring errors when you have selected the status code mode via the toggle switch in the upper-right corner of the page.
+The following widgets are available for monitoring errors when you selecte the **Status Code** in the upper-right corner of the page.
 
 - **Errors by Status Code**
 
@@ -141,7 +141,7 @@ The following widgets are available for monitoring errors when you have selected
     
 ### Latency
 
-This page shows information related to the latency of API calls within the API management deployment. You can view a summary of the slowest APIs and then drill down into the API view for further analysis. Use this page as the starting point for debugging API slowness.
+This page shows information related to the latency of API calls within the API management deployment. You can view a summary of the slowest APIs and then drill down into the API view for further analysis. Use this page as a starting point to debug API slowness.
 
 ![Latency](../assets/img/insights/latency-page-full.png){.cInlineImage-full}
 
@@ -155,7 +155,7 @@ The information displayed is as follows:
 
 - **Latencies By Category**
 
-    This widget allows you to further drill down details in the above chart. Use the API selector in this widget to select the slow API you identified in the earlier step and then troubleshoot further. Use the charts available in the widget to view the 95th percentile and the median latency of the components given below over the selected period.
+    This widget allows you to further drill down details in the above chart. Use the API selector in this widget to select the slow API you identified in the earlier step and then analyze further. Use the charts available in the widget to view the 95th percentile and the median latency over the selected period of the following:
 
     - Backend
     - Request mediation
@@ -163,11 +163,14 @@ The information displayed is as follows:
     
     ![Latencies by category](../assets/img/insights/latency-by-category.png){.cInlineImage-full}
     
-    You can use these charts to drill down to the component level where the slowness occurs. Also, because you can see both the median and 95th percentile, you can easily identify whether the slowness is occurring in each request or whether it is intermittent.
+    You can use these charts to further drill down and analyze whether the latency occurs in the backend, request mediation, or response mediation. Also, because you can see both the median and 95th percentile, you can easily identify whether the slowness is occurring in each request or whether it is intermittent.
 
 ### Cache
 
 This page shows statistics that indicate the efficiency with which response caching is carried out for the requests sent to your APIs.
+
+!!! info
+    Cache hits occur only if you have [enabled response caching](https://apim.docs.wso2.com/en/latest/deploy-and-publish/deploy-on-gateway/api-gateway/response-caching/)
 
 ![Cache statistics](../assets/img/insights/cache-page-full.png){.cInlineImage-full}
 
@@ -175,15 +178,15 @@ This page contains the following graphs:
 
 - **Cache Hit Percentage**
 
-    This graph shows the percentage of requests that were processed via the response cache instead of being sent to the backend over time. Assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it indicates that the backend is processing the same data multiple times as a result of requests not being served via the cache. In such a scenario, there is scope to improve performance via response caching.
+    This graph shows the percentage of requests that were handled via the response cache over time. Assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
 
     ![Cache hit percentagle](../assets/img/insights/cache-hit-percentage.png){.cInlineImage-full}
 
 - **Cache Hit/Miss**
 
-    This section shows the number of requests that hit and missed the cache over time, and the latency that occurred at the same times. 
+    This section shows the number of requests that hit and missed the cache over time, and the latency that occurred at the same times. Requests miss the cache for APIs for which you have not enabled response caching.
     
-    ![Cache hits abd misses](../assets/img/insights/cache-statistics.png){.cInlineImage-full}
+    ![Cache hits and misses](../assets/img/insights/cache-statistics.png){.cInlineImage-full}
     
 ### Devices
 
@@ -331,13 +334,13 @@ To configure a new latency alert, follow the steps below:
         
 7. Click **Add**.
 
-Once an alert is successfully added, the alert configuration is shown in the table as follows. Each configuration can be edited and removed using this table. If multiple emails are configured, they are displayed in a comma-separated list.
+Once an alert is successfully added, the alert configuration  is displayed in the table in the lower section of the page. Each configuration can be edited and removed using this table. If multiple emails are configured, they are displayed in a comma-separated list.
 
 #### Traffic alerts
 
 Configure Traffic alerts to identify if the request count of APIs is greater than a predefined threshold. This is useful when you have APIs that are using backends with traffic limits or monetized backends that require your system to proactively scale depending on the incoming traffic.
 
-To configure a new latency alert, follow the steps below:
+To configure a new traffic alert, follow the steps below:
 
 1. In the Insights Portal, click **Alert Configuration** to open the **Alert Configuration** page.
 
@@ -361,4 +364,4 @@ To configure a new latency alert, follow the steps below:
 
 8. Click **Add**.
 
-When added successfully, the alert configuration is shown in the table as follows. Each configuration can be edited and removed using this table. If multiple emails are configured, they are displayed in a comma-separated list.
+When added successfully, the alert configuration is displayed in the table in the lower section of the page. Each configuration can be edited and removed using this table. If multiple emails are configured, they are displayed in a comma-separated list.
