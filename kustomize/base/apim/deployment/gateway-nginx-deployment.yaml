@@ -124,6 +124,10 @@ spec:
             failureThreshold: 30
             periodSeconds: 10
           volumeMounts:
+          - name: openresty-logs-folder
+            mountPath: /usr/local/openresty/nginx/logs
+          - name: openresty-run-path
+            mountPath: /var/run/openresty
           - name: nginx-ca-cert
             mountPath: /etc/certs
             readOnly: true
@@ -145,6 +149,10 @@ spec:
             mountPath: /mnt/csi/secret-redis
             readOnly: true
       volumes:
+      - name: openresty-logs-folder
+        emptyDir: {}
+      - name: openresty-run-path
+        emptyDir: {}
       - name: redis-config
         configMap:
           name: redis-config
