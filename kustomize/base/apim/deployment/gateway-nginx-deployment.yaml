@@ -29,7 +29,7 @@ spec:
     allowPrivilegeEscalation: false
     runAsUser: 10600
     runAsGroup: 10600
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       deployment: choreo-nginx
