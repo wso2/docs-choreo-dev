@@ -540,7 +540,7 @@ Data filter
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id
+API ID
 
 </td>
 </tr>
@@ -729,7 +729,7 @@ Data filter
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id
+API ID
 
 </td>
 </tr>
@@ -842,7 +842,7 @@ Data filter
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API Id
+API ID
 
 </td>
 </tr>
@@ -1262,7 +1262,7 @@ Represents the API usage for a single timestamp. The timestamp is calculated bas
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -1350,7 +1350,7 @@ Represents API usage across APIs by applications over time.
 <td valign="top">[<a href="#apiusagebyapp">APIUsageByApp</a>]</td>
 <td>
 
-A list containing the API usage values across APIs by each application. Returns an empty array if no data is
+A list containing the API usage values across APIs, grouped by the application. Returns an empty array if no data is
 available.
 
 </td>
@@ -1395,7 +1395,7 @@ The ID of the API.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The Application Id.
+The Application ID.
 
 </td>
 </tr>
@@ -1644,7 +1644,7 @@ The ID of the API.
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -1754,7 +1754,7 @@ granularity value provided.
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -1928,7 +1928,7 @@ and a <code>null</code> value is shown for the other categories that are not sel
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -2073,7 +2073,7 @@ The ID of the API.
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -2227,7 +2227,7 @@ calculated based on the granularity value provided.
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -2297,7 +2297,7 @@ Represents the error counts grouped by status code for each API.
 <td valign="top">[<a href="#errorcountbycodeforapi">ErrorCountByCodeForAPI</a>]!</td>
 <td>
 
-A list containing the error count for each status code of each API. Returns an empty array if no data is available.
+A list containing the error count for each status code for each API. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2336,7 +2336,7 @@ single timestamp. The timestamp is calculated based on the granularity value pro
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -2386,7 +2386,7 @@ granularity value provided.
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -2523,7 +2523,7 @@ value.
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -2980,7 +2980,7 @@ timestamp. The timestamp is calculated according to the granularity value provid
 Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
 value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
 time filter.
-e.g., timeSpan: '2021-06-21T00:00:00.0000000+05:30'
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
 </tr>
@@ -3182,8 +3182,7 @@ Filters the API usage by application results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3193,8 +3192,7 @@ an optional parameter that can be used if there is a requirement to filter resul
 <td>
 
 The results are filtered for the list of applications you specify here. A maximum of five application IDs can be
-defined. This is an optional parameter that can be used if there is a requirement to filter results for selected
-applications.
+defined.
 
 </td>
 </tr>
@@ -3204,8 +3202,7 @@ applications.
 <td>
 
 The results are filtered for the list of subscribers you specify here. A maximum of five subscriber IDs can be
-defined. This is an optional parameter that can be used if there is a requirement to filter results for selected
-subscribers.
+defined.
 
 </td>
 </tr>
@@ -3230,8 +3227,7 @@ Filters the results for API usage by backend over time.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3240,9 +3236,9 @@ an optional parameter that can be used if there is a requirement to filter resul
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3267,8 +3263,7 @@ Filters the results for API usage over time.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3278,8 +3273,7 @@ an optional parameter that can be used if there is a requirement to filter resul
 <td>
 
 The results are filtered for the list of applications you specify here. A maximum of five application IDs can be
-defined. This is an optional parameter that can be used if there is a requirement to filter results for selected
-applications.
+defined.
 
 </td>
 </tr>
@@ -3288,9 +3282,9 @@ applications.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3315,8 +3309,7 @@ Filters the alerts summary results.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
-parameter, omit this parameter.
+The pagination filter.
 
 </td>
 </tr>
@@ -3325,8 +3318,7 @@ parameter, omit this parameter.
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
-omit this parameter.
+The search filter.
 
 </td>
 </tr>
@@ -3335,8 +3327,7 @@ omit this parameter.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3345,8 +3336,8 @@ an optional parameter that can be used if there is a requirement to filter resul
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Alert category where the results needs to be filtered with. Category needs to be one the 'TRAFFIC', 'LATENCY'
-values. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
+Alert category where the results needs to be filtered with. Category needs to be one the <code>TRAFFIC</code>, <code>LATENCY</code>
+values.
 
 </td>
 </tr>
@@ -3376,8 +3367,7 @@ Filters applications by the application owner and API IDs.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3402,7 +3392,7 @@ Filters response cache results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The results are filtered by the API ID specified here. This is an optional parameter.
+The results are filtered by the API ID specified here.
 
 </td>
 </tr>
@@ -3411,9 +3401,9 @@ The results are filtered by the API ID specified here. This is an optional param
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3482,8 +3472,7 @@ Filters results related to devices.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3508,7 +3497,7 @@ Filters errors by status code results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The results are filtered by the API ID specified here. This is an optional parameter.
+The results are filtered by the API ID specified here.
 
 </td>
 </tr>
@@ -3526,9 +3515,8 @@ The type of the error. It is required to specify a value for this parameter.
 <td valign="top"><a href="#errorcodetype">ErrorCodeType</a></td>
 <td>
 
-Error code type. This field is optional. Hence, if there is no need of filtering by this attribute, omit the field.
-If this field is not provided, result set will include both client related error response codes(401, 404, etc.) and
-server related error response codes.
+Error code type. If this field is not provided, result set will include both client related error response codes
+(401, 404, etc.) and server related error response codes.
 
 </td>
 </tr>
@@ -3537,8 +3525,7 @@ server related error response codes.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
-parameter, omit this parameter.
+The pagination filter.
 
 </td>
 </tr>
@@ -3563,8 +3550,7 @@ Filters errors by category results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The ID of the API. This field is optional. Hence, if there is no need of filtering by this attribute, omit the
-field.
+The ID of the API.
 
 </td>
 </tr>
@@ -3573,9 +3559,8 @@ field.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of categories where the results needs to be filtered with. Allowed error category values for this list are
-'AUTH', 'TARGET_CONNECTIVITY', 'THROTTLED' and 'OTHER'. This field is optional. Hence, if there is no need of
-filtering by this attribute, omit the field.
+The list of categories by which the results need to be filtered. Category values that you can specify here are
+<code>AUTH</code>, <code>TARGET_CONNECTIVITY</code>, <code>THROTTLED</code>, and <code>OTHER</code>.
 
 </td>
 </tr>
@@ -3584,9 +3569,9 @@ filtering by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3611,7 +3596,7 @@ Filters errors by status code results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The results are filtered by the API ID specified here. This is an optional parameter.
+The results are filtered by the API ID specified here.
 
 </td>
 </tr>
@@ -3620,9 +3605,9 @@ The results are filtered by the API ID specified here. This is an optional param
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3631,7 +3616,7 @@ specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>,
 
 ### ErrorsDetailsFilter
 
-Filters error details results.
+Filters the results for error details.
 
 <table>
 <thead>
@@ -3647,7 +3632,7 @@ Filters error details results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The results are filtered by the API ID specified here. This is an optional parameter.
+The results are filtered by the API ID specified here.
 
 </td>
 </tr>
@@ -3656,8 +3641,7 @@ The results are filtered by the API ID specified here. This is an optional param
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Application ID where the results needs to be filtered with. This field is optional. Hence, if there is no need of
-filtering by this attribute, omit the field.
+The application ID by which the results need to be filtered.
 
 </td>
 </tr>
@@ -3666,9 +3650,8 @@ filtering by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Error category where the results needs to be filtered with. Error category value must be one of 'AUTH',
-'TARGET_CONNECTIVITY', 'THROTTLED' and 'OTHER' values. This field is optional. Hence, if there is no need of
-filtering by this attribute, omit the field.
+The error category by which the results need to be filtered. The error category that you can specify here must be
+one of the <code>AUTH</code> <code>TARGET_CONNECTIVITY</code>, <code>THROTTLED</code>, and <code>OTHER</code> values.
 
 </td>
 </tr>
@@ -3677,9 +3660,9 @@ filtering by this attribute, omit the field.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3688,8 +3671,7 @@ specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>,
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
-parameter, omit this parameter.
+The pagination filter.
 
 </td>
 </tr>
@@ -3698,8 +3680,7 @@ parameter, omit this parameter.
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
-omit this parameter.
+The search filter.
 
 </td>
 </tr>
@@ -3708,7 +3689,7 @@ omit this parameter.
 
 ### GeoLocationFilter
 
-Filters API usage by geolocation results.
+Filters the The search filter. This is an optional pAPI usage by geolocation results.
 
 <table>
 <thead>
@@ -3724,7 +3705,7 @@ Filters API usage by geolocation results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The results are filtered by the API ID specified here. This is an optional parameter.
+The results are filtered by the API ID specified here.
 
 </td>
 </tr>
@@ -3758,9 +3739,9 @@ The results are filtered by the API ID specified here. It is required to specify
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3785,7 +3766,7 @@ Filters latency summary results.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The results are filtered by the API ID specified here. This is an optional parameter.
+The results are filtered by the API ID specified here.
 
 </td>
 </tr>
@@ -3794,9 +3775,9 @@ The results are filtered by the API ID specified here. This is an optional param
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The granularity value that is used for data retrieval. This parameter is optional. If the granularity value is not
-set, the default granularity for the related time range is applied. The possible granularity values that you can
-specify are <code>1m</code>, <code>15m</code>, <code>1h</code>, <code>1d</code>, and <code>7d</code>.
+The granularity value that is used for data retrieval. If the granularity value is not set, the default granularity
+for the related time range is applied. The possible granularity values that you can specify are <code>1m</code>, <code>15m</code>, <code>1h</code>,
+<code>1d</code>, and <code>7d</code>.
 
 </td>
 </tr>
@@ -3847,9 +3828,8 @@ Filters related to pagination.
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Total number of rows in the result set. This value must be a positive integer. This field is optional. Hence, if
-there is no need of filtering by this attribute, omit the field. If limit value is not set, default limit value of
-5 will be used.
+The total number of rows in the result set. This value must be a positive integer. If this limit value is not set,
+the total number of rows is five by default.
 
 </td>
 </tr>
@@ -3858,9 +3838,8 @@ there is no need of filtering by this attribute, omit the field. If limit value 
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
-Offset value to set when filtering results. This value must be a positive integer. This field is optional. Hence, if
-there is no need of filtering by this attribute, omit the field. If offset value is not set, default offset value of
-0 will be used.
+The offset value to set when filtering results. This value must be zero or a positive integer. If you do not specify
+an offset value, the default offset value (i.e., <code>0</code>) applies.
 
 </td>
 </tr>
@@ -3869,9 +3848,8 @@ there is no need of filtering by this attribute, omit the field. If offset value
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Column name which will be used to sort results. This field is optional. Hence, if there is no need of filtering by
-this attribute, omit the field. If sortBy value is not set, default sortBy column name for the related operation
-will be used.
+The column name by which the results are sorted. If the <code>sortBy</code> value is not set, the default column of the related
+operation that is available for sorting purposes is used.
 
 </td>
 </tr>
@@ -3880,10 +3858,10 @@ will be used.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Order which will be used to sort results. The sortOrder value must be one of 'asc' or 'desc' values. This field is
-optional. Hence, if there is no need of filtering by this attribute, omit the field. If sortOrder value is not set,
-default sortOrder value of 'asc' will be used(with the exemption of setting 'desc' for count specific operations ex:
-getTopAPIsByAlertCount).
+The order in which the results are sorted. Possible values are <code>asc</code>(to sort in the ascending order) and <code>desc</code>
+(to sort in the descending order). If no value is specified, the results are sorted in ascending order by default
+(with the exception of count-specific operations such as <code>getTopAPIsByAlertCount</code> where the results are always
+sorted in the descending order).
 
 </td>
 </tr>
@@ -3908,8 +3886,7 @@ Filters resource usage results.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
-parameter, omit this parameter.
+The pagination filter.
 
 </td>
 </tr>
@@ -3918,8 +3895,7 @@ parameter, omit this parameter.
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
-omit this parameter.
+The search filter.
 
 </td>
 </tr>
@@ -3944,9 +3920,8 @@ Filters results by searching matching results for the provided search text.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the 'searchtext' needs to be searched. This field is optional. Hence, if there is
-no need of filtering by this attribute, omit the field. Please note that it is not possible to define apiIds
-only without a search text in the search filter.
+The list of API Ids that need to be searched with the given search text. Note that it is not possible to define API
+IDs without a search text in the search filter.
 
 </td>
 </tr>
@@ -3964,7 +3939,7 @@ Text which needs to be searched among the results. It is required to specify a v
 
 ### SubscriberFilter
 
-Filters subscribers results.
+Filters the subscribers results.
 
 <table>
 <thead>
@@ -3980,8 +3955,7 @@ Filters subscribers results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined. This is
-an optional parameter that can be used if there is a requirement to filter results for the selected APIs.
+The results are filtered for the list of APIs you specify here. A maximum of five API IDs can be defined.
 
 </td>
 </tr>
@@ -3990,7 +3964,7 @@ an optional parameter that can be used if there is a requirement to filter resul
 
 ### SuccessAPIUsageByAppFilter
 
-Filters successful APU usage by application results.
+Filters successful API usage by application results.
 
 <table>
 <thead>
@@ -4006,8 +3980,7 @@ Filters successful APU usage by application results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-List of API Ids where the results needs to be filtered with. This field is optional. Hence, if there is no need of
-filtering by this attribute, omit the field.
+The list of API Ids by which the results need to be filtered with.
 
 </td>
 </tr>
@@ -4016,8 +3989,7 @@ filtering by this attribute, omit the field.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-Tenant domain name where the results needs to be filtered with. This field is optional. Hence, if there is no need
-of filtering by this attribute, omit the field.
+The tenant domain name by which the results need to be filtered with.
 
 </td>
 </tr>
@@ -4078,9 +4050,10 @@ Filters results by the provided date range.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Start date of the time range. This 'from' date must be a date before the date defined in 'to'. If the defined date
-time entry does not have a timezone, UTC time zone(z) will be used. Example value: '2021-08-16T12:30:00.000+05:30'.
-It is required to specify a value for this parameter.
+The start date of the time range. The date specified here must be a date earlier than the date specified via the
+<code>to</code> parameter. If the defined date and time entry do not have a timezone, the <code>UTC</code> time zone (z) is used. It is
+required to specify a value for this parameter.
+e.g., <code>'2021-08-16T12:00:00.000+05:30'</code>.
 
 </td>
 </tr>
@@ -4089,8 +4062,10 @@ It is required to specify a value for this parameter.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-End date of the time range. If the defined date time entry does not have a timezone, UTC time zone(z) will be used.
-Example value: '2021-08-16T12:30:00.000+05:30'. It is required to specify a value for this parameter.
+The end date of the time range. The date specified here must be a date later than the date specified via the <code>from</code>
+parameter. If the defined date and time entry do not have a timezone, the <code>UTC</code> time zone (z) is used. It is
+required to specify a value for this parameter.
+e.g., <code>'2021-08-16T12:30:00.000+05:30'</code>.
 
 </td>
 </tr>
@@ -4099,7 +4074,7 @@ Example value: '2021-08-16T12:30:00.000+05:30'. It is required to specify a valu
 
 ### TopAPIsByAlertCountFilter
 
-Filters top APIs by alert count results.
+Filters the top APIs by alert count results.
 
 <table>
 <thead>
@@ -4115,8 +4090,7 @@ Filters top APIs by alert count results.
 <td valign="top"><a href="#paginationfilter">PaginationFilter</a></td>
 <td>
 
-The pagination filter. This is an optional parameter. Therefore, if there is no requirement to filter by this
-parameter, omit this parameter.
+The pagination filter.
 
 </td>
 </tr>
@@ -4125,8 +4099,7 @@ parameter, omit this parameter.
 <td valign="top"><a href="#searchfilter">SearchFilter</a></td>
 <td>
 
-The search filter. This is an optional parameter. Therefore, if there is no requirement to filter by this parameter,
-omit this parameter.
+The search filter.
 
 </td>
 </tr>
@@ -4178,7 +4151,7 @@ Represents an error type.
 <td valign="top"><strong>PROXY</strong></td>
 <td>
 
-Proxy related errors.
+Proxy-related errors.
 
 </td>
 </tr>
@@ -4186,7 +4159,7 @@ Proxy related errors.
 <td valign="top"><strong>TARGET</strong></td>
 <td>
 
-Target related errors.
+Target-related errors.
 
 </td>
 </tr>
