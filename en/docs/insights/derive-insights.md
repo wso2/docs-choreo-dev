@@ -178,7 +178,7 @@ This page contains the following graphs:
 
 - **Cache Hit Percentage**
 
-    This graph shows the percentage of requests that were handled via the response cache over time. Assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
+    This graph shows the percentage of requests that were handled via the response cache over time. This allows you to assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
 
     ![Cache hit percentagle](../assets/img/insights/cache-hit-percentage.png){.cInlineImage-full}
 
