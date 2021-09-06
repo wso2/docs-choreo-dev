@@ -16,7 +16,7 @@
 # under the License.
 
 # Project information
-site_name: Choreo Documentation
+site_name: Learning Portal
 site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
@@ -28,15 +28,15 @@ edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
-copyright: WSO2 Choreo - Dev-Documentation
+copyright: Copyright © WSO2 Inc. 2021
 
 # Configuration
 theme:
     name: material
     custom_dir: theme/material
     palette:
-        primary: deep-orange
-        accent: deep-orange
+        primary: indigo
+        accent: indigo
     logo: images/logo.svg
     favicon: images/favicon.png
     slack: images/help-slack-icon.svg
@@ -75,6 +75,7 @@ nav:
           - Data Mapping: references/data-mapping.md
           - Test Your Service via Postman: references/test-your-service-via-postman.md
           - API Path: references/api-path.md
+          - Connectors : references/connectors.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
