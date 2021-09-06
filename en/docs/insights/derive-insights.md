@@ -12,7 +12,7 @@ Once you access the Insights Portal, you can view the following information.
 
 ### Overview
 
-This page gives you a quick overview of the whole system. The targeted audiences for the page are managers and business users who need quick insight. Also, this page can be used as a dashboard to view the current system status.
+This page gives you a quick overview of the performance of the system. It can be used as a dashboard to view the current system status.
 
 ![Overview](../assets/img/insights/overview.png){.cInlineImage-full}
 
@@ -24,7 +24,7 @@ The information displayed is as follows:
 
     This widget displays the total traffic your selected environment received during the selected time range. This includes both successful requests and error requests. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic** page](#traffic)
     
-- **Error request count**
+- **Error Request Count**
 
     ![Error request count](../assets/img/insights/overview-page-error-request-count.png){.cInlineImage-half}
 
@@ -34,13 +34,13 @@ The information displayed is as follows:
 
     ![Average error rate](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
 
-    This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, investigate further using the Viewing API Analytics on Errors. 
+    This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the **Errors** page.
 
 - **95th Percentile Latency**
 
     ![95th percentile latency](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
 
-    This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, see Viewing API Analytics on Latency. 
+    This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the **Latency** page where you can further analyze the latency.
 
 - **API Request Summary**
 
@@ -117,13 +117,13 @@ The following widgets are available for monitoring errors when you have selected
  
     ![Errors by category table](../assets/img/insights/error-category-table.png){.cInlineImage-full}
     
-#### Status Code mode
+#### Status code mode
     
 The following widgets are available for monitoring errors when you have selected the status code mode via the toggle switch in the upper-right corner of the page.
 
 - **Errors by Status Code**
 
-    This graph shows the distribution of HTTP status codes (of the errors) over time for the selected period. Apply the required filters as explained above to select the APIs and status code groups to which this content applies. When you select multiple APIs, the error count is grouped by the status code.
+    This graph shows the distribution of HTTP status codes received for errors over time for the selected period. Apply the required filters as explained above to select the APIs and status code groups to which this content applies. When you select multiple APIs, the error count is grouped by the status code.
     
     ![Errors by status code](../assets/img/insights/error-by-status-code.png){.cInlineImage-full}
     
@@ -149,7 +149,7 @@ The information displayed is as follows:
 
 - **Top 10 Slowest APIs**
 
-    This widget allows you to identify the slowest APIs of the API management system at a glance. Since these are the APIs that contribute to the higher 95th percentile of the system, improving these APIs lowers the 95th percentile of latency in the API Management system.
+    This widget allows you to identify the slowest APIs of the API management system at a glance. Since these are the APIs that contribute to the higher 95th percentile of the system, improving these APIs lowers the 95th percentile of latency in the API Management deployments.
 
     ![Slowest APIs](../assets/img/insights/slowest-apis.png){.cInlineImage-full}
 
