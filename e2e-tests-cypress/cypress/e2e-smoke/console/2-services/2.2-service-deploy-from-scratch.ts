@@ -50,6 +50,7 @@ describe('Service deployment and delete deployed service', () => {
         cy.getByTestId("fit-to-screen-btn").click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('body').type('{enter}', { force: true });
         cy.get('[data-testid="http-save-next"]').click();
         cy.log("HTTP connector added successfully!");
