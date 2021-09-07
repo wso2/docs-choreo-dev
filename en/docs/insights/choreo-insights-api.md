@@ -3690,7 +3690,7 @@ The search filter.
 
 ### GeoLocationFilter
 
-Filters the The search filter. This is an optional pAPI usage by geolocation results.
+Filters the API usage by geolocation results.
 
 <table>
 <thead>
