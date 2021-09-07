@@ -968,7 +968,7 @@ Data filter
 <td valign="top"><a href="#apiusagebygeolocation">APIUsageByGeoLocation</a></td>
 <td>
 
-NOTE: The data required for this operation is not yet collected in the database. Hence, this operation will return
+NOTE: The data required for this operation is not yet collected in the database. Therefore, this operation returns
 empty results.
 
 Returns API usage by country within the specified time range for the given combination of tenant ID, environment ID,
@@ -1122,7 +1122,7 @@ Data filter
 <td valign="top">[<a href="#successapiusagebyapplication">SuccessAPIUsageByApplication</a>]</td>
 <td>
 
-NOTE: This operations can only be invoked via using an on-prem key as the authentication header.
+NOTE: This operation can only be invoked via using an on-prem key as the authentication header.
 
 Returns a list of successful hit counts (i.e., 2xx response codes) within the specified time range for each API,
 grouped by each application. Optionally, you can configure the <code>successAPIUsageByAppFilter</code> parameter to further
@@ -1260,9 +1260,9 @@ Represents the API usage for a single timestamp. The timestamp is calculated bas
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -1528,7 +1528,7 @@ The ID of the API.
 <td valign="top">[<a href="#usagebygeolocation">UsageByGeoLocation</a>]</td>
 <td>
 
-A List containing usages of API in different countries. Returns an empty array if no data is available.
+A list containing usages of API in different countries. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1598,7 +1598,7 @@ Represents alert summaries.
 <td valign="top">[<a href="#alertsummary">AlertSummary</a>]</td>
 <td>
 
-A list containing alert summary for each alert. Returns an empty array if no data is available.
+A list containing the alert summary for each alert. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -1642,9 +1642,9 @@ The ID of the API.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -1752,9 +1752,9 @@ granularity value provided.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -1897,7 +1897,7 @@ The environment name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The environment type. A Choreo environment is labelled as <code>CHOREO</code>, and the on premise environment is labelled as
+The environment type. A Choreo environment is labelled as <code>CHOREO</code>, and the on-premise environment is labelled as
 <code>ON_PREM</code>.
 
 </td>
@@ -1926,9 +1926,9 @@ and a <code>null</code> value is shown for the other categories that are not sel
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -2071,9 +2071,9 @@ The ID of the API.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -2225,9 +2225,9 @@ is calculated based on the granularity value provided.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -2334,9 +2334,9 @@ single timestamp. The timestamp is calculated based on the granularity value pro
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -2384,9 +2384,9 @@ granularity value provided.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -2521,9 +2521,9 @@ value.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -2978,9 +2978,9 @@ timestamp. The timestamp is calculated according to the granularity value provid
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Represents a timestamp value that is calculated based on the specified granularity value. For example, granularity
-value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone provided in the
-time filter.
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
 e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 
 </td>
@@ -3337,8 +3337,8 @@ The results are filtered for the list of APIs you specify here. A maximum of fiv
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Alert category where the results needs to be filtered with. Category needs to be one the <code>TRAFFIC</code>, <code>LATENCY</code>
-values.
+The alert category by which the results need to be filtered. The available categories to select are <code>TRAFFIC</code> and
+<code>LATENCY</code>.
 
 </td>
 </tr>
@@ -3413,7 +3413,7 @@ for the related time range is applied. The possible granularity values that you 
 
 ### DataFilter
 
-Filters results by organization, environment and tenant.
+Filters results for the given combination of organization, environment, and tenant.
 
 <table>
 <thead>
@@ -3438,7 +3438,7 @@ The organization by which the results need to be filtered. It is required to spe
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Environment ID where the results needs to be filtered with. It is required to specify a value for this parameter.
+The environment ID by which the results need to be filtered. It is required to specify a value for this parameter.
 
 </td>
 </tr>
@@ -3516,8 +3516,8 @@ The type of the error. It is required to specify a value for this parameter.
 <td valign="top"><a href="#errorcodetype">ErrorCodeType</a></td>
 <td>
 
-Error code type. If this field is not provided, result set will include both client related error response codes
-(<code>401</code>, <code>404</code>, etc.) and server related error response codes.
+The error code type. If this parameter is not configured, both client-related error response codes (<code>401</code>, <code>404</code>,
+etc.) and server-related response codes (<code>500</code>, <code>501</code>, etc.) are included in the result set.
 
 </td>
 </tr>
@@ -3787,7 +3787,7 @@ for the related time range is applied. The possible granularity values that you 
 
 ### OrgFilter
 
-Filters results by organization.
+Filters results for the given organization.
 
 <table>
 <thead>
@@ -3999,7 +3999,7 @@ The tenant domain name by which the results need to be filtered with.
 
 ### TenantDataFilter
 
-Filters results by tenant.
+Filters results by the tenant.
 
 <table>
 <thead>
@@ -4123,7 +4123,7 @@ Represents an error code type.
 <td valign="top"><strong>_4XX</strong></td>
 <td>
 
-Client side errors.
+Client-side errors.
 
 </td>
 </tr>
@@ -4131,7 +4131,7 @@ Client side errors.
 <td valign="top"><strong>_5XX</strong></td>
 <td>
 
-Server side errors.
+Server-side errors.
 
 </td>
 </tr>
