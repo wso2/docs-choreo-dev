@@ -249,7 +249,7 @@ To generate a custom report, follow the steps below:
 
 1. In the **API** field, select one or more APIs for which you want to generate the report. If required, you can select all the APIs.
 
-2. To further filter the content printed in the report, select one or more applications in the **Application** field. By default, all the applications that have subscribed to one or more of the selected APIs are selected.
+2. If you need to further filter the content printed in the report, select one or more applications in the **Application** field. By default, all the applications that have subscribed to one or more of the selected APIs are selected.
 
     !!! Tip
         If you want to filter the report content by the API consumer instead of the application, click on the toggle switch to the right of the **Application** field, and then select the required consumer. Only consumers who have subscribed to one or more of the selected APIs are displayed in the list. You can either select one, or all of them.
