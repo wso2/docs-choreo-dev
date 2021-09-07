@@ -321,9 +321,9 @@ Granularity value
 <td valign="top"><a href="#errorsummary">ErrorSummary</a></td>
 <td>
 
-Returns the number of unsuccessful (total of both 4xx and 5xx response codes) hit count for each time granularity
-within the specified time range for the given combination of tenant ID, environment ID, and organization ID.
-Optionally, you can configure the <code>granularity</code> parameter to override the default granularity value.
+Returns the number of unsuccessful hits (i.e., the total of both <code>4xx</code> and <code>5xx</code> response codes) for each time
+granularity within the specified time range for the given combination of tenant ID, environment ID, and organization
+ID. Optionally, you can configure the <code>granularity</code> parameter to override the default granularity value.
 
 </td>
 </tr>
@@ -359,9 +359,10 @@ Granularity value
 <td valign="top"><a href="#errorsbycategory">ErrorsByCategory</a></td>
 <td>
 
-Returns the number of proxy errors (total of both 4xx and 5xx response codes) hit count by each error category for
-each time granularity within the specified time range for the given combination of tenant ID, environment ID, and
-organization ID. Optionally, you can configure the <code>errorsByCategoryFilter</code> parameter to further filter the results.
+Returns the number of proxy errors (i.e., the total of both <code>4xx</code> and <code>5xx</code> response codes) by each error category
+for each time granularity within the specified time range for the given combination of tenant ID, environment ID,
+and organization ID. Optionally, you can configure the <code>errorsByCategoryFilter</code> parameter to further filter the
+results.
 
 </td>
 </tr>
@@ -397,8 +398,8 @@ Data filter
 <td valign="top"><a href="#detailsoferrors">DetailsOfErrors</a></td>
 <td>
 
-Returns details of each proxy error (for both 4xx and 5xx response codes) within the specified time range for the
-given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+Returns details of each proxy error (for both <code>4xx</code> and <code>5xx</code> response codes) within the specified time range for
+the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
 <code>errorsDetailsFilter</code> parameter to further filter the results.
 
 </td>
@@ -1143,7 +1144,7 @@ Time filter
 <td valign="top"><a href="#successapiusagebyappfilter">SuccessAPIUsageByAppFilter</a></td>
 <td>
 
-Success API usage by APP filter
+Successful API usage by application filter.
 
 </td>
 </tr>
@@ -2127,7 +2128,7 @@ The error count.
 
 ### ErrorStatusCodeCategoryCounts
 
-Represents errors by the main status code (4xx or 5xx) and the total error count.
+Represents errors by the main status code (<code>4xx</code> or <code>5xx</code>) and the total error count.
 
 <table>
 <thead>
@@ -2171,7 +2172,7 @@ The total number of client and server errors.
 
 ### ErrorSummary
 
-Provides the unsuccessful usage (i.e., 4xx and 5xx response codes) summary across all APIs.
+Provides the unsuccessful usage (i.e., <code>4xx</code> and <code>5xx</code> response codes) summary across all APIs.
 
 <table>
 <thead>
@@ -2206,8 +2207,8 @@ The granularity value for which data is retrieved.
 
 ### ErrorValue
 
-Represents the unsuccessful request count (i.e., 4xx and 5xx response codes) for a single timestamp. The timestamp is
-calculated based on the granularity value provided.
+Represents the unsuccessful request count (i.e., <code>4xx</code> and <code>5xx</code> response codes) for a single timestamp. The timestamp
+is calculated based on the granularity value provided.
 
 <table>
 <thead>
@@ -3516,7 +3517,7 @@ The type of the error. It is required to specify a value for this parameter.
 <td>
 
 Error code type. If this field is not provided, result set will include both client related error response codes
-(401, 404, etc.) and server related error response codes.
+(<code>401</code>, <code>404</code>, etc.) and server related error response codes.
 
 </td>
 </tr>
