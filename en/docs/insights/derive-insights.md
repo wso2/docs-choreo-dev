@@ -38,7 +38,7 @@ The information displayed is as follows:
 
 - **95th Percentile Latency**
 
-    ![95th percentile latency](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
+    ![95th percentile latency](../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
 
     This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the **Latency** page where you can further analyze the latency.
 
@@ -330,7 +330,7 @@ To configure a new latency alert, follow the steps below:
     !!! info
         When the 95th percentile of the selected metric exceeds the threshold provided here, alerts are triggered.
         
-6. In the **Emails** field, specify the list of emails that should be notified when the alert is generated.
+6. If required, specify the list of emails that should be notified when the alert is generated in the **Emails** field.
         
 7. Click **Add**.
 
@@ -360,7 +360,7 @@ To configure a new traffic alert, follow the steps below:
         
 6. In the **Threshold** field, specify the threshold number of requests per minute.
 
-7. In the **Emails** field, specify the list of emails that should be notified when the alert is generated.
+7. If required, specify the list of emails that should be notified when the alert is generated in the **Emails** field.
 
 8. Click **Add**.
 
