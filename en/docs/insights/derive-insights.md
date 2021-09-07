@@ -50,7 +50,7 @@ The information displayed is as follows:
 
 ### Traffic
 
-This page shows information related to the traffic that goes through your API management system. This includes API usage, application usage, resource usage, etc. You can use this page to investigate the usage of APIs and applications, traffic patterns, etc.
+This page shows information related to the traffic that goes through your API management deployments. This includes API usage, application usage, resource usage, etc. You can use this page to investigate the usage of APIs and applications, traffic patterns, etc.
 
 ![Traffic](../assets/img/insights/traffic-page-full.png){.cInlineImage-full}
 
@@ -190,7 +190,7 @@ This page contains the following graphs:
     
 ### Devices
 
-This page displays information about Operating System platforms and HTTP Agents end users are using to invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
+This page displays information about operating system platforms and HTTP agents that end users use invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
 
 ![Device statistics](../assets/img/insights/devices-page-full.png){.cInlineImage-full}
 
