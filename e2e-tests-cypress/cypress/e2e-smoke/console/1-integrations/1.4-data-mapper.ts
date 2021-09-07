@@ -52,7 +52,7 @@ describe("Data Mapper", () => {
  
         cy.get('[data-testid="datamapper-variable-name"]').find('input').first()
             .click({ force: true }).clear().type('emp');
-        //cy.get('[data-testid="vertical-close-btn"]').click();
+        
         cy.get('[data-testid = "Select Typestring"]').click();
         cy.contains('json').click({force: true});
         cy.get ('[data-testid="datamapper-output-config-save-btn"]'). click ();
@@ -132,20 +132,6 @@ describe("Data Mapper", () => {
 
 
         cy.deployToChoreo("integration", appName);
-    
-        cy.log('Switch to Develop View');
-        cy.get('[data-testid="develop"]').within(()=>{
-            cy.get('[id="develop"]').click({force:true});
-        });
-        cy.url().should("include", "app/" + appName + "/develop");
-        cy.waitTillWorkSpace();
-        cy.get('[data-testid="vertical-close-btn"]').click();
-        
-
-        cy.log('Deleting DataMapper');
-        cy.get('g:nth-child(9) #DeleteIcon').click({force:true});
-        cy.get('[data-testid="delete-logic-block-btn"] > .MuiButton-label').click({force:true});
-        cy.log("DataMapper deleted successfully!");
            
 
     });
