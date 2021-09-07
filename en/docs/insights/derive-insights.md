@@ -223,7 +223,7 @@ To use this page, be sure to configure alerts and have API invocations that trig
 
 - **Alert Summary**
 
-    This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The dropdowns can be used to filter alerts based on the alert type and API.
+    This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The drop-downs can be used to filter alerts based on the alert type and API.
 
     ![Alert summary](../assets/img/insights/alert-summary.png){.cInlineImage-full}
 
