@@ -475,8 +475,8 @@ Data filter
 <td valign="top"><a href="#errorsbystatuscode">ErrorsByStatusCode</a></td>
 <td>
 
-Returns the hit count for each error response code (401, 404, and 500 etc.,) for each API within the specified time
-range for the given combination of tenant ID, environment ID, and organization ID.
+Returns the hit count for each error response code (<code>401</code>, <code>404</code>, and <code>500</code> etc.,) for each API within the specified
+time range for the given combination of tenant ID, environment ID, and organization ID.
 
 </td>
 </tr>
