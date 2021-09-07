@@ -46,7 +46,7 @@ The information displayed is as follows:
 
     ![API request summary](../assets/img/insights/overview-page-timeline.png){.cInlineImage-full}
 
-    This chart combines the above three widgets and plots them in a timeline. The y-axis on the left displays the request count and the error count. The x-axis shows time, and the y-axis on the right shows the latency in milliseconds. The granularity of the data points is decided based on the time range you have selected. The tooltip provides the exact value of all three metrics accurately.
+    This chart displays the total successful requests, the total requests that have resulted in errors, and the latency in a timeline. The y-axis on the left displays the request count and the error count. The x-axis shows time, and the y-axis on the right shows the latency in milliseconds. The granularity of the data points is decided based on the time range you have selected. The tooltip provides the exact value of all three metrics accurately.
 
 ### Traffic
 
@@ -107,7 +107,7 @@ The following widgets are available for monitoring errors when you have selected
 
 - **Errors by Category** (graph)
 
-    This graph shows the error category distribution over time for the selected period. Apply the required filters as explained above to select the APIs and the error categories to which this content applies. When you select multiple APIs, the error count is grouped by category.
+    This graph shows the error by category over time for the selected period. Apply the required filters as explained above to select the APIs and the error categories to which this content applies. When you select multiple APIs, the error count is grouped by category.
 
     ![Errors by category graph](../assets/img/insights/error-category-graph.png){.cInlineImage-full}
     
