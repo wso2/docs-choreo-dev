@@ -2,13 +2,13 @@
 
 This section explains how you can derive insights about the APIs deployed in your organization. 
 
-## Access the Insights Portal
+## Access the Insights page
 
-To access the Insights Portal, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Insights** in the left navigation menu.
+To open the Insights page, access the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/), and click **Insights** in the left navigation menu.
 
 ## Analyzing statistics
 
-Once you access the Insights Portal, you can view the following information.
+Once you access the Insights page, you can access the following sub pages.
 
 ### Overview
 
@@ -58,14 +58,14 @@ You can filter the information displayed in the widgets as follows:
 
 | **Filtering Option** | **Description** |
 |--------------------|-------------------------------------------------------------------------------------------------|
-| **By API**         | In the **API** field, you can select the APIs for which you want to view analytics. **All** is selected by default. You can select one or multiple APIs from this selector and view the aggregated result. Once you select an API, you can further filter by a specific application that uses the selected API via the **Application** field described below. |
+| **By API**         | In the **API** field, you can select one or more APIs for which you want to view analytics. **All** is selected by default. Once you select an API, you can further filter by a specific application that uses the selected API via the **Application** field described below. |
 | **By Application** | In the **Application** field, you can select the applications for which you want to view analytics. **All** is selected by default. The available applications are all the applications that have subscribed to one or more of the APIs you selected in the **API** field.|
 
-The information you can view is as follows:
+You can view the following information for the APIs you have selected using the above filtering criteria:
 
  - **API Usage Over Time**
  
-    This timeline shows the count of API hits for the APIs you selected using the above-mentioned selectors. If multiple APIs are selected, the timeline shows each API in a separate line with a legend separating each line. You can also zoom in on a selected time range by selecting that area in the chart. To restore to the original view use the **Zoom out** button on the top right-hand corner of the plot.
+    This timeline shows the count of API hits for the APIs for the filtered APIs. If multiple APIs are selected, the timeline shows each API in a separate line with a legend separating each line. You can also zoom in on a selected time range by selecting that area in the chart. To restore to the original view use the **Zoom out** button on the top right-hand corner of the plot.
 
     ![API usage over time](../assets/img/insights/api-usage-timeline.png){.cInlineImage-full}
     
@@ -89,7 +89,7 @@ The information you can view is as follows:
     
 ### Errors
 
-This page shows information related to erroneous API calls that are received by your system. The errors are categorization based on the error type. You can further drill down using the error subtypes. Use this page as the starting point for debugging any API errors.
+This page shows information related to erroneous API calls that are received by your system. The errors are categorized based on the error type. You can further drill down using the error subtypes. Use this page as the starting point for debugging any API errors.
 
 ![Error statistics](../assets/img/insights/error-page-full.png){.cInlineImage-full}
 
@@ -98,8 +98,8 @@ You can filter the information displayed in the widgets as follows:
 | **Filtering Option** | **Description** |
 |--------------------|-------------------------------------------------------------------------------------------------|
 | **By API** | In the **API** field, select the APIs for which you want to view analytics. By default, all APIs are selected. You can select one or multiple APIs from this selector and view the aggregated result. |
-| **By Category** | The **Category** field is displayed when you click **Category** in the toggle switch in the upper right corner of the page. In this field, you can select one or all of the following error categories:<br/>**Authentication**: Any kind of authentication error falls into this category including expired/missing/invalid credentials.<br/>**Target Connectivity**: Any kind of API back-end error falls into this category including connection time-outs/other back-end errors (for example, 4xx and 5xx status codes).<br/>**Throttling**: Any kind of API back-end error falls into this category including application throttling/subscription throttling.<br/>**Other**: All other errors fall into this category including mediation errors/resource not found errors. |
-| **By Status Code** | The **Status Code** field is displayed when you click **Status Code** in the toggle switch in the upper right corner of the page. In this field, you can select all or any available HTTP status code category (4xx, 5xx, etc.). These status codes represent the response status of the API Gateway. |
+| **By Category** | The **Category** field is displayed when you click **Category** in the upper right corner of the page. In this field, you can select one or all of the following error categories:<br/>**Authentication**: Any kind of authentication error falls into this category including expired/missing/invalid credentials.<br/>**Target Connectivity**: Any kind of API back-end error falls into this category including connection time-outs/other back-end errors (for example, 4xx and 5xx status codes).<br/>**Throttling**: Any kind of API back-end error falls into this category including application throttling/subscription throttling.<br/>**Other**: All other errors fall into this category including mediation errors/resource not found errors. |
+| **By Status Code** | The **Status Code** field is displayed when you click **Status Code** in the upper right corner of the page. In this field, you can select all or any available HTTP status code category (4xx, 5xx, etc.). These status codes represent the response status of the API Gateway. |
 
 #### Category mode
 
@@ -212,18 +212,18 @@ The information displayed is as follows:
     
 ### Alerts
 
-This page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them to the best effect.
+This page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
 
 **Prerequisites**
 
-To use this page, be sure to configure alerts and have API invocations that trigger alerts. For instructions, see [Alert Configuration]
+To use this page, be sure to configure alerts and have API invocations that trigger alerts. For instructions, see [Alert Configuration](#alert-configuration).
 
-!!! Tip
+!!! Note
     Alerts are retained only for a week.
 
 - **Alert Summary**
 
-    This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The dropdowns can be used to filter alerts based on type and API.
+    This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The dropdowns can be used to filter alerts based on the alert type and API.
 
     ![Alert summary](../assets/img/insights/alert-summary.png){.cInlineImage-full}
 
@@ -241,7 +241,7 @@ This page allows you to download monthly usage reports for your system. There ar
 
 #### Download custom reports
 
-This widget allows you to generate a custom report with available stats and download it.
+This widget allows you to generate a custom report for the statistics that have been generated up to now and download it.
 
 ![Custom report download](../assets/img/insights/custom-report.png){.cInlineImage-full}
 
