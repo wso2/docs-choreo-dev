@@ -301,7 +301,7 @@ Alerts are subject to a suppression policy to ensure you do not receive duplicat
     - The maximum number of alerts that can be configured is 20 for each organization, environment, and tenant combination.
     - Adding an email to an alert configuration is optional. The maximum number of emails per alert configuration is limited to 5.
     
-The alert can be a latency alert or a traffic alert.
+The alert can be a [latency alert](#latency-alerts) or a [traffic alert](#traffic-alerts).
 
 #### Latency alerts
 
