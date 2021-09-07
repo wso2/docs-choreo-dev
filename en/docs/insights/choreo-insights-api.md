@@ -3413,7 +3413,7 @@ for the related time range is applied. The possible granularity values that you 
 
 ### DataFilter
 
-Filters results for the given combination of organization, environment, and tenant.
+Filters results by the given combination of organization, environment, and tenant.
 
 <table>
 <thead>
@@ -3859,10 +3859,10 @@ operation that is available for sorting purposes is used.
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The order in which the results are sorted. Possible values are <code>asc</code>(to sort in the ascending order) and <code>desc</code>
-(to sort in the descending order). If no value is specified, the results are sorted in ascending order by default
-(with the exception of count-specific operations such as <code>getTopAPIsByAlertCount</code> where the results are always
-sorted in the descending order).
+The order in which the results are sorted. Possible values are <code>asc</code> (to sort in ascending order) and <code>desc</code> (to
+sort in descending order). If no value is specified, the results are sorted in ascending order by default (except
+for count-specific operations such as <code>getTopAPIsByAlertCount</code> where the results are always sorted in descending
+order).
 
 </td>
 </tr>
@@ -3940,7 +3940,7 @@ Text which needs to be searched among the results. It is required to specify a v
 
 ### SubscriberFilter
 
-Filters the subscribers results.
+Filters the subscriber results.
 
 <table>
 <thead>
@@ -4179,7 +4179,7 @@ The <code>Float</code> scalar type represents signed double-precision fractional
 
 ### ID
 
-The <code>ID</code> scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as <code>"4"</code>) or integer (such as <code>4</code>) input value will be accepted as an ID.
+The <code>ID</code> scalar type represents a unique identifier, often used to re-fetch an object or as the key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as <code>"4"</code>) or integer (such as <code>4</code>) input value is accepted as an ID.
 
 ### Int
 
