@@ -69,6 +69,7 @@ nav:
           - Performance Analysis: observability/analyze-performance.md
     - Insights:
           - Choreo Insights API:
+                - Overview: insights/choreo-insights-api.md
                 - Explorer: insights/graphiql-explorer.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
