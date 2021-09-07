@@ -190,7 +190,7 @@ This page contains the following graphs:
     
 ### Devices
 
-This page displays information about operating system platforms and HTTP agents that end users use invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
+This page displays information about operating systems and HTTP agents that end users use invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
 
 ![Device statistics](../assets/img/insights/devices-page-full.png){.cInlineImage-full}
 
@@ -200,13 +200,13 @@ The information displayed is as follows:
 
 - **Top Platforms**
 
-    This chart shows the Operating System Platform wise breakdown of the API clients. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the **Other** category.
+    This chart shows the breakdown of the API clients by operating system. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the **Other** category.
 
     ![Top platforms](../assets/img/insights/top-platforms.png){.cInlineImage-half}
 
 - **Top User Agents**
 
-    This chart shows the breakdown of the API clients based on user-agent. The pie chart only shows user agents with a significant amount of requests. Other platforms are grouped under the **Other** category.
+    This chart shows the breakdown of the API clients by user-agent. The pie chart only shows user agents with a significant amount of requests. Other platforms are grouped under the **Other** category.
 
     ![Top user agents](../assets/img/insights/top-user-agents.png){.cInlineImage-half}
     
