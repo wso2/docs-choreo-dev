@@ -227,11 +227,11 @@ To use this page, be sure to configure alerts and have API invocations that trig
 
     ![Alert summary](../assets/img/insights/alert-summary.png){.cInlineImage-full}
 
-- **Top APIs by Alert**
+- **Top APIs by Alert Count**
 
     This shows a pie chart and a table to visualize the alert distribution during the selected time interval.
     
-    ![Top APIs by alert](../assets/img/insights/top-apis-by-alert-count.png){.cInlineImage-full}    
+    ![Top APIs by alert count](../assets/img/insights/top-apis-by-alert-count.png){.cInlineImage-full}    
 
 ### Reports
 
@@ -262,7 +262,7 @@ The report is downloaded in the specified format. The following is a sample repo
 
 ![Sample report](../assets/img/insights/custom-report-sample.png){.cInlineImage-full}
 
-The contents of the report are as follows:
+The contents of the report are as follows.
 
 | **Item** | **Description** |
 |-------------------------|--------------------------------------------------------------------------------------------|
@@ -273,13 +273,13 @@ The contents of the report are as follows:
 | **Reporting Period**    | The time interval for which the report is generated.                                       |
 | **Total request count** | The total request count received by all selected APIs during the report time interval.     |
 
-The table in the report contains the following rows:
+The table in the report contains the following rows.
 
 | **Item** | **Description** |
 |-----------------------|------------------------------------------------------------------------------|
 | **API Name**          | The name of the API.                                                         |
 | **Application name:** | The name of the application. The name of the subscriber is also provided within brackets. |
-| **Usage Count**       | The request count.                                                           |
+| **Usage Count**       | The usage count.                                                           |
 
 #### Download pre-generated reports
 
@@ -293,7 +293,7 @@ To download a pre-generated report, click **Download** for the relevant month an
 
 This page allows you to configure alerts. These alerts allow you to proactively monitor your API ecosystem and take corrective measures for any abnormalities you find.
 
-You can configure alerts for each environment within your organization separately. You can configure alerts per API as well as modify/remove already-added alert configurations. Optionally, you can specify a list of emails for each alert configuration.
+You can configure alerts for each environment within your organization. You can configure and add new, modify, or delete alerts per API. Optionally, you can specify a list of emails for each alert configuration.
 
 Alerts are subject to a suppression policy to ensure you do not receive duplicate alert notifications. For each alert you configure, there is a 10-minute suppression window applied by default. The suppression interval is not configurable at present. In addition, note that the suppression policy is applicable per alert configuration.
 
