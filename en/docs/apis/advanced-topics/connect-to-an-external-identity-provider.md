@@ -1,16 +1,16 @@
 # Connect to an External Identity Provider
 
-Choreo uses an in-built Identity Provider (IdP) by default to manage OAuth clients and generate tokens required to authenticate Choreo APIs. Choreo also grants organization administrator privileges to users to configure a required authorization server as an IdP via the Choreo Console. This allows you to [add one or more external identity providers](#add-an-external-identity-provider) to your Choreo organization and [obtain access tokens from the identity providers](#obtain-an-access-token-from-an-external-identity-provider) to exchange and get Choreo access tokens to invoke APIs. This capability lets you expose your APIs to users who are external to Choreo.
+Choreo uses an in-built Identity Provider (IdP) by default to manage OAuth 2.0 clients and generate tokens required to authenticate Choreo APIs. Choreo also grants organization administrator privileges to users to configure an external authorization server as an IdP via the Choreo Console (for example, Okta). This allows you to [add one or more external identity providers](#add-an-external-identity-provider) to your Choreo organization and [obtain access tokens from the identity providers](#obtain-an-access-token-from-an-external-identity-provider) to exchange and get Choreo access tokens to invoke APIs. This capability lets you expose your APIs to users who reside in an external user store.
 
 ## Token exchange
 
-Choreo supports the token exchange grant type to exchange a JSON Web Token (JWT) issued by an external IdP for a Choreo token. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693), which describes how to request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
+Choreo supports the token exchange grant type to exchange a JSON Web Token (JWT) issued by an external IdP for a Choreo token. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693). The OAuth 2.0 token exchange specification describes how to request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
 
 ![Token exchange flow](../../assets/img/apis/advanced-topics/external-identity-providers/token-exchange-flow.png){.cInlineImage-full}
 
 When you provide a JWT access token (referred to as the `subject_token` in the preceding diagram), a request is sent to the Choreo token endpoint to exchange the JWT with a Choreo JWT. On validation of the request sent, the corresponding IdP configuration is retrieved based on the issuer. Then the `subject_token` validation (signature and expiry time validation) takes place. Successful validation generates a Choreo access token and returns it to you.
 
-Now that you understand the token exchange flow, you can go ahead and add an external identity provider depending on your requirement. 
+Now that you understand the token exchange flow, you can go ahead and add an external identity provider. 
 
 
 ## Add an external identity provider
@@ -43,7 +43,11 @@ Follow this procedure to add an external IdP to your Choreo organization:
     </tr>
     <tr class="odd">
         <td><b>Name</b></td>
-    <td>The name of the IdP. You cannot modify the value after you add the IdP.</td>
+    <tr class="odd">
+        <td><b>Name</b></td>
+    <td>The name of the IdP. <br/>
+!!! note
+    You cannot modify the value after you add the IdP.</td>
     </tr>
     <tr class="even">
         <td><b>Description</b></td>
@@ -51,13 +55,13 @@ Follow this procedure to add an external IdP to your Choreo organization:
     </tr>
     <tr class="odd">
         <td><b>Allowed Token Audience</b></td>
-    <td><b>Okta:</b><br>The audience of the authorization server for which the access token is necessary.<br>
+    <td>If the IdP is <b>Okta:</b><br>The audience of the authorization server for which the access token is necessary.<br>
         You can update this default value via the Okta authorization server by navigating to the following path:<br>
         Security → API → Authorization Server → Your Authorization Server → Settings → Audience<br><br>
-        <b>Microsoft:</b><br>The identifier that identifies the intended recipient of the token.
+        If the IdP is <b>Microsoft:</b><br>The identifier that identifies the intended recipient of the token.
 This value should be the application ID URI of the application in Azure Active Directory (Azure AD) for which the token is requested.
         <br><br>
-        <b>Auth0:</b><br>The unique API identifier to use as the audience parameter in the authorization call.<br>
+        If the IdP is <b>Auth0:</b><br>The unique API identifier to use as the audience parameter in the authorization call.<br>
          You can update this value in the Auth0 server by navigating to the following path:<br>
          Applications → APIs → Your API → General Settings → Identifier<br>
     </td>
@@ -84,7 +88,7 @@ This value should be the application ID URI of the application in Azure Active D
    </tr>
    <tr class="even">
        <td><b>Token Endpoint</b></td>
-   <td>The token endpoint URL of the IdP from where the OAuth client can get an access token.</td>
+   <td>The token endpoint URL of the IdP from where the OAuth 2.0 client can get an access token.</td>
    </tr>
    <tr class="odd">
        <td><b>JWKS Endpoint</b></td>
