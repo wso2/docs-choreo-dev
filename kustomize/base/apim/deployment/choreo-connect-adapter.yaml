@@ -74,12 +74,15 @@ spec:
             - mountPath: /home/wso2/security/truststore/consul/local-dc-client-consul-0.pem
               name: secret-mgw-adapter-consul
               readOnly: true
-              subPath: CONSUL_DC_CLIENT_CERTIFICATE              
+              subPath: CONSUL_DC_CLIENT_CERTIFICATE
             - mountPath: /home/wso2/conf
               name: adapter-config
             - name: secret-mgw
               mountPath: /mnt/csi/secret-mgw
-              readOnly: true 
+              readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always  
           securityContext:
@@ -106,7 +109,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: SUPER_ADMIN_PSWD
-                  name: secret-apim      
+                  name: secret-apim
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
           resources:
             requests:
               memory: "500Mi"
@@ -162,5 +170,13 @@ spec:
             volumeAttributes:
               secretProviderClass: secret-mgw-adapter-consul
             nodePublishSecretRef:
-              name: csi-secret-store-azure                                                   
+              name: csi-secret-store-azure
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
