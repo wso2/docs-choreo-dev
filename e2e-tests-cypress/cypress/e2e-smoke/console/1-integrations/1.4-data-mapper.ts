@@ -10,8 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { generateAppName } from "../../../support/common/utils";
-import { INTEGRATIONS_TEXT,EX_LONG_TIME_OUT} from "../../../support/common/constants";
+import { generateAppName, getSelectedOrgHandle } from "../../../support/common/utils";
+import { INTEGRATIONS_TEXT } from "../../../support/common/constants";
 
 /// <reference types="cypress" />
 
@@ -19,8 +19,10 @@ describe("Data Mapper", () => {
     let appName: string;
 
     before(() => {
-        cy.consoleUserLogin();
-        cy.clearAllTestData();
+        cy.consoleUserLogin().then((user) => {
+            const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
+            cy.clearAllTestData(org);
+        });
     });
 
 
@@ -32,7 +34,7 @@ describe("Data Mapper", () => {
         appName = generateAppName("app");
         cy.log("app name: " + appName);
         cy.createNewApp(INTEGRATIONS_TEXT, appName);
-        cy.url().should("include", "app/" + appName + "/develop");
+        cy.verifyAppName(appName);
         cy.selectTrigger("Manual");
         cy.get('[data-testid="vertical-close-btn"]').click();
 
@@ -50,7 +52,7 @@ describe("Data Mapper", () => {
  
         cy.get('[data-testid="datamapper-variable-name"]').find('input').first()
             .click({ force: true }).clear().type('emp');
-        cy.get('[data-testid="vertical-close-btn"]').click();
+        
         cy.get('[data-testid = "Select Typestring"]').click();
         cy.contains('json').click({force: true});
         cy.get ('[data-testid="datamapper-output-config-save-btn"]'). click ();
@@ -129,10 +131,7 @@ describe("Data Mapper", () => {
         cy.log("DataMapper edited successfully!");
 
 
-        cy.log('Deleting DataMapper');
-        cy.get('g:nth-child(9) #DeleteIcon').click({force:true});
-        cy.get('[data-testid="delete-logic-block-btn"] > .MuiButton-label').click({force:true});
-        cy.log("DataMapper deleted successfully!");
+        cy.deployToChoreo("integration", appName);
            
 
     });

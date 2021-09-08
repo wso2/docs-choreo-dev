@@ -105,6 +105,8 @@ echo "--- Installing Certmanager"
 kubectl create ns cert-manager
 kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
 helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
@@ -194,8 +196,14 @@ kubectl apply -f conf/view-cluster-role-binding.yaml
 echo "--- Add OMS Agent Config"
 kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 
+echo "--- Configure CSI Secret Store"
 bash configure-csi-secret-store.sh
+
+echo "--- Setup Nginx Ingress"
 bash install-nginx-ingress.sh
+
+echo "--- Enable HPA for Ingress Controller"
+kubectl apply -f ingress/hpa.yaml
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"

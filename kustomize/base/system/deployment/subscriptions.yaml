@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+  labels:
+    choreo.component: subscriptions
+  name: subscriptions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: subscriptions
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: subscriptions
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: subscriptions
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-subscriptions:latest
+          env:
+            - name: CACHE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-redis
+                  key: REDIS_PASSWORD
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-subscriptions
+                  key: MSSQL_PASSWORD
+          ports:
+            - containerPort: 9090
+              name: grpc-port
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+            - containerPort: 9092      # To be used for public health check (external)
+              name: healthz
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 100
+            runAsGroup: 1000
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-subscriptions
+              mountPath: "/mnt/csi/secret-subscriptions"
+              readOnly: true
+            - name: secret-redis
+              mountPath: "/mnt/csi/secret-redis"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-subscriptions-config
+        - name: secret-subscriptions
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-subscriptions
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-redis
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-redis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default

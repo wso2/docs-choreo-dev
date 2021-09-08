@@ -3,11 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: app-service
   name: app-service
@@ -57,6 +54,11 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - name: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
         - name: IDP_BACKEND_API_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
@@ -97,9 +99,14 @@ spec:
             secretKeyRef:
               name: secret-service-now
               key: SERVICE_NOW_PASSWORD
+        - name: ASB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: secret-organization-remover
+              key: ASB_CONNECTION_STRING
         envFrom:
-          - configMapRef:
-              name: env-app-service
+        - configMapRef:
+            name: env-app-service
         ports:
         - containerPort: 8080
           name: grpc-port
@@ -120,9 +127,12 @@ spec:
             memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
-          runAsUser: 1000
-          runAsGroup: 1000
+          runAsUser: 12000
+          runAsGroup: 12000
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         volumeMounts:
         - mountPath: /app-service.yaml
           name: config
@@ -150,6 +160,9 @@ spec:
           readOnly: true
         - name: secret-service-now
           mountPath: "/mnt/csi/secret-service-now"
+          readOnly: true
+        - name: secret-organization-remover
+          mountPath: "/mnt/csi/secret-organization-remover"
           readOnly: true
       volumes:
       - name: config
@@ -217,6 +230,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-service-now
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-organization-remover
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-organization-remover
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

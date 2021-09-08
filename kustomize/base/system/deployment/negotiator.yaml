@@ -36,16 +36,6 @@ spec:
             configMapKeyRef:
               key: B7A_LOG_LEVEL
               name: cm-loglevel-negotiator
-        - name: CHOREO_APP_URL
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_APP_URL
-              name: cm-negotiator
-        - name: CHOREO_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-program-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
@@ -56,31 +46,11 @@ spec:
            secretKeyRef:
              name: secret-program-db
              key: CHOREO_DB_PASSWORD
-        - name: CHOREO_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-program-db
-        - name: CHOREO_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-program-db
-        - name: CHOREO_DB_DRIVER
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_DRIVER
-              name: cm-choreo-program-db
         - name: CHOREO_DB_MAX_POOL
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_MAX_POOL
               name: cm-choreo-program-db
-        - name: REDIS_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: REDIS_HOST
-              name: cm-negotiator
         - name: REDIS_PORT
           valueFrom:
             configMapKeyRef:
@@ -101,6 +71,11 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: env-negotiator
+          - configMapRef:
+              name: env-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           allowPrivilegeEscalation: false
