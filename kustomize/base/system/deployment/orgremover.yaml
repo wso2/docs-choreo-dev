@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Liveness probe not required
+    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
+    checkov.io/skip3: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip9: CKV_K8S_31=Temporarily suppressing till fixing
+    checkov.io/skip10: CKV_K8S_29=Temporarily suppressing till fixing
+  labels:
+    choreo.component: organization-remover
+  name: organization-remover
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: organization-remover
+  template:
+    metadata:
+      labels:
+        choreo.component: organization-remover
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-org-cleanup-service:latest
+          name: organization-remover
+          env:
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  key: ASB_CONNECTION_STRING
+                  name: secret-organization-remover
+            - name: ORG_REMOVER_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: ORG_REMOVER_DB_PASSWORD
+                  name: secret-organization-remover
+            - name: BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: BASIC_AUTH_PASSWORD
+                  name: secret-organization-remover
+          envFrom:
+            - configMapRef:
+                name: env-organization-remover
+          ports:
+            - containerPort: 8080
+              name: org-rem-port
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1000
+            runAsGroup: 1000
+            readOnlyRootFilesystem: true
+            name: organization-remover
+          volumeMounts:
+            - name: secret-organization-remover
+              mountPath: "/mnt/csi/secret-organization-remover"
+              readOnly: true
+            - name: config
+              mountPath: /organization-remover.yaml
+              subPath: organization-remover.yaml
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+      volumes:
+        - name: secret-organization-remover
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-organization-remover
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: config
+          configMap:
+            name: cm-organization-remover
+      serviceAccountName: sa-choreo-default
