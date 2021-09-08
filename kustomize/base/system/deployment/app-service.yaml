@@ -99,6 +99,11 @@ spec:
             secretKeyRef:
               name: secret-service-now
               key: SERVICE_NOW_PASSWORD
+        - name: ASB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: secret-organization-remover
+              key: ASB_CONNECTION_STRING
         envFrom:
         - configMapRef:
             name: env-app-service
@@ -155,6 +160,9 @@ spec:
           readOnly: true
         - name: secret-service-now
           mountPath: "/mnt/csi/secret-service-now"
+          readOnly: true
+        - name: secret-organization-remover
+          mountPath: "/mnt/csi/secret-organization-remover"
           readOnly: true
       volumes:
       - name: config
@@ -222,6 +230,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-service-now
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-organization-remover
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-organization-remover
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default

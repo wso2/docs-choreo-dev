@@ -37,6 +37,10 @@ describe('Service deployment and delete deployed service', () => {
         cy.configureResource("hello", null, "string ?");
     });
 
+    beforeEach(() => {
+        cy.hideWelcomeMessage();
+    })
+
     after(() => {
         cy.userLogout();
     })
