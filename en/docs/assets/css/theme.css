@@ -47,10 +47,9 @@
     text-align: left;
 }
 
-[data-md-color-primary=deep-orange] .md-header {
+[data-md-color-primary=indigo] .md-header {
     background-color: #ffffff;
     color: #212121;
-    border-top: 4px solid #ff7043;
 }
 
 .md-header-nav__button.md-logo > img {
@@ -80,7 +79,7 @@
 }
 
 @media only screen and (min-width: 76.25em) {
-    [data-md-color-primary=deep-orange] .md-tabs {
+    [data-md-color-primary=indigo] .md-tabs {
         background-color: #f5f5f5;
         box-shadow: 0 0 0.2rem rgba(0,0,0,.1), 0 0.2rem 0.4rem rgba(0,0,0,.2);
     }
@@ -91,12 +90,12 @@
 }
 
 html .md-typeset .superfences-tabs > label{
-    color: #ff7043;
+    color: #545CEC;
     font-weight: normal;
 }
 
 html .md-typeset .superfences-tabs > label:hover {
-    color: #ff7043;
+    color: #545CEC;
     font-weight: bold;
 }
 
@@ -133,14 +132,14 @@ html .md-typeset .superfences-tabs > label:hover {
     transform: rotateX(180deg)
 }
 
-[data-md-color-primary=deep-orange] .md-nav-link-wrapper a:focus,
-[data-md-color-primary=deep-orange] .md-nav-link-wrapper a:hover {
-    color: #ff7043;
+[data-md-color-primary=indigo] .md-nav-link-wrapper a:focus,
+[data-md-color-primary=indigo] .md-nav-link-wrapper a:hover {
+    color: #545CEC;
 }
 
 .hljs-title,
 .hljs-section {
-    color: #ff7043;
+    color: #545CEC;
     font-weight: normal;
 }
 
@@ -152,7 +151,7 @@ html .md-typeset .superfences-tabs > label:hover {
 .hljs-quote,
 .hljs-template-tag,
 .hljs-deletion {
-    color: #ff7043;
+    color: #545CEC;
 }
 
 .home_icon {
@@ -258,18 +257,17 @@ html .md-typeset .superfences-tabs > label:hover {
         line-height: .9rem;
         white-space: unset;
         background-color: rgba(0,0,0,.01);
-        border-top: 3px solid #ff7043;
+        border-top: 3px solid #545CEC;
         box-shadow: 0 0 0.2rem rgba(0,0,0,.1), 0 0.2rem 0.4rem rgba(0,0,0,.2);
     }
 }
 
 @media only screen and (max-width: 76.1875em) {
-    html [data-md-color-primary=deep-orange] .md-nav--primary .md-nav__title--site {
+    html [data-md-color-primary=indigo] .md-nav--primary .md-nav__title--site {
         background-color: #fff;
-        border-top: 3px solid #ff7043;
         box-shadow: 0 0 0.2rem rgba(0,0,0,.1), 0 0.2rem 0.4rem rgba(0,0,0,.2);
         color: #212121;
-    }
+    }``
 }
 
 .md-footer-nav__inner {
@@ -330,7 +328,7 @@ html .md-footer-meta.md-typeset a,
 
 .cd-top {
     position: fixed;
-    bottom: 20px;
+    bottom: 65px;
     right: 20px;
     display: inline-block;
     height: 40px;

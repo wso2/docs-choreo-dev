@@ -17,7 +17,7 @@ An API lifecycle comprises the stages an API goes through from creation to retir
 An application in Choreo is the logical representation of a physical application such as a mobile app, web app, device, etc. For an application to use an API, the application should subscribe to the relevant APIs it intends to use. A subscription to an API happens over a selected business plan.  The business plan determines the usage quota the subscription gets. An application has a consumer key and a consumer secret, which acts as the credentials of the application.
 
 ## Access token
-Choreo uses the OAuth2.0 bearer token-based authentication mechanism to allow a consumer to access an API.  
+Choreo uses the OAuth 2.0 bearer token-based authentication mechanism to allow a consumer to access an API.  
 The access token is a string that the consumer passes in an HTTP header of the API request. Choreo supports JWT formatted, self-contained access tokens.
 
 ## Rate limiting
@@ -39,7 +39,7 @@ The API section in the Choreo Console is designed for API creators to develop, d
 The API Developer Portal allows API publishers to host and advertise their APIs and API consumers to discover, evaluate, subscribe to, and consume APIs securely.
 
 ### API Key Manager
-The API Key Manager is the identity provider for Choreo and acts as the Secure Token Service (STS). Choreo's API management supports OAuth2.0 and API key-based authentication mechanisms.
+The API Key Manager is the identity provider for Choreo and acts as the Secure Token Service (STS). Choreo's API management supports OAuth 2.0 and API key-based authentication mechanisms.
 
 In Choreo, tokens are bound to an application. The Key Manager provides a token API to generate access tokens. Clients can use these tokens to invoke APIs exposed by Choreo. The Key Manager also exposes a revoke token API that clients can use to revoke an access token. A client can generate an OAuth2.0 access token by invoking the token API directly or via the API Developer Portal UI. Alternatively, a client can generate an API key through the API Developer Portal without calling the Key Manager. The API key is a self-signed JWT token. When a client invokes an API with an OAuth2.0 access token or an API key, the Gateway validates the token by validating its signature and subscription.
 
