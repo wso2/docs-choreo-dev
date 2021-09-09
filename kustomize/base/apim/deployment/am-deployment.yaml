@@ -178,7 +178,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                     key: MONGO_DB_ATLAS_PUBLIC_KEY
-                    name: secret-apim-mongodb   
+                    name: secret-apim-mongodb
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
             - name: JVM_MEM_OPTS
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
@@ -225,6 +230,9 @@ spec:
               readOnly: true
             - name: secret-apim-mongodb
               mountPath: /mnt/csi/secret-apim-mongodb
+              readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
               readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
@@ -312,6 +320,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim-mongodb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
             nodePublishSecretRef:
               name: csi-secret-store-azure
 
