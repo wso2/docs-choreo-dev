@@ -11,8 +11,8 @@ The following lists the connections you can use to interact with application-spe
 
 | **Connection**       | **Description**                                                                                |
 |----------------------|------------------------------------------------------------------------------------------------|
-| **Mail by Choreo**   | Sends email via Choreo to a specific address with a specific subject and a message body.        |
-| **SMS by Choreo**    | Sends SMS via Choreo to a specific telephone number with a specific message body.               |
+| **Mail by Choreo**   | Sends an email via Choreo to a specific address with a specific subject and a message body.        |
+| **SMS by Choreo**    | Sends an SMS via Choreo to a specific telephone number with a specific message body.               |
 | **COVID-19 API**     | Integrates with the COVID-19 API to retrieve the statistics related to the spread of the disease such as the number of new cases in a specific country, vaccine coverage data, etc. |
 | **World Bank API**   | Integrates with the World Bank API to retrieve information related to population, literacy rate, Gross Domestic Product (GDP), government expenditure, etc., in different countries. |
 | **GitHub**           | Integrates with GitHub to perform operations such as creating an issue, creating a pull request, etc. |
