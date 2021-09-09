@@ -8,7 +8,7 @@ You can use the GraphQL Explorer to test Choreo Insights API operations using yo
 
 <div class="explorer">
   <iframe 
-    src="../assets/static/graphiql-explorer/index.html"
+    src="../../assets/static/graphiql-explorer/index.html"
     style="border:1px solid black; height: 700px; width: 100%;"
   >
   </iframe>
