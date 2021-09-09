@@ -58,11 +58,14 @@ spec:
             - mountPath: /home/wso2/security/truststore/controlplane.pem
               name: secret-mgw-truststore
               readOnly: true
-              subPath: CONTROL_PLANE_CERTIFICATE              
+              subPath: CONTROL_PLANE_CERTIFICATE
             - mountPath: /home/wso2/security/truststore/mg.pem
               name: secret-mgw-truststore
               readOnly: true
               subPath: ADAPTER_TRUSTSTORE_CERTIFICATE
+            # - mountPath: /home/wso2/security/truststore/global-adapter.pem
+            #   name: global-adapter-keystore-vol
+            #   subPath: global-adapter.pem
             - mountPath: /home/wso2/security/truststore/consul/consul-agent-ca.pem
               name: secret-mgw-adapter-consul
               readOnly: true
@@ -84,7 +87,7 @@ spec:
               mountPath: /mnt/csi/secret-asb
               readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
-          imagePullPolicy: Always  
+          imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -104,7 +107,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: ADAPTER_ADMIN_PASSWORD
-                  name: secret-mgw     
+                  name: secret-mgw
             - name: cp_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -139,6 +142,9 @@ spec:
         - name: adapter-config
           configMap:
             name: mgw-adapter-enforcer-conf
+        # - name: global-adapter-keystore-vol
+        #   configMap:
+        #     name: global-adapter-keystore-vol
         - name: secret-mgw
           csi:
             driver: secrets-store.csi.k8s.io
@@ -162,7 +168,7 @@ spec:
             volumeAttributes:
               secretProviderClass: secret-mgw-truststore
             nodePublishSecretRef:
-              name: csi-secret-store-azure 
+              name: csi-secret-store-azure
         - name: secret-mgw-adapter-consul
           csi:
             driver: secrets-store.csi.k8s.io
