@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/assets/static/graphiql-explorer/static/css/main.1520b23e.chunk.css",
+    "main.js": "/assets/static/graphiql-explorer/static/js/main.8ef781e2.chunk.js",
+    "main.js.map": "/assets/static/graphiql-explorer/static/js/main.8ef781e2.chunk.js.map",
+    "runtime-main.js": "/assets/static/graphiql-explorer/static/js/runtime-main.036293d9.js",
+    "runtime-main.js.map": "/assets/static/graphiql-explorer/static/js/runtime-main.036293d9.js.map",
+    "static/css/2.dff3c244.chunk.css": "/assets/static/graphiql-explorer/static/css/2.dff3c244.chunk.css",
+    "static/js/2.4469f692.chunk.js": "/assets/static/graphiql-explorer/static/js/2.4469f692.chunk.js",
+    "static/js/2.4469f692.chunk.js.map": "/assets/static/graphiql-explorer/static/js/2.4469f692.chunk.js.map",
+    "index.html": "/assets/static/graphiql-explorer/index.html",
+    "static/css/2.dff3c244.chunk.css.map": "/assets/static/graphiql-explorer/static/css/2.dff3c244.chunk.css.map",
+    "static/css/main.1520b23e.chunk.css.map": "/assets/static/graphiql-explorer/static/css/main.1520b23e.chunk.css.map",
+    "static/js/2.4469f692.chunk.js.LICENSE.txt": "/assets/static/graphiql-explorer/static/js/2.4469f692.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.036293d9.js",
+    "static/css/2.dff3c244.chunk.css",
+    "static/js/2.4469f692.chunk.js",
+    "static/css/main.1520b23e.chunk.css",
+    "static/js/main.8ef781e2.chunk.js"
+  ]
+}
