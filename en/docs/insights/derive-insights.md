@@ -34,13 +34,13 @@ The information displayed is as follows:
 
     ![Average error rate](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
 
-    This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the **Errors** page.
+    This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the [**Errors** page](#errors).
 
 - **95th Percentile Latency**
 
     ![95th percentile latency](../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
 
-    This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the **Latency** page where you can further analyze the latency.
+    This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency** page](#latency) where you can further analyze the latency.
 
 - **API Request Summary**
 
