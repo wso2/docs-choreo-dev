@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-connect-adapter
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-adapter-default-p2
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-connect-adapter-default-p2
+    spec:
+     containers:
+       - name: choreo-connect-adapter
+         volumeMounts:
+           - mountPath: /home/wso2/security/truststore/global-adapter.pem
+             name: global-adapter-keystore-vol
+             subPath: global-adapter.pem
+         env:
+         - name: localLabel
+           value: default-p2
+         - name: environmentLabel
+           value: Production and Sandbox
+     volumes:
+        - name: global-adapter-keystore-vol
+          configMap:
+            name: global-adapter-keystore-vol
