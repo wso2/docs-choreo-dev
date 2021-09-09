@@ -124,10 +124,4 @@ describe('Service deployment and delete deployed service', () => {
         cy.wait(2.5 * 60 * 1000);
     });
 
-    it('Undeploy from UI and delete the service', () => {
-        cy.goBacktoAppsList();
-        cy.deleteAppWithoutUndeploy(appName, true);
-        cy.undeployApp("service", appName, true);
-        cy.deleteApp("service", appName, true);
-    });
 })
