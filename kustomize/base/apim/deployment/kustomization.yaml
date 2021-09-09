@@ -5,7 +5,6 @@ resources:
 - eventhub-2-deployment.yaml
 - tm-1-deployment.yaml
 - tm-2-deployment.yaml
-- choreo-connect-adapter.yaml
-- choreo-connect-deployment.yaml
 - choreo-connect-global-adapter.yaml
 - gateway-nginx-deployment.yaml
+- choreo-connect
