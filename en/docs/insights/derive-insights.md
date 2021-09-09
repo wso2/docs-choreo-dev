@@ -101,25 +101,21 @@ You can filter the information displayed in the widgets as follows:
 | **By Category** | The **Category** field is displayed when you click **Category** in the upper right corner of the page. In this field, you can select one or all of the following error categories:<br/>**Authentication**: Any kind of authentication error falls into this category including expired/missing/invalid credentials.<br/>**Target Connectivity**: Any kind of back-end error falls into this category including connection time-outs/other back-end errors (for example, 4xx and 5xx status codes).<br/>**Throttling**: Any kind of rate-limiting error falls into this category including application throttling/subscription throttling.<br/>**Other**: All other errors fall into this category including mediation errors/resource not found errors. |
 | **By Status Code** | The **Status Code** field is displayed when you click **Status Code** in the upper right corner of the page. In this field, you can select all or any available HTTP status code category (4xx, 5xx, etc.). These status codes represent the response status of the API Gateway. |
 
-#### Category mode
+#### Viewing errors by category
 
-The following widgets are available for monitoring errors when you have selected the category mode via the toggle switch in the upper-right corner of the page.
+The following widgets are available for monitoring errors when you have selected **Category** in the upper-right corner of the page.
 
-- **Errors by Category** (graph)
-
-    This graph shows the error by category over time for the selected period. Apply the required filters as explained above to select the APIs and the error categories to which this content applies. When you select multiple APIs, the error count is grouped by category.
+- This graph shows the error by category over time for the selected period. Apply the required filters as explained above to select the APIs and the error categories to which this content applies. When you select multiple APIs, the error count is grouped by category.
 
     ![Errors by category graph](../assets/img/insights/error-category-graph.png){.cInlineImage-full}
     
-- **Errors by Category** (table)
-
-    This table provides further information about the errors such as application details and the error reason. For some authentication errors, the application name is not available. You can use this table to get more concrete information about the errors related to your APIs and then start the problem identification.
+- This table provides further information about the errors such as application details and the error reason. For some authentication errors, the application name is not available. You can use this table to get more concrete information about the errors related to your APIs and then start the problem identification.
  
     ![Errors by category table](../assets/img/insights/error-category-table.png){.cInlineImage-full}
     
-#### Status code mode
+#### Viewing errors by status code
     
-The following widgets are available for monitoring errors when you selecte the **Status Code** in the upper-right corner of the page.
+The following widgets are available for monitoring errors when you selected **Status Code** in the upper-right corner of the page.
 
 - **Errors by Status Code**
 
@@ -247,7 +243,7 @@ This widget allows you to generate a custom report for the statistics that have 
 
 To generate a custom report, follow the steps below:
 
-1. In the **API** field, select one or more APIs for which you want to generate the report. If required, you can select all the APIs.
+1. In the **API** field, select one or more APIs for which you want to generate the report. If required, you can select all the APIs by selecting **All**.
 
 2. If you need to further filter the content printed in the report, select one or more applications in the **Application** field. By default, all the applications that have subscribed to one or more of the selected APIs are selected.
 
@@ -278,7 +274,7 @@ The table in the report contains the following rows.
 | **Item** | **Description** |
 |-----------------------|------------------------------------------------------------------------------|
 | **API Name**          | The name of the API.                                                         |
-| **Application name:** | The name of the application. The name of the subscriber is also provided within brackets. |
+| **Application name** | The name of the application. The name of the subscriber is also provided within brackets. |
 | **Usage Count**       | The usage count.                                                           |
 
 #### Download pre-generated reports
@@ -295,7 +291,7 @@ This page allows you to configure alerts. These alerts allow you to proactively 
 
 You can configure alerts for each environment within your organization. You can configure and add new, modify, or delete alerts per API. Optionally, you can specify a list of emails for each alert configuration.
 
-Alerts are subject to a suppression policy to ensure you do not receive duplicate alert notifications. For each alert you configure, there is a 10-minute suppression window applied by default. The suppression interval is not configurable at present. In addition, note that the suppression policy is applicable per alert configuration.
+Alerts are subject to a suppression policy to ensure that you do not receive duplicate alert notifications within a specific time interval. A 10-minute suppression window is applied by default, and it is not configurable at present. Note that the suppression policy is applicable per alert configuration.
 
 !!! info
     - The maximum number of alerts that can be configured is 20 for each organization, environment, and tenant combination.
