@@ -12,7 +12,7 @@ Once you access the **Insights** page, you can access the following sub pages.
 
 ### Overview
 
-This page gives you a quick overview of the performance of the system. It can be used as a dashboard to view the current system status.
+The **Overview** page gives you a quick overview of the performance of the system. It can be used as a dashboard to view the current system status.
 
 ![Overview](../assets/img/insights/overview.png){.cInlineImage-full}
 
@@ -50,7 +50,7 @@ The information displayed is as follows:
 
 ### Traffic
 
-This page shows information related to the traffic that goes through your API management deployments. This includes API usage, application usage, resource usage, etc. You can use this page to investigate the usage of APIs and applications, traffic patterns, etc.
+The **Traffic** page shows information related to the traffic that goes through your API management deployments. This includes API usage, application usage, resource usage, etc. You can use this page to investigate the usage of APIs and applications, traffic patterns, etc.
 
 ![Traffic](../assets/img/insights/traffic-page-full.png){.cInlineImage-full}
 
@@ -89,7 +89,7 @@ You can view the following information for the APIs you have selected using the 
     
 ### Errors
 
-This page shows information related to erroneous API calls that are received by your system. The errors are categorized based on the error type. You can further drill down using the error subtypes. Use this page as the starting point for debugging any API errors.
+The **Errors** page shows information related to erroneous API calls that are received by your system. The errors are categorized based on the error type. You can further drill down using the error subtypes. Use this page as the starting point for debugging any API errors.
 
 ![Error statistics](../assets/img/insights/error-page-full.png){.cInlineImage-full}
 
@@ -137,7 +137,7 @@ The following widgets are available for monitoring errors when you selected **St
     
 ### Latency
 
-This page shows information related to the latency of API calls within the API management deployment. You can view a summary of the slowest APIs and then drill down into the API view for further analysis. Use this page as a starting point to debug API slowness.
+The **Latency** page shows information related to the latency of API calls within the API management deployment. You can view a summary of the slowest APIs and then drill down into the API view for further analysis. Use this page as a starting point to debug API slowness.
 
 ![Latency](../assets/img/insights/latency-page-full.png){.cInlineImage-full}
 
@@ -163,14 +163,14 @@ The information displayed is as follows:
 
 ### Cache
 
-This page shows statistics that indicate the efficiency with which response caching is carried out for the requests sent to your APIs.
+The **Cache** page shows statistics that indicate the efficiency with which response caching is carried out for the requests sent to your APIs.
 
 !!! info
     Cache hits occur only if you have [enabled response caching](https://apim.docs.wso2.com/en/latest/deploy-and-publish/deploy-on-gateway/api-gateway/response-caching/)
 
 ![Cache statistics](../assets/img/insights/cache-page-full.png){.cInlineImage-full}
 
-This page contains the following graphs:
+The page displays the folloing statistics:
 
 - **Cache Hit Percentage**
 
@@ -186,7 +186,7 @@ This page contains the following graphs:
     
 ### Devices
 
-This page displays information about operating systems and HTTP agents that end users use invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
+The **Devices** page displays information about operating systems and HTTP agents that end users use invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
 
 ![Device statistics](../assets/img/insights/devices-page-full.png){.cInlineImage-full}
 
@@ -208,7 +208,7 @@ The information displayed is as follows:
     
 ### Alerts
 
-This page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
+The **Alerts** page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
 
 **Prerequisites**
 
@@ -231,7 +231,7 @@ To use this page, be sure to configure alerts and have API invocations that trig
 
 ### Reports
 
-This page allows you to download monthly usage reports for your system. There are pre-configured reports with system-wide statistics, and a custom report generator to generate reports based on a subset of APIs/applications.
+The **Reports** page allows you to download monthly usage reports for your system. There are pre-configured reports with system-wide statistics, and a custom report generator to generate reports based on a subset of APIs/applications.
 
 ![Report page](../assets/img/insights/report-page-full.png){.cInlineImage-full}
 
@@ -287,7 +287,7 @@ To download a pre-generated report, click **Download** for the relevant month an
 
 ### Alert Configuration
 
-This page allows you to configure alerts. These alerts allow you to proactively monitor your API ecosystem and take corrective measures for any abnormalities you find.
+The **Alert Configuration** page allows you to configure alerts. These alerts allow you to proactively monitor your API ecosystem and take corrective measures for any abnormalities you find.
 
 You can configure alerts for each environment within your organization. You can configure and add new, modify, or delete alerts per API. Optionally, you can specify a list of emails for each alert configuration.
 
