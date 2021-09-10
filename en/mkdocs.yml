@@ -70,9 +70,7 @@ nav:
     - Insights:
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
-          - Choreo Insights API:
-                - Overview: insights/choreo-insights-api.md
-                - Explorer: insights/graphiql-explorer.md
+          - Choreo Insights API: insights/choreo-insights-api.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Anonymous Access: references/anonymous-access.md
