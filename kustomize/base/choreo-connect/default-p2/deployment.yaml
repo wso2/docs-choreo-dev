@@ -18,8 +18,8 @@ spec:
        - name: choreo-connect-enforcer
          env:
          - name: ADAPTER_HOST
-           value: adapter-default-p2
+           value: adapter-green-default-p2
        - name: choreo-connect-router
          env:
          - name: ADAPTER_HOST
-           value: adapter-default-p2
+           value: adapter-green-default-p2

@@ -18,12 +18,12 @@ spec:
        - name: choreo-connect-enforcer
          env:
          - name: ADAPTER_HOST
-           value: adapter-test-p1
+           value: adapter-green-test-p1
          - name: ENFORCER_LABEL
            value: test
        - name: choreo-connect-router
          env:
          - name: ADAPTER_HOST
-           value: adapter-test-p1
+           value: adapter-green-test-p1
          - name: ROUTER_LABEL
            value: test
