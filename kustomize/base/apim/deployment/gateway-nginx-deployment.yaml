@@ -85,6 +85,10 @@ spec:
                   key: REDIS_PASSWORD
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "sh", "init.sh" ]
           securityContext:
             runAsNonRoot: true
             runAsUser: 10500
@@ -118,11 +122,6 @@ spec:
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 5
-          startupProbe:
-            exec:
-              command: [ "sh", "init.sh" ]
-            failureThreshold: 30
-            periodSeconds: 10
           volumeMounts:
           - name: openresty-logs-folder
             mountPath: /usr/local/openresty/nginx/logs
