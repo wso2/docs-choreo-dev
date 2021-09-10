@@ -93,6 +93,8 @@ describe('Service deployment and delete deployed service', () => {
             cy.get('.execute-wrapper > .btn').click();
                 cy.get('.curl-command').should('exist');
                 cy.get('.request-url').should('exist');
+                cy.get("div[class='highlight-code'] pre[class=' microlight'] code span").should('have.text', 'hello world')
+                cy.log('service response is successfully returned');
                 cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
                 cy.log('Service Tryout is successful!');
     
