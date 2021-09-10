@@ -62,7 +62,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-5326efab9fa61dd8d1bc4ed24f53f0d16b6b5ede
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
-  newTag: master-15d60c28e689d88be16edaed7c013128c8f50a7c
+  newTag: master-d94b4dd9e1f2b2dfa8ff5e33435342badf01b02a
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase
   newTag: master-e05e52db3170b3266d010c5cd9c6779be204d352
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreodp-cicd
