@@ -22,9 +22,9 @@ metadata:
   annotations:
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
     checkov.io/skip8: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
-  name: choreo-connect-deployment
+  name: choreo-connect-deployment-green
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -32,11 +32,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      choreo.component: choreo-connect-deployment
+      choreo.component: choreo-connect-deployment-green
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-deployment
+        choreo.component: choreo-connect-deployment-green
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -48,7 +48,7 @@ spec:
         - name: init-adapter-service
           image: busybox:1.31
           imagePullPolicy: Always
-          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-green 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -75,7 +75,7 @@ spec:
             - mountPath: /home/wso2/security/truststore/mg.pem
               name: secret-mgw-enforcer-truststore
               readOnly: true
-              subPath: ENFORCER_TRUSTSTORE_CERTIFICATE                            
+              subPath: ENFORCER_TRUSTSTORE_CERTIFICATE
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-enforcer-keystore
               readOnly: true
@@ -83,7 +83,7 @@ spec:
             - mountPath: /home/wso2/security/keystore/mg.pem
               name: secret-mgw-enforcer-keystore
               readOnly: true
-              subPath: ENFORCER_KEYSTORE_CERTIFICATE              
+              subPath: ENFORCER_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/conf
               name: enforcer-config
             - mountPath: /home/wso2/lib/dropins
@@ -93,7 +93,7 @@ spec:
               readOnly: true
             - name: secret-mgw-analytics
               mountPath: /mnt/csi/secret-mgw-analytics
-              readOnly: true 
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           securityContext:
@@ -258,7 +258,7 @@ spec:
                 - name: Host
                   value: gw.wso2.com
             initialDelaySeconds: 20
-            periodSeconds: 5         
+            periodSeconds: 5
       volumes:
         - name: enforcer-config
           configMap:
@@ -294,7 +294,7 @@ spec:
             volumeAttributes:
               secretProviderClass: secret-mgw-router-truststore
             nodePublishSecretRef:
-              name: csi-secret-store-azure              
+              name: csi-secret-store-azure
         - name: dropins-vol
           emptyDir: {}
         - name: enforcer-truststore
