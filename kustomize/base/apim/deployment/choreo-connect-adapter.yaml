@@ -77,7 +77,7 @@ spec:
             - mountPath: /home/wso2/security/truststore/consul/local-dc-client-consul-0.pem
               name: secret-mgw-adapter-consul
               readOnly: true
-              subPath: CONSUL_DC_CLIENT_CERTIFICATE
+              subPath: CONSUL_DC_CLIENT_CERTIFICATE              
             - mountPath: /home/wso2/conf
               name: adapter-config
             - name: secret-mgw

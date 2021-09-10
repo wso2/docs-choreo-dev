@@ -330,4 +330,3 @@ spec:
               secretProviderClass: secret-asb
             nodePublishSecretRef:
               name: csi-secret-store-azure
-
