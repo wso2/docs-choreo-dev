@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: router
+  name: router-green
   labels:
     choreo.component: choreo-connect-deployment-default-p1
 spec:
