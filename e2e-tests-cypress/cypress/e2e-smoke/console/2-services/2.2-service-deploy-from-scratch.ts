@@ -83,9 +83,7 @@ describe('Service deployment and delete deployed service', () => {
     })
 
     it('Add test view', () => {
-        cy.wait(2000);
         cy.get('[data-testid="test"]').click();
-        cy.wait(3000);
         cy.log("verify test operation");
         cy.get('[data-testid="backdrop-loader"]').should('not.exist');
         cy.get('.swagger-ui').within(() => {
@@ -93,7 +91,6 @@ describe('Service deployment and delete deployed service', () => {
                     cy.get('button').contains('Try it out').should('exist').click();
             cy.get('.opblock-section-header').contains('Cancel').should('exist');
             cy.get('.execute-wrapper > .btn').click();
-                cy.wait(4000);
                 cy.get('.curl-command').should('exist');
                 cy.get('.request-url').should('exist');
                 cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');

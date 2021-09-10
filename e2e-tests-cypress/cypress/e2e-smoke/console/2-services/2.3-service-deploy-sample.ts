@@ -59,7 +59,6 @@ describe("Test successful deployment of sample services", () => {
             cy.get('.body-param').should('exist').type('Hello world'); 
             cy.get('.execute-wrapper > .btn').click();
             
-            cy.wait(4000);
             cy.get('.curl-command').should('exist');
             cy.get('.request-url').should('exist');
             cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
