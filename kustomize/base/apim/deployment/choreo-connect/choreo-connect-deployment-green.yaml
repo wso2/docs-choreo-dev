@@ -19,10 +19,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-deployment-test
   annotations:
     checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
     checkov.io/skip8: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+  name: choreo-connect-deployment-green
 spec:
   replicas: 0
   strategy:
@@ -32,11 +32,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      choreo.component: choreo-connect-deployment-test
+      choreo.component: choreo-connect-deployment-green
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-deployment-test
+        choreo.component: choreo-connect-deployment-green
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -48,7 +48,7 @@ spec:
         - name: init-adapter-service
           image: busybox:1.31
           imagePullPolicy: Always
-          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-green 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -262,7 +262,7 @@ spec:
       volumes:
         - name: enforcer-config
           configMap:
-            name: mgw-ga-adapter-conf
+            name: mgw-adapter-enforcer-conf
         - name: secret-mgw-enforcer-keystore
           csi:
             driver: secrets-store.csi.k8s.io

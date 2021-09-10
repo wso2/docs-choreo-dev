@@ -75,7 +75,7 @@ spec:
             - mountPath: /home/wso2/security/truststore/mg.pem
               name: secret-mgw-enforcer-truststore
               readOnly: true
-              subPath: ENFORCER_TRUSTSTORE_CERTIFICATE                            
+              subPath: ENFORCER_TRUSTSTORE_CERTIFICATE
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-enforcer-keystore
               readOnly: true
@@ -83,7 +83,7 @@ spec:
             - mountPath: /home/wso2/security/keystore/mg.pem
               name: secret-mgw-enforcer-keystore
               readOnly: true
-              subPath: ENFORCER_KEYSTORE_CERTIFICATE              
+              subPath: ENFORCER_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/conf
               name: enforcer-config
             - mountPath: /home/wso2/lib/dropins
@@ -93,7 +93,7 @@ spec:
               readOnly: true
             - name: secret-mgw-analytics
               mountPath: /mnt/csi/secret-mgw-analytics
-              readOnly: true 
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
           securityContext:
@@ -258,7 +258,7 @@ spec:
                 - name: Host
                   value: gw.wso2.com
             initialDelaySeconds: 20
-            periodSeconds: 5         
+            periodSeconds: 5
       volumes:
         - name: enforcer-config
           configMap:
@@ -294,7 +294,7 @@ spec:
             volumeAttributes:
               secretProviderClass: secret-mgw-router-truststore
             nodePublishSecretRef:
-              name: csi-secret-store-azure              
+              name: csi-secret-store-azure
         - name: dropins-vol
           emptyDir: {}
         - name: enforcer-truststore

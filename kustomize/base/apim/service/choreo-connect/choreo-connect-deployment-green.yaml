@@ -14,23 +14,21 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-# Service for adapter
+# service for router
 
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: choreo-connect-adapter-test
-  name: adapter-test
+    choreo.component: choreo-connect-deployment-green
+  name: router-green
 spec:
   selector:
-    choreo.component: choreo-connect-adapter-test
+    choreo.component: choreo-connect-deployment-green
   ports:
-    - name: "http-adaptermanagementserver"
-      port: 18000
-      targetPort: 18000
+    - name: "http-routeradmin"
+      port: 9000
       protocol: TCP
-    - name: "https-adapter"
-      port: 9843
-      targetPort: 9843
+    - name: "https-router"
+      port: 9095
       protocol: TCP
