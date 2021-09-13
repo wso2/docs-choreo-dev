@@ -1,0 +1,319 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2021, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+# Deployment for router and enforcer
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
+    checkov.io/skip8: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+  name: choreo-connect-deployment-green
+spec:
+  replicas: 0
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-deployment-green
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-connect-deployment-green
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: init-adapter-service
+          image: busybox:1.31
+          imagePullPolicy: Always
+          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-green 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+      containers:
+        - name: choreo-connect-enforcer
+          volumeMounts:
+            - mountPath: /home/wso2/security/truststore/wso2carbon.pem
+              name: secret-mgw-enforcer-truststore
+              readOnly: true
+              subPath: ADAPTER_CONNECTION_CERTIFICATE
+            - name: enforcer-truststore
+              mountPath: /home/wso2/security/truststore/publisher-truststore.pem
+              subPath: publisher-truststore.pem
+            - mountPath: /home/wso2/security/truststore/mg.pem
+              name: secret-mgw-enforcer-truststore
+              readOnly: true
+              subPath: ENFORCER_TRUSTSTORE_CERTIFICATE
+            - mountPath: /home/wso2/security/keystore/mg.key
+              name: secret-mgw-enforcer-keystore
+              readOnly: true
+              subPath: ENFORCER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/keystore/mg.pem
+              name: secret-mgw-enforcer-keystore
+              readOnly: true
+              subPath: ENFORCER_KEYSTORE_CERTIFICATE
+            - mountPath: /home/wso2/conf
+              name: enforcer-config
+            - mountPath: /home/wso2/lib/dropins
+              name: dropins-vol
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
+            - name: secret-mgw-analytics
+              mountPath: /mnt/csi/secret-mgw-analytics
+              readOnly: true
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add: ["NET_RAW"]
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
+          env:
+            - name: ENFORCER_PRIVATE_KEY_PATH
+              value: "/home/wso2/security/keystore/mg.key"
+            - name: ENFORCER_PUBLIC_CERT_PATH
+              value: "/home/wso2/security/keystore/mg.pem"
+            - name: TRUSTED_CA_CERTS_PATH
+              value: "/home/wso2/security/truststore"
+            - name: ADAPTER_HOST_NAME
+              value: "adapter"
+            - name: ADAPTER_HOST
+              value: "adapter"
+            - name: ADAPTER_XDS_PORT
+              value: "18000"
+            - name: ENFORCER_LABEL
+              value: "Production and Sandbox"
+            - name: ENFORCER_REGION
+              value: "UNKNOWN"
+            - name: XDS_MAX_MSG_SIZE
+              value: "4194304"
+            - name: XDS_MAX_RETRIES
+              value: "3"
+            - name: JAVA_OPTS
+              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms1536m -Xmx1536m"
+            - name: tm_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: SUPER_ADMIN_PSWD
+                  name: secret-apim
+            - name: analytics_authToken
+              valueFrom:
+                secretKeyRef:
+                  key: ANALYTICS_AUTH_TOKEN
+                  name: secret-mgw-analytics
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1500m"
+          ports:
+            - containerPort: 8081
+            - containerPort: 9001
+          startupProbe:
+            exec:
+              command: [ "sh", "check_health.sh" ]
+            periodSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            exec:
+              command: [ "sh", "check_health.sh" ]
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            exec:
+              command: [ "sh", "check_health.sh" ]
+            initialDelaySeconds: 8
+            periodSeconds: 5
+        - name: choreo-connect-router
+          volumeMounts:
+            - mountPath:  /home/wso2/security/keystore/mg.pem
+              name: secret-mgw-router-keystore
+              readOnly: true
+              subPath: ROUTER_KEYSTORE_CERTIFICATE
+            - mountPath: /home/wso2/security/keystore/mg.key
+              name: secret-mgw-router-keystore
+              readOnly: true
+              subPath: ROUTER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/truststore/mg.pem
+              name: secret-mgw-router-truststore
+              readOnly: true
+              subPath: ROUTER_TRUSTSTORE
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add: ["NET_RAW"]
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
+          env:
+            - name: ROUTER_ADMIN_HOST
+              value: "0.0.0.0"
+            - name: ROUTER_ADMIN_PORT
+              value: "9000"
+            - name: ROUTER_CLUSTER
+              value: "default_cluster"
+            - name: ROUTER_LABEL
+              value: "Production and Sandbox"
+            - name: ROUTER_PRIVATE_KEY_PATH
+              value: "/home/wso2/security/keystore/mg.key"
+            - name: ROUTER_PUBLIC_CERT_PATH
+              value: "/home/wso2/security/keystore/mg.pem"
+            - name: ADAPTER_HOST
+              value: "adapter"
+            - name: ADAPTER_PORT
+              value: "18000"
+            - name: ADAPTER_CA_CERT_PATH
+              value: "/home/wso2/security/truststore/mg.pem"
+            - name: ENFORCER_HOST
+              value: "127.0.0.1"
+            - name: ENFORCER_PORT
+              value: "8081"
+            - name: ENFORCER_ANALYTICS_HOST
+              value: "127.0.0.1"
+            - name: ENFORCER_ANALYTICS_RECEIVER_PORT
+              value: "18090"
+            - name: ENFORCER_CA_CERT_PATH
+              value: "/home/wso2/security/truststore/mg.pem"
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "2000m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"
+          ports:
+            - containerPort: 9000
+            - containerPort: 9095
+          startupProbe:
+            httpGet:
+              port: 9095
+              path: /ready
+              scheme: HTTPS
+              httpHeaders:
+                - name: Host
+                  value: gw.wso2.com
+            failureThreshold: 30
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              port: 9095
+              path: /health
+              scheme: HTTPS
+              httpHeaders:
+                - name: Host
+                  value: gw.wso2.com
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 9095
+              path: /ready
+              scheme: HTTPS
+              httpHeaders:
+                - name: Host
+                  value: gw.wso2.com
+            initialDelaySeconds: 20
+            periodSeconds: 5
+      volumes:
+        - name: enforcer-config
+          configMap:
+            name: mgw-adapter-enforcer-conf
+        - name: secret-mgw-enforcer-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-enforcer-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-enforcer-truststore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-enforcer-truststore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-router-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-router-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-router-truststore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-router-truststore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: dropins-vol
+          emptyDir: {}
+        - name: enforcer-truststore
+          configMap:
+            name: mgw-enforcer-truststore
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-analytics
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-analytics
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always

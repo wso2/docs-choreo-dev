@@ -51,6 +51,23 @@ describe("Test successful deployment of sample services", () => {
             "exist"
         );
         cy.log("Tested the echo service successfully!");
+
+        cy.get('.swagger-ui').within(() => {
+            cy.get('.opblock-summary').click();
+            cy.get('button').contains('Try it out').should('exist').click();
+            cy.get('.opblock-section-header').contains('Cancel').should('exist');
+            cy.get('.body-param').should('exist').type('Hello World'); 
+            cy.get('.execute-wrapper > .btn').click();
+            
+            cy.get('.curl-command').should('exist');
+            cy.get('.request-url').should('exist');
+            cy.get("div[class='highlight-code'] pre[class=' microlight'] code span").should('have.text', 'Hello World');
+            cy.log('service response is successfully returned');
+            cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
+            cy.log('Service Tryout is successful!');
+
+        });
+
         cy.url().then((url) => {
             const appName = url.split("app/").pop().split("/test")[0];
             cy.goBacktoAppsList();
