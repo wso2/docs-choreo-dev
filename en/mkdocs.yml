@@ -71,7 +71,7 @@ nav:
           - Rate Limiting: manage/rate-limiting.md
           - API Monetization: manage/api-monetization.md
     - Observe:
-        - Observability Overview: observe/observability-overview.md
+        - Observe APIs: observe/observe-apis.md
     - Derive Insights: insights/derive-insights.md
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
