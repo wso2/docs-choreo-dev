@@ -322,6 +322,7 @@ Cypress.Commands.add('typeOnNthExpressionEditor',
 
         cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(n).click()
             .type('{backspace}{backspace}' + expressionToType + '{esc}');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
 
         if (waitForEnable && validExpression) {
             cy.get('[data-testid="' + waitForEnable + '"]').should('not.have.attr', 'disabled');
@@ -843,20 +844,26 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
         cy.get('[data-testid="weather api"]').click();
         cy.get('[placeholder="Enter endpoint name"]').clear().type(endpointName);
         cy.get('.exp-editor').eq(2).type('{"appid": "' + OPENWEATHERMAP_APPID + '"}', { parseSpecialCharSequences: false });
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.contains('Continue to Invoke API').should('be.visible').click();
         cy.get('[id="combo-box-demo"]').type('Weather Forecast' + '{enter}');
 
         cy.get('.exp-editor').eq(0).type(lat);
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(2000);
         cy.get('.exp-editor').eq(1).type(lon);
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(2000);
         if (exclude || units || lang != null) {
             cy.get('#panel1bh-header').click();
             cy.get('.exp-editor').eq(2).type(exclude);
+            cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
             cy.wait(2000);
             cy.get('.exp-editor').eq(3).type(units);
+            cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
             cy.wait(2000);
             cy.get('.exp-editor').eq(4).type(lang);
+            cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
             cy.wait(2000);
         }
         cy.get('[placeholder="Enter response variable name"]').clear().type(responseVarName);
@@ -883,7 +890,9 @@ Cypress.Commands.add('createVariableOtherTypeProperty', (custom_type: string, na
         cy.get('[data-testid="api-options"]').click({ force: true });
         cy.get('[data-testid="sms by choreo"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type(recipientNumber);
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('.exp-editor').eq(1).type(textMessage);
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(2000);
         if (responseVariableName != null) {
             cy.get('[ placeholder="Enter response variable name"]').clear().type(responseVariableName);
