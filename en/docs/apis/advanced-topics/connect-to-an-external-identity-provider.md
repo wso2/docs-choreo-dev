@@ -109,11 +109,15 @@ Follow this procedure:
 
 3. Create a new application or use an existing application.
 
-4. In the left navigation menu, click **OAuth2 Tokens** under **Production Keys**. This displays the following page if you have not generated the **Consumer Key** and **Consumer Secret**:
+4. In the left navigation menu, click **OAuth2 Tokens** under **Production Keys**. 
 
-    ![Generate credentials](../../assets/img/apis/advanced-topics/external-identity-providers/generate-credentials.png){.cInlineImage-full}
+5. If you have already generated credentials, go to step 6. Otherwise, click **Generate Credentials** to generate the **Consumer Key** and **Consumer Secret**.
+   
 
-5. Click **Generate Credentials** to generate the **Consumer Key** and **Consumer Secret**.
+    !!! tip
+        Before you click **Generate Credentials**, click **Advanced Configurations** and make sure **Token Exchange** is selected as one of the **Grant Types**.  
+
+           ![Application keys advanced configuration](../../assets/img/apis/advanced-topics/external-identity-providers/application-keys-advanced-configuration.png){.cInlineImage-half}
 
 6. Click the **User Keys** tab.
 
