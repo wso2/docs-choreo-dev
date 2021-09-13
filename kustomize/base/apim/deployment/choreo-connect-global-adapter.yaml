@@ -189,12 +189,12 @@ spec:
             secretProviderClass: secret-redis
           nodePublishSecretRef:
             name: csi-secret-store-azure
-        - name: secret-mgw-truststore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-truststore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
+      - name: secret-mgw-truststore
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-mgw-truststore
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
