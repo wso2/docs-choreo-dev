@@ -87,6 +87,7 @@ describe("Data Mapper", () => {
 
         cy.get('[data-testid="datamapper-expression-box"]').eq(0).click({force: true});
         cy.get('.exp-editor').click().type('{backspace}{backspace}fName+lName'); 
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -97,6 +98,7 @@ describe("Data Mapper", () => {
 
         cy.get('[data-testid="datamapper-expression-box"]').eq(1).click({force: true});
         cy.get('.exp-editor').click().type('{backspace}{backspace}"age"');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -123,6 +125,7 @@ describe("Data Mapper", () => {
         });
         cy.get('[data-testid="datamapper-expression-box"]').eq(1).click({force: true});
         cy.get('.exp-editor').click().type('{backspace}{backspace}{backspace}{backspace}{backspace}"0"');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
