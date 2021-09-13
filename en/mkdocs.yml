@@ -58,8 +58,10 @@ nav:
           - Quick Start Guide: qsg/quick-start-guide.md
     - Develop:
           - Create API: develop/create-api.md
-          - Create Integration: develop/create-integration.md
-                - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
+          - Create Integration:
+                - Create Integration: develop/create-integration.md
+                - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
+                - Data Mapping: references/data-mapping.md
                 - Connectors : references/connectors.md
     - Deploy:
           - Deploy APIs: deploy/deploy-apis.md
@@ -71,7 +73,8 @@ nav:
           - Rate Limiting: manage/rate-limiting.md
           - API Monetization: manage/api-monetization.md
     - Observe:
-        - Observe APIs: observe/observe-apis.md
+        - Observability Overview: observe/observability-overview.md
+        - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
     - Derive Insights: insights/derive-insights.md
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
@@ -79,8 +82,8 @@ nav:
                 - Overview: insights/choreo-insights-api.md
                 - Explorer: insights/graphiql-explorer.md
     - Reference:
-          - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
-          - Data Mapping: references/data-mapping.md
+          - FAQ: faq.md
+
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
