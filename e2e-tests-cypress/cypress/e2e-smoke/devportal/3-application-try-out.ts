@@ -58,9 +58,20 @@ describe('Application tryout scenario', () => {
         cy.get('[data-testid="subscriptions"]').click();
         cy.get('[data-testid="create-subscription-btn"]').click();
         cy.wait(2000);
+        cy.log("Search API " + apiName + " to subscribe");
+        cy.get('.MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type(apiName);
         cy.get('[data-testid="add-api-' + apiName + '"]').click();
         cy.get('[data-testid="subscription-dialog-close-btn"]').click();
         cy.log('Subscribed to the API successfully');
+
+        cy.log("Check whether to re-subscribe to the API -  " + apiName + " ,that has already subscribed ");
+        cy.get('[data-testid="create-subscription-btn"]').click();
+        cy.wait(2000);
+        cy.log("Search API " + apiName + " to subscribe");
+        cy.get('.MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type(apiName);
+        cy.wait(2000);
+        cy.get('[index="0"] > :nth-child(3) > :nth-child(1)').contains('button', 'Add').should('be.disabled');
+        cy.get('[data-testid="subscription-dialog-close-btn"]').click();
 
         // Tryout the added API
         cy.findByText(apiName).click();
