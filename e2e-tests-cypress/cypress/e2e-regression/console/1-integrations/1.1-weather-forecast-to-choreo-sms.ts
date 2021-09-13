@@ -87,6 +87,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.log("Add while loop");
         cy.selectManualTriggerOptions("Statements", "addWhile");
         cy.get('.exp-editor').eq(0).type('index < daily_result.length()');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(2000);
         cy.get('[data-testid="while-save-btn" ]').click({ force: true });
         cy.log("While loop added successfully!");
@@ -113,6 +114,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addIf"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type('minTemp > <decimal>temp_data["min"]');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click();
         cy.wait(4000);
@@ -124,6 +126,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addcustom"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type('minTemp = <decimal>temp_data["min"];');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click();
         cy.wait(4000);
@@ -135,6 +138,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addcustom"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type(' humidity_data = <decimal>daily_data["humidity"];');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click({ force: true });
         cy.wait(4000);
@@ -146,6 +150,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addcustom"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type('pressure_data = <decimal>daily_data["pressure"];');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click();
         cy.wait(4000);
@@ -157,6 +162,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addLog"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type('"Temperature not exceeded threshold temperature"');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click({ force: true });
         cy.wait(4000);
@@ -169,6 +175,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addcustom"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type(' index = index + 1;');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click({ force: true });
         cy.log("Other type variable added successfully!");
@@ -194,6 +201,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="variable-name"]').click().type('weatherInfo');
         cy.log('Creating variable: added weatherInfo');
         cy.get('.exp-editor').eq(0).type(weatherOutput, { parseSpecialCharSequences: false });
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.log("Creating variable: added variable expression");
         cy.wait(4000);
         cy.get('[data-testid="save-btn"]').click();
@@ -205,6 +213,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.selectManualTriggerOptions("Statements", "addIf");
         cy.wait(2000);
         cy.get('.exp-editor').eq(0).type('minTemp < <decimal>threshold');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click();
         cy.wait(4000);
@@ -221,6 +230,7 @@ describe("Weather Forecast data to a SMS", () => {
         cy.get('[data-testid="statement-options"]').click({ force: true });
         cy.get('[data-testid="addLog"]').click({ force: true });
         cy.get('.exp-editor').eq(0).type('"Temperature is over the threshold value, Message not sent"');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.wait(1000);
         cy.contains('button', 'Save').click({ force: true });
         cy.wait(4000);

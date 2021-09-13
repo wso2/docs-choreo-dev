@@ -63,6 +63,7 @@ describe('Schedule trigger test run and deployment', () => {
 
         cy.log('Updating the input with a valid expression');
         cy.get('.exp-editor').get('.monaco-editor').get('.view-line').eq(0).click().type('.toString()');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
 
         cy.log('Checking expression editor diagnostics is not visible and save button is enabled');
         cy.get('[data-testid="save-btn"').should('not.have.attr', 'disabled');
