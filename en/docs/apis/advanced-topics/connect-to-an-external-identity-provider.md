@@ -1,17 +1,16 @@
 # Connect to an External Identity Provider
 
-Choreo uses an in-built Identity Provider (IdP) by default to manage OAuth 2.0 clients and generate tokens required to authenticate Choreo APIs. Choreo also grants organization administrator privileges to users to configure an external authorization server as an IdP via the Choreo Console (for example, Okta). As an administrator, you can [add one or more external identity providers](#add-an-external-identity-provider) to your Choreo organization and [obtain a JSON Web Token (JWT) from the identity provider](#obtain-an-access-token-from-an-external-identity-provider) to exchange for a [Choreo access token](../api-concepts.md#choreo-access-token) to invoke APIs. This capability allows you expose your APIs to users who reside in an external user store.
+Choreo uses an in-built Identity Provider (IdP) by default to manage OAuth 2.0 clients and generate tokens required to authenticate Choreo APIs. Choreo also allows users with administrator privileges to configure an external authorization server as an IdP via the Choreo Console (for example, Okta). As an administrator, you can [add one or more external identity providers](#add-an-external-identity-provider) to your Choreo organization and [obtain a JSON Web Token (JWT) from the identity provider](#obtain-an-access-token-from-an-external-identity-provider) to exchange for a [Choreo access token](../api-concepts.md#choreo-access-token) to invoke APIs. This capability allows you to expose your APIs to users who reside in an external user store.
 
 ## Token exchange
 
-Choreo supports the token exchange grant type. This grant type allow the client to obtain a Choreo access token by providing a JWT issued by an external IdP. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693). The OAuth 2.0 token exchange specification describes how to request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
+Choreo supports the token exchange grant type. This grant type allows the client to obtain a Choreo access token by providing a JWT issued by an external IdP. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693). The OAuth 2.0 token exchange specification describes how to request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
 
 ![Token exchange flow](../../assets/img/apis/advanced-topics/external-identity-providers/token-exchange-flow.png){.cInlineImage-full}
 
 To exchange a JWT issued by an external IdP for a Choreo access token, you must send a request to the Choreo token endpoint with the JWT (referred to as the subject_token in the preceding diagram) in the request body. Upon successful authentication of the request, validation of the request takes place, and the corresponding IdP configuration is retrieved using the issuer. Next, the subject token is validated. Successful validation generates and returns a Choreo access token.
 
 Now that you understand the token exchange flow, you can go ahead and add an external IdP. 
-
 
 ## Add an external IdP
 
@@ -99,7 +98,7 @@ Follow this procedure to add an external IdP to your Choreo organization:
 Now that you have added an external IdP, you can obtain a JWT from that IdP and exchange it for a Choreo access token to invoke APIs.
 
 
-## Obtain a JWT from an external IdP to exchange for a Choreo aceess token
+## Obtain a JWT from an external IdP to exchange for a Choreo access token
 
 Follow this procedure:
 
@@ -134,6 +133,6 @@ Follow this procedure:
    
 9. Paste the access token in the **<Your_IdP_name> Token** field. Here, you see the field name displayed as **Okta Token**.
 
-10. Click **://Curl** and copy the cURL command to obtain the Choreo access token. Alternatively, you can click **Generate Test Token** to get the Choreo access token via the UI.
+10. Click **://Curl** and copy the curl command to obtain the Choreo access token. Alternatively, you can click **Generate Test Token** to get the Choreo access token via the UI.
 
 Now you can use the generated Choreo access token to invoke APIs that you have subscribed to using the application.
