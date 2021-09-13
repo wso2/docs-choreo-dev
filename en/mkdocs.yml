@@ -57,25 +57,21 @@ nav:
     - Quick Start Guide:
           - Quick Start Guide: qsg/quick-start-guide.md
     - Develop:
-          - Create Project
-                - Create API: develop/create-api.md
-                - Create Integration: develop/create-integration.md
+          - Create API: develop/create-api.md
+          - Create Integration: develop/create-integration.md
+                - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
+                - Connectors : references/connectors.md
     - Deploy:
           - Deploy APIs: deploy/deploy-apis.md
           - CI/CD: deploy/ci-cd.md
     - Manage:
           - Create API Revisions: manage/create-api-revisions.md
           - Add Custom Properties: manage/add-custom-properties.md
-          - Create API Product: manage/create-api-product.md
-          - Manage Endpoints: manage/manage-endpoints.md
-          - API Documentation: manage/api-documentation.md
           - API Collaboration: manage/api-collaboratio.md
-          - API Security: manage/api-security.md
           - Rate Limiting: manage/rate-limiting.md
           - API Monetization: manage/api-monetization.md
     - Observe:
         - Observability Overview: observe/observability-overview.md
-        - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
     - Derive Insights: insights/derive-insights.md
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
@@ -85,7 +81,6 @@ nav:
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
           - Data Mapping: references/data-mapping.md
-          - Connectors : references/connectors.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
