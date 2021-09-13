@@ -27,7 +27,7 @@ metadata:
     choreo.component: nginx
   name: choreo-nginx-deployment
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       deployment: choreo-nginx
