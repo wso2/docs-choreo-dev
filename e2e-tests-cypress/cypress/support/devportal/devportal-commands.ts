@@ -32,6 +32,8 @@ Cypress.Commands.add('devportalLogout', () => {
 Cypress.Commands.add('navigateToOverviewInDevportal', (apiName: string) => {
     cy.log('Navigating to Overview');
     cy.get('[data-testid="apis-appbar-btn"]', { timeout: STANDARD_TIME_OUT }).should('be.visible').click();
+    cy.log('Searching the API');
+    cy.get('#outlined-search-bar-api-listing', { timeout: STANDARD_TIME_OUT }).type(apiName + '{enter}');
     cy.get('[data-testid="apiCard-' + apiName + '"]').click();
     cy.log('Successfully navigated to Overview');
 });
