@@ -57,8 +57,14 @@ spec:
         - mountPath: /home/wso2/security/keystore/global-adapter.pem
           name: global-adapter-keystore-vol
           subPath: global-adapter.pem
-        - mountPath: /home/wso2/security/truststore
-          name: global-adapter-truststore-vol
+        - mountPath: /home/wso2/security/truststore/controlplane.pem
+          name: secret-mgw-truststore
+          readOnly: true
+          subPath: CONTROL_PLANE_CERTIFICATE
+        - mountPath: /home/wso2/security/truststore/local-adapter.pem
+          name: secret-mgw-truststore
+          readOnly: true
+          subPath: ADAPTER_TRUSTSTORE_CERTIFICATE
         - mountPath: /home/wso2/conf
           name: global-adapter-config
         - name: secret-mgw
@@ -181,6 +187,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-mgw-truststore
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-mgw-truststore
           nodePublishSecretRef:
             name: csi-secret-store-azure
       restartPolicy: Always
