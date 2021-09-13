@@ -44,8 +44,8 @@ Follow this procedure to add an external IdP to your Choreo organization:
     <tr class="odd">
         <td><b>Name</b></td>
     <td>The name of the IdP. <br/>
-!!! note
-    You cannot modify the name after you add an IdP.</td>
+    !!! note
+        You cannot modify the name after you add an IdP.</td>
     </tr>
     <tr class="even">
         <td><b>Description</b></td>
@@ -57,9 +57,9 @@ Follow this procedure to add an external IdP to your Choreo organization:
         You can update this default value via the Okta authorization server by navigating to the following path:<br>
         Security → API → Authorization Server → Your Authorization Server → Settings → Audience<br><br>
         If the IdP is <b>Microsoft:</b><br>The identifier that identifies the intended recipient of the token.
-This value should be the application ID URI of the application in Azure Active Directory (Azure AD) for which the token is requested.
+        This value should be the application ID URI of the application in Azure Active Directory (Azure AD) for which the token is requested.
         <br><br>
-        If the IdP is <b>Auth0:</b><br>The unique API identifier to use as the audience parameter in the authorization call.<br>
+         If the IdP is <b>Auth0:</b><br>The unique API identifier to use as the audience parameter in the authorization call.<br>
          You can update this value in the Auth0 server by navigating to the following path:<br>
          Applications → APIs → Your API → General Settings → Identifier<br>
     </td>
@@ -71,33 +71,30 @@ This value should be the application ID URI of the application in Azure Active D
     </tr>
     </table>
 
-   ![Add an identity provider](../../assets/img/apis/advanced-topics/external-identity-providers/add-an-identity-provider.png){.cInlineImage-half} 
+    ![Add an identity provider](../../assets/img/apis/advanced-topics/external-identity-providers/add-an-identity-provider.png){.cInlineImage-half} 
 
-   When you specify the **Well-Known URL**, the values for **Issuer**, **Token Endpoint**, and **JWKS Endpoint** get autopopulated. You can either choose to keep the values or manually change them. The following table describes each field in detail:
+    When you specify the **Well-Known URL**, the values for **Issuer**, **Token Endpoint**, and **JWKS Endpoint** get autopopulated. You can either choose to keep the values or manually change them. The following table describes each field in detail:
+        <table>
+        <tr class="header">
+        <th><b>Field</b></th>
+        <th><b>Description</b></th>
+        </tr>
+        <tr class="odd">
+        <td><b>Issuer</b></td>
+        <td>The issuer identifier of the IdP, which is in the `iss` claim of the JWT issued.</td>
+        </tr>
+        <tr class="even">
+        <td><b>Token Endpoint</b></td>
+        <td>The token endpoint URL of the IdP from where the OAuth 2.0 client can get an access token.</td>
+        </tr>
+        <tr class="odd">
+        <td><b>JWKS Endpoint</b></td>
+        <td>The URL that returns the JSON Web Key (JWK) set of the IdP. This returns a collection of JWKs used to verify the signature of the JWT tokens.
+        </td>
+        </tr>
+        </table>  
 
-   <table>
-   <tr class="header">
-   <th><b>Field</b></th>
-   <th><b>Description</b></th>
-   </tr>
-   <tr class="odd">
-       <td><b>Issuer</b></td>
-   <td>The issuer identifier of the IdP, which is in the `iss` claim of the JWT issued.</td>
-   </tr>
-   <tr class="even">
-       <td><b>Token Endpoint</b></td>
-   <td>The token endpoint URL of the IdP from where the OAuth 2.0 client can get an access token.</td>
-   </tr>
-   <tr class="odd">
-       <td><b>JWKS Endpoint</b></td>
-   <td>The URL that returns the JSON Web Key (JWK) set of the IdP. This returns a collection of JWKs used to verify the signature of the JWT tokens.
-   </td>
-   </tr>
-   </table>
-
-  ![Identity provider details](../../assets/img/apis/advanced-topics/external-identity-providers/identity-provider-details.png){.cInlineImage-half}
-
-8.  Click **Add**. This adds Okta as an external IdP to your Choreo Organization.
+7.  Click **Add**. This adds Okta as an external IdP to your Choreo Organization.
 
 Now that you have added an external IdP, you can obtain a JWT from that IdP and exchange it for a Choreo access token to invoke APIs.
 
