@@ -52,22 +52,31 @@ strict: true
 # Navigation
 nav:
     - Home: index.md
-    - Services:
-          - Service Concepts: services/service-concepts.md
-          - Create Your First Service: services/create-your-first-service.md
-    - APIs:
-          - API Concepts: apis/api-concepts.md
-          - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
-    - Integrations:
-          - Integration Concepts: integrations/integration-concepts.md
-          - Build Your First Integration: integrations/build-your-first-integration.md
-    - Remote Apps:
-          - Connect Remote Applications: remote-apps/connect-remote-applications.md
-    - Observability:
-          - Observability Overview: observability/observability-overview.md
-          - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
-          - Performance Analysis: observability/analyze-performance.md
-    - Insights:
+    - Concepts:
+          - Concepts: concepts/concepts.md
+    - Quick Start Guide:
+          - Quick Start Guide: qsg/quick-start-guide.md
+    - Develop:
+          - Create Project
+                - Create API: develop/create-api.md
+                - Create Integration: develop/create-integration.md
+    - Deploy:
+          - Deploy APIs: deploy/deploy-apis.md
+          - CI/CD: deploy/ci-cd.md
+    - Manage:
+          - Create API Revisions: manage/create-api-revisions.md
+          - Add Custom Properties: manage/add-custom-properties.md
+          - Create API Product: manage/create-api-product.md
+          - Manage Endpoints: manage/manage-endpoints.md
+          - API Documentation: manage/api-documentation.md
+          - API Collaboration: manage/api-collaboratio.md
+          - API Security: manage/api-security.md
+          - Rate Limiting: manage/rate-limiting.md
+          - API Monetization: manage/api-monetization.md
+    - Observe:
+        - Observability Overview: observe/observability-overview.md
+        - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
+    - Derive Insights: insights/derive-insights.md
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
           - Choreo Insights API:
@@ -75,10 +84,7 @@ nav:
                 - Explorer: insights/graphiql-explorer.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
-          - Anonymous Access: references/anonymous-access.md
           - Data Mapping: references/data-mapping.md
-          - Test Your Service via Postman: references/test-your-service-via-postman.md
-          - API Path: references/api-path.md
           - Connectors : references/connectors.md
 # Extensions
 markdown_extensions:
