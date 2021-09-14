@@ -10,11 +10,11 @@ Choreo supports the token exchange grant type. This grant type allows the client
 
 To exchange a JWT issued by an external IdP for a Choreo access token, you must send a request to the Choreo token endpoint with the JWT (referred to as the subject_token in the preceding diagram) in the request body. Upon successful authentication of the request, validation of the request takes place, and the corresponding IdP configuration is retrieved using the issuer. Next, the subject token is validated. Successful validation generates and returns a Choreo access token.
 
-Now that you understand the token exchange flow, you can go ahead and add an external IdP. 
+Now that you understand the token exchange flow, you can go ahead and add an external IdP to your Choreo organization and then obtain a JWT from the external IdP to exchange for a Choreo access token.  
 
-## Add an external IdP
+## Step 1: Add an external IdP
 
-Follow this procedure to add an external IdP to your Choreo organization:
+Follow this procedure:
 
 !!! note
     You must have organization administrator privileges to add an external IdP.
@@ -98,7 +98,7 @@ Follow this procedure to add an external IdP to your Choreo organization:
 Now that you have added an external IdP, you can obtain a JWT from that IdP and exchange it for a Choreo access token to invoke APIs.
 
 
-## Obtain a JWT from an external IdP to exchange for a Choreo access token
+## Step 2: Obtain a JWT from an external IdP to exchange for a Choreo access token
 
 Follow this procedure:
 
