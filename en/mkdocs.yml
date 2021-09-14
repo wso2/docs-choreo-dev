@@ -52,34 +52,31 @@ strict: true
 # Navigation
 nav:
     - Home: index.md
-    - Services:
-          - Service Concepts: services/service-concepts.md
-          - Create Your First Service: services/create-your-first-service.md
-    - APIs:
-          - API Concepts: apis/api-concepts.md
-          - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
-    - Integrations:
-          - Integration Concepts: integrations/integration-concepts.md
-          - Build Your First Integration: integrations/build-your-first-integration.md
-    - Remote Apps:
-          - Connect Remote Applications: remote-apps/connect-remote-applications.md
-    - Observability:
-          - Observability Overview: observability/observability-overview.md
-          - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
-          - Performance Analysis: observability/analyze-performance.md
-    - Insights:
+    - Concepts: concepts/concepts.md
+    - Quick Start Guide: qsg/quick-start-guide.md
+    - Develop:
+          - Create APIs: develop/create-api.md
+          - Create Integrations:
+                - Create Integrations: develop/create-integration.md
+                - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
+                - Data Mapping: references/data-mapping.md
+                - Connectors : references/connectors.md
+                - Anonymous Access: references/anonymous-access.md
+    - Deploy:
+          - Deploy APIs: deploy/deploy-apis.md
+    - Manage:
+
+    - Observe:
+        - Observability Overview: observe/observability-overview.md
+        - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
+    - Derive Insights:
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
           - Choreo Insights API:
                 - Overview: insights/choreo-insights-api.md
                 - Explorer: insights/graphiql-explorer.md
-    - Reference:
-          - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
-          - Anonymous Access: references/anonymous-access.md
-          - Data Mapping: references/data-mapping.md
-          - Test Your Service via Postman: references/test-your-service-via-postman.md
-          - API Path: references/api-path.md
-          - Connectors : references/connectors.md
+    - FAQ: faq.md
+
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
