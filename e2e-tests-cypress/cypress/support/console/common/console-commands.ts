@@ -375,7 +375,7 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
 }),
 
 Cypress.Commands.add('goBacktoAppsList', () => {
-    cy.closeInitialTourPopup();
+   // cy.closeInitialTourPopup();
     cy.get('[data-testid="app-list-btn"]').click();
     cy.get('[id="backdrop-loader"').should('not.exist');
     cy.log('App List Page loaded successfully');
@@ -392,7 +392,7 @@ Cypress.Commands.add('searchApps', (name: string) => {
 });
 
 Cypress.Commands.add('resetAppSearch', () => {
-    cy.closeInitialTourPopup();
+  //  cy.closeInitialTourPopup();
     cy.get('body').then($body => {
         let searchButtonExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
         if (searchButtonExists) {
