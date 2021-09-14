@@ -12,7 +12,7 @@ metadata:
 spec:
   schedule: 0 * * * *
   startingDeadlineSeconds: 600
-  concurrencyPolicy: Forbid
+  concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
