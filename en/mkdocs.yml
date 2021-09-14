@@ -64,7 +64,7 @@ nav:
   - Deploy:
       - Deploy APIs: deploy/deploy-apis.md
   - Manage:
-          - Exposure and Management of APIs: manage/expose-manage-apis.md
+          - Topic 1: manage/topic-one.md
   - Observe:
       - Observability Overview: observe/observability-overview.md
       - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
@@ -74,7 +74,7 @@ nav:
       - Choreo Insights API:
           - Overview: insights/choreo-insights-api.md
           - Explorer: insights/graphiql-explorer.md
-  - FAQ: faq.md
+  - FAQ: references/faq.md
 
 # Extensions
 markdown_extensions:
