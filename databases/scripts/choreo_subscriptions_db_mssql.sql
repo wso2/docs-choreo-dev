@@ -75,6 +75,7 @@ GO
 
 INSERT INTO choreo_subscriptions_db.dbo.tier (id,name,description,cost,created_at) VALUES
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'Free Tier',N'Free tier to tryout choreo',0,1627639797657),
+	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'Internal Dev',N'Free tier to tryout choreo',0,1631591372000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'Choreo Internal',N'Tier for choreo internal users',0,1627639797657);
 GO
 
@@ -83,6 +84,10 @@ INSERT INTO choreo_subscriptions_db.dbo.quota (tier_id,attribute_name,threshold)
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'integration_quota',10),
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'api_quota',10),
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'remote_app_quota',10),
+	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'service_quota',5),
+	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'integration_quota',5),
+	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'api_quota',5),
+	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'remote_app_quota',5),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'service_quota',1000000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'integration_quota',1000000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'api_quota',1000000),
