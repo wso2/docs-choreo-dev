@@ -88,7 +88,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-garbage-collector
   newTag: master-2f20682056cb4e7e8c6f27a13ae66211becf5c25
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
-  newTag: master-d73d1e00f25f07523486fea5489316de3fdb9b38
+  newTag: master-ee7540af79867abfcd0516d7db845db48de83a84
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-secret-manager
   newTag: master-615e3d8c7f6a92b68c82644bde516350c7de8436
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-utility-api
