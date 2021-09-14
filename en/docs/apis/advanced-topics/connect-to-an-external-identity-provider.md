@@ -4,7 +4,7 @@ Choreo uses an in-built Identity Provider (IdP) by default to manage OAuth 2.0 c
 
 ## Token exchange
 
-Choreo supports the token exchange grant type. This grant type allows the client to obtain a Choreo access token by providing a JWT issued by an external IdP. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693). The OAuth 2.0 token exchange specification describes how to request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
+Choreo supports the token exchange grant type. This grant type allows the client to obtain a Choreo access token by providing a JWT issued by an external IdP. The token exchange grant type uses the protocol defined in the [OAuth 2.0 token exchange specification](https://datatracker.ietf.org/doc/html/rfc8693). The OAuth 2.0 token exchange specification describes how you can request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
 
 ![Token exchange flow](../../assets/img/apis/advanced-topics/external-identity-providers/token-exchange-flow.png){.cInlineImage-full}
 
