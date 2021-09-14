@@ -16,9 +16,9 @@ An API lifecycle comprises the stages an API goes through from creation to retir
 ## Application
 An application in Choreo is the logical representation of a physical application such as a mobile app, web app, device, etc. For an application to use an API, the application should subscribe to the relevant APIs it intends to use. A subscription to an API happens over a selected business plan.  The business plan determines the usage quota the subscription gets. An application has a consumer key and a consumer secret, which acts as the credentials of the application.
 
-## Access token
+## Choreo access token
 Choreo uses the OAuth 2.0 bearer token-based authentication mechanism to allow a consumer to access an API.  
-The access token is a string that the consumer passes in an HTTP header of the API request. Choreo supports JWT formatted, self-contained access tokens.
+A Choreo access token is an OAuth 2.0 token in the JWT format. A consumer passes a Choreo access token in the HTTP header in an API request.
 
 ## Rate limiting
 Rate limiting limits the number of permitted requests to an API within a specified timeframe. You can use a rate-limiting strategy for the following use cases:
