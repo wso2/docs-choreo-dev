@@ -6,18 +6,18 @@ metadata:
     checkov.io/skip1: CKV_K8S_43=Risk accepted
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
-    choreo.component: dp-project-manager
+    choreo.component: dp-auth-module
     choreo.dataplane: "true"
-  name: dp-project-manager
+  name: dp-auth-module
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: dp-project-manager
+      choreo.component: dp-auth-module
   template:
     metadata:
       labels:
-        choreo.component: dp-project-manager
+        choreo.component: dp-auth-module
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -30,9 +30,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dp-project-manager
+        - name: dp-auth-module
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-auth-module:latest
           resources:
             limits:
               cpu: 350m
@@ -42,12 +42,12 @@ spec:
               memory: 300Mi
           envFrom:
             - configMapRef:
-                name: env-dp-project-manager
+                name: env-dp-auth-module
           env:
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-dp-project-manager
+                  name: secret-dp-auth-module
                   key: MONGODB_PASSWORD
           securityContext:
             allowPrivilegeEscalation: false
@@ -83,16 +83,16 @@ spec:
               path: /healthz
               port: http-port
           volumeMounts:
-            - name: secret-dp-project-manager
-              mountPath: "/mnt/csi/secret-dp-project-manager"
+            - name: secret-dp-auth-module
+              mountPath: "/mnt/csi/secret-dp-auth-module"
               readOnly: true
       volumes:
-        - name: secret-dp-project-manager
+        - name: secret-dp-auth-module
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-dp-project-manager
+              secretProviderClass: secret-dp-auth-module
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
