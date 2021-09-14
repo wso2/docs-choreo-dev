@@ -86,6 +86,16 @@ CREATE TABLE daily_total_step_count (
   FOREIGN KEY (last_job_id) REFERENCES job_status (id)
 );
 
+IF NOT EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[threshold_event_status]') AND TYPE IN (N'U'))
+CREATE TABLE threshold_event_status (
+	org_uuid varchar(100) NOT NULL,
+	billing_month int NOT NULL,
+	threshold_1_event_sent bit DEFAULT 0,
+	threshold_2_event_sent bit DEFAULT 0,
+	billing_cycle_reset bit DEFAULT 0,
+	PRIMARY KEY (org_uuid, billing_month)
+);
+
 -- --------------------------- INDEX CREATION -----------------------------
 
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'daily_api_proxy_ind_by_day_start')
