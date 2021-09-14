@@ -92,7 +92,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-secret-manager
   newTag: master-d9245f7bd4244171f313c717cf13cff5e6780b8f
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-utility-api
-  newTag: master-acae11426cdaa6b0ed4fb16295a3eb74791d8e08
+  newTag: master-7d96aa93559ad4fd5e038b98d9348671d111c3fc
 - name: choreocontrolplane.azurecr.io/choreoipaas/email-service
   newTag: master-5424ee56772339a0cd3e0a894f6352d60479e65e
 - name: choreocontrolplane.azurecr.io/choreoipaas/lang-server
