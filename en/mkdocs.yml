@@ -52,37 +52,30 @@ strict: true
 # Navigation
 nav:
     - Home: index.md
-    - Concepts:
-          - Concepts: concepts/concepts.md
-    - Quick Start Guide:
-          - Quick Start Guide: qsg/quick-start-guide.md
+    - Concepts: concepts/concepts.md
+    - Quick Start Guide: qsg/quick-start-guide.md
     - Develop:
-          - Create API: develop/create-api.md
-          - Create Integration:
-                - Create Integration: develop/create-integration.md
+          - Create APIs: develop/create-api.md
+          - Create Integrations:
+                - Create Integrations: develop/create-integration.md
                 - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
                 - Data Mapping: references/data-mapping.md
                 - Connectors : references/connectors.md
+                - Anonymous Access: references/anonymous-access.md
     - Deploy:
           - Deploy APIs: deploy/deploy-apis.md
-          - CI/CD: deploy/ci-cd.md
     - Manage:
-          - Create API Revisions: manage/create-api-revisions.md
-          - Add Custom Properties: manage/add-custom-properties.md
-          - API Collaboration: manage/api-collaboratio.md
-          - Rate Limiting: manage/rate-limiting.md
-          - API Monetization: manage/api-monetization.md
+
     - Observe:
         - Observability Overview: observe/observability-overview.md
         - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
-    - Derive Insights: insights/derive-insights.md
+    - Derive Insights:
           - Derive Insights: insights/derive-insights.md
           - Configure Alerts: insights/configure-alerts.md
           - Choreo Insights API:
                 - Overview: insights/choreo-insights-api.md
                 - Explorer: insights/graphiql-explorer.md
-    - Reference:
-          - FAQ: faq.md
+    - FAQ: faq.md
 
 # Extensions
 markdown_extensions:
