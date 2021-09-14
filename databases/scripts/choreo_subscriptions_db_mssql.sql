@@ -74,7 +74,7 @@ INSERT INTO [attribute] (id,name,description,created_at) VALUES
 GO
 
 INSERT INTO tier (id,name,description,cost,created_at) VALUES
-	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'Free Tier',N'Free tier to tryout choreo',0,1627639797657),
+	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'Free',N'Free tier to tryout choreo',0,1627639797657),
 	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'Internal Dev',N'Free tier to tryout choreo',0,1631591372000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'Choreo Internal',N'Tier for choreo internal users',0,1627639797657);
 GO
