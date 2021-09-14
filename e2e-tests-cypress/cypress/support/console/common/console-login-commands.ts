@@ -232,6 +232,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
 
                     const STORAGE_KEY = "PORTAL_STATE";
                     cy.wrap(user).as("loggedInUser");
+                    localStorage.setItem("HAS_SEEN_WELCOME_MESSAGE","YES")
                     localStorage.setItem(
                         STORAGE_KEY,
                         JSON.stringify({
