@@ -1,0 +1,88 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_43=The image tag gets updated to component git hash when deploying
+  name: step-aggregator
+  labels:
+    choreo.component: step-aggregator
+spec:
+  schedule: 0 * * * *
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: step-aggregator
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: step-aggregator
+              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-step-aggregator:latest
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                  - all
+              env:
+                - name: ADX_ANALYTICS_APP_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-aggregator
+                      key: ADX_ANALYTICS_APP_CLIENT_SECRET
+                - name: APIM_CLIENT_ID  # need to get away from KV secret
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-aggregator
+                      key: APIM_CLIENT_ID
+                - name: APIM_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-aggregator
+                      key: APIM_CLIENT_SECRET
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-aggregator
+                      key: MSSQL_PASSWORD
+              envFrom:
+                - configMapRef:
+                    name: env-step-aggregator
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 1024Mi
+                requests:
+                  cpu: 300m
+                  memory: 512Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
+                - name: secret-step-aggregator
+                  mountPath: "/mnt/csi/secret-step-aggregator"
+                  readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: cm-step-aggregator-config
+            - name: secret-step-aggregator
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-step-aggregator
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default
