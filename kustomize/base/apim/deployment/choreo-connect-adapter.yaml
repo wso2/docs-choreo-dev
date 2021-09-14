@@ -108,6 +108,11 @@ spec:
                 secretKeyRef:
                   key: ADAPTER_ADMIN_PASSWORD
                   name: secret-mgw
+            - name: enforcer_managemenet_password
+              valueFrom:
+                secretKeyRef:
+                  key: ENFORCER_MANAGEMENT_PASSWORD
+                  name: secret-mgw
             - name: cp_admin_pwd
               valueFrom:
                 secretKeyRef:
