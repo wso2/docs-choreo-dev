@@ -4,13 +4,13 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
-    choreo.component: dp-auth-module
-  name: dp-auth-module
+    choreo.component: dp-project-manager
+  name: dp-project-manager
 spec:
   maxReplicas: 1
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: dp-auth-module
+    name: dp-project-manager
   targetCPUUtilizationPercentage: 75
