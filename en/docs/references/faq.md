@@ -1,5 +1,9 @@
 # Frequently Asked Questions
 
+<FAQs>
+
+
+
 ## 1. Can I access Choreo anonymously?
 
 Choreo supports anonymous access to allow (evaluation) users to try out Choreo without having to sign in. An anonymous account is valid for seven days from the time of initial access. 
