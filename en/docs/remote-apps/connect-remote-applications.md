@@ -80,8 +80,6 @@ In this step, you will build and run your Ballerina project.
     Logs similar to the following appear in the terminal.
     
     ```bash
-    ballerina: initializing connection with observability backend periscope.choreo.dev:443
-    ballerina: visit http://console.choreo.dev/observe/app/91e9750f-e2e1-11eb-90ce-de6d84510939/dd9780a8-e2e2-11eb-90ce-de6d84510939 to access observability data
     ballerina: started publishing metrics to Choreo
     [ballerina/http] started HTTP/WS listener 0.0.0.0:9090
     ballerina: started publishing traces to Choreo

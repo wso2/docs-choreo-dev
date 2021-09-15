@@ -7,7 +7,7 @@ This quick start guide walks you through the steps to quickly create and publish
 Follow this procedure to create an API:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
-2. Go to the **APIs** card and click **Get Started**. This takes you to the **Create API** page.
+2. Go to the **APIs** card and click **Create**. This takes you to the **Create API** page.
 3. On the **Create API** page, go to the **Create an API proxy** card and click **Next**.
 4. Under **Design a new REST API**, click **Next**.
 5. In the **Create API from REST API** form, enter the details as follows:
@@ -27,7 +27,6 @@ Follow this procedure to create an API:
     2. Select **GET** from the **HTTP Verb** drop-down list.
     3. In the **URI Pattern** field, enter `/v3/covid-19/states` and then click the **+** icon next to the text to add the resource.
     4. Click **Save**.
-    5. You can see a confirmation message to proceed with the changes. Click **Save** to proceed.
 
 You have successfully created the API and added a `GET` resource to it.
 
@@ -73,7 +72,7 @@ Follow this procedure to invoke the REST API from the API Developer Portal:
 
 1. Click **Credentials** in the left pane.
 2. Click **Generate Credentials**. This creates credentials for an internal application and subscribes this API to that internal application.
-2. Click **Generate Test Token**. Copy the generated access token.
+2. Click **Generate Access Token**. Copy the generated access token.
 3. Click **Try Out** in the left pane. 
 4. Paste the copied access token in the **Access Token** field.
 5. Click the `GET` resource you added to expand it.
