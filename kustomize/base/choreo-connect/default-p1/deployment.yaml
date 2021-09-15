@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: choreo-connect-deployment-green
 spec:
+  replicas: 1  
   selector:
     matchLabels:
       choreo.component: choreo-connect-deployment-default-p1
