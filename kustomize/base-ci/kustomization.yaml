@@ -50,7 +50,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router
   newTag: master-aa4448a8c87a264c2bb668e8539f48ecf313102b
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
-  newTag: master-2cbf9f8b12470408d356a6d2912c9cd9415557cc
+  newTag: master-65fd02f223e77ecd7990fa98c859f80a50b101aa
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-org-cleanup-service
   newTag: main-ec5d25c516f26dcdb8ae63903f2ea7671002086d
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim
