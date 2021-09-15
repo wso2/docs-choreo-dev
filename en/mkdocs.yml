@@ -59,7 +59,7 @@ nav:
   - Deploy: deploy/deploy.md
   - Manage: manage/overview.md
   - Observe: observe/observability-overview.md
-  - Derive Insights: insights/derive-insights.md
+  - Insights: insights/derive-insights.md
   - FAQ: references/faq.md
 
 # Extensions
