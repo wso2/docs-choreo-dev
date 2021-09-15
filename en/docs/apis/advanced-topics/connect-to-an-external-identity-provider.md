@@ -34,7 +34,6 @@ Follow this procedure:
 5. Click on the IdP you want to add. This displays a form where you must enter details to set up the IdP. <br/> This example walks you through the steps to add **Okta** as the IdP. The details you need to fill in are similar for other IdPs as well.
 
 6. Enter appropriate values for each of the fields and click **Next**. The following table describes each field in detail: 
-
     <table>
     <tr class="header">
     <th><b>Field</b></th>
