@@ -31,6 +31,8 @@ IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[a
 CREATE TABLE app_request_step_count (
   id UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID(),
   job_id UNIQUEIDENTIFIER NOT NULL,
+  org_uuid VARCHAR(100) NOT NULL,
+  app_id VARCHAR(100) NOT NULL,
   obs_id VARCHAR(100) NOT NULL,
   obs_version VARCHAR(100) NOT NULL,
   request_type VARCHAR(15) NOT NULL,
@@ -66,7 +68,6 @@ CREATE TABLE daily_app_request_step_count (
   obs_id VARCHAR(100) NOT NULL,
   obs_version VARCHAR(100) NOT NULL,
   request_type VARCHAR(15) NOT NULL,
-  app_type VARCHAR(100) NOT NULL,
   count INTEGER NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (last_job_id) REFERENCES job_status (id)
