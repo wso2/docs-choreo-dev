@@ -41,7 +41,8 @@ Follow this procedure:
     </tr>
     <tr class="odd">
         <td><b>Name</b></td>
-    <td>The name of the IdP. <br/>
+    <td>The name of the IdP.<br/>
+        
     !!! note
         You cannot modify the name after you add an IdP.</td>
     </tr>
