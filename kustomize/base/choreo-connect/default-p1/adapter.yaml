@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: choreo-connect-adapter-green
 spec:
+  replicas: 1
   selector:
     matchLabels:
       choreo.component: choreo-connect-adapter-default-p1
