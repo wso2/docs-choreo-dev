@@ -59,6 +59,8 @@ describe('API creation from choreo service', () => {
             cy.navigateFromHomePage(APIS_TEXT);
             cy.searchApiFromListAndVisit(apiName);
             cy.get('[data-testid="backdrop-loader"]').should('not.exist');
+            cy.get('[data-testid="explore-more-btn"]').click();
+            cy.get('[data-testid="backdrop-loader"]').should('not.exist');
             cy.verifyApiOverview(apiName, "1.0.0");
             cy.updateRuntimeConfiguration();
 

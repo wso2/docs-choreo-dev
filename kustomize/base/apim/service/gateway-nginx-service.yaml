@@ -1,5 +1,5 @@
-# --------------------------------------------------------------------
-# Copyright (c) 2020, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+---
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,23 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# -----------------------------------------------------------------------
-
-# service for router
 
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    choreo.component: choreo-connect-deployment-test
-  name: router-test
+  name: choreo-nginx-service
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "choreo-dev-ctrl-plane-aks-cluster-loadbalanacer-external-subnet"
 spec:
   selector:
-    choreo.component: choreo-connect-deployment-test
+    deployment: choreo-nginx
   ports:
-    - name: "http-routeradmin"
-      port: 9000
-      protocol: TCP
-    - name: "https-router"
-      port: 9095
-      protocol: TCP
+    - port: 443
+      targetPort: 9443
+      name: https
+  type: LoadBalancer
+  loadBalancerIP: 172.16.197.6

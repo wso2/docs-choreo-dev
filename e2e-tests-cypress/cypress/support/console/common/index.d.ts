@@ -15,12 +15,21 @@ interface User {
     uuid: string;
     email: string;
     token: string;
+    apimToken: string;
     picURL: string;
     orgs: Organization[];
     fidp?: string;
     isAnonymous?: boolean;
     createdAt?: Date;
     expiredAt?: Date;
+}
+
+interface ApimTokenResponse {
+    access_token: string,
+    issued_token_type: string,
+    scope: string,
+    token_type: string,
+    expires_in: number,
 }
 
 declare namespace Cypress {

@@ -69,16 +69,13 @@ helm upgrade --install "${USERAPPS_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}"
 
 ############### Install IDP Nginx Ingress Controller using Helm 3
-echo "--- Creating namespace ${IDP_NAMESPACE}"
-kubectl create namespace "${IDP_NAMESPACE}" --dry-run=client -o yaml | kubectl apply -f -
-
-kubectl annotate namespace "${IDP_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
+kubectl annotate namespace "${IDP_NAMESPACE}" linkerd.io/inject=enabled
 kubectl annotate namespace "${IDP_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
 
 echo "--- Installing nginx ingress using Helm 3..."
 # shellcheck disable=SC2140
 helm upgrade --install "${IDP_NAMESPACE}" ingress-nginx/ingress-nginx \
-  --namespace "${IDP_NAMESPACE}-nginx-ingress" \
+  --namespace "${IDP_NAMESPACE}" \
   --version 3.8.0 \
   --set controller.replicaCount=2 \
   --set controller.service.loadBalancerIP="${IDP_LOADBALANCER_IP}"\
