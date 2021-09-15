@@ -55,25 +55,11 @@ nav:
   - Quick Start Guide: qsg/quick-start-guide.md
   - Develop:
       - APIs: develop/create-api.md
-      - Integrations:
-          - Create Integrations: develop/create-integration.md
-          - Ballerina Expression Syntax: references/ballerina-expression-syntax.mdv
-          - Data Mapping: references/data-mapping.md
-          - Connectors : references/connectors.md
-          - Anonymous Access: references/anonymous-access.md
-  - Deploy:
-      - Deploy APIs: deploy/deploy-apis.md
-  - Manage:
-          - Topic 1: manage/topic-one.md
-  - Observe:
-      - Observability Overview: observe/observability-overview.md
-      - Perform Root Cause Analysis: observe/perform-root-cause-analysis.md
-  - Derive Insights:
-      - Derive Insights: insights/derive-insights.md
-      - Configure Alerts: insights/configure-alerts.md
-      - Choreo Insights API:
-          - Overview: insights/choreo-insights-api.md
-          - Explorer: insights/graphiql-explorer.md
+      - Integrations: develop/create-integration.md
+  - Deploy: deploy/deploy-apis.md
+  - Manage: manage/overview.md
+  - Observe: observe/observability-overview.md
+  - Derive Insights: insights/derive-insights.md
   - FAQ: references/faq.md
 
 # Extensions
