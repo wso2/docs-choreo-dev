@@ -262,7 +262,7 @@ spec:
       volumes:
         - name: enforcer-config
           configMap:
-            name: mgw-adapter-enforcer-conf
+            name: mgw-ga-adapter-conf
         - name: secret-mgw-enforcer-keystore
           csi:
             driver: secrets-store.csi.k8s.io

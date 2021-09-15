@@ -141,7 +141,7 @@ spec:
       volumes:
         - name: adapter-config
           configMap:
-            name: mgw-adapter-enforcer-conf
+            name: mgw-ga-adapter-conf
         - name: global-adapter-keystore-vol
           configMap:
             name: global-adapter-keystore-vol
