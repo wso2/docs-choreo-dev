@@ -4,42 +4,15 @@
           <h1>Welcome to the Choreo Learning Portal</h1>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
-             <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies creating services, managing APIs, and building integrations while ensuring best practices and secure coding guidelines.</p>
+             <p><b>Note</b><br/>The Home page will be designed to  provide a guided experience to any user coming to docs with a valid Choreo use case.</p>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
             <iframe width="800" height="250" src="https://www.youtube.com/embed/65cXAAyeJX0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
        </div>
 </div>
-<div class="container cDocsContainer">
-       <div class="container cDocsContainer">
-       <div class="row">      
-          <div class="col-sm-12 col-md-4 col-lg-4">
-             <div class="cIconContainer">
-                 <img style= "height: 115px;" src="assets/img/home/services.svg"/>
-                 <BR><BR><BR>
-                 <h3>Create Services</h3>
-                 <a href="services/create-your-first-service/">Learn More</a>
-             </div>
-          </div>
-          <div class="col-sm-12 col-md-4 col-lg-4">
-              <div class="cIconContainer">
-               <img style= "height: 115px;" src="assets/img/home/api.svg"/>
-	           <BR><BR><BR>	
-               <h3>Manage APIs</h3>
-               <a href="apis/create-and-publish-your-first-api/">Learn More</a>
-              </div>
-          </div>
-          <div class="col-sm-12 col-md-4 col-lg-4">
-              <div class="cIconContainer">
-                 <img src="assets/img/home/integrations.svg"/>
-	             <BR><BR><BR>
-                 <h3>Build Integrations</h3>
-                 <a href="integrations/build-your-first-integration/">Learn More</a>
-              </div>
-          </div>
-       </div>
-</div>
+
+
 <!---
 <div class="container cDocsContainer">
        <div class="row">
