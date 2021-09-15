@@ -56,7 +56,7 @@ nav:
   - Develop:
       - APIs: develop/create-api.md
       - Integrations: develop/create-integration.md
-  - Deploy: deploy/deploy-apis.md
+  - Deploy: deploy/deploy.md
   - Manage: manage/overview.md
   - Observe: observe/observability-overview.md
   - Derive Insights: insights/derive-insights.md
