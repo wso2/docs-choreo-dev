@@ -1,6 +1,6 @@
-# Derive Insights
+# View API Insights
 
-This section explains how you can derive insights about the APIs deployed in your organization. 
+This section explains how you can view insights about the APIs deployed in your organization.
 
 ## Access the Insights page
 
@@ -8,7 +8,7 @@ To open the **Insights** page, access the Choreo Console at [https://console.cho
 
 ## Analyzing statistics
 
-Once you access the **Insights** page, you can access the following sub pages.
+Once you access the **Insights** page, you can access the following subpages.
 
 ### Overview
 
@@ -170,7 +170,7 @@ The **Cache** page shows statistics that indicate the efficiency with which resp
 
 ![Cache statistics](../assets/img/insights/cache-page-full.png){.cInlineImage-full}
 
-The page displays the folloing statistics:
+The page displays the following statistics:
 
 - **Cache Hit Percentage**
 
@@ -186,7 +186,7 @@ The page displays the folloing statistics:
     
 ### Devices
 
-The **Devices** page displays information about operating systems and HTTP agents that end users use invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
+The **Devices** page displays information about operating systems and HTTP agents that end users use to invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
 
 ![Device statistics](../assets/img/insights/devices-page-full.png){.cInlineImage-full}
 
@@ -196,7 +196,7 @@ The information displayed is as follows:
 
 - **Top Platforms**
 
-    This chart shows the breakdown of the API clients by operating system. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the **Other** category.
+    This chart shows the breakdown of the API clients by the operating system. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the **Other** category.
 
     ![Top platforms](../assets/img/insights/top-platforms.png){.cInlineImage-half}
 
@@ -266,16 +266,16 @@ The contents of the report are as follows.
 | **Organization**        | The organization to which the report applies. Each report always applies to a specific organization. |
 | **Environment**         | The environment to which the report applies. Each report always applies to a specific environment.  |
 | **Tenant**              | The tenant to which the report applies. Each report always applies to a specific tenant.            |
-| **Reporting Period**    | The time interval for which the report is generated.                                       |
+| **Reporting period**    | The time interval for which the report is generated.                                       |
 | **Total request count** | The total request count received by all selected APIs during the report time interval.     |
 
 The table in the report contains the following rows.
 
 | **Item** | **Description** |
 |-----------------------|------------------------------------------------------------------------------|
-| **API Name**          | The name of the API.                                                         |
-| **Application name** | The name of the application. The name of the subscriber is also provided within brackets. |
-| **Usage Count**       | The usage count.                                                           |
+| **API**          | The name of the API.                                                         |
+| **Application** | The name of the application. The name of the subscriber is also provided within brackets. |
+| **Usage**       | The usage count.                                                           |
 
 #### Download pre-generated reports
 

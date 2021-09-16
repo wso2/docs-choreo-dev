@@ -15,11 +15,12 @@ Follow this procedure to try out the sample service:
     ![Access the Observability view](../assets/img/observability/access-observability.png){.cInlineImage-full}
         
 You are directed to the sample service low-code view where you can see the following:
-  - Low-code diagram
-  - Throughput graph   
-  - Latency graph
-  - Logs
-  - Diagnostic data
+
+- Low-code diagram
+- Throughput graph   
+- Latency graph
+- Logs
+- Diagnostic data
 
 Here you can detect anomalies and perform root cause analysis on the sample service.
     
