@@ -41,11 +41,6 @@ spec:
                     secretKeyRef:
                       name: secret-step-aggregator
                       key: ADX_ANALYTICS_APP_CLIENT_SECRET
-                - name: APIM_CLIENT_ID  # need to get away from KV secret
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-step-aggregator
-                      key: APIM_CLIENT_ID
                 - name: APIM_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
