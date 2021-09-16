@@ -51,7 +51,7 @@ describe('Choreo APIM publisher scenarios', () => {
 
         cy.intercept({
             method: "POST",
-            pathname: Cypress.env("apimBasePath") + APIM_RESOURCE_PATH + PATH_SEPARATOR + "import-openapi",
+            pathname: APIM_RESOURCE_PATH + PATH_SEPARATOR + "import-openapi",
         }).as("createApi");
 
         cy.get('[id="create-and-publish-api"]').click();

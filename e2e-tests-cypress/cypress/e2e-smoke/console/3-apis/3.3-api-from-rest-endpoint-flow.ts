@@ -50,7 +50,7 @@ describe("API creation from an existing endpoint", () => {
 
         cy.intercept({
             method: "POST",
-            pathname: Cypress.env("apimBasePath") + APIM_RESOURCE_PATH
+            pathname: APIM_RESOURCE_PATH
         }).as("createApi");
 
         cy.get('#create-API-from-restEp-btn').click();
