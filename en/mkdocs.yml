@@ -70,7 +70,7 @@ nav:
           - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
           - Performance Analysis: observability/analyze-performance.md
     - Insights:
-          - View API Insights: insights/derive-insights.md
+          - View API Insights: insights/view-api-insights.md
           - Configure Alerts: insights/configure-alerts.md
           - Choreo Insights API: insights/choreo-insights-api.md
     - Reference:
