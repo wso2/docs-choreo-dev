@@ -108,7 +108,7 @@ Follow this procedure:
 
 3. Create a new application or use an existing application.
 
-4. In the left navigation menu, click **OAuth2 Tokens** under **Production Keys**. 
+4. In the left navigation menu, click **OAuth 2.0 Tokens** under **Production Keys**. 
 
 5. If you have already generated credentials, go to step 6. Otherwise, click **Generate Credentials** to generate the **Consumer Key** and **Consumer Secret**.   
 
