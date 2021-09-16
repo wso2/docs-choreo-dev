@@ -165,6 +165,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
             const cbearer = fragments[0] + "." + fragments[1];
             const accessTokenSegments = data["access_token"].split(".");
             const accessToken = accessTokenSegments[0] + "." + accessTokenSegments[1];
+            let apimToken = "";
             cy.log('Starting login process...');
 
             Cypress.Cookies.defaults({
@@ -184,7 +185,10 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     Cookie: `cwatf=${accessTokenSegments[2]}`
                 }
             }).then((response) => {
-                apimTokenResponse = response.body as ApimTokenResponse;
+                const data = response["body"];
+                cy.log('Data received from apim token endpoint');
+                apimToken = data["access_token"];
+                // apimTokenResponse = response.body as ApimTokenResponse;
             });
 
             cy.request({
@@ -205,7 +209,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     uuid: idpId,
                     email: jwtPayload.email,
                     token: token,
-                    apimToken: apimTokenResponse.access_token,
+                    apimToken: apimToken,
                     picURL: jwtPayload.avatar_url,
                     orgs: orgs,
                     createdAt: new Date(jwtPayload.iat * 1000),
@@ -256,7 +260,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
                             req.headers['authentication'] = "Bearer " + data["id_token"];
                         } else if (req.url.includes("/api/am/")) {
-                            req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
                             req.headers['authentication'] = "Bearer " + apimTokenResponse.access_token;
                         } else {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;

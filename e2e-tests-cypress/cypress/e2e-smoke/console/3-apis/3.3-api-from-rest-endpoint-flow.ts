@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import cypress from 'cypress';
 import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName, getSelectedOrgHandle } from "../../../support/common/utils";
 
@@ -49,7 +50,7 @@ describe("API creation from an existing endpoint", () => {
 
         cy.intercept({
             method: "POST",
-            pathname: APIM_RESOURCE_PATH
+            pathname: Cypress.env("apimBasePath") + APIM_RESOURCE_PATH
         }).as("createApi");
 
         cy.get('#create-API-from-restEp-btn').click();
