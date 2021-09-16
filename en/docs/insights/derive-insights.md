@@ -1,6 +1,6 @@
-# Derive Insights
+# View API Insights
 
-This section explains how you can derive insights about the APIs deployed in your organization. 
+This section explains how you can view insights about the APIs deployed in your organization.
 
 ## Access the Insights page
 
