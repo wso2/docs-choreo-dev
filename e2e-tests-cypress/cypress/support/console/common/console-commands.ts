@@ -27,6 +27,7 @@ import {
     PATH_SEPARATOR,
     GOOGLE_CALENDAR_CONNECTOR,
     OPENWEATHERMAP_APPID,
+    APIM_SVC_URL,
 } from '../../common/constants';
 import { getApiName } from '../../devportal/utils';
 
@@ -479,7 +480,7 @@ Cypress.Commands.add('cleanupApp', (name: string, orgHandle: string) => {
 Cypress.Commands.add('cleanupApi', (apiId: string, orgId: string, token: string) => {
     cy.request({
         method: "DELETE",
-        url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
+        url: APIM_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
@@ -496,65 +497,66 @@ Cypress.Commands.add('cleanupApi', (apiId: string, orgId: string, token: string)
 
 
 Cypress.Commands.add('deleteApiByApplicationId', (id: string, orgId: string) => {
-    let token;
-    const query = `?organizationId=${orgId}&query=applicationId:${id}`
-    cy.getCookie('token').should('exist').then((c) => {
-        token = c;
-        cy.log("GET API for applicationId: " + id);
-        cy.request({
-            method: "GET",
-            url: APP_SVC_URL + APIM_RESOURCE_PATH + query,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.value
-            },
-            timeout: 60000
-        }).then((res) => {
-            expect(res.status).to.eq(SUCCESS_STATUS_CODE);
-            const data = res["body"]["list"];
-            expect(data).to.have.length(1);
+    const localSt = JSON.parse(localStorage.getItem("PORTAL_STATE"));
+    const apimToken = localSt.userInfo.user.apimToken;
+    cy.log("GET API for applicationId: " + id);
+    cy.request({
+        method: "GET",
+        url: APIM_SVC_URL + APIM_RESOURCE_PATH,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apimToken
+        },
+        qs: {
+            organizationId: orgId,
+            applicationId: id
+        },
+        timeout: 60000
+    }).then((res) => {
+        expect(res.status).to.eq(SUCCESS_STATUS_CODE);
+        const data = res["body"]["list"];
+        expect(data).to.have.length(1);
 
-            const apiId = data[0].id;
-            cy.log(`Delete API id: ${apiId}`);
-            if (!apiId) {
-                throw new Error('API id cannot be empty');
-            }
+        const apiId = data[0].id;
+        cy.log(`Delete API id: ${apiId}`);
+        if (!apiId) {
+            throw new Error('API id cannot be empty');
+        }
 
-            cy.request({
-                method: "DELETE",
-                url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token.value
-                },
-                qs: {
-                    'organizationId': orgId,
-                },
-            }).then((res) => {
-                expect(res.status).to.eq(SUCCESS_STATUS_CODE);
-                cy.log("Successfully deleted API: ");
-            });
-        })
-    });
-});
-
-Cypress.Commands.add('deleteApiByApiId', (id: string, orgId: string) => {
-    cy.getCookie('token').should('exist').then((token) => {
         cy.request({
             method: "DELETE",
-            url: APP_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + id,
+            url: APIM_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + apiId,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.value
+                'Authorization': 'Bearer ' + apimToken
             },
             qs: {
                 'organizationId': orgId,
-            }
-        }).then((resp) => {
-            // Status code is expected to be 200
-            expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
-            cy.log("Successfully deleted API: " + id);
+            },
+        }).then((res) => {
+            expect(res.status).to.eq(SUCCESS_STATUS_CODE);
+            cy.log("Successfully deleted API: ");
         });
+    })
+});
+
+Cypress.Commands.add('deleteApiByApiId', (id: string, orgId: string) => {
+    const localSt = JSON.parse(localStorage.getItem("PORTAL_STATE"));
+    const apimToken = localSt.userInfo.user.apimToken;
+    cy.request({
+        method: "DELETE",
+        url: APIM_SVC_URL + APIM_RESOURCE_PATH + PATH_SEPARATOR + id,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apimToken
+        },
+        qs: {
+            'organizationId': orgId,
+        }
+    }).then((resp) => {
+        // Status code is expected to be 200
+        expect(resp.status).to.eq(SUCCESS_STATUS_CODE);
+        cy.log("Successfully deleted API: " + id);
     });
 });
 
@@ -1020,35 +1022,36 @@ Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
 
 Cypress.Commands.add('clearAPIs', (orgId: string) => {
     cy.log('Deleting APIs...');
-    cy.getCookie('token').should('exist').then((token) => {
-        cy.request({
-            method: "GET",
-            url: APP_SVC_URL + APIM_RESOURCE_PATH,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.value
-            },
-            qs: {
-                'organizationId': orgId
-            },
-            timeout: 60000
-        }).then((response) => {
-            const apis = response["body"]["list"] as { id: string, name: string, }[];
-            const e2eApis = apis.filter(({ name }) => name.startsWith(apiNamePrefix) || name.startsWith(appNamePrefix));
+    const localSt = JSON.parse(localStorage.getItem("PORTAL_STATE"));
+    const apimToken = localSt.userInfo.user.apimToken;
 
-            cy.log(`Total APIs found : ${apis.length}`);
-            cy.log(`E2E test APIs found : ${e2eApis.length}`);
+    cy.request({
+        method: "GET",
+        url: APIM_SVC_URL + APIM_RESOURCE_PATH,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apimToken
+        },
+        qs: {
+            'organizationId': orgId
+        },
+        timeout: 60000
+    }).then((response) => {
+        const apis = response["body"]["list"] as { id: string, name: string, }[];
+        const e2eApis = apis.filter(({ name }) => name.startsWith(apiNamePrefix) || name.startsWith(appNamePrefix));
 
-            if (e2eApis.length) {
-                for (const api of e2eApis) {
-                    cy.cleanupApi(api.id, orgId, token.value);
-                    cy.wait(300);
-                }
-                cy.log("Successfully deleted all e2e test APIs");
-            } else {
-                cy.log('No e2e test APIs found');
+        cy.log(`Total APIs found : ${apis.length}`);
+        cy.log(`E2E test APIs found : ${e2eApis.length}`);
+
+        if (e2eApis.length) {
+            for (const api of e2eApis) {
+                cy.cleanupApi(api.id, orgId, apimToken);
+                cy.wait(300);
             }
-        });
+            cy.log("Successfully deleted all e2e test APIs");
+        } else {
+            cy.log('No e2e test APIs found');
+        }
     });
 });
 
