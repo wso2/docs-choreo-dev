@@ -172,7 +172,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
                 preserve: ['cwatf', 'cbearer', 'id_token', 'token']
             });
 
-            let apimTokenResponse: ApimTokenResponse;
             cy.request({
                 method: 'POST',
                 url: APP_SVC_URL + "/auth/apim-token",
@@ -188,7 +187,6 @@ Cypress.Commands.add('consoleUserLogin', () => {
                 const data = response["body"];
                 cy.log('Data received from apim token endpoint');
                 apimToken = data["access_token"];
-                // apimTokenResponse = response.body as ApimTokenResponse;
             });
 
             cy.request({
@@ -260,7 +258,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
                             req.headers['authentication'] = "Bearer " + data["id_token"];
                         } else if (req.url.includes("/api/am/")) {
-                            req.headers['authentication'] = "Bearer " + apimTokenResponse.access_token;
+                            req.headers['authentication'] = "Bearer " + apimToken;
                         } else {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
                             req.headers['authentication'] = "Bearer " + data["id_token"];
