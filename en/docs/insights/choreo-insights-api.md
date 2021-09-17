@@ -2,10 +2,15 @@
 
 Choreo Insights API is a GraphQL API that allows you to fetch data in a flexible manner by defining the criteria with precision. This guide explains the different ways in which you can fetch data via this API.
 
-Try out the Choreo Insights API from [here.](../graphiql-explorer/)
-
  - **Allowed operations:** [Queries](#query)
  - **Schema defined types:** [Objects](#objects), [Inputs](#inputs), [Enums](#enums) and [Scalars](#scalars)
+
+##Try out
+
+You can try out the Choreo Insights API with your data using GraphQL Explorer from [here.](../graphiql-explorer/)
+
+!!! warning
+    GraphQL Explorer is not working in the Safari web browser due to an [issue](https://developer.apple.com/forums/thread/658688) in the browser.
 
 ## Query
 The query root of the Choreo Insights GraphQL API.
