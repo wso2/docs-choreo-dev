@@ -13,10 +13,9 @@ This quick start guide walks you through the steps to quickly create an integrat
 Follow this procedure to create an integration from scratch:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
-2. Go to the **Integrations** card and click **Get Started**. This takes you to the **Integrations** page.
-3. Click **Create**. This takes you to the **Create Integration** page.
-4. Go to the **Create with Choreo** card, enter `USACovidStatus` as the integration name, and then click **Create**.
-5. In the **Select Trigger** window, select **Manual**. This creates an integration that you can manually trigger.
+2. Go to the **Integrations** card and click **Create**. This takes you to the **Create Integration** page.
+3. Go to the **Create with Choreo** card, enter `USACovidStatus` as the integration name, and then click **Create**.
+4. In the **Select Trigger** window, select **Manual**. This creates an integration that you can manually trigger.
 
 ## Step 2: Get the COVID-19 data 
 
