@@ -14,6 +14,7 @@ spec:
       template:
         metadata:
           annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
             choreo.component: step-aggregator
