@@ -14,17 +14,15 @@ To create the resource to invoke the service, follow this procedure:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
     
-2. Go to the **Services** card and click **Get Started**. This takes you to the **Services** page, where you can try out sample services or create your own.
+2. Go to the **Services** card and click **Create**. This takes you to the **Create Service** page.
     
-3. Click **Create** to create a service from scratch.
+3. In the **Create with Choreo** card, enter the service name as `CovidStatus` and click **Create**.
 
-4. In the **Create with Choreo** card, enter the service name as `CovidStatus` and click **Create**.
-
-5. Select **GET** as the HTTP method, and enter `stats/[string country]` in the **Path** field.
+4. Select **GET** as the HTTP method, and enter `stats/[string country]` in the **Path** field.
 
     ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
 
-6. Click **Save API**. 
+5. Click **Save API**. 
     
 ## Step 2: Get COVID-19 data
 
