@@ -24,14 +24,6 @@ interface User {
     expiredAt?: Date;
 }
 
-interface ApimTokenResponse {
-    access_token: string,
-    issued_token_type: string,
-    scope: string,
-    token_type: string,
-    expires_in: number,
-}
-
 declare namespace Cypress {
     interface Chainable {
         consoleUserLogin(): Chainable<User>
