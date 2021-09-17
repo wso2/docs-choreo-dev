@@ -7,10 +7,10 @@ Choreo Insights API is a GraphQL API that allows you to fetch data in a flexible
 
 ##Try out
 
-You can try out the Choreo Insights API with your data using GraphQL Explorer from [here.](../graphiql-explorer/)
+You can try out the Choreo Insights API with your data via the [GraphQL Explorer](../graphiql-explorer/).
 
 !!! warning
-    GraphQL Explorer is not working in the Safari web browser due to an [issue](https://developer.apple.com/forums/thread/658688) in the browser.
+    You cannot work with the GraphQL Explorer with the Safari web browser at present due to [this issue](https://developer.apple.com/forums/thread/658688) in the browser.
 
 ## Query
 The query root of the Choreo Insights GraphQL API.
