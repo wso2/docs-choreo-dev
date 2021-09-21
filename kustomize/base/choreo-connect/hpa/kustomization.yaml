@@ -1,0 +1,4 @@
+resources:
+- default-p1.yaml
+- default-p2.yaml
+- test-p1.yaml
