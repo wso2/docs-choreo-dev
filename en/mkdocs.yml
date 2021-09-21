@@ -54,10 +54,10 @@ nav:
   - Concepts: concepts/concepts.md
   - Quick Start Guide: qsg/quick-start-guide.md
   - Develop:
-      - Create APIs: develop/create-api.md
-      - Create Webhooks: develop/create-webhooks.md
-      - Create Automations: develop/create-automations.md
-      - Create API Proxies: develop/create-api-proxies.md
+      - APIs: develop/create-api.md
+      - Webhooks: develop/create-webhooks.md
+      - Automations: develop/create-automations.md
+      - API Proxies: develop/create-api-proxies.md
   - Deploy: deploy/deploy.md
   - Test: test/test.md
   - Manage: manage/overview.md
