@@ -7,8 +7,8 @@ metadata:
     choreo.component: dp-mizzen
   name: dp-mizzen
 spec:
-  maxReplicas: 5
-  minReplicas: 2
+  maxReplicas: 1
+  minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
