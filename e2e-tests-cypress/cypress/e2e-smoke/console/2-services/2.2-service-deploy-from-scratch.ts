@@ -37,6 +37,10 @@ describe('Service deployment and delete deployed service', () => {
         cy.configureResource("hello", null, "string ?");
     });
 
+    beforeEach(() => {
+        cy.hideWelcomeMessage();
+    })
+
     after(() => {
         cy.userLogout();
     })
@@ -52,6 +56,7 @@ describe('Service deployment and delete deployed service', () => {
         cy.get('[data-testid="api-options"]').click();
         cy.get('[data-testid="http"]').click();
         cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('body').type('{enter}', { force: true });
         cy.get('[data-testid="http-save-next"]').click();
         cy.log("HTTP connector added successfully!");
@@ -78,6 +83,25 @@ describe('Service deployment and delete deployed service', () => {
         });
     })
 
+    it('Add test view', () => {
+        cy.get('[data-testid="test"]').click();
+        cy.log("verify test operation");
+        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
+        cy.get('.swagger-ui').within(() => {
+                    cy.get('.opblock-summary').click();
+                    cy.get('button').contains('Try it out').should('exist').click();
+            cy.get('.opblock-section-header').contains('Cancel').should('exist');
+            cy.get('.execute-wrapper > .btn').click();
+                cy.get('.curl-command').should('exist');
+                cy.get('.request-url').should('exist');
+                cy.get("div[class='highlight-code'] pre[class=' microlight'] code span").should('have.text', 'hello world')
+                cy.log('service response is successfully returned');
+                cy.get('tr[class="response"]>td[class="response-col_status"]').should('have.text', '200');
+                cy.log('Service Tryout is successful!');
+    
+        });
+    });
+
     it('test postman view', () => {
         cy.get('[data-testid="test"]').click();
         cy.get('[id="backdrop-loader"').should('not.exist');
@@ -100,10 +124,4 @@ describe('Service deployment and delete deployed service', () => {
         cy.wait(2.5 * 60 * 1000);
     });
 
-    it('Undeploy from UI and delete the service', () => {
-        cy.goBacktoAppsList();
-        cy.deleteAppWithoutUndeploy(appName, true);
-        cy.undeployApp("service", appName, true);
-        cy.deleteApp("service", appName, true);
-    });
 })

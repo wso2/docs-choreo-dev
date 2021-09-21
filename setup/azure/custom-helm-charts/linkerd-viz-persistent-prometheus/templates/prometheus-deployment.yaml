@@ -11,6 +11,10 @@ metadata:
     namespace: {{.Values.namespace}}
   name: prometheus
   namespace: {{.Values.namespace}}
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_31=Suppressing False positive
 spec:
   replicas: 1
   selector:
@@ -22,6 +26,7 @@ spec:
     metadata:
       annotations:
         linkerd.io/created-by: linkerd/helm stable-2.10.2
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
       labels:
         linkerd.io/extension: viz
         component: prometheus
@@ -56,10 +61,20 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 30
         resources:
+          requests:
+            memory: "4Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "500m"
         securityContext:
+          allowPrivilegeEscalation: false
           runAsNonRoot: true
           runAsUser: {{.Values.persistentVolume.userID}}
           runAsGroup: {{.Values.persistentVolume.groupID}}
+          capabilities:
+            drop:
+              - ALL
         volumeMounts:
         - mountPath: /data
           name: data
@@ -75,4 +90,3 @@ spec:
       - configMap:
           name: prometheus-config
         name: prometheus-config
-        

@@ -27,7 +27,7 @@ persistentVolume:
 # Details of the Prometheus Deployment
 prometheus: 
   # Retention Period of metrics (Lowest Possible Value is 2h, Highest is dependent on the Persistent Volume Size)
-  retentionPeriod: 24h
+  retentionPeriod: 7d
   # Image Pull policy
   imagePullPolicy: IfNotPresent
   

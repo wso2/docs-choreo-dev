@@ -14,7 +14,7 @@
             <xsd:enable>true</xsd:enable>
             <xsd:federationHub>false</xsd:federationHub>
             <xsd:identityProviderName>choreoidp</xsd:identityProviderName>
-            <xsd:alias>choreoportalapplication</xsd:alias>
+            <xsd:alias>{IDP_ALIAS}</xsd:alias>
             <xsd:idpProperties>
                <xsd:displayName>Identity Provider's JWKS Endpoint</xsd:displayName>
                <xsd:name>jwksUri</xsd:name>

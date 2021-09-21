@@ -163,10 +163,30 @@ Cypress.Commands.add('consoleUserLogin', () => {
             const token = fragments[0] + "." + fragments[1];
             const cwatf = fragments[2];
             const cbearer = fragments[0] + "." + fragments[1];
+            const accessTokenSegments = data["access_token"].split(".");
+            const accessToken = accessTokenSegments[0] + "." + accessTokenSegments[1];
+            let apimToken = "";
             cy.log('Starting login process...');
 
             Cypress.Cookies.defaults({
                 preserve: ['cwatf', 'cbearer', 'id_token', 'token']
+            });
+
+            cy.request({
+                method: 'POST',
+                url: APP_SVC_URL + "/auth/apim-token",
+                body: {
+                    client_id: "choreoconsole",
+                    scope: "apim:api_manage apim:subscription_manage apim:tier_manage apim:admin"
+                },
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    Cookie: `cwatf=${accessTokenSegments[2]}`
+                }
+            }).then((response) => {
+                const data = response["body"];
+                cy.log('Data received from apim token endpoint');
+                apimToken = data["access_token"];
             });
 
             cy.request({
@@ -187,6 +207,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
                     uuid: idpId,
                     email: jwtPayload.email,
                     token: token,
+                    apimToken: apimToken,
                     picURL: jwtPayload.avatar_url,
                     orgs: orgs,
                     createdAt: new Date(jwtPayload.iat * 1000),
@@ -213,6 +234,7 @@ Cypress.Commands.add('consoleUserLogin', () => {
 
                     const STORAGE_KEY = "PORTAL_STATE";
                     cy.wrap(user).as("loggedInUser");
+                    localStorage.setItem("HAS_SEEN_WELCOME_MESSAGE","YES")
                     localStorage.setItem(
                         STORAGE_KEY,
                         JSON.stringify({
@@ -235,6 +257,8 @@ Cypress.Commands.add('consoleUserLogin', () => {
                         if (req.url.includes("/linkersec/checklink")) {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
                             req.headers['authentication'] = "Bearer " + data["id_token"];
+                        } else if (req.url.includes("/api/am/")) {
+                            req.headers['authentication'] = "Bearer " + apimToken;
                         } else {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
                             req.headers['authentication'] = "Bearer " + data["id_token"];

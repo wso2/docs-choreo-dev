@@ -19,7 +19,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-adapter-test
+  name: choreo-connect-adapter-green
   annotations:
     checkov.io/skip1: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
@@ -32,11 +32,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      choreo.component: choreo-connect-adapter-test
+      choreo.component: choreo-connect-adapter-green
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-adapter-test
+        choreo.component: choreo-connect-adapter-green
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -45,7 +45,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: choreo-connect-adapter-test
+        - name: choreo-connect-adapter
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-keystore
@@ -83,6 +83,9 @@ spec:
             - name: secret-mgw
               mountPath: /mnt/csi/secret-mgw
               readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always
           securityContext:
@@ -105,11 +108,21 @@ spec:
                 secretKeyRef:
                   key: ADAPTER_ADMIN_PASSWORD
                   name: secret-mgw
+            - name: enforcer_managemenet_password
+              valueFrom:
+                secretKeyRef:
+                  key: ENFORCER_MANAGEMENT_PASSWORD
+                  name: secret-mgw
             - name: cp_admin_pwd
               valueFrom:
                 secretKeyRef:
                   key: SUPER_ADMIN_PSWD
                   name: secret-apim
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
           resources:
             requests:
               memory: "500Mi"
@@ -167,6 +180,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-adapter-consul
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always

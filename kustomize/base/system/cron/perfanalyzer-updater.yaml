@@ -11,7 +11,8 @@ metadata:
     choreo.component: perfanalyzer-updater
 spec:
   schedule: 0 * * * *
-  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:

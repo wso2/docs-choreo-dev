@@ -232,5 +232,3 @@ if [[ "${step_installed}" == "false" ]]; then
     echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
     step_installed=false
 fi
-
-

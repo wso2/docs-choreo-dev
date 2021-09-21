@@ -1,0 +1,190 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2021, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+# Deployment for nginx
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
+    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: nginx
+  name: choreo-nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: choreo-nginx
+  template:
+    metadata:
+      labels:
+        deployment: choreo-nginx
+        choreo.component: nginx
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: nginx
+          envFrom:
+          - configMapRef:
+              name: redis-config
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-config
+                  key: REDIS_PORT
+            - name: REDIS_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-config
+                  key: REDIS_SSL
+            - name: REDIS_SSL_VERIFY
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-config
+                  key: REDIS_SSL_VERIFY
+            - name: REDIS_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-config
+                  key: REDIS_DATABASE
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-redis
+                  key: REDIS_PASSWORD
+          image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
+          imagePullPolicy: Always
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "sh", "init.sh" ]
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "2"
+            limits:
+              memory: "500Mi"
+              cpu: "2"
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /nginx-health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /nginx-health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          volumeMounts:
+          - name: openresty-logs-folder
+            mountPath: /usr/local/openresty/nginx/logs
+          - name: openresty-run-path
+            mountPath: /var/run/openresty
+          - name: nginx-ca-cert
+            mountPath: /etc/certs
+            readOnly: true
+          - name: nginx-lua-modules
+            mountPath: /usr/local/openresty/lualib/util
+          - name: nginx-default-vhost
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+            readOnly: true
+          - name: nginx-config-file
+            mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+            subPath: nginx.conf
+          - name: nginx-vhosts
+            mountPath: /etc/nginx/sites-enabled
+          - name: choreo-api-wildcard-tls
+            mountPath: /etc/nginx/ssl/choreo
+            readOnly: true
+          - name: choreo-api-gateway-wildcard-tls
+            mountPath: /etc/nginx/ssl/choreo/gateway
+            readOnly: true
+          - name: secret-redis
+            mountPath: /mnt/csi/secret-redis
+            readOnly: true
+      volumes:
+      - name: openresty-logs-folder
+        emptyDir: {}
+      - name: openresty-run-path
+        emptyDir: {}
+      - name: redis-config
+        configMap:
+          name: redis-config
+      - name: nginx-ca-cert
+        configMap:
+          name: nginx-ca-cert
+      - name: nginx-lua-modules
+        configMap:
+          name: nginx-lua-modules
+      - name: nginx-default-vhost
+        configMap:
+          name: nginx-default-vhost
+      - name: nginx-config-file
+        configMap:
+          name: nginx-config-file
+      - name: nginx-vhosts
+        configMap:
+          name: nginx-vhosts
+      - name: choreo-api-wildcard-tls
+        secret:
+          secretName: dev-choreo-api-wildcard-tls
+      - name: choreo-api-gateway-wildcard-tls
+        secret:
+          secretName: dev-choreo-api-gateway-wildcard-tls
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      restartPolicy: Always

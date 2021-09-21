@@ -20,11 +20,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: choreo-connect-adapter-test
-  name: adapter-test
+    choreo.component: choreo-connect-adapter-green
+  name: adapter-green
 spec:
   selector:
-    choreo.component: choreo-connect-adapter-test
+    choreo.component: choreo-connect-adapter-green
   ports:
     - name: "http-adaptermanagementserver"
       port: 18000

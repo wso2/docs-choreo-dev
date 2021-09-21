@@ -15,6 +15,7 @@ interface User {
     uuid: string;
     email: string;
     token: string;
+    apimToken: string;
     picURL: string;
     orgs: Organization[];
     fidp?: string;
