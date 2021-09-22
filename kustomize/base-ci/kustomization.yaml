@@ -76,11 +76,11 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/data-collector
   newTag: master-1bf1e86c13eb15c8938dfa3d6a611a1a82395498
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper
-  newTag: master-f1c71d6c14d205a0618098a48218aaab575b6c7d
+  newTag: master-1e0411cd4bded901e1cc2b9eff5e4d95e957881d
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-balo-extractor
-  newTag: master-f1c71d6c14d205a0618098a48218aaab575b6c7d
+  newTag: master-1e0411cd4bded901e1cc2b9eff5e4d95e957881d
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-init
-  newTag: master-f1c71d6c14d205a0618098a48218aaab575b6c7d
+  newTag: master-1e0411cd4bded901e1cc2b9eff5e4d95e957881d
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
   newTag: master-52b66b62c62d9ac2fa2b87fd365f5b31281a246a
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
