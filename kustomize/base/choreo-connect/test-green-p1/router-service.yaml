@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: router-green
   labels:
-    choreo.component: choreo-connect-deployment-test-p1
+    choreo.component: choreo-connect-deployment-green-test-p1
 spec:
   selector:
-    choreo.component: choreo-connect-deployment-test-p1
+    choreo.component: choreo-connect-deployment-green-test-p1
