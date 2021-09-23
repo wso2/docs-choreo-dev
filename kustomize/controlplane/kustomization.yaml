@@ -5,4 +5,4 @@ resources:
   - deployment
 
 commonLabels:
-  app: choreo-dataplane
+  app: choreo-controlplane
