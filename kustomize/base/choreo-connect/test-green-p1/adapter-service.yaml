@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: adapter-green
   labels:
-    choreo.component: choreo-connect-adapter-test-p1
+    choreo.component: choreo-connect-adapter-green-test-p1
 spec:
   selector:
-    choreo.component: choreo-connect-adapter-test-p1
+    choreo.component: choreo-connect-adapter-green-test-p1

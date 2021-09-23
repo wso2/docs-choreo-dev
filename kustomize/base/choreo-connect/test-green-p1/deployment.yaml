@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   name: choreo-connect-deployment-green
 spec:
-  replicas: 1  
+  replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-connect-deployment-test-p1
+      choreo.component: choreo-connect-deployment-green-test-p1
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-deployment-test-p1
+        choreo.component: choreo-connect-deployment-green-test-p1
     spec:
      initContainers:
        - name: init-adapter-service
