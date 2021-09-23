@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-adapter
+  name: choreo-connect-adapter-green
 spec:
-  replicas: 1
+  replicas: 1  
   selector:
     matchLabels:
-      choreo.component: choreo-connect-adapter-default-p2
+      choreo.component: choreo-connect-adapter-test-p1
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-adapter-default-p2
+        choreo.component: choreo-connect-adapter-test-p1
     spec:
      containers:
        - name: choreo-connect-adapter
          env:
          - name: localLabel
-           value: default-p2
+           value: test-p1
          - name: environmentLabel
-           value: Production and Sandbox
+           value: test
      volumes:
         - name: global-adapter-keystore-vol
           configMap:

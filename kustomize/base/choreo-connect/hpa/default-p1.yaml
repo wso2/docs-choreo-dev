@@ -4,6 +4,40 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
+    choreo.component: choreo-connect-adapter-green-default-p1
+  name: choreo-connect-adapter-green-default-p1
+spec:
+  maxReplicas: 2
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-connect-adapter-green-default-p1
+  targetCPUUtilizationPercentage: 75
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  labels:
+    choreo.component: choreo-connect-deployment-green-default-p1
+  name: choreo-connect-deployment-green-default-p1
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-connect-deployment-green-default-p1
+  targetCPUUtilizationPercentage: 75
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  labels:
     choreo.component: choreo-connect-adapter-default-p1
   name: choreo-connect-adapter-default-p1
 spec:
@@ -12,7 +46,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-connect-adapter-green-default-p1
+    name: choreo-connect-adapter-default-p1
   targetCPUUtilizationPercentage: 75
 ---
 apiVersion: autoscaling/v1
@@ -29,5 +63,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-connect-deployment-green-default-p1
+    name: choreo-connect-deployment-default-p1
   targetCPUUtilizationPercentage: 75
