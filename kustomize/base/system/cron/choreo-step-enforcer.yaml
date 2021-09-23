@@ -9,6 +9,7 @@ metadata:
 spec:
   schedule: 0 * * * *
   successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
