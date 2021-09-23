@@ -3,3 +3,5 @@ resources:
 - choreo-connect-adapter.yaml
 - choreo-connect-deployment.yaml
 - am.yaml
+- choreo-connect-global-adapter.yaml
+- choreo-gateway-nginx.yaml
