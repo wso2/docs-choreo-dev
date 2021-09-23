@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-adapter-green
+  name: choreo-connect-adapter
 spec:
-  replicas: 1  
+  replicas: 1
   selector:
     matchLabels:
       choreo.component: choreo-connect-adapter-test-p1
