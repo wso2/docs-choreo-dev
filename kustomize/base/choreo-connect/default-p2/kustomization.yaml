@@ -1,6 +1,6 @@
 resources:
-- ../../apim/deployment
-- ../../apim/service
+- ../../apim/deployment/choreo-connect
+- ../../apim/service/choreo-connect
 
 nameSuffix: -default-p2
 

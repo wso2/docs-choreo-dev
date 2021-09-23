@@ -9,5 +9,4 @@ resources:
 - choreo-connect-global-adapter.yaml
 - gateway-nginx-service.yaml
 - choreo-connect
-- choreo-connect-adapter.yaml
-- choreo-connect-deployment.yaml
+- choreo-connect-green
