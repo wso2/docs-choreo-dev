@@ -54,6 +54,11 @@ spec:
                 secretKeyRef:
                   name: secret-subscriptions
                   key: MSSQL_PASSWORD
+            - name: STRIPE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: secret-billing
+                  key: STRIPE_TOKEN
           ports:
             - containerPort: 9090
               name: http
@@ -93,6 +98,9 @@ spec:
             - name: secret-subscriptions
               mountPath: /mnt/csi/secret-subscriptions
               readonly: true
+            - name: secret-billing
+              mountPath: /mnt/csi/secret-billing
+              readonly: true
       restartPolicy: Always
       volumes:
         - name: secret-subscriptions
@@ -101,6 +109,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-subscriptions
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-billing
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-billing
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
