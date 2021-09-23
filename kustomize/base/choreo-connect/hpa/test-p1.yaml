@@ -4,7 +4,7 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
-    choreo.component: choreo-connect-adapter-test-p1
+    choreo.component: choreo-connect-adapter-green-test-p1
   name: choreo-connect-adapter-green-test-p1
 spec:
   maxReplicas: 2
@@ -21,7 +21,7 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
-    choreo.component: choreo-connect-deployment-test-p1
+    choreo.component: choreo-connect-deployment-green-test-p1
   name: choreo-connect-deployment-green-test-p1
 spec:
   maxReplicas: 10
