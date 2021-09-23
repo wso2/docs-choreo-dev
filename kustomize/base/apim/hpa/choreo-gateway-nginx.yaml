@@ -5,7 +5,7 @@ metadata:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
     choreo.component: nginx
-  name: gateway-nginx
+  name: choreo-nginx-deployment
 spec:
   maxReplicas: 5
   minReplicas: 3
