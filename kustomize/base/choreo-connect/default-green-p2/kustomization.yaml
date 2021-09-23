@@ -1,8 +1,8 @@
 resources:
-- ../../apim/deployment
-- ../../apim/service
+- ../../apim/deployment/choreo-connect
+- ../../apim/service/choreo-connect
 
-nameSuffix: -test-p1
+nameSuffix: -default-p2
 
 patchesStrategicMerge:
 - adapter.yaml
