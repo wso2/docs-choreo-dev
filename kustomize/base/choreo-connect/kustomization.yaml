@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - default-green-p1
-  - default-green-p2
+  # - default-green-p2
   - test-green-p1
   - default-p1
   - default-p2
