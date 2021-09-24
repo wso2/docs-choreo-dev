@@ -74,7 +74,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreodp-cicd
   newTag: master-d474684dfa8d9f8c87c4d5efcdae31cb7be8adb8
 - name: choreocontrolplane.azurecr.io/choreoipaas/data-collector
-  newTag: master-1bf1e86c13eb15c8938dfa3d6a611a1a82395498
+  newTag: master-a316e05bc3a8f66e6f85b49c851351042e268d5b
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper
   newTag: master-1e0411cd4bded901e1cc2b9eff5e4d95e957881d
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-balo-extractor
