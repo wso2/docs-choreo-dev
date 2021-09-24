@@ -90,7 +90,7 @@ INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
 	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'integration_quota',5),
 	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'api_quota',5),
 	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'remote_app_quota',5),
-      (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'step_quota',100),
+       (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'step_quota',100),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'service_quota',1000000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'integration_quota',1000000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'api_quota',1000000),
