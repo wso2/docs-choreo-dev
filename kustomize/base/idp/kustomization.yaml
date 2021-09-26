@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - deployment
   - hpa
+  - pdb
