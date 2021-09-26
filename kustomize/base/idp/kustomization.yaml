@@ -7,3 +7,5 @@ resources:
   - pdb
   - rbac
   - service
+
+namespace: choreo-idp
