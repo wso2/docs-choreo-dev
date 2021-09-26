@@ -1,0 +1,4 @@
+resources:
+  - ep-reader-role.yaml
+  - ep-reader-role-binding.yaml
+  - choreo-identity-server.yaml
