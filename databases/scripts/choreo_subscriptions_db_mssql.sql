@@ -138,7 +138,11 @@ GO
 INSERT INTO tier (id,name,description,cost,created_at) VALUES
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'Free',N'Free tier to tryout choreo',0,1627639797657),
 	 (N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'Internal Dev',N'Free tier to tryout choreo',0,1631591372000),
-	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'Choreo Internal',N'Tier for choreo internal users',0,1627639797657);
+	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'Choreo Internal',N'Tier for choreo internal users',0,1627639797657),
+     (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'Individual',N'Tier for Individual users',50,1627639797657),
+	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'Team',N'Tier for Team users',395,1627639797657),
+	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'Group',N'Tier for Group users',995,1627639797657),
+     (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'Enterprise',N'Tier for Enterprise users',0,1627639797657);
 GO
 
 INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
@@ -159,11 +163,32 @@ INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'api_quota',1000000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'remote_app_quota',1000000),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'step_quota',1000000),
-     (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'developer_count',10);
+     (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'developer_count',10),
+     (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'service_quota',100),
+	 (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'integration_quota',100),
+	 (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'api_quota',100),
+	 (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'step_quota',10000),
+	 (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'developer_count',1),
+	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'service_quota',100),
+	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'integration_quota',100),
+	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'api_quota',100),
+	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'step_quota',100000),
+	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'developer_count',10),
+	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'service_quota',100),
+	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'integration_quota',50),
+	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'api_quota',200),
+	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'step_quota',1000000),
+	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'developer_count',50),
+     (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'service_quota',-100),
+	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'integration_quota',-50),
+	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'api_quota',-200),
+	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'step_quota',-1000000),
+	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'developer_count',-1);
 GO
 
 INSERT INTO choreo_subscriptions_db.dbo.billing_tier (id,tier_id,product_id,price_id,currency,recurring_interval) VALUES
 	 (N'01ec1491-3eff-1aec-b511-2eec6e3c92d2',N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'prod_K8pD0xG5AqXUzG',N'price_1JY0lgEeYOVsvOhWyxCaQmNy',N'USD',N'month'),
-     (N'01ec1491-3eff-1aec-b511-2eec6e3c92d2',N'A2B419A7-8930-41D0-B813-829CC5A95C73',N'prod_K8owVLffK8Gzzh',N'price_1JUXIREeYOVsvOhWVyik0FRN',N'USD',N'month'),
-	 (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'prod_K8ot6C4EbUhWIa',N'price_1JUXG4EeYOVsvOhWYOu9Turn',N'USD',N'month');
+     (N'01ec1491-3eff-1aec-b511-2eec6e3c92d2',N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'prod_K8om1rkbBYoyxW',N'price_1JUX9OEeYOVsvOhWNPoBudVS',N'USD',N'month'),
+	 (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'prod_K8ot6C4EbUhWIa',N'price_1JUXG4EeYOVsvOhWYOu9Turn',N'USD',N'month'),
+     (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'prod_K8owVLffK8Gzzh',N'price_1JUXIREeYOVsvOhWVyik0FRN',N'USD',N'month');
 GO
