@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: adapter-green
-  labels:
-    choreo.component: choreo-connect-adapter-green-default-p2
-spec:
-  selector:
-    choreo.component: choreo-connect-adapter-green-default-p2
