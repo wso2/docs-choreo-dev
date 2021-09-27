@@ -186,7 +186,7 @@ GO
 
 INSERT INTO choreo_subscriptions_db.dbo.billing_tier (id,tier_id,product_id,price_id,currency,recurring_interval) VALUES
 	 (N'01ec1491-3eff-1aec-b511-2eec6e3c92d2',N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'prod_K8pD0xG5AqXUzG',N'price_1JY0lgEeYOVsvOhWyxCaQmNy',N'USD',N'month'),
-     (N'01ec1491-3eff-1aec-b511-2eec6e3c92d2',N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'prod_K8om1rkbBYoyxW',N'price_1JUX9OEeYOVsvOhWNPoBudVS',N'USD',N'month'),
+     (N'01ec1f92-e300-1a7c-b10c-16b408c2e17b',N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'prod_K8om1rkbBYoyxW',N'price_1JUX9OEeYOVsvOhWNPoBudVS',N'USD',N'month'),
 	 (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'prod_K8ot6C4EbUhWIa',N'price_1JUXG4EeYOVsvOhWYOu9Turn',N'USD',N'month'),
      (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'prod_K8owVLffK8Gzzh',N'price_1JUXIREeYOVsvOhWVyik0FRN',N'USD',N'month');
 GO
