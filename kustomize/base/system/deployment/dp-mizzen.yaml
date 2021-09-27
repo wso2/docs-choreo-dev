@@ -41,6 +41,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-mizzen
+            - configMapRef:
+                name: cm-dp-mizzen
           env:
             - name: MSSQL_PASSWORD
               valueFrom:
