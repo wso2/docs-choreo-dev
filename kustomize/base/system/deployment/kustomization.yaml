@@ -33,6 +33,7 @@ resources:
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
   - orgremover.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
