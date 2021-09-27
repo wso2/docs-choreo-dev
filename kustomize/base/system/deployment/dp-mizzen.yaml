@@ -42,16 +42,26 @@ spec:
             - configMapRef:
                 name: env-dp-mizzen
           env:
-          - name: MSSQL_PASSWORD
-            valueFrom:
-              secretKeyRef: 
-                name: secret-dp-mizzen
-                key: MSSQL_PASSWORD
-          - name: MIZZEN_SERVICE_TOKEN
-            valueFrom:
-              secretKeyRef: 
-                name: secret-dp-mizzen
-                key: MIZZEN_SERVICE_TOKEN
+            - name: MSSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-mizzen
+                  key: MSSQL_PASSWORD
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-mizzen
+                  key: JWT_KEY
+            - name: SERVICE_BUS_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-mizzen
+                  key: SERVICE_BUS_CONNECTION_STRING
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-mizzen
+                  key: REDIS_PASSWORD
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -85,17 +95,17 @@ spec:
               path: /healthz
               port: http-port
           volumeMounts:
-          - name: secret-dp-mizzen
-            mountPath: /mnt/csi/secret-dp-mizzen
-            readonly: true
+            - name: secret-dp-mizzen
+              mountPath: /mnt/csi/secret-dp-mizzen
+              readonly: true
       volumes:
-      - name: secret-dp-mizzen
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-dp-mizzen
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-dp-mizzen
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-mizzen
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
