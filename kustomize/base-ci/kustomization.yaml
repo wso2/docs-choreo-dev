@@ -46,11 +46,11 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging
   newTag: master-6911764b19fcfec1143ec146b78e2be7ef68fabe
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter
-  newTag: master-aa4448a8c87a264c2bb668e8539f48ecf313102b
+  newTag: master-
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer
-  newTag: master-aa4448a8c87a264c2bb668e8539f48ecf313102b
+  newTag: master-
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router
-  newTag: master-aa4448a8c87a264c2bb668e8539f48ecf313102b
+  newTag: master-
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator
   newTag: master-65fd02f223e77ecd7990fa98c859f80a50b101aa
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-org-cleanup-service
