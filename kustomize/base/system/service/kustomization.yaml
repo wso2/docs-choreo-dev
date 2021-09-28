@@ -29,4 +29,5 @@ resources:
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
   - orgremover.yaml
