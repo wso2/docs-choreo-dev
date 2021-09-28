@@ -75,7 +75,7 @@ spec:
               drop:
                 - all
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
               name: http-port
               protocol: TCP
           readinessProbe:
