@@ -2,9 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - default-green-p1
-  # - default-green-p2
-  - test-green-p1
   - default-p1
   - default-p2
   - test-p1
