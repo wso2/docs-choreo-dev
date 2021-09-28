@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - deployment
   - hpa
+  - rbac
 
 namespace: choreo-dp-system

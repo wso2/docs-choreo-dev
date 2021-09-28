@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: choreo-dp-system-admin
+subjects:
+  - kind: ServiceAccount
+    name: choreo-dp-system-admin
+    namespace: platformer-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: choreo-dp-system-admin
