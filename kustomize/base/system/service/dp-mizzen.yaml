@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     choreo.component: dp-mizzen
-    choreo.dataplane: true
+    choreo.dataplane: "true"
   name: dp-mizzen
 spec:
   ports:
