@@ -23,16 +23,16 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - image: gcr.io/platformer-public/platformer-agent:v0.0.36
-          imagePullPolicy: IfNotPresent
-          name: platformer-agent
+        - image: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen-agent:latest
+          imagePullPolicy: Always
+          name: dp-mizzen-agent
           resources:
             requests:
-              memory: 150Mi
-              cpu: 100m
+              memory: 256Mi
+              cpu: 200m
             limits:
-              memory: 750Mi
-              cpu: 1000m
+              memory: 512Mi
+              cpu: 5000m
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -47,18 +47,11 @@ spec:
             - configMapRef:
                 name: env-dp-mizzen-agent
           env:
-            - name: AUTH_TOKEN
+            - name: TOKEN
               valueFrom:
                 secretKeyRef:
                   name: secret-dp-mizzen-agent
-                  key: AUTH_TOKEN
-            # - name: NODE_ENV
-            #   value: production
-            # - name: HEALTH_CHECK_PORT
-            #   value: "8081"
-            # - name: SENTRY_DSN
-            #   value: >-
-            #     https://5bc6ca6a627941518c1323e51d7a1985@o350818.ingest.sentry.io/5597771
+                  key: TOKEN
           volumeMounts:
             - name: secret-dp-mizzen-agent
               mountPath: /mnt/csi/secret-dp-mizzen-agent
