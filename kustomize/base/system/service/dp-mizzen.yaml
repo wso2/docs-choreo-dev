@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: dp-mizzen
+    choreo.dataplane: "true"
+  name: dp-mizzen
+spec:
+  ports:
+    - name: dp-mizzen-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: dp-mizzen

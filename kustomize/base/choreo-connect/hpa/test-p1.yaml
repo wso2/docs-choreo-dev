@@ -12,7 +12,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-connect-adapter-green-test-p1
+    name: choreo-connect-adapter-test-p1
   targetCPUUtilizationPercentage: 75
 ---
 apiVersion: autoscaling/v1
@@ -29,5 +29,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-connect-deployment-green-test-p1
+    name: choreo-connect-deployment-test-p1
   targetCPUUtilizationPercentage: 75
