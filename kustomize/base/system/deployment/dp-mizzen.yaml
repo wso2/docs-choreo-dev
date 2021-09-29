@@ -78,6 +78,9 @@ spec:
             - containerPort: 8080
               name: http-port
               protocol: TCP
+            - containerPort: 8081
+              name: ws-port
+              protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
