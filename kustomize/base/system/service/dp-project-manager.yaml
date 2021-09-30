@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dp-project-manager
+  labels:
+    choreo.component: dp-project-manager
+    choreo.dataplane: "true"
+spec:
+  ports:
+    - name: dp-project-manager-port-http
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: dp-project-manager
