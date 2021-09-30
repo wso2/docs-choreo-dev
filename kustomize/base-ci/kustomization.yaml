@@ -94,7 +94,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-garbage-collector
   newTag: master-4b773f085122927311567c9d6f41cc6771852665
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen
-  newTag: main-32fda618bf9dde4e8ea623126e50c41e33bef3e7
+  newTag: main-96ee41db5cccdbfae956c9a022784fdb543f270e
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager
   newTag: master-9f690b53fc18a9d7899f40d20655810cb6d4d8ef
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
