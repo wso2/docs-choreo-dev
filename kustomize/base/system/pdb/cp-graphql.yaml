@@ -7,3 +7,4 @@ spec:
   selector:
     matchLabels:
       choreo.component: cp-graphql
+      
