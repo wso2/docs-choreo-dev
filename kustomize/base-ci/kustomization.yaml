@@ -66,7 +66,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-step-enforcer
   newTag: main-1193e1c9088eb735667cb54bf5da4a60ef57c4cc
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-subscriptions
-  newTag: main-74b48505c19aeb6a779a285e7f68fb599a900bc1
+  newTag: main-5b2c6afb08492a164e4acc9cb4166ae285443c0f
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi
   newTag: master-7b3e528f12976cd4461983ef11575097aa291989
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
