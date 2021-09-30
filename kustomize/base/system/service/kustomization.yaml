@@ -32,3 +32,4 @@ resources:
   - dp-mizzen.yaml
   - orgremover.yaml
   - cp-graphql.yaml
+  - dp-project-manager.yaml
