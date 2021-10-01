@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dp-mizzen-agent-sa
-    namespace: platformer-system
+    namespace: choreodp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
