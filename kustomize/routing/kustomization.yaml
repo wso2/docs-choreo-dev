@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - nginx
+  - choreo-nginx
 
 commonLabels:
   app: choreo-routing
