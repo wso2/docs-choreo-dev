@@ -39,6 +39,8 @@ spec:
               name: health
             - containerPort: 9092      # To be used for public health check (external)
               name: healthz
+            - containerPort: 9095      # This is a temporary http gateway until the CORS issues fixed. https://github.com/ballerina-platform/ballerina-standard-library/issues/1475
+              name: http-port
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
