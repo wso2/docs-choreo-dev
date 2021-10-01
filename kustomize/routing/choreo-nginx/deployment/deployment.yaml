@@ -43,10 +43,6 @@ spec:
         runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
-      hostAliases:
-      - ip: "10.1.64.4"
-        hostnames:
-        - "router-default-p2-lb"
       containers:
         - name: nginx
           envFrom:
