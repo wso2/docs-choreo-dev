@@ -31,7 +31,10 @@ resources:
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
   - orgremover.yaml
+  - cp-graphql.yaml
+  - dp-project-manager.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587
