@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: netpol-dp-mizzen-ws-test
+spec:
+  podSelector:
+    matchLabels:
+      choreo.component: dp-mizzen
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - port: 8081
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              choreo-ingress-purpose: controlplane-internal
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: controlplane-internal-nginx-ingress
