@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: netpol-dp-mizzen-ws-test
+  name: netpol-dp-mizzen-ws
 spec:
   podSelector:
     matchLabels:
