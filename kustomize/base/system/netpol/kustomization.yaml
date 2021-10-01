@@ -1,5 +1,6 @@
 resources:
   - namespace.yaml
+  - dp-mizzen-ws.yaml
  # - obsapi.yaml
  # - telemetry.yaml
  # - sys-obsapi.yaml
