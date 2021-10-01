@@ -1,0 +1,2 @@
+resources:
+  - gateway-nginx-service.yaml

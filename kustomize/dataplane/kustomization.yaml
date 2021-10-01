@@ -3,6 +3,9 @@ kind: Kustomization
 
 resources:
   - nginx
+  - choreo-connect
+  - service
+  - choreodp-system
 
 commonLabels:
   app: choreo-dataplane

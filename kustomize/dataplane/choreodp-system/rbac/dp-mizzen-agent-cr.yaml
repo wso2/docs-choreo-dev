@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dp-mizzen-agent
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/logs", "services", "endpoints", "secrets"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+- apiGroups: ["extensions"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]

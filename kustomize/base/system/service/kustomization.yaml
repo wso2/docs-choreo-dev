@@ -32,3 +32,5 @@ resources:
   - dp-mizzen.yaml
   - orgremover.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
+  - cp-graphql.yaml
+  - dp-project-manager.yaml
