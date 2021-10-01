@@ -37,6 +37,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-multivariate-anomaly-detector-notification-manager
+            - configMapRef:
+                name: env-multivariate-anomaly-detector-notification-manager
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
