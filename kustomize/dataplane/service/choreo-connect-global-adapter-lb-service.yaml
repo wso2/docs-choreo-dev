@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "choreo-dev-controlplane-aks-cluster-loadbalanacer-subnet"
+  labels:
+    choreo.component: choreo-connect-global-adapter
+  name: global-adapter-lb
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 172.18.195.21
+  ports:
+    - name: http-gamanagementserver
+      port: 18000
+      protocol: TCP
+      targetPort: 18000
+    - name: https-global-adapter
+      port: 9843
+      protocol: TCP
+      targetPort: 9843
+  selector:
+    choreo.component: choreo-connect-global-adapter
+  sessionAffinity: None
