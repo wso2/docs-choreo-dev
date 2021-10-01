@@ -6,18 +6,18 @@ metadata:
     checkov.io/skip1: CKV_K8S_43=Risk accepted
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
   labels:
-    choreo.component: dp-mizzen
+    choreo.component: dp-project-manager
     choreo.dataplane: "true"
-  name: dp-mizzen
+  name: dp-project-manager
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: dp-mizzen
+      choreo.component: dp-project-manager
   template:
     metadata:
       labels:
-        choreo.component: dp-mizzen
+        choreo.component: dp-project-manager
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -25,12 +25,14 @@ spec:
       automountServiceAccountToken: false
       securityContext:
         allowPrivilegeEscalation: false
+        runAsUser: 1000
+        runAsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dp-mizzen
+        - name: dp-project-manager
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager:latest
           resources:
             limits:
               cpu: 350m
@@ -40,46 +42,27 @@ spec:
               memory: 300Mi
           envFrom:
             - configMapRef:
-                name: env-dp-mizzen
-            - configMapRef:
-                name: cm-dp-mizzen
+                name: env-dp-project-manager
           env:
-            - name: MSSQL_PASSWORD
+            - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-dp-mizzen
-                  key: MSSQL_PASSWORD
-            - name: JWT_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-mizzen
-                  key: JWT_KEY
-            - name: SERVICE_BUS_CONNECTION_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-mizzen
-                  key: SERVICE_BUS_CONNECTION_STRING
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-mizzen
-                  key: REDIS_PASSWORD
+                  name: secret-dp-project-manager
+                  key: MONGODB_PASSWORD
           securityContext:
             allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
             runAsUser: 10001
             runAsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
             readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - all
+                - "NET_RAW"
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
               name: http-port
-              protocol: TCP
-            - containerPort: 8081
-              name: ws-port
               protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
@@ -100,16 +83,16 @@ spec:
               path: /healthz
               port: http-port
           volumeMounts:
-            - name: secret-dp-mizzen
-              mountPath: /mnt/csi/secret-dp-mizzen
-              readonly: true
+            - name: secret-dp-project-manager
+              mountPath: "/mnt/csi/secret-dp-project-manager"
+              readOnly: true
       volumes:
-        - name: secret-dp-mizzen
+        - name: secret-dp-project-manager
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-dp-mizzen
+              secretProviderClass: secret-dp-project-manager
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
