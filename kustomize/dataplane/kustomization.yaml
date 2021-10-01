@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - nginx
+  - choreo-connect
+  - service
   - choreodp-system
 
 commonLabels:
