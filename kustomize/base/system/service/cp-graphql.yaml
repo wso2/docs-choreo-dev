@@ -12,6 +12,9 @@ spec:
     - name: healthz
       port: 9092
       targetPort: healthz
+    - name: http-port
+      port: 9095
+      targetPort: http-port
 
   selector:
     choreo.component: cp-graphql
