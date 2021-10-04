@@ -23,5 +23,4 @@ resources:
   - datacollector.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - cp-graphql.yaml
