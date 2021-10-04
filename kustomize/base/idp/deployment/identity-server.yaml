@@ -43,6 +43,10 @@ spec:
       initContainers:
         - name: init-is
           image: choreocontrolplane.azurecr.io/alpine:3.14
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: ANONYMOUS_USERSTORE_PASSWORD
               valueFrom:
