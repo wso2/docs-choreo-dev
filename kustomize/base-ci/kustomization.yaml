@@ -90,7 +90,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-auth-module
   newTag: master-5e8b0f44a053537cf478e150307ec07e5fcd339d
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
-  newTag: master-2d52b08dc6de881ff0a25ade824c5dca0b98bade
+  newTag: master-7abe9a31d9e687d045b2956e486030a8b084223d
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cloud-manager
   newTag: master-9ced081d6ad6080dd7ef6d9f3b30d73bb645d590
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-garbage-collector
