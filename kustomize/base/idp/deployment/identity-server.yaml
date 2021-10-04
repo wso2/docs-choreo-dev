@@ -191,6 +191,7 @@ spec:
               mountPath: /home/wso2carbon/wso2is-5.10.0/repository/resources/security/wso2carbon.pfx
               subPath: IDP_CARBON_KEYSTORE
               readOnly: true
+      automountServiceAccountToken: false
       serviceAccountName: choreo-identity-server
       volumes:
         - name: idp-docker-entrypoint
