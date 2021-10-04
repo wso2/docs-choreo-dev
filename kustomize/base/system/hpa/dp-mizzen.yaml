@@ -4,13 +4,13 @@ metadata:
   annotations:
     autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
-    choreo.component: choreo-connect-deployment
-  name: choreo-connect-deployment
+    choreo.component: dp-mizzen
+  name: dp-mizzen
 spec:
-  maxReplicas: 10
-  minReplicas: 2
+  maxReplicas: 1
+  minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-connect-deployment
+    name: dp-mizzen
   targetCPUUtilizationPercentage: 75

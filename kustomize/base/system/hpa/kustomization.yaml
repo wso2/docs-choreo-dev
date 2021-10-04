@@ -25,3 +25,6 @@ resources:
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
   - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
+  - cp-graphql.yaml
