@@ -109,7 +109,6 @@ Cypress.Commands.add('configureResource', (relativePath: string | null, method: 
         }
     })
     cy.get('[data-testid="api-path"]').type(relativePath);
-    cy.get('[data-testid="api-return-type"]').type(returnType);
     cy.get('[data-testid="advanced-path-config"]').click();
     cy.get('[data-testid="select-request-btn"]').click();
     cy.get('[data-testid="save-btn"]').click();
