@@ -6,7 +6,6 @@ metadata:
     choreo.component: identity-server
   annotations:
     checkov.io/skip1: CKV_K8S_40=This should be Implemented in Dockerfile first
-
 spec:
   replicas: 1
   selector:
@@ -23,11 +22,11 @@ spec:
       labels:
         deployment: wso2is
         choreo.component: identity-server
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
       securityContext:
         runAsUser: 10500
+        seccompProfile:
+          type: RuntimeDefault
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
