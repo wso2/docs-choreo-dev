@@ -28,10 +28,10 @@ export class OrganizationComponent {
     }
 
     static inviteMembers(email: string, ...groups) {
-        cy.wait(2000)
-        cy.get('div [type="button"] h5').contains('Invite Members').click()
-        cy.wait(2000)
-        cy.get('[data-testid="invite-email"] div div input').type(email)
+        cy.wait(300);
+        cy.get('div [type="button"] h5').contains('Invite Members').click();
+        cy.wait(300);
+        cy.get('[data-testid="invite-email"] div div input').should('be.visible').type(email)
         cy.get('#demo-mutiple-checkbox').click()
         this.addGroups(groups)
         cy.get('body').type('{esc}')
@@ -51,7 +51,7 @@ export class OrganizationComponent {
     static deleteRecord(email: string) {
         cy.contains('td', email).trigger('mouseover');
         cy.get('[data-testid="api-delete-btn"]').click();
-        cy.wait(2000)
+        cy.get('button > span > h5').should('be.visible');
         cy.get('button > span > h5').contains('Delete').click();
     }
 
@@ -83,6 +83,6 @@ export class OrganizationComponent {
         cy.get('[id="filled-multiline-static"]').type(groupDescription);
         cy.get('[id="create-group-tag"]').type(groupTag);
         cy.get('[data-testid="create-group"]').click({ force: true });
-        cy.wait(2000)
+        cy.get(`td[value="${groupName}"]`).should('be.visible');
     }
 }

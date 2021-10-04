@@ -37,7 +37,6 @@ describe("Group List View", () => {
         cy.navigateFromHomePage(SETTINGS_TEXT);
         cy.get('[role="progressbar"]').should("not.exist");
         cy.get('[data-testid="/user-settings/organization/groups"]').click({ force: true });
-        cy.wait(5000);
     });
 
     after(() => {
