@@ -48,6 +48,13 @@ spec:
             capabilities:
               drop:
                 - ALL
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 500m
+            limits:
+              memory: 300Mi
+              cpu: 1000m
           env:
             - name: ANONYMOUS_USERSTORE_PASSWORD
               valueFrom:
