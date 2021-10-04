@@ -12,6 +12,7 @@
  */
 
 import { SETTINGS_TEXT, INVITATION_EMAIL } from '../../../support/common/constants';
+import { OrganizationComponent } from '../../../support/console/common/organizations-component';
 
 /// <reference types="cypress" />
 
@@ -36,31 +37,10 @@ describe('Invite members', () => {
     })
 
     it('invite a member', () => {
-        cy.get('[data-testid="invite-members-btn"]').click();
-        cy.get('[data-testid="group-select"]').invoke('text').then((groupText) => {
-            if (groupText == '') {
-                cy.get('[data-testid="group-select"]').click();
-                cy.contains('Developer').click();
-            } else if (groupText == 'admin') {
-                cy.get('[data-testid="group-select"]').click();
-                cy.contains('Admin').click();
-                cy.contains('Developer').click();
-            } else if ((groupText == 'admin, developer') || (groupText == 'developer, admin')) {
-                cy.contains('Admin').click();
-            }
-
-            cy.get('[data-testid="invite-email"]').within(() => {
-                cy.get('input').type(INVITATION_EMAIL+'{enter}', { force: true });
-            })
-            cy.get('[data-testid="invite-btn"]').click({ force: true });
-            cy.contains('td', INVITATION_EMAIL).should('be.visible');
-            cy.log('Invitation sent successfully');
-
-            cy.log('Deleting member invitation');
-            cy.contains('td', INVITATION_EMAIL).trigger('mouseover');
-            cy.get('[data-testid="api-delete-btn"]').click();
-            cy.get('[data-testid="delete-invitation-btn"]').click();
-            cy.log('Invitation deleted successfully');
-        })
+        OrganizationComponent.inviteMembers(INVITATION_EMAIL,"developer");
+        OrganizationComponent.selectPendingInvitation()
+        cy.contains('td', INVITATION_EMAIL).should('be.visible');
+        OrganizationComponent.deleteRecord(INVITATION_EMAIL); 
+        
     });
 })
