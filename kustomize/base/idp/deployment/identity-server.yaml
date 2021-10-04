@@ -22,6 +22,8 @@ spec:
       labels:
         deployment: wso2is
         choreo.component: identity-server
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
       securityContext:
         runAsUser: 10500
