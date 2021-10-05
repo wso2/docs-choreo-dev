@@ -20,7 +20,6 @@ metadata:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "choreo-dev-rt-loadbalancer-subnet"
-  namespace: dev-choreo-apim
 spec:
   selector:
     deployment: choreo-nginx
