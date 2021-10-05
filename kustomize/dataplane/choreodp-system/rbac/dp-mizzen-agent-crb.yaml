@@ -5,7 +5,6 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dp-mizzen-agent-sa
-    namespace: choreodp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
