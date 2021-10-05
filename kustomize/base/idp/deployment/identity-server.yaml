@@ -62,7 +62,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: ANONYMOUS_USERSTORE_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
           command:
             - 'sh'
             - '-c'
@@ -93,77 +93,78 @@ spec:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
+                  apiVersion: v1
                   fieldPath: status.podIP
             - name: SUPER_ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: SUPER_ADMIN_USERNAME
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: SUPER_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: SUPER_ADMIN_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: DB_USERNAME
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: DB_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: SHARED_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: SHARED_DB_USERNAME
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: SHARED_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: SHARED_DB_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: BPS_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: BPS_DB_USERNAME
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: BPS_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: BPS_DB_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: USERSTORE_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: USERSTORE_DB_USERNAME
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: USERSTORE_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: USERSTORE_DB_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: CONFIG_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: CONFIG_DB_USERNAME
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: CONFIG_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: CONFIG_DB_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: KEYSTORE_PRIMARY_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: KEYSTORE_PRIMARY_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: KEYSTORE_INTERNAL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: KEYSTORE_INTERNAL_PASSWORD
-                  name: secret-identity-server-predev
+                  name: secret-identity-server
             - name: JVM_MEM_OPTS
               value: -Xms1024m -Xmx4096m
           livenessProbe:
@@ -183,7 +184,10 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: [ 'sh', '-c', '${WSO2_SERVER_HOME}/bin/wso2server.sh stop' ]
+                command:
+                  - 'sh'
+                  - '-c'
+                  - '${WSO2_SERVER_HOME}/bin/wso2server.sh stop'
           imagePullPolicy: Always
           securityContext:
             runAsUser: 802
@@ -240,7 +244,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-identity-server-predev
+              secretProviderClass: secret-identity-server
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: idp-carbon-keystore
@@ -248,6 +252,6 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: idp-carbon-keystore-predev
+              secretProviderClass: idp-carbon-keystore
             nodePublishSecretRef:
               name: csi-secret-store-azure
