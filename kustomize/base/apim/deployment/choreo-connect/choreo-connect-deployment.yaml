@@ -76,6 +76,9 @@ spec:
               name: secret-mgw-enforcer-truststore
               readOnly: true
               subPath: ENFORCER_TRUSTSTORE_CERTIFICATE
+            - name: enforcer-km-public-cert
+              mountPath: /home/wso2/security/truststore/apim-service-root.pem
+              subPath: apim-service-root.pem
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-enforcer-keystore
               readOnly: true
@@ -263,6 +266,9 @@ spec:
         - name: enforcer-config
           configMap:
             name: mgw-adapter-enforcer-conf
+        - name: enforcer-km-public-cert
+          configMap:
+            name: mgw-keymanager-public-cert
         - name: secret-mgw-enforcer-keystore
           csi:
             driver: secrets-store.csi.k8s.io
