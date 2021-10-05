@@ -109,8 +109,7 @@ Cypress.Commands.add('configureResource', (relativePath: string | null, method: 
         }
     })
     cy.get('[data-testid="api-path"]').type(relativePath);
-    cy.get('[data-testid="api-return-type"]').type(returnType);
-    cy.get('[data-testid="advanced-path-config"]').click();
+     cy.get('[data-testid="advanced-path-config"]').click();
     cy.get('[data-testid="select-request-btn"]').click();
     cy.get('[data-testid="save-btn"]').click();
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
@@ -375,12 +374,12 @@ Cypress.Commands.add('createLogProperty', (type: string, expression: string) => 
     cy.log('Successfully created the log with expression : ' + expression);
 }),
 
-Cypress.Commands.add('goBacktoAppsList', () => {
-   // cy.closeInitialTourPopup();
-    cy.get('[data-testid="app-list-btn"]').click();
-    cy.get('[id="backdrop-loader"').should('not.exist');
-    cy.log('App List Page loaded successfully');
-});
+    Cypress.Commands.add('goBacktoAppsList', () => {
+        // cy.closeInitialTourPopup();
+        cy.get('[data-testid="app-list-btn"]').click();
+        cy.get('[id="backdrop-loader"').should('not.exist');
+        cy.log('App List Page loaded successfully');
+    });
 
 Cypress.Commands.add('searchApps', (name: string) => {
     cy.get('body').then($body => {
@@ -393,7 +392,7 @@ Cypress.Commands.add('searchApps', (name: string) => {
 });
 
 Cypress.Commands.add('resetAppSearch', () => {
-  //  cy.closeInitialTourPopup();
+    //  cy.closeInitialTourPopup();
     cy.get('body').then($body => {
         let searchButtonExists = ($body.find('[data-testid="search-btn"]').length > 0) ? true : false;
         if (searchButtonExists) {
@@ -676,6 +675,7 @@ Cypress.Commands.add('callExternalEndpoint', (URL: string, attempts: number, exp
 });
 
 Cypress.Commands.add('testRunApp', () => {
+    cy.get('#test').click()
     cy.get('[data-testid="editor-run-btn"]').should('be.visible');
     cy.get('[data-testid="editor-run-btn"]').click();
     cy.log('Started test run');
@@ -996,22 +996,22 @@ Cypress.Commands.add('clearOnPremKeys', (orgHandle: string) => {
         url: `${APP_SVC_URL}/orgs/${orgHandle}/keys/`
     }).then((response) => {
         const keys = response["body"] as { displayName: string }[];
-	    const e2eKeys = keys.filter(({displayName}) => {
-		    if (isOldValue(displayName) || displayName.startsWith(keyNamePrefix)) {
-			    return true;
-		    }
-		    return false;
-	    });
+        const e2eKeys = keys.filter(({ displayName }) => {
+            if (isOldValue(displayName) || displayName.startsWith(keyNamePrefix)) {
+                return true;
+            }
+            return false;
+        });
 
-	    cy.log(`Total on-prem keys found : ${keys.length}`);
-	    cy.log(`E2E test on-prem keys found : ${e2eKeys.length}`);
+        cy.log(`Total on-prem keys found : ${keys.length}`);
+        cy.log(`E2E test on-prem keys found : ${e2eKeys.length}`);
 
         if (e2eKeys.length) {
             for (const key of e2eKeys) {
                 const { displayName } = key;
 
-		        cy.cleanOnPremKey(displayName, orgHandle);
-		        cy.wait(300);
+                cy.cleanOnPremKey(displayName, orgHandle);
+                cy.wait(300);
             }
             cy.log("Successfully deleted all e2e test on-prem keys");
         } else {
@@ -1066,8 +1066,17 @@ Cypress.Commands.add('clearAllTestData', (org: { uuid: string, handle: string })
 
 // Verify the App Name
 Cypress.Commands.add('verifyAppName', (appName) => {
-    cy.get('h4.MuiTypography-root').invoke('text').then((text) =>{
+    cy.get('h4.MuiTypography-root').invoke('text').then((text) => {
         cy.log("App Name From Choreo :: ${text}");
         expect(text.trim()).eq(appName)
     });
 });
+
+
+// Delete a recrd app,group,memeber ect...
+Cypress.Commands.add('deleteRecord', (record: string) => {
+    cy.contains('td', record).trigger('mouseover');
+    cy.get('[aria-label="delete"]').should('be.visible').click();
+    cy.wait(2000)
+    cy.get('button > span > h5').contains('Delete').click();
+})

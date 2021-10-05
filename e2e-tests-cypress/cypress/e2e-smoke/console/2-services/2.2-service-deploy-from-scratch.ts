@@ -13,6 +13,11 @@
 
 import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
 import { SERVICES_TEXT } from '../../../support/common/constants';
+import { Home } from '../../../support/console/common/component/home';
+import { Services } from '../../../support/console/common/component/service';
+import { Develop } from '../../../support/console/common/component/develop';
+import { HTTPMethod } from '../../../support/console/common/component/enums/http-method-enum';
+import { ReturnType } from '../../../support/console/common/component/enums/return-type-enum';
 
 /// <reference types="cypress" />
 
@@ -29,12 +34,9 @@ describe('Service deployment and delete deployed service', () => {
         cy.getCookies().then((cookies) => {
             savedCookies = cookies
         });
-
         appName = generateAppName("app");
-        cy.log('app name: '+ appName);
-        cy.createNewApp(SERVICES_TEXT, appName);
-        cy.verifyAppName(appName);
-        cy.configureResource("hello", null, "string ?");
+        cy.log('app name: ' + appName);
+        Home.selectOrganization()
     });
 
     beforeEach(() => {
@@ -45,60 +47,60 @@ describe('Service deployment and delete deployed service', () => {
         cy.userLogout();
     })
 
+    it('crate service', () => {
+        Home.selectSrvice()
+        Services.createService(appName)
+        cy.verifyAppName(appName);
+        Develop.configureResources(HTTPMethod.GET, "hello", ReturnType.JSON)
+    })
+
     it('low code form AI suggestions', () => {
         const variableSourceFields = 'string url = "https://postman-echo.com/get"';
 
-        cy.selectManualTriggerOptions("Statements", "addVariable");
-        cy.createVariableProperty("string", urlName, '"https://postman-echo.com/get"');
+        Develop.addStatements()
+        Develop.addVariable("string", urlName, 'https://postman-echo.com/get')
+        Develop.addAPICalls()
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
-        cy.get('[id="SmallPlus"]').eq(0).click({force: true});
-        cy.get('[data-testid="api-options"]').click();
-        cy.get('[data-testid="http"]').click();
-        cy.get('.exp-editor').click().type('{selectall}{del}' + urlName);
-        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
-        cy.get('body').type('{enter}', { force: true });
-        cy.get('[data-testid="http-save-next"]').click();
-        cy.log("HTTP connector added successfully!");
-
-        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+        Develop.addHTTPConnector(urlName, HTTPMethod.GET, ReturnType.JSON)
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
     })
 
     it('test run hello world service', () => {
-        cy.selectManualTriggerOptions("Statements", "addVariable");
-        cy.createVariableProperty("var", "res", '"hello world"');
-        cy.createRespond("res");
+        Develop.addStatements()
+        Develop.addVariable("var", "res", 'hello world')
+        Develop.addStatements()
+        Develop.addResponse("res")
 
         cy.testRunApp();
 
-        cy.get('[data-testid="test-url"]').should('exist');
+        cy.get('[data-testid="product-tour-log-panel"] input').eq(0).invoke('attr', 'value').should('not.be.empty')
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 600000 }).should('exist');
         cy.log('Retrieving the test URL successful');
 
-        cy.get('[data-testid="test-url"]').invoke('text').then((testUrl) => {
+        cy.get('[data-testid="product-tour-log-panel"] input').eq(0).invoke('attr', 'value').then((testUrl) => {
             cy.callExternalEndpoint((testUrl + "/hello"), 3, "hello world");
             cy.log('Successfully invoked test endpoint');
         });
     })
 
-    it('Add test view', () => {
+    it.skip('Add test view', () => {
         cy.get('[data-testid="test"]').click();
         cy.log("verify test operation");
         cy.get('[data-testid="backdrop-loader"]').should('not.exist');
         cy.get('.swagger-ui').within(() => {
-                    cy.get('.opblock-summary').click();
-                    cy.get('button').contains('Try it out').should('exist').click();
+            cy.get('.opblock-summary').click();
+            cy.get('button').contains('Try it out').should('exist').click();
             cy.get('.opblock-section-header').contains('Cancel').should('exist');
             cy.get('.execute-wrapper > .btn').click();
-                cy.get('.curl-command').should('exist');
-                cy.get('.request-url').should('exist');
-                cy.get("div[class='highlight-code'] pre[class=' microlight'] code span").should('have.text', 'hello world')
-                cy.log('service response is successfully returned');
-                cy.get('tr[class="response"]>td[class="response-col_status"]').should('have.text', '200');
-                cy.log('Service Tryout is successful!');
-    
+            cy.get('.curl-command').should('exist');
+            cy.get('.request-url').should('exist');
+            cy.get("div[class='highlight-code'] pre[class=' microlight'] code span").should('have.text', 'hello world')
+            cy.log('service response is successfully returned');
+            cy.get('tr[class="response"]>td[class="response-col_status"]').should('have.text', '200');
+            cy.log('Service Tryout is successful!');
+
         });
     });
 
@@ -120,7 +122,7 @@ describe('Service deployment and delete deployed service', () => {
 
     it('Deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
-       // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
+        // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
         cy.wait(2.5 * 60 * 1000);
     });
 
