@@ -67,9 +67,9 @@ spec:
             - 'sh'
             - '-c'
             - >-
-                cp /config/anonymous.xml /userstores &&
-                cd /userstores &&
-                sed -i "s#{ANONYMOUS_USERSTORE_PASSWORD}#${ANONYMOUS_USERSTORE_PASSWORD}#g" anonymous.xml
+              cp /config/anonymous.xml /userstores &&
+              cd /userstores &&
+              sed -i "s#{ANONYMOUS_USERSTORE_PASSWORD}#${ANONYMOUS_USERSTORE_PASSWORD}#g" anonymous.xml
           volumeMounts:
             - name: identity-server-anon-userstore
               mountPath: /userstores
@@ -167,6 +167,9 @@ spec:
                   name: secret-identity-server
             - name: JVM_MEM_OPTS
               value: -Xms1024m -Xmx4096m
+          envFrom:
+            - configMapRef:
+                name: env-idp
           livenessProbe:
             httpGet:
               path: /api/health-check/v1.0/health
@@ -229,7 +232,7 @@ spec:
           configMap:
             name: identity-server-conf
         - name: identity-server-anon-userstore
-          emptyDir: {}
+          emptyDir: { }
         - name: identity-server-anon-userstore-config
           configMap:
             name: identity-server-anon-userstore
