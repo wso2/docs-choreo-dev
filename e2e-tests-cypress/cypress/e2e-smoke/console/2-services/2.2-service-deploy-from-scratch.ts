@@ -12,12 +12,12 @@
  */
 
 import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
-import { SERVICES_TEXT } from '../../../support/common/constants';
 import { Home } from '../../../support/console/common/component/home';
 import { Services } from '../../../support/console/common/component/service';
 import { Develop } from '../../../support/console/common/component/develop';
 import { HTTPMethod } from '../../../support/console/common/component/enums/http-method-enum';
 import { ReturnType } from '../../../support/console/common/component/enums/return-type-enum';
+import { TestView } from '../../../support/console/common/component/test-view';
 
 /// <reference types="cypress" />
 
@@ -36,7 +36,6 @@ describe('Service deployment and delete deployed service', () => {
         });
         appName = generateAppName("app");
         cy.log('app name: ' + appName);
-        Home.selectOrganization()
     });
 
     beforeEach(() => {
@@ -67,15 +66,19 @@ describe('Service deployment and delete deployed service', () => {
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
     })
 
+    
+
+  
     it('test run hello world service', () => {
         Develop.addStatements()
         Develop.addVariable("var", "res", 'hello world')
         Develop.addStatements()
         Develop.addResponse("res")
 
-        cy.testRunApp();
+       TestView.navigatTestView()
+       TestView.clickTestRunButton()
+       TestView.getTestURL().should('not.be.empty')
 
-        cy.get('[data-testid="product-tour-log-panel"] input').eq(0).invoke('attr', 'value').should('not.be.empty')
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 600000 }).should('exist');
         cy.log('Retrieving the test URL successful');
 
@@ -85,7 +88,7 @@ describe('Service deployment and delete deployed service', () => {
         });
     })
 
-    it.skip('Add test view', () => {
+    it('Add test view', () => {
         cy.get('[data-testid="test"]').click();
         cy.log("verify test operation");
         cy.get('[data-testid="backdrop-loader"]').should('not.exist');
