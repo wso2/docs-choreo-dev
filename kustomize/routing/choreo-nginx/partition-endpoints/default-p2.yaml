@@ -22,7 +22,7 @@ ports:
     port: 9095
 endpoints:
   - addresses:
-      - 10.2.64.4
+      - 10.1.64.4
     conditions:
       ready: true
     hostname: router-default-p2

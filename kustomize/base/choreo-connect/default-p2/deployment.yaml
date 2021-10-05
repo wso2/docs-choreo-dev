@@ -17,6 +17,10 @@ spec:
          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p2 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
      containers:
        - name: choreo-connect-enforcer
+         volumeMounts:
+          - name: enforcer-km-public-cert
+            mountPath: /home/wso2/security/truststore/apim-service-root.pem
+            subPath: apim-service-root.pem
          env:
          - name: ADAPTER_HOST
            value: adapter-default-p2
@@ -24,3 +28,7 @@ spec:
          env:
          - name: ADAPTER_HOST
            value: adapter-default-p2
+     volumes:
+       - name: enforcer-km-public-cert
+         configMap:
+          name: mgw-keymanager-public-cert
