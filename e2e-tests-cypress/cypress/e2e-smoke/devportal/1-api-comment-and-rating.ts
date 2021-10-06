@@ -58,17 +58,13 @@ describe('API overview comment and rating scenario', () => {
 
         cy.log('Adding 4 star rating');
         cy.get('[for="hover-feedback-4"]').trigger('focus');
-        cy.wait(3000);
         cy.get('[for="hover-feedback-4"]').click({ force: true });
-        cy.wait(3000);
         cy.get('[class="MuiPopover-root"]').click({ force: true });
         cy.log('Added 4 star');
 
         cy.log('Changing 4 star rating to 3 star');
         cy.get('[for="hover-feedback-3"]').trigger('focus');
-        cy.wait(3000)
         cy.get('[for="hover-feedback-3"]').click({ force: true });
-        cy.wait(3000);
         cy.get('[class="MuiPopover-root"]').click({ force: true });
         cy.log('Changed the rate to 3 stars');
         cy.get('body').type('{esc}');
