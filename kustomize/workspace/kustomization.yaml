@@ -5,5 +5,4 @@ resources:
   - nginx
 
 commonLabels:
-  app: choreo-routing
-  
+  app: choreo-workspace
