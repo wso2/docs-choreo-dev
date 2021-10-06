@@ -79,7 +79,7 @@ describe('Service deployment and delete deployed service', () => {
        TestView.clickTestRunButton()
        TestView.getTestURL().should('not.be.empty')
 
-        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 600000 }).should('exist');
+        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 40000 }).should('exist');
         cy.log('Retrieving the test URL successful');
 
         cy.get('[data-testid="product-tour-log-panel"] input').eq(0).invoke('attr', 'value').then((testUrl) => {

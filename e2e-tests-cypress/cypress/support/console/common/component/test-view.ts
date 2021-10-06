@@ -17,7 +17,7 @@ export class TestView {
     }
 
     static executePostmanTest(postmanKey: string) {
-        cy.get('data-testid="postman"').click()
+        cy.get('div[data-testid="postman"] > p').click()
         cy.get('[id="backdrop-loader"').should('not.exist');
         cy.get('h3').contains('Postman').should('exist')
 
