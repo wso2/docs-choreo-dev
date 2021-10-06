@@ -108,25 +108,14 @@ describe('Service deployment and delete deployed service', () => {
     });
 
     it('test postman view', () => {
-        cy.get('[data-testid="test"]').click();
-        cy.get('[id="backdrop-loader"').should('not.exist');
-        cy.url().should('include', 'app/' + appName + '/test');
-
         cy.log('Testing invalid API key validation attempt scenario');
-        cy.get('[data-testid="postman"]').should('exist');
-        cy.get('[data-testid="postman"]').eq(0).click();
-        cy.get('[data-testid="click-here"]').should('exist');
-        cy.get('[data-testid="click-here"]').click();
-        cy.get('[data-testid="api-key"]').should('exist');
-        cy.get('[data-testid="api-key"]').type('dummyapikey');
-        cy.get('[data-testid="api-key-error"]').should('exist');
-        cy.log('Test phase successful!');
+        TestView.executePostmanTest("dummykey")
     });
 
     it('Deploy hello world service', () => {
         cy.deployToChoreo("service", appName);
         // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
-        cy.wait(2.5 * 60 * 1000);
+    
     });
 
 })
