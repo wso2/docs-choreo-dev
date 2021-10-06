@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: multivariate-anomaly-detector-notification-manager
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: multivariate-anomaly-detector-notification-manager
