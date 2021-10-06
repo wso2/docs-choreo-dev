@@ -1,0 +1,4 @@
+resources:
+  - dp-mizzen-agent-cr.yaml
+  - dp-mizzen-agent-crb.yaml
+  - dp-mizzen-agent-sa.yaml
