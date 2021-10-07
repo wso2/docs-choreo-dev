@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - deployment
   - service
-  - partition-endpoints
+  # - partition-endpoints
 
 namespace: choreo-apim
