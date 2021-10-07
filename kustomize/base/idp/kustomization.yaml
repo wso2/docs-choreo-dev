@@ -5,7 +5,7 @@ resources:
   - deployment
   - hpa
   - pdb
-  - rbac
+ # - rbac
   - service
 
 namespace: choreo-idp
