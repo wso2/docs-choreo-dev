@@ -10,6 +10,7 @@ metadata:
     checkov.io/skip3: CKV_K8S_37=This need to be tested after the deployment
     checkov.io/skip4: CKV_K8S_43=Image is using the digest in the pipeline
     checkov.io/skip5: CKV_K8S_22=Files will be created in the container root dir at startup
+    checkov.io/skip6: CKV_K8S_38=Automounting service account token is required
 spec:
   replicas: 1
   selector:
@@ -88,8 +89,6 @@ spec:
               memory: 6Gi
               cpu: 3000m
           env:
-            - name: KUBERNETES_NAMESPACE
-              value: choreo-idp
             - name: NODE_ID
               value: identity-server-is-node
             - name: NODE_IP
@@ -222,7 +221,6 @@ spec:
               mountPath: /home/wso2carbon/wso2is-5.10.0/repository/resources/security/wso2carbon.pfx
               subPath: IDP_CARBON_KEYSTORE
               readOnly: true
-      automountServiceAccountToken: false
       serviceAccountName: choreo-identity-server
       volumes:
         - name: idp-docker-entrypoint
