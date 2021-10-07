@@ -39,7 +39,7 @@ spec:
           name: console-next
           ports:
             - containerPort: 8080
-              name: console-next-port
+              name: con-v2-port
               protocol: TCP
           securityContext:
             runAsUser: 101
