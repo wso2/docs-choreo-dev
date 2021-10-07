@@ -5,7 +5,6 @@ export class TestView {
         cy.get('[data-testid="backdrop-loader"]').should('not.exist');
     }
 
-
     static getTestURL() {
         return cy.get('[data-testid="product-tour-log-panel"] input').eq(0).invoke('attr', 'value')
     }
@@ -20,7 +19,6 @@ export class TestView {
         cy.get('div[data-testid="postman"] > p').click()
         cy.get('[id="backdrop-loader"').should('not.exist');
         cy.get('h3').contains('Postman').should('exist')
-
         cy.get('[data-testid="click-here"]').click();
         cy.get('[data-testid="api-key"]').should('exist');
         cy.get('[data-testid="api-key"]').type(postmanKey);

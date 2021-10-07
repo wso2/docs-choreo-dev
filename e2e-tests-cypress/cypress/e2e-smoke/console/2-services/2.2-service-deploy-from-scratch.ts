@@ -18,6 +18,7 @@ import { Develop } from '../../../support/console/common/component/develop';
 import { HTTPMethod } from '../../../support/console/common/component/enums/http-method-enum';
 import { ReturnType } from '../../../support/console/common/component/enums/return-type-enum';
 import { TestView } from '../../../support/console/common/component/test-view';
+import { Deploy } from '../../../support/console/common/component/deploy';
 
 /// <reference types="cypress" />
 
@@ -66,18 +67,18 @@ describe('Service deployment and delete deployed service', () => {
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
     })
 
-    
 
-  
+
+
     it('test run hello world service', () => {
         Develop.addStatements()
         Develop.addVariable("var", "res", 'hello world')
         Develop.addStatements()
         Develop.addResponse("res")
 
-       TestView.navigatTestView()
-       TestView.clickTestRunButton()
-       TestView.getTestURL().should('not.be.empty')
+        TestView.navigatTestView()
+        TestView.clickTestRunButton()
+        TestView.getTestURL().should('not.be.empty')
 
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 40000 }).should('exist');
         cy.log('Retrieving the test URL successful');
@@ -113,9 +114,10 @@ describe('Service deployment and delete deployed service', () => {
     });
 
     it('Deploy hello world service', () => {
-        cy.deployToChoreo("service", appName);
+        Deploy.navigateDeploy()
+        Deploy.deploy()
         // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
-    
+
     });
 
 })
