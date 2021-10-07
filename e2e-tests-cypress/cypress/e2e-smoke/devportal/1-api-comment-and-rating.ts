@@ -16,7 +16,7 @@
 import { MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../support/common/constants";
 import { getApiName } from "../../support/devportal/utils";
 
-describe('API overview comment scenario', () => {
+describe('API overview comment and rating scenario', () => {
 
     const apiName = getApiName();
 
@@ -47,4 +47,27 @@ describe('API overview comment scenario', () => {
         cy.get('[data-testid=txt-no-comments]').should('exist');
         cy.log('Successfully deleted the comment');
     });
+
+    it('Adding and modifying the ratings of the API', () => {
+        cy.log('Opening the rating box');
+        cy.get('[class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-4"]').within(() => {
+            cy.get('button')
+                .first()
+                .click();
+        })
+
+        cy.log('Adding 4 star rating');
+        cy.get('[for="hover-feedback-4"]').trigger('focus');
+        cy.get('[for="hover-feedback-4"]').click({ force: true });
+        cy.get('[class="MuiPopover-root"]').click({ force: true });
+        cy.log('Added 4 star');
+
+        cy.log('Changing 4 star rating to 3 star');
+        cy.get('[for="hover-feedback-3"]').trigger('focus');
+        cy.get('[for="hover-feedback-3"]').click({ force: true });
+        cy.get('[class="MuiPopover-root"]').click({ force: true });
+        cy.log('Changed the rate to 3 stars');
+        cy.get('body').type('{esc}');
+    })
+
 });

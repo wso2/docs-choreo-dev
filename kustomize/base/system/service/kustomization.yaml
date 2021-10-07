@@ -33,4 +33,5 @@ resources:
   - orgremover.yaml
   - cp-graphql.yaml
   - dp-project-manager.yaml
+  - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
