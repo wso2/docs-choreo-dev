@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity-server-deployment
+  name: identity-server
   labels:
     choreo.component: identity-server
   annotations:
