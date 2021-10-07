@@ -9,6 +9,7 @@ metadata:
     checkov.io/skip2: CKV_K8S_28=This need to be tested after the deployment
     checkov.io/skip3: CKV_K8S_37=This need to be tested after the deployment
     checkov.io/skip4: CKV_K8S_43=Image is using the digest in the pipeline
+    checkov.io/skip5: CKV_K8S_22=Files will be created in the container root dir at startup
 spec:
   replicas: 1
   selector:
@@ -195,7 +196,6 @@ spec:
           imagePullPolicy: Always
           securityContext:
             runAsUser: 802
-            readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
           ports:
             - containerPort: 9763
