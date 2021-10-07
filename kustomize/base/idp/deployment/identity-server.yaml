@@ -1,0 +1,261 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-server-deployment
+  labels:
+    choreo.component: identity-server
+  annotations:
+    checkov.io/skip1: CKV_K8S_40=This should be Implemented in Dockerfile first
+    checkov.io/skip2: CKV_K8S_28=This need to be tested after the deployment
+    checkov.io/skip3: CKV_K8S_37=This need to be tested after the deployment
+    checkov.io/skip4: CKV_K8S_43=Image is using the digest in the pipeline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: identity-server
+  minReadySeconds: 20
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        deployment: wso2is
+        choreo.component: identity-server
+    spec:
+      securityContext:
+        runAsUser: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: deployment
+                      operator: In
+                      values:
+                        - wso2is
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      initContainers:
+        - name: init-is
+          image: choreocontrolplane.azurecr.io/alpine:3.14
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 500m
+            limits:
+              memory: 300Mi
+              cpu: 1000m
+          env:
+            - name: ANONYMOUS_USERSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: ANONYMOUS_USERSTORE_PASSWORD
+                  name: secret-identity-server
+          command:
+            - 'sh'
+            - '-c'
+            - >-
+              cp /config/anonymous.xml /userstores &&
+              cd /userstores &&
+              sed -i "s#{ANONYMOUS_USERSTORE_PASSWORD}#${ANONYMOUS_USERSTORE_PASSWORD}#g" anonymous.xml
+          volumeMounts:
+            - name: identity-server-anon-userstore
+              mountPath: /userstores
+            - name: identity-server-anon-userstore-config
+              mountPath: /config
+      containers:
+        - name: wso2is
+          image: choreocontrolplane.azurecr.io/choreoipaas/identity-server:5.10.0-latest
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: 1500m
+            limits:
+              memory: 6Gi
+              cpu: 3000m
+          env:
+            - name: KUBERNETES_NAMESPACE
+              value: choreo-idp
+            - name: NODE_ID
+              value: identity-server-is-node
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: SUPER_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: SUPER_ADMIN_USERNAME
+                  name: secret-identity-server
+            - name: SUPER_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: SUPER_ADMIN_PASSWORD
+                  name: secret-identity-server
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: DB_USERNAME
+                  name: secret-identity-server
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DB_PASSWORD
+                  name: secret-identity-server
+            - name: SHARED_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: SHARED_DB_USERNAME
+                  name: secret-identity-server
+            - name: SHARED_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: SHARED_DB_PASSWORD
+                  name: secret-identity-server
+            - name: BPS_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: BPS_DB_USERNAME
+                  name: secret-identity-server
+            - name: BPS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: BPS_DB_PASSWORD
+                  name: secret-identity-server
+            - name: USERSTORE_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: USERSTORE_DB_USERNAME
+                  name: secret-identity-server
+            - name: USERSTORE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: USERSTORE_DB_PASSWORD
+                  name: secret-identity-server
+            - name: CONFIG_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: CONFIG_DB_USERNAME
+                  name: secret-identity-server
+            - name: CONFIG_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: CONFIG_DB_PASSWORD
+                  name: secret-identity-server
+            - name: KEYSTORE_PRIMARY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KEYSTORE_PRIMARY_PASSWORD
+                  name: secret-identity-server
+            - name: KEYSTORE_INTERNAL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KEYSTORE_INTERNAL_PASSWORD
+                  name: secret-identity-server
+            - name: JVM_MEM_OPTS
+              value: -Xms1024m -Xmx4096m
+          envFrom:
+            - configMapRef:
+                name: env-idp
+          livenessProbe:
+            httpGet:
+              path: /api/health-check/v1.0/health
+              port: 9443
+              scheme: HTTPS
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/health-check/v1.0/health
+              port: 9443
+              scheme: HTTPS
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - 'sh'
+                  - '-c'
+                  - '${WSO2_SERVER_HOME}/bin/wso2server.sh stop'
+          imagePullPolicy: Always
+          securityContext:
+            runAsUser: 802
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: 9763
+              protocol: TCP
+            - containerPort: 9443
+              protocol: TCP
+          volumeMounts:
+            - name: idp-docker-entrypoint
+              mountPath: /home/wso2carbon/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
+            - name: identity-server-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
+            - name: identity-server-conf-identity
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/identity
+            - name: identity-server-anon-userstore
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/deployment/server/userstores
+            - name: idp-client-truststore
+              mountPath: /home/wso2carbon/wso2is-5.10.0/repository/resources/security/client-truststore.jks
+              subPath: client-truststore.jks
+            - name: secret-identity-server
+              mountPath: /mnt/csi/secret-identity-server
+              readOnly: true
+            - name: idp-carbon-keystore
+              mountPath: /home/wso2carbon/wso2is-5.10.0/repository/resources/security/wso2carbon.pfx
+              subPath: IDP_CARBON_KEYSTORE
+              readOnly: true
+      automountServiceAccountToken: false
+      serviceAccountName: choreo-identity-server
+      volumes:
+        - name: idp-docker-entrypoint
+          configMap:
+            name: choreo-idp-docker-entrypoint
+            defaultMode: 0407
+        - name: identity-server-conf
+          configMap:
+            name: identity-server-conf
+        - name: identity-server-anon-userstore
+          emptyDir: { }
+        - name: identity-server-anon-userstore-config
+          configMap:
+            name: identity-server-anon-userstore
+        - name: identity-server-conf-identity
+          configMap:
+            name: identity-server-conf-identity
+        - name: idp-client-truststore
+          configMap:
+            name: idp-client-truststore
+        - name: secret-identity-server
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-identity-server
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: idp-carbon-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: idp-carbon-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

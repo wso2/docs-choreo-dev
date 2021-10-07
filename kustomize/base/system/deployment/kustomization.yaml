@@ -35,6 +35,7 @@ resources:
   - orgremover.yaml
   - cp-graphql.yaml
   - dp-project-manager.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587

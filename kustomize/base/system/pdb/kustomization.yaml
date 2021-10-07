@@ -24,3 +24,4 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - cp-graphql.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
