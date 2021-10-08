@@ -52,8 +52,7 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
-          env:
-            envFrom:
-              - configMapRef:
-                  name: env-console-next     
+          envFrom:
+            - configMapRef:
+                name: env-console-next     
       serviceAccountName: sa-choreo-default
