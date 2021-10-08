@@ -11,7 +11,7 @@
  * associated services.
  */
 
-export class SwaggerComponent {
+export class SwaggerUI {
 
     static SelectResource(httpMethod: string, path: string){
         

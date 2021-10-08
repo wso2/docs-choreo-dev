@@ -15,7 +15,7 @@
 
 import { generateAppName } from "../../support/common/utils";
 import { getApiName } from "../../support/devportal/utils";
-import { SwaggerComponent } from '../../support/console/common/swagger-ui-component';
+import { SwaggerUI } from '../../support/console/common/swagger-ui-component';
 
 describe('Application tryout scenario', () => {
     const appName = generateAppName('-e2etest');
@@ -86,8 +86,8 @@ describe('Application tryout scenario', () => {
         cy.wait(4000);
 
         cy.log("Invoking the API");
-        SwaggerComponent.SelectResource("GET","/v3/covid-19/states");
-        SwaggerComponent.TryoutAPI();
+        SwaggerUI.SelectResource("GET","/v3/covid-19/states");
+        SwaggerUI.TryoutAPI();
         
         cy.get('tr[data-param-name="sort"]').within(() => {
             cy.get('.parameters-col_description').within(() => {
@@ -104,8 +104,8 @@ describe('Application tryout scenario', () => {
                 cy.get('select').select('0').should('have.value', '0');
             });
         });
-        SwaggerComponent.ExecuteResourceFunction();
-        SwaggerComponent.GetResponse();
+        SwaggerUI.ExecuteResourceFunction();
+        SwaggerUI.GetResponse();
     });
 
     it('Delete a consumer application', () => {

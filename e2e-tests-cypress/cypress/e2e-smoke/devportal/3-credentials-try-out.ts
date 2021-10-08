@@ -14,7 +14,7 @@
 /// <reference types="cypress" />
 
 import { getApiName } from "../../support/devportal/utils";
-import { SwaggerComponent } from '../../support/console/common/swagger-ui-component';
+import { SwaggerUI } from '../../support/console/common/swagger-ui-component';
 import { eq } from "cypress/types/lodash";
 
 describe('Credentials generation & API tryout scenario', () => {
@@ -60,8 +60,8 @@ describe('Credentials generation & API tryout scenario', () => {
         cy.wait(4000);
 
         cy.log("Invoking the API");
-        SwaggerComponent.SelectResource("GET","/v3/covid-19/states");
-        SwaggerComponent.TryoutAPI();
+        SwaggerUI.SelectResource("GET","/v3/covid-19/states");
+        SwaggerUI.TryoutAPI();
         
         cy.get('tr[data-param-name="sort"]').within(() => {
             cy.get('.parameters-col_description').within(() => {
@@ -78,8 +78,8 @@ describe('Credentials generation & API tryout scenario', () => {
                 cy.get('select').select('0').should('have.value', '0');
             });
         });
-        SwaggerComponent.ExecuteResourceFunction();
-        SwaggerComponent.GetResponse();
+        SwaggerUI.ExecuteResourceFunction();
+        SwaggerUI.GetResponse();
    
     });
 
