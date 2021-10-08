@@ -15,6 +15,7 @@
 
 import { generateAppName } from "../../support/common/utils";
 import { getApiName } from "../../support/devportal/utils";
+import { SwaggerUI } from '../../support/console/common/swagger-ui-component';
 
 describe('Application tryout scenario', () => {
     const appName = generateAppName('-e2etest');
@@ -83,13 +84,28 @@ describe('Application tryout scenario', () => {
         cy.get('[data-testid="get-test-key-btn"]').should('not.be.disabled');
         cy.get('[data-testid="get-test-key-btn"]').click();
         cy.wait(4000);
+
         cy.log("Invoking the API");
-        cy.get('.opblock-summary').click();
-        cy.get('.btn').click();
-        cy.get('.execute-wrapper > .btn').click();
-        cy.wait(4000);
-        cy.get(':nth-child(1) > .responses-table > tbody > .response > .response-col_status').should('have.text', '200');
-        cy.log('API Tryout was successful!');
+        SwaggerUI.SelectResource("GET","/v3/covid-19/states");
+        SwaggerUI.TryoutAPI();
+        
+        cy.get('tr[data-param-name="sort"]').within(() => {
+            cy.get('.parameters-col_description').within(() => {
+                cy.get('select').select('todayCases').should('have.value', 'todayCases');
+            });
+        });
+        cy.get('tr[data-param-name="yesterday"]').within(() => {
+            cy.get('.parameters-col_description').within(() => {
+                cy.get('select').select('true').should('have.value', 'true');
+            });
+        });
+        cy.get('tr[data-param-name="allowNull"]').within(() => {
+            cy.get('.parameters-col_description').within(() => {
+                cy.get('select').select('0').should('have.value', '0');
+            });
+        });
+        SwaggerUI.ExecuteResourceFunction();
+        SwaggerUI.GetResponse();
     });
 
     it('Delete a consumer application', () => {
