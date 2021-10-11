@@ -45,7 +45,7 @@ spec:
             - configMapRef:
                 name: env-connector-builder
             - configMapRef:
-                name: cm-idp
+                name: cm-idp-replica
             - configMapRef:
                 name: cm-connector-builder
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder:latest
