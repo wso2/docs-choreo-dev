@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: connector-builder
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: connector-builder
