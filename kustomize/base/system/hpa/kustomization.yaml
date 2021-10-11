@@ -1,4 +1,5 @@
 resources:
+  - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
   - frontend.yaml
