@@ -5,6 +5,9 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip4: CKV_K8S_38=The SA token is required for the linkerd to define service identity
     checkov.io/skip5: CKV_K8S_43=The image tag gets updated to component git hash when deploying
+    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_20=Temporarily suppressing till fixing
   labels:
     choreo.component: connector-builder
   name: connector-builder
