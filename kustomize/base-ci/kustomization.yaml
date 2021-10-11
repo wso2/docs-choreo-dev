@@ -86,9 +86,9 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/datamapper-init
   newTag: master-1e0411cd4bded901e1cc2b9eff5e4d95e957881d
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer
-  newTag: master-fea50eedd237df7b0e0ab98cbe3d3fb313318ddb
+  newTag: master-f31a57445abd3463f68edbf7cc0abeba40ba1745
 - name: choreocontrolplane.azurecr.io/choreoipaas/deployment-optimizer-init
-  newTag: master-fea50eedd237df7b0e0ab98cbe3d3fb313318ddb
+  newTag: master-f31a57445abd3463f68edbf7cc0abeba40ba1745
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-auth-module
   newTag: master-5e8b0f44a053537cf478e150307ec07e5fcd339d
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
