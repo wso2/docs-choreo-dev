@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip4: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip5: CKV_K8S_43=The image tag gets updated to component git hash when deploying
+    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_20=Temporarily suppressing till fixing
+  labels:
+    choreo.component: connector-builder
+  name: connector-builder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: connector-builder
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: connector-builder
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: secret-app-deployer
+                key: GITHUB_TOKEN
+          - name: BCENTRAL_CLI_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secret-ballerina-central
+                key: BCENTRAL_CLI_CLIENT_SECRET
+          envFrom:
+            - configMapRef:
+                name: env-connector-builder
+            - configMapRef:
+                name: cm-idp
+            - configMapRef:
+                name: cm-connector-builder
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder:latest
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+          name: connector-builder
+          volumeMounts:
+            - name: secret-ballerina-central
+              mountPath: "/mnt/csi/secret-ballerina-central"
+              readOnly: true
+            - name: secret-app-deployer
+              mountPath: "/mnt/csi/secret-app-deployer"
+              readOnly: true
+            - mountPath: /tmp
+              name: tmp              
+          ports:
+            - containerPort: 9090
+              name: c-builder-port
+              protocol: TCP
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: c-builder-port
+              path: /user-connectors/healthz
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: c-builder-port
+              path: /user-connectors/healthz
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+      volumes:
+        - emptyDir: {}
+          name: tmp
+        - name: secret-app-deployer
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-app-deployer
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-ballerina-central
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-ballerina-central
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
