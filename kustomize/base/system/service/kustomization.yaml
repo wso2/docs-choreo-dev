@@ -30,3 +30,4 @@ resources:
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
   - orgremover.yaml
+  - billing.yaml
