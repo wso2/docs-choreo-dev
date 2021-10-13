@@ -12,6 +12,8 @@
  */
 
 import { SETTINGS_TEXT } from "../../../support/common/constants";
+import { INVITATION_EMAIL } from '../../../support/common/constants';
+import { OrganizationComponent } from '../../../support/console/common/organizations-component';
 
 /// <reference types="cypress" />
 
@@ -21,7 +23,7 @@ describe("Group List View", () => {
     let memberName: string;
     const groupName = "testGroup";
     const groupDescription = "This is a test group.";
-    const groupTag = "testGroupTag"
+    const groupTag = "testTag"
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
@@ -31,10 +33,7 @@ describe("Group List View", () => {
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });
-    });
 
-    beforeEach(() => {
-        cy.preserveCookiesForTest(savedCookies);
         cy.navigateFromHomePage(SETTINGS_TEXT);
         cy.get('[role="progressbar"]').should("not.exist");
         cy.get('[data-testid="/user-settings/organization/groups"]').click({ force: true });
@@ -45,20 +44,24 @@ describe("Group List View", () => {
     });
 
     it("Create a group", () => {
-        cy.get('[data-testid="create-group-btn"]').click();
-        cy.get('[data-testid="create-group-popup"]').should("be.visible");
-        cy.log("Creating a group!");
-        cy.get('[id="create-group-name"]').type(groupName, { force: true });
-        cy.get('[id="filled-multiline-static"]').type(groupDescription, { force: true });
-        cy.get('[id="create-group-tag"]').type(groupTag, { force: true });
-        cy.get('[data-testid="create-group"]').click({ force: true });
+
+        OrganizationComponent.createGroup(groupName,groupDescription,groupTag);
+
+    });
+
+    it("Invite a member to new group", () => {
+
         cy.contains("td", groupName).should("be.visible");
         cy.contains("td", groupTag).should("be.visible");
-        cy.log("Group created successfully!");
+        cy.contains("td", groupName).click();
+        OrganizationComponent.inviteMembers(INVITATION_EMAIL,groupName);
+        OrganizationComponent.selectPendingInvitation()
+        cy.contains('td', INVITATION_EMAIL).should('be.visible');
+        OrganizationComponent.deleteRecord(INVITATION_EMAIL);
     });
 
     it("Add a member to a group", () => {
-        cy.get('[data-testid="/user-settings/organization/groups"]').click();
+        cy.contains('Groups').click();
         cy.contains("td", groupName).click();
         cy.get('[id="tags-standard"]').click().type(memberName);
         cy.contains('[id="tags-standard-popup"]', memberName).should("be.visible");
@@ -76,6 +79,7 @@ describe("Group List View", () => {
     });
 
     it("Delete created group", () => {
+        cy.contains('Groups').click();
         cy.searchApps(groupName);
         cy.log("Removing the group");
         cy.contains("td", groupName).should("be.visible");

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: cp-graphql
+  name: cp-graphql
+spec:
+  ports:
+    - name: gql-port
+      port: 9090
+      targetPort: gql-port
+    - name: healthz
+      port: 9092
+      targetPort: healthz
+    - name: http-port
+      port: 9095
+      targetPort: http-port
+
+  selector:
+    choreo.component: cp-graphql

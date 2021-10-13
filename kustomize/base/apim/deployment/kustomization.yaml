@@ -8,5 +8,3 @@ resources:
 - choreo-connect-global-adapter.yaml
 - gateway-nginx-deployment.yaml
 - choreo-connect
-- choreo-connect-adapter.yaml
-- choreo-connect-deployment.yaml

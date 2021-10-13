@@ -1,0 +1,80 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_43=The image tag gets updated to component git hash when deploying
+  name: step-enforcer
+  labels:
+    choreo.component: step-enforcer
+spec:
+  schedule: 0 * * * *
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: step-enforcer
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: step-enforcer
+              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-step-enforcer:latest
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                  - all
+              env:
+                - name: CHOREO_STEP_ENFORCER_ASB_CONN_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-enforcer
+                      key: ASB_CONN_STRING
+                - name: CHOREO_STEP_ENFORCER_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-enforcer
+                      key: MSSQL_PASSWORD
+              envFrom:
+                - configMapRef:
+                    name: env-step-enforcer
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 1024Mi
+                requests:
+                  cpu: 300m
+                  memory: 512Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
+                - name: secret-step-enforcer
+                  mountPath: "/mnt/csi/secret-step-enforcer"
+                  readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: cm-step-enforcer-config
+            - name: secret-step-enforcer
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-step-enforcer
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default

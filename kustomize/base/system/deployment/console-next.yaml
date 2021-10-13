@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Liveness probe not required
+    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
+    checkov.io/skip3: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_43=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip9: CKV_K8S_31=Temporarily suppressing till fixing
+    checkov.io/skip10: CKV_K8S_29=Temporarily suppressing till fixing
+    checkov.io/skip11: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
+    checkov.io/skip12: CKV_K8S_23=Temporarily suppressing till fixing
+  labels:
+    choreo.component: console-next
+  name: console-next
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: console-next
+  template:
+    metadata:
+      labels:
+        choreo.component: console-next
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console-next:latest
+          name: console-next
+          ports:
+            - containerPort: 8080
+              name: con-v2-port
+              protocol: TCP
+          securityContext:
+            runAsUser: 101
+            runAsGroup: 101
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          envFrom:
+            - configMapRef:
+                name: env-console-next     
+      serviceAccountName: sa-choreo-default

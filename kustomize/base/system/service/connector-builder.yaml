@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: connector-builder
+  name: connector-builder
+spec:
+  ports:
+    - name: c-builder-port
+      port: 9090
+      targetPort: c-builder-port
+    - name: healthz
+      port: 9091
+      targetPort: healthz
+  selector:
+    choreo.component: connector-builder

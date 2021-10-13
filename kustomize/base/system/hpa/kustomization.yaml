@@ -1,4 +1,5 @@
 resources:
+  - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
   - frontend.yaml
@@ -25,4 +26,8 @@ resources:
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
   - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
+  - cp-graphql.yaml
+  - console-next.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
   - billing.yaml
