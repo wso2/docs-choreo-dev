@@ -14,6 +14,7 @@ metadata:
     checkov.io/skip9: CKV_K8S_31=Temporarily suppressing till fixing
     checkov.io/skip10: CKV_K8S_29=Temporarily suppressing till fixing
     checkov.io/skip11: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
+    checkov.io/skip12: CKV_K8S_23=Temporarily suppressing till fixing
   labels:
     choreo.component: console-next
   name: console-next
@@ -51,4 +52,7 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
+          envFrom:
+            - configMapRef:
+                name: env-console-next     
       serviceAccountName: sa-choreo-default
