@@ -5,6 +5,7 @@ resources:
   - nginx
   - choreodp-system
   - choreo-connect
+  - traffic-manager
 
 commonLabels:
   app: choreo-dataplane

@@ -1,4 +1,5 @@
 resources:
+  - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
   - frontend.yaml
@@ -39,4 +40,4 @@ resources:
   - multivariate-anomaly-detector-notification-manager.yaml
 
 commonAnnotations:
-  config.linkerd.io/skip-outbound-ports: 3306,443,2587
+  config.linkerd.io/skip-outbound-ports: 3306,443,2587,25

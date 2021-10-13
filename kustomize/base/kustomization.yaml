@@ -5,7 +5,7 @@ resources:
 - apim
 - apim-analytics
 - choreo-connect
-#- idp
+- idp
 - system
 
 commonLabels:
