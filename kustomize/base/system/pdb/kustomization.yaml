@@ -26,3 +26,4 @@ resources:
   - subscriptions.yaml
   - cp-graphql.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
+  - billing.yaml
