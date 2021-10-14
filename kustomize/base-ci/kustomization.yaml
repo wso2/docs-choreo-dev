@@ -114,7 +114,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/lang-server
   newTag: master-f694356d3dc5be6f862b3f805b655c78704d564b
 - name: choreocontrolplane.azurecr.io/choreoipaas/multivariate-anomaly-detector-notification-manager
-  newTag: main-d1e0890ce940d171aff0bee7ebbd185092d9e0c2
+  newTag: main-5da4841830eb2434f06082c126b9fa41a40d44f8
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-api
   newTag: master-4ea60e135bf018843746849450e9ab23099dfe1c
 - name: choreocontrolplane.azurecr.io/choreoipaas/observability-data-generator
