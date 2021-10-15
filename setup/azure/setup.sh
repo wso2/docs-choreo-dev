@@ -86,7 +86,7 @@ command -v helm >/dev/null 2>&1 || {
 ############### Install Step Cli
 echo "--- Installing Step to generate Keys"
 step_installed="true"
-command -v helm >/dev/null 2>&1 || {
+command -v step >/dev/null 2>&1 || {
     step_installed="false"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         wget https://github.com/smallstep/cli/releases/download/v0.14.6/step-cli_0.14.6_amd64.deb -O /tmp/step-cli_0.14.6_amd64.deb
@@ -96,12 +96,12 @@ command -v helm >/dev/null 2>&1 || {
         brew install step
         step_installed="true"
     else
-        echo "Could not install helm3. Unsupported operating system. Please manually install it.."
+        echo "Could not install step. Unsupported operating system. Please manually install it.."
     fi
 }
 
 ############### Install Certmanager
-echo "--- Installing Certmanager"
+echo "--- Installing Cert Manager"
 kubectl create ns cert-manager
 kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
@@ -115,7 +115,7 @@ helm install \
   --set installCRDs=true
 
 echo "-- Creating secrets for DNS-01 challenge"
-kubectl create secret generic choreo-secret-azuredns-config clientsecret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager
+kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
@@ -136,7 +136,8 @@ kubectl apply -n linkerd -f linkerd2/certmanager/certificate.yaml
 echo "--- Installing linkerd2... "
 helm repo add linkerd https://helm.linkerd.io/stable
 helm repo update
-helm upgrade --install linkerd2 --wait \
+# --wait
+helm upgrade --install linkerd2 \
   --set-file identityTrustAnchorsPEM=/tmp/ca.crt \
   linkerd/linkerd2 \
   -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
@@ -146,7 +147,7 @@ helm upgrade --install linkerd2 --wait \
 
 # Installing extensions
 echo "--- Installing linkerd viz extension... "
-helm upgrade --install linkerd-viz linkerd/linkerd-viz -f linkerd-viz/custom-values.yaml
+helm upgrade --install linkerd-viz linkerd/linkerd-viz -f "linkerd-viz/custom-values.yaml"
 helm upgrade --install linkerd-viz-persistent-prometheus custom-helm-charts/linkerd-viz-persistent-prometheus \
   --set env="${ENV}" \
   --set persistentVolume.azureSecretNamespace="${ENV}-choreo-system"
@@ -175,7 +176,8 @@ helm upgrade --install "linkerd-viz-ingress" ingress-nginx/ingress-nginx \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET}"
 
-# Install nginx-ingress for linkerd extensions
+# Create namespace for Linkerd Viz
+kubectl create namespace "linkerd-viz"
 
 # Add Secret to get username and password for basic auth
 kubectl create secret generic web-ingress-auth --from-literal auth="${LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD}" -n "linkerd-viz"
