@@ -38,26 +38,6 @@ else
     echo "File ${azuredfile} not found"; exit 1
 fi
 
-############## Set additional parameters
-case $ENV in
-
-  dev)
-    ENV_URL=".dv"
-    ;;
-
-  stage)
-    ENV_URL=".st"
-    ;;
-
-  prod)
-    ENV_URL=""
-    ;;
-
-  *)
-    echo "Invalid environment. Found ${ENV}. Valid environments are dev, stage and prod"; exit 1
-    ;;
-esac
-
 ############## Install Reloader
 echo "--- Installing Reloader..."
 kubectl create ns reloader
