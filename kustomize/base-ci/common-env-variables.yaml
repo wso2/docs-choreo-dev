@@ -1,3 +1,3 @@
-WORKSPACE_IMAGE=choreocontrolplane.azurecr.io/choreoipaas/workspace:master-3fa60a389e94b5ab94ddedfd12890ec07b195aa0
+WORKSPACE_IMAGE=choreocontrolplane.azurecr.io/choreoipaas/workspace:master-81bca111a8b33f2ef66f87f172887bfc967f2c4f
 CODE_SERVER_IMAGE=choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server:master-236660b9eac59bf6500b19cfcc13d74901054299
 CODE_SERVER_INIT_IMAGE=choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server-init:master-236660b9eac59bf6500b19cfcc13d74901054299
