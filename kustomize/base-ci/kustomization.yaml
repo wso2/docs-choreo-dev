@@ -30,7 +30,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/capacity-planner-init
   newTag: master-b3d9ea16d6149b9a4c3f533cc32bc363bb33754f
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal
-  newTag: main-6447561ba58b204d55d32db1e9edd1a4c5e61e67
+  newTag: main-4f64dd83eb1a4ab65bc8867249557b6ec9f653b6
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-service
   newTag: master-c19c6a4fcb678ae004de4ba6e202fc1fae96e97d
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-billing
