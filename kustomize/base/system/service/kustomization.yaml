@@ -36,3 +36,4 @@ resources:
   - dp-project-manager.yaml
   - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
+  - billing.yaml

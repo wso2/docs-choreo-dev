@@ -15,3 +15,7 @@ configMapGenerator:
     behavior: create
     files:
       - test-assistant/models.properties
+  - name: env-workspace-manager-shared # shared workspace-manager configs across environments
+    behavior: create
+    literals:
+    - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
