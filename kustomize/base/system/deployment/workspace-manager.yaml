@@ -40,11 +40,18 @@ spec:
             secretKeyRef:
               key: AZURE_INSIGHTS_KEY
               name: secret-azure-insights
+        - name: APIM_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-runtime
+              key: APIM_CLIENT_SECRET
         envFrom:
         - configMapRef:
             name: common-env-variables
         - configMapRef:
             name: env-workspace-manager
+        - configMapRef:
+            name: env-workspace-manager-shared
         ports:
         - containerPort: 8080
           name: grpc-port
@@ -86,6 +93,9 @@ spec:
         - name: secret-azure-storage-account
           mountPath: "/mnt/csi/secret-azure-storage-account"
           readOnly: true
+        - name: secret-runtime
+          mountPath: "/mnt/csi/secret-runtime"
+          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -115,6 +125,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-azure-storage-account
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-runtime
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-runtime
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-workspace-manager

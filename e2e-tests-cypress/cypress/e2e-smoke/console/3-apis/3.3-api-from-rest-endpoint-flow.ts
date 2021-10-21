@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import cypress from 'cypress';
 import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName, getSelectedOrgHandle } from "../../../support/common/utils";
 

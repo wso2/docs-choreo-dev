@@ -6,13 +6,13 @@
   # You can disable line with:              #
   # # yamllint disable-line                 #
   ###########################################
-  
-  extends: default
-  
+
   ignore: |
-    *dbscripts-for-structure-configmap.yaml
-    *dbscripts-for-structure-idp-configmap.yaml
-  
+    *
+    !/*template.yaml
+
+  extends: default
+
   rules:
     braces:
       level: warning

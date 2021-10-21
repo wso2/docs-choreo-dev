@@ -15,6 +15,7 @@ interface User {
     uuid: string;
     email: string;
     token: string;
+    apimToken: string;
     picURL: string;
     orgs: Organization[];
     fidp?: string;
@@ -52,6 +53,7 @@ declare namespace Cypress {
         goBacktoAppsList(): Chainable<Element>
         searchApps(name: string): Chainable<Element>
         resetAppSearch(): Chainable<Element>
+        closeInitialTourPopup(): Chainable<Element>
         undeployApp(type: string, name: string, strict: boolean): Chainable<Element>
         deleteApp(type: string, name: string, strict: boolean): Chainable<Element>
         cleanupApp(name: string, orgHandle: string): Chainable<Element>
@@ -81,6 +83,8 @@ declare namespace Cypress {
         clearConfigurations(orgHandle: string): Chainable<Element>
         clearConnections(orgHandle: string): Chainable<Element>
         clearOnPremKeys(orgHandle: string): Chainable<Element>
-        verifyAppName(appName): Chainable<Element>
+        verifyAppName(appName: string): Chainable<Element>
+        deleteRecord(recordValue: string): Chainable<Element>
+      
     }
 }

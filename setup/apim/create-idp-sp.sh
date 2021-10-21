@@ -37,22 +37,31 @@ echo_results () {
 
 case "$env" in
   "dev")
+    idpAlias="choreoportalapplication"
     jwksUri="https://id.dv.choreo.dev/oauth2/jwks"
     idpIssuerName="https://id.dv.choreo.dev:443/oauth2/token"
     ;;
   "stage")
+    idpAlias="choreostageportalapplication"
     jwksUri="https://id.st.choreo.dev/oauth2/jwks"
     idpIssuerName="https://id.st.choreo.dev:443/oauth2/token"
     ;;
   "prod")
+    idpAlias="choreoportalapplication"
     jwksUri="https://id.choreo.dev/oauth2/jwks"
     idpIssuerName="https://id.choreo.dev:443/oauth2/token"
     ;;
 esac
 
 # shellcheck disable=SC2002
-choreo_idp=$(cat idp/choreo-idp.xml | sed "s#{JWKS_URI}#${jwksUri}#g" | sed "s#{IDP_ISSUER_NAME}#${idpIssuerName}#g")
+choreo_idp=$(cat idp/choreo-idp.xml | sed "s#{IDP_ALIAS}#${idpAlias}#g" | sed "s#{JWKS_URI}#${jwksUri}#g" | sed "s#{IDP_ISSUER_NAME}#${idpIssuerName}#g")
+# shellcheck disable=SC2002
+choreo_idp_delete=$(cat idp/delete-idp.xml)
 
+# Delete existing idp
+HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: text/xml;charset=UTF-8" --header "SOAPAction:urn:deleteIdP" -u "${APIM_ADMIN_USERNAME}":"${APIM_ADMIN_PASSWORD}" --data "${choreo_idp_delete}" "${APIM_URL}"/services/IdentityProviderMgtService.IdentityProviderMgtServiceHttpsSoap11Endpoint -k)
+
+# Create idp
 HTTP_RESPONSE=$(curl --silent --write-out "HTTPSTATUS:%{http_code}" --header "Content-Type: text/xml;charset=UTF-8" --header "SOAPAction:urn:addIdp" -u "${APIM_ADMIN_USERNAME}":"${APIM_ADMIN_PASSWORD}" --data "${choreo_idp}" "${APIM_URL}"/services/IdentityProviderMgtService.IdentityProviderMgtServiceHttpsSoap11Endpoint -k)
 echo_results "Choreo idp added successfully" "Error while adding Choreo idp" "Choreo idp already exists"
 

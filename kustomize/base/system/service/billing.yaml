@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: billing
+  name: billing
+spec:
+  ports:
+    - name: http
+      port: 9090
+      targetPort: http
+    - name: health-public
+      port: 9092
+      targetPort: health-public
+
+  selector:
+    choreo.component: billing

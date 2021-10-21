@@ -52,7 +52,7 @@ describe("Data Mapper", () => {
  
         cy.get('[data-testid="datamapper-variable-name"]').find('input').first()
             .click({ force: true }).clear().type('emp');
-        cy.get('[data-testid="vertical-close-btn"]').click();
+        
         cy.get('[data-testid = "Select Typestring"]').click();
         cy.contains('json').click({force: true});
         cy.get ('[data-testid="datamapper-output-config-save-btn"]'). click ();
@@ -87,6 +87,7 @@ describe("Data Mapper", () => {
 
         cy.get('[data-testid="datamapper-expression-box"]').eq(0).click({force: true});
         cy.get('.exp-editor').click().type('{backspace}{backspace}fName+lName'); 
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -97,6 +98,7 @@ describe("Data Mapper", () => {
 
         cy.get('[data-testid="datamapper-expression-box"]').eq(1).click({force: true});
         cy.get('.exp-editor').click().type('{backspace}{backspace}"age"');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -123,6 +125,7 @@ describe("Data Mapper", () => {
         });
         cy.get('[data-testid="datamapper-expression-box"]').eq(1).click({force: true});
         cy.get('.exp-editor').click().type('{backspace}{backspace}{backspace}{backspace}{backspace}"0"');
+        cy.get('[data-testid="expr-validating-loader"]').should('not.exist');
         cy.get('[data-testid="datamapper-save-btn"]').should('not.have.attr', 'disabled');
         cy.get('[data-testid="datamapper-save-btn"]').click();
         cy.waitTillWorkSpace();
@@ -131,10 +134,7 @@ describe("Data Mapper", () => {
         cy.log("DataMapper edited successfully!");
 
 
-        cy.log('Deleting DataMapper');
-        cy.get('g:nth-child(9) #DeleteIcon').click({force:true});
-        cy.get('[data-testid="delete-logic-block-btn"] > .MuiButton-label').click({force:true});
-        cy.log("DataMapper deleted successfully!");
+        cy.deployToChoreo("integration", appName);
            
 
     });

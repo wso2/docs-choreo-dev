@@ -6,11 +6,13 @@ metadata:
     checkov.io/skip1: CKV_K8S_43=Risk accepted
     checkov.io/skip2: CKV_K8S_31=Temporarily suppressing till fixing
     checkov.io/skip3: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: perfanalyzer-updater
 spec:
   schedule: 0 * * * *
-  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -21,7 +23,6 @@ spec:
           labels:
             choreo.component: perfanalyzer-updater
         spec:
-          automountServiceAccountToken: false
           securityContext:
             seccompProfile:
               type: RuntimeDefault

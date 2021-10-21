@@ -105,6 +105,8 @@ echo "--- Installing Certmanager"
 kubectl create ns cert-manager
 kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
 helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
@@ -144,7 +146,7 @@ helm upgrade --install linkerd2 --wait \
 
 # Installing extensions
 echo "--- Installing linkerd viz extension... "
-helm upgrade --install linkerd-viz linkerd/linkerd-viz -f linkerd-viz/custom-values.yaml
+helm upgrade --install linkerd-viz linkerd/linkerd-viz -f linkerd-viz/custom-values.yaml --version 2.10.1
 helm upgrade --install linkerd-viz-persistent-prometheus custom-helm-charts/linkerd-viz-persistent-prometheus \
   --set env="${ENV}" \
   --set persistentVolume.azureSecretNamespace="${ENV}-choreo-system"
@@ -230,5 +232,3 @@ if [[ "${step_installed}" == "false" ]]; then
     echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
     step_installed=false
 fi
-
-

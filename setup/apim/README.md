@@ -9,6 +9,7 @@ Execute `run.sh` to perform the following.
  3. Create a service provider for the application choreo console
  4. Create a service provider for the application choreo apim devportal
  5. Create a service provider for the application choreo quota limiter
+ 6. Create a service provider for the application choreo step aggregator
 
 ### Usage
 Export following environmental variables.

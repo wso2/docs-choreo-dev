@@ -66,6 +66,8 @@ ALTER TABLE `application` ADD COLUMN `cron_schedule` VARCHAR(100) NULL DEFAULT '
 ALTER TABLE `application` ADD COLUMN `pre_built` TINYINT(1) NULL DEFAULT 0 AFTER `git_remote`;
 ALTER TABLE `application` ADD COLUMN `sample_reference` VARCHAR(255) NULL DEFAULT '' AFTER `pre_built`;
 ALTER TABLE `application` ADD COLUMN `docker_image` VARCHAR(255) NULL DEFAULT '' AFTER `sample_reference`;
+ALTER TABLE `application` ADD COLUMN `project_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `handle`;
+ALTER TABLE `application` ADD COLUMN `application_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `project_id`;
 
 CREATE TABLE beta_invitation
 (
