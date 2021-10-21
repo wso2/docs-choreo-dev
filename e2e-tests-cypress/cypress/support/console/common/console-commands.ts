@@ -1038,7 +1038,7 @@ Cypress.Commands.add('clearAPIs', (orgId: string) => {
         timeout: 60000
     }).then((response) => {
         const apis = response["body"]["list"] as { id: string, name: string, }[];
-        const e2eApis = apis.filter(({ name }) => name.startsWith(apiNamePrefix) || name.startsWith(appNamePrefix));
+        const e2eApis = apis.filter(({ name }) => name.includes(apiNamePrefix) || name.includes(appNamePrefix));
 
         cy.log(`Total APIs found : ${apis.length}`);
         cy.log(`E2E test APIs found : ${e2eApis.length}`);
@@ -1073,7 +1073,7 @@ Cypress.Commands.add('verifyAppName', (appName) => {
 });
 
 
-// Delete a recrd app,group,memeber ect...
+// Delete a record app,group,member ect...
 Cypress.Commands.add('deleteRecord', (record: string) => {
     cy.contains('td', record).trigger('mouseover');
     cy.get('[aria-label="delete"]').should('be.visible').click();
