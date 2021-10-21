@@ -30,7 +30,6 @@ export class Services {
     }
 
     static deleteService(serviceName: string) {
-
         this.searchSrevice(serviceName)
         cy.get(`tr > td[value="${serviceName.toLowerCase()}"]`).then($tr => {
             cy.deleteRecord(serviceName)

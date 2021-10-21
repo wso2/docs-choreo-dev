@@ -14,11 +14,13 @@
 import { generateAppName, getSelectedOrgHandle } from '../../../support/common/utils';
 import { Home } from '../../../support/console/common/component/home';
 import { Services } from '../../../support/console/common/component/service';
-import { Develop } from '../../../support/console/common/component/develop';
+import { ServiceDevelop } from '../../../support/console/common/component/services/service-develop';
 import { HTTPMethod } from '../../../support/console/common/component/enums/http-method-enum';
 import { ReturnType } from '../../../support/console/common/component/enums/return-type-enum';
 import { TestView } from '../../../support/console/common/component/test-view';
-import { Deploy } from '../../../support/console/common/component/deploy';
+import { Deploy } from '../../../support/console/common/component/services/deploy';
+import { SwaggerUI } from '../../../support/console/common/swagger-ui-component';
+import { CurlComponent } from '../../../support/console/common/curl-component';
 
 /// <reference types="cypress" />
 
@@ -37,6 +39,7 @@ describe('Service deployment and delete deployed service', () => {
         });
         appName = generateAppName("app");
         cy.log('app name: ' + appName);
+
     });
 
     beforeEach(() => {
@@ -51,30 +54,27 @@ describe('Service deployment and delete deployed service', () => {
         Home.selectSrvice()
         Services.createService(appName)
         cy.verifyAppName(appName);
-        Develop.configureResources(HTTPMethod.GET, "hello", ReturnType.JSON)
+        ServiceDevelop.configureResources(HTTPMethod.GET, "hello", ReturnType.JSON)
     })
 
     it('low code form AI suggestions', () => {
         const variableSourceFields = 'string url = "https://postman-echo.com/get"';
 
-        Develop.addStatements()
-        Develop.addVariable("string", urlName, 'https://postman-echo.com/get')
-        Develop.addAPICalls()
+        ServiceDevelop.addStatements()
+        ServiceDevelop.addVariable("string", urlName, 'https://postman-echo.com/get')
+        ServiceDevelop.addAPICalls()
 
         cy.log('Adding HTTP connector with AI suggestion of previous variable');
-        Develop.addHTTPConnector(urlName, HTTPMethod.GET, ReturnType.JSON)
+        ServiceDevelop.addHTTPConnector(urlName, HTTPMethod.GET, ReturnType.JSON)
         cy.checkSourceCodeForValidation(variableSourceFields);
         cy.log('Data Mapper AI suggestion added to Low Code form successfully!');
     })
 
-
-
-
     it('test run hello world service', () => {
-        Develop.addStatements()
-        Develop.addVariable("var", "res", 'hello world')
-        Develop.addStatements()
-        Develop.addResponse("res")
+        ServiceDevelop.addStatements()
+        ServiceDevelop.addVariable("var", "res", 'hello world')
+        ServiceDevelop.addStatements()
+        ServiceDevelop.addResponse("res")
 
         TestView.navigatTestView()
         TestView.clickTestRunButton()
@@ -82,30 +82,14 @@ describe('Service deployment and delete deployed service', () => {
 
         cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', { timeout: 40000 }).should('exist');
         cy.log('Retrieving the test URL successful');
-
-        cy.get('[data-testid="product-tour-log-panel"] input').eq(0).invoke('attr', 'value').then((testUrl) => {
-            cy.callExternalEndpoint((testUrl + "/hello"), 3, "hello world");
-            cy.log('Successfully invoked test endpoint');
-        });
+        CurlComponent.generateRequest(HTTPMethod.GET, "")
     })
 
     it('Add test view', () => {
-        cy.get('[data-testid="test"]').click();
-        cy.log("verify test operation");
-        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
-        cy.get('.swagger-ui').within(() => {
-            cy.get('.opblock-summary').click();
-            cy.get('button').contains('Try it out').should('exist').click();
-            cy.get('.opblock-section-header').contains('Cancel').should('exist');
-            cy.get('.execute-wrapper > .btn').click();
-            cy.get('.curl-command').should('exist');
-            cy.get('.request-url').should('exist');
-            cy.get("div[class='highlight-code'] pre[class=' microlight'] code span").should('have.text', 'hello world')
-            cy.log('service response is successfully returned');
-            cy.get('tr[class="response"]>td[class="response-col_status"]').should('have.text', '200');
-            cy.log('Service Tryout is successful!');
-
-        });
+        SwaggerUI.SelectResource(HTTPMethod.GET, "/hello")
+        SwaggerUI.TryoutAPI()
+        SwaggerUI.ExecuteResourceFunction()
+        SwaggerUI.GetResponse()
     });
 
     it('test postman view', () => {
@@ -116,6 +100,8 @@ describe('Service deployment and delete deployed service', () => {
     it('Deploy hello world service', () => {
         Deploy.navigateDeploy()
         Deploy.deploy()
+        CurlComponent.generateRequest(HTTPMethod.GET, "")
+        Deploy.undeloy()
         // TODO: Remove wait after fixing https://github.com/wso2-enterprise/choreo/issues/7308
 
     });

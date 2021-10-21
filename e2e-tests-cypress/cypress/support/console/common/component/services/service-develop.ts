@@ -11,10 +11,10 @@
  * associated services.
  */
 
-import { HTTPMethod } from "./enums/http-method-enum";
-import { ReturnType } from "./enums/return-type-enum";
+import { HTTPMethod } from "../enums/http-method-enum";
+import { ReturnType } from "../enums/return-type-enum";
 
-export class Develop {
+export class ServiceDevelop {
 
     static configureResources(httpMethod: HTTPMethod, uri: string, returnType: ReturnType) {
         this.selectHTTPMethod(httpMethod)
@@ -100,8 +100,8 @@ export class Develop {
         this.invokeAPI()
         cy.get('[role="combobox"]').click().within
         cy.get('#combo-box-demo').type(`${httpMethod.toLowerCase()}{enter}`)
-        cy.get('[data-testid="Select TypeString"]').click()
-        cy.get(`li[data-value="${payloadType.toUpperCase()}"]`).click()
+        cy.get('#canvas-overlay [aria-haspopup="listbox"]').click()
+        cy.get(`li[data-value="${payloadType}"]`).click()
         cy.get('[data-testid="http-save-done"]').click()
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
     }

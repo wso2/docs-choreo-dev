@@ -11,12 +11,11 @@
  * associated services.
  */
 
-export enum HTTPMethod {
-    GET = "GET",
-    POST = "POST",
-    DELETE = "DELETE",
-    PUT = "PUT",
-    HEAD = "HEAD",
-    CONNECT = "CONNECT",
-    TRACE = "TRACE"
+export class APITest {
+
+
+    static testAPI() {
+        cy.get('[data-testid="test"] > div').click()
+        cy.get('[id="backdrop-loader"').should('not.exist');
+    }
 }

@@ -32,7 +32,6 @@ export class SwaggerUI {
     }
 
     static GetResponse(){
-
         cy.get('.curl-command').should('exist');
         cy.get('.request-url').should('exist');
         cy.log('Response is successfully returned');

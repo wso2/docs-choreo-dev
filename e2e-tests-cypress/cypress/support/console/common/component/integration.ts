@@ -11,12 +11,20 @@
  * associated services.
  */
 
-export enum HTTPMethod {
-    GET = "GET",
-    POST = "POST",
-    DELETE = "DELETE",
-    PUT = "PUT",
-    HEAD = "HEAD",
-    CONNECT = "CONNECT",
-    TRACE = "TRACE"
+
+export class Integration {
+
+    static createIntegration(name: string) {
+        cy.get('create-integration-btn').click()
+        this.wait()
+        cy.get('[placeholder="Type name"]').type(name)
+        cy.get('#create-with-choreo-btn').click()
+        this.wait()
+    }
+
+    
+    private static wait() {
+        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    }
 }

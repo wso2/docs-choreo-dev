@@ -21,7 +21,7 @@ export class Home {
 
 
     static selectAPI() {
-        cy.get('[data-testid="left-navbar-api-btn"]').click()
+        cy.get('[data-testid="left-navbar-apis-btn"]').click()
     }
 
 
