@@ -11,80 +11,53 @@
  * associated services.
  */
 
-import cypress from 'cypress';
-import { APIM_RESOURCE_PATH, APIS_TEXT, LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../../support/common/constants";
 import { generateApiName, getSelectedOrgHandle } from "../../../support/common/utils";
+import { API } from '../../../support/console/common/component/apis';
+import { APIDeployment } from '../../../support/console/common/component/apis/api-deployment';
+import { APIDevelop } from '../../../support/console/common/component/apis/api-develop';
+import { APIPublish } from '../../../support/console/common/component/apis/api-publish';
+import { APITest } from '../../../support/console/common/component/apis/api-test';
+import { HTTPMethod } from '../../../support/console/common/component/enums/http-method-enum';
+import { SubscriptionsPlan } from '../../../support/console/common/component/enums/subscription-plans';
+import { Home } from '../../../support/console/common/component/home';
+import { SwaggerUI } from '../../../support/console/common/swagger-ui-component';
 
 describe("API creation from an existing endpoint", () => {
     const API_NAME = generateApiName('CYE2E');
     const API_VERSION = 'V0.0.1';
     const API_ENDPOINT = 'https://jsonplaceholder.typicode.com';
     const OPERATION_TARGET = '/users';
-    let apiId: string;
+    const ALLOWED_ORIGINS = ["https://127.0.0.1"]
+    const ALLOWED_HEADERS = ["tenantId"]
+    const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD]
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
             const org = user?.orgs.find((org) => org.handle === getSelectedOrgHandle(user));
             cy.clearAllTestData(org);
         });
+
     });
 
     it("Create API from existing endpoint and deploy and publish", () => {
         cy.log("Visiting API listing");
-        cy.navigateFromHomePage(APIS_TEXT);
-
-        cy.log("Checking availability of the API list");
-        cy.checkApiListAvailabilityAndVisitCreate();
-
-        cy.log('Opening API creation dialog');
-        cy.contains('Create API').should('exist');
-        cy.get('[data-testid="create-api-from-proxy-btn"]').click();
-        cy.get('[data-testid="create-api-from-rest-api-btn"]').click();
-
-        cy.log('Filling API creation form data');
-        cy.get('[data-testid=api-name]').type(API_NAME);
-        cy.get('[data-testid=api-version]').clear();
-        cy.get('[data-testid=api-version]').type(API_VERSION);
-        cy.get('[data-testid=api-endpoint]').type(API_ENDPOINT);
-        cy.get('#create-API-from-restEp-btn').should('be.enabled');
-
-        cy.intercept({
-            method: "POST",
-            pathname: APIM_RESOURCE_PATH
-        }).as("createApi");
-
-        cy.get('#create-API-from-restEp-btn').click();
-
-        cy.wait('@createApi', { timeout: 20000 }).then((interception) => {
-            apiId = interception.response.body[ `id` ];
-
-            cy.verifyApiOverview(API_NAME, API_VERSION);
-            cy.updateDesignConfiguration();
-            cy.addApiDocument();
-            cy.updateRuntimeConfiguration();
-
-            cy.log('Visiting and updating resources');
-            cy.get('[data-testid=Resources]', { timeout: STANDARD_TIME_OUT }).click();
-            cy.log('Deleting initial resources');
-            cy.get('[data-testid=delete-all-operations-btn]').click();
-            cy.get('#mui-component-select-verbs').click();
-            cy.get('#menu-verbs').within(() => {
-                cy.get('.MuiPaper-root > .MuiList-root > :nth-child(1)', { timeout: LONG_TIME_OUT })
-                    .contains('GET').click();
-            });
-            cy.get('body').type('{esc}');
-            cy.get('#operation-target').type(OPERATION_TARGET);
-            cy.get('[data-testid=add-btn]').click();
-            cy.get('button').contains('Save').click();
-            cy.get('#circular-loader', { timeout: MEDIUM_TIME_OUT }).should('not.exist');
-            cy.updateSubscriptionPlans();
-            cy.deployInitialRevision();
-            cy.get('[data-testid="api-revision-deploy-successful"]').should("be.visible");
-            cy.get('[fill="green"]').should("be.visible");
-            cy.testApiInPublisherTestConsole();
-            cy.publishApi();
-            cy.wait(2000);
-        });
+        Home.selectAPI()
+        API.createAPI()
+        API.createProxyAPI()
+        API.designANewRESTAPI(API_NAME, API_VERSION, "", API_ENDPOINT)
+        cy.verifyAppName(`${API_NAME}(${API_VERSION})`)
+        APIDevelop.configureRuntimeOptions(true, false, ALLOWED_ORIGINS, ALLOWED_HEADERS, ALLOWED_METHODS)
+        APIDevelop.addResources(OPERATION_TARGET, HTTPMethod.GET)
+        APIDevelop.updateSubscriptionPlan(SubscriptionsPlan.GOLD, SubscriptionsPlan.BRONZE)
+        APIDeployment.navigateToDeployment()
+        APIDeployment.createRevisionAndDeploy()
+        APITest.testAPI()
+        SwaggerUI.SelectResource(HTTPMethod.GET, OPERATION_TARGET)
+        SwaggerUI.TryoutAPI()
+        SwaggerUI.ExecuteResourceFunction()
+        SwaggerUI.GetResponse()
+        APIPublish.navigateToAPIPublish()
+        APIPublish.publishAPI()
     });
 
     // TODO: add test case to check API delete flow

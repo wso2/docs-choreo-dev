@@ -258,10 +258,10 @@ Cypress.Commands.add('consoleUserLogin', () => {
                             req.headers['cookie'] = "cwatf=" + cwatf + "; " + req.headers['cookie'];
                             req.headers['authentication'] = "Bearer " + data["id_token"];
                         } else if (req.url.includes("/api/am/")) {
-                            req.headers['authentication'] = "Bearer " + apimToken;
+                     //       req.headers['authentication'] = "Bearer " + apimToken;
                         } else {
-                            req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
-                            req.headers['authentication'] = "Bearer " + data["id_token"];
+                    //        req.headers['cookie'] = "cwatf=" + cwatf + "; cbearer=" + cbearer;
+                    //        req.headers['authentication'] = "Bearer " + data["id_token"];
                         }
                     });
                     cy.hideWelcomeMessage();
