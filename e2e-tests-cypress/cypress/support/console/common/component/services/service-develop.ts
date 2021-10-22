@@ -20,6 +20,7 @@ export class ServiceDevelop {
         this.selectHTTPMethod(httpMethod)
         cy.get('[data-testid="api-path"]').click()
         cy.get('[placeholder="Relative path from host"]').type(uri)
+        this.addCaller()
         this.setReturnType(returnType)
         cy.get('[data-testid="save-btn"]').click()
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
@@ -39,6 +40,11 @@ export class ServiceDevelop {
                 this.addReturnType(returnType)
             }
         })
+    }
+
+    private static addCaller(){
+        cy.get('[data-testid="advanced-path-config"]').click()
+        cy.get('[data-testid="select-caller-btn"]').should('be.visible').click()
     }
 
     static addReturnType(returnTyp: ReturnType) {
