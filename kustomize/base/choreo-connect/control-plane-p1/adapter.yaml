@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-connect-adapter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-adapter-control-plane-p1
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-connect-adapter-control-plane-p1
+    spec:
+     containers:
+       - name: choreo-connect-adapter
+         env:
+         - name: localLabel
+           value: control-plane-p1
+         - name: environmentLabel
+           value: control-plane
+     volumes:
+        - name: global-adapter-keystore-vol
+          configMap:
+            name: global-adapter-keystore-vol
+        - name: adapter-config
+          configMap:
+            name: mgw-ga-cp-adapter-conf
