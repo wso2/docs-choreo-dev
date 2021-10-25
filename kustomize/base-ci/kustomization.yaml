@@ -102,7 +102,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen
   newTag: main-86fb15766de9a9ea57ce04da62ad527ed1030b52
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager
-  newTag: master-6a0de516c4d29888339dd68616e3433522d8cf00
+  newTag: master-142cec50468e4ba0cd4cc61813729161d3116539
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
   newTag: master-25fc733ab494aa8bc0e487fb0aec22594847a264
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-secret-manager
