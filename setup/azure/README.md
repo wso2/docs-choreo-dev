@@ -1,4 +1,6 @@
-sample azure-deploy.properties file
+### Sample azure-deploy.properties files for each cluster
+
+#### Control Plane Cluster
 
 ```bash
 SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
@@ -27,9 +29,55 @@ LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD=xxxxxxxxxxxxxxxxx
 EOF
 ```
 
-Running the script
+#### Routing Cluster
+
 ```bash
- bash setup.sh -d=azure-deploy.properties
+APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ENV=xxxxx
+EOF
+````
+
+#### Data Plane Cluster
+
+```bash
+APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
+SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ENV=xxxxx
+EOF
+```
+
+#### Workspace Cluster
+
+```bash
+APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
+WORKSPACE_INGRESS_NAMESPACE=xxxxxxxxxxxxxxxxx
+WORKSPACE_INGRESS_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
+LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
+SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ENV=xxxxx
+EOF
+```
+
+Run the script by adding the cluster-prefix cp | rt | dp | ws
+```bash
+ bash <cluster-prefix>-setup.sh -d=azure-deploy.properties
 ```
 
 To Obtain Let's Encrypt Certs [follow](Lets-encrypt-certs)

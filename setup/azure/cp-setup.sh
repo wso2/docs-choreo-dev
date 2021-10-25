@@ -146,7 +146,7 @@ helm upgrade --install linkerd2 --wait \
 
 # Installing extensions
 echo "--- Installing linkerd viz extension... "
-helm upgrade --install linkerd-viz linkerd/linkerd-viz -f linkerd-viz/custom-values.yaml --version 2.10.1
+helm upgrade --install linkerd-viz linkerd/linkerd-viz -f "linkerd-viz/custom-values.yaml"
 helm upgrade --install linkerd-viz-persistent-prometheus custom-helm-charts/linkerd-viz-persistent-prometheus \
   --set env="${ENV}" \
   --set persistentVolume.azureSecretNamespace="${ENV}-choreo-system"
