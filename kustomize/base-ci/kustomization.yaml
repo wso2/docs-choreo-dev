@@ -76,7 +76,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry
   newTag: master-d94b4dd9e1f2b2dfa8ff5e33435342badf01b02a
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase
-  newTag: master-4a2e509a10bdc6b858377307c5163c5b0197fd72
+  newTag: master-95e8ce2f0d76300c071a46a0b687d81b3037342b
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreodp-cicd
   newTag: master-d474684dfa8d9f8c87c4d5efcdae31cb7be8adb8
 - name: choreocontrolplane.azurecr.io/choreoipaas/data-collector
