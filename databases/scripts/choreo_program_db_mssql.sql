@@ -26,6 +26,8 @@ CREATE TABLE [dbo].[program](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
+ALTER TABLE dbo.program ADD release_id varchar(255) DEFAULT NULL NULL
+    GO
 /****** Object:  Table [dbo].[version]    Script Date: 9/10/2021 7:36:09 AM ******/
     SET ANSI_NULLS ON
     GO
@@ -72,6 +74,16 @@ CREATE UNIQUE NONCLUSTERED INDEX [program$uc_app_id] ON [dbo].[program]
 	[app_id] ASC
 )
 WHERE ([app_id] IS NOT NULL)
+WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [program$uc_release_id] ******/
+CREATE UNIQUE NONCLUSTERED INDEX [program$uc_release_id] ON [dbo].[program]
+(
+	[release_id] ASC
+)
+WHERE ([release_id] IS NOT NULL)
 WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
 SET ANSI_PADDING ON
@@ -266,6 +278,93 @@ BEGIN TRANSACTION
 	  SET @astchanged = 0;
 
 EXECUTE dbo.GetObsId @projsec, @appid, @programid OUTPUT, @obsid OUTPUT
+	  EXECUTE dbo.GetVersion @programid, @asthash, @versionid OUTPUT, @vn OUTPUT, @versionrows OUTPUT
+
+	  IF (@versionrows = 1)
+BEGIN
+UPDATE dbo.program
+SET latest_version_id = @versionid WHERE program.id = @programid
+    SET @astchanged = 0x1
+END
+
+      WHILE @@TRANCOUNT > 0
+         COMMIT
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetObsIdByReleaseId] ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetObsIdByReleaseId]
+   @projsec nvarchar(255),
+   @releaseid nvarchar(255),
+   @pid int  OUTPUT,
+   @obsid nvarchar(255)  OUTPUT
+AS
+BEGIN
+
+      SET  XACT_ABORT  ON
+
+      SET  NOCOUNT  ON
+
+      SET @obsid = NULL
+
+      SET @pid = NULL
+
+      IF (@releaseid = '')
+         SET @releaseid = NULL
+
+      INSERT dbo.program(obs_id, project_secret, release_id)
+SELECT newid(), @projsec, @releaseid
+    WHERE NOT EXISTS
+            (
+               SELECT TOP (1) program.id
+               FROM dbo.program
+               WHERE program.project_secret = @projsec
+            )
+
+SELECT @pid = scope_identity()
+
+SELECT @pid = program.id, @obsid = program.obs_id
+FROM dbo.program
+WHERE program.project_secret = @projsec
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[RegisterV2]    Script Date: 9/10/2021 7:36:09 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[RegisterV2]
+   @projsec nvarchar(255),
+   @asthash nvarchar(255),
+   @releaseid nvarchar(255),
+   @obsid nvarchar(255)  OUTPUT,
+   @vn nvarchar(255)  OUTPUT,
+   @astchanged bit  OUTPUT
+
+AS
+BEGIN
+      SET  XACT_ABORT  ON
+      SET  NOCOUNT  ON
+      SET @astchanged = NULL
+      SET @vn = NULL
+      SET @obsid = NULL
+
+BEGIN TRANSACTION
+	  DECLARE @programid INT;
+	  DECLARE @versionid INT;
+	  DECLARE @versionrows INT;
+
+	  SET @programid = 0;
+	  SET @versionid = 0
+	  SET @versionrows = 0
+	  SET @astchanged = 0;
+
+EXECUTE dbo.GetObsIdByReleaseId @projsec, @releaseid, @programid OUTPUT, @obsid OUTPUT
 	  EXECUTE dbo.GetVersion @programid, @asthash, @versionid OUTPUT, @vn OUTPUT, @versionrows OUTPUT
 
 	  IF (@versionrows = 1)
