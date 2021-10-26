@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - ../../base/choreo-connect/default-p2
+  - ../../base/choreo-connect/dev-us-east-azure-p1
 
 namespace: choreo-apim
