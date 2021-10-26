@@ -11,12 +11,9 @@
  * associated services.
  */
 
-export enum HTTPMethod {
-    GET = "GET",
-    POST = "POST",
-    DELETE = "DELETE",
-    PUT = "PUT",
-    HEAD = "HEAD",
-    CONNECT = "CONNECT",
-    TRACE = "TRACE"
+export enum SubscriptionsPlan{
+
+    GOLD="Gold",
+    SILVER="Silver",
+    BRONZE="Bronze"
 }

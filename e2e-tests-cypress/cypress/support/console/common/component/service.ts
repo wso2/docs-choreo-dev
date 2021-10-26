@@ -25,12 +25,11 @@ export class Services {
 
     static selectService(serviceName: string) {
         const app = `tr > td[value="${serviceName.toLowerCase()}"] >div`
-        cy.get(app).click()
+        cy.contains(serviceName).click()
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
     }
 
     static deleteService(serviceName: string) {
-
         this.searchSrevice(serviceName)
         cy.get(`tr > td[value="${serviceName.toLowerCase()}"]`).then($tr => {
             cy.deleteRecord(serviceName)
@@ -40,7 +39,7 @@ export class Services {
     static searchSrevice(serviceName: string) {
         cy.get('[data-testid="search-btn"]').trigger('mouseover')
         cy.get('[data-testid="search-app"]').within(() => {
-            cy.get('input').type(serviceName + '{enter}')
+            cy.get('input').type(serviceName.replace(/ /g,'-') + '{enter}')
         })
     }
 

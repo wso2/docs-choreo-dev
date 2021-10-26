@@ -11,12 +11,18 @@
  * associated services.
  */
 
-export enum HTTPMethod {
-    GET = "GET",
-    POST = "POST",
-    DELETE = "DELETE",
-    PUT = "PUT",
-    HEAD = "HEAD",
-    CONNECT = "CONNECT",
-    TRACE = "TRACE"
+export class APIPublish{
+
+
+    static navigateToAPIPublish(){
+        cy.get('[data-testid="lifecycle-management"] > div').click()
+        cy.get('[id="backdrop-loader"]').should('not.exist');
+    }
+
+    static publishAPI(){
+        cy.get('button > span > h5').contains('Publish').click()
+        cy.contains('Successfully updated API Lifecycle state').should('be.visible')
+        cy.get('[data-testid="go-to-dev-portal-btn"]').should('be.enabled')
+        cy.contains('Lifecycle state has changed from CREATED to PUBLISHED').should('be.visible')
+    }
 }

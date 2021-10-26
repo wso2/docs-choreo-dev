@@ -11,12 +11,28 @@
  * associated services.
  */
 
-export enum HTTPMethod {
-    GET = "GET",
-    POST = "POST",
-    DELETE = "DELETE",
-    PUT = "PUT",
-    HEAD = "HEAD",
-    CONNECT = "CONNECT",
-    TRACE = "TRACE"
+
+
+
+
+
+
+export class APIDeployment {
+
+
+    static navigateToDeployment() {
+        cy.get('[data-testid="deployments"] > div').click()
+        cy.get('[id="backdrop-loader"').should('not.exist');
+
+    }
+
+
+    static createRevisionAndDeploy() {
+        cy.get('[data-testid="create-deploy-revision-btn"]').click()
+        cy.wait(100)
+        cy.get('[data-testid="create-deploy-revision-dialog-btn"]').click()
+        cy.contains('Successfully created the revision. Deploying the revision ...').should('be.visible')
+        cy.get('[data-testid="api-revision-deploy-successful"]').should('be.visible')
+    }
+
 }

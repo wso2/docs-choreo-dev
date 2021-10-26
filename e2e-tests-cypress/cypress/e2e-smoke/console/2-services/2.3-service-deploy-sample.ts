@@ -13,6 +13,7 @@
 
 import { SERVICES_TEXT, EX_LONG_TIME_OUT } from "../../../support/common/constants";
 import { appNamePrefix, getSelectedOrgHandle } from "../../../support/common/utils";
+import { Home } from "../../../support/console/common/component/home";
 
 /// <reference types="cypress" />
 
@@ -32,7 +33,7 @@ describe("Test successful deployment of sample services", () => {
     });
 
     it("Test deployment of sample:- echo service", () => {
-        cy.navigateFromHomePage(SERVICES_TEXT);
+        Home.selectSrvice()
         cy.get('[id="backdrop-loader"').should("not.exist");
         cy.get('[data-testId="try-out-samples-btn"]').should("exist").click({ force: true });
         cy.log("Creating echo service!");
