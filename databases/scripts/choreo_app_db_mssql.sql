@@ -1508,3 +1508,59 @@ END
 GO
 ALTER TABLE [dbo].[org_env_mapping] ENABLE TRIGGER [org_env_mapping_UpdateTimeTrigger]
     GO
+CREATE TABLE [dbo].[configuration_mount](
+    [id] [int] IDENTITY(1172,1) NOT NULL,
+    [config_key_name] [nvarchar](255) NOT NULL,
+    [organization_id] [nvarchar](50) NOT NULL,
+    [project_id] [nvarchar](50) NOT NULL,
+    [component_id] [nvarchar](50) NOT NULL,
+    [environment_id] [nvarchar](50) NOT NULL,
+    [component_version] [nvarchar](50) NOT NULL,
+    [value_type] [nvarchar](50) NOT NULL,
+    CONSTRAINT [PK_configuration_mount_id] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [configuration_mount$org_project_component_version_env_key_unique] UNIQUE NONCLUSTERED
+(
+    [organization_id] ASC,
+    [project_id] ASC,
+    [component_id] ASC,
+    [component_version] ASC,
+    [environment_id] ASC,
+    [config_key_name] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[configuration_mount] ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[configuration_value](
+    [id] [int] IDENTITY(10893,1) NOT NULL,
+    [config_mount_id] [int] NOT NULL,
+    [key_name] [nvarchar](255) NOT NULL,
+    [value_ref] [nvarchar](255) NOT NULL,
+    [user_id] [nvarchar](50) NOT NULL,
+    CONSTRAINT [PK_configuration_value_id] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [configuration_value$key_unique] UNIQUE NONCLUSTERED
+(
+    [key_name] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[configuration_value] ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+/****** Object:  Index [config_mount_id_fk] ******/
+CREATE NONCLUSTERED INDEX [config_mount_id_fk] ON [dbo].[configuration_value]
+(
+	[config_mount_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
