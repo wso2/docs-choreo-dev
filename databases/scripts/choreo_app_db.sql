@@ -371,3 +371,31 @@ ALTER TABLE `config_mapping` DROP INDEX config_id_fk;
 ALTER TABLE `connection_info` ADD COLUMN `type` VARCHAR(255) NOT NULL DEFAULT 'sso' AFTER `configuration_group_id`;
 
 ALTER TABLE `user` ADD COLUMN `is_anonymous` BOOLEAN NOT NULL DEFAULT FALSE AFTER `idp_id`;
+
+CREATE TABLE configuration_mount
+(
+    id                INT AUTO_INCREMENT,
+    config_key_name   VARCHAR(255)  NOT NULL,
+    organization_id   VARCHAR(50)   NOT NULL,
+    project_id        VARCHAR(50)   NOT NULL,
+    component_id      VARCHAR(50)   NOT NULL,
+    environment_id    VARCHAR(50)   NOT NULL,
+    component_version VARCHAR(50)   NOT NULL,
+    value_type        VARCHAR(50)   NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY org_project_component_version_env_key_unique (organization_id, project_id, component_id, component_version, environment_id, config_key_name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE configuration_value
+(
+    id                INT AUTO_INCREMENT,
+    config_mount_id   INT           NOT NULL,
+    key_name          VARCHAR(255)  NOT NULL,
+    value_ref         VARCHAR(255)  NOT NULL,
+    user_id           VARCHAR(50)   NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT config_mount_key_id_fk FOREIGN KEY (config_mount_id) REFERENCES configuration_mount (id),
+    UNIQUE KEY key_unique (key_name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
