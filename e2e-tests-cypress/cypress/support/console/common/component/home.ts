@@ -28,7 +28,10 @@ export class Home {
     static selectIntegration() {
         cy.get('[data-testid="left-navbar-integrations-btn"]').click()
     }
-
+    static navigateBackToIntegration(){
+        cy.get('[data-testid="app-list-btn"]').click()
+        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
+    }
 
     /**
      * If user is in multiple organizations, this method selects the given name.

@@ -27,4 +27,26 @@ export class Integration {
         cy.get('[data-testid="backdrop-loader"]').should('not.exist');
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
     }
+
+    static selectSample() {
+        cy.get('[title="Create"]').then(val => {
+            const preBuiltBtnAvailable = (val.find('[data-testid="use-prebuilt-btn"]').length > 0) ? true : false;
+            if (preBuiltBtnAvailable) {
+                cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
+            }
+        })
+    }
+    static clearIntegrations() {
+        cy.get('tbody>tr').then(tr => {
+            cy.wrap(tr[0]).then(()=>{
+                cy.wrap(tr[0]).trigger('mouseover')
+                cy.wait(1000)
+                cy.get('[data-testid="delete-btn"]').click()
+                cy.wait(1000)
+                cy.get('[role="dialog"] button').contains('Delete').click()
+                cy.contains('INTEGRATION').should('be.visible')
+            })
+        })
+
+    }
 }
