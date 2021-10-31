@@ -51,18 +51,34 @@ strict: true
 # Navigation
 nav:
   - Home: index.md
-  - Concepts: concepts/concepts.md
-  - Quick Start Guide: qsg/quick-start-guide.md
-  - Develop:
-      - APIs: develop/create-api.md
-      - Webhooks: develop/create-webhooks.md
-      - Automations: develop/create-automations.md
-      - API Proxies: develop/create-api-proxies.md
-  - Deploy: deploy/deploy.md
-  - Test: test/test.md
-  - Manage: manage/overview.md
-  - Observe: observe/observability-overview.md
+  - Get Started:
+      - What is Choreo?: get-started/what-is-choreo.md
+      - Quick Start Guide: get-started/quick-start-guide.md 
+  - Concepts: 
+      - Low Code Editing: concepts/concepts.md
+      - Where are my apps running?: concepts/concepts.md
+      - What limits are imposed?: concepts/concepts.md
+      - Connector Marketplace: concepts/concepts.md
+      - User Management and Permissions: concepts/concepts.md
+  - Develop APIs:
+      - REST APIs: develop/api/rest-api.md
+      - GraphQL APIs: develop/api/graphql-apis.md
+  - Develop Integrations:
+      - Triggered by Webhooks: develop/integrations/webhooks.md
+      - Scheduled Integrations: develop/integrations/scheduled-integrations.md
+  - Manage Your APIs:
+      - Proxy APIs: develop/manage/api-proxies.md
+      - Developer Portal: develop/manage/developer-portal.md
+      - API Security: develop/manage/api-security.md
+      - API Lifecycle: develop/manage/api-lifecycle.md
   - Insights: insights/derive-insights.md
+  - Observe Your Code:
+      - View Logs: observe/view-logs.md
+      - Root Cause Analysis: observe/root-cause-analysis.md
+      - Performance Analysis: observe/performance-analysis.md
+      - Diagnosing Problems: observe/diagnosing-problems.md 
+  - Tutorials: tutorials/overview.md
+  - Best Practices: best-practices/overview.md
   - FAQ: references/faq.md
 
 # Extensions
