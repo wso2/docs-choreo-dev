@@ -11,4 +11,4 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router
   newTag: choreo-7e8e147ff4344d10fdd5b58ae9538a0e340afe7b
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen-agent
-  newTag: main-b1fd77723d1d24045563014e4b0f4a27086dabcc
+  newTag: main-581042fbe7d65b59abeb5d88db6c32751c8cf4e9
