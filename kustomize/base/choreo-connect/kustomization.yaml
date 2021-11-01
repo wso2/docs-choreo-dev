@@ -5,6 +5,7 @@ resources:
   - control-plane-p1
   - default-p1
   - default-p2
+  - default-p3
   - test-p1
   - hpa
 
