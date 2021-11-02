@@ -25,62 +25,24 @@ repo_name: wso2/docs-choreo-dev
 repo_url: https://github.com/wso2/docs-choreo-dev/
 edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
-
-# Copyright
-copyright: Copyright © WSO2 Inc. 2021
-
-# Configuration
-theme:
-  name: material
-  custom_dir: theme/material
-  palette:
-    primary: indigo
-    accent: indigo
-  logo: images/logo.svg
-  favicon: images/favicon.png
-  slack: images/help-slack-icon.svg
-  choreo_logo: images/choreo-logo-icon.svg
-  highlightjs: true
-  feature:
-    tabs: true
-  font:
-    text: 'Montserrat'
-  language: 'en'
-#Breaks build if there's a warning
-strict: true
-# Navigation
-nav:
-  - Home: index.md
-  - Get Started:
-      - What is Choreo?: get-started/what-is-choreo.md
-      - Quick Start Guide: get-started/quick-start-guide.md 
-  - Concepts: 
-      - Low Code Editing: concepts/concepts.md
-      - Where are my apps running?: concepts/concepts.md
-      - What limits are imposed?: concepts/concepts.md
-      - Connector Marketplace: concepts/concepts.md
-      - User Management and Permissions: concepts/concepts.md
-  - Develop APIs:
-      - REST APIs: develop/api/rest-api.md
-      - GraphQL APIs: develop/api/graphql-apis.md
-  - Develop Integrations:
-      - Triggered by Webhooks: develop/integrations/webhooks.md
-      - Scheduled Integrations: develop/integrations/scheduled-integrations.md
-  - Manage Your APIs:
-      - Proxy APIs: develop/manage/api-proxies.md
-      - Developer Portal: develop/manage/developer-portal.md
-      - API Security: develop/manage/api-security.md
-      - API Lifecycle: develop/manage/api-lifecycle.md
-  - Insights: insights/derive-insights.md
-  - Observe Your Code:
+ 
+      - GraphQL APIs: api/graphql-apis.md
+      - gRPC API: api/grpc-api.md
+  - API Proxies: api-proxies.md
+  - Triggers: webhooks.md
+  - Scheduled Tasks: scheduled-tasks.md
+  - API Management:
+      - API Security: manage/api-security.md
+      - API Lifecycle: manage/api-lifecycle.md
+  - Marketplace: marketplace.md
+  - Business Insights: insights/derive-insights.md
+  - Observe:
       - View Logs: observe/view-logs.md
       - Root Cause Analysis: observe/root-cause-analysis.md
       - Performance Analysis: observe/performance-analysis.md
       - Diagnosing Problems: observe/diagnosing-problems.md 
+  - Choreo DevOps: devops/overview.md
   - Tutorials: tutorials/overview.md
-  - Best Practices: best-practices/overview.md
-  - FAQ: references/faq.md
-
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition

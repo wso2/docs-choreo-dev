@@ -412,3 +412,26 @@ position: relative;
       color: #222228;
   }
  
+  .topBarActionsCont2{
+    margin-left: 10px;
+    vertical-align: middle;
+ }
+ .topBarActions2{
+     padding-top:20px;
+     padding-right: 30px;
+     padding-bottom: 0px;
+     margin-left: 650px;
+     display: flex;
+     align-items: right;
+ }
+  
+   .topBarActions2 .actionLink2  {
+     display: flex;
+     align-items: center;  
+     margin-left:50px;
+   }
+   .topBarActions2 .actionLink2 .text2 {
+       font-size: 14px; 
+       white-space: nowrap;
+       color: #1111e7;
+   }
