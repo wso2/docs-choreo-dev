@@ -2,4 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../workspace/
+- ../workspace/
+images:
+- name: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen-agent
+  newTag: main-221879a6e618e4f996a418cbdd85a43cbe7132be
