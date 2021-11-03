@@ -1,4 +1,4 @@
 # REST APIs
 
 !!! note
-    This section would serve as a learning material about REST APIs. Would not include How to create a REST API, but would focus more on the REST API concepts. 
+    This section will serve as learning material about REST APIs. It will not describe how to create a REST API, but will focus more on the REST API concepts. 
