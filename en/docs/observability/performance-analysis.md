@@ -1,4 +1,4 @@
 # Performance Analysis
 
 !!! note
-    This section will include the conent in the current documentation page "Performance Analysis"
+    This section will include the content in the current **Performance Analysis** documentation page.

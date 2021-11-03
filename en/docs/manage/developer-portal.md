@@ -1,5 +1,5 @@
 # Developer Portal
 
 !!! note
-    This section will discuss about the main features, concepts, and limitations of the developer portal. This will mainly focus on the API consumption.
+    This section will describe the main features, concepts, and limitations of the Developer Portal. This will mainly focus on the API consumption.
 
