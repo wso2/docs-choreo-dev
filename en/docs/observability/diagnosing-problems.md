@@ -1,4 +1,4 @@
 # Diagnosing Problems
 
-!!! note
+!!! info
     This section would include helpful tips to identify probable issues in your production environment. 
