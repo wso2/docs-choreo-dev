@@ -54,12 +54,7 @@ nav:
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
       - Quick Start Guide: get-started/quick-start-guide.md 
-      - Concepts: 
-          - Low Code Editing: concepts/concepts.md
-          - Where are my apps running?: concepts/concepts.md
-          - What limits are imposed?: concepts/concepts.md
-          - Connector Marketplace: concepts/concepts.md
-          - User Management and Permissions: concepts/concepts.md
+      - Concepts: concepts/concepts.md
   - APIs:
       - REST APIs: api/rest-api.md
       - GraphQL APIs: api/graphql-apis.md
