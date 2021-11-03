@@ -1,7 +1,7 @@
 # Concepts
 
 !!! info
-    The **concepts** will be categoried under appropriate high-level topics and add subsections depending on the concepts we would need to add. A few concepts are listed on the navigation. In addition to this, all the concepts currently in the References section would also be included. 
+    The **concepts** will be categorized under appropriate high-level topics and add subsections depending on the concepts we would need to add. A few concepts are listed on the navigation. In addition to this, all the concepts currently in the References section would also be included. 
 
     **Low Code Development**: Would include inportant information and a simple guide on how to develop on low code. Introducing the UI options etc. This will also include a guide to ballerina expression syntax.
      

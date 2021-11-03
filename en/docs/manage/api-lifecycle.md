@@ -1,4 +1,4 @@
 # API Lifecycle
 
 !!! note
-    This section will disucss about the API Lifecycle states and its usage in Choreo. 
+    This section will discuss about the API Lifecycle states and its usage in Choreo. 
