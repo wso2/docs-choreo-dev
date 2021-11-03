@@ -96,6 +96,8 @@
     margin: 0 13.4rem 1.2rem !important;
 }
 
+
+
 html .md-typeset .superfences-tabs > label{
     color: #545CEC;
     font-weight: normal;
@@ -283,6 +285,8 @@ html .md-typeset .superfences-tabs > label:hover {
 .md-footer-nav {
     background-color: #f5f5f5;
     color: #424242;
+    margin: 0 13.4rem;
+    
 }
 
 .md-footer-nav__link {
