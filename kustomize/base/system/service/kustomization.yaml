@@ -15,7 +15,6 @@ resources:
   - connectords.yaml
   - apim-service.yaml
   - language-server.yaml
-  - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
   - datamapper.yaml
   - test-assistant.yaml
