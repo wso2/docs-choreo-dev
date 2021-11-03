@@ -1,7 +1,7 @@
 # Concepts
 
 !!! info
-    The **concepts** will be categorized under appropriate high-level topics, and we can add subsections depending on the concepts that need to be added. A few concepts could be as follows:
+    The **concepts** will be categorized under appropriate high-level topics, and we can add subsections depending on the concepts that need to be added. For example, the following concepts could be added:
 
     **Low Code Development**: This will include details on developing on the low-code editor. It will include details on how to persist changes, and include a guide to the Ballerina expression syntax.
      
