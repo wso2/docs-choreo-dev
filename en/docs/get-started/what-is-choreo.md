@@ -1,5 +1,5 @@
 # What is Choreo?
 
 !!! note
-    This section will introduce the Choreo platform, it's basic capabilities, and it's competitive advantage. Will also answer "Why Choreo?".
+    This section will introduce the Choreo platform, its basic capabilities, and its competitive advantage. It will also answer "Why Choreo?".
 

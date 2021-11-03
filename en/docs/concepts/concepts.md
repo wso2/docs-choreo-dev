@@ -1,14 +1,18 @@
 # Concepts
 
 !!! info
+<<<<<<< HEAD
     The **concepts** will be categorized under appropriate high-level topics and add subsections depending on the concepts we would need to add. A few concepts are listed on the navigation. In addition to this, all the concepts currently in the References section would also be included. 
+=======
+    The **concepts** will be categorized under appropriate high-level topics, and we can add subsections depending on the concepts that need to be added. A few concepts are listed on the navigation. In addition to this, all the concepts that are currently listed in the References section will also be included. 
+>>>>>>> 27388eacced823884b27bdcb8bfd4581f238e713
 
-    **Low Code Development**: Would include inportant information and a simple guide on how to develop on low code. Introducing the UI options etc. This will also include a guide to ballerina expression syntax.
+    **Low Code Development**: This will include important information and a simple guide on how to develop via low-code. It will also intrioduce the UI options etc., and include a guide to the Ballerina expression syntax.
      
-    **Where are my apps running?**: Would include a diagram and a description on how the deployment of integrations happens behind the scenes. It will also includeany concerns that needs attention when developing an integration. 
+    **Where are my apps running?**: This will include a diagram and a description on how the deployment of integrations happens behind the scenes. It will also include any concerns that need attention when developing an integration. 
     
-     **What limits are imposed?** : This section would include details about the rate limits/ any limitations in the system. 
+     **What limits are imposed?** : This will include details about the rate limits/ any limitations in the system. 
     
-     **Connector Marketplace**: This section would introduce the connector marketplace concept in Choreo and  include a links/ extraction of the connector list from the Ballerina central connector marketplace showcasing the categorization.
+     **Connector Marketplace**: This will introduce the connector marketplace concept in Choreo, and include a link/extraction of the connector list from the Ballerina central connector marketplace showcasing the categorization.
     
-     **User Management and Permssions**: This section will describe the user management functionalities and permission model in Choreo.  
+     **User Management and Permssions**: This will describe the user management functionalities and the permission model in Choreo.  
