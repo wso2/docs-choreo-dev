@@ -1,7 +1,7 @@
-# References
+# Frequently Asked Questions
 
 !!! info
-    This section will include any Reference material and an FAQ.
+    This section will include a list of FAQs.
 
 
 
