@@ -1,4 +1,4 @@
 # Webhooks
 
 !!! info
-    This section will describe Webhooks, it's concepts, and it's usage concerns/concepts in Choreo..
+    This section will describe Webhooks, its concepts, and its usage concerns/concepts in Choreo.

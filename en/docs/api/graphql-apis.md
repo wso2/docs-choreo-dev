@@ -1,5 +1,4 @@
 # GraphQL APIs
 
-!!! note
-    This section will not include a how to guide, but will serve as learning material to understand how to use graphQL in your integrations and graphQL concepts. 
-
+!!! info
+    This section will not include a how to guide, but will serve as learning material to understand how to use GraphQL in your integrations and GraphQL concepts. 

@@ -1,5 +1,4 @@
 #gRPC API
 
-!!! note
-    This section will introduce gRPC APIs, its features, and how it is used in Choreo
-This section will also serve as learning material.
+!!! info
+    This section will  serve as learning material introducing gRPC APIs, its features, and usage in Choreo but would not include any How To guides.
