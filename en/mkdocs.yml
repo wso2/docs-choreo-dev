@@ -73,10 +73,10 @@ nav:
   - Marketplace: marketplace.md
   - Business Insights: insights/derive-insights.md
   - Observability:
-      - View Logs: observe/view-logs.md
-      - Root Cause Analysis: observe/root-cause-analysis.md
-      - Performance Analysis: observe/performance-analysis.md
-      - Diagnosing Problems: observe/diagnosing-problems.md 
+      - View Logs: observability/view-logs.md
+      - Root Cause Analysis: observability/root-cause-analysis.md
+      - Performance Analysis: observability/performance-analysis.md
+      - Diagnosing Problems: observability/diagnosing-problems.md 
   - Choreo DevOps: devops/overview.md
   - Tutorials: tutorials/overview.md
 # Extensions
