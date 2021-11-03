@@ -72,7 +72,7 @@ nav:
       - API Lifecycle: manage/api-lifecycle.md
   - Marketplace: marketplace.md
   - Business Insights: insights/derive-insights.md
-  - Observe:
+  - Observability:
       - View Logs: observe/view-logs.md
       - Root Cause Analysis: observe/root-cause-analysis.md
       - Performance Analysis: observe/performance-analysis.md
