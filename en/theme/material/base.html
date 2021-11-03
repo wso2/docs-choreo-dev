@@ -163,30 +163,31 @@
               </div>
             {% endif %}
           {% endblock %}
-          <div class="md-content container">
-            <div class="md-flex__cell md-flex__cell--shrink topBarActionsCont2">
-              <div class="topBarActions2">
-                {% if config.theme.slack %}
-                <a
-                  href="https://join.slack.com/t/wso2-choreo/shared_invite/zt-qm86tg1f-R2kXf~26GB6X6Ux0GcuYbQ"
-                  class="actionLink2"
-                >
-                
-                  <div class="text2">Best Practices</div>
-                </a>
-                {% endif %} {% if config.theme.choreo_logo %}
-      
-                <a href="https://wso2.com/choreo" class="actionLink2">
-             
-                  <div class="text2">Troubleshooting Guide</div>
-                </a>
-                <a href="https://wso2.com/choreo" class="actionLink2">
-             
-                  <div class="text2">References</div>
-                </a>
-                {% endif %}
-              </div>
+          <div class="md-flex__cell md-flex__cell--shrink topBarActionsCont2">
+            <div class="topBarActions2">
+              {% if config.theme.slack %}
+              <a
+                href="https://join.slack.com/t/wso2-choreo/shared_invite/zt-qm86tg1f-R2kXf~26GB6X6Ux0GcuYbQ"
+                class="actionLink2"
+              >
+              
+                <div class="text2">Best Practices</div>
+              </a>
+              {% endif %} {% if config.theme.choreo_logo %}
+    
+              <a href="https://wso2.com/choreo" class="actionLink2">
+           
+                <div class="text2">Troubleshooting Guide</div>
+              </a>
+              <a href="https://wso2.com/choreo" class="actionLink2">
+           
+                <div class="text2">References</div>
+              </a>
+              {% endif %}
             </div>
+          </div>
+          <div class="md-content container">
+  
 <div class="cChoreoBreadCrumbs">
   
   {% include "partials/breadcrumbs.html" %}
