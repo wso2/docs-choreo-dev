@@ -399,3 +399,35 @@ CREATE TABLE configuration_value
     UNIQUE KEY key_unique (key_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+ALTER TABLE `configuration_value` RENAME COLUMN `user_id` TO `user_idp_id`;
+ALTER TABLE `configuration_value` DROP INDEX `key_unique`;
+ALTER TABLE `configuration_value` DROP COLUMN `key_name`;
+
+ALTER TABLE `configuration_mount` ADD COLUMN `is_system` BOOLEAN NOT NULL DEFAULT FALSE AFTER `value_type`;
+
+CREATE TABLE component_data
+(
+    id                  INT AUTO_INCREMENT,
+    uuid                VARCHAR(50)   NOT NULL,
+    organization_handle VARCHAR(50)   NOT NULL,
+    project_uuid        VARCHAR(50)   NOT NULL,
+    component_uuid      VARCHAR(50)   NOT NULL,
+    environment_uuid    VARCHAR(50)   NOT NULL,
+    component_version   VARCHAR(50)   NOT NULL,
+    release_uuid        VARCHAR(50)   NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uuid_unique (uuid),
+    UNIQUE KEY release_id_unique (release_uuid)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+ALTER TABLE `configuration_mount` DROP INDEX `org_project_component_version_env_key_unique`;
+ALTER TABLE `configuration_mount` DROP COLUMN `organization_id`,
+    DROP COLUMN `project_id`,
+    DROP COLUMN `component_id`,
+    DROP COLUMN `environment_id`,
+    DROP COLUMN `component_version`;
+ALTER TABLE `configuration_mount` ADD COLUMN `component_data_uuid` VARCHAR(50) NOT NULL AFTER `config_key_name`;
+ALTER TABLE `configuration_mount` ADD CONSTRAINT `component_data_uuid_fk` FOREIGN KEY (component_data_uuid) REFERENCES component_data (uuid),
+    ADD UNIQUE KEY `component_data_uuid_key_unique` (`component_data_uuid`,`config_key_name`);
