@@ -610,6 +610,7 @@ CREATE TABLE [dbo].[role](
     [handle] [nvarchar](255) NOT NULL,
     [description] [nvarchar](255) NULL,
     [organization_id] [int] NOT NULL,
+    [default_role] [smallint] NOT NULL,
     [created_by] [int] NOT NULL,
     [updated_by] [int] NULL,
     [created_at] [datetime] NOT NULL,
@@ -1637,3 +1638,125 @@ ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$co
     GO
     SET QUOTED_IDENTIFIER ON
     GO
+
+CREATE TABLE [dbo].[permission]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL ,
+    [handle][varchar](255) NOT NULL,
+    [display_name][varchar](255) NOT NULL,
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLINNG')),
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [parent_id] [int] DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT parent_id_fk FOREIGN KEY (parent_id) REFERENCES permission(id),
+    CONSTRAINT unique_handle   UNIQUE(handle)
+)
+
+CREATE TABLE [dbo].[role_permission_mapping]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [role_id] [int] NOT NULL,
+    [permission_id] [int] NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT role_permission_mapping_role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+    CONSTRAINT role_permission_mapping_permission_id_fk FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE,
+    CONSTRAINT unique_role_permission_mapping   UNIQUE(role_id,permission_id)
+)
+
+CREATE TABLE [dbo].[role_member_mapping]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [role_id] [int] NOT NULL,
+    [user_id] [int] NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT role_member_mapping_role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+    CONSTRAINT role_member_mapping_user_id_fk FOREIGN KEY (user_id) REFERENCES [user](id) ON DELETE CASCADE,
+    CONSTRAINT unique_role_member_mapping   UNIQUE(role_id,user_id)
+)
+
+/****** Object:  Trigger [dbo].[permission_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[permission_UpdateTimeTrigger] ON [dbo].[permission]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [permission] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[permission] ENABLE TRIGGER [permission_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[role_permission_mapping_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[role_permission_mapping_UpdateTimeTrigger] ON [dbo].[role_permission_mapping]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [role_permission_mapping] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[role_permission_mapping] ENABLE TRIGGER [role_permission_mapping_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[role_member_mapping_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[role_member_mapping_UpdateTimeTrigger] ON [dbo].[role_member_mapping]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [role_member_mapping] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[role_member_mapping] ENABLE TRIGGER [role_member_mapping_UpdateTimeTrigger]
+    GO
+
+/****** Add default Permission list ******/
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:tier_manage','apim:tier_manage','APIM-PUBLISHER');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:api_manage','apim:api_manage','APIM-PUBLISHER');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:subscription_manage','apim:subscription_manage','APIM-PUBLISHER');
+
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:subscribe','apim:subscribe', 'APIM-SUBSCRIBER');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:app_manage','apim:app_manage', 'APIM-SUBSCRIBER');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:sub_manage','apim:sub_manage', 'APIM-SUBSCRIBER');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:app_import_export','apim:app_import_export', 'APIM-SUBSCRIBER');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:api_key','apim:api_key', 'APIM-SUBSCRIBER');
+
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('apim:admin','apim:admin','APIM-ADMIN');
+
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:tier_view','billing:tier_view','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:org_create','billing:org_create','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:org_view','billing:org_view','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:invoice_view','billing:invoice_view','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:subscription_create','billing:subscription_create','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:subscription_view','billing:subscription_view','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:payment_method_create','billing:payment_method_create','BILLINNG');
+INSERT INTO permission (handle,display_name,domain_area) VALUES ('billing:payment_method_view','billing:payment_method_view','BILLINNG');
