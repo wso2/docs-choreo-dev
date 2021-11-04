@@ -36,7 +36,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-billing
   newTag: main-2e894cd9ebb15b011c159d54d322334fe257bcb2
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter
-  newTag: master-20d67ac7b186cca2e940d908df7d570c8faafb02
+  newTag: master-fa88daa7b0030edbc545c7585df19ecf2f3d30ba
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder
   newTag: master-47dd5434c790ed8873c8894eb601e4e8daaa4598
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords
