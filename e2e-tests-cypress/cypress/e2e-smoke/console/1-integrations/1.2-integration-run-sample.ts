@@ -14,14 +14,24 @@
 /// <reference types="cypress" />
 
 import {
-    INTEGRATIONS_TEXT, FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
-    FAKE_TWILIO_RECIPIENT_NUMBER, INVITATION_EMAIL, EX_LONG_TIME_OUT 
+     FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER,
+    FAKE_TWILIO_RECIPIENT_NUMBER, EX_LONG_TIME_OUT 
 } from "../../../support/common/constants";
-import { appNamePrefix, getSelectedOrgHandle } from "../../../support/common/utils";
+import {  getSelectedOrgHandle } from "../../../support/common/utils";
+import { Home } from "../../../support/console/common/component/home";
+import { Integration } from "../../../support/console/common/component/integration";
+import { GCTwillioIntegration } from "../../../support/console/common/component/integrations/google-calendar-event-to-twillio-sms";
+import { Deploy } from "../../../support/console/common/component/services/deploy";
+import { TestView } from "../../../support/console/common/component/test-view";
+
+
+
+
 
 describe('Integration sample flow', () => {
     let savedCookies: Cypress.Cookie[];
     let selectedOrgHandle: string;
+    const INVITATION_EMAIL="test.user.choreo@gmail.com"
 
     before(() => {
         cy.consoleUserLogin().then((user) => {
@@ -32,22 +42,16 @@ describe('Integration sample flow', () => {
         cy.getCookies().then((cookies) => {
             savedCookies = cookies;
         });
-        cy.navigateFromHomePage(INTEGRATIONS_TEXT);
+       Home.selectIntegration()
+       Home.selectOrganization()
+       Integration.selectSample()
     });
 
     beforeEach(() => {
         cy.preserveCookiesForTest(savedCookies);
         cy.restoreLocalStorage();
-        cy.visit(Cypress.env("baseUrl") + '/' + INTEGRATIONS_TEXT);
-        cy.get('[id="backdrop-loader"]').should('not.exist');
 
-        cy.get('body').then($body => {
-            const preBuiltBtnAvailable = ($body.find('[data-testid="use-prebuilt-btn"]').length > 0) ? true : false;
-            if (preBuiltBtnAvailable) {
-                cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
-            }
-        });
-    });
+     });
 
     afterEach(() => {
         cy.saveLocalStorage();
@@ -58,50 +62,25 @@ describe('Integration sample flow', () => {
     });
 
     it('clone and edit Google calender to twilio SMS', () => {
-        cy.intercept('POST', '**/apps/template', (req) => {
-            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
-        });
-        cy.get('[data-testid="gcalendar-to-twilio"]').trigger('mouseover').within(() => {
-            cy.contains('Clone & Edit').click({ force: true });
-        });
-        cy.get('[data-testid="diagram-canvas"]').should('be.visible');
-        cy.get('[data-testid="settings-btn"]').click();
-        cy.fillCalendarConfigs(INVITATION_EMAIL);
-        cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
-        cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
-
-        cy.testRunApp();
-        cy.get('[data-testid="test-url"]').should('exist');
-        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
-        cy.log('Retrieved the test URL successfully');
-
-        cy.url().then((url) => {
-            const appName = url.split('app/').pop().split('/test')[0];
-            cy.goBacktoAppsList();
-            cy.cleanupApp(appName, selectedOrgHandle);
-        });
+         GCTwillioIntegration.cloneEdit()
+         GCTwillioIntegration.configureSettings(INVITATION_EMAIL,FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER)  
     })
 
     it('test-run sample integration', () => {
-        cy.log("Prebuilt integrations page loaded successfully");
-        cy.intercept('POST', `**/${selectedOrgHandle}/apps`, (req) => {
-            req.body.displayName = `${appNamePrefix} ${req.body.displayName}`;
-        });
-        cy.get('[data-testid="gcalendar-to-twilio"]').should('exist').children().contains('Use this').click({ force: true });
+        TestView.navigatTestView()
+        TestView.clickTestRunButton()
+        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
+        TestView.clickTestRunButton()
+    })
 
-        cy.waitTillWorkSpace();
-        cy.get('.diagram-canvas').should('exist');
-        cy.fillCalendarConfigs(INVITATION_EMAIL);
-        cy.fillTwilioConfigs(FAKE_TWILIO_ACCOUNT_SID, FAKE_TWILIO_TOKEN, FAKE_TWILIO_SENDER_NUMBER, FAKE_TWILIO_RECIPIENT_NUMBER);
-        cy.get('[data-testid="config-save-btn"]').should('be.visible').click();
 
-        cy.get('[data-testid="test-url"]').should('exist');
-        cy.log('Retrieved the test URL successfully');
 
-        cy.url().then((url) => {
-            const appName = url.split('app/').pop().split('/deploy')[0];
-            cy.goBacktoAppsList();
-            cy.cleanupApp(appName, selectedOrgHandle);
-        });
+    it('Deploy integration',()=>{
+        Deploy.navigateDeploy()
+        Deploy.deploy()
+        cy.contains('[data-testid="log-panel"]', 'started HTTP/WS listener', {timeout: EX_LONG_TIME_OUT}).should('exist');
+        Deploy.undeloy()
+        Home.navigateBackToIntegration()
+        Integration.clearIntegrations()
     })
 })

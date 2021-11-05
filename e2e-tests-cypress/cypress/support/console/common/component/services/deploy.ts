@@ -21,12 +21,13 @@ static navigateDeploy(){
 
 static deploy(){
     cy.get('#deploy-button').click()
-    cy.get('#stop-button', { timeout: 1000 * 60 * 5 }).should('exist');
+    cy.get('#stop-button', { timeout: 1000 * 60 * 8 }).should('exist');
 }
 
 static undeloy(){
+    cy.get('button[aria-label="close"]').click({ multiple: true })
     cy.get('#stop-button').click()
-    cy.get('#deploy-button', { timeout: 1000 * 60 * 5 }).should('exist');
+    cy.get('#deploy-button', { timeout: 1000 * 60 * 8 }).should('exist');
 }
 
 
