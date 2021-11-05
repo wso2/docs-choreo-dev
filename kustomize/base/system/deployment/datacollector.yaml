@@ -57,6 +57,11 @@ spec:
                 secretKeyRef:
                   name: secret-datacollector
                   key: EVENTHUB_CONNECTION_STRING
+            - name: EVENTHUB_SHARED_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-datacollector
+                  key: EVENTHUB_SHARED_ACCESS_KEY
           envFrom:
             - configMapRef:
                 name: env-datacollector
