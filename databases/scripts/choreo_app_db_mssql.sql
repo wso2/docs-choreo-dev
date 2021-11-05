@@ -1564,17 +1564,19 @@ CREATE NONCLUSTERED INDEX [config_mount_id_fk] ON [dbo].[configuration_value]
 	[config_mount_id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-EXEC sp_rename 'dbo.configuration_value.user_id', 'user_idp_id', 'COLUMN'
+ALTER TABLE [dbo].[configuration_value] DROP COLUMN [user_id]
+    GO
+ALTER TABLE [dbo].[configuration_value] ADD user_idp_id NVARCHAR (50) NOT NULL
     GO
 ALTER TABLE [dbo].[configuration_value] DROP CONSTRAINT [configuration_value$key_unique]
     GO
 ALTER TABLE [dbo].[configuration_value] DROP COLUMN [key_name]
     GO
-ALTER TABLE [dbo].[configuration_mount] ADD  DEFAULT ((0)) FOR [is_system]
-    GO
+ALTER TABLE [dbo].[configuration_mount] ADD is_system BIT NOT NULL DEFAULT 0
+       GO
 CREATE TABLE [dbo].[component_data](
     [id] [int] IDENTITY(1172,1) NOT NULL,
-    [uuid] nvarchar](50) NOT NULL,
+    [uuid] [nvarchar](50) NOT NULL,
     [organization_handle] [nvarchar](50) NOT NULL,
     [project_uuid] [nvarchar](50) NOT NULL,
     [component_uuid] [nvarchar](50) NOT NULL,
@@ -1587,11 +1589,11 @@ CREATE TABLE [dbo].[component_data](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
     CONSTRAINT [component_data$uuid_unique] UNIQUE NONCLUSTERED
 (
-    [uuid] ASC,
+[uuid] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
     CONSTRAINT [component_data$release_id_unique] UNIQUE NONCLUSTERED
 (
-[release_uuid] ASC,
+[release_uuid] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO

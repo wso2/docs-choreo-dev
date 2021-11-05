@@ -400,7 +400,8 @@ CREATE TABLE configuration_value
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-ALTER TABLE `configuration_value` RENAME COLUMN `user_id` TO `user_idp_id`;
+ALTER TABLE `configuration_value` DROP COLUMN `user_id`;
+ALTER TABLE `configuration_value` ADD COLUMN `user_idp_id` VARCHAR(50) NOT NULL AFTER `value_ref`;
 ALTER TABLE `configuration_value` DROP INDEX `key_unique`;
 ALTER TABLE `configuration_value` DROP COLUMN `key_name`;
 
