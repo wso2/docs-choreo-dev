@@ -5,4 +5,4 @@ resources:
 - ../workspace/
 images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen-agent
-  newTag: main-2b152bce99715e56793d724a7fa240009df71732
+  newTag: main-b17c18693c58f365557d81b8a002297e97650f9d
