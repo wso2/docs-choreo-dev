@@ -44,7 +44,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console
   newTag: master-4b003c2dfaf9a861dc96202f342fba05b790fb8b
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console-next
-  newTag: next-abbf0bf18ff33f1afc9b29037a9e8cbc236ddc3b
+  newTag: next-72853a3e356382f5c54af6063b263f41f7d11732
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-graphql
   newTag: main-d1a63013c969bcb9419238518345e723b6f80154
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-linker
