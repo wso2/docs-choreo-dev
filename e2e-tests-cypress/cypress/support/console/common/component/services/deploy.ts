@@ -17,6 +17,7 @@ static navigateDeploy(){
     cy.get('#deploy').click()
     cy.get('[data-testid="backdrop-loader"]').should('not.exist');
     cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
 }
 
 static deploy(){
