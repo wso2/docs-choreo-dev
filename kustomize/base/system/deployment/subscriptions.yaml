@@ -43,7 +43,7 @@ spec:
                 secretKeyRef:
                   name: secret-subscriptions
                   key: MSSQL_PASSWORD
-            - name: ASB_AUTH_TOKEN
+            - name: CHOREO_SUBSCRIPTIONS_ASB_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: secret-asb-token
