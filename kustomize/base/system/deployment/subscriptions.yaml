@@ -43,6 +43,11 @@ spec:
                 secretKeyRef:
                   name: secret-subscriptions
                   key: MSSQL_PASSWORD
+            - name: CHOREO_SUBSCRIPTIONS_ASB_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb-token
+                  key: ASB_AUTH_TOKEN
           ports:
             - containerPort: 9090
               name: grpc-port
@@ -90,6 +95,9 @@ spec:
             - name: secret-redis
               mountPath: "/mnt/csi/secret-redis"
               readOnly: true
+            - name: secret-asb-token
+              mountPath: "/mnt/csi/secret-asb-token"
+              readOnly: true            
       restartPolicy: Always
       volumes:
         - name: config
@@ -109,6 +117,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-redis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-asb-token
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb-token
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
