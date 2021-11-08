@@ -1,0 +1,33 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dp-kv-resolver-manager-role
+rules:
+  - apiGroups:
+      - choreo.wso2.com
+    resources:
+      - configurables
+      - configurables/finalizers
+      - configurables/status
+    verbs: ["*"]
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs: ["*"]
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create      
