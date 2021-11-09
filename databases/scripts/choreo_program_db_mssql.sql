@@ -301,7 +301,8 @@ CREATE PROCEDURE [dbo].[GetObsIdByReleaseId]
    @projsec nvarchar(255),
    @releaseid nvarchar(255),
    @pid int  OUTPUT,
-   @obsid nvarchar(255)  OUTPUT
+   @obsid nvarchar(255)  OUTPUT,
+   @finalreleaseid nvarchar(255)  OUTPUT
 AS
 BEGIN
 
@@ -312,6 +313,8 @@ BEGIN
       SET @obsid = NULL
 
       SET @pid = NULL
+      
+      SET @finalreleaseid = NULL
 
       IF (@releaseid = '')
          SET @releaseid = NULL
@@ -327,7 +330,7 @@ SELECT newid(), @projsec, @releaseid
 
 SELECT @pid = scope_identity()
 
-SELECT @pid = program.id, @obsid = program.obs_id
+SELECT @pid = program.id, @obsid = program.obs_id, @finalreleaseid = program.release_id
 FROM dbo.program
 WHERE program.project_secret = @projsec
 
@@ -344,8 +347,9 @@ CREATE PROCEDURE [dbo].[RegisterV2]
    @releaseid nvarchar(255),
    @obsid nvarchar(255)  OUTPUT,
    @vn nvarchar(255)  OUTPUT,
-   @astchanged bit  OUTPUT
-
+   @astchanged bit  OUTPUT,
+   @finalreleaseid nvarchar(255)  OUTPUT
+   
 AS
 BEGIN
       SET  XACT_ABORT  ON
@@ -353,6 +357,7 @@ BEGIN
       SET @astchanged = NULL
       SET @vn = NULL
       SET @obsid = NULL
+      SET @finalreleaseid = NULL
 
 BEGIN TRANSACTION
 	  DECLARE @programid INT;
@@ -364,7 +369,7 @@ BEGIN TRANSACTION
 	  SET @versionrows = 0
 	  SET @astchanged = 0;
 
-EXECUTE dbo.GetObsIdByReleaseId @projsec, @releaseid, @programid OUTPUT, @obsid OUTPUT
+EXECUTE dbo.GetObsIdByReleaseId @projsec, @releaseid, @programid OUTPUT, @obsid OUTPUT, @finalreleaseid OUTPUT
 	  EXECUTE dbo.GetVersion @programid, @asthash, @versionid OUTPUT, @vn OUTPUT, @versionrows OUTPUT
 
 	  IF (@versionrows = 1)

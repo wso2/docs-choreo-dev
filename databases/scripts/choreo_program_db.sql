@@ -51,16 +51,16 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE GetObsIdByReleaseId(IN projsec VARCHAR(255), IN releaseid VARCHAR(255), 
-                          OUT pid INT, OUT obsid VARCHAR(255))
+                          OUT pid INT, OUT obsid VARCHAR(255), OUT finalreleaseid VARCHAR(255))
 BEGIN
-  IF(appid = '') THEN
+  IF(releaseid = '') THEN
      SET releaseid := NULL;
   END IF;
   INSERT INTO `program` (`obs_id`, `project_secret`, `release_id`) 
   SELECT UUID(),projsec,releaseid
   WHERE NOT EXISTS (SELECT id FROM `program` WHERE `project_secret`=projsec LIMIT 1);
   SELECT LAST_INSERT_ID() INTO pid;
-  SELECT `id`,`obs_id` INTO pid,obsid FROM `program` WHERE `project_secret`=projsec;
+  SELECT `id`,`obs_id`,`release_id` INTO pid,obsid,finalreleaseid FROM `program` WHERE `project_secret`=projsec;
 END //
 DELIMITER ;
 
@@ -98,14 +98,14 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE RegisterV2(IN projsec VARCHAR(255), IN asthash VARCHAR(255), IN releaseid VARCHAR(255), 
-                          OUT obsid VARCHAR(255), OUT vn VARCHAR(255), OUT astchanged BOOLEAN)
+                          OUT obsid VARCHAR(255), OUT vn VARCHAR(255), OUT astchanged BOOLEAN, OUT finalreleaseid VARCHAR(255))
 BEGIN
   START TRANSACTION;
     SET @programid := 0;
     SET @versionid := 0;
     SET @versionrows := 0;
     SET @astchanged := false;
-    CALL GetObsIdByReleaseId(projsec, releaseid, @programid, obsid); 
+    CALL GetObsIdByReleaseId(projsec, releaseid, @programid, obsid, finalreleaseid); 
     CALL GetVersion(@programid, asthash, @versionid, vn, @versionrows); 
     IF (@versionrows = 1) THEN
       UPDATE program SET latest_version_id=@versionid WHERE id=@programid;
