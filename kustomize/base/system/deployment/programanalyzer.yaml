@@ -26,12 +26,12 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/programanalyzer:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 100
           runAsGroup: 1000
         name: programanalyzer

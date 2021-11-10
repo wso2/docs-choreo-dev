@@ -28,7 +28,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -76,6 +75,7 @@ spec:
             name: env-frontend
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
         securityContext:
+          allowPrivilegeEscalation: false
           runAsUser: 101
           runAsGroup: 101
         name: frontend
