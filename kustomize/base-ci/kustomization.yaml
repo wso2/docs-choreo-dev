@@ -66,7 +66,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter
   newTag: main-97767f62de0d9ec52137be6e5584e735a7038182
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-step-aggregator
-  newTag: main-283d865636b92df6e2cc5bd9c18fa3641d7d92e0
+  newTag: main-b6e182f45385902dcb89a6dff65667646aece882
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-step-enforcer
   newTag: main-1193e1c9088eb735667cb54bf5da4a60ef57c4cc
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-subscriptions
