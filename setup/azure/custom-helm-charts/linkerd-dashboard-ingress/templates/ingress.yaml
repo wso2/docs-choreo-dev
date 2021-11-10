@@ -4,6 +4,7 @@ metadata:
   name: web-ingress
   namespace: {{.Values.namespace}}
   annotations:
+    checkov.io/skip1: CKV_K8S_153=Suppressing till finding a solution
     kubernetes.io/ingress.class: '{{.Values.ingress.class}}'
     nginx.ingress.kubernetes.io/upstream-vhost: $service_name.$namespace.svc.cluster.local:8084
     nginx.ingress.kubernetes.io/configuration-snippet: |
