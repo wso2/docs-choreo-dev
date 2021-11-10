@@ -27,7 +27,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -67,6 +66,7 @@ spec:
                 name: env-datacollector
           image: choreocontrolplane.azurecr.io/choreoipaas/data-collector:latest
           securityContext:
+            allowPrivilegeEscalation: false
             runAsUser: 10500
             runAsGroup: 10500
             readOnlyRootFilesystem: true
