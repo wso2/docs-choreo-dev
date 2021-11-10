@@ -40,3 +40,8 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
     verbs: ["*"]
+  - apiGroups:
+      - choreo.wso2.com
+    resources:
+      - configurables
+    verbs: ["*"]
