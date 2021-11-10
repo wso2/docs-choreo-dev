@@ -2,8 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../dataplane/choreodp-system/deployment
-  - ../../dataplane/choreodp-system/hpa
-  - ../../dataplane/choreodp-system/rbac
+  - ../../dataplane/choreodp-system/deployment/dp-mizzen-agent.yaml
+  - ../../dataplane/choreodp-system/hpa/dp-mizzen-agent.yaml
+  - ../../dataplane/choreodp-system/rbac/dp-mizzen-agent-cr.yaml
+  - ../../dataplane/choreodp-system/rbac/dp-mizzen-agent-crb.yaml
+  - ../../dataplane/choreodp-system/rbac/dp-mizzen-agent-sa.yaml
 
 namespace: choreodp-system
