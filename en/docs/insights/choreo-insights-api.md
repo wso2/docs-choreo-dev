@@ -128,6 +128,15 @@ Data filter
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>listOrganizations</strong></td>
+<td valign="top">[<a href="#organization">Organization</a>]</td>
+<td>
+
+Fetches all the organizations of a user.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>listEnvironments</strong></td>
 <td valign="top">[<a href="#environment">Environment</a>]</td>
 <td>
@@ -2541,6 +2550,59 @@ e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 <td>
 
 Represents the latency (95th percentile) time in milliseconds (ms).
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### Organization
+
+Represents an organization.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The organization ID.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#id">ID</a>!</td>
+<td>
+
+The organization UUID.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>handle</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The organization handle name.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The organization name.
 
 </td>
 </tr>
