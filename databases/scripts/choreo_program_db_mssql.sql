@@ -379,6 +379,48 @@ END
 END
 GO
 
+/****** Object:  StoredProcedure [dbo].[GetObsIdByProjectSecret]     Script Date: 11/11/2021 4:36:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetObsIdByProjectSecret]
+   @projsec nvarchar(255),
+   @pid int  OUTPUT,
+   @obsid nvarchar(255)  OUTPUT,
+   @releaseid nvarchar(255)  OUTPUT
+AS
+BEGIN
+
+      SET  XACT_ABORT  ON
+
+      SET  NOCOUNT  ON
+
+      SET @obsid = NULL
+
+      SET @pid = NULL
+
+      SET @releaseid = NULL
+
+      INSERT dbo.program(obs_id, project_secret)
+SELECT newid(), @projsec
+      WHERE NOT EXISTS
+            (
+               SELECT TOP (1) program.id
+               FROM dbo.program
+               WHERE program.project_secret = @projsec
+            )
+
+SELECT @pid = scope_identity()
+
+SELECT @pid = program.id, @obsid = program.obs_id, @releaseid = program.release_id
+FROM dbo.program
+WHERE program.project_secret = @projsec
+
+END
+GO
+
 /****** Object:  StoredProcedure [dbo].[Handshake]    Script Date: 11/11/2021 4:36:09 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -422,47 +464,5 @@ END
 
       WHILE @@TRANCOUNT > 0
          COMMIT
-END
-GO
-
-/****** Object:  StoredProcedure [dbo].[GetObsIdByProjectSecret]     Script Date: 11/11/2021 4:36:09 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [dbo].[GetObsIdByProjectSecret]
-   @projsec nvarchar(255),
-   @pid int  OUTPUT,
-   @obsid nvarchar(255)  OUTPUT,
-   @releaseid nvarchar(255)  OUTPUT
-AS
-BEGIN
-
-      SET  XACT_ABORT  ON
-
-      SET  NOCOUNT  ON
-
-      SET @obsid = NULL
-
-      SET @pid = NULL
-
-      SET @releaseid = NULL
-
-      INSERT dbo.program(obs_id, project_secret)
-SELECT newid(), @projsec
-      WHERE NOT EXISTS
-            (
-               SELECT TOP (1) program.id
-               FROM dbo.program
-               WHERE program.project_secret = @projsec
-            )
-
-SELECT @pid = scope_identity()
-
-SELECT @pid = program.id, @obsid = program.obs_id, @releaseid = program.release_id
-FROM dbo.program
-WHERE program.project_secret = @projsec
-
 END
 GO
