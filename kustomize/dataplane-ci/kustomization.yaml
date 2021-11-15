@@ -5,10 +5,10 @@ resources:
 - ../dataplane/
 images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter
-  newTag: choreo-7e8e147ff4344d10fdd5b58ae9538a0e340afe7b
+  newTag: choreo-4d8868caf656ea1ec99acc26c2917e4c88da7965
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer
-  newTag: choreo-7e8e147ff4344d10fdd5b58ae9538a0e340afe7b
+  newTag: choreo-4d8868caf656ea1ec99acc26c2917e4c88da7965
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router
-  newTag: choreo-7e8e147ff4344d10fdd5b58ae9538a0e340afe7b
+  newTag: choreo-4d8868caf656ea1ec99acc26c2917e4c88da7965
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen-agent
   newTag: main-b17c18693c58f365557d81b8a002297e97650f9d
