@@ -39,7 +39,6 @@ resources:
   - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - billing.yaml
-  - billing-console.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25

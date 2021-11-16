@@ -37,4 +37,3 @@ resources:
   - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - billing.yaml
-  - billing-console.yaml
