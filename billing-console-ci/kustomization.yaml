@@ -3,3 +3,6 @@ kind: Kustomization
 
 resources:
 - ../billing-console/
+images:
+- name: choreocontrolplane.azurecr.io/choreoipaas/billing-console
+  newTag: billing-52e772b3be513f94cfa8ed48a062d68a4bc099f7
