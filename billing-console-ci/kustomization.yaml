@@ -13,7 +13,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/billing-console
   newTag: billing-52e772b3be513f94cfa8ed48a062d68a4bc099f7
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console-next
-  newTag: next-9a333f43bedb33e7f080e68759a3716394b153cf
+  newTag: next-4fe845c5b3b8a1c8cad1d8ea53e946867b368470
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
   newTag: master-27b2f65c578a9c66c6a1893d8c2f515585b258f0
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
