@@ -4,6 +4,12 @@ kind: Kustomization
 resources:
 - ../billing-console/
 images:
+- name: choreocontrolplane.azurecr.io/choreoipaas/api-server
+  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
+- name: choreocontrolplane.azurecr.io/choreoipaas/app-deployer
+  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
+- name: choreocontrolplane.azurecr.io/choreoipaas/app-service
+  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
 - name: choreocontrolplane.azurecr.io/choreoipaas/billing-console
   newTag: billing-52e772b3be513f94cfa8ed48a062d68a4bc099f7
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console-next
@@ -12,3 +18,5 @@ images:
   newTag: master-27b2f65c578a9c66c6a1893d8c2f515585b258f0
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
   newTag: master-44dcfbc4b866479ea441519fb5f06f61698cf920
+- name: choreocontrolplane.azurecr.io/choreoipaas/workspace-manager
+  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
