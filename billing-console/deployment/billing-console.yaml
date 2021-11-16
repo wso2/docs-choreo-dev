@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Liveness probe not required
+    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
+    checkov.io/skip3: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_37=Temporarily suppressing till fixing
+  labels:
+    choreo.component: billing-console
+  name: billing-console
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: billing-console
+  template:
+    metadata:
+      labels:
+        choreo.component: billing-console
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/billing-console:latest
+          name: billing-console
+          envFrom:
+            - configMapRef:
+                name: env-billing-console
+          ports:
+            - containerPort: 8080
+              name: bil-con-port
+              protocol: TCP
+          securityContext:
+            runAsUser: 101
+            runAsGroup: 101
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+      serviceAccountName: sa-choreo-default
