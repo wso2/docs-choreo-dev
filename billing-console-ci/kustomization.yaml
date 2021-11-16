@@ -16,6 +16,8 @@ images:
   newTag: next-4fe845c5b3b8a1c8cad1d8ea53e946867b368470
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
   newTag: master-27b2f65c578a9c66c6a1893d8c2f515585b258f0
+- name: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager
+  newTag: master-b22e9136e2be2a6997a93a36bad6e64d176986eb
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
   newTag: master-44dcfbc4b866479ea441519fb5f06f61698cf920
 - name: choreocontrolplane.azurecr.io/choreoipaas/workspace-manager
