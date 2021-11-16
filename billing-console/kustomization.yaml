@@ -6,7 +6,7 @@ resources:
 - hpa
 - service
 
-namespace: dev-choreo-system
+namespace: choreo-system
 
 commonLabels:
   app: choreo-control-plane
