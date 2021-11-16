@@ -10,3 +10,5 @@ images:
   newTag: next-43bb42123e4db5dc3eb09c53a2ea7ae7a0a1066d
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
   newTag: master-27b2f65c578a9c66c6a1893d8c2f515585b258f0
+- name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
+  newTag: master-44dcfbc4b866479ea441519fb5f06f61698cf920
