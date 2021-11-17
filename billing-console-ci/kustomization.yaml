@@ -11,7 +11,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-service
   newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
 - name: choreocontrolplane.azurecr.io/choreoipaas/billing-console
-  newTag: billing-404f7085d40f80054f25a6a12be775bbe7a9f044
+  newTag: billing-53156b43ce9289b2153bdd55e9c4accbf860a175
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal
   newTag: main-bb2260d0a6ab33ea2cf7ca77e8a9ca8cbcbd34ba
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder
