@@ -17,7 +17,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder
   newTag: master-ec1bbcd17e767bca6d4d3cb04418ccb3613c5642
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-console-next
-  newTag: next-4801bece9b6e73e92730adfe54e1ea51de776b24
+  newTag: next-edc08303f20681a30827beee9abbb288cf07efe1
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-graphql
   newTag: main-c18bfb72f09dc3cb610a504c53daa25b5ff94498
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
