@@ -23,7 +23,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-graphql
   newTag: main-c18bfb72f09dc3cb610a504c53daa25b5ff94498
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd
-  newTag: master-803b502fa765805ef9904e9bbf542a344f7c1c79
+  newTag: master-f8171ca53e92ea333e8971f455a188286f663cba
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager
   newTag: master-b22e9136e2be2a6997a93a36bad6e64d176986eb
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
