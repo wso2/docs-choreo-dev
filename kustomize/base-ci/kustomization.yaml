@@ -106,7 +106,7 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-project-manager
   newTag: master-b22e9136e2be2a6997a93a36bad6e64d176986eb
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder
-  newTag: master-44dcfbc4b866479ea441519fb5f06f61698cf920
+  newTag: master-27e2ecb764887592229dedf3647f12b4da0510f4
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-secret-manager
   newTag: master-90c7e2fac3da526bd61021d54348d4fe3b300f05
 - name: choreocontrolplane.azurecr.io/choreoipaas/dp-utility-api
