@@ -132,7 +132,7 @@ fi
 successful="true"
 # shellcheck disable=SC2154
 if [[ "${successful}" == "true" ]]; then
-    echo "Choreo control plane successfully installed"
+    echo "Choreo Routing cluster has been successfully installed"
 fi
 if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"
