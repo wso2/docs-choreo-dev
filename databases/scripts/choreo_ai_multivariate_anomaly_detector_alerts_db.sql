@@ -13,3 +13,6 @@ CREATE TABLE MULTIVARIATE_ANOMALY_ALERTS
  notification_opened bit NOT NULL,
  anomaly_count smallint NOT NULL  
 );
+    GO
+ALTER TABLE [dbo].[MULTIVARIATE_ANOMALY_ALERTS] ADD release_id varchar(100) DEFAULT NULL, env_name varchar(100) DEFAULT NULL
+    GO
