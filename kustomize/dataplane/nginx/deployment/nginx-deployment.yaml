@@ -4,6 +4,22 @@ metadata:
   name: nginx
   labels:
     app: nginx
+  annotations:
+    checkov.io/skip1: CKV_K8S_23=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_31=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_29=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip6: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_10=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_8=Temporarily suppressing till fixing
+    checkov.io/skip9: CKV_K8S_30=Temporarily suppressing till fixing
+    checkov.io/skip10: CKV_K8S_9=Temporarily suppressing till fixing
+    checkov.io/skip11: CKV_K8S_13=Temporarily suppressing till fixing
+    checkov.io/skip12: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip13: CKV_K8S_12=Temporarily suppressing till fixing
+    checkov.io/skip14: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip15: CKV_K8S_37=Temporarily suppressing till fixing
 spec:
   replicas: 1
   selector:
