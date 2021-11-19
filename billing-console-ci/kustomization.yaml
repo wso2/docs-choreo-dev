@@ -5,11 +5,11 @@ resources:
 - ../billing-console/
 images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/api-server
-  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
+  newTag: master-ff49270c0642ac566629b806eee5af97ca803a78
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-deployer
-  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
+  newTag: master-ff49270c0642ac566629b806eee5af97ca803a78
 - name: choreocontrolplane.azurecr.io/choreoipaas/app-service
-  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
+  newTag: master-ff49270c0642ac566629b806eee5af97ca803a78
 - name: choreocontrolplane.azurecr.io/choreoipaas/billing-console
   newTag: billing-967f7cdec57f9771e165c1ee512e58ea37a79bc7
 - name: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal
@@ -31,4 +31,4 @@ images:
 - name: choreocontrolplane.azurecr.io/choreoipaas/email-service
   newTag: master-e1a3312a89b5bd9a3711f92f72b887df1cbfe68c
 - name: choreocontrolplane.azurecr.io/choreoipaas/workspace-manager
-  newTag: master-ca0e37588c8746c6ee5ac14f4a6c91d33a8c954c
+  newTag: master-ff49270c0642ac566629b806eee5af97ca803a78
