@@ -1645,6 +1645,7 @@ CREATE TABLE [dbo].[permission]
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
     [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLINNG')),
+    [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [parent_id] [int] DEFAULT NULL,
@@ -1677,6 +1678,22 @@ CREATE TABLE [dbo].[role_member_mapping]
     CONSTRAINT role_member_mapping_role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
     CONSTRAINT role_member_mapping_user_id_fk FOREIGN KEY (user_id) REFERENCES [user](id) ON DELETE CASCADE,
     CONSTRAINT unique_role_member_mapping   UNIQUE(role_id,user_id)
+)
+
+CREATE TABLE [dbo].[role_tag]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [role_id] [int] NOT NULL,
+    [organization_id] [int] NOT NULL,
+    [handle][varchar](255) NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [created_by] [int] NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT tag_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id) ON DELETE CASCADE,
+    CONSTRAINT tag_role_id_fk FOREIGN KEY (role_id) REFERENCES [role](id) ON DELETE CASCADE,
+    CONSTRAINT tag_role_key_created_by_fk FOREIGN KEY (created_by) REFERENCES [user](id),
+    CONSTRAINT unique_role_tag_mapping   UNIQUE(role_id,handle)
 )
 
 /****** Object:  Trigger [dbo].[permission_UpdateTimeTrigger] ******/
@@ -1737,6 +1754,26 @@ BEGIN
 END
 GO
 ALTER TABLE [dbo].[role_member_mapping] ENABLE TRIGGER [role_member_mapping_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[role_tag_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[role_tag_UpdateTimeTrigger] ON [dbo].[role_tag]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [role_tag] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[role_tag] ENABLE TRIGGER [role_tag_UpdateTimeTrigger]
     GO
 
 /****** Add default Permission list ******/
