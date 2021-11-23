@@ -75,8 +75,8 @@ echo "--- Setting up IDP Nginx Ingress Controller.."
 echo "--- Creating namespace ${IDP_NAMESPACE}-nginx-ingress..."
 kubectl create namespace "${IDP_NAMESPACE}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
-kubectl annotate namespace "${IDP_NAMESPACE}" linkerd.io/inject=enabled
-kubectl annotate namespace "${IDP_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
+#kubectl annotate namespace "${IDP_NAMESPACE}" linkerd.io/inject=enabled
+#kubectl annotate namespace "${IDP_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
 
 echo "--- Installing IDP Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
