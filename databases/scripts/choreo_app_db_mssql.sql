@@ -1797,3 +1797,19 @@ INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('bi
 INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing subscription view','billing:subscription_view','BILLINNG','view billing subscription');
 INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing payment method create','billing:payment_method_create','BILLINNG','create billing payment method');
 INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing payment method view','billing:payment_method_view','BILLINNG','view billing payment method');
+ALTER TABLE [dbo].[configuration_mount] DROP CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
+    GO
+ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_key_unique] UNIQUE NONCLUSTERED ON DELETE CASCADE
+    (
+    [component_data_uuid] ASC,
+    [config_key_name] ASC
+    )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    GO
+ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
+    GO
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+ALTER TABLE [dbo].[configuration_mount] ADD is_required BIT NOT NULL DEFAULT 0
+    GO
