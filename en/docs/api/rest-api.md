@@ -14,7 +14,6 @@ Choreo’s strong API management capabilities and enterprise integration capabil
 
 When you create a REST API component, similar to all other components, it  will be created in a private GitHub repo for your user account.  You can then manage changes to your API via Git. The changes you make will be visible in the Choreo UI giving you a clear visual representation of the Git change log of your implementation. 
 
-
 ## Deploy your API 
 
 The REST API needs to be deployed to make your API invocable.  Deploying an API in Choreo will checkout the API’s source from your private Github repository, build it, and push it to a docker container, and host it on Kubernetes. 
@@ -27,13 +26,11 @@ Choreo allows you to manage your API’s lifecycle visually. This helps you mana
 
 ## Document your API 
 API documentation helps API subscribers to understand the functionality of the API and API publishers to market their APIs better and sustain competition.In Choreo,  you can add different types of documentation from various sources. All documents created in Choreo have unique URLs to help improve SEO support.
-​​
 
 ## Secure your API
 API authentication is a way of protecting API access from unidentified or anonymous access. It ensures that the API is secured and accessible only by the consumers who prove their identity and whose identities are found within Choreo.
 
 Choreo by default for REST APIs uses OAuth2 authentication. This means that APIs created in Choreo can be invoked using an OAuth2 token. Chore allows you to enable or disable security on a resource level giving you more flexibility to your API implementation. 
-
 
 ## Rate limit your API
 Rate limiting allows you to limit the number of successful hits to an API during a given period, typically in cases such as the following:
@@ -69,5 +66,3 @@ Developers need to select a business plan for each API subscription. The busines
 
 ### Test APIs¶
 Before using an API for development, the API consumer may want to test it’s capabilities. Choreo provides in-built capabilities to test the APIs using the UI.
-
-
