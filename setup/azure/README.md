@@ -33,6 +33,7 @@ EOF
 
 ```bash
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
