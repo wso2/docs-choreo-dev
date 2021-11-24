@@ -5,6 +5,7 @@
 -- herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
+-- TODO: Remove the DEFAULT constraint in the "is_internal" column when the addTier method is modified
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='tier' and xtype='U')
 BEGIN
     CREATE TABLE tier (
@@ -13,7 +14,7 @@ BEGIN
         description VARCHAR(1024) NOT NULL,
         cost INTEGER NOT NULL,
         created_at BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
-        is_internal BIT NOT NULL,
+        is_internal BIT NOT NULL DEFAULT 1,
         PRIMARY KEY (ID)
     );
 END
@@ -143,7 +144,7 @@ INSERT INTO tier (id,name,description,cost,created_at,is_internal) VALUES
      (N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'Individual',N'Tier for Individual users',50,1627639797657,0),
 	 (N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'Team',N'Tier for Team users',395,1627639797657,0),
 	 (N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'Group',N'Tier for Group users',995,1627639797657,0),
-     (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'Enterprise',N'Tier for Enterprise users',0,1627639797657,0);
+     (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'Enterprise',N'Tier for Enterprise users',0,1627639797657,1);
 GO
 
 INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
