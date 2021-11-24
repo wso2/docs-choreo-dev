@@ -9,5 +9,8 @@ helm repo update
 helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --namespace csi-secret-store-driver --version 0.0.16
 
 ################ Install CSI Secret Store Class Secret ########
+kubectl create namespace "${DP_SYSTEM_NAMESPACE}"
+kubectl create secret generic csi-secret-store-azure --from-literal clientid="${SYSTEM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${DP_SYSTEM_NAMESPACE}"
+
 kubectl create namespace "${APIM_NAMESPACE}"
 kubectl create secret generic csi-secret-store-azure --from-literal clientid="${APIM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${APIM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${APIM_NAMESPACE}"
