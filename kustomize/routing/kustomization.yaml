@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - nginx
   - choreo-nginx
+  - choreodp-system
 
 commonLabels:
   app: choreo-routing
