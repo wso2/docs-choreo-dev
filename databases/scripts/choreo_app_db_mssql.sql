@@ -1777,26 +1777,27 @@ ALTER TABLE [dbo].[role_tag] ENABLE TRIGGER [role_tag_UpdateTimeTrigger]
     GO
 
 /****** Add default Permission list ******/
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('api manage','apim:api_manage','APIM-PUBLISHER','manage api');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('tier manage','apim:tier_manage','APIM-PUBLISHER','manage api tier');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('subscription manage','apim:subscription_manage','APIM-PUBLISHER','api subscription manage');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api manage','apim:api_manage','APIM-PUBLISHER','manage api');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('tier manage','apim:tier_manage','APIM-PUBLISHER','manage api tier');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('subscription manage','apim:subscription_manage','APIM-PUBLISHER','api subscription manage');
 
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('api subscribe','apim:subscribe', 'APIM-SUBSCRIBER','subscribe apis');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('app manage','apim:app_manage', 'APIM-SUBSCRIBER','manage applications');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('sub manage','apim:sub_manage', 'APIM-SUBSCRIBER','manage api subscriptions');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('app import_export','apim:app_import_export', 'APIM-SUBSCRIBER','app import export');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('api key','apim:api_key', 'APIM-SUBSCRIBER','api key gen');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api subscribe','apim:subscribe', 'APIM-SUBSCRIBER','subscribe apis');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('app manage','apim:app_manage', 'APIM-SUBSCRIBER','manage applications');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('sub manage','apim:sub_manage', 'APIM-SUBSCRIBER','manage api subscriptions');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('app import_export','apim:app_import_export', 'APIM-SUBSCRIBER','app import export');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api key','apim:api_key', 'APIM-SUBSCRIBER','api key gen');
 
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('apim:admin','apim:admin','APIM-ADMIN','apim admin');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('apim:admin','apim:admin','APIM-ADMIN','apim admin');
 
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing tier view','billing:tier_view','BILLINNG','view billing tier');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing org create','billing:org_create','BILLINNG','create billing org');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing org view','billing:org_view','BILLINNG','view billing org');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing invoice view','billing:invoice_view','BILLINNG','view billing invoice');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing subscription create','billing:subscription_create','BILLINNG','create billiling subscription');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing subscription view','billing:subscription_view','BILLINNG','view billing subscription');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing payment method create','billing:payment_method_create','BILLINNG','create billing payment method');
-INSERT INTO permission (handle,display_name,domain_area,description) VALUES ('billing payment method view','billing:payment_method_view','BILLINNG','view billing payment method');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing tier view','billing:tier_view','BILLINNG','view billing tier');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing org create','billing:org_create','BILLINNG','create billing org');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing org view','billing:org_view','BILLINNG','view billing org');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing invoice view','billing:invoice_view','BILLINNG','view billing invoice');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing subscription create','billing:subscription_create','BILLINNG','create billiling subscription');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing subscription view','billing:subscription_view','BILLINNG','view billing subscription');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing payment method create','billing:payment_method_create','BILLINNG','create billing payment method');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing payment method view','billing:payment_method_view','BILLINNG','view billing payment method');
+
 ALTER TABLE [dbo].[configuration_mount] DROP CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
     GO
 ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_key_unique] UNIQUE NONCLUSTERED ON DELETE CASCADE
