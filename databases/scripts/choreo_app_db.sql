@@ -432,3 +432,4 @@ ALTER TABLE `configuration_mount` DROP COLUMN `organization_id`,
 ALTER TABLE `configuration_mount` ADD COLUMN `component_data_uuid` VARCHAR(50) NOT NULL AFTER `config_key_name`;
 ALTER TABLE `configuration_mount` ADD CONSTRAINT `component_data_uuid_fk` FOREIGN KEY (component_data_uuid) REFERENCES component_data (uuid),
     ADD UNIQUE KEY `component_data_uuid_key_unique` (`component_data_uuid`,`config_key_name`);
+ALTER TABLE `configuration_mount` ADD COLUMN `is_required` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_system`;

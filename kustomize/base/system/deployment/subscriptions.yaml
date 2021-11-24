@@ -48,6 +48,14 @@ spec:
                 secretKeyRef:
                   name: secret-asb-token
                   key: ASB_AUTH_TOKEN
+            - name: CHOREO_STEP_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-subscriptions
+                  key: CHOREO_STEP_DB_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: env-subscriptions                  
           ports:
             - containerPort: 9090
               name: grpc-port
@@ -97,7 +105,7 @@ spec:
               readOnly: true
             - name: secret-asb-token
               mountPath: "/mnt/csi/secret-asb-token"
-              readOnly: true            
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config

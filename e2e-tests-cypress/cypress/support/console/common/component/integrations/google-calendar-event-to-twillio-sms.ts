@@ -10,6 +10,7 @@ export class GCTwillioIntegration {
 
 
     static configureSettings(email: string, twilioSID: string, twilioAuth: string, senderNumber: string, recipientNumber: string) {
+        cy.get('[data-testid="setting-up-workspace"]').should('not.exist');
         cy.get('[data-testid="settings-btn"]').should('be.visible').click();
         cy.wait(5000)
         cy.get('[data-testid="google-calendar-connect-btn"] button').click({ force: true });
