@@ -1,12 +1,22 @@
 # Webhooks
 
-A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response. Choreo allows you to create webhooks for platforms such as Github, Slack, and Google Calendar using the integrated pro-code or low-code editor.
-
-## Develop and publish a webhook
+A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response. Choreo allows you to create webhooks for platforms such as Github, Slack, and Google Calendar using the integrated pro-code or low-code editor. For example, you can design a webhook to notify a Github user via mail each time an issue is assigned to him/her.
 
 ### Develop your webhook
 
 Choreo provides strong integration capabilities that allow you incorporate logical flows into your webhook. You can create a webhook from scratch using the low-code editor that helps you focus on the logic of the process you are defining instead of on the accuracy of the code you are writing, while leveraging the capabilities of programming languages.
+
+Lets consider the example scenario of recording newly created github issues in a Google spreadsheet. For this, we need to implement a webhook that gets triggered whenever a new issue is created in a specific Github repository. In this scenario, Choreo manages the majority of work relating to the accuracy of the coding while you simply need to write the logic for carrying out the relevant process.
+
+When you create a webhook component, you can select the event source (i.e. Github) and the event channel. As shown below.
+
+![Select event source](../assets/img/webhooks/select-event-source.png)
+
+Once you select them, Choreo creates the skeleton of the code which looks as shown below.
+
+<TO DO: Add Image>
+
+You can implement the logic and test it locally in the code server. After that you can commit and push the code changes to the Github repository that has been created for your webhook component, and go back to the Choreo Console to deploy it.
 
 You can also use the Choreo built-in connectors in the webhook configuration.
 
