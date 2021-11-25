@@ -1,38 +1,28 @@
 # Webhooks
 
-!!! info
-    This section will describe Webhooks, its concepts, and its usage concerns/concepts in Choreo.
+A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response. Choreo allows you to easily design, develop, and manage webhooks using the integrated pro-code or low-code editor.
 
-## Introduction
+## Develop and publish a webhook
 
-A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response.
+### Develop your webhook
 
-A project can use a webhook to receive information from another project or an external application in order to execute a process. A project can also trigger another project or an external application by sending information to it via a webhook.
+Choreo provides strong integration capabilities that allow you incorporate logical flows into your webhook. You can create a webhook from scratch using the low-code editor that helps you focus on the logic of the process you are defining instead of on the accuracy of the code you are writing, while leveraging the capabilities of programming languages.
 
-## Design webhooks
+You can also use the Choreo built-in connectors in the webhook configuration.
 
-### Prerequisites
+### Deploy your webhook
 
-You need to create a project to contain the webhook.
+A webhook needs to be deployed to be able to receive information that triggers the defined process. Deploying a webhook in Choreo results in checking out the API’s source from your private Github repository, building it, pushing it to a Docker container, and hosting it on Kubernetes.
 
-### Create webhooks
+### Test your webhook
 
-You can create a webhook by following the instructions in the UI
+Testing your webhook ensures that it functions as expected, and is therefore highly beneficial for a smooth user experience. To test a webhook, you can use the integrated API console, generate a cURL command, or integrate Postman.
 
-!!! tip "Instructions in the UI"
-    
-    1. In the Choreo console, open the **Projects** page, and click on the project to which you want to add a webhook.
-    2. Click **Add Component**.
-    3. Click **Webhook**.
-    4. Add a name for the webhook and select the trigger type.
-    5. Enter other information as relevant, depending on the trigger type you selected.
-    6. Click **Create**.
-    7. Once the webhook is created, click **Develop**.
-    8. To add more information to the webhook, click **Edit with VS Code Online**.
-    9. Open the code server in a new tab. In the left navigator of the web page that opens, click on **webhook.bal**. This opens the low-code diagram of the webhook.
-    10. Make the required changes to the webhook by editing the diagram. If required, you can also open the file in the code view, and update it by editing the code.
+### Observe your webhook
 
-## Use webhooks
+You can observe the performance of your webhook in terms of the throughput (i.e., the number of requests processed within a specific time duration) and latency (the amount of time taken to process one request). The observability view allows you to visualize the performance statistics via interactive graphs.
+
+## Use your webhook
 
 A project can use a webhook to receive data and activate a trigger that causes specific code to be executed based on that data.
 
