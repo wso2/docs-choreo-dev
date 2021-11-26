@@ -22,7 +22,9 @@ To create the resource to invoke the service, follow this procedure:
 
     ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
 
-5. Click **Save API**. 
+5. Click **Advanced** and select **Add Caller** under the **Advanced** section.
+
+6. Click **Save API**. 
     
 ## Step 2: Get COVID-19 data
 
@@ -30,7 +32,7 @@ Follow this procedure to connect to the COVID-19 API and retrieve the data:
 
 1. Click **API Calls** and then select **COVID-19 API**.
 2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
-3. In the **Operation** drop-down list, select **Country Status** and enter these details:
+3. In the **Operation** drop-down list, select **getStatusByCountry** and enter these details:
 
     | **Field**                  | **Value**         |
     |----------------------------|-------------------|
@@ -45,9 +47,9 @@ Follow this procedure to connect to the COVID-19 API and retrieve the data:
 
         | **Field**      | **Value**                     |
         |----------------|-------------------------------|
-        | **Type**       | `var`                         |
+        | **Type**       | `int`                         |
         | **Name**       | `totalCases`                  |
-        | **Expression** | `statusByCountry?.cases ?: 0d`|
+        | **Expression** | `<int>statusByCountry.cases`  |
 
     3. Click **Save**.
     
@@ -58,7 +60,7 @@ Follow this procedure to connect to the World Bank API and retrieve the populati
 1. Click the last **+** icon in the low-code diagram.
 2. Click **API Calls** and then select **World Bank API**.
 3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Endpoint Name** and click **Continue to Invoke API**.
-4. In the **Operation** drop-down list, select **Get Country Population** and enter these details: 
+4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter these details: 
 
     | **Field**                  | **Value**            |
     |----------------------------|----------------------|
@@ -74,8 +76,8 @@ Follow this procedure to connect to the World Bank API and retrieve the populati
         | **Field**      | **Value**                                         |
         |----------------|---------------------------------------------------|
         | **Type**       | `int`                                             |
-        | **Name**       | `population`                                      |
-        | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
+        | **Name**       | `populationMillions`                                      |
+        | **Expression** | `(populationByCountry[0].value ?: 0) / 1000000`  |
 
     3. Click **Save**.
     
@@ -88,9 +90,9 @@ In this step, you'll calculate the total COVID-19 case count per million in the 
 
     | **Field**      | **Value**                     |
     |----------------|-------------------------------|
-    | **Type**       | `var`                         |
+    | **Type**       | `decimal`                     |
     | **Name**       | `totalCasesPerMillion`        |
-    | **Expression** | `totalCases / population`     |
+    | **Expression** | `<decimal>(totalCases / populationMillions)` |
 
 3. Click **Save**.
 
@@ -106,7 +108,7 @@ To build the JSON payload to be sent as the response and then to send the respon
     |----------------|-------------------------------|
     | **Type**       | `json`                        |
     | **Name**       | `payload`                     |
-    | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}`     |
+    | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}`|
 
 2. Click **Save**.
     
@@ -136,11 +138,11 @@ service / on new http:Listener(8090) {
 
         covid19:Client covid19Client = check new ();
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
-        var totalCases = statusByCountry?.cases ?: 0d;
-        worldbank:Client worldbankClient = check new ();
-        worldbank:CountryPopulation[] populationByCountry = check worldbankClient->getPopulationByCountry(country);
-        int population = (populationByCountry[0]?.value ?: 0) / 1000000;
-        var totalCasesPerMillion = totalCases / population;
+        int totalCases = <int>statusByCountry.cases;
+        worldbank:Client worldBankClient = check new ();
+        worldbank:IndicatorInformation[] populationByCountry = check worldBankClient->getPopulationByCountry(country);
+        int populationMillions = (populationByCountry[0].value ?: 0) / 1000000;
+        decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
         json payload = {
             country: country,
             totalCasesPerMillion: totalCasesPerMillion
