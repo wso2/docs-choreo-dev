@@ -44,5 +44,5 @@ Choreo allows you to expose your unmanaged API through a well-managed REST API p
 Managing your API involves managing the lifecycle of the API, adding documentation, applying security, and applying rate limits.  
 
 !!! note
-    This section is the same as REST API. I feel like it’s good to point to that content, or we can re-use the content and visually duplicate the content on both pages. 
+This section is the same as REST API. I feel like it’s good to point to that content, or we can re-use the content and visually duplicate the content on both pages. 
 
