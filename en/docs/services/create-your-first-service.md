@@ -22,7 +22,9 @@ To create the resource to invoke the service, follow this procedure:
 
     ![Resource configuration](../assets/img/services/configure-api-trigger.png){.cInlineImage-half}
 
-5. Click **Save API**. 
+5. Click **Advanced** and select **Add Caller** under the **Advanced** section.
+
+6. Click **Save API**. 
     
 ## Step 2: Get COVID-19 data
 
