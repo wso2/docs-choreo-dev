@@ -38,9 +38,9 @@ Follow this procedure to connect to the COVID-19 API and retrieve data:
 
         | **Field**      | **Value**                     |
         |----------------|-------------------------------|
-        | **Type**       | `var`                         |
+        | **Type**       | `int`                         |
         | **Name**       | `totalCases`                  |
-        | **Expression** | `statusByCountry?.cases ?: 0d`|
+        | **Expression** | `<int>statusByCountry.cases`  |
 
     3. Click **Save**.
 
@@ -51,7 +51,7 @@ Follow this procedure to connect to the World Bank API and retrieve population d
 1. Click the last **+** icon in the low-code diagram.
 2. Click **API Calls** and then select **World Bank API**.
 3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
-4. In the **Operation** drop-down list, select **Get Country Population** and enter these details:
+4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter these details:
 
     | **Field**                  | **Value**            |
     |----------------------------|----------------------|
@@ -67,8 +67,8 @@ Follow this procedure to connect to the World Bank API and retrieve population d
         | **Field**      | **Value**                     |
         |----------------|-------------------------------|
         | **Type**       | `int`                         |
-        | **Name**       | `population`                  |
-        | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`|
+        | **Name**       | `populationMillions`                  |
+        | **Expression** | `(populationByCountry[0].value ?: 0) / 1000000`|
 
     3. Click **Save**.
 
@@ -79,11 +79,11 @@ Now let’s calculate the total COVID-19 case count per million based on the COV
 1. Click the last **+** icon in the low-code diagram.
 2. Under **Statements**, select **Variable** and enter these details:
 
-    | **Field**      | **Value**                     |
-    |----------------|-------------------------------|
-    | **Type**       | `var`                         |
-    | **Name**       | `totalCasesPerMillion`        |
-    | **Expression** | `totalCases / population`     |
+    | **Field**      | **Value**                                   |
+    |----------------|---------------------------------------------|
+    | **Type**       | `decimal`                                   |
+    | **Name**       | `totalCasesPerMillion`                      | 
+    | **Expression** | `<decimal>(totalCases / populationMillions)`|
 
 3. Click **Save**.
          
@@ -127,11 +127,11 @@ You have successfully created and configured the integration. It should look som
 
         covid19:Client covid19Client = check new ();
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry("USA");
-        var totalCases = statusByCountry?.cases ?: 0d;
+        int totalCases = <int>statusByCountry.cases;
         worldbank:Client worldBankClient = check new ();
-        worldbank:CountryPopulation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA");
-        int population = (populationByCountry[0]?.value ?: 0) / 1000000;
-        var totalCasesPerMillion = totalCases / population;
+        worldbank:IndicatorInformation[] populationByCountry = check worldBankClient->getPopulationByCountry("USA");
+        int populationMillions = (populationByCountry[0].value ?: 0) / 1000000;
+        decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
         string mailBody = string `Total Cases Per Million : ${totalCasesPerMillion}`;
         sendemail:Client sendemailEndpoint = check new ();
         string sendEmailResponse = check sendemailEndpoint->sendEmail("test@gmail.com", "Total COVID-19 Cases in the USA", 
