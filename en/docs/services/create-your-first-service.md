@@ -30,7 +30,7 @@ Follow this procedure to connect to the COVID-19 API and retrieve the data:
 
 1. Click **API Calls** and then select **COVID-19 API**.
 2. In the **COVID-19 API Connection** window, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
-3. In the **Operation** drop-down list, select **Country Status** and enter these details:
+3. In the **Operation** drop-down list, select **getStatusByCountry** and enter these details:
 
     | **Field**                  | **Value**         |
     |----------------------------|-------------------|
