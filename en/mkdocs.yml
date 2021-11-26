@@ -60,7 +60,7 @@ nav:
       - GraphQL APIs: api/graphql-apis.md
       - gRPC API: api/grpc-api.md
   - API Proxies: api-proxies.md
-  - Triggers: webhooks.md
+  - Webhooks: webhooks.md
   - Scheduled Tasks: scheduled-tasks.md
   - API Management:
       - API Security: manage/api-security.md
