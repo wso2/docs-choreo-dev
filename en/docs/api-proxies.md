@@ -3,8 +3,8 @@
 Choreo allows you to expose an unmanaged API via a REST API proxy. An unmanaged API is usually not straightforward to adopt, poorly documented, improperly authenticated, and lacks access control. You can overcome these shortcomings by fronting your API with a REST API proxy through Choreo. Fronting your unmanaged API by a REST API proxy gives your application the flexibility to make changes to the backend API without affecting the applications that consume them.
 
 Choreo allows you to create a REST API proxy in two ways:
-    - From scratch by using an existing endpoint
-    - By importing an OpenAPI specification
+- From scratch by using an existing endpoint
+- By importing an OpenAPI specification
 
 ### What happens when you create a REST API proxy Component?
 
