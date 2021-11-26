@@ -29,7 +29,7 @@ Choreo allows you to create revisions of a particular version of an API. These r
 ### Revisions
 API proxy Revisions allows you to have more control over the API deployments. Revisions allow you to restore changes done to the API or redeploy the API Proxy in a different environment. API revisions are similar to a checkpoint in time, which means that when you create a revision, it captures the current state of the API proxy. This gives you the ability to restore a previous revision of an API at any point. In addition, even if you want to test out a new run time configuration, this concept provides the ability to test it in an independent Gateway before applying the change to all the Gateway.
 
-!!! info
+!!!info
     At any given time, Choreo maintains a maximum of 5 revisions per API.
 
 
@@ -43,6 +43,6 @@ Apart from the integrated Swagger UI, Choreo provides you with multiple options 
 Choreo allows you to expose your unmanaged API through a well-managed REST API proxy. 
 Managing your API involves managing the lifecycle of the API, adding documentation, applying security, and applying rate limits.  
 
-!!! note
-This section is the same as REST API. I feel like it’s good to point to that content, or we can re-use the content and visually duplicate the content on both pages. 
+!!!note
+    This section is the same as REST API. I feel like it’s good to point to that content, or we can re-use the content and visually duplicate the content on both pages. 
 
