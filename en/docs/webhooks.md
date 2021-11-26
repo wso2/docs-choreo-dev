@@ -1,41 +1,41 @@
 # Webhooks
 
-!!! info
-    This section will describe Webhooks, its concepts, and its usage concerns/concepts in Choreo.
+A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response. Choreo allows you to create webhooks for platforms such as Github, Slack, and Google Calendar using the integrated pro-code or low-code editor. For example, you can design a webhook to notify a Github user via mail each time an issue is assigned to him/her.
 
-## Introduction
+### Develop your webhook
 
-A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response.
+Choreo provides strong integration capabilities that allow you incorporate logical flows into your webhook. You can create a webhook from scratch using the low-code editor that helps you focus on the logic of the process you are defining instead of on the accuracy of the code you are writing, while leveraging the capabilities of programming languages.
 
-A project can use a webhook to receive information from another project or an external application in order to execute a process. A project can also trigger another project or an external application by sending information to it via a webhook.
+Lets consider the example scenario of recording newly created github issues in a Google spreadsheet. For this, we need to implement a webhook that gets triggered whenever a new issue is created in a specific Github repository. In this scenario, Choreo manages the majority of work relating to the accuracy of the coding while you simply need to write the logic for carrying out the relevant process.
 
-## Design webhooks
+When you create a webhook component, you can select the event source (i.e. Github) and the event channel. As shown below.
 
-### Prerequisites
+![Select event source](../assets/img/webhooks/select-event-source.png)
 
-You need to create a project to contain the webhook.
+Once you select them, Choreo creates the skeleton of the code which looks as shown below.
 
-### Create webhooks
+<TO DO: Add Image>
 
-You can create a webhook by following the instructions in the UI
+You can implement the logic and test it locally in the code server. After that you can commit and push the code changes to the Github repository that has been created for your webhook component, and go back to the Choreo Console to deploy it.
 
-!!! tip "Instructions in the UI"
-    
-    1. In the Choreo console, open the **Projects** page, and click on the project to which you want to add a webhook.
-    2. Click **Add Component**.
-    3. Click **Webhook**.
-    4. Add a name for the webhook and select the trigger type.
-    5. Enter other information as relevant, depending on the trigger type you selected.
-    6. Click **Create**.
-    7. Once the webhook is created, click **Develop**.
-    8. To add more information to the webhook, click **Edit with VS Code Online**.
-    9. Open the code server in a new tab. In the left navigator of the web page that opens, click on **webhook.bal**. This opens the low-code diagram of the webhook.
-    10. Make the required changes to the webhook by editing the diagram. If required, you can also open the file in the code view, and update it by editing the code.
+You can also use the Choreo built-in connectors in the webhook configuration.
 
-## Use webhooks
+### Deploy your webhook
+
+A webhook needs to be deployed to be able to receive information that triggers the defined process. Deploying a webhook in Choreo results in checking out the API’s source from your private Github repository, building it, pushing it to a Docker container, and hosting it on Kubernetes.
+
+### Test your webhook
+
+Testing your webhook ensures that it functions as expected, and is therefore highly beneficial for a smooth user experience. To test a webhook, you can use the integrated API console, generate a cURL command, or integrate Postman.
+
+### Observe your webhook
+
+You can observe the performance of your webhook in terms of the throughput (i.e., the number of requests processed within a specific time duration) and latency (the amount of time taken to process one request). The observability view allows you to visualize the performance statistics via interactive graphs.
+
+## Use your webhook
 
 A project can use a webhook to receive data and activate a trigger that causes specific code to be executed based on that data.
 
 - Sending a chat message in a group chat when an event is added in a slack channel.
-- Sending an email to a selected mail account when a new issue is created in a specific Git repository.
-- Updating a Google sheet when a sale is recorded for a  specific product.
+- Generating an alert when a new issue is created in a specific Git repository.
+- Sending a notification when an event is scheduled in a google calendar.
