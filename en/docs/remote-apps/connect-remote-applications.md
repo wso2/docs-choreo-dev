@@ -101,7 +101,7 @@ After sending a few requests, you can proceed to the next step to view the obser
 
 ## Step 5: View observability statistics
 
-To view the observability statistics generated for your remote Ballerina application, click the link provided for observability data in the startup logs of your remote application. As shown in the startup logs generated in [Step 3](step-3-build-the-ballerina-project), the link in this example is `http://console.choreo.dev/observe/app/91e9750f-e2e1-11eb-90ce-de6d84510939/dd9780a8-e2e2-11eb-90ce-de6d84510939`.
+To view the observability statistics generated for your remote Ballerina application, click the link provided for observability data in the startup logs of your remote application. As shown in the startup logs generated in [Step 3](#step-3-build-the-ballerina-project), the link in this example is `http://console.choreo.dev/observe/app/91e9750f-e2e1-11eb-90ce-de6d84510939/dd9780a8-e2e2-11eb-90ce-de6d84510939`.
 
 Observability data is displayed as shown in the example below.
 

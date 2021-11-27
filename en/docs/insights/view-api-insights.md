@@ -125,13 +125,13 @@ The following widgets are available for monitoring errors when you selected **St
     
 - **Proxy Errors**
 
-    Proxy errors heatmap shows the HTTP response codes of errors that are sent to the client by the API Gateway. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+    Proxy errors heat map shows the HTTP response codes of errors that are sent to the client by the API Gateway. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
     
     ![Proxy errors](../assets/img/insights/proxy-error-heatmap.png){.cInlineImage-full}
     
 - **Target Errors**
 
-    Target errors heatmap shows the HTTP response codes of errors that are received by the API Gateway from the backend. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+    Target errors heat map shows the HTTP response codes of errors that are received by the API Gateway from the backend. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
 
      ![Target errors](../assets/img/insights/target-error-heatmap.png){.cInlineImage-full}
     
@@ -231,7 +231,7 @@ To use this page, be sure to configure alerts and have API invocations that trig
 
 ### Reports
 
-The **Reports** page allows you to download monthly usage reports for your system. There are pre-configured reports with system-wide statistics, and a custom report generator to generate reports based on a subset of APIs/applications.
+The **Reports** page allows you to download monthly usage reports for your system. There are preconfigured reports with system-wide statistics, and a custom report generator to generate reports based on a subset of APIs/applications.
 
 ![Report page](../assets/img/insights/report-page-full.png){.cInlineImage-full}
 
@@ -277,10 +277,10 @@ The table in the report contains the following rows.
 | **Application** | The name of the application. The name of the subscriber is also provided within brackets. |
 | **Usage**       | The usage count.                                                           |
 
-#### Download pre-generated reports
+#### Download pregenerated reports
 
 These widgets allow you to download monthly reports for the last three months.
 
 ![Pre-generated reports](../assets/img/insights/configured-report.png){.cInlineImage-full}
 
-To download a pre-generated report, click **Download** for the relevant month and then click on the required format.
+To download a pregenerated report, click **Download** for the relevant month and then click on the required format.
