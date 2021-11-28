@@ -112,8 +112,8 @@ kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 echo "--- Configure CSI Secret Store"
 bash routing/configure-csi-secret-store.sh
 
-#echo "--- Setup Nginx Ingress"
-#bash routing/install-nginx-ingress.sh
+echo "--- Setup Routing Nginx Ingress Controller"
+bash routing/install-nginx-ingress.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
