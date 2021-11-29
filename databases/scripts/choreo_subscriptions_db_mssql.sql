@@ -5,6 +5,14 @@
 -- herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_subscriptions_db_user')
+BEGIN
+    CREATE USER [choreo_subscriptions_db_user] FOR LOGIN [choreo_subscriptions_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_subscriptions_db TO choreo_subscriptions_db_user
+END;
+GO
+
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='tier' and xtype='U')
 BEGIN
     CREATE TABLE tier (

@@ -1,3 +1,11 @@
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_testbase_db_user')
+BEGIN
+    CREATE USER [choreo_testbase_db_user] FOR LOGIN [choreo_testbase_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_testbase_db TO choreo_testbase_db_user
+END;
+GO
+
 CREATE TABLE [dbo].[current_collection_info](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[user_id] [nvarchar](255) NOT NULL,

@@ -1,3 +1,11 @@
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_step_db_user')
+BEGIN
+    CREATE USER [choreo_step_db_user] FOR LOGIN [choreo_step_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_step_db TO choreo_step_db_user
+END;
+GO
+
 -- create job_status table
 
 IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[job_status]') AND TYPE IN (N'U'))
