@@ -1,3 +1,11 @@
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_apim_db_user')
+BEGIN
+    CREATE USER [choreo_apim_db_user] FOR LOGIN [choreo_apim_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_apim_db TO choreo_apim_db_user
+END;
+GO
+
 -- Start of IDN Tables --
 IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[IDN_BASE_TABLE]') AND TYPE IN (N'U'))
 CREATE TABLE IDN_BASE_TABLE (

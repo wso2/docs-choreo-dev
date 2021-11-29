@@ -1,3 +1,11 @@
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_app_db_user')
+BEGIN
+    CREATE USER [choreo_app_db_user] FOR LOGIN [choreo_app_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_app_db TO choreo_app_db_user
+END;
+GO
+
 /* DB Objects that are related to App DB to be used by choreo-runtime */
 CREATE FUNCTION [dbo].[enum2str$onprem_key$status]
 (
