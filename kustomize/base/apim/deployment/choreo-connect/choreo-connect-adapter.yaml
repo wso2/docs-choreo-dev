@@ -86,6 +86,9 @@ spec:
             - name: secret-asb
               mountPath: /mnt/csi/secret-asb
               readOnly: true
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always
           securityContext:
@@ -133,6 +136,7 @@ spec:
           ports:
             - containerPort: 18000
             - containerPort: 9843
+            - containerPort: 6060
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
@@ -188,6 +192,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-asb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always

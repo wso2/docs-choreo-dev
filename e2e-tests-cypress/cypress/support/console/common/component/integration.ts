@@ -1,0 +1,51 @@
+/*
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+
+export class Integration {
+
+    static createIntegration(name: string) {
+        cy.get('create-integration-btn').click()
+        this.wait()
+        cy.get('[placeholder="Type name"]').type(name)
+        cy.get('#create-with-choreo-btn').click()
+        this.wait()
+    }
+
+
+    private static wait() {
+        cy.get('[data-testid="backdrop-loader"]').should('not.exist');
+        cy.get('[data-testid="diagram-loader"]').should('not.exist');
+    }
+
+    static selectSample() {
+        cy.get('[title="Create"]').then(val => {
+            const preBuiltBtnAvailable = (val.find('[data-testid="use-prebuilt-btn"]').length > 0) ? true : false;
+            if (preBuiltBtnAvailable) {
+                cy.get('[data-testid="use-prebuilt-btn"]').should('exist').click();
+            }
+        })
+    }
+    static clearIntegrations() {
+        cy.get('tbody>tr').then(tr => {
+            cy.wrap(tr[0]).then(()=>{
+                cy.wrap(tr[0]).trigger('mouseover')
+                cy.wait(1000)
+                cy.get('[data-testid="delete-btn"]').click()
+                cy.wait(1000)
+                cy.get('[role="dialog"] button').contains('Delete').click()
+            })
+        })
+
+    }
+}

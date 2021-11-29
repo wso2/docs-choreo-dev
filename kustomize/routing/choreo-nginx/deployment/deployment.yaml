@@ -147,6 +147,12 @@ spec:
           - name: choreo-api-gateway-wildcard-tls
             mountPath: /etc/nginx/ssl/choreo/gateway
             readOnly: true
+          - name: choreo-api-e1-us-east-azure-wildcard-tls
+            mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
+            readOnly: true
+          - name: choreo-api-e2-us-east-azure-wildcard-tls
+            mountPath: /etc/nginx/ssl/choreo/e2-us-east-gateway
+            readOnly: true
           - name: secret-redis
             mountPath: /mnt/csi/secret-redis
             readOnly: true
@@ -179,6 +185,12 @@ spec:
       - name: choreo-api-gateway-wildcard-tls
         secret:
           secretName: dev-choreo-api-gateway-wildcard-tls
+      - name: choreo-api-e1-us-east-azure-wildcard-tls
+        secret:
+          secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls
+      - name: choreo-api-e2-us-east-azure-wildcard-tls
+        secret:
+          secretName: dev-choreo-api-e2-us-east-azure-wildcard-tls
       - name: secret-redis
         csi:
           driver: secrets-store.csi.k8s.io

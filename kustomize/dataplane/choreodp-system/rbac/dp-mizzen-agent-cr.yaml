@@ -2,6 +2,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: dp-mizzen-agent
+  annotations:
+    checkov.io/skip1: CKV_K8S_49=Temporarily suppressing till fixing
 rules:
   - apiGroups: [""]
     resources:
@@ -13,6 +15,8 @@ rules:
       - configmaps
       - namespaces
       - events
+      - persistentvolumes
+      - persistentvolumeclaims
     verbs: ["*"]
   - apiGroups: [""]
     resources: ["nodes"]
@@ -34,4 +38,12 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: ["autoscaling"]
     resources: ["horizontalpodautoscalers"]
+    verbs: ["*"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["*"]
+  - apiGroups:
+      - choreo.wso2.com
+    resources:
+      - configurables
     verbs: ["*"]

@@ -618,6 +618,7 @@ CREATE TABLE [dbo].[role](
     [handle] [nvarchar](255) NOT NULL,
     [description] [nvarchar](255) NULL,
     [organization_id] [int] NOT NULL,
+    [default_role] [smallint] NOT NULL,
     [created_by] [int] NOT NULL,
     [updated_by] [int] NULL,
     [created_at] [datetime] NOT NULL,
@@ -1515,4 +1516,309 @@ ON tble.id = i.id;
 END
 GO
 ALTER TABLE [dbo].[org_env_mapping] ENABLE TRIGGER [org_env_mapping_UpdateTimeTrigger]
+    GO
+CREATE TABLE [dbo].[configuration_mount](
+    [id] [int] IDENTITY(1172,1) NOT NULL,
+    [config_key_name] [nvarchar](255) NOT NULL,
+    [organization_id] [nvarchar](50) NOT NULL,
+    [project_id] [nvarchar](50) NOT NULL,
+    [component_id] [nvarchar](50) NOT NULL,
+    [environment_id] [nvarchar](50) NOT NULL,
+    [component_version] [nvarchar](50) NOT NULL,
+    [value_type] [nvarchar](50) NOT NULL,
+    CONSTRAINT [PK_configuration_mount_id] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [configuration_mount$org_project_component_version_env_key_unique] UNIQUE NONCLUSTERED
+(
+    [organization_id] ASC,
+    [project_id] ASC,
+    [component_id] ASC,
+    [component_version] ASC,
+    [environment_id] ASC,
+    [config_key_name] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[configuration_mount] ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[configuration_value](
+    [id] [int] IDENTITY(10893,1) NOT NULL,
+    [config_mount_id] [int] NOT NULL,
+    [key_name] [nvarchar](255) NOT NULL,
+    [value_ref] [nvarchar](255) NOT NULL,
+    [user_id] [nvarchar](50) NOT NULL,
+    CONSTRAINT [PK_configuration_value_id] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [configuration_value$key_unique] UNIQUE NONCLUSTERED
+(
+    [key_name] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[configuration_value] ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+/****** Object:  Index [config_mount_id_fk] ******/
+CREATE NONCLUSTERED INDEX [config_mount_id_fk] ON [dbo].[configuration_value]
+(
+	[config_mount_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[configuration_value] DROP COLUMN [user_id]
+    GO
+ALTER TABLE [dbo].[configuration_value] ADD user_idp_id NVARCHAR (50) NOT NULL
+    GO
+ALTER TABLE [dbo].[configuration_value] DROP CONSTRAINT [configuration_value$key_unique]
+    GO
+ALTER TABLE [dbo].[configuration_value] DROP COLUMN [key_name]
+    GO
+ALTER TABLE [dbo].[configuration_mount] ADD is_system BIT NOT NULL DEFAULT 0
+       GO
+CREATE TABLE [dbo].[component_data](
+    [id] [int] IDENTITY(1172,1) NOT NULL,
+    [uuid] [nvarchar](50) NOT NULL,
+    [organization_handle] [nvarchar](50) NOT NULL,
+    [project_uuid] [nvarchar](50) NOT NULL,
+    [component_uuid] [nvarchar](50) NOT NULL,
+    [environment_uuid] [nvarchar](50) NOT NULL,
+    [component_version] [nvarchar](50) NOT NULL,
+    [release_uuid] [nvarchar](50) NOT NULL,
+    CONSTRAINT [PK_component_data_uuid] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [component_data$uuid_unique] UNIQUE NONCLUSTERED
+(
+[uuid] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [component_data$release_id_unique] UNIQUE NONCLUSTERED
+(
+[release_uuid] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[component_data] ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+ALTER TABLE [dbo].[configuration_mount] DROP CONSTRAINT [configuration_mount$org_project_component_version_env_key_unique]
+    GO
+ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [organization_id]
+    GO
+ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [project_id]
+    GO
+ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [component_id]
+    GO
+ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [environment_id]
+    GO
+ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [component_version]
+    GO
+ALTER TABLE [dbo].[configuration_mount] ADD component_data_uuid NVARCHAR (50) NOT NULL
+    GO
+ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_fk] FOREIGN KEY([component_data_uuid])
+    REFERENCES [dbo].[component_data] ([uuid])
+    GO
+ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_fk]
+    GO
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_key_unique] UNIQUE NONCLUSTERED
+    (
+    [component_data_uuid] ASC,
+    [config_key_name] ASC
+    )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    GO
+ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
+    GO
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TABLE [dbo].[permission]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL ,
+    [handle][varchar](255) NOT NULL,
+    [display_name][varchar](255) NOT NULL,
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLINNG')),
+    [description] [varchar](255) NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [parent_id] [int] DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT parent_id_fk FOREIGN KEY (parent_id) REFERENCES permission(id),
+    CONSTRAINT unique_handle   UNIQUE(handle)
+)
+
+CREATE TABLE [dbo].[role_permission_mapping]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [role_id] [int] NOT NULL,
+    [permission_id] [int] NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT role_permission_mapping_role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+    CONSTRAINT role_permission_mapping_permission_id_fk FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE,
+    CONSTRAINT unique_role_permission_mapping   UNIQUE(role_id,permission_id)
+)
+
+CREATE TABLE [dbo].[role_member_mapping]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [role_id] [int] NOT NULL,
+    [user_id] [int] NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT role_member_mapping_role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+    CONSTRAINT role_member_mapping_user_id_fk FOREIGN KEY (user_id) REFERENCES [user](id) ON DELETE CASCADE,
+    CONSTRAINT unique_role_member_mapping   UNIQUE(role_id,user_id)
+)
+
+CREATE TABLE [dbo].[role_tag]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [role_id] [int] NOT NULL,
+    [organization_id] [int] NOT NULL,
+    [handle][varchar](255) NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at]   [datetime]    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [created_by] [int] NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT tag_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id) ON DELETE CASCADE,
+    CONSTRAINT tag_role_id_fk FOREIGN KEY (role_id) REFERENCES [role](id) ON DELETE CASCADE,
+    CONSTRAINT tag_role_key_created_by_fk FOREIGN KEY (created_by) REFERENCES [user](id),
+    CONSTRAINT unique_role_tag_mapping   UNIQUE(role_id,handle)
+)
+
+/****** Object:  Trigger [dbo].[permission_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[permission_UpdateTimeTrigger] ON [dbo].[permission]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [permission] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[permission] ENABLE TRIGGER [permission_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[role_permission_mapping_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[role_permission_mapping_UpdateTimeTrigger] ON [dbo].[role_permission_mapping]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [role_permission_mapping] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[role_permission_mapping] ENABLE TRIGGER [role_permission_mapping_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[role_member_mapping_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[role_member_mapping_UpdateTimeTrigger] ON [dbo].[role_member_mapping]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [role_member_mapping] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[role_member_mapping] ENABLE TRIGGER [role_member_mapping_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[role_tag_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[role_tag_UpdateTimeTrigger] ON [dbo].[role_tag]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [role_tag] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[role_tag] ENABLE TRIGGER [role_tag_UpdateTimeTrigger]
+    GO
+
+/****** Add default Permission list ******/
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api manage','apim:api_manage','APIM-PUBLISHER','manage api');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('tier manage','apim:tier_manage','APIM-PUBLISHER','manage api tier');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('subscription manage','apim:subscription_manage','APIM-PUBLISHER','api subscription manage');
+
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api subscribe','apim:subscribe', 'APIM-SUBSCRIBER','subscribe apis');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('app manage','apim:app_manage', 'APIM-SUBSCRIBER','manage applications');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('sub manage','apim:sub_manage', 'APIM-SUBSCRIBER','manage api subscriptions');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('app import_export','apim:app_import_export', 'APIM-SUBSCRIBER','app import export');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api key','apim:api_key', 'APIM-SUBSCRIBER','api key gen');
+
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('apim:admin','apim:admin','APIM-ADMIN','apim admin');
+
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing tier view','billing:tier_view','BILLINNG','view billing tier');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing org create','billing:org_create','BILLINNG','create billing org');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing org view','billing:org_view','BILLINNG','view billing org');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing invoice view','billing:invoice_view','BILLINNG','view billing invoice');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing subscription create','billing:subscription_create','BILLINNG','create billiling subscription');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing subscription view','billing:subscription_view','BILLINNG','view billing subscription');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing payment method create','billing:payment_method_create','BILLINNG','create billing payment method');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing payment method view','billing:payment_method_view','BILLINNG','view billing payment method');
+
+ALTER TABLE [dbo].[configuration_mount] DROP CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
+    GO
+ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_key_unique] UNIQUE NONCLUSTERED ON DELETE CASCADE
+    (
+    [component_data_uuid] ASC,
+    [config_key_name] ASC
+    )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    GO
+ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
+    GO
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+ALTER TABLE [dbo].[configuration_mount] ADD is_required BIT NOT NULL DEFAULT 0
     GO
