@@ -59,6 +59,11 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+        - name: MARKETING_CONSENT_APP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: MARKETING_CONSENT_APP_CLIENT_SECRET
         - name: IDP_BACKEND_API_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
