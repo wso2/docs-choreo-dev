@@ -32,6 +32,12 @@ spec:
       containers:
         - name: cp-graphql
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cp-graphql:latest
+          env:
+          - name: APIM_REST_API_CONSUMER_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secret-cp-graphql
+                key: APIM_REST_API_CONSUMER_SECRET
           ports:
             - containerPort: 9090
               name: gql-port
@@ -76,8 +82,20 @@ spec:
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
       restartPolicy: Always
+      volumeMounts:
+      - name: secret-cp-graphql
+        mountPath: "/mnt/csi/secret-cp-graphql"
+        readOnly: true
       volumes:
         - name: config
           configMap:
             name: cm-cp-graphql-config
+        - name: secret-cp-graphql
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cp-graphql
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
