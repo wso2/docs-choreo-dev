@@ -24,7 +24,7 @@ Once you select them, Choreo creates the skeleton of the code which looks as sho
 
 You can implement the logic and test it locally in the code server. After that you can commit and push the code changes to the Github repository that has been created for your webhook component, and go back to the Choreo Console to deploy it.
 
-You can also use the Choreo built-in connectors in the webhook configuration.
+You can also use the connectors supported by Choreo in the webhook configuration.
 
 ### Deploy
 
