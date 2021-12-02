@@ -5,13 +5,6 @@
 -- herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'billing_db')
-    BEGIN
-        CREATE DATABASE billing_db;
-    END
-GO
-USE billing_db;
-GO
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_plan' and xtype='U')
 BEGIN
