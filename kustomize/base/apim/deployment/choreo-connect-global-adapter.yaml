@@ -79,6 +79,9 @@ spec:
         - name: secret-asb
           mountPath: /mnt/csi/secret-asb
           readOnly: true
+        - name: secret-apim
+          mountPath: /mnt/csi/secret-apim
+          readOnly: true
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter:latest
         imagePullPolicy: Always
         securityContext:
@@ -213,4 +216,12 @@ spec:
             secretProviderClass: secret-asb
           nodePublishSecretRef:
             name: csi-secret-store-azure
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure            
       restartPolicy: Always
