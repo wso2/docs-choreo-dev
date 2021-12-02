@@ -1,6 +1,12 @@
 # Webhooks
 
-A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response. Choreo allows you to create webhooks for platforms such as Github, Slack, and Google Calendar using the integrated pro-code or low-code editor. For example, you can design a webhook to notify a Github user via mail each time an issue is assigned to him/her.
+A webhook directs information from one application to another in real-time and triggers the receiving application to execute a specific process in response. Choreo allows you to create webhooks for platforms such as Github, Slack, and Google Calendar using the integrated pro-code or low-code editor.
+
+The following are some examples of scenarios where you can create webhooks for the mentioned platforms:
+
+- Sending a chat message in a group chat when an event is added in a slack channel.
+- Generating an alert when a new issue is created in a specific Git repository.
+- Sending a notification when an event is scheduled in a google calendar.
 
 ### Develop
 
@@ -31,11 +37,3 @@ Testing your webhook ensures that it functions as expected, and is therefore hig
 ### Observe
 
 You can observe the performance of your webhook in terms of the throughput (i.e., the number of requests processed within a specific time duration) and latency (the amount of time taken to process one request). The observability view allows you to visualize the performance statistics via interactive graphs.
-
-## Use
-
-A project can use a webhook to receive data and activate a trigger that causes specific code to be executed based on that data.
-
-- Sending a chat message in a group chat when an event is added in a slack channel.
-- Generating an alert when a new issue is created in a specific Git repository.
-- Sending a notification when an event is scheduled in a google calendar.
