@@ -216,12 +216,12 @@ spec:
             secretProviderClass: secret-asb
           nodePublishSecretRef:
             name: csi-secret-store-azure
-        - name: secret-apim
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim
-            nodePublishSecretRef:
-              name: csi-secret-store-azure            
+      - name: secret-apim
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-apim
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
       restartPolicy: Always
