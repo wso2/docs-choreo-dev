@@ -6,9 +6,6 @@ BEGIN
 END;
 GO
 
-CREATE
-DATABASE choreo_org_remover_db;
-
 CREATE TABLE ORG_COMPONENT_MAPPING
 (
     [ID]             int NOT NULL IDENTITY,

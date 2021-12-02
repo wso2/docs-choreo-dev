@@ -90,6 +90,12 @@ IF NOT EXISTS
 CREATE LOGIN choreo_testbase_db_user with password = N'xxxxxxxxxxxxx'
 GO
 
+IF NOT EXISTS
+	(SELECT name FROM master.sys.sql_logins
+	WHERE name = 'billing_db_user')
+CREATE LOGIN billing_db_user with password = N'xxxxxxxxxxxxx'
+GO
+
 --IF NOT EXISTS
 --	(SELECT name FROM master.sys.sql_logins
 --	WHERE name = 'choreo-aiexp-db-reader')

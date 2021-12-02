@@ -5,6 +5,13 @@
 -- herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 -- You may not alter or remove any copyright or other notice from copies of this content.
 
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'billing_db_user')
+BEGIN
+    CREATE USER [billing_db_user] FOR LOGIN [billing_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::billing_db TO billing_db_user
+END;
+GO
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_plan' and xtype='U')
 BEGIN
