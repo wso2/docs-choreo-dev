@@ -522,6 +522,32 @@ CREATE TABLE [dbo].[member_invitation](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
+/****** Object:  Table [dbo].[member_invitation_v2]    Script Date: 2/12/2021 10:13:48 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[member_invitation_v2](
+    [invitation_id] [int] IDENTITY(1290,1) NOT NULL,
+    [uuid] [nvarchar](255) NOT NULL,
+    [organization_id] [int] NOT NULL,
+    [user_email] [nvarchar](255) NOT NULL,
+    [invited_roles] [nvarchar](255) NOT NULL,
+    [invited_application] [nvarchar](255) NOT NULL,
+    [created_at] [datetime] NOT NULL,
+    [updated_at] [datetime] NOT NULL,
+    CONSTRAINT [PK_member_invitation_v2_invitation_id] PRIMARY KEY CLUSTERED
+(
+[invitation_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    CONSTRAINT [member_invitation_v2$email_org_unique] UNIQUE NONCLUSTERED
+(
+    [user_email] ASC,
+    [organization_id] ASC,
+[invited_application] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
 /****** Object:  Table [dbo].[onprem_key]    Script Date: 9/7/2021 5:33:08 AM ******/
     SET ANSI_NULLS ON
     GO

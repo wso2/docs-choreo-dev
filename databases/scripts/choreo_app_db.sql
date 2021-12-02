@@ -266,6 +266,23 @@ CREATE TABLE IF NOT EXISTS member_invitation
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+CREATE TABLE IF NOT EXISTS member_invitation_v2
+(
+    invitation_id     int NOT NULL AUTO_INCREMENT,
+    uuid                VARCHAR(255) NOT NULL,
+    organization_id     int          NOT NULL,
+    user_email          VARCHAR(255) NOT NULL,
+    invited_roles       VARCHAR(255) NOT NULL,
+    invited_application VARCHAR(255) NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (invitation_id),
+    UNIQUE KEY email_org_unique_v2 (user_email, organization_id, invited_application),
+    CONSTRAINT inv_organization_id_v2_fk
+        FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE configuration
 (
     id              INT AUTO_INCREMENT,
