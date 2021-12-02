@@ -14,7 +14,7 @@ Choreo provides strong integration capabilities that allow you incorporate logic
 
 Lets consider the example scenario of recording newly created github issues in a Google spreadsheet. For this, we need to implement a webhook that gets triggered whenever a new issue is created in a specific Github repository. In this scenario, Choreo manages the majority of work relating to the accuracy of the coding while you simply need to write the logic for carrying out the relevant process.
 
-When you create a webhook component, you can select the event source (i.e. Github) and the event channel. As shown below.
+When you create a Webhook component, you can select the event source (i.e. Github) and the event channel. As shown below.
 
 ![Select event source](../assets/img/webhooks/select-event-source.png)
 
@@ -22,7 +22,7 @@ Once you select them, Choreo creates the skeleton of the code which looks as sho
 
 <TO DO: Add Image>
 
-You can implement the logic and test it locally in the code server. After that you can commit and push the code changes to the Github repository that has been created for your webhook component, and go back to the Choreo Console to deploy it.
+You can implement the logic and test it locally in the code server. After that you can commit and push the code changes to the Github repository that has been created for your Webhook component, and go back to the Choreo Console to deploy it.
 
 You can also use the connectors supported by Choreo in the webhook configuration.
 
