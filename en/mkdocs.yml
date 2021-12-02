@@ -53,12 +53,8 @@ nav:
   - Home: index.md
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
-      - Quick Start Guide: get-started/quick-start-guide.md 
       - Concepts: concepts/concepts.md
-  - APIs:
-      - REST APIs: api/rest-api.md
-      - GraphQL APIs: api/graphql-apis.md
-      - gRPC API: api/grpc-api.md
+  - REST APIs: api/rest-api.md
   - API Proxies: api-proxies.md
   - Webhooks: webhooks.md
   - Scheduled Tasks: scheduled-tasks.md
@@ -68,11 +64,11 @@ nav:
   - Marketplace: marketplace.md
   - Business Insights: insights/derive-insights.md
   - Observability:
+      - Observability Overview: observability/observability-overview.md
       - View Logs: observability/view-logs.md
       - Root Cause Analysis: observability/root-cause-analysis.md
       - Performance Analysis: observability/performance-analysis.md
   - Choreo DevOps: devops/overview.md
-  - Tutorials: tutorials/overview.md
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
