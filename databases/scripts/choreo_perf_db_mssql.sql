@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[api_metrics](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[time_stamp] [bigint] NOT NULL,
 	[api_name] [varchar](256) NOT NULL,
+	[env_name] [varchar](16),
 	[wip] [real] NOT NULL,
 	[latency] [real] NOT NULL,
 	[throughput] [real] NOT NULL,
