@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: sys-obsapi
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -27,6 +27,11 @@ spec:
           type: RuntimeDefault
       containers:
         - env:
+            - name: b7a_log_level
+              valueFrom:
+                configMapKeyRef:
+                  key: B7A_LOG_LEVEL
+                  name: cm-loglevel-sys-obsapi
             - name: IDP_ISSUER
               valueFrom:
                 configMapKeyRef:
@@ -47,12 +52,29 @@ spec:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp-replica
+            - name: AZURE_LA_TENANT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AZURE_ACTIVEDIRECTORY_TENANT_ID
+                  name: cm-sys-obsapi
+            - name: AZURE_LA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
+                  name: env-sys-obsapi
+            - name: AZURE_LA_WORKSPACE_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: LOG_WORKSPACE_ID
+                  name: env-loganalytics-replica
             - name: AZURE_LA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           envFrom:
+            - configMapRef:
+                name: env-k8sservice-replica
             - configMapRef:
                 name: cm-sys-obsapi
             - configMapRef:
@@ -65,12 +87,12 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+                - all
           name: sys-obsapi
           volumeMounts:
-          - name: secret-sys-obsapi
-            mountPath: "/mnt/csi/secret-sys-obsapi"
-            readOnly: true
+            - name: secret-sys-obsapi
+              mountPath: "/mnt/csi/secret-sys-obsapi"
+              readOnly: true
           ports:
             - containerPort: 9098
               name: sys-obsapi-port
@@ -104,13 +126,13 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
-      - name: secret-sys-obsapi
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-sys-obsapi
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-sys-obsapi
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-sys-obsapi
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
