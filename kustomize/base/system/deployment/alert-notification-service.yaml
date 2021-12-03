@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    choreo.component: alert-notification-service
+  name: alert-notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: alert-notification-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: alert-notification-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - env:
+            - name: EVENTHUB_SHARED_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-alert-notification-service
+                  key: EVENTHUB_SHARED_ACCESS_KEY
+          envFrom:
+            - configMapRef:
+                name: env-alert-notification-service
+          image: choreocontrolplane.azurecr.io/choreoipaas/alert-notification-service:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+          name: alert-notification-service
+          volumeMounts:
+            - name: secret-alert-notification-service
+              mountPath: "/mnt/csi/secret-alert-notification-service"
+              readOnly: true
+          ports:
+            - containerPort: 9090
+              name: alert-notification-service-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+      volumes:
+        - name: secret-alert-notification-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-alert-notification-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
