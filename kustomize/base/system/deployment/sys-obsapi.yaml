@@ -27,11 +27,6 @@ spec:
           type: RuntimeDefault
       containers:
         - env:
-            - name: b7a_log_level
-              valueFrom:
-                configMapKeyRef:
-                  key: B7A_LOG_LEVEL
-                  name: cm-loglevel-sys-obsapi
             - name: IDP_ISSUER
               valueFrom:
                 configMapKeyRef:
@@ -52,31 +47,6 @@ spec:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp-replica
-            - name: AZURE_LA_TENANT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-sys-obsapi
-            - name: AZURE_LA_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: env-sys-obsapi
-            - name: AZURE_LA_WORKSPACE_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: LOG_WORKSPACE_ID
-                  name: env-loganalytics-replica
-            - name: NEGOTIATOR_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: NEGOTIATOR_GRPC_ADDRESS
-                  name: cm-sys-obsapi
-            - name: APP_SERVICE_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: APP_SERVICE_GRPC_ADDRESS
-                  name: cm-sys-obsapi
             - name: AZURE_LA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
@@ -84,7 +54,9 @@ spec:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           envFrom:
             - configMapRef:
-                name: env-k8sservice-replica
+                name: cm-sys-obsapi
+            - configMapRef:
+                name: env-sys-obsapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
             runAsUser: 10500

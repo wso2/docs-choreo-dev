@@ -28,11 +28,6 @@ spec:
       containers:
         - name: loggingapi
           env:
-            - name: b7a_log_level
-              valueFrom:
-                configMapKeyRef:
-                  key: B7A_LOG_LEVEL
-                  name: cm-loglevel-loggingapi
             - name: IDP_ISSUER
               valueFrom:
                 configMapKeyRef:
@@ -53,41 +48,11 @@ spec:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp-replica
-            - name: JWKS_ENDPOINT_PROTOCOL
-              valueFrom:
-                configMapKeyRef:
-                  key: JWKS_ENDPOINT_PROTOCOL
-                  name: cm-loggingapi
-            - name: AAD_TENANT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-loggingapi
-            - name: AAD_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: env-loggingapi
-            - name: NEGOTIATOR_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: NEGOTIATOR_GRPC_ADDRESS
-                  name: cm-loggingapi
-            - name: APP_SERVICE_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: APP_SERVICE_GRPC_ADDRESS
-                  name: cm-loggingapi
             - name: AAD_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: secret-loggingapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-            - name: AZURE_K8S_API_SERVER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: env-loggingapi
-                  key: AZURE_K8S_API_SERVER_URL
             - name: AZURE_K8S_SERVICE_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -95,9 +60,9 @@ spec:
                   key: AZURE_K8S_API_SERVER_ACCESS_TOKEN
           envFrom:
             - configMapRef:
-                name: env-k8sservice-replica
+                name: cm-loggingapi
             - configMapRef:
-                name: env-loganalytics-replica
+                name: env-loggingapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
           securityContext:
             runAsUser: 10500
