@@ -228,9 +228,9 @@ To publish the API of the `CovidStatus` service, follow this procedure:
 
 3. Click **Explore More**. This takes you to the **Develop** view where you can see an overview of the API.
 
-3. Click the **Publish** icon in the left pane.
+4. Click the **Publish** icon in the left pane.
 
-4. On the **Lifecycle Management** page, click **Publish**.
+5. On the **Lifecycle Management** page, click **Publish**.
 
     ![Publish API](../assets/img/services/publish-api.png){.cInlineImage-full}
     
