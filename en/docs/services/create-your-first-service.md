@@ -224,7 +224,9 @@ To publish the API of the `CovidStatus` service, follow this procedure:
 
 1. Open the left navigator and click **APIs**.
 
-2. Click on the `CovidStatus` API (i.e., the API of the `CovidStatus` service).
+2. Click on the `CovidStatus` API (i.e., the API of the `CovidStatus` service). This takes you to the `CovidStatus` API view on the Publisher Portal.
+
+3. Click **Explore More**. This takes you to the Develop view where you can see an overview of the API.
 
 3. Click the **Publish** icon in the left pane.
 
@@ -234,7 +236,7 @@ To publish the API of the `CovidStatus` service, follow this procedure:
     
     The status of the API changes to **Published**.
     
-Now you have published the API of the `CovidStatus` service. To understand how a user can generate credentials for it and then invoke it, proceed to the next step.
+Now you have published the API of the `CovidStatus` service. To understand how a user can generate credentials for the API and then invoke it, proceed to the next step.
 
 ## Step 10: Generate API credentials
 
