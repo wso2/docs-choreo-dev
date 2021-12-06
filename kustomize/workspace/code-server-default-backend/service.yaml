@@ -7,5 +7,6 @@ spec:
     app: code-server-default-backend
   ports:
     - protocol: TCP
+      name: http-port
       port: 8090
-      targetPort: 8090
+      targetPort: http-port

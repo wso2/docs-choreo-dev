@@ -4,6 +4,10 @@ metadata:
   name: default-backend
   labels:
     app: code-server-default-backend
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Liveness probe not required
+    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
 spec:
   replicas: 1
   selector:
@@ -14,6 +18,11 @@ spec:
       labels:
         app: code-server-default-backend
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: default-backend
           image: choreocontrolplane.azurecr.io/choreoipaas/code-server-default-backend:latest
@@ -30,8 +39,8 @@ spec:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
-            runAsUser: 10001
-            runAsGroup: 10001
+            runAsUser: 10700
+            runAsGroup: 10700
             readOnlyRootFilesystem: true
             capabilities:
               drop:
