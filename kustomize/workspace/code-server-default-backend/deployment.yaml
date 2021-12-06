@@ -19,6 +19,23 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/code-server-default-backend:latest
           ports:
             - containerPort: 8090
+          resources:
+            requests:
+              memory: 20Mi
+              cpu: 50m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
           envFrom:
             - configMapRef:
                 name: env-cs-default-backend
