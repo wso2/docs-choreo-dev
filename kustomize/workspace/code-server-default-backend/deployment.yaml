@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: default-backend
+  labels:
+    app: code-server-default-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-server-default-backend
+  template:
+    metadata:
+      labels:
+        app: code-server-default-backend
+    spec:
+      containers:
+        - name: default-backend
+          image: choreocontrolplane.azurecr.io/choreoipaas/code-server-default-backend:latest
+          ports:
+            - containerPort: 8090
+          envFrom:
+            - configMapRef:
+                name: env-cs-default-backend
