@@ -5,6 +5,9 @@ echo "--- Setting up Workspace Nginx Ingress Controller.."
 echo "--- Creating namespace ${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress..."
 kubectl create namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
+# Add label to Nginx ingress namespace
+kubectl label namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" purpose="${WORKSPACE_INGRESS_NAMESPACE}-ingress-traffic"
+
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" linkerd.io/inject=enabled
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
 
