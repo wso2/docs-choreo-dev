@@ -226,7 +226,7 @@ To publish the API of the `CovidStatus` service, follow this procedure:
 
 2. Click on the `CovidStatus` API (i.e., the API of the `CovidStatus` service). This takes you to the `CovidStatus` API view on the Publisher Portal.
 
-3. Click **Explore More**. This takes you to the Develop view where you can see an overview of the API.
+3. Click **Explore More**. This takes you to the **Develop** view where you can see an overview of the API.
 
 3. Click the **Publish** icon in the left pane.
 
