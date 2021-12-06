@@ -28,7 +28,7 @@ You can also use the connectors supported by Choreo in the webhook configuration
 
 ### Deploy
 
-A webhook needs to be deployed to be able to receive information that triggers the defined process. Deploying a webhook in Choreo results in checking out the API’s source from your private Github repository, building it, pushing it to a Docker container, and hosting it on Kubernetes.
+A webhook needs to be deployed to be able to receive information that triggers the defined process. When you deploy a webhook, Choreo checks out your latest code, builds it, creates a Docker image, and starts it in an environment managed by Choreo. More importantly, Choreo registers the webhook with the relevant event source (e.g., Github, Slack, etc.). When the relevant action is carried out in the event source, your webhook is triggered. 
 
 ### Test
 
@@ -36,4 +36,4 @@ Testing your webhook ensures that it functions as expected, and is therefore hig
 
 ### Observe
 
-You can observe the performance of your webhook in terms of the throughput (i.e., the number of requests processed within a specific time duration) and latency (the amount of time taken to process one request). The observability view allows you to visualize the performance statistics via interactive graphs.
+You can assess the performance of your webhook by observing the success and failure rates of the requests sent to it. The observability view allows you to visualize the performance statistics via interactive graphs.
