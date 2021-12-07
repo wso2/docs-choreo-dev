@@ -1820,6 +1820,8 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('ap
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('sub manage','apim:sub_manage', 'APIM-SUBSCRIBER','manage api subscriptions');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('app import_export','apim:app_import_export', 'APIM-SUBSCRIBER','app import export');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api key','apim:api_key', 'APIM-SUBSCRIBER','api key gen');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('prod view','environments:view_prod','APIM-SUBSCRIBER','prod environment view');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('dev view','environments:view_dev','APIM-SUBSCRIBER','dev environment view');
 
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('apim:admin','apim:admin','APIM-ADMIN','apim admin');
 
