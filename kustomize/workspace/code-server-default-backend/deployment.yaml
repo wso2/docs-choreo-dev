@@ -28,6 +28,8 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/code-server-default-backend:latest
           ports:
             - containerPort: 8090
+              name: http-port
+              protocol: TCP
           resources:
             requests:
               memory: 20Mi
