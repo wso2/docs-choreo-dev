@@ -61,6 +61,7 @@ nav:
   - API Management:
       - API Security: manage/api-security.md
       - API Lifecycle: manage/api-lifecycle.md
+      - Consume API: manage/api-consumption.md
   - Marketplace: marketplace.md
   - Business Insights: insights/derive-insights.md
   - Observability:

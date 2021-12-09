@@ -8,6 +8,7 @@ When you create a REST API component, similar to all other components, it  will 
 Choreo’s inbuilt user-friendly low-code and pro-code editors allow you to easily design and develop REST API’s in compliance with the OpenAPI specification. 
 
 ### Design
+
 API designing is the process of laying out the architecture or simply the blueprint of your API around the resources the API intends to expose. These resources are what allows access to the backend endpoint. A good API design should be simple, flexible, and easy to adopt. Choreo’s low-code editor helps design your REST API by giving a visual representation of the API’s resources. Choreo supports HTTP and therefore you can expose your HTTP endpoint easily through Choreo as means of a managed API. 
 
 ### Develop
