@@ -1543,72 +1543,6 @@ END
 GO
 ALTER TABLE [dbo].[org_env_mapping] ENABLE TRIGGER [org_env_mapping_UpdateTimeTrigger]
     GO
-CREATE TABLE [dbo].[configuration_mount](
-    [id] [int] IDENTITY(1172,1) NOT NULL,
-    [config_key_name] [nvarchar](255) NOT NULL,
-    [organization_id] [nvarchar](50) NOT NULL,
-    [project_id] [nvarchar](50) NOT NULL,
-    [component_id] [nvarchar](50) NOT NULL,
-    [environment_id] [nvarchar](50) NOT NULL,
-    [component_version] [nvarchar](50) NOT NULL,
-    [value_type] [nvarchar](50) NOT NULL,
-    CONSTRAINT [PK_configuration_mount_id] PRIMARY KEY CLUSTERED
-(
-[id] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-    CONSTRAINT [configuration_mount$org_project_component_version_env_key_unique] UNIQUE NONCLUSTERED
-(
-    [organization_id] ASC,
-    [project_id] ASC,
-    [component_id] ASC,
-    [component_version] ASC,
-    [environment_id] ASC,
-    [config_key_name] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[configuration_mount] ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[configuration_value](
-    [id] [int] IDENTITY(10893,1) NOT NULL,
-    [config_mount_id] [int] NOT NULL,
-    [key_name] [nvarchar](255) NOT NULL,
-    [value_ref] [nvarchar](255) NOT NULL,
-    [user_id] [nvarchar](50) NOT NULL,
-    CONSTRAINT [PK_configuration_value_id] PRIMARY KEY CLUSTERED
-(
-[id] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-    CONSTRAINT [configuration_value$key_unique] UNIQUE NONCLUSTERED
-(
-    [key_name] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[configuration_value] ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-/****** Object:  Index [config_mount_id_fk] ******/
-CREATE NONCLUSTERED INDEX [config_mount_id_fk] ON [dbo].[configuration_value]
-(
-	[config_mount_id] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[configuration_value] DROP COLUMN [user_id]
-    GO
-ALTER TABLE [dbo].[configuration_value] ADD user_idp_id NVARCHAR (50) NOT NULL
-    GO
-ALTER TABLE [dbo].[configuration_value] DROP CONSTRAINT [configuration_value$key_unique]
-    GO
-ALTER TABLE [dbo].[configuration_value] DROP COLUMN [key_name]
-    GO
-ALTER TABLE [dbo].[configuration_mount] ADD is_system BIT NOT NULL DEFAULT 0
-       GO
 CREATE TABLE [dbo].[component_data](
     [id] [int] IDENTITY(1172,1) NOT NULL,
     [uuid] [nvarchar](50) NOT NULL,
@@ -1618,60 +1552,31 @@ CREATE TABLE [dbo].[component_data](
     [environment_uuid] [nvarchar](50) NOT NULL,
     [component_version] [nvarchar](50) NOT NULL,
     [release_uuid] [nvarchar](50) NOT NULL,
-    CONSTRAINT [PK_component_data_uuid] PRIMARY KEY CLUSTERED
-(
-[id] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-    CONSTRAINT [component_data$uuid_unique] UNIQUE NONCLUSTERED
-(
-[uuid] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-    CONSTRAINT [component_data$release_id_unique] UNIQUE NONCLUSTERED
-(
-[release_uuid] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[component_data] ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-ALTER TABLE [dbo].[configuration_mount] DROP CONSTRAINT [configuration_mount$org_project_component_version_env_key_unique]
-    GO
-ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [organization_id]
-    GO
-ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [project_id]
-    GO
-ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [component_id]
-    GO
-ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [environment_id]
-    GO
-ALTER TABLE [dbo].[configuration_mount] DROP COLUMN [component_version]
-    GO
-ALTER TABLE [dbo].[configuration_mount] ADD component_data_uuid NVARCHAR (50) NOT NULL
-    GO
-ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_fk] FOREIGN KEY([component_data_uuid])
-    REFERENCES [dbo].[component_data] ([uuid])
-    GO
-ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_fk]
-    GO
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_key_unique] UNIQUE NONCLUSTERED
-    (
-    [component_data_uuid] ASC,
-    [config_key_name] ASC
-    )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    GO
-ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
-    GO
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
+    PRIMARY KEY (id),
+    CONSTRAINT component_data$uuid_unique UNIQUE(uuid),
+    CONSTRAINT component_data$release_id_unique UNIQUE(release_uuid)
+)
+
+CREATE TABLE [dbo].[configuration_mount](
+    [id] [int] IDENTITY(1172,1) NOT NULL,
+    [config_key_name] [nvarchar](255) NOT NULL,
+    [component_data_uuid] [nvarchar](50) NOT NULL,
+    [value_type] [nvarchar](50) NOT NULL,
+    [is_system] [bit] NOT NULL DEFAULT 0,
+    [is_required] [bit] NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    CONSTRAINT configuration_mount$component_data_uuid_fk FOREIGN KEY (component_data_uuid) REFERENCES [component_data](uuid) ON DELETE CASCADE,
+    CONSTRAINT configuration_mount$component_data_uuid_key_unique UNIQUE(component_data_uuid,config_key_name)
+)
+
+CREATE TABLE [dbo].[configuration_value](
+    [id] [int] IDENTITY(10893,1) NOT NULL,
+    [config_mount_id] [int] NOT NULL,
+    [value_ref] [nvarchar](255) NOT NULL,
+    [user_idp_id] [nvarchar](50) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT config_mount_id_fk FOREIGN KEY (config_mount_id) REFERENCES [configuration_mount](id) ON DELETE CASCADE
+)
 
 CREATE TABLE [dbo].[permission]
 (
@@ -1833,20 +1738,3 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('bi
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing subscription view','billing:subscription_view','BILLINNG','view billing subscription');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing payment method create','billing:payment_method_create','BILLINNG','create billing payment method');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('billing payment method view','billing:payment_method_view','BILLINNG','view billing payment method');
-
-ALTER TABLE [dbo].[configuration_mount] DROP CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
-    GO
-ALTER TABLE [dbo].[configuration_mount]  WITH CHECK ADD  CONSTRAINT [configuration_mount$component_data_uuid_key_unique] UNIQUE NONCLUSTERED ON DELETE CASCADE
-    (
-    [component_data_uuid] ASC,
-    [config_key_name] ASC
-    )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    GO
-ALTER TABLE [dbo].[configuration_mount] CHECK CONSTRAINT [configuration_mount$component_data_uuid_key_unique]
-    GO
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-ALTER TABLE [dbo].[configuration_mount] ADD is_required BIT NOT NULL DEFAULT 0
-    GO
