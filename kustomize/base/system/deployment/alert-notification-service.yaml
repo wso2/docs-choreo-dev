@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Will implement later
+    checkov.io/skip2: CKV_K8S_9=Will implement later
   labels:
     choreo.component: alert-notification-service
   name: alert-notification-service
@@ -20,6 +22,7 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      automountServiceAccountToken: false
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -39,6 +42,9 @@ spec:
             runAsUser: 10500
             runAsGroup: 10500
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
           name: alert-notification-service
           volumeMounts:
             - name: secret-alert-notification-service
