@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - choreodp-system
+  - code-server-default-backend
 
 commonLabels:
   app: choreo-workspace

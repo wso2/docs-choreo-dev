@@ -52,8 +52,8 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-subscriptions
-                  key: MSSQL_PASSWORD
+                  name: secret-billing
+                  key: BILLING_DB_PASSWORD
             - name: STRIPE_TOKEN
               valueFrom:
                 secretKeyRef:
