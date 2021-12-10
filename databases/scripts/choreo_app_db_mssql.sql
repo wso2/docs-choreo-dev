@@ -802,6 +802,12 @@ CREATE NONCLUSTERED INDEX [inv_organization_id_fk] ON [dbo].[member_invitation]
 	[organization_id] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
+/****** Object:  Index [inv_organization_idv2_fk]    Script Date: 2/12/2021 10:13:48 AM ******/
+CREATE NONCLUSTERED INDEX [inv_organization_idv2_fk] ON [dbo].[member_invitation_v2]
+(
+	[organization_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
 /****** Object:  Index [onprem_key_created_by_fk]    Script Date: 9/7/2021 5:33:08 AM ******/
 CREATE NONCLUSTERED INDEX [onprem_key_created_by_fk] ON [dbo].[onprem_key]
 (
@@ -967,6 +973,10 @@ ALTER TABLE [dbo].[group_tag] ADD  DEFAULT (getdate()) FOR [updated_at]
 ALTER TABLE [dbo].[member_invitation] ADD  DEFAULT (getdate()) FOR [created_at]
     GO
 ALTER TABLE [dbo].[member_invitation] ADD  DEFAULT (getdate()) FOR [updated_at]
+    GO
+ALTER TABLE [dbo].[member_invitation_v2] ADD  DEFAULT (getdate()) FOR [created_at]
+    GO
+ALTER TABLE [dbo].[member_invitation_v2] ADD  DEFAULT (getdate()) FOR [updated_at]
     GO
 ALTER TABLE [dbo].[onprem_key] ADD  DEFAULT (N'ACTIVE') FOR [status]
     GO
@@ -1354,6 +1364,25 @@ END;
 
 GO
 ALTER TABLE [dbo].[member_invitation] ENABLE TRIGGER [member_invitation_UpdateTimeTrigger]
+    GO
+/****** Object:  Trigger [dbo].[member_invitation_v2_UpdateTimeTrigger]    Script Date: 2/12/2021 10:13:48 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TRIGGER [dbo].[member_invitation_v2_UpdateTimeTrigger] ON  [dbo].[member_invitation_v2]
+FOR INSERT, UPDATE AS
+BEGIN
+	SET NOCOUNT ON;
+UPDATE tble
+SET updated_at = GETDATE()
+    FROM member_invitation_v2 AS tble
+	INNER JOIN inserted AS i
+ON tble.invitation_id = i.invitation_id;
+END;
+
+GO
+ALTER TABLE [dbo].[member_invitation_v2] ENABLE TRIGGER [member_invitation_v2_UpdateTimeTrigger]
     GO
 /****** Object:  Trigger [dbo].[onprem_key_UpdateTimeTrigger]    Script Date: 9/7/2021 5:33:08 AM ******/
     SET ANSI_NULLS ON
