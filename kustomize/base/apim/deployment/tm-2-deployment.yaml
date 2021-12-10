@@ -163,8 +163,7 @@ spec:
             - name: apim-vol
               mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
             - name: wso2am-conf
-              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
-              subPath: tm-2-deployment.toml
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
             - name: apim-docker-entrypoint
               mountPath: /home/wso2carbon/docker-entrypoint.sh
               subPath: docker-entrypoint.sh
