@@ -105,4 +105,12 @@ spec:
               secretProviderClass: secret-cp-graphql
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: secret-idp
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-idp
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
