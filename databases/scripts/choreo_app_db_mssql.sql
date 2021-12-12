@@ -1748,6 +1748,7 @@ ALTER TABLE [dbo].[role_tag] ENABLE TRIGGER [role_tag_UpdateTimeTrigger]
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api manage','apim:api_manage','APIM-PUBLISHER','manage api');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('tier manage','apim:tier_manage','APIM-PUBLISHER','manage api tier');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('subscription manage','apim:subscription_manage','APIM-PUBLISHER','api subscription manage');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api setting,’apim:publisher_settings','APIM-PUBLISHER’,’settings api');
 
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('api subscribe','apim:subscribe', 'APIM-SUBSCRIBER','subscribe apis');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('app manage','apim:app_manage', 'APIM-SUBSCRIBER','manage applications');
