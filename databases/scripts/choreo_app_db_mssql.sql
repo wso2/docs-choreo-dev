@@ -1664,6 +1664,24 @@ CREATE TABLE [dbo].[role_tag]
     CONSTRAINT unique_role_tag_mapping   UNIQUE(role_id,handle)
 )
 
+/****** Object:  Table [dbo].[user_migration_info]    Script Date: 12/07/2021 5:40:00 PM ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[user_migration_info](
+    [email] [nvarchar](255) NOT NULL,
+    [v1_idpid] [nvarchar](255) NOT NULL,
+    [selected] [smallint] NOT NULL DEFAULT 0,
+    [is_complete] [smallint] NOT NULL DEFAULT 0,
+    CONSTRAINT [user_migration$email_vi_idpid_unique] UNIQUE NONCLUSTERED
+(
+    [email] ASC,
+[v1_idpid] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+
 /****** Object:  Trigger [dbo].[permission_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
     GO
