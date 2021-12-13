@@ -27,6 +27,7 @@ resources:
   - cp-graphql.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - billing.yaml
+  - alert-notification-service.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
