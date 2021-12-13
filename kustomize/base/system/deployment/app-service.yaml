@@ -69,6 +69,12 @@ spec:
             secretKeyRef:
               name: secret-idp
               key: IDP_BACKEND_API_CLIENT_SECRET
+        - name: SCIM_BACKEND_API_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: SCIM_BACKEND_API_USER_PASSWORD
+              optional: true
         - name: AZURE_KEY_VAULT_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
