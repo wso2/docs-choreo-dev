@@ -6,8 +6,8 @@ metadata:
   name: alert-notification-service
 spec:
   ports:
-  - name: alert-notification-service-port
+  - name: an-port
     port: 9090
-    targetPort: alert-notification-service-port
+    targetPort: an-port
   selector:
     choreo.component: alert-notification-service
