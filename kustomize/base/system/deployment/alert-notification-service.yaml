@@ -52,7 +52,7 @@ spec:
               readOnly: true
           ports:
             - containerPort: 9090
-              name: alert-notification-service-port
+              name: an-port
               protocol: TCP
           resources:
             limits:
