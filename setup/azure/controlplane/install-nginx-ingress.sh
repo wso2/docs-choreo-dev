@@ -106,6 +106,8 @@ echo "--- Setting up Internal Nginx Ingress Controller.."
 echo "--- Creating namespace ${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress..."
 kubectl create namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
+kubectl label namespace "${INTERNAL_INGRESS_NAMESPACE}" choreo-ingress-purpose="controlplane-internal"
+
 #kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}" linkerd.io/inject=enabled
 #kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
 
