@@ -130,7 +130,7 @@ When you add a REST API component, the API design is by default that of the samp
     6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
 
         1. Click the last **+** icon in the low-code diagram.
-       
+
         2. Under **Statements**, select **Variable** and enter details as follows:
 
            | **Field**      | **Value**                                         |
@@ -213,7 +213,9 @@ Now you can commit the API configuration in a private GitHub repository in GitHu
 
 To commit the Statistics REST API, follow the steps below:
 
-1. In the left panel, expand **Changes**. 
+1. Click **Sync with Choreo Upstream** to sync your changes with the repository into which you are checking the REST API component.
+
+2. In the left panel, expand **Changes**. 
 
 2. Right-click on the `service.bal` file, and click **Stage Changes**. As a result, the `service.bal` file appears under **Staged Changes**.
 
