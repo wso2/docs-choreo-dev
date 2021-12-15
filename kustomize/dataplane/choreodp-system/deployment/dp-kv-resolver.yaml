@@ -68,11 +68,11 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              memory: 256Mi
-              cpu: 200m
+              memory: 1.5Gi
+              cpu: 1
             limits:
-              memory: 512Mi
-              cpu: 500m
+              memory: 1Gi
+              cpu: 1
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
