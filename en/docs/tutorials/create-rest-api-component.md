@@ -48,7 +48,7 @@ The `Statistics` REST API opens on a separate page.
 
 ### Design the REST API
 
-When you add a REST API component, the API design is by default that of the sample Hello World application. To create your REST API, let's update it as follows:
+Let's design the REST API as follows:
 
 1. To open the REST API component in the Web Editor, click **Edit with VSCode Online**.
 
