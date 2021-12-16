@@ -69,7 +69,7 @@ Once you have promoted the API to production, Choreo then shows a second URL tha
 
 API Management is automatically turned on in REST APIs (and other APIs) on Choreo. Developers can use its capabilities to manage the exposure of APIs to their consumers. Developers can configure the API’s security settings, set rate limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. The following image shows how developers can execute the consumer-facing Lifecycle of the API.
 
-[Manage API Lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
+![Manage API Lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
 
 Consuming the published APIs is made easy with the inbuilt Choreo Developer Portal. Application developers can discover and invoke published APIs using the Choreo Developer Portal. Learn more about the Choreo Developer Portal.
 
@@ -83,5 +83,5 @@ Learn more about Choreo's observability capabilities from [here]().
 
 ## Business Insights
 
-Once you take your APIs to production, you need to constantly analyze your APIs to fully understand the usage of your APIs. Choreo provides an
+Once you take your APIs to production, you need to constantly analyze your APIs to fully understand the usage of your APIs. 
 
