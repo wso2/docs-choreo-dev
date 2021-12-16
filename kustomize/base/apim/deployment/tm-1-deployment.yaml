@@ -165,6 +165,9 @@ spec:
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
               subPath: tm-1-deployment.toml
+            - name: wso2am-conf-log4j
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/log4j2.properties
+              subPath: log4j2.properties
             - name: apim-docker-entrypoint
               mountPath: /home/wso2carbon/docker-entrypoint.sh
               subPath: docker-entrypoint.sh
@@ -196,6 +199,9 @@ spec:
         - name: apim-vol
           emptyDir: {}
         - name: wso2am-conf
+          configMap:
+            name: choreo-apim-tm-1-conf
+        - name: wso2am-conf-log4j
           configMap:
             name: choreo-apim-tm-1-conf
         - name: apim-docker-entrypoint

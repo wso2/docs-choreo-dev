@@ -266,6 +266,23 @@ CREATE TABLE IF NOT EXISTS member_invitation
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+CREATE TABLE IF NOT EXISTS member_invitation_v2
+(
+    invitation_id     int NOT NULL AUTO_INCREMENT,
+    uuid                VARCHAR(255) NOT NULL,
+    organization_id     int          NOT NULL,
+    user_email          VARCHAR(255) NOT NULL,
+    invited_roles       VARCHAR(255) NOT NULL,
+    invited_application VARCHAR(255) NOT NULL,
+    created_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (invitation_id),
+    UNIQUE KEY email_org_unique_v2 (user_email, organization_id, invited_application),
+    CONSTRAINT inv_organization_id_v2_fk
+        FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE configuration
 (
     id              INT AUTO_INCREMENT,
@@ -372,18 +389,33 @@ ALTER TABLE `connection_info` ADD COLUMN `type` VARCHAR(255) NOT NULL DEFAULT 's
 
 ALTER TABLE `user` ADD COLUMN `is_anonymous` BOOLEAN NOT NULL DEFAULT FALSE AFTER `idp_id`;
 
+CREATE TABLE component_data
+(
+    id                  INT AUTO_INCREMENT,
+    uuid                VARCHAR(50)   NOT NULL,
+    organization_handle VARCHAR(50)   NOT NULL,
+    project_uuid        VARCHAR(50)   NOT NULL,
+    component_uuid      VARCHAR(50)   NOT NULL,
+    environment_uuid    VARCHAR(50)   NOT NULL,
+    component_version   VARCHAR(50)   NOT NULL,
+    release_uuid        VARCHAR(50)   NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uuid_unique (uuid),
+    UNIQUE KEY release_id_unique (release_uuid)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE configuration_mount
 (
-    id                INT AUTO_INCREMENT,
-    config_key_name   VARCHAR(255)  NOT NULL,
-    organization_id   VARCHAR(50)   NOT NULL,
-    project_id        VARCHAR(50)   NOT NULL,
-    component_id      VARCHAR(50)   NOT NULL,
-    environment_id    VARCHAR(50)   NOT NULL,
-    component_version VARCHAR(50)   NOT NULL,
-    value_type        VARCHAR(50)   NOT NULL,
+    id                  INT AUTO_INCREMENT,
+    config_key_name     VARCHAR(255)  NOT NULL,
+    component_data_uuid VARCHAR(50)   NOT NULL,
+    value_type          VARCHAR(50)   NOT NULL,
+    is_system           BOOLEAN       NOT NULL DEFAULT FALSE,
+    is_required         BOOLEAN       NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
-    UNIQUE KEY org_project_component_version_env_key_unique (organization_id, project_id, component_id, component_version, environment_id, config_key_name)
+    CONSTRAINT component_data_uuid_fk FOREIGN KEY (component_data_uuid) REFERENCES component_data (uuid) ON DELETE CASCADE,
+    UNIQUE KEY component_data_uuid_key_unique (component_data_uuid,config_key_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -391,11 +423,9 @@ CREATE TABLE configuration_value
 (
     id                INT AUTO_INCREMENT,
     config_mount_id   INT           NOT NULL,
-    key_name          VARCHAR(255)  NOT NULL,
     value_ref         VARCHAR(255)  NOT NULL,
-    user_id           VARCHAR(50)   NOT NULL,
+    user_idp_id       VARCHAR(50)   NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT config_mount_key_id_fk FOREIGN KEY (config_mount_id) REFERENCES configuration_mount (id),
-    UNIQUE KEY key_unique (key_name)
+    CONSTRAINT config_mount_key_id_fk FOREIGN KEY (config_mount_id) REFERENCES configuration_mount (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-kv-resolver
+  labels:
+    choreo.component: dp-kv-resolver
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_43=Risk accepted
+    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip6: CKV_K8S_10=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_8=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_30=Temporarily suppressing till fixing
+    checkov.io/skip9: CKV_K8S_9=Temporarily suppressing till fixing
+    checkov.io/skip10: CKV_K8S_13=Temporarily suppressing till fixing
+    checkov.io/skip11: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip12: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip13: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip14: CKV_K8S_11=Temporarily suppressing till fixing
+    checkov.io/skip15: CKV_K8S_12=Temporarily suppressing till fixing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: dp-kv-resolver
+  template:
+    metadata:
+      labels:
+        choreo.component: dp-kv-resolver
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: kube-rbac-proxy
+          image: gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+          args:
+            - --secure-listen-address=0.0.0.0:8443
+            - --upstream=http://127.0.0.1:8080/
+            - --logtostderr=true
+            - --v=10
+          ports:
+            - containerPort: 8443
+              name: https
+        - name: manager
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-kv-resolver:latest
+          args:
+            - --health-probe-bind-address=:8081
+            - --leader-elect
+          command:
+            - /manager
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 1
+            limits:
+              memory: 1.5Gi
+              cpu: 1
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          envFrom:
+            - configMapRef:
+                name: env-dp-kv-resolver
+          env:
+          - name: AZURE_KEYVAULT_CLIENT_ID
+            valueFrom:
+              secretKeyRef: 
+                name: secret-dp-kv-resolver
+                key: AZURE_KEYVAULT_CLIENT_ID
+                optional: true
+          - name: AZURE_KEYVAULT_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef: 
+                name: secret-dp-kv-resolver
+                key: AZURE_KEYVAULT_CLIENT_SECRET
+                optional: true
+          - name: AZURE_KEYVAULT_TENANT_ID
+            valueFrom:
+              secretKeyRef: 
+                name: secret-dp-kv-resolver
+                key: AZURE_KEYVAULT_TENANT_ID
+                optional: true
+          volumeMounts:
+            - name: secret-dp-kv-resolver
+              mountPath: /mnt/csi/secret-dp-kv-resolver
+              readonly: true     
+      volumes:
+        - name: secret-dp-kv-resolver
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-kv-resolver
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: dp-kv-resolver-controller-manager
+      terminationGracePeriodSeconds: 10

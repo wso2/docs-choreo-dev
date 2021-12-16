@@ -112,8 +112,8 @@ kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 echo "--- Configure CSI Secret Store"
 bash routing/configure-csi-secret-store.sh
 
-#echo "--- Setup Nginx Ingress"
-#bash routing/install-nginx-ingress.sh
+echo "--- Setup Routing Nginx Ingress Controller"
+bash routing/install-nginx-ingress.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
@@ -132,7 +132,7 @@ fi
 successful="true"
 # shellcheck disable=SC2154
 if [[ "${successful}" == "true" ]]; then
-    echo "Choreo control plane successfully installed"
+    echo "Choreo Routing cluster has been successfully installed"
 fi
 if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"

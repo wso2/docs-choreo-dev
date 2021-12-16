@@ -59,11 +59,22 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+        - name: MARKETING_CONSENT_APP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: MARKETING_CONSENT_APP_CLIENT_SECRET
         - name: IDP_BACKEND_API_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: secret-idp
               key: IDP_BACKEND_API_CLIENT_SECRET
+        - name: SCIM_BACKEND_API_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: SCIM_BACKEND_API_USER_PASSWORD
+              optional: true
         - name: AZURE_KEY_VAULT_CLIENT_SECRET
           valueFrom:
             secretKeyRef:

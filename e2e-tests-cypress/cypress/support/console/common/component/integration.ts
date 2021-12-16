@@ -22,7 +22,7 @@ export class Integration {
         this.wait()
     }
 
-    
+
     private static wait() {
         cy.get('[data-testid="backdrop-loader"]').should('not.exist');
         cy.get('[data-testid="diagram-loader"]').should('not.exist');
@@ -44,7 +44,6 @@ export class Integration {
                 cy.get('[data-testid="delete-btn"]').click()
                 cy.wait(1000)
                 cy.get('[role="dialog"] button').contains('Delete').click()
-                cy.contains('INTEGRATION').should('be.visible')
             })
         })
 

@@ -27,7 +27,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -57,11 +56,17 @@ spec:
                 secretKeyRef:
                   name: secret-datacollector
                   key: EVENTHUB_CONNECTION_STRING
+            - name: EVENTHUB_SHARED_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-datacollector
+                  key: EVENTHUB_SHARED_ACCESS_KEY
           envFrom:
             - configMapRef:
                 name: env-datacollector
           image: choreocontrolplane.azurecr.io/choreoipaas/data-collector:latest
           securityContext:
+            allowPrivilegeEscalation: false
             runAsUser: 10500
             runAsGroup: 10500
             readOnlyRootFilesystem: true

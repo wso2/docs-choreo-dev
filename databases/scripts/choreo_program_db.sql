@@ -53,7 +53,7 @@ DELIMITER //
 CREATE PROCEDURE GetObsIdByReleaseId(IN projsec VARCHAR(255), IN releaseid VARCHAR(255), 
                           OUT pid INT, OUT obsid VARCHAR(255))
 BEGIN
-  IF(appid = '') THEN
+  IF(releaseid = '') THEN
      SET releaseid := NULL;
   END IF;
   INSERT INTO `program` (`obs_id`, `project_secret`, `release_id`) 
@@ -119,5 +119,37 @@ DELIMITER //
 CREATE PROCEDURE DeleteVersion(IN versionId INT, IN obsId VARCHAR(255))
 BEGIN
   DELETE FROM version WHERE id=versionId AND id NOT IN (SELECT latest_version_id from program where obs_id=obsId);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Handshake(IN projsec VARCHAR(255), IN asthash VARCHAR(255), 
+                          OUT obsid VARCHAR(255), OUT vn VARCHAR(255), OUT astchanged BOOLEAN, OUT releaseid VARCHAR(255))
+BEGIN
+  START TRANSACTION;
+    SET @programid := 0;
+    SET @versionid := 0;
+    SET @versionrows := 0;
+    SET @astchanged := false;
+    CALL GetObsIdByProjectSecret(projsec, @programid, obsid, releaseid); 
+    CALL GetVersion(@programid, asthash, @versionid, vn, @versionrows); 
+    IF (@versionrows = 1) THEN
+      UPDATE program SET latest_version_id=@versionid WHERE id=@programid;
+      SET astchanged := true;
+    END IF;
+  COMMIT;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE GetObsIdByProjectSecret(IN projsec VARCHAR(255), 
+                          OUT pid INT, OUT obsid VARCHAR(255), OUT releaseid VARCHAR(255))
+BEGIN
+  INSERT INTO `program` (`obs_id`, `project_secret`) 
+  SELECT UUID(),projsec
+  WHERE NOT EXISTS (SELECT id FROM `program` WHERE `project_secret`=projsec LIMIT 1);
+  SELECT LAST_INSERT_ID() INTO pid;
+  SELECT `id`,`obs_id`,`release_id` INTO pid,obsid,releaseid FROM `program` WHERE `project_secret`=projsec;
 END //
 DELIMITER ;

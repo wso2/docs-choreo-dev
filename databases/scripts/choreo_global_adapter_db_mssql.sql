@@ -1,3 +1,11 @@
+-- Create User
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_global_adapter_db_user')
+BEGIN
+    CREATE USER [choreo_global_adapter_db_user] FOR LOGIN [choreo_global_adapter_db_user]
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_global_adapter_db TO choreo_global_adapter_db_user
+END;
+GO
+
 --create ga_local_adapter_partition
 IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[ga_local_adapter_partition]') AND TYPE IN (N'U'))
 

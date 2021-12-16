@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: sys-obsapi
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -67,16 +67,6 @@ spec:
                 configMapKeyRef:
                   key: LOG_WORKSPACE_ID
                   name: env-loganalytics-replica
-            - name: NEGOTIATOR_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: NEGOTIATOR_GRPC_ADDRESS
-                  name: cm-sys-obsapi
-            - name: APP_SERVICE_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: APP_SERVICE_GRPC_ADDRESS
-                  name: cm-sys-obsapi
             - name: AZURE_LA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
@@ -85,6 +75,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-k8sservice-replica
+            - configMapRef:
+                name: cm-sys-obsapi
+            - configMapRef:
+                name: env-sys-obsapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest
           securityContext:
             runAsUser: 10500
@@ -93,12 +87,12 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+                - all
           name: sys-obsapi
           volumeMounts:
-          - name: secret-sys-obsapi
-            mountPath: "/mnt/csi/secret-sys-obsapi"
-            readOnly: true
+            - name: secret-sys-obsapi
+              mountPath: "/mnt/csi/secret-sys-obsapi"
+              readOnly: true
           ports:
             - containerPort: 9098
               name: sys-obsapi-port
@@ -132,13 +126,13 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
-      - name: secret-sys-obsapi
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-sys-obsapi
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-sys-obsapi
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-sys-obsapi
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
