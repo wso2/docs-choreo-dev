@@ -47,11 +47,6 @@ spec:
                 secretKeyRef:
                   name: secret-delete-manager
                   key: MSSQL_PASSWORD
-            - name: ASB_CONNECTION_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: secret-delete-manager
-                  key: ASB_CONNECTION_STRING
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
