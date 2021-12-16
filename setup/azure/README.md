@@ -1,14 +1,18 @@
-### Sample azure-deploy.properties files for each cluster
+## Sample azure-deploy.properties files for each cluster
 
-#### Control Plane Cluster
+### Control Plane Cluster
 
 ```bash
 SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+INTERNAL_INGRESS_NAMESPACE=xxxxxxxxxxxxxxxxx
 IDP_NAMESPACE=xxxxxxxxxxxxxxxxx
 USERAPPS_NAMESPACE=xxxxxxxxxxxxxxxxx
+INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE=xxxxxxxxxxxxxxxxx
 SYSTEM_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 USERAPPS_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+INTERNAL_INGRESS_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+INTERNAL_CHOREO_CONTROLPLANE_INGRESS_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 IDP_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
@@ -28,8 +32,25 @@ LOADBALANCER_SUBNET=xxxxxxxxxxxxxxxxx
 LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD=xxxxxxxxxxxxxxxxx
 EOF
 ```
+#### Creating TLS Secrets
+For executing the TLS Secret generation script mentioned in `controlplane/create-ingress-tls-secrets.sh`
+Provide the following properties in addition to the above-mentioned properties.
 
-#### Routing Cluster
+``````
+SUBSCRIPTION_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
+SUBSCRIPTION_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
+CONTROLPLANE_INTERNAL_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
+CONTROLPLANE_INTERNAL_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
+``````
+Follow the following chart to obtain the required CERT and KEY files, for first time execution. 
+Proceed to store the file values in the CSI Key Vault for further reference
+
+| Cert/Key File Pair            | First Execution          | CSI Key Vault Secret for reference                                                            |
+|-------------------------------|--------------------------|-----------------------------------------------------------------------------------------------|
+| Subscription Ingress          | Obtain from DigiOps team | `subscription-ingress-TLS-KEY` <br/> `subscription-ingress-TLS-CERTIFICATE`                   |
+| ControlPlane Internal Ingress | Obtain from SecOps team  | `controlplane-internal-ingress-TLS-KEY` <br/> `controlplane-internal-ingress-TLS-CERTIFICATE` |
+
+### Routing Cluster
 
 ```bash
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
@@ -47,7 +68,7 @@ ENV=xxxxx
 EOF
 ````
 
-#### Data Plane Cluster
+### Data Plane Cluster
 
 ```bash
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
@@ -62,7 +83,7 @@ ENV=xxxxx
 EOF
 ```
 
-#### Workspace Cluster
+### Workspace Cluster
 
 ```bash
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
