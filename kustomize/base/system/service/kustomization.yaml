@@ -37,3 +37,4 @@ resources:
   - multivariate-anomaly-detector-notification-manager.yaml
   - billing.yaml
   - alert-notification-service.yaml
+  - delete-manager.yaml
