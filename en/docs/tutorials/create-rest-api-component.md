@@ -14,7 +14,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 2. Expand the drop-down menu for projects and click **Create Project**.
 
-    ![Create project](../assets/img/tutorials/rest-api/create-project.png)
+    ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
 3. Enter the name and the description for the project as follows:
 
@@ -37,10 +37,10 @@ Let's create a new REST API component as follows:
 
 4. Enter a name and a description for the API as follows:
 
-   | **Field**       | **Value**             |
-   |-----------------|-----------------------|
-   | **Name**        | `Statistics`          |
-   | **Description** | `COVID-19 Statistics` |
+    | **Field**       | **Value**             |
+    |-----------------|-----------------------|
+    | **Name**        | `Statistics`          |
+    | **Description** | `COVID-19 Statistics` |
 
 5. Click **Create**.
 
@@ -57,73 +57,73 @@ Let's design the REST API as follows:
 2. On the left navigator, click **service.bal**  to open the low-code diagram of your REST API component.
 
 3. Add a new construct and an API resource as follows:
- 
-   1. Click on the first **+** icon to add an HTTP construct. Select the **Service** construct type, 
-   
-      ![Add service construct](../assets/img/tutorials/rest-api/add-service-construct.png)
 
-      Select HTTP as the service type, and enter the following information. 
+    1. Click on the first **+** icon to add an HTTP construct. Select the **Service** construct type,
 
-      | **Field**             | **Value**             |
-      |-----------------------|-----------------------|
-      | **Service Base Path** | `COVID19-Statistics`  |
-      | **Listener Port**     | `9090`                |
+        ![Add service construct](../assets/img/tutorials/rest-api/add-service-construct.png){.cInlineImage-half}
 
-      Select the **Define Inline** check box, and then click **Save**.
+        Select HTTP as the service type, and enter the following information.
 
-   2. Expand the construct you created by clicking on it. Then click the **EDIT** icon of the default `GET` resource within the construct.
-   
-   3. Enter `stats/[string country]` in the **Path** field.
-   
-   4. Click **Advanced** and select **Add Caller** under the **Advanced** section.
-   
-   5. Click **Save API**.
+        | **Field**             | **Value**             |
+        |-----------------------|-----------------------|
+        | **Service Base Path** | `COVID19-Statistics`  |
+        | **Listener Port**     | `9090`                |
+
+        Select the **Define Inline** check box, and then click **Save**.
+
+    2. Expand the construct you created by clicking on it. Then click the **EDIT** icon of the default `GET` resource within the construct.
+
+    3. Enter `stats/[string country]` in the **Path** field.
+
+    4. Click **Advanced** and in the **Return Type** field, enter `json|error` to get the return in `json` or `error1` format.
+
+    5. Click **Save API**.
 
 4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
 
-   1. Click on the API resource you edited, and then click on the first **+** icon after the **Start** statement.
-   
-   2. Click **Connector** and then select **Covid19 API**.
-   
-   3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
-   
-   4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+    1. Click on the API resource you edited, and then click on the first **+** icon after the **Start** statement.
 
-      | **Field**                  | **Value**         |
-      |----------------------------|-------------------|
-      | **Country**                | `country`         |
-      | **Response Variable Name** | `statusByCountry` |
+    2. Click **Connector** and then select **Covid19 API**.
 
-   5. Click **Save**.
-   
-   6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
+    3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-       1. Click the last **+** icon in the low-code diagram.
-      
-       2. Under **Statements**, select **Variable** and enter details as follows:
+    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
-          | **Field**      | **Value**                     |
-          |----------------|-------------------------------|
-          | **Type**       | `int`                         |
-          | **Name**       | `totalCases`                  |
-          | **Expression** | `<int>statusByCountry.cases`  |
+        | **Field**                  | **Value**         |
+        |----------------------------|-------------------|
+        | **Country**                | `country`         |
+        | **Response Variable Name** | `statusByCountry` |
 
-       3. Click **Save**.
-      
+    5. Click **Save**.
+
+    6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
+
+        1. Click the last **+** icon in the low-code diagram.
+
+        2. Under **Statements**, select **Variable** and enter details as follows:
+
+            | **Field**      | **Value**                     |
+            |----------------|-------------------------------|
+            | **Type**       | `int`                         |
+            | **Name**       | `totalCases`                  |
+            | **Expression** | `<int>statusByCountry.cases`  |
+
+        3. Click **Save**.
+
 5. To retrieve the population data, connect to the World Bank API as follows:
 
     1. Click the last **+** icon in the low-code diagram.
-   
+
     2. Click **Connector** and then select **World Bank API**.
-   
+
     3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
-   
+
     4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
 
-       | **Field**                  | **Value**            |
-       |----------------------------|----------------------|
-       | **Country Code**           | `country`            |
-       | **Response Variable Name** | `populationByCountry`|
+        | **Field**                  | **Value**            |
+        |----------------------------|----------------------|
+        | **Country Code**           | `country`            |
+        | **Response Variable Name** | `populationByCountry`|
 
     5. Click **Save**.
 
@@ -133,55 +133,55 @@ Let's design the REST API as follows:
 
         2. Under **Statements**, select **Variable** and enter details as follows:
 
-           | **Field**      | **Value**                                         |
-           |----------------|---------------------------------------------------|
-           | **Type**       | `int`                                             |
-           | **Name**       | `populationMillions`                              |
-           | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
+            | **Field**      | **Value**                                         |
+            |----------------|---------------------------------------------------|
+            | **Type**       | `int`                                             |
+            | **Name**       | `populationMillions`                              |
+            | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
 
         3. Click **Save**.
-       
+
 6. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
-   1. Click the last **+** icon in the low-code diagram.
-   
-   2. Under **Statements**, select **Variable** and enter details as follows:
+    1. Click the last **+** icon in the low-code diagram.
 
-      | **Field**      | **Value**                                    |
-      |----------------|----------------------------------------------|
-      | **Type**       | `decimal`                                    |
-      | **Name**       | `totalCasesPerMillion`                       |
-      | **Expression** | `<decimal>(totalCases / populationMillions)` |
+    2. Under **Statements**, select **Variable** and enter details as follows:
 
-   3. Click **Save**.
-   
+        | **Field**      | **Value**                                    |
+        |----------------|----------------------------------------------|
+        | **Type**       | `decimal`                                    |
+        | **Name**       | `totalCasesPerMillion`                       |
+        | **Expression** | `<decimal>(totalCases / populationMillions)` |
+
+    3. Click **Save**.
+
 7. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
 
-    1. To build the `json` payload with data of the total cases per million in the population, add a variable. 
+    1. To build the `json` payload with data of the total cases per million in the population, add a variable.
 
-       Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
+        Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
 
-       | **Field**      | **Value**                     |
-       |----------------|-------------------------------|
-       | **Type**       | `json`                        |
-       | **Name**       | `payload`                     |
-       | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
+         | **Field**      | **Value**                     |
+         |----------------|-------------------------------|
+         | **Type**       | `json`                        |
+         | **Name**       | `payload`                     |
+         | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
 
     2. Click **Save**.
 
-    3. To respond with the JSON payload, add a `Respond` statement.
+    3. To respond with the JSON payload, add a `Return` statement.
 
-       Click the last **+** icon in the low-code diagram and click **Respond**.
+        Click the last **+** icon in the low-code diagram and click **Return**.
 
-       In the **Respond Expression** field, enter `payload`.
+        In the **Return Expression** field, enter `payload`.
 
-       Save the information.
+        Save the information.
 
 Now you have completed designing the `CovidStatus` service.
 
 The low-code diagram looks as follows:
 
-TODO
+ ![Add service construct](../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-full}
 
 The code view looks as follows:
 
@@ -190,84 +190,99 @@ import ballerinax/worldbank;
 import ballerinax/covid19;
 import ballerina/http;
 
-service /covid on new http:Listener(9090) {
-
-    resource function get stats/[string country](http:Caller caller) returns error? {
-
+service /CovidStats on new http:Listener(9090) {
+    resource function get stats/[string country]() returns json|error {
         covid19:Client covid19Client = check new ({});
         covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
         int totalCases = <int>statusByCountry.cases;
-
         worldbank:Client worldbankClient = check new ({});
         worldbank:IndicatorInformation[] populationByCountry = check worldbankClient->getPopulationByCountry(country);
-        int population = (populationByCountry[0]?.value ?: 0) / 1000000;
-        decimal totalCasesPerMillion = <decimal>(totalCases / population);
+        int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
+        decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
         json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
-        check caller->respond(payload);
+        return payload;
     }
 }
 ```
-Now you can commit the API configuration in a private GitHub repository in GitHub under your user account.
+Now you can run the REST API and test it to see whether it works as expected.
+
+### Run and test the REST API
+
+To run the API, click **Run** (above the low-code diagram).
+
+Once the REST API is successfully started, the following appears in the terminal log.
+
+```
+Running executable
+```
+Now you can try out the REST API as follows:
+
+1. Click **Try it** As a result, a test view opens to the right of the page.
+
+2. In the test view, expand the **GET** resource.
+
+3. Click **Try it out**.
+
+4. In the **country** field, enter `USA`.
+
+5. Click **Execute**.
+
+The following is displayed as the response body under **Responses**.
+
+![Try-out response](../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
+
+The REST API you created works as expected. Therefore, now you can commit it.
 
 ### Commit the REST API to GitHub
 
-To commit the Statistics REST API, follow the steps below:
+The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub as follows:
 
-1. Click **Sync with Choreo Upstream** to sync your changes with the repository into which you are checking the REST API component.
+1. Click **Sync with Choreo Upstream** (at the bottom of the page), and then click **Sync my changes with Choreo**.
 
-2. In the left panel, expand **Changes**. 
+2. In the left panel, enter `Implement REST API` as the message and click on the tick.
 
-2. Right-click on the `service.bal` file, and click **Stage Changes**. As a result, the `service.bal` file appears under **Staged Changes**.
+    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-half} 
 
-3. Click on the **Views and More Actions** menu, and then click **Commit** -> **Commit Staged**.
+    Select **Yes** in the message that appears to specify that you need the changes to be staged.
 
-   ![Commit changes](../assets/img/tutorials/rest-api/commit-changes.png)
+Once the changes are successfully deployed, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
-4. Enter `Add Statistics API` as the message, and press **Enter**/**return**.
-
-5. Click **Views and More Actions** -> **Push**.
-
-To run this API, click the **Run** icon in the top right corner. 
 
 ## Deploy
 
 To deploy the API, click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
 
-![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png)
+![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
 
-The progress of the deployment is shown as follows.
+To check the progress of the deployment, click **View Logs**
 
-![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png)
+![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
 
 Once the API is deployed, the **Development** card indicates that the API is running as shown below.
 
-![Deployed API](../assets/img/tutorials/rest-api/deployed-api.png)
+![Deployed API](../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-full}
 
+Now you can test your deployed REST API to check again whether it is working as expected.
 
 ## Test
 
 Once you have deployed the Choreo application you can test it via the Open API Console, A cURL command, or Postman.
 
-For this scenario, let's test via a cURL command as follows:
+For this scenario, let's test via the Open API Console:
 
-1. To open the test view, click **Test** in the left pane.
+1. To open the test view, click **Test** in the **Development** card in the **Deploy tab, or click on the **Test** tab.
 
-2. Click **cURL** to generate the cURL command required.
+2. Click **Try it out**.
 
-    The automatically generated cURL command is displayed as follows:
+3. In the **country** field, enter `USA`.
 
-   ![Default cURL command](../assets/img/tutorials/rest-api/default-curl-command.png)
+4. Click **Execute**.
 
-3. In the **Parameters** tab, click **Add* and add the `country` parameter as follows so that you can fetch the COVID statistics for the USA.
+The following is displayed as the response body under **Responses**.
 
-    | **KEY**      | **VALUE** |
-    |--------------|-----------|
-    | **country**  | `USA`     |
+![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
 
-    The cURL command is updated with this parameter.
-
-4. Copy the generated cURL command and issue it from your terminal. The response shows COVID-19 statistics retrieved for the USA as follows:
-    
+Congratulations! You have now successfully created and tested a REST API in Choreo!
 
 ## Manage
 
@@ -281,9 +296,4 @@ Once you have successfully deployed your API and tested it, you can perform the 
 
 - Select/switch usage plans: You can select a usage plan for your API out of `Bronz` `Silver`, `Gold`, and `Unlimited` based on the level of traffic that you expect the API to receive. You can change the usage plan when required.
 
-- Update API settings: 
-
-
-## Observe
-
-
+- Update API settings:
