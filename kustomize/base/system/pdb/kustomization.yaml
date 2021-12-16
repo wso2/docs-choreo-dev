@@ -17,7 +17,6 @@ resources:
   - apim-service.yaml
   - language-server.yaml
   - perfanalyzer-estimator.yaml
-  - programanalyzer.yaml
   - datamapper.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
