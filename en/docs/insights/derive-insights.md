@@ -212,7 +212,7 @@ The **Alerts** page shows information related to business alerts issued by Chore
 
 **Prerequisites**
 
-To use this page, be sure to configure alerts and have API invocations that trigger alerts. For instructions, see [Alert Configuration](configure-alerts.md).
+To use this page, be sure to configure alerts and have API invocations that trigger alerts. 
 
 !!! Note
 Alerts are retained only for a week.
@@ -221,7 +221,6 @@ Alerts are retained only for a week.
 
   This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The drop-downs can be used to filter alerts based on the alert type and API.
 
-  ![Alert summary](../assets/img/insights/alert-summary.png){.cInlineImage-full}
 
 - **Top APIs by Alert Count**
 

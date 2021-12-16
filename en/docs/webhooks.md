@@ -16,7 +16,7 @@ Lets consider the example scenario of recording newly created GitHub issues in a
 
 When you create a Webhook component, you can select the event source (i.e. GitHub) and the event channel. As shown below.
 
-![Select event source](../assets/img/webhooks/select-event-source.png)
+![Select event source](assets/img/webhooks/select-event-source.png)
 
 Once you select them, Choreo creates the skeleton of the code which looks as shown below.
 
