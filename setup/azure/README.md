@@ -43,7 +43,7 @@ CONTROLPLANE_INTERNAL_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
 CONTROLPLANE_INTERNAL_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
 ``````
 Follow the following chart to obtain the required CERT and KEY files, for first time execution. 
-Proceed to store in the file values in the CSI Key Vault for further reference
+Proceed to store the file values in the CSI Key Vault for further reference
 
 | Cert/Key File Pair            | First Execution          | CSI Key Vault Secret for reference                                                            |
 |-------------------------------|--------------------------|-----------------------------------------------------------------------------------------------|
