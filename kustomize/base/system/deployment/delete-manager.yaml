@@ -40,7 +40,7 @@ spec:
               memory: 300Mi
           envFrom:
             - configMapRef:
-                name: env-delete-manager
+                name: env-dp-delete-manager
           env:
             - name: MSSQL_PASSWORD
               valueFrom:
