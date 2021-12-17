@@ -54,6 +54,7 @@ nav:
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
       - Concepts: concepts/concepts.md
+  - Tutorials: tutorials/create-rest-api-component.md
   - REST APIs: api/rest-api.md
   - API Proxies: api-proxies.md
   - Webhooks: webhooks.md
