@@ -105,6 +105,17 @@ CREATE TABLE threshold_event_status (
 	PRIMARY KEY (org_uuid, billing_month)
 );
 
+
+IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[usage_publishing_status]') AND TYPE IN (N'U'))
+CREATE TABLE usage_publishing_status (
+     day DATETIME2(0) NOT NULL,
+     org_uuid varchar(100) NOT NULL,
+     stripe_subscription_item_id varchar(100) NOT NULL,
+     count INTEGER NOT NULL,
+     successful BIT NOT NULL DEFAULT 0,
+     PRIMARY KEY (day, org_uuid, stripe_subscription_item_id)
+);
+
 -- --------------------------- INDEX CREATION -----------------------------
 
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'daily_api_proxy_ind_by_day_start')
