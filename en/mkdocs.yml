@@ -53,11 +53,11 @@ nav:
   - Home: index.md
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
-      - Concepts: concepts/concepts.md
-  - Tutorials: rest-api.md      
+  - Tutorials: 
+      - Create your First REST API Proxy: tutorials/create-your-first-rest-api-proxy.md      
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
-  - Webhooks: webhooks.md
+  - Triggers: triggers.md
   - Scheduled Tasks: scheduled-tasks.md
   - API Management:
       - API Security: manage/api-security.md
