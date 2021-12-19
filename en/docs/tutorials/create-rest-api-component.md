@@ -1,18 +1,22 @@
 # Create a REST API
 
-A REST API is an Application Programming Interface that conforms to the constraints of REST architectural styles and principles. REST is an [architectural style](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) introduced by Dr. Roy Fielding in his doctoral dissertation in the year 2000. It was initially designed as a guide for the development of the web. Today, REST is being widely adopted for the creation of high-performance, stateless and reliable APIs that are used by numerous applications.
+A RESTful API (Application Program Interface) uses HTTP requests to access and use data. The operations you can perform on data are GET (reading), PUT (updating), POST (creating), and DELETE (deleting).
 
-Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will create an API that supports this.
+Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
-## Develop
+- Design a REST API that addresses the described requirement, test it in the VS Code Editor, and then commit it so that it is available in the Chore Console.
+- Deploy the REST API you created to make it available for use.
+- Test the REST API after deploying it to check whether it works as expected.
+
+## Step 1: Develop
 
 In this section, let's develop the application that retrieves COVID-19 related statistics.
 
-### Create a project and add a REST API component
+### 1. Create a project and add a REST API component
 
-1. Sign in to the Choreo Console at https://consolev2.preview-dv.choreo.dev/.
+1. Sign in to the [Choreo Console](https://consolev2.preview-dv.choreo.dev/).
 
-2. Expand the drop-down menu for projects and click **Create Project**.
+2. Expand the drop-down menu for projects and click **+ Create New**.
 
     ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
@@ -25,7 +29,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 4. Click **Create**.
 
-### Add a REST API component
+### 2. Add a REST API component
 
 Let's create a new REST API component as follows:
 
@@ -46,17 +50,15 @@ Let's create a new REST API component as follows:
 
 The `Statistics` REST API opens on a separate page.
 
-### Design the REST API
+### 3. Design the REST API
 
 Let's design the REST API as follows:
 
-1. To open the REST API component in the Web Editor, click **Edit with VSCode Online**.
+1. To open the REST API component in the VS Code Editor, click **Edit with VSCode Online**.
 
     Then click **Open Link in New Tab** in the message that appears to indicate that the code server is ready.
 
-2. On the left navigator, click **service.bal**  to open the low-code diagram of your REST API component.
-
-3. Add a new construct and an API resource as follows:
+2. Add a new construct and an API resource as follows:
 
     1. Click on the first **+** icon to add an HTTP construct. Select the **Service** construct type,
 
@@ -79,7 +81,7 @@ Let's design the REST API as follows:
 
     5. Click **Save API**.
 
-4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
+3. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
 
     1. Click on the API resource you edited, and then click on the first **+** icon after the **Start** statement.
 
@@ -102,15 +104,15 @@ Let's design the REST API as follows:
 
         2. Under **Statements**, select **Variable** and enter details as follows:
 
-            | **Field**      | **Value**                     |
-            |----------------|-------------------------------|
-            | **Type**       | `int`                         |
-            | **Name**       | `totalCases`                  |
-            | **Expression** | `<int>statusByCountry.cases`  |
+            | **Field**         | **Value**                     |
+            |-------------------|-------------------------------|
+            | **Variable Type** | `int`                         |
+            | **VariableName**  | `totalCases`                  |
+            | Expression        | `<int>statusByCountry.cases`  |
 
         3. Click **Save**.
 
-5. To retrieve the population data, connect to the World Bank API as follows:
+4. To retrieve the population data, connect to the World Bank API as follows:
 
     1. Click the last **+** icon in the low-code diagram.
 
@@ -133,39 +135,39 @@ Let's design the REST API as follows:
 
         2. Under **Statements**, select **Variable** and enter details as follows:
 
-            | **Field**      | **Value**                                         |
-            |----------------|---------------------------------------------------|
-            | **Type**       | `int`                                             |
-            | **Name**       | `populationMillions`                              |
-            | **Expression** | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
+            | **Field**         | **Value**                                         |
+            |-------------------|---------------------------------------------------|
+            | **Variable Type** | `int`                                             |
+            | **Variable Name** | `populationMillions`                              |
+            | Expression        | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
 
         3. Click **Save**.
 
-6. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
+5. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
 
     2. Under **Statements**, select **Variable** and enter details as follows:
 
-        | **Field**      | **Value**                                    |
-        |----------------|----------------------------------------------|
-        | **Type**       | `decimal`                                    |
-        | **Name**       | `totalCasesPerMillion`                       |
-        | **Expression** | `<decimal>(totalCases / populationMillions)` |
+        | **Field**         | **Value**                                    |
+        |-------------------|----------------------------------------------|
+        | **Variable Type** | `decimal`                                    |
+        | **Variable Name** | `totalCasesPerMillion`                       |
+        | Expression*       | `<decimal>(totalCases / populationMillions)` |
 
     3. Click **Save**.
 
-7. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
+6. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
 
-    1. To build the `json` payload with data of the total cases per million in the population, add a variable.
+    1. To build the JSON payload with data of the total cases per million in the population, add a variable.
 
         Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
 
-         | **Field**      | **Value**                     |
-         |----------------|-------------------------------|
-         | **Type**       | `json`                        |
-         | **Name**       | `payload`                     |
-         | **Expression** | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
+         | **Field**         | **Value**                     |
+         |-------------------|-------------------------------|
+         | **Variable Type** | `json`                        |
+         | **Variable Name** | `payload`                     |
+         | Expression        | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
 
     2. Click **Save**.
 
@@ -175,7 +177,7 @@ Let's design the REST API as follows:
 
         In the **Return Expression** field, enter `payload`.
 
-        Save the information.
+        Click **Save**.
 
 Now you have completed designing the `CovidStatus` service.
 
@@ -206,26 +208,28 @@ service /CovidStats on new http:Listener(9090) {
 ```
 Now you can run the REST API and test it to see whether it works as expected.
 
-### Run and test the REST API
+### 4. Run and test the REST API 
 
-To run the API, click **Run** (above the low-code diagram).
+Let's run the REST API you designed in the VS Code Editor to check whether it can be started successfully without errors.
 
-Once the REST API is successfully started, the following appears in the terminal log.
+1. Click **Run** (above the low-code diagram).
 
-```
-Running executable
-```
-Now you can try out the REST API as follows:
+    Once the REST API is successfully started, the following appears in the terminal log.
 
-1. Click **Try it** As a result, a test view opens to the right of the page.
+    ```
+    Running executable
+    ```
+    Now you can try out the REST API.
 
-2. In the test view, expand the **GET** resource.
+2. Click **Try it** As a result, a test view opens to the right of the page.
 
-3. Click **Try it out**.
+3. In the test view, expand the **GET** resource.
 
-4. In the **country** field, enter `USA`.
+4. Click **Try it out**.
 
-5. Click **Execute**.
+5. In the **country** field, enter `USA`.
+
+6. Click **Execute**.
 
 The following is displayed as the response body under **Responses**.
 
@@ -233,9 +237,9 @@ The following is displayed as the response body under **Responses**.
 
 The REST API you created works as expected. Therefore, now you can commit it.
 
-### Commit the REST API to GitHub
+### 5. Commit the REST API to GitHub
 
-The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub as follows:
+The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
 
 1. Click **Sync with Choreo Upstream** (at the bottom of the page), and then click **Sync my changes with Choreo**.
 
@@ -248,15 +252,17 @@ The REST API you designed is currently available only in the VS Code Editor. To 
 Once the changes are successfully deployed, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
 
-## Deploy
+## Step 2: Deploy
 
-To deploy the API, click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
+To deploy the API, follow the steps below:
 
-![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
+1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
 
-To check the progress of the deployment, click **View Logs**
+    ![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
 
-![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
+2. To check the progress of the deployment, click **View Logs**
+
+    ![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
 
 Once the API is deployed, the **Development** card indicates that the API is running as shown below.
 
@@ -264,13 +270,13 @@ Once the API is deployed, the **Development** card indicates that the API is run
 
 Now you can test your deployed REST API to check again whether it is working as expected.
 
-## Test
+## Step 3: Test
 
 Once you have deployed the Choreo application you can test it via the Open API Console, A cURL command, or Postman.
 
-For this scenario, let's test via the Open API Console:
+In this tutorial, let's test via the Open API Console:
 
-1. To open the test view, click **Test** in the **Development** card in the **Deploy tab, or click on the **Test** tab.
+1. To open the test view, click **Test** in the **Development** card. Alternatively, you can click on the **Test** tab.
 
 2. Click **Try it out**.
 
@@ -284,7 +290,7 @@ The following is displayed as the response body under **Responses**.
 
 Congratulations! You have now successfully created and tested a REST API in Choreo!
 
-## Manage
+## Step 4: Manage
 
 Once you have successfully deployed your API and tested it, you can perform the following actions for it
 
@@ -294,6 +300,6 @@ Once you have successfully deployed your API and tested it, you can perform the 
 
 - Add documents: This involves attaching files with information about the API for users.
 
-- Select/switch usage plans: You can select a usage plan for your API out of `Bronz` `Silver`, `Gold`, and `Unlimited` based on the level of traffic that you expect the API to receive. You can change the usage plan when required.
+- Select/switch usage plans: You can select a usage plan for your API out of `Bronze` `Silver`, `Gold`, and `Unlimited` based on the level of traffic that you expect the API to receive. You can change the usage plan when required.
 
 - Update API settings:
