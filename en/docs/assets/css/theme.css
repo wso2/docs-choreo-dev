@@ -93,7 +93,7 @@
 }
 
 .md-content__inner {
-    margin: 0 13.4rem 1.2rem !important;
+    margin: 0 14.2rem 1.2rem !important;
 }
 
 
@@ -276,7 +276,7 @@ html .md-typeset .superfences-tabs > label:hover {
         background-color: #fff;
         box-shadow: 0 0 0.2rem rgba(0,0,0,.1), 0 0.2rem 0.4rem rgba(0,0,0,.2);
         color: #212121;
-    }``
+    }
 }
 
 .md-footer-nav__inner {
