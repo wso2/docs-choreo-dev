@@ -254,6 +254,8 @@ Once the changes are successfully deployed, the VS Code Editor indicates by disp
 
 ## Step 2: Deploy
 
+Once you have designed, tested, and committed the REST API, you need to deploy it so that users can invoke it.
+
 To deploy the API, follow the steps below:
 
 1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
