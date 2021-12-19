@@ -300,7 +300,14 @@ a.cChoreoDocsButtons.localLink {
 }
 .md-search {
 	padding-right: 24px;
+    align: left;
 }
+
+
+.md-search__inner{
+    width: 100%;
+}
+
 
 .md-container{
 padding-bottom:15px;
@@ -317,12 +324,7 @@ position: relative;
 	height: 100%;
 }
 
-.cChoreoHeaderBar {
-	display: inline-block;
-	width: 100%;
-	background-color: #545CEC;
-	height: 200px;
-}
+
 
 .cInlineImage-full {
     display: inline-block;

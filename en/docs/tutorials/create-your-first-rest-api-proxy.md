@@ -8,7 +8,7 @@ Choreo is a low-code cloud-native platform for building integration solutions. I
 4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..." 
- We recommend you familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
+   We recommend you familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
 
 
 Let's begin...
@@ -31,7 +31,7 @@ In this tutorial, we will be importing an OpenAPI specification and creating a R
  You can now start adding components to your project. Let's add a REST API proxy component.
 
  !!! tip
- Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
+     Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
 
 4. Click **+Create** On the right-hand upper corner of the components landing page.
  ![Create a new component](../assets/img/tutorials/create-component.png){.cInlineImage-full}
@@ -163,7 +163,7 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 4. Click **://Curl**. Then copy the cURL command that is displayed.
 
  !!!info
- Click the button to copy the cURL command. **Do not manually copy it**. The displayed cURL command is only a template, and it does not include the generated credentials.
+     Click the button to copy the cURL command. **Do not manually copy it**. The displayed cURL command is only a template, and it does not include the generated credentials.
 
 5. Close the **Get cURL to Generate Access Token** card. Then click **Update**. 
  A message appears to confirm that the keys are successfully updated.
@@ -178,10 +178,10 @@ Now, let's try out the REST API proxy we created by invoking a resource.
 
 2. Enter the following values:
 
- | **Field** | **Value** |
- |-----------------|-------------------------------|
- | **Environment** | `Development` |
- | **Access Token**| the generated access token in step 6. Alternatively, click **Get Test Key** to generate a test access token. |
+   | **Field** | **Value** |
+   |-----------------|-------------------------------|
+   | **Environment** | `Development` |
+   | **Access Token**| the generated access token in step 6. Alternatively, click **Get Test Key** to generate a test access token. |
 
 3. Expand the **GET** resource **/pet/{petid}**
 
