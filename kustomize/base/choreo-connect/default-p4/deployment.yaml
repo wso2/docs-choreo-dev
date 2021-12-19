@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-connect-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-deployment-default-p4
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-connect-deployment-default-p4
+    spec:
+     initContainers:
+       - name: init-adapter-service
+         command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p3 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+     containers:
+       - name: choreo-connect-enforcer
+         env:
+         - name: ADAPTER_HOST
+           value: adapter-default-p4
+       - name: choreo-connect-router
+         env:
+         - name: ADAPTER_HOST
+           value: adapter-default-p4
