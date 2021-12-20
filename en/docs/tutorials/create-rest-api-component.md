@@ -57,6 +57,9 @@ Let's design the REST API as follows:
 1. To open the REST API component in the VS Code Editor, click **Edit with VSCode Online**.
 
     Then click **Open Link in New Tab** in the message that appears to indicate that the code server is ready.
+    
+    !!! info
+        Opening the VS Code Editor may take a little while if you are a first-time user.
 
 2. Add a new construct and an API resource as follows:
 
@@ -76,6 +79,8 @@ Let's design the REST API as follows:
     2. Expand the construct you created by clicking on it. Then click the **EDIT** icon of the default `GET` resource within the construct.
 
     3. Enter `stats/[string country]` in the **Path** field.
+
+        By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
 
     4. Click **Advanced** and in the **Return Type** field, enter `json|error` to get the return in `json` or `error1` format.
 
