@@ -65,7 +65,7 @@ nav:
       - API Lifecycle: manage/api-lifecycle.md
       - Consume API: manage/api-consumption.md
   - Marketplace: marketplace.md
-# - Business Insights: insights/derive-insights.md
+  - Business Insights: insights/derive-insights.md
 # - Observability:
 #    - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
