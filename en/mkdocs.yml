@@ -54,6 +54,7 @@ nav:
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
   - Tutorials: 
+      - Create Your First REST API: tutorials/create-rest-api-component.md
       - Create your First REST API Proxy: tutorials/create-your-first-rest-api-proxy.md      
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
