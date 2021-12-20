@@ -12,7 +12,7 @@ Choreo’s low-code editor allows developers to easily design (and then implemen
 
 In this section, let's develop the application that retrieves COVID-19 related statistics.
 
-### 1. Create a project and add a REST API component
+### Step 1.1: Create a project and add a REST API component
 
 1. Sign in to the [Choreo Console](https://consolev2.preview-dv.choreo.dev/).
 
@@ -29,7 +29,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 4. Click **Create**.
 
-### 2. Add a REST API component
+### Step 1.2: Add a REST API component
 
 Let's create a new REST API component as follows:
 
@@ -50,7 +50,7 @@ Let's create a new REST API component as follows:
 
 The `Statistics` REST API opens on a separate page.
 
-### 3. Design the REST API
+### Step 1.3: Design the REST API
 
 Let's design the REST API as follows:
 
@@ -213,7 +213,7 @@ service /CovidStats on new http:Listener(9090) {
 ```
 Now you can run the REST API and test it to see whether it works as expected.
 
-### 4. Run and test the REST API 
+### Step 1.4: Run and test the REST API 
 
 Let's run the REST API you designed in the VS Code Editor to check whether it can be started successfully without errors.
 
@@ -242,7 +242,7 @@ The following is displayed as the response body under **Responses**.
 
 The REST API you created works as expected. Therefore, now you can commit it.
 
-### 5. Commit the REST API to GitHub
+### Step 1.5: Commit the REST API to GitHub
 
 The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
 
