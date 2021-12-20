@@ -1,17 +1,14 @@
 {% import "partials/language.html" as lang with context %}
 <footer class="md-footer">
   {% if page.previous_page or page.next_page %}
-   
+
   {% endif %}
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright cChoreoCopyrght">
         {% if config.copyright %}
-          <div class="md-footer-copyright__highlight">
             {{ config.copyright }}
-          </div>
         {% endif %}
-        &copy;2021 <a href="https://wso2.com/">WSO2</a>
       </div>
     </div>
   </div>

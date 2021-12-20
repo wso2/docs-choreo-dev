@@ -16,7 +16,7 @@
 # under the License.
 
 # Project information
-site_name: Choreo Documentation
+site_name: Learning Portal
 site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
@@ -28,15 +28,15 @@ edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
 dev_addr: localhost:8000
 
 # Copyright
-copyright: WSO2 Choreo - Dev-Documentation
+copyright: Copyright © WSO2 Inc. 2021
 
 # Configuration
 theme:
     name: material
     custom_dir: theme/material
     palette:
-        primary: deep-orange
-        accent: deep-orange
+        primary: indigo
+        accent: indigo
     logo: images/logo.svg
     favicon: images/favicon.png
     slack: images/help-slack-icon.svg
@@ -58,14 +58,28 @@ nav:
     - APIs:
           - API Concepts: apis/api-concepts.md
           - Create and Publish Your First API: apis/create-and-publish-your-first-api.md
+          - Advanced Topics:
+                - Connect to an External Identity Provider: apis/advanced-topics/connect-to-an-external-identity-provider.md
     - Integrations:
           - Integration Concepts: integrations/integration-concepts.md
           - Build Your First Integration: integrations/build-your-first-integration.md
+    - Remote Apps:
+          - Connect Remote Applications: remote-apps/connect-remote-applications.md
     - Observability:
           - Observability Overview: observability/observability-overview.md
-          -  Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+          - Perform Root Cause Analysis: observability/perform-root-cause-analysis.md
+          - Performance Analysis: observability/analyze-performance.md
+    - Insights:
+          - View API Insights: insights/view-api-insights.md
+          - Configure Alerts: insights/configure-alerts.md
+          - Choreo Insights API: insights/choreo-insights-api.md
     - Reference:
           - Ballerina Expression Syntax: references/ballerina-expression-syntax.md
+          - Anonymous Access: references/anonymous-access.md
+          - Data Mapping: references/data-mapping.md
+          - Test Your Service via Postman: references/test-your-service-via-postman.md
+          - API Path: references/api-path.md
+          - Connectors : references/connectors.md
 # Extensions
 markdown_extensions:
     - markdown.extensions.admonition
@@ -97,6 +111,8 @@ markdown_extensions:
     - pymdownx.snippets:
           base_path: docs
     - attr_list
+    - markdown_include.include:
+          base_path: docs
 plugins:
     - search
     - markdownextradata: {}

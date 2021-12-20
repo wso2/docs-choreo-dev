@@ -63,7 +63,7 @@
       {% if palette.primary %}
         {% import "partials/palette.html" as map %}
         {% set primary = map.primary(
-          palette.primary | replace(" ", "-") | lower
+          palette.primary | lower
         ) %}
         <meta name="theme-color" content="{{ primary }}">
       {% endif %}
@@ -95,38 +95,24 @@
     {% endblock %}
     {% block extrahead %}{% endblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
-
-
-
-
-
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-
-
-
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ 'assets/stylesheets/choreo-docs-theme.css' | url }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+
   </head>
+
   {% if palette.primary or palette.accent %}
     {% set primary = palette.primary | replace(" ", "-") | lower %}
     {% set accent  = palette.accent  | replace(" ", "-") | lower %}
-    <body dir="{{ lang.t('direction') }}" data-md-color-primary="{{ primary }}" data-md-color-accent="{{ accent }}" class="cChoreoBody">
+   <body dir="{{ lang.t('direction') }}" data-md-color-primary="{{ primary }}" data-md-color-accent="{{ accent }}" class="cChoreoBody">
   {% else %}
-    <body dir="{{ lang.t('direction') }}" class="cChoreoBody">
+  <body dir="{{ lang.t('direction') }}" class="cChoreoBody">
   {% endif %}
     <svg class="md-svg">
       <defs>
@@ -148,27 +134,14 @@
         {{ lang.t('skip.link.title') }}
       </a>
     {% endif %}
-    {% block header %}
-      {% include "partials/header.html" %}
-    {% endblock %}
+
     <div class="md-container">
-      {% block hero %}
-        {% if page and page.meta and page.meta.hero %}
-          {% include "partials/hero.html" with context %}
-        {% endif %}
-      {% endblock %}
-      {% if feature.tabs %}
-        <!-- {% include "partials/tabs.html" %} -->
-      {% endif %}
+      <div>
+        {% block header %}
+        {% include "partials/header.html" %}
+        {% endblock %}
+      </div>
       <main class="md-main" role="main">
-
-
-       
-
-
-
-
-        
         <div class="md-main__inner md-grid" data-md-component="container">
           {% block site_nav %}
             {% if nav %}
@@ -264,10 +237,10 @@
           </div>
         </div>
       </main>
-      {% block footer %}
-        {% include "partials/footer.html" %}
-      {% endblock %}
     </div>
+  <div>
+
+  </div>
     {% block scripts %}
       <script src="{{ 'assets/javascripts/application.198c86c7.js' | url }}"></script>
       {% if lang.t("search.language") != "en" %}
@@ -296,6 +269,11 @@
       {% endfor %}
     {% endblock %}
   </body>
+  <footer>
+  {% block footer %}
+  {% include "partials/footer.html" %}
+  {% endblock %}
+    </footer>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
   <script type="text/javascript"> docsearch({
     apiKey: 'c4c6e2af60050262289542d4687eeb6c',
