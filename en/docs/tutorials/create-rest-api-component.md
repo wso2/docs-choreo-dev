@@ -242,7 +242,7 @@ The following is displayed as the response body under **Responses**.
 
 The REST API you created works as expected. Therefore, now you can commit it.
 
-### 1.5 Commit the REST API to GitHub
+### Step 1.5: Commit the REST API to GitHub
 
 The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
 
