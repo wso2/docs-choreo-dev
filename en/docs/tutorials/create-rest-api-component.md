@@ -248,14 +248,17 @@ The REST API you designed is currently available only in the VS Code Editor. To 
 
 1. Click **Sync with Choreo Upstream** (at the bottom of the page), and then click **Sync my changes with Choreo**.
 
-2. In the left panel, enter `Implement REST API` as the message and click on the tick.
+2. In the left panel, enter a commit message (e.g., `Implement REST API`)and click on the tick.
 
     ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-half} 
 
     Select **Yes** in the message that appears to specify that you need the changes to be staged.
 
-Once the changes are successfully deployed, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
+3. To push the changes to the GitHub repository, click on the GitHub action menu (marked in the image below), and then click **Push**.
 
+   ![Push changes](../assets/img/tutorials/rest-api/git-action-menu.png){.cInlineImage-half}
+
+Once the changes are successfully pushed to the GitHub repository, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
 ## Step 2: Deploy
 
