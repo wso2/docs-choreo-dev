@@ -10,7 +10,7 @@ To visualize the observability data of a component, follow these steps:
 
 2. On the Home page, select the project with the component that you want to observe.
 
-    ![Select project](../assets/img/tutorials/observability/select-project.png){.cInlineImage-full}
+    ![Select project](../assets/img/observability/select-project.png){.cInlineImage-full}
 
 3. Click on the component that you need to observe to open it.
 
