@@ -50,7 +50,7 @@ Congratulations! You have created a REST API using a template, deployed, and tes
 
 Let's look at how you can add integration logic to the API and further develop this API. Follow the steps in the next section.
 
-## Develop the REST API 
+## Develop your REST API 
 
 Developing the API involves writing the business logic for the API. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily with a low-code, pro-code editor, or both and publish your API with a faster time-to-market.
 
