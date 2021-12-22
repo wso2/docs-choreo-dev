@@ -9,6 +9,5 @@ resources:
   - ../../base/choreo-connect/default-p5
   - ../../base/choreo-connect/dev-us-east-azure-p1
   - ../../base/choreo-connect/dev-us-east-azure-p2
-  - ../../base/choreo-connect/dev-us-east-azure-p3
 
 namespace: choreo-apim
