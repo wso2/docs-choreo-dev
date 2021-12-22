@@ -47,7 +47,7 @@ theme:
     text: 'Montserrat'
   language: 'en'
 #Breaks build if there's a warning
-strict: true
+strict: false
 # Navigation
 nav:
   - Home: index.md
