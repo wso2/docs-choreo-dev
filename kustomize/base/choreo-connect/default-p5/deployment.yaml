@@ -6,21 +6,21 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-connect-deployment-default-p4
+      choreo.component: choreo-connect-deployment-default-p5
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-deployment-default-p4
+        choreo.component: choreo-connect-deployment-default-p5
     spec:
      initContainers:
        - name: init-adapter-service
-         command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p4 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+         command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p5 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
      containers:
        - name: choreo-connect-enforcer
          env:
          - name: ADAPTER_HOST
-           value: adapter-default-p4
+           value: adapter-default-p5
        - name: choreo-connect-router
          env:
          - name: ADAPTER_HOST
-           value: adapter-default-p4
+           value: adapter-default-p5
