@@ -26,7 +26,7 @@ Let's deploy the API to make it invokable. Choreo maintains 3 environments by de
 
 2. Click **Deploy**.
 
-    ![Deploy API](../assets/img/get-started/deploy-rest-api.png)
+    ![Deploy API](../assets/img/get-started/deploy-rest-api.png){.cInlineImage-full}
 
 You have now successfully deployed your API to the development environment. It is now invokable. Let's test it and verify if it works.
 
@@ -35,12 +35,12 @@ You have now successfully deployed your API to the development environment. It i
 1. Click **Test** from the left navigation.
 
 2. Expand the **POST** method with the **/** resource path. 
-    ![POST method](../assets/img/get-started/post-method.png)
+    ![POST method](../assets/img/get-started/post-method.png){.cInlineImage-full}
 
 3. Click **Try it out**.
 
 4. Add a meaningful string to the request body. E.g.: `Welcome to Choreo`.
-    ![Request Payload](../assets/img/get-started/request-payload.png)
+    ![Request Payload](../assets/img/get-started/request-payload.png){.cInlineImage-full}
 
 5. Click **Execute**.
 
@@ -50,7 +50,7 @@ Congratulations! You have created a REST API using a template, deployed, and tes
 
 Let's look at how you can add integration logic to the API and further develop this API. Follow the steps in the next section.
 
-## Develop the REST API 
+## Develop your REST API 
 
 Developing the API involves writing the business logic for the API. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily with a low-code, pro-code editor, or both and publish your API with a faster time-to-market.
 
@@ -65,11 +65,11 @@ In this guide, we will add a new resource to the API and simple business logic:
     !!! info
         Opening the VS Code Editor may take a little while if you are a first-time user.
  
-    ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png)
+    ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
 3. Click **+** on the low-code diagram and select **Resource**. 
   
-    ![Addd New Resource](../assets/img/get-started/add-new-resource.png)
+    ![Addd New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
   
     Let's create a new resource with the following values:
 
@@ -89,7 +89,7 @@ In this guide, we will add a new resource to the API and simple business logic:
      | **Type** | `string` |
      | **Value** | `name` |
 
-     ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png)
+     ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
 
  5. Click **Save**.
@@ -97,7 +97,7 @@ In this guide, we will add a new resource to the API and simple business logic:
  6. Now, let's return the personalized message. Expand the created **GET personalizedMessage** resource. You will now see the low-code diagram.
 
  7. Click on **Variables** on the low-code diagram to add a variable after **Start**. 
-    ![Create variable](../assets/img/get-started/create-variable.png)
+    ![Create variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
  8. Configure the variable as follows:
 
@@ -107,14 +107,14 @@ In this guide, we will add a new resource to the API and simple business logic:
      | **name** | `message` |
      | **string** |`"Hello "+ name`|
 
-     ![Configure Variable](../assets/img/get-started/configure-variable.png)
+     ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
 
 9. Click **Save**.
 
 10. Let's return the message. Click **+** below the variable we created on the low-code diagram and select **Return**. 
-   ![Add Return Type](../assets/img/get-started/add-return-type.png)
+   ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
 
-    ![Select Return](../assets/img/get-started/select-return.png)
+    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
 11. Enter `message` as the value in the **Return Expression** text box.
     
@@ -122,26 +122,26 @@ In this guide, we will add a new resource to the API and simple business logic:
 
 !!!info
     Notice that you can click on the **</>** icon on the top left corner of the editor to open the code-view at any given time. You can choose to develop on the low-code or pro-code or both simultaneously. 
-    ![Edito View](../assets/img/get-started/low-code-pro-code-side-by-side.png)
+    ![Edito View](../assets/img/get-started/low-code-pro-code-side-by-side.png){.cInlineImage-full}
 
 ### Step 2: Commit Changes to GitHub
 
 Choreo maintains source code in a private GitHub repository. When you create a component in Choreo, it creates it in the private-GitHub repository associated with your account. Therefore, when you change the API Implementation, you need to commit and push your changes. 
 
 1. Click on the **Sync with Choreo upstream** link at the bottom of the editor. 
-    ![Sync Choreo With upstream](../assets/img/get-started/sync-with-choreo-upstream.png)
+    ![Sync Choreo With upstream](../assets/img/get-started/sync-with-choreo-upstream.png){.cInlineImage-full}
 
     Alternatively, you can click on the source control button on the left navigation or click on the pop-up that appears at the bottom right corner. 
 
-    ![Alternative Commit](../assets/img/get-started/alternative-commit.png)
+    ![Alternative Commit](../assets/img/get-started/alternative-commit.png){.cInlineImage-full}
 
 2. Click **Sync my changes with Choreo** in the pop-up that appears. 
 
-     ![Sync Changes](../assets/img/get-started/sync-changes.png)
+     ![Sync Changes](../assets/img/get-started/sync-changes.png){.cInlineImage-full}
 
 3. Enter a meaningful commit message and click on the tick sign from the toolbar. This will commit your changes to your private GitHub repository.
 
-     ![Commit](../assets/img/get-started/commit-message.png)
+     ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
 4. Next, you need to push the changes to GitHub. Click on the **...** on the top toolbar and select **Push** from the list. 
 
