@@ -67,10 +67,10 @@ nav:
       - Consume API: manage/api-consumption.md
   - Marketplace: marketplace.md
   - Business Insights: insights/derive-insights.md
-# - Observability:
-#    - Observability Overview: observability/observability-overview.md
+  - Observability:
+     - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
-#    - Root Cause Analysis: observability/root-cause-analysis.md
+     - Root Cause Analysis: observability/root-cause-analysis.md
 #    - Performance Analysis: observability/performance-analysis.md
 # - Choreo DevOps: devops/overview.md
 # Extensions
