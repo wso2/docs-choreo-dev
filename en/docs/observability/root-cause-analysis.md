@@ -63,7 +63,7 @@ The latency graph depicts the latency of requests over a selected time interval.
 
 - **View details of a latency that has occurred:** To do this, go to the latency graph under the **Throughput & Latency** tab and click a data point where there is a spike. This displays the latency, start time, and status of the corresponding requests just above the low-code diagram as shown in the following figure:
 
-    ![View latency statistics](../assets/img/observability/latency-statistics.png)
+    ![View latency statistics](../assets/img/observability/latency-statistics.png){.cInlineImage-full}
 
 - **View details for a custom time range:** If you want to drill down to view details at a higher granularity, drag the pointer over a time range to view the graph for the selected period.
 
@@ -73,14 +73,14 @@ The latency graph depicts the latency of requests over a selected time interval.
 
 The **Diagnostic View** allows you to further drill down the observability data you view in the **Throughput & Latency** tab to identify possible root causes for anomalies of a service. The following figure is an example of how you can view diagnostic data once you click on the **Diagnostics View** tab:
 
-![Diagnostics view](../assets/img/observability/diagnostic-view.png)
+![Diagnostics view](../assets/img/observability/diagnostic-view.png){.cInlineImage-full}
 
 !!! info
     The time range applied to the **Diagnostics View** by default is the same time range for which you viewed the **Throughput & Latency** before clicking on that tab.
 
 If you hold the pointer over a section where you see fluctuations in multiple bins, you can view the related logs as shown in the following figure:
 
-![Logs in diagnostic view](../assets/img/observability/logs-in-diagnostic-view.png)
+![Logs in diagnostic view](../assets/img/observability/logs-in-diagnostic-view.png){.cInlineImage-half}
 
 In this example, the logs indicate that the reason for the errors during the selected time interval was that client has been unable to connect to the `hr-service` component. This error has occurred 1637 times.
 
