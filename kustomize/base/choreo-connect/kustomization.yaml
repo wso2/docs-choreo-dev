@@ -7,6 +7,7 @@ resources:
   - default-p2
   - default-p3
   - default-p4
+  - default-p5
   - test-p1
   - hpa
 
