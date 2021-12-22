@@ -1,6 +1,6 @@
 # Marketplace
 
-The Marketplace is an interface provided by Choreo that allows the reuse of APIs by publishing them as connectors. It offers a range of deafult connectors and triggers that you can use to design your Cloud native applications. You can purchase them, acquire them via a Freemium account, or find them free of charge. Similarly, you can publish an API or a trigger you developed to be purchased, acquired via Freemium or used free of charge by other Choreo users.
+The Marketplace is an interface provided by Choreo that allows the reuse of APIs by publishing them as connectors. It offers a range of default connectors and triggers that you can use to design your Cloud-native applications. You can purchase them, acquire them via a Freemium account, or find them free of charge. Similarly, you can publish an API or a trigger you developed to be purchased, acquired via Freemium or used free of charge by other Choreo users.
 
 By enabling the reuse of APIs, Choreo addresses the need of modern businesses to focus more on developing applications with unique functionality, and save resources by acquiring the components they need from another party who has already developed them instead of creating them from scratch.
 
@@ -10,7 +10,7 @@ Let's explore the Marketplace.
 
 To access the Marketplace, open the Choreo Console and click **Marketplace** in the left navigator.
 
-The Market place opens displaying the pre-built connectors designed and published by Choreo. 
+The Marketplace opens displaying the pre-built connectors designed and published by Choreo. 
 
 ![Marketplace default view](../assets/img/marketplace/marketplace-default-view.png){.cInlineImage-full}
 
@@ -50,7 +50,7 @@ Once you populate the Marketplace page by filtering or searching for connectors 
 - A label indicating whether the connector/trigger is free, acquirable via Freemium, or paid
 - The vendor
 - The date on which it was published
-- The number of instances the connector/triggeris used
+- The number of instances the connector/trigger is used
 
 You can also sort the list by the newest or the most used connectors/triggers.
 
@@ -64,10 +64,10 @@ When you design your components in the low-code view, you can search and add the
 
    ![Add connector](../assets/img/marketplace/add-connector.png){.cInlineImage-half}
 
-2. Search for the connector you need to add (e.g.,World Bank), and click on it to add it.
+2. Search for the connector you need to add (e.g., World Bank), and click on it to add it.
 
    ![Select connector](../assets/img/marketplace/select-connector.png){.cInlineImage-half}
 
-If the connector is not available by default, you need to visit the vendor portal, make a payment or provide your Freemium account details if required, and access the required authorization tokens beforehand.
+If the connector is not available by default, you need to visit the vendor portal, make a payment/provide your Freemium account details if required, and access the required authorization tokens beforehand.
 
 e.g., If you need to use the Azure SQL DB connector, you need to create an Azure account and obtain an authorization token.
