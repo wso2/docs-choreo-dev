@@ -256,7 +256,7 @@ The REST API you designed is currently available only in the VS Code Editor. To 
 
 3. To push the changes to the GitHub repository, click on the GitHub action menu (marked in the image below), and then click **Push**.
 
-   ![Push changes](../assets/img/tutorials/rest-api/git-action-menu.png){.cInlineImage-half}
+    ![Push changes](../assets/img/tutorials/rest-api/git-action-menu.png){.cInlineImage-half}
 
 Once the changes are successfully pushed to the GitHub repository, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
