@@ -55,7 +55,7 @@ nav:
       - What is Choreo?: get-started/what-is-choreo.md
       - Quick Start Guide: get-started/quick-start-guide.md
   - Tutorials: 
-      - Create Your First REST API: tutorials/create-rest-api-component.md
+      - Create Your First REST API: tutorials/create-your-first-rest-api.md
       - Create your First REST API Proxy: tutorials/create-your-first-rest-api-proxy.md      
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
@@ -67,7 +67,7 @@ nav:
       - Consume API: manage/api-consumption.md
   - Marketplace: marketplace.md
   - Business Insights: 
-      - View API Insights: insights/derive-insights.md
+      - View API Insights: insights/view-api-insights.md
       - Configure Alerts: insights/configure-alerts.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
