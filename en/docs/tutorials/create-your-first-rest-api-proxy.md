@@ -1,194 +1,316 @@
-# Create Your First REST API Proxy
+# Create Your First REST API
 
-Choreo is a low-code cloud-native platform for building integration solutions. In this tutorial, we will explore REST API Proxies in Choreo by:
+A RESTful API (Application Program Interface) uses HTTP requests to access and use data. The operations you can perform on data are GET (reading), PUT (updating), POST (creating), and DELETE (deleting).
 
-1. Exposing an existing API by creating a REST API proxy
-2. Deploying the REST API proxy
-3. Testing the REST API proxy to verify its functionality
-4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
+Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
-!!!tip "Before you begin..." 
-   We recommend you familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
+- Design a REST API that addresses the described requirement, test it in the VS Code Editor, and then commit it so that it is available in the Chore Console.
+- Deploy the REST API you created to make it available for use.
+- Test the REST API after deploying it to check whether it works as expected.
 
+## Step 1: Develop
 
-Let's begin...
-## Step 1: Create a REST API Proxy
+In this section, let's develop the application that retrieves COVID-19 related statistics.
 
-Choreo gives you two options to create a REST API proxy: 
+### 1. Create a project and add a REST API component
 
-- Design a new REST API proxy using an existing endpoint 
-- Importing an OpenAPI specification of the existing API
+1. Sign in to the [Choreo Console](https://consolev2.preview-dv.choreo.dev/).
 
-In this tutorial, we will be importing an OpenAPI specification and creating a REST API proxy:
+2. Expand the drop-down menu for projects and click **+ Create New**.
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+    ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
-2. Expand the project dropdown on the console header and click **+ Create New** to create a new project.
- ![Create a new Project](../assets/img/tutorials/create-project.png){.cInlineImage-full}
+3. Enter the name and the description for the project as follows:
 
-3. Enter a unique name and description for your project and click **Create**. 
+    | **Field**       | **Value**                             |
+    |-----------------|---------------------------------------|
+    | **Name**        | `COVID-19Stats`                       |
+    | **Description** | `Get statistics relating to COVID-19` |
 
- You can now start adding components to your project. Let's add a REST API proxy component.
+4. Click **Create**.
 
- !!! tip
-     Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
+### 2. Add a REST API component
 
-4. Click **+Create** On the right-hand upper corner of the components landing page.
- ![Create a new component](../assets/img/tutorials/create-component.png){.cInlineImage-full}
+Let's create a new REST API component as follows:
 
-5. Click the **REST API Proxy** card.
+1. On the **Components** page, click **Create**.
 
-6. Click **Import OpenAPI**.
+2. Click on the **REST API** card.
 
-7. Select the **Input Type** and provide the OpenAPI URL as follows:
- 
- | **Field** | **Value** |
- |-----------------|-----------------------|
- | **Input Type** | OpenAPI URL |
- | **OpenAPI URL** | `https://petstore3.swagger.io/api/v3/openapi.json` |
+3. Click on **Create an API from scratch**.
 
-8. Click **Next**.
+4. Enter a name and a description for the API as follows:
 
-9. Review the information( API Name, API Version, API Base Path, Endpoint) that Choreo extracted from the OpenAPI. You can make any changes to the fields if you require. Click **Create** to create your REST API Proxy.
+    | **Field**       | **Value**             |
+    |-----------------|-----------------------|
+    | **Name**        | `Statistics`          |
+    | **Description** | `COVID-19 Statistics` |
 
-## Step 2: Developing the REST API Proxy
+5. Click **Create**.
 
-1. Click **Develop** and then **Resources**. Notice all the resources on the OpenAPI specification are populated on Choreo.
+The `Statistics` REST API opens on a separate page.
 
-2. Click **API Definition** and view the OpenAPI specification. The API definition will include any modifications you made in the **Resources** tab.
+### 3. Design the REST API
 
-## Step 3: Deploy the REST API Proxy
+Let's design the REST API as follows:
 
-Deploying the REST API proxy will make it invokable. Choreo maintains 2 environments by default: development and production. [Learn more](../api-proxies/#choreo-environments). 
+1. To open the REST API component in the VS Code Editor, click **Edit with VSCode Online**.
 
-1. Click **Deploy** from the left navigation. 
+    Then click **Open Link in New Tab** in the message that appears to indicate that the code server is ready.
+    
+    !!! info
+        Opening the VS Code Editor may take a little while if you are a first-time user.
 
-2. Let's deploy the REST API proxy to the development environment. Click **Deploy** in the **Build Area** column.
- ![Deploy REST API proxy](../assets/img/tutorials/deploy-rest-api-proxy.png){.cInlineImage-full}
+2. Add a new construct and an API resource as follows:
 
-3. Once you have deployed it to the development environment, you can test it. When you are ready to take it to production, you can come back to this view and promote it by clicking on the **Promote** button on the **Development** column.
- ![Promote REST API proxy](../assets/img/tutorials/promote-rest-api-proxy.png){.cInlineImage-full}
+    1. Click on the first **+** icon to add an HTTP construct. Select the **Service** construct type,
 
+        ![Add service construct](../assets/img/tutorials/rest-api/add-service-construct.png){.cInlineImage-half}
 
-## Step 4: Test your REST API Proxy
+        Select HTTP as the service type, and enter the following information.
 
-In Choreo, you can test your REST API proxy before publishing it for consumers to use. Choreo provides you with 3 modes to test your REST API proxy: 
+        | **Field**             | **Value**             |
+        |-----------------------|-----------------------|
+        | **Service Base Path** | `COVID19-Statistics`  |
+        | **Listener Port**     | `9090`                |
 
-- OpenAPI Console 
-- cURL
-- Postman
+        Select the **Define Inline** check box, and then click **Save**.
 
-In this tutorial, we will be using the inbuilt OpenAPI Console. 
+    2. Expand the construct you created by clicking on it. Then click the **EDIT** icon of the default `GET` resource within the construct.
 
-1. Click **Test** from the left navigation.
+    3. Enter `stats/[string country]` in the **Path** field.
 
-2. Select `Development` as the environment from the **Environment** dropdown. 
+        By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
 
-3. Choreo uses OAuth2.0. Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
+    4. Click **Advanced** and in the **Return Type** field, enter `json|error` to get the return in `json` or `error1` format.
 
-4. Let's invoke. Expand the **GET** resource **/pet/{petID}**.
- ![Test Resource](../assets/img/tutorials/test-resource.png){.cInlineImage-full}
+    5. Click **Save API**.
 
-5. Click **Try it Out**.
+3. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
 
-6. Enter `1` as the **petid**.
+    1. Click on the API resource you edited, and then click on the first **+** icon after the **Start** statement.
 
-7. Click **Execute** and observe the response. 
- ![Test Response](../assets/img/tutorials/test-response.png){.cInlineImage-full}
+    2. Click **Connector** and then select **Covid19 API**.
 
-## Step 5: Manage your REST API Proxy
+    3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-Now that you have a tested REST API proxy, let's publish it and make it available for application developers to consume.
+    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
-### Step 5.1: Secure your REST API Proxy
+        | **Field**                  | **Value**         |
+        |----------------------------|-------------------|
+        | **Country**                | `country`         |
+        | **Response Variable Name** | `statusByCountry` |
 
-First, let's review the security settings and add a rate limit to the **GET** resource **/pet/{petid}**. 
+    5. Click **Save**.
 
-1. Click **Manage** on the left navigation and click **Settings**.
+    6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
-2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** at the bottom of the page and make the necessary changes. Once the changes are confirmed, you can save them by clicking on **Save**.
- ![Security Settings](../assets/img/tutorials/security-settings.png){.cInlineImage-full}
+        1. Click the last **+** icon in the low-code diagram.
 
-3. Next, let's add a rate-limiting policy to the API. Click **Resources**.
+        2. Under **Statements**, select **Variable** and enter details as follows:
 
-4. Scroll down to the end of the page and click **Edit**.
+            | **Field**         | **Value**                     |
+            |-------------------|-------------------------------|
+            | **Variable Type** | `int`                         |
+            | **VariableName**  | `totalCases`                  |
+            | Expression        | `<int>statusByCountry.cases`  |
 
-5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, we are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../api-proxies/#settings)
- ![Rate Limiting Level](../assets/img/tutorials/rate-limiting-level.png){.cInlineImage-full}
- ![Rate Limiting Per Resource](../assets/img/tutorials/rate-limiting-per-resource.png){.cInlineImage-full}
+        3. Click **Save**.
 
-5. Next, from the dropdown, select an appropriate rate limiting level.
+4. To retrieve the population data, connect to the World Bank API as follows:
 
-6. Click **Save**.
+    1. Click the last **+** icon in the low-code diagram.
 
-### Step 5.2: Apply usage plans on the REST API Proxy
+    2. Click **Connector** and then select **World Bank API**.
 
-Apply usage plans on the REST API proxy to allow API developers to select the suitable usage plan when subscribing to the REST API proxy.
+    3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
 
-1. Click **Usage Plans** from the left menu. 
+    4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
 
-2. Select **Bronze**, **Gold**, and **Unlimited**. 
+        | **Field**                  | **Value**            |
+        |----------------------------|----------------------|
+        | **Country Code**           | `country`            |
+        | **Response Variable Name** | `populationByCountry`|
 
-3. Click **Save**.
+    5. Click **Save**.
 
-### Step 5.3: Publish the REST API Proxy 
+    6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
 
-Publishing the REST API proxy makes it available for consumers to discover and subscribe to. 
+        1. Click the last **+** icon in the low-code diagram.
 
-1. Click **Lifecycle** from the left menu. 
+        2. Under **Statements**, select **Variable** and enter details as follows:
 
-2. Click **Publish**.
+            | **Field**         | **Value**                                         |
+            |-------------------|---------------------------------------------------|
+            | **Variable Type** | `int`                                             |
+            | **Variable Name** | `populationMillions`                              |
+            | Expression        | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
 
-3. You will see a popup **Publish a connector**. We recommend that you publish a connector for this REST API proxy. Creating a connector for this REST API proxy will make it available on the Marketplace. Click **Yes, Please**.
+        3. Click **Save**.
 
-4. Click **Publish**.
+5. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
-You will now see that the status of the API changes to **Published**.
+    1. Click the last **+** icon in the low-code diagram.
 
-To understand how a user can generate credentials for the API and then invoke it, proceed to the next step.
+    2. Under **Statements**, select **Variable** and enter details as follows:
 
-### Step 5.4: Invoke your REST API Proxy
+        | **Field**         | **Value**                                    |
+        |-------------------|----------------------------------------------|
+        | **Variable Type** | `decimal`                                    |
+        | **Variable Name** | `totalCasesPerMillion`                       |
+        | Expression*       | `<decimal>(totalCases / populationMillions)` |
 
-Now your REST API proxy is ready to be consumed. An application developer can discover your REST API proxy, subscribe to it and invoke it. 
+    3. Click **Save**.
 
-#### Step 5.4.1: Generate Credentials
+6. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
 
-1. On the **Lifecycle Management** page, click **Go to DevPortal**.
- ![Go to Developer Portal](../assets/img/tutorials/go-to-devportal.png){.cInlineImage-full}
+    1. To build the JSON payload with data of the total cases per million in the population, add a variable.
 
-2. Once you sign in to the API Developer Portal, click **Credentials** in the navigator.
+        Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
 
-3. Click **Generate Credentials**. As a result, Choreo populates the **Consumer Key** and **Consumer Secret** fields with the newly generated tokens.
+         | **Field**         | **Value**                     |
+         |-------------------|-------------------------------|
+         | **Variable Type** | `json`                        |
+         | **Variable Name** | `payload`                     |
+         | Expression        | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
 
-4. Click **://Curl**. Then copy the cURL command that is displayed.
+    2. Click **Save**.
 
- !!!info
-     Click the button to copy the cURL command. **Do not manually copy it**. The displayed cURL command is only a template, and it does not include the generated credentials.
+    3. To respond with the JSON payload, add a `Return` statement.
 
-5. Close the **Get cURL to Generate Access Token** card. Then click **Update**. 
- A message appears to confirm that the keys are successfully updated.
- 
-6. Replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the API Developer Portal to generate an access token.
+        Click the last **+** icon in the low-code diagram and click **Return**.
 
-Now, let's try out the REST API proxy we created by invoking a resource. 
+        In the **Return Expression** field, enter `payload`.
 
-#### Step 5.4.2; Invoke the REST API Proxy
+        Click **Save**.
 
-1. Click **Try out**.
+Now you have completed designing the `CovidStatus` service.
 
-2. Enter the following values:
+The low-code diagram looks as follows:
 
-   | **Field** | **Value** |
-   |-----------------|-------------------------------|
-   | **Environment** | `Development` |
-   | **Access Token**| the generated access token in step 6. Alternatively, click **Get Test Key** to generate a test access token. |
+ ![Add service construct](../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-full}
 
-3. Expand the **GET** resource **/pet/{petid}**
+The code view looks as follows:
+
+```ballerina
+import ballerinax/worldbank;
+import ballerinax/covid19;
+import ballerina/http;
+
+service /CovidStats on new http:Listener(9090) {
+    resource function get stats/[string country]() returns json|error {
+        covid19:Client covid19Client = check new ({});
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
+        int totalCases = <int>statusByCountry.cases;
+        worldbank:Client worldbankClient = check new ({});
+        worldbank:IndicatorInformation[] populationByCountry = check worldbankClient->getPopulationByCountry(country);
+        int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
+        decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
+        json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
+        return payload;
+    }
+}
+```
+Now you can run the REST API and test it to see whether it works as expected.
+
+### 4. Run and test the REST API 
+
+Let's run the REST API you designed in the VS Code Editor to check whether it can be started successfully without errors.
+
+1. Click **Run** (above the low-code diagram).
+
+    Once the REST API is successfully started, the following appears in the terminal log.
+
+    ```
+    Running executable
+    ```
+    Now you can try out the REST API.
+
+2. Click **Try it** As a result, a test view opens to the right of the page.
+
+3. In the test view, expand the **GET** resource.
 
 4. Click **Try it out**.
 
-5. Enter the **petid** value as `1`.
+5. In the **country** field, enter `USA`.
 
-6. Click **Execute** and observe the response. 
+6. Click **Execute**.
 
-Congratulations! You have successfully created your first REST API Proxy, deployed, developer tested, managed, and invoked it. 
+The following is displayed as the response body under **Responses**.
+
+![Try-out response](../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
+
+The REST API you created works as expected. Therefore, now you can commit it.
+
+### 5. Commit the REST API to GitHub
+
+The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
+
+1. Click **Sync with Choreo Upstream** (at the bottom of the page), and then click **Sync my changes with Choreo**.
+
+2. In the left panel, enter a commit message (e.g., `Implement REST API`)and click on the tick.
+
+    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-half} 
+
+    Select **Yes** in the message that appears to specify that you need the changes to be staged.
+
+3. To push the changes to the GitHub repository, click on the GitHub action menu (marked in the image below), and then click **Push**.
+
+    ![Push changes](../assets/img/tutorials/rest-api/git-action-menu.png){.cInlineImage-half}
+
+Once the changes are successfully pushed to the GitHub repository, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
+
+
+## Step 2: Deploy
+
+Once you have designed, tested, and committed the REST API, you need to deploy it so that users can invoke it.
+
+To deploy the API, follow the steps below:
+
+1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
+
+    ![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
+
+2. To check the progress of the deployment, click **View Logs**
+
+    ![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
+
+Once the API is deployed, the **Development** card indicates that the API is running as shown below.
+
+![Deployed API](../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-full}
+
+Now you can test your deployed REST API to check again whether it is working as expected.
+
+## Step 3: Test
+
+Once you have deployed the Choreo application you can test it via the Open API Console, A cURL command, or Postman.
+
+In this tutorial, let's test via the Open API Console:
+
+1. To open the test view, click **Test** in the **Development** card. Alternatively, you can click on the **Test** tab.
+
+2. Click **Try it out**.
+
+3. In the **country** field, enter `USA`.
+
+4. Click **Execute**.
+
+The following is displayed as the response body under **Responses**.
+
+![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
+
+Congratulations! You have now successfully created and tested a REST API in Choreo!
+
+## Step 4: Manage
+
+Once you have successfully deployed your API and tested it, you can perform the following actions for it
+
+- Manage the lifecycle: You can publish your API to the Developer Portal to make it available for public use, or deploy it as a prototype so that users can try it out and provide feedback for improvement. Once you publish an API, you can deprecate it or block it from being used if required.
+
+- Validate subscriptions: You can configure subscription validation to mandate subscriptions.
+
+- Add documents: This involves attaching files with information about the API for users.
+
+- Select/switch usage plans: You can select a usage plan for your API out of `Bronze` `Silver`, `Gold`, and `Unlimited` based on the level of traffic that you expect the API to receive. You can change the usage plan when required.
+
+- Update API settings:
