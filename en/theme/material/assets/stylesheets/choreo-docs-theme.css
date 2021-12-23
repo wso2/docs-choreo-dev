@@ -236,6 +236,10 @@ padding-bottom: 2rem;
     border: none;
 }
 
+.abc{
+    background-color: magenta;
+}
+
 [data-md-color-primary="deep-orange"] .md-header {
     border: none;
 }
@@ -269,6 +273,10 @@ padding-bottom: 2rem;
 .md-search__inner {
 	margin-right: 0;
 	margin-top: 6px;
+}
+
+.md-search__output {
+background-color: magenta !important;
 }
 
 .cChoreoCards {
