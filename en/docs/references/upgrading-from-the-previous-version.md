@@ -1,3 +1,7 @@
+---
+template: templates/single-column.html
+---
+
 # Upgrade from the Previous Version
 
 The previous version of Choreo allowed you to create APIs, services and integrations. The current version introduces the concept of creating Choreo projects with components.
