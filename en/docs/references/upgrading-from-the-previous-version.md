@@ -8,11 +8,9 @@ This section explains how to migrate the APIs, services, and integrations you cr
     Only APIs, services, and integrations created before year 2022 can be migrated.
 
 !!! info
-    If you want to continue using the previous version, you can access it via the following URLs:<br/><br/> - **Choreo Console**: `https://console.depricated.choreo.dev/`<br/> - **Dev Portal**: `https://devportal.deprecated.choreo.dev/`<br/> - **API access**: `https://choreoapis.dev/<organization_name>/<api_name>/`<br/> - **API token management**: `https://apim.choreo.dev/oauth2/token`<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
+    If you want to continue using the previous version, you can access it via the following URLs:<br/><br/> - **Choreo Console**: https://console.depricated.choreo.dev/<br/> - **Dev Portal**: https://devportal.deprecated.choreo.dev/<br/> - **API access**: https://choreoapis.dev/<organization_name>/<api_name>/<br/> - **API token management**: https://apim.choreo.dev/oauth2/token<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
 
 To upgrade from the previous version to the current version, follow these steps:
-
-If you want to upgrade from the previous version to the current version, follow these steps:
 
 ## Step 1: Migrate your components
 
@@ -20,9 +18,9 @@ To migrate you components:
 
 1. Access Choreo via console.choreo.dev. Enter your current credentials to sign in.
 
-   You will see the following displayed on the Home page.
+    You will see the following displayed on the Home page.
 
-   ![Migrate message](../assets/img/migration/migrate-prompt.png){.cInlineImage-full}
+    ![Migrate message](../assets/img/migration/migrate-prompt.png){.cInlineImage-full}
 
 2. Click **Migrate** to migrate your components to the current Choreo version.
 
@@ -57,7 +55,7 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
 
 1. Access the current Choreo version via https://console.preview.choreo.dev/.
 
-2. In the Home page, select the **DefaultProject-<OrgName>** project.
+2. In the Home page, select the **`DefaultProject-<OrgName>`** project.
 
 3. Click on a migrated component. It opens in a separate page.
 
