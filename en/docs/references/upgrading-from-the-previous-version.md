@@ -69,9 +69,9 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
 
 5. If there are syntax errors in the code, fix them.
 
-   !!! info
-       - You can use code suggestions in the editor to correct the errors. If you need additional information, see [Overview of Ballerina Swan Lake Beta4 - Bug Fixes and Breaking Changes](https://github.com/ballerina-platform/ballerina-release/blob/1d3e4514a356e472c1d021dcba531a517fde8967/release-notes/swan-lake-beta4-release-note.md#bug-fixes-and-breaking-changes)
-       - If you require our assistance to carry out this step, contact us via choreo-help@wso2.com.
+    !!! info
+        - You can use code suggestions in the editor to correct the errors. If you need additional information, see [Overview of Ballerina Swan Lake Beta4 - Bug Fixes and Breaking Changes](https://github.com/ballerina-platform/ballerina-release/blob/1d3e4514a356e472c1d021dcba531a517fde8967/release-notes/swan-lake-beta4-release-note.md#bug-fixes-and-breaking-changes)
+        - If you require our assistance to carry out this step, contact us via choreo-help@wso2.com.
 
 6. Once you correct all the errors in the code, commit the component configuration as follows:
 
