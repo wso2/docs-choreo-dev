@@ -4,9 +4,9 @@ Choreo is a cloud-native low-code engineering platform that allows you to create
 
 This quick start guide walks you through the steps to create, develop, publish, deploy, and invoke a REST API using Choreo. 
 
-## Create your first REST API
+## Create your first REST API 
 
-### Step 1: Create and deploy a REST API
+### Step 1: Create a REST API
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
@@ -50,13 +50,13 @@ Congratulations! You have created a REST API using a template, deployed, and tes
 
 Let's look at how you can add integration logic to the API and further develop this API. Follow the steps in the next section.
 
-## Develop your REST API 
+## Develop your REST API
 
 Developing the API involves writing the business logic for the API. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily with a low-code, pro-code editor, or both and publish your API with a faster time-to-market.
 
 In this guide, we will add a new resource to the API and simple business logic:
 
-### Step 1: Develop a simple business logic
+### Step 1: Develop in low-code
 
 1. Click **Develop** from the left navigation. 
 

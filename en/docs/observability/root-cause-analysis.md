@@ -41,7 +41,7 @@ The actions you can perform in a throughput graph are as follows:
 
 - **View log entries:** If you click the required area on the graph, the log entries applicable for that period are displayed in the Logs pane. In this example, the log displays multiple entries indicating the error `employee information not found in the hr-service`.
 
-- **View data for a custom time range:** You can expand the graph by clicking and dragging the pointer over the period you want to drill down. The default graph displays data for the last 24v hours.
+- **View data for a custom time range:** You can expand the graph by clicking and dragging the pointer over the period you want to drill down. The default graph displays data for the last 24 hours.
 
 - **View details per request:** Once you view data for a custom time range, each request that was sent during the selected time range is displayed in a pane above the low-code diagram as shown below.
 
