@@ -165,9 +165,6 @@ The information displayed is as follows:
 
 The **Cache** page shows statistics that indicate the efficiency with which response caching is carried out for the requests sent to your APIs.
 
-!!! info
-Cache hits occur only if you have [enabled response caching](https://apim.docs.wso2.com/en/latest/deploy-and-publish/deploy-on-gateway/api-gateway/response-caching/)
-
 ![Cache statistics](../assets/img/insights/cache-page-full.png){.cInlineImage-full}
 
 The page displays the following statistics:
@@ -215,7 +212,7 @@ The **Alerts** page shows information related to business alerts issued by Chore
 To use this page, be sure to configure alerts and have API invocations that trigger alerts. 
 
 !!! Note
-Alerts are retained only for a week.
+    Alerts are retained only for a week.
 
 - **Alert Summary**
 
