@@ -7,8 +7,8 @@ Choreo is a low-code cloud-native platform for building integration solutions. I
 3. Testing the REST API proxy to verify its functionality
 4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
 
-!!!tip "Before you begin..." 
-   We recommend you familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
+!!!tip "Before you begin..."
+    We recommend you familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
 
 
 Let's begin...
@@ -30,8 +30,8 @@ In this tutorial, we will be importing an OpenAPI specification and creating a R
 
  You can now start adding components to your project. Let's add a REST API proxy component.
 
- !!! tip
-     Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
+   !!! tip
+       Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
 
 4. Click **+Create** On the right-hand upper corner of the components landing page.
  ![Create a new component](../assets/img/tutorials/create-component.png){.cInlineImage-full}
