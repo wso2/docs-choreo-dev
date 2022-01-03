@@ -46,5 +46,35 @@ GraphQL
 gRPC
 devops
 Whatfix
+invokable
+iPaaS
+backends
+subpages
+tooltip
+4xx
+5xx
+preconfigured
+pregenerated
+img
+png
+dev
+dropdown
+DevPortal
+VSCode
+Covid19
 
 
+ - docs/references/upgrading-from-the-previous-version.md
+DefaultProject
+console.choreo.dev.
+ - docs/tutorials/create-your-first-rest-api-proxy.md
+petID
+petid
+ - docs/tutorials/create-your-first-rest-api.md
+getStatusByCountry
+VariableName
+getPopulationByCountry
+ - docs/get-started/quick-start-guide.md
+personalizedMessage
+ - docs/insights/configure-alerts.md
+10-minute

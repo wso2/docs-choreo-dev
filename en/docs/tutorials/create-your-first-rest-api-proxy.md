@@ -84,7 +84,7 @@ In this tutorial, we will be using the inbuilt OpenAPI Console.
 
 2. Select `Development` as the environment from the **Environment** dropdown. 
 
-3. Choreo uses OAuth2.0. Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
+3. Choreo uses OAuth 2.0 Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
 
 4. Let's invoke. Expand the **GET** resource **/pet/{petID}**.
  ![Test Resource](../assets/img/tutorials/test-resource.png){.cInlineImage-full}
