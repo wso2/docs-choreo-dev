@@ -97,5 +97,5 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
             Once all the consumers have switched to the new API, the Choreo team will restrict access to the previous Choreo version. 
 
 !!! note
-    Migration needs to be completed before 1st March 2022
+    Migration needs to be completed before 1st March 2022.
 
