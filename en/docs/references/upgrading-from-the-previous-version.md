@@ -26,7 +26,7 @@ To migrate you components:
 
    You will see the following displayed on the Home page.
 
-   ![Migrate message](../assets/img/tutorials/migration/migrate-prompt.png){.cInlineImage-full}
+   ![Migrate message](../assets/img/migration/migrate-prompt.png){.cInlineImage-full}
 
 2. Click **Migrate** to migrate your components to the current Choreo version.
 
@@ -35,17 +35,17 @@ To migrate you components:
 
 - Once the migration process starts, the following message is displayed.
 
-    ![Migration in progress](../assets/img/tutorials/migration/migration-in-progress.png){.cInlineImage-full}
+    ![Migration in progress](../assets/img/migration/migration-in-progress.png){.cInlineImage-full}
 
 - Once the migration process is successfully completed, the following message is displayed.
 
-    ![Migration successfully completed](../assets/img/tutorials/migration/migration-successfully-completed.png){.cInlineImage-full}
+    ![Migration successfully completed](../assets/img/migration/migration-successfully-completed.png){.cInlineImage-full}
 
 - If the migration fails completely or results in being partially completed, the following messages are displayed.
 
-    ![Migration failed](../assets/img/tutorials/migration/migration-failed.png){.cInlineImage-full}
+    ![Migration failed](../assets/img/migration/migration-failed.png){.cInlineImage-full}
 
-    ![Migration partially completed](../assets/img/tutorials/migration/migration-partially-completed.png){.cInlineImage-full}
+    ![Migration partially completed](../assets/img/migration/migration-partially-completed.png){.cInlineImage-full}
 
   !!! note
       If any migration failures occurs, contact choreo-help@wso2.com.
@@ -55,7 +55,7 @@ Once you have successfully migrated the components, you can proceed to deploy th
 
 ## Step 2: Deploy the migrated components
 
-The migrated components are added to a project named `""` in the current Choreo version. They are not deployed.
+The migrated components are added to a project named `DefaultProject-<OrgName>` in the current Choreo version. They are not deployed.
 
 You can deploy them after editing and testing then in the VS Code Editor as follows:
 
