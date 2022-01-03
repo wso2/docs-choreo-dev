@@ -65,8 +65,8 @@ To migrate you components:
 
     ![Migration partially completed](../assets/img/migration/migration-partially-completed.png){.cInlineImage-full}
 
-  !!! note
-      If any migration failures occurs, contact choreo-help@wso2.com.
+    !!! note
+        If any migration failures occurs, contact choreo-help@wso2.com.
 
 Once you have successfully migrated the components, you can proceed to deploy them.
 
@@ -115,8 +115,8 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
 
     7. Inform your customers of the migration and request them to subscribe to your component again via the Developer Portal.
 
-       !!! info
-           Once all the consumers have switched to the new API, the Choreo team will restrict access to the previous Choreo version.
+        !!! info
+            Once all the consumers have switched to the new API, the Choreo team will restrict access to the previous Choreo version.
 
 !!! note
     Migration needs to be completed before 1st March 2022.
