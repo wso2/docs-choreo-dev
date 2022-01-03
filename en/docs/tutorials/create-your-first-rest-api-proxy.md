@@ -1,6 +1,6 @@
 # Create Your First REST API Proxy
 
-Choreo is a low-code cloud-native platform for building integration solutions. In this tutorial, we will explore REST API Proxies in Choreo by:
+Choreo is a low-code cloud-native platform for building integration solutions. In this tutorial, you will explore REST API Proxies in Choreo by:
 
 1. Exposing an existing API by creating a REST API proxy
 2. Deploying the REST API proxy
@@ -8,7 +8,7 @@ Choreo is a low-code cloud-native platform for building integration solutions. I
 4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..."
-    We recommend you familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
+    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../api-proxies.md) 
 
 
 Let's begin...
@@ -19,7 +19,7 @@ Choreo gives you two options to create a REST API proxy:
 - Design a new REST API proxy using an existing endpoint 
 - Importing an OpenAPI specification of the existing API
 
-In this tutorial, we will be importing an OpenAPI specification and creating a REST API proxy:
+In this tutorial, you will be importing an OpenAPI specification and creating a REST API proxy:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
@@ -78,7 +78,7 @@ In Choreo, you can test your REST API proxy before publishing it for consumers t
 - cURL
 - Postman
 
-In this tutorial, we will be using the inbuilt OpenAPI Console. 
+In this tutorial, let's use the inbuilt OpenAPI Console. 
 
 1. Click **Test** from the left navigation.
 
@@ -113,7 +113,7 @@ First, let's review the security settings and add a rate limit to the **GET** re
 
 4. Scroll down to the end of the page and click **Edit**.
 
-5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, we are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../api-proxies/#settings)
+5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, you are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../api-proxies/#settings)
  ![Rate Limiting Level](../assets/img/tutorials/rate-limiting-level.png){.cInlineImage-full}
  ![Rate Limiting Per Resource](../assets/img/tutorials/rate-limiting-per-resource.png){.cInlineImage-full}
 
@@ -139,11 +139,11 @@ Publishing the REST API proxy makes it available for consumers to discover and s
 
 2. Click **Publish**.
 
-3. You will see a popup **Publish a connector**. We recommend that you publish a connector for this REST API proxy. Creating a connector for this REST API proxy will make it available on the Marketplace. Click **Yes, Please**.
+    A pop-up named **Publish a connector** appears. Let's publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available on the Marketplace. Click **Yes, Please**.
 
-4. Click **Publish**.
+3. Click **Publish**.
 
-You will now see that the status of the API changes to **Published**.
+As a result, the status of the API changes to **Published**.
 
 To understand how a user can generate credentials for the API and then invoke it, proceed to the next step.
 
@@ -170,7 +170,7 @@ Now your REST API proxy is ready to be consumed. An application developer can di
  
 6. Replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the API Developer Portal to generate an access token.
 
-Now, let's try out the REST API proxy we created by invoking a resource. 
+Now, let's try out the REST API proxy you created by invoking a resource. 
 
 #### Step 5.4.2; Invoke the REST API Proxy
 
