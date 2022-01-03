@@ -1,24 +1,20 @@
 # Upgrade from the Previous Version
 
-This page covers the following topics related to the recent changes we introduced to Choreo.
+The previous version of Choreo allowed you to create APIs, services and integrations. The current version introduces the concept of creating Choreo projects with components.
 
-- The status of the previous Choreo version (i.e., Version 1) and the components (i.e.,services, APIs, and the integrations) that you developed in it.
-- The process for migrating from the 
+This section explains how to migrate the APIs, services, and integrations you created in the previous version as components to the current version.
 
-## The previous version and the status of components
+!!! note
+    Only APIs, services, and integrations created before year 2022 can be migrated.
 
-You can still run the previous version of Choreo. The components that you run in it are not affected by the new version.
+!!! info
+    If you want to continue using the previous version, you can access it via `deprecated.choreo.dev`.<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
 
-The URL to access the previous version is deprecated.choreo.dev
-
-To access the components you added in the previous version, you can use the same endpoints as before.
-
-
-## Upgrading process
+To upgrade from the previous version to the current version, follow these steps:
 
 If you want to upgrade from the previous version to the current version, follow these steps:
 
-### Step 1: Migrate your components
+## Step 1: Migrate your components
 
 To migrate you components:
 
@@ -49,8 +45,9 @@ To migrate you components:
         If any migration failures occurs, contact support@choreo.io.
 
 Once you have successfully migrated the components, you can proceed to deploy them.
+        
 
-### Step 2: Deploy the migrated components
+## Step 2: Deploy the migrated components
 
 The migrated components are added to a project named `""` in the current Choreo version. They are not deployed.
 
