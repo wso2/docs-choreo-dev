@@ -11,6 +11,7 @@ This section explains how to migrate the APIs, services, and integrations you cr
     You can only migrate APIs, services, and integrations created before 2022.
 
 !!! info
+
     If you want to continue using the **previous version**, you can access it **until the 1st of March 2022** via the following URLs:
 
     - **Choreo Console**: [https://console.deprecated.choreo.dev/](https://console.deprecated.choreo.dev/)
@@ -48,7 +49,7 @@ To migrate your applications:
         **To list the components soon after you complete the migrations process,** follow the steps below:
      
          1. **Refresh** the page.
-         2.  On the Home page, select the **` DefaultProject-<OrgName>`** project.
+         2.  On the Home page, select the **`DefaultProject-{ORGANIZATION_NAME}`** project.
 
 
 5. If the migration fails or results in being partially completed, the following messages are displayed.
@@ -66,13 +67,13 @@ Once you successfully migrate your applications, on the new Choreo version, you 
 
 ## Step 2: Deploy the migrated components
 
-Choreo adds the migrated components to a project named `DefaultProject-<OrgName>` in the current Choreo version. They are **NOT** deployed.
+Choreo adds the migrated components to a project named `DefaultProject-{ORGANIZATION_NAME}` in the current Choreo version. They are **NOT** deployed.
 
 You can deploy them after editing and testing them in the VS Code Editor as follows:
 
 1. Access the current Choreo version via [https://console.preview.choreo.dev/](https://console.preview.choreo.dev/).
 
-2. On the Home page, select the **` DefaultProject-<OrgName>`** project.
+2. In the Home page, select the **`DefaultProject-{ORGANIZATION_NAME}`** project.
 
 3. Click the **Components** icon in the left navigator to open the Components page. The page displays the APIs, services, and integrations (applications) that you migrated from the previous version. Choreo displays these as a list of components.
 
@@ -123,4 +124,3 @@ You can deploy them after editing and testing them in the VS Code Editor as foll
 
     !!! attention
         You need to complete the migration **before 1st March 2022**.
-
