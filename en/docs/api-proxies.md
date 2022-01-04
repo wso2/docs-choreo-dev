@@ -92,7 +92,7 @@ A well-designed API or API Proxy needs to be well-documented as well. The usabil
 
 ### Usage Plans
 
-To-DO
+The usage plan determines the number of requests allowed for the API per minute. Therefore, this is also the rate limit that applies to an API.
 
 ![Usage Plans](assets/img/api-proxies/api-proxies-usage-plans.png){.cInlineImage-full}
 
