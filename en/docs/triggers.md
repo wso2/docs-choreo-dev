@@ -105,13 +105,6 @@ Once you implement a trigger, it needs to be built, tested, and eventually put i
 A well-designed API needs to be well-documented as well. The usability of the API is a deciding factor of its value. Many API developers find documenting an API a tedious task. Choreo makes documentation an easy task for developers by allowing different sources of documentation. Choreo allows you to add documentation to the REST API by specifying a URL, in Markdown format, importing a file, or by simply including inline documentation. 
 
 
-### Usage Plans
-
-To-DO
-
-![Usage Plans](assets/img/api-proxies/api-proxies-usage-plans.png){.cInlineImage-full}
-
-
 ### Settings
 
 A well-managed API needs to have security policies and access-control policies in place. Setting rate-limiting policies will ensure:
@@ -137,4 +130,4 @@ Learn about Choreo's full API Management capabilities of Choreo from [here](link
 
 You can assess the performance of your webhook by observing the success and failure rates of the requests sent to it. The observability view allows you to visualize the performance statistics via interactive graphs.
 
-ToDO: add a link to the observability doc
+Learn more on how to observe your trigger from [here](observability/observability-overview.md).
