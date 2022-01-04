@@ -12,11 +12,11 @@ To access the Marketplace, open the Choreo Console and click **Marketplace** in 
 
 The Marketplace opens displaying the pre-built connectors designed and published by Choreo. 
 
-![Marketplace default view](../assets/img/marketplace/marketplace-default-view.png){.cInlineImage-full}
+![Marketplace default view](assets/img/marketplace/marketplace-default-view.png){.cInlineImage-full}
 
 If you want to view the triggers published by Choreo, click on the **Triggers** tab.
 
-![Marketplace default view](../assets/img/marketplace/choreo-triggers.png){.cInlineImage-full}
+![Marketplace default view](assets/img/marketplace/choreo-triggers.png){.cInlineImage-full}
 
 If you want to filter the connectors and triggers published by your organization, click **My Organization** under **Filter By**.
 
@@ -29,13 +29,13 @@ If you want to filter connectors and triggers by a specific domain, click on the
 
 The results appear filtered by this selection as shown below.
 
-![Filter by category](../assets/img/marketplace/filter-by-category.png){.cInlineImage-full}
+![Filter by category](assets/img/marketplace/filter-by-category.png){.cInlineImage-full}
 
 ## Filter by price
 
 To filter connectors and triggers based on whether they are free, acquirable via Freemium, or paid, select the required checkbox under
 
-![Filter by price](../assets/img/marketplace/filter-by-price.png){.cInlineImage-full}
+![Filter by price](assets/img/marketplace/filter-by-price.png){.cInlineImage-full}
 
 ## Search for connectors/triggers
 
@@ -62,11 +62,11 @@ When you design your components in the low-code view, you can search and add the
 
 1. Open the component you are designing in the VS Code Editor and add a connector.
 
-   ![Add connector](../assets/img/marketplace/add-connector.png){.cInlineImage-half}
+   ![Add connector](assets/img/marketplace/add-connector.png){.cInlineImage-half}
 
 2. Search for the connector you need to add (e.g., World Bank), and click on it to add it.
 
-   ![Select connector](../assets/img/marketplace/select-connector.png){.cInlineImage-half}
+   ![Select connector](assets/img/marketplace/select-connector.png){.cInlineImage-half}
 
 If the connector is not available by default, you need to visit the vendor portal, make a payment/provide your Freemium account details if required, and access the required authorization tokens beforehand.
 
