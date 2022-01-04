@@ -8,7 +8,7 @@ This section explains how to migrate the APIs, services, and integrations you cr
     Only APIs, services, and integrations created before year 2022 can be migrated.
 
 !!! info
-    If you want to continue using the previous version, you can access it until the 1st of February 2022 via the following URLs:<br/><br/> - **Choreo Console**: [https://console.deprecated.choreo.dev/](https://console.deprecated.choreo.dev/)<br/> - **Dev Portal**: [https://devportal.deprecated.choreo.dev/](https://devportal.deprecated.choreo.dev/)<br/> - **API access** (unchanged): [https://choreoapis.dev/<organization_name>/<api_name>/*](https://choreoapis.dev/<organization_name>/<api_name>/*)<br/> - **API token management**: [https://apim.choreo.dev/oauth2/token](https://apim.choreo.dev/oauth2/token)<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
+    If you want to continue using the previous version, you can access it until the 1st of February 2022 via the following URLs:<br/><br/> - **Choreo Console**: [https://console.deprecated.choreo.dev/](https://console.deprecated.choreo.dev/)<br/> - **Dev Portal**: [https://devportal.deprecated.choreo.dev/](https://devportal.deprecated.choreo.dev/)<br/> - **API access** (unchanged): [https://choreoapis.dev/{organization_name}/{api_name}/*](https://choreoapis.dev/{organization_name}/{api_name}/*)<br/> - **API token management**: [https://apim.choreo.dev/oauth2/token](https://apim.choreo.dev/oauth2/token)<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
 
 To migrate your APIs, services, and integrations from the previous version to the current version, follow these steps:
 
@@ -54,13 +54,13 @@ Once you have successfully migrated the components, you can proceed to deploy th
 
 ## Step 2: Deploy the migrated components
 
-The migrated components are added to a project named `DefaultProject-<OrgName>` in the current Choreo version. They are not deployed.
+The migrated components are added to a project named `DefaultProject-{ORGANIZATION_NAME}` in the current Choreo version. They are not deployed.
 
 You can deploy them after editing and testing then in the VS Code Editor as follows:
 
 1. Access the current Choreo version via [https://console.preview.choreo.dev/](https://console.preview.choreo.dev/).
 
-2. In the Home page, select the **`DefaultProject-<OrgName>`** project.
+2. In the Home page, select the **`DefaultProject-{ORGANIZATION_NAME}`** project.
 
 3. Open the **Components** page by clicking the **Components** icon in the left navigator. The page displays the APIs, services, and integrations that you migrated from the previous version. These are displayed as a list of components.
 
