@@ -92,8 +92,10 @@
 
 }
 
+@media only screen and (min-width: 76.25em) {
 .md-content__inner {
     margin: 0 14.2rem 1.2rem !important;
+}
 }
 
 
