@@ -44,7 +44,8 @@
         <label
           class="md-icon md-icon--menu md-header-nav__button"
           for="__drawer"
-        ></label>
+        >
+        </label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div
@@ -64,6 +65,7 @@
           {% endif %}
         </div>
       </div>
+      
       <div class="md-flex__cell md-flex__cell--shrink topBarActionsCont">
         <div class="topBarActions">
           {% if config.theme.slack %}
@@ -91,7 +93,7 @@
           {% endif %}
         </div>
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
+      <div class="md-flex__cell md-flex__cell--shrink" style="width: 16rem;">
         {% if "search" in config["plugins"] %}
         <label
           class="md-icon md-icon--search md-header-nav__button"
@@ -100,5 +102,6 @@
         {% include "partials/search.html" %} {% endif %}
       </div>
     </div>
-  </nav>
+      
+  </nav> 
 </header>

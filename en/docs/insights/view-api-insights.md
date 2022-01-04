@@ -20,33 +20,33 @@ The information displayed is as follows:
 
 - **Total Traffic**
 
-    ![Total traffic](../assets/img/insights/overview-page-total-traffic.png){.cInlineImage-half}
+  ![Total traffic](../assets/img/insights/overview-page-total-traffic.png){.cInlineImage-half}
 
-    This widget displays the total traffic your selected environment received during the selected time range. This includes both successful requests and error requests. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic** page](#traffic)
-    
+  This widget displays the total traffic your selected environment received during the selected time range. This includes both successful requests and error requests. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic** page](#traffic)
+
 - **Error Request Count**
 
-    ![Error request count](../assets/img/insights/overview-page-error-request-count.png){.cInlineImage-half}
+  ![Error request count](../assets/img/insights/overview-page-error-request-count.png){.cInlineImage-half}
 
-    This widget displays the total number of requests that have resulted in errors in your selected environment during the selected time range.
-    
+  This widget displays the total number of requests that have resulted in errors in your selected environment during the selected time range.
+
 - **Average Error Rate**
 
-    ![Average error rate](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
+  ![Average error rate](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
 
-    This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the [**Errors** page](#errors).
+  This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the [**Errors** page](#errors).
 
 - **95th Percentile Latency**
 
-    ![95th percentile latency](../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
+  ![95th percentile latency](../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
 
-    This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency** page](#latency) where you can further analyze the latency.
+  This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency** page](#latency) where you can further analyze the latency.
 
 - **API Request Summary**
 
-    ![API request summary](../assets/img/insights/overview-page-timeline.png){.cInlineImage-full}
+  ![API request summary](../assets/img/insights/overview-page-timeline.png){.cInlineImage-full}
 
-    This chart displays the total successful requests, the total requests that have resulted in errors, and the latency in a timeline. The y-axis on the left displays the request count and the error count. The x-axis shows time, and the y-axis on the right shows the latency in milliseconds. The granularity of the data points is decided based on the time range you have selected. The tooltip provides the exact value of all three metrics accurately.
+  This chart displays the total successful requests, the total requests that have resulted in errors, and the latency in a timeline. The y-axis on the left displays the request count and the error count. The x-axis shows time, and the y-axis on the right shows the latency in milliseconds. The granularity of the data points is decided based on the time range you have selected. The tooltip provides the exact value of all three metrics accurately.
 
 ### Traffic
 
@@ -63,30 +63,30 @@ You can filter the information displayed in the widgets as follows:
 
 You can view the following information for the APIs you have selected using the above filtering criteria:
 
- - **API Usage Over Time**
- 
-    This timeline shows the count of API hits for the APIs for the filtered APIs. If multiple APIs are selected, the timeline shows each API in a separate line with a legend separating each line. You can also zoom in on a selected time range by selecting that area in the chart. To restore to the original view use the **Zoom out** button on the top right-hand corner of the plot.
+- **API Usage Over Time**
 
-    ![API usage over time](../assets/img/insights/api-usage-timeline.png){.cInlineImage-full}
-    
- - **API Usage By Application** 
- 
-    This widget shows the per-application breakdown of requests for the APIs you selected. You can use the pie chart view or the line chart view. You can switch between the two views using the small icon at the upper-right corner of the widget.
- 
-    ![API usage by application](../assets/img/insights/usage-by-application.png){.cInlineImage-half}
- 
- - **API Usage By Backend**
- 
-    This widget shows the per-backend breakdown of requests for the APIs you selected. This is useful when multiple APIs are sharing the same backend, which has traffic restrictions. You can use these stats to proactively scale your backends. You can switch between the two views using the small icon at the upper-right corner of the widget.
- 
-    ![API usage by backend](../assets/img/insights/usage-by-backend.png){.cInlineImage-half}
- 
- - **API Resource Usage**
- 
-    This table shows a resource-level breakdown of API traffic. Each row represents an API resource and it shows the API name, resource path, API method, and the hit count for that combination.
-    
-    ![API resource usage](../assets/img/insights/resource-usage.png){.cInlineImage-half}
-    
+  This timeline shows the count of API hits for the APIs for the filtered APIs. If multiple APIs are selected, the timeline shows each API in a separate line with a legend separating each line. You can also zoom in on a selected time range by selecting that area in the chart. To restore to the original view use the **Zoom out** button on the top right-hand corner of the plot.
+
+  ![API usage over time](../assets/img/insights/api-usage-timeline.png){.cInlineImage-full}
+
+- **API Usage By Application**
+
+  This widget shows the per-application breakdown of requests for the APIs you selected. You can use the pie chart view or the line chart view. You can switch between the two views using the small icon at the upper-right corner of the widget.
+
+  ![API usage by application](../assets/img/insights/usage-by-application.png){.cInlineImage-half}
+
+- **API Usage By Backend**
+
+  This widget shows the per-backend breakdown of requests for the APIs you selected. This is useful when multiple APIs are sharing the same backend, which has traffic restrictions. You can use these stats to proactively scale your backends. You can switch between the two views using the small icon at the upper-right corner of the widget.
+
+  ![API usage by backend](../assets/img/insights/usage-by-backend.png){.cInlineImage-half}
+
+- **API Resource Usage**
+
+  This table shows a resource-level breakdown of API traffic. Each row represents an API resource and it shows the API name, resource path, API method, and the hit count for that combination.
+
+  ![API resource usage](../assets/img/insights/resource-usage.png){.cInlineImage-half}
+
 ### Errors
 
 The **Errors** page shows information related to erroneous API calls that are received by your system. The errors are categorized based on the error type. You can further drill down using the error subtypes. Use this page as the starting point for debugging any API errors.
@@ -107,34 +107,34 @@ The following widgets are available for monitoring errors when you have selected
 
 - This graph shows the error by category over time for the selected period. Apply the required filters as explained above to select the APIs and the error categories to which this content applies. When you select multiple APIs, the error count is grouped by category.
 
-    ![Errors by category graph](../assets/img/insights/error-category-graph.png){.cInlineImage-full}
-    
+  ![Errors by category graph](../assets/img/insights/error-category-graph.png){.cInlineImage-full}
+
 - This table provides further information about the errors such as application details and the error reason. For some authentication errors, the application name is not available. You can use this table to get more concrete information about the errors related to your APIs and then start the problem identification.
- 
-    ![Errors by category table](../assets/img/insights/error-category-table.png){.cInlineImage-full}
-    
+
+  ![Errors by category table](../assets/img/insights/error-category-table.png){.cInlineImage-full}
+
 #### Viewing errors by status code
-    
+
 The following widgets are available for monitoring errors when you selected **Status Code** in the upper-right corner of the page.
 
 - **Errors by Status Code**
 
-    This graph shows the distribution of HTTP status codes received for errors over time for the selected period. Apply the required filters as explained above to select the APIs and status code groups to which this content applies. When you select multiple APIs, the error count is grouped by the status code.
-    
-    ![Errors by status code](../assets/img/insights/error-by-status-code.png){.cInlineImage-full}
-    
+  This graph shows the distribution of HTTP status codes received for errors over time for the selected period. Apply the required filters as explained above to select the APIs and status code groups to which this content applies. When you select multiple APIs, the error count is grouped by the status code.
+
+  ![Errors by status code](../assets/img/insights/error-by-status-code.png){.cInlineImage-full}
+
 - **Proxy Errors**
 
-    Proxy errors heat map shows the HTTP response codes of errors that are sent to the client by the API Gateway. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
-    
-    ![Proxy errors](../assets/img/insights/proxy-error-heatmap.png){.cInlineImage-full}
-    
+  Proxy errors heat map shows the HTTP response codes of errors that are sent to the client by the API Gateway. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+
+  ![Proxy errors](../assets/img/insights/proxy-error-heatmap.png){.cInlineImage-full}
+
 - **Target Errors**
 
-    Target errors heat map shows the HTTP response codes of errors that are received by the API Gateway from the backend. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+  Target errors heat map shows the HTTP response codes of errors that are received by the API Gateway from the backend. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
 
-     ![Target errors](../assets/img/insights/target-error-heatmap.png){.cInlineImage-full}
-    
+  ![Target errors](../assets/img/insights/target-error-heatmap.png){.cInlineImage-full}
+
 ### Latency
 
 The **Latency** page shows information related to the latency of API calls within the API management deployment. You can view a summary of the slowest APIs and then drill down into the API view for further analysis. Use this page as a starting point to debug API slowness.
@@ -145,28 +145,25 @@ The information displayed is as follows:
 
 - **Top 10 Slowest APIs**
 
-    This widget allows you to identify the slowest APIs of the API management system at a glance. Since these are the APIs that contribute to the higher 95th percentile of the system, improving these APIs lowers the 95th percentile of latency in the API Management deployments.
+  This widget allows you to identify the slowest APIs of the API management system at a glance. Since these are the APIs that contribute to the higher 95th percentile of the system, improving these APIs lowers the 95th percentile of latency in the API Management deployments.
 
-    ![Slowest APIs](../assets/img/insights/slowest-apis.png){.cInlineImage-full}
+  ![Slowest APIs](../assets/img/insights/slowest-apis.png){.cInlineImage-full}
 
 - **Latencies By Category**
 
-    This widget allows you to further drill down details in the above chart. Use the API selector in this widget to select the slow API you identified in the earlier step and then analyze further. Use the charts available in the widget to view the 95th percentile and the median latency over the selected period of the following:
+  This widget allows you to further drill down details in the above chart. Use the API selector in this widget to select the slow API you identified in the earlier step and then analyze further. Use the charts available in the widget to view the 95th percentile and the median latency over the selected period of the following:
 
     - Backend
     - Request mediation
     - Response mediation
-    
-    ![Latencies by category](../assets/img/insights/latency-by-category.png){.cInlineImage-full}
-    
-    You can use these charts to further drill down and analyze whether the latency occurs in the backend, request mediation, or response mediation. Also, because you can see both the median and 95th percentile, you can easily identify whether the slowness is occurring in each request or whether it is intermittent.
+
+  ![Latencies by category](../assets/img/insights/latency-by-category.png){.cInlineImage-full}
+
+  You can use these charts to further drill down and analyze whether the latency occurs in the backend, request mediation, or response mediation. Also, because you can see both the median and 95th percentile, you can easily identify whether the slowness is occurring in each request or whether it is intermittent.
 
 ### Cache
 
 The **Cache** page shows statistics that indicate the efficiency with which response caching is carried out for the requests sent to your APIs.
-
-!!! info
-    Cache hits occur only if you have [enabled response caching](https://apim.docs.wso2.com/en/latest/deploy-and-publish/deploy-on-gateway/api-gateway/response-caching/)
 
 ![Cache statistics](../assets/img/insights/cache-page-full.png){.cInlineImage-full}
 
@@ -174,16 +171,16 @@ The page displays the following statistics:
 
 - **Cache Hit Percentage**
 
-    This graph shows the percentage of requests that were handled via the response cache over time. This allows you to assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
+  This graph shows the percentage of requests that were handled via the response cache over time. This allows you to assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
 
-    ![Cache hit percentagle](../assets/img/insights/cache-hit-percentage.png){.cInlineImage-full}
+  ![Cache hit percentagle](../assets/img/insights/cache-hit-percentage.png){.cInlineImage-full}
 
 - **Cache Hit/Miss**
 
-    This section shows the number of requests that hit and missed the cache over time, and the latency that occurred at the same times. Requests miss the cache for APIs for which you have not enabled response caching.
-    
-    ![Cache hits and misses](../assets/img/insights/cache-statistics.png){.cInlineImage-full}
-    
+  This section shows the number of requests that hit and missed the cache over time, and the latency that occurred at the same times. Requests miss the cache for APIs for which you have not enabled response caching.
+
+  ![Cache hits and misses](../assets/img/insights/cache-statistics.png){.cInlineImage-full}
+
 ### Devices
 
 The **Devices** page displays information about operating systems and HTTP agents that end users use to invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.
@@ -196,38 +193,37 @@ The information displayed is as follows:
 
 - **Top Platforms**
 
-    This chart shows the breakdown of the API clients by the operating system. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the **Other** category.
+  This chart shows the breakdown of the API clients by the operating system. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the **Other** category.
 
-    ![Top platforms](../assets/img/insights/top-platforms.png){.cInlineImage-half}
+  ![Top platforms](../assets/img/insights/top-platforms.png){.cInlineImage-half}
 
 - **Top User Agents**
 
-    This chart shows the breakdown of the API clients by user-agent. The pie chart only shows user agents with a significant amount of requests. Other platforms are grouped under the **Other** category.
+  This chart shows the breakdown of the API clients by user-agent. The pie chart only shows user agents with a significant amount of requests. Other platforms are grouped under the **Other** category.
 
-    ![Top user agents](../assets/img/insights/top-user-agents.png){.cInlineImage-half}
-    
+  ![Top user agents](../assets/img/insights/top-user-agents.png){.cInlineImage-half}
+
 ### Alerts
 
 The **Alerts** page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
 
 **Prerequisites**
 
-To use this page, be sure to configure alerts and have API invocations that trigger alerts. For instructions, see [Alert Configuration](configure-alerts.md).
+To use this page, be sure to configure alerts and have API invocations that trigger alerts. 
 
 !!! Note
     Alerts are retained only for a week.
 
 - **Alert Summary**
 
-    This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The drop-downs can be used to filter alerts based on the alert type and API.
+  This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The drop-downs can be used to filter alerts based on the alert type and API.
 
-    ![Alert summary](../assets/img/insights/alert-summary.png){.cInlineImage-full}
 
 - **Top APIs by Alert Count**
 
-    This shows a pie chart and a table to visualize the alert distribution during the selected time interval.
-    
-    ![Top APIs by alert count](../assets/img/insights/top-apis-by-alert-count.png){.cInlineImage-full}    
+  This shows a pie chart and a table to visualize the alert distribution during the selected time interval.
+
+  ![Top APIs by alert count](../assets/img/insights/top-apis-by-alert-count.png){.cInlineImage-full}
 
 ### Reports
 
@@ -247,9 +243,9 @@ To generate a custom report, follow the steps below:
 
 2. If you need to further filter the content printed in the report, select one or more applications in the **Application** field. By default, all the applications that have subscribed to one or more of the selected APIs are selected.
 
-    !!! Tip
-        If you want to filter the report content by the API consumer instead of the application, click on the toggle switch to the right of the **Application** field, and then select the required consumer. Only consumers who have subscribed to one or more of the selected APIs are displayed in the list. You can either select one, or all of them.
-        
+   !!! Tip
+   If you want to filter the report content by the API consumer instead of the application, click on the toggle switch to the right of the **Application** field, and then select the required consumer. Only consumers who have subscribed to one or more of the selected APIs are displayed in the list. You can either select one, or all of them.
+
 3. Select the required year and the month in the **Year** and **Month** fields to specify the time interval for which you want to generate the report.
 
 4. Click **Download**, and select the required format.
@@ -284,3 +280,4 @@ These widgets allow you to download monthly reports for the last three months.
 ![Pre-generated reports](../assets/img/insights/configured-report.png){.cInlineImage-full}
 
 To download a pregenerated report, click **Download** for the relevant month and then click on the required format.
+

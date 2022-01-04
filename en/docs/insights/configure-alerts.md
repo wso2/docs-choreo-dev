@@ -20,6 +20,8 @@ To configure a new latency alert, follow the steps below:
 
 1. In the **Insights** page, click **Alert Configuration** to open the **Alert Configuration** page.
 
+	![Configure alerts](../assets/img/insights/alert-configuration.png){.cInlineImage-full}
+
     The **Latency** tab is open by default.
 
 2. Verify that you are in the correct organization, and select the required environment. 
