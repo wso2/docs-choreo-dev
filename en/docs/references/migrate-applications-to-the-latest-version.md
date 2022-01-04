@@ -71,7 +71,7 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
 6. If there are syntax errors in the code, fix them.
 
     !!! info
-        If you require our assistance to carry out this step, contact us via [choreo-help@wso2.com].
+        If you require our assistance to carry out this step, contact us via choreo-help@wso2.com.
 
 6. Once you correct all the errors in the code, commit the component configuration as follows:
 
