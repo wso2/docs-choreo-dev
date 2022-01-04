@@ -5,14 +5,14 @@ The previous version of Choreo allowed you to create APIs, services, and integra
 This section explains how to migrate the APIs, services, and integrations you created in the previous version as components to the current version.
 
 !!! attention
-    You need to complete the migration **before 1st March 2022**.
+    You need to complete the migration **before 1st February 2022**.
 
 !!! note
     You can only migrate APIs, services, and integrations created before 2022.
 
 !!! info
 
-    If you want to continue using the **previous version**, you can access it **until the 1st of March 2022** via the following URLs:
+    If you want to continue using the **previous version**, you can access it **until the 1st of February 2022** via the following URLs:
 
     - **Choreo Console**: [https://console.deprecated.choreo.dev/](https://console.deprecated.choreo.dev/)
     - **Dev Portal**: [https://devportal.deprecated.choreo.dev/](https://devportal.deprecated.choreo.dev/)
@@ -123,4 +123,4 @@ You can deploy them after editing and testing them in the VS Code Editor as foll
          Once all the consumers have switched to the new API, the Choreo team will restrict access to the previous Choreo version.
 
     !!! attention
-        You need to complete the migration **before 1st March 2022**.
+        You need to complete the migration **before 1st February 2022**.
