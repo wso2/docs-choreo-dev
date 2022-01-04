@@ -8,7 +8,7 @@ This section explains how to migrate the APIs, services, and integrations you cr
     Only APIs, services, and integrations created before year 2022 can be migrated.
 
 !!! info
-    If you want to continue using the previous version, you can access it via the following URLs:<br/><br/> - **Choreo Console**: [https://console.deprecated.choreo.dev/](https://console.deprecated.choreo.dev/)<br/> - **Dev Portal**: [https://devportal.deprecated.choreo.dev/](https://devportal.deprecated.choreo.dev/)<br/> - **API access**: [https://choreoapis.dev/<organization_name>/<api_name>/](https://choreoapis.dev/<organization_name>/<api_name>/)<br/> - **API token management**: [https://apim.choreo.dev/oauth2/token](https://apim.choreo.dev/oauth2/token)<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
+    If you want to continue using the previous version, you can access it until the 1st of March 2022 via the following URLs:<br/><br/> - **Choreo Console**: [https://console.deprecated.choreo.dev](https://console.deprecated.choreo.dev)<br/> - **Dev Portal**: [https://devportal.deprecated.choreo.dev/](ttps://devportal.deprecated.choreo.dev/)<br/> - **API access**: [https://choreoapis.dev/<organization_name>/<api_name>/*](https://choreoapis.dev/<organization_name>/<api_name>/*)<br/> - **API token management**: [https://apim.choreo.dev/oauth2/token](https://apim.choreo.dev/oauth2/token)<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
 
 To migrate your APIs, services, and integrations from the previous version to the current version, follow these steps:
 
@@ -44,8 +44,10 @@ To migrate you components:
 
     ![Migration partially completed](../assets/img/migration/migration-partially-completed.png){.cInlineImage-full}
 
+    If either of these messages appear, you can click **Retry**in the message to run the migration process again.
+
     !!! note
-        If any migration failures occurs, contact choreo-help@wso2.com.
+        If you continuously experience migration failures, contact choreo-help@wso2.com.
 
 Once you have successfully migrated the components, you can proceed to deploy them.
 
@@ -60,11 +62,13 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
 
 2. In the Home page, select the **`DefaultProject-<OrgName>`** project.
 
-3. Click on a migrated component. It opens in a separate page.
+3. Open the **Components** page by clicking the **Components** icon in the left navigator. The page displays the APIs, services, and integrations that you migrated from the previous version. These aredisplayed as a list of components.
 
-4. Click **Edit with VS Code Online** to open the component configuration in the VS Code Editor.
+4. Click on a migrated component. It opens in a separate page.
 
-5. If there are syntax errors in the code, fix them.
+5. Click **Edit with VS Code Online** to open the component configuration in the VS Code Editor.
+
+6. If there are syntax errors in the code, fix them.
 
     !!! info
         - You can use code suggestions in the editor to correct the errors. If you need additional information, see [Overview of Ballerina Swan Lake Beta4 - Bug Fixes and Breaking Changes](https://github.com/ballerina-platform/ballerina-release/blob/1d3e4514a356e472c1d021dcba531a517fde8967/release-notes/swan-lake-beta4-release-note.md#bug-fixes-and-breaking-changes)
