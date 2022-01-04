@@ -96,29 +96,11 @@
     {% endblock %}
     {% block extrahead %}{% endblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
-
-
-
-
-
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-
-
-
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ 'assets/stylesheets/choreo-docs-theme.css' | url }}">
   </head>
   {% if palette.primary or palette.accent %}
@@ -164,13 +146,6 @@
       {% endif %}
       <main class="md-main" role="main">
 
-
-       
-
-
-
-
-        
         <div class="md-main__inner md-grid" data-md-component="container">
           {% block site_nav %}
             {% if nav %}
@@ -192,83 +167,104 @@
               </div>
             {% endif %}
           {% endblock %}
-          <div class="cChoreoHeaderBar">
-
-          </div>
-          <div class="md-content container">
-<div class="cChoreoBreadCrumbs">
-  
-  {% include "partials/breadcrumbs.html" %}
-</div>
-
-            <article class="md-content__inner md-typeset">
-              {% block content %}
-                {% if page.edit_url %}
-                  <a href="{{ page.edit_url }}" title="{{ lang.t('edit.link.title') }}" class="md-icon md-content__icon">&#xE3C9;</a>
-                {% endif %}
-                {% if not "\x3ch1" in page.content %}
-                  <h1>{{ page.title | default(config.site_name, true)}}</h1>
-                {% endif %}
-                {{ page.content }}
-                {% block source %}
-                  {% if page and page.meta and page.meta.source %}
-                    <h2 id="__source">{{ lang.t("meta.source") }}</h2>
-                    {% set repo = config.repo_url %}
-                    {% if repo | last == "/" %}
-                      {% set repo = repo[:-1] %}
-                    {% endif %}
-                    {% set path = page.meta.path | default([""]) %}
-                    {% set file = page.meta.source %}
-                    <a href="{{ [repo, path, file] | join('/') }}" title="{{ file }}" class="md-source-file">
-                      {{ file }}
-                    </a>
-                  {% endif %}
-                {% endblock %}
-              {% endblock %}
-              {% block disqus %}
-                {% include "partials/integrations/disqus.html" %}
-              {% endblock %}
+        
+            <article class="md-content__inner md-typeset">    
+              <div class="cChoreoHeaderBar">
+                <div class="cChoreoHeaderText">
+                  <div class="HomePageBanner" >
+                  <label>Start Learning About Choreo, Now</label>
+                  </div>
+                  <div class=HomePageBannerTag>
+                    <label> Easily build your cloud-native, low-code integration solutions and expose it as an API in Choreo.</label>
+                  </div>
+              </div>
+                <div class= "md-search-home" >
+                  {% include "partials/search.html" %} 
+                </div>
+              </div>
             </article>
+            <div class="md-content__inner md-typeset cHomeContainer">
+              <div class="row">
+          
+                 <div class="col-sm-12 col-md-12 col-lg-12">
+                 <h1>Welcome to the Choreo Learning Portal</h1>
+                 </div>
+                 <div class="col-sm-12 col-md-7 col-lg-9" >
+                    <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies creating services, managing APIs, and building integrations while ensuring best practices and secure coding guidelines.</p>
+                 </div>
+              
+              </div>
+              <a class="cChoreoDocsButtons" href="get-started/quick-start-guide/">Get Started with Choreo</a>
 
-            {% if page.previous_page or page.next_page %}
-            <div class="md-footer-nav">
-              <nav class="md-footer-nav__inner md-grid">
-                {% if page.previous_page %}
-                <a href="{{ page.previous_page.url | url }}" title="{{ page.previous_page.title }}" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-                  <div class="md-flex__cell md-flex__cell--shrink">
-                    <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-                  </div>
-                  <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-                      <span class="md-flex__ellipsis">
-                        <span class="md-footer-nav__direction">
-                          {{ lang.t("footer.previous") }}
-                        </span>
-                        {{ page.previous_page.title }}
-                      </span>
-                  </div>
-                </a>
-                {% endif %}
-                {% if page.next_page %}
-                <a href="{{ page.next_page.url | url }}" title="{{ page.next_page.title }}" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-                  <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-                      <span class="md-flex__ellipsis">
-                        <span class="md-footer-nav__direction">
-                          {{ lang.t("footer.next") }}
-                        </span>
-                        {{ page.next_page.title }}
-                      </span>
-                  </div>
-                  <div class="md-flex__cell md-flex__cell--shrink">
-                    <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-                  </div>
-                </a>
-                {% endif %}
-              </nav>
-            </div>
-            {% endif %}
+              <div class="cDocsContainer">
+                <h4>Explore Choreo</h4>
 
-          </div>
-        </div>
+                <div class="row">      
+                   <div class="col-sm-12 col-md-4 col-lg-2">
+                      <div class="cIconContainer">
+                          <img src="assets/img/home/api.svg"/>
+                           <div>
+                           <div class="cDocsContainerHeader">
+                             <label>Build an API From Scratch</label>
+                           </div>
+                           <div class="cDocsContainerText">
+                             Design and build a REST API in low-code, pro-code, or both.
+                           </div>
+                           <div class="cDocsContainerLink">
+                            <a href="tutorials/create-rest-api-component/">Learn More</a>
+                           </div>
+                          </div>
+                      </div>
+                   </div>
+                   <div class="col-sm-12 col-md-4 col-lg-2">
+                       <div class="cIconContainer">
+                        <img src="assets/img/home/api.svg"/>
+                         <div class="cDocsContainerHeader">
+                           <label>Expose an Existing API</label>
+                         </div>
+                         <div class="cDocsContainerText">
+                           Expose and manage your existing APIs via REST API Proxies. 
+                         </div>
+                         <div class="cDocsContainerLink">
+                          <a href="tutorials/create-your-first-rest-api-proxy/">Learn More</a>
+                         </div>
+                        </div>
+                   </div>
+                   <div class="col-sm-12 col-md-4 col-lg-2">
+                    <div class="cIconContainer">
+                      <img src="assets/img/home/services.svg"/>
+                       <div class="cDocsContainerHeader">
+                         <label>Centrally Manage All Your APIs</label>
+                       </div>
+                       <div class="cDocsContainerText">
+                         Manage the lifecycle, add security, add documentation, apply rate-limiting policies to your REST APIs.<br/>  
+                       </div>
+                       <div class="cDocsContainerLink">
+                        <a href="api-proxies/#manage-the-rest-api-proxy">Learn More</a>
+                       </div>
+                      </div>
+                   </div>
+                   <div class="col-sm-12 col-md-4 col-lg-2">
+                    <div class="cIconContainer">
+                      <img src="assets/img/home/integrations.svg"/>
+                       <div>
+                       <div class="cDocsContainerHeader">
+                         <label>Handle Event Notifications in Real-Time</label>
+                       </div>
+                       <div class="cDocsContainerText">
+                         Get notified of events via configured triggers in real-time and create notifications using connectors on Choreo.
+                       </div>
+                       <div class="cDocsContainerLink">
+                        <a href="triggers/">Learn More</a>
+                       </div>
+                      </div>
+                </div>
+                </div>
+                
+       </div>
+        
+ </div>
+           
       </main>
       {% block footer %}
         {% include "partials/footer.html" %}
@@ -314,8 +310,158 @@
     /* .md-sidebar {
       position: static;
     } */
+
+   .container{
+    max-width:0;
+    height: 0;
+  }
     .md-sidebar.md-sidebar--primary {
-      top: 256px;
+      top: 56px;
     }
+
+    .md-search__input{
+      background-color: white;
+    }
+
+    .md-search__input::selection{
+      background-color: white;
+    }
+
+
+    .md-search__form, .md-search__input{
+      border-radius: 2rem;
+      width:100%;
+      height: 2.5rem;
+      background-color: white;
+
+    }
+    .algolia-autocomplete{
+      width: 100%;
+      padding-left: 1rem;
+      
+    }
+
+    .md-content__inner{
+      margin: 0 13.2rem 1.2rem !important;
+      width:70%;
+
+    }
+    .algolia-autocomplete ::placeholder{
+      padding-left: 1rem;
+    }
+
+    .cChoreoHeaderBar .cChoreoHeaderText{
+      padding-right: 2rem;
+      padding-left: 3rem;
+      padding-top: 2rem;
+      color: white;
+      font-family: sans-serif;
+      float:left;
+      max-width: 57%;
+      
+    }
+
+    .cChoreoHeaderBar .cChoreoHeaderText .HomePageBanner{
+      font-weight:bolder;
+      font-size: 1.3rem;
+    }
+
+    .cChoreoHeaderBar .cChoreoHeaderText .HomePageBannerTag{
+      font-size: .7rem;
+      word-wrap: break-word;
+      max-width: 100%;
+
+    }
+
+    .cChoreoHeaderBar .md-search-home {
+	  padding-right: 0.3rem;
+    float: left;
+    width: 40%;
+    padding-top: 2rem;
+   }
+
+   .md-search__icon{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 2rem;
+    color: #3F5DF8;
+  }
+
+.cChoreoHeaderBar {
+	display: inline-block;
+	width: 100%;
+	background-color: #7183e1;
+	height: 150px;
+  overflow-wrap: break-word;
+}
+
+.cHomeContainer {
+ width: 100%; 
+ padding-left: 3rem;
+}
+
+.cDocsContainer {
+  padding-top: 3rem;
+}
+
+.cIconContainer {
+   text-align: center;
+   border-style: solid;
+   border-color: #D0D0D0;
+   border-width: 0.03rem;
+   border-radius: 0.5rem;
+   padding-bottom: 1.6rem;
+   padding-top: rem;
+   padding-left: 0.3rem;
+   padding-right: 0.3rem;
+   height: 100%;
+}
+
+.cIconContainer:hover{
+   border-color: #3F5DF8;
+   box-shadow: 0 0 15px #D0D0D0 ;
+
+
+}
+.cIconContainer img {
+    height: 120px;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+.cDocsContainerHeader{
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #3F5DF8;
+  height: 4.5rem;
+
+
+}
+
+.cDocsContainerText{
+  font-family: sans-serif;
+  font-size: 0.65rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  height:5.5rem;
+}
+
+.cDocsContainerLink{
+  font-size: 0.7rem;
+  vertical-align: bottom;
+}
+.cChoreoDocsButtons{
+  margin-top: 0;
+}
+
   </style>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+  apiKey: 'c4c6e2af60050262289542d4687eeb6c',
+  indexName: 'wso2_choreo',
+  inputSelector: ".md-search__input",
+  debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
 </html>
