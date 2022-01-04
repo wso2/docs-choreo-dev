@@ -78,3 +78,7 @@ getPopulationByCountry
 personalizedMessage
  - docs/insights/configure-alerts.md
 10-minute
+ - docs/references/migrate-applications-to-the-latest-version.md
+organization_name
+api_name
+console.choreo.dev.

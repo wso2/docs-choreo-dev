@@ -62,7 +62,7 @@ You can deploy them after editing and testing then in the VS Code Editor as foll
 
 2. In the Home page, select the **`DefaultProject-<OrgName>`** project.
 
-3. Open the **Components** page by clicking the **Components** icon in the left navigator. The page displays the APIs, services, and integrations that you migrated from the previous version. These aredisplayed as a list of components.
+3. Open the **Components** page by clicking the **Components** icon in the left navigator. The page displays the APIs, services, and integrations that you migrated from the previous version. These are displayed as a list of components.
 
 4. Click on a migrated component. It opens in a separate page.
 
