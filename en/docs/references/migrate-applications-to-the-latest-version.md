@@ -10,7 +10,7 @@ This section explains how to migrate the APIs, services, and integrations you cr
 !!! info
     If you want to continue using the previous version, you can access it via the following URLs:<br/><br/> - **Choreo Console**: [https://console.deprecated.choreo.dev/](https://console.deprecated.choreo.dev/)<br/> - **Dev Portal**: [https://devportal.deprecated.choreo.dev/](https://devportal.deprecated.choreo.dev/)<br/> - **API access**: [https://choreoapis.dev/<organization_name>/<api_name>/](https://choreoapis.dev/<organization_name>/<api_name>/)<br/> - **API token management**: [https://apim.choreo.dev/oauth2/token](https://apim.choreo.dev/oauth2/token)<br/><br/>To access the APIs, services and integrations you added in the previous version, you can use the same endpoints as before.
 
-To upgrade from the previous version to the current version, follow these steps:
+To migrate your APIs, services, and integrations from the previous version to the current version, follow these steps:
 
 ## Step 1: Migrate your components
 
