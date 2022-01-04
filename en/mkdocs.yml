@@ -64,7 +64,7 @@ nav:
   - API Management:
      # - API Security: manage/api-security.md
      # - API Lifecycle: manage/api-lifecycle.md
-      - Developer Portal: manage/api-consumption.md
+      - Developer Portal: manage/developer-portal.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
