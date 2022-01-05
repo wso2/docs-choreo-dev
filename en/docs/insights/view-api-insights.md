@@ -243,8 +243,8 @@ To generate a custom report, follow the steps below:
 
 2. If you need to further filter the content printed in the report, select one or more applications in the **Application** field. By default, all the applications that have subscribed to one or more of the selected APIs are selected.
 
-   !!! Tip
-   If you want to filter the report content by the API consumer instead of the application, click on the toggle switch to the right of the **Application** field, and then select the required consumer. Only consumers who have subscribed to one or more of the selected APIs are displayed in the list. You can either select one, or all of them.
+    !!! Tip
+        If you want to filter the report content by the API consumer instead of the application, click on the toggle switch to the right of the **Application** field, and then select the required consumer. Only consumers who have subscribed to one or more of the selected APIs are displayed in the list. You can either select one, or all of them.
 
 3. Select the required year and the month in the **Year** and **Month** fields to specify the time interval for which you want to generate the report.
 
@@ -252,7 +252,7 @@ To generate a custom report, follow the steps below:
 
 The report is downloaded in the specified format. The following is a sample report generated in PDF format.
 
-![Sample report](../assets/img/insights/custom-report-sample.png){.cInlineImage-full}
+![Sample report](../assets/img/insights/custom-report-sample.png){.cInlineImage-half}
 
 The contents of the report are as follows.
 
@@ -277,7 +277,7 @@ The table in the report contains the following rows.
 
 These widgets allow you to download monthly reports for the last three months.
 
-![Pre-generated reports](../assets/img/insights/configured-report.png){.cInlineImage-full}
+![Pre-generated reports](../assets/img/insights/configured-report.png){.cInlineImage-half}
 
 To download a pregenerated report, click **Download** for the relevant month and then click on the required format.
 
