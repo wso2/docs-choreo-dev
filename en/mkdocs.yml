@@ -69,6 +69,7 @@ nav:
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
       - Configure Alerts: insights/configure-alerts.md
+      - Choreo Insights API: insights/choreo-insights-api.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
