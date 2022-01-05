@@ -352,6 +352,13 @@ position: relative;
     border: 1px solid gray;
 }
 
+.cInlineImage-threeQuarter {
+    display: inline-block;
+    text-align: center;
+    width:65%;
+    border: 1px solid gray;
+}
+
 .cInlineImage-half {
     display: inline-block;
     text-align: center;
