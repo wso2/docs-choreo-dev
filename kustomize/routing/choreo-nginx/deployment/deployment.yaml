@@ -20,8 +20,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip1: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
-    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip1: CKV_K8S_8=Suppressing since the sidecar should be only run once after container starts
+    checkov.io/skip3: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_22=Risk Accepted
+    checkov.io/skip5: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip8: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
+    
     reloader.stakater.com/auto: "true"
   labels:
     choreo.component: nginx
@@ -123,6 +129,8 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
           volumeMounts:
+          - name: redis-subscribe-folder
+            mountPath: /mnt/redis
           - name: openresty-logs-folder
             mountPath: /usr/local/openresty/nginx/logs
           - name: openresty-run-path
@@ -156,7 +164,37 @@ spec:
           - name: secret-redis
             mountPath: /mnt/csi/secret-redis
             readOnly: true
+        - name: redis-subscribe
+          image: choreocontrolplane.azurecr.io/choreoipaas/redis-subscribe:latest
+          imagePullPolicy: Always
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
+          volumeMounts:
+          - name: redis-subscribe-folder
+            mountPath: /redis
+          readinessProbe:
+            httpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
       volumes:
+      - name: redis-subscribe-folder
+        emptyDir: {}
       - name: openresty-logs-folder
         emptyDir: {}
       - name: openresty-run-path
