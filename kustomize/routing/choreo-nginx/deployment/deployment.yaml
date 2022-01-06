@@ -21,6 +21,7 @@ kind: Deployment
 metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_8=Suppressing since the sidecar should be only run once after container starts
+    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
     checkov.io/skip3: CKV_K8S_20=Temporarily suppressing till fixing
     checkov.io/skip4: CKV_K8S_22=Risk Accepted
     checkov.io/skip5: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
@@ -187,11 +188,6 @@ spec:
           volumeMounts:
           - name: redis-subscribe-folder
             mountPath: /redis
-          readinessProbe:
-            httpSocket:
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 5
       volumes:
       - name: redis-subscribe-folder
         emptyDir: {}
