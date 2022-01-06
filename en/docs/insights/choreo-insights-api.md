@@ -1,13 +1,13 @@
 # Choreo Insights API
 
-Choreo Insights API is a GraphQL API that allows you to fetch data in a flexible manner by defining the criteria with precision. This guide explains the different ways in which you can fetch data via this API.
+Choreo Insights API is a GraphQL API that allows you to fetch data in a flexibly by defining the criteria with precision. This guide explains the different ways in which you can fetch data via this API.
 
  - **Allowed operations:** [Queries](#query)
- - **Schema defined types:** [Objects](#objects), [Inputs](#inputs), [Enums](#enums) and [Scalars](#scalars)
+ - **Schema-defined types:** [Objects](#objects), [Inputs](#inputs), [Enums](#enums), and [Scalars](#scalars)
 
 ##Try out
 
-You can try out the Choreo Insights API with your data via the [GraphQL Explorer](graphiql-explorer/index.html).
+You can try out the Choreo Insights API with your data via [GraphQL Explorer](graphiql-explorer/index.html).
 
 !!! warning
     You cannot work with the GraphQL Explorer with the Safari web browser at present due to [this issue](https://developer.apple.com/forums/thread/658688) in the browser.
@@ -566,7 +566,7 @@ API ID
 <td valign="top">[<a href="#apiusageovertime">APIUsageOverTime</a>]</td>
 <td>
 
-Returns a list of usage details for each API over time for each time granularity within the specified time range for
+Returns a list of details related to the usage of each API over time for each time granularity within the specified time range for
 the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
 <code>apiUsageOvertimeFilter</code> parameter to further filter the results.
 
@@ -868,7 +868,7 @@ API ID
 <td valign="top"><a href="#cachehits">CacheHits</a></td>
 <td>
 
-Return the total number of response cache hits, misses and hit percentage for an API over time for each time
+Return the total number of response cache hits, misses, and hit percentage for an API over time for each time
 granularity within the specified time range for the given combination of tenant ID, environment ID, and
 organization ID.
 
@@ -908,7 +908,7 @@ Data filter
 
 Returns a list of top platforms ranked based on the hit count within the specified time range for the given
 combination of tenant ID, environment ID, and organization ID. The result list includes the top nine platforms with
-the respective hit count, and all the rest of the platforms are labelled as **Other** with the cumulated hit count.
+the respective hit count, and all the rest of the platforms are labeled as **Other** with the cumulated hit count.
 Optionally, you can configure the <code>deviceFilter</code> parameter to further filter the results.
 
 </td>
@@ -947,7 +947,7 @@ Data filter
 
 Returns a list of top user agents ranked based on the hit count within the specified time range for the given
 combination of tenant ID, environment ID, and organization ID. The result list includes the top nine user agents
-with the respective hit count, and all the rest of the platforms are labelled as **Other** with the cumulated hit
+with the respective hit count, and all the rest of the platforms are labeled as **Other** with the cumulated hit
 count. Optionally, you can configure the <code>deviceFilter</code> parameter to further filter the results.
 
 </td>
@@ -1006,7 +1006,7 @@ Time filter
 <td valign="top"><a href="#geolocationfilter">GeoLocationFilter</a></td>
 <td>
 
-Geo location filter
+Geolocation filter
 
 </td>
 </tr>
@@ -1024,7 +1024,7 @@ Data filter
 <td valign="top">[<a href="#apiusagebyapplication">APIUsageByApplication</a>]</td>
 <td>
 
-Returns usage details of each API by application within the specified time range for the given combination of
+Returns details relating to the usage of each API by application within the specified time range for the given combination of
 tenant ID, environment ID, and organization ID. Optionally, you can configure the <code>apiUsageByAppFilter</code> parameter to
 further filter the results.
 
@@ -1913,7 +1913,7 @@ The environment name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The environment type. A Choreo environment is labelled as <code>CHOREO</code>, and the on-premise environment is labelled as
+The environment type. A Choreo environment is labeled as <code>CHOREO</code>, and the on-premise environment is labeled as
 <code>ON_PREM</code>.
 
 </td>
@@ -3990,7 +3990,7 @@ Filters results by searching matching results for the provided search text.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The list of API Ids that need to be searched with the given search text. Note that it is not possible to define API
+The list of API IDs that need to be searched with the given search text. Note that it is not possible to define API
 IDs without a search text in the search filter.
 
 </td>
@@ -4050,7 +4050,7 @@ Filters successful API usage by application results.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The list of API Ids by which the results need to be filtered with.
+The list of API IDs by which the results need to be filtered.
 
 </td>
 </tr>
@@ -4059,7 +4059,7 @@ The list of API Ids by which the results need to be filtered with.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The tenant domain name by which the results need to be filtered with.
+The tenant domain name by which the results need to be filtered.
 
 </td>
 </tr>
