@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-connect-adapter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-adapter-dev-us-east-azure-p7
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-connect-adapter-dev-us-east-azure-p7
+    spec:
+     containers:
+       - name: choreo-connect-adapter
+         env:
+         - name: localLabel
+           value: dev-us-east-azure-p7
+         - name: environmentLabel
+           value: dev-us-east-azure
+     volumes:
+        - name: global-adapter-keystore-vol
+          configMap:
+            name: global-adapter-keystore-vol
