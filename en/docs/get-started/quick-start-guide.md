@@ -44,7 +44,7 @@ Now let's test the REST API to verify whether it works as expected.
 4. Add a meaningful string as the request body. For example, `Welcome to Choreo`.
     ![Request Payload](../assets/img/get-started/request-payload.png){.cInlineImage-full}
 
-5. Click **Execute**. You'll see the string you entered in step 4 above displayed as the server response.
+5. Click **Execute**. You'll see the string you entered in step 4 above returned as the server response.
 
 Congratulations! You have now tested the REST API and are ready to implement the business logic.
 
@@ -65,7 +65,7 @@ In this guide, you will further develop the API by adding a new resource and sim
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click the **+** icon on the low-code diagram, click **Resource**, and configure the resource as follows: 
+3. Click **+** on the low-code diagram, click **Resource**, and then configure the resource as follows: 
   
     ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
 
@@ -81,7 +81,7 @@ In this guide, you will further develop the API by adding a new resource and sim
      | **Field** | **Value** |
      |-----------------|-----------------------|
      | **Type** | `string` |
-     | **Value** | `name` |
+     | **Name** | `name` |
 
      ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
@@ -103,12 +103,12 @@ In this guide, you will further develop the API by adding a new resource and sim
 
 8. Click **Save**.
 
-9. To return the personalized message, click the **+** icon below the variable you created and click **Return**.
+9. To return the personalized message, click **+** below the variable you created, then click **Return** and enter `message` as the **Return Expression**.
    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
 
    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
-10. Enter `message` as the **Return Expression** value and click **Save**.
+10. Click **Save**.
 
 !!!info
     You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can choose to work in the low-code or pro-code view or both views simultaneously.  
@@ -116,73 +116,72 @@ In this guide, you will further develop the API by adding a new resource and sim
 
 ### Step 2: Commit Changes to GitHub
 
-Choreo maintains source code in a private GitHub repository. When you create a component in Choreo, it creates it in the private-GitHub repository associated with your account. Therefore, when you change the API Implementation, you need to commit and push your changes. 
+Choreo maintains source code in a private GitHub repository. When you create a component in Choreo, it creates it in the private-GitHub repository associated with your account. Therefore, when you change the API Implementation, you need to commit and push your changes.
 
-1. Click on the **Sync with Choreo upstream** link at the bottom of the editor. 
+1. Click **Sync with Choreo upstream** on the bottom bar of the editor. 
     ![Sync Choreo With upstream](../assets/img/get-started/sync-with-choreo-upstream.png){.cInlineImage-full}
 
-    Alternatively, you can click on the source control button on the left navigation or click on the pop-up that appears at the bottom right corner. 
+    Alternatively, you can click source control on the left pane or click **Sync changes with Choreo** in the pop-up that is displayed at the bottom right corner. 
 
     ![Alternative Commit](../assets/img/get-started/alternative-commit.png){.cInlineImage-full}
 
-2. Click **Sync my changes with Choreo** in the pop-up that appears. 
+2. Click **Sync my changes with Choreo** in the window that is displayed. 
 
      ![Sync Changes](../assets/img/get-started/sync-changes.png){.cInlineImage-full}
 
-3. Enter a meaningful commit message and click on the tick sign from the toolbar. This will commit your changes to your private GitHub repository.
+3. Enter a meaningful commit message and click ✓ on the toolbar. This commits the changes to your private GitHub repository.
 
      ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
-4. Next, you need to push the changes to GitHub. Click on the **...** on the top toolbar and select **Push** from the list. 
+4. Click **...** on the top toolbar and then click **Push**. 
 
 !!! tip
-    You need to re-deploy the new changes. Follow steps in section [Deploy Your REST API](#deploy-your-rest-api). 
+    If you want to re-deploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
 
- Next, let's publish the API 
+ Now let's publish the API. 
 
 ## Manage your REST API
 
-Choreo provides you with full API management capabilities. You can manage your REST API's lifecycle, apply security, apply rate-limiting policies, configure usage plans, and add documentation.
+Choreo provides full API management capabilities so that you can manage your REST API lifecycle, apply security, apply rate-limiting policies, configure usage plans, and add documentation.
 
-In this guide, we will publish and invoke the API we created. 
+The following steps walk you through the process to publish and invoke the API you created. 
 
 ### Step 1: Publish the API
 Follow this procedure to publish the API to the API Developer Portal so that external consumers can view and consume the API:
 
-1. Click **Publish** in the left pane.
+1. Click **Manage** in the left pane.
 
 2. On the **Lifecycle Management** page, click **Publish**.
 
 3. Click **Go to Developer Portal**. 
     ![Go to API Developer Portal](../assets/img/get-started/go-to-dev-portal.png){.cInlineImage-full}
  
-    You can see the published API in the API Developer Portal:
+    You'ii see the published API:
  
     ![List of published APIs in the API Developer Portal](../assets/img/get-started/developer-portal.png){.cInlineImage-full}
 
 ### Step 2: Invoke the API 
-Follow this procedure to invoke the REST API from the API Developer Portal:
+Follow this procedure to invoke the REST API via the API Developer Portal:
 
-1. Click **Credentials** in the left pane.
+1. Click **Credentials** in the left pane of the API Developer Portal.
 
 2. Click **Generate Credentials**. Choreo creates credentials for an internal application and subscribes this API to that internal application.
      ![Generate Credentials](../assets/img/get-started/generate-credentials.png){.cInlineImage-full}
 
-
-2. Click **Generate Access Token**. Copy the generated access token.
+3. Click **Generate Access Token**, copy the generated access token, and click **Close**.
 
      ![Generate Access Token](../assets/img/get-started/generate-access-token.png){.cInlineImage-full}
 
-3. Click **Try Out** in the left pane. 
+4. Click **Try Out** in the left pane. 
 
-4. Paste the copied access token in the **Access Token** field.
+5. Paste the copied access token in the **Access Token** field.
      ![Get Test Key ](../assets/img/get-started/get-test-key.png){.cInlineImage-full}
 
-5. Click the `GET` resource you added to expand it.
+6. Click the `GET` resource you added to expand it.
 
-6. Click **Try it out** and add a name for the query parameter.
+7. Click **Try it out** and enter a name for the query parameter.
      ![Invoke API ](../assets/img/get-started/invoke-api.png){.cInlineImage-full} 
 
-7. Click **Execute**. You can see the personalized message response from the API.
+8. Click **Execute**. You'll see the personalized message as the response from the API.
 
-Congratulations! You have successfully created a REST API, published it on the API Developer Portal, and finally, invoked the API via the API Developer Portal.
+Congratulations! You have successfully created a REST API, published it on the API Developer Portal, and invoked it via the API Developer Portal.
