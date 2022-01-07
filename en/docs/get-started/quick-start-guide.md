@@ -65,7 +65,7 @@ In this guide, you will further develop the API by adding a new resource and sim
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click **+** on the low-code diagram, click **Resource**, and then configure the resource as follows: 
+3. Click **+** on the low-code diagram, click **Resource**, and configure it as follows: 
   
     ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
 
@@ -88,7 +88,7 @@ In this guide, you will further develop the API by adding a new resource and sim
 
  5. Click **Save**.
 
- 6. Expand the **GET personalizedMessage** resource you created. This displays the low-code diagram.
+ 6. Expand the **GET personalizedMessage** resource. This displays the low-code diagram for it.
 
  7. Click **Variable** and configure it as follows: 
     ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
@@ -103,7 +103,7 @@ In this guide, you will further develop the API by adding a new resource and sim
 
 8. Click **Save**.
 
-9. To return the personalized message, click **+** below the variable you created, then click **Return** and enter `message` as the **Return Expression**.
+9. To return the personalized message, click **+** below the variable you created,  click **Return**, and enter `message` as the **Return Expression**.
    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
 
    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
@@ -111,25 +111,25 @@ In this guide, you will further develop the API by adding a new resource and sim
 10. Click **Save**.
 
 !!!info
-    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can choose to work in the low-code or pro-code view or both views simultaneously.  
+    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can choose to work in the low-code view or pro-code view, or both simultaneously.    
     ![Editor View](../assets/img/get-started/low-code-pro-code-side-by-side.png){.cInlineImage-full}
 
 ### Step 2: Commit Changes to GitHub
 
-Choreo maintains source code in a private GitHub repository. When you create a component in Choreo, it creates it in the private-GitHub repository associated with your account. Therefore, when you change the API Implementation, you need to commit and push your changes.
+Choreo maintains source code in a private GitHub repository. When you create a component in Choreo, it creates it in the private-GitHub repository associated with your account. Therefore, when you change the API Implementation, you must commit and push your changes.
 
 1. Click **Sync with Choreo upstream** on the bottom bar of the editor. 
     ![Sync Choreo With upstream](../assets/img/get-started/sync-with-choreo-upstream.png){.cInlineImage-full}
 
-    Alternatively, you can click source control on the left pane or click **Sync changes with Choreo** in the pop-up that is displayed at the bottom right corner. 
+    Alternatively, you can click source control on the left pane or click **Sync changes with Choreo** in the pop-up displayed at the bottom right corner. 
 
     ![Alternative Commit](../assets/img/get-started/alternative-commit.png){.cInlineImage-full}
 
-2. Click **Sync my changes with Choreo** in the window that is displayed. 
+2. Click **Sync my changes with Choreo** in the window displayed. 
 
      ![Sync Changes](../assets/img/get-started/sync-changes.png){.cInlineImage-full}
 
-3. Enter a meaningful commit message and click ✓ on the toolbar. This commits the changes to your private GitHub repository.
+3. Enter a meaningful commit message and click **✓** on the toolbar. This commits the changes to your private GitHub repository.
 
      ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
@@ -144,7 +144,7 @@ Choreo maintains source code in a private GitHub repository. When you create a c
 
 Choreo provides full API management capabilities so that you can manage your REST API lifecycle, apply security, apply rate-limiting policies, configure usage plans, and add documentation.
 
-The following steps walk you through the process to publish and invoke the API you created. 
+The following topics walk you through the steps to publish and invoke the API you created.  
 
 ### Step 1: Publish the API
 Follow this procedure to publish the API to the API Developer Portal so that external consumers can view and consume the API:
@@ -156,7 +156,7 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 3. Click **Go to Developer Portal**. 
     ![Go to API Developer Portal](../assets/img/get-started/go-to-dev-portal.png){.cInlineImage-full}
  
-    You'ii see the published API:
+    You'll see the published API:
  
     ![List of published APIs in the API Developer Portal](../assets/img/get-started/developer-portal.png){.cInlineImage-full}
 
