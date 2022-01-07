@@ -10,79 +10,73 @@ This quick start guide walks you through the steps to create, develop, publish, 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
-2. On the landing page, scroll down to the **Use a sample and get started** section. 
+2. On the **Home** page, scroll to the **Use a sample and get started** section. 
 
-3. Let's use the **Echo Service** sample. Hover over the sample and click **Get Started**.
+3. Go to the **Echo Service** card and click **Get Started**.
  
- You have successfully created an API using a template. You will see the flow diagram of the integration logic implemented for this API. You can learn how to further develop this API in the [Develop the REST API](#develop-the-rest-api) section of this guide. 
+Now you have successfully created an API using a template and you can see the flow diagram of the integration logic implemented for this API.
 
- Let's deploy this API and make it invokable.
+Next, let's deploy this API and make it invokable.
  
 ### Step 2: Deploy the REST API 
 
-Let's deploy the API to make it invokable. Choreo maintains 3 environments by default: development and production. We will deploy the API to the development environment. 
+Choreo maintains 2 environments by default: development and production. Let's deploy the API to the development environment.
 
-1. Click **Deploy** from the left navigation. 
+1. Click **Deploy** in the left pane. 
 
-2. Click **Deploy**.
+2. Go to the **Build Area** card and click **Deploy**.
 
     ![Deploy API](../assets/img/get-started/deploy-rest-api.png){.cInlineImage-full}
 
-You have now successfully deployed your API to the development environment. It is now invokable. Let's test it and verify if it works.
+   This deploys the API to the development environment to make it invokable. 
+
+Now let's test the REST API to verify whether it works as expected.
 
 ### Step 3: Test the REST API 
 
-1. Click **Test** from the left navigation.
+1. Click **Test** in the left pane.
 
 2. Expand the **POST** method with the **/** resource path. 
     ![POST method](../assets/img/get-started/post-method.png){.cInlineImage-full}
 
 3. Click **Try it out**.
 
-4. Add a meaningful string to the request body. E.g.: `Welcome to Choreo`.
+4. Add a meaningful string as the request body. For example, `Welcome to Choreo`.
     ![Request Payload](../assets/img/get-started/request-payload.png){.cInlineImage-full}
 
-5. Click **Execute**.
+5. Click **Execute**. You'll see the string you entered in step 4 above displayed as the server response.
 
-6. Notice the string you entered in step 4 in the response. 
+Congratulations! You have now tested the REST API and are ready to implement the business logic.
 
-Congratulations! You have created a REST API using a template, deployed, and tested the API. 
+## Implement the business logic
 
-Let's look at how you can add integration logic to the API and further develop this API. Follow the steps in the next section.
+Developing the API involves writing the business logic for the API. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily using its low-code editor, pro-code editor, or both to publish your API at a faster time-to-market.
 
-## Develop your REST API
-
-Developing the API involves writing the business logic for the API. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily with a low-code, pro-code editor, or both and publish your API with a faster time-to-market.
-
-In this guide, we will add a new resource to the API and simple business logic:
+In this guide, you will further develop the API by adding a new resource and simple business logic to it:
 
 ### Step 1: Develop in low-code
 
-1. Click **Develop** from the left navigation. 
+1. Click **Develop** in the left pane.
 
-2. Then, click **Edit with VS Code Online**.
+2. Click **Edit with VS Code Online**.
  
     !!! info
-        Opening the VS Code Editor may take a little while if you are a first-time user.
+        The VS Code Editor can take some time to open if you are a first-time user.
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click **+** on the low-code diagram and select **Resource**. 
+3. Click the **+** icon on the low-code diagram, click **Resource**, and configure the resource as follows: 
   
-    ![Addd New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
-  
-    Let's create a new resource with the following values:
+    ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
 
- 
      | **Field** | **Value** |
      |-----------------|-----------------------|
-     | **Method** | `GET` |
+     | **HTTP Method** | `GET` |
      | **Path** | `personalizedMessage` |
      | **Return Type** | `string` |
 
-   
 
-4. Let's add a query parameter to get a name as an input. Click **Advanced** and add a query parameter as follows:
+4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -94,12 +88,10 @@ In this guide, we will add a new resource to the API and simple business logic:
 
  5. Click **Save**.
 
- 6. Now, let's return the personalized message. Expand the created **GET personalizedMessage** resource. You will now see the low-code diagram.
+ 6. Expand the **GET personalizedMessage** resource you created. This displays the low-code diagram.
 
- 7. Click on **Variables** on the low-code diagram to add a variable after **Start**. 
-    ![Create variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
-
- 8. Configure the variable as follows:
+ 7. Click **Variable** and configure it as follows: 
+    ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -109,20 +101,18 @@ In this guide, we will add a new resource to the API and simple business logic:
 
      ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
 
-9. Click **Save**.
+8. Click **Save**.
 
-10. Let's return the message. Click **+** below the variable we created on the low-code diagram and select **Return**. 
+9. To return the personalized message, click the **+** icon below the variable you created and click **Return**.
    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
 
-    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
+   ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
-11. Enter `message` as the value in the **Return Expression** text box.
-    
-12. Click **Save**.
+10. Enter `message` as the **Return Expression** value and click **Save**.
 
 !!!info
-    Notice that you can click on the **</>** icon on the top left corner of the editor to open the code-view at any given time. You can choose to develop on the low-code or pro-code or both simultaneously. 
-    ![Edito View](../assets/img/get-started/low-code-pro-code-side-by-side.png){.cInlineImage-full}
+    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can choose to work in the low-code or pro-code view or both views simultaneously.  
+    ![Editor View](../assets/img/get-started/low-code-pro-code-side-by-side.png){.cInlineImage-full}
 
 ### Step 2: Commit Changes to GitHub
 
