@@ -39,16 +39,20 @@ Provide the following properties in addition to the above-mentioned properties.
 ``````
 SUBSCRIPTION_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
 SUBSCRIPTION_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
-CONTROLPLANE_INTERNAL_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
-CONTROLPLANE_INTERNAL_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
+CONTROLPLANE_SYSTEM_INTERNAL_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
+CONTROLPLANE_SYSTEM_INTERNAL_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
+CONTROLPLANE_APIM_INTERNAL_INGRESS_TLS_CERT_FILE_PATH=xxxxxxxxxxxxxxxxx
+CONTROLPLANE_APIM_INTERNAL_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
 ``````
 Follow the following chart to obtain the required CERT and KEY files, for first time execution. 
 Proceed to store the file values in the CSI Key Vault for further reference
 
-| Cert/Key File Pair            | First Execution          | CSI Key Vault Secret for reference                                                            |
-|-------------------------------|--------------------------|-----------------------------------------------------------------------------------------------|
-| Subscription Ingress          | Obtain from DigiOps team | `subscription-ingress-TLS-KEY` <br/> `subscription-ingress-TLS-CERTIFICATE`                   |
-| ControlPlane Internal Ingress | Obtain from SecOps team  | `controlplane-internal-ingress-TLS-KEY` <br/> `controlplane-internal-ingress-TLS-CERTIFICATE` |
+| Cert/Key File Pair                   | First Execution          | CSI Key Vault Secret for reference                                                                          |
+|--------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------------|
+| Subscription Ingress                 | Obtain from DigiOps team | `subscription-ingress-TLS-KEY` <br/> `subscription-ingress-TLS-CERTIFICATE`                                 |
+| ControlPlane System Internal Ingress | Obtain from SecOps team  | `controlplane-system-internal-ingress-TLS-KEY` <br/> `controlplane-system-internal-ingress-TLS-CERTIFICATE` |
+| ControlPlane APIM Internal Ingress   | Obtain from SecOps team  | `controlplane-apim-internal-ingress-TLS-KEY` <br/> `controlplane-apim-internal-ingress-TLS-CERTIFICATE`     |
+
 
 ### Routing Cluster
 
