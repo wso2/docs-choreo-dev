@@ -61,10 +61,10 @@ spec:
                   name: env-perf-analyzer
             resources:
               limits:
-                cpu: 300m
+                cpu: 1000m
                 memory: 1024Mi
               requests:
-                cpu: 200m
+                cpu: 300m
                 memory: 512Mi
             volumeMounts:
               - name: perfanalyzer-config
