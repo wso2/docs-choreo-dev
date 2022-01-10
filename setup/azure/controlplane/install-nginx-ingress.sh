@@ -41,12 +41,10 @@ helm upgrade --install "${SYSTEM_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
-  --set controller.config.disable-ipv6="true" \
-  --set controller.config.disable-ipv6-dns="true" \
   --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
   --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
   --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
-  --set controller.extraVolumeMounts[0].configMap.name="lua-log4j-migitaion-script-config-map"
+  --set controller.extraVolumes[0].configMap.name="lua-log4j-migitaion-script-config-map"
 
 ################ Install Userapps Nginx Ingress Controller using Helm 3
 #echo "--- Setting up Userapps Nginx Ingress Controller.."
@@ -113,12 +111,10 @@ helm upgrade --install "${INTERNAL_INGRESS_NAMESPACE}" ingress-nginx/ingress-ngi
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
-  --set controller.config.disable-ipv6="true" \
-  --set controller.config.disable-ipv6-dns="true" \
   --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
   --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
   --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
-  --set controller.extraVolumeMounts[0].configMap.name="lua-log4j-migitaion-script-config-map"
+  --set controller.extraVolumes[0].configMap.name="lua-log4j-migitaion-script-config-map"
 ###########
 
 echo "--- Setting up Internal Nginx Ingress Controller for Exposing Choreo Control Plane internal services"
@@ -154,9 +150,7 @@ helm upgrade --install "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}" ingre
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
-  --set controller.config.disable-ipv6="true" \
-  --set controller.config.disable-ipv6-dns="true" \
   --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
   --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
   --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
-  --set controller.extraVolumeMounts[0].configMap.name="lua-log4j-migitaion-script-config-map"
+  --set controller.extraVolumes[0].configMap.name="lua-log4j-migitaion-script-config-map"
