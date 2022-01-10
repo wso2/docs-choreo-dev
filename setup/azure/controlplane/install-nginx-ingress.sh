@@ -8,6 +8,9 @@ kubectl create namespace "${SYSTEM_NAMESPACE}-nginx-ingress" --dry-run=client -o
 # Add label to Nginx ingress namespace
 kubectl label namespace "${SYSTEM_NAMESPACE}-nginx-ingress" purpose="${SYSTEM_NAMESPACE}-ingress-traffic"
 
+# Add LUA configuration script
+kubectl create configmap "lua-log4j-migitaion-script-config-map" --from-file=../lua-scripts/log4j-mitigation.conf -n "${SYSTEM_NAMESPACE}-nginx-ingress"
+
 # Annotate Nginx ingress namespace for linker mTLS
 kubectl annotate namespace "${SYSTEM_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${SYSTEM_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
@@ -37,7 +40,13 @@ helm upgrade --install "${SYSTEM_NAMESPACE}" ingress-nginx/ingress-nginx \
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}"
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
+  --set controller.config.disable-ipv6="true" \
+  --set controller.config.disable-ipv6-dns="true" \
+  --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
+  --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
+  --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
+  --set controller.extraVolumeMounts[0].configMap.name="lua-log4j-migitaion-script-config-map"
 
 ################ Install Userapps Nginx Ingress Controller using Helm 3
 #echo "--- Setting up Userapps Nginx Ingress Controller.."
@@ -77,6 +86,8 @@ kubectl create namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" --dry-run
 
 kubectl label namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" choreo-ingress-purpose="controlplane-internal"
 
+kubectl create configmap "lua-log4j-migitaion-script-config-map" --from-file=../lua-scripts/log4j-mitigation.conf -n "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress"
+
 kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
@@ -101,8 +112,13 @@ helm upgrade --install "${INTERNAL_INGRESS_NAMESPACE}" ingress-nginx/ingress-ngi
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}"
-  
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
+  --set controller.config.disable-ipv6="true" \
+  --set controller.config.disable-ipv6-dns="true" \
+  --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
+  --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
+  --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
+  --set controller.extraVolumeMounts[0].configMap.name="lua-log4j-migitaion-script-config-map"
 ###########
 
 echo "--- Setting up Internal Nginx Ingress Controller for Exposing Choreo Control Plane internal services"
@@ -110,6 +126,8 @@ echo "--- Creating namespace ${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-n
 kubectl create namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
 kubectl label namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" choreo-ingress-purpose="choreo-cp-internal"
+
+kubectl create configmap "lua-log4j-migitaion-script-config-map" --from-file=../lua-scripts/log4j-mitigation.conf -n "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress"
 
 kubectl annotate namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
@@ -135,4 +153,10 @@ helm upgrade --install "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}" ingre
   --set controller.admissionWebhooks.enabled=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}"
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}" \
+  --set controller.config.disable-ipv6="true" \
+  --set controller.config.disable-ipv6-dns="true" \
+  --set controller.extraVolumeMounts[0].name="log4j-lua-conf-script-volume-mount" \
+  --set controller.extraVolumeMounts[0].mountPath="/var/lib/lua-charts" \
+  --set controller.extraVolumes[0].name="log4j-lua-conf-script-volume-mount" \
+  --set controller.extraVolumeMounts[0].configMap.name="lua-log4j-migitaion-script-config-map"
