@@ -5,6 +5,7 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_43=Risk accepted
     checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: dp-mizzen
     choreo.dataplane: "true"
@@ -22,7 +23,7 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
