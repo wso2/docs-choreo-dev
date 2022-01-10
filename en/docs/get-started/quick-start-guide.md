@@ -50,11 +50,11 @@ Congratulations! You have now tested the REST API and are ready to implement the
 
 ## Implement the business logic
 
-Developing the API involves writing the business logic for the API. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily using its low-code editor, pro-code editor, or both to publish your API at a faster time-to-market.
-
-In this guide, you will further develop the API by adding a new resource and simple business logic to it:
+Developing an API involves writing the business logic for it. APIs often need to integrate with third-party systems to create a comprehensive integration solution. With Choreo, you can create your integration solution easily by implementing the business logic using its low-code editor, pro-code editor, or both.
 
 ### Step 1: Develop in low-code
+
+Follow this procedure to further develop the API by adding a new resource and simple business logic:
 
 1. Click **Develop** in the left pane.
 
@@ -116,9 +116,11 @@ In this guide, you will further develop the API by adding a new resource and sim
 
 ### Step 2: Commit Changes to GitHub
 
-Choreo maintains source code in a private GitHub repository. When you create a component in Choreo, it creates it in the private-GitHub repository associated with your account. Therefore, when you change the API Implementation, you must commit and push your changes.
+Choreo maintains source code in a private GitHub repository. When you create a component, Choreo creates it in the private-GitHub repository associated with your account. Therefore, you must commit and push your changes if you want to change the API Implementation.
 
-1. Click **Sync with Choreo upstream** on the bottom bar of the editor. 
+Follow this procedure to commit and push your changes to GitHub.
+
+1. On the bottom bar of the editor, click **Sync with Choreo upstream**.  
     ![Sync Choreo With upstream](../assets/img/get-started/sync-with-choreo-upstream.png){.cInlineImage-full}
 
     Alternatively, you can click source control on the left pane or click **Sync changes with Choreo** in the pop-up displayed at the bottom right corner. 
@@ -133,18 +135,16 @@ Choreo maintains source code in a private GitHub repository. When you create a c
 
      ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
-4. Click **...** on the top toolbar and then click **Push**. 
+4. On the top toolbar, click **...** and then click **Push**. 
 
 !!! tip
     If you want to re-deploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
 
- Now let's publish the API. 
+ Now let's publish the API and invoke it via the API Developer Portal. 
 
 ## Manage your REST API
 
 Choreo provides full API management capabilities so that you can manage your REST API lifecycle, apply security, apply rate-limiting policies, configure usage plans, and add documentation.
-
-The following topics walk you through the steps to publish and invoke the API you created.  
 
 ### Step 1: Publish the API
 Follow this procedure to publish the API to the API Developer Portal so that external consumers can view and consume the API:
