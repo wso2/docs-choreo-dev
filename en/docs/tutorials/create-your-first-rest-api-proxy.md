@@ -24,7 +24,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
 
 2. Expand the project dropdown on the console header and click **+ Create New** to create a new project.
- ![Create a new Project](../assets/img/tutorials/create-project.png){.cInlineImage-full}
+ ![Create a new Project](../assets/img/tutorials/api-proxy/create-project.png){.cInlineImage-full}
 
 3. Enter a unique name and description for your project and click **Create**. 
 
@@ -34,7 +34,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
         Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
 
 4. Click **+Create** On the right-hand upper corner of the components landing page.
-    ![Create a new component](../assets/img/tutorials/create-component.png){.cInlineImage-full}
+    ![Create a new component](../assets/img/tutorials/api-proxy/create-component.png){.cInlineImage-full}
 
 5. Click the **REST API Proxy** card.
 
@@ -64,10 +64,10 @@ Deploying the REST API proxy makes it invokable. Choreo maintains two environmen
 1. Click **Deploy** from the left navigation. 
 
 2. Let's deploy the REST API proxy to the development environment. Click **Deploy** in the **Build Area** column.
-    ![Deploy REST API proxy](../assets/img/tutorials/deploy-rest-api-proxy.png){.cInlineImage-full}
+    ![Deploy REST API proxy](../assets/img/tutorials/api-proxy/deploy-rest-api-proxy.png){.cInlineImage-full}
 
 3. Once you have deployed it to the development environment, you can test it. When you are ready to take it to production, you can come back to this view and promote it by clicking on the **Promote** button on the **Development** column.
-    ![Promote REST API proxy](../assets/img/tutorials/promote-rest-api-proxy.png){.cInlineImage-full}
+    ![Promote REST API proxy](../assets/img/tutorials/api-proxy/promote-rest-api-proxy.png){.cInlineImage-full}
 
 
 ## Step 4: Test your REST API Proxy
@@ -87,14 +87,14 @@ In this tutorial, let's use the inbuilt OpenAPI Console.
 3. Choreo uses OAuth 2.0 Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
 
 4. Let's invoke. Expand the **GET** resource **/pet/{petID}**.
- ![Test Resource](../assets/img/tutorials/test-resource.png){.cInlineImage-full}
+ ![Test Resource](../assets/img/tutorials/api-proxy/test-resource.png){.cInlineImage-full}
 
 5. Click **Try it Out**.
 
 6. Enter `1` as the **petid**.
 
 7. Click **Execute** and observe the response. 
-    ![Test Response](../assets/img/tutorials/test-response.png){.cInlineImage-full}
+    ![Test Response](../assets/img/tutorials/api-proxy/test-response.png){.cInlineImage-full}
 
 ## Step 5: Manage your REST API Proxy
 
@@ -107,15 +107,15 @@ First, let's review the security settings and add a rate limit to the **GET** re
 1. Click **Manage** on the left navigation and click **Settings**.
 
 2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** at the bottom of the page and make the necessary changes. Once the changes are confirmed, you can save them by clicking on **Save**.
-    ![Security Settings](../assets/img/tutorials/security-settings.png){.cInlineImage-full}
+    ![Security Settings](../assets/img/tutorials/api-proxy/security-settings.png){.cInlineImage-full}
 
 3. Next, let's add a rate-limiting policy to the API. Click **Resources**.
 
 4. Scroll down to the end of the page and click **Edit**.
 
 5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, you are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../api-proxies/#settings)
-    ![Rate Limiting Level](../assets/img/tutorials/rate-limiting-level.png){.cInlineImage-full}
-    ![Rate Limiting Per Resource](../assets/img/tutorials/rate-limiting-per-resource.png){.cInlineImage-full}
+    ![Rate Limiting Level](../assets/img/tutorials/api-proxy/rate-limiting-level.png){.cInlineImage-full}
+    ![Rate Limiting Per Resource](../assets/img/tutorials/api-proxy/rate-limiting-per-resource.png){.cInlineImage-full}
 
 5. Next, from the dropdown, select an appropriate rate limiting level.
 
@@ -154,7 +154,7 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 #### Step 5.4.1: Generate Credentials
 
 1. On the **Lifecycle Management** page, click **Go to DevPortal**.
-    ![Go to Developer Portal](../assets/img/tutorials/go-to-devportal.png){.cInlineImage-full}
+    ![Go to Developer Portal](../assets/img/tutorials/api-proxy/go-to-devportal.png){.cInlineImage-full}
 
 2. Once you sign in to the API Developer Portal, click **Credentials** in the navigator.
 
