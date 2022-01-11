@@ -49,6 +49,11 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+        - name: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
         - name: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
           valueFrom:
             secretKeyRef:
