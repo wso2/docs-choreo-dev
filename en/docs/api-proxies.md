@@ -10,7 +10,7 @@ A REST API Proxy exposes an endpoint that applications use to consume the API.
 
 ## Develop a REST API Proxy
 
-Designing your REST API proxy from scratch involves declaring the resources and the methods that end-user applications should use to access the API. Choreo supports spec-driven API Proxy development. Therefore, it guides you visually via a Swagger editor to create REST API Proxies that comply with the [Open API Specification] (https://github.com/OAI/OpenAPI-Specification). It is the most widely used standard for declaring HTTP/REST APIs. Choreo also allows you to generate your OpenAPI specification through this editor.
+Designing your REST API proxy from scratch involves declaring the resources and the methods that end-user applications should use to access the API. Choreo supports spec-driven API Proxy development. Therefore, it guides you visually via a Swagger editor to create REST API Proxies that comply with the [Open API Specification](https://github.com/OAI/OpenAPI-Specification). It is the most widely used standard for declaring HTTP/REST APIs. Choreo also allows you to generate your OpenAPI specification through this editor.
 
 Choreo allows you to easily expose your existing APIs via a REST API proxy and convert it to a managed API. You can create a REST API Proxy in Choreo in two ways:
 
