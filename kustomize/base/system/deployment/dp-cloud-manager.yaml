@@ -58,7 +58,6 @@ spec:
             capabilities:
               drop:
                 - all
-                - "NET_RAW"
           ports:
             - containerPort: 3200
               name: http-port
