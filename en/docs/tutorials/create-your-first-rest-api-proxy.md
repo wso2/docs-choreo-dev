@@ -180,7 +180,7 @@ Now, let's try out the REST API proxy you created by invoking a resource.
 
     | **Field** | **Value** |
     |-----------------|-------------------------------|
-    | **Environment** | `Development` |
+    | **Environment** | **Development** |
     | **Access Token**| the generated access token in step 6. Alternatively, click **Get Test Key** to generate a test access token. |
 
 3. Expand the **GET** resource **/pet/{petid}**
