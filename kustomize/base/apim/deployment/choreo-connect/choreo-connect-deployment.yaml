@@ -87,6 +87,14 @@ spec:
               name: secret-mgw-enforcer-keystore
               readOnly: true
               subPath: ENFORCER_KEYSTORE_CERTIFICATE
+            - mountPath: /home/wso2/security/jwt/key.pem
+              name: secret-mgw-enforcer-jwt-keystore
+              readOnly: true
+              subPath: ENFORCER_JWT_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/jwt/cert.pem
+              name: secret-mgw-enforcer-jwt-keystore
+              readOnly: true
+              subPath: ENFORCER_JWT_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/conf
               name: enforcer-config
             - mountPath: /home/wso2/lib/dropins
@@ -275,6 +283,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-enforcer-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-enforcer-jwt-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-enforcer-jwt-keystore
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-mgw-enforcer-truststore
