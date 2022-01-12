@@ -1,4 +1,22 @@
 resources:
 - default-p1.yaml
 - default-p2.yaml
+- default-p3.yaml
+- default-p4.yaml
+- default-p5.yaml
+- default-p6.yaml
+- default-p7.yaml
+- default-p8.yaml
+- default-p9.yaml
+- default-p10.yaml
+- dev-us-east-azure-p1.yaml
+- dev-us-east-azure-p2.yaml
+- dev-us-east-azure-p3.yaml
+- dev-us-east-azure-p4.yaml
+- dev-us-east-azure-p5.yaml
+- dev-us-east-azure-p6.yaml
+- dev-us-east-azure-p7.yaml
+- dev-us-east-azure-p8.yaml
+- dev-us-east-azure-p9.yaml
+- dev-us-east-azure-p10.yaml
 - test-p1.yaml
