@@ -1,0 +1,11 @@
+resources:
+- ../../apim/deployment/choreo-connect
+- ../../apim/service/choreo-connect
+
+nameSuffix: -dev-us-east-azure-p10
+
+patchesStrategicMerge:
+- adapter.yaml
+- deployment.yaml
+- adapter-service.yaml
+- router-service.yaml

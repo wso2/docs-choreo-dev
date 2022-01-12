@@ -1612,7 +1612,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLINNG')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1778,8 +1778,8 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ge
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Production Environment','environments:view_prod','APIM-SUBSCRIBER','View production environment');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Development Environment','environments:view_dev','APIM-SUBSCRIBER','View development environment');
 
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Subscription Tiers','billing:tier_view','BILLINNG','View subscription tiers');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Billing Account','billing:org_manage','BILLINNG','Manage billing account');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Invoices','billing:invoice_view','BILLINNG','View invoices');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Subscriptions','billing:subscription_manage','BILLINNG','Manage subscriptions');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Payment Methods','billing:payment_method_manage','BILLINNG','Manage payment methods');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Subscription Tiers','billing:tier_view','BILLING','View subscription tiers');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Billing Account','billing:org_manage','BILLING','Manage billing account');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Invoices','billing:invoice_view','BILLING','View invoices');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Subscriptions','billing:subscription_manage','BILLING','Manage subscriptions');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Payment Methods','billing:payment_method_manage','BILLING','Manage payment methods');
