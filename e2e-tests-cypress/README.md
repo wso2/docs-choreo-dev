@@ -31,7 +31,7 @@
        </p>
     6. Do a curl as follows replacing <CWATF_COOKIE> and <CBEARER_COOKIE> (Mind the `;` and space)
         ```
-       curl --cookie "cwatf=<CWATF_COOKIE>; cbearer=<CBEARER_COOKIE>" -L app.dv.choreo.dev/internaltools/resetIdpPassword
+       curl --cookie "cwatf=<CWATF_COOKIE>; cbearer=<CBEARER_COOKIE>" -L app.preview-dv.choreo.dev/internaltools/resetIdpPassword
        ```
 
 -   ### Debugging
