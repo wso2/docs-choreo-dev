@@ -116,6 +116,15 @@ CREATE TABLE usage_publishing_status (
      PRIMARY KEY (day, org_uuid, stripe_subscription_item_id)
 );
 
+IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[usage_publisher_job_status]') AND TYPE IN (N'U'))
+CREATE TABLE usage_publisher_job_status (
+    usage_date DATETIME2(0) NOT NULL,
+    execution_timestamp DATETIME2(3) NOT NULL,
+    started BIT NOT NULL DEFAULT 0,
+    completed BIT NOT NULL DEFAULT 0,
+    PRIMARY KEY (usage_date)
+);
+
 -- --------------------------- INDEX CREATION -----------------------------
 
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'daily_api_proxy_ind_by_day_start')
