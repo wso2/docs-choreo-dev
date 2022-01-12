@@ -1,4 +1,5 @@
 resources:
 - default-p1.yaml
 - default-p2.yaml
+- control-plane-p1.yaml
 - test-p1.yaml
