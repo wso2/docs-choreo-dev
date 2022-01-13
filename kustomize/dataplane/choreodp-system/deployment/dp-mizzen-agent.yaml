@@ -6,11 +6,10 @@ metadata:
     choreo.component: dp-mizzen-agent
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_43=Risk accepted
-    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_8=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_9=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_8=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_9=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
 spec:
   replicas: 1
   selector:

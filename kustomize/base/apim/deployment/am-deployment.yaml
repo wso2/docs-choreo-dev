@@ -17,9 +17,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
-    checkov.io/skip3: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
-    checkov.io/skip4: CKV_K8S_38=Service account token is required when using Linkerd
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_38=Service account token is required when using Linkerd
   labels:
     choreo.component: apim-am
   name: choreo-apim-am-deployment

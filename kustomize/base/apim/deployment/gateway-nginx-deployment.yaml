@@ -20,6 +20,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_8=Suppressing since the sidecar should be only run once after container starts
     checkov.io/skip2: CKV_K8S_9=Readiness probe not required
     checkov.io/skip3: CKV_K8S_20=Temporarily suppressing till fixing
@@ -27,9 +28,6 @@ metadata:
     checkov.io/skip5: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
     checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
-    
-    reloader.stakater.com/auto: "true"
   labels:
     choreo.component: nginx
   name: choreo-nginx-deployment
