@@ -8,8 +8,6 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_25=A fix has not been anounced
     checkov.io/skip2: CKV_K8S_38=Need this to read kubeconfig
-    checkov.io/skip3: CKV_K8S_8=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_9=Temporarily suppressing till fixing
 spec:
   replicas: 1
   selector:
@@ -37,6 +35,12 @@ spec:
           ports:
             - containerPort: 8443
               name: https
+          livenessProbe:
+            tcpSocket:
+              port: 8443
+          readinessProbe:
+            tcpSocket:
+              port: 8443
           resources:
             requests:
               cpu: 1
