@@ -8,9 +8,8 @@ metadata:
     checkov.io/skip1: CKV_K8S_40=This should be Implemented in Dockerfile first
     checkov.io/skip2: CKV_K8S_28=This need to be tested after the deployment
     checkov.io/skip3: CKV_K8S_37=This need to be tested after the deployment
-    checkov.io/skip4: CKV_K8S_43=Image is using the digest in the pipeline
-    checkov.io/skip5: CKV_K8S_22=Files will be created in the container root dir at startup
-    checkov.io/skip6: CKV_K8S_38=Automounting service account token is required
+    checkov.io/skip4: CKV_K8S_22=Files will be created in the container root dir at startup
+    checkov.io/skip5: CKV_K8S_38=Automounting service account token is required
 spec:
   replicas: 2
   selector:

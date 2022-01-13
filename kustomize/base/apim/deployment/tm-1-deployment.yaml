@@ -17,8 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
-    checkov.io/skip3: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
   labels:
     choreo.component: apim-tm
   name: choreo-apim-tm-1-deployment

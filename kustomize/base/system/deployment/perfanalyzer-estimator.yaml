@@ -4,8 +4,7 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
-    checkov.io/skip2: CKV_K8S_43=On hold ,not an high priority issue, requires some CI/CD workflow changes
-    checkov.io/skip3: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: perfanalyzer-estimator
   name: perfanalyzer-estimator

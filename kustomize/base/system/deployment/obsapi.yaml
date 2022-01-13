@@ -4,7 +4,6 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
-    checkov.io/skip2: CKV_K8S_43=The image tag gets updated to component git hash when deploying
   labels:
     choreo.component: obsapi
   name: obsapi
