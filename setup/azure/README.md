@@ -30,6 +30,10 @@ LINKERD_VIZ_INGRESS_CLASS=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET=xxxxxxxxxxxxxxxxx
 LINKERD_VIZ_DASHBOARD_AUTH_UNAME_PWD=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_AGENT_ID=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_AGENT_KEY=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_AGENT_DOWNLOAD_KEY=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_NAME=xxxxxxxxxxxxxxxxx
 EOF
 ```
 #### Creating TLS Secrets
@@ -53,7 +57,21 @@ Proceed to store the file values in the CSI Key Vault for further reference
 | ControlPlane System Internal Ingress | Obtain from SecOps team  | `controlplane-system-internal-ingress-TLS-KEY` <br/> `controlplane-system-internal-ingress-TLS-CERTIFICATE` |
 | ControlPlane APIM Internal Ingress   | Obtain from SecOps team  | `controlplane-apim-internal-ingress-TLS-KEY` <br/> `controlplane-apim-internal-ingress-TLS-CERTIFICATE`     |
 
+### Buoyant Cloud Setup
+> NOTE: Buoyant Cloud setup is required for Stage and Prod environments only
 
+To integrate Buoyant Cloud with Choreo, the following  secrets are used
+
+```
+BUOYANT_CLOUD_AGENT_ID=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_AGENT_KEY=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_AGENT_DOWNLOAD_KEY=xxxxxxxxxxxxxxxxx
+BUOYANT_CLOUD_NAME=xxxxxxxxxxxxxxxxx
+```
+
+In the initial setup these secrets can be obtained by adding a new Cluster to the `wso2-choreo` project within Buoyant Cloud Console, as specified here https://docs.buoyant.cloud/article/29-adding-a-cluster
+
+Obtain the value for the above-mentioned secrets by inspecting the yaml file that is provided in this setup. For subsequent reruns refer the secrets via Key Vault Secrets
 ### Routing Cluster
 
 ```bash
