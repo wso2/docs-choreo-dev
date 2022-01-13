@@ -8,7 +8,6 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_25=A fix has not been anounced
     checkov.io/skip2: CKV_K8S_38=Need this to read kubeconfig
-    checkov.io/skip4: CKV_K8S_20=Temporarily suppressing till fixing
     checkov.io/skip5: CKV_K8S_10=Temporarily suppressing till fixing
     checkov.io/skip6: CKV_K8S_8=Temporarily suppressing till fixing
     checkov.io/skip7: CKV_K8S_30=Temporarily suppressing till fixing
@@ -46,6 +45,8 @@ spec:
           ports:
             - containerPort: 8443
               name: https
+          securityContext:
+            allowPrivilegeEscalation: false
         - name: manager
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-kv-resolver:latest
           args:
