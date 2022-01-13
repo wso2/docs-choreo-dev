@@ -69,8 +69,7 @@ BUOYANT_CLOUD_AGENT_DOWNLOAD_KEY=xxxxxxxxxxxxxxxxx
 BUOYANT_CLOUD_NAME=xxxxxxxxxxxxxxxxx
 ```
 
-In the initial setup these secrets can be obtained by adding a new Cluster to the `wso2-choreo` project within Buoyant Cloud Console,
-as specified here https://docs.buoyant.cloud/article/29-adding-a-cluster
+In the initial setup these secrets can be obtained by adding a new Cluster to the `wso2-choreo` project within Buoyant Cloud Console, as specified here https://docs.buoyant.cloud/article/29-adding-a-cluster
 
 Obtain the value for the above-mentioned secrets by inspecting the yaml file that is provided in this setup. For subsequent reruns refer the secrets via Key Vault Secrets
 ### Routing Cluster
