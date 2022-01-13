@@ -11,32 +11,19 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
+import { Environment } from '../enum/environment';
 
+export class ComponentTestPage {
+  static selectCurl() {
+    cy.get('[data-testid="cURL"]').click();
+  }
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
+  static getTestKey() {
+    cy.contains('Get Test Key').should('be.visible').click();
+  }
 
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
-
+  static selectEnvironment(env: Environment) {
+    cy.get('.MuiFormControl-fullWidth >div').eq(0).click();
+    cy.get('ul>li').contains(env).click();
+  }
+}

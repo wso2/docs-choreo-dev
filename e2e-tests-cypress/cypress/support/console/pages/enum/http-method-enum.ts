@@ -11,32 +11,12 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
-
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
-
+export enum HTTPMethod {
+  GET = 'GET',
+  POST = 'POST',
+  DELETE = 'DELETE',
+  PUT = 'PUT',
+  HEAD = 'HEAD',
+  CONNECT = 'CONNECT',
+  TRACE = 'TRACE',
+}
