@@ -5,6 +5,7 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_22=Container writes to /app at start-up
     checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip3: CKV_K8S_40=Low UUID is required to write to /app at start-up (need to solve this from component level)
   labels:
     choreo.component: frontend
   name: frontend
@@ -13,7 +14,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: frontend
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -23,85 +24,84 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - env:
-        - name: IDP_URL
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_URL
-              name: env-idp-replica
-        - name: IDP_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_CLIENT_ID
-              name: env-idp-replica
-        - name: IDP_REDIRECT_URL
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_REDIRECT_URL
-              name: env-idp-replica
-        - name: DISABLE_ON_PREMISE_APPS
-          valueFrom:
-            configMapKeyRef:
-              key: DISABLE_ON_PREMISE_APPS
-              name: cm-frontend
-        - name: APIM_SAMPLE_URL
-          valueFrom:
-            configMapKeyRef:
-              key: APIM_SAMPLE_URL
-              name: cm-frontend
-        - name: SENTRY_DSN
-          valueFrom:
-            configMapKeyRef:
-              key: SENTRY_DSN
-              name: cm-frontend
-              optional: true
-        - name: ANALYTICS_PORTAL_DOCUMENTATION
-          valueFrom:
-            configMapKeyRef:
-              key: ANALYTICS_PORTAL_DOCUMENTATION
-              name: cm-frontend
-        envFrom:
-        - configMapRef:
-            name: cm-feature-flags
-        - configMapRef:
-            name: env-frontend
-        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 101
-          runAsGroup: 101
-          capabilities:
-            drop:
-              - ALL
-        name: frontend
-        ports:
-        - containerPort: 8080
-          name: frontend-port
-          protocol: TCP
-        readinessProbe:
-          initialDelaySeconds: 10
-          timeoutSeconds: 5
-          periodSeconds: 5
-          httpGet:
-            path: /index.html
-            port: 8080
-        livenessProbe:
-          initialDelaySeconds: 20
-          timeoutSeconds: 5
-          periodSeconds: 10
-          httpGet:
-            path: /index.html
-            port: 8080
-        resources:
-          limits:
-            cpu: "1"
-            memory: 512Mi
-          requests:
-            cpu: 500m
-            memory: 256Mi
+        - env:
+            - name: IDP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_URL
+                  name: env-idp-replica
+            - name: IDP_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_CLIENT_ID
+                  name: env-idp-replica
+            - name: IDP_REDIRECT_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_REDIRECT_URL
+                  name: env-idp-replica
+            - name: DISABLE_ON_PREMISE_APPS
+              valueFrom:
+                configMapKeyRef:
+                  key: DISABLE_ON_PREMISE_APPS
+                  name: cm-frontend
+            - name: APIM_SAMPLE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: APIM_SAMPLE_URL
+                  name: cm-frontend
+            - name: SENTRY_DSN
+              valueFrom:
+                configMapKeyRef:
+                  key: SENTRY_DSN
+                  name: cm-frontend
+                  optional: true
+            - name: ANALYTICS_PORTAL_DOCUMENTATION
+              valueFrom:
+                configMapKeyRef:
+                  key: ANALYTICS_PORTAL_DOCUMENTATION
+                  name: cm-frontend
+          envFrom:
+            - configMapRef:
+                name: cm-feature-flags
+            - configMapRef:
+                name: env-frontend
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 101
+            runAsGroup: 101
+            capabilities:
+              drop:
+                - ALL
+          name: frontend
+          ports:
+            - containerPort: 8080
+              name: frontend-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 5
+            httpGet:
+              path: /index.html
+              port: 8080
+          livenessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 10
+            httpGet:
+              path: /index.html
+              port: 8080
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 256Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
