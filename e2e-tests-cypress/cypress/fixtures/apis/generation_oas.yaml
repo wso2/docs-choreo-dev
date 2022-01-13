@@ -1,0 +1,110 @@
+#Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+#
+#This software is the property of WSO2 Inc. and its suppliers, if any.
+#Dissemination of any information or reproduction of any material contained
+#the WSO2 Commercial License available at http://wso2.com/licenses.
+#For specific language governing the permissions and limitations under
+#this license, please see the license as well as any agreement you’ve
+#entered into with WSO2 governing the purchase of this software and any
+#associated services.
+
+openapi: 3.0.1
+info:
+  title: e2eTestOpenApiDev
+  contact:
+    name: Test User
+    email: test.user.choreo@gmail.com
+  version: 1.0.0
+servers:
+  - url: 'https://api.carbonintensity.org.uk'
+security:
+  - default: []
+paths:
+  /intensity:
+    get:
+      operationId: operation_get_/intensity
+      parameters: []
+      responses:
+        '200':
+          description: ok
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /intensity/factors:
+    get:
+      operationId: operation_get_/intensity/factors
+      parameters: []
+      responses:
+        '200':
+          description: ok
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /generation:
+    get:
+      operationId: operation_get_/generation
+      parameters: []
+      responses:
+        '200':
+          description: ok
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: null
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+components:
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'https://test.com'
+          scopes: {}
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+    - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+    - authorization
+    - Access-Control-Allow-Origin
+    - Content-Type
+    - SOAPAction
+    - apikey
+    - testKey
+  accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - PATCH
+    - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+    - 'https://api.carbonintensity.org.uk'
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+    - 'https://api.carbonintensity.org.uk'
+  type: http
+x-wso2-basePath: /choreotestuserlocal/aaa/1.0.0
+x-wso2-transports:
+  - http
+  - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300

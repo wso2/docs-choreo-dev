@@ -11,32 +11,22 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
+export class APIDeployment {
 
+    static navigateToDeployment() {
+        cy.contains('Deploy').should('be.visible').click();
+        cy.get('[id="backdrop-loader"').should('not.exist');
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
+    }
 
+    static DeploytoDev(){
+      cy.wait(1000);
+      cy.get('.MuiPaper-root > :nth-child(3)').contains('Deploy').should('be.visible').click();
+    }
 
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
+    static PrmotetoProd(){
+      cy.contains('Promote').should('be.visible').click();
+      cy.wait(5000);
+    }
 
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
-
+}

@@ -11,32 +11,10 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
+export const SETTINGS_TEXT = 'settings';
+export const INVITATION_EMAIL = 'test.user.choreo@gmail.com';
+export const SETTINGS_PATH = 'user-settings/organization/members';
 
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
-
+// API Management
+export const DEVELOP = '/develop';
+export const OVERVIEW = '/resources';

@@ -11,32 +11,16 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
+export class ProjectOverviewPage {
 
+  static selectComponent(fileID) {
+    cy.get('tbody>tr').contains(fileID).click();
+  }
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
-
+  static addNewComponent() {
+    cy.wait(5000);
+    cy.get('button[class*="MuiButton-containedPrimary"]')
+      .should('be.visible')
+      .click(); // Need to add a id for the Create button
+  }
+}

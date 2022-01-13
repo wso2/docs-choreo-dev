@@ -1,23 +1,15 @@
 {
-    "defaultCommandTimeout": 30000,
-    "screenshotsFolder": "cypress/screenshots/e2e-smoke",
-    "videosFolder": "cypress/videos/e2e-smoke",
-    "ignoreTestFiles": "**/examples/*.js",
-    "chromeWebSecurity": false,
+    "defaultCommandTimeout": 120000,
+    "pageLoadTimeout": 120000,
+    "responseTimeout": 120000,
     "integrationFolder": "cypress/e2e-smoke",
     "testFiles": [
-        "console/1-integrations/*.ts",
-        "console/2-services/*.ts",
-        "console/3-apis/*.ts",
-        "console/4-observability/*.ts",
-        "console/5-settings/*.ts",
-        "console/6-other/*.ts",
-        "console/*.ts",
-        "devportal/*.ts"
+        "./**/*.ts"
     ],
-    "videoUploadOnPasses": false,
-    "videoCompression": false,
-    "viewportWidth": 1920,
-    "viewportHeight": 1080,
-    "scrollBehavior": "center"
+    "viewportHeight": 1440,
+    "viewportWidth": 2560,
+    "chromeWebSecurity": false,
+    "video":true,
+    "videosFolder": "./cypress/videos",
+    "videoCompression":32
 }
