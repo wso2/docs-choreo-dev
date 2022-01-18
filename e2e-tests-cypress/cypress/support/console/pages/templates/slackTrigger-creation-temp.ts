@@ -18,29 +18,29 @@ export class TriggersTemplate {
 
   static createSlackTriggerFromTemplate(webhookName: string, fileID: string) {
     cy.get('input[name="webhookName"]').clear().type(webhookName);
-    cy.get('#mui-component-select-triggerType').click();
-    cy.contains('Slack').click();
-    cy.get('#mui-component-select-triggerChannel').click();
-    cy.contains('SlackEventsAppService').click();
-    cy.get('button').contains('Create').click();
-    cy.intercept(Cypress.env('gqlServerUrl')).as('proj_create');
+    cy.get("#mui-component-select-triggerType").click();
+    cy.contains("Slack").click();
+    cy.get("#mui-component-select-triggerChannel").click();
+    cy.contains("SlackEventsAppService").click();
+    cy.get("button").contains("Create").click();
+    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
     this.interceptProjectDetails(fileID);
   }
 
   private static interceptProjectDetails(fileID: string) {
-    cy.wait('@proj_create', { timeout: 80000 }).then((e) => {
+    cy.wait("@proj_create", { timeout: 80000 }).then((e) => {
       const authdata = {
         header: {
           authorization: e.request.headers.authorization,
-          'content-type': 'application/json',
+          "content-type": "application/json",
         },
         id: e.response.body.data.createProjectComponent.id,
         projectId: e.response.body.data.createProjectComponent.projectId,
         handler: e.response.body.data.createProjectComponent.handler,
       };
-      cy.task('writeTestData', {
+      cy.task("writeTestData", {
         fileName: fileID,
-        key: 'authData',
+        key: "authData",
         value: authdata,
       });
     });
