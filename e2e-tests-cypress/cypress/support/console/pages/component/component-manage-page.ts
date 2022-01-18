@@ -14,6 +14,7 @@
 import { DocumentType } from '../enum/document-type';
 import { DocumentSoruceType } from '../enum/document-source';
 import { ConnectorAudience } from '../enum/marketplace-connector-audience';
+import { Environment } from '../enum/environment';
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
@@ -21,7 +22,23 @@ export class ComponentAPILifecycle {
   static manageLifecycle() {
     cy.get('[data-testid="Lifecycle"]').click();
   }
+  static verifyDevRevision() {
+    this.selectSetting();
+    return cy
+      .get('.MuiChip-outlined')
+      .eq(1)
+      .should('be.visible')
+      .invoke('text');
+  }
 
+  static verifyProdRevision() {
+    this.selectSetting();
+    return cy
+      .get('.MuiChip-outlined')
+      .eq(3)
+      .should('be.visible')
+      .invoke('text');
+  }
   static publish(audience: ConnectorAudience) {
     this.publishToMarketplace(audience);
     return cy.get(ComponentAPILifecycle.devportl_btn).should('be.visible');
@@ -151,5 +168,28 @@ export class ComponentAPILifecycle {
         cy.wait(1000);
       });
     }
+  }
+
+
+  static selectSetting() {
+    cy.get('[data-testid="Settings"]').click();
+  }
+
+  static selectResources() {
+    cy.get('[data-cyid="tab-resource-settings"]').click();
+  }
+
+  static editResource() {
+    cy.get('[data-cyid="btn-edit-settings"]').click();
+  }
+
+  static disableResourceSecurity(resource: string, env: Environment) {
+    cy.get(`[data-testid="resource-${resource}"]>div`).eq(1).click();
+    cy.get('[data-testid="security"]').should('be.visible').click();
+    cy.get('[data-cyid="btn-save-settings"]').should('be.enabled').click();
+    cy.get(`[aria-label="environment"]`).contains(env).click();
+    cy.get('button').contains('Apply').click();
+    cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
+
   }
 }

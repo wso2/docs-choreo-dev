@@ -52,4 +52,24 @@ export class Utils {
       value: modifiedDate,
     });
   }
+
+
+
+  static sendRequest(
+    method: string,
+    url: string,
+    headers: any={},
+    body: any = {}
+  ) {
+    const request = {
+      method,
+      url,
+      headers,
+      body,
+    };
+    return cy.request(request).then((res) => {
+      cy.log(res.body);
+      return cy.wrap({ body: res.body, status: res.status });
+    });
+  }
 }

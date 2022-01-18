@@ -1,3 +1,5 @@
+import { Environment } from "../../enum/environment";
+
 export class Curl {
   static selectMethod(httpMethod: string) {
     cy.get('[data-testid="curl-select-method"]').click();
@@ -16,7 +18,39 @@ export class Curl {
         .click();
     }
   }
+  static selectEnvironment(env: Environment) {
 
+    cy.wait(2000);
+    cy.get('[aria-haspopup="listbox"]').eq(1).click();
+    cy.get('ul>li').contains(env).click();
+  }
+
+  static getRequestComponents(fileID, env: string) {
+    return cy
+      .readFile(`${Cypress.env('tempfile')}${fileID}.json`)
+      .then((data) => {
+        if (data[env.toLowerCase()]) {
+          return cy.wrap(data[env.toLowerCase()]);
+        }
+        return cy
+          .get('textarea')
+          .invoke('text')
+          .then((c) => {
+            const modifiedURL = c.replace(/"/g, '').replace(/'/g, '');
+            const arrayURL = modifiedURL.split(' ');
+            const url = arrayURL[1];
+            const apiKey = arrayURL[4];
+            const method = arrayURL[6];
+            const curl = { method, url, headers: { 'api-key': apiKey } };
+            cy.task('writeTestData', {
+              fileName: fileID,
+              key: env.toLowerCase(),
+              value: curl,
+            });
+            return cy.wrap(curl);
+          });
+      });
+  }
   static sendCurlRequest() {
     cy.get('textarea')
       .invoke('text')

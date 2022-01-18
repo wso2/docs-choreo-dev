@@ -82,11 +82,11 @@ describe("Verify project creation functionality", () => {
     ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
-  it("Deploy the component", () => {
+  it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    ComponentDeployPage.isDeploymentSuccessful(FILE_ID).should("be.visible");
-    //  ComponentDeployPage.verifyDevInvokeURL().should('not.be.null');
+    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+    ComponentDeployPage.verifyDevInvokeURL().should('not.be.null');
   });
 
   it("Verify test functionality in dev", () => {
@@ -102,13 +102,15 @@ describe("Verify project creation functionality", () => {
     ComponentTestPage.selectCurl();
     Curl.selectMethod(HTTPMethod.GET);
     Curl.addQueryParameter(queryParameters);
-    Curl.sendCurlRequest();
+    Curl.getRequestComponents(FILE_ID,Environment.DEVELOPMENT).then((curl) =>
+      Utils.sendRequest(curl.method, curl.url, curl.headers)
+    );
   });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
-    //  ComponentDeployPage.verifyProdInvokeURL().should('not.be.null');;
+    ComponentDeployPage.verifyProdInvokeURL().should('not.be.null');;
   });
 
   it("Verify test functionality in prod", () => {
@@ -124,7 +126,9 @@ describe("Verify project creation functionality", () => {
     ComponentTestPage.selectCurl();
     Curl.selectMethod(HTTPMethod.GET);
     Curl.addQueryParameter(queryParameters);
-    Curl.sendCurlRequest();
+    Curl.getRequestComponents(FILE_ID,Environment.PRODUCTION).then((curl) =>
+      Utils.sendRequest(curl.method, curl.url, curl.headers)
+    );
   });
 
   it("Verify manage functionality", () => {
@@ -140,7 +144,7 @@ describe("Verify project creation functionality", () => {
   it.skip("Delete created project", () => {
     HomePage.selectHomeMenu();
     HomePage.navigateToProjects(FILE_ID);
-    ProjectListingPage.selectProject(FILE_ID);
+    // ProjectListingPage.selectProject();
   });
 
   after(() => {
