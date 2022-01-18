@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - choreodp-system
   - code-server-default-backend
+  - actions-runner-system
 
 commonLabels:
   app: choreo-workspace
