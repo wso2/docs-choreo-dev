@@ -7,7 +7,7 @@ spec:
  template:
    spec:
      organization: choreo-userapps-gitops-dev
-     image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:main-5c2b84cd317bfa6bea2e5cb225f9ac30eb6367d7
+     image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
      resources:
        limits:
          cpu: '1.5'
