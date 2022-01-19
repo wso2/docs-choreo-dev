@@ -36,8 +36,9 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "create-rest-api-from-scratch";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding user.bal file";
-  const queryParameters = [{ key: "name", value: "dasun" }];
+  const commitMessage = "adding new service";
+  const queryParameters1 = [{ key: "number", value: "2" }];
+  const queryParameters2 = [{ key: "name", value: "5" }];
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
@@ -59,9 +60,8 @@ describe("Verify project creation functionality", () => {
 
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace(FILE_ID);
-    VSExplorer.typeCode("User.bal");
+    VSExplorer.typeCode("Numbers.bal");
     VSExplorer.selectSourceControl();
-
     VSExplorer.enterCommandInTerminal(
       "bash /config/workspace/.githooks/pre-commit"
     );
@@ -69,7 +69,6 @@ describe("Verify project creation functionality", () => {
       "rm /config/workspace/.githooks/pre-commit"
     );
     VSSourceControl.commitChanges(commitMessage);
-
     VSExplorer.enterCommandInTerminal("git push");
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
@@ -86,48 +85,178 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
     ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
-    ComponentDeployPage.verifyDevInvokeURL().should('not.be.null');
+    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
-  it("Verify test functionality in dev", () => {
+  it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/sayHello");
+    SwaggerUI.SelectResource(HTTPMethod.GET, "/root");
     SwaggerUI.TryoutAPI();
-    cy.get('[placeholder="name"]').type("Dasun");
+    SwaggerUI.enterValue('name','2')
     SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.GetResponse().should("eq", "Hello, Dasun");
+    SwaggerUI.GetResponse().should("eq", "4");
     SwaggerUI.getResponseCode().should("eq", "200");
+  });
+
+  it("Verify test functionality of root resource in dev on curl", () => {
     ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
-    Curl.addQueryParameter(queryParameters);
-    Curl.getRequestComponents(FILE_ID,Environment.DEVELOPMENT).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url, curl.headers)
+    Curl.enterPathParameter("root");
+    Curl.addQueryParameter(queryParameters1);
+    Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "root").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+          expect(res.body).equal("4");
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  it("Verify test functionality of isOdd resource in dev on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.SelectResource(HTTPMethod.GET, "/isOdd");
+    SwaggerUI.TryoutAPI();
+    SwaggerUI.enterValue('name','5')
+    SwaggerUI.ExecuteResourceFunction();
+    SwaggerUI.GetResponse().should("eq", "true");
+    SwaggerUI.getResponseCode().should("eq", "200");
+  });
+
+  it("Verify test functionality of isOdd resource in dev on curl", () => {
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.DEVELOPMENT);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("isOdd");
+    Curl.addQueryParameter(queryParameters2);
+    Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "isOdd").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+          expect(res.body).equal("true");
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify component promote to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should('not.be.null');;
+    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
-  it("Verify test functionality in prod", () => {
+  it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/sayHello");
+    SwaggerUI.SelectResource(HTTPMethod.GET, "/root");
     SwaggerUI.TryoutAPI();
-    cy.get('[placeholder="name"]').type("Dasun");
+    SwaggerUI.enterValue('name','2')
     SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.GetResponse().should("eq", "Hello, Dasun");
+    SwaggerUI.GetResponse().should("eq", "4");
     SwaggerUI.getResponseCode().should("eq", "200");
+  });
+
+  it("Verify test functionality of root resource in prod on curl", () => {
     ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.PRODUCTION);
     Curl.selectMethod(HTTPMethod.GET);
-    Curl.addQueryParameter(queryParameters);
-    Curl.getRequestComponents(FILE_ID,Environment.PRODUCTION).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url, curl.headers)
+    Curl.enterPathParameter("root");
+    Curl.addQueryParameter(queryParameters1);
+    Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "root").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+          expect(res.body).equal("4");
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  it("Verify test functionality of isOdd resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.SelectResource(HTTPMethod.GET, "/isOdd");
+    SwaggerUI.TryoutAPI();
+    SwaggerUI.enterValue('name','5')
+    SwaggerUI.ExecuteResourceFunction();
+    SwaggerUI.GetResponse().should("eq", "true");
+    SwaggerUI.getResponseCode().should("eq", "200");
+  });
+
+  it("Verify test functionality of isOdd resource in prod on curl", () => {
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.PRODUCTION);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("isOdd");
+    Curl.addQueryParameter(queryParameters2);
+    Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "isOdd").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+          expect(res.body).equal("true");
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  it("Disable security for root resource", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.disableResourceSecurity("/root");
+  });
+
+  it("Apply configs to dev", () => {
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+  });
+
+  it("Apply configs to prod", () => {
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+  });
+
+  it("Verify resource access without the token in dev", () => {
+    Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "root").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url).then((res) => {
+          expect(res.body).equal(4);
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  it("Verify resource not access without the token in dev", () => {
+    Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "isOdd").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url).then((res) => {
+          expect(res.body).equal(4);
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  it("Verify resource access without the token in prod", () => {
+    Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "root").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url).then((res) => {
+          expect(res.body).equal(4);
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  it("Verify resource not access without the token in prod", () => {
+    Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "isOdd").then(
+      (curl) =>
+        Utils.sendRequest(curl.method, curl.url).then((res) => {
+          expect(res.body).equal(4);
+          expect(res.status).equal(200);
+        })
     );
   });
 
@@ -148,6 +277,8 @@ describe("Verify project creation functionality", () => {
   });
 
   after(() => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
     HomePage.logout(FILE_ID);
   });
 });

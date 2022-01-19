@@ -183,13 +183,15 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-edit-settings"]').click();
   }
 
-  static disableResourceSecurity(resource: string, env: Environment) {
+  static disableResourceSecurity(resource: string) {
     cy.get(`[data-testid="resource-${resource}"]>div`).eq(1).click();
     cy.get('[data-testid="security"]').should('be.visible').click();
+  }
+
+  static applyConfiguration(env:Environment){
     cy.get('[data-cyid="btn-save-settings"]').should('be.enabled').click();
     cy.get(`[aria-label="environment"]`).contains(env).click();
     cy.get('button').contains('Apply').click();
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-
   }
 }

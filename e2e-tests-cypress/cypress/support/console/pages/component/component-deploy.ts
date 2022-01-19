@@ -66,7 +66,7 @@ export class ComponentDeployPage {
       .invoke('attr', 'value');
   }
 
-  static stopAllDeployement() {
+  static stopAllDeployment() {
     cy.get('[data-cyid="btn-stop-redeploy"]').click({ multiple: true });
   }
 

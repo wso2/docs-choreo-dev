@@ -38,10 +38,6 @@ describe('Verify resources security configuration', () => {
     );
   });
 
-  // it('mock select component', () => {
-  //   ProjectListingPage.selectProject('Default Project');
-  //   ProjectOverviewPage.selectComponent('mock');
-  // });
 
   it('Verify component deployment', () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -138,7 +134,7 @@ describe('Verify resources security configuration', () => {
 
   after(() => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployement();
+    ComponentDeployPage.stopAllDeployment();
     HomePage.logout(FILE_ID);
   });
 });

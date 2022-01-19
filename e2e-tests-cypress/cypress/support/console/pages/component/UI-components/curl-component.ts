@@ -19,30 +19,29 @@ export class Curl {
     }
   }
   static selectEnvironment(env: Environment) {
-
     cy.wait(2000);
     cy.get('[aria-haspopup="listbox"]').eq(1).click();
-    cy.get('ul>li').contains(env).click();
+    cy.get("ul>li").contains(env).click();
   }
 
   static getRequestComponents(fileID, env: string) {
     return cy
-      .readFile(`${Cypress.env('tempfile')}${fileID}.json`)
+      .readFile(`${Cypress.env("tempfile")}${fileID}.json`)
       .then((data) => {
         if (data[env.toLowerCase()]) {
           return cy.wrap(data[env.toLowerCase()]);
         }
         return cy
-          .get('textarea')
-          .invoke('text')
+          .get("textarea")
+          .invoke("text")
           .then((c) => {
-            const modifiedURL = c.replace(/"/g, '').replace(/'/g, '');
-            const arrayURL = modifiedURL.split(' ');
+            const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
+            const arrayURL = modifiedURL.split(" ");
             const url = arrayURL[1];
             const apiKey = arrayURL[4];
             const method = arrayURL[6];
-            const curl = { method, url, headers: { 'api-key': apiKey } };
-            cy.task('writeTestData', {
+            const curl = { method, url, headers: { "api-key": apiKey } };
+            cy.task("writeTestData", {
               fileName: fileID,
               key: env.toLowerCase(),
               value: curl,
@@ -51,12 +50,16 @@ export class Curl {
           });
       });
   }
+
+  static enterPathParameter(pathparmeter: string) {
+    cy.get("#path-id").clear().type(pathparmeter);
+  }
   static sendCurlRequest() {
-    cy.get('textarea')
-      .invoke('text')
+    cy.get("textarea")
+      .invoke("text")
       .then((curl) => {
-        const modifiedURL = curl.replace(/"/g, '').replace(/'/g, '');
-        const arrayURL = modifiedURL.split(' ');
+        const modifiedURL = curl.replace(/"/g, "").replace(/'/g, "");
+        const arrayURL = modifiedURL.split(" ");
         const url = arrayURL[1];
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
@@ -65,7 +68,7 @@ export class Curl {
           method,
           url,
           headers: {
-            'api-key': apiKey,
+            "api-key": apiKey,
           },
         };
 
