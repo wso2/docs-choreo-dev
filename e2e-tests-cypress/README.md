@@ -2,47 +2,48 @@
 
 ## Quick Start
 
--   ### Setup & Run
+- ### Setup & Run
 
-    1.  Navigate to the `e2e-tests-cypress` directory
-    2.  Run `npm install` - only for first time
-    3.  Change the following in `cypress.env.json` if you are working on front-end local dev server
-	    -   URLs that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
-	        -   `loginURL`
-	        -   `appSvcURL`
-	        -   `baseUrl`
-			-   `apimSvcURL`
-	    -   `apimBasePath` value to `/apimanagement`
-    4.  Update user information in `cypress.env.json`
-	    -   `idpUsername` and `idpPassword` (Refer the section section below on how to get them)
-	    -   (Optional) If the user is associated with multiple organizations, the specific organization handle to be considered in the test execution can be set in the `selectedOrgHandle`. By default this is not set, which will result in the first organization value returned in the users orgs list being considered.
+  1.  Navigate to the `e2e-tests-cypress` directory
+  2.  Run `npm install` - only for first time
+  3.  Change the following in `cypress.env.json` if you are working on front-end local dev server
+      - URLs that contains `https://console.dv.choreo.dev` to `http://localhost:9000` - your front-end serving url
+        - `loginURL`
+        - `appSvcURL`
+        - `baseUrl`
+        - `apimSvcURL`
+      - `apimBasePath` value to `/apimanagement`
+  4.  Update user information in `cypress.env.json`
 
-    5.  Run `npm run e2etest:headless` to run test cases in [headless mode](#headless-mode)
+      - `idpUsername` and `idpPassword` (Refer the section section below on how to get them)
+      - (Optional) If the user is associated with multiple organizations, the specific organization handle to be considered in the test execution can be set in the `selectedOrgHandle`. By default this is not set, which will result in the first organization value returned in the users orgs list being considered. To run devportal tests you must set the preferred `choreoOrgHandle` as an environment variable.
 
--   ### Getting idpUsername and idpPassword
+  5.  Run `npm run e2etest:headless` to run test cases in [headless mode](#headless-mode)
 
-    1. Logout of Choreo dev and goto `https://console.dv.choreo.dev`
-    2. Open browser dev tools and open network tab (and tick "Preserve log" checkbox)
-    3. Login to Choreo
-    4. Observe network tab in dev tools and locate "token" response
-    5. Copy cwatf and cbearer cookies from Response Headers
-       <p align="center">
-            <img src="images/token-response.png" height="400" alt="token-response">
-       </p>
-    6. Do a curl as follows replacing <CWATF_COOKIE> and <CBEARER_COOKIE> (Mind the `;` and space)
-        ```
-       curl --cookie "cwatf=<CWATF_COOKIE>; cbearer=<CBEARER_COOKIE>" -L app.preview-dv.choreo.dev/internaltools/resetIdpPassword
-       ```
+- ### Getting idpUsername and idpPassword
 
--   ### Debugging
+  1. Logout of Choreo dev and goto `https://console.dv.choreo.dev`
+  2. Open browser dev tools and open network tab (and tick "Preserve log" checkbox)
+  3. Login to Choreo
+  4. Observe network tab in dev tools and locate "token" response
+  5. Copy cwatf and cbearer cookies from Response Headers
+     <p align="center">
+          <img src="images/token-response.png" height="400" alt="token-response">
+     </p>
+  6. Do a curl as follows replacing <CWATF_COOKIE> and <CBEARER_COOKIE> (Mind the `;` and space)
+     ```
+     curl --cookie "cwatf=<CWATF_COOKIE>; cbearer=<CBEARER_COOKIE>" -L app.preview-dv.choreo.dev/internaltools/resetIdpPassword
+     ```
 
-    -   You can find screen shot of failured test cases in `e2e-tests-cypress/screenshots` directory
+- ### Debugging
 
-    -   There are videos created for all the success and failed test cases in `e2e-tests-cypress/videos` directory.
+  - You can find screen shot of failured test cases in `e2e-tests-cypress/screenshots` directory
 
-    -   You can check a error is already reported or not by filtering issues contains `Type/e2eTestFailure` lable on github.
+  - There are videos created for all the success and failed test cases in `e2e-tests-cypress/videos` directory.
 
-    -   You can check identified errors in [interactive mode](#interactive-mode) to get more idea on visualized manner.
+  - You can check a error is already reported or not by filtering issues contains `Type/e2eTestFailure` lable on github.
+
+  - You can check identified errors in [interactive mode](#interactive-mode) to get more idea on visualized manner.
 
 ## Setup
 
@@ -113,36 +114,36 @@ e2e-tests-cypress
 
 1.  Use below commands to run tests in headless mode
 
-    -   Run all the spec files in the project
+    - Run all the spec files in the project
 
-        > `npm run local`
+      > `npm run local`
 
-    -   Run one spec file
+    - Run one spec file
 
-        > `npx cypress run --spec "cypress/e2e/<path/to/spec/file>"`
+      > `npx cypress run --spec "cypress/e2e/<path/to/spec/file>"`
 
-            ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts"`
+          ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts"`
 
-    -   Run multiple spec files
+    - Run multiple spec files
 
-        > `npx cypress run --spec "cypress/e2e/<path/to/spec/file1>,cypress/e2e/<path/to/spec/file2>"`
+      > `npx cypress run --spec "cypress/e2e/<path/to/spec/file1>,cypress/e2e/<path/to/spec/file2>"`
 
-            ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts,cypress/e2e/console/integrations/clone-and-edit-flow.ts"`
+          ex: `npx cypress run --spec "cypress/e2e/console/clean/clean-this-run.ts,cypress/e2e/console/integrations/clone-and-edit-flow.ts"`
 
-    -   Run all spec files in a folder
+    - Run all spec files in a folder
 
-        > `npx cypress run --spec "cypress/e2e/<path/to/folder>/**/*"`
+      > `npx cypress run --spec "cypress/e2e/<path/to/folder>/**/*"`
 
-            ex: `npx cypress run --spec "cypress/e2e/console/integrations/**/*"`
+          ex: `npx cypress run --spec "cypress/e2e/console/integrations/**/*"`
 
 2.  After running the tests in headless mode, following artifacts can be found
 
--   videos - for each spec file, a separate video will be created
-    -   Location: `cypress/videos`
--   screenshots - screenshot will be captured when a failure happens during a test run
-    -   Location: `cypress/screenshots`
--   reports - reports will be generated only if the `npm run test` is used
-    -   Location: `cypress/reports`
+- videos - for each spec file, a separate video will be created
+  - Location: `cypress/videos`
+- screenshots - screenshot will be captured when a failure happens during a test run
+  - Location: `cypress/screenshots`
+- reports - reports will be generated only if the `npm run test` is used
+  - Location: `cypress/reports`
 
 ## Scenarios
 
@@ -418,5 +419,6 @@ Scenarios covered by the End to End tests.
 			<td>integration-run-sample.ts</td>
 		</tr>
 
-	</tbody>
+    </tbody>
+
 </table>
