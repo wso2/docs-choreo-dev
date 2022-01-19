@@ -7,6 +7,6 @@ return number * number;
 {downarrow}
 resource function get isOdd(int number) returns boolean|error {
 if (number % 2 == 0) {
-return true;
-{downarrow}
 return false;
+{downarrow}
+return true;

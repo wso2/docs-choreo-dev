@@ -34,27 +34,6 @@ export class Utils {
     return this.keyNamePrefix + Date.now() + name;
   }
 
-  static logDate(fileID: string, key: string, val = '') {
-    const date = new Date();
-
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-    const modifiedDate = new Intl.DateTimeFormat('en', options).format(date);
-    cy.task('writeTestData', {
-      fileName: fileID,
-      key,
-      value: modifiedDate,
-    });
-  }
-
-
-
   static sendRequest(
     method: string,
     url: string,
@@ -67,8 +46,8 @@ export class Utils {
       headers,
       body,
     };
+
     return cy.request(request).then((res) => {
-      cy.log(res.body);
       return cy.wrap({ body: res.body, status: res.status });
     });
   }

@@ -11,10 +11,9 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
+
 import "cypress-file-upload"
-import 'cypress-xpath';
+
 
 
 Cypress.on('uncaught:exception', (err, runnable) => {

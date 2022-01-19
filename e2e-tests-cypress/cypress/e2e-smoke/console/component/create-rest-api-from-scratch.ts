@@ -39,7 +39,7 @@ describe("Verify project creation functionality", () => {
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
-  const queryParameters2 = [{ key: "name", value: "5" }];
+  const queryParameters2 = [{ key: "number", value: "5" }];
 
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
@@ -102,12 +102,14 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
+    ProjectListingPage.selectProject("Default Project")
+    ProjectOverviewPage.selectComponent("jojo")
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/root");
+    SwaggerUI.SelectResource( "/root");
     SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue('name','2')
+    SwaggerUI.enterValue('number','2')
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse().should("eq", "4");
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -122,7 +124,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "root").then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-          expect(res.body).equal("4");
+          expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
     );
@@ -132,9 +134,9 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/isOdd");
+    SwaggerUI.SelectResource( "/isOdd");
     SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue('name','5')
+    SwaggerUI.enterValue('number','5')
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse().should("eq", "true");
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -149,7 +151,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "isOdd").then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-          expect(res.body).equal("true");
+          expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
     );
@@ -161,9 +163,9 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/root");
+    SwaggerUI.SelectResource( "/root");
     SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue('name','2')
+    SwaggerUI.enterValue('number','2')
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse().should("eq", "4");
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -178,7 +180,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "root").then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-          expect(res.body).equal("4");
+          expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
     );
@@ -188,9 +190,9 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/isOdd");
+    SwaggerUI.SelectResource( "/isOdd");
     SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue('name','5')
+    SwaggerUI.enterValue('number','5')
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse().should("eq", "true");
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -205,24 +207,21 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "isOdd").then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-          expect(res.body).equal("true");
+          expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
     );
   });
 
-  it("Disable security for root resource", () => {
+  it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("/root");
-  });
-
-  it("Apply configs to dev", () => {
-    ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
   });
+
 
   it("Apply configs to prod", () => {
     ComponentAPILifecycle.editResource();
@@ -242,8 +241,8 @@ describe("Verify project creation functionality", () => {
   it("Verify resource not access without the token in dev", () => {
     Curl.getRequestComponents(FILE_ID, Environment.DEVELOPMENT + "isOdd").then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url).then((res) => {
-          expect(res.body).equal(4);
+        Utils.sendRequest(curl.method, curl.url,curl.headers).then((res) => {
+          expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
     );
@@ -262,8 +261,8 @@ describe("Verify project creation functionality", () => {
   it("Verify resource not access without the token in prod", () => {
     Curl.getRequestComponents(FILE_ID, Environment.PRODUCTION + "isOdd").then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url).then((res) => {
-          expect(res.body).equal(4);
+        Utils.sendRequest(curl.method, curl.url,curl.headers).then((res) => {
+          expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
     );
@@ -281,9 +280,10 @@ describe("Verify project creation functionality", () => {
 
 
   it("Verify insight values", () => {
+    HomePage.navigateToHome()
     HomePage.navigateToInsights();
     InsightsPage.selectEnvironment(Environment.DEVELOPMENT)
-    InsightsPage.selectTimePeriod("Past 3 months")
+    InsightsPage.selectTimePeriod()
     InsightsPage.getTotalTraffic().should('eq','136')
     InsightsPage.getTotalErrorRequestCount().should('eq','31')
     InsightsPage.getAverageErrorRate().should('eq','23')

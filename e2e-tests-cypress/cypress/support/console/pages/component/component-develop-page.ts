@@ -19,7 +19,7 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL(fileID) {
-    cy.contains("Edit with VSCode Online")
+    cy.contains("Open in web-based editor")
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {

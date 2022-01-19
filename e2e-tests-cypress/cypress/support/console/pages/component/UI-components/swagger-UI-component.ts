@@ -12,7 +12,7 @@
  */
 
 export class SwaggerUI {
-  static SelectResource(httpMethod: string, path: string) {
+  static SelectResource(path: string) {
     const pathVariable = `[data-path="${path}"]`;
     cy.get('.swagger-ui').within(() => {
       cy.get(pathVariable).click();
@@ -47,6 +47,7 @@ export class SwaggerUI {
   }
 
   static enterValue(placeholder:string , value:string){
-    cy.get(`[placeholder="${placeholder}"]`).type(value);
+    cy.wait(2000);
+    cy.get(`[placeholder="${placeholder}"]`).should('be.visible').type(value);
   }
 }

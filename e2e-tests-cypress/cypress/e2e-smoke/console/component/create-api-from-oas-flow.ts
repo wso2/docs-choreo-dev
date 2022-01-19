@@ -69,21 +69,21 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify test functionality", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/intensity");
+    SwaggerUI.SelectResource( "/intensity");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/intensity/factors");
+    SwaggerUI.SelectResource( "/intensity/factors");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/generation");
+    SwaggerUI.SelectResource( "/generation");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse();
