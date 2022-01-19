@@ -8,6 +8,7 @@ metadata:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_8=Liveness probe not required
     checkov.io/skip2: CKV_K8S_9=Readiness probe not required
+    checkov.io/skip3: CKV_K8S_38=Service account token is required when using Linkerd
 spec:
   replicas: 1
   selector:
@@ -18,7 +19,6 @@ spec:
       labels:
         app: code-server-default-backend
     spec:
-      automountServiceAccountToken: false
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:

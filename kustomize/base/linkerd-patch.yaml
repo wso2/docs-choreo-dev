@@ -2,3 +2,8 @@
   path: /spec/template/metadata/annotations
   value:
     linkerd.io/inject: enabled
+
+- op: add
+  path: /spec/template/spec
+  value:
+    automountServiceAccountToken: true
