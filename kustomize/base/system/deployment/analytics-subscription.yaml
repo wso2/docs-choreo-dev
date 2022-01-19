@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_38=Service account token is required when using Linkerd
   labels:
     choreo.component: analytics-subs
   name: analytics-subs
@@ -25,6 +24,7 @@ spec:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
+      automountServiceAccountToken: false
       containers:
       - env:
         - name: CHOREO_DB_HOST

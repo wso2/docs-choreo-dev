@@ -46,6 +46,7 @@ spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
