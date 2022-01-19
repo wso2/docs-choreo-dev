@@ -8,5 +8,10 @@ resources:
 - idp
 - system
 
+patches:
+  - path: linkerd-patch.yaml
+    target:
+      kind: Deployment
+
 commonLabels:
   app: choreo-control-plane
