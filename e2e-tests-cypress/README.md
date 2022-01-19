@@ -11,7 +11,7 @@
 	        -   `loginURL`
 	        -   `appSvcURL`
 	        -   `baseUrl`
-			-   `apimSvcUrl`
+			-   `apimSvcURL`
 	    -   `apimBasePath` value to `/apimanagement`
     4.  Update user information in `cypress.env.json`
 	    -   `idpUsername` and `idpPassword` (Refer the section section below on how to get them)

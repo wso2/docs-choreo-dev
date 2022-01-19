@@ -10,35 +10,19 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { LONG_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
-import "./commands"
-import 'cypress-xpath';
-
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
-
+export class LoginPage {
+  static loginToDevportal(): void {
+    cy.visit(Cypress.env("devportalLoginURL"));
+    cy.get('button[type="submit"]', { timeout: STANDARD_TIME_OUT }).should(
+      "be.visible"
+    );
+    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
+    cy.get("#password").type(Cypress.env("choreoIDPPassword"));
+    cy.get('button[type="submit"]').click();
+    cy.get("[data-testid=home-appbar-btn]", { timeout: LONG_TIME_OUT }).should(
+      "be.visible"
+    );
+  }
+}
