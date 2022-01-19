@@ -11,33 +11,8 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
-import 'cypress-xpath';
-
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
+export const STANDARD_TIME_OUT = 6000;
+export const MEDIUM_TIME_OUT = 10000;
+export const LONG_TIME_OUT = 60000;
+export const DAY = 86400000;
 

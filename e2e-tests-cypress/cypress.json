@@ -10,6 +10,8 @@
     "viewportWidth": 2560,
     "chromeWebSecurity": false,
     "video":true,
-    "videosFolder": "./cypress/videos",
-    "videoCompression":32
+    "screenshotsFolder": "cypress/screenshots/e2e-smoke",
+    "videosFolder": "cypress/videos/e2e-smoke",
+    "videoUploadOnPasses": false,
+    "videoCompression": false
 }

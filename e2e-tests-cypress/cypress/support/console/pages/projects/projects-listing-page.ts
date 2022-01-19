@@ -20,11 +20,11 @@ export class ProjectListingPage {
     cy.get('[data-testid="version-picker"]').click();
     cy.get('[aria-labelledby="version-picker"]>button').click();
 
-    const balRegistryUrl = Cypress.env("balRegistryUrl");
+    const balRegistryURL = Cypress.env("balRegistryURL");
 
     cy.intercept({
       method: "GET",
-      url: `${balRegistryUrl}/packages?*`,
+      url: `${balRegistryURL}/packages?*`,
       times: 1,
     }).as("balRegistry");
 

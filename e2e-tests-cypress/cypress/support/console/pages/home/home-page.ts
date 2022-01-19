@@ -12,18 +12,22 @@
  */
 
 export class HomePage {
+<<<<<<< HEAD
   static username = ('[data-testid="header-user-profile-menu"]')
   //static username = 'button[aria-haspopup]>span>p';
+=======
+  static username = "button[aria-haspopup]>span>p";
+>>>>>>> 75e4379df81424026e5d7756e10e63123fd321c3
 
   static navigateToHome() {
     cy.get('[data-testid="main-left-nav-item-Home"]')
-      .should('be.visible')
+      .should("be.visible")
       .click();
   }
 
   static navigateToProjects(fileID) {
     cy.get('[data-testid="main-left-nav-item-Components"]')
-      .should('be.visible')
+      .should("be.visible")
       .click();
     this.interceptProjects(fileID);
   }
@@ -34,24 +38,24 @@ export class HomePage {
 
   static navigateToMarketPlace() {
     cy.get('[data-testid="main-left-nav-item-Marketplace"]')
-      .should('be.visible')
+      .should("be.visible")
       .click();
   }
 
   static navigateToInsights() {
     cy.get('[data-testid="main-left-nav-item-Insights"]')
-      .should('be.visible')
+      .should("be.visible")
       .click();
   }
 
   static getLoggedUsername() {
     this.navigateToHome();
-    return cy.get(this.username).invoke('text');
+    return cy.get(this.username).invoke("text");
   }
 
   static getLoggedUserEmail() {
     this.clickOnLoggedInUser();
-    return cy.get('ul>li>div>p').invoke('text');
+    return cy.get("ul>li>div>p").invoke("text");
   }
 
   static clickOnLoggedInUser() {
@@ -59,25 +63,25 @@ export class HomePage {
   }
 
   static logout(fileID) {
-    cy.task('deleteFile', fileID);
+    cy.task("deleteFile", fileID);
     this.clickOnLoggedInUser();
-    cy.contains('Logout').click();
+    cy.contains("Logout").click();
   }
 
   static navigateToSettings() {
     this.clickOnLoggedInUser();
     cy.get('[data-testid="header-user-profile-item-settings"]')
-      .should('be.visible')
+      .should("be.visible")
       .click();
   }
 
   private static interceptProjects(fileID) {
-    cy.intercept(Cypress.env('gqlServerUrl')).as('projects');
-    return cy.wait('@projects', { timeout: 20000 }).then((e) => {
+    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("projects");
+    return cy.wait("@projects", { timeout: 20000 }).then((e) => {
       const { projects } = e.response.body.data;
-      cy.task('writeTestData', {
+      cy.task("writeTestData", {
         fileName: fileID,
-        key: 'projects',
+        key: "projects",
         value: projects,
       });
     });

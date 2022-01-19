@@ -15,7 +15,8 @@
     "cypress-file-upload": "^5.0.8",
     "cypress-grep": "^2.3.2",
     "cypress-multi-reporters": "^1.5.0",
-    "cypress-real-events": "^1.5.1"
+    "cypress-real-events": "^1.5.1",
+    "cypress-xpath": "^1.6.2"
   },
   "scripts": {
     "pretest": "npm run clean:reports",
