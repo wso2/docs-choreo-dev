@@ -41,7 +41,7 @@ describe("Add roles and permissions", () => {
     OrganizationComponent.createRole(roleName, roleDescription, roleTag);
   });
 
-  it.skip("Add a member to new role", () => {
+  it("Add a member to new role", () => {
     OrganizationComponent.addMembertoRole(roleName);
   });
 
