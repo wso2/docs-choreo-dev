@@ -72,8 +72,7 @@ describe('Verify resources security configuration', () => {
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity(
-      '/sayHello',
-      Environment.DEVELOPMENT
+      '/sayHello'
     );
   });
 

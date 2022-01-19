@@ -15,9 +15,7 @@ export class HomePage {
   static username = "button[aria-haspopup]>span>p";
 
   static navigateToHome() {
-    cy.get('[data-testid="main-left-nav-item-Home"]')
-      .should("be.visible")
-      .click();
+    cy.get('[href="/"]').eq(1).click();
   }
 
   static navigateToProjects(fileID) {

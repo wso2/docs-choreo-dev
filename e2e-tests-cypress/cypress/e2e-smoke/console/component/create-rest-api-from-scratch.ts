@@ -21,6 +21,7 @@ import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { HomePage } from "../../../support/console/pages/home/home-page";
+import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -40,6 +41,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "name", value: "5" }];
 
+
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
   it("Verify REST API component creation", () => {
@@ -57,6 +59,11 @@ describe("Verify project creation functionality", () => {
     );
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
+
+  // it('select a project and component',()=>{
+  //   ProjectListingPage.selectProject('Default Project')
+  //   ProjectOverviewPage.selectComponent('jojo')
+  // })
 
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace(FILE_ID);
@@ -86,6 +93,12 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.deploy();
     ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+  });
+
+
+  it("Verify component promote to prod", () => {
+    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -142,11 +155,7 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
-  });
+
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
@@ -268,6 +277,16 @@ describe("Verify project creation functionality", () => {
     );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+  });
+
+
+  it("Verify insight values", () => {
+    HomePage.navigateToInsights();
+    InsightsPage.selectEnvironment(Environment.DEVELOPMENT)
+    InsightsPage.selectTimePeriod("Past 3 months")
+    InsightsPage.getTotalTraffic().should('eq','136')
+    InsightsPage.getTotalErrorRequestCount().should('eq','31')
+    InsightsPage.getAverageErrorRate().should('eq','23')
   });
 
   it.skip("Delete created project", () => {

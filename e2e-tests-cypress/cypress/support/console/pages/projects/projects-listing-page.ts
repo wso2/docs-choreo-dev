@@ -38,11 +38,8 @@ export class ProjectListingPage {
     });
   }
 
-  static selectProject(fileID: string) {
-    cy.readFile(`${Cypress.env("tempfile")}${fileID}.json`).then((data) => {
-      cy.get(
-        `[data-testid="project-icon-card-${data.authData.projectId}"]`
-      ).click();
-    });
+  static selectProject(projectName: string) {
+    cy.get('[data-testid="version-picker"]').click();
+    cy.get(`li>div`).contains(projectName).click()
   }
 }

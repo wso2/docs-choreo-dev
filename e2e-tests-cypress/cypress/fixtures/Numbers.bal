@@ -1,4 +1,3 @@
-import ballerina/random;
 import ballerina/http;
 
 service /numbers on new http:Listener(9090) {
