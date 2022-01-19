@@ -37,7 +37,7 @@ describe("Add roles and permissions", () => {
     HomePage.logout(FILE_ID);
   });
 
-  it.skip("Create a role", () => {
+  it("Create a role", () => {
     OrganizationComponent.createRole(roleName, roleDescription, roleTag);
   });
 

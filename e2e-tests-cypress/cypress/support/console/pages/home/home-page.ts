@@ -12,12 +12,7 @@
  */
 
 export class HomePage {
-<<<<<<< HEAD
   static username = ('[data-testid="header-user-profile-menu"]')
-  //static username = 'button[aria-haspopup]>span>p';
-=======
-  static username = "button[aria-haspopup]>span>p";
->>>>>>> 75e4379df81424026e5d7756e10e63123fd321c3
 
   static navigateToHome() {
     cy.get('[data-testid="main-left-nav-item-Home"]')
