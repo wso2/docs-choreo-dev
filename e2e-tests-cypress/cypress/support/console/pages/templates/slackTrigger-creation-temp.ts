@@ -19,9 +19,10 @@ export class TriggersTemplate {
   static createSlackTriggerFromTemplate(webhookName: string, fileID: string) {
     cy.get('input[name="webhookName"]').clear().type(webhookName);
     cy.get('#mui-component-select-triggerType').click();
-    cy.contains('Slack').click();
+    cy.contains('Slack').click(9);
     cy.get('#mui-component-select-triggerChannel').click();
-    cy.contains('SlackEventsAppService').click();
+    // cy.get('li').contains('SlackEventsAppService').click();
+    cy.contains('SlackEventsAppService').click({ force: true });
     cy.get('button').contains('Create').click();
     cy.intercept(Cypress.env('gqlServerUrl')).as('proj_create');
     this.interceptProjectDetails(fileID);

@@ -75,7 +75,7 @@ describe("Verify webhook creation functionality", () => {
 
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deploy();
+    ComponentDeployPage.configureAndDeploy();
     ComponentDeployPage.isDeploymentSuccessful(FILE_ID).should("be.visible");
   });
 
