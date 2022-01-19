@@ -23,10 +23,13 @@ spec:
     type: RollingUpdate
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         deployment: wso2is
         choreo.component: identity-server
     spec:
+      automountServiceAccountToken: true
       securityContext:
         runAsUser: 10500
         seccompProfile:
