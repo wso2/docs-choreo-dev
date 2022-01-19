@@ -108,11 +108,11 @@ export class LoginPage {
 
       const userOrg = this.persistOrgs(interceptions[1], fileID);
 
-      // GraphQL.createDefaultProjectIfNotExists(
-      //   userOrg.id,
-      //   userOrg.handle,
-      //   token
-      // );
+      GraphQL.createDefaultProjectIfNotExists(
+        userOrg.id,
+        userOrg.handle,
+        token
+      );
 
       //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
     });

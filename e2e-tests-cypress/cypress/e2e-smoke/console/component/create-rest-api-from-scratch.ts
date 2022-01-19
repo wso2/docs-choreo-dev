@@ -60,10 +60,6 @@ describe("Verify project creation functionality", () => {
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
 
-  // it('select a project and component',()=>{
-  //   ProjectListingPage.selectProject('Default Project')
-  //   ProjectOverviewPage.selectComponent('jojo')
-  // })
 
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace(FILE_ID);
