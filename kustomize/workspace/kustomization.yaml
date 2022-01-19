@@ -5,5 +5,10 @@ resources:
   - choreodp-system
   - code-server-default-backend
 
+patches:
+  - path: linkerd-patch.yaml
+    target:
+      kind: Deployment
+
 commonLabels:
   app: choreo-workspace
