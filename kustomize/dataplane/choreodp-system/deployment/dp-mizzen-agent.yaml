@@ -9,7 +9,7 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_8=Temporarily suppressing till fixing
     checkov.io/skip3: CKV_K8S_9=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_38=Required by linkerD
 spec:
   replicas: 1
   selector:
@@ -17,9 +17,12 @@ spec:
       choreo.component: dp-mizzen-agent
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         choreo.component: dp-mizzen-agent
     spec:
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
