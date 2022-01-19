@@ -11,14 +11,14 @@
  * associated services.
  */
 
-import { GraphQL } from '../apis/graphql';
+import { GraphQL } from "../apis/graphql";
 
 export class LoginPage {
   static loginToChoreo(fileID: string) {
-    cy.visit(Cypress.env('loginUrl'));
-    cy.get('button[type="submit"]').should('be.visible');
-    cy.get('#usernameUserInput').type(Cypress.env('choreoIDPUsername'));
-    cy.get('#password').type(Cypress.env('choreoIDPPassword'));
+    cy.visit(Cypress.env("loginURL"));
+    cy.get('button[type="submit"]').should("be.visible");
+    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
+    cy.get("#password").type(Cypress.env("choreoIDPPassword"));
 
     this.interceptRequiredApiCalls();
 
@@ -30,18 +30,18 @@ export class LoginPage {
   }
 
   static reloginToChoreo(fileID: string) {
-    const file = `${Cypress.env('tempfile')}${fileID}.json`;
+    const file = `${Cypress.env("tempfile")}${fileID}.json`;
 
     cy.readFile(file).then((d) => {
       cy.visit(d.componentURL);
       cy.intercept(d.componentURL).then(() => {
         cy.readFile(file).then((data) => {
-          cy.setCookie('commonAuthId', data.commanAuthId, {
-            path: '/',
-            domain: 'id.dv.choreo.dev',
+          cy.setCookie("commonAuthId", data.commanAuthId, {
+            path: "/",
+            domain: "id.dv.choreo.dev",
             secure: true,
             httpOnly: true,
-            sameSite: 'no_restriction',
+            sameSite: "no_restriction",
           });
         });
       });
@@ -49,27 +49,27 @@ export class LoginPage {
   }
 
   static navigateToCodespace(fileID: string) {
-    cy.readFile(`${Cypress.env('tempfile')}${fileID}.json`).then((data) => {
+    cy.readFile(`${Cypress.env("tempfile")}${fileID}.json`).then((data) => {
       cy.visit(data.accessURL);
     });
   }
 
   private static interceptRequiredApiCalls() {
-    const appSvcURL = Cypress.env('appSvcURL');
-    const idpURL = Cypress.env('idpURL');
-    const apimSvcUrl = Cypress.env('apimSvcUrl');
+    const appSvcURL = Cypress.env("appSvcURL");
+    const idpURL = Cypress.env("idpURL");
+    const apimSvcURL = Cypress.env("apimSvcURL");
 
-    cy.intercept('POST', `${idpURL}/commonauth`).as('cookies');
+    cy.intercept("POST", `${idpURL}/commonauth`).as("cookies");
     cy.intercept({
-      method: 'POST',
-      url: `${apimSvcUrl}/oauth2/token`,
+      method: "POST",
+      url: `${apimSvcURL}/oauth2/token`,
       times: 1,
-    }).as('token');
-    cy.intercept('GET', `${appSvcURL}/validate-user`).as('org');
+    }).as("token");
+    cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
   }
 
   private static persistOrgs(interceptor: any, fileID: string) {
-    const handle = Cypress.env('choreoOrgHandle');
+    const handle = Cypress.env("choreoOrgHandle");
     let userOrg: any;
     if (handle) {
       userOrg = interceptor.response.body.organizations.find(
@@ -91,9 +91,9 @@ export class LoginPage {
       handle: userOrg.handle,
     };
 
-    cy.task('writeTestData', {
+    cy.task("writeTestData", {
       fileName: fileID,
-      key: 'orgData',
+      key: "orgData",
       value: orgData,
     });
 
@@ -101,9 +101,9 @@ export class LoginPage {
   }
 
   private static testSetup(fileID: string) {
-    cy.log('testSetup()');
+    cy.log("testSetup()");
     let token: string;
-    cy.wait(['@token', '@org'], { timeout: 60000 }).then((interceptions) => {
+    cy.wait(["@token", "@org"], { timeout: 60000 }).then((interceptions) => {
       token = interceptions[0].response.body.access_token;
 
       const userOrg = this.persistOrgs(interceptions[1], fileID);
@@ -119,19 +119,19 @@ export class LoginPage {
   }
 
   private static persistCookies(fileID: string) {
-    cy.log('persistCookies()');
-    cy.wait('@cookies').then((interceptor) => {
-      const cookies = interceptor.response.headers['set-cookie'];
+    cy.log("persistCookies()");
+    cy.wait("@cookies").then((interceptor) => {
+      const cookies = interceptor.response.headers["set-cookie"];
       if (Array.isArray(cookies)) {
         cookies.forEach((element) => {
-          if (element.includes('commonAuthId')) {
+          if (element.includes("commonAuthId")) {
             const commonauId = element
-              .split(';')[0]
-              .replace('commonAuthId=', '');
+              .split(";")[0]
+              .replace("commonAuthId=", "");
             cy.log(`Common Auth ID :: ${commonauId}`);
-            cy.task('writeTestData', {
+            cy.task("writeTestData", {
               fileName: fileID,
-              key: 'commanAuthId',
+              key: "commanAuthId",
               value: commonauId,
             });
           }

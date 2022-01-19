@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Utils } from '../utils';
+import { Utils } from "../utils";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
@@ -89,7 +89,7 @@ export class GraphQL {
 
     this.callGraphQL(token, query).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      cy.log('Successfully created Default e2e Project');
+      cy.log("Successfully created Default e2e Project");
     });
   }
 
@@ -111,7 +111,7 @@ export class GraphQL {
     orgHandle: string,
     token: string
   ) {
-    cy.log('deleteComponentsInProject()');
+    cy.log("deleteComponentsInProject()");
     this.getComponents(projectId, orgHandle, token).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
       response.body.data.components.forEach((component) => {
@@ -164,13 +164,14 @@ export class GraphQL {
   }
 
   private static callGraphQL(token: string, query: any) {
+    const appSvcURL = Cypress.env("appSvcURL");
     const header = {
       Authorization: `Bearer ${token}`,
-      'content-type': 'application/json',
+      "content-type": "application/json",
     };
     return cy.request({
-      method: 'POST',
-      url: Cypress.env('gqlServerUrl'),
+      method: "POST",
+      url: `${appSvcURL}/graphql`,
       body: JSON.stringify(query),
       headers: header,
     });
