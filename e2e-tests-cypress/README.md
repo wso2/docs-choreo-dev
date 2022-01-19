@@ -21,7 +21,7 @@
 
 -   ### Getting idpUsername and idpPassword
 
-    1. Logout of Choreo dev and goto `https://console.dv.choreo.dev`
+    1. Logout of Choreo dev and goto `https://console.preview-dv.choreo.dev/`
     2. Open browser dev tools and open network tab (and tick "Preserve log" checkbox)
     3. Login to Choreo
     4. Observe network tab in dev tools and locate "token" response

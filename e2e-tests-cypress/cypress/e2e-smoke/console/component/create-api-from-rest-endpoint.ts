@@ -27,6 +27,7 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
+import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
@@ -42,6 +43,9 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
+    cy.wait(5000);
+    LoginPage.changeOrg();
+    cy.wait(5000);
   });
 
   it("Verify Rest API creation from existing endpoint", () => {
@@ -60,23 +64,19 @@ describe("Verify project creation functionality", () => {
       FILE_ID
     );
     APIDevelop.addResources(OPERATION_TARGET, HTTPMethod.GET);
+    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
   it("Verify component deployment", () => {
+    cy.wait(5000);
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeploytoDev();
     APIDeployment.PrmotetoProd();
   });
 
   it("Verify test functionality", () => {
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, OPERATION_TARGET);
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.GetResponse();
-    SwaggerUI.getResponseCode().should("eq", "200");
+    cy.verifyTest(OPERATION_TARGET);
   });
 
   it("Verify manage functionality", () => {
@@ -90,6 +90,32 @@ describe("Verify project creation functionality", () => {
     );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
+  });
+
+  it("Create new version from the created API", () => {
+    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.createNewVersion();
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeploytoDev();
+    APIDeployment.PrmotetoProd();
+    ComponentOverviewPage.navigateToTest();
+    APITest.selectEnvironment('Production');
+    cy.verifyTest(OPERATION_TARGET);
+
+    APITest.selectEnvironment('Development');
+    cy.verifyTest(OPERATION_TARGET);
+
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+      "be.visible"
+    );
+    ComponentAPILifecycle.goToDevportal()
+    // cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
+    //   .invoke('attr', 'href').and('removeAttr', 'target')
+    //   .then((href) => {
+    //     cy.visit(href)
+    //   })
   });
 
   it.skip("Delete created project", () => {

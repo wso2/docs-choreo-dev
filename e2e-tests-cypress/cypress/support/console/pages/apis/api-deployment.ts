@@ -20,7 +20,7 @@ export class APIDeployment {
     }
 
     static DeploytoDev(){
-      cy.wait(1000);
+      cy.wait(5000);
       cy.get('.MuiPaper-root > :nth-child(3)').contains('Deploy').should('be.visible').click();
     }
 
