@@ -10,34 +10,18 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { MEDIUM_TIME_OUT } from "../../constants";
 
-import '@testing-library/cypress/add-commands'
-import "cypress-real-events/support";
-import "cypress-file-upload"
-import 'cypress-xpath';
+export class ProductionKeys {
 
+    static generateTestToken() {
+        cy.get('[data-testid="oauth-key"]').click();
+        cy.wait(2000);
+        cy.get('[data-testid="generate-token-btn"]').should('not.exist');
+        cy.get('[data-testid="generate-oauth-key"]').click();
+        cy.get('[data-testid="generate-token-btn"]').should('exist');
+        cy.wait(2000);
+    }
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false
-})
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
-    value: undefined,
-    writable: false,
-  });
-});
-
-
-
+}
 

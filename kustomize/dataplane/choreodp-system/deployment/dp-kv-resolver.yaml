@@ -14,9 +14,12 @@ spec:
       choreo.component: dp-kv-resolver
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         choreo.component: dp-kv-resolver
     spec:
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         runAsNonRoot: true
