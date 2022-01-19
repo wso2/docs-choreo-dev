@@ -1,7 +1,6 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  annotations:
   name: step-usage-publisher
   labels:
     choreo.component: step-usage-publisher
