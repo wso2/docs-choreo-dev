@@ -19,34 +19,34 @@ import fs from 'fs';
 
 module.exports = (on, config) => {
 
-  // on('task', {
-  //   writeTestData: ({ fileName, key, value }) => {
-  //     let initData = {}
-  //     const filePath = `cypress/fixtures/json/${fileName}.json`
-  //     initData[key] = value
-  //     if (!fs.existsSync(filePath)) {
-  //       fs.writeFileSync(filePath, JSON.stringify(initData))
-  //     } else {
-  //       let jsonContent = {}
-  //       let dataFileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-  //       jsonContent = JSON.parse(dataFileContent);
-  //       jsonContent[key] = value
-  //       fs.writeFileSync(filePath, JSON.stringify(jsonContent))
-  //     }
-  //     return null
-  //   },
-  //   deleteFile: (fileName) => {
-  //     const filePath = `cypress/fixtures/json/${fileName}.json`
-  //     fs.unlinkSync(filePath)
-  //     return null
-  //   }
-  // },
-  //   'file:preprocessor', webpackPreprocessor({
-  //     typescript: require.resolve('typescript')
-  //   }));
-  // config.env.choreoIDPUsername = process.env.choreoIDPUsername;
-  // config.env.choreoIDPPassword = process.env.choreoIDPPassword;
-  // config.env.choreoOrgHandle = process.env.choreoOrgHandle;
-  // return config;
+  on('task', {
+    writeTestData: ({ fileName, key, value }) => {
+      let initData = {}
+      const filePath = `cypress/fixtures/json/${fileName}.json`
+      initData[key] = value
+      if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, JSON.stringify(initData))
+      } else {
+        let jsonContent = {}
+        let dataFileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
+        jsonContent = JSON.parse(dataFileContent);
+        jsonContent[key] = value
+        fs.writeFileSync(filePath, JSON.stringify(jsonContent))
+      }
+      return null
+    },
+    deleteFile: (fileName) => {
+      const filePath = `cypress/fixtures/json/${fileName}.json`
+      fs.unlinkSync(filePath)
+      return null
+    }
+  },
+    'file:preprocessor', webpackPreprocessor({
+      typescript: require.resolve('typescript')
+    }));
+  config.env.choreoIDPUsername = process.env.choreoIDPUsername;
+  config.env.choreoIDPPassword = process.env.choreoIDPPassword;
+  config.env.choreoOrgHandle = process.env.choreoOrgHandle;
+  return config;
 };
 
