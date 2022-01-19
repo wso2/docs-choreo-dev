@@ -28,6 +28,7 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+      automountServiceAccountToken: true
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
           imagePullPolicy: Always

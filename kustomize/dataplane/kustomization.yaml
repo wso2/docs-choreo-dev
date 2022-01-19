@@ -6,10 +6,5 @@ resources:
   - choreo-connect
   - traffic-manager
 
-patches:
-  - path: linkerd-patch.yaml
-    target:
-      kind: Deployment
-
 commonLabels:
   app: choreo-dataplane
