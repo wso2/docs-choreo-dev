@@ -1,7 +1,11 @@
-- op: add
-  path: /spec/template/metadata/annotations/linkerd.io~1inject
-  value: enabled
-
-- op: add
-  path: /spec/template/spec/automountServiceAccountToken
-  value: true
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+spec:
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      automountServiceAccountToken: true
