@@ -20,8 +20,8 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 describe("Add roles and permissions", () => {
   const FILE_ID = "Add Roles";
 
-  const roleName = "testRole";
-  const roleDescription = "This Role is created by e2e test run.";
+  const roleName = "E2EtestRole";
+  const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
   before(() => {
@@ -41,15 +41,11 @@ describe("Add roles and permissions", () => {
     OrganizationComponent.createRole(roleName, roleDescription, roleTag);
   });
 
-  it("Add permissions", () => {
-    OrganizationComponent.addPermissions();
-  });
-
-  it("Invite a member to new role", () => {
-    OrganizationComponent.inviteMembertoRole();
+  it("Add a member to new role", () => {
+    OrganizationComponent.addMembertoRole(roleName);
   });
 
   it("Delete created role", () => {
-    OrganizationComponent.deleteCreatedRole();
+    OrganizationComponent.deleteCreatedRole(roleName);
   });
 });
