@@ -4,11 +4,11 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: CKV_K8S_38=Required by linkerd
   labels:
     choreo.component: billing
   name: billing
 spec:
-  automountServiceAccountToken: false
   replicas: 1
   selector:
     matchLabels:
@@ -31,7 +31,7 @@ spec:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-billing:latest
           securityContext:
