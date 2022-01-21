@@ -6,4 +6,9 @@ resources:
   - ../../dataplane/choreodp-system/hpa
   - ../../dataplane/choreodp-system/rbac
 
+patches:
+  - path: linkerd-patch.yaml
+    target:
+      kind: Deployment
+
 namespace: choreodp-system

@@ -19,9 +19,9 @@ export class OrganizationComponent {
 
   static memberName: string;
 
-  static roleName = 'testRole';
+  static roleName = 'E2EtestRole';
 
-  static roleDescription = 'This Role is created by e2e test run.';
+  static roleDescription = 'This Role is created by E2E test run.';
 
   static roleTag = 'testRoleTag';
 
@@ -50,8 +50,8 @@ export class OrganizationComponent {
     cy.get('[data-cyid="select-roles"]').click();
     this.addRoles(roles);
     cy.get('body').type('{esc}');
-    cy.get('[data-testid="invite-btn"]').click({ force: true });
-    cy.get('[data-testid="invite-btn"]').should('not.exist');
+    cy.get('[data-cyid="btn-invite"]').click({ force: true });
+    cy.get('[data-cyid="btn-invite"]').should('not.exist');
     cy.log('Invitation sent successfully');
   }
 
@@ -107,9 +107,11 @@ export class OrganizationComponent {
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
     cy.get('[data-cyid="text-field-role-description"]').type(roleDescription);
     cy.get('[data-cyid="chip-role-tag"]').type(roleTag);
-    // cy.get('[data-cyid="next-btn"]').click();
     cy.get('[data-cyid="btn-role-create"]').click({ force: true });
-    cy.get(`td[value="${roleName}"]`).should('be.visible');
+    cy.get('[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]').click();
+    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]').click();
+    cy.log('Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER');
+    cy.get('[data-cyid="btn-create"]').click();
   }
 
   static addPermissions() {
@@ -125,9 +127,10 @@ export class OrganizationComponent {
     OrganizationComponent.deleteRecord(INVITATION_EMAIL);
   }
 
-  static inviteMembertoRole() {
-    cy.contains('Groups').click();
-    cy.contains('td', OrganizationComponent.roleName).click();
+  static addMembertoRole(roleName: string) {
+    cy.get('[data-cyid="search-app"]').type(roleName);
+    cy.get('[id="menu-appbar"]').click();
+    //cy.contains('td', OrganizationComponent.roleName).click();
     cy.get('[id="tags-standard"]')
       .click()
       .type(OrganizationComponent.memberName);
@@ -151,13 +154,14 @@ export class OrganizationComponent {
     cy.log('Member removed from the role successfully');
   }
 
-  static deleteCreatedRole() {
-    cy.contains('Roles').click();
-    cy.log('Deleting the created role');
+  static deleteCreatedRole(roleName: string) {
+    cy.get('[data-cyid="search-app"]').type(roleName);
     cy.contains('td', OrganizationComponent.roleName).should('be.visible');
     cy.contains('td', OrganizationComponent.roleName).trigger('mouseover');
-    cy.get('[data-cy="role-delete-btn"]').click();
+    cy.get('[data-cyid="btn-delete-role"]').click();
+    cy.log('Deleting the created Role');
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
     cy.contains('td', OrganizationComponent.roleName).should('not.exist');
-    cy.log('Role Removed successfully'!);
+    cy.log('Role deleted successfully'!);
   }
 }
