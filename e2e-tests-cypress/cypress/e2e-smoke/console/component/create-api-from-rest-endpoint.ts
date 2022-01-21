@@ -28,6 +28,10 @@ import { ComponentDevelopPage } from "../../../support/console/pages/component/c
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
+import { STANDARD_TIME_OUT } from "../../../support/devportal/constants";
+import { TryOut } from "../../../support/devportal/pages/apis/try-out";
+import { Apis } from "../../../support/devportal/pages/apis/apis-home";
+import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
@@ -40,11 +44,10 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTIION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "create-api-from-rest-endpoint";
+  const idpUser = "choreoe2etest"
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
-    cy.wait(5000);
-    LoginPage.changeOrg();
     cy.wait(5000);
   });
 
@@ -90,6 +93,9 @@ describe("Verify project creation functionality", () => {
     );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector().should(
+      "be.visible"
+    );
   });
 
   it("Create new version from the created API", () => {
@@ -110,12 +116,21 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
-    ComponentAPILifecycle.goToDevportal()
-    // cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
-    //   .invoke('attr', 'href').and('removeAttr', 'target')
-    //   .then((href) => {
-    //     cy.visit(href)
-    //   })
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+
+    // Set 5 minutes waiting time. Since it take some time to appear the newly published APIs on developer portal API listing.
+    cy.wait(300000); 
+
+    Apis.searchApiAndSelect();
+    ApiCredentials.navigateTocredentialsTab();
+    ApiCredentials.generateCredentials();
+    TryOut.navigateToTryOutMenu();
+    TryOut.generateTestKeyAndVerify();
+    TryOut.SelectResource(null, '/users');
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    cy.wait(5000);
+    TryOut.GetResponse();
   });
 
   it.skip("Delete created project", () => {
