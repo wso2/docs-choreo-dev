@@ -100,7 +100,7 @@ describe("Verify webhook creation functionality", () => {
 
   it.skip("Delete created project", () => {
     HomePage.selectHomeMenu();
-    HomePage.navigateToProjects(FILE_ID);
+    HomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 

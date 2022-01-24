@@ -1,0 +1,96 @@
+{
+  "data": {
+    "component": {
+      "id": "c348e973-8626-4615-ba51-8218673b8598",
+      "name": "covid-stat-api",
+      "handler": "answkb",
+      "description": "covid daily stats",
+      "displayType": "restAPI",
+      "displayName": "covid stat api",
+      "orgId": 869,
+      "orgHandler": "dasunatwso2com",
+      "version": "1.0.0",
+      "labels": ["IT Operations/Testing Tools", "IT Operations/Debug Tools"],
+      "createdAt": "2022-01-10T03:54:46.2549226Z",
+      "updatedAt": "2022-01-10T03:54:49.010397Z",
+      "projectId": "977f98ea-39ea-45ed-b396-5e36602c9cf2",
+      "apiId": null,
+      "repository": {
+        "nameApp": "00176523c97b-covid-stat-api-app",
+        "nameConfig": "00176523c97b-covid-stat-api-configs",
+        "branch": "main",
+        "organizationApp": "choreo-userapps-source-dev",
+        "organizationConfig": "choreo-userapps-gitops-dev"
+      },
+      "apiVersions": [
+        {
+          "apiVersion": "1.0.0",
+          "proxyName": "covid-stat-apiq0zk",
+          "proxyUrl": "fec0832e-94dd-4749-aa0f-7da5ed9e0a31/rl7m/covid-stat-apiq0zk",
+          "proxyId": "61dbae089ebed5068eeb7c36",
+          "id": "5c4e6588-b017-4efb-ba59-57a211183a8f",
+          "state": "CREATED",
+          "latest": true,
+          "appEnvVersions": [
+            {
+              "environmentId": "5a9f8b0a-764c-4fc0-bda9-202fd889497d",
+              "releaseId": "e436d1b3-bdfb-4866-b86b-0b9aaf4ee3fe",
+              "release": {
+                "id": "e436d1b3-bdfb-4866-b86b-0b9aaf4ee3fe",
+                "metadata": { "choreoEnv": "dev" },
+                "environmentId": "5a9f8b0a-764c-4fc0-bda9-202fd889497d",
+                "environment": null,
+                "gitHash": "8a4841ea10a5f8b80c339ae4955747e424f557ef",
+                "gitOpsHash": "2552257e871b08ffe26372ac92debcbf02f316a0",
+                "latestDeployment": {
+                  "pending": false,
+                  "deploymentHistoryId": "4b583e58-d638-49c7-850c-30d6db394647",
+                  "deploymentHistory": {
+                    "id": "4b583e58-d638-49c7-850c-30d6db394647",
+                    "appEnvironment": null,
+                    "appEnvironmentId": "e436d1b3-bdfb-4866-b86b-0b9aaf4ee3fe",
+                    "changeMessage": "Deployment state changed",
+                    "containerImages": [
+                      {
+                        "imageId": "cc610df6-f84d-4d7a-b5be-28f8073aef6a",
+                        "containerId": "d58e76a5-9ede-4945-82c9-3814c5c3d820",
+                        "image": {
+                          "imageVersion": null,
+                          "imageName": "choreodevuserappsalbacore.azurecr.io/00176523c97b-covid-stat-api-app",
+                          "imageRegistry": null,
+                          "imageRegistryId": "610c626d-bbc9-4376-a9aa-cc98105b8423",
+                          "tagName": "8a4841ea10a5f8b80c339ae4955747e424f557ef",
+                          "tags": ["8a4841ea10a5f8b80c339ae4955747e424f557ef"],
+                          "gitHash": "8a4841ea10a5f8b80c339ae4955747e424f557ef",
+                          "committer": "",
+                          "commitMsg": ""
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "environmentId": "1bd58161-bcc0-453d-8a67-174d1c89a89f",
+              "releaseId": "70d41e01-def5-4e11-8d24-6af3bfebfcd8",
+              "release": {
+                "id": "70d41e01-def5-4e11-8d24-6af3bfebfcd8",
+                "metadata": { "choreoEnv": "prod" },
+                "environmentId": "1bd58161-bcc0-453d-8a67-174d1c89a89f",
+                "environment": null,
+                "gitHash": null,
+                "gitOpsHash": null,
+                "latestDeployment": {
+                  "pending": false,
+                  "deploymentHistoryId": null,
+                  "deploymentHistory": null
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

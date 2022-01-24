@@ -1,15 +1,3 @@
-/*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
- *
- * This software is the property of WSO2 Inc. and its suppliers, if any.
- * Dissemination of any information or reproduction of any material contained
- * herein is strictly forbidden, unless permitted by WSO2 in accordance with
- * the WSO2 Commercial License available at http://wso2.com/licenses.
- * For specific language governing the permissions and limitations under
- * this license, please see the license as well as any agreement you’ve
- * entered into with WSO2 governing the purchase of this software and any
- * associated services.
- */
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
@@ -26,11 +14,9 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
-import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
 import { Utils } from "../../../support/console/utils";
 
-describe("Verify project creation functionality", () => {
+describe("Verify resources security configuration", () => {
   const COMPONENT_NAME = "covid stat api";
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
@@ -41,61 +27,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
 
-
   before(() => LoginPage.loginToChoreo(FILE_ID));
-
-  it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
-    );
-    ProjectOverviewPage.addNewComponent();
-    RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(
-      COMPONENT_NAME,
-      COMPONENT_DESCRIPTION,
-      FILE_ID
-    );
-    ComponentDevelopPage.getComponentURL(FILE_ID);
-  });
-
-
-  it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace(FILE_ID);
-    VSExplorer.typeCode("Numbers.bal");
-    VSExplorer.selectSourceControl();
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
-    );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
-    VSExplorer.waitTillCodeSyncWithChoreo();
-  });
-
-  it("Verify component commits", () => {
-    LoginPage.reloginToChoreo(FILE_ID);
-    ComponentDevelopPage.addLabels(labels).then((arr) => {
-      expect(arr).to.deep.eq(labels);
-    });
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
-  });
-
-  it("Verify component deployment", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deploy();
-    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
-  });
-
-
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
-  });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ProjectListingPage.selectProject("Default Project");
@@ -324,8 +256,6 @@ describe("Verify project creation functionality", () => {
   });
 
   after(() => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
     HomePage.logout(FILE_ID);
   });
 });

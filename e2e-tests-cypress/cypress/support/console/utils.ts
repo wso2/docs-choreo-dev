@@ -46,6 +46,8 @@ export class Utils {
       headers,
       body,
     };
+cy.log(JSON.stringify(request))
+
 
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });

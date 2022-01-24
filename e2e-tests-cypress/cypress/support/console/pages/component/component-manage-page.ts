@@ -11,10 +11,10 @@
  * associated services.
  */
 
-import { DocumentType } from '../enum/document-type';
-import { DocumentSoruceType } from '../enum/document-source';
-import { ConnectorAudience } from '../enum/marketplace-connector-audience';
-import { Environment } from '../enum/environment';
+import { DocumentType } from "../enum/document-type";
+import { DocumentSoruceType } from "../enum/document-source";
+import { ConnectorAudience } from "../enum/marketplace-connector-audience";
+import { Environment } from "../enum/environment";
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
@@ -25,28 +25,28 @@ export class ComponentAPILifecycle {
   static verifyDevRevision() {
     this.selectSetting();
     return cy
-      .get('.MuiChip-outlined')
+      .get(".MuiChip-outlined")
       .eq(1)
-      .should('be.visible')
-      .invoke('text');
+      .should("be.visible")
+      .invoke("text");
   }
 
   static verifyProdRevision() {
     this.selectSetting();
     return cy
-      .get('.MuiChip-outlined')
+      .get(".MuiChip-outlined")
       .eq(3)
-      .should('be.visible')
-      .invoke('text');
+      .should("be.visible")
+      .invoke("text");
   }
   static publish(audience: ConnectorAudience) {
     this.publishToMarketplace(audience);
-    return cy.get(ComponentAPILifecycle.devportl_btn).should('be.visible');
+    return cy.get(ComponentAPILifecycle.devportl_btn).should("be.visible");
   }
 
   static demoteToCreated() {
     cy.get('[data-testid="Demote to Created-lc-btn"]').click();
-    cy.get(ComponentAPILifecycle.devportl_btn).should('not.be.visible');
+    cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.visible");
   }
 
   static deprecate() {
@@ -59,7 +59,7 @@ export class ComponentAPILifecycle {
 
   static deployAsPrototype() {
     cy.get('[data-testid="Deploy as a Prototype-lc-btn"]')
-      .should('be.visible')
+      .should("be.visible")
       .click();
   }
 
@@ -69,13 +69,13 @@ export class ComponentAPILifecycle {
 
   static selectUsagePlans(...plans) {
     cy.get('[data-testid="Usage plans"]').click();
-    cy.get('[data-testid="checkbox-Unlimited"]').should('be.visible').click();
+    cy.get('[data-testid="checkbox-Unlimited"]').should("be.visible").click();
     plans.forEach((plan) => {
       const pln = `[data-testid="checkbox-${plan}"]`;
       cy.get(pln).click();
     });
-    cy.get('button > span').contains('Save').click();
-    cy.get('[data-testid="checkbox-Unlimited"]').should('be.visible');
+    cy.get("button > span").contains("Save").click();
+    cy.get('[data-testid="checkbox-Unlimited"]').should("be.visible");
   }
 
   static addDocument(
@@ -85,8 +85,8 @@ export class ComponentAPILifecycle {
     documentSourceType: DocumentSoruceType,
     documentSoruce: string
   ) {
-    cy.get('[data-testid="Documents"]').should('be.visible').click();
-    cy.get('[data-testid="add-new-doc"]').should('be.visible').click();
+    cy.get('[data-testid="Documents"]').should("be.visible").click();
+    cy.get('[data-testid="add-new-doc"]').should("be.visible").click();
     cy.get('[data-testid="document-name"]>div>input').type(documentName);
     cy.get('[data-testid="document-summary"]>div>textarea').type(
       documentSummaray
@@ -97,15 +97,15 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="document-source-selector"]').click();
     cy.get(`dta-value=${documentSourceType}`).click();
     cy.get('[data-testid="document-url"]>div>input').type(documentSoruce);
-    cy.contains('Save').click();
+    cy.contains("Save").click();
   }
 
   static publishToMarketplace(connectorAudience: ConnectorAudience) {
-    cy.get('[data-testid="Publish-lc-btn"]').should('be.visible').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
-    cy.contains('Yes, Please').should('be.enabled').click();
+    cy.get('[data-testid="Publish-lc-btn"]').should("be.visible").click();
+    cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
+    cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
-    cy.get('[data-testid="publish-btn"]').should('be.visible').click();
+    cy.get('[data-testid="publish-btn"]').should("be.visible").click();
   }
 
   static configureSecuritySettings(
@@ -116,9 +116,9 @@ export class ComponentAPILifecycle {
     allowedMethods: string[]
   ) {
     cy.get('[data-testid="Settings"]').click();
-    cy.get('[data-testid="switch-cors-config"]').should('be.visible');
+    cy.get('[data-testid="switch-cors-config"]').should("be.visible");
     if (isCORSenable) {
-      cy.contains('Edit').click();
+      cy.contains("Edit").click();
       cy.get('[data-testid="switch-cors-config"]').click();
       cy.get('[data-testid="cors-config-label"]').click();
       if (!isAllOriginsAllowed) {
@@ -127,9 +127,9 @@ export class ComponentAPILifecycle {
       this.addAllowedOrigins(allowedOrigins);
       this.addAllowedAccessControlHeaders(allowedHeaders);
       this.addAllowedAccessMethods(allowedMethods);
-      cy.get('[role="button"]>span').contains('Save').click();
-      cy.get('button').contains('Apply').click();
-      cy.contains('Delete').should('be.visible');
+      cy.get('[role="button"]>span').contains("Save").click();
+      cy.get("button").contains("Apply").click();
+      cy.contains("Delete").should("be.visible");
     }
   }
 
@@ -141,7 +141,7 @@ export class ComponentAPILifecycle {
           .get('[placeholder="Type and press enter to add Origins"]')
           .type(`${ori}`)
           .wait(1000)
-          .type('{enter}')
+          .type("{enter}")
       );
     }
   }
@@ -154,7 +154,7 @@ export class ComponentAPILifecycle {
           .get('[placeholder="Type and press enter to add Headers"]')
           .type(`${meth}`)
           .wait(1000)
-          .type('{enter}')
+          .type("{enter}")
       );
     }
   }
@@ -170,10 +170,11 @@ export class ComponentAPILifecycle {
     }
   }
 
-
   static selectSetting() {
     cy.get('[data-testid="Settings"]').click();
   }
+
+
 
   static selectResources() {
     cy.get('[data-cyid="tab-resource-settings"]').click();
@@ -185,13 +186,28 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[data-testid="resource-${resource}"]>div`).eq(1).click();
-    cy.get(`[data-testid="resource-${resource}"] [data-testid="security"]`).should('be.visible').click();
+    cy.get(`[data-testid="resource-${resource}"] [data-testid="security"]`)
+      .should("be.visible")
+      .click();
   }
 
-  static applyConfiguration(env:Environment){
-    cy.get('[data-cyid="btn-save-settings"]').should('be.enabled').click();
+  static applyConfiguration(env: Environment) {
+    cy.get('[data-cyid="btn-save-settings"]').should("be.enabled").click();
     cy.get(`[aria-label="environment"]`).contains(env).click();
-    cy.get('button').contains('Apply').click();
-    cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
+    cy.get("button").contains("Apply").click();
+    cy.wait(2000);
+    cy.intercept({
+      method: "POST",
+      url: "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/**/revisions?organizationId=**",
+    }).as("revision");
+
+    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
   }
+  static getLatestRevision() {
+    return cy.wait("@revision").then((revision) => {
+     cy.log(JSON.stringify(revision.response.body));
+     return cy.wrap(revision.response.body.displayName);
+   });
+ }
+
 }

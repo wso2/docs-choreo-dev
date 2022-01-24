@@ -69,7 +69,7 @@ export class VSExplorer {
     this.closeTab();
     this.selectExplorer();
     this.createFile(fileName);
-    cy.get('div[class="view-line"]').should('be.visible').realClick();
+    cy.get('div[class="view-line"]').should('be.visible').click();
     cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
       const codeArr = code.split('\n'); // create an array from the read file content.
       codeArr.forEach((element) => {

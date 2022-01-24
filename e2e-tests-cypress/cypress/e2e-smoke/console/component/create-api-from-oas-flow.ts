@@ -29,6 +29,8 @@ import {
 } from "../../../support/console/pages/component/common/constants";
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
+import { Environment } from "../../../support/console/pages/enum/environment";
+import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 
 describe("Choreo APIM publisher scenarios", () => {
   const FILE_ID = "create-api-from-oas-flow";
@@ -62,31 +64,66 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify component deployment and endpoint configurations", () => {
     //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeploytoDev();
-    APIDeployment.PrmotetoProd();
+    APIDeployment.DeployToDev();
+    APIDeployment.PromoteToProd();
   });
 
   it("Verify test functionality", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource( "/intensity");
+    SwaggerUI.SelectResource("/intensity");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource( "/intensity/factors");
+    SwaggerUI.SelectResource("/intensity/factors");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource( "/generation");
+    SwaggerUI.SelectResource("/generation");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
     SwaggerUI.GetResponse();
+  });
+
+  it("Verify test functionality of root resource in dev on curl", () => {
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.DEVELOPMENT);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("intensity");
+    Curl.getRequestComponents(
+      FILE_ID,
+      `${Environment.DEVELOPMENT}intensity`
+    ).then((curl) =>
+      Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+      })
+    );
+  });
+
+  it("Apply configs to dev", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.disableResourceSecurity("/intensity");
+    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+  });
+
+  it("Verify resource not access without the token in dev", () => {
+    Curl.getRequestComponents(
+      FILE_ID,
+      `${Environment.DEVELOPMENT}intensity`
+    ).then((curl) =>
+      Utils.sendRequest(curl.method, curl.url).then((res) => {
+        expect(res.status).equal(200);
+      })
+    );
   });
 
   it("Verify manage functionality", () => {
@@ -96,7 +133,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it.skip("Delete created project", () => {
     HomePage.selectHomeMenu();
-    HomePage.navigateToProjects(FILE_ID);
+    HomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 

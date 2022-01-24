@@ -14,7 +14,7 @@
 export class ProjectOverviewPage {
 
   static selectComponent(fileID) {
-    cy.get('tbody>tr').contains(fileID).click();
+    cy.get('td>div>p').contains(fileID).click();
   }
 
   static addNewComponent() {
