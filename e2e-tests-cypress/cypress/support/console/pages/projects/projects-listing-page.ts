@@ -20,22 +20,12 @@ export class ProjectListingPage {
     cy.get('[data-testid="version-picker"]').click();
     cy.get('[aria-labelledby="version-picker"]>button').click();
 
-    const balRegistryURL = Cypress.env("balRegistryURL");
-
-    cy.intercept({
-      method: "GET",
-      url: `${balRegistryURL}/packages?*`,
-      times: 1,
-    }).as("balRegistry");
-
-    cy.wait("@balRegistry").then(() => {
-      cy.get('[name="Name"]').should("be.visible").clear().type(projectName);
-      cy.get('[name="Description"]')
-        .should("be.visible")
-        .clear()
-        .type(description);
-      cy.get('[data-testid="create-version-create"]').click();
-    });
+    cy.get('[name="Name"]').should("be.visible").clear().type(projectName);
+    cy.get('[name="Description"]')
+      .should("be.visible")
+      .clear()
+      .type(description);
+    cy.get('[data-testid="create-version-create"]').click();
   }
 
   static selectProject(fileID: string) {
