@@ -20,8 +20,6 @@ export class ProjectListingPage {
     cy.get('[data-testid="version-picker"]').click();
     cy.get('[aria-labelledby="version-picker"]>button').click();
 
-    const balRegistryURL = Cypress.env("balRegistryURL");
-
     cy.get('[name="Name"]').should("be.visible").clear().type(projectName);
     cy.get('[name="Description"]')
       .should("be.visible")
