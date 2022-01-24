@@ -98,9 +98,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    // ProjectListingPage.selectProject("Default Project");
-    // HomePage.navigateToComponents();
-
     ProjectOverviewPage.selectComponent("jojo");
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
@@ -217,7 +214,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.disableResourceSecurity("/root");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
     ComponentAPILifecycle.verifyDevRevision().should('eq',Environment.DEVELOPMENT)
-     ComponentAPILifecycle.getLatestRevision().should('eq','Revision 184')
+     ComponentAPILifecycle.getLatestRevision().should('eq','Revision 3')
   });
 
   it("Apply configs to prod", () => {

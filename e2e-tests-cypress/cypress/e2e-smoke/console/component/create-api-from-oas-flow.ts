@@ -113,6 +113,11 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("/intensity");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Environment.DEVELOPMENT
+    );
+     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
   });
 
   it("Verify resource not access without the token in dev", () => {
