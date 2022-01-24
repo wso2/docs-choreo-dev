@@ -27,6 +27,7 @@ export class RestAPITemplate {
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
     cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
     this.interceptProjectDetails(fiileID);
+    this.interceptRevision(fiileID)
   }
 
   private static interceptProjectDetails(fiileID: string) {
@@ -50,4 +51,20 @@ export class RestAPITemplate {
       });
     });
   }
+
+
+private static interceptRevision(fileID){
+  const url = "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*?organizationId=*"
+  https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/61ee75e3829e4f312e1bc946?organizationId=fec0832e-94dd-4749-aa0f-7da5ed9e0a31
+  cy.intercept(url).as('revision')
+
+  cy.wait('@revision',{timeout:1200000}).then(inc=>{
+    cy.log(inc.request.url)
+  })
+}
+
+
+
+
+
 }

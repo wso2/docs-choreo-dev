@@ -98,8 +98,8 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    ProjectListingPage.selectProject("Default Project");
-    HomePage.navigateToComponents();
+    // ProjectListingPage.selectProject("Default Project");
+    // HomePage.navigateToComponents();
 
     ProjectOverviewPage.selectComponent("jojo");
     ComponentOverviewPage.navigateToTest();

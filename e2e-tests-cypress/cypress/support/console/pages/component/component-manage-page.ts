@@ -197,16 +197,17 @@ export class ComponentAPILifecycle {
     cy.get("button").contains("Apply").click();
     cy.wait(2000);
     cy.intercept({
-      method: "POST",
-      url: "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/**/revisions?organizationId=**",
+      method: "GET",
+      url: "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*/revisions?organizationId=*",
+      
     }).as("revision");
 
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
   }
   static getLatestRevision() {
-    return cy.wait("@revision").then((revision) => {
+    return cy.wait("@revision",{timeout:20000}).then((revision) => {
      cy.log(JSON.stringify(revision.response.body));
-     return cy.wrap(revision.response.body.displayName);
+     return cy.wrap(revision.response.body.list);
    });
  }
 

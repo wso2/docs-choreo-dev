@@ -33,19 +33,19 @@ describe("Verify resources security configuration", () => {
     ProjectListingPage.selectProject("Default Project");
     HomePage.navigateToComponents();
 
-    ProjectOverviewPage.selectComponent("jojo");
-    ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("/root");
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue("number", "2");
-    SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.GetResponse().should("eq", "4");
-    SwaggerUI.getResponseCode().should("eq", "200");
+    // ProjectOverviewPage.selectComponent("jojo");
+    // ComponentOverviewPage.navigateToTest();
+    // ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
+    // ComponentTestPage.getTestKey();
+    // SwaggerUI.SelectResource("/root");
+    // SwaggerUI.TryoutAPI();
+    // SwaggerUI.enterValue("number", "2");
+    // SwaggerUI.ExecuteResourceFunction();
+    // SwaggerUI.GetResponse().should("eq", "4");
+    // SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
+  it.skip("Verify test functionality of root resource in dev on curl", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
@@ -60,7 +60,7 @@ describe("Verify resources security configuration", () => {
     );
   });
 
-  it("Verify test functionality of isOdd resource in dev on swagger", () => {
+  it.skip("Verify test functionality of isOdd resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
@@ -72,7 +72,7 @@ describe("Verify resources security configuration", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify test functionality of isOdd resource in dev on curl", () => {
+  it.skip("Verify test functionality of isOdd resource in dev on curl", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
@@ -87,7 +87,7 @@ describe("Verify resources security configuration", () => {
     );
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
+  it.skip("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
@@ -99,7 +99,7 @@ describe("Verify resources security configuration", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify test functionality of root resource in prod on curl", () => {
+  it.skip("Verify test functionality of root resource in prod on curl", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.PRODUCTION);
     Curl.selectMethod(HTTPMethod.GET);
@@ -114,7 +114,7 @@ describe("Verify resources security configuration", () => {
     );
   });
 
-  it("Verify test functionality of isOdd resource in prod on swagger", () => {
+  it.skip("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
@@ -126,7 +126,7 @@ describe("Verify resources security configuration", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify test functionality of isOdd resource in prod on curl", () => {
+  it.skip("Verify test functionality of isOdd resource in prod on curl", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.PRODUCTION);
     Curl.selectMethod(HTTPMethod.GET);
@@ -144,12 +144,18 @@ describe("Verify resources security configuration", () => {
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.getLatestRevision().then((r) => {
+      cy.log(JSON.stringify(r));
+    });
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("/root");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
-    ComponentAPILifecycle.verifyDevRevision().should('eq',Environment.DEVELOPMENT)
-     ComponentAPILifecycle.getLatestRevision().should('eq','Revision 184')
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Environment.DEVELOPMENT
+    );
+    ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 184");
   });
 
   it("Apply configs to prod", () => {
