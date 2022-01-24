@@ -12,7 +12,7 @@
  */
 
 export class HomePage {
-  static username = "button[aria-haspopup]>span>p";
+  static username = ('[data-testid="header-user-profile-menu"]')
 
   static navigateToHome() {
     cy.get('[href="/"]').eq(1).click();

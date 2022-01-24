@@ -89,6 +89,8 @@ kubectl create configmap "lua-log4j-migitaion-script-config-map" --from-file=../
 kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
+kubectl apply -f ./netpol/"${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress-ns.yaml"
+
 echo "--- Installing Control Plane Internal Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
 helm upgrade --install "${INTERNAL_INGRESS_NAMESPACE}" ingress-nginx/ingress-nginx \
@@ -127,6 +129,8 @@ kubectl create configmap "lua-log4j-migitaion-script-config-map" --from-file=../
 
 kubectl annotate namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
+
+kubectl apply -f ./netpol/"${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress-ns.yaml"
 
 echo "--- Installing Control Plane Internal Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
