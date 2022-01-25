@@ -126,7 +126,7 @@ describe("Verify project creation functionality", () => {
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(null, '/users');
+    TryOut.SelectResource(null, OPERATION_TARGET);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     cy.wait(5000);
