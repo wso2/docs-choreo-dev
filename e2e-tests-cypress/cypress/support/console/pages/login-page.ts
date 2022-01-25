@@ -58,6 +58,7 @@ export class LoginPage {
     const appSvcURL = Cypress.env("appSvcURL");
     const idpURL = Cypress.env("idpURL");
     const apimSvcURL = Cypress.env("apimSvcURL");
+    const balRegistryURL = Cypress.env("balRegistryURL");
 
     cy.intercept("POST", `${idpURL}/commonauth`).as("cookies");
     cy.intercept({
@@ -66,6 +67,11 @@ export class LoginPage {
       times: 1,
     }).as("token");
     cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
+    cy.intercept({
+      method: "GET",
+      url: `${balRegistryURL}/packages?*`,
+      times: 1,
+    }).as("balRegistry"); // Ensure ballerina registry call completes before interacting with UI
   }
 
   private static persistOrgs(interceptor: any, fileID: string) {
@@ -103,19 +109,21 @@ export class LoginPage {
   private static testSetup(fileID: string) {
     cy.log("testSetup()");
     let token: string;
-    cy.wait(["@token", "@org"], { timeout: 60000 }).then((interceptions) => {
-      token = interceptions[0].response.body.access_token;
+    cy.wait(["@token", "@org", "@balRegistry"], { timeout: 60000 }).then(
+      (interceptions) => {
+        token = interceptions[0].response.body.access_token;
 
-      const userOrg = this.persistOrgs(interceptions[1], fileID);
+        const userOrg = this.persistOrgs(interceptions[1], fileID);
 
-      GraphQL.createDefaultProjectIfNotExists(
-        userOrg.id,
-        userOrg.handle,
-        token
-      );
+        GraphQL.createDefaultProjectIfNotExists(
+          userOrg.id,
+          userOrg.handle,
+          token
+        );
 
-      //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
-    });
+        //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
+      }
+    );
   }
 
   private static persistCookies(fileID: string) {

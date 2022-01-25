@@ -21,6 +21,7 @@ kind: Deployment
 metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
   name: choreo-connect-deployment
 spec:
   replicas: 0
