@@ -10,8 +10,6 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
-import { APITest } from "../../../support/console/pages/apis/api-test";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
@@ -30,10 +28,6 @@ import { RestAPITemplate } from "../../../support/console/pages/templates/rest-a
 import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
 import { Utils } from "../../../support/console/utils";
-import { STANDARD_TIME_OUT } from "../../../support/devportal/constants";
-import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
-import { Apis } from "../../../support/devportal/pages/apis/apis-home";
-import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 
 describe("Verify project creation functionality", () => {
   const COMPONENT_NAME = "covid stat api";
@@ -45,7 +39,6 @@ describe("Verify project creation functionality", () => {
   const commitMessage = "adding user.bal file";
   const queryParameters = [{ key: "name", value: "dasun" }];
   const OPERATION_TARGET = "/sayHello";
-  const idpUser = "choreoe2etest"
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
@@ -143,41 +136,6 @@ describe("Verify project creation functionality", () => {
     );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
-
-  it("Create new version from the created API", () => {
-    ComponentOverviewPage.navigateToDevelop();
-    ComponentOverviewPage.createNewVersion();
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeploytoDev();
-    APIDeployment.PrmotetoProd();
-    ComponentOverviewPage.navigateToTest();
-    APITest.selectEnvironment('Production');
-    cy.verifyTest(OPERATION_TARGET);
-
-    APITest.selectEnvironment('Development');
-    cy.verifyTest(OPERATION_TARGET);
-
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-
-    // Set 5 minutes waiting time. Since it take some time to appear the newly published APIs on developer portal API listing.
-    cy.wait(300000); 
-
-    Apis.searchApiAndSelect();
-    ApiCredentials.navigateTocredentialsTab();
-    ApiCredentials.generateCredentials();
-    TryOut.navigateToTryOutMenu();
-    TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(null, OPERATION_TARGET);
-    TryOut.TryoutAPI();
-    TryOut.ExecuteResourceFunction();
-    cy.wait(STANDARD_TIME_OUT);
-    TryOut.GetResponse();
   });
 
   it.skip("Delete created project", () => {
