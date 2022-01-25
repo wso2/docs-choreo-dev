@@ -44,6 +44,11 @@ export class ComponentAPILifecycle {
     return cy.get(ComponentAPILifecycle.devportl_btn).should("be.visible");
   }
 
+  static publishWithoutConnector() {
+    this.publishToDevportal();
+    return cy.get(ComponentAPILifecycle.devportl_btn).should('be.visible');
+  }
+
   static demoteToCreated() {
     cy.get('[data-testid="Demote to Created-lc-btn"]').click();
     cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.visible");
@@ -65,6 +70,14 @@ export class ComponentAPILifecycle {
 
   static goToDevportal() {
     cy.get(ComponentAPILifecycle.devportl_btn).click();
+  }
+
+  static goToDeveloperPortalWithoutLogin(idpUser: string) {
+    cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
+      .invoke('attr', 'href')
+      .then((href) => {
+        cy.visit(href + '&fidp=' + idpUser)
+      })
   }
 
   static selectUsagePlans(...plans) {
@@ -106,6 +119,12 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.visible").click();
+  }
+
+  static publishToDevportal() {
+    cy.get('[data-testid="Publish-lc-btn"]').should('be.visible').click();
+    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
+    cy.contains('No, Thanks').should('be.enabled').click();
   }
 
   static configureSecuritySettings(

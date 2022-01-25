@@ -71,6 +71,7 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify test functionality", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
+    //SwaggerUI.invokeResource("/intensity")
     SwaggerUI.SelectResource("/intensity");
     SwaggerUI.TryoutAPI();
     SwaggerUI.ExecuteResourceFunction();
