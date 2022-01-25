@@ -37,16 +37,10 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "create-rest-api-from-scratch";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-<<<<<<< HEAD
   const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
 
-=======
-  const commitMessage = "adding user.bal file";
-  const queryParameters = [{ key: "name", value: "dasun" }];
-  const OPERATION_TARGET = "/sayHello";
->>>>>>> 5f0beba26fdd2970c6e4ba9a34ae0ba0db87d7dd
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 

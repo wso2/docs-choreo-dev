@@ -62,10 +62,5 @@ export class SwaggerUI {
       this.enterValue(key, value);
     }
     this.ExecuteResourceFunction();
-// cy.log(this.GetResponse())
-    return {
-      response: this.GetResponse(),
-      statusCode: this.getResponseCode(),
-    };
   }
 }
