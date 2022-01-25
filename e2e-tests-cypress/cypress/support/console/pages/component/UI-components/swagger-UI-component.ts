@@ -12,37 +12,55 @@
  */
 
 export class SwaggerUI {
-  static SelectResource(httpMethod: string, path: string) {
+  static SelectResource(path: string) {
     const pathVariable = `[data-path="${path}"]`;
-    cy.get('.swagger-ui').within(() => {
+    cy.get(".swagger-ui").within(() => {
       cy.get(pathVariable).click();
     });
   }
 
   static TryoutAPI() {
     cy.get('div > div > button[class="btn try-out__btn"]')
-      .contains('Try it out')
-      .should('exist')
+      .contains("Try it out")
+      .should("exist")
       .click({ force: true });
-    cy.get('.opblock-section-header').contains('Cancel').should('exist');
+    cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
   static ExecuteResourceFunction() {
-    cy.get('.execute-wrapper').click();
-    cy.log('Execution is successful');
+    cy.get(".execute-wrapper").click();
+    cy.log("Execution is successful");
   }
 
   static GetResponse() {
-    cy.get('.curl-command').should('exist');
-    cy.get('.request-url').should('exist');
-    cy.log('Response is successfully returned');
-    cy.log('API Tryout is successful!');
-    return cy.get('.live-responses-table pre code').invoke('text')
+    cy.get(".curl-command").should("exist");
+    cy.get(".request-url").should("exist");
+    cy.log("Response is successfully returned");
+    cy.log("API Tryout is successful!");
+    return cy.get(".live-responses-table pre code").invoke("text");
   }
 
   static getResponseCode() {
     return cy
-      .get('.live-responses-table tbody tr .response-col_status')
-      .invoke('text');
+      .get(".live-responses-table tbody tr .response-col_status")
+      .invoke("text");
+  }
+
+  static enterValue(placeholder: string, value: string) {
+    cy.wait(2000);
+    cy.get(`[placeholder="${placeholder}"]`).should("be.visible").type(value);
+  }
+
+  static invokeResource(
+    resource: string,
+    key: string = "",
+    value: string = ""
+  ) {
+    this.SelectResource(resource);
+    this.TryoutAPI();
+    if (key) {
+      this.enterValue(key, value);
+    }
+    this.ExecuteResourceFunction();
   }
 }

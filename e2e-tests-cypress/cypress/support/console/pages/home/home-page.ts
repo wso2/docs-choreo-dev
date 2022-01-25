@@ -15,16 +15,13 @@ export class HomePage {
   static username = ('[data-testid="header-user-profile-menu"]')
 
   static navigateToHome() {
-    cy.get('[data-testid="main-left-nav-item-Home"]')
-      .should("be.visible")
-      .click();
+    cy.get('[href="/"]').eq(1).click();
   }
 
-  static navigateToProjects(fileID) {
+  static navigateToComponents() {
     cy.get('[data-testid="main-left-nav-item-Components"]')
       .should("be.visible")
       .click();
-    this.interceptProjects(fileID);
   }
 
   static selectHomeMenu() {
@@ -70,15 +67,4 @@ export class HomePage {
       .click();
   }
 
-  private static interceptProjects(fileID) {
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("projects");
-    return cy.wait("@projects", { timeout: 20000 }).then((e) => {
-      const { projects } = e.response.body.data;
-      cy.task("writeTestData", {
-        fileName: fileID,
-        key: "projects",
-        value: projects,
-      });
-    });
-  }
 }

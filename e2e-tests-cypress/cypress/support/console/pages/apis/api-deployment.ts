@@ -12,21 +12,20 @@
  */
 
 export class APIDeployment {
+  static navigateToDeployment() {
+    cy.contains("Deploy").should("be.visible").click();
+    cy.get('[id="backdrop-loader"').should("not.exist");
+  }
 
-    static navigateToDeployment() {
-        cy.contains('Deploy').should('be.visible').click();
-        cy.get('[id="backdrop-loader"').should('not.exist');
+  static DeployToDev() {
+    cy.wait(5000)
+    cy.get('[data-cyid="btn-deploy-proxy"]').should("be.visible").click({force:true});
+   cy.get('[data-cyid="btn-proxy-promote"]').should('be.visible')
 
-    }
+  }
 
-    static DeploytoDev(){
-      cy.wait(5000);
-      cy.get('.MuiPaper-root > :nth-child(3)').contains('Deploy').should('be.visible').click();
-    }
-
-    static PrmotetoProd(){
-      cy.contains('Promote').should('be.visible').click();
-      cy.wait(5000);
-    }
-
+  static PromoteToProd() {
+    cy.contains("Promote").click();
+   cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains('Production').should('be.visible')
+  }
 }

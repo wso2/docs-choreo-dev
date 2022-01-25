@@ -7,7 +7,12 @@ export class VSExplorer {
 
   static waitTillCodespaceLoad() {
     cy.get('[aria-label="service.bal Diagram"]').should('be.visible');
+    // cy.get('.monaco-highlighted-label').contains('service.bal').click();
+    // cy.get('div[class*="service.bal-name-file-icon"]  [title="Delete"]').should('be.visible').click();
+    // cy.get('.notification-list-item-buttons-container > [title="Delete"]').should('be.visible').click();
   }
+
+
 
   static selectExplorer() {
     cy.get('a[aria-label="Explorer (Ctrl+Shift+E)"]')
@@ -64,7 +69,7 @@ export class VSExplorer {
     this.closeTab();
     this.selectExplorer();
     this.createFile(fileName);
-    cy.get('div[class="view-line"]').should('be.visible').realClick();
+    cy.get('div[class="view-line"]').should('be.visible').click();
     cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
       const codeArr = code.split('\n'); // create an array from the read file content.
       codeArr.forEach((element) => {
@@ -97,4 +102,9 @@ export class VSExplorer {
     cy.get('a[aria-label="cloud-upload  Sync with Choreo upsteam"]').click();
     cy.get('[title*="show again!"]').should('be.visible').click();
   }
+
+
+  // private static deleteDefaultBalFile(){
+  //   cy.get('.monaco-highlighted-label').contains('service.bal').click()
+  // }
 }

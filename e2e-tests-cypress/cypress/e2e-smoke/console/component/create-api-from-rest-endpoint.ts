@@ -74,8 +74,8 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     cy.wait(5000);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeploytoDev();
-    APIDeployment.PrmotetoProd();
+    APIDeployment.DeployToDev();
+    APIDeployment.PromoteToProd();
   });
 
   it("Verify test functionality", () => {
@@ -135,7 +135,7 @@ describe("Verify project creation functionality", () => {
 
   it.skip("Delete created project", () => {
     HomePage.selectHomeMenu();
-    HomePage.navigateToProjects(FILE_ID);
+    HomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 

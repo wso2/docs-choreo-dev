@@ -2,9 +2,9 @@
     "defaultCommandTimeout": 120000,
     "pageLoadTimeout": 120000,
     "responseTimeout": 120000,
-    "integrationFolder": "cypress/e2e-smoke",
+    "integrationFolder": "cypress/e2e-smoke/",
     "testFiles": [
-        "./**/*.ts"
+        "./**/component/**/*.ts"
     ],
     "viewportHeight": 1440,
     "viewportWidth": 2560,

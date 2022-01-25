@@ -157,7 +157,7 @@ export class GraphQL {
 
   static getProjects(orgId: number, token: string) {
     const query = {
-      query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate, }}`,
+      query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
     };
 
     return this.callGraphQL(token, query);

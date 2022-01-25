@@ -34,22 +34,23 @@ export class Utils {
     return this.keyNamePrefix + Date.now() + name;
   }
 
-  static logDate(fileID: string, key: string, val = '') {
-    const date = new Date();
-
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
+  static sendRequest(
+    method: string,
+    url: string,
+    headers: any={},
+    body: any = {}
+  ) {
+    const request = {
+      method,
+      url,
+      headers,
+      body,
     };
-    const modifiedDate = new Intl.DateTimeFormat('en', options).format(date);
-    cy.task('writeTestData', {
-      fileName: fileID,
-      key,
-      value: modifiedDate,
+cy.log(JSON.stringify(request))
+
+
+    return cy.request(request).then((res) => {
+      return cy.wrap({ body: res.body, status: res.status });
     });
   }
 }

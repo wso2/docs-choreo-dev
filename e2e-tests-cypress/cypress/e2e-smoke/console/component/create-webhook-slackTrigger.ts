@@ -76,7 +76,7 @@ describe("Verify webhook creation functionality", () => {
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeploy();
-    ComponentDeployPage.isDeploymentSuccessful(FILE_ID).should("be.visible");
+    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
   });
 
   it("Component promotion to prod", () => {
@@ -100,7 +100,7 @@ describe("Verify webhook creation functionality", () => {
 
   it.skip("Delete created project", () => {
     HomePage.selectHomeMenu();
-    HomePage.navigateToProjects(FILE_ID);
+    HomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 

@@ -40,24 +40,10 @@ export class ComponentDeployPage {
     this.selectButton('Redeploy').should('be.visible');
   }
 
-  static isDeploymentSuccessful(fileID) {
-    return cy
-      .get('[title="Build Success"]', { timeout: 900000 })
-      .then(() => Utils.logDate(fileID, 'depDate'));
+  static isDeploymentSuccessful() {
+    return cy.get('[title="Build Success"]');
   }
 
-  static verifyDevInvokeURL() {
-    return cy.get('input[type="text"]').eq(1).invoke('attr', 'value');
-  }
-
-  static verifyProdInvokeURL() {
-    cy.wait(5000);
-    return cy
-      .get('input[type="text"]')
-      .should('be.visible')
-      .eq(2)
-      .invoke('attr', 'value');
-  }
 
   static promoteToProd() {
     cy.wait(8000);
@@ -68,4 +54,26 @@ export class ComponentDeployPage {
   private static selectButton(buttonName) {
     return cy.get('[type="button"]>span').contains(buttonName);
   }
+
+
+  
+   static verifyDevInvokeURL() {
+    return cy
+      .get('[data-cyid="text-field-invoke-url"] input')
+      .eq(0)
+      .invoke('attr', 'value');
+  }
+
+  static verifyProdInvokeURL() {
+    cy.wait(5000);
+    return cy
+      .get('[data-cyid="text-field-invoke-url"] input')
+      .eq(1)
+      .invoke('attr', 'value');
+  }
+
+  static stopAllDeployment() {
+    cy.get('[data-cyid="btn-stop-redeploy"]').click({ multiple: true });
+  }
+
 }

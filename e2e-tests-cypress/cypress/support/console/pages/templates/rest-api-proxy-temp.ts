@@ -63,34 +63,12 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="open-api-file"]').click();
     cy.get('input[type="file"]').attachFile(filepath);
     cy.get('[id="next"]').click();
-    cy.get('[data-testid="api-name"]').findByRole("textbox").clear();
-    cy.wait(2000);
-    cy.get('[data-testid="api-name"]').findByRole("textbox").type(API_NAME);
-    cy.get('[data-testid="api-basepath"]').within(() => {
-      cy.get("input").clear().type(API_NAME);
-    });
+    cy.get('[data-testid="api-name"]>div>input').clear().type(API_NAME);
+    cy.get('[data-testid="api-basepath"]>div>input').clear().type(API_NAME);
     cy.get('[data-testid="api-endpoint"]').within(() => {
       cy.get("p").contains("Mui-error").should("not.exist");
     });
 
     cy.get("button>span").contains("Create").click();
-
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("createApi");
-
-    cy.wait("@createApi", { timeout: 80000 }).then((interception) => {
-      const authData = { projectId: "" };
-      authData.projectId = interception.response.body.data.createComponent.id;
-
-      cy.task("writeTestData", {
-        fileName: file_id,
-        key: "authData",
-        value: authData,
-      });
-      cy.url().should("include", develop + overview);
-      cy.get('[data-testid="develop-resources-header"')
-        .contains("Resources")
-        .should("be.visible");
-      cy.log("Successfully created API from open API specification");
-    });
   }
 }
