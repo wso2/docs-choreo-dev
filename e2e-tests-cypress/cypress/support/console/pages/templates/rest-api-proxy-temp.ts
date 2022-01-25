@@ -70,23 +70,5 @@ export class RestAPIProxyTemplate {
     });
 
     cy.get("button>span").contains("Create").click();
-
-    // cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("createApi");
-
-    // cy.wait("@createApi", { timeout: 80000 }).then((interception) => {
-    //   const authData = { projectId: "" };
-    //   authData.projectId = interception.response.body.data.createComponent.id;
-
-    //   cy.task("writeTestData", {
-    //     fileName: file_id,
-    //     key: "authData",
-    //     value: authData,
-    //   });
-    //   cy.url().should("include", develop + overview);
-    //   cy.get('[data-testid="develop-resources-header"')
-    //     .contains("Resources")
-    //     .should("be.visible");
-    //   cy.log("Successfully created API from open API specification");
-    // });
   }
 }
