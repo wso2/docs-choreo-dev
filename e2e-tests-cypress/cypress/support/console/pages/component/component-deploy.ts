@@ -23,7 +23,7 @@ export class ComponentDeployPage {
   static configureAndDeploy() {
     cy.wait(8000);
     cy.get('[data-cyid="btn-deploy-api"]').click();
-    this.selectButton('Deploy').should('be.visible').click();
+    cy.contains('Deploy').should('be.visible').click();
   }
 
   static addConfiguration(key: string, value: string) {
