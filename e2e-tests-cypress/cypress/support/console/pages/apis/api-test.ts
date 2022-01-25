@@ -16,4 +16,10 @@ export class APITest {
     cy.contains('Test').should('be.visible').click();
     cy.get('[id="backdrop-loader"').should('not.exist');
   }
+
+  static selectEnvironment(envName: string) {
+    cy.get('[data-cyid=select-env]').click();
+    cy.get('[data-cyid=item-env-name]').contains(envName).click();
+  }
+
 }

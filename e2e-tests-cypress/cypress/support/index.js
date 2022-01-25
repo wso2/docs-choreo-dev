@@ -14,6 +14,7 @@
 import '@testing-library/cypress/add-commands'
 import "cypress-real-events/support";
 import "cypress-file-upload"
+import "./commands"
 import 'cypress-xpath';
 
 

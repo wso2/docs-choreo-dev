@@ -23,9 +23,19 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing", {
       timeout: STANDARD_TIME_OUT,
     }).type(apiName + "{enter}");
-    cy.get('[data-testid="apiCard-' + apiName + '"]')
+    cy.get('[data-testid="apiCard-' + apiName + '"]').first()
       .should("be.visible")
       .click();
     cy.log("Successfully navigated to Overview");
+  }
+  
+  static searchApiAndSelect() {
+    cy.get('[data-testid=txt-api-name]').invoke('text').then((textApiName) => {
+      cy.get('[data-testid=apis-appbar-btn]').click();
+      cy.get('#outlined-search-bar-api-listing').type(textApiName);
+      cy.get('button').contains('Search').click();
+      cy.get('[data-testid=apiCard-' + textApiName + ']').should('have.length', 2);
+      cy.get('[data-testid=apiCard-' + textApiName + ']').last().click();
+    });
   }
 }

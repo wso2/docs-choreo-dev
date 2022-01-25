@@ -27,6 +27,11 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
+import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
+import { STANDARD_TIME_OUT } from "../../../support/devportal/constants";
+import { TryOut } from "../../../support/devportal/pages/apis/try-out";
+import { Apis } from "../../../support/devportal/pages/apis/apis-home";
+import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
@@ -39,9 +44,11 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTIION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "create-api-from-rest-endpoint";
+  const idpUser = "choreoe2etest"
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
+    cy.wait(5000);
   });
 
   it("Verify Rest API creation from existing endpoint", () => {
@@ -60,23 +67,19 @@ describe("Verify project creation functionality", () => {
       FILE_ID
     );
     APIDevelop.addResources(OPERATION_TARGET, HTTPMethod.GET);
+    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
   it("Verify component deployment", () => {
+    cy.wait(5000);
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeploytoDev();
     APIDeployment.PrmotetoProd();
   });
 
   it("Verify test functionality", () => {
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, OPERATION_TARGET);
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.GetResponse();
-    SwaggerUI.getResponseCode().should("eq", "200");
+    cy.verifyTest(OPERATION_TARGET);
   });
 
   it("Verify manage functionality", () => {
@@ -90,6 +93,44 @@ describe("Verify project creation functionality", () => {
     );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector().should(
+      "be.visible"
+    );
+  });
+
+  it("Create new version from the created API", () => {
+    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.createNewVersion();
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeploytoDev();
+    APIDeployment.PrmotetoProd();
+    ComponentOverviewPage.navigateToTest();
+    APITest.selectEnvironment('Production');
+    cy.verifyTest(OPERATION_TARGET);
+
+    APITest.selectEnvironment('Development');
+    cy.verifyTest(OPERATION_TARGET);
+
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+      "be.visible"
+    );
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+
+    // Set 5 minutes waiting time. Since it take some time to appear the newly published APIs on developer portal API listing.
+    cy.wait(300000); 
+
+    Apis.searchApiAndSelect();
+    ApiCredentials.navigateTocredentialsTab();
+    ApiCredentials.generateCredentials();
+    TryOut.navigateToTryOutMenu();
+    TryOut.generateTestKeyAndVerify();
+    TryOut.SelectResource(null, OPERATION_TARGET);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    cy.wait(5000);
+    TryOut.GetResponse();
   });
 
   it.skip("Delete created project", () => {

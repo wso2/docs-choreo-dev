@@ -38,6 +38,7 @@ describe("Verify project creation functionality", () => {
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding user.bal file";
   const queryParameters = [{ key: "name", value: "dasun" }];
+  const OPERATION_TARGET = "/sayHello";
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
@@ -93,7 +94,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/sayHello");
+    SwaggerUI.SelectResource(HTTPMethod.GET, OPERATION_TARGET);
     SwaggerUI.TryoutAPI();
     cy.get('[placeholder="name"]').type("Dasun");
     SwaggerUI.ExecuteResourceFunction();
@@ -115,7 +116,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, "/sayHello");
+    SwaggerUI.SelectResource(HTTPMethod.GET, OPERATION_TARGET);
     SwaggerUI.TryoutAPI();
     cy.get('[placeholder="name"]').type("Dasun");
     SwaggerUI.ExecuteResourceFunction();

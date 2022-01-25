@@ -19,11 +19,11 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDevelop() {
-    cy.contains('Develop').should('be.visible').click();
+    cy.get('[data-cyid=link-develop]').click();
   }
 
   static navigateToDeploy() {
-    cy.contains('Deploy').should('be.visible').click();
+    cy.get('[data-cyid=link-deploy]').click();
   }
 
   static navigateToDeployFromTest() {
@@ -52,5 +52,16 @@ export class ComponentOverviewPage {
       .should('be.visible')
       .invoke('text')
       .then((text) => text.replace('overview','').trim());
+  }
+
+  static createNewVersion() {
+    cy.get('#version-picker').click();
+    cy.get('[data-cyid=btn-create-version]').click();
+    cy.get('[data-cyid=text-field-new-version]').within(() => {
+      cy.get('input').clear();
+      cy.get('input').type("1.0.1");
+    });
+    cy.get('[data-testid=create-version-create]').click();
+    cy.wait(5000);
   }
 }
