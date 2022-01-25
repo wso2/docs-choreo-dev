@@ -20,7 +20,7 @@ Next, let's deploy this API and make it invokable.
  
 ### Step 2: Deploy the REST API 
 
-Choreo maintains 2 environments by default: development and production. Let's deploy the API to the development environment.
+Choreo maintains two environments by default: development and production. Let's deploy the API to the development environment.
 
 1. Click **Deploy** in the left pane. 
 
@@ -103,7 +103,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
 8. Click **Save**.
 
-9. To return the personalized message, click **+** below the variable you created,  click **Return**, and enter `message` as the **Return Expression**.
+9. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
 
    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
