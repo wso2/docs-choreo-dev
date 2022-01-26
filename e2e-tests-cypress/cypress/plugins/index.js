@@ -13,6 +13,7 @@
  */
 import webpackPreprocessor from '@cypress/webpack-batteries-included-preprocessor';
 import fs from 'fs';
+import path  from 'path'
 
 
 
@@ -22,7 +23,8 @@ module.exports = (on, config) => {
   on('task', {
     writeTestData: ({ fileName, key, value }) => {
       let initData = {}
-      const filePath = `cypress/fixtures/json/${fileName}.json`
+    
+      const filePath  =  path.join(__dirname,'..', `/fixtures/json/${fileName}.json`)
       initData[key] = value
       if (!fs.existsSync(filePath)) {
         fs.writeFileSync(filePath, JSON.stringify(initData))
@@ -36,7 +38,7 @@ module.exports = (on, config) => {
       return null
     },
     deleteFile: (fileName) => {
-      const filePath = `cypress/fixtures/json/${fileName}.json`
+      const filePath  =  path.join(__dirname,'..', `/fixtures/json/${fileName}.json`)
       fs.unlinkSync(filePath)
       return null
     }

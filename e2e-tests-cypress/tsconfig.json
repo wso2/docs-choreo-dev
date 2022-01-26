@@ -18,12 +18,10 @@
       "cypress",
       "node",
       "@testing-library/cypress",
-      "clipboardy",
-      "cypress-real-events",
       "cypress-file-upload"
     ],
   },
   "include": [
     "**/*.ts"
-  ]
+, "cypress/plugins/index.js"  ]
 }
