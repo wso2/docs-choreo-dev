@@ -187,7 +187,7 @@ kubectl create namespace csi-secret-store-driver --dry-run=client -o yaml | kube
 
 helm repo add csi-secrets-store-provider-azure https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts
 helm repo update
-helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --namespace csi-secret-store-driver --version 0.0.16 helm upgrade --install csi-secrets-store-provider-azure
+helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --namespace csi-secret-store-driver --version 0.0.16 --set secrets-store-csi-driver.linux.driver.resources.limits.memory=400Mi --set secrets-store-csi-driver.linux.driver.resources.requests.memory=200Mi
 
 ################ Install CSI Secret Store Class Secret ########
 # This secret has to be created in other namespaces as well if CSI driver is going to be used
