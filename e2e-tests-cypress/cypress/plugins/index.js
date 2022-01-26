@@ -23,8 +23,14 @@ module.exports = (on, config) => {
   on('task', {
     writeTestData: ({ fileName, key, value }) => {
       let initData = {}
-    
-      const filePath  =  path.join(__dirname,'..', `/fixtures/json/${fileName}.json`)
+
+      const dirPath  =  path.join(__dirname,'..', `/fixtures/json`)
+
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true});
+      }
+
+      const filePath  =  path.join(dirPath, `/${fileName}.json`)
       initData[key] = value
       if (!fs.existsSync(filePath)) {
         fs.writeFileSync(filePath, JSON.stringify(initData))
