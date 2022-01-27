@@ -16,6 +16,7 @@ import { ComponentDevelopPage } from "../../../support/console/pages/component/c
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
+import { ComponentTemplate } from "../../../support/console/pages/enum/component-template";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
@@ -51,7 +52,7 @@ describe("Verify webhook creation functionality", () => {
 
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace(FILE_ID);
-    VSExplorer.typeCode("slacktrigger.bal");
+    VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
     VSExplorer.selectSourceControl();
 
     VSExplorer.enterCommandInTerminal(
@@ -75,7 +76,7 @@ describe("Verify webhook creation functionality", () => {
 
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.configureAndDeploy();
+    ComponentDeployPage.configureAndDeploy("pkKgDNr5vGND364IsHzwGM7O");
     ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
   });
 
