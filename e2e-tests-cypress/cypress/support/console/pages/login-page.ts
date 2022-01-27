@@ -109,7 +109,7 @@ export class LoginPage {
   private static testSetup(fileID: string) {
     cy.log("testSetup()");
     let token: string;
-    cy.wait(["@token", "@org", "@balRegistry"], { timeout: 60000 }).then(
+    cy.wait(["@token", "@org", "@balRegistry"], { timeout: 120000 }).then(
       (interceptions) => {
         token = interceptions[0].response.body.access_token;
 
