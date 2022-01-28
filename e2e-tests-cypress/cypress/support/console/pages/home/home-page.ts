@@ -12,7 +12,7 @@
  */
 
 export class HomePage {
-  static username = ('[data-testid="header-user-profile-menu"]')
+  static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
     cy.get('[href="/"]').eq(1).click();
@@ -66,5 +66,4 @@ export class HomePage {
       .should("be.visible")
       .click();
   }
-
 }

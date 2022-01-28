@@ -44,7 +44,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTIION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "create-api-from-rest-endpoint";
-  const idpUser = "choreoe2etest"
+  const idpUser = "choreoe2etest";
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
@@ -93,22 +93,20 @@ describe("Verify project creation functionality", () => {
     );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion();
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeploytoDev();
-    APIDeployment.PrmotetoProd();
+    APIDeployment.DeployToDev();
+    APIDeployment.PromoteToProd();
     ComponentOverviewPage.navigateToTest();
-    APITest.selectEnvironment('Production');
+    APITest.selectEnvironment("Production");
     cy.verifyTest(OPERATION_TARGET);
 
-    APITest.selectEnvironment('Development');
+    APITest.selectEnvironment("Development");
     cy.verifyTest(OPERATION_TARGET);
 
     ComponentOverviewPage.navigateToManage();
@@ -119,7 +117,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
 
     // Set 5 minutes waiting time. Since it take some time to appear the newly published APIs on developer portal API listing.
-    cy.wait(300000); 
+    cy.wait(300000);
 
     Apis.searchApiAndSelect();
     ApiCredentials.navigateTocredentialsTab();
