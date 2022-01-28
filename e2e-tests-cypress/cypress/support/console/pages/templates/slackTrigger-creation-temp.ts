@@ -18,19 +18,24 @@ export class TriggersTemplate {
 
   static createSlackTriggerFromTemplate(webhookName: string, fileID: string) {
     cy.get('input[name="webhookName"]').clear().type(webhookName);
-    cy.get('#mui-component-select-triggerType').click();
+    cy.get("#mui-component-select-triggerType").click();
     cy.get('[data-cyid="Slack"]').click();
-    cy.get('#mui-component-select-triggerChannel').click();
+    cy.get("#mui-component-select-triggerChannel").click();
     cy.get('[data-cyid="SlackEventsAppService"]').click();
     cy.get('[data-cyid="btn-create"]').click();
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
+    cy.intercept({
+      method: "POST",
+      url: Cypress.env("appSvcURL") + "/graphql",
+      times: 1,
+    }).as("proj_create");
     this.interceptProjectDetails(fileID);
   }
 
   private static interceptProjectDetails(fileID: string) {
     // eslint-disable-next-line arrow-body-style
 
-    cy.wait("@proj_create", { timeout: 100000 }).then((e) => {
+    cy.wait("@proj_create", { timeout: 180000 }).then((e) => {
+      expect(e.response.statusCode).to.eq(200);
       const { id, projectId, handler } = e.response.body.data.createComponent;
       const authdata = {
         header: {

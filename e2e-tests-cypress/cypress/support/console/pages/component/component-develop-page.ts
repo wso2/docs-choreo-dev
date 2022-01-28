@@ -19,7 +19,7 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL(fileID) {
-    cy.contains("Open in web-based editor")
+    cy.contains("Edit code")
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
