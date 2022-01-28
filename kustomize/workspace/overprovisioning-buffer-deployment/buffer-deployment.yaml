@@ -25,7 +25,7 @@ spec:
       priorityClassName: buffer-priority
       containers:
         - name: pause-buffer
-          image: google/pause
+          image: choreocontrolplane.azurecr.io/pause
           resources:
             limits:
               cpu: "2"
