@@ -18,14 +18,20 @@ export class APIDeployment {
   }
 
   static DeployToDev() {
-    cy.wait(5000)
-    cy.get('[data-cyid="btn-deploy-proxy"]').should("be.visible").click({force:true});
-   cy.get('[data-cyid="btn-proxy-promote"]').should('be.visible')
-
+    cy.wait(5000);
+    cy.get('[data-cyid="btn-deploy-proxy"]')
+      .should("be.visible")
+      .click({ force: true });
+    cy.get('[data-cyid="btn-proxy-promote"]').should("be.visible");
   }
 
   static PromoteToProd() {
     cy.contains("Promote").click();
-   cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains('Production').should('be.visible')
+    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+      .contains("Production")
+      .should("be.visible");
+    cy.get('[data-cyid="deployment-status"]')
+      .contains("Active")
+      .should("be.visible");
   }
 }
