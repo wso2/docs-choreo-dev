@@ -13,7 +13,7 @@ metadata:
     choreo.component: language-server
   name: language-server
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       choreo.component: language-server
