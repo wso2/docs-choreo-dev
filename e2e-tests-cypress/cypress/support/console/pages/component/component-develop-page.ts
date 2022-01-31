@@ -114,4 +114,10 @@ export class ComponentDevelopPage {
   static verifyLatestCommit(commitMessage: string) {
     cy.get(`[title="${commitMessage}"]`).should("be.visible");
   }
+
+
+
+static getVersion(){
+  return cy.get('[id="version-picker"]>div>div').invoke('text')
+}
 }

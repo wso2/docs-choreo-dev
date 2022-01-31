@@ -30,8 +30,10 @@ export class Apis {
   }
   
   static searchApiAndSelect() {
+  
     cy.get('[data-testid=txt-api-name]').invoke('text').then((textApiName) => {
       cy.get('[data-testid=apis-appbar-btn]').click();
+      cy.get('[data-testid*="apiCard"]').should('be.visible')
       cy.get('#outlined-search-bar-api-listing').type(textApiName);
       cy.get('button').contains('Search').click();
       cy.get('[data-testid=apiCard-' + textApiName + ']').should('have.length', 2);

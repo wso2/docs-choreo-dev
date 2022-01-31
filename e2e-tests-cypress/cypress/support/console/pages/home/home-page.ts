@@ -11,8 +11,8 @@
  * associated services.
  */
 
-export class HomePage {
-  static username = '[data-testid="header-user-profile-menu"]';
+export class ChoreoHomePage {
+  static username = ('[data-testid="header-user-profile-menu"]')
 
   static navigateToHome() {
     cy.get('[href="/"]').eq(1).click();

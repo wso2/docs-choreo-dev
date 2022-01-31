@@ -11,7 +11,7 @@
  * associated services.
  */
 
-export class HomePage {
+export class DevportalHomePage {
   static username = "[data-testid=signedin-user-menu-btn]";
 
   static navigateToHome(): void {
@@ -29,9 +29,12 @@ export class HomePage {
     cy.get(this.username).click();
   }
 
-  static logout(): void {
+  static logout(fileID: string = ""): void {
+    if (fileID) {
+      cy.task("deleteFile", fileID);
+    }
     this.clickOnLoggedInUser();
-    cy.contains("Logout").click();
+    cy.get('[data-testid="logout-item-btn"]').click();
   }
 
   static navigateToApisPage(): void {

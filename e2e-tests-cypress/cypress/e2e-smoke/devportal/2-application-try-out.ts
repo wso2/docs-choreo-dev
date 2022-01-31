@@ -14,7 +14,7 @@
 /// <reference types="cypress" />
 
 import { LoginPage } from "../../support/devportal/pages/login/login-page";
-import { HomePage } from "../../support/devportal/pages/home/home-page";
+import { DevportalHomePage } from "../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../support/devportal/utils";
 import { AppsList } from "../../support/devportal/pages/applications/apps-list";
 import { ProductionKeys } from "../../support/devportal/pages/applications/production-keys";
@@ -26,10 +26,10 @@ describe("Application tryout scenario", () => {
   const apiName = "e2etestdevportalapi";
 
   before(() => LoginPage.loginToDevportal());
-  after(() => HomePage.logout());
+  after(() => DevportalHomePage.logout());
 
   it("Create a consumer application and tryout an API", () => {
-    HomePage.navigateToAppsPage();
+    DevportalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
     ProductionKeys.generateTestToken();
     Subscriptions.addAnSubsriptionToApplication(apiName);

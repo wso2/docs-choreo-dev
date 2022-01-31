@@ -24,10 +24,10 @@ export class GraphQL {
   ) {
     this.getProjects(orgId, token).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      const projects = response.body.data.projects as [];
-      if (projects === undefined || !projects.length) {
-        this.createDefaultProject(orgId, orgHandle, token);
-      }
+      // const projects = response.body.data.projects as [];
+      // if (projects === undefined || !projects.length) {
+      //   this.createDefaultProject(orgId, orgHandle, token);
+      // }
     });
   }
 

@@ -12,13 +12,13 @@
  */
 
 import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
-import { HomePage } from "../../../support/console/pages/home/home-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 
 /// <reference types="cypress" />
 
 describe("Add roles and permissions", () => {
-  const FILE_ID = "Add Roles";
+  const FILE_ID = "1.1-add-roles-permissions";
 
   const roleName = "E2EtestRole";
   const roleDescription = "This Role is created by E2E test run.";
@@ -29,12 +29,12 @@ describe("Add roles and permissions", () => {
   });
 
   beforeEach(() => {
-    HomePage.navigateToSettings();
+    ChoreoHomePage.navigateToSettings();
     cy.get('[href="/settings/organization/roles"]').click({ force: true });
   });
 
   after(() => {
-    HomePage.logout(FILE_ID);
+    ChoreoHomePage.logout(FILE_ID);
   });
 
   it("Create a role", () => {

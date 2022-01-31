@@ -11,23 +11,23 @@
  * associated services.
  */
 
-import { HomePage } from "../../../support/console/pages/home/home-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { Marketplace } from "../../../support/console/pages/marketplace/marketplace-page";
 
 describe("Verify the functionality in Choreo Marketplace", () => {
   const MAIN_CATEGORY1 = "Business Intelligence";
   const MAIN_CATEGORY2 = "Marketing";
-  const FILE_ID = "marketplace-search";
+  const FILE_ID = "1.1-marketplace-search.spec";
   const SUB_CATEGORY = "Email Newsletters";
   const CONNECTOR = "Slack";
   const TRIGGER = "GitHub";
 
-  after(() => HomePage.logout(FILE_ID));
+  after(() => ChoreoHomePage.logout(FILE_ID));
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
   it("Verify Choreo filter functionality", () => {
-    HomePage.navigateToMarketPlace();
+    ChoreoHomePage.navigateToMarketPlace();
     Marketplace.filterByChoreo();
     Marketplace.clearSelectedFilters();
   });

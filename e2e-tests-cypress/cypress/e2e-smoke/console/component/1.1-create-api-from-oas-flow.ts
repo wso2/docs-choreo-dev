@@ -12,7 +12,7 @@
  */
 
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { HomePage } from "../../../support/console/pages/home/home-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
@@ -33,7 +33,7 @@ import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const FILE_ID = "create-api-from-oas-flow";
+  const FILE_ID = "1.1-create-api-from-oas-flow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = RandomTextGenerator.generateApiName("oas");
@@ -131,12 +131,12 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it.skip("Delete created project", () => {
-    HomePage.selectHomeMenu();
-    HomePage.navigateToComponents();
+    ChoreoHomePage.selectHomeMenu();
+    ChoreoHomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 
   after(() => {
-    HomePage.logout(FILE_ID);
+    ChoreoHomePage.logout(FILE_ID);
   });
 });

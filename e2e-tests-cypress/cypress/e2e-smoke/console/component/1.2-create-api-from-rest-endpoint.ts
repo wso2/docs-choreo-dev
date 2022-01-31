@@ -12,7 +12,7 @@
  */
 
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { HomePage } from "../../../support/console/pages/home/home-page";
+
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
@@ -32,6 +32,9 @@ import { STANDARD_TIME_OUT } from "../../../support/devportal/constants";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
+import { Environment } from "../../../support/console/pages/enum/environment";
+import { DevportalHomePage } from "../../../support/devportal/pages/home/home-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
@@ -43,12 +46,11 @@ describe("Verify project creation functionality", () => {
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
   const PROJECT_DESCRIPTIION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "create-api-from-rest-endpoint";
+  const FILE_ID = "1.2-create-api-from-rest-endpoint";
   const idpUser = "choreoe2etest";
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
-    cy.wait(5000);
   });
 
   it("Verify Rest API creation from existing endpoint", () => {
@@ -67,19 +69,20 @@ describe("Verify project creation functionality", () => {
       FILE_ID
     );
     APIDevelop.addResources(OPERATION_TARGET, HTTPMethod.GET);
-    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
   it("Verify component deployment", () => {
-    cy.wait(5000);
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.PromoteToProd();
   });
 
   it("Verify test functionality", () => {
-    cy.verifyTest(OPERATION_TARGET);
+    APITest.testAPI();
+    ComponentTestPage.getTestKey();
+    SwaggerUI.invokeResource(OPERATION_TARGET);
+    SwaggerUI.GetResponse();
   });
 
   it("Verify manage functionality", () => {
@@ -99,26 +102,39 @@ describe("Verify project creation functionality", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion();
-    ComponentOverviewPage.navigateToDeploy();
+ //  ComponentDevelopPage.getVersion().should("eq", "Version 1.0.1");
+    ComponentOverviewPage.navigateToDeploy()
     APIDeployment.DeployToDev();
     APIDeployment.PromoteToProd();
-    ComponentOverviewPage.navigateToTest();
-    APITest.selectEnvironment("Production");
-    cy.verifyTest(OPERATION_TARGET);
+    APIDeployment.verifyProdInvokeURL().should('not.be.null')
+  });
 
-    APITest.selectEnvironment("Development");
-    cy.verifyTest(OPERATION_TARGET);
+  it("Test in prod", () => {
+    APITest.testAPI();
+    APITest.selectEnvironment(Environment.PRODUCTION);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.invokeResource(OPERATION_TARGET);
+    SwaggerUI.GetResponse();
+  });
 
+  it("Test in prod", () => {
+    APITest.testAPI();
+    APITest.selectEnvironment(Environment.DEVELOPMENT);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.invokeResource(OPERATION_TARGET);
+    SwaggerUI.GetResponse();
+  });
+
+  it("Publish connector", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
+  });
+
+  it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-
-    // Set 5 minutes waiting time. Since it take some time to appear the newly published APIs on developer portal API listing.
-    cy.wait(300000);
-
     Apis.searchApiAndSelect();
     ApiCredentials.navigateTocredentialsTab();
     ApiCredentials.generateCredentials();
@@ -132,12 +148,12 @@ describe("Verify project creation functionality", () => {
   });
 
   it.skip("Delete created project", () => {
-    HomePage.selectHomeMenu();
-    HomePage.navigateToComponents();
+    ChoreoHomePage.selectHomeMenu();
+    ChoreoHomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 
   after(() => {
-    HomePage.logout(FILE_ID);
+    DevportalHomePage.logout(FILE_ID)
   });
 });

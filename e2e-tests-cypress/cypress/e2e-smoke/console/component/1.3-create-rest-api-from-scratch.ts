@@ -20,7 +20,7 @@ import { SwaggerUI } from "../../../support/console/pages/component/UI-component
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
-import { HomePage } from "../../../support/console/pages/home/home-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
@@ -35,7 +35,7 @@ describe("Verify project creation functionality", () => {
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "create-rest-api-from-scratch";
+  const FILE_ID = "1.3-create-rest-api-from-scratch";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
@@ -273,8 +273,8 @@ describe("Verify project creation functionality", () => {
   });
 
   it.skip("Verify insight values for dev", () => {
-    HomePage.navigateToHome();
-    HomePage.navigateToInsights();
+    ChoreoHomePage.navigateToHome();
+    ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should("eq", "6");
@@ -323,6 +323,6 @@ describe("Verify project creation functionality", () => {
   after(() => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
-    HomePage.logout(FILE_ID);
+    ChoreoHomePage.logout(FILE_ID);
   });
 });
