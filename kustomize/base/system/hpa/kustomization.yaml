@@ -14,7 +14,6 @@ resources:
   - loggingapi.yaml
   - connectords.yaml
   - apim-service.yaml
-  - language-server.yaml
   - perfanalyzer-estimator.yaml
   - datamapper.yaml
   - test-assistant.yaml
