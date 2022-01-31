@@ -20,21 +20,17 @@ export class DevportalHomePage {
       .click();
   }
 
-  static getLoggedUsername(): Cypress.Chainable<string> {
-    this.navigateToHome();
-    return cy.get(this.username).invoke("text");
-  }
 
   static clickOnLoggedInUser(): void {
     cy.get(this.username).click();
   }
 
   static logout(fileID: string = ""): void {
+  cy.get('[data-testid="signedin-user-menu-btn"]').should('be.visible').click();
+    cy.get('[data-testid="logout-item-btn"]').click();
     if (fileID) {
       cy.task("deleteFile", fileID);
     }
-    this.clickOnLoggedInUser();
-    cy.get('[data-testid="logout-item-btn"]').click();
   }
 
   static navigateToApisPage(): void {

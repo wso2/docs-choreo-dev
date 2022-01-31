@@ -11,50 +11,62 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import webpackPreprocessor from '@cypress/webpack-batteries-included-preprocessor';
-import fs from 'fs';
-import path  from 'path'
-
-
-
+import webpackPreprocessor from "@cypress/webpack-batteries-included-preprocessor";
+import fs from "fs";
+import path from "path";
 
 module.exports = (on, config) => {
+  on(
+    "task",
+    {
+      writeTestData: ({ fileName, key, value }) => {
+        let initData = {};
 
-  on('task', {
-    writeTestData: ({ fileName, key, value }) => {
-      let initData = {}
+        const dirPath = path.join(__dirname, "..", `/fixtures/json`);
 
-      const dirPath  =  path.join(__dirname,'..', `/fixtures/json`)
+        if (!fs.existsSync(dirPath)) {
+          fs.mkdirSync(dirPath, { recursive: true });
+        }
 
-      if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true});
-      }
-
-      const filePath  =  path.join(dirPath, `/${fileName}.json`)
-      initData[key] = value
-      if (!fs.existsSync(filePath)) {
-        fs.writeFileSync(filePath, JSON.stringify(initData))
-      } else {
-        let jsonContent = {}
-        let dataFileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-        jsonContent = JSON.parse(dataFileContent);
-        jsonContent[key] = value
-        fs.writeFileSync(filePath, JSON.stringify(jsonContent))
-      }
-      return null
+        const filePath = path.join(dirPath, `/${fileName}.json`);
+        initData[key] = value;
+        if (!fs.existsSync(filePath)) {
+          fs.writeFileSync(filePath, JSON.stringify(initData));
+        } else {
+          let jsonContent = {};
+          let dataFileContent = fs.readFileSync(filePath, { encoding: "utf8" });
+          jsonContent = JSON.parse(dataFileContent);
+          jsonContent[key] = value;
+          fs.writeFileSync(filePath, JSON.stringify(jsonContent));
+        }
+        return null;
+      },
+      deleteFile: (fileName) => {
+        const filePath = path.join(
+          __dirname,
+          "..",
+          `/fixtures/json/${fileName}.json`
+        );
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+        return null;
+      },
+      readFile: (filePath) => {
+        if (fs.existsSync(filePath)) {
+          const content = fs.readFileSync(filePath, { encoding: "utf8" });
+         return JSON.parse(content)
+        }
+        return {};
+      },
     },
-    deleteFile: (fileName) => {
-      const filePath  =  path.join(__dirname,'..', `/fixtures/json/${fileName}.json`)
-      fs.unlinkSync(filePath)
-      return null
-    }
-  },
-    'file:preprocessor', webpackPreprocessor({
-      typescript: require.resolve('typescript')
-    }));
+    "file:preprocessor",
+    webpackPreprocessor({
+      typescript: require.resolve("typescript"),
+    })
+  );
   config.env.choreoIDPUsername = process.env.choreoIDPUsername;
   config.env.choreoIDPPassword = process.env.choreoIDPPassword;
   config.env.choreoOrgHandle = process.env.choreoOrgHandle;
   return config;
 };
-

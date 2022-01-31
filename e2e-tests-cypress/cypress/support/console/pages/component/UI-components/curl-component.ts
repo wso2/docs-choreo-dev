@@ -26,7 +26,7 @@ export class Curl {
 
   static getRequestComponents(fileID, env: string) {
     return cy
-      .readFile(`${Cypress.env("tempfile")}${fileID}.json`)
+      .task("readFile", `${Cypress.env("tempfile")}${fileID}.json`)
       .then((data) => {
         if (data[env.toLowerCase()]) {
           return cy.wrap(data[env.toLowerCase()]);

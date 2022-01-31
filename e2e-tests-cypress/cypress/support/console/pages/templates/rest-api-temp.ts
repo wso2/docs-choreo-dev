@@ -19,18 +19,17 @@ export class RestAPITemplate {
   static createApiFromScratch(
     componentName: string,
     description: string,
-    fiileID: string
+    fileID: string
   ) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
     cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
-    this.interceptProjectDetails(fiileID);
-    this.interceptRevision(fiileID)
+    this.interceptProjectDetails(fileID);
   }
 
-  private static interceptProjectDetails(fiileID: string) {
+  private static interceptProjectDetails(fileID: string) {
     // eslint-disable-next-line arrow-body-style
 
     cy.wait("@proj_create", { timeout: 100000 }).then((e) => {
@@ -45,26 +44,12 @@ export class RestAPITemplate {
         handler,
       };
       cy.task("writeTestData", {
-        fileName: fiileID,
+        fileName: fileID,
         key: "authData",
         value: authdata,
       });
     });
   }
-
-
-private static interceptRevision(fileID){
-  const url = "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*?organizationId=*"
-  https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/61ee75e3829e4f312e1bc946?organizationId=fec0832e-94dd-4749-aa0f-7da5ed9e0a31
-  cy.intercept(url).as('revision')
-
-  cy.wait('@revision',{timeout:1200000}).then(inc=>{
-    cy.log(inc.request.url)
-  })
-}
-
-
-
 
 
 }

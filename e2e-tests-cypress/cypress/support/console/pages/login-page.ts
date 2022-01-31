@@ -14,19 +14,21 @@
 import { GraphQL } from "../apis/graphql";
 
 export class LoginPage {
-  static loginToChoreo(fileID: string) {
+  static loginToChoreo(fileID: string,enableIntercept:boolean=false) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible");
     cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
     cy.get("#password").type(Cypress.env("choreoIDPPassword"));
 
-    this.interceptRequiredApiCalls();
-
+    
     cy.get('button[type="submit"]').click();
-    Cypress.Cookies.debug(true);
-
+    if(enableIntercept){
+      this.interceptRequiredApiCalls();
+  
+      
     this.persistCookies(fileID);
     this.testSetup(fileID);
+    }
   }
 
   static reloginToChoreo(fileID: string) {

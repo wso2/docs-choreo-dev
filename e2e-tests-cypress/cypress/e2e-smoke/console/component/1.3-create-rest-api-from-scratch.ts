@@ -41,8 +41,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
 
-
-  before(() => LoginPage.loginToChoreo(FILE_ID));
+  before(() => LoginPage.loginToChoreo(FILE_ID, true));
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -59,7 +58,6 @@ describe("Verify project creation functionality", () => {
     );
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
-
 
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace(FILE_ID);
@@ -90,7 +88,6 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
-
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
@@ -213,8 +210,11 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("/root");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
-    ComponentAPILifecycle.verifyDevRevision().should('eq',Environment.DEVELOPMENT)
-     ComponentAPILifecycle.getLatestRevision().should('eq','Revision 3')
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Environment.DEVELOPMENT
+    );
+    ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
   });
 
   it("Apply configs to prod", () => {
