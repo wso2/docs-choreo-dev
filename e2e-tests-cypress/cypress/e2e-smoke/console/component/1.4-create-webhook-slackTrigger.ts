@@ -18,7 +18,7 @@ import { ComponentOverviewPage } from "../../../support/console/pages/component/
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { ComponentTemplate } from "../../../support/console/pages/enum/component-template";
 import { Environment } from "../../../support/console/pages/enum/environment";
-import { HomePage } from "../../../support/console/pages/home/home-page";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -29,7 +29,7 @@ import { Utils } from "../../../support/console/utils";
 
 describe("Verify webhook creation functionality", () => {
   const WEBHOOK_NAME = "Slack Trigger";
-  const FILE_ID = "create-slack-trigger";
+  const FILE_ID = "1.4-create-webhook-slackTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTIION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
@@ -100,12 +100,12 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it.skip("Delete created project", () => {
-    HomePage.selectHomeMenu();
-    HomePage.navigateToComponents();
+    ChoreoHomePage.selectHomeMenu();
+    ChoreoHomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
   });
 
   after(() => {
-    HomePage.logout(FILE_ID);
+    ChoreoHomePage.logout(FILE_ID);
   });
 });

@@ -11,7 +11,7 @@
  * associated services.
  */
 
-export class HomePage {
+export class ChoreoHomePage {
   static username = ('[data-testid="header-user-profile-menu"]')
 
   static navigateToHome() {

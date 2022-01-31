@@ -11,35 +11,31 @@
  * associated services.
  */
 
-import {
-  SETTINGS_TEXT,
-  INVITATION_EMAIL,
-} from "../../../support/console/pages/component/common/constants";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { HomePage } from "../../../support/console/pages/home/home-page";
-import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { OnPremkeyComponent } from "../../../support/console/pages/component/common/onpremkey-components";
 
 /// <reference types="cypress" />
 
-describe("Invite members", () => {
-  const FILE_ID = "Invite members";
+describe("Generate on-prem keys", () => {
+  const FILE_ID = "1.2-generate-onprem-key";
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
   });
 
   beforeEach(() => {
-    HomePage.navigateToSettings();
+    ChoreoHomePage.navigateToSettings();
   });
 
-  it("Invite a member", () => {
-    OrganizationComponent.inviteMembers(INVITATION_EMAIL, "API Publisher");
-    OrganizationComponent.selectPendingInvitation();
-    cy.contains("td", INVITATION_EMAIL).should("be.visible");
-    OrganizationComponent.deleteRecord(INVITATION_EMAIL);
+  it("generate on-prem key", () => {
+    OnPremkeyComponent.generateOnPremKey();
+    OnPremkeyComponent.editOnPremKey();
+    OnPremkeyComponent.regenerateOnPremKey();
+    OnPremkeyComponent.deleteOnPremKey();
   });
 
   after(() => {
-    HomePage.logout(FILE_ID);
+    ChoreoHomePage.logout(FILE_ID);
   });
 });

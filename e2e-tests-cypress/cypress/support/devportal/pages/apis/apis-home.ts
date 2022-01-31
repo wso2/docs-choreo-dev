@@ -34,6 +34,7 @@ export class Apis {
       cy.get('[data-testid=apis-appbar-btn]').click();
       cy.get('#outlined-search-bar-api-listing').type(textApiName);
       cy.get('button').contains('Search').click();
+      cy.wait(10000)
       cy.get('[data-testid=apiCard-' + textApiName + ']').should('have.length', 2);
       cy.get('[data-testid=apiCard-' + textApiName + ']').last().click();
     });

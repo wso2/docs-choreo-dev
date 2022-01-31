@@ -22,6 +22,7 @@ export class APIDevelop {
     cy.get('#operation-target').type(path);
     cy.get('[data-testid="add-btn"]').click();
     cy.contains('Save').click();
+    cy.get(`[data-testid="resource-${path}"]`).should('be.visible')
   }
 
   private static addHTTPVerb(verbs: string[]) {

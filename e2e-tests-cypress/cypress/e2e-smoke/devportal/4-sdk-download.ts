@@ -19,7 +19,7 @@ import {
 } from "../../support/devportal/constants";
 import { LoginPage } from "../../support/devportal/pages/login/login-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
-import { HomePage } from "../../support/devportal/pages/home/home-page";
+import { DevportalHomePage } from "../../support/devportal/pages/home/home-page";
 import path from "path";
 
 describe("Downloading the API SDK scenario", () => {
@@ -32,7 +32,7 @@ describe("Downloading the API SDK scenario", () => {
   });
 
   after(() => {
-    HomePage.logout();
+    DevportalHomePage.logout();
   });
 
   it("Navigating to SDK page and download SDK ", () => {

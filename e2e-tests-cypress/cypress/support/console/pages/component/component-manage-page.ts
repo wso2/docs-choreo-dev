@@ -73,11 +73,14 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
+    cy.wait(300000)
     cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
       .invoke('attr', 'href')
       .then((href) => {
         cy.visit(href + '&fidp=' + idpUser)
       })
+      
+     // cy.get('[data-testid="txt-api-name"]').should('be.visible');
   }
 
   static selectUsagePlans(...plans) {

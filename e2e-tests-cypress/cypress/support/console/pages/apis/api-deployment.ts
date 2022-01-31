@@ -27,5 +27,21 @@ export class APIDeployment {
   static PromoteToProd() {
     cy.contains("Promote").click();
    cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains('Production').should('be.visible')
+  } 
+  
+  
+  static verifyDevInvokeURL() {
+    return cy
+      .get('[data-cyid="text-field-invoke-url"] input')
+      .eq(0)
+      .invoke("attr", "value");
+  }
+
+  static verifyProdInvokeURL() {
+    cy.wait(5000);
+    return cy
+      .get('[data-cyid="text-field-invoke-url"] input')
+      .eq(1)
+      .invoke("attr", "value");
   }
 }
