@@ -66,5 +66,4 @@ export class ChoreoHomePage {
       .should("be.visible")
       .click();
   }
-
 }

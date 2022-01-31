@@ -11,26 +11,26 @@
  * associated services.
  */
 
-import '@testing-library/cypress/add-commands';
+import "@testing-library/cypress/add-commands";
 import { APITest } from "./console/pages/apis/api-test";
 import { SwaggerUI } from "./console/pages/component/UI-components/swagger-UI-component";
 import { ComponentTestPage } from "./console/pages/component/component-test-page";
 import { HTTPMethod } from "./console/pages/enum/http-method-enum";
 
-Cypress.Commands.add('verifyTest', (operationTarget: string) => {
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(HTTPMethod.GET, operationTarget);
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.ExecuteResourceFunction();
-    SwaggerUI.GetResponse();
-    SwaggerUI.getResponseCode().should("eq", "200");
+Cypress.Commands.add("verifyTest", (operationTarget: string) => {
+  APITest.testAPI();
+  ComponentTestPage.getTestKey();
+  SwaggerUI.SelectResource(operationTarget);
+  SwaggerUI.TryoutAPI();
+  SwaggerUI.ExecuteResourceFunction();
+  SwaggerUI.GetResponse();
+  SwaggerUI.getResponseCode().should("eq", "200");
 });
 
 declare global {
-    namespace Cypress {
-      interface Chainable {
-        verifyTest(operationTarget: string): Chainable<Element>
-      }
+  namespace Cypress {
+    interface Chainable {
+      verifyTest(operationTarget: string): Chainable<Element>;
     }
   }
+}
