@@ -11,57 +11,55 @@
  * associated services.
  */
 
-
-
 export class ComponentOverviewPage {
   static goBack() {
-    cy.contains('Go Back').should('be.visible').click();
+    cy.contains("Go Back").should("be.visible").click();
   }
 
   static navigateToDevelop() {
-    cy.get('[data-cyid=link-develop]').click();
+    cy.get("[data-cyid=link-develop]").click();
   }
 
   static navigateToDeploy() {
-    cy.get('[data-cyid=link-deploy]').click();
+    cy.get("[data-cyid=link-deploy]", { timeout: 180000 }).click();
   }
 
   static navigateToDeployFromTest() {
-    cy.get('[data-testid=deploy-link]').click();
+    cy.get("[data-testid=deploy-link]").click();
   }
 
   static navigateToTest() {
-    cy.contains('Test').should('be.visible').click();
+    cy.contains("Test").should("be.visible").click();
   }
 
   static navigateToManage() {
-    cy.contains('Manage').should('be.visible').click();
+    cy.contains("Manage").should("be.visible").click();
   }
 
   static navigateToObserve() {
-    cy.contains('Observe').should('be.visible').click();
+    cy.contains("Observe").should("be.visible").click();
   }
 
   static navigateToDevops() {
-    cy.contains('Devops').should('be.visible').click();
+    cy.contains("Devops").should("be.visible").click();
   }
 
   static getComponentName() {
     return cy
-      .get('#root .MuiCardHeader-content span')
-      .should('be.visible')
-      .invoke('text')
-      .then((text) => text.replace('overview','').trim());
+      .get("#root .MuiCardHeader-content span")
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => text.replace("overview", "").trim());
   }
 
   static createNewVersion() {
-    cy.get('#version-picker').click();
-    cy.get('[data-cyid=btn-create-version]').click();
-    cy.get('[data-cyid=text-field-new-version]').within(() => {
-      cy.get('input').clear();
-      cy.get('input').type("1.0.1");
+    cy.get("#version-picker").click();
+    cy.get("[data-cyid=btn-create-version]").click();
+    cy.get("[data-cyid=text-field-new-version]").within(() => {
+      cy.get("input").clear();
+      cy.get("input").type("1.0.1");
     });
-    cy.get('[data-testid=create-version-create]').click();
+    cy.get("[data-testid=create-version-create]").click();
     cy.wait(5000);
   }
 }
