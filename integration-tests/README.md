@@ -10,13 +10,13 @@
     - TEST_CHOREO_ORG_UUID
     - STS_CLIENT_ID
     - STS_CLIENT_SECRET
-2. Navigate to the `integration-tests` directory
+
 ## 2. Run
 
-  run `mvn clean verify`
+1. Navigate to the `integration-tests` directory
+2. run `mvn clean verify`
 
-## 3. Folder Structure
-
+## 3. Directory Structure
 
 ```
 integration-tests/src/test/java/com/wso2/choreo/
@@ -24,34 +24,42 @@ integration-tests/src/test/java/com/wso2/choreo/
 |	|───common
 |	|───config
 |	└───tests
+|           └───connectorbuilder
+|           └─── ...
+|           EndpointConfig.java
 └───resources
 	└───templates
-        └───connector-builder
-                get_connector_success.json
-                publish_status_completed.json
-                publish_success_ok.json
-    citrus-application.properties
-    log4j.properties
-    testng.xml
+            └───connectorbuilder
+            |      get_connector_success.json
+            |      publish_status_completed.json
+            |      publish_success_ok.json
+            └─── ...
+       citrus-application.properties
+       log4j.properties
+       testng.xml
 
 ```
+
 **java/com/wso2/choreo/integration**
 
 1. **/common**
     - Common Java implementations to run Choreo use-cases
-2. **/tests**
-    - Citrus integration tests written for Choreo use-cases
-        -  **/connectorbuilder** - connector publishing related integration tests
-        - ...
 
 2. **/config**
-    - Configurations needed to run common use-cases and integration tests
+    - Configurations needed to run common use-cases and Citrus integration tests
+
+3. **/tests**
+    - Citrus integration tests written for Choreo use-cases
+        - **/connectorbuilder** - connector publishing related integration tests
+        - ...
+    - **EndpointConfig.java**
+        - Spring bean configuration class that has the Citrus Endpoints defined
 
 **resources**
 
 1. **/templates**
     - Sample Json payload templates
-        -  **/connectorbuilder** - connector publishing related Json payload templates
+        - **/connectorbuilder** - connector publishing related Json payload templates
         - ...
 
 ## 4. Scenarios
@@ -59,19 +67,19 @@ integration-tests/src/test/java/com/wso2/choreo/
 <table>
 	<thead>
 		<tr>
-			<th align="left">test source</th>
-			<th align="left">Scenario</th>
-			<th align="left">Work flow</th>
+			<th>test source</th>
+			<th>Scenario</th>
+			<th>Work flow</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>1. /connectorbuilder</td>
-			<td>1. Publish a connector </td>
+			<td>connectorbuilder</td>
+			<td>Publish a connector </td>
 			<td>
 				1) Publish a connector <br/>
 				2) Continuously check the status of publishing action<br/>
-				2) Retrieved the details of the published connector<br/>
+				3) Retrieved the details of the published connector<br/>
 			</td>
 		</tr>
     </tbody>

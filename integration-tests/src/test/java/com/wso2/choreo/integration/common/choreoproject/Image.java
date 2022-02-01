@@ -1,5 +1,8 @@
 package com.wso2.choreo.integration.common.choreoproject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class to represent an image of a container image
  */
@@ -9,7 +12,7 @@ public class Image {
     private String imageRegistry;
     private String imageRegistryId;
     private String tagName;
-    private String[] tags;
+    private List<String> tags = new ArrayList<>();
     private String committer;
     private String commitMsg;
     private String gitHash;
@@ -54,11 +57,11 @@ public class Image {
         this.tagName = tagName;
     }
 
-    public String[] getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(String[] tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 

@@ -3,14 +3,12 @@ package com.wso2.choreo.integration.tests.connectorbuilder;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
-import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TokenHandler;
-import com.wso2.choreo.integration.common.choreoproject.ChoreoApi;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
@@ -46,9 +44,9 @@ import org.testng.annotations.Test;
  */
 public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
-    private static String testComponentId;
+    private static String componentId;
     private static String accessToken;
-    private static String testApiId;
+    private static String apiId;
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -64,18 +62,18 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
             ComponentDeploymentFailureException, TokenRetrievalException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
-        ChoreoOrganization testOrg = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
+        ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-        ChoreoProject testProject = testOrg.createProject(accessToken);
-        RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(testProject, testOrg);
-        RestApiChoreoComponent testRestApiComponent =
-                (RestApiChoreoComponent) testProject.createChoreoComponent(restApiComponentBuilder, accessToken);
-        testComponentId = testRestApiComponent.getId();
-        testApiId = testRestApiComponent.getLatestApiVersion().getProxyId();
-        testRestApiComponent.addConfigurations(accessToken, testOrg.getOrgHandle());
-        testRestApiComponent.deploy(accessToken, testOrg.getOrgHandle(), testOrg.getOrgUUID());
-        ChoreoApi testRestApi = new ChoreoApi(testApiId);
-        testRestApi.changeApiLifeCycle(accessToken, testOrg.getOrgUUID(), Constant.apiLIifCycleState.Publish);
+        ChoreoProject project = org.createProject(accessToken);
+        RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
+        RestApiChoreoComponent restApiComponent =
+                (RestApiChoreoComponent) project.createChoreoComponent(restApiComponentBuilder, accessToken);
+        componentId = restApiComponent.getId();
+        apiId = restApiComponent.getLatestApiVersion().getProxyId();
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
+        restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
+        restApiComponent.getLatestApiVersion()
+                .changeApiLifeCycle(accessToken, org.getOrgUUID(), Constant.apiLIifCycleState.Publish);
     }
 
     @Test
@@ -85,12 +83,12 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .client(choreoTestClient)
                 .send()
                 .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(Configuration.TEST_CHOREO_ORG_HANDLE)
-                        .concat("/").concat(testComponentId))
+                        .concat("/").concat(componentId))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body("{" +
-                        "    \"apiId\": \"" + testApiId + "\"," +
+                        "    \"apiId\": \"" + apiId + "\"," +
                         "    \"organizationId\": \"" + Configuration.TEST_CHOREO_ORG_UUID + "\"," +
                         "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
                         "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
@@ -103,9 +101,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/connector-builder/publish_success_ok.json")));
+                .body(new ClassPathResource("templates/connectorbuilder/publish_success_ok.json")));
     }
-
 
     @Test(dependsOnMethods = {"testPublishConnector"})
     @CitrusTest
@@ -120,7 +117,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                                 .send()
                                 .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/")
                                         .concat(Configuration.TEST_CHOREO_ORG_HANDLE).concat("/")
-                                        .concat(testComponentId).concat("/status"))
+                                        .concat(componentId).concat("/status"))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)
@@ -130,7 +127,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                                 .response(HttpStatus.OK)
                                 .message()
                                 .body(new ClassPathResource(
-                                        "templates/connector-builder/publish_status_completed.json"))
+                                        "templates/connectorbuilder/publish_status_completed.json"))
                                 .validate(json()
                                         .ignore("$.id")
                                         .ignore("$.created_at")
@@ -147,7 +144,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .client(choreoTestClient)
                 .send()
                 .get(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(Configuration.TEST_CHOREO_ORG_HANDLE)
-                        .concat("/").concat(testComponentId))
+                        .concat("/").concat(componentId))
                 .queryParam("version=".concat(Constant.TEST_CONNECTOR_VERSION))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -157,14 +154,13 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
-                .body(new ClassPathResource("templates/connector-builder/get_connector_success.json"))
+                .body(new ClassPathResource("templates/connectorbuilder/get_connector_success.json"))
                 .validate(json()
                         .ignore("$.name")
                         .ignore("$.org")
                         .ignore("$.modules")
                         .ignore("$.createdDate")
                 )
-                .validate(jsonPath()
-                ));
+        );
     }
 }

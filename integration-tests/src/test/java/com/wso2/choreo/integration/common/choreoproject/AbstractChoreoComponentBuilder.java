@@ -34,7 +34,7 @@ public abstract class AbstractChoreoComponentBuilder {
      * Constructor
      *
      * @param project The Choreo project the creating component belongs to
-     * @param org The Choreo organization the project belongs to
+     * @param org     The Choreo organization the project belongs to
      */
     public AbstractChoreoComponentBuilder(ChoreoProject project, ChoreoOrganization org) {
         this.project = project;
@@ -64,8 +64,8 @@ public abstract class AbstractChoreoComponentBuilder {
                 .build();
         long timeTaken = 0;
         while (timeTaken <= Constant.COMPONENT_CREATE_TIMEOUT) {
-            TimeUnit.SECONDS.sleep(5);
-            timeTaken += 5000;
+            TimeUnit.SECONDS.sleep(2);
+            timeTaken += 2000;
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             int statusCode = response.statusCode();
             if (statusCode != HttpStatus.OK.value()) {
@@ -85,8 +85,8 @@ public abstract class AbstractChoreoComponentBuilder {
     /**
      * Get details of created Choreo component
      *
-     * @param accessToken OAuth token to invoke the Chorea backend
-     * @param projectId ID of the Choreo project the component belongs to
+     * @param accessToken     OAuth token to invoke the Chorea backend
+     * @param projectId       ID of the Choreo project the component belongs to
      * @param componentHandle The Choreo component handle
      */
     public JsonObject retrieveComponentJsonObject(String accessToken, String projectId, String componentHandle) throws

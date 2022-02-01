@@ -23,6 +23,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import org.springframework.http.HttpHeaders;
@@ -38,13 +39,13 @@ public abstract class ChoreoComponent {
     private static final HttpClient client = HttpClient.newHttpClient();
     private String id;
     private String apiId;
-    private ApiVersion[] apiVersions;
+    private List<ApiVersion> apiVersions = new ArrayList<>();
     private String createdAt;
     private String description;
     private String displayName;
     private String displayType;
     private String handler;
-    private String[] labels;
+    private List<String> labels = new ArrayList<>();
     private String name;
     private String orgHandler;
     private String orgId;
@@ -238,8 +239,8 @@ public abstract class ChoreoComponent {
                 .build();
         long timeTaken = 0;
         while (timeTaken <= Constant.COMPONENT_DEPLOY_TIMEOUT) {
-            TimeUnit.SECONDS.sleep(5);
-            timeTaken += 5000;
+            TimeUnit.SECONDS.sleep(2);
+            timeTaken += 2000;
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             int statusCode = response.statusCode();
             if (statusCode != HttpStatus.OK.value()) {
@@ -319,11 +320,11 @@ public abstract class ChoreoComponent {
         this.apiId = apiId;
     }
 
-    public ApiVersion[] getApiVersions() {
+    public List<ApiVersion> getApiVersions() {
         return apiVersions;
     }
 
-    public void setApiVersions(ApiVersion[] apiVersions) {
+    public void setApiVersions(List<ApiVersion> apiVersions) {
         this.apiVersions = apiVersions;
     }
 
@@ -367,11 +368,11 @@ public abstract class ChoreoComponent {
         this.handler = handler;
     }
 
-    public String[] getLabels() {
+    public List<String> getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
+    public void setLabels(List<String> labels) {
         this.labels = labels;
     }
 

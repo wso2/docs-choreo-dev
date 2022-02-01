@@ -1,5 +1,8 @@
 package com.wso2.choreo.integration.common.choreoproject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class to represent the deployment history of the latest deployment
  */
@@ -8,7 +11,7 @@ public class DeploymentHistory {
     private String appEnvironment;
     private String appEnvironmentId;
     private String changeMessage;
-    private ContainerImage[] containerImages;
+    private List<ContainerImage> containerImages = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -42,11 +45,11 @@ public class DeploymentHistory {
         this.changeMessage = changeMessage;
     }
 
-    public ContainerImage[] getContainerImages() {
+    public List<ContainerImage> getContainerImages() {
         return containerImages;
     }
 
-    public void setContainerImages(ContainerImage[] containerImages) {
+    public void setContainerImages(List<ContainerImage> containerImages) {
         this.containerImages = containerImages;
     }
 }
