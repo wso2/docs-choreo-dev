@@ -9,7 +9,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -26,7 +28,7 @@ public class ApiVersion {
     private String id;
     private String state;
     private boolean latest;
-    private AppEnvVersion[] appEnvVersions;
+    private List<AppEnvVersion> appEnvVersions = new ArrayList<>();
 
     /**
      * Update the lifecycle state of the Choreo API
@@ -112,11 +114,11 @@ public class ApiVersion {
         this.latest = latest;
     }
 
-    public AppEnvVersion[] getAppEnvVersions() {
+    public List<AppEnvVersion> getAppEnvVersions() {
         return appEnvVersions;
     }
 
-    public void setAppEnvVersions(AppEnvVersion[] appEnvVersions) {
+    public void setAppEnvVersions(List<AppEnvVersion> appEnvVersions) {
         this.appEnvVersions = appEnvVersions;
     }
 
