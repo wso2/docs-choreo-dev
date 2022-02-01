@@ -19,7 +19,8 @@
 ## 3. Directory Structure
 
 ```
-integration-tests/src/test/java/com/wso2/choreo/
+integration-tests/src/test
+|
 |───java/com/wso2/choreo/integration
 |	|───common
 |	|───config
