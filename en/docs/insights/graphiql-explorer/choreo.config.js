@@ -5,8 +5,8 @@ window.__RUNTIME_CONFIG__ = {
             tokenEndpoint: 'https://api.asgardeo.io/t/a/oauth2/token',
             endSessionEndpoint: 'https://api.asgardeo.io/t/a/oidc/logout'
         },
-        signInRedirectURL: 'https://wso2.com/choreo/docs/insights/graphiql-explorer',
-        signOutRedirectURL: 'https://wso2.com/choreo/docs/insights/graphiql-explorer',
+        signInRedirectURL: 'https://wso2.com/choreo/docs/insights/graphiql-explorer/',
+        signOutRedirectURL: 'https://wso2.com/choreo/docs/insights/graphiql-explorer/',
         clientID: 'BDXalD9exTskS5bt7xYfIK5TsnIa'
     },
     TOKEN_EXCHANGE_CONFIG: {
