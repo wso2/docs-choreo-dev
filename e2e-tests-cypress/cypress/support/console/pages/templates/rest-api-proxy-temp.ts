@@ -15,7 +15,7 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="project-template-list-httpProxyApi"]').click();
   }
 
-  static designANewRESTAPI(
+  static designNewRestApi(
     apiName,
     apiVersion,
     apiBasePath,
@@ -31,34 +31,9 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
     cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
-    this.interceptProjectDetails(fiileID);
   }
 
-  private static interceptProjectDetails(fiileID: string) {
-    // eslint-disable-next-line arrow-body-style
-
-    cy.wait("@proj_create", { timeout: 100000 }).then((e) => {
-      cy.log(JSON.stringify(e.response.body.data.component));
-      const { id, projectId, handler } = e.response.body.data.createComponent;
-
-      const authdata = {
-        header: {
-          authorization: e.request.headers.authorization,
-          "content-type": "application/json",
-        },
-        id,
-        projectId,
-        handler,
-      };
-      cy.task("writeTestData", {
-        fileName: fiileID,
-        key: "authData",
-        value: authdata,
-      });
-    });
-  }
-
-  static createOpenApi(API_NAME, filepath, file_id, develop, overview) {
+  static createOpenApi(API_NAME, filepath) {
     cy.get('[role="dialog"] ul>div:nth-child(2)').click();
     cy.get('[data-testid="open-api-file"]').click();
     cy.get('input[type="file"]').attachFile(filepath);

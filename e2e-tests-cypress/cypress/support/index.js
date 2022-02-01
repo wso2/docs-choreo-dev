@@ -18,8 +18,11 @@ import 'cypress-xpath';
 
 
 Cypress.on('uncaught:exception', (err, runnable) => {
+  cy.log(err)
   return false
 })
+
+
 
 
 Cypress.on('window:confirm', (err, runnable) => {

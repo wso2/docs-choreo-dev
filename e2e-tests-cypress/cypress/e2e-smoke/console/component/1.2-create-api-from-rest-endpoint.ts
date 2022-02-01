@@ -44,7 +44,7 @@ describe("Verify project creation functionality", () => {
   const ALLOWED_ORIGINS = ["https://127.0.0.1"];
   const ALLOWED_HEADERS = ["tenantId"];
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
-  const PROJECT_DESCRIPTIION = "sample stats project";
+  const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "1.2-create-api-from-rest-endpoint";
   const idpUser = "choreoe2etest";
@@ -56,12 +56,12 @@ describe("Verify project creation functionality", () => {
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTIION,
+      PROJECT_DESCRIPTION,
       FILE_ID
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    RestAPIProxyTemplate.designANewRESTAPI(
+    RestAPIProxyTemplate.designNewRestApi(
       API_NAME,
       API_VERSION,
       "",

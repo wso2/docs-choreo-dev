@@ -31,16 +31,16 @@ describe("Verify webhook creation functionality", () => {
   const WEBHOOK_NAME = "Slack Trigger";
   const FILE_ID = "1.4-create-webhook-slackTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTIION = "Slack Trigger";
+  const PROJECT_DESCRIPTION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding slacktrigger.bal file";
 
-  before(() => LoginPage.loginToChoreo(FILE_ID));
+  before(() => LoginPage.loginToChoreo(FILE_ID,true));
 
   it("Verify slack trigger creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTIION,
+      PROJECT_DESCRIPTION,
       FILE_ID
     );
     ProjectOverviewPage.addNewComponent();

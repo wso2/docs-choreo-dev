@@ -12,7 +12,7 @@
  */
 
 export class ChoreoHomePage {
-  static username = ('[data-testid="header-user-profile-menu"]')
+  static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
     cy.get('[href="/"]').eq(1).click();
@@ -40,28 +40,19 @@ export class ChoreoHomePage {
       .click();
   }
 
-  static getLoggedUsername() {
-    this.navigateToHome();
-    return cy.get(this.username).invoke("text");
-  }
-
   static getLoggedUserEmail() {
-    this.clickOnLoggedInUser();
+    cy.get(this.username).should("be.visible").click();
     return cy.get("ul>li>div>p").invoke("text");
   }
 
-  static clickOnLoggedInUser() {
-    cy.get(this.username).click();
-  }
-
   static logout(fileID) {
-    cy.task("deleteFile", fileID);
-    this.clickOnLoggedInUser();
+    cy.get(this.username).should("be.visible").click();
     cy.contains("Logout").click();
+    cy.task("deleteFile", fileID);
   }
 
   static navigateToSettings() {
-    this.clickOnLoggedInUser();
+    cy.get(this.username).should("be.visible").click();
     cy.get('[data-testid="header-user-profile-item-settings"]')
       .should("be.visible")
       .click();

@@ -54,10 +54,7 @@ describe("Choreo APIM publisher scenarios", () => {
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(
       API_Name,
-      Filepath,
-      FILE_ID,
-      DEVELOP,
-      OVERVIEW
+      Filepath
     );
   });
 
