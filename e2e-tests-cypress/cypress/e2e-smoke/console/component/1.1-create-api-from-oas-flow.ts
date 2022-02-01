@@ -52,10 +52,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    RestAPIProxyTemplate.createOpenApi(
-      API_Name,
-      Filepath
-    );
+    RestAPIProxyTemplate.createOpenApi(API_Name, Filepath);
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -68,17 +65,17 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify test functionality", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/intensity")
+    SwaggerUI.invokeResource("/intensity");
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/intensity/factors")
+    SwaggerUI.invokeResource("/intensity/factors");
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/generation")
+    SwaggerUI.invokeResource("/generation");
     SwaggerUI.GetResponse();
   });
 
@@ -108,7 +105,7 @@ describe("Choreo APIM publisher scenarios", () => {
       "eq",
       Environment.DEVELOPMENT
     );
-     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
+    ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
   });
 
   it("Verify resource not access without the token in dev", () => {
