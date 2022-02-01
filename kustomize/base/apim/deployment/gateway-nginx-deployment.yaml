@@ -47,6 +47,7 @@ spec:
       securityContext:
         runAsUser: 10500
         runAsGroup: 10500
+        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
