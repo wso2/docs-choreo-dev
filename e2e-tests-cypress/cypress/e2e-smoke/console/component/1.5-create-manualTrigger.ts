@@ -33,7 +33,7 @@ describe("Verify manual trigger creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding slacktrigger.bal file";
+  const commitMessage = "adding manualtrigger.bal file";
 
   before(() => LoginPage.loginToChoreo(FILE_ID,true));
 
