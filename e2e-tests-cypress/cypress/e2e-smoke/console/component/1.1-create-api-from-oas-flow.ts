@@ -23,10 +23,6 @@ import { ComponentTestPage } from "../../../support/console/pages/component/comp
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import {
-  DEVELOP,
-  OVERVIEW,
-} from "../../../support/console/pages/component/common/constants";
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
@@ -41,6 +37,10 @@ describe("Choreo APIM publisher scenarios", () => {
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
+  });
+
+  after(() => {
+    ChoreoHomePage.logout(FILE_ID);
   });
 
   it("Creating and publishing an API from open API specification", () => {
@@ -62,7 +62,7 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.PromoteToProd();
   });
 
-  it("Verify test functionality", () => {
+  it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource("/intensity");
@@ -79,7 +79,7 @@ describe("Choreo APIM publisher scenarios", () => {
     SwaggerUI.GetResponse();
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
+  it("Verify test functionality using generated curl in Dev", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
@@ -94,7 +94,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Apply configs to dev", () => {
+  it("Disable security of a resource belonging to the API deployed in Dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
@@ -106,9 +106,8 @@ describe("Choreo APIM publisher scenarios", () => {
       Environment.DEVELOPMENT
     );
     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
-  });
 
-  it("Verify resource not access without the token in dev", () => {
+    // Verify that deployment has been updated by invoking the API without a token
     Curl.getRequestComponents(
       FILE_ID,
       `${Environment.DEVELOPMENT}intensity`
@@ -122,15 +121,5 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-  });
-
-  it.skip("Delete created project", () => {
-    ChoreoHomePage.selectHomeMenu();
-    ChoreoHomePage.navigateToComponents();
-    ProjectListingPage.selectProject(FILE_ID);
-  });
-
-  after(() => {
-    ChoreoHomePage.logout(FILE_ID);
   });
 });
