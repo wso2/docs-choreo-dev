@@ -19,7 +19,7 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL(fileID) {
-    cy.contains("Edit code")
+    cy.get('[data-testid="component-develop-edit-code"]', { timeout: "120000" })
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
@@ -115,9 +115,9 @@ export class ComponentDevelopPage {
     cy.get(`[title="${commitMessage}"]`).should("be.visible");
   }
 
-
-
-static getVersion(){
-  return cy.get('[id="version-picker"]>div>div').invoke('text')
-}
+  static getVersion() {
+    return cy.get('[id="version-picker"]>div').then((v) => {
+      return v.text().trim();
+    });
+  }
 }

@@ -15,9 +15,9 @@ import { deprecate } from "util";
 import { Utils } from "../../utils";
 
 export class ComponentDeployPage {
+
   static deploy() {
-    cy.wait(8000);
-    this.selectButton("Deploy").should("be.visible").click();
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.visible").click();
   }
 
   static configureAndDeploy(configValue: string) {
@@ -39,12 +39,11 @@ export class ComponentDeployPage {
   }
 
   static isDeploymentSuccessful() {
-    return cy.get('[title="Build Success"]');
+    return cy.get('[title="Build Success"]',{timeout:90000});
   }
 
   static promoteToProd() {
-    cy.wait(8000);
-    this.selectButton("Promote").should("be.visible").click();
+    cy.get('[data-cyid="btn-proxy-promote"]',{timeout:120000}).should('be.visible').click();
   }
 
   private static selectButton(buttonName) {

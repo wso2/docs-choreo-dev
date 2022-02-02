@@ -45,5 +45,8 @@ export class RestAPIProxyTemplate {
     });
 
     cy.get("button>span").contains("Create").click();
+    cy.get(`[data-testid="resource-/intensity"]`, { timeout: 120000 }).should(
+      "be.visible"
+    );
   }
 }

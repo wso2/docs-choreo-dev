@@ -49,9 +49,9 @@ describe("Verify project creation functionality", () => {
   const FILE_ID = "1.2-create-api-from-rest-endpoint";
   const idpUser = "choreoe2etest";
 
-  before(() => {
-    LoginPage.loginToChoreo(FILE_ID);
-  });
+  before(() => LoginPage.loginToChoreo(FILE_ID));
+
+  after(() => DevportalHomePage.logout(FILE_ID));
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(
@@ -102,11 +102,14 @@ describe("Verify project creation functionality", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion();
- //  ComponentDevelopPage.getVersion().should("eq", "Version 1.0.1");
-    ComponentOverviewPage.navigateToDeploy()
+    ComponentDevelopPage.getVersion().should("eq", "Version 1.0.1");
+  });
+
+  it("Deploy new version", () => {
+    ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should('not.be.null')
+    APIDeployment.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Test in prod", () => {
@@ -135,7 +138,8 @@ describe("Verify project creation functionality", () => {
 
   it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    Apis.searchApiAndSelect();
+    Apis.verifyAPIname().should("eq", API_NAME);
+    Apis.searchApiAndSelect(API_NAME);
     ApiCredentials.navigateTocredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
@@ -151,9 +155,5 @@ describe("Verify project creation functionality", () => {
     ChoreoHomePage.selectHomeMenu();
     ChoreoHomePage.navigateToComponents();
     ProjectListingPage.selectProject(FILE_ID);
-  });
-
-  after(() => {
-    DevportalHomePage.logout(FILE_ID)
   });
 });

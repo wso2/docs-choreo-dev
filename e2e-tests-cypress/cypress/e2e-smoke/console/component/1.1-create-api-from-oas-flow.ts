@@ -42,7 +42,9 @@ describe("Choreo APIM publisher scenarios", () => {
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
   });
-
+  after(() => {
+    ChoreoHomePage.logout(FILE_ID);
+  });
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(
@@ -92,7 +94,8 @@ describe("Choreo APIM publisher scenarios", () => {
       `${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
+
+         expect(res.status).equal(200);
       })
     );
   });
@@ -111,7 +114,7 @@ describe("Choreo APIM publisher scenarios", () => {
      ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
   });
 
-  it("Verify resource not access without the token in dev", () => {
+  it("Verify resource can access without the token in dev", () => {
     Curl.getRequestComponents(
       FILE_ID,
       `${Environment.DEVELOPMENT}intensity`
@@ -127,13 +130,5 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
   });
 
-  it.skip("Delete created project", () => {
-    ChoreoHomePage.selectHomeMenu();
-    ChoreoHomePage.navigateToComponents();
-    ProjectListingPage.selectProject(FILE_ID);
-  });
 
-  after(() => {
-    ChoreoHomePage.logout(FILE_ID);
-  });
 });

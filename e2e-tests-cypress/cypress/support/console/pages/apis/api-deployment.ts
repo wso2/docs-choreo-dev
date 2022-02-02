@@ -18,11 +18,10 @@ export class APIDeployment {
   }
 
   static DeployToDev() {
-    cy.wait(5000);
-    cy.get('[data-cyid="btn-deploy-proxy"]')
+    cy.get('[data-cyid="btn-deploy-proxy"]',{timeout:120000})
       .should("be.visible")
       .click({ force: true });
-    cy.get('[data-cyid="btn-proxy-promote"]').should("be.visible");
+    cy.get('[data-cyid="btn-proxy-promote"]',{timeout:120000}).should("be.visible");
   }
 
   static PromoteToProd() {

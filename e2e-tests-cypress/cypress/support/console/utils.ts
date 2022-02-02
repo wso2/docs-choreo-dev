@@ -12,9 +12,9 @@
  */
 
 export class Utils {
-  static projectNamePrefix = 'e2eproject';
+  static projectNamePrefix = "e2eproject";
 
-  static keyNamePrefix = 'e2eOnPremkey';
+  static keyNamePrefix = "e2eOnPremkey";
 
   /**
    * Create name for app.
@@ -37,7 +37,7 @@ export class Utils {
   static sendRequest(
     method: string,
     url: string,
-    headers: any={},
+    headers: any = {},
     body: any = {}
   ) {
     const request = {
@@ -45,12 +45,12 @@ export class Utils {
       url,
       headers,
       body,
-    };
-cy.log(JSON.stringify(request))
-
-
+    }; 
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });
     });
   }
+
+
+
 }
