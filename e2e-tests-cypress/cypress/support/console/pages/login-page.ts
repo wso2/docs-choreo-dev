@@ -15,13 +15,12 @@ import { GraphQL } from "../apis/graphql";
 
 export class LoginPage {
   static loginToChoreo(fileID: string, enableIntercept: boolean = false) {
-    
     cy.visit(Cypress.env("loginURL"));
-    cy.get('button[type="submit"]', { timeout: 120000 }).should("be.visible");
+    cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
     cy.get("#password").type(Cypress.env("choreoIDPPassword"));
-    cy.get('button[type="submit"]').click();
 
+    cy.get('button[type="submit"]').click();
     if (enableIntercept) {
       this.interceptRequiredApiCalls();
       this.persistCookies(fileID);
@@ -109,7 +108,7 @@ export class LoginPage {
   private static testSetup(fileID: string) {
     cy.log("testSetup()");
     let token: string;
-    cy.wait(["@token", "@org", "@balRegistry"], { timeout: 120000 }).then(
+    cy.wait(["@token", "@org", "@balRegistry"], { timeout: 180000 }).then(
       (interceptions) => {
         token = interceptions[0].response.body.access_token;
 

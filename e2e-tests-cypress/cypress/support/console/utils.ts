@@ -34,18 +34,12 @@ export class Utils {
     return this.keyNamePrefix + Date.now() + name;
   }
 
-  static sendRequest(
-    method: string,
-    url: string,
-    headers: any = {},
-    body: any = {}
-  ) {
+  static sendRequest(method: string, url: string, headers: any = {}) {
     const request = {
       method,
       url,
       headers,
-      body,
-    }; 
+    };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });
     });

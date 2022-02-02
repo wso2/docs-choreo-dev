@@ -23,10 +23,6 @@ import { ComponentTestPage } from "../../../support/console/pages/component/comp
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import {
-  DEVELOP,
-  OVERVIEW,
-} from "../../../support/console/pages/component/common/constants";
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
@@ -42,9 +38,11 @@ describe("Choreo APIM publisher scenarios", () => {
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
   });
+
   after(() => {
     ChoreoHomePage.logout(FILE_ID);
   });
+
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(
@@ -54,10 +52,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    RestAPIProxyTemplate.createOpenApi(
-      API_Name,
-      Filepath
-    );
+    RestAPIProxyTemplate.createOpenApi(API_Name, Filepath);
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -67,24 +62,24 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.PromoteToProd();
   });
 
-  it("Verify test functionality", () => {
+  it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/intensity")
+    SwaggerUI.invokeResource("/intensity");
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/intensity/factors")
+    SwaggerUI.invokeResource("/intensity/factors");
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/generation")
+    SwaggerUI.invokeResource("/generation");
     SwaggerUI.GetResponse();
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
+  it("Verify test functionality using generated curl in Dev", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
@@ -100,7 +95,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Apply configs to dev", () => {
+  it("Disable security of a resource belonging to the API deployed in Dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
@@ -111,10 +106,13 @@ describe("Choreo APIM publisher scenarios", () => {
       "eq",
       Environment.DEVELOPMENT
     );
-     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
-  });
+    ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
 
+<<<<<<< HEAD
   it("Verify resource can access without the token in dev", () => {
+=======
+    // Verify that deployment has been updated by invoking the API without a token
+>>>>>>> 2a6565f55b42ced9fea9abe7ec364ca8450519f4
     Curl.getRequestComponents(
       FILE_ID,
       `${Environment.DEVELOPMENT}intensity`
@@ -129,6 +127,9 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
   });
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 2a6565f55b42ced9fea9abe7ec364ca8450519f4
 });

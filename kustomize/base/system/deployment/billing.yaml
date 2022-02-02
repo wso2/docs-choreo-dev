@@ -94,22 +94,11 @@ spec:
               cpu: 300m
               memory: 512Mi
           volumeMounts:
-            - name: secret-subscriptions
-              mountPath: /mnt/csi/secret-subscriptions
-              readonly: true
             - name: secret-billing
               mountPath: /mnt/csi/secret-billing
               readonly: true
       restartPolicy: Always
       volumes:
-        - name: secret-subscriptions
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-subscriptions
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: secret-billing
           csi:
             driver: secrets-store.csi.k8s.io
