@@ -108,11 +108,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
 
-<<<<<<< HEAD
-  it("Verify resource can access without the token in dev", () => {
-=======
     // Verify that deployment has been updated by invoking the API without a token
->>>>>>> 2a6565f55b42ced9fea9abe7ec364ca8450519f4
     Curl.getRequestComponents(
       FILE_ID,
       `${Environment.DEVELOPMENT}intensity`
@@ -127,9 +123,4 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
   });
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 2a6565f55b42ced9fea9abe7ec364ca8450519f4
 });

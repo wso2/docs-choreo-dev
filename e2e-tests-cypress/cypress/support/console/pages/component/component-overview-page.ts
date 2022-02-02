@@ -60,15 +60,10 @@ export class ComponentOverviewPage {
       cy.get("input").type("1.0.1");
     });
     cy.get("[data-testid=create-version-create]").click();
-<<<<<<< HEAD
     cy.intercept(
       "GET",
       "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*/swagger?organizationId=*"
     ).as("version");
-
     cy.wait("@version", { timeout: 30000 });
-=======
-    cy.wait(5000);
->>>>>>> 2a6565f55b42ced9fea9abe7ec364ca8450519f4
   }
 }
