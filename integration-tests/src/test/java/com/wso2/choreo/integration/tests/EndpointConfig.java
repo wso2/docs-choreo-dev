@@ -16,4 +16,13 @@ public class EndpointConfig {
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.CHOREO_ENDPOINT)
                 .build();
     }
+
+    @Bean
+    public HttpClient choreoTestClientForSTS() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.STS_ENDPOINT)
+                .build();
+    }
 }
