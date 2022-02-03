@@ -261,6 +261,7 @@ VariableName
 getPopulationByCountry
  - docs/get-started/quick-start-guide.md
 personalizedMessage
+Param
  - docs/insights/configure-alerts.md
 10-minute
  - docs/references/migrate-applications-to-the-latest-version.md
@@ -354,3 +355,6 @@ site_version
  - theme/material/templates/home-page.html
 doctype
 html
+ - docs/insights/choreo-insights-api.md
+listOrganizations
+uuid
