@@ -13,16 +13,18 @@
 
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
-    cy.get('[data-testid="develop-resources-header"')
-      .contains('Resources')
-      .should('be.visible');
-    cy.get('[id="backdrop-loader"').should('not.exist');
+    cy.get('[data-testid="develop-resources-header"]')
+      .contains("Resources")
+      .should("be.visible");
+    cy.get('[id="backdrop-loader"').should("not.exist");
     cy.get('[data-testid="delete-all-operations-btn"]').click();
     this.addHTTPVerb(verbs);
-    cy.get('#operation-target').type(path);
+    cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
-    cy.contains('Save').click();
-    cy.get(`[data-testid="resource-${path}"]`).should('be.visible')
+    cy.contains("Save").click();
+    cy.get(`[data-testid="resource-${path}"]`, { timeout: 120000 }).should(
+      "be.visible"
+    );
   }
 
   private static addHTTPVerb(verbs: string[]) {
@@ -32,27 +34,27 @@ export class APIDevelop {
       cy.contains(verb.toUpperCase()).click();
       cy.wait(1000);
     });
-    cy.get('body').type('{esc}');
+    cy.get("body").type("{esc}");
   }
 
   static addEndpoints() {
     cy.get('[data-testid="Endpoints"]').click();
-    cy.contains('Save').click();
+    cy.contains("Save").click();
   }
 
   static updateEndpointConfiguration(newEndpoint: string) {
     cy.get('[data-testid="Endpoints"]').click();
     cy.get('[data-testid="api-endpoint"]').within(() => {
-      cy.get('input').clear().type(newEndpoint);
+      cy.get("input").clear().type(newEndpoint);
     });
-    cy.contains('Save').click();
+    cy.contains("Save").click();
 
-    cy.get('[id="circular-loader"]').should('not.exist');
+    cy.get('[id="circular-loader"]').should("not.exist");
     cy.get('[data-testid="api-endpoint"] > div > input').should(
-      'have.value',
+      "have.value",
       newEndpoint
     );
     cy.wait(1000);
-    cy.log('Endpoint configuration updated successfully');
+    cy.log("Endpoint configuration updated successfully");
   }
 }

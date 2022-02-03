@@ -19,7 +19,7 @@ export class Curl {
     }
   }
   static selectEnvironment(env: Environment) {
-    cy.wait(2000);
+    cy.get('[data-testid="add-btn"]').should('be.visible')
     cy.get('[aria-haspopup="listbox"]').eq(1).click();
     cy.get("ul>li").contains(env).click();
   }
@@ -30,6 +30,7 @@ export class Curl {
       .then((data) => {
         if (data[env.toLowerCase()]) {
           return cy.wrap(data[env.toLowerCase()]);
+          
         }
         return cy
           .get("textarea")

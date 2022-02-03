@@ -13,7 +13,7 @@
 
 
 
-export enum DocumentSoruceType {
+export enum DocumentSourceType {
   INLINE = 'INLINE',
   MARKDOWN = 'MARKDOWN',
   URL = 'URL',

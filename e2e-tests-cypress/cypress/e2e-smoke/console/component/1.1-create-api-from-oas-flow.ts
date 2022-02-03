@@ -89,7 +89,8 @@ describe("Choreo APIM publisher scenarios", () => {
       `${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
+
+         expect(res.status).equal(200);
       })
     );
   });

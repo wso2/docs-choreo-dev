@@ -1,6 +1,5 @@
 export class VSSourceControl {
   static commitChanges(commitMessage: string) {
-    cy.wait(30000);
     cy.contains('Changes').click({ force: true });
     cy.get('[title="Stage All Changes"]').should('be.visible').click();
     cy.get('[aria-label="Changes"] div[class="count"] div')

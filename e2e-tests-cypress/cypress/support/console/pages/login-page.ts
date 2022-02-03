@@ -23,7 +23,6 @@ export class LoginPage {
     cy.get('button[type="submit"]').click();
     if (enableIntercept) {
       this.interceptRequiredApiCalls();
-
       this.persistCookies(fileID);
       this.testSetup(fileID);
     }

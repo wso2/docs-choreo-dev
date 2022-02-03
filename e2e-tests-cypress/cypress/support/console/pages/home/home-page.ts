@@ -46,8 +46,12 @@ export class ChoreoHomePage {
   }
 
   static logout(fileID) {
-    cy.get(this.username).should("be.visible").click();
-    cy.contains("Logout").click();
+    cy.window()
+    .its("sessionStorage")
+    .invoke("getItem", "sign_out_url")
+    .then((url) => {
+      cy.request(url);
+    });
     cy.task("deleteFile", fileID);
   }
 
