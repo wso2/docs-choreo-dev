@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -13,15 +13,23 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.codegen.ApiDTO;
+import com.wso2.choreo.integration.codegen.GraphqlDTO;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import org.eclipse.jetty.util.IO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -34,15 +42,7 @@ public class APICreator {
         String requestURI = Configuration.STS_ENDPOINT.
                 concat(Constant.APIS_ENDPOINT).concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
                 .concat(Configuration.TEST_CHOREO_ORG_UUID);
-        String requestBody = "{\"name\":" +
-                "\"" + apiName + "\"," +
-                "\"version\":\"" + Constant.DEFAULT_VERSION + "\"," +
-                "\"description\":\"This api is used to connect to the" + apiName + " service\"," +
-                "\"context\":\"" + apiContext + "\"," +
-                "\"policies\":[\"Bronze\"]," +
-                "\"endpointConfig\":{\"endpoint_type\":\"http\"," +
-                "\"production_endpoints\":{\"url\":\"" + Constant.DEFAULT_ENDPOINT + "\"}," +
-                "\"sandbox_endpoints\":{\"url\":\"" + Constant.DEFAULT_ENDPOINT + "\"}}}";
+        String requestBody = getRequestBodyForAPICreation(apiName, apiContext);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -59,27 +59,36 @@ public class APICreator {
         return apiId;
     }
 
-    public String createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId) {
-        String graphQlQuery = "mutation{ createComponent(" +
-                "      component: {" +
-                "        name: \"" + apiName.toLowerCase() + "\"," +
-                "        orgId: " + Configuration.TEST_CHOREO_ORG_ID + "," +
-                "        orgHandler: \"" + Configuration.TEST_CHOREO_ORG_HANDLE + "\"," +
-                "        displayName: \"" + apiName + "\"," +
-                "        displayType: \"" + Constant.displayType.proxy + "\"," +
-                "        projectId: \"" + projectId + "\"," +
-                "        labels: \"\"," +
-                "        version: \"1.0.0\"," +
-                "        description: \"\"," +
-                "        apiId: " + apiId + "," +
-                "        ballerinaVersion: \"swan-lake-alpha5\"," +
-                "        triggerChannels: \"\"," +
-                "        triggerID: null," +
-                "        httpBase: true," +
-                "        sampleTemplate: \"\"" +
-                "      }){" +
-                "        id, orgId, projectId, handler" +
-                "      }}";
+    public String getRequestBodyForAPICreation(String apiName, String apiContext) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/api-proxy/requestBodyForAPICreation.mustache");
+        Writer writer = new StringWriter();
+        ApiDTO api = new ApiDTO();
+        api.setApiName(apiName);
+        api.setVersion(Constant.DEFAULT_VERSION);
+        api.setContext(apiContext);
+        api.setProductionEndpoint(Constant.DEFAULT_ENDPOINT);
+        api.setSandboxEndpoint(Constant.DEFAULT_ENDPOINT);
+        mustache.execute(writer, api).flush();
+        return writer.toString();
+    }
+
+    public String createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/api-proxy/graphqlQueryForComponentCreation.mustache");
+        Writer writer = new StringWriter();
+
+        GraphqlDTO gql = new GraphqlDTO();
+        gql.setApiName(apiName.toLowerCase());
+        gql.setOrgId(Configuration.TEST_CHOREO_ORG_ID);
+        gql.setOrgHandler(Configuration.TEST_CHOREO_ORG_HANDLE);
+        gql.setDiaplayName(apiName);
+        gql.setDisplayType(String.valueOf(Constant.displayType.proxy));
+        gql.setProjectId(projectId);
+        gql.setApiId(apiId.replaceAll("\"", ""));
+        mustache.execute(writer, gql).flush();
+        String graphQlQuery = writer.toString();
+
         return graphQlQuery;
     }
 }
