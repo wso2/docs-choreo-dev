@@ -18,7 +18,7 @@ export class LoginPage {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPPassword"));
+    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
 
     cy.get('button[type="submit"]').click();
     if (enableIntercept) {
