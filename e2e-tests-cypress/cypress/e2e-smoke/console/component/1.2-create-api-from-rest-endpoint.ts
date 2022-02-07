@@ -28,13 +28,11 @@ import { ComponentDevelopPage } from "../../../support/console/pages/component/c
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
-import { STANDARD_TIME_OUT } from "../../../support/devportal/constants";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { DevportalHomePage } from "../../../support/devportal/pages/home/home-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
@@ -149,11 +147,5 @@ describe("Verify project creation functionality", () => {
     TryOut.ExecuteResourceFunction();
     cy.wait(5000);
     TryOut.GetResponse();
-  });
-
-  it.skip("Delete created project", () => {
-    ChoreoHomePage.selectHomeMenu();
-    ChoreoHomePage.navigateToComponents();
-    ProjectListingPage.selectProject(FILE_ID);
   });
 });
