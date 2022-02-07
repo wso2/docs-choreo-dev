@@ -4,6 +4,7 @@
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
+            <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
         </classes>
     </test>
 </suite>
