@@ -88,7 +88,7 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
         .response(HttpStatus.OK)
         .message()
         .type(MessageType.JSON)
-        .body(new ClassPathResource("templates/createProject/query_create_project_success.json"))
+        .body(new ClassPathResource("templates/createProject/mutation_create_project_success.json"))
         .validate(json()
             .ignore("$.data.createProject.id")
             .ignore("$.data.createProject.handler")
