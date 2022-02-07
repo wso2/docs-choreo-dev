@@ -12,7 +12,7 @@
  */
 
 import { DocumentType } from "../enum/document-type";
-import { DocumentSoruceType } from "../enum/document-source";
+import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
 
@@ -73,14 +73,12 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.wait(300000)
+    cy.wait(30000)
     cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
       .invoke('attr', 'href')
       .then((href) => {
         cy.visit(href + '&fidp=' + idpUser)
       })
-      
-     // cy.get('[data-testid="txt-api-name"]').should('be.visible');
   }
 
   static selectUsagePlans(...plans) {
@@ -96,23 +94,23 @@ export class ComponentAPILifecycle {
 
   static addDocument(
     documentName: string,
-    documentSummaray: string,
+    documentSummary: string,
     documentType: DocumentType,
-    documentSourceType: DocumentSoruceType,
-    documentSoruce: string
+    documentSourceType: DocumentSourceType,
+    documentSource: string
   ) {
     cy.get('[data-testid="Documents"]').should("be.visible").click();
     cy.get('[data-testid="add-new-doc"]').should("be.visible").click();
     cy.get('[data-testid="document-name"]>div>input').type(documentName);
     cy.get('[data-testid="document-summary"]>div>textarea').type(
-      documentSummaray
+      documentSummary
     );
 
     cy.get('[data-testid="document-type-selector"]').click();
     cy.get(`dta-value=${documentType}`).click();
     cy.get('[data-testid="document-source-selector"]').click();
     cy.get(`dta-value=${documentSourceType}`).click();
-    cy.get('[data-testid="document-url"]>div>input').type(documentSoruce);
+    cy.get('[data-testid="document-url"]>div>input').type(documentSource);
     cy.contains("Save").click();
   }
 

@@ -11,36 +11,25 @@
  * associated services.
  */
 
+import "cypress-file-upload";
+import "./commands";
+import "cypress-xpath";
 
-import "cypress-file-upload"
-import "./commands"
-import 'cypress-xpath';
+Cypress.on("uncaught:exception", (err, runnable) => {
+  return false;
+});
 
+Cypress.on("window:confirm", (err, runnable) => {
+  return true;
+});
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  cy.log(err)
-  return false
-})
+Cypress.on("window:alert", (err, runnable) => {
+  return true;
+});
 
-
-
-
-Cypress.on('window:confirm', (err, runnable) => {
-  return true
-})
-
-Cypress.on('window:alert', (err, runnable) => {
-  return true
-})
-
-
-Cypress.on('window:before:load', (win) => {
-  Object.defineProperty(win, 'onbeforeunload', {
+Cypress.on("window:before:load", (win) => {
+  Object.defineProperty(win, "onbeforeunload", {
     value: undefined,
     writable: false,
   });
 });
-
-
-
-

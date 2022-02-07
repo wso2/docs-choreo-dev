@@ -26,8 +26,12 @@ export class DevportalHomePage {
   }
 
   static logout(fileID: string = ""): void {
-  cy.get('[data-testid="signedin-user-menu-btn"]').should('be.visible').click();
-    cy.get('[data-testid="logout-item-btn"]').click();
+  cy.window()
+    .its("sessionStorage")
+    .invoke("getItem", "sign_out_url")
+    .then((url) => {
+      cy.request(url);
+    });
     if (fileID) {
       cy.task("deleteFile", fileID);
     }

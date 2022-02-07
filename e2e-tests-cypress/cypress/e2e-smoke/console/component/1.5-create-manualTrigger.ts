@@ -22,61 +22,60 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { TriggersTemplate } from "../../../support/console/pages/templates/slackTrigger-creation-temp";
+import { TriggersTemplate } from "../../../support/console/pages/templates/manualTrigger-creation-temp";
 import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
 import { Utils } from "../../../support/console/utils";
 
-describe("Verify webhook creation functionality", () => {
-  const WEBHOOK_NAME = "Slack Trigger";
-  const FILE_ID = "1.4-create-webhook-slackTrigger";
+describe("Verify manual trigger creation functionality", () => {
+  const MANUAL_NAME = "Manual Trigger";
+  const FILE_ID = "1.5-create-manualTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "Slack Trigger";
+  const PROJECT_DESCRIPTION = "Manual Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding slacktrigger.bal file";
+  const commitMessage = "adding manualtrigger.bal file";
 
-  before(() => LoginPage.loginToChoreo(FILE_ID, true));
-  after(() => ChoreoHomePage.logout(FILE_ID));
-  it("Verify slack trigger creation", () => {
+  before(() => LoginPage.loginToChoreo(FILE_ID,true));
+
+  it("Verify manual trigger deployment", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
       FILE_ID
     );
     ProjectOverviewPage.addNewComponent();
-    TriggersTemplate.SelectWebhookTemplate();
-    TriggersTemplate.createSlackTriggerFromTemplate(WEBHOOK_NAME, FILE_ID);
+    TriggersTemplate.SelectManualTriggeremplate();
+    TriggersTemplate.createManualTriggerFromTemplate(MANUAL_NAME, FILE_ID);
 
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
 
-  it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace(FILE_ID);
-    VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
-    VSExplorer.selectSourceControl();
+  // it("Edit code in VScode", () => {
+  //   LoginPage.navigateToCodespace(FILE_ID);
+  //   VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
+  //   VSExplorer.selectSourceControl();
 
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
-    );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
-    VSExplorer.waitTillCodeSyncWithChoreo();
-  });
+  //   VSExplorer.enterCommandInTerminal(
+  //     "bash /config/workspace/.githooks/pre-commit"
+  //   );
+  //   VSExplorer.enterCommandInTerminal(
+  //     "rm /config/workspace/.githooks/pre-commit"
+  //   );
+  //   VSSourceControl.commitChanges(commitMessage);
+  //   VSExplorer.enterCommandInTerminal("git push");
+  //   VSExplorer.waitTillCodeSyncWithChoreo();
+  // });
 
-  it("Verify component commits", () => {
-    LoginPage.reloginToChoreo(FILE_ID);
-    ComponentDevelopPage.addLabels(labels).then((arr) => {
-      expect(arr).to.deep.eq(labels);
-    });
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
-  });
+  // // it("Verify component commits", () => {
+  // //   LoginPage.reloginToChoreo(FILE_ID);
+  // //   ComponentDevelopPage.addLabels(labels).then((arr) => {
+  // //     expect(arr).to.deep.eq(labels);
+  // //   });
+  // //   ComponentDevelopPage.verifyLatestCommit(commitMessage);
+  // // });
 
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.configureAndDeploy("pkKgDNr5vGND364IsHzwGM7O");
     ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
   });
 
@@ -85,25 +84,8 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.promoteToProd();
   });
 
-  it("Verify test functionality in Dev env", () => {
-    ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentTestPage.getTestKey();
+
+  after(() => {
+    ChoreoHomePage.logout(FILE_ID);
   });
-
-  it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    cy.contains("This feature is disabled for webhook components.").should(
-      "be.visible"
-    );
-  });
-
-  it.skip("Delete created project", () => {
-    ChoreoHomePage.selectHomeMenu();
-    ChoreoHomePage.navigateToComponents();
-    ProjectListingPage.selectProject(FILE_ID);
-  });
-
-
 });

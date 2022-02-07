@@ -42,6 +42,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters2 = [{ key: "number", value: "5" }];
 
   before(() => LoginPage.loginToChoreo(FILE_ID, true));
+  after(() => ChoreoHomePage.logout(FILE_ID));
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -95,7 +96,6 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    ProjectOverviewPage.selectComponent("jojo");
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
@@ -318,11 +318,5 @@ describe("Verify project creation functionality", () => {
     InsightsPage.getTotalTraffic().should("eq", "7");
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  after(() => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
-    ChoreoHomePage.logout(FILE_ID);
   });
 });
