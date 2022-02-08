@@ -11,7 +11,7 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.codegen;
+package com.wso2.choreo.integration.models;
 
 public class ApiDTO {
     private String apiName;

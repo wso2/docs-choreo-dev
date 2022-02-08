@@ -18,12 +18,11 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.codegen.ApiDTO;
-import com.wso2.choreo.integration.codegen.GraphqlDTO;
+import com.wso2.choreo.integration.models.ApiDTO;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import org.eclipse.jetty.util.IO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
