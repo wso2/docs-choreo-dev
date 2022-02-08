@@ -46,7 +46,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 
 /**
- * Connector publishing related tests
+ * git commit list related tests
  */
 public class GetCommitListIT extends TestNGCitrusSpringSupport {
 
@@ -58,23 +58,17 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
 
   @BeforeSuite
   public void beforeSuite()
-      throws IOException, InterruptedException, ProjectCreationException,
-      ComponentCreationStatusCheckException,
-      ComponentCreationException, ComponentRetrieveException,
-      ComponentCreationTimeoutException,
+      throws IOException, InterruptedException, ProjectCreationException, ComponentCreationStatusCheckException,
+      ComponentCreationException, ComponentRetrieveException, ComponentCreationTimeoutException,
       TokenRetrievalException {
     TokenHandler tokenHandler = new TokenHandler();
     accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-
     ChoreoProject project = org.createProject(accessToken);
-
     RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
-
     RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project
         .createChoreoComponent(restApiComponentBuilder, accessToken);
-
     componentId = restApiComponent.getId();
   }
 

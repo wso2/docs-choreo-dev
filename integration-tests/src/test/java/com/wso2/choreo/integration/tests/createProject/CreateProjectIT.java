@@ -30,10 +30,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import java.util.Date;
 import java.util.HashMap;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.consol.citrus.message.MessageType;
@@ -43,7 +41,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 /**
  * $(http()
  * 
- * Connector publishing related tests
+ * project creation related tests
  */
 public class CreateProjectIT extends TestNGCitrusSpringSupport {
 

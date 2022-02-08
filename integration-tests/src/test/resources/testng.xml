@@ -7,6 +7,7 @@
             <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
+            <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>
         </classes>
     </test>
 </suite>
