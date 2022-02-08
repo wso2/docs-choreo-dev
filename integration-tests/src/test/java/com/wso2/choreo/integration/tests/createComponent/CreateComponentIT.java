@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
   @Autowired
   private HttpClient choreoTestClient;
 
-  @BeforeSuite
+  @BeforeTest
   public void beforeSuite()
       throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
     TokenHandler tokenHandler = new TokenHandler();
