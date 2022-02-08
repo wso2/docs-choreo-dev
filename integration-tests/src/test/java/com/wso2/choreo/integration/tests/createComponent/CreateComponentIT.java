@@ -115,7 +115,6 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
             .ignore("$.data.createComponent.handler")
             .ignore("$.data.createComponent.projectId"))
         .validate((message, context) -> {
-          System.out.println(message.getPayload());
           JsonObject component = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
               .getAsJsonObject("data")
               .getAsJsonObject("createComponent");
