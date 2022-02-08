@@ -74,12 +74,12 @@ describe("Verify manual trigger creation functionality", () => {
   // //   ComponentDevelopPage.verifyLatestCommit(commitMessage);
   // // });
 
-  it("Deploy the component", () => {
+  it.skip("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
   });
 
-  it("Component promotion to prod", () => {
+  it.skip("Component promotion to prod", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
   });
