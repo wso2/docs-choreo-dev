@@ -39,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Date;
@@ -58,8 +59,8 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoTestClientForSTS;
 
-    @BeforeSuite
-    public void beforeSuite() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
+    @BeforeTest
+    public void beforeTest() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
         ChoreoOrganization testOrg = new ChoreoOrganization(TEST_CHOREO_ORG_HANDLE,

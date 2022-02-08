@@ -11,6 +11,8 @@
     - STS_CLIENT_ID
     - STS_CLIENT_SECRET
 
+Please talk to your EM or any QA team member to get these dev test user credentials. 
+
 ## 2. Run
 
 1. Navigate to the `integration-tests` directory
