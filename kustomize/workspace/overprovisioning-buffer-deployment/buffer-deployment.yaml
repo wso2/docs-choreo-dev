@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pause-buffer-workload
+  labels:
+    app: pause-buffer-workload
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Liveness probe not required
+    checkov.io/skip2: CKV_K8S_9=Readiness probe not required
+    checkov.io/skip3: CKV_K8S_38=Required by likerd
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: pause-buffer-workload
+  template:
+    metadata:
+      labels:
+        app: pause-buffer-workload
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      priorityClassName: buffer-priority
+      containers:
+        - name: pause-buffer
+          image: choreocontrolplane.azurecr.io/pause
+          resources:
+            limits:
+              cpu: "2"
+              ephemeral-storage: 1Gi
+              memory: 2Gi
+            requests:
+              cpu: "1"
+              ephemeral-storage: 1Gi
+              memory: 2Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 15000
+            runAsGroup: 15000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
