@@ -73,7 +73,7 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.wait(30000)
+    cy.wait(300000)
     cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
       .invoke('attr', 'href')
       .then((href) => {
@@ -140,7 +140,6 @@ export class ComponentAPILifecycle {
     if (isCORSenable) {
       cy.contains("Edit").click();
       cy.get('[data-testid="switch-cors-config"]').click();
-      cy.get('[data-testid="cors-config-label"]').click();
       if (!isAllOriginsAllowed) {
         cy.get('[data-testid="checkbox-allow-all-origins"]').click();
       }

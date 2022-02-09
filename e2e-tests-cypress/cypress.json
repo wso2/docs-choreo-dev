@@ -6,8 +6,9 @@
     "testFiles": [
         "./**/component/**/*.ts"
     ],
-    "viewportHeight": 1440,
-    "viewportWidth": 2560,
+    "viewportHeight": 960,
+    "viewportWidth": 1536,
+    "orientation":"landscape",
     "chromeWebSecurity": false,
     "video":true,
     "screenshotsFolder": "cypress/screenshots/e2e-smoke",
