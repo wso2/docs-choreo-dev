@@ -10,7 +10,7 @@ metadata:
     checkov.io/skip3: CKV_K8S_37=This need to be tested after the deployment
     checkov.io/skip4: CKV_K8S_22=Files will be created in the container root dir at startup
     checkov.io/skip5: CKV_K8S_38=Automounting service account token is required
-    checkov.io/skip5: CKV_K8S_AZURE_WSO2_2=LinkerD has a connection Issue to the cluster
+    checkov.io/skip6: CKV_K8S_AZURE_WSO2_2=LinkerD has a connection Issue to the cluster
 
 spec:
   replicas: 2
