@@ -28,18 +28,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - env:
-          - name: GITHUB_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: secret-app-deployer
-                key: GITHUB_TOKEN
-          - name: BCENTRAL_CLI_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: secret-ballerina-central
-                key: BCENTRAL_CLI_CLIENT_SECRET
-          envFrom:
+        - envFrom:
             - configMapRef:
                 name: env-connector-builder
             - configMapRef:
@@ -53,15 +42,6 @@ spec:
             runAsGroup: 10500
             readOnlyRootFilesystem: true
           name: connector-builder
-          volumeMounts:
-            - name: secret-ballerina-central
-              mountPath: "/mnt/csi/secret-ballerina-central"
-              readOnly: true
-            - name: secret-app-deployer
-              mountPath: "/mnt/csi/secret-app-deployer"
-              readOnly: true
-            - mountPath: /tmp
-              name: tmp              
           ports:
             - containerPort: 9090
               name: c-builder-port
@@ -97,22 +77,6 @@ spec:
       volumes:
         - emptyDir: {}
           name: tmp
-        - name: secret-app-deployer
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-app-deployer
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-ballerina-central
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-ballerina-central
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
 
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
