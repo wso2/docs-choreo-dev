@@ -5,6 +5,10 @@
         <classes>
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
+        </classes>
+    </test>
+    <test name="alert">
+        <classes>
             <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
         </classes>
     </test>

@@ -17,7 +17,6 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.email.EmailUtils;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +42,8 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
 
     @BeforeSuite
     public void beforeSuite() throws Exception, TokenRetrievalException {
-        String clientId = Configuration.ALERT.CLIENT_ID;
-        String clientSecret = Configuration.ALERT.CLIENT_SECRET;
         TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken(clientId, clientSecret));
+        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
     }
 
     @Test
@@ -58,12 +55,13 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 + "\t\"envId\": \"" + Constant.ALERT.ENV_ID + "\",\n"
                 + "\t\"publisher\": \"Critical alert detector\",\n"
                 + "\t\"time\": \"" + Instant.now().toString() + "\",\n"
-                + "    \"severity\": \"5\",\n"
+                + "    \"severity\": \"High\",\n"
                 + "\t\"metaData\": {\n"
-                + "\t\t\"componentName\": \"" + appName+ "\",\n"
+                + "        \"componentName\": \"" + appName+ "\",\n"
+                + "        \"envName\": \"" + Constant.ALERT.ENV_ID+ "\",\n"
                 + "        \"containerId\": \"" + Constant.ALERT.CONTAINER_ID + "\",\n"
                 + "        \"releaseId\": \"" + Constant.ALERT.RELEASE_ID + "\",\n"
-                + "\t\t\"alertType\": \"OOM\"\n"
+                + "        \"alertType\": \"Out Of Memory error\"\n"
                 + "\t},\n"
                 + "\t\"properties\": {\n"
                 + "\t}\n"

@@ -1,6 +1,5 @@
 package com.wso2.choreo.integration.config;
 
-import java.util.UUID;
 
 public class Configuration {
     public static final String CHOREO_ENDPOINT = System.getenv("CHOREO_ENDPOINT");
@@ -14,8 +13,6 @@ public class Configuration {
     public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");
 
     public static final class ALERT {
-        public static final String CLIENT_ID = System.getenv("ALERT_CLIENT_ID");
-        public static final String CLIENT_SECRET = System.getenv("ALERT_CLIENT_SECRET");
         public static final String MAIL_IMAP_PASS = System.getenv("ALERT_MAIL_IMAP_PASS");
     }
 }
