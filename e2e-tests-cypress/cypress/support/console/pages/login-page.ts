@@ -121,7 +121,7 @@ export class LoginPage {
 
   private static persistCookies(fileID: string) {
     cy.log("persistCookies()");
-    cy.wait("@cookies").then((interceptor) => {
+    cy.wait("@cookies", { timeout: 1200000 }).then((interceptor) => {
       const cookies = interceptor.response.headers["set-cookie"];
       if (Array.isArray(cookies)) {
         cookies.forEach((element) => {
