@@ -35,7 +35,7 @@ export class APIDevelop {
 
     cy.intercept({
       method: "PUT",
-      url: "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*/swagger?organizationId=*",
+      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
 
     cy.wait("@swagger", { timeout: 120000 }).then((res) => {

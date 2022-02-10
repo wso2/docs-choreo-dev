@@ -217,7 +217,7 @@ export class ComponentAPILifecycle {
     cy.wait(2000);
     cy.intercept({
       method: "POST",
-      url: "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*/revisions?organizationId=*",
+      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
       
     }).as("revision");
 
