@@ -10,6 +10,7 @@
     - TEST_CHOREO_ORG_UUID
     - STS_CLIENT_ID
     - STS_CLIENT_SECRET
+    - ALERT_MAIL_IMAP_PASS
 
 Please talk to your EM or any QA team member to get these dev test user credentials. 
 
