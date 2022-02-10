@@ -48,7 +48,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testPublishConnector() throws Exception {
+    public void testImmediateAlert() throws Exception {
         String appName = UUID.randomUUID().toString();
         String body = "{\n"
                 + "\t\"orgId\": \"" + Constant.ALERT.ORG_UUID + "\",\n"
