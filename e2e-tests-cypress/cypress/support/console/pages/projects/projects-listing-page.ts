@@ -19,7 +19,7 @@ export class ProjectListingPage {
   ) {
     cy.get('[data-testid="version-picker"]',{timeout:120000}).click();
     cy.get('[aria-labelledby="version-picker"]>button').click();
-
+cy.wait(5000)
     cy.get('[name="Name"]').should("be.visible").clear().type(projectName);
     cy.get('[name="Description"]')
       .should("be.visible")

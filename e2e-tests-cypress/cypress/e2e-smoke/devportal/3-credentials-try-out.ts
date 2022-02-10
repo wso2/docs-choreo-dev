@@ -27,7 +27,7 @@ describe("Credentials generation & API tryout scenario", () => {
 
   it("Generate credentials and tryout the API", () => {
     Apis.navigateToApiOverview("e2etestdevportalsample");
-    ApiCredentials.navigateTocredentialsTab();
+    ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOut(apiName);
     TryOut.GenerateAccessToken();
