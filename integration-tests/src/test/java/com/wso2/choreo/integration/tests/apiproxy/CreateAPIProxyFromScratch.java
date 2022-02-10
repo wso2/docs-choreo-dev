@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -39,11 +39,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.io.IOException;
+
 
 public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     private static String accessToken;
@@ -58,8 +60,8 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoTestClientForSTS;
 
-    @BeforeSuite
-    public void beforeSuite() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
+    @BeforeTest
+    public void beforeTest() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
         ChoreoOrganization testOrg = new ChoreoOrganization(TEST_CHOREO_ORG_HANDLE,
@@ -147,9 +149,10 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testAPINameValidationForAPIProxyCreation"})
     @CitrusTest
-    public void testAPIBasePathValidationForAPIProxyCreation() {
+    public void testAPIBasePathValidationForAPIProxyCreation() throws IOException {
         // Create a unique API Name.
         String secondAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        String requestBody = new APICreator().getRequestBodyForAPICreation(secondAPIName, firstContext);
         // Test API Proxy creation with an already existing context.
         $(http()
                 .client(choreoTestClientForSTS)
@@ -157,15 +160,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
                 .post(Constant.APIS_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
                         .concat(Configuration.TEST_CHOREO_ORG_UUID))
                 .message()
-                .body("{\"name\":" +
-                        "\"" + secondAPIName + "\"," +
-                        "\"version\":\"" + Constant.DEFAULT_VERSION + "\"," +
-                        "\"description\":\"This api is used to connect to the" + secondAPIName + " service\"," +
-                        "\"context\":\"" + firstContext + "\"," +
-                        "\"policies\":[\"Bronze\"]," +
-                        "\"endpointConfig\":{\"endpoint_type\":\"http\"," +
-                        "\"production_endpoints\":{\"url\":\"" + Constant.DEFAULT_ENDPOINT + "\"}," +
-                        "\"sandbox_endpoints\":{\"url\":\"" + Constant.DEFAULT_ENDPOINT + "\"}}}")
+                .body(requestBody)
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));

@@ -18,18 +18,38 @@ export class APIDeployment {
   }
 
   static DeployToDev() {
-    cy.get('[data-cyid="btn-deploy-proxy"]',{timeout:120000})
-      .should("be.visible")
-      .click({ force: true });
-    cy.get('[data-cyid="btn-proxy-promote"]',{timeout:120000}).should("be.visible");
+    cy.get('[data-cyid="btn-deploy-proxy"]', { timeout: 120000 })
+      .should("not.be.disabled")
+      .click();
+    cy.get('[data-cyid="deployment-status"]')
+      .contains("Active")
+      .should("be.visible");
+    cy.get('[id="securityHeaderInput"').invoke("val").should("not.be.empty");
+    cy.get('[data-cyid="btn-proxy-promote"]', { timeout: 120000 }).should(
+      "not.be.disabled"
+    );
   }
 
   static PromoteToProd() {
-    cy.contains("Promote").click();
-   cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains('Production').should('be.visible')
-  } 
-  
-  
+    cy.get('[data-cyid="btn-proxy-promote"]').click();
+    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+      .contains("Production")
+      .should("be.visible");
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+    cy.get('[id="securityHeaderInput"')
+      .should("have.length", 2)
+      .eq(1)
+      .invoke("val")
+      .should("not.be.empty");
+    cy.get('[data-cyid="btn-proxy-promote"]', { timeout: 120000 }).should(
+      "not.be.disabled"
+    );
+  }
+
   static verifyDevInvokeURL() {
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')

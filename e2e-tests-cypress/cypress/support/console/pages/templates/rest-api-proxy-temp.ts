@@ -15,13 +15,7 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="project-template-list-httpProxyApi"]').click();
   }
 
-  static designNewRestApi(
-    apiName,
-    apiVersion,
-    apiBasePath,
-    endpoint,
-    fiileID
-  ) {
+  static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint, fiileID) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
@@ -33,17 +27,35 @@ export class RestAPIProxyTemplate {
     cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
   }
 
-  static createOpenApi(API_NAME, filepath) {
+  static createOpenApi(filepath: string = "", url: string = "") {
     cy.get('[role="dialog"] ul>div:nth-child(2)').click();
-    cy.get('[data-testid="open-api-file"]').click();
-    cy.get('input[type="file"]').attachFile(filepath);
+
+    if (filepath) {
+      cy.get('[data-testid="open-api-file"]').click();
+      cy.get('input[type="file"]').attachFile(filepath);
+    }
+
+    if (url) {
+      cy.get('[data-testid="open-api-url"]').click();
+      cy.get('[data-testid="swagger-file-url"]>div>input').type(url);
+    }
+
     cy.get('[id="next"]').click();
-    cy.get('[data-testid="api-name"]>div>input').clear().type(API_NAME);
-    cy.get('[data-testid="api-basepath"]>div>input').clear().type(API_NAME);
+  }
+
+  static enterAPIdetails(
+    apiName: string,
+    apiBasePath: string,
+    endpoint: string
+  ) {
+    cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
+    cy.get('[data-testid="api-basepath"]>div>input').clear().type(apiBasePath);
     cy.get('[data-testid="api-endpoint"]').within(() => {
       cy.get("p").contains("Mui-error").should("not.exist");
     });
-
+    if (endpoint) {
+      cy.get('[data-testid="api-endpoint"]>div>input').type(endpoint);
+    }
     cy.get("button>span").contains("Create").click();
     cy.get(`[data-testid="resource-/intensity"]`, { timeout: 120000 }).should(
       "be.visible"

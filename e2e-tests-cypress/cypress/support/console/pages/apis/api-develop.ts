@@ -13,15 +13,35 @@
 
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
-    cy.get('[data-testid="develop-resources-header"]')
+    cy.get('[data-testid="develop-resources-header"]', { timeout: 120000 })
       .contains("Resources")
       .should("be.visible");
-    cy.get('[id="backdrop-loader"').should("not.exist");
-    cy.get('[data-testid="delete-all-operations-btn"]').click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+
+    cy.get("body").then((body) => {
+      if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
+        cy.get('[data-testid="delete-all-operations-btn"]').click();
+      }
+    });
+
     this.addHTTPVerb(verbs);
+    this.addResource(path);
+  }
+
+  private static addResource(path: string) {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
     cy.contains("Save").click();
+
+    cy.intercept({
+      method: "PUT",
+      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+    }).as("swagger");
+
+    cy.wait("@swagger", { timeout: 120000 }).then((res) => {
+      expect(res.response.body.paths).to.have.property(path);
+      cy.log(JSON.stringify(res.response.body.paths));
+    });
     cy.get(`[data-testid="resource-${path}"]`, { timeout: 120000 }).should(
       "be.visible"
     );

@@ -1,0 +1,12 @@
+{
+  "data": {
+      "createProject": {
+          "id": "xxxx-xxxx-xxxx-xxxx",
+          "orgId": 1291,
+          "name": "test_project",
+          "version": "1.0.0",
+          "createdDate": "2022-01-07T10:33:29.945Z",
+          "handler": "choreocontrolplane"
+      }
+  }
+}

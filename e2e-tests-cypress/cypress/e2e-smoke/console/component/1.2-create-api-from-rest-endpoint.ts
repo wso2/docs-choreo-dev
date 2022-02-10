@@ -28,19 +28,18 @@ import { ComponentDevelopPage } from "../../../support/console/pages/component/c
 import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
-import { STANDARD_TIME_OUT } from "../../../support/devportal/constants";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { DevportalHomePage } from "../../../support/devportal/pages/home/home-page";
-import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
   const API_VERSION = "1.0.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
-  const OPERATION_TARGET = "/users";
+  const OPERATION_USERS = "/users";
+  const   OPERATION_POSTS ="/posts"
   const ALLOWED_ORIGINS = ["https://127.0.0.1"];
   const ALLOWED_HEADERS = ["tenantId"];
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
@@ -48,6 +47,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "1.2-create-api-from-rest-endpoint";
   const idpUser = "choreoe2etest";
+  
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
@@ -68,20 +68,22 @@ describe("Verify project creation functionality", () => {
       API_ENDPOINT,
       FILE_ID
     );
-    APIDevelop.addResources(OPERATION_TARGET, HTTPMethod.GET);
+    APIDevelop.addResources(OPERATION_USERS, HTTPMethod.GET);
     APIDevelop.addEndpoints();
   });
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
+    APIDeployment.verifyDevInvokeURL().should('not.be.null')
     APIDeployment.PromoteToProd();
+    APIDeployment.verifyProdInvokeURL().should('not.be.null')
   });
 
   it("Verify test functionality", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_TARGET);
+    SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.GetResponse();
   });
 
@@ -103,29 +105,39 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion();
     ComponentDevelopPage.getVersion().should("eq", "Version 1.0.1");
+    APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
+    APIDevelop.addEndpoints();
+   
   });
 
   it("Deploy new version", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
+    APIDeployment.verifyDevInvokeURL().should('not.be.null')
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should("not.be.null");
+    APIDeployment.verifyProdInvokeURL().should('not.be.null')
   });
 
   it("Test in prod", () => {
     APITest.testAPI();
     APITest.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_TARGET);
-    SwaggerUI.GetResponse();
+    SwaggerUI.invokeResource(OPERATION_USERS);
+    SwaggerUI.getResponseCode().should('eq','200')
+    SwaggerUI.invokeResource(OPERATION_POSTS);
+    SwaggerUI.getResponseCode().should('eq','200')
+ //   SwaggerUI.GetResponse();
   });
 
-  it("Test in prod", () => {
+  it("Test in dev", () => {
     APITest.testAPI();
     APITest.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_TARGET);
-    SwaggerUI.GetResponse();
+    SwaggerUI.invokeResource(OPERATION_USERS);
+    SwaggerUI.getResponseCode().should('eq','200')
+    SwaggerUI.invokeResource(OPERATION_POSTS);
+    SwaggerUI.getResponseCode().should('eq','200')
+ //   SwaggerUI.GetResponse();
   });
 
   it("Publish connector", () => {
@@ -140,20 +152,14 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
     Apis.searchApiAndSelect(API_NAME);
-    ApiCredentials.navigateTocredentialsTab();
+    ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(null, OPERATION_TARGET);
+    TryOut.SelectResource(null, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     cy.wait(5000);
     TryOut.GetResponse();
-  });
-
-  it.skip("Delete created project", () => {
-    ChoreoHomePage.selectHomeMenu();
-    ChoreoHomePage.navigateToComponents();
-    ProjectListingPage.selectProject(FILE_ID);
   });
 });
