@@ -24,7 +24,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.Assert;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.time.Instant;
@@ -40,7 +40,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoAlertTestClient;
     private static String accessToken;
 
-    @BeforeSuite
+    @BeforeTest
     public void beforeSuite() throws Exception, TokenRetrievalException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
