@@ -8,10 +8,6 @@
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
             <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>
-        </classes>
-    </test>
-    <test name="alert">
-        <classes>
             <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
         </classes>
     </test>
