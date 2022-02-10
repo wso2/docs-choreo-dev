@@ -12,7 +12,11 @@ export class VSExplorer {
   }
 
   private static waitTillCodespaceLoadForWebhook() {
-    cy.get('[aria-label="webhook.bal Diagram"]').should("be.visible");
+    cy.get('[aria-label="webhook.bal Diagram"]',{timeout:120000}).should("be.visible");
+  }
+
+  private static waitTillCodespaceLoadForManual() {
+    cy.get('[aria-label="main.bal Diagram"]',{timeout:120000}).should("be.visible");
   }
 
   static selectExplorer() {
@@ -70,6 +74,9 @@ export class VSExplorer {
       case ComponentTemplate.WEBHOOK:
         this.waitTillCodespaceLoadForWebhook();
         break;
+        case ComponentTemplate.MANUAL:
+        this.waitTillCodespaceLoadForManual();
+        break;
       default:
         this.waitTillCodespaceLoad();
     }
@@ -90,6 +97,8 @@ export class VSExplorer {
     });
     return cy.get(`div${VSExplorer.sourceControllerBtn}>div`).invoke("text");
   }
+
+
 
   static waitTillCodeSyncWithChoreo() {
     cy.get('[id="wso2.ballerina"]>a').should("not.have.attr", "style", true);

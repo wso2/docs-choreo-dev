@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -13,9 +13,7 @@
 
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
-import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { ComponentTemplate } from "../../../support/console/pages/enum/component-template";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
@@ -32,56 +30,55 @@ describe("Verify manual trigger creation functionality", () => {
   const FILE_ID = "1.5-create-manualTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
-  const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding manualtrigger.bal file";
+  const commitMessage = "adding manualtrigger bal file";
 
-  before(() => LoginPage.loginToChoreo(FILE_ID,true));
+  before(() => {
+    LoginPage.loginToChoreo(FILE_ID,true);
+  });
 
-  it("Verify manual trigger deployment", () => {
+
+  it("Verify manual trigger component creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
       FILE_ID
     );
     ProjectOverviewPage.addNewComponent();
-    TriggersTemplate.SelectManualTriggeremplate();
+    TriggersTemplate.selectManualTriggerTemplate();
     TriggersTemplate.createManualTriggerFromTemplate(MANUAL_NAME, FILE_ID);
-
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
 
-  // it("Edit code in VScode", () => {
-  //   LoginPage.navigateToCodespace(FILE_ID);
-  //   VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
-  //   VSExplorer.selectSourceControl();
-
-  //   VSExplorer.enterCommandInTerminal(
-  //     "bash /config/workspace/.githooks/pre-commit"
-  //   );
-  //   VSExplorer.enterCommandInTerminal(
-  //     "rm /config/workspace/.githooks/pre-commit"
-  //   );
-  //   VSSourceControl.commitChanges(commitMessage);
-  //   VSExplorer.enterCommandInTerminal("git push");
-  //   VSExplorer.waitTillCodeSyncWithChoreo();
-  // });
-
-  // // it("Verify component commits", () => {
-  // //   LoginPage.reloginToChoreo(FILE_ID);
-  // //   ComponentDevelopPage.addLabels(labels).then((arr) => {
-  // //     expect(arr).to.deep.eq(labels);
-  // //   });
-  // //   ComponentDevelopPage.verifyLatestCommit(commitMessage);
-  // // });
-
-  it.skip("Deploy the component", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+  it("Edit code in VScode", () => {
+    LoginPage.navigateToCodespace(FILE_ID);
+    VSExplorer.typeCode("manualtrigger.bal",ComponentTemplate.MANUAL);
+    VSExplorer.selectSourceControl();
+    VSExplorer.enterCommandInTerminal(
+      "bash /config/workspace/.githooks/pre-commit"
+    );
+    VSExplorer.enterCommandInTerminal(
+      "rm /config/workspace/.githooks/pre-commit"
+    );
+    VSSourceControl.commitChanges(commitMessage);
+    VSExplorer.enterCommandInTerminal("git push");
+    VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
-  it.skip("Component promotion to prod", () => {
+  it("Verify component commits", () => {
+    LoginPage.reloginToChoreo(FILE_ID);
+    ComponentDevelopPage.verifyLatestCommit(commitMessage);
+  });
+
+  it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.deploy();
+    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+  });
+
+  it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
 
