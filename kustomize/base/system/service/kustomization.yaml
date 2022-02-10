@@ -25,7 +25,6 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - dp-utility-api.yaml
-  - dp-auth-module.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
