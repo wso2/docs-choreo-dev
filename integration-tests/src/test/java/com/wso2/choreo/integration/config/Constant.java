@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -12,6 +12,8 @@
  */
 
 package com.wso2.choreo.integration.config;
+
+import java.util.UUID;
 
 public final class Constant {
     public static final String BASIC_PREFIX = "Basic ";
@@ -34,6 +36,20 @@ public final class Constant {
 
     public static long COMPONENT_CREATE_TIMEOUT = 30000;
     public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
+
+    // Alert related const
+    public static final class ALERT {
+        public static final String CHOREO_GW_HOST = "https://choreocontrolplane.preview-dv.choreo.dev";
+        public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";
+        public static final String ORG_UUID = "b545f89e-b328-4ff3-8a47-0ae964674957";
+        public static final String ENV_ID = UUID.randomUUID().toString();
+        public static final String CONTAINER_ID = UUID.randomUUID().toString();
+        public static final String RELEASE_ID = "de821f3e-9418-449f-99d9-687831b5b3f7";
+
+        public static final String MAIL_IMAP_HOST = "imap.gmail.com";
+        public static final int MAIL_IMAP_PORT = 993;
+        public static final String MAIL_IMAP_USER = "choreoalert@gmail.com";
+    }
 
     public enum displayType {
         restAPI,

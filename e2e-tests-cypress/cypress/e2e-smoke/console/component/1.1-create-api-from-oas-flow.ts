@@ -52,7 +52,8 @@ describe("Choreo APIM publisher scenarios", () => {
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    RestAPIProxyTemplate.createOpenApi(API_Name, Filepath);
+    RestAPIProxyTemplate.createOpenApi(Filepath);
+    RestAPIProxyTemplate.enterAPIdetails(API_Name, API_Name, "");
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -89,8 +90,7 @@ describe("Choreo APIM publisher scenarios", () => {
       `${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
-
-         expect(res.status).equal(200);
+        expect(res.status).equal(200);
       })
     );
   });

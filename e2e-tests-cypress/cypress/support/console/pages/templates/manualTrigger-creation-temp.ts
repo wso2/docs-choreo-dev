@@ -12,7 +12,7 @@
  */
 
 export class TriggersTemplate {
-  static SelectManualTriggeremplate() {
+  static selectManualTriggerTemplate() {
     cy.get('[data-testid="project-template-list-manualTrigger"]').click();
   }
 

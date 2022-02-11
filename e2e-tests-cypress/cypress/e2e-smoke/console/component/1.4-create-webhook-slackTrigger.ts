@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -33,7 +33,7 @@ describe("Verify webhook creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding slacktrigger.bal file";
+  const commitMessage = "adding slacktrigger bal file";
 
   before(() => LoginPage.loginToChoreo(FILE_ID, true));
   after(() => ChoreoHomePage.logout(FILE_ID));

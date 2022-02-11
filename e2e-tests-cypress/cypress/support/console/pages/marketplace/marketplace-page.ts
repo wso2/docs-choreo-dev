@@ -102,7 +102,7 @@ export class Marketplace {
   }
 
   static searchTrigger(triggerName: string) {
-    cy.get('[data-testid="search-field"]').type(triggerName);
+    cy.get('[data-testid="search-field"]').clear().type(triggerName);
     cy.get('[data-testid="search-button"]').click();
     return cy.get(`[data-testid*="${triggerName}"]`);
   }

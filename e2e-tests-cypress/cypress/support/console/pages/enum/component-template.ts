@@ -14,4 +14,5 @@
 export enum ComponentTemplate {
   REST = "REST",
   WEBHOOK = "WEBHOOK",
+  MANUAL = "MANUAL",
 }
