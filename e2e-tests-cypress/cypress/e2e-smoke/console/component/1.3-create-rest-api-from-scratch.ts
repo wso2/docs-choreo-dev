@@ -86,7 +86,7 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+  //  ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
@@ -262,7 +262,7 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it.skip("Verify manage functionality", () => {
+  it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(

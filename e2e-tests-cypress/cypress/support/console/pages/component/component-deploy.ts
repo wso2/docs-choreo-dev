@@ -43,24 +43,19 @@ export class ComponentDeployPage {
   }
 
   static promoteToProd() {
-    cy.get('[data-cyid="btn-proxy-promote"]',{timeout:120000}).should('be.visible').click();
-  }
-
-  private static selectButton(buttonName) {
-    return cy.get('[type="button"]>span').contains(buttonName);
+    cy.get('[data-cyid="btn-promote"]',{timeout:120000}).should('be.enabled').click();
   }
 
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
+      .get('[data-cyid="text-field-invoke-url"] input',{timeout:120000})
       .eq(0)
       .invoke("attr", "value");
   }
 
   static verifyProdInvokeURL() {
-    cy.wait(5000);
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
+      .get('[data-cyid="text-field-invoke-url"] input',{timeout:120000})
       .eq(1)
       .invoke("attr", "value");
   }

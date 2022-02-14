@@ -19,7 +19,7 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL(fileID) {
-    cy.get('[data-testid="component-develop-edit-code"]', { timeout: "120000" })
+    cy.get('[data-testid="component-develop-edit-code"]',{timeout:120000})
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
@@ -29,11 +29,11 @@ export class ComponentDevelopPage {
             key: "componentURL",
             value: url,
           });
-          const accesURL = url.split("/projects")[0] + href;
+          const accessURL = url.split("/organizations")[0] + href.replace(/ /g,'').replace(/\n/g,'');
           cy.task("writeTestData", {
             fileName: fileID,
             key: "accessURL",
-            value: accesURL,
+            value: accessURL,
           });
         });
       });
@@ -94,7 +94,7 @@ export class ComponentDevelopPage {
 
   static addLabels(labels: string[]) {
     const lblArr = [];
-    cy.contains("+ Add labels").click();
+    cy.contains("+ Add labels",{timeout:120000}).click();
     labels.forEach((label) => {
       cy.get("#labels-filled").click();
       cy.contains(label).click();

@@ -76,7 +76,7 @@ describe("Verify manual trigger creation functionality", () => {
 
   it.skip("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+   // ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
   });
 
   it.skip("Component promotion to prod", () => {

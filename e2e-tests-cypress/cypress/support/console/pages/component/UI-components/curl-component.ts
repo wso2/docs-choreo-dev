@@ -74,7 +74,6 @@ export class Curl {
         };
 
         cy.request(request).then((res) => {
-          cy.log(res.body);
         });
       });
   }

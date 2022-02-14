@@ -120,7 +120,10 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.visible").click();
+    cy.get('[data-testid="marketplace-btn"]',{timeout:800000}).should('be.visible')
+    cy.get('[data-testid="connector-publish-wizard-title"]',{timeout:800000}).should('not.exist')
   }
+
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').should('be.visible').click();
@@ -225,7 +228,6 @@ export class ComponentAPILifecycle {
   }
   static getLatestRevision() {
     return cy.wait("@revision").then((revision) => {
-     cy.log(JSON.stringify(revision.response.body));
      return cy.wrap(revision.response.body.displayName);
    });
  }
