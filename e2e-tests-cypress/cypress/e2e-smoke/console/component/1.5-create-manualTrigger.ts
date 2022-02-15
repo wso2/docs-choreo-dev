@@ -30,7 +30,6 @@ describe("Verify manual trigger creation functionality", () => {
   const FILE_ID = "1.5-create-manualTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
-  const commitMessage = "adding manualtrigger bal file";
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID,true);
@@ -49,36 +48,15 @@ describe("Verify manual trigger creation functionality", () => {
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
 
-  it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace(FILE_ID);
-    VSExplorer.typeCode("manualtrigger.bal",ComponentTemplate.MANUAL);
-    VSExplorer.selectSourceControl();
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
-    );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
-    VSExplorer.waitTillCodeSyncWithChoreo();
-  });
-
-  it("Verify component commits", () => {
-    LoginPage.reloginToChoreo(FILE_ID);
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
-  });
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-   // ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+    ComponentDeployPage.ismanualDeploymentSuccessful().should("be.visible");
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
 

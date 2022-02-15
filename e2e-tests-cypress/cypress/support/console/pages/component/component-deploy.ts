@@ -11,8 +11,7 @@
  * associated services.
  */
 
-import { deprecate } from "util";
-import { Utils } from "../../utils";
+
 
 export class ComponentDeployPage {
 
@@ -42,8 +41,13 @@ export class ComponentDeployPage {
     return cy.get('[title="Build Success"]',{timeout:90000});
   }
 
+  static ismanualDeploymentSuccessful() {
+    return cy.get('[title="Deployed successfully"]',{timeout:90000});
+  }
+
+
   static promoteToProd() {
-    cy.get('[data-cyid="btn-promote"]',{timeout:120000}).should('be.enabled').click();
+    cy.get('[data-cyid="btn-promote"]',{timeout:120000}).should('be.visible').click();
   }
 
   static verifyDevInvokeURL() {
