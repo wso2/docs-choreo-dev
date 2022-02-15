@@ -11,8 +11,7 @@
  * associated services.
  */
 
-import { deprecate } from "util";
-import { Utils } from "../../utils";
+
 
 export class ComponentDeployPage {
 
@@ -51,21 +50,16 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]',{timeout:120000}).should('be.visible').click();
   }
 
-  private static selectButton(buttonName) {
-    return cy.get('[type="button"]>span').contains(buttonName);
-  }
-
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
+      .get('[data-cyid="text-field-invoke-url"] input',{timeout:120000})
       .eq(0)
       .invoke("attr", "value");
   }
 
   static verifyProdInvokeURL() {
-    cy.wait(5000);
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
+      .get('[data-cyid="text-field-invoke-url"] input',{timeout:120000})
       .eq(1)
       .invoke("attr", "value");
   }
