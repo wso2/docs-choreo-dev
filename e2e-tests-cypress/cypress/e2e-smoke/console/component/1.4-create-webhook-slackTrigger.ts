@@ -77,12 +77,12 @@ describe("Verify webhook creation functionality", () => {
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeploy("pkKgDNr5vGND364IsHzwGM7O");
-    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
   it("Component promotion to prod", () => {
-    ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Verify test functionality in Dev env", () => {
