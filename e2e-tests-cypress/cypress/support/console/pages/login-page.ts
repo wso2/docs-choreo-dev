@@ -50,25 +50,21 @@ export class LoginPage {
     });
   }
 
-  private static interceptRequiredApiCalls() {
-    const appSvcURL = Cypress.env("appSvcURL");
-    const idpURL = Cypress.env("idpURL");
-    const apimSvcURL = Cypress.env("apimSvcURL");
-    const balRegistryURL = Cypress.env("balRegistryURL");
 
-    // cy.intercept("POST", `${idpURL}/commonauth`).as("cookies");
-    // cy.intercept({
-    //   method: "POST",
-    //   url: `${apimSvcURL}/oauth2/token`,
-    //   times: 1,
-    // }).as("token");
-    // cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
-    // cy.intercept({
-    //   method: "GET",
-    //   url: `${balRegistryURL}/packages?*`,
-    //   times: 1,
-    // }).as("balRegistry"); // Ensure ballerina registry call completes before interacting with UI
-  }
+  // private static testSetup(fileID: string) {
+  //   cy.log("testSetup()");
+  //   let token: string;
+  //   cy.wait("@org", { timeout: 180000 }).then(
+  //     (interceptions) => {
+  //       token = interceptions.response.body.access_token;
+
+  //       const userOrg = this.persistOrgs(interceptions, fileID);
+
+  //       //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
+  //     }
+  //   );
+  // }
+
 
   private static persistOrgs(fileID: string) {
     cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
@@ -101,23 +97,10 @@ export class LoginPage {
     });
   }
 
-  // private static testSetup(fileID: string) {
-  //   cy.log("testSetup()");
-  //   let token: string;
-  //   cy.wait("@org", { timeout: 180000 }).then(
-  //     (interceptions) => {
-  //       token = interceptions.response.body.access_token;
-
-  //       const userOrg = this.persistOrgs(interceptions, fileID);
-
-  //       //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
-  //     }
-  //   );
-  // }
 
   private static persistCookies(fileID: string) {
     cy.log("persistCookies()");
-    cy.get('[alt="Choreo Logo"]', { timeout: 12000000 });
+    cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
     cy.request(`${ Cypress.env("idpURL")}/commonauth`).then((res) => {
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
