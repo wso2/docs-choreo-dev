@@ -51,6 +51,20 @@ export class LoginPage {
   }
 
 
+  // private static testSetup(fileID: string) {
+  //   cy.log("testSetup()");
+  //   let token: string;
+  //   cy.wait("@org", { timeout: 180000 }).then(
+  //     (interceptions) => {
+  //       token = interceptions.response.body.access_token;
+
+  //       const userOrg = this.persistOrgs(interceptions, fileID);
+
+  //       //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
+  //     }
+  //   );
+  // }
+
 
   private static persistOrgs(fileID: string) {
     cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
