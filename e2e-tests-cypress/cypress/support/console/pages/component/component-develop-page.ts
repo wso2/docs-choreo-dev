@@ -42,7 +42,7 @@ export class ComponentDevelopPage {
   }
 
   private static editInCodeServer(fileID) {
-    cy.readFile(`${Cypress.env("tempfile")}${fileID}.json`).then((data) => {
+    cy.readFile(`${Cypress.env("tempFile")}${fileID}.json`).then((data) => {
       this.startCodeServer(
         data.orgData.orgId,
         data.orgData.handle,
@@ -54,14 +54,14 @@ export class ComponentDevelopPage {
   }
 
   private static startCodeServer(
-    orgid,
+    orgId,
     orgHandler,
     projectId,
     componentId,
     header
   ) {
     const qry = {
-      query: `mutation{ startCodeServer(orgId:${orgid},orgHandler:"${orgHandler}", projectId:"${projectId}",componentId:"${componentId}") }`,
+      query: `mutation{ startCodeServer(orgId:${orgId},orgHandler:"${orgHandler}", projectId:"${projectId}",componentId:"${componentId}") }`,
     };
     const appSvcURL = Cypress.env("appSvcURL");
 

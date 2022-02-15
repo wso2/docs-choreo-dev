@@ -73,7 +73,6 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.wait(300000)
     cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
       .invoke('attr', 'href')
       .then((href) => {
@@ -120,8 +119,8 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.visible").click();
-    cy.get('[data-testid="marketplace-btn"]',{timeout:800000}).should('be.visible')
-    cy.get('[data-testid="connector-publish-wizard-title"]',{timeout:800000}).should('not.exist')
+    cy.get('[data-testid="marketplace-btn"]',{timeout:180000}).should('be.visible')
+    cy.get('[data-testid="connector-publish-wizard-title"]',{timeout:180000}).should('not.exist')
   }
 
 

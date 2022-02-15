@@ -49,7 +49,7 @@ export class Apis {
     .type(textApiName);
 
     cy.get("button").contains("Search").click();
-    cy.get("[data-testid=apiCard-" + textApiName + "]").should(
+    cy.get("[data-testid=apiCard-" + textApiName + "]",{timeout:180000}).should(
       "have.length",
       2
     );
