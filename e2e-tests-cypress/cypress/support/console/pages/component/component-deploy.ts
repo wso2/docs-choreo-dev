@@ -42,8 +42,17 @@ export class ComponentDeployPage {
     return cy.get('[title="Build Success"]',{timeout:90000});
   }
 
+  static ismanualDeploymentSuccessful() {
+    return cy.get('[title="Deployed successfully"]',{timeout:90000});
+  }
+
+
   static promoteToProd() {
     cy.get('[data-cyid="btn-proxy-promote"]',{timeout:120000}).should('be.visible').click();
+  }
+
+  static manualPromoteToProd() {
+    cy.get('[data-cyid="btn-promote"]',{timeout:120000}).should('be.visible').click();
   }
 
   private static selectButton(buttonName) {
