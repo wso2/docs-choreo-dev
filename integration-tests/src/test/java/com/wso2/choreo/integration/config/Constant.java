@@ -39,13 +39,9 @@ public final class Constant {
 
     // Alert related const
     public static final class ALERT {
-        public static final String CHOREO_GW_HOST = "https://choreocontrolplane.preview-dv.choreo.dev";
         public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";
-        public static final String ORG_UUID = "b545f89e-b328-4ff3-8a47-0ae964674957";
         public static final String ENV_ID = UUID.randomUUID().toString();
         public static final String CONTAINER_ID = UUID.randomUUID().toString();
-        public static final String RELEASE_ID = "de821f3e-9418-449f-99d9-687831b5b3f7";
-
         public static final String MAIL_IMAP_HOST = "imap.gmail.com";
         public static final int MAIL_IMAP_PORT = 993;
         public static final String MAIL_IMAP_USER = "choreoalert@gmail.com";
