@@ -8,6 +8,7 @@ export class VSExplorer {
   static count: number = 0;
 
   static waitTillCodespaceLoad() {
+   
     cy.get('[aria-label="service.bal Diagram"]', { timeout: 300000 }).should(
       "be.visible"
     );
@@ -81,18 +82,8 @@ export class VSExplorer {
       }
     });
      cy.get(VSExplorer.terminal, { timeout: 120000 }).click();
-    cy.get(VSExplorer.terminal).type(`rm /config/workspace/.git/index.lock{enter}`);
-    cy.wait(3000)
     cy.get(VSExplorer.terminal).type(`${command}{enter}`);   
     cy.wait(20000);
-  }
-
-  static pushCode(command: string) {
-    // this.enterCommandInTerminal("bash /config/workspace/.githooks/pre-commit");
-    // this.enterCommandInTerminal("rm /config/workspace/.githooks/pre-commit");
-    this.enterCommandInTerminal("git add .");
-    this.enterCommandInTerminal(`git commit -m '${command}'`);
-    this.enterCommandInTerminal("git push");
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {

@@ -64,7 +64,8 @@ describe("Verify project creation functionality", () => {
     LoginPage.navigateToCodespace(FILE_ID);
     VSExplorer.typeCode("Numbers.bal");
     VSExplorer.selectSourceControl();
-    VSExplorer.pushCode(commitMessage);
+    VSSourceControl.commitChanges(commitMessage);
+    VSExplorer.enterCommandInTerminal('gti push');
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
