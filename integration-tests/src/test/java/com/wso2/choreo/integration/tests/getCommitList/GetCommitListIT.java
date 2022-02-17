@@ -38,7 +38,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -56,8 +56,8 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
   @Autowired
   private HttpClient choreoTestClient;
 
-  @BeforeTest
-  public void beforeSuite()
+  @BeforeClass
+  public void beforeClass()
       throws IOException, InterruptedException, ProjectCreationException, ComponentCreationStatusCheckException,
       ComponentCreationException, ComponentRetrieveException, ComponentCreationTimeoutException,
       TokenRetrievalException {
