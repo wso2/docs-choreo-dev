@@ -68,8 +68,6 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 + "\t}\n"
                 + "}";
 
-        System.out.println(body);
-
         $(http()
                 .client(choreoAlertTestClient)
                 .send()
