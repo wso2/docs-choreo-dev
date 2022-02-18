@@ -1,8 +1,4 @@
 configMapGenerator:
-  - name: cm-deploymentoptimizer-model-metadata
-    behavior: create
-    files:
-      - deploymentoptimizer/models.properties
   - name: cm-anomalydetector-model-metadata
     behavior: create
     files:
