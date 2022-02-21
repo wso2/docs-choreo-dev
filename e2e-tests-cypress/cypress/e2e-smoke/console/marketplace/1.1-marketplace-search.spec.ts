@@ -24,10 +24,14 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const TRIGGER = "GitHub";
 
   after(() => ChoreoHomePage.logout(FILE_ID));
+
+  beforeEach(() => {
+    ChoreoHomePage.navigateToMarketPlace();
+  });
+
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
   it("Verify Choreo filter functionality", () => {
-    ChoreoHomePage.navigateToMarketPlace();
     Marketplace.filterByChoreo();
     Marketplace.clearSelectedFilters();
   });
