@@ -19,7 +19,7 @@ export class Curl {
     }
   }
   static selectEnvironment(env: Environment) {
-    cy.get('[data-testid="add-btn"]').should('be.visible')
+    cy.get('[data-testid="add-btn"]').should("be.visible");
     cy.get('[aria-haspopup="listbox"]').eq(1).click();
     cy.get("ul>li").contains(env).click();
   }
@@ -30,7 +30,6 @@ export class Curl {
       .then((data) => {
         if (data[env.toLowerCase()]) {
           return cy.wrap(data[env.toLowerCase()]);
-          
         }
         return cy
           .get("textarea")
@@ -53,7 +52,7 @@ export class Curl {
   }
 
   static enterPathParameter(pathparmeter: string) {
-    cy.get("#path-id").clear().type(pathparmeter);
+    cy.get("#path-id").clear().type(pathparmeter.replace(/\//g, ""));
   }
   static sendCurlRequest() {
     cy.get("textarea")
@@ -73,8 +72,7 @@ export class Curl {
           },
         };
 
-        cy.request(request).then((res) => {
-        });
+        cy.request(request).then((res) => {});
       });
   }
 }
