@@ -41,9 +41,11 @@ export class Apis {
 
     cy.get("[data-testid=apis-appbar-btn]").click();
     cy.get('[data-testid*="apiCard"]').should("be.visible");
+    ///// >> work around
     cy.get('[data-testid="applications-appbar-btn"]').click() //
-    cy.wait(10000);//
+    cy.wait(3000);//
     cy.get("[data-testid=apis-appbar-btn]").click();///
+    // <<
     cy.get('[placeholder="Search APIs"]')
     .should("be.visible")
     .type(textApiName);

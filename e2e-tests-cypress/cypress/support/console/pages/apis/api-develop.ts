@@ -31,10 +31,22 @@ export class APIDevelop {
   private static addResource(path: string) {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
-    cy.contains("Save").click();
+
+    cy.get("button").then((buttons) => {
+      if (buttons.length > 0) {
+        buttons.each(function () {
+          if (this.innerText === "Save") {
+            this.click();
+            return;
+          }
+        });
+      }
+    });
     cy.intercept({
       method: "PUT",
-      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+      url: `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", { timeout: 120000 }).then((res) => {
       expect(res.response.body.paths).to.have.property(path);
