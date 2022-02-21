@@ -47,7 +47,7 @@ export class ComponentDeployPage {
 
 
   static promoteToProd() {
-    cy.get('[data-cyid="btn-promote"]',{timeout:120000}).should('be.visible').click();
+    cy.get('[data-cyid*="promote"]',{timeout:120000}).should('be.visible').click();
   }
 
   static verifyDevInvokeURL() {

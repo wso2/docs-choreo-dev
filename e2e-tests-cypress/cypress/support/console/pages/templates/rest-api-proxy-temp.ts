@@ -24,6 +24,7 @@ export class RestAPIProxyTemplate {
     }
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
+
     cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
   }
 
@@ -57,8 +58,31 @@ export class RestAPIProxyTemplate {
       cy.get('[data-testid="api-endpoint"]>div>input').type(endpoint);
     }
     cy.get("button>span").contains("Create").click();
+
+    this.interceptValidate(); // workaround
+
     cy.get(`[data-testid="resource-/intensity"]`, { timeout: 120000 }).should(
       "be.visible"
     );
+  }
+
+  private static interceptValidate() {
+    cy.intercept(
+      `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`
+    ).as("validate");
+    cy.wait("@validate").then((r) => {
+      if (r.response.statusCode == 404) {
+        cy.get("button").then((buttons) => {
+          if (buttons.length > 0) {
+            buttons.each(function () {
+              if (this.innerText === "Create") {
+                this.click();
+                return;
+              }
+            });
+          }
+        });
+      }
+    });
   }
 }

@@ -17,9 +17,9 @@ export class ProjectListingPage {
     description: string,
     fileID: string
   ) {
-    cy.get('[data-testid="version-picker"]',{timeout:120000}).click();
+    cy.get('[data-testid="version-picker"]', { timeout: 120000 }).click();
     cy.get('[aria-labelledby="version-picker"]>button').click();
-cy.wait(5000)
+    cy.wait(5000);
     cy.get('[name="Name"]').should("be.visible").clear().type(projectName);
     cy.get('[name="Description"]')
       .should("be.visible")
@@ -30,6 +30,6 @@ cy.wait(5000)
 
   static selectProject(projectName: string) {
     cy.get('[data-testid="version-picker"]').click();
-    cy.get(`li>div`).contains(projectName).click()
+    cy.get(`li>div`).contains(projectName).click();
   }
 }
