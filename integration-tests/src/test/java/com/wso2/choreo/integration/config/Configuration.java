@@ -14,5 +14,8 @@ public class Configuration {
 
     public static final class ALERT {
         public static final String MAIL_IMAP_PASS = System.getenv("ALERT_MAIL_IMAP_PASS");
+        public static final String CHOREO_GW_HOST = System.getenv("ALERT_CHOREO_GW_HOST");
+        public static final String ORG_UUID = System.getenv("ALERT_ORG_UUID");
+        public static final String RELEASE_ID = System.getenv("ALERT_RELEASE_ID");
     }
 }
