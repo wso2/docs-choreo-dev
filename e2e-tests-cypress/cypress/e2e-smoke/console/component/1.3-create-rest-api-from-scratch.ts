@@ -65,7 +65,7 @@ describe("Verify project creation functionality", () => {
     VSExplorer.typeCode("Numbers.bal");
     VSExplorer.selectSourceControl();
     VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal('gti push');
+    VSExplorer.enterCommandInTerminal('git push');
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
