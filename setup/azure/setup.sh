@@ -118,31 +118,8 @@ echo "--- Creating secrets for DNS-01 challenge..."
 kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
 ############### Install Linkerd2 using Helm 3
-echo "--- Creating namespace for linkerd..."
-kubectl create namespace linkerd
-
-echo "--- Creating secrets for linkerd..."
-step certificate create root.linkerd.cluster.local /tmp/ca.crt /tmp/ca.key \
-  --profile root-ca --no-password --insecure
-
-echo "--- Creating k8s TLS secrets to Automatically rotate control plane TLS using certmanager..."
-#Automatically Rotating Control Plane TLS Credentials https://linkerd.io/2/tasks/automatically-rotating-control-plane-tls-credentials/
-
-kubectl create secret tls linkerd-trust-anchor --cert=/tmp/ca.crt --key=/tmp/ca.key --namespace=linkerd
-
-kubectl apply -n linkerd -f linkerd2/certmanager/issuer.yaml
-kubectl apply -n linkerd -f linkerd2/certmanager/certificate.yaml
-
 echo "--- Installing linkerd2... "
-helm repo add linkerd https://helm.linkerd.io/stable
-helm repo update
-helm upgrade --install linkerd2 --wait \
-  --set-file identityTrustAnchorsPEM=/tmp/ca.crt \
-  linkerd/linkerd2 \
-  -f linkerd2/values.yaml -f linkerd2/ha-values.yaml \
-  --set identity.issuer.scheme=kubernetes.io/tls \
-  --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
-  -n linkerd --version 2.10.0
+linkerd install | kubectl apply -f -
 
 # Installing extensions
 echo "--- Installing linkerd viz extension... "

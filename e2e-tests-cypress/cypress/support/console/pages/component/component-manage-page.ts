@@ -73,7 +73,6 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.wait(30000)
     cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
       .invoke('attr', 'href')
       .then((href) => {
@@ -120,7 +119,10 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.visible").click();
+    cy.get('[data-testid="marketplace-btn"]',{timeout:180000}).should('be.visible')
+    cy.get('[data-testid="connector-publish-wizard-title"]',{timeout:180000}).should('not.exist')
   }
+
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').should('be.visible').click();
@@ -140,7 +142,6 @@ export class ComponentAPILifecycle {
     if (isCORSenable) {
       cy.contains("Edit").click();
       cy.get('[data-testid="switch-cors-config"]').click();
-      cy.get('[data-testid="cors-config-label"]').click();
       if (!isAllOriginsAllowed) {
         cy.get('[data-testid="checkbox-allow-all-origins"]').click();
       }
@@ -218,7 +219,7 @@ export class ComponentAPILifecycle {
     cy.wait(2000);
     cy.intercept({
       method: "POST",
-      url: "https://sts.preview-dv.choreo.dev/api/am/publisher/v2/apis/*/revisions?organizationId=*",
+      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
       
     }).as("revision");
 
@@ -226,7 +227,6 @@ export class ComponentAPILifecycle {
   }
   static getLatestRevision() {
     return cy.wait("@revision").then((revision) => {
-     cy.log(JSON.stringify(revision.response.body));
      return cy.wrap(revision.response.body.displayName);
    });
  }

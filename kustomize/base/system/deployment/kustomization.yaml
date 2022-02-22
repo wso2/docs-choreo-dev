@@ -18,7 +18,6 @@ resources:
   - perfanalyzer-estimator.yaml
   - anomalydetector.yaml
   - datamapper.yaml
-  - deploymentoptimizer.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
   - datacollector.yaml
@@ -27,7 +26,6 @@ resources:
   - quota-limiter.yaml
   - subscriptions.yaml
   - dp-utility-api.yaml
-  - dp-auth-module.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml

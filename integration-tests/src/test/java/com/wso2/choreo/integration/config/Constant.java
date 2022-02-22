@@ -13,6 +13,8 @@
 
 package com.wso2.choreo.integration.config;
 
+import java.util.UUID;
+
 public final class Constant {
     public static final String BASIC_PREFIX = "Basic ";
     public static final String BEARER_PREFIX = "Bearer ";
@@ -34,6 +36,16 @@ public final class Constant {
 
     public static long COMPONENT_CREATE_TIMEOUT = 30000;
     public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
+
+    // Alert related const
+    public static final class ALERT {
+        public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";
+        public static final String ENV_ID = UUID.randomUUID().toString();
+        public static final String CONTAINER_ID = UUID.randomUUID().toString();
+        public static final String MAIL_IMAP_HOST = "imap.gmail.com";
+        public static final int MAIL_IMAP_PORT = 993;
+        public static final String MAIL_IMAP_USER = "choreoalert@gmail.com";
+    }
 
     public enum displayType {
         restAPI,

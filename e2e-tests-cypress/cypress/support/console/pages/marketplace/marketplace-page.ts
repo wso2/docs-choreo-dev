@@ -23,14 +23,12 @@ export class Marketplace {
 
   static filterByChoreo() {
     cy.get('[data-testid="choreo-filter"]').click();
-    cy.get('div[role="button"] > span').contains('Choreo').should('be.visible');
+    cy.get('[data-testid="choreo-filter"]').contains('Choreo').should('be.visible');
   }
 
   static filterByMyOrganization() {
     cy.get('[data-testid="my-organization-filter"]').click();
-    cy.get('div[role="button"] > span')
-      .contains('My Organization')
-      .should('be.visible');
+    cy.get('[data-testid="my-organization-filter"]').contains('My Organization')
   }
 
   static filterByFree() {

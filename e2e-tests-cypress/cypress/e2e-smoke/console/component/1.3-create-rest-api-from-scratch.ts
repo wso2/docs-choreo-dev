@@ -64,14 +64,8 @@ describe("Verify project creation functionality", () => {
     LoginPage.navigateToCodespace(FILE_ID);
     VSExplorer.typeCode("Numbers.bal");
     VSExplorer.selectSourceControl();
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
-    );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
     VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
+    VSExplorer.enterCommandInTerminal('git push');
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
@@ -86,7 +80,7 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
+    //  ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
@@ -262,7 +256,7 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it.skip("Verify manage functionality", () => {
+  it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(

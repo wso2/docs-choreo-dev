@@ -13,7 +13,7 @@
 import { MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
 
 export class ApiCredentials {
-  static navigateTocredentialsTab() {
+  static navigateCredentialsTab() {
     cy.get('[data-testid="credentials-item-link"]').click();
     cy.url().should("include", "/credentials");
     cy.log("Successfully navigated to credentials tab");

@@ -30,17 +30,28 @@ export class Apis {
     cy.log("Successfully navigated to Overview");
   }
 
-  static verifyAPIname(){
-    return cy.get('[data-testid="txt-api-name"]',{timeout:120000}).should('be.visible').invoke('text')
+  static verifyAPIname() {
+    return cy
+      .get('[data-testid="txt-api-name"]', { timeout: 120000 })
+      .should("be.visible")
+      .invoke("text");
   }
 
   static searchApiAndSelect(textApiName) {
+
     cy.get("[data-testid=apis-appbar-btn]").click();
     cy.get('[data-testid*="apiCard"]').should("be.visible");
-    cy.wait(1000)
-    cy.get("#outlined-search-bar-api-listing").click().type(textApiName);
+    ///// >> work around
+    cy.get('[data-testid="applications-appbar-btn"]').click() //
+    cy.wait(3000);//
+    cy.get("[data-testid=apis-appbar-btn]").click();///
+    // <<
+    cy.get('[placeholder="Search APIs"]')
+    .should("be.visible")
+    .type(textApiName);
+
     cy.get("button").contains("Search").click();
-    cy.get("[data-testid=apiCard-" + textApiName + "]").should(
+    cy.get("[data-testid=apiCard-" + textApiName + "]",{timeout:180000}).should(
       "have.length",
       2
     );
