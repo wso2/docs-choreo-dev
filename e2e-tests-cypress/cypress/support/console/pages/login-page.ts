@@ -34,7 +34,6 @@ export class LoginPage {
 
     cy.get('button[type="submit"]').click();
 
-    // this.interceptRequiredApiCalls();
     const apimSvcURL = Cypress.env("apimSvcURL");
     cy.intercept({
       method: "POST",
