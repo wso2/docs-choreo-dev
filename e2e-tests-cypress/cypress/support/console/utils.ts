@@ -15,6 +15,12 @@ export class Utils {
   static projectNamePrefix = "e2eproject";
 
   static keyNamePrefix = "e2eOnPremkey";
+  static APP_SVC_URL = Cypress.env("appSvcURL");
+  static ORG_NAME = Cypress.env("testUserOrg");
+  static MAIL_READER_SVC_URL = Cypress.env("mailReaderSvcURL");
+  static MAIL_READER_CLIENT_ID = Cypress.env("mailReaderClientId");
+  static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
+  static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
 
   /**
    * Create name for app.
@@ -34,17 +40,44 @@ export class Utils {
     return this.keyNamePrefix + Date.now() + name;
   }
 
-  static sendRequest(method: string, url: string, headers: any = {}) {
+  static getInvitationId(token: string, timestamp: string) {
+    const headerString = btoa(`${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`);
+    this.sendRequest("POST", Utils.MAIL_READER_TOKEN_URL,
+        { Authorization: `Basic ${headerString}`}, { grant_type: "client_credentials"})
+        .then((res) => {
+          const accessToken = res.body.access_token;
+          this.sendRequest("GET", Utils.MAIL_READER_SVC_URL + timestamp,
+              { Authorization: `Bearer ${accessToken}` })
+              .then((res) => {
+                const rawMailContent = res.body;
+                const decodedMail = atob(rawMailContent);
+
+                const socRegEx = /^<!DOCTYPE html PUBLIC /im;
+                const bodyPos = decodedMail.indexOf(socRegEx.exec(decodedMail) as unknown as string);
+                let bodyLines = decodedMail.substring(bodyPos);
+                bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+                bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+                const invitationId = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(bodyLines)[0];
+
+                const header = {
+                  Authorization: `Bearer ${token}`,
+                  "content-type": "application/json",
+                };
+                this.sendRequest("POST", `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+                    header);
+              });
+        });
+  }
+
+  static sendRequest(method: string, url: string, headers: any = {}, body: any = {}) {
     const request = {
       method,
       url,
       headers,
+      body
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });
     });
   }
-
-
-
 }

@@ -10,14 +10,15 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { INVITATION_EMAIL } from './constants';
 
 /// <reference types="cypress" />
 
 export class OrganizationComponent {
-  static memberEmail: string;
+  static memberEmail: string = Cypress.env("userEmail");
 
-  static memberName: string;
+  static memberName: string = Cypress.env("userName");
+
+  static invitationEmail = Cypress.env("invitationUserEmail");
 
   static roleName = 'E2EtestRole';
 
@@ -47,12 +48,24 @@ export class OrganizationComponent {
     cy.get('[data-cyid="chip-email-addresses"] div div input')
       .should('be.visible')
       .type(email);
+    cy.get('[data-cyid="chip-email-addresses"] div div input')
+        .should('be.visible')
+        .type('{enter}');
     cy.get('[data-cyid="select-roles"]').click();
     this.addRoles(roles);
     cy.get('body').type('{esc}');
     cy.get('[data-cyid="btn-invite"]').click({ force: true });
     cy.get('[data-cyid="btn-invite"]').should('not.exist');
     cy.log('Invitation sent successfully');
+  }
+
+  static deleteMember(email: string) {
+    cy.contains('td', email).trigger('mouseover');
+    cy.get('[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]').click();
+    cy.get('[data-testid="Delete User"]').should('be.visible');
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').contains('Delete').click();
+    cy.contains('td', email).should('not.exist');
+    cy.log('Member deleted successfully');
   }
 
   static selectPendingInvitation() {
@@ -65,14 +78,14 @@ export class OrganizationComponent {
 
   static deleteRecord(email: string) {
     cy.contains('td', email).trigger('mouseover');
-    cy.get('[data-testid="api-delete-btn"]').click();
+    cy.get('[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]').click();
     cy.get('button > span > h5').should('be.visible');
     cy.get('button > span > h5').contains('Delete').click();
   }
 
   private static addRoles(roles: string[]) {
     roles.forEach((v) => {
-      cy.get('ul[aria-labelledby="demo-mutiple-checkbox-label"] >li').each(
+      cy.get('ul[class="MuiList-root MuiMenu-list MuiList-padding"] >li').each(
         ($e) => {
           if ($e.text().toLocaleLowerCase() === v.toLocaleLowerCase()) {
             cy.wrap($e)
@@ -106,7 +119,7 @@ export class OrganizationComponent {
     cy.log('Creating a Role');
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
     cy.get('[data-cyid="text-field-role-description"]').type(roleDescription);
-    cy.get('[data-cyid="chip-role-tag"]').type(roleTag);
+    cy.get('[data-cyid="chip-role-tag"]').type(roleTag + '{enter}');
     cy.get('[data-cyid="btn-role-create"]').click({ force: true });
     cy.get('[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]').click();
     cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]').click();
@@ -119,39 +132,32 @@ export class OrganizationComponent {
     cy.contains('td', OrganizationComponent.roleTag).should('be.visible');
     cy.contains('td', OrganizationComponent.roleName).click();
     OrganizationComponent.inviteMembers(
-      INVITATION_EMAIL,
+      OrganizationComponent.invitationEmail,
       OrganizationComponent.roleName
     );
     OrganizationComponent.selectPendingInvitation();
-    cy.contains('td', INVITATION_EMAIL).should('be.visible');
-    OrganizationComponent.deleteRecord(INVITATION_EMAIL);
+    cy.contains('td', OrganizationComponent.invitationEmail).should('be.visible');
+    OrganizationComponent.deleteRecord(OrganizationComponent.invitationEmail);
   }
 
   static addMembertoRole(roleName: string) {
     cy.get('[data-cyid="search-app"]').type(roleName);
-    cy.get('[id="menu-appbar"]').click();
-    //cy.contains('td', OrganizationComponent.roleName).click();
-    cy.get('[id="tags-standard"]')
-      .click()
-      .type(OrganizationComponent.memberName);
+    cy.get('[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]').should('contain', roleName);
+    cy.contains('td', OrganizationComponent.roleName).click();
+    cy.get('[data-cyid="btn-add-member-to-role"]').click();
+    cy.get('[data-cyid="select_members_to_role"]').click();
     cy.contains(
-      '[id="tags-standard-popup"]',
+      '[data-cyid="' + OrganizationComponent.memberName + ' (' + OrganizationComponent.memberEmail + ')"]',
       OrganizationComponent.memberName
     ).should('be.visible');
     cy.contains(
-      '[id="tags-standard-popup"]',
+        '[data-cyid="' + OrganizationComponent.memberName + ' (' + OrganizationComponent.memberEmail + ')"]',
       OrganizationComponent.memberName
     ).click();
-    cy.get('[data-testid="add-member-btn"]').click();
+    cy.get('body').type('{esc}');
+    cy.get('[data-cyid="btn-add-member"]').click();
     cy.contains('td', OrganizationComponent.memberEmail).should('be.visible');
     cy.log('Member added to the role successfully');
-    cy.log('Removing member from the role');
-    cy.contains('tr', OrganizationComponent.memberEmail).within(() => {
-      cy.get('[data-testid="api-delete-btn"]').click();
-    });
-    cy.get('[data-testid="delete-member-btn"]').click();
-    cy.contains('td', OrganizationComponent.memberEmail).should('not.exist');
-    cy.log('Member removed from the role successfully');
   }
 
   static deleteCreatedRole(roleName: string) {

@@ -4,7 +4,7 @@
     "responseTimeout": 120000,
     "integrationFolder": "cypress/e2e-smoke/",
     "testFiles": [
-        "./**/component/**/*.ts"
+        "./**/**/**/*.ts"
     ],
     "viewportHeight": 1440,
     "viewportWidth": 2560,
