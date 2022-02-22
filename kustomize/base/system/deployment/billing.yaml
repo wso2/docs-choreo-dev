@@ -104,7 +104,7 @@ spec:
               readonly: true
             - name: secret-billing
               mountPath: /home/ballerina/security/clientTrustStore.p12
-              subPath: billing-BAL-TRUSTSTORE
+              subPath: BAL_TRUSTSTORE
               readOnly: true
       restartPolicy: Always
       volumes:
