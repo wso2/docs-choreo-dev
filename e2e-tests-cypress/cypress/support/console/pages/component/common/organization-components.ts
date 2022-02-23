@@ -40,6 +40,10 @@ export class OrganizationComponent {
     ).click();
   }
 
+  static navigateToRoles(){
+    cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
+  }
+
   static inviteMembers(email: string, ...roles) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
@@ -129,7 +133,7 @@ export class OrganizationComponent {
 
   static addMembertoRole(roleName: string) {
     cy.get('[data-cyid="search-app"]').type(roleName);
-    cy.get('[id="menu-appbar"]').click();
+  //  cy.get('[id="menu-appbar"]').click();
     //cy.contains('td', OrganizationComponent.roleName).click();
     cy.get('[id="tags-standard"]')
       .click()

@@ -14,7 +14,7 @@
 import { GraphQL } from "../apis/graphql";
 
 export class LoginPage {
-  static loginToChoreo(fileID: string, enableIntercept: boolean = false) {
+  static loginToChoreo(fileID: string) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
@@ -25,31 +25,24 @@ export class LoginPage {
     this.persistCookies(fileID);
   }
 
-  static reloginToChoreo(fileID: string) {
+  static reLoginToChoreo(fileID: string) {
     const file = `${Cypress.env("tempFile")}${fileID}.json`;
-
-    cy.readFile(file).then((d) => {
-      cy.visit(d.componentURL);
-      cy.intercept(d.componentURL).then(() => {
-        cy.readFile(file).then((data) => {
-          cy.setCookie("commonAuthId", data.commonAuthId, {
-            path: "/",
-            domain: "id.dv.choreo.dev",
-            secure: true,
-            httpOnly: true,
-            sameSite: "no_restriction",
-          });
-        });
+    const componentURL = Cypress.env(`${fileID}_componentURL`);
+    cy.visit(componentURL);
+    cy.intercept(componentURL).then(() => {
+      cy.setCookie("commonAuthId", Cypress.env(`${fileID}_commonAuthId`), {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
       });
     });
   }
 
   static navigateToCodespace(fileID: string) {
-    cy.readFile(`${Cypress.env("tempFile")}${fileID}.json`).then((data) => {
-      cy.visit(data.accessURL);
-    });
+    cy.visit(Cypress.env(`${fileID}_accessURL`));
   }
-
 
   // private static testSetup(fileID: string) {
   //   cy.log("testSetup()");
@@ -64,7 +57,6 @@ export class LoginPage {
   //     }
   //   );
   // }
-
 
   private static persistOrgs(fileID: string) {
     cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
@@ -89,28 +81,18 @@ export class LoginPage {
         orgId: userOrg.id,
         handle: userOrg.handle,
       };
-      cy.task("writeTestData", {
-        fileName: fileID,
-        key: "orgData",
-        value: orgData,
-      });
     });
   }
-
 
   private static persistCookies(fileID: string) {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
-    cy.request(`${ Cypress.env("idpURL")}/commonauth`).then((res) => {
+    cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
           const commonAuthId = c.replace("commonAuthId=", "").trim();
-          cy.task("writeTestData", {
-            fileName: fileID,
-            key: "commonAuthId",
-            value: commonAuthId,
-          });
+          Cypress.env(`${fileID}_commonAuthId`, commonAuthId);
           return;
         }
       });

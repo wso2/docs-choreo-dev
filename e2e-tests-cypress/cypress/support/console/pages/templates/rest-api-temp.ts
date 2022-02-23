@@ -30,11 +30,10 @@ export class RestAPITemplate {
   }
 
   private static interceptProjectDetails(fileID: string) {
-    // eslint-disable-next-line arrow-body-style
 
     cy.wait("@proj_create", { timeout: 100000 }).then((e) => {
       const { id, projectId, handler } = e.response.body.data.createComponent;
-      const authdata = {
+      const authData = {
         header: {
           authorization: e.request.headers.authorization,
           "content-type": "application/json",
@@ -43,11 +42,10 @@ export class RestAPITemplate {
         projectId,
         handler,
       };
-      cy.task("writeTestData", {
-        fileName: fileID,
-        key: "authData",
-        value: authdata,
-      });
+      cy.log(fileID)
+      cy.log(JSON.stringify(authData))
+
+      Cypress.env(`${fileID}_authData`,authData)
     });
   }
 

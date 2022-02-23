@@ -19,62 +19,36 @@ export class Curl {
     }
   }
   static selectEnvironment(env: Environment) {
-    cy.get('[data-testid="add-btn"]').should('be.visible')
+    cy.get('[data-testid="add-btn"]').should("be.visible");
     cy.get('[aria-haspopup="listbox"]').eq(1).click();
     cy.get("ul>li").contains(env).click();
   }
 
-  static getRequestComponents(fileID, env: string) {
-    return cy
-      .task("readFile", `${Cypress.env("tempFile")}${fileID}.json`)
-      .then((data) => {
-        if (data[env.toLowerCase()]) {
-          return cy.wrap(data[env.toLowerCase()]);
-          
-        }
-        return cy
-          .get("textarea")
-          .invoke("text")
-          .then((c) => {
-            const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
-            const arrayURL = modifiedURL.split(" ");
-            const url = arrayURL[1];
-            const apiKey = arrayURL[4];
-            const method = arrayURL[6];
-            const curl = { method, url, headers: { "api-key": apiKey } };
-            cy.task("writeTestData", {
-              fileName: fileID,
-              key: env.toLowerCase(),
-              value: curl,
-            });
-            return cy.wrap(curl);
-          });
-      });
-  }
+  static getRequestComponents( env: string) {
+    const curlData = Cypress.env(`${env}`);
+    cy.log(JSON.stringify(`${curlData}`));
 
-  static enterPathParameter(pathparmeter: string) {
-    cy.get("#path-id").clear().type(pathparmeter);
-  }
-  static sendCurlRequest() {
-    cy.get("textarea")
+    if (curlData) {
+      return cy.wrap(curlData);
+    }
+    return cy
+      .get("textarea")
       .invoke("text")
-      .then((curl) => {
-        const modifiedURL = curl.replace(/"/g, "").replace(/'/g, "");
+      .then((c) => {
+        const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
         const arrayURL = modifiedURL.split(" ");
         const url = arrayURL[1];
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
-
-        const request = {
-          method,
-          url,
-          headers: {
-            "api-key": apiKey,
-          },
-        };
-
-        cy.request(request).then((res) => {
-        });
+        const curl = { method, url, headers: { "api-key": apiKey } };
+        Cypress.env(`${env}`, curl);
+    
+        return cy.wrap(curl);
       });
+
+  }
+
+  static enterPathParameter(pathParameter: string) {
+    cy.get("#path-id").clear().type(pathParameter);
   }
 }

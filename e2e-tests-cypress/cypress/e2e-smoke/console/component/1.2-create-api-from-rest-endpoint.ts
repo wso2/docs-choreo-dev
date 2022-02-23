@@ -45,7 +45,7 @@ describe("Verify project creation functionality", () => {
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "1.2-create-api-from-rest-endpoint";
+  const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
   
 

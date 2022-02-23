@@ -19,59 +19,28 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL(fileID) {
-    cy.get('[data-testid="component-develop-edit-code"]',{timeout:120000})
+    cy.get('[data-testid="component-develop-edit-code"]', { timeout: 120000 })
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
         cy.url().then((url) => {
-          cy.task("writeTestData", {
-            fileName: fileID,
-            key: "componentURL",
-            value: url,
-          });
-          const accessURL = url.split("/organizations")[0] + href.replace(/ /g,'').replace(/\n/g,'');
-          cy.task("writeTestData", {
-            fileName: fileID,
-            key: "accessURL",
-            value: accessURL,
-          });
+          cy.log(fileID);
+          cy.log(url);
+          Cypress.env(`${fileID}_componentURL`, url);
+          const accessURL =
+            url.split("/organizations")[0] +
+            href.replace(/ /g, "").replace(/\n/g, "");
+          Cypress.env(`${fileID}_accessURL`, accessURL);
+          cy.log(fileID);
+          cy.log(accessURL);
         });
       });
 
-    this.editInCodeServer(fileID);
+    const orgData = Cypress.env(`${fileID}_orgData`);
+    const authData = Cypress.env(`${fileID}_authData`);
   }
 
-  private static editInCodeServer(fileID) {
-    cy.readFile(`${Cypress.env("tempFile")}${fileID}.json`).then((data) => {
-      this.startCodeServer(
-        data.orgData.orgId,
-        data.orgData.handle,
-        data.authData.projectId,
-        data.authData.id,
-        data.authData.header
-      );
-    });
-  }
 
-  private static startCodeServer(
-    orgId,
-    orgHandler,
-    projectId,
-    componentId,
-    header
-  ) {
-    const qry = {
-      query: `mutation{ startCodeServer(orgId:${orgId},orgHandler:"${orgHandler}", projectId:"${projectId}",componentId:"${componentId}") }`,
-    };
-    const appSvcURL = Cypress.env("appSvcURL");
-
-    cy.request({
-      method: "POST",
-      url: `${appSvcURL}/graphql`,
-      body: JSON.stringify(qry),
-      headers: header,
-    });
-  }
 
   static addResources(path: string, ...verbs) {
     cy.get('[id="backdrop-loader"').should("not.exist");
@@ -94,7 +63,7 @@ export class ComponentDevelopPage {
 
   static addLabels(labels: string[]) {
     const lblArr = [];
-    cy.contains("+ Add labels",{timeout:120000}).click();
+    cy.contains("+ Add labels", { timeout: 120000 }).click();
     labels.forEach((label) => {
       cy.get("#labels-filled").click();
       cy.contains(label).click();

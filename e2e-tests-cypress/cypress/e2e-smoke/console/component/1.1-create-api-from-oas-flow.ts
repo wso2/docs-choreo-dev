@@ -31,7 +31,7 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const FILE_ID = "1.1-create-api-from-oas-flow";
+  const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = RandomTextGenerator.generateApiName("oas");
@@ -42,7 +42,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 
   it("Creating and publishing an API from open API specification", () => {
@@ -70,7 +70,6 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
-
   it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
@@ -94,8 +93,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}intensity`
+      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -118,8 +116,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
     // Verify that deployment has been updated by invoking the API without a token
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}intensity`
+      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url).then((res) => {
         expect(res.status).equal(200);
