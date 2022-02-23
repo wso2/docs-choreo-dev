@@ -38,7 +38,7 @@ export class ComponentDeployPage {
   }
 
   static isDeploymentSuccessful() {
-    return cy.get('[title="Build Success"]',{timeout:90000});
+    return cy.get('[title="Build Success"]', { timeout: 90000 });
   }
 
   static ismanualDeploymentSuccessful() {
@@ -47,18 +47,27 @@ export class ComponentDeployPage {
 
 
   static promoteToProd() {
-    cy.get('[data-cyid*="promote"]',{timeout:120000}).should('be.visible').click();
+    cy.get('[data-cyid="btn-promote"]', { timeout: 120000 })
+      .should("be.visible")
+      .click();
   }
 
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input',{timeout:120000})
+      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 120000 })
       .eq(0)
       .invoke("attr", "value");
   }
 
   static verifyProdInvokeURL() {
-    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2)
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+
+    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2);
+
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
       .eq(1)

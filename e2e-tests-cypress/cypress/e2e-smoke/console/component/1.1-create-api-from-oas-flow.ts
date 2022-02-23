@@ -27,8 +27,6 @@ import { RandomTextGenerator } from "../../../support/console/pages/component/co
 import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 
 describe("Choreo APIM publisher scenarios", () => {
   const FILE_ID = "1.1-create-api-from-oas-flow";
@@ -62,14 +60,8 @@ describe("Choreo APIM publisher scenarios", () => {
     //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+    APIDeployment.PromoteToProd();
   });
-
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
-  });
-
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
@@ -117,6 +109,11 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
 
     // Verify that deployment has been updated by invoking the API without a token
+    APITest.testAPI();
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.DEVELOPMENT);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
       FILE_ID,
       `${Environment.DEVELOPMENT}intensity`
@@ -129,11 +126,9 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 });
