@@ -1,5 +1,5 @@
 -- Create User
-IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_perf_db_user')
+IF EXISTS (SELECT name FROM master.sys.databases WHERE name = N'choreo_perf_db') AND NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_perf_db_user')
 BEGIN
     CREATE USER [choreo_perf_db_user] FOR LOGIN [choreo_perf_db_user]
     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_perf_db TO choreo_perf_db_user

@@ -26,8 +26,6 @@ export class Curl {
 
   static getRequestComponents( env: string) {
     const curlData = Cypress.env(`${env}`);
-    cy.log(JSON.stringify(`${curlData}`));
-
     if (curlData) {
       return cy.wrap(curlData);
     }
@@ -42,7 +40,6 @@ export class Curl {
         const method = arrayURL[6];
         const curl = { method, url, headers: { "api-key": apiKey } };
         Cypress.env(`${env}`, curl);
-    
         return cy.wrap(curl);
       });
 

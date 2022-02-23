@@ -64,9 +64,14 @@ export class ComponentDeployPage {
   }
 
   static verifyProdInvokeURL() {
-    cy.get('[data-cyid="text-field-invoke-url"] input', {
-      timeout: 120000,
-    }).should("have.length", 2);
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+
+    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2);
+
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
       .eq(1)
