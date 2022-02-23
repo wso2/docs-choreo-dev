@@ -179,72 +179,11 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it.skip("Verify manage functionality", () => {
+  it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publishWithoutConnector();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
-  });
-
-  it("Verify Observability", () => {
-    ComponentOverviewPage.navigateToObserve();
-    //ComponentObservePage.verifyLogsView();
-    ComponentObservePage.verifyObserveOverview();
-    //ComponentObservePage.verifyDiagnosticView();
-  });
-
-  it.skip("Verify insight values for dev", () => {
-    ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToInsights();
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should("eq", "6");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it.skip("Verify insight values for prod", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should("eq", "6");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it.skip("Verify increase in total traffic count for dev", () => {
-    Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
-    ).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      })
-    );
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should("eq", "7");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it.skip("Verify increase in total traffic count for prod", () => {
-    Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
-    ).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      })
-    );
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should("eq", "7");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 });
