@@ -28,10 +28,9 @@ import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const FILE_ID = "1.1-create-api-from-oas-flow";
+  const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = RandomTextGenerator.generateApiName("oas");
@@ -42,7 +41,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 
   it("Creating and publishing an API from open API specification", () => {
@@ -62,14 +61,13 @@ describe("Choreo APIM publisher scenarios", () => {
     //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+    APIDeployment.verifyDevInvokeURL().should("not.be.null");
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
-
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
@@ -94,8 +92,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}intensity`
+      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -117,9 +114,13 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
 
     // Verify that deployment has been updated by invoking the API without a token
+    APITest.testAPI();
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.DEVELOPMENT);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}intensity`
+      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url).then((res) => {
         expect(res.status).equal(200);
@@ -129,11 +130,9 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 });

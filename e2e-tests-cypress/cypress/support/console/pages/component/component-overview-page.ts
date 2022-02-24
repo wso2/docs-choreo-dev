@@ -37,7 +37,7 @@ export class ComponentOverviewPage {
   }
 
   static navigateToObserve() {
-    cy.contains("Observe").should("be.visible").click();
+    cy.get("[data-cyid=link-observe]").click();
   }
 
   static navigateToDevops() {
@@ -62,10 +62,12 @@ export class ComponentOverviewPage {
     cy.get("[data-testid=create-version-create]").click();
     cy.intercept({
       method: "GET",
-      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+      url: `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
       times: 1,
     }).as("version");
     cy.wait("@version", { timeout: 120000 });
-    cy.wait(5000)
+    cy.wait(5000);
   }
 }

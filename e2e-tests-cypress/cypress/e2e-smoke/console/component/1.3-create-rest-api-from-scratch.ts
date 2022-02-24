@@ -35,42 +35,48 @@ describe("Verify project creation functionality", () => {
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "1.3-create-rest-api-from-scratch";
+  const key = "restapidata";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
 
-  before(() => LoginPage.loginToChoreo(FILE_ID, true));
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  before(() => LoginPage.loginToChoreo(key));
+  after(() => ChoreoHomePage.logout());
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION,
-      FILE_ID
+      key
     );
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
     RestAPITemplate.createApiFromScratch(
       COMPONENT_NAME,
       COMPONENT_DESCRIPTION,
-      FILE_ID
+      key
     );
-    ComponentDevelopPage.getComponentURL(FILE_ID);
+    ComponentDevelopPage.getComponentURL(key);
   });
 
   it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace(FILE_ID);
+    LoginPage.navigateToCodespace(key);
     VSExplorer.typeCode("Numbers.bal");
     VSExplorer.selectSourceControl();
+    VSExplorer.enterCommandInTerminal(
+      "bash /config/workspace/.githooks/pre-commit"
+    );
+    VSExplorer.enterCommandInTerminal(
+      "rm /config/workspace/.githooks/pre-commit"
+    );
     VSSourceControl.commitChanges(commitMessage);
     VSExplorer.enterCommandInTerminal('git push');
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
   it("Verify component commits", () => {
-    LoginPage.reloginToChoreo(FILE_ID);
+    LoginPage.reLoginToChoreo(key);
     ComponentDevelopPage.addLabels(labels).then((arr) => {
       expect(arr).to.deep.eq(labels);
     });
@@ -80,7 +86,6 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    //  ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
@@ -107,7 +112,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("root");
     Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents(FILE_ID, `${Environment.DEVELOPMENT}root`).then(
+    Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
@@ -134,7 +139,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("isOdd");
     Curl.addQueryParameter(queryParameters2);
-    Curl.getRequestComponents(FILE_ID, `${Environment.DEVELOPMENT}isOdd`).then(
+    Curl.getRequestComponents( `${key}${Environment.DEVELOPMENT}isOdd`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -161,7 +166,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("root");
     Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents(FILE_ID, `${Environment.PRODUCTION}root`).then(
+    Curl.getRequestComponents( `${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
@@ -188,7 +193,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("isOdd");
     Curl.addQueryParameter(queryParameters2);
-    Curl.getRequestComponents(FILE_ID, `${Environment.PRODUCTION}isOdd`).then(
+    Curl.getRequestComponents( `${key}${Environment.PRODUCTION}isOdd`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -217,7 +222,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents(FILE_ID, `${Environment.DEVELOPMENT}root`).then(
+    Curl.getRequestComponents( `${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
@@ -227,7 +232,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource not access without the token in dev", () => {
-    Curl.getRequestComponents(FILE_ID, `${Environment.DEVELOPMENT}isOdd`).then(
+    Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}isOdd`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -237,7 +242,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(FILE_ID, `${Environment.PRODUCTION}root`).then(
+    Curl.getRequestComponents(`${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
@@ -247,7 +252,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource not access without the token in prod", () => {
-    Curl.getRequestComponents(FILE_ID, `${Environment.PRODUCTION}isOdd`).then(
+    Curl.getRequestComponents(`${key}${Environment.PRODUCTION}isOdd`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -285,7 +290,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it.skip("Verify increase in total traffic count for dev", () => {
-    Curl.getRequestComponents(FILE_ID, `${Environment.DEVELOPMENT}root`).then(
+    Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
@@ -300,7 +305,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it.skip("Verify increase in total traffic count for prod", () => {
-    Curl.getRequestComponents(FILE_ID, `${Environment.PRODUCTION}root`).then(
+    Curl.getRequestComponents(`${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
         Utils.sendRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);

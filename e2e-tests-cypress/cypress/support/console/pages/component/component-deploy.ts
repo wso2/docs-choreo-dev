@@ -11,10 +11,7 @@
  * associated services.
  */
 
-
-
 export class ComponentDeployPage {
-
   static deploy() {
     cy.get('[data-cyid="btn-deploy-api"]').should("be.visible").click();
   }
@@ -32,33 +29,49 @@ export class ComponentDeployPage {
       '[class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"]'
     ).type(value);
     cy.get('button[type="submit"]').click();
-
-    cy.get('[title="Build Success"]', { timeout: 900000 });
-    cy.get('[data-cyid="btn-promote"]').should("be.visible");
   }
 
   static isDeploymentSuccessful() {
-    return cy.get('[title="Build Success"]',{timeout:90000});
+    return cy.get('[title="Build Success"]', { timeout: 90000 });
   }
 
   static ismanualDeploymentSuccessful() {
-    return cy.get('[title="Deployed successfully"]',{timeout:90000});
+    return cy.get('[title="Deployed successfully"]', { timeout: 90000 });
   }
 
-
   static promoteToProd() {
-    cy.get('[data-cyid*="promote"]',{timeout:120000}).should('be.visible').click();
+    cy.get('[data-cyid*="promote"]', { timeout: 120000 })
+      .should("be.visible")
+      .click();
+
+    cy.get("body").then((b) => {
+      if (
+        b.find('[data-cyid="btn-deploy-api"]').text() === "Configure & Deploy"
+      ) {
+        cy.contains("Next").click();
+        cy.get(".ConfigForm button", { timeout: 120000 })
+          .contains("Promote")
+          .click();
+      }
+    });
   }
 
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input',{timeout:120000})
+      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 120000 })
       .eq(0)
       .invoke("attr", "value");
   }
 
   static verifyProdInvokeURL() {
-    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2)
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+
+    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2);
+
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
       .eq(1)

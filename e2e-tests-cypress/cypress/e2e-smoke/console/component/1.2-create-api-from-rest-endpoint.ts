@@ -39,15 +39,14 @@ describe("Verify project creation functionality", () => {
   const API_VERSION = "1.0.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
   const OPERATION_USERS = "/users";
-  const   OPERATION_POSTS ="/posts"
+  const OPERATION_POSTS = "/posts";
   const ALLOWED_ORIGINS = ["https://127.0.0.1"];
   const ALLOWED_HEADERS = ["tenantId"];
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "1.2-create-api-from-rest-endpoint";
+  const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
-  
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
@@ -69,15 +68,16 @@ describe("Verify project creation functionality", () => {
       FILE_ID
     );
     APIDevelop.addResources(OPERATION_USERS, HTTPMethod.GET);
+    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should('not.be.null')
+    APIDeployment.verifyDevInvokeURL().should("not.be.null");
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should('not.be.null')
+    APIDeployment.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Verify test functionality", () => {
@@ -106,16 +106,16 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.createNewVersion();
     ComponentDevelopPage.getVersion().should("eq", "Version 1.0.1");
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
+    cy.wait(3000);
     APIDevelop.addEndpoints();
-   
   });
 
   it("Deploy new version", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should('not.be.null')
+    APIDeployment.verifyDevInvokeURL().should("not.be.null");
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should('not.be.null')
+    APIDeployment.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Test in prod", () => {
@@ -123,10 +123,10 @@ describe("Verify project creation functionality", () => {
     APITest.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should('eq','200')
+    SwaggerUI.getResponseCode().should("eq", "200");
     SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should('eq','200')
- //   SwaggerUI.GetResponse();
+    SwaggerUI.getResponseCode().should("eq", "200");
+    //   SwaggerUI.GetResponse();
   });
 
   it("Test in dev", () => {
@@ -134,10 +134,10 @@ describe("Verify project creation functionality", () => {
     APITest.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should('eq','200')
+    SwaggerUI.getResponseCode().should("eq", "200");
     SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should('eq','200')
- //   SwaggerUI.GetResponse();
+    SwaggerUI.getResponseCode().should("eq", "200");
+    //   SwaggerUI.GetResponse();
   });
 
   it("Publish connector", () => {

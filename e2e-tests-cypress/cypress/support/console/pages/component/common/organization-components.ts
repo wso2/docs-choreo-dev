@@ -41,6 +41,10 @@ export class OrganizationComponent {
     ).click();
   }
 
+  static navigateToRoles(){
+    cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
+  }
+
   static inviteMembers(email: string, ...roles) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();

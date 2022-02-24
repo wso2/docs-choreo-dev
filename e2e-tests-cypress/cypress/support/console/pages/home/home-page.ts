@@ -45,20 +45,16 @@ export class ChoreoHomePage {
     return cy.get("ul>li>div>p").invoke("text");
   }
 
-  static logout(fileID) {
+  static logout() {
     cy.window()
     .its("sessionStorage")
     .invoke("getItem", "sign_out_url")
     .then((url) => {
       cy.request(url);
     });
-    cy.task("deleteFile", fileID);
   }
 
   static navigateToSettings() {
-    cy.get(this.username).should("be.visible").click();
-    cy.get('[data-testid="header-user-profile-item-settings"]')
-      .should("be.visible")
-      .click();
+    cy.get('[data-testid="main-left-nav-item-Settings"]').click();
   }
 }

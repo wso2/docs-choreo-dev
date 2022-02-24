@@ -30,11 +30,11 @@ describe("Add roles and permissions", () => {
 
   beforeEach(() => {
     ChoreoHomePage.navigateToSettings();
-    cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
+    OrganizationComponent.navigateToRoles();
   });
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 
   it("Create a role", () => {
