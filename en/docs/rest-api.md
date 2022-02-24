@@ -26,9 +26,6 @@ Choreo supports spec-driven API development. Once you have carefully designed an
 
 ### Low Code Mode
 
-
-TODO: Include a low-code graphic of a program with the above logic.
-
 The above image shows a simple API implemented in the low-code editor in Choreo, that extracts data from an HTTP request, queries a database, and returns a JSON in an HTTP response. 
 
 The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments, logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed [connectors]() as shown above.
