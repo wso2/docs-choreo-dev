@@ -11,16 +11,10 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import webpackPreprocessor from "@cypress/webpack-batteries-included-preprocessor";
+
 
 
 module.exports = (on, config) => {
-  on(
-    "file:preprocessor",
-    webpackPreprocessor({
-      typescript: require.resolve("typescript"),
-    })
-  );
   config.env.choreoIDPUsername = process.env.choreoIDPUsername;
   config.env.choreoIDPPassword = process.env.choreoIDPPassword;
   config.env.choreoOrgHandle = process.env.choreoOrgHandle;
