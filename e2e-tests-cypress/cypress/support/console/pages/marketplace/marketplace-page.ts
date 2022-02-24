@@ -29,9 +29,9 @@ export class Marketplace {
 
   static filterByMyOrganization() {
     cy.get('[data-testid="my-organization-filter"]').click();
-    cy.get('[data-testid="my-organization-filter"]').contains(
-      "My Organization"
-    );
+    cy.get('[data-testid="my-organization-filter"]')
+      .contains("My Organization")
+      .should("be.visible");
   }
 
   static filterByFree() {
