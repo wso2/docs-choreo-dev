@@ -61,7 +61,7 @@ describe("Choreo APIM publisher scenarios", () => {
     //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.PromoteToProd();
+    APIDeployment.verifyDevInvokeURL().should("not.be.null");
   });
 
   it("Verify component promote to prod", () => {
