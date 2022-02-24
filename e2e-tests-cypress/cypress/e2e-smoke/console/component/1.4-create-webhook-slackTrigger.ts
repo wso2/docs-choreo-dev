@@ -29,14 +29,14 @@ import { Utils } from "../../../support/console/utils";
 
 describe("Verify webhook creation functionality", () => {
   const WEBHOOK_NAME = "Slack Trigger";
-  const FILE_ID = "1.4-create-webhook-slackTrigger";
+  const FILE_ID = "slacktrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding slacktrigger bal file";
 
-  before(() => LoginPage.loginToChoreo(FILE_ID, true));
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  before(() => LoginPage.loginToChoreo(FILE_ID));
+  after(() => ChoreoHomePage.logout());
   it("Verify slack trigger creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
@@ -67,7 +67,7 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Verify component commits", () => {
-    LoginPage.reloginToChoreo(FILE_ID);
+    LoginPage.reLoginToChoreo(FILE_ID);
     ComponentDevelopPage.addLabels(labels).then((arr) => {
       expect(arr).to.deep.eq(labels);
     });

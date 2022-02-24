@@ -27,12 +27,12 @@ import { Utils } from "../../../support/console/utils";
 
 describe("Verify manual trigger creation functionality", () => {
   const MANUAL_NAME = "Manual Trigger";
-  const FILE_ID = "1.5-create-manualTrigger";
+  const FILE_ID = "manualTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
 
   before(() => {
-    LoginPage.loginToChoreo(FILE_ID,true);
+    LoginPage.loginToChoreo(FILE_ID);
   });
 
 
@@ -52,7 +52,6 @@ describe("Verify manual trigger creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    ComponentDeployPage.ismanualDeploymentSuccessful().should("be.visible");
   });
 
   it("Verify component promote to prod", () => {
@@ -61,6 +60,6 @@ describe("Verify manual trigger creation functionality", () => {
 
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 });

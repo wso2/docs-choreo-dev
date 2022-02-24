@@ -27,9 +27,10 @@ import { RandomTextGenerator } from "../../../support/console/pages/component/co
 import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
+import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const FILE_ID = "1.1-create-api-from-oas-flow";
+  const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = RandomTextGenerator.generateApiName("oas");
@@ -40,7 +41,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 
   it("Creating and publishing an API from open API specification", () => {
@@ -61,6 +62,11 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.PromoteToProd();
+  });
+
+  it("Verify component promote to prod", () => {
+    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -86,8 +92,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}intensity`
+      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -115,8 +120,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}intensity`
+      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url).then((res) => {
         expect(res.status).equal(200);

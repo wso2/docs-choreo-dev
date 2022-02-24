@@ -33,7 +33,7 @@ describe("Verify project creation functionality", () => {
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "1.6-create-default-rest-api-from-scratch";
+  const FILE_ID = "restapidefault";
   const RESOURCE_NAME = "/sayHello";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
@@ -41,7 +41,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  after(() => ChoreoHomePage.logout());
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -89,8 +89,7 @@ describe("Verify project creation functionality", () => {
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
+      `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -118,8 +117,7 @@ describe("Verify project creation functionality", () => {
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
+      `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -155,8 +153,7 @@ describe("Verify project creation functionality", () => {
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
+      `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -169,8 +166,7 @@ describe("Verify project creation functionality", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.PRODUCTION);
     Curl.getRequestComponents(
-      FILE_ID,
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
+      `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendRequest(curl.method, curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);

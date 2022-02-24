@@ -11,10 +11,7 @@
  * associated services.
  */
 
-
-
 export class ComponentDeployPage {
-
   static deploy() {
     cy.get('[data-cyid="btn-deploy-api"]').should("be.visible").click();
   }
@@ -32,9 +29,6 @@ export class ComponentDeployPage {
       '[class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"]'
     ).type(value);
     cy.get('button[type="submit"]').click();
-
-    cy.get('[title="Build Success"]', { timeout: 900000 });
-    cy.get('[data-cyid="btn-promote"]').should("be.visible");
   }
 
   static isDeploymentSuccessful() {
@@ -42,14 +36,24 @@ export class ComponentDeployPage {
   }
 
   static ismanualDeploymentSuccessful() {
-    return cy.get('[title="Deployed successfully"]',{timeout:90000});
+    return cy.get('[title="Deployed successfully"]', { timeout: 90000 });
   }
 
-
   static promoteToProd() {
-    cy.get('[data-cyid="btn-promote"]', { timeout: 120000 })
+    cy.get('[data-cyid*="promote"]', { timeout: 120000 })
       .should("be.visible")
       .click();
+
+    cy.get("body").then((b) => {
+      if (
+        b.find('[data-cyid="btn-deploy-api"]').text() === "Configure & Deploy"
+      ) {
+        cy.contains("Next").click();
+        cy.get(".ConfigForm button", { timeout: 120000 })
+          .contains("Promote")
+          .click();
+      }
+    });
   }
 
   static verifyDevInvokeURL() {

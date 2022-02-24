@@ -35,7 +35,7 @@ export class TriggersTemplate {
     cy.wait("@proj_create", { timeout: 180000 }).then((e) => {
       expect(e.response.statusCode).to.eq(200);
       const { id, projectId, handler } = e.response.body.data.createComponent;
-      const authdata = {
+      const authData = {
         header: {
           authorization: e.request.headers.authorization,
           "content-type": "application/json",
@@ -44,11 +44,7 @@ export class TriggersTemplate {
         projectId,
         handler,
       };
-      cy.task("writeTestData", {
-        fileName: fileID,
-        key: "authData",
-        value: authdata,
-      });
+      Cypress.env(`${fileID}_authData`,authData)
     });
   }
 }
