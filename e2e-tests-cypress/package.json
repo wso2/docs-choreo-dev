@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "cypress": "^9.4.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "webpack": "^5.68.0"
   },
   "devDependencies": {
     "@testing-library/cypress": "^8.0.1",

@@ -16,6 +16,7 @@
   4.  Update user information in `cypress.env.json`
 
       - `idpUsername` and `idpPassword` (Refer the section section below on how to get them)
+      - `userEmail` and `userName` - Here the userEmail is the email address of the associated choreo account and the userName is the display name for that email. 
       - (Optional) If the user is associated with multiple organizations, the specific organization handle to be considered in the test execution can be set in the `selectedOrgHandle`. By default this is not set, which will result in the first organization value returned in the users orgs list being considered. To run devportal tests you must set the preferred `choreoOrgHandle` as an environment variable.
 
   5.  Run `npm run e2etest:headless` to run test cases in [headless mode](#headless-mode)
