@@ -46,7 +46,7 @@ describe("Invite members", () => {
 });
 
 describe("Accept invitation", () => {
-  const invited_org_handle = Cypress.env("testUserOrg");
+  const invited_org_handle = Cypress.env("choreoOrgHandle");
   const FILE_ID = "1.3.2-accept-invitation";
 
   before(() => {

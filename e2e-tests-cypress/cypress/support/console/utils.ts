@@ -16,7 +16,7 @@ export class Utils {
 
   static keyNamePrefix = "e2eOnPremkey";
   static APP_SVC_URL = Cypress.env("appSvcURL");
-  static ORG_NAME = Cypress.env("testUserOrg");
+  static ORG_NAME = Cypress.env("choreoOrgHandle");
   static MAIL_READER_SVC_URL = Cypress.env("mailReaderSvcURL");
   static MAIL_READER_CLIENT_ID = Cypress.env("mailReaderClientId");
   static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
