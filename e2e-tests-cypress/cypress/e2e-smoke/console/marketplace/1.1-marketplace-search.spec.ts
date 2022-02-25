@@ -22,8 +22,11 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const SUB_CATEGORY = "Email Newsletters";
   const CONNECTOR = "Slack";
   const TRIGGER = "GitHub";
+  const FREE = "Cost/Free";
+  const FREEMIUM = "Cost/Freemium";
+  const PAID = "Cost/Paid";
 
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  after(() => ChoreoHomePage.logout());
 
   beforeEach(() => {
     ChoreoHomePage.navigateToMarketPlace();
@@ -43,26 +46,31 @@ describe("Verify the functionality in Choreo Marketplace", () => {
 
   it("Verify price by Free filter functionality", () => {
     Marketplace.filterByFree();
+    Marketplace.validateConnectorPopulation([FREE, FREEMIUM]);
     Marketplace.clearSelectedFilters();
   });
 
   it("Verify price by Freemium filter functionality", () => {
     Marketplace.filterByFreemium();
+    Marketplace.validateConnectorPopulation([FREEMIUM]);
     Marketplace.clearSelectedFilters();
   });
 
   it("Verify price by Paid filter functionality", () => {
     Marketplace.filterByPaid();
+    Marketplace.validateConnectorPopulation([PAID]);
     Marketplace.clearSelectedFilters();
   });
 
   it("Verify filter functionality by main category", () => {
     Marketplace.filterByCategory(MAIN_CATEGORY1, "");
+    Marketplace.validateConnectorPopulation([MAIN_CATEGORY1]);
     Marketplace.clearSelectedFilters();
   });
 
   it("Verify filter functionality by main category and subcategory", () => {
     Marketplace.filterByCategory(MAIN_CATEGORY2, SUB_CATEGORY);
+    Marketplace.validateConnectorPopulation([SUB_CATEGORY]);
     Marketplace.clearSelectedFilters();
   });
 
