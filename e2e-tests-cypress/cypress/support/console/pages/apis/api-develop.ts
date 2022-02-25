@@ -49,18 +49,17 @@ export class APIDevelop {
       )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", { timeout: 120000 }).then((res) => {
-      expect(res.response.body.paths).to.have.property(path);
+      expect(res.response.body.paths).to.have.property(`/${path}`);
     });
-    cy.get(`[data-testid="resource-${path}"]`, { timeout: 120000 }).should(
+    cy.get(`[data-testid="resource-/${path}"]`, { timeout: 120000 }).should(
       "be.visible"
     );
   }
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get('[data-testid="verb-selector"]').click();
-
     verbs.forEach((verb) => {
-      cy.contains(verb.toUpperCase()).click();
+      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click();
       cy.wait(1000);
     });
     cy.get("body").type("{esc}");

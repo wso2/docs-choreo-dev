@@ -98,7 +98,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("/root");
+    SwaggerUI.SelectResource("root");
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue("number", "2");
     SwaggerUI.ExecuteResourceFunction();
@@ -125,7 +125,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("/isOdd");
+    SwaggerUI.SelectResource("isOdd");
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue("number", "5");
     SwaggerUI.ExecuteResourceFunction();
@@ -152,7 +152,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("/root");
+    SwaggerUI.SelectResource("root");
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue("number", "2");
     SwaggerUI.ExecuteResourceFunction();
@@ -179,7 +179,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("/isOdd");
+    SwaggerUI.SelectResource("isOdd");
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue("number", "5");
     SwaggerUI.ExecuteResourceFunction();
@@ -207,7 +207,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("/root");
+    ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",

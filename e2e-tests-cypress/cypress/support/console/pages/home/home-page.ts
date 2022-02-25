@@ -46,12 +46,13 @@ export class ChoreoHomePage {
   }
 
   static logout() {
-    cy.window()
-    .its("sessionStorage")
-    .invoke("getItem", "sign_out_url")
-    .then((url) => {
-      cy.request(url);
-    });
+    cy.request(Cypress.env('sign_out_url'))
+    // cy.window()
+    // .its("sessionStorage")
+    // .invoke("getItem", "sign_out_url")
+    // .then((url) => {
+    //   cy.request(url);
+    // });
   }
 
   static navigateToSettings() {
