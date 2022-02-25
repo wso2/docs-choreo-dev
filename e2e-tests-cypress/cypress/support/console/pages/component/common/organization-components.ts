@@ -151,13 +151,13 @@ export class OrganizationComponent {
     cy.get('[data-cyid="btn-add-member-to-role"]').click();
     cy.get('[data-cyid="select_members_to_role"]').click();
     cy.contains(
-      '[data-cyid="' + OrganizationComponent.memberName + ' (' + OrganizationComponent.memberEmail + ')"]',
+      '[class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"]',
       OrganizationComponent.memberName
-    ).should('be.visible');
+    ).should('exist');
     cy.contains(
-        '[data-cyid="' + OrganizationComponent.memberName + ' (' + OrganizationComponent.memberEmail + ')"]',
+        '[class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"]',
       OrganizationComponent.memberName
-    ).click();
+    ).click( { force: true } );
     cy.get('body').type('{esc}');
     cy.get('[data-cyid="btn-add-member"]').click();
     cy.contains('td', OrganizationComponent.memberEmail).should('be.visible');
