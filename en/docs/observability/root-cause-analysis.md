@@ -6,7 +6,7 @@ Choreo provides insightful observability features to drill down to the request l
 
 To visualize the observability data of a component, follow these steps:
 
-1. Access the Choreo Console via https://console.preview.choreo.dev/.
+1. Access the Choreo Console via https://console.choreo.dev/.
 
 2. On the Home page, select the project with the component that you want to observe.
 
@@ -14,16 +14,15 @@ To visualize the observability data of a component, follow these steps:
 
 3. Click on the component that you need to observe to open it.
 
-4. Open the Observability view for the component by clicking **Observe** in the left panel.
+4. To open the **Observability** view for the component, click **Observe** on the left navigation.
 
-    You can view the following
+    You can view the following:
     
-    Low-code diagram
-    Throughput graph
-    Latency graph
-    Logs
-    Diagnostic data
-    Here you can detect anomalies and perform root cause analysis on the sample service.
+    - Low-code diagram
+    - Throughput graph
+    - Latency graph
+    - Logs
+    - Diagnostic data
 
 ## Detect anomalies and perform root cause analysis
 
