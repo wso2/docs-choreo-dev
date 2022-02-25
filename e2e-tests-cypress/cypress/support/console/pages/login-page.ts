@@ -24,6 +24,7 @@ export class LoginPage {
     cy.get('button[type="submit"]').click();
     this.persistOrgs(fileID);
     this.persistCookies(fileID);
+    this.persistLogoutURL();
   }
 
   static loginToInvitedUser(fileID: string, timestamp: string) {
@@ -67,6 +68,15 @@ export class LoginPage {
 
   static navigateToCodespace(fileID: string) {
     cy.visit(Cypress.env(`${fileID}_accessURL`));
+  }
+
+  private static persistLogoutURL() {
+    cy.window()
+      .its("sessionStorage")
+      .invoke("getItem", "sign_out_url")
+      .then((url) => {
+        Cypress.env("sign_out_url", url);
+      });
   }
 
   // private static testSetup(fileID: string) {

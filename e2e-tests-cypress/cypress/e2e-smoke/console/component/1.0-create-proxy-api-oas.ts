@@ -18,7 +18,7 @@ describe.skip("Create proxy api using existing url", () => {
   });
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 
   it("Creating and publishing an API from open API specification", () => {

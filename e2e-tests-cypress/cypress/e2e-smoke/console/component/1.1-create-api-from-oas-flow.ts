@@ -72,17 +72,17 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/intensity");
+    SwaggerUI.invokeResource("intensity");
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/intensity/factors");
+    SwaggerUI.invokeResource("intensity/factors");
     SwaggerUI.GetResponse();
 
     APITest.testAPI();
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("/generation");
+    SwaggerUI.invokeResource("generation");
     SwaggerUI.GetResponse();
   });
 
@@ -105,7 +105,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("/intensity");
+    ComponentAPILifecycle.disableResourceSecurity("intensity");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",

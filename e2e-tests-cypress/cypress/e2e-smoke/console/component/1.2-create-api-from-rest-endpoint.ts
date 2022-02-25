@@ -36,10 +36,10 @@ import { DevportalHomePage } from "../../../support/devportal/pages/home/home-pa
 
 describe("Verify project creation functionality", () => {
   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
-  const API_VERSION = "1.0.0";
+  const API_VERSION = "1.1.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
-  const OPERATION_USERS = "/users";
-  const OPERATION_POSTS = "/posts";
+  const OPERATION_USERS = "users";
+  const OPERATION_POSTS = "posts";
   const ALLOWED_ORIGINS = ["https://127.0.0.1"];
   const ALLOWED_HEADERS = ["tenantId"];
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
@@ -50,7 +50,7 @@ describe("Verify project creation functionality", () => {
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
-  after(() => DevportalHomePage.logout(FILE_ID));
+  after(() => DevportalHomePage.logout());
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(
