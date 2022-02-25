@@ -34,7 +34,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "restapidefault";
-  const RESOURCE_NAME = "sayHello";
+  const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
@@ -91,7 +91,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+      Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })
@@ -119,7 +119,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+      Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })
@@ -155,7 +155,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url).then((res) => {
+      Utils.sendGetRequest(curl.method, curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })
@@ -168,7 +168,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendRequest(curl.method, curl.url).then((res) => {
+      Utils.sendGetRequest(curl.method, curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })

@@ -42,11 +42,11 @@ export class Utils {
 
   static getInvitationId(token: string, timestamp: string) {
     const headerString = btoa(`${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`);
-    this.sendRequest("POST", Utils.MAIL_READER_TOKEN_URL,
+    this.sendPostRequest("POST", Utils.MAIL_READER_TOKEN_URL,
         { Authorization: `Basic ${headerString}`}, { grant_type: "client_credentials"})
         .then((res) => {
           const accessToken = res.body.access_token;
-          this.sendRequest("GET", Utils.MAIL_READER_SVC_URL + timestamp,
+          this.sendGetRequest("GET", Utils.MAIL_READER_SVC_URL + timestamp,
               { Authorization: `Bearer ${accessToken}` })
               .then((res) => {
                 const rawMailContent = res.body;
@@ -63,18 +63,29 @@ export class Utils {
                   Authorization: `Bearer ${token}`,
                   "content-type": "application/json",
                 };
-                this.sendRequest("POST", `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+                this.sendGetRequest("POST", `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
                     header);
               });
         });
   }
 
-  static sendRequest(method: string, url: string, headers: any = {}, body: any = {}) {
+  static sendPostRequest(method: string, url: string, headers, body) {
     const request = {
       method,
       url,
       headers,
       body
+    };
+    return cy.request(request).then((res) => {
+      return cy.wrap({ body: res.body, status: res.status });
+    });
+  }
+
+  static sendGetRequest(method: string, url: string, headers:any={}) {
+    const request = {
+      method,
+      url,
+      headers
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });

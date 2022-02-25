@@ -114,7 +114,7 @@ describe("Verify project creation functionality", () => {
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
@@ -141,7 +141,7 @@ describe("Verify project creation functionality", () => {
     Curl.addQueryParameter(queryParameters2);
     Curl.getRequestComponents( `${key}${Environment.DEVELOPMENT}isOdd`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
@@ -168,7 +168,7 @@ describe("Verify project creation functionality", () => {
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents( `${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
@@ -195,7 +195,7 @@ describe("Verify project creation functionality", () => {
     Curl.addQueryParameter(queryParameters2);
     Curl.getRequestComponents( `${key}${Environment.PRODUCTION}isOdd`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
@@ -224,7 +224,7 @@ describe("Verify project creation functionality", () => {
   it("Verify resource access without the token in dev", () => {
     Curl.getRequestComponents( `${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
@@ -234,7 +234,7 @@ describe("Verify project creation functionality", () => {
   it("Verify resource not access without the token in dev", () => {
     Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}isOdd`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
@@ -244,7 +244,7 @@ describe("Verify project creation functionality", () => {
   it("Verify resource access without the token in prod", () => {
     Curl.getRequestComponents(`${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
@@ -254,7 +254,7 @@ describe("Verify project creation functionality", () => {
   it("Verify resource not access without the token in prod", () => {
     Curl.getRequestComponents(`${key}${Environment.PRODUCTION}isOdd`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url, curl.headers).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
           expect(res.status).equal(200);
         })
@@ -292,7 +292,7 @@ describe("Verify project creation functionality", () => {
   it.skip("Verify increase in total traffic count for dev", () => {
     Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
@@ -307,7 +307,7 @@ describe("Verify project creation functionality", () => {
   it.skip("Verify increase in total traffic count for prod", () => {
     Curl.getRequestComponents(`${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
-        Utils.sendRequest(curl.method, curl.url).then((res) => {
+        Utils.sendGetRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         })
