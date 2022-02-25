@@ -18,5 +18,7 @@ module.exports = (on, config) => {
   config.env.choreoIDPUsername = process.env.choreoIDPUsername;
   config.env.choreoIDPPassword = process.env.choreoIDPPassword;
   config.env.choreoOrgHandle = process.env.choreoOrgHandle;
+  config.env.userName = process.env.userName;
+  config.env.userEmail = process.env.userEmail;
   return config;
 };

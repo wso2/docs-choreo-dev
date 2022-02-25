@@ -29,6 +29,7 @@ describe("Add roles and permissions", () => {
   });
 
   beforeEach(() => {
+    cy.reload();
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.navigateToRoles();
   });
