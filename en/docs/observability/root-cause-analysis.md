@@ -6,7 +6,7 @@ Choreo provides insightful observability features to drill down to the request l
 
 To visualize the observability data of a component, follow these steps:
 
-1. Access the Choreo Console via https://console.choreo.dev/.
+1. Access the Choreo Console via [https://console.choreo.dev/](https://console.choreo.dev/).
 
 2. On the Home page, select the project with the component that you want to observe.
 
