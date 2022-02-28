@@ -47,6 +47,16 @@ spec:
                 secretKeyRef:
                   key: DB_PASSWORD
                   name: secret-dp-cicd
+            - name: GITHUB_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-APP-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: GITHUB_APP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-APP-PRIVATE-KEY
+                  name: secret-dp-cicd
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
