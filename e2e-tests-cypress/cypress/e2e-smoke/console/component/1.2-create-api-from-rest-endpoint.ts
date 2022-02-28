@@ -37,7 +37,8 @@ import { DevportalHomePage } from "../../../support/devportal/pages/home/home-pa
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
   const API_BASE_PATH = Utils.generateBasePath();
-  const API_VERSION = "1.1.0";
+  const API_VERSION = "1.0.0";
+  const API_NEW_VERSION = "1.1.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
   const OPERATION_USERS = "users";
   const OPERATION_POSTS = "posts";
@@ -104,8 +105,11 @@ describe("Verify project creation functionality", () => {
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentOverviewPage.createNewVersion();
-    ComponentDevelopPage.getVersion().should("eq", "Version 1.0.1");
+    ComponentOverviewPage.createNewVersion(API_NEW_VERSION);
+    ComponentDevelopPage.getVersion().should(
+      "eq",
+      "Version " + API_NEW_VERSION
+    );
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
     cy.wait(3000);
     APIDevelop.addEndpoints();
@@ -119,9 +123,9 @@ describe("Verify project creation functionality", () => {
     APIDeployment.verifyProdInvokeURL().should("not.be.null");
   });
 
-  it("Test in prod", () => {
+  it("Test in dev", () => {
     APITest.testAPI();
-    APITest.selectEnvironment(Environment.PRODUCTION);
+    APITest.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -130,9 +134,9 @@ describe("Verify project creation functionality", () => {
     //   SwaggerUI.GetResponse();
   });
 
-  it("Test in dev", () => {
+  it("Test in prod", () => {
     APITest.testAPI();
-    APITest.selectEnvironment(Environment.DEVELOPMENT);
+    APITest.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
