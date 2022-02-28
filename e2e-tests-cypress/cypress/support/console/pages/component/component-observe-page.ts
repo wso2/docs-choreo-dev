@@ -12,12 +12,43 @@
  */
 
 export class ComponentObservePage {
+  private static obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
+
   static gotoOverview() {
     cy.get('[data-testid="panel-Overview-btn"]').should("be.visible").click();
   }
 
   static gotoLogs() {
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
+  }
+
+  static deploySampleApp() {
+    cy.visit(Cypress.env("baseUrl") + "/observability");
+    cy.get('[data-testid="btn-observability-try-sample"]')
+      .should("be.visible")
+      .click();
+
+    cy.url()
+      .should("contain", "/observe/app/")
+      .then((url) => {
+        const obsUrlRegexMatch = url.match(this.obsUrlRegexp);
+        return obsUrlRegexMatch;
+      });
+
+    return [];
+  }
+
+  static navigateToSampleApp(obsId: string, version: string) {
+    const observabilityViewUrl =
+      Cypress.env("baseUrl") +
+      "/observe/app/" +
+      obsId +
+      "/" +
+      version +
+      "?isSample=true";
+    cy.visit(observabilityViewUrl);
+    cy.url().should("eq", observabilityViewUrl);
+    cy.get('[data-testid="backdrop-loader"]').should("not.exist");
   }
 
   static verifyLogsView() {
