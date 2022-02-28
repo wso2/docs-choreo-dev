@@ -12,16 +12,13 @@
  */
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
-import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -29,7 +26,7 @@ import { RestAPITemplate } from "../../../support/console/pages/templates/rest-a
 import { Utils } from "../../../support/console/utils";
 
 describe("Verify project creation functionality", () => {
-  const COMPONENT_NAME = "covid stat api";
+  const COMPONENT_NAME = Utils.generateComponentName("rest");
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();

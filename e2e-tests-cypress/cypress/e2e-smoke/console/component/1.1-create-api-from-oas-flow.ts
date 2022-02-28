@@ -23,7 +23,6 @@ import { ComponentTestPage } from "../../../support/console/pages/component/comp
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
@@ -33,7 +32,8 @@ describe("Choreo APIM publisher scenarios", () => {
   const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
-  const API_Name = RandomTextGenerator.generateApiName("oas");
+  const API_Name = Utils.generateComponentName("oas");
+  const API_BASE_PATH = Utils.generateBasePath();
   const Filepath = "apis/generation_oas.yaml";
 
   before(() => {
@@ -54,7 +54,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_Name, API_Name, "");
+    RestAPIProxyTemplate.enterAPIdetails(API_Name, API_BASE_PATH, "");
   });
 
   it("Verify component deployment and endpoint configurations", () => {

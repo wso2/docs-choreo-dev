@@ -35,7 +35,8 @@ import { Environment } from "../../../support/console/pages/enum/environment";
 import { DevportalHomePage } from "../../../support/devportal/pages/home/home-page";
 
 describe("Verify project creation functionality", () => {
-  const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
+  const API_NAME = Utils.generateComponentName("CYE2E");
+  const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.1.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
   const OPERATION_USERS = "users";
@@ -63,7 +64,7 @@ describe("Verify project creation functionality", () => {
     RestAPIProxyTemplate.designNewRestApi(
       API_NAME,
       API_VERSION,
-      "",
+      API_BASE_PATH,
       API_ENDPOINT,
       FILE_ID
     );

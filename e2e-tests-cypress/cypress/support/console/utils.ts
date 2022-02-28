@@ -12,7 +12,11 @@
  */
 
 export class Utils {
-  static projectNamePrefix = "e2eproject";
+  static oldProjectNamePrefix = "e2eproject";
+  static projectNamePrefix = "automationtestproject";
+
+  static oldComponentNamePrefix = "e2eapi";
+  static componentNamePrefix = "automationtestcomponent";
 
   static keyNamePrefix = "e2eOnPremkey";
   static APP_SVC_URL = Cypress.env("appSvcURL");
@@ -29,6 +33,14 @@ export class Utils {
    */
   static generateProjectName() {
     return this.projectNamePrefix + Date.now();
+  }
+
+  static generateComponentName(name: string) {
+    return this.componentNamePrefix + Date.now() + name;
+  }
+
+  static generateBasePath() {
+    return Date.now().toString();
   }
 
   /**

@@ -31,7 +31,7 @@ import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-
 import { Utils } from "../../../support/console/utils";
 
 describe("Verify project creation functionality", () => {
-  const COMPONENT_NAME = "covid stat api";
+  const COMPONENT_NAME = Utils.generateComponentName("rest");
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -45,11 +45,7 @@ describe("Verify project creation functionality", () => {
   after(() => ChoreoHomePage.logout());
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      key
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, key);
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
     RestAPITemplate.createApiFromScratch(
@@ -71,7 +67,7 @@ describe("Verify project creation functionality", () => {
       "rm /config/workspace/.githooks/pre-commit"
     );
     VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal('git push');
+    VSExplorer.enterCommandInTerminal("git push");
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
@@ -139,7 +135,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("isOdd");
     Curl.addQueryParameter(queryParameters2);
-    Curl.getRequestComponents( `${key}${Environment.DEVELOPMENT}isOdd`).then(
+    Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}isOdd`).then(
       (curl) =>
         Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -166,7 +162,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("root");
     Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents( `${key}${Environment.PRODUCTION}root`).then(
+    Curl.getRequestComponents(`${key}${Environment.PRODUCTION}root`).then(
       (curl) =>
         Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
@@ -193,7 +189,7 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("isOdd");
     Curl.addQueryParameter(queryParameters2);
-    Curl.getRequestComponents( `${key}${Environment.PRODUCTION}isOdd`).then(
+    Curl.getRequestComponents(`${key}${Environment.PRODUCTION}isOdd`).then(
       (curl) =>
         Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -222,7 +218,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents( `${key}${Environment.DEVELOPMENT}root`).then(
+    Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}root`).then(
       (curl) =>
         Utils.sendGetRequest(curl.method, curl.url).then((res) => {
           expect(res.body).equal(4);
