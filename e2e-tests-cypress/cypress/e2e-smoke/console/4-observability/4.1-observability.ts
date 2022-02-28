@@ -18,37 +18,30 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 describe("Observability tests", () => {
   const FILE_ID = "observability";
 
-  let obsId: string;
-  let version: string;
-
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
-
-    const obsUrlRegexMatch = ComponentObservePage.deploySampleApp();
-
-    expect(obsUrlRegexMatch).to.have.lengthOf(3);
-
-    obsId = obsUrlRegexMatch[1];
-    version = obsUrlRegexMatch[2];
-  });
-
-  beforeEach(() => {
-    ComponentObservePage.navigateToSampleApp(obsId, version);
   });
 
   after(() => {
     ChoreoHomePage.logout();
   });
 
-  it("test logs view", () => {
+  it("Deploy sample App", () => {
+    const obsUrlRegexMatch = ComponentObservePage.deploySampleApp();
+  });
+
+  it("Test logs view", () => {
+    ComponentObservePage.navigateToSampleApp();
     ComponentObservePage.verifyLogsView();
   });
 
-  it('test observability overview', () => {
+  it("Test observability overview", () => {
+    ComponentObservePage.navigateToSampleApp();
     ComponentObservePage.verifyObserveOverview();
   });
 
-  it('test diagnostics view', () => {
-      ComponentObservePage.verifyDiagnosticView();
+  it("Test diagnostics view", () => {
+    ComponentObservePage.navigateToSampleApp();
+    ComponentObservePage.verifyDiagnosticView();
   });
 });

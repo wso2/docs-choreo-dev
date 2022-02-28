@@ -24,6 +24,7 @@ export class ComponentObservePage {
 
   static deploySampleApp() {
     cy.visit(Cypress.env("baseUrl") + "/observability");
+
     cy.get('[data-testid="btn-observability-try-sample"]')
       .should("be.visible")
       .click();
@@ -32,19 +33,24 @@ export class ComponentObservePage {
       .should("contain", "/observe/app/")
       .then((url) => {
         const obsUrlRegexMatch = url.match(this.obsUrlRegexp);
-        return obsUrlRegexMatch;
-      });
 
-    return [];
+        expect(obsUrlRegexMatch).to.have.lengthOf(3);
+
+        let obsId = obsUrlRegexMatch[1];
+        let version = obsUrlRegexMatch[2];
+
+        Cypress.env(`obsSampleId`, obsId);
+        Cypress.env(`obsSampleVersion`, version);
+      });
   }
 
-  static navigateToSampleApp(obsId: string, version: string) {
+  static navigateToSampleApp() {
     const observabilityViewUrl =
       Cypress.env("baseUrl") +
       "/observe/app/" +
-      obsId +
+      Cypress.env(`obsSampleId`) +
       "/" +
-      version +
+      Cypress.env(`obsSampleVersion`) +
       "?isSample=true";
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
