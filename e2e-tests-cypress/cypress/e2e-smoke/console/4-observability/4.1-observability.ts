@@ -25,6 +25,11 @@ describe("Observability tests", () => {
     LoginPage.loginToChoreo(FILE_ID);
 
     const obsUrlRegexMatch = ComponentObservePage.deploySampleApp();
+
+    expect(obsUrlRegexMatch).to.have.lengthOf(3);
+
+    obsId = obsUrlRegexMatch[1];
+    version = obsUrlRegexMatch[2];
   });
 
   beforeEach(() => {
@@ -37,5 +42,13 @@ describe("Observability tests", () => {
 
   it("test logs view", () => {
     ComponentObservePage.verifyLogsView();
+  });
+
+  it('test observability overview', () => {
+    ComponentObservePage.verifyObserveOverview();
+  });
+
+  it('test diagnostics view', () => {
+      ComponentObservePage.verifyDiagnosticView();
   });
 });
