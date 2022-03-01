@@ -46,7 +46,7 @@ export class ComponentAPILifecycle {
 
   static publishWithoutConnector() {
     this.publishToDevportal();
-    return cy.get(ComponentAPILifecycle.devportl_btn).should('be.visible');
+    return cy.get(ComponentAPILifecycle.devportl_btn).should("be.visible");
   }
 
   static demoteToCreated() {
@@ -73,11 +73,12 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.get('[data-cyid=go-to-dev-portal-btn]').parent()
-      .invoke('attr', 'href')
+    cy.get("[data-cyid=go-to-dev-portal-btn]")
+      .parent()
+      .invoke("attr", "href")
       .then((href) => {
-        cy.visit(href + '&fidp=' + idpUser)
-      })
+        cy.visit(href + "&fidp=" + idpUser);
+      });
   }
 
   static selectUsagePlans(...plans) {
@@ -119,15 +120,18 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.visible").click();
-    cy.get('[data-testid="marketplace-btn"]',{timeout:180000}).should('be.visible')
-    cy.get('[data-testid="connector-publish-wizard-title"]',{timeout:180000}).should('not.exist')
+    cy.get('[data-testid="marketplace-btn"]', { timeout: 60000 }).should(
+      "be.visible"
+    );
+    cy.get('[data-testid="connector-publish-wizard-title"]', {
+      timeout: 60000,
+    }).should("not.exist");
   }
 
-
   static publishToDevportal() {
-    cy.get('[data-testid="Publish-lc-btn"]').should('be.visible').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
-    cy.contains('No, Thanks').should('be.enabled').click();
+    cy.get('[data-testid="Publish-lc-btn"]').should("be.visible").click();
+    cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
+    cy.contains("No, Thanks").should("be.enabled").click();
   }
 
   static configureSecuritySettings(
@@ -195,8 +199,6 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="Settings"]').click();
   }
 
-
-
   static selectResources() {
     cy.get('[data-cyid="tab-resource-settings"]').click();
   }
@@ -219,16 +221,16 @@ export class ComponentAPILifecycle {
     cy.wait(2000);
     cy.intercept({
       method: "POST",
-      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
-      
+      url: `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
     }).as("revision");
 
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
   }
   static getLatestRevision() {
     return cy.wait("@revision").then((revision) => {
-     return cy.wrap(revision.response.body.displayName);
-   });
- }
-
+      return cy.wrap(revision.response.body.displayName);
+    });
+  }
 }

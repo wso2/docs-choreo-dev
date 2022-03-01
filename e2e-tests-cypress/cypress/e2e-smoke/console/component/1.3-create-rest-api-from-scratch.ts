@@ -42,7 +42,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters2 = [{ key: "number", value: "5" }];
 
   before(() => LoginPage.loginToChoreo(key));
-  after(() => ChoreoHomePage.logout());
+  after(() => ChoreoHomePage.logout(key));
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -271,51 +271,13 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
-  it.skip("Verify insight values for dev", () => {
-    ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToInsights();
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should("eq", "6");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+ 
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment().should("eq", "Redeploy");
   });
 
-  it.skip("Verify insight values for prod", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should("eq", "6");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it.skip("Verify increase in total traffic count for dev", () => {
-    Curl.getRequestComponents(`${key}${Environment.DEVELOPMENT}root`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.method, curl.url).then((res) => {
-          expect(res.body).equal(4);
-          expect(res.status).equal(200);
-        })
-    );
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should("eq", "7");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it.skip("Verify increase in total traffic count for prod", () => {
-    Curl.getRequestComponents(`${key}${Environment.PRODUCTION}root`).then(
-      (curl) =>
-        Utils.sendGetRequest(curl.method, curl.url).then((res) => {
-          expect(res.body).equal(4);
-          expect(res.status).equal(200);
-        })
-    );
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should("eq", "7");
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment().should("eq", "Redeploy");
   });
 });

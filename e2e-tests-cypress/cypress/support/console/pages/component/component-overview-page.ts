@@ -52,12 +52,12 @@ export class ComponentOverviewPage {
       .then((text) => text.replace("overview", "").trim());
   }
 
-  static createNewVersion() {
+  static createNewVersion(version) {
     cy.get("#version-picker").click();
     cy.get("[data-cyid=btn-create-version]").click();
     cy.get("[data-cyid=text-field-new-version]").within(() => {
       cy.get("input").clear();
-      cy.get("input").type("1.0.1");
+      cy.get("input").type(version);
     });
     cy.get("[data-testid=create-version-create]").click();
     cy.intercept({

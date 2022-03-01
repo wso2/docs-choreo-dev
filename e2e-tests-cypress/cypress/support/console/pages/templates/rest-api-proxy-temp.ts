@@ -1,3 +1,6 @@
+import { TimeoutError } from "cypress/types/bluebird";
+import { Utils } from "../../utils";
+
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -15,7 +18,7 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="project-template-list-httpProxyApi"]').click();
   }
 
-  static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint, fiileID) {
+  static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint, fileID) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
@@ -24,8 +27,14 @@ export class RestAPIProxyTemplate {
     }
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
+    
+    Utils.saveProjectData(fileID);
 
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
+    cy.get('[data-testid="delete-all-operations-btn"]', {
+      timeout: 120000,
+    }).should("be.visible");
+
+    Utils.saveComponentURL(fileID);
   }
 
   static createOpenApi(filepath: string = "", url: string = "") {
@@ -47,7 +56,8 @@ export class RestAPIProxyTemplate {
   static enterAPIdetails(
     apiName: string,
     apiBasePath: string,
-    endpoint: string
+    endpoint: string,
+    key: string
   ) {
     cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
     cy.get('[data-testid="api-basepath"]>div>input').clear().type(apiBasePath);
@@ -58,31 +68,10 @@ export class RestAPIProxyTemplate {
       cy.get('[data-testid="api-endpoint"]>div>input').type(endpoint);
     }
     cy.get("button>span").contains("Create").click();
-
-    this.interceptValidate(); // workaround
-
+    Utils.saveProjectData(key);
     cy.get(`[data-testid="resource-/intensity"]`, { timeout: 120000 }).should(
       "be.visible"
     );
-  }
-
-  private static interceptValidate() {
-    cy.intercept(
-      `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`
-    ).as("validate");
-    cy.wait("@validate").then((r) => {
-      if (r.response.statusCode == 404) {
-        cy.get("button").then((buttons) => {
-          if (buttons.length > 0) {
-            buttons.each(function () {
-              if (this.innerText === "Create") {
-                this.click();
-                return;
-              }
-            });
-          }
-        });
-      }
-    });
+    Utils.saveComponentURL(key);
   }
 }

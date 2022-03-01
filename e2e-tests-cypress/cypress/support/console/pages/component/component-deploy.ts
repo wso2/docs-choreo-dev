@@ -70,7 +70,9 @@ export class ComponentDeployPage {
       .contains("Active")
       .should("be.visible");
 
-    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2);
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 2);
 
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
@@ -78,7 +80,40 @@ export class ComponentDeployPage {
       .invoke("attr", "value");
   }
 
-  static stopAllDeployment() {
-    cy.get('[data-cyid="btn-stop-redeploy"]').click({ multiple: true });
+  static stopDevDeployment() {
+    cy.get("body").then((body) => {
+      if (body.find('[data-cyid="btn-stop-redeploy"]')) {
+        cy.get('[data-cyid="btn-stop-redeploy"]').eq(0).click();
+        return cy
+          .get('[data-cyid="btn-stop-redeploy"]>button>span')
+          .eq(0)
+          .invoke("text");
+      }
+    });
+    cy.get('[data-cyid="btn-stop-deployment"]').eq(0).click();
+    return cy
+      .get('[data-cyid="btn-stop-deployment"]>span')
+      .eq(0)
+      .invoke("text");
+  }
+  static stopProdDeployment() {
+    cy.get("body").then((body) => {
+      if (body.find('[data-cyid="btn-stop-redeploy"]')) {
+        cy.get('[data-cyid="btn-stop-redeploy"]').eq(1).click();
+        return cy
+          .get('[data-cyid="btn-stop-redeploy"]>button>span')
+          .eq(1)
+          .invoke("text");
+      }
+    });
+    cy.get('[data-cyid="btn-stop-deployment"]')
+      .should("have.length", 2)
+      .eq(1)
+      .click();
+    cy.get('[data-cyid="text-field-invoke-url"]').should("have.length", 2);
+    return cy
+      .get('[data-cyid="btn-stop-deployment"]>span')
+      .eq(1)
+      .invoke("text");
   }
 }

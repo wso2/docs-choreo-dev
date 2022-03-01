@@ -52,7 +52,7 @@ export class TryOut {
   }
 
   static SelectResource(httpMethod: string, path: string) {
-    const pathVariable = `[data-path="${path}"]`;
+    const pathVariable = `[data-path="/${path}"]`;
     cy.get(".swagger-ui").within(() => {
       cy.get(pathVariable).click();
     });

@@ -69,6 +69,27 @@ export class Utils {
         });
   }
 
+  static saveComponentURL(testKey){
+    cy.url().then((url) => {
+      Cypress.env(`${testKey}_componentURL`, url);
+    });
+  }
+
+  static saveProjectData(testKey){
+    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
+    cy.wait('@proj_create',{timeout:180000}).then(intercept=>{
+
+      const token =  JSON.stringify(intercept.request.headers["authorization"]).split(" ")[1].replace(/"/g,'').replace(/'/g,'')
+      const {id,projectId} = intercept.response.body.data.createComponent
+      cy.log(JSON.stringify(token))
+      cy.log(JSON.stringify(id))
+      cy.log(JSON.stringify(projectId))
+      Cypress.env(`${testKey}_component_id`,id)
+      Cypress.env(`${testKey}_projectId`,projectId)
+      Cypress.env(`${testKey}_apim_token`,token)
+    })
+  }
+
   static sendPostRequest(method: string, url: string, headers, body) {
     const request = {
       method,

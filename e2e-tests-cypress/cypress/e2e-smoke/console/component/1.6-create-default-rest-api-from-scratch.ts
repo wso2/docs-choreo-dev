@@ -41,7 +41,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
-  after(() => ChoreoHomePage.logout());
+  after(() => ChoreoHomePage.logout(FILE_ID));
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -181,5 +181,14 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.publishWithoutConnector();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+  });
+
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment().should("eq", "Redeploy");
+  });
+
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment().should("eq", "Redeploy");
   });
 });

@@ -17,6 +17,7 @@ export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
 
 export class GraphQL {
+
   static createDefaultProjectIfNotExists(
     orgId: number,
     orgHandle: string,
@@ -120,7 +121,7 @@ export class GraphQL {
     });
   }
 
-  private static deleteComponent(
+  public static deleteComponent(
     componentId: string,
     projectId: string,
     orgHandle: string,

@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class ComponentDevelopPage {
   static currentTime = new Date();
 
@@ -24,15 +26,11 @@ export class ComponentDevelopPage {
       .invoke("attr", "href")
       .then((href) => {
         cy.url().then((url) => {
-          cy.log(fileID);
-          cy.log(url);
-          Cypress.env(`${fileID}_componentURL`, url);
+          Utils.saveComponentURL(fileID)
           const accessURL =
             url.split("/organizations")[0] +
             href.replace(/ /g, "").replace(/\n/g, "");
           Cypress.env(`${fileID}_accessURL`, accessURL);
-          cy.log(fileID);
-          cy.log(accessURL);
         });
       });
 
