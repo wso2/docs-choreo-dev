@@ -132,10 +132,10 @@ spec:
               key: ASB_CONNECTION_STRING
         resources:
           requests:
-            memory: "500Mi"
+            memory: "1000Mi"
             cpu: "500m"
           limits:
-            memory: "750Mi"
+            memory: "1000Mi"
             cpu: "750m"
         ports:
         - containerPort: 18000
