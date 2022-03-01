@@ -81,39 +81,32 @@ export class ComponentDeployPage {
   }
 
   static stopDevDeployment() {
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 2);
     cy.get("body").then((body) => {
-      if (body.find('[data-cyid="btn-stop-redeploy"]')) {
-        cy.get('[data-cyid="btn-stop-redeploy"]').eq(0).click();
-        return cy
-          .get('[data-cyid="btn-stop-redeploy"]>button>span')
-          .eq(0)
-          .invoke("text");
+      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-redeploy"]',{timeout:180000}).eq(0).click();
+      }
+      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-deployment"]',{timeout:180000}).eq(0).click();
       }
     });
-    cy.get('[data-cyid="btn-stop-deployment"]').eq(0).click();
-    return cy
-      .get('[data-cyid="btn-stop-deployment"]>span')
-      .eq(0)
-      .invoke("text");
   }
   static stopProdDeployment() {
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 2);
     cy.get("body").then((body) => {
-      if (body.find('[data-cyid="btn-stop-redeploy"]')) {
-        cy.get('[data-cyid="btn-stop-redeploy"]').eq(1).click();
-        return cy
-          .get('[data-cyid="btn-stop-redeploy"]>button>span')
+      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-redeploy"]',{timeout:180000}).eq(1).click();
+      }
+      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-deployment"]',{timeout:180000})
+          .should("have.length", 2)
           .eq(1)
-          .invoke("text");
+          .click();
       }
     });
-    cy.get('[data-cyid="btn-stop-deployment"]')
-      .should("have.length", 2)
-      .eq(1)
-      .click();
-    cy.get('[data-cyid="text-field-invoke-url"]').should("have.length", 2);
-    return cy
-      .get('[data-cyid="btn-stop-deployment"]>span')
-      .eq(1)
-      .invoke("text");
   }
 }

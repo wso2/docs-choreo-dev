@@ -120,7 +120,7 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').should("be.visible").click();
-    cy.get('[data-testid="marketplace-btn"]', { timeout: 60000 }).should(
+    cy.get('[data-testid="marketplace-btn"]', { timeout: 180000 }).should(
       "be.visible"
     );
     cy.get('[data-testid="connector-publish-wizard-title"]', {

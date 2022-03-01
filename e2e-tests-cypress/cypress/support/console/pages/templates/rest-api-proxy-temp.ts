@@ -57,15 +57,22 @@ export class RestAPIProxyTemplate {
     apiName: string,
     apiBasePath: string,
     endpoint: string,
-    key: string
+    version: string = "",
+    validateResourceName: string = "",
+    key:string
   ) {
     cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
+
+    if (version) {
+      cy.get('[data-testid="api-version"]>div>input').clear().type(version);
+    }
+
     cy.get('[data-testid="api-basepath"]>div>input').clear().type(apiBasePath);
     cy.get('[data-testid="api-endpoint"]').within(() => {
       cy.get("p").contains("Mui-error").should("not.exist");
     });
     if (endpoint) {
-      cy.get('[data-testid="api-endpoint"]>div>input').type(endpoint);
+      cy.get('[data-testid="api-endpoint"]>div>input').clear().type(endpoint);
     }
     cy.get("button>span").contains("Create").click();
     Utils.saveProjectData(key);
@@ -73,5 +80,15 @@ export class RestAPIProxyTemplate {
       "be.visible"
     );
     Utils.saveComponentURL(key);
+    let resourceIdentifier = "resource-/intensity";
+    if (validateResourceName) {
+      resourceIdentifier = "resource-/" + validateResourceName;
+    }
+
+    cy.get(`[data-testid="${resourceIdentifier}"]`, { timeout: 120000 }).should(
+      "be.visible"
+    );
   }
+
+ 
 }

@@ -33,7 +33,7 @@ export class ComponentOverviewPage {
   }
 
   static navigateToManage() {
-    cy.contains("Manage").should("be.visible").click();
+    cy.contains("Manage").should("be.visible").click({ force: true });
   }
 
   static navigateToObserve() {
@@ -52,7 +52,7 @@ export class ComponentOverviewPage {
       .then((text) => text.replace("overview", "").trim());
   }
 
-  static createNewVersion(version) {
+  static createNewVersion(version: string) {
     cy.get("#version-picker").click();
     cy.get("[data-cyid=btn-create-version]").click();
     cy.get("[data-cyid=text-field-new-version]").within(() => {

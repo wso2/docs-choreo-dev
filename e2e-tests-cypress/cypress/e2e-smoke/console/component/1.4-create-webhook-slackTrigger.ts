@@ -28,7 +28,7 @@ import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-
 import { Utils } from "../../../support/console/utils";
 
 describe("Verify webhook creation functionality", () => {
-  const WEBHOOK_NAME = "Slack Trigger";
+  const WEBHOOK_NAME = Utils.generateComponentName("SlackHook");
   const FILE_ID = "slacktrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Trigger";
@@ -101,11 +101,11 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify suspending Prod deployed component", () => {
      ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment().should("eq", "Redeploy");
+    ComponentDeployPage.stopProdDeployment()
   });
 
   it("Verify suspending Dev deployed component", () => {
-    ComponentDeployPage.stopDevDeployment().should("eq", "Redeploy");
+    ComponentDeployPage.stopDevDeployment()
   });
 
 });

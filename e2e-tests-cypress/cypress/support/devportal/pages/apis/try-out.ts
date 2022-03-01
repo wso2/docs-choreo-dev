@@ -10,7 +10,11 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { LONG_TIME_OUT, MEDIUM_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
+import {
+  LONG_TIME_OUT,
+  MEDIUM_TIME_OUT,
+  STANDARD_TIME_OUT,
+} from "../../constants";
 
 export class TryOut {
   static tryOutApi(appName: string) {
@@ -23,7 +27,7 @@ export class TryOut {
       '//input[@placeholder="Select an Application"]//../div[@role="button"]'
     ).click({ force: true });
     // cy.get("option").click();
-    cy.get('.MuiList-root').contains(appName).click();
+    cy.get(".MuiList-root").contains(appName).click();
     cy.wait(5000);
     cy.get('[data-testid="get-test-key-btn"]').should("not.be.disabled");
     cy.get('[data-testid="get-test-key-btn"]').click();
@@ -32,7 +36,7 @@ export class TryOut {
 
   static navigateToTryOut(apiName: string) {
     // Tryout the added API
-    cy.get('[value="'+ apiName +'"] > .MuiTypography-root').click();
+    cy.get('[value="' + apiName + '"] > .MuiTypography-root').click();
     cy.wait(2000);
     cy.get('[data-testid="tryout-item-link"]').click();
     cy.wait(5000);
@@ -40,15 +44,13 @@ export class TryOut {
 
   static navigateToTryOutMenu() {
     cy.get('[data-testid="tryout-item-link"]').click();
-    cy.wait(STANDARD_TIME_OUT)
+    cy.wait(STANDARD_TIME_OUT);
   }
 
   static generateTestKeyAndVerify() {
-    cy.get('[data-testid=get-test-key-btn]').should('be.visible').click();
+    cy.get("[data-testid=get-test-key-btn]").should("be.visible").click();
     cy.wait(LONG_TIME_OUT);
-    cy.get('#accessTokenInput')
-      .invoke('val')
-      .should('not.be.empty');
+    cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
   }
 
   static SelectResource(httpMethod: string, path: string) {

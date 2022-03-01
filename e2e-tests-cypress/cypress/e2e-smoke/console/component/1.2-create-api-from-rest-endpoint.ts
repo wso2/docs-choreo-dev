@@ -37,9 +37,10 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 
 describe("Verify project creation functionality", () => {
-
-   const API_NAME = RandomTextGenerator.generateApiName("CYE2E");
+  const API_NAME = Utils.generateComponentName("CYE2E");
+  const API_BASE_PATH = Utils.generateBasePath();
   const API_VERSION = "1.0.0";
+  const API_NEW_VERSION = "1.1.0";
   const API_ENDPOINT = "https://jsonplaceholder.typicode.com";
   const OPERATION_USERS = "users";
   const OPERATION_POSTS = "posts";
@@ -66,7 +67,7 @@ describe("Verify project creation functionality", () => {
     RestAPIProxyTemplate.designNewRestApi(
       API_NAME,
       API_VERSION,
-      "",
+      API_BASE_PATH,
       API_ENDPOINT,
       FILE_ID
     );
@@ -106,8 +107,11 @@ describe("Verify project creation functionality", () => {
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentOverviewPage.createNewVersion("1.1.0");
-    ComponentDevelopPage.getVersion().should("eq", "Version 1.1.0");
+    ComponentOverviewPage.createNewVersion(API_NEW_VERSION);
+    ComponentDevelopPage.getVersion().should(
+      "eq",
+      "Version " + API_NEW_VERSION
+    );
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
     cy.wait(3000);
     APIDevelop.addEndpoints();
@@ -121,9 +125,9 @@ describe("Verify project creation functionality", () => {
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
-  it("Test in prod", () => {
+  it("Test in dev", () => {
     APITest.testAPI();
-    APITest.selectEnvironment(Environment.PRODUCTION);
+    APITest.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -132,9 +136,9 @@ describe("Verify project creation functionality", () => {
     //   SwaggerUI.GetResponse();
   });
 
-  it("Test in dev", () => {
+  it("Test in prod", () => {
     APITest.testAPI();
-    APITest.selectEnvironment(Environment.DEVELOPMENT);
+    APITest.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -169,10 +173,10 @@ describe("Verify project creation functionality", () => {
   it("Verify suspending Prod deployed component", () => {
     LoginPage.reLoginToChoreo(FILE_ID);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment().should("eq", "Redeploy");
+    ComponentDeployPage.stopProdDeployment()
   });
 
   it("Verify suspending Dev deployed component", () => {
-    ComponentDeployPage.stopDevDeployment().should("eq", "Redeploy");
+    ComponentDeployPage.stopDevDeployment()
   });
 });

@@ -31,7 +31,9 @@ export class LoginPage {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), { log: false });
+    cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), {
+      log: false,
+    });
 
     cy.get('button[type="submit"]').click();
 
@@ -43,12 +45,10 @@ export class LoginPage {
     }).as("token");
 
     let token: string;
-    cy.wait("@token", { timeout: 180000 }).then(
-        (interceptions) => {
-          token = interceptions.response.body.access_token;
-          const invitationId = Utils.getInvitationId(token, timestamp);
-        }
-    );
+    cy.wait("@token", { timeout: 180000 }).then((interceptions) => {
+      token = interceptions.response.body.access_token;
+      const invitationId = Utils.getInvitationId(token, timestamp);
+    });
   }
 
   static reLoginToChoreo(fileID: string) {

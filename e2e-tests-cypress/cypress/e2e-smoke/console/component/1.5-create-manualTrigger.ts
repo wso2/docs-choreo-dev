@@ -26,7 +26,7 @@ import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-
 import { Utils } from "../../../support/console/utils";
 
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = "Manual Trigger";
+  const MANUAL_NAME = Utils.generateComponentName("ManualTrigger");
   const FILE_ID = "manualTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
@@ -34,7 +34,6 @@ describe("Verify manual trigger creation functionality", () => {
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
   });
-
 
   it("Verify manual trigger component creation", () => {
     ProjectListingPage.createNewProject(
@@ -48,7 +47,6 @@ describe("Verify manual trigger creation functionality", () => {
     ComponentDevelopPage.getComponentURL(FILE_ID);
   });
 
-
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
@@ -59,11 +57,11 @@ describe("Verify manual trigger creation functionality", () => {
   });
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment().should("eq", "Redeploy");
+    ComponentDeployPage.stopProdDeployment()
   });
 
   it("Verify suspending Dev deployed component", () => {
-    ComponentDeployPage.stopDevDeployment().should("eq", "Redeploy");
+    ComponentDeployPage.stopDevDeployment()
   });
 
   after(() => {
