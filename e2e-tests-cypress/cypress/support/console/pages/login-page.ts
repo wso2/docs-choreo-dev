@@ -120,6 +120,7 @@ export class LoginPage {
         orgId: userOrg.id,
         handle: userOrg.handle,
       };
+      cy.log("userData: ", JSON.stringify(userData));
       Cypress.env("userData", userData);
     });
   }

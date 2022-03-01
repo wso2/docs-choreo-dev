@@ -138,8 +138,13 @@ export class OrganizationComponent {
     cy.get('[data-cyid="select_members_to_role"]').click();
 
     const userData = Cypress.env("userData");
+    let displayName = userData["displayName"];
 
-    cy.get(`[data-cyid^="${userData["displayName"]}"]`).click({ force: true });
+    if (displayName.includes("@")) {
+      displayName = displayName.split("@")[0];
+    }
+
+    cy.get(`[data-cyid^="${displayName}"]`).click({ force: true });
 
     cy.get("body").type("{esc}");
     cy.get('[data-cyid="btn-add-member"]').click();
