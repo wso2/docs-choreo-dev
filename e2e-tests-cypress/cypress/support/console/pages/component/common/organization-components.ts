@@ -14,17 +14,7 @@
 /// <reference types="cypress" />
 
 export class OrganizationComponent {
-  static memberEmail: string = Cypress.env("userEmail");
-
-  static memberName: string = Cypress.env("userName");
-
   static invitationEmail = Cypress.env("invitationUserEmail");
-
-  static roleName = 'E2EtestRole';
-
-  static roleDescription = 'This Role is created by E2E test run.';
-
-  static roleTag = 'testRoleTag';
 
   static navigateToMembers() {
     cy.get('[data-testid="/user-settings/organization/members"]').click();
@@ -41,7 +31,7 @@ export class OrganizationComponent {
     ).click();
   }
 
-  static navigateToRoles(){
+  static navigateToRoles() {
     cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
   }
 
@@ -50,26 +40,30 @@ export class OrganizationComponent {
     cy.get('[data-cyid="invite-members"]').click();
     cy.wait(300);
     cy.get('[data-cyid="chip-email-addresses"] div div input')
-      .should('be.visible')
+      .should("be.visible")
       .type(email);
     cy.get('[data-cyid="chip-email-addresses"] div div input')
-        .should('be.visible')
-        .type('{enter}');
+      .should("be.visible")
+      .type("{enter}");
     cy.get('[data-cyid="select-roles"]').click();
     this.addRoles(roles);
-    cy.get('body').type('{esc}');
+    cy.get("body").type("{esc}");
     cy.get('[data-cyid="btn-invite"]').click({ force: true });
-    cy.get('[data-cyid="btn-invite"]').should('not.exist');
-    cy.log('Invitation sent successfully');
+    cy.get('[data-cyid="btn-invite"]').should("not.exist");
+    cy.log("Invitation sent successfully");
   }
 
   static deleteMember(email: string) {
-    cy.contains('td', email).trigger('mouseover');
-    cy.get('[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]').click();
-    cy.get('[data-testid="Delete User"]').should('be.visible');
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').contains('Delete').click();
-    cy.contains('td', email).should('not.exist');
-    cy.log('Member deleted successfully');
+    cy.contains("td", email).trigger("mouseover");
+    cy.get(
+      '[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]'
+    ).click();
+    cy.get('[data-testid="Delete User"]').should("be.visible");
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
+      .contains("Delete")
+      .click();
+    cy.contains("td", email).should("not.exist");
+    cy.log("Member deleted successfully");
   }
 
   static selectPendingInvitation() {
@@ -81,10 +75,12 @@ export class OrganizationComponent {
   }
 
   static deleteRecord(email: string) {
-    cy.contains('td', email).trigger('mouseover');
-    cy.get('[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]').click();
-    cy.get('button > span > h5').should('be.visible');
-    cy.get('button > span > h5').contains('Delete').click();
+    cy.contains("td", email).trigger("mouseover");
+    cy.get(
+      '[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]'
+    ).click();
+    cy.get("button > span > h5").should("be.visible");
+    cy.get("button > span > h5").contains("Delete").click();
   }
 
   private static addRoles(roles: string[]) {
@@ -93,7 +89,7 @@ export class OrganizationComponent {
         ($e) => {
           if ($e.text().toLocaleLowerCase() === v.toLocaleLowerCase()) {
             cy.wrap($e)
-              .invoke('attr', 'aria-selected')
+              .invoke("attr", "aria-selected")
               .then((attr) => {
                 if (!attr) {
                   cy.wrap($e).click();
@@ -101,7 +97,7 @@ export class OrganizationComponent {
               });
           } else {
             cy.wrap($e)
-              .invoke('attr', 'aria-selected')
+              .invoke("attr", "aria-selected")
               .then((attr) => {
                 if (attr) {
                   cy.wrap($e).click();
@@ -119,59 +115,67 @@ export class OrganizationComponent {
     roleTag: string
   ) {
     cy.get('[data-cyid="btn-create-role"]').click();
-    cy.contains('Create Role').should('be.visible');
-    cy.log('Creating a Role');
+    cy.contains("Create Role").should("be.visible");
+    cy.log("Creating a Role");
     cy.get('[data-cyid="text-field-role-name"]').type(roleName);
     cy.get('[data-cyid="text-field-role-description"]').type(roleDescription);
-    cy.get('[data-cyid="chip-role-tag"]').type(roleTag + '{enter}');
+    cy.get('[data-cyid="chip-role-tag"]').type(roleTag + "{enter}");
     cy.get('[data-cyid="btn-role-create"]').click({ force: true });
     cy.get('[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]').click();
     cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]').click();
-    cy.log('Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER');
+    cy.log("Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER");
     cy.get('[data-cyid="btn-create"]').click();
-  }
-
-  static addPermissions() {
-    cy.contains('td', OrganizationComponent.roleName).should('be.visible');
-    cy.contains('td', OrganizationComponent.roleTag).should('be.visible');
-    cy.contains('td', OrganizationComponent.roleName).click();
-    OrganizationComponent.inviteMembers(
-      OrganizationComponent.invitationEmail,
-      OrganizationComponent.roleName
-    );
-    OrganizationComponent.selectPendingInvitation();
-    cy.contains('td', OrganizationComponent.invitationEmail).should('be.visible');
-    OrganizationComponent.deleteRecord(OrganizationComponent.invitationEmail);
+    cy.get('[data-cyid="btn-create"]').should("not.exist");
   }
 
   static addMembertoRole(roleName: string) {
-    cy.get('[data-cyid="search-app"]').type(roleName);
-    cy.get('[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]').should('contain', roleName);
-    cy.contains('td', OrganizationComponent.roleName).click();
+    cy.get('[data-cyid="search-app"]').clear().type(roleName);
+    cy.get(
+      '[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]'
+    ).should("contain", roleName);
+    cy.contains("td", roleName).click();
     cy.get('[data-cyid="btn-add-member-to-role"]').click();
     cy.get('[data-cyid="select_members_to_role"]').click();
-    cy.contains(
-      '[class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"]',
-      OrganizationComponent.memberName
-    ).should('exist');
-    cy.contains(
-        '[class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"]',
-      OrganizationComponent.memberName
-    ).click( { force: true } );
-    cy.get('body').type('{esc}');
+
+    const userData = Cypress.env("userData");
+    let displayName = userData["displayName"];
+
+    if (displayName.includes("@")) {
+      displayName = displayName.split("@")[0];
+    }
+
+    cy.get(`[data-cyid^="${displayName}"]`).click({ force: true });
+
+    cy.get("body").type("{esc}");
     cy.get('[data-cyid="btn-add-member"]').click();
-    cy.contains('td', OrganizationComponent.memberEmail).should('be.visible');
-    cy.log('Member added to the role successfully');
+    cy.get('[data-cyid="btn-add-member"]').should("not.exist");
+    cy.contains("td", userData["userEmail"]).should("be.visible");
+    cy.log("Member added to the role successfully");
   }
 
   static deleteCreatedRole(roleName: string) {
-    cy.get('[data-cyid="search-app"]').type(roleName);
-    cy.contains('td', OrganizationComponent.roleName).should('be.visible');
-    cy.contains('td', OrganizationComponent.roleName).trigger('mouseover');
+    cy.get('[data-cyid="search-app"]').clear().type(roleName);
+    cy.contains("td", roleName).should("be.visible");
+    this.deleteSelectedRole(roleName);
+  }
+
+  static deleteRoleIfExists(roleName: string) {
+    cy.get('[data-cyid="search-app"]').clear().type(roleName);
+    cy.wait(2000);
+    cy.get("td").then(($role) => {
+      if (!$role.text().includes("No records to display")) {
+        cy.contains("td", roleName).should("be.visible");
+        this.deleteSelectedRole(roleName);
+      }
+    });
+  }
+
+  private static deleteSelectedRole(roleName: string) {
+    cy.contains("td", roleName).trigger("mouseover");
     cy.get('[data-cyid="btn-delete-role"]').click();
-    cy.log('Deleting the created Role');
+    cy.log("Deleting the created Role");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
-    cy.contains('td', OrganizationComponent.roleName).should('not.exist');
-    cy.log('Role deleted successfully'!);
+    cy.contains("td", roleName).should("not.exist");
+    cy.log("Role deleted successfully"!);
   }
 }

@@ -26,12 +26,9 @@ describe("Add roles and permissions", () => {
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
-  });
-
-  beforeEach(() => {
-    cy.reload();
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.navigateToRoles();
+    OrganizationComponent.deleteRoleIfExists(roleName);
   });
 
   after(() => {
@@ -47,6 +44,7 @@ describe("Add roles and permissions", () => {
   });
 
   it("Delete created role", () => {
+    OrganizationComponent.navigateToRoles();
     OrganizationComponent.deleteCreatedRole(roleName);
   });
 });
