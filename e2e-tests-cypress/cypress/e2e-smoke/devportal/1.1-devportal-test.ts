@@ -32,6 +32,11 @@ import { Subscriptions } from "../../support/devportal/pages/applications/subscr
 import { generateAppName } from "../../support/devportal/utils";
 import { ComponentDeployPage } from "../../support/console/pages/component/component-deploy";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
+
+
+
+
+
 describe("API overview comment and rating scenario", () => {
   const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -43,15 +48,6 @@ describe("API overview comment and rating scenario", () => {
   const OPERATION_USERS = "intensity";
   const appName = generateAppName("-e2etest");
   const sdkFile = API_Name + "_1.0.0_android.zip";
-
-  //   before(() => LoginPage.loginToDevportal());
-  //   beforeEach(() => {
-  //     DevPortalHomePage.navigateToApisPage();
-
-  //     Apis.navigateToApiOverview("e2etestdevportalsample");
-  //   });
-
-  //   after(() => DevPortalHomePage.logout());
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
@@ -76,8 +72,9 @@ describe("API overview comment and rating scenario", () => {
       FILE_ID
     );
   });
+
+  
   it("Verify component deployment and endpoint configurations", () => {
-    //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
