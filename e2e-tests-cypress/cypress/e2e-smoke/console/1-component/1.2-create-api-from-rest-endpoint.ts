@@ -32,7 +32,7 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { Environment } from "../../../support/console/pages/enum/environment";
-import { DevportalHomePage } from "../../../support/devportal/pages/home/home-page";
+import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 

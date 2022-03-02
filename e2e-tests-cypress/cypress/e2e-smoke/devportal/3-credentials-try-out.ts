@@ -14,7 +14,7 @@
 /// <reference types="cypress" />
 
 import { LoginPage } from "../../support/devportal/pages/login/login-page";
-import { DevportalHomePage } from "../../support/devportal/pages/home/home-page";
+import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
 import { TryOut } from "../../support/devportal/pages/apis/try-out";
@@ -23,7 +23,7 @@ describe("Credentials generation & API tryout scenario", () => {
   const apiName = "e2etestdevportalapi";
 
   before(() => LoginPage.loginToDevportal());
-  after(() => DevportalHomePage.logout());
+  after(() => DevPortalHomePage.logout());
 
   it("Generate credentials and tryout the API", () => {
     Apis.navigateToApiOverview("e2etestdevportalsample");

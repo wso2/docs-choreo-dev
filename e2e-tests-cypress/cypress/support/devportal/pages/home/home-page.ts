@@ -11,7 +11,7 @@
  * associated services.
  */
 
-export class DevportalHomePage {
+export class DevPortalHomePage {
   static username = "[data-testid=signedin-user-menu-btn]";
 
   static navigateToHome(): void {
