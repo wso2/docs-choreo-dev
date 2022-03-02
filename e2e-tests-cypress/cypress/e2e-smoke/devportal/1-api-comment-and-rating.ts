@@ -17,7 +17,7 @@ import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page"
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
 
-describe("API overview comment and rating scenario", () => {
+describe.skip("API overview comment and rating scenario", () => {
   before(() => LoginPage.loginToDevportal());
   beforeEach(() => {
     DevPortalHomePage.navigateToApisPage();

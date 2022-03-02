@@ -22,7 +22,7 @@ import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import path from "path";
 
-describe("Downloading the API SDK scenario", () => {
+describe.skip("Downloading the API SDK scenario", () => {
   const apiName = "e2eapiCYE2Eoas";
   const sdkFile = apiName + "_1.0.0_android.zip";
 

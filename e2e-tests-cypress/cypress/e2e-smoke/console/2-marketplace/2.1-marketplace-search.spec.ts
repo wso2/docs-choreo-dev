@@ -26,7 +26,7 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const FREEMIUM = "Cost/Freemium";
   const PAID = "Cost/Paid";
 
-  after(() => ChoreoHomePage.logout());
+  after(() => ChoreoHomePage.logout(FILE_ID));
 
   beforeEach(() => {
     ChoreoHomePage.navigateToMarketPlace();

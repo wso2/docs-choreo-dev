@@ -21,7 +21,7 @@ import { ProductionKeys } from "../../support/devportal/pages/applications/produ
 import { Subscriptions } from "../../support/devportal/pages/applications/subscriptions";
 import { TryOut } from "../../support/devportal/pages/apis/try-out";
 
-describe("Application tryout scenario", () => {
+describe.skip("Application tryout scenario", () => {
   const appName = generateAppName("-e2etest");
   const apiName = "e2etestdevportalapi";
 

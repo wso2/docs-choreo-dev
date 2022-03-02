@@ -158,7 +158,7 @@ describe("Verify project creation functionality", () => {
   it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.searchApiAndSelect(API_NAME, FILE_ID);
+    Apis.searchApiAndSelect(API_NAME);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();

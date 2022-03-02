@@ -19,7 +19,7 @@ import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
 import { TryOut } from "../../support/devportal/pages/apis/try-out";
 
-describe("Credentials generation & API tryout scenario", () => {
+describe(.skip"Credentials generation & API tryout scenario", () => {
   const apiName = "e2etestdevportalapi";
 
   before(() => LoginPage.loginToDevportal());
