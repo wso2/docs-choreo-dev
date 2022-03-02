@@ -115,6 +115,8 @@ export class LoginPage {
         orgId: userOrg.id,
         handle: userOrg.handle,
       };
+
+      Cypress.env(`${fileID}_orgData`,orgData)
     });
   }
 
