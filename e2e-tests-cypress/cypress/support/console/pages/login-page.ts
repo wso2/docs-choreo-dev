@@ -22,7 +22,7 @@ export class LoginPage {
     cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
 
     cy.get('button[type="submit"]').click();
-    // this.persistOrgs(fileID);
+    this.persistOrgs(fileID);
     this.persistCookies(fileID);
     this.persistLogoutURL();
   }
@@ -92,31 +92,31 @@ export class LoginPage {
   //   );
   // }
 
-  // private static persistOrgs(fileID: string) {
-  //   cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
-  //   cy.wait("@org", { timeout: 180000 }).then((res) => {
-  //     let userOrg: any;
-  //     const handle = Cypress.env("choreoOrgHandle");
-  //     if (handle) {
-  //       userOrg = res.response.body.organizations.find(
-  //         (o: { handle: any }) => o.handle === handle
-  //       );
-  //       if (userOrg === undefined) {
-  //         throw new Error(
-  //           `Configured org handle ${handle} does not exist for current user`
-  //         );
-  //       }
-  //       cy.log(`Configured org handle ${userOrg.handle} selected`);
-  //     } else {
-  //       [userOrg] = res.response.body.organizations;
-  //       cy.log(`First available org ${userOrg.handle} selected`);
-  //     }
-  //     const orgData = {
-  //       orgId: userOrg.id,
-  //       handle: userOrg.handle,
-  //     };
-  //   });
-  // }
+  private static persistOrgs(fileID: string) {
+    cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
+    cy.wait("@org", { timeout: 180000 }).then((res) => {
+      let userOrg: any;
+      const handle = Cypress.env("choreoOrgHandle");
+      if (handle) {
+        userOrg = res.response.body.organizations.find(
+          (o: { handle: any }) => o.handle === handle
+        );
+        if (userOrg === undefined) {
+          throw new Error(
+            `Configured org handle ${handle} does not exist for current user`
+          );
+        }
+        cy.log(`Configured org handle ${userOrg.handle} selected`);
+      } else {
+        [userOrg] = res.response.body.organizations;
+        cy.log(`First available org ${userOrg.handle} selected`);
+      }
+      const orgData = {
+        orgId: userOrg.id,
+        handle: userOrg.handle,
+      };
+    });
+  }
 
   private static persistCookies(fileID: string) {
     cy.log("persistCookies()");
