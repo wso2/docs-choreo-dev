@@ -111,12 +111,16 @@ export class LoginPage {
         [userOrg] = res.response.body.organizations;
         cy.log(`First available org ${userOrg.handle} selected`);
       }
-      const orgData = {
+      const displayName = res.response.body.displayName;
+      const userEmail = res.response.body.userEmail;
+      const userData = {
+        displayName: displayName,
+        userEmail: userEmail,
         orgId: userOrg.id,
         handle: userOrg.handle,
       };
-
-      Cypress.env(`${fileID}_orgData`,orgData)
+      cy.log("userData: ", JSON.stringify(userData));
+      Cypress.env("userData", userData);
     });
   }
 
