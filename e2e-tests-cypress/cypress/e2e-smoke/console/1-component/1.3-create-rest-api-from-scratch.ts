@@ -42,7 +42,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters2 = [{ key: "number", value: "5" }];
 
   before(() => LoginPage.loginToChoreo(key));
-  after(() => ChoreoHomePage.logout());
+  after(() => ChoreoHomePage.logout(key));
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, key);
@@ -313,5 +313,17 @@ describe("Verify project creation functionality", () => {
     InsightsPage.getTotalTraffic().should("eq", "7");
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
+  });
+
+ 
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment()
+    
+  });
+
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment()
+    
   });
 });

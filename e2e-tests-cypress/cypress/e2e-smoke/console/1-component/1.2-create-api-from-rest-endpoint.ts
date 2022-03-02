@@ -32,7 +32,9 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { Environment } from "../../../support/console/pages/enum/environment";
-import { DevportalHomePage } from "../../../support/devportal/pages/home/home-page";
+import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
+import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
@@ -52,7 +54,7 @@ describe("Verify project creation functionality", () => {
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
 
-  after(() => DevportalHomePage.logout());
+  after(() => ChoreoHomePage.logout(FILE_ID));
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(
@@ -77,9 +79,9 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.be.null");
+    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should("not.be.null");
+    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality", () => {
@@ -118,9 +120,9 @@ describe("Verify project creation functionality", () => {
   it("Deploy new version", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.be.null");
+    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should("not.be.null");
+    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Test in dev", () => {
@@ -156,7 +158,7 @@ describe("Verify project creation functionality", () => {
   it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.searchApiAndSelect(API_NAME);
+    Apis.searchApiAndSelect(API_NAME, FILE_ID);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
@@ -166,5 +168,15 @@ describe("Verify project creation functionality", () => {
     TryOut.ExecuteResourceFunction();
     cy.wait(5000);
     TryOut.GetResponse();
+  });
+
+  it("Verify suspending Prod deployed component", () => {
+    LoginPage.reLoginToChoreo(FILE_ID);
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment()
+  });
+
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment()
   });
 });

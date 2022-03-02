@@ -13,18 +13,20 @@
 /// <reference types="cypress-xpath" />
 
 import { LoginPage } from "../../support/devportal/pages/login/login-page";
-import { DevportalHomePage } from "../../support/devportal/pages/home/home-page";
+import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
 
 describe("API overview comment and rating scenario", () => {
   before(() => LoginPage.loginToDevportal());
   beforeEach(() => {
-    DevportalHomePage.navigateToApisPage();
+    DevPortalHomePage.navigateToApisPage();
 
     Apis.navigateToApiOverview("e2etestdevportalsample");
   });
-  after(() => DevportalHomePage.logout());
+
+  
+  after(() => DevPortalHomePage.logout());
 
   it("Add and delete comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");

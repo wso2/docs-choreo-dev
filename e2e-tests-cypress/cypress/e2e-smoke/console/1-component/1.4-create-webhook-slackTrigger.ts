@@ -36,7 +36,7 @@ describe("Verify webhook creation functionality", () => {
   const commitMessage = "adding slacktrigger bal file";
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
-  after(() => ChoreoHomePage.logout());
+  after(() => ChoreoHomePage.logout(FILE_ID));
   it("Verify slack trigger creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
@@ -99,9 +99,13 @@ describe("Verify webhook creation functionality", () => {
     );
   });
 
-  it.skip("Delete created project", () => {
-    ChoreoHomePage.selectHomeMenu();
-    ChoreoHomePage.navigateToComponents();
-    ProjectListingPage.selectProject(FILE_ID);
+  it("Verify suspending Prod deployed component", () => {
+     ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment()
   });
+
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment()
+  });
+
 });

@@ -19,7 +19,7 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { Utils } from "../../../support/console/utils";
 
 describe.skip("Create proxy api using existing url", () => {
-  const FILE_ID = "1.0-create-proxy-api-oas";
+  const FILE_ID = "oasurl";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = Utils.generateComponentName("oas");
@@ -31,7 +31,7 @@ describe.skip("Create proxy api using existing url", () => {
   });
 
   after(() => {
-    ChoreoHomePage.logout();
+    ChoreoHomePage.logout(FILE_ID);
   });
 
   it("Creating and publishing an API from open API specification", () => {
@@ -49,7 +49,7 @@ describe.skip("Create proxy api using existing url", () => {
       API_BASE_PATH,
       `${URL}/v2`,
       "1.0.0",
-      "pets"
+      "pets",FILE_ID
     );
   });
 });

@@ -70,7 +70,9 @@ export class ComponentDeployPage {
       .contains("Active")
       .should("be.visible");
 
-    cy.get('[data-cyid="text-field-invoke-url"] input',{timeout:120000}).should('have.length',2);
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 2);
 
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
@@ -78,7 +80,33 @@ export class ComponentDeployPage {
       .invoke("attr", "value");
   }
 
-  static stopAllDeployment() {
-    cy.get('[data-cyid="btn-stop-redeploy"]').click({ multiple: true });
+  static stopDevDeployment() {
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 1);
+    cy.get("body").then((body) => {
+      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-redeploy"]',{timeout:180000}).eq(0).click();
+      }
+      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-deployment"]',{timeout:180000}).eq(0).click();
+      }
+    });
+  }
+  static stopProdDeployment() {
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 2);
+    cy.get("body").then((body) => {
+      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-redeploy"]',{timeout:180000}).eq(1).click();
+      }
+      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-deployment"]',{timeout:180000})
+          .should("have.length", 2)
+          .eq(1)
+          .click();
+      }
+    });
   }
 }

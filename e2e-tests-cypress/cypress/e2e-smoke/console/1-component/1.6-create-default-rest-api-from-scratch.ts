@@ -31,14 +31,14 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "restapidefault";
-  const RESOURCE_NAME = "sayHello";
+  const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
   before(() => LoginPage.loginToChoreo(FILE_ID));
-  after(() => ChoreoHomePage.logout());
+  after(() => ChoreoHomePage.logout(FILE_ID));
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -178,5 +178,14 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.publishWithoutConnector();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+  });
+
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment()
+  });
+
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment()
   });
 });

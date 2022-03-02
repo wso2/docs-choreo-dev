@@ -41,7 +41,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   after(() => {
-    ChoreoHomePage.logout();
+    ChoreoHomePage.logout(FILE_ID);
   });
 
   it("Creating and publishing an API from open API specification", () => {
@@ -54,19 +54,19 @@ describe("Choreo APIM publisher scenarios", () => {
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_Name, API_BASE_PATH, "");
+    RestAPIProxyTemplate.enterAPIdetails(API_Name, API_BASE_PATH, "","","",FILE_ID);
   });
 
   it("Verify component deployment and endpoint configurations", () => {
     //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.be.null");
+    APIDeployment.verifyDevInvokeURL().should("not.eq",'');
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
+    ComponentDeployPage.verifyProdInvokeURL().should("not.eq",'');
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -134,5 +134,14 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+  });
+
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdDeployment()
+  });
+
+  it("Verify suspending Dev deployed component", () => {
+    ComponentDeployPage.stopDevDeployment()
   });
 });

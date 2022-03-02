@@ -52,7 +52,6 @@ export class LoginPage {
   }
 
   static reLoginToChoreo(fileID: string) {
-    const file = `${Cypress.env("tempFile")}${fileID}.json`;
     const componentURL = Cypress.env(`${fileID}_componentURL`);
     cy.visit(componentURL);
     cy.intercept(componentURL).then(() => {
