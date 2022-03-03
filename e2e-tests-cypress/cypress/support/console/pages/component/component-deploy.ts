@@ -99,7 +99,7 @@ export class ComponentDeployPage {
   //     }
   //   });
   // }
-  static stopProdDeployment() {
+  static stopAllDeployment() {
     cy.get('[data-cyid*="btn-stop"]', {
       timeout: 120000,
     }).should("exist").click({multiple:true});

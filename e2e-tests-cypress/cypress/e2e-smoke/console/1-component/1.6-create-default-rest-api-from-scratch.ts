@@ -181,7 +181,7 @@ describe("Verify project creation functionality", () => {
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment()
+    ComponentDeployPage.stopAllDeployment()
   });
 
   // it("Verify suspending Dev deployed component", () => {
