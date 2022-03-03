@@ -28,3 +28,5 @@ spec:
            value: adapter-dev-us-east-azure-p3
          - name: ROUTER_LABEL
            value: dev-us-east-azure           
+         - name: TRAILING_ARGS
+           value: --component-log-level upstream:debug,connection:trace
