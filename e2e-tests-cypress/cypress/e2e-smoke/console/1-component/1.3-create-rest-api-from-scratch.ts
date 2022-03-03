@@ -284,7 +284,7 @@ describe("Verify project creation functionality", () => {
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
-  it.skip("Verify insight values for prod", () => {
+  it("Verify insight values for prod", () => {
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Environment.PRODUCTION);
     InsightsPage.getTotalTraffic().should((value) => {
