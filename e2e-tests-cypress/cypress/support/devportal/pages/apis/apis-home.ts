@@ -40,7 +40,7 @@ export class Apis {
       .invoke("text");
   }
 
-  static searchApiAndSelect(textApiName, testKey) {
+  static searchApiAndSelect(textApiName, versionCount = 1) {
     cy.get("[data-testid=apis-appbar-btn]").click();
 
     cy.intercept(
@@ -51,31 +51,32 @@ export class Apis {
     cy.wait("@apis", { timeout: 40000 }).then((intercept) => {
       const splitArr = intercept.request.url.split("apis?");
       const url = `${splitArr[0]}apis?query=name:${textApiName}&${splitArr[1]}`;
-      cy.log(url);
       const header = intercept.request.headers.authorization;
-      this.verifyAPI(url, header);
+      this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName);
   }
 
   private static searchAPI(textApiName) {
-    cy.get("#outlined-search-bar-api-listing").focus().type(`${textApiName}{enter}`);
+    cy.get("#outlined-search-bar-api-listing")
+      .focus()
+      .type(`${textApiName}{enter}`);
     cy.get("[data-testid=apiCard-" + textApiName + "]")
       .last()
       .click();
   }
 
-  private static verifyAPI(url, header) {
+  private static verifyAPI(url, header, versionCount) {
     const headers = {
       Authorization: `${header}`,
     };
-    Utils.sendGetRequest("GET", url, headers).then((res) => {
+    Utils.sendGetRequest(url, headers).then((res) => {
       cy.log(res.body.list.length);
-      if (res.body.list.length == 2) {
+      if (res.body.list.length == versionCount) {
         return;
       } else {
         cy.wait(30000);
-        this.verifyAPI(url, header);
+        this.verifyAPI(url, header, versionCount);
       }
     });
   }

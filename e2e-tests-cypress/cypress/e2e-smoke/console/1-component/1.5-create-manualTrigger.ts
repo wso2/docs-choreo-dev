@@ -55,14 +55,6 @@ describe("Verify manual trigger creation functionality", () => {
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
   });
-  it("Verify suspending Prod deployed component", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment()
-  });
-
-  it("Verify suspending Dev deployed component", () => {
-    ComponentDeployPage.stopDevDeployment()
-  });
 
   after(() => {
     ChoreoHomePage.logout(FILE_ID);

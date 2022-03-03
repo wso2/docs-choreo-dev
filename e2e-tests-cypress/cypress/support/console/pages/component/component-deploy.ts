@@ -13,7 +13,9 @@
 
 export class ComponentDeployPage {
   static deploy() {
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.visible").click();
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 120000 })
+      .should("be.enabled")
+      .click();
   }
 
   static configureAndDeploy(configValue: string) {
@@ -81,28 +83,34 @@ export class ComponentDeployPage {
   }
 
   static stopDevDeployment() {
-    cy.get('[data-cyid="text-field-invoke-url"] input', {
-      timeout: 120000,
-    }).should("have.length", 1);
-    cy.get("body").then((body) => {
-      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-redeploy"]',{timeout:180000}).eq(0).click();
-      }
-      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-deployment"]',{timeout:180000}).eq(0).click();
-      }
-    });
-  }
-  static stopProdDeployment() {
-    cy.get('[data-cyid="text-field-invoke-url"] input', {
+    cy.get('[data-cyid*="btn-stop"]', {
       timeout: 120000,
     }).should("have.length", 2);
     cy.get("body").then((body) => {
       if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-redeploy"]',{timeout:180000}).eq(1).click();
+        cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
+          .eq(0)
+          .click();
       }
       if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-deployment"]',{timeout:180000})
+        cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
+          .eq(0)
+          .click();
+      }
+    });
+  }
+  static stopProdDeployment() {
+    cy.get('[data-cyid*="btn-stop"]', {
+      timeout: 120000,
+    }).should("have.length", 2);
+    cy.get("body").then((body) => {
+      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
+          .eq(1)
+          .click();
+      }
+      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+        cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
           .should("have.length", 2)
           .eq(1)
           .click();

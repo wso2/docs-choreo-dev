@@ -58,7 +58,6 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    //  ComponentDeployPage.isDeploymentSuccessful().should("be.visible");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
@@ -88,7 +87,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })
@@ -116,7 +115,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })
@@ -152,7 +151,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendGetRequest(curl.method, curl.url).then((res) => {
+      Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })
@@ -165,7 +164,7 @@ describe("Verify project creation functionality", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
-      Utils.sendGetRequest(curl.method, curl.url).then((res) => {
+      Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
       })

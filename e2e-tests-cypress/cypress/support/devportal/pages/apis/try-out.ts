@@ -34,13 +34,6 @@ export class TryOut {
     cy.wait(4000);
   }
 
-  static navigateToTryOut(apiName: string) {
-    // Tryout the added API
-    cy.get('[value="' + apiName + '"] > .MuiTypography-root').click();
-    cy.wait(2000);
-    cy.get('[data-testid="tryout-item-link"]').click();
-    cy.wait(5000);
-  }
 
   static navigateToTryOutMenu() {
     cy.get('[data-testid="tryout-item-link"]').click();
@@ -105,9 +98,8 @@ export class TryOut {
 
   static DeleteApplication(appName: string) {
     cy.get('[data-testid="applications-appbar-btn"]').click();
-    cy.get(appName).trigger("mouseover");
-    cy.get("button").click;
-    cy.get("button").click();
+    cy.contains(appName).trigger("mouseover");
+    cy.get('[data-testid="delete-btn"]').trigger("mouseover").click();
     cy.get('[data-testid="delete-dialog-ok-button"]').click();
   }
 
