@@ -15,11 +15,7 @@
 import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page";
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
-import { ProjectOverviewPage } from "../../support/console/pages/projects/project-overview";
-import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
-import { RestAPIProxyTemplate } from "../../support/console/pages/templates/rest-api-proxy-temp";
 import { Utils } from "../../support/console/utils";
-import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
 import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
 import { ApiCredentials } from "../../support/devportal/pages/apis/apis-credentials";
@@ -32,65 +28,27 @@ import { Subscriptions } from "../../support/devportal/pages/applications/subscr
 import { generateAppName } from "../../support/devportal/utils";
 import { ComponentDeployPage } from "../../support/console/pages/component/component-deploy";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
-
-
-
-
+import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
 
 describe("API overview comment and rating scenario", () => {
   const FILE_ID = "oasflow";
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = Utils.generateComponentName("oas");
-  const API_BASE_PATH = Utils.generateBasePath();
-  const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const OPERATION_USERS = "intensity";
   const appName = generateAppName("-e2etest");
   const sdkFile = API_Name + "_1.0.0_android.zip";
 
-  before(() => LoginPage.loginToChoreo(FILE_ID));
+  before(() => {
+    LoginPage.loginToChoreo(FILE_ID);
+    DevPortalHelper.createDeployComponent(API_Name);
+  });
 
   after(() => ChoreoHomePage.logout(FILE_ID));
-
-  it("Creating and publishing an API from open API specification", () => {
-    cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
-    );
-    ProjectOverviewPage.addNewComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_Name,
-      API_BASE_PATH,
-      "",
-      "",
-      "",
-      FILE_ID
-    );
-  });
-
-  
-  it("Verify component deployment and endpoint configurations", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
-  });
-
-  it("Verify manage functionality", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
-  });
 
   it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_Name);
-    Apis.searchApiAndSelect(API_Name, 1);
+    Apis.searchApiAndSelect(API_Name);
   });
   it("Add and delete comment for the API", () => {
     ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");

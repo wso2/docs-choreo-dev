@@ -94,7 +94,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
-      Utils.sendGetRequest(curl.method, curl.url, curl.headers).then((res) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       })
     );
@@ -122,7 +122,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.getRequestComponents(
       `${FILE_ID}${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
-      Utils.sendGetRequest(curl.method, curl.url).then((res) => {
+      Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.status).equal(200);
       })
     );

@@ -53,72 +53,82 @@ export class Utils {
   }
 
   static getInvitationId(token: string, timestamp: string) {
-    const headerString = btoa(`${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`);
-    this.sendPostRequest("POST", Utils.MAIL_READER_TOKEN_URL,
-        { Authorization: `Basic ${headerString}`}, { grant_type: "client_credentials"})
-        .then((res) => {
-          const accessToken = res.body.access_token;
-          this.sendGetRequest("GET", Utils.MAIL_READER_SVC_URL + timestamp,
-              { Authorization: `Bearer ${accessToken}` })
-              .then((res) => {
-                const rawMailContent = res.body;
-                const decodedMail = atob(rawMailContent);
+    const headerString = btoa(
+      `${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`
+    );
+    this.sendPostRequest(
+      Utils.MAIL_READER_TOKEN_URL,
+      { Authorization: `Basic ${headerString}` },
+      { grant_type: "client_credentials" }
+    ).then((res) => {
+      const accessToken = res.body.access_token;
+      this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
+        Authorization: `Bearer ${accessToken}`,
+      }).then((res) => {
+        const rawMailContent = res.body;
+        const decodedMail = atob(rawMailContent);
 
-                const socRegEx = /^<!DOCTYPE html PUBLIC /im;
-                const bodyPos = decodedMail.indexOf(socRegEx.exec(decodedMail) as unknown as string);
-                let bodyLines = decodedMail.substring(bodyPos);
-                bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-                bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
-                const invitationId = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(bodyLines)[0];
+        const socRegEx = /^<!DOCTYPE html PUBLIC /im;
+        const bodyPos = decodedMail.indexOf(
+          socRegEx.exec(decodedMail) as unknown as string
+        );
+        let bodyLines = decodedMail.substring(bodyPos);
+        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+        const invitationId =
+          /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
+            bodyLines
+          )[0];
 
-                const header = {
-                  Authorization: `Bearer ${token}`,
-                  "content-type": "application/json",
-                };
-                this.sendGetRequest("POST", `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
-                    header);
-              });
-        });
+        const header = {
+          Authorization: `Bearer ${token}`,
+          "content-type": "application/json",
+        };
+        this.sendGetRequest(
+          `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+          header
+        );
+      });
+    });
   }
 
-  static saveComponentURL(testKey){
+  static saveComponentURL(testKey) {
     cy.url().then((url) => {
       Cypress.env(`${testKey}_componentURL`, url);
     });
   }
 
-  static saveProjectData(testKey){
+  static saveProjectData(testKey) {
     cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
-    cy.wait('@proj_create',{timeout:180000}).then(intercept=>{
-
-      const token =  JSON.stringify(intercept.request.headers["authorization"]).split(" ")[1].replace(/"/g,'').replace(/'/g,'')
-      const {id,projectId} = intercept.response.body.data.createComponent
-      cy.log(JSON.stringify(token))
-      cy.log(JSON.stringify(id))
-      cy.log(JSON.stringify(projectId))
-      Cypress.env(`${testKey}_component_id`,id)
-      Cypress.env(`${testKey}_projectId`,projectId)
-      Cypress.env(`${testKey}_apim_token`,token)
-    })
+    cy.wait("@proj_create", { timeout: 180000 }).then((intercept) => {
+      const token = JSON.stringify(intercept.request.headers["authorization"])
+        .split(" ")[1]
+        .replace(/"/g, "")
+        .replace(/'/g, "");
+      const { id, projectId } = intercept.response.body.data.createComponent;
+      Cypress.env(`${testKey}_component_id`, id);
+      Cypress.env(`${testKey}_projectId`, projectId);
+      Cypress.env(`${testKey}_apim_token`, token);
+    });
   }
 
-  static sendPostRequest(method: string, url: string, headers, body) {
+  static sendPostRequest(url: string, headers, body) {
     const request = {
-      method,
+      method: "POST",
       url,
       headers,
-      body
+      body,
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });
     });
   }
 
-  static sendGetRequest(method: string, url: string, headers:any={}) {
+  static sendGetRequest(url: string, headers: any = {}) {
     const request = {
-      method,
+      method: "GET",
       url,
-      headers
+      headers,
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status });
