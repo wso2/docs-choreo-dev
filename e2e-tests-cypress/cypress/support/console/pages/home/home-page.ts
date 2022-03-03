@@ -17,7 +17,8 @@ export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
-    cy.get('[href="/"]').eq(1).click();
+    const handle = Cypress.env("userData")["handle"];
+    cy.get(`[href="/organizations/${handle}/home"]`).eq(1).click();
   }
 
   static navigateToComponents() {
