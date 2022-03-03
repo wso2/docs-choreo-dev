@@ -82,39 +82,39 @@ export class ComponentDeployPage {
       .invoke("attr", "value");
   }
 
-  static stopDevDeployment() {
+  // static stopDevDeployment() {
+  //   cy.get('[data-cyid*="btn-stop"]', {
+  //     timeout: 120000,
+  //   }).should("exist");
+  //   cy.get("body").then((body) => {
+  //     if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+  //       cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
+  //         .eq(0)
+  //         .click();
+  //     }
+  //     if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+  //       cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
+  //         .eq(0)
+  //         .click();
+  //     }
+  //   });
+  // }
+  static stopAllDeployment() {
     cy.get('[data-cyid*="btn-stop"]', {
       timeout: 120000,
-    }).should("have.length", 2);
-    cy.get("body").then((body) => {
-      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
-          .eq(0)
-          .click();
-      }
-      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
-          .eq(0)
-          .click();
-      }
-    });
-  }
-  static stopProdDeployment() {
-    cy.get('[data-cyid*="btn-stop"]', {
-      timeout: 120000,
-    }).should("have.length", 2);
-    cy.get("body").then((body) => {
-      if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
-          .eq(1)
-          .click();
-      }
-      if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
-        cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
-          .should("have.length", 2)
-          .eq(1)
-          .click();
-      }
-    });
+    }).should("exist").click({multiple:true});
+    // cy.get("body").then((body) => {
+    //   if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+    //     cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
+    //       .eq(1)
+    //       .click();
+    //   }
+    //   if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+    //     cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
+    //       .should("exist")
+    //       .eq(1)
+    //       .click();
+    //   }
+    // });
   }
 }

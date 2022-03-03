@@ -98,6 +98,8 @@ export class TryOut {
 
   static DeleteApplication(appName: string) {
     cy.get('[data-testid="applications-appbar-btn"]').click();
+    cy.get('[data-testid="search-btn"]').trigger("mouseover");
+    cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName)
     cy.contains(appName).trigger("mouseover");
     cy.get('[data-testid="delete-btn"]').trigger("mouseover").click();
     cy.get('[data-testid="delete-dialog-ok-button"]').click();

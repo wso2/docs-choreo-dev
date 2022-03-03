@@ -22,16 +22,22 @@ describe("Generate on-prem keys", () => {
 
   before(() => {
     LoginPage.loginToChoreo(FILE_ID);
-  });
-
-  beforeEach(() => {
     ChoreoHomePage.navigateToSettings();
   });
 
   it("generate on-prem key", () => {
     OnPremkeyComponent.generateOnPremKey();
+  });
+
+  it("edit on-prem key", () => {
     OnPremkeyComponent.editOnPremKey();
+  });
+
+  it("regenerate on-prem key", () => {
     OnPremkeyComponent.regenerateOnPremKey();
+  });
+
+  it("delete on-prem key", () => {
     OnPremkeyComponent.deleteOnPremKey();
   });
 

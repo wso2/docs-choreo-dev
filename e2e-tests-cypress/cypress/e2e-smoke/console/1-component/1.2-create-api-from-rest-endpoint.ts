@@ -173,10 +173,10 @@ describe("Verify project creation functionality", () => {
   it("Verify suspending Prod deployed component", () => {
     LoginPage.reLoginToChoreo(FILE_ID);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment()
+    ComponentDeployPage.stopAllDeployment()
   });
 
-  it("Verify suspending Dev deployed component", () => {
-    ComponentDeployPage.stopDevDeployment()
-  });
+  // it("Verify suspending Dev deployed component", () => {
+  //   ComponentDeployPage.stopDevDeployment()
+  // });
 });

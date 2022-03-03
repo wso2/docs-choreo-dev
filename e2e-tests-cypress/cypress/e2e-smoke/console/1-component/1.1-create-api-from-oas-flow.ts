@@ -58,7 +58,6 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify component deployment and endpoint configurations", () => {
-    //APIDevelop.updateEndpointConfiguration('https://api.carbonintensity.org.uk');
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq",'');
@@ -138,10 +137,10 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopProdDeployment()
+    ComponentDeployPage.stopAllDeployment()
   });
 
-  it("Verify suspending Dev deployed component", () => {
-    ComponentDeployPage.stopDevDeployment()
-  });
+  // it("Verify suspending Dev deployed component", () => {
+  //   ComponentDeployPage.stopDevDeployment()
+  // });
 });

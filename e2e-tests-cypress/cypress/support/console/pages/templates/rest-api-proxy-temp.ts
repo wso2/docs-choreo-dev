@@ -27,7 +27,7 @@ export class RestAPIProxyTemplate {
     }
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
-    
+
     Utils.saveProjectData(fileID);
 
     cy.get('[data-testid="delete-all-operations-btn"]', {
@@ -59,7 +59,7 @@ export class RestAPIProxyTemplate {
     endpoint: string,
     version: string = "",
     validateResourceName: string = "",
-    key:string
+    key: string
   ) {
     cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
 
@@ -75,6 +75,7 @@ export class RestAPIProxyTemplate {
       cy.get('[data-testid="api-endpoint"]>div>input').clear().type(endpoint);
     }
     cy.get("button>span").contains("Create").click();
+    this.interceptValidate(); // workaround
     Utils.saveProjectData(key);
     cy.get(`[data-testid="resource-/intensity"]`, { timeout: 120000 }).should(
       "be.visible"
@@ -90,5 +91,25 @@ export class RestAPIProxyTemplate {
     );
   }
 
- 
+  private static interceptValidate() {
+    cy.intercept(
+      `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`
+    ).as("validate");
+    cy.wait("@validate").then((r) => {
+      if (r.response.statusCode == 404) {
+        cy.get("button").then((buttons) => {
+          if (buttons.length > 0) {
+            buttons.each(function () {
+              if (this.innerText === "Create") {
+                this.click();
+                return;
+              }
+            });
+          }
+        });
+      }
+    });
+  }
 }
