@@ -27,6 +27,4 @@ spec:
          - name: ADAPTER_HOST
            value: adapter-dev-us-east-azure-p2
          - name: ROUTER_LABEL
-           value: dev-us-east-azure           
-         - name: TRAILING_ARGS
-           value: --component-log-level upstream:debug,connection:trace
+           value: dev-us-east-azure
