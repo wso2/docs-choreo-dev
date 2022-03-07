@@ -39,11 +39,12 @@ describe("API overview comment and rating scenario", () => {
   const sdkFile = API_Name + "_1.0.0_android.zip";
 
   before(() => {
-    LoginPage.loginToChoreo(FILE_ID);
     DevPortalHelper.createDeployComponent(API_Name);
   });
 
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);

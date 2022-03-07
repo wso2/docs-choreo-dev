@@ -49,7 +49,14 @@ export class Utils {
    * @returns true name for a new on-prem key
    */
   static generateKeyName(name: string) {
-    return this.keyNamePrefix + Date.now() + name;
+    return (
+      this.keyNamePrefix +
+      Math.random()
+        .toString(36)
+        .replace(/[^a-z]+/g, "")
+        .substring(0, 5) +
+      name
+    );
   }
 
   static getInvitationId(token: string, timestamp: string) {

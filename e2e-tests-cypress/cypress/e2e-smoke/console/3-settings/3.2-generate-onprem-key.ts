@@ -20,10 +20,15 @@ import { OnPremkeyComponent } from "../../../support/console/pages/component/com
 describe("Generate on-prem keys", () => {
   const FILE_ID = "1.2-generate-onprem-key";
 
-  before(() => {
-    LoginPage.loginToChoreo(FILE_ID);
+  beforeEach(() => {
     ChoreoHomePage.navigateToSettings();
+    OnPremkeyComponent.navigateToOpPremKeySettings()
   });
+
+
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("generate on-prem key", () => {
     OnPremkeyComponent.generateOnPremKey();
@@ -41,7 +46,5 @@ describe("Generate on-prem keys", () => {
     OnPremkeyComponent.deleteOnPremKey();
   });
 
-  after(() => {
-    ChoreoHomePage.logout(FILE_ID);
-  });
+
 });

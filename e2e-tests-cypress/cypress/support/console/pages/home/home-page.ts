@@ -17,7 +17,7 @@ export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
-    cy.get('[href="/"]').eq(1).click();
+    cy.visit(`${Cypress.env("baseUrl")}/organizations/${Cypress.env("choreoOrgHandle")}/home`)
   }
 
   static navigateToComponents() {
@@ -47,13 +47,10 @@ export class ChoreoHomePage {
     return cy.get("ul>li>div>p").invoke("text");
   }
 
-  static logout(testKey) {
-    // const componentId = Cypress.env(`${testKey}_component_id`);
-    // const projectId = Cypress.env(`${testKey}_projectId`);
-    // const token = Cypress.env(`${testKey}_apim_token`);
-    // const choreoOrgHandle = Cypress.env("choreoOrgHandle");
-    // GraphQL.deleteComponent(componentId, projectId, choreoOrgHandle, token);
+  static logout() {
+
     cy.request(Cypress.env("sign_out_url"));
+    this.navigateToHome();
   }
 
   static navigateToSettings() {

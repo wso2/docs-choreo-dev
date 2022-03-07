@@ -52,9 +52,10 @@ describe("Verify project creation functionality", () => {
   const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
 
-  before(() => LoginPage.loginToChoreo(FILE_ID));
 
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(
@@ -176,7 +177,4 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.stopAllDeployment()
   });
 
-  // it("Verify suspending Dev deployed component", () => {
-  //   ComponentDeployPage.stopDevDeployment()
-  // });
 });
