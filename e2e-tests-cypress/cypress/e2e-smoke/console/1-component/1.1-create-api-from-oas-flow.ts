@@ -36,13 +36,9 @@ describe("Choreo APIM publisher scenarios", () => {
   const API_BASE_PATH = Utils.generateBasePath();
   const Filepath = "apis/generation_oas.yaml";
 
-  before(() => {
-    LoginPage.loginToChoreo(FILE_ID);
-  });
-
-  after(() => {
-    ChoreoHomePage.logout(FILE_ID);
-  });
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
@@ -140,7 +136,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentDeployPage.stopAllDeployment()
   });
 
-  // it("Verify suspending Dev deployed component", () => {
-  //   ComponentDeployPage.stopDevDeployment()
-  // });
+
+
+
 });
