@@ -11,13 +11,12 @@
  * associated services.
  */
 
-import { GraphQL } from "../../apis/graphql";
-
 export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
-    cy.visit(`${Cypress.env("baseUrl")}/organizations/${Cypress.env("choreoOrgHandle")}/home`)
+    const handle = Cypress.env("userData")["handle"];
+    cy.get(`[href="/organizations/${handle}/home"]`).eq(1).click();
   }
 
   static navigateToComponents() {
@@ -48,9 +47,7 @@ export class ChoreoHomePage {
   }
 
   static logout() {
-
     cy.request(Cypress.env("sign_out_url"));
-    this.navigateToHome();
   }
 
   static navigateToSettings() {

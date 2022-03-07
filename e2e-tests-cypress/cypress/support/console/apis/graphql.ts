@@ -43,14 +43,15 @@ export class GraphQL {
         id: string;
         name: string;
       }[];
+      
       const e2eProjects = projects.filter(({ name }) =>
-        name.includes(Utils.projectNamePrefix)
-      );
-
+      name.includes(Utils.projectNamePrefix) ||
+      name.includes(Utils.oldProjectNamePrefix) 
+    );
       cy.log(`Total projects found : ${projects.length}`);
       cy.log(`E2E projects found : ${e2eProjects.length}`);
 
-      projects.forEach((project) => {
+      e2eProjects.forEach((project) => {
         this.deleteComponentsInProject(project.id, orgHandle, token);
         this.deleteProject(orgId, project.id, token);
       });

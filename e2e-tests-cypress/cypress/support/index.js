@@ -109,7 +109,7 @@ const persistOrgs = () => {
 };
 
 const persistApimToken = () => {
-  cy.intercept("POST", `${appSvcURL}/graphql`).as(
+  cy.intercept("POST", `${Cypress.env("appSvcURL")}/graphql`).as(
     "gquery"
   );
   cy.wait("@gquery", { timeout: 150000 }).then((intercept) => {

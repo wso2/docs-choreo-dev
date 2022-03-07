@@ -12,8 +12,8 @@ export class VSSourceControl {
       .eq(0)
       .click()
       .type(`{backspace}{backspace}${commitMessage}`);
-      cy.wait(60000)// wait till git process complete.
+      cy.wait(40000)// wait till git process complete.
     cy.get('[title="Commit"]').should('be.visible').eq(0).click();
-    cy.get('.resource-group',{timeout:120000}).should('have.length', 1);
+    cy.get('.button-container>a',{timeout:120000}).should('have.length', 1);
   }
 }
