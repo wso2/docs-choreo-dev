@@ -11,13 +11,13 @@
  * associated services.
  */
 
+import { ONE_HOUR } from "../constants";
 import { Utils } from "../utils";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
 
 export class GraphQL {
-
   static createDefaultProjectIfNotExists(
     orgId: number,
     orgHandle: string,
@@ -43,17 +43,26 @@ export class GraphQL {
         id: string;
         name: string;
       }[];
-      
-      const e2eProjects = projects.filter(({ name }) =>
-      name.includes(Utils.projectNamePrefix) ||
-      name.includes(Utils.oldProjectNamePrefix) 
-    );
+
+      const e2eProjects = projects.filter(
+        ({ name }) =>
+          name.includes(Utils.projectNamePrefix) ||
+          name.includes(Utils.oldProjectNamePrefix)
+      );
       cy.log(`Total projects found : ${projects.length}`);
       cy.log(`E2E projects found : ${e2eProjects.length}`);
 
       e2eProjects.forEach((project) => {
-        this.deleteComponentsInProject(project.id, orgHandle, token);
-        this.deleteProject(orgId, project.id, token);
+        // Extract date section of project name for comparison
+        const createdDate = Number(
+          project.name.split(Utils.projectNamePrefix)[1]
+        );
+
+        // Only delete projects(and their components) that are older than 1 hour
+        if (Date.now() - createdDate > ONE_HOUR) {
+          this.deleteComponentsInProject(project.id, orgHandle, token);
+          this.deleteProject(orgId, project.id, token);
+        }
       });
     });
   }
