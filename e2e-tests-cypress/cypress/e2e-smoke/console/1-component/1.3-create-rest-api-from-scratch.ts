@@ -41,9 +41,6 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
 
-
-
-
   after(()=>{
     ChoreoHomePage.navigateToHome()
   })
