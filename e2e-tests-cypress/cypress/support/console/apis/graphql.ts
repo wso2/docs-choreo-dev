@@ -145,8 +145,13 @@ export class GraphQL {
     };
 
     this.callGraphQL(token, query).then((response) => {
-      expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      cy.log(`Successfully deleted Component  ${componentId}`);
+      if (response.status === SUCCESS_STATUS_CODE) {
+        cy.log(`Successfully deleted Component  ${componentId}`);
+      } else {
+        cy.log(
+          `Could not delete Component: ${componentId}, status returned: ${response.status}`
+        );
+      }
     });
   }
 
@@ -161,8 +166,13 @@ export class GraphQL {
     };
 
     this.callGraphQL(token, query).then((response) => {
-      expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      cy.log(`Successfully deleted Project  ${projectId}`);
+      if (response.status === SUCCESS_STATUS_CODE) {
+        cy.log(`Successfully deleted Project  ${projectId}`);
+      } else {
+        cy.log(
+          `Could not delete Project: ${projectId}, status returned: ${response.status}`
+        );
+      }
     });
   }
 
