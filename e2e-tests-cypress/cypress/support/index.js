@@ -36,6 +36,8 @@ Cypress.on("window:before:load", (win) => {
 });
 
 before(() => {
+
+  cy.log(Cypress.env("isLoggedIn"))
   if (!Cypress.env("isLoggedIn")) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
@@ -50,9 +52,7 @@ before(() => {
     persistCookies();
   }
 });
-after(() => {
-  ChoreoHomePage.logout();
-});
+
 
 const persistLogoutURL = () => {
   cy.window()
