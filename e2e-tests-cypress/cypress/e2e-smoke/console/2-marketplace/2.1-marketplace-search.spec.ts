@@ -26,13 +26,15 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const FREEMIUM = "Cost/Freemium";
   const PAID = "Cost/Paid";
 
-  after(() => ChoreoHomePage.logout(FILE_ID));
+
 
   beforeEach(() => {
     ChoreoHomePage.navigateToMarketPlace();
   });
 
-  before(() => LoginPage.loginToChoreo(FILE_ID));
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("Verify Choreo filter functionality", () => {
     Marketplace.filterByChoreo();
@@ -86,4 +88,7 @@ describe("Verify the functionality in Choreo Marketplace", () => {
     Marketplace.getTriggerName().should("eq", TRIGGER);
     Marketplace.getTriggerTags().should("have.length", 3);
   });
+
+
+
 });

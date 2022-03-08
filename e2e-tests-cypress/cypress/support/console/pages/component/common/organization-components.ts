@@ -58,7 +58,7 @@ export class OrganizationComponent {
     cy.get(
       '[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]'
     ).click();
-    cy.get('[data-testid="Delete User"]').should("be.visible");
+    // cy.get('[data-testid="Delete User"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
       .contains("Delete")
       .click();

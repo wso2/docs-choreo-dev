@@ -11,8 +11,6 @@
  * associated services.
  */
 
-import { GraphQL } from "../../apis/graphql";
-
 export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
@@ -48,12 +46,7 @@ export class ChoreoHomePage {
     return cy.get("ul>li>div>p").invoke("text");
   }
 
-  static logout(testKey) {
-    // const componentId = Cypress.env(`${testKey}_component_id`);
-    // const projectId = Cypress.env(`${testKey}_projectId`);
-    // const token = Cypress.env(`${testKey}_apim_token`);
-    // const choreoOrgHandle = Cypress.env("choreoOrgHandle");
-    // GraphQL.deleteComponent(componentId, projectId, choreoOrgHandle, token);
+  static logout() {
     cy.request(Cypress.env("sign_out_url"));
   }
 

@@ -18,13 +18,10 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 describe("Observability tests", () => {
   const FILE_ID = "observability";
 
-  before(() => {
-    LoginPage.loginToChoreo(FILE_ID);
-  });
 
-  after(() => {
-    ChoreoHomePage.logout();
-  });
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("Deploy sample App", () => {
     const obsUrlRegexMatch = ComponentObservePage.deploySampleApp();
@@ -44,4 +41,6 @@ describe("Observability tests", () => {
     ComponentObservePage.navigateToSampleApp();
     ComponentObservePage.verifyDiagnosticView();
   });
+
+
 });

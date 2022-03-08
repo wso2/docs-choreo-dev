@@ -37,8 +37,9 @@ describe("Verify project creation functionality", () => {
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
-  before(() => LoginPage.loginToChoreo(FILE_ID));
-  after(() => ChoreoHomePage.logout(FILE_ID));
+  after(()=>{
+    ChoreoHomePage.navigateToHome()
+  })
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
@@ -184,7 +185,5 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.stopAllDeployment()
   });
 
-  // it("Verify suspending Dev deployed component", () => {
-  //   ComponentDeployPage.stopDevDeployment()
-  // });
+
 });

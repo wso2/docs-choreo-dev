@@ -16,8 +16,19 @@ import { Utils } from '../../../utils';
 export class OnPremkeyComponent {
 
   static keyName = Utils.generateKeyName('key');
+
+
+
+
+
+static navigateToOpPremKeySettings(){
+  cy.get('[data-cy="/onpremkeys"]').click();
+}
+
+
+
   static generateOnPremKey() {
-    cy.get('[data-cy="/onpremkeys"]').click();
+
     cy.wait(5000)
     cy.get('[title="Generate Key"]').should('exist').click();
     cy.get('[data-testid="on-prem-key"]').should('exist');
@@ -48,12 +59,12 @@ export class OnPremkeyComponent {
       .parent()
       .find('[data-testid="key-regenerate-btn"]')
       .click();
-    cy.get('[data-testid="regenerate-key-dialog-content"]').should('exist');
     cy.get('[data-testid="regenerate-on-prem-key-regenerate-btn"]')
       .should('exist')
       .click();
-    cy.get('[data-testid="copy-key-dialog-content"]').should('be.visible');
-    cy.get('[data-testid="copy-key-close-btn"]').should('exist').click();
+
+      cy.contains('Copy on-premises key').next().click()
+    // cy.get('[data-testid="copy-key-close-btn"]').should('exist').click();
   }
 
   static deleteOnPremKey() {
@@ -63,7 +74,6 @@ export class OnPremkeyComponent {
       .parent()
       .find('[data-testid="key-delete-btn"]')
       .click();
-    cy.get('[data-testid="delete-key-dialog-content"]').should('exist');
     cy.get('[data-testid="delete-on-prem-key-delete-btn"]')
       .should('exist')
       .click();

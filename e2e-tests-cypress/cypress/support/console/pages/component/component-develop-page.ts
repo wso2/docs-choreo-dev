@@ -79,7 +79,7 @@ export class ComponentDevelopPage {
   }
 
   static verifyLatestCommit(commitMessage: string) {
-    cy.get(`[title="${commitMessage}"]`).should("be.visible");
+    cy.get(`[title*="${commitMessage}"]`).should("be.visible");
   }
 
   static getVersion() {
