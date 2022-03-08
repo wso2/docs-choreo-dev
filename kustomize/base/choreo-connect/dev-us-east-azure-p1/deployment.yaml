@@ -27,4 +27,4 @@ spec:
          - name: ADAPTER_HOST
            value: adapter-dev-us-east-azure-p1
          - name: ROUTER_LABEL
-           value: dev-us-east-azure           
+           value: dev-us-east-azure

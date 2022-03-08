@@ -36,8 +36,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -52,8 +51,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoTestClient;
 
-    @BeforeTest
-    public void beforeTest()
+    @BeforeClass
+    public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
             NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
             ComponentCreationStatusCheckException, ComponentDeploymentException,

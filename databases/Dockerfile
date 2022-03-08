@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------------
 #
-# Copyright (c) 2020, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+# Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
 #
 # This software is the property of WSO2 Inc. and its suppliers, if any.
 # Dissemination of any information or reproduction of any material contained
@@ -9,17 +9,22 @@
 #
 # --------------------------------------------------------------------------------------
 
-# Derived from official mysql image (our base image)
-FROM mysql:5.7
+# Derived from official mssql image (our base image)
+FROM mcr.microsoft.com/mssql/server:2019-latest
 
-# Add the content of the sql-scripts/ directory to your image
-# All scripts in docker-entrypoint-initdb.d/ are automatically
-# executed during container startup
-COPY scripts/choreo_testbase_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_app_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_perf_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_program_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_apim_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_apim_shared_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/choreo_apim_user_db.sql /docker-entrypoint-initdb.d/
-COPY scripts/configure_dbs.sql /docker-entrypoint-initdb.d/
+# Switch to root user for access to apt-get install
+USER root
+
+# Create  directory
+RUN mkdir -p /db-script-data
+WORKDIR /db-script-data
+
+# Bundle files
+COPY initialize-db-script.sh entrypoint.sh scripts/ /db-script-data/
+
+# Grant permissions for the initialize-db-script script to be executable
+RUN chmod +x /db-script-data/initialize-db-script.sh
+
+# Switch back to mssql user and run the entrypoint script
+USER mssql
+ENTRYPOINT ["/bin/bash", "./entrypoint.sh"]

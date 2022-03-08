@@ -17,6 +17,7 @@ export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
 
 export class GraphQL {
+
   static createDefaultProjectIfNotExists(
     orgId: number,
     orgHandle: string,
@@ -42,10 +43,11 @@ export class GraphQL {
         id: string;
         name: string;
       }[];
+      
       const e2eProjects = projects.filter(({ name }) =>
-        name.includes(Utils.projectNamePrefix)
-      );
-
+      name.includes(Utils.projectNamePrefix) ||
+      name.includes(Utils.oldProjectNamePrefix) 
+    );
       cy.log(`Total projects found : ${projects.length}`);
       cy.log(`E2E projects found : ${e2eProjects.length}`);
 
@@ -120,7 +122,7 @@ export class GraphQL {
     });
   }
 
-  private static deleteComponent(
+  public static deleteComponent(
     componentId: string,
     projectId: string,
     orgHandle: string,

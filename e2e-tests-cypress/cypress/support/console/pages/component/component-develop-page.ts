@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class ComponentDevelopPage {
   static currentTime = new Date();
 
@@ -19,59 +21,24 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL(fileID) {
-    cy.get('[data-testid="component-develop-edit-code"]', { timeout: "120000" })
+    cy.get('[data-testid="component-develop-edit-code"]', { timeout: 120000 })
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
         cy.url().then((url) => {
-          cy.task("writeTestData", {
-            fileName: fileID,
-            key: "componentURL",
-            value: url,
-          });
-          const accesURL = url.split("/projects")[0] + href;
-          cy.task("writeTestData", {
-            fileName: fileID,
-            key: "accessURL",
-            value: accesURL,
-          });
+          Utils.saveComponentURL(fileID)
+          const accessURL =
+            url.split("/organizations")[0] +
+            href.replace(/ /g, "").replace(/\n/g, "");
+          Cypress.env(`${fileID}_accessURL`, accessURL);
         });
       });
 
-    this.editInCodeServer(fileID);
+    const orgData = Cypress.env(`${fileID}_orgData`);
+    const authData = Cypress.env(`${fileID}_authData`);
   }
 
-  private static editInCodeServer(fileID) {
-    cy.readFile(`${Cypress.env("tempfile")}${fileID}.json`).then((data) => {
-      this.startCodeServer(
-        data.orgData.orgId,
-        data.orgData.handle,
-        data.authData.projectId,
-        data.authData.id,
-        data.authData.header
-      );
-    });
-  }
 
-  private static startCodeServer(
-    orgid,
-    orgHandler,
-    projectId,
-    componentId,
-    header
-  ) {
-    const qry = {
-      query: `mutation{ startCodeServer(orgId:${orgid},orgHandler:"${orgHandler}", projectId:"${projectId}",componentId:"${componentId}") }`,
-    };
-    const appSvcURL = Cypress.env("appSvcURL");
-
-    cy.request({
-      method: "POST",
-      url: `${appSvcURL}/graphql`,
-      body: JSON.stringify(qry),
-      headers: header,
-    });
-  }
 
   static addResources(path: string, ...verbs) {
     cy.get('[id="backdrop-loader"').should("not.exist");
@@ -94,7 +61,7 @@ export class ComponentDevelopPage {
 
   static addLabels(labels: string[]) {
     const lblArr = [];
-    cy.contains("+ Add labels").click();
+    cy.contains("+ Add labels", { timeout: 120000 }).click();
     labels.forEach((label) => {
       cy.get("#labels-filled").click();
       cy.contains(label).click();
@@ -112,7 +79,7 @@ export class ComponentDevelopPage {
   }
 
   static verifyLatestCommit(commitMessage: string) {
-    cy.get(`[title="${commitMessage}"]`).should("be.visible");
+    cy.get(`[title*="${commitMessage}"]`).should("be.visible");
   }
 
   static getVersion() {

@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class RestAPITemplate {
   static selectHttpAPITemplate() {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
@@ -25,31 +27,6 @@ export class RestAPITemplate {
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
-    this.interceptProjectDetails(fileID);
+    Utils.saveProjectData(fileID);
   }
-
-  private static interceptProjectDetails(fileID: string) {
-    // eslint-disable-next-line arrow-body-style
-
-    cy.wait("@proj_create", { timeout: 100000 }).then((e) => {
-      const { id, projectId, handler } = e.response.body.data.createComponent;
-      const authdata = {
-        header: {
-          authorization: e.request.headers.authorization,
-          "content-type": "application/json",
-        },
-        id,
-        projectId,
-        handler,
-      };
-      cy.task("writeTestData", {
-        fileName: fileID,
-        key: "authData",
-        value: authdata,
-      });
-    });
-  }
-
-
 }

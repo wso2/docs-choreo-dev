@@ -11,49 +11,16 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class TriggersTemplate {
-  static SelectManualTriggeremplate() {
+  static selectManualTriggerTemplate() {
     cy.get('[data-testid="project-template-list-manualTrigger"]').click();
   }
 
   static createManualTriggerFromTemplate(manualName: string, fileID: string) {
     cy.get('input[name="name"]').clear().type(manualName);
     cy.get('[data-cyid="btn-create-mannual-trigger"]').click();
-
-
-    cy.intercept({
-      method: "POST",
-      url: Cypress.env("appSvcURL") + "/graphql",
-      times: 1,
-    }).as("proj_create");
-    this.interceptProjectDetails(fileID);
-  }
-
-  private static interceptProjectDetails(fileID: string) {
-    // eslint-disable-next-line arrow-body-style
-
-    cy.wait("@proj_create", { timeout: 180000 }).then((e) => {
-      expect(e.response.statusCode).to.eq(200);
-      const { id, projectId, handler } = e.response.body.data.createComponent;
-      const authdata = {
-        header: {
-          authorization: e.request.headers.authorization,
-          "content-type": "application/json",
-        },
-        id,
-        projectId,
-        handler,
-      };
-      cy.task("writeTestData", {
-        fileName: fileID,
-        key: "authData",
-        value: authdata,
-      });
-    });
+    Utils.saveProjectData(fileID);
   }
 }
-
-
-
-
-    

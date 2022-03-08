@@ -10,9 +10,12 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { Utils } from "../../../console/utils";
 import { STANDARD_TIME_OUT } from "../../constants";
 
 export class Apis {
+  static afterTwoMinutes = Date.now() + 180000;
+
   static navigateToApiOverview(apiName: string): void {
     cy.log("Navigating to Overview");
     cy.get('[data-testid="apis-appbar-btn"]', { timeout: STANDARD_TIME_OUT })
@@ -30,22 +33,51 @@ export class Apis {
     cy.log("Successfully navigated to Overview");
   }
 
-  static verifyAPIname(){
-    return cy.get('[data-testid="txt-api-name"]',{timeout:120000}).should('be.visible').invoke('text')
+  static verifyAPIname() {
+    return cy
+      .get('[data-testid="txt-api-name"]', { timeout: 120000 })
+      .should("be.visible")
+      .invoke("text");
   }
 
-  static searchApiAndSelect(textApiName) {
+  static searchApiAndSelect(textApiName, versionCount = 1) {
     cy.get("[data-testid=apis-appbar-btn]").click();
-    cy.get('[data-testid*="apiCard"]').should("be.visible");
-    cy.wait(1000)
-    cy.get("#outlined-search-bar-api-listing").click().type(textApiName);
-    cy.get("button").contains("Search").click();
-    cy.get("[data-testid=apiCard-" + textApiName + "]").should(
-      "have.length",
-      2
-    );
+
+    cy.intercept(
+      "GET",
+      `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/apis?organizationId=*`
+    ).as("apis");
+
+    cy.wait("@apis", { timeout: 40000 }).then((intercept) => {
+      const splitArr = intercept.request.url.split("apis?");
+      const url = `${splitArr[0]}apis?query=name:${textApiName}&${splitArr[1]}`;
+      const header = intercept.request.headers.authorization;
+      this.verifyAPI(url, header, versionCount);
+    });
+    this.searchAPI(textApiName);
+  }
+
+  private static searchAPI(textApiName) {
+    cy.get("#outlined-search-bar-api-listing")
+      .focus()
+      .type(`${textApiName}{enter}`);
     cy.get("[data-testid=apiCard-" + textApiName + "]")
       .last()
       .click();
+  }
+
+  private static verifyAPI(url, header, versionCount) {
+    const headers = {
+      Authorization: `${header}`,
+    };
+    Utils.sendGetRequest(url, headers).then((res) => {
+      cy.log(res.body.list.length);
+      if (res.body.list.length == versionCount) {
+        return;
+      } else {
+        cy.wait(30000);
+        this.verifyAPI(url, header, versionCount);
+      }
+    });
   }
 }

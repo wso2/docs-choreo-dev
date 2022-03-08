@@ -11,133 +11,56 @@
  * associated services.
  */
 
-import { GraphQL } from "../apis/graphql";
+
+import { Utils } from "../utils";
 
 export class LoginPage {
-  static loginToChoreo(fileID: string, enableIntercept: boolean = false) {
+
+
+  static loginToInvitedUser(fileID: string, timestamp: string) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
+    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
+    cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), {
+      log: false,
+    });
 
     cy.get('button[type="submit"]').click();
-    if (enableIntercept) {
-      this.interceptRequiredApiCalls();
-      this.persistCookies(fileID);
-      this.testSetup(fileID);
-    }
-  }
 
-  static reloginToChoreo(fileID: string) {
-    const file = `${Cypress.env("tempfile")}${fileID}.json`;
-
-    cy.readFile(file).then((d) => {
-      cy.visit(d.componentURL);
-      cy.intercept(d.componentURL).then(() => {
-        cy.readFile(file).then((data) => {
-          cy.setCookie("commonAuthId", data.commanAuthId, {
-            path: "/",
-            domain: "id.dv.choreo.dev",
-            secure: true,
-            httpOnly: true,
-            sameSite: "no_restriction",
-          });
-        });
-      });
-    });
-  }
-
-  static navigateToCodespace(fileID: string) {
-    cy.readFile(`${Cypress.env("tempfile")}${fileID}.json`).then((data) => {
-      cy.visit(data.accessURL);
-    });
-  }
-
-  private static interceptRequiredApiCalls() {
-    const appSvcURL = Cypress.env("appSvcURL");
-    const idpURL = Cypress.env("idpURL");
     const apimSvcURL = Cypress.env("apimSvcURL");
-    const balRegistryURL = Cypress.env("balRegistryURL");
-
-    cy.intercept("POST", `${idpURL}/commonauth`).as("cookies");
     cy.intercept({
       method: "POST",
       url: `${apimSvcURL}/oauth2/token`,
       times: 1,
     }).as("token");
-    cy.intercept("GET", Cypress.env("appSvcURL") + "/validate-user").as("org");
-    cy.intercept({
-      method: "GET",
-      url: `${balRegistryURL}/packages?*`,
-      times: 1,
-    }).as("balRegistry"); // Ensure ballerina registry call completes before interacting with UI
-  }
 
-  private static persistOrgs(interceptor: any, fileID: string) {
-    const handle = Cypress.env("choreoOrgHandle");
-    let userOrg: any;
-    if (handle) {
-      userOrg = interceptor.response.body.organizations.find(
-        (o: { handle: any }) => o.handle === handle
-      );
-
-      if (userOrg === undefined) {
-        throw new Error(
-          `Configured org handle ${handle} does not exist for current user`
-        );
-      }
-      cy.log(`Configured org handle ${userOrg.handle} selected`);
-    } else {
-      [userOrg] = interceptor.response.body.organizations;
-      cy.log(`First available org ${userOrg.handle} selected`);
-    }
-    const orgData = {
-      orgId: userOrg.id,
-      handle: userOrg.handle,
-    };
-
-    cy.task("writeTestData", {
-      fileName: fileID,
-      key: "orgData",
-      value: orgData,
-    });
-
-    return userOrg;
-  }
-
-  private static testSetup(fileID: string) {
-    cy.log("testSetup()");
     let token: string;
-    cy.wait(["@token", "@org", "@balRegistry"], { timeout: 180000 }).then(
-      (interceptions) => {
-        token = interceptions[0].response.body.access_token;
-
-        const userOrg = this.persistOrgs(interceptions[1], fileID);
-
-        //    GraphQL.deleteProjectsCreatedByTests(userOrg.id, userOrg.handle, token);
-      }
-    );
-  }
-
-  private static persistCookies(fileID: string) {
-    cy.log("persistCookies()");
-    cy.wait("@cookies").then((interceptor) => {
-      const cookies = interceptor.response.headers["set-cookie"];
-      if (Array.isArray(cookies)) {
-        cookies.forEach((element) => {
-          if (element.includes("commonAuthId")) {
-            const commonauId = element
-              .split(";")[0]
-              .replace("commonAuthId=", "");
-            cy.log(`Common Auth ID :: ${commonauId}`);
-            cy.task("writeTestData", {
-              fileName: fileID,
-              key: "commanAuthId",
-              value: commonauId,
-            });
-          }
-        });
-      }
+    cy.wait("@token", { timeout: 180000 }).then((interceptions) => {
+      token = interceptions.response.body.access_token;
+      const invitationId = Utils.getInvitationId(token, timestamp);
     });
   }
+
+  static reLoginToChoreo(fileID: string) {
+    const componentURL = Cypress.env(`${fileID}_componentURL`);
+    cy.visit(componentURL);
+    cy.intercept(componentURL).then(() => {
+      cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
+    });
+  }
+
+  static navigateToCodespace(fileID: string) {
+    cy.visit(Cypress.env(`${fileID}_accessURL`));
+  }
+
+  
+
+
+
 }

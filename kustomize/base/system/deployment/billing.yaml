@@ -58,6 +58,11 @@ spec:
                 secretKeyRef:
                   name: secret-billing
                   key: STRIPE_TOKEN
+            - name: BAL_TRUSTSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-billing
+                  key: BAL_TRUSTSTORE_PASSWORD
           ports:
             - containerPort: 9090
               name: http
@@ -97,6 +102,14 @@ spec:
             - name: secret-billing
               mountPath: /mnt/csi/secret-billing
               readonly: true
+            - name: secret-billing
+              mountPath: /home/ballerina/security/clientTrustStore.p12
+              subPath: BAL_TRUSTSTORE
+              readOnly: true
+            - name: secret-billing
+              mountPath: /home/ballerina/security/subscription.dev.rootasgardeo.internal.crt
+              subPath: BAL_CERT
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: secret-billing

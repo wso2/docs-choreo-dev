@@ -35,6 +35,21 @@ public class TokenHandler {
      * @throws TokenRetrievalException if token retrieval fails
      */
     public String getTestToken() throws InterruptedException, TokenRetrievalException, IOException {
+        return getTestToken(clientId, clientSecret);
+    }
+
+    /**
+     * Retrieve oauth token to be used when invoking choreo APIs
+     *
+     * @param clientId                 client id to generate token
+     * @param clientSecret             client secret of the client
+     * @return oauth token
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws InterruptedException    if sending request is interrupted
+     * @throws TokenRetrievalException if token retrieval fails
+     */
+    public String getTestToken(String clientId, String clientSecret)
+            throws InterruptedException, TokenRetrievalException, IOException {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(clientId, clientSecret));
         String tokenEndpoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{

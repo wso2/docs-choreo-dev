@@ -12,9 +12,19 @@
  */
 
 export class Utils {
-  static projectNamePrefix = "e2eproject";
+  static oldProjectNamePrefix = "e2eproject";
+  static projectNamePrefix = "automationtestproject";
+
+  static oldComponentNamePrefix = "e2eapi";
+  static componentNamePrefix = "automationtestcomponent";
 
   static keyNamePrefix = "e2eOnPremkey";
+  static APP_SVC_URL = Cypress.env("appSvcURL");
+  static ORG_NAME = Cypress.env("choreoOrgHandle");
+  static MAIL_READER_SVC_URL = Cypress.env("mailReaderSvcURL");
+  static MAIL_READER_CLIENT_ID = Cypress.env("mailReaderClientId");
+  static MAIL_READER_CLIENT_SECRET = Cypress.env("mailReaderClientSecret");
+  static MAIL_READER_TOKEN_URL = Cypress.env("mailReaderTokenURL");
 
   /**
    * Create name for app.
@@ -25,18 +35,105 @@ export class Utils {
     return this.projectNamePrefix + Date.now();
   }
 
+  static generateComponentName(name: string) {
+    return this.componentNamePrefix + Date.now() + name;
+  }
+
+  static generateBasePath() {
+    return Date.now().toString();
+  }
+
   /**
    * Create name for on-prem key.
    *
    * @returns true name for a new on-prem key
    */
   static generateKeyName(name: string) {
-    return this.keyNamePrefix + Date.now() + name;
+    return (
+      this.keyNamePrefix +
+      Math.random()
+        .toString(36)
+        .replace(/[^a-z]+/g, "")
+        .substring(0, 5) +
+      name
+    );
   }
 
-  static sendRequest(method: string, url: string, headers: any = {}) {
+  static getInvitationId(token: string, timestamp: string) {
+    const headerString = btoa(
+      `${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`
+    );
+    this.sendPostRequest(
+      Utils.MAIL_READER_TOKEN_URL,
+      { Authorization: `Basic ${headerString}` },
+      { grant_type: "client_credentials" }
+    ).then((res) => {
+      const accessToken = res.body.access_token;
+      this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
+        Authorization: `Bearer ${accessToken}`,
+      }).then((res) => {
+        const rawMailContent = res.body;
+        const decodedMail = atob(rawMailContent);
+
+        const socRegEx = /^<!DOCTYPE html PUBLIC /im;
+        const bodyPos = decodedMail.indexOf(
+          socRegEx.exec(decodedMail) as unknown as string
+        );
+        let bodyLines = decodedMail.substring(bodyPos);
+        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+        bodyLines = bodyLines.replace(/\r?\n?[^\r\n]*$/, "");
+        const invitationId =
+          /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.exec(
+            bodyLines
+          )[0];
+
+        const header = {
+          Authorization: `Bearer ${token}`,
+          "content-type": "application/json",
+        };
+        this.sendGetRequest(
+          `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
+          header
+        );
+      });
+    });
+  }
+
+  static saveComponentURL(testKey) {
+    cy.url().then((url) => {
+      Cypress.env(`${testKey}_componentURL`, url);
+    });
+  }
+
+  static saveProjectData(testKey) {
+    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
+    cy.wait("@proj_create", { timeout: 180000 }).then((intercept) => {
+      const token = JSON.stringify(intercept.request.headers["authorization"])
+        .split(" ")[1]
+        .replace(/"/g, "")
+        .replace(/'/g, "");
+      const { id, projectId } = intercept.response.body.data.createComponent;
+      Cypress.env(`${testKey}_component_id`, id);
+      Cypress.env(`${testKey}_projectId`, projectId);
+      Cypress.env(`${testKey}_apim_token`, token);
+    });
+  }
+
+  static sendPostRequest(url: string, headers, body) {
     const request = {
-      method,
+      method: "POST",
+      url,
+      headers,
+      body,
+    };
+    return cy.request(request).then((res) => {
+      return cy.wrap({ body: res.body, status: res.status });
+    });
+  }
+
+  static sendGetRequest(url: string, headers: any = {}) {
+    const request = {
+      method: "GET",
       url,
       headers,
     };
@@ -44,7 +141,4 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status });
     });
   }
-
-
-
 }

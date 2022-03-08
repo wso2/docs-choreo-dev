@@ -11,13 +11,11 @@
  * associated services.
  */
 
-import { deprecate } from "util";
-import { Utils } from "../../utils";
-
 export class ComponentDeployPage {
-
   static deploy() {
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.visible").click();
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 120000 })
+      .should("be.enabled")
+      .click();
   }
 
   static configureAndDeploy(configValue: string) {
@@ -33,39 +31,90 @@ export class ComponentDeployPage {
       '[class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"]'
     ).type(value);
     cy.get('button[type="submit"]').click();
-
-    cy.get('[title="Build Success"]', { timeout: 900000 });
-    cy.get('[data-cyid="btn-promote"]').should("be.visible");
   }
 
   static isDeploymentSuccessful() {
-    return cy.get('[title="Build Success"]',{timeout:90000});
+    return cy.get('[title="Build Success"]', { timeout: 90000 });
+  }
+
+  static ismanualDeploymentSuccessful() {
+    return cy.get('[title="Deployed successfully"]', { timeout: 90000 });
   }
 
   static promoteToProd() {
-    cy.get('[data-cyid="btn-proxy-promote"]',{timeout:120000}).should('be.visible').click();
-  }
+    cy.get('[data-cyid*="promote"]', { timeout: 120000 })
+      .should("be.visible")
+      .click();
 
-  private static selectButton(buttonName) {
-    return cy.get('[type="button"]>span').contains(buttonName);
+    cy.get("body").then((b) => {
+      if (
+        b.find('[data-cyid="btn-deploy-api"]').text() === "Configure & Deploy"
+      ) {
+        cy.contains("Next").click();
+        cy.get(".ConfigForm button", { timeout: 120000 })
+          .contains("Promote")
+          .click();
+      }
+    });
   }
 
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
+      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 120000 })
       .eq(0)
       .invoke("attr", "value");
   }
 
   static verifyProdInvokeURL() {
-    cy.wait(5000);
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+
+    cy.get('[data-cyid="text-field-invoke-url"] input', {
+      timeout: 120000,
+    }).should("have.length", 2);
+
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
       .eq(1)
       .invoke("attr", "value");
   }
 
+  // static stopDevDeployment() {
+  //   cy.get('[data-cyid*="btn-stop"]', {
+  //     timeout: 120000,
+  //   }).should("exist");
+  //   cy.get("body").then((body) => {
+  //     if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+  //       cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
+  //         .eq(0)
+  //         .click();
+  //     }
+  //     if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+  //       cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
+  //         .eq(0)
+  //         .click();
+  //     }
+  //   });
+  // }
   static stopAllDeployment() {
-    cy.get('[data-cyid="btn-stop-redeploy"]').click({ multiple: true });
+    cy.get('[data-cyid*="btn-stop"]', {
+      timeout: 120000,
+    }).should("exist").click({multiple:true});
+    // cy.get("body").then((body) => {
+    //   if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
+    //     cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })
+    //       .eq(1)
+    //       .click();
+    //   }
+    //   if (body.find('[data-cyid="btn-stop-deployment"]').length > 0) {
+    //     cy.get('[data-cyid="btn-stop-deployment"]', { timeout: 180000 })
+    //       .should("exist")
+    //       .eq(1)
+    //       .click();
+    //   }
+    // });
   }
 }

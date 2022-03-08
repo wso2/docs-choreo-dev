@@ -13,25 +13,53 @@
 
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
-    cy.get('[data-testid="develop-resources-header"]')
+    cy.get('[data-testid="develop-resources-header"]', { timeout: 120000 })
       .contains("Resources")
       .should("be.visible");
-    cy.get('[id="backdrop-loader"').should("not.exist");
-    cy.get('[data-testid="delete-all-operations-btn"]').click();
+    cy.get('[id="backdrop-loader"]').should("not.exist");
+
+    cy.get("body").then((body) => {
+      if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
+        cy.get('[data-testid="delete-all-operations-btn"]').click();
+      }
+    });
+
     this.addHTTPVerb(verbs);
+    this.addResource(path);
+  }
+
+  private static addResource(path: string) {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
-    cy.contains("Save").click();
-    cy.get(`[data-testid="resource-${path}"]`, { timeout: 120000 }).should(
+
+    cy.get("button").then((buttons) => {
+      if (buttons.length > 0) {
+        buttons.each(function () {
+          if (this.innerText === "Save") {
+            this.click();
+            return;
+          }
+        });
+      }
+    });
+    cy.intercept({
+      method: "PUT",
+      url: `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+    }).as("swagger");
+    cy.wait("@swagger", { timeout: 120000 }).then((res) => {
+      expect(res.response.body.paths).to.have.property(`/${path}`);
+    });
+    cy.get(`[data-testid="resource-/${path}"]`, { timeout: 120000 }).should(
       "be.visible"
     );
   }
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get('[data-testid="verb-selector"]').click();
-
     verbs.forEach((verb) => {
-      cy.contains(verb.toUpperCase()).click();
+      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click();
       cy.wait(1000);
     });
     cy.get("body").type("{esc}");

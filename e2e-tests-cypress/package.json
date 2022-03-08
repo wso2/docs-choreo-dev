@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cypress": "^8.7.0",
-    "typescript": "^4.4.2"
+    "cypress": "^9.4.1",
+    "typescript": "^4.4.2",
+    "webpack": "^5.68.0"
   },
   "devDependencies": {
-    "@cypress/webpack-batteries-included-preprocessor": "^2.0.0",
-    "@cypress/webpack-preprocessor": "^5.11.0",
     "@testing-library/cypress": "^8.0.1",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^1.6.2"
