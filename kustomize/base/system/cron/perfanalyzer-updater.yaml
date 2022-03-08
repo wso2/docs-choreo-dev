@@ -9,7 +9,7 @@ metadata:
   labels:
     choreo.component: perfanalyzer-updater
 spec:
-  schedule: 0 * * * *
+  schedule: 0 */2 * * *
   startingDeadlineSeconds: 600
   concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
@@ -60,10 +60,10 @@ spec:
                   name: env-perf-analyzer
             resources:
               limits:
-                cpu: 1000m
+                cpu: 1500m
                 memory: 1024Mi
               requests:
-                cpu: 300m
+                cpu: 1000m
                 memory: 512Mi
             volumeMounts:
               - name: perfanalyzer-config
