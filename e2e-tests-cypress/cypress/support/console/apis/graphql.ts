@@ -53,18 +53,29 @@ export class GraphQL {
       cy.log(`E2E projects found : ${e2eProjects.length}`);
 
       e2eProjects.forEach((project) => {
-        // Extract date section of project name for comparison
-        const createdDate = Number(
-          project.name.split(Utils.projectNamePrefix)[1]
-        );
-
-        // Only delete projects(and their components) that are older than 1 hour
-        if (Date.now() - createdDate > ONE_HOUR) {
+        if (this.isProjectOld(project.name)) {
           this.deleteComponentsInProject(project.id, orgHandle, token);
           this.deleteProject(orgId, project.id, token);
         }
       });
     });
+  }
+
+  private static isProjectOld(projectName: string) {
+    // Previous project name format signifies old projects
+    if (projectName.includes(Utils.oldProjectNamePrefix)) {
+      return true;
+    }
+
+    // Extract date section of project name for comparison
+    const createdDate = Number(projectName.split(Utils.projectNamePrefix)[1]);
+
+    // Only delete projects(and their components) that are older than 1 hour
+    if (Date.now() - createdDate > ONE_HOUR) {
+      return true;
+    }
+
+    return false;
   }
 
   private static createDefaultProject(
