@@ -14,7 +14,7 @@
 import "cypress-file-upload";
 import "cypress-xpath";
 import { GraphQL } from "../support/console/apis/graphql";
-import {ChoreoHomePage} from "../support/console/pages/home/home-page"
+import { ChoreoHomePage } from "../support/console/pages/home/home-page";
 
 Cypress.on("uncaught:exception", (err, runnable) => {
   return false;
@@ -36,22 +36,23 @@ Cypress.on("window:before:load", (win) => {
 });
 
 before(() => {
-  cy.visit(Cypress.env("loginURL"));
-  cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-  cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-  cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
 
-  cy.get('button[type="submit"]').click();
-  persistOrgs();
-  persistApimToken();
-  persistLogoutURL();
-  persistCookies();
+  cy.log(Cypress.env("isLoggedIn"))
+  if (!Cypress.env("isLoggedIn")) {
+    cy.visit(Cypress.env("loginURL"));
+    cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
+    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
+    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
 
-
+    cy.get('button[type="submit"]').click();
+    Cypress.env("isLoggedIn", true);
+    persistOrgs();
+    persistApimToken();
+    persistLogoutURL();
+    persistCookies();
+  }
 });
-after(()=>{
-  ChoreoHomePage.logout()
-})
+
 
 const persistLogoutURL = () => {
   cy.window()
@@ -109,13 +110,13 @@ const persistOrgs = () => {
 };
 
 const persistApimToken = () => {
-  cy.intercept("POST", `${Cypress.env("appSvcURL")}/graphql`).as(
-    "gquery"
-  );
+  cy.intercept("POST", `${Cypress.env("appSvcURL")}/graphql`).as("gquery");
   cy.wait("@gquery", { timeout: 150000 }).then((intercept) => {
     Cypress.env("apim_token", intercept.request.headers.authorization);
     const { orgId, handle } = Cypress.env("userData");
-    const token = intercept.request.headers.authorization.replace('Bearer','').trim() 
+    const token = intercept.request.headers.authorization
+      .replace("Bearer", "")
+      .trim();
     GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
   });
 };
