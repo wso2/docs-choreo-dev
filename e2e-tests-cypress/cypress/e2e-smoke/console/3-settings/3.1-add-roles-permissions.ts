@@ -24,15 +24,20 @@ describe("Add roles and permissions", () => {
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
+
+  before(()=>{
+    LoginPage.login()
+  })
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
   beforeEach(() => {
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.navigateToRoles();
     // OrganizationComponent.deleteRoleIfExists(roleName);
   });
 
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
-  })
 
   it("Create a role", () => {
     OrganizationComponent.createRole(roleName, roleDescription, roleTag);

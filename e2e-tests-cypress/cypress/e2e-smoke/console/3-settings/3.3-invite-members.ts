@@ -49,11 +49,10 @@ describe("Accept invitation", () => {
     ChoreoHomePage.navigateToSettings();
   });
 
-  
-
   after(()=>{
-    ChoreoHomePage.navigateToHome()
+    ChoreoHomePage.logout()
   })
+  
 
   it("Accept the invitation", () => {
     cy.reload();
@@ -67,15 +66,18 @@ describe("Accept invitation", () => {
 
 describe("Delete members", () => {
   const FILE_ID = "1.3.3-delete-members";
-
+  before(() => {
+    LoginPage.login();
+  });
   beforeEach(() => {
     ChoreoHomePage.navigateToSettings();
   });
-
-
   after(()=>{
-    ChoreoHomePage.navigateToHome()
+    ChoreoHomePage.logout()
   })
+  
+
+
 
   it("Delete a member", () => {
     cy.contains("td", INVITATION_EMAIL).should("exist");

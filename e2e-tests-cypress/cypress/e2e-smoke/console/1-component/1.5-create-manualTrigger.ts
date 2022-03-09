@@ -30,10 +30,13 @@ describe("Verify manual trigger creation functionality", () => {
   const FILE_ID = "manualTrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
-
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
+  before(()=>{
+    LoginPage.login()
   })
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
 
   it("Verify manual trigger component creation", () => {
     ProjectListingPage.createNewProject(
