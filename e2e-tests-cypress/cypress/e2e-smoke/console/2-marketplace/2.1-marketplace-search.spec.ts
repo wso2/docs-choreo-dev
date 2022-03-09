@@ -26,15 +26,16 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const FREEMIUM = "Cost/Freemium";
   const PAID = "Cost/Paid";
 
-
-
+  before(()=>{
+    LoginPage.login()
+  })
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
   beforeEach(() => {
     ChoreoHomePage.navigateToMarketPlace();
   });
-
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
-  })
 
   it("Verify Choreo filter functionality", () => {
     Marketplace.filterByChoreo();

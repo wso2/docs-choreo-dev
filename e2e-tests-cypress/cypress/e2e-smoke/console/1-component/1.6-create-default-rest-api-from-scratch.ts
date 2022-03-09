@@ -37,9 +37,13 @@ describe("Verify project creation functionality", () => {
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
+  before(()=>{
+    LoginPage.login()
   })
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(

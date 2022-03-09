@@ -36,14 +36,14 @@ describe("Verify webhook creation functionality", () => {
   const commitMessage = "adding slacktrigger bal file";
   
   
-  
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
+
+  before(()=>{
+    LoginPage.login()
   })
-
-
-
-
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
 
   it("Verify slack trigger creation", () => {
     ProjectListingPage.createNewProject(

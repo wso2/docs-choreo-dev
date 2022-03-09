@@ -53,9 +53,13 @@ describe("Verify project creation functionality", () => {
   const idpUser = "choreoe2etest";
 
 
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
+  before(()=>{
+    LoginPage.login()
   })
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(

@@ -39,12 +39,13 @@ describe("API overview comment and rating scenario", () => {
   const sdkFile = API_Name + "_1.0.0_android.zip";
 
   before(() => {
+    LoginPage.login();
     DevPortalHelper.createDeployComponent(API_Name);
   });
 
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
-  })
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Test in devportal", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
@@ -91,6 +92,6 @@ describe("API overview comment and rating scenario", () => {
   it("Verify suspending Dev deployed component", () => {
     LoginPage.reLoginToChoreo(FILE_ID);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
+    ComponentDeployPage.stopAllDeployment();
   });
 });

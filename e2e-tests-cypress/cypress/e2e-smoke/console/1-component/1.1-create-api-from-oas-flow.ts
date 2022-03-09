@@ -36,9 +36,12 @@ describe("Choreo APIM publisher scenarios", () => {
   const API_BASE_PATH = Utils.generateBasePath();
   const Filepath = "apis/generation_oas.yaml";
 
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
+  before(()=>{
+    LoginPage.login()
   })
+after(()=>{
+  ChoreoHomePage.logout()
+})
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");

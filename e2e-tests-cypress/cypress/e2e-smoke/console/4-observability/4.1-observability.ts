@@ -17,11 +17,14 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 
 describe("Observability tests", () => {
   const FILE_ID = "observability";
-
-
-  after(()=>{
-    ChoreoHomePage.navigateToHome()
+  before(()=>{
+    LoginPage.login()
   })
+  after(()=>{
+    ChoreoHomePage.logout()
+  })
+  
+
 
   it("Deploy sample App", () => {
     const obsUrlRegexMatch = ComponentObservePage.deploySampleApp();
