@@ -15,9 +15,7 @@ import { GraphQL } from "../apis/graphql";
 import { Utils } from "../utils";
 
 export class LoginPage {
-
-  
-  static loginToInvitedUser(fileID: string, timestamp: string) {
+  static acceptInviteAsInvitedUser(timestamp: string) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
@@ -34,7 +32,8 @@ export class LoginPage {
     let token: string;
     cy.wait("@token", { timeout: 180000 }).then((interceptions) => {
       token = interceptions.response.body.access_token;
-      const invitationId = Utils.getInvitationId(token, timestamp);
+      Utils.acceptEmailInviteToOrg(token, timestamp);
+      cy.reload(); // Reload in order to get updated orgs
     });
   }
 
@@ -132,6 +131,10 @@ export class LoginPage {
       Cypress.env("apim_token", intercept.request.headers.authorization);
       const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 77fb23bc70396fa1446656eca812e574a91d1b78
       const token = header.replace("Bearer", "").trim();
       GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
       this.deleteOnPremKeys()

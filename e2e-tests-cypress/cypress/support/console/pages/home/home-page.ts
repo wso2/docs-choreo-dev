@@ -41,6 +41,12 @@ export class ChoreoHomePage {
       .click();
   }
 
+  static isOrgHandleVisible(orgHandle: string) {
+    cy.get('[id="org-picker"]').should("be.visible");
+    cy.get('[id="org-picker"]').click();
+    cy.get('[data-value="' + orgHandle + '"]').should("be.visible");
+  }
+
   static getLoggedUserEmail() {
     cy.get(this.username).should("be.visible").click();
     return cy.get("ul>li>div>p").invoke("text");
