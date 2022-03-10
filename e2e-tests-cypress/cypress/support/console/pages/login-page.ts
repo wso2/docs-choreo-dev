@@ -131,10 +131,6 @@ export class LoginPage {
       Cypress.env("apim_token", intercept.request.headers.authorization);
       const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
-<<<<<<< HEAD
-=======
-
->>>>>>> 77fb23bc70396fa1446656eca812e574a91d1b78
       const token = header.replace("Bearer", "").trim();
       GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
       this.deleteOnPremKeys()
