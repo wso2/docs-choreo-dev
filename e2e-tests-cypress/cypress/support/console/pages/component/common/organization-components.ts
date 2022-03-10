@@ -35,6 +35,14 @@ export class OrganizationComponent {
     cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
   }
 
+  static verifyEmailIsNotDisplayed(email: string) {
+    cy.contains("td", email).should("not.exist");
+  }
+
+  static verifyEmailIsDisplayed(email: string) {
+    cy.contains("td", email).should("be.visible");
+  }
+
   static inviteMembers(email: string, ...roles) {
     cy.wait(300);
     cy.get('[data-cyid="invite-members"]').click();
