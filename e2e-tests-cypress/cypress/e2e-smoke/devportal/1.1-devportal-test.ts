@@ -81,7 +81,7 @@ describe("API overview comment and rating scenario", () => {
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
     ProductionKeys.generateTestToken();
-    Subscriptions.addAnSubsriptionToApplication(API_Name);
+    Subscriptions.addSubscriptionToApplication(API_Name);
     Subscriptions.validateResubscribingApi(API_Name);
   });
 

@@ -12,3 +12,6 @@
  */
 
 export const ONE_HOUR = 60 * 60 * 1000;
+export const SHORT_TIME = 4000;
+export const MEDIUM_TIME = 60000;
+export const LONG_TIME = 150000;

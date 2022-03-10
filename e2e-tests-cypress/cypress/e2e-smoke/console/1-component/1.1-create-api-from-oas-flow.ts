@@ -27,14 +27,22 @@ import { Utils } from "../../../support/console/utils";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
+import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
+import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
+import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
+import { generateAppName } from "../../../support/devportal/utils";
+import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 
 describe("Choreo APIM publisher scenarios", () => {
   const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
-  const API_Name = Utils.generateComponentName("oas");
+  const API_NAME = Utils.generateComponentName("oas");
   const API_BASE_PATH = Utils.generateBasePath();
   const Filepath = "apis/generation_oas.yaml";
+  const idpUser = "choreoe2etest";
+  const appName = generateAppName("-e2etest");
 
   before(()=>{
     LoginPage.login()
@@ -53,7 +61,7 @@ after(()=>{
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_Name, API_BASE_PATH, "","","",FILE_ID);
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "","","",FILE_ID);
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -134,6 +142,26 @@ after(()=>{
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 
+
+  it("Create a consumer application and tryout an API", () => {
+      ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    Apis.searchApiAndSelect(API_NAME,1);
+    DevPortalHomePage.navigateToAppsPage();
+    AppsList.createAnApplication(appName);
+    ProductionKeys.generateTestToken();
+    Subscriptions.addSubscriptionToApplication(API_NAME);
+    Subscriptions.validateResubscribingApi(API_NAME);
+  });
+
+
+  it("Verify consumers", () => {
+    LoginPage.reLoginToChoreo(FILE_ID);
+    ComponentOverviewPage.navigateToManage()
+    ComponentAPILifecycle.selectConsumers()
+    ComponentAPILifecycle.verifyConsumer(appName).should('be.visible')
+
+  });
+
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment()
@@ -143,3 +171,4 @@ after(()=>{
 
 
 });
+

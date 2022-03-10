@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../../console/utils";
+
 export class DevPortalHomePage {
   static username = "[data-testid=signedin-user-menu-btn]";
 
@@ -20,18 +22,17 @@ export class DevPortalHomePage {
       .click();
   }
 
-
   static clickOnLoggedInUser(): void {
     cy.get(this.username).click();
   }
 
   static logout(): void {
-  cy.window()
-    .its("sessionStorage")
-    .invoke("getItem", "sign_out_url")
-    .then((url) => {
-      cy.request(url);
-    });
+    cy.window()
+      .its("sessionStorage")
+      .invoke("getItem", "sign_out_url")
+      .then((url) => {
+        cy.request(url);
+      });
   }
 
   static navigateToApisPage(): void {
@@ -42,5 +43,28 @@ export class DevPortalHomePage {
     cy.get('[data-testid="applications-appbar-btn"]')
       .should("be.visible")
       .click();
+    this.interceptApplications();
+  }
+
+  private static interceptApplications() {
+    cy.intercept(
+      "https://sts.preview-dv.choreo.dev/api/am/devportal/v2/applications/?organizationId=*"
+    ).as("apps");
+    cy.wait("@apps", { timeout: 180000 }).then((intercept) => {
+      const orgId = intercept.request.url.split("organizationId=")[1];
+
+      const header = intercept.request.headers.authorization;
+      const apps = intercept.response.body.list as [];
+      const headers = {
+        Authorization: `${header}`,
+      };
+      apps.forEach((app) => {
+        let appId = app["applicationId"];
+        Utils.sendDeleteRequest(
+          `https://sts.preview-dv.choreo.dev/api/am/devportal/v2/applications/${appId}?organizationId=${orgId}`,
+          headers
+        );
+      });
+    });
   }
 }
