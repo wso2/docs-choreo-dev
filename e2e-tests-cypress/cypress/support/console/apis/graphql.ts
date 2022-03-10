@@ -38,7 +38,11 @@ export class GraphQL {
     token: string
   ) {
     this.getProjects(orgId, token).then((response) => {
-      expect(response.status).to.eq(SUCCESS_STATUS_CODE);
+      if (response.status !== SUCCESS_STATUS_CODE) {
+        cy.log(`getProjects failed, status returned: ${response.status}`);
+        return;
+      }
+
       const projects = response.body.data.projects as {
         id: string;
         name: string;
@@ -135,10 +139,13 @@ export class GraphQL {
   ) {
     cy.log("deleteComponentsInProject()");
     this.getComponents(projectId, orgHandle, token).then((response) => {
-      expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      response.body.data.components.forEach((component) => {
-        this.deleteComponent(component.id, projectId, orgHandle, token);
-      });
+      if (response.status === SUCCESS_STATUS_CODE) {
+        response.body.data.components.forEach((component) => {
+          this.deleteComponent(component.id, projectId, orgHandle, token);
+        });
+      } else {
+        cy.log(`getComponents failed, status returned: ${response.status}`);
+      }
     });
   }
 
