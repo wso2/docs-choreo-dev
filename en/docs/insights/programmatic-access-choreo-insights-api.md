@@ -1,6 +1,6 @@
 # Programmatic Access to Insights API
 
-The **Insights** page in the Choreo Console fetches data from the Insights API exposed over the Internet. However, in some scenarios, you may need to fetch data from external systems and implement custom dashboards to display this data.
+The **Insights** page in the Choreo Console displays data fetched from the Insights API exposed over the Internet. However, in some scenarios, you may need to fetch data from external systems and implement custom dashboards to display this data.
 
 Choreo provides a secure and user-friendly method to achieve this requirement. The steps are outlined below:
 
