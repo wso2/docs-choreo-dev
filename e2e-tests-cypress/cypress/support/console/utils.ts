@@ -59,7 +59,7 @@ export class Utils {
     );
   }
 
-  static getInvitationId(token: string, timestamp: string) {
+  static acceptEmailInviteToOrg(token: string, timestamp: string) {
     const headerString = btoa(
       `${Utils.MAIL_READER_CLIENT_ID}:${Utils.MAIL_READER_CLIENT_SECRET}`
     );
@@ -91,10 +91,16 @@ export class Utils {
           Authorization: `Bearer ${token}`,
           "content-type": "application/json",
         };
-        this.sendGetRequest(
+        this.sendPostRequest(
           `${Utils.APP_SVC_URL}/v2/orgs/${Utils.ORG_NAME}/invitations/${invitationId}`,
-          header
-        );
+          header,
+          {}
+        ).then((resp) => {
+          cy.log(`Org invite accept response status: ${resp.status}`);
+          cy.log(
+            `Org invite accept response body: ${JSON.stringify(resp.body)}`
+          );
+        });
       });
     });
   }

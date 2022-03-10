@@ -16,74 +16,56 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
 
 /// <reference types="cypress" />
-let timestamp = "";
+let timestamp = Math.floor(+new Date() / 1000).toString();
 const INVITATION_EMAIL = Cypress.env("invitationUserEmail");
 
 describe("Invite members", () => {
-  const FILE_ID = "1.3.1-invite-members";
-
-  beforeEach(() => {
-    ChoreoHomePage.navigateToSettings();
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
   });
 
-  it("Invite a member", () => {
-    cy.contains("td", INVITATION_EMAIL).should("not.exist");
+  it("Invite a member to users org", () => {
+    ChoreoHomePage.navigateToSettings();
+    OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
     OrganizationComponent.selectPendingInvitation();
-    cy.contains("td", INVITATION_EMAIL).should("not.exist");
-    timestamp = Math.floor(+new Date() / 1000).toString();
+    OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
     OrganizationComponent.inviteMembers(INVITATION_EMAIL, "API Publisher");
     OrganizationComponent.selectPendingInvitation();
-    cy.contains("td", INVITATION_EMAIL).should("be.visible");
+    OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
   });
 });
 
 describe("Accept invitation", () => {
   const invited_org_handle = Cypress.env("choreoOrgHandle");
-  const FILE_ID = "1.3.2-accept-invitation";
 
   before(() => {
-    LoginPage.loginToInvitedUser(FILE_ID, timestamp);
+    LoginPage.acceptInviteAsInvitedUser(timestamp);
   });
 
-  beforeEach(() => {
-    ChoreoHomePage.navigateToSettings();
+  after(() => {
+    ChoreoHomePage.logout();
   });
 
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
-
-  it("Accept the invitation", () => {
-    cy.reload();
-    cy.get('[id="org-picker"]').should("be.visible");
-    cy.get('[id="org-picker"]').click();
-    cy.get('[data-value="' + invited_org_handle + '"]').should("be.visible");
+  it("Verify member is accepted to Org", () => {
+    ChoreoHomePage.isOrgHandleVisible(invited_org_handle);
   });
-
-
 });
 
 describe("Delete members", () => {
-  const FILE_ID = "1.3.3-delete-members";
   before(() => {
     LoginPage.login();
   });
-  beforeEach(() => {
-    ChoreoHomePage.navigateToSettings();
+
+  after(() => {
+    ChoreoHomePage.logout();
   });
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
-
-
 
   it("Delete a member", () => {
-    cy.contains("td", INVITATION_EMAIL).should("exist");
-    cy.log("Member invitation accepted successfully");
+    ChoreoHomePage.navigateToSettings();
+    OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
     OrganizationComponent.deleteMember(INVITATION_EMAIL);
   });
-
-
 });
