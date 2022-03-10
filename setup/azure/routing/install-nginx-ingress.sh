@@ -8,8 +8,8 @@ kubectl create namespace "${APIM_NAMESPACE}-nginx-ingress" --dry-run=client -o y
 kubectl label namespace "${APIM_NAMESPACE}-nginx-ingress" purpose="${APIM_NAMESPACE}-ingress-traffic"
 
 # Annotate Nginx ingress namespace for linker mTLS
-#kubectl annotate namespace "${SYSTEM_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
-#kubectl annotate namespace "${SYSTEM_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
+kubectl annotate namespace "${APIM_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
+kubectl annotate namespace "${APIM_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
 kubectl apply -f ./netpol/"${APIM_NAMESPACE}-nginx-ingress-ns.yaml"
 
