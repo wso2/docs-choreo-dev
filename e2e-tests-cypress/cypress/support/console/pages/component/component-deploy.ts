@@ -18,6 +18,21 @@ export class ComponentDeployPage {
       .click();
   }
 
+
+  static deployScheduleTask(){
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 }).should('be.enabled').click()
+    cy.get('button:not([data-cyid])').contains("Deploy").click()
+  }
+
+
+  static promoteScheduleTask(){
+    cy.get('[data-cyid*="promote"]', { timeout: 180000 })
+    .should("be.visible")
+    .click();
+    cy.get('button:not([data-cyid])').contains("Deploy").click()
+    cy.get('[value="*/1 * * * *"]').should('have.length',2)
+  }
+
   static configureAndDeploy(configValue: string) {
     cy.wait(8000);
     cy.get('[data-cyid="btn-deploy-api"]').click();

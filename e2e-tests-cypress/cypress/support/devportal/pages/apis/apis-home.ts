@@ -52,6 +52,8 @@ export class Apis {
       const splitArr = intercept.request.url.split("apis?");
       const url = `${splitArr[0]}apis?query=name:${textApiName}&${splitArr[1]}`;
       const header = intercept.request.headers.authorization;
+
+      Cypress.env("devportal_auth", header);
       this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName);
@@ -71,7 +73,6 @@ export class Apis {
       Authorization: `${header}`,
     };
     Utils.sendGetRequest(url, headers).then((res) => {
-      cy.log(res.body.list.length);
       if (res.body.list.length == versionCount) {
         return;
       } else {

@@ -13,5 +13,6 @@
     "screenshotsFolder": "cypress/screenshots/e2e-smoke",
     "videosFolder": "cypress/videos/e2e-smoke",
     "videoUploadOnPasses": false,
-    "videoCompression": false
+    "videoCompression": false,
+    "watchForFileChanges": false
 }

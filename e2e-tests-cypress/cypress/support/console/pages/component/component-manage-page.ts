@@ -16,6 +16,7 @@ import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
 
+
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
 
@@ -232,5 +233,14 @@ export class ComponentAPILifecycle {
     return cy.wait("@revision").then((revision) => {
       return cy.wrap(revision.response.body.displayName);
     });
+  }
+
+
+  static selectConsumers(){
+cy.get('[data-cyid="Consumers"]').should('be.visible').click()
+  }
+
+  static verifyConsumer(appName:string){
+    return cy.get(`[value=${appName}]`)
   }
 }

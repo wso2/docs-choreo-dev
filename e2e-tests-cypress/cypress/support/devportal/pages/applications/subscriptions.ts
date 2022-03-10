@@ -14,7 +14,7 @@ import { MEDIUM_TIME_OUT } from "../../constants";
 
 export class Subscriptions {
 
-    static addAnSubsriptionToApplication(apiName: string) {
+    static addSubscriptionToApplication(apiName: string) {
     
         cy.get('[data-testid="subscriptions"]').click();
         cy.get('[data-testid="create-subscription-btn"]').click();

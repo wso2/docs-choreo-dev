@@ -35,6 +35,11 @@ import { Environment } from "../../../support/console/pages/enum/environment";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
+import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
+import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
+import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
+import { generateAppName } from "../../../support/devportal/utils";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
@@ -51,6 +56,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
+
 
 
   before(()=>{
@@ -175,10 +181,11 @@ describe("Verify project creation functionality", () => {
     TryOut.GetResponse();
   });
 
-  it("Verify suspending Prod deployed component", () => {
+
+  it("Verify application suspension",()=>{
     LoginPage.reLoginToChoreo(FILE_ID);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment()
-  });
+  })
 
 });

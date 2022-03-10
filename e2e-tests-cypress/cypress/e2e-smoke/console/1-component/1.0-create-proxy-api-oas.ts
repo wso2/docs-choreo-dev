@@ -27,11 +27,11 @@ describe.skip("Create proxy api using existing url", () => {
   const URL = "https://petstore.swagger.io/v2/swagger.json";
 
   before(() => {
-    LoginPage.loginToChoreo(FILE_ID);
+    LoginPage.login();
   });
 
   after(() => {
-    ChoreoHomePage.logout(FILE_ID);
+    ChoreoHomePage.logout();
   });
 
   it("Creating and publishing an API from open API specification", () => {

@@ -18,8 +18,23 @@ export class ComponentObservePage {
     cy.get('[data-testid="panel-Overview-btn"]').should("be.visible").click();
   }
 
-  static gotoLogs() {
+  static gotoLogs(timeToWait = 0) {
+    cy.wait(timeToWait);
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
+  }
+
+  static verifyTextInLogs(text: string) {
+    cy.log(text);
+    return cy.get('[data-testid="log-panel-entry"]>span').each(($e) => {
+      let log = $e
+        .text()
+        .replace("ballerina: sending metrics to Choreo", "")
+        .trim()
+        .toString();
+      if (log.includes(text)) {
+        return cy.wrap(true);
+      }
+    });
   }
 
   static deploySampleApp() {
