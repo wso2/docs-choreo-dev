@@ -2,15 +2,15 @@
 
 The **Insights** page in the Choreo Console fetches data from the Insights API exposed over the Internet. However, in some scenarios, you may need to fetch data from external systems and implement custom dashboards to display this data.
 
-Choreo provides a secure and user-friendly method to achieve this requirement. The steps are outlined below.
+Choreo provides a secure and user-friendly method to achieve this requirement. The steps are outlined below:
 
 ## Become a member of the Choreo System organization
 
 1. Sign in to [https://devportal.choreo.dev](https://devportal.choreo.dev) using your credentials.
 
-2. Access the developer portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem).
+2. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem).
    
-3. Request Access to the `Choreo System` organization by clicking **Request Access**.
+3. To get access to the `Choreo System` organization, click **Request Access**.
 
 ![Request-Access](../assets/img/insights/request-access.png){.cInlineImage-full}
 
