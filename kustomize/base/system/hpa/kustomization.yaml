@@ -31,3 +31,7 @@ resources:
   - billing.yaml
   - alert-notification-service.yaml
   - delete-manager.yaml
+  - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+  - dp-project-manager.yaml
+  - dp-rudder.yaml
