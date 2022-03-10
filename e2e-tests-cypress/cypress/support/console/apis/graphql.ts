@@ -213,6 +213,7 @@ export class GraphQL {
       url: `${appSvcURL}/graphql`,
       body: JSON.stringify(query),
       headers: header,
+      failOnStatusCode: false,
     });
   }
 }
