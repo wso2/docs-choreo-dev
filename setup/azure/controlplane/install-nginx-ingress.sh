@@ -64,7 +64,7 @@ kubectl annotate namespace "${IDP_NAMESPACE}-nginx-ingress" config.linkerd.io/sk
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
-echo "--- Installing System Nginx Ingress using Helm 3..."
+echo "--- Installing IDP Nginx Ingress using Helm 3..."
 helm upgrade --install "${IDP_NAMESPACE}" ingress-nginx/ingress-nginx \
   --namespace "${IDP_NAMESPACE}-nginx-ingress" \
   --version 3.8.0 \
