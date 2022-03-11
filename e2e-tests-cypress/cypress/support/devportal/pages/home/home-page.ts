@@ -48,7 +48,7 @@ export class DevPortalHomePage {
 
   private static interceptApplications() {
     cy.intercept(
-      "https://sts.preview-dv.choreo.dev/api/am/devportal/v2/applications/?organizationId=*"
+      `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/?organizationId=*`
     ).as("apps");
     cy.wait("@apps", { timeout: 180000 }).then((intercept) => {
       const orgId = intercept.request.url.split("organizationId=")[1];
@@ -61,7 +61,7 @@ export class DevPortalHomePage {
       apps.forEach((app) => {
         let appId = app["applicationId"];
         Utils.sendDeleteRequest(
-          `https://sts.preview-dv.choreo.dev/api/am/devportal/v2/applications/${appId}?organizationId=${orgId}`,
+          `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/${appId}?organizationId=${orgId}`,
           headers
         );
       });
