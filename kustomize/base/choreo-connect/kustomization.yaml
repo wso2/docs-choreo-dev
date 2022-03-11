@@ -9,5 +9,6 @@ resources:
   - default-p4
   - test-p1
   - hpa
+  - pdb
 
 namespace: choreo-apim

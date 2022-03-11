@@ -1,3 +1,9 @@
 resources:
-- devportal.yaml
+  - am-pdb.yaml
+  - choreo-connect-adapter.yaml
+  - choreo-connect-deployment.yaml
+  - choreo-connect-global-adapter.yaml
+  - devportal.yaml
+  - tm-1-pdb.yaml
+  - tm-2-pdb.yaml
 # - gateway.yaml

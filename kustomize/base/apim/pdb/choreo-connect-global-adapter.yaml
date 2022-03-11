@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-connect-global-adapter
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-global-adapter
