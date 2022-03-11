@@ -4,6 +4,13 @@ package com.wso2.choreo.integration.config;
 public class Configuration {
     public static final String CHOREO_ENDPOINT = System.getenv("CHOREO_ENDPOINT");
     public static final String STS_ENDPOINT = System.getenv("STS_ENDPOINT");
+    public static final String ASGARDEO_ENDPOINT = System.getenv("ASGARDEO_ENDPOINT");
+
+    public static final String TEST_USER_EMAIL = System.getenv("TEST_USER_EMAIL");
+    public static final String TEST_USER_PASSWORD = System.getenv("TEST_USER_PASSWORD");
+
+    public static final String ASGARDEO_CLIENT_ID = System.getenv("ASGARDEO_CLIENT_ID");
+    public static final String ASGARDEO_CLIENT_SECRET = System.getenv("ASGARDEO_CLIENT_SECRET");
 
     public static final String STS_CLIENT_ID = System.getenv("STS_CLIENT_ID");
     public static final String STS_CLIENT_SECRET = System.getenv("STS_CLIENT_SECRET");
