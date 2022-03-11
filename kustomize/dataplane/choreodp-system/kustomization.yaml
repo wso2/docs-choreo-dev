@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - deployment
   - hpa
+  - pdb
   - rbac
 
 namespace: choreodp-system
