@@ -19,7 +19,10 @@ public final class Constant {
     public static final String BASIC_PREFIX = "Basic ";
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String TOKEN_ENDPOINT_SUFFIX = "/oauth2/token";
-    public static final String OAUTH_GRANT_TYPE = "client_credentials";
+    public static final String OAUTH_PASSWORD_GRANT_TYPE = "password";
+    public static final String OAUTH_TOKEN_EXCHANGE_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange";
+    public static final String SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
+    public static final String REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String OAUTH_SCOPES = "apim:api_manage apim:subscription_manage apim:tier_manage apim:admin " +
             "apim:publisher_settings environments:view_prod environments:view_dev";
 
@@ -33,30 +36,6 @@ public final class Constant {
     public static final String USER_CONNECTORS_ENDPOINT_SUFFIX = "/user-connectors";
     public static final String TEST_CONNECTOR_VISIBILITY = "public";
     public static final String TEST_CONNECTOR_VERSION = "1.0.0";
-
-    public static long COMPONENT_CREATE_TIMEOUT = 30000;
-    public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
-
-    // Alert related const
-    public static final class ALERT {
-        public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";
-        public static final String ENV_ID = UUID.randomUUID().toString();
-        public static final String CONTAINER_ID = UUID.randomUUID().toString();
-        public static final String MAIL_IMAP_HOST = "imap.gmail.com";
-        public static final int MAIL_IMAP_PORT = 993;
-        public static final String MAIL_IMAP_USER = "choreoalert@gmail.com";
-    }
-
-    public enum displayType {
-        restAPI,
-        proxy,
-        webhook
-    }
-
-    public enum apiLIifCycleState {
-        Publish
-    }
-
     // API Proxy related constants
     public static final String DEFAULT_API_NAME = "DefaultAPI";
     public static final String DEFAULT_VERSION = "1.0.0";
@@ -67,4 +46,24 @@ public final class Constant {
     public static final String APIS_ENDPOINT = "/api/am/publisher/v2/apis";
     public static final String ORGANIZATION_ID = "organizationId";
     public static final String QUERY = "query";
+    public static long COMPONENT_CREATE_TIMEOUT = 30000;
+    public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
+    public enum displayType {
+        restAPI,
+        proxy,
+        webhook
+    }
+    public enum apiLIifCycleState {
+        Publish
+    }
+
+    // Alert related const
+    public static final class ALERT {
+        public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";
+        public static final String ENV_ID = UUID.randomUUID().toString();
+        public static final String CONTAINER_ID = UUID.randomUUID().toString();
+        public static final String MAIL_IMAP_HOST = "imap.gmail.com";
+        public static final int MAIL_IMAP_PORT = 993;
+        public static final String MAIL_IMAP_USER = "choreoalert@gmail.com";
+    }
 }

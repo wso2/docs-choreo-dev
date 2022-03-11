@@ -78,65 +78,6 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_tier' and xtype='U')
-BEGIN
-    CREATE TABLE billing_tier (
-        id VARCHAR(128) NOT NULL,
-        tier_id VARCHAR(128) NOT NULL,
-        product_id VARCHAR(128) NOT NULL,
-        price_id VARCHAR(128) NOT NULL,
-        currency VARCHAR(20) NOT NULL,
-        recurring_interval VARCHAR(10) NOT NULL,
-        UNIQUE (product_id),
-        UNIQUE (price_id),
-        UNIQUE (tier_id),
-        PRIMARY KEY (tier_id, product_id),
-        CONSTRAINT FK_Tier FOREIGN KEY (tier_id) REFERENCES tier(id)
-    );
-END
-GO
-
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_subscription' and xtype='U')
-BEGIN
-    CREATE TABLE billing_subscription (
-        id VARCHAR(128) NOT NULL,
-        subscription_id VARCHAR(128) NOT NULL,
-        customer_id VARCHAR(128) NOT NULL,
-        stripe_subscription_id VARCHAR(128) NOT NULL,
-        stripe_subscription_item_id VARCHAR(128) NOT NULL,
-        UNIQUE (subscription_id),
-        PRIMARY KEY (subscription_id, stripe_subscription_id),
-        CONSTRAINT FK_ChoreoSubscription FOREIGN KEY (subscription_id) REFERENCES subscription(id)
-    );
-END
-GO
-
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_account' and xtype='U')
-BEGIN
-    CREATE TABLE billing_account (
-        id VARCHAR(128) NOT NULL,
-        org_id VARCHAR(128) NOT NULL,
-        customer_id VARCHAR(128) NOT NULL,
-        UNIQUE (org_id),
-        UNIQUE (customer_id),
-        PRIMARY KEY (org_id, customer_id)
-    );
-END
-GO
-
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_history' and xtype='U')
-BEGIN
-    CREATE TABLE billing_history (
-        id VARCHAR(128) NOT NULL,
-        subscribed_user VARCHAR(256) NOT NULL,
-        customer_id VARCHAR(128) NOT NULL,
-        timestamp BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
-        operation VARCHAR(128) NOT NULL,
-        PRIMARY KEY (id)
-    );
-END
-GO
-
 -- Initial data for subscriptions
 -- Relevant issue: https://github.com/wso2-enterprise/choreo/issues/7627
 
@@ -196,11 +137,4 @@ INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
 	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'api_quota',-200),
 	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'step_quota',-1000000),
 	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'developer_count',-1);
-GO
-
-INSERT INTO choreo_subscriptions_db.dbo.billing_tier (id,tier_id,product_id,price_id,currency,recurring_interval) VALUES
-	 (N'01ec1491-3eff-1aec-b511-2eec6e3c92d2',N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'prod_K8pD0xG5AqXUzG',N'price_1JY0lgEeYOVsvOhWyxCaQmNy',N'USD',N'month'),
-     (N'01ec1f92-e300-1a7c-b10c-16b408c2e17b',N'01ec1f8e-7ba6-1f88-bd74-41709200d0c0',N'prod_K8om1rkbBYoyxW',N'price_1JUX9OEeYOVsvOhWNPoBudVS',N'USD',N'month'),
-	 (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ec1d1e-0e9c-16e4-b6c9-1904e9ef9567',N'prod_K8ot6C4EbUhWIa',N'price_1JUXG4EeYOVsvOhWYOu9Turn',N'USD',N'month'),
-     (N'01ec1491-316e-1c84-9195-5bbb347a8a0b',N'01ec1f82-5451-1cfa-83ca-222452b503ab',N'prod_K8owVLffK8Gzzh',N'price_1JUXIREeYOVsvOhWVyik0FRN',N'USD',N'month');
 GO

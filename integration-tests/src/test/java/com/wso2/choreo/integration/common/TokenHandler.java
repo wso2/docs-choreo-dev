@@ -23,8 +23,13 @@ import org.springframework.http.MediaType;
  */
 public class TokenHandler {
     private static final HttpClient client = HttpClient.newHttpClient();
-    private final String clientId = Configuration.STS_CLIENT_ID;
-    private final String clientSecret = Configuration.STS_CLIENT_SECRET;
+
+    private final String asgardeoClientId = Configuration.ASGARDEO_CLIENT_ID;
+    private final String asgardeoClientSecret = Configuration.ASGARDEO_CLIENT_SECRET;
+    private final String testUserEmail = Configuration.TEST_USER_EMAIL;
+    private final String testUserPassword = Configuration.TEST_USER_PASSWORD;
+    private final String stsClientId = Configuration.STS_CLIENT_ID;
+    private final String stsClientSecret = Configuration.STS_CLIENT_SECRET;
 
     /**
      * Retrieve oauth token to be used when invoking choreo APIs
@@ -35,33 +40,73 @@ public class TokenHandler {
      * @throws TokenRetrievalException if token retrieval fails
      */
     public String getTestToken() throws InterruptedException, TokenRetrievalException, IOException {
-        return getTestToken(clientId, clientSecret);
+        String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
+        String stsToken = getStsToken(stsClientId, stsClientSecret, userToken);
+        return stsToken;
     }
 
     /**
      * Retrieve oauth token to be used when invoking choreo APIs
      *
-     * @param clientId                 client id to generate token
-     * @param clientSecret             client secret of the client
-     * @return oauth token
+     * @param asgardeoClientId     client id for Asgardeo SP
+     * @param asgardeoClientSecret client secret for Asgardeo SP
+     * @return user token
      * @throws IOException             if an IO error occurs when sending or receiving request
      * @throws InterruptedException    if sending request is interrupted
      * @throws TokenRetrievalException if token retrieval fails
      */
-    public String getTestToken(String clientId, String clientSecret)
+    public String getTestUserToken(String asgardeoClientId, String asgardeoClientSecret)
             throws InterruptedException, TokenRetrievalException, IOException {
-        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(clientId, clientSecret));
-        String tokenEndpoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+        String tokenAuthHeader =
+                Constant.BASIC_PREFIX.concat(encodeCredentials(asgardeoClientId, asgardeoClientSecret));
+        String asgardeoTokenEndpoint = Configuration.ASGARDEO_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("grant_type", Constant.OAUTH_GRANT_TYPE);
+            put("grant_type", Constant.OAUTH_PASSWORD_GRANT_TYPE);
+            put("username", testUserEmail);
+            put("password", testUserPassword);
+        }};
+        String form = requestBodyMap.keySet().stream()
+                .map(key -> key + "=" + URLEncoder.encode(requestBodyMap.get(key), StandardCharsets.UTF_8))
+                .collect(Collectors.joining("&"));
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(asgardeoTokenEndpoint))
+                .headers(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .POST(HttpRequest.BodyPublishers.ofString(form))
+                .header(HttpHeaders.AUTHORIZATION, tokenAuthHeader)
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int statusCode = response.statusCode();
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new TokenRetrievalException(statusCode, response.body());
+        }
+        return new JsonParser().parse(response.body()).getAsJsonObject().getAsJsonPrimitive("access_token")
+                .getAsString();
+    }
+
+    /**
+     * @param stsClientId     client id for STS SP
+     * @param stsClientSecret client secret for STS SP
+     * @param userToken       test user token
+     * @return sts access token
+     * @throws InterruptedException
+     * @throws TokenRetrievalException
+     * @throws IOException
+     */
+    public String getStsToken(String stsClientId, String stsClientSecret, String userToken)
+            throws InterruptedException, TokenRetrievalException, IOException {
+        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
+        String stsEndPoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+        HashMap<String, String> requestBodyMap = new HashMap<>() {{
+            put("grant_type", Constant.OAUTH_TOKEN_EXCHANGE_GRANT_TYPE);
+            put("subject_token", userToken);
+            put("subject_token_type", Constant.SUBJECT_TOKEN_TYPE);
+            put("requested_token_type", Constant.REQUESTED_TOKEN_TYPE);
             put("orgHandle", Configuration.TEST_CHOREO_ORG_HANDLE);
             put("scope", Constant.OAUTH_SCOPES);
         }};
         String form = requestBodyMap.keySet().stream()
                 .map(key -> key + "=" + URLEncoder.encode(requestBodyMap.get(key), StandardCharsets.UTF_8))
                 .collect(Collectors.joining("&"));
-
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(tokenEndpoint))
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(stsEndPoint))
                 .headers(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString(form))
                 .header(HttpHeaders.AUTHORIZATION, tokenAuthHeader)
