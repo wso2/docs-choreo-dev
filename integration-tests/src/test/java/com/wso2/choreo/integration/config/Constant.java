@@ -20,7 +20,7 @@ public final class Constant {
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String TOKEN_ENDPOINT_SUFFIX = "/oauth2/token";
     public static final String OAUTH_PASSWORD_GRANT_TYPE = "password";
-    public static final String OAUTH_CLIENT_CREDENTIALS_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange";
+    public static final String OAUTH_TOKEN_EXCHANGE_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange";
     public static final String SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String OAUTH_SCOPES = "apim:api_manage apim:subscription_manage apim:tier_manage apim:admin " +

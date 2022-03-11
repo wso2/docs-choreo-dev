@@ -96,7 +96,7 @@ public class TokenHandler {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
         String stsEndPoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("grant_type", Constant.OAUTH_CLIENT_CREDENTIALS_GRANT_TYPE);
+            put("grant_type", Constant.OAUTH_TOKEN_EXCHANGE_GRANT_TYPE);
             put("subject_token", userToken);
             put("subject_token_type", Constant.SUBJECT_TOKEN_TYPE);
             put("requested_token_type", Constant.REQUESTED_TOKEN_TYPE);
