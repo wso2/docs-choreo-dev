@@ -96,7 +96,7 @@ public class TokenHandler {
     public String getStsToken(String stsClientId, String stsClientSecret, String userToken)
             throws InterruptedException, TokenRetrievalException, IOException {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
-        String asgardeoTokenEndpoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+        String stsEndPoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("grant_type", Constant.OAUTH_CLIENT_CREDENTIALS_GRANT_TYPE);
             put("subject_token", userToken);
@@ -108,7 +108,7 @@ public class TokenHandler {
         String form = requestBodyMap.keySet().stream()
                 .map(key -> key + "=" + URLEncoder.encode(requestBodyMap.get(key), StandardCharsets.UTF_8))
                 .collect(Collectors.joining("&"));
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(asgardeoTokenEndpoint))
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(stsEndPoint))
                 .headers(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString(form))
                 .header(HttpHeaders.AUTHORIZATION, tokenAuthHeader)
