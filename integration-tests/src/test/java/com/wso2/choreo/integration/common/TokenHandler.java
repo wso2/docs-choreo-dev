@@ -41,9 +41,7 @@ public class TokenHandler {
      */
     public String getTestToken() throws InterruptedException, TokenRetrievalException, IOException {
         String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-        System.out.println(userToken);
         String stsToken = getStsToken(stsClientId, stsClientSecret, userToken);
-        System.out.println(stsToken);
         return stsToken;
     }
 
