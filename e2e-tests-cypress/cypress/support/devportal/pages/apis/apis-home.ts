@@ -14,7 +14,7 @@ import { Utils } from "../../../console/utils";
 import { STANDARD_TIME_OUT } from "../../constants";
 
 export class Apis {
-  static afterTwoMinutes = Date.now() + 180000;
+  static afterTwoMinutes = 0;
 
   static navigateToApiOverview(apiName: string): void {
     cy.log("Navigating to Overview");
@@ -54,6 +54,8 @@ export class Apis {
       const header = intercept.request.headers.authorization;
 
       Cypress.env("devportal_auth", header);
+
+      this.afterTwoMinutes= Date.now() + 180000
       this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName);
@@ -76,8 +78,11 @@ export class Apis {
       if (res.body.list.length == versionCount) {
         return;
       } else {
-        cy.wait(30000);
-        this.verifyAPI(url, header, versionCount);
+        let k = this.afterTwoMinutes - Date.now();
+        if (k >= 0) {
+          cy.wait(60000);
+          this.verifyAPI(url, header, versionCount);
+        }
       }
     });
   }
