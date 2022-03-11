@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - choreo-connect
   - deployment
+  - hpa
   - service
 
 namespace: choreo-apim
