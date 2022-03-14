@@ -1,0 +1,19 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-connect-adapter-default-p6
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-adapter-default-p6
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-connect-deployment-default-p6
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-deployment-default-p6
