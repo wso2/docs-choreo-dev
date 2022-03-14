@@ -1,31 +1,19 @@
 resources:
-  - connector-builder.yaml
-  - testbase.yaml
-  - obsapi.yaml
-  - frontend.yaml
-  - email-service.yaml
+  - alert-notification-service.yaml
+  - analytics-subscription.yaml
+  - anomaly-detector.yaml
   - api-server.yaml
+  - apim-service.yaml
   - app-deployer.yaml
   - app-service.yaml
-  - workspace-manager.yaml
-  - telemetry.yaml
-  - sys-obsapi.yaml
-  - negotiator.yaml
-  - linker.yaml
-  - loggingapi.yaml
-  - connectords.yaml
-  - apim-service.yaml
-  - perfanalyzer-estimator.yaml
-  - datamapper.yaml
-  - test-assistant.yaml
-  - analytics-subscription.yaml
-  - datacollector.yaml
-  - quota-limiter.yaml
-  - subscriptions.yaml
-  - cp-graphql.yaml
-  - multivariate-anomaly-detector-notification-manager.yaml
   - billing.yaml
-  - alert-notification-service.yaml
+  - connector-builder.yaml
+  - connectords.yaml
+  - console-next.yaml
+  - cp-graphql.yaml
+  - datacollector.yaml
+  - datamapper.yaml
+  - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
@@ -34,4 +22,19 @@ resources:
   - dp-rudder.yaml
   - dp-secret-manager.yaml
   - dp-utility-api.yaml
-
+  - email-service.yaml
+  - frontend.yaml
+  - linker.yaml
+  - loggingapi.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
+  - negotiator.yaml
+  - obsapi.yaml
+  - orgremover.yaml
+  - perfanalyzer-estimator.yaml
+  - quota-limiter.yaml
+  - subscriptions.yaml
+  - sys-obsapi.yaml
+  - telemetry.yaml
+  - test-assistant.yaml
+  - testbase.yaml
+  - workspace-manager.yaml
