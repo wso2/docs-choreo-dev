@@ -5,6 +5,5 @@ resources:
   - choreo-connect-global-adapter.yaml
   - choreo-gateway-nginx.yaml
   - devportal.yaml
-  - gateway.yaml
   - tm-1-hpa.yaml
   - tm-2-hpa.yaml
