@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: default-backend
   labels:
-    app: code-server-default-backend
+    choreo.component: code-server-default-backend
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip1: CKV_K8S_8=Liveness probe not required
@@ -13,11 +13,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: code-server-default-backend
+      choreo.component: code-server-default-backend
   template:
     metadata:
       labels:
-        app: code-server-default-backend
+        choreo.component: code-server-default-backend
     spec:
       securityContext:
         allowPrivilegeEscalation: false

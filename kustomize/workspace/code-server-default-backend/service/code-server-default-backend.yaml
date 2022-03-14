@@ -4,7 +4,7 @@ metadata:
   name: default-backend
 spec:
   selector:
-    app: code-server-default-backend
+    choreo.component: code-server-default-backend
   ports:
     - protocol: TCP
       name: http-port
