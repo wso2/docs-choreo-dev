@@ -1,39 +1,39 @@
 resources:
-  - connector-builder.yaml
-  - testbase.yaml
-  - obsapi.yaml
-  - frontend.yaml
-  - email-service.yaml
-  - api-server.yaml
-  - app-service.yaml
-  - app-deployer.yaml
-  - workspace-manager.yaml
-  - telemetry.yaml
-  - sys-obsapi.yaml
-  - negotiator.yaml
-  - loggingapi.yaml
-  - connectords.yaml
-  - apim-service.yaml
-  - language-server.yaml
-  - perfanalyzer-estimator.yaml
-  - datamapper.yaml
-  - test-assistant.yaml
+  - alert-notification-service.yaml
   - analytics-subscription.yaml
+  - api-server.yaml
+  - apim-service.yaml
+  - app-deployer.yaml
+  - app-service.yaml
+  - billing.yaml
+  - connector-builder.yaml
+  - connectords.yaml
+  - console-next.yaml
+  - cp-graphql.yaml
   - datacollector.yaml
-  - dp-rudder.yaml
-  - dp-secret-manager.yaml
-  - quota-limiter.yaml
-  - subscriptions.yaml
-  - dp-utility-api.yaml
+  - datamapper.yaml
+  - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
   - dp-garbage-collector.yaml
   - dp-mizzen.yaml
-  - orgremover.yaml
-  - cp-graphql.yaml
   - dp-project-manager.yaml
-  - console-next.yaml
+  - dp-rudder.yaml
+  - dp-secret-manager.yaml
+  - dp-utility-api.yaml
+  - email-service.yaml
+  - frontend.yaml
+  - language-server.yaml
+  - loggingapi.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
-  - billing.yaml
-  - alert-notification-service.yaml
-  - delete-manager.yaml
+  - negotiator.yaml
+  - obsapi.yaml
+  - orgremover.yaml
+  - perfanalyzer-estimator.yaml
+  - quota-limiter.yaml
+  - subscriptions.yaml
+  - sys-obsapi.yaml
+  - telemetry.yaml
+  - test-assistant.yaml
+  - testbase.yaml
+  - workspace-manager.yaml
