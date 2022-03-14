@@ -1,6 +1,7 @@
 resources:
   - alert-notification-service.yaml
   - analytics-subscription.yaml
+  - anomaly-detector.yaml
   - api-server.yaml
   - apim-service.yaml
   - app-deployer.yaml
