@@ -3,11 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: app-service
   name: app-service
@@ -52,16 +48,37 @@ spec:
             secretKeyRef:
               name: secret-app-service
               key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+        - name: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
         - name: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
           valueFrom:
             secretKeyRef:
               name: secret-app-service
               key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+        - name: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+        - name: MARKETING_CONSENT_APP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: MARKETING_CONSENT_APP_CLIENT_SECRET
         - name: IDP_BACKEND_API_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: secret-idp
               key: IDP_BACKEND_API_CLIENT_SECRET
+        - name: SCIM_BACKEND_API_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: SCIM_BACKEND_API_USER_PASSWORD
+              optional: true
         - name: AZURE_KEY_VAULT_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
@@ -97,9 +114,36 @@ spec:
             secretKeyRef:
               name: secret-service-now
               key: SERVICE_NOW_PASSWORD
+        - name: ASB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: secret-organization-remover
+              key: ASB_CONNECTION_STRING
+        - name: APIM_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-runtime
+              key: APIM_CLIENT_SECRET
+        # temporary: migration-related configs start
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-deployer
+              key: GITHUB_TOKEN
+        - name: IDP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: secret-idp
+              key: IDP_CLIENT_SECRET
+        - name: MIGRATION_IDP_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-app-service
+              key: MIGRATION_IDP_USER_PASSWORD
+        # temporary: migration-related configs end
         envFrom:
-          - configMapRef:
-              name: env-app-service
+        - configMapRef:
+            name: env-app-service
         ports:
         - containerPort: 8080
           name: grpc-port
@@ -120,9 +164,12 @@ spec:
             memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
-          runAsUser: 1000
-          runAsGroup: 1000
+          runAsUser: 12000
+          runAsGroup: 12000
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         volumeMounts:
         - mountPath: /app-service.yaml
           name: config
@@ -151,6 +198,17 @@ spec:
         - name: secret-service-now
           mountPath: "/mnt/csi/secret-service-now"
           readOnly: true
+        - name: secret-organization-remover
+          mountPath: "/mnt/csi/secret-organization-remover"
+          readOnly: true
+        - name: secret-runtime
+          mountPath: "/mnt/csi/secret-runtime"
+          readOnly: true
+        # temporary: migration-related configs start
+        - name: secret-app-deployer
+          mountPath: "/mnt/csi/secret-app-deployer"
+          readOnly: true
+        # temporary: migration-related configs end
       volumes:
       - name: config
         configMap:
@@ -219,4 +277,30 @@ spec:
             secretProviderClass: secret-service-now
           nodePublishSecretRef:
             name: csi-secret-store-azure
+      - name: secret-organization-remover
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-organization-remover
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-runtime
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-runtime
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      # temporary: migration-related configs start
+      - name: secret-app-deployer
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-app-deployer
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      # temporary: migration-related configs end
       serviceAccountName: sa-choreo-default

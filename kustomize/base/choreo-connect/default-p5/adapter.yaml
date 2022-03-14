@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-connect-adapter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-adapter-default-p5
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-connect-adapter-default-p5
+    spec:
+     containers:
+       - name: choreo-connect-adapter
+         env:
+         - name: localLabel
+           value: default-p5
+         - name: environmentLabel
+           value: Production and Sandbox
+     volumes:
+        - name: global-adapter-keystore-vol
+          configMap:
+            name: global-adapter-keystore-vol

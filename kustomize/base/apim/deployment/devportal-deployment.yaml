@@ -3,11 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
-    checkov.io/skip2: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_23=Temporarily suppressing till fixing
     checkov.io/skip4: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
-    checkov.io/skip5: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
+    checkov.io/skip6: CKV_K8S_38=Service account token is required when using Linkerd
   labels:
     choreo.component: apim-devportal
   name: apim-devportal-deployment
@@ -31,16 +28,20 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-devportal:v0.1.8
           imagePullPolicy: Always
           securityContext:
+            runAsNonRoot: true
+            runAsUser: 10500
+            runAsGroup: 10500
             allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - all
               add: ["NET_RAW"]
+            readOnlyRootFilesystem: true
           name: apim-devportal
           envFrom:
           - configMapRef:
@@ -75,6 +76,10 @@ spec:
               cpu: 300m
               memory: 512Mi
           volumeMounts:
+            - name: devportal-var-cache-dir
+              mountPath: /var/cache/nginx
+            - name: devportal-var-run-dir
+              mountPath: /var/run
             - name: devportal-conf
               mountPath: /app/devportal.config.js
               subPath: devportal.config.js
@@ -83,4 +88,8 @@ spec:
         - name: devportal-conf
           configMap:
             name: choreo-apim-devportal-conf
+        - name: devportal-var-cache-dir
+          emptyDir: {}
+        - name: devportal-var-run-dir
+          emptyDir: {}
       serviceAccountName: sa-choreo-apim

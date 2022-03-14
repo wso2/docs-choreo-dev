@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="choreoIntegrationTests">
+    <test name="choreo">
+        <classes>
+            <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
+            <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
+            <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
+            <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
+            <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>
+            <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
+            <class name="com.wso2.choreo.integration.tests.deploy.DeployIT"/>
+            <class name="com.wso2.choreo.integration.tests.addConfigurations.AddConfigurationsIT"/>
+        </classes>
+    </test>
+</suite>

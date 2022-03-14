@@ -1,0 +1,10 @@
+{
+  "data": {
+      "createComponent": {
+          "id": "xxxx-xxxx-xxxx-xxxx",
+          "orgId": 1291,
+          "projectId": "xxxx-xxxx-xxxx-xxxx",
+          "handler": "choreocontrolplane"
+      }
+  }
+}

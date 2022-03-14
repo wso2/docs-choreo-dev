@@ -1,4 +1,5 @@
 resources:
+  - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
   - frontend.yaml
@@ -14,10 +15,23 @@ resources:
   - loggingapi.yaml
   - connectords.yaml
   - apim-service.yaml
-  - language-server.yaml
   - perfanalyzer-estimator.yaml
-  - programanalyzer.yaml
   - datamapper.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
   - datacollector.yaml
+  - quota-limiter.yaml
+  - subscriptions.yaml
+  - cp-graphql.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
+  - billing.yaml
+  - alert-notification-service.yaml
+  - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+  - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
+  - dp-project-manager.yaml
+  - dp-rudder.yaml
+  - dp-secret-manager.yaml
+  - dp-utility-api.yaml
+

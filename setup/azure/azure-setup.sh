@@ -124,6 +124,17 @@ helm upgrade --install linkerd2 --wait \
   --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
   -n linkerd --version 2.10.0
 
+# Execute for Stage and Prod Environments only
+echo "---  Installing Buoyant Cloud... "
+kubectl create -f buoyant-cloud/buoyant-setup.sh
+kubectl create secret generic buoyant-cloud-id -n buoyant-cloud \
+  --from-literal=id="${BUOYANT_CLOUD_AGENT_ID}" \
+  --from-literal=key="${BUOYANT_CLOUD_AGENT_KEY}" \
+  --from-literal=downloadKey="${BUOYANT_CLOUD_AGENT_DOWNLOAD_KEY}" \
+  --from-literal=name="${BUOYANT_CLOUD_NAME}"
+kubectl label secret buoyant-cloud-id -n buoyant-cloud app.kubernetes.io/part-of=buoyant-cloud
+
+## TODO: Migrate to Buoyant Cloud for Linkerd Monitoring
 echo "--- Installing linkerd viz extension... "
 helm install linkerd-viz linkerd/linkerd-viz
 
@@ -176,7 +187,7 @@ kubectl create namespace csi-secret-store-driver --dry-run=client -o yaml | kube
 
 helm repo add csi-secrets-store-provider-azure https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts
 helm repo update
-helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --namespace csi-secret-store-driver --version 0.0.16
+helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --namespace csi-secret-store-driver --version 0.0.16 --set secrets-store-csi-driver.linux.driver.resources.limits.memory=400Mi --set secrets-store-csi-driver.linux.driver.resources.requests.memory=200Mi
 
 ################ Install CSI Secret Store Class Secret ########
 # This secret has to be created in other namespaces as well if CSI driver is going to be used

@@ -1,0 +1,33 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  labels:
+    choreo.component: choreo-connect-adapter-default-p3
+  name: choreo-connect-adapter-default-p3
+spec:
+  maxReplicas: 3
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-connect-adapter-default-p3
+  targetCPUUtilizationPercentage: 75
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  labels:
+    choreo.component: choreo-connect-deployment-default-p3
+  name: choreo-connect-deployment-default-p3
+spec:
+  maxReplicas: 10
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-connect-deployment-default-p3
+  targetCPUUtilizationPercentage: 75

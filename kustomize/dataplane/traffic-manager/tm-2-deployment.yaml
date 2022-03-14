@@ -1,0 +1,249 @@
+---
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+  labels:
+    choreo.component: apim-tm
+  name: choreo-apim-tm-2-deployment
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      deployment: choreo-tm-2
+  template:
+    metadata:
+      labels:
+        deployment: choreo-tm-2
+        choreo.component: apim-tm
+    spec:
+      # Remove fsGroup due to issue in init container. TODO: Remove init container.
+      # securityContext:
+      #   fsGroup: 802
+      automountServiceAccountToken: false
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: wso2am
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r06102021.1
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - nc -z localhost 9611
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - nc -z localhost 9611
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          lifecycle:
+            preStop:
+              exec:
+                command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/api-manager.sh stop']
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: 3000m
+            limits:
+              memory: 4Gi
+              cpu: 3000m
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
+          ports:
+            - containerPort: 9711
+              protocol: "TCP"
+            - containerPort: 9611
+              protocol: "TCP"
+            - containerPort: 5672
+              protocol: "TCP"
+          envFrom:
+          - configMapRef:
+              name: cm-feature-flags
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NODE_ID
+              valueFrom:
+                fieldRef:
+                    fieldPath: metadata.name
+            - name: PRIMARY_KEYSTORE_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: PRIMARY_KEYSTORE_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: PRIMARY_KEYSTORE_KEY_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: PRIMARY_KEYSTORE_KEY_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: TLS_KEYSTORE_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: TLS_KEYSTORE_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: TLS_KEYSTORE_KEY_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: TLS_KEYSTORE_KEY_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: INTERNAL_KEYSTORE_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: INTERNAL_KEYSTORE_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: INTERNAL_KEYSTORE_KEY_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: INTERNAL_KEYSTORE_KEY_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: TRUSTSTORE_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: TRUSTSTORE_PSWD
+                  name: secret-apim-keystore-passwords
+            - name: H2_SHARED_DB_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: H2_SHARED_DB_PSWD
+                  name: secret-apim
+            - name: SUPER_ADMIN_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: SUPER_ADMIN_PSWD
+                  name: secret-apim
+            - name: CHOREO_IS_ADMIN_PSWD
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO_IS_ADMIN_PSWD
+                  name: secret-apim
+            - name: JVM_MEM_OPTS
+              value: "-Xms2048m -Xmx2048m"
+            - name: PROFILE_NAME
+              value: traffic-manager
+          volumeMounts:
+            - name: apim-vol
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
+            - name: wso2am-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
+              subPath: tm-2-deployment.toml
+            - name: apim-docker-entrypoint
+              mountPath: /home/wso2carbon/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
+            - name: mysql-connector-jar
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
+            - name: secret-apim-keystore-passwords
+              mountPath: /mnt/csi/keystore-passwords
+              readOnly: true
+            - name: secret-apim-primary-keystore
+              mountPath: /home/wso2carbon/wso2-keystores/primary-keystore.pfx
+              readOnly: true
+              subPath: APIM_PRIMARY_KEYSTORE
+            - name: secret-apim-tls-keystore
+              mountPath: /home/wso2carbon/wso2-keystores/tls-keystore.pfx
+              readOnly: true
+              subPath: APIM_TLS_KEYSTORE
+            - name: secret-apim-internal-keystore
+              mountPath: /home/wso2carbon/wso2-keystores/internal-keystore.pfx
+              readOnly: true
+              subPath: APIM_INTERNAL_KEYSTORE
+            - name: apim-truststore
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/resources/security/client-truststore.jks
+              subPath: client-truststore.jks
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
+      # serviceAccountName: sa-choreo-apim
+      volumes:
+        - name: apim-vol
+          emptyDir: {}
+        - name: wso2am-conf
+          configMap:
+            name: choreo-apim-tm-2-conf
+        - name: apim-docker-entrypoint
+          configMap:
+            name: choreo-apim-docker-entrypoint
+            defaultMode: 0407
+        - name: mysql-connector-jar
+          emptyDir: {}
+        - name: secret-apim-keystore-passwords
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-keystore-passwords
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-primary-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-primary-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-tls-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-tls-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-internal-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-internal-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: apim-truststore
+          configMap:
+            name: choreo-apim-truststore
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

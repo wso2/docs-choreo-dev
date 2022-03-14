@@ -1,9 +1,9 @@
 resources:
   - namespace.yaml
+  - dp-mizzen-ws.yaml
  # - obsapi.yaml
  # - telemetry.yaml
  # - sys-obsapi.yaml
  # - negotiator.yaml
  # - loggingapi.yaml
  # - perfanalyzer-estimator.yaml
- # - programanalyzer.yaml

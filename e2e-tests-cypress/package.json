@@ -1,33 +1,25 @@
 {
-  "name": "integration-tests-cypress",
+  "name": "e2e-tests-cypress",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cypress": "^7.4.0",
-    "cypress-social-logins": "^1.11.2",
-    "typescript": "^4.2.4"
+    "cypress": "^9.4.1",
+    "typescript": "^4.4.2"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^7.0.6",
-    "cypress-file-upload": "^5.0.7",
-    "cypress-grep": "^2.3.2",
-    "cypress-multi-reporters": "^1.5.0",
-    "mocha": "^8.3.2",
-    "mochawesome": "^6.2.2",
-    "mochawesome-merge": "^4.2.0",
-    "mochawesome-report-generator": "^5.2.0"
+    "@cypress/webpack-batteries-included-preprocessor": "^2.0.0",
+    "@cypress/webpack-preprocessor": "^5.11.0",
+    "@testing-library/cypress": "^8.0.1",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-xpath": "^1.6.2"
   },
   "scripts": {
-    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
     "e2etest:headless": "npx cypress run --headless",
     "devportal-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/devportal/*.ts'",
     "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*'",
     "console-prod-periodic-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*' --config-file prod-periodic.json",
-    "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
-    "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
-    "posttest": "npm run combine-reports && npm run generate-report",
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
     "local": "npm run e2etest:headless || npm run posttest"
   },

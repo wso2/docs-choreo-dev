@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS api_metrics (
   `id`              int(11)       NOT NULL AUTO_INCREMENT,
   `time_stamp`      bigint(20)    NOT NULL,
   `api_name`        varchar(256)  NOT NULL,
+  `env_name`        varchar(16)   NULL,
   `wip`             float         NOT NULL,
   `latency`         float         NOT NULL,
   `throughput`      float         NOT NULL,

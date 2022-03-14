@@ -1,0 +1,81 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: step-usage-publisher
+  labels:
+    choreo.component: step-usage-publisher
+spec:
+  schedule: 30 0 * * *
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 10
+      completions: 1
+      parallelism: 1
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+            linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+          labels:
+            choreo.component: step-usage-publisher
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: step-usage-publisher
+              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-step-usage-publisher:latest
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              env:
+                - name: STRIPE_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-usage-publisher
+                      key: STRIPE_TOKEN
+                - name: CHOREO_STEP_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-usage-publisher
+                      key: MSSQL_PASSWORD
+              envFrom:
+                - configMapRef:
+                    name: env-step-usage-publisher
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 1024Mi
+                requests:
+                  cpu: 300m
+                  memory: 512Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
+                - name: secret-step-usage-publisher
+                  mountPath: "/mnt/csi/secret-step-usage-publisher"
+                  readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: cm-step-usage-publisher-config
+            - name: secret-step-usage-publisher
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-step-usage-publisher
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default

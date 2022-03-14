@@ -1,0 +1,16 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  labels:
+    choreo.component: console-next
+  name: console-next
+spec:
+  maxReplicas: 5
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: console-next
+  targetCPUUtilizationPercentage: 75

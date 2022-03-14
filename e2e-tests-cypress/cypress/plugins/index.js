@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -10,48 +11,62 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-
-/// <reference types="cypress" />
-// ***********************************************************
-// This example plugins/index.js can be used to load plugins
-//
-// You can change the location of this file or turn off loading
-// the plugins file with the 'pluginsFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/plugins-guide
-// ***********************************************************
-
-// This function is called when a project is opened or re-opened (e.g. due to
-// the project's config changing)
-
-const { GoogleSocialLogin, GitHubSocialLogin } = require('cypress-social-logins').plugins
-
-/**
- * @type {Cypress.PluginConfig}
- */
-// eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-  on('task', {
-    GoogleSocialLogin: GoogleSocialLogin,
-    GitHubSocialLogin: GitHubSocialLogin
-  })
-}
+import webpackPreprocessor from "@cypress/webpack-batteries-included-preprocessor";
+import fs from "fs";
+import path from "path";
 
 module.exports = (on, config) => {
-  // register cypress-grep plugin code
-  require('cypress-grep/src/plugin')(config)
-}
+  on(
+    "task",
+    {
+      writeTestData: ({ fileName, key, value }) => {
+        let initData = {};
 
+        const dirPath = path.join(__dirname, "..", `/fixtures/json`);
 
-module.exports = (on, config) => {
-// put all cy.log() messages to console output
-  on('task', {
-    log(message) {
-      console.log(message);
-      return null;
-    }
-  });
+        if (!fs.existsSync(dirPath)) {
+          fs.mkdirSync(dirPath, { recursive: true });
+        }
+
+        const filePath = path.join(dirPath, `/${fileName}.json`);
+        initData[key] = value;
+        if (!fs.existsSync(filePath)) {
+          fs.writeFileSync(filePath, JSON.stringify(initData));
+        } else {
+          let jsonContent = {};
+          let dataFileContent = fs.readFileSync(filePath, { encoding: "utf8" });
+          jsonContent = JSON.parse(dataFileContent);
+          jsonContent[key] = value;
+          fs.writeFileSync(filePath, JSON.stringify(jsonContent));
+        }
+        return null;
+      },
+      deleteFile: (fileName) => {
+        const filePath = path.join(
+          __dirname,
+          "..",
+          `/fixtures/json/${fileName}.json`
+        );
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+        return null;
+      },
+      readFile: (filePath) => {
+        if (fs.existsSync(filePath)) {
+          const content = fs.readFileSync(filePath, { encoding: "utf8" });
+         return JSON.parse(content)
+        }
+        return {};
+      },
+    },
+    "file:preprocessor",
+    webpackPreprocessor({
+      typescript: require.resolve("typescript"),
+    })
+  );
+  config.env.choreoIDPUsername = process.env.choreoIDPUsername;
+  config.env.choreoIDPPassword = process.env.choreoIDPPassword;
+  config.env.choreoOrgHandle = process.env.choreoOrgHandle;
+  return config;
 };

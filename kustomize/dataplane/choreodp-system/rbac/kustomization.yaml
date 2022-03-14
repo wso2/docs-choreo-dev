@@ -1,0 +1,10 @@
+resources:
+  - dp-mizzen-agent-cr.yaml
+  - dp-mizzen-agent-crb.yaml
+  - dp-mizzen-agent-sa.yaml
+  - dp-kv-resolver-cr.yaml
+  - dp-kv-resolver-crb.yaml
+  - dp-kv-resolver-sa.yaml
+  - dp-kv-resolver-role.yaml
+  - dp-kv-resolver-rb.yaml
+  - dp-kv-resolver-crd.yaml

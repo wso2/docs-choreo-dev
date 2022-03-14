@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
+  labels:
+    choreo.component: quota-limiter
+  name: quota-limiter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: quota-limiter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: quota-limiter
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: quota-limiter
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-quota-limiter:latest
+          env:
+            - name: APIM_PUBLISHER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-quota-limiter
+                  key: QUOTA_LIMITER_APIM_CLEINT_ID
+            - name: APIM_PUBLISHER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-quota-limiter
+                  key: QUOTA_LIMITER_APIM_CLIENT_SECRET
+          ports:
+            - containerPort: 9090
+              name: grpc-port
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+            - containerPort: 9092      # To be used for public health check (external)
+              name: healthz
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 100
+            runAsGroup: 1000
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-quota-limiter
+              mountPath: "/mnt/csi/secret-quota-limiter"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-quota-limiter-config
+        - name: secret-quota-limiter
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-quota-limiter
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default

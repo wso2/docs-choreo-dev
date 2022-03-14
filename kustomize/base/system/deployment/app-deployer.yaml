@@ -3,12 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
-    checkov.io/skip2: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: app-deployer
   name: app-deployer
@@ -64,8 +59,8 @@ spec:
               name: secret-app-deployer
               key: APIM_CLIENT_SECRET
         envFrom:
-          - configMapRef:
-              name: env-app-deployer
+        - configMapRef:
+            name: env-app-deployer
         ports:
         - containerPort: 8080
           name: grpc-port
@@ -86,8 +81,12 @@ spec:
             memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
-          runAsUser: 1000
-          runAsGroup: 1000
+          runAsUser: 12000
+          runAsGroup: 12000
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         volumeMounts:
         - mountPath: /app-deployer.yaml
           name: config
@@ -105,6 +104,8 @@ spec:
         - name: secret-redis
           mountPath: "/mnt/csi/secret-redis"
           readOnly: true
+        - name: tmp
+          mountPath: /tmp
       volumes:
       - name: config
         configMap:
@@ -141,4 +142,6 @@ spec:
             secretProviderClass: secret-redis
           nodePublishSecretRef:
             name: csi-secret-store-azure
+      - name: tmp
+        emptyDir: {}
       serviceAccountName: sa-choreo-default

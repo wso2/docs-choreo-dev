@@ -17,9 +17,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    checkov.io/skip1: CKV_K8S_22=Skipping till the issue is fixed
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing as this requires CICD level changes
-    checkov.io/skip3: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_38=Service account token is required when using Linkerd
   labels:
     choreo.component: apim-am
   name: choreo-apim-am-deployment
@@ -45,7 +44,7 @@ spec:
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
@@ -79,6 +78,7 @@ spec:
               cpu: 3000m
           securityContext:
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             runAsUser: 10500
             runAsGroup: 10500
             capabilities:
@@ -177,12 +177,19 @@ spec:
               valueFrom:
                 secretKeyRef:
                     key: MONGO_DB_ATLAS_PUBLIC_KEY
-                    name: secret-apim-mongodb   
+                    name: secret-apim-mongodb
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
             - name: JVM_MEM_OPTS
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
               value: control-plane
           volumeMounts:
+            - name: apim-vol
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
             - name: apim-docker-entrypoint
@@ -223,8 +230,13 @@ spec:
             - name: secret-apim-mongodb
               mountPath: /mnt/csi/secret-apim-mongodb
               readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
+              readOnly: true
       serviceAccountName: sa-choreo-apim
       volumes:
+        - name: apim-vol
+          emptyDir: {}
         - name: wso2am-conf
           configMap:
             name: choreo-apim-am-conf
@@ -309,4 +321,11 @@ spec:
               secretProviderClass: secret-apim-mongodb
             nodePublishSecretRef:
               name: csi-secret-store-azure
-
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

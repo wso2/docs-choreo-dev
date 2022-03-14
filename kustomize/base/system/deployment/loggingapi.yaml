@@ -3,12 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_20=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: loggingapi
   name: loggingapi
@@ -17,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: loggingapi
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -27,11 +22,11 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - env:
+        - name: loggingapi
+          env:
             - name: b7a_log_level
               valueFrom:
                 configMapKeyRef:
@@ -41,27 +36,22 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: IDP_ISSUER
-                  name: cm-idp-replica
+                  name: env-idp-replica
             - name: IDP_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: IDP_CLIENT_ID
-                  name: cm-idp-replica
+                  name: env-idp-replica
             - name: IDP_HOST
               valueFrom:
                 configMapKeyRef:
                   key: IDP_HOST
-                  name: cm-idp-replica
+                  name: env-idp-replica
             - name: IDP_JWKS_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
                   name: cm-idp-replica
-            - name: JWKS_ENDPOINT_PROTOCOL
-              valueFrom:
-                configMapKeyRef:
-                  key: JWKS_ENDPOINT_PROTOCOL
-                  name: cm-loggingapi
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
@@ -71,67 +61,39 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                  name: cm-loggingapi
-            - name: USER_APPS_NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  key: USER_APPS_NAMESPACE
-                  name: cm-k8sservice-replica
-            - name: K8S_SERVICE_SUBSCRIPTION_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: K8S_SERVICE_SUBSCRIPTION_ID
-                  name: cm-k8sservice-replica
-            - name: RESOURCE_GROUP
-              valueFrom:
-                configMapKeyRef:
-                  key: RESOURCE_GROUP
-                  name: cm-k8sservice-replica
-            - name: CLUSTER_NAME
-              valueFrom:
-               configMapKeyRef:
-                 key: CLUSTER_NAME
-                 name: cm-k8sservice-replica
-            - name: LOG_WORKSPACE_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: LOG_WORKSPACE_ID
-                  name: cm-loganalytics-replica
-            - name: NEGOTIATOR_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: NEGOTIATOR_GRPC_ADDRESS
-                  name: cm-loggingapi
-            - name: APP_SERVICE_GRPC_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: APP_SERVICE_GRPC_ADDRESS
-                  name: cm-loggingapi
+                  name: env-loggingapi
             - name: AAD_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: secret-loggingapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-            - name: AZURE_K8S_API_SERVER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: cm-loggingapi
-                  key: AZURE_K8S_API_SERVER_URL  
             - name: AZURE_K8S_SERVICE_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: secret-loggingapi
-                  key: AZURE_K8S_API_SERVER_ACCESS_TOKEN    
+                  key: AZURE_K8S_API_SERVER_ACCESS_TOKEN
+          envFrom:
+            - configMapRef:
+                name: env-k8sservice-replica
+            - configMapRef:
+                name: env-loganalytics-replica
+            - configMapRef:
+                name: cm-loggingapi
+            - configMapRef:
+                name: env-loggingapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
           securityContext:
-            runAsUser: 100
-            runAsGroup: 1000
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-          name: loggingapi
+            capabilities:
+              drop:
+                - all
           volumeMounts:
-          - name: secret-loggingapi
-            mountPath: "/mnt/csi/secret-loggingapi"
-            readOnly: true
+            - name: secret-loggingapi
+              mountPath: "/mnt/csi/secret-loggingapi"
+              readOnly: true
           ports:
             - containerPort: 9097
               name: logapi-port
@@ -165,13 +127,13 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
-      - name: secret-loggingapi
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-loggingapi
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-loggingapi
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-loggingapi
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

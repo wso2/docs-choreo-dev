@@ -1,0 +1,16 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  labels:
+    app.kubernetes.io/component: controller
+  name: "${SYSTEM_NAMESPACE}-ingress-nginx-controller"
+spec:
+  maxReplicas: 4
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: "${SYSTEM_NAMESPACE}-ingress-nginx-controller"
+  targetCPUUtilizationPercentage: 75

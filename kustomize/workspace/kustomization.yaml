@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - choreodp-system
+  - code-server-default-backend
+  - actions-runner-system
+  - overprovisioning-buffer-deployment
+
+patches:
+  - path: linkerd-patch.yaml
+    target:
+      kind: Deployment
+
+commonLabels:
+  app: choreo-workspace

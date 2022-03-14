@@ -1,33 +1,35 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+/*
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
 
-// Import commands.js using ES2015 syntax:
-import '@testing-library/cypress/add-commands'
-import 'cypress-file-upload'
-import './console/common/console-commands'
-import './devportal/devportal-commands'
-import './console/common/console-login-commands'
-import  './console/apis/publisher-commands'
-import './console/integrations/integration-commands'
-import './console/services/service-commands'
+import "cypress-file-upload";
+import "./commands";
+import "cypress-xpath";
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+Cypress.on("uncaught:exception", (err, runnable) => {
+  return false;
+});
 
-// Overwrite log command to use task to put all cy.log() messages to console output
-Cypress.Commands.overwrite('log', (subject, message) => cy.task('log', message));
+Cypress.on("window:confirm", (err, runnable) => {
+  return true;
+});
 
-// load and register the grep feature
-require('cypress-grep')()
+Cypress.on("window:alert", (err, runnable) => {
+  return true;
+});
+
+Cypress.on("window:before:load", (win) => {
+  Object.defineProperty(win, "onbeforeunload", {
+    value: undefined,
+    writable: false,
+  });
+});

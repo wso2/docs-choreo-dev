@@ -2,4 +2,6 @@ resources:
   - ast-archiver.yaml
   - observability-data-generator.yaml
   - perfanalyzer-updater.yaml
-  - datamapper-balo-extractor.yaml
+  - choreo-step-aggregator.yaml
+  - choreo-step-enforcer.yaml
+  - choreo-step-usage-publisher.yaml

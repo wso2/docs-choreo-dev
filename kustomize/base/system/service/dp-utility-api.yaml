@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: dp-utility-api
+    choreo.dataplane: "true"
+  name: dp-utility-api
+spec:
+  ports:
+    - name: dp-utility-api-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: dp-utility-api

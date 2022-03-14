@@ -3,11 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_43=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: testbase
   name: testbase
@@ -35,46 +31,26 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_ISSUER
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_CLIENT_ID
           valueFrom:
             configMapKeyRef:
               key: IDP_CLIENT_ID
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:
               key: IDP_HOST
-              name: cm-idp-replica
+              name: env-idp-replica
         - name: IDP_JWKS_ENDPOINT
           valueFrom:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
               name: cm-idp-replica
-        - name: CHOREO_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-testbase-db
-        - name: CHOREO_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: cm-choreo-testbase-db
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-testbase-db
-        - name: CHOREO_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-testbase-db
-        - name: CHOREO_DB_DRIVER
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_DRIVER
               name: cm-choreo-testbase-db
         - name: CHOREO_DB_MAX_POOL
           valueFrom:
@@ -101,12 +77,18 @@ spec:
            secretKeyRef:
              name: secret-testbase-db
              key: CHOREO_DB_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: env-choreo-testbase-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase:v0.7.2
         securityContext:
           allowPrivilegeEscalation: false
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 12000
+          runAsGroup: 12000
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - all
         name: testbase
         volumeMounts:
         - name: secret-testbase-db

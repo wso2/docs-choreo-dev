@@ -1,4 +1,5 @@
 resources:
+  - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
   - frontend.yaml
@@ -14,14 +15,29 @@ resources:
   - loggingapi.yaml
   - apim-service.yaml
   - language-server.yaml
-  - programanalyzer.yaml
   - perfanalyzer-estimator.yaml
   - anomalydetector.yaml
   - datamapper.yaml
-  - deploymentoptimizer.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
   - datacollector.yaml
+  - dp-rudder.yaml
+  - dp-secret-manager.yaml
+  - quota-limiter.yaml
+  - subscriptions.yaml
+  - dp-utility-api.yaml
+  - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+  - dp-garbage-collector.yaml
+  - dp-mizzen.yaml
+  - orgremover.yaml
+  - cp-graphql.yaml
+  - dp-project-manager.yaml
+  - console-next.yaml
+  - multivariate-anomaly-detector-notification-manager.yaml
+  - billing.yaml
+  - alert-notification-service.yaml
+  - delete-manager.yaml
 
 commonAnnotations:
-  config.linkerd.io/skip-outbound-ports: 3306,443,2587
+  config.linkerd.io/skip-outbound-ports: 3306,443,2587,25

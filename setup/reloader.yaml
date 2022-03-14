@@ -105,6 +105,13 @@ spec:
         image: "stakater/reloader:v0.0.58"
         imagePullPolicy: IfNotPresent
         name: reloader-reloader
+        resources:
+          limits:
+            cpu: 10m
+            memory: 50Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
         args:
       serviceAccountName: reloader-reloader
 
