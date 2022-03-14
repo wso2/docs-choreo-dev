@@ -104,6 +104,7 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
             .ignore("$.data.createProject.id")
             .ignore("$.data.createProject.handler")
             .ignore("$.data.createProject.createdDate")
+            .ignore("$.data.createProject.orgId")
             .ignore("$.data.createProject.name")));
   }
 }

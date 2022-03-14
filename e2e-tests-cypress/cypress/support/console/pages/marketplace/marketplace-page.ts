@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 export class Marketplace {
   static connectorResults = '[data-testid="search-results"]>a';
 
@@ -23,29 +22,28 @@ export class Marketplace {
 
   static filterByChoreo() {
     cy.get('[data-testid="choreo-filter"]').click();
-    cy.get('[data-testid="choreo-filter"]').contains('Choreo').should('be.visible');
+    cy.get('[data-testid="choreo-filter"]')
+      .contains("Choreo")
+      .should("be.visible");
   }
 
   static filterByMyOrganization() {
     cy.get('[data-testid="my-organization-filter"]').click();
-    cy.get('[data-testid="my-organization-filter"]').contains('My Organization')
+    cy.get('[data-testid="my-organization-filter"]')
+      .contains("My Organization")
+      .should("be.visible");
   }
 
   static filterByFree() {
     cy.get('[data-testid="Free-checkbox"]').click();
-    cy.get('div[role="button"] > span').contains('Free').should('be.visible');
   }
 
   static filterByFreemium() {
     cy.get('[data-testid="Freemium-checkbox"]').click();
-    cy.get('div[role="button"] > span')
-      .contains('Freemium')
-      .should('be.visible');
   }
 
   static filterByPaid() {
     cy.get('[data-testid="Paid-checkbox"]').click();
-    cy.get('div[role="button"] > span').contains('Paid').should('be.visible');
   }
 
   static clearSelectedFilters() {
@@ -53,30 +51,24 @@ export class Marketplace {
   }
 
   static collapsAndExpandPrice() {
-    cy.get('ul[role="tree"] >li').contains('Price');
+    cy.get('ul[role="tree"] >li').contains("Price");
   }
 
   static filterByCategory(mainCategory: string, subCategory: string) {
     cy.get('[role="group"]>div>div').then((ele) => {
       cy.wrap(ele)
-        .contains('See')
+        .contains("See")
         .then((e) => {
-          if (e.text() === 'See More') {
+          if (e.text() === "See More") {
             cy.wrap(e).click();
           }
         });
     });
     cy.get(`[data-testid="${mainCategory}"]`).click();
-    cy.get('div[role="button"] > span')
-      .contains(`${mainCategory}`)
-      .should('be.visible');
+
     if (subCategory) {
-      cy.get(`[data-testid="${subCategory}"]`).should('be.visible').click();
-      cy.get('div[role="button"] > span')
-        .contains(`${subCategory}`)
-        .should('be.visible');
+      cy.get(`[data-testid="${subCategory}"]`).should("be.visible").click();
     }
-    cy.get(`[data-testid="${mainCategory}"]>div>div>svg`).click();
   }
 
   static navigateToConnectorOverview() {
@@ -84,7 +76,7 @@ export class Marketplace {
   }
 
   static getConnectorName() {
-    return cy.get('[data-testid="connector-name"]').invoke('text');
+    return cy.get('[data-testid="connector-name"]').invoke("text");
   }
 
   static getConnectorTags() {
@@ -106,7 +98,7 @@ export class Marketplace {
   }
 
   static getTriggerName() {
-    return cy.get('[data-testid="trigger-name"]').invoke('text');
+    return cy.get('[data-testid="trigger-name"]').invoke("text");
   }
 
   static getTriggerTags() {
@@ -116,4 +108,19 @@ export class Marketplace {
       .each((v) => tags.push(v.text()));
   }
 
+  static validateConnectorPopulation(tags: string[]) {
+    cy.intercept({
+      method: "GET",
+      url: Cypress.env("balRegistryURL") + "/connectors*",
+      times: 1,
+    }).as("balRegistry");
+
+    cy.wait("@balRegistry", { timeout: 120000 }).then(() => {
+      tags.forEach(function (tag) {
+        cy.get('[data-testid="connector-tag"]', { timeout: 10000 }).contains(
+          tag
+        );
+      });
+    });
+  }
 }

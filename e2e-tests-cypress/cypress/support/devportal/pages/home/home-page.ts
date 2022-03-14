@@ -11,7 +11,9 @@
  * associated services.
  */
 
-export class DevportalHomePage {
+import { Utils } from "../../../console/utils";
+
+export class DevPortalHomePage {
   static username = "[data-testid=signedin-user-menu-btn]";
 
   static navigateToHome(): void {
@@ -20,21 +22,17 @@ export class DevportalHomePage {
       .click();
   }
 
-
   static clickOnLoggedInUser(): void {
     cy.get(this.username).click();
   }
 
-  static logout(fileID: string = ""): void {
-  cy.window()
-    .its("sessionStorage")
-    .invoke("getItem", "sign_out_url")
-    .then((url) => {
-      cy.request(url);
-    });
-    if (fileID) {
-      cy.task("deleteFile", fileID);
-    }
+  static logout(): void {
+    cy.window()
+      .its("sessionStorage")
+      .invoke("getItem", "sign_out_url")
+      .then((url) => {
+        cy.request(url);
+      });
   }
 
   static navigateToApisPage(): void {
@@ -45,5 +43,28 @@ export class DevportalHomePage {
     cy.get('[data-testid="applications-appbar-btn"]')
       .should("be.visible")
       .click();
+    this.interceptApplications();
+  }
+
+  private static interceptApplications() {
+    cy.intercept(
+      `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/?organizationId=*`
+    ).as("apps");
+    cy.wait("@apps", { timeout: 180000 }).then((intercept) => {
+      const orgId = intercept.request.url.split("organizationId=")[1];
+
+      const header = intercept.request.headers.authorization;
+      const apps = intercept.response.body.list as [];
+      const headers = {
+        Authorization: `${header}`,
+      };
+      apps.forEach((app) => {
+        let appId = app["applicationId"];
+        Utils.sendDeleteRequest(
+          `${Cypress.env("apimSvcURL")}/api/am/devportal/v2/applications/${appId}?organizationId=${orgId}`,
+          headers
+        );
+      });
+    });
   }
 }

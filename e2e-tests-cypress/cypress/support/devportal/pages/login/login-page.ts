@@ -14,7 +14,7 @@ import { LONG_TIME_OUT, STANDARD_TIME_OUT } from "../../constants";
 const handle = Cypress.env("choreoOrgHandle");
 const idpParam = "?fidp=choreoe2etest";
 const devportalLoginURL =
-  Cypress.env("devportalLoginURL") + "/" + handle + idpParam;
+  Cypress.env("devPortalLoginURL") + "/" + handle + idpParam;
 
 export class LoginPage {
   static loginToDevportal(): void {

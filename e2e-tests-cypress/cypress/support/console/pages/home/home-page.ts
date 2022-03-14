@@ -15,7 +15,8 @@ export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
-    cy.get('[href="/"]').eq(1).click();
+    const handle = Cypress.env("userData")["handle"];
+    cy.get(`[href="/organizations/${handle}/home"]`).eq(1).click();
   }
 
   static navigateToComponents() {
@@ -40,25 +41,24 @@ export class ChoreoHomePage {
       .click();
   }
 
+  static isOrgHandleVisible(orgHandle: string) {
+    cy.get('[id="org-picker"]').should("be.visible");
+    cy.get('[id="org-picker"]').click();
+    cy.get('[data-value="' + orgHandle + '"]').should("be.visible");
+  }
+
   static getLoggedUserEmail() {
     cy.get(this.username).should("be.visible").click();
     return cy.get("ul>li>div>p").invoke("text");
   }
 
-  static logout(fileID) {
-    cy.window()
-    .its("sessionStorage")
-    .invoke("getItem", "sign_out_url")
-    .then((url) => {
-      cy.request(url);
-    });
-    cy.task("deleteFile", fileID);
+  static logout() {
+    cy.request(Cypress.env("sign_out_url"));
   }
 
   static navigateToSettings() {
-    cy.get(this.username).should("be.visible").click();
-    cy.get('[data-testid="header-user-profile-item-settings"]')
-      .should("be.visible")
-      .click();
+    cy.get('[data-testid="main-left-nav-item-Settings"]', {
+      timeout: 120000,
+    }).click();
   }
 }

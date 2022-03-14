@@ -33,4 +33,3 @@ helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingre
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=\"true\"" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}"
-

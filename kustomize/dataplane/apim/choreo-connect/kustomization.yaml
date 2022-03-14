@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../base/choreo-connect/default-p1
+  - ../../../base/choreo-connect/default-p2
+  - ../../../base/choreo-connect/default-p3
+  - ../../../base/choreo-connect/default-p4
+  - ../../../base/choreo-connect/default-p5
+  - ../../../base/choreo-connect/default-p6
+  - ../../../base/choreo-connect/default-p7
+  - ../../../base/choreo-connect/default-p8
+  - ../../../base/choreo-connect/default-p9
+  - ../../../base/choreo-connect/default-p10
+  - ../../../base/choreo-connect/dev-us-east-azure-p1
+  - ../../../base/choreo-connect/dev-us-east-azure-p2
+  - ../../../base/choreo-connect/dev-us-east-azure-p3
+  - ../../../base/choreo-connect/dev-us-east-azure-p4
+  - ../../../base/choreo-connect/dev-us-east-azure-p5
+  - ../../../base/choreo-connect/dev-us-east-azure-p6
+  - ../../../base/choreo-connect/dev-us-east-azure-p7
+  - ../../../base/choreo-connect/dev-us-east-azure-p8
+  - ../../../base/choreo-connect/dev-us-east-azure-p9
+  - ../../../base/choreo-connect/dev-us-east-azure-p10
+  - hpa

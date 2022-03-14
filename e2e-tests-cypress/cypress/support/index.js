@@ -12,8 +12,9 @@
  */
 
 import "cypress-file-upload";
-import "./commands";
 import "cypress-xpath";
+import { GraphQL } from "../support/console/apis/graphql";
+import { ChoreoHomePage } from "../support/console/pages/home/home-page";
 
 Cypress.on("uncaught:exception", (err, runnable) => {
   return false;
@@ -33,3 +34,4 @@ Cypress.on("window:before:load", (win) => {
     writable: false,
   });
 });
+

@@ -33,11 +33,11 @@ export class ComponentOverviewPage {
   }
 
   static navigateToManage() {
-    cy.contains("Manage").should("be.visible").click();
+    cy.contains("Manage").should("be.visible").click({ force: true });
   }
 
   static navigateToObserve() {
-    cy.contains("Observe").should("be.visible").click();
+    cy.get("[data-cyid=link-observe]").click();
   }
 
   static navigateToDevops() {
@@ -52,20 +52,22 @@ export class ComponentOverviewPage {
       .then((text) => text.replace("overview", "").trim());
   }
 
-  static createNewVersion() {
+  static createNewVersion(version: string) {
     cy.get("#version-picker").click();
     cy.get("[data-cyid=btn-create-version]").click();
     cy.get("[data-cyid=text-field-new-version]").within(() => {
       cy.get("input").clear();
-      cy.get("input").type("1.0.1");
+      cy.get("input").type(version);
     });
     cy.get("[data-testid=create-version-create]").click();
     cy.intercept({
       method: "GET",
-      url: `${Cypress.env('apimSvcURL')}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+      url: `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
       times: 1,
     }).as("version");
     cy.wait("@version", { timeout: 120000 });
-    cy.wait(5000)
+    cy.wait(5000);
   }
 }

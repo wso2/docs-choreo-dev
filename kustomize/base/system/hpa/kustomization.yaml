@@ -1,4 +1,5 @@
 resources:
+  - anomalydetector.yaml
   - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
@@ -18,6 +19,7 @@ resources:
   - datamapper.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
+  - organization-remover.yaml
   - datacollector.yaml
   - quota-limiter.yaml
   - subscriptions.yaml
@@ -31,3 +33,7 @@ resources:
   - billing.yaml
   - alert-notification-service.yaml
   - delete-manager.yaml
+  - dp-cicd.yaml
+  - dp-cloud-manager.yaml
+  - dp-project-manager.yaml
+  - dp-rudder.yaml

@@ -2,25 +2,28 @@ import ballerinax/trigger.slack;
 import ballerina/http;
 import ballerina/log;
 
-configurable slack:ListenerConfig userInput = {
+configurable slack:ListenerConfig config = {
     verificationToken: "pkKgDNr5vGND364IsHzwGM7O"
-}; 
+{downarrow}
+;
+{enter}
+listener http:Listener httpListener = new (8090);
+listener slack:Listener webhookListener = new (config, httpListener);
+{enter}
+service slack:SlackEventsAppService on webhookListener {
 
-listener http:Listener httpListener = new(8090);
-listener slack:Listener Listener = new(userInput, httpListener);
+remote function onAppMention(slack:GenericEventWrapper payload) returns error? {
+    log:printInfo("App Mentioned : ");
+    log:printInfo(payload.event?.text.toJsonString());
+    {downarrow}
+remote function onAppRateLimited(slack:GenericEventWrapper payload) returns error? {
+    return error("Not Implemented");
+ {downarrow}
+remote function onAppUninstalled(slack:GenericEventWrapper payload) returns error? {
+    return error("Not Implemented");
+  {downarrow}
+ {downarrow}
+  {downarrow}
 
-service slack:SlackEventsAppService on Listener {
-    
-    remote function onAppMention(slack:GenericEventWrapper event) returns error? {
-        log:printInfo("App Mentioned : ");
-        log:printInfo(event.event?.text.toJsonString());
-    }
-    remote function onAppRateLimited(slack:GenericEventWrapper event) returns error? {
-        return error ("Not Implemented");
-    }
-    remote function onAppUninstalled(slack:GenericEventWrapper event) returns error? {
-        return error ("Not Implemented");
-    }
-}
+service /ignore on httpListener {
 
-service /ignore on httpListener {}

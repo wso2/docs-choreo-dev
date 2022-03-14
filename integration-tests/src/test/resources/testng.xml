@@ -11,6 +11,7 @@
             <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
             <class name="com.wso2.choreo.integration.tests.deploy.DeployIT"/>
             <class name="com.wso2.choreo.integration.tests.addConfigurations.AddConfigurationsIT"/>
+            <class name="com.wso2.choreo.integration.tests.createTrigger.CreateTriggerIT"/>
         </classes>
     </test>
 </suite>

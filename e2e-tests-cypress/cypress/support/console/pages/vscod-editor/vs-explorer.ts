@@ -8,12 +8,11 @@ export class VSExplorer {
   static count: number = 0;
 
   static waitTillCodespaceLoad() {
-   
-    cy.get('[aria-label="service.bal Diagram"]', { timeout: 300000 }).should(
+    cy.get('[aria-label*=".bal Diagram"]', { timeout: 300000 }).should(
       "be.visible"
     );
-    cy.get(".monaco-highlighted-label").contains("service.bal").click();
-    cy.get('div[class*="service.bal-name-file-icon"]  [title="Delete"]')
+    cy.get(".monaco-highlighted-label").contains(".bal").click();
+    cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]')
       .should("be.visible")
       .click();
     cy.get('[aria-label*="Are you sure you want to delete"] [title="Delete"]', {
@@ -21,18 +20,6 @@ export class VSExplorer {
     })
       .should("be.visible")
       .click();
-  }
-
-  private static waitTillCodespaceLoadForWebhook() {
-    cy.get('[aria-label="webhook.bal Diagram"]', { timeout: 120000 }).should(
-      "be.visible"
-    );
-  }
-
-  private static waitTillCodespaceLoadForManual() {
-    cy.get('[aria-label="main.bal Diagram"]', { timeout: 120000 }).should(
-      "be.visible"
-    );
   }
 
   static selectExplorer() {
@@ -75,28 +62,18 @@ export class VSExplorer {
   }
 
   static enterCommandInTerminal(command: string) {
-  
     cy.get("body").then((bd) => {
       if (bd.find(".xterm-helpers").length == 0) {
         cy.wrap(bd).type("{ctrl}`");
       }
     });
-     cy.get(VSExplorer.terminal, { timeout: 120000 }).click();
-    cy.get(VSExplorer.terminal).type(`${command}{enter}`);   
+    cy.get(VSExplorer.terminal, { timeout: 120000 }).click();
+    cy.get(VSExplorer.terminal).type(`${command}{enter}`);
     cy.wait(20000);
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
-    switch (template) {
-      case ComponentTemplate.WEBHOOK:
-        this.waitTillCodespaceLoadForWebhook();
-        break;
-      case ComponentTemplate.MANUAL:
-        this.waitTillCodespaceLoadForManual();
-        break;
-      default:
-        this.waitTillCodespaceLoad();
-    }
+    this.waitTillCodespaceLoad();
     this.closeTab();
     this.createFile(fileName);
     this.selectExplorer();
@@ -108,7 +85,7 @@ export class VSExplorer {
         if (element !== null && element !== "") {
           // file may content empty lines. ignore them
           cy.focused().then((e) => {
-            cy.wrap(e).type(`${element}\n`).wait(5000); // add time to code format
+            cy.wrap(e).type(`${element}\n`).wait(4000); // add time to code format
           });
         }
       });
