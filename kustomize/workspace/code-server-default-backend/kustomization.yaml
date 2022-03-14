@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - deployment
   - hpa
+  - pdb
   - service
 
 namespace: default-backend-cs

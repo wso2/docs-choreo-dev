@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: code-server-default-backend
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: code-server-default-backend
