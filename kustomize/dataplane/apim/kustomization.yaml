@@ -5,6 +5,7 @@ resources:
   - choreo-connect
   - deployment
   - hpa
+  - pdb
   - service
 
 namespace: choreo-apim

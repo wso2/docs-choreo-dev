@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-apim-tm-1-pdb
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: apim-tm
+      deployment: choreo-tm-1

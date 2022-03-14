@@ -23,3 +23,4 @@ resources:
   - ../../../base/choreo-connect/dev-us-east-azure-p9
   - ../../../base/choreo-connect/dev-us-east-azure-p10
   - hpa
+  - pdb
