@@ -48,7 +48,7 @@ spec:
               name: env-perf-analyzer
         readinessProbe:
           initialDelaySeconds: 5
-          timeoutSeconds: 15
+          timeoutSeconds: 30
           periodSeconds: 10
           failureThreshold: 3
           successThreshold: 1
@@ -57,7 +57,7 @@ spec:
             path: /readiness
         livenessProbe:
           initialDelaySeconds: 10
-          timeoutSeconds: 15
+          timeoutSeconds: 30
           periodSeconds: 30
           failureThreshold: 3
           successThreshold: 1
