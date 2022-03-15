@@ -55,7 +55,7 @@ export class Apis {
 
       Cypress.env("devportal_auth", header);
 
-      this.afterTwoMinutes= Date.now() + 180000
+      this.afterTwoMinutes = Date.now() + 300000;
       this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName);
@@ -68,6 +68,16 @@ export class Apis {
     cy.get("[data-testid=apiCard-" + textApiName + "]")
       .last()
       .click();
+  }
+
+  static getInvokeUrl() {
+    let urls = [];
+    cy.get('[aria-haspopup="listbox"]').click();
+    cy.get("ul>li").each(($l) => {
+      urls.push($l.attr("data-value"));
+    });
+
+    return cy.wrap(urls);
   }
 
   private static verifyAPI(url, header, versionCount) {

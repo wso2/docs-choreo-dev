@@ -44,12 +44,12 @@ describe("Choreo APIM publisher scenarios", () => {
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
 
-  before(()=>{
-    LoginPage.login()
-  })
-after(()=>{
-  ChoreoHomePage.logout()
-})
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
@@ -61,18 +61,25 @@ after(()=>{
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "","","",FILE_ID);
+    RestAPIProxyTemplate.enterAPIdetails(
+      API_NAME,
+      API_BASE_PATH,
+      "",
+      "",
+      "",
+      FILE_ID
+    );
   });
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.eq",'');
+    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq",'');
+    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -142,10 +149,9 @@ after(()=>{
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 
-
   it("Create a consumer application and tryout an API", () => {
-      ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    Apis.searchApiAndSelect(API_NAME,1);
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    Apis.searchApiAndSelect(API_NAME, 1);
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
     ProductionKeys.generateTestToken();
@@ -153,22 +159,15 @@ after(()=>{
     Subscriptions.validateResubscribingApi(API_NAME);
   });
 
-
   it("Verify consumers", () => {
     LoginPage.reLoginToChoreo(FILE_ID);
-    ComponentOverviewPage.navigateToManage()
-    ComponentAPILifecycle.selectConsumers()
-    ComponentAPILifecycle.verifyConsumer(appName).should('be.visible')
-
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectConsumers();
+    ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");
   });
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
+    ComponentDeployPage.stopAllDeployment();
   });
-
-
-
-
 });
-
