@@ -1,0 +1,19 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-connect-adapter-dev-us-east-azure-p2
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-adapter-dev-us-east-azure-p2
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-connect-deployment-dev-us-east-azure-p2
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: choreo-connect-deployment-dev-us-east-azure-p2

@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - deployment
+  - hpa
+  - pdb
   - service
   # - partition-endpoints
 

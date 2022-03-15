@@ -1,0 +1,7 @@
+resources:
+  - control-plane-p1.yaml
+  - default-p1.yaml
+  - default-p2.yaml
+  - default-p3.yaml
+  - default-p4.yaml
+  - test-p1.yaml

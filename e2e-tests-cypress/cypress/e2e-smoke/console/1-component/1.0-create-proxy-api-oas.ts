@@ -18,7 +18,7 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { Utils } from "../../../support/console/utils";
 
-describe.skip("Create proxy api using existing url", () => {
+describe("Create proxy api using existing url", () => {
   const FILE_ID = "oasurl";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
@@ -49,7 +49,8 @@ describe.skip("Create proxy api using existing url", () => {
       API_BASE_PATH,
       `${URL}/v2`,
       "1.0.0",
-      "pets",FILE_ID
+      "pet",
+      FILE_ID
     );
   });
 });

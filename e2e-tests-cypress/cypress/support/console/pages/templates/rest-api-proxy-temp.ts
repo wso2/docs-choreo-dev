@@ -77,9 +77,7 @@ export class RestAPIProxyTemplate {
     cy.get("button>span").contains("Create").click();
     this.interceptValidate(); // workaround
     Utils.saveProjectData(key);
-    cy.get(`[data-testid="resource-/intensity"]`, { timeout: 120000 }).should(
-      "be.visible"
-    );
+
     Utils.saveComponentURL(key);
     let resourceIdentifier = "resource-/intensity";
     if (validateResourceName) {

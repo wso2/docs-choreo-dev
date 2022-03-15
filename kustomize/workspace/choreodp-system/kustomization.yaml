@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ../../dataplane/choreodp-system/deployment
   - ../../dataplane/choreodp-system/hpa
+  - ../../dataplane/choreodp-system/pdb
   - ../../dataplane/choreodp-system/rbac
 
 namespace: choreodp-system

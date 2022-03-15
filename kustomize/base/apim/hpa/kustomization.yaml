@@ -1,5 +1,9 @@
 resources:
-- devportal.yaml
-- am.yaml
-- choreo-connect-global-adapter.yaml
-- choreo-gateway-nginx.yaml
+  - am.yaml
+  - choreo-connect-adapter.yaml
+  - choreo-connect-deployment.yaml
+  - choreo-connect-global-adapter.yaml
+  - choreo-gateway-nginx.yaml
+  - devportal.yaml
+  - tm-1-hpa.yaml
+  - tm-2-hpa.yaml
