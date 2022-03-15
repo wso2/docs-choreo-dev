@@ -128,13 +128,17 @@ describe("Verify project creation functionality", () => {
     APIDevelop.addEndpoints();
   });
 
-  it("Deploy new version", () => {
+  it("Deploy to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
+
+  });
+
+  it("Promote to Prod",()=>{
     APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
-  });
+  })
 
   it("Test in dev", () => {
     APITest.testAPI();
@@ -166,9 +170,17 @@ describe("Verify project creation functionality", () => {
     );
   });
 
+it("Verify api invoke urls",()=>{
+  ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+  Apis.verifyAPIname().should("eq", API_NAME);
+  Apis.getInvokeUrl().then(urls=>{
+    expect(urls).have.lengthOf(2)
+    expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`))
+    expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`))
+  })
+})
+
   it("Test in devportal", () => {
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    Apis.verifyAPIname().should("eq", API_NAME);
     Apis.searchApiAndSelect(API_NAME,2);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
