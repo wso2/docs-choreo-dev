@@ -64,12 +64,12 @@ describe("Create Greeting sample in Choreo", () => {
     ComponentOverviewPage.navigateToTest();
     ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource("/");
+    SwaggerUI.SelectResource("");
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue("name", "dasun");
     SwaggerUI.ExecuteResourceFunction();
-    // SwaggerUI.GetResponse().should("eq", "true");
-    // SwaggerUI.getResponseCode().should("eq", "200");
+
+     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
   it("Verify suspending deployed componen", () => {
