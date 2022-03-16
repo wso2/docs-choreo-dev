@@ -7,8 +7,8 @@ metadata:
     choreo.component: dp-garbage-collector
   name: dp-garbage-collector
 spec:
-  maxReplicas: 1
-  minReplicas: 1
+  maxReplicas: 3
+  minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
