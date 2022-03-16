@@ -78,7 +78,7 @@ export class RestAPIProxyTemplate {
     this.interceptValidate(); // workaround
     Utils.saveProjectData(key);
 
-    Utils.saveComponentURL(key);
+  
     let resourceIdentifier = "resource-/intensity";
     if (validateResourceName) {
       resourceIdentifier = "resource-/" + validateResourceName;
@@ -87,6 +87,7 @@ export class RestAPIProxyTemplate {
     cy.get(`[data-testid="${resourceIdentifier}"]`, { timeout: 120000 }).should(
       "be.visible"
     );
+    Utils.saveComponentURL(key);
   }
 
   private static interceptValidate() {

@@ -13,6 +13,7 @@
 
 import "cypress-file-upload";
 import "cypress-xpath";
+import "cypress-real-events/support";
 import { GraphQL } from "../support/console/apis/graphql";
 import { ChoreoHomePage } from "../support/console/pages/home/home-page";
 
