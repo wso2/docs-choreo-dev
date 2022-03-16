@@ -33,8 +33,7 @@ DATABASE_NAME="choreo_db"    # database name
 # Waiting for server to startup as otherwise the creation of tables will not work
 while true
 do
-  /opt/mssql-tools/bin/sqlcmd -S "${HOST}" -U "${USERNAME}" -P "${PASSWORD}" -Q 'SELECT 1' > /dev/null
-  if [ "${?}" == "0" ]; then
+  if /opt/mssql-tools/bin/sqlcmd -S "${HOST}" -U "${USERNAME}" -P "${PASSWORD}" -Q 'SELECT 1' > /dev/null; then
     break
   fi
   sleep 1s
