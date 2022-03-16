@@ -29,6 +29,10 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 4. Click **Create**.
 
+    This take you to the **Components** page shown below.
+
+   ![Create component](../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
+
 ### Step 1.2: Add a REST API component
 
 Let's create a new REST API component as follows:
@@ -52,78 +56,81 @@ The `Statistics` REST API opens on a separate page.
 
 ### Step 1.3: Design the REST API
 
-Let's design the REST API as follows:
+To design the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code. 
 
-1. To open the REST API component in the VS Code Editor, click **Edit with VSCode Online**.
+In this tutorial, let's design the REST API by updating the low-code diagram as follows:
 
-    Then click **Open Link in New Tab** in the message that appears to indicate that the code server is ready.
+1. To open the REST API component in the Web Editor, click **Edit Code**.
     
     !!! info
         Opening the VS Code Editor may take a little while if you are a first-time user.
 
-2. Add a new construct and an API resource as follows:
+2. Remove the resource configured for the REST API by default by clicking its **Delete** icon.
 
-    1. Click on the first **+** icon to add an HTTP construct. Select the **Service** construct type,
+   ![Delete resource](../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
 
-        ![Add service construct](../assets/img/tutorials/rest-api/add-service-construct.png){.cInlineImage-half}
+3. Add a new resource by clicking the **+** icon under the existing construct.
 
-        Select HTTP as the service type, and enter the following information.
+   ![Add resource](../assets/img/tutorials/rest-api/add-resource.png){.cInlineImage-half}
 
-        | **Field**             | **Value**             |
-        |-----------------------|-----------------------|
-        | **Service Base Path** | `COVID19-Statistics`  |
-        | **Listener Port**     | `9090`                |
+    Then click **Resource**. 
 
-        Select the **Define Inline** check box, and then click **Save**.
+    As a result, a panel named **Configure Resource** appears on the right of the page. In this panel, enter information as follows:
 
-    2. Expand the construct you created by clicking on it. Then click the **EDIT** icon of the default `GET` resource within the construct.
+     | **Field**       | **Value**                |
+     |-----------------|--------------------------|
+     | **HTTP Method** | `GET`                    |
+     | **Path**        | `stats/[string country]` |
+     | **Return Type** | `json|error?`            |
 
-    3. Enter `stats/[string country]` in the **Path** field.
+    Here, you are configuring a GET resource to fetch statistics related to COVID-19.
 
-        By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
+    By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
 
-    4. Click **Advanced** and in the **Return Type** field, enter `json|error` to get the return in `json` or `error1` format.
+    The specified return type allows the REST API to return the output in either JSON or error? format.
 
-    5. Click **Save API**.
+    Click **Save**.
 
-3. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
+    The low-code diagram of this resource opens .
 
-    1. Click on the API resource you edited, and then click on the first **+** icon after the **Start** statement.
+4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
 
-    2. Click **Connector** and then select **Covid19 API**.
+    1. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
 
-    3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+    2. In the **Connector** panel, `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+       3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-        | **Field**                  | **Value**         |
-        |----------------------------|-------------------|
-        | **Country**                | `country`         |
-        | **Response Variable Name** | `statusByCountry` |
+       4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
-    5. Click **Save**.
+           | **Field**                  | **Value**         |
+           |----------------------------|-------------------|
+           | **Country**                | `country`         |
+           | **Response Variable Name** | `statusByCountry` |
 
-    6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
+       5. Click **Save**.
 
-        1. Click the last **+** icon in the low-code diagram.
+       6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
-        2. Under **Statements**, select **Variable** and enter details as follows:
+           1. Click the last **+** icon in the low-code diagram.
 
-            | **Field**         | **Value**                     |
-            |-------------------|-------------------------------|
-            | **Variable Type** | `int`                         |
-            | **VariableName**  | `totalCases`                  |
-            | Expression        | `<int>statusByCountry.cases`  |
+           2. Under **Statements**, select **Variable** and enter details as follows:
 
-        3. Click **Save**.
+               | **Field**         | **Value**                     |
+               |-------------------|-------------------------------|
+               | **Variable Type** | `int`                         |
+               | **VariableName**  | `totalCases`                  |
+               | Expression        | `<int>statusByCountry.cases`  |
 
-4. To retrieve the population data, connect to the World Bank API as follows:
+           3. Click **Save**.
+
+6. To retrieve the population data, connect to the World Bank API as follows:
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Click **Connector** and then select **World Bank API**.
+    2. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
 
-    3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
+    3. In the **Connector** panel that appears on the right of the page, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
 
     4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
 
@@ -134,7 +141,7 @@ Let's design the REST API as follows:
 
     5. Click **Save**.
 
-    6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. Follow this procedure:
+    6. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. To do this, follow this procedure:
 
         1. Click the last **+** icon in the low-code diagram.
 
@@ -148,7 +155,7 @@ Let's design the REST API as follows:
 
         3. Click **Save**.
 
-5. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
+7. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
 
@@ -162,7 +169,7 @@ Let's design the REST API as follows:
 
     3. Click **Save**.
 
-6. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
+8. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
 
     1. To build the JSON payload with data of the total cases per million in the population, add a variable.
 
@@ -188,7 +195,7 @@ Now you have completed designing the `CovidStatus` service.
 
 The low-code diagram looks as follows:
 
- ![Add service construct](../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-full}
+ ![Add service construct](../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-half}
 
 The code view looks as follows:
 
@@ -226,7 +233,7 @@ Let's run the REST API you designed in the VS Code Editor to check whether it ca
     ```
     Now you can try out the REST API.
 
-2. Click **Try it** As a result, a test view opens to the right of the page.
+2. Click **Try it** As a result, a test view opens on the right of the page.
 
 3. In the test view, expand the **GET** resource.
 
@@ -236,7 +243,7 @@ Let's run the REST API you designed in the VS Code Editor to check whether it ca
 
 6. Click **Execute**.
 
-The following is displayed as the response body under **Responses**.
+A response is displayed as follows in the **Response body** field under **Responses**.
 
 ![Try-out response](../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
 
@@ -244,11 +251,11 @@ The REST API you created works as expected. Therefore, now you can commit it.
 
 ### Step 1.5: Commit the REST API to GitHub
 
-The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
+The REST API you designed is currently available only in the Web Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
 
-1. Click **Sync with Choreo Upstream** (at the bottom of the page), and then click **Sync my changes with Choreo**.
+1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red). In the message that appears as a result, click **Sync my changes with Choreo**.
 
-2. In the left panel, enter a commit message (e.g., `Implement REST API`)and click on the tick.
+2. In the left panel, enter a commit message (e.g., `Implement REST API`) and click on the tick.
 
     ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-half} 
 
@@ -274,7 +281,7 @@ To deploy the API, follow the steps below:
 
     ![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
 
-Once the API is deployed, the **Development** card indicates that the API is running as shown below.
+Once the API is deployed, the **Development** card indicates that the API is active as shown below.
 
 ![Deployed API](../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-full}
 
@@ -282,7 +289,7 @@ Now you can test your deployed REST API to check again whether it is working as 
 
 ## Step 3: Test
 
-Once you have deployed the Choreo application you can test it via the Open API Console, A cURL command, or Postman.
+Once you have deployed the Choreo application you can test it via the Open API Console, a cURL command, or Postman.
 
 In this tutorial, let's test via the Open API Console:
 
@@ -312,4 +319,4 @@ Once you have successfully deployed your API and tested it, you can perform the 
 
 - Select/switch usage plans: You can select a usage plan for your API out of `Bronze` `Silver`, `Gold`, and `Unlimited` based on the level of traffic that you expect the API to receive. You can change the usage plan when required.
 
-- Update API settings:
+- Update API settings.
