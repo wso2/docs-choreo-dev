@@ -33,3 +33,19 @@ spec:
     - port: 443
   egress:
   - {}
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-instance-metadata-egress
+  namespace: dev-choreo-system-nginx-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
