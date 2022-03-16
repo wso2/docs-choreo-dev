@@ -55,6 +55,30 @@ spec:
             - containerPort: 9090
               name: an-port
               protocol: TCP
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+              protocol: TCP
+            - containerPort: 9092      # To be used for public health check (external)
+              name: healthz
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
           resources:
             limits:
               cpu: 500m
