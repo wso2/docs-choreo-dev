@@ -1,5 +1,6 @@
 resources:
   - generated/linker.yaml
+  - choreo-linker-0-pdb.yaml
 
 patches:
 - path: deployment-patch.yaml
