@@ -27,6 +27,6 @@ export class RestAPITemplate {
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
-    Utils.saveProjectData(fileID);
+    Utils.saveProjectData();
   }
 }
