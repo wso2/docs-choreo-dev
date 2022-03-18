@@ -1612,7 +1612,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BC','AI','BILLING','ACCOUNT-MANAGE')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1783,3 +1783,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Invoices','billing:invoice_view','BILLING','View invoices');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Subscriptions','billing:subscription_manage','BILLING','Manage subscriptions');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Payment Methods','billing:payment_method_manage','BILLING','Manage payment methods');
+
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Users','choreo:user_manage','ACCOUNT-MANAGE','Add and remove users');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Roles','choreo:role_manage','ACCOUNT-MANAGE','Create, update and delete roles');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Organization','choreo:organization_manage','ACCOUNT-MANAGE','Create, update and delete organization');
