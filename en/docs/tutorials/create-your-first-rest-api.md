@@ -56,7 +56,7 @@ The `Statistics` REST API opens on a separate page.
 
 ### Step 1.3: Design the REST API
 
-To design the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code. 
+Designing the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code. 
 
 In this tutorial, let's design the REST API by updating the low-code diagram as follows:
 
@@ -65,7 +65,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
     !!! info
         Opening the VS Code Editor may take a little while if you are a first-time user.
 
-2. Remove the resource configured for the REST API by default by clicking its **Delete** icon.
+2. Remove the resource that is configured by default for the REST API by by clicking its **Delete** icon.
 
    ![Delete resource](../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
 
@@ -93,42 +93,42 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     The low-code diagram of this resource opens .
 
-4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
+4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
 
     1. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
 
     2. In the **Connector** panel, `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-       3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+    3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-       4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
-           | **Field**                  | **Value**         |
-           |----------------------------|-------------------|
-           | **Country**                | `country`         |
-           | **Response Variable Name** | `statusByCountry` |
+       | **Field**                  | **Value**         |
+       |----------------------------|-------------------|
+       | **Country**                | `country`         |
+       | **Response Variable Name** | `statusByCountry` |
 
-       5. Click **Save**.
+    5. Click **Save**.
 
-       6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
+6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
-           1. Click the last **+** icon in the low-code diagram.
+    1. Click the last **+** icon in the low-code diagram.
 
-           2. Under **Statements**, select **Variable** and enter details as follows:
+    2. Under **Statements**, select **Variable** and enter details as follows:
 
-               | **Field**         | **Value**                     |
-               |-------------------|-------------------------------|
-               | **Variable Type** | `int`                         |
-               | **VariableName**  | `totalCases`                  |
-               | Expression        | `<int>statusByCountry.cases`  |
+       | **Field**         | **Value**                     |
+       |-------------------|-------------------------------|
+       | **Variable Type** | `int`                         |
+       | **VariableName**  | `totalCases`                  |
+       | Expression        | `<int>statusByCountry.cases`  |
 
-           3. Click **Save**.
+    3. Click **Save**.
 
 6. To retrieve the population data, connect to the World Bank API as follows:
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
+    2. Click **Connector** to add a connector. Then search for the World Bank connector, and click on it once it appears in the search results.
 
     3. In the **Connector** panel that appears on the right of the page, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
 
@@ -169,27 +169,25 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     3. Click **Save**.
 
-8. To build the JSON payload to be sent as the response and then send the response, follow this procedure:
+8. To build the JSON payload with data of the total cases per million in the population, add a variable.
 
-    1. To build the JSON payload with data of the total cases per million in the population, add a variable.
+    Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
 
-        Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
+     | **Field**         | **Value**                     |
+     |-------------------|-------------------------------|
+     | **Variable Type** | `json`                        |
+     | **Variable Name** | `payload`                     |
+     | Expression        | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
+     
+     Click **Save**.
 
-         | **Field**         | **Value**                     |
-         |-------------------|-------------------------------|
-         | **Variable Type** | `json`                        |
-         | **Variable Name** | `payload`                     |
-         | Expression        | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
+9. To respond with the JSON payload, add a `Return` statement.
 
-    2. Click **Save**.
+    Click the last **+** icon in the low-code diagram and click **Return**.
 
-    3. To respond with the JSON payload, add a `Return` statement.
+    In the **Return Expression** field, enter `payload`.
 
-        Click the last **+** icon in the low-code diagram and click **Return**.
-
-        In the **Return Expression** field, enter `payload`.
-
-        Click **Save**.
+    Click **Save**.
 
 Now you have completed designing the `CovidStatus` service.
 
