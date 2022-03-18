@@ -63,7 +63,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 1. To open the REST API component in the Web Editor, click **Edit Code**.
     
     !!! info
-        Opening the VS Code Editor may take a little while if you are a first-time user.
+        Opening the Web Editor may take a little while if you are a first-time user.
 
 2. Remove the resource that is configured by default for the REST API by by clicking its **Delete** icon.
 
