@@ -93,7 +93,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     The low-code diagram of this resource opens .
 
-4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
+4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
 
     1. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
 
