@@ -8,3 +8,4 @@ resources:
 - choreo-connect-global-adapter.yaml
 - gateway-nginx-deployment.yaml
 - choreo-connect
+- ga-health-check-deployment.yaml
