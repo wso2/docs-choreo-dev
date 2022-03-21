@@ -14,7 +14,8 @@ CREATE TABLE ga_local_adapter_partition (
 	label_hierarchy varchar(50) NOT NULL,
 	api_id int NOT NULL,
 	org_id varchar(150) NULL,
-CONSTRAINT PK_uuid_hierarcy PRIMARY KEY (api_uuid,label_hierarchy)
+CONSTRAINT PK_uuid_hierarcy PRIMARY KEY (api_uuid,label_hierarchy),
+CONSTRAINT api_id_label_unique UNIQUE (api_id,label_hierarchy)
 );
 
 --create la_partition_size
