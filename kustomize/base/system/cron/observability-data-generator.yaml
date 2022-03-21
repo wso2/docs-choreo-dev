@@ -61,6 +61,11 @@ spec:
                     secretKeyRef:
                       key: APIM_CLIENT_SECRET
                       name: secret-observability-data-generator
+                - name: EMPLOYEE_CONSUMER_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: EMPLOYEE_CONSUMER_SECRET
+                      name: secret-observability-data-generator
               envFrom:
                 - configMapRef:
                     name: env-observability-data-generator
