@@ -507,7 +507,7 @@ Time filter
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">errorCountByStatusCodeFilter</td>
-<td valign="top"><a href="#errorcountbystatuscodefilter">ErrorCountByStatusCodeFilter</a></td>
+<td valign="top"><a href="#errorcountbystatuscodefilter">ErrorCountByStatusCodeFilter</a>!</td>
 <td>
 
 Error count by status code filter
@@ -885,7 +885,7 @@ Time filter
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">cacheFilter</td>
-<td valign="top"><a href="#cachefilter">CacheFilter</a>!</td>
+<td valign="top"><a href="#cachefilter">CacheFilter</a></td>
 <td>
 
 Cache filter
@@ -1161,6 +1161,207 @@ Time filter
 <td>
 
 Successful API usage by application filter.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>getSuccessAPIsUsageByApplicationsWithOnPremKey</strong></td>
+<td valign="top">[<a href="#successapiusagebyapplication">SuccessAPIUsageByApplication</a>]</td>
+<td>
+
+Returns a list of successful hit counts (i.e., 2xx response codes) within the specified time range for each API,
+grouped by each application. Optionally, you can configure the <code>successAPIUsageByAppFilter</code> parameter to further
+filter the results.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">onPremKey</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Value of the On-Prem key
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">timeFilter</td>
+<td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
+<td>
+
+Time filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">successAPIUsageByAppFilter</td>
+<td valign="top"><a href="#successapiusagebyappfilter">SuccessAPIUsageByAppFilter</a></td>
+<td>
+
+Successful API usage by application filter.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>getCustomReportOvertime</strong></td>
+<td valign="top"><a href="#customreportovertime">CustomReportOvertime</a></td>
+<td>
+
+Returns summary of hits/ latency data for the inquired time frame grouped into timeSpans
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">dataFilter</td>
+<td valign="top"><a href="#datafilter">DataFilter</a>!</td>
+<td>
+
+Data filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">timeFilter</td>
+<td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
+<td>
+
+Time filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">metric</td>
+<td valign="top"><a href="#metric">Metric</a>!</td>
+<td>
+
+Metric to retrieve data for
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">groupByFields</td>
+<td valign="top">[<a href="#groupbyfield">GroupByField</a>]!</td>
+<td>
+
+Column/ Field to group the data by
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">groupByValues</td>
+<td valign="top">[<a href="#string">String</a>]!</td>
+<td>
+
+Value to filter by on the groupByField
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">granularity</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The granularity value for which data is retrieved.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>getCustomReportTopOvertime</strong></td>
+<td valign="top"><a href="#customreporttopovertime">CustomReportTopOvertime</a></td>
+<td>
+
+Returns summary of hits/ latency data for the inquired time frame grouped into timeSpans for the top N values
+for the selected groupByField
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">dataFilter</td>
+<td valign="top"><a href="#datafilter">DataFilter</a>!</td>
+<td>
+
+Data filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">timeFilter</td>
+<td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
+<td>
+
+Time filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">metric</td>
+<td valign="top"><a href="#metric">Metric</a>!</td>
+<td>
+
+Metric to retrieve data for
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">groupByFields</td>
+<td valign="top">[<a href="#groupbyfield">GroupByField</a>]!</td>
+<td>
+
+Column/ Field to group the data by
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">groupByValues</td>
+<td valign="top">[<a href="#string">String</a>]!</td>
+<td>
+
+Value to filter by on the groupByField
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">granularity</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The granularity value for which data is retrieved.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>getGroupByValues</strong></td>
+<td valign="top">[<a href="#string">String</a>]</td>
+<td>
+
+Returns a list of distinct group by values for the data available for a selected groupByField
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">dataFilter</td>
+<td valign="top"><a href="#datafilter">DataFilter</a>!</td>
+<td>
+
+Data filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">groupByFields</td>
+<td valign="top">[<a href="#groupbyfield">GroupByField</a>]!</td>
+<td>
+
+Column/ Field to get the distinct values for
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">groupByValues</td>
+<td valign="top">[<a href="#string">String</a>]!</td>
+<td>
+
+Value to filter by on the groupByField
 
 </td>
 </tr>
@@ -1835,6 +2036,150 @@ available.
 <td>
 
 The granularity value for which data is retrieved.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CustomReportGroupBy
+
+Represents usage data overtime for the selected paramters for a certain groupByValue
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>groupByValue</strong></td>
+<td valign="top"><a href="#id">ID</a>!</td>
+<td>
+
+Distinct group by value used as an ID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>usage</strong></td>
+<td valign="top">[<a href="#customreportusage">CustomReportUsage</a>]</td>
+<td>
+
+A list containing the usage values. Returns an empty array if no data is available.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CustomReportOvertime
+
+Represents usage data overtime for the selected paramters
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>usage</strong></td>
+<td valign="top">[<a href="#customreportusage">CustomReportUsage</a>]</td>
+<td>
+
+A list containing the usage values. Returns an empty array if no data is available.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>granularity</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The granularity value for which data is retrieved.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CustomReportTopOvertime
+
+Represents usage data overtime for the selected paramters grouped by the top N groupByValues
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>usage</strong></td>
+<td valign="top">[<a href="#customreportgroupby">CustomReportGroupBy</a>]</td>
+<td>
+
+A list containing the usage values grouped by the selected groupByField. Returns an empty array if no data is
+available.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>granularity</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The granularity value for which data is retrieved.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CustomReportUsage
+
+Represents usage data for a single timestamp in CustomReports
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>timeSpan</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Represents a timestamp value that is calculated based on the specified granularity value. For example, if the
+granularity value is <code>1d</code>, the timestamp represents the start of the day calculated adhering to the timezone
+provided in the time filter.
+e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>value</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Usage value (Hit Count/ Latency)
 
 </td>
 </tr>
@@ -4230,6 +4575,184 @@ Proxy-related errors.
 <td>
 
 Target-related errors.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### GroupByField
+
+Represents an groupByField used in CustomReports.
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>API_NAME</strong></td>
+<td>
+
+API Name
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>API_VERSION</strong></td>
+<td>
+
+API Version
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>API_RESOURCE_TEMPLATE</strong></td>
+<td>
+
+API Resource Template
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>API_METHOD</strong></td>
+<td>
+
+API Method
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>API_CREATOR</strong></td>
+<td>
+
+API Creator
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>APPLICATION_NAME</strong></td>
+<td>
+
+Application Name
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>APPLICATION_OWNER</strong></td>
+<td>
+
+Application Owner
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>DESTINATION</strong></td>
+<td>
+
+Destination
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>USER_AGENT</strong></td>
+<td>
+
+User Agent
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>PLATFORM</strong></td>
+<td>
+
+Platform
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>TARGET_RESPONSE_CODE</strong></td>
+<td>
+
+Target Response Code
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### Metric
+
+Represents a metric used in CustomReports.
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>HIT_COUNT</strong></td>
+<td>
+
+Number of API calls
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>RESPONSE_CACHE_HIT</strong></td>
+<td>
+
+Number of API calls that used Response Cache
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>REQUEST_MEDIATION_LATENCY</strong></td>
+<td>
+
+Request Mediation Latency
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>RESPONSE_MEDIATION_LATENCY</strong></td>
+<td>
+
+Response Mediation Latency
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>BACKEND_LATENCY</strong></td>
+<td>
+
+Backend Latency
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>TOTAL_LATENCY</strong></td>
+<td>
+
+Total Latency
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>API_ERRORS</strong></td>
+<td>
+
+Number of hits with API errors returning
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>TARGET_ERRORS</strong></td>
+<td>
+
+Number of hits with target errors returning
 
 </td>
 </tr>
