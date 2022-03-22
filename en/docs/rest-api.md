@@ -77,9 +77,9 @@ The inbuilt Choreo Developer Portal makes it easy for consumers to consume publi
 
 Choreo allows you to visualize and monitor the performance of REST APIs deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data, diagnostic data, and logs. Developers can efficiently detect and troubleshoot anomalies in REST APIs using  Choreo Observability.
 
-For more information about observability capabilities of Choreo, see [Observability](observability/observability-overview.md).
+For more information about the observability capabilities of Choreo, see [Observability](observability/observability-overview.md).
 
 ## Business insights
 
-Once you take your APIs to production, you need to constantly analyze your APIs to get a good understanding of their usage.
+Once you take your APIs to production, you need to constantly analyze the APIs to get a good understanding of their usage.
 
