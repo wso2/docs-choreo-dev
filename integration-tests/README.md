@@ -11,6 +11,11 @@
     - STS_CLIENT_ID
     - STS_CLIENT_SECRET
     - ALERT_MAIL_IMAP_PASS
+    - TEST_USER_EMAIL
+    - TEST_USER_PASSWORD
+    - ASGARDEO_ENDPOINT
+    - ASGARDEO_CLIENT_ID
+    - ASGARDEO_CLIENT_SECRET
 
 Please talk to your EM or any QA team member to get these dev test user credentials. 
 
