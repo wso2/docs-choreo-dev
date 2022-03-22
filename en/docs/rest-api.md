@@ -70,14 +70,14 @@ Choreo provides API management capabilities by default for REST APIs (and other 
 
 ![Manage API lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
 
-Choreo's inbuilt Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](../manage/developer-portal.md)
+Choreo's inbuilt Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](manage/developer-portal.md)
 
 
 ## Observability
 
 Choreo allows you to visualize and monitor the performance of REST APIs deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data, diagnostic data, and logs. Developers can efficiently detect and troubleshoot anomalies in REST APIs using  Choreo Observability.
 
-For more information about Choreo's observability capabilities, see [Observability](../observability/observability-overview.md).
+For more information about Choreo's observability capabilities, see [Observability](observability/observability-overview.md).
 
 ## Business insights
 
