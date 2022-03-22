@@ -8,7 +8,7 @@ Choreo is a Digital Platform as a Service that helps you develop integration sol
 
 |               | Free                   |  Pay As You Go    | Enterprise     |
 |---------------|------------------------|-------------------|----------------|
-| Cost Per Step | 5,000 steps per month *|$5 per 1,000 steps <br/> <ul><li>First 5,000 steps per month are free</li></ul>| Contact Us For Discounted Pricing <br/><ul><li> Volume Discounts</li><li> Committed-use Discounts</li><li> Support Channels and Support SLA</li></ul>|
+| Cost Per Step | 5,000 steps per month *|$5 per 1,000 steps <br/> <ul><li>First 5,000 steps per month are free</li></ul>| Contact us for discounted pricing including: <br/><ul><li> Volume Discounts</li><li> Committed-use Discounts</li><li> Support Channels and Support SLA</li></ul>|
 
  \* Limited to a maximum of 3 components
 
@@ -74,6 +74,7 @@ Let’s see how steps are calculated for the search process:
 - **Assuming the entire [execution time](#executionTime) for the search process takes less than 500ms** (starting from making a call to Choreo, and Choreo making a call to the database), the search process thereby results in a **total of 2 steps**.
 
 <br/>
+
 #### Reserving a flight
 
 ![Reserving a flight](../assets/img/references/rest-api-example2.png)
@@ -120,9 +121,9 @@ To search for real-time flight data, a client will enter search criteria, and se
 - <a class="pricing" id="flightsDatabase">Flights Database</a>: A database that stores flight information.
 
 
-Get flight status
+#### Get flight status
 
-![Get Flight Status](../assets/img/references/api-proxy-example1.png)
+![Get flight status](../assets/img/references/api-proxy-example1.png)
 
 Let’s see how the steps are calculated for the get flight status process:
 
@@ -148,9 +149,10 @@ The Aircraft Maintenance team carries out maintenance for each flight before tak
 - <a class="pricing" id="flightSchedulingDatabase">Flight Scheduling Database</a>:The database that includes details about  flights, the aircraft assigned to the flight route, and their maintenance state.
 
 <br/>
+
 #### Update maintenance status 
 
-![Update Maintenance Status](../assets/img/references/webhook-example1.png)
+![Update maintenance status](../assets/img/references/webhook-example1.png)
 
 Let’s see how the steps are calculated for the update maintenance process:
 
@@ -209,7 +211,7 @@ Let’s see how we can calculate the steps for the update maintenance process:
 
 #### Update airfare daily  
 
-![ Update jet fuel prices daily](../assets/img/references/scheduled-task-example1.png)
+![ Update airfare daily](../assets/img/references/scheduled-task-example2.png)
 
 Let’s see how we can calculate the steps for the update process: 
 
