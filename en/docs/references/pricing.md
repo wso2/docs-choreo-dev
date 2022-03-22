@@ -178,7 +178,7 @@ Airlines compute ticket prices typically once per day. The ticket prices depend 
 
 The [scheduler](#scheduler) on Choreo runs once per day and fetches the oil prices for the day from the [Oil Price API](#oilPriceAPI). It then computes the jet fuel price applying the price calculation formula. The scheduler then updates the daily jet fuel price in the [Air Fare Database](#airFareDatabase).
 
-Having the jet fuel price, the scheduler is now able to now calculate the airfare for each route. The Scheduler retrieves the airline routes from the [Airline Routes API](#airlineRoutesAPI). Upon receiving the airline routes, it iterates over each route, computes the airfare, and updates the AirFare database.
+Having the jet fuel price, the scheduler is now able to calculate the airfare for each route. The Scheduler retrieves the airline routes from the [Airline Routes API](#airlineRoutesAPI). Upon receiving the airline routes, it iterates over each route, computes the airfare, and updates the AirFare database.
 
 #### Glossary 
 
