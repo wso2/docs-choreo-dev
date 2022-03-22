@@ -29,7 +29,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 4. Click **Create**.
 
-    This take you to the **Components** page shown below.
+    This takes you to the **Components** page shown below.
 
    ![Create component](../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
 
@@ -65,7 +65,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
     !!! info
         Opening the Web Editor may take a little while if you are a first-time user.
 
-2. Remove the resource that is configured by default for the REST API by by clicking its **Delete** icon.
+2. Remove the resource that is configured by default for the REST API by clicking its **Delete** icon.
 
    ![Delete resource](../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
 
@@ -91,9 +91,9 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     Click **Save**.
 
-    The low-code diagram of this resource opens .
+    The low-code diagram of this resource opens.
 
-4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
+4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
 
     1. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
 
@@ -231,7 +231,7 @@ Let's run the REST API you designed in the VS Code Editor to check whether it ca
     ```
     Now you can try out the REST API.
 
-2. Click **Try it** As a result, a test view opens on the right of the page.
+2. Click **Try it**. As a result, a test view opens on the right of the page.
 
 3. In the test view, expand the **GET** resource.
 
