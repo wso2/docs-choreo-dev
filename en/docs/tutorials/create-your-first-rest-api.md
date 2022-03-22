@@ -287,9 +287,9 @@ Now you can test your deployed REST API to check again whether it is working as 
 
 ## Step 3: Test
 
-Once you have deployed the Choreo application you can test it via the Open API Console, a cURL command, or Postman.
+Once you have deployed the Choreo application you can test it via the OpenAPI Console, a cURL command, or Postman.
 
-In this tutorial, let's test via the Open API Console:
+In this tutorial, let's test via the OpenAPI Console:
 
 1. To open the test view, click **Test** in the **Development** card. Alternatively, you can click on the **Test** tab.
 
