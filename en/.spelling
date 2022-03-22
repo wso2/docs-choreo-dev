@@ -247,6 +247,13 @@ envId
 2021-08-16T12
 10-minute
 GraphQL
+ballerinax
+500ms
+vCPU
+unmanaged
+Webhook
+webhooks
+webhook
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -352,9 +359,16 @@ main.js
 github
 linkedin
 site_version
+choreo-insights-api
+programmatic-access-choreo-insights-api
+pricing.md
  - theme/material/templates/home-page.html
 doctype
 html
  - docs/insights/choreo-insights-api.md
 listOrganizations
 uuid
+ - docs/references/pricing.md
+1200ms
+1.2s
+750ms
