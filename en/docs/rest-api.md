@@ -4,49 +4,51 @@ Explore how you can easily design, develop, and manage REST APIs in Choreo to im
 
 ## What is a REST API?
 
-A Representational State Transfer(REST) API is an Application Programming Interface(API) that complies with the constraints of REST architectural styles and principles. [REST is an architectural style](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) introduced by Dr. Roy Fielding in his doctoral dissertation in the year 2000.  Dr.Roy initially designed it as a guide for the development of modern web architecture. Today, REST is widely adopted to create high-performance, stateless, and reliable APIs that various applications use.
+A Representational State Transfer(REST) API is an Application Programming Interface(API) that complies with the constraints of REST architectural styles and principles. [REST is an architectural style](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) introduced by Dr. Roy Fielding in his doctoral dissertation in the year 2000. Dr.Roy initially designed it as a guide for the development of modern web architecture. Today, REST is widely adopted to create high-performance, stateless, and reliable APIs that various applications use.
 
 ## Designing a REST API
 
-Designing a REST API is the process of declaring the resources, the appropriate HTTP verbs, paths, and input (request) and output (response) data formats to showcase the capabilities of the API. Designing an API based on a standard helps you design well and provide a consistent experience to the users of your API. [The Open API Specification](https://github.com/OAI/OpenAPI-Specification) is the most widely used standard for declaring HTTP/REST APIs. The design of the API is a crucial factor in determining the usability and the value of the API. A well-designed API is easily adopted and thereby is profitable. 
+Designing a REST API is the process of declaring the resources, the appropriate HTTP verbs, paths, and input (request) and output (response) data formats to showcase the capabilities of the API. Designing an API based on a standard helps to do the design well and provide a consistent experience to the users of your API. [The Open API Specification](https://github.com/OAI/OpenAPI-Specification) is the most widely used standard for declaring HTTP/REST APIs. The design of an API is a crucial factor that determines the usability and the value of the API. A well-designed API is easily adopted and thereby is profitable. 
 
-Choreo’s low-code editor allows developers to easily design (and develop) high-quality REST APIs. Designing a REST API in Choreo begins by creating a REST API component. Developers can choose to design the REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements or by importing an Open API document(coming soon):
+Choreo’s low-code editor allows developers to design (and develop) high-quality REST APIs with ease. To start designing a REST API in Choreo, you must create a REST API component. Developers can choose to design the REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. The road map of Choreo also includes the capability to design a REST API by importing an OpenAPI document, which will be available soon.
 
-![Add Resource](assets/img/rest-apis/add-resource.png){.cInlineImage-full}
+![Add resource](assets/img/rest-apis/add-resource.png){.cInlineImage-full}
 
-Choreo allows developers to easily specify input and output data formats per each resource of the API:
+Choreo allows developers to easily specify input and output data formats for each API resource:
 
-![Configure Request Payload](assets/img/rest-apis/configure-request-payload.png){.cInlineImage-full}
+![Configure request payload](assets/img/rest-apis/configure-request-payload.png){.cInlineImage-full}
 
-![Configure Response](assets/img/rest-apis/configure-response.png){.cInlineImage-full}
+![Configure response](assets/img/rest-apis/configure-response.png){.cInlineImage-full}
 
 ## Developing a REST API
 
-Choreo supports spec-driven API development. Once you have carefully designed and defined your API, you can start implementing the functionality of your API. Choreo comes with an online IDE based on Visual Studio Code for developers to implement the API’s functionality. By supporting both a low-code and a pro-code mode for implementing APIs and providing the flexibility to alternate between the two modes - Choreo makes API development easy, smooth, and developer-friendly.
+Choreo supports spec-driven API development. Once you have carefully designed and defined your API, you can start implementing the functionality of your API. Choreo comes with an online IDE based on Visual Studio Code for developers to implement the API’s functionality. With its support for both low-code and pro-code modes to implement APIs and the flexibility to alternate between the modes during development, Choreo makes API development easy, smooth, and developer-friendly.
 
-### Low Code Mode
+### Low-Code Mode
 
-The above image shows a simple API implemented in the low-code editor in Choreo, that extracts data from an HTTP request, queries a database, and returns a JSON in an HTTP response. 
+The following image shows the low-code diagram view in Choreo for a simple API implemented to retrieve information such as population and GDP for a specified country. Here, the [World Bank connector](https://lib.ballerina.io/ballerinax/worldbank/1.2.0) is used to extract the required data, which is then sent as a JSON response.
 
-The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments, logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed [connectors]() as shown above.
+![Low-code view](assets/img/rest-apis/low-code-view.png){.cInlineImage-full}
 
-The main advantage of the low-code programming mode is that it increases the developer productivity by multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the API, the IDE automatically writes the corresponding [Ballerina](link to Ballerina) source code of the API. This speeds up the developer's learning process significantly and thereby boosts overall productivity.
+The low-code programming model allows developers to use common programming constructs such as loops, conditional statements, variable declarations and assignments, logs, data transformations(visual data mapping), and more in a graphical editor. It also allows developers to connect to built-in or custom-developed connectors.
 
-### Pro Code Mode
+The main advantage of the low-code programming mode is that it can increase developer productivity multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the API, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io/) source code for the API. This speeds up the developer learning process significantly and thereby boosts overall productivity.
 
-In addition to the low-code mode, Choreo provides a pro code mode of implementing API functionality with the ability to alternate between low-code and pro-code at any time. Choreo's online IDE allows viewing the low-code and pro-code editors side by side:
+### Pro-Code Mode
 
-![Low-Code Pro-Code View](assets/img/rest-apis/low-code-pro-code-view.png){.cInlineImage-full}
+The pro-code mode of Choreo allows developers to directly edit code in a manner where the graphical representation in the low-code editor gets updated accordingly. Choreo's online IDE also allows viewing the low-code and pro-code editors side-by-side.
 
-Choreo gives the developers the flexibility to use the pro-code mode only or use it for implementing certain parts of the API and use the low-code mode for the rest, based on their preference. Choreo treats the source code (generated and handwritten) of the API as the single source of truth and therefore has no limitations or restrictions on which mode developers may choose to implement their API’s functionality.
+![Low code and pro-code view](assets/img/rest-apis/low-code-and-pro-code-view.png){.cInlineImage-full}
+
+Choreo gives developers the flexibility to use the pro-code mode only or to use it for implementing specific parts of the API while using the low-code mode for the rest, based on their preference. Choreo treats the source code (generated and handwritten) of the API as the single source of truth and has no limitations or restrictions on the mode developers can choose to implement their API's functionality.
 
 ## Lifecycle of a REST API
 
-Once you have implemented the REST API,  it needs to be built, tested, and eventually put into production. Choreo executes a CI/CD pipeline that manages the API’s Lifecycle. Choreo stores the source code of APIs in a private Github repository for the user account. It also provides the capability for developers to hook in their own Github repositories containing the source code of their APIs(coming soon). The CI/CD pipeline in Choreo takes an API through the whole process, starting with code checkout, to compile, build, test, and finally to deployment.
+Once you implement a REST API, it needs to be built, tested, and eventually put into production. Choreo executes a CI/CD pipeline to manage the API lifecycle. Choreo stores the source code of APIs in a private GitHub repository for the user account. It also provides the capability for developers to connect their own GitHub repositories containing the source code of their APIs. The CI/CD pipeline in Choreo takes an API through the complete process, starting from code checkout to compile, build, test, and finally deploy.
 
 ## Deploying a REST API
 
-The following diagram illustrates the process for deploying an API in Choreo to the default development environment. 
+The following diagram illustrates the procedure to deploy an API in Choreo to the default development environment.
 
 ![Deploy API](assets/img/rest-apis/deploy-api.png){.cInlineImage-full}
 
@@ -58,7 +60,7 @@ Once you deploy the REST API to the development environment, it is then exposed 
 
 Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
 
-![Deploy View](assets/img/rest-apis/deploy-promote.png){.cInlineImage-full}
+![Deploy view](assets/img/rest-apis/deploy-promote.png){.cInlineImage-full}
 
 Once you have promoted the API to production, Choreo then shows a second URL that developers can use in production applications to invoke the API.
 
@@ -66,7 +68,7 @@ Once you have promoted the API to production, Choreo then shows a second URL tha
 
 API Management is automatically turned on in REST APIs (and other APIs) on Choreo. Developers can use its capabilities to manage the exposure of APIs to their consumers. Developers can configure the API’s security settings, set rate limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. The following image shows how developers can execute the consumer-facing Lifecycle of the API.
 
-![Manage API Lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
+![Manage API lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
 
 Consuming the published APIs is made easy with the inbuilt Choreo Developer Portal. Application developers can discover and invoke published APIs using the Choreo Developer Portal. Learn more about the Choreo Developer Portal.
 
