@@ -24,7 +24,7 @@ Choreo allows developers to easily specify input and output data formats for eac
 
 Choreo supports spec-driven API development. Once you have carefully designed and defined your API, you can start implementing the functionality of your API. Choreo comes with an online IDE based on Visual Studio Code for developers to implement the API’s functionality. With its support for both low-code and pro-code modes to implement APIs and the flexibility to alternate between the modes during development, Choreo makes API development easy, smooth, and developer-friendly.
 
-### Low-Code Mode
+### Low-code mode
 
 The following image shows the low-code diagram view in Choreo for a simple API implemented to retrieve information such as population and GDP for a specified country. Here, the [World Bank connector](https://lib.ballerina.io/ballerinax/worldbank/1.2.0) is used to extract the required data, which is then sent as a JSON response.
 
@@ -34,7 +34,7 @@ The low-code programming model allows developers to use common programming const
 
 The main advantage of the low-code programming mode is that it can increase developer productivity multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the API, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io/) source code for the API. This speeds up the developer learning process significantly and thereby boosts overall productivity.
 
-### Pro-Code Mode
+### Pro-code mode
 
 The pro-code mode of Choreo allows developers to directly edit code in a manner where the graphical representation in the low-code editor gets updated accordingly. Choreo's online IDE also allows viewing the low-code and pro-code editors side-by-side.
 
@@ -52,35 +52,34 @@ The following diagram illustrates the procedure to deploy an API in Choreo to th
 
 ![Deploy API](assets/img/rest-apis/deploy-api.png){.cInlineImage-full}
 
-Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo’s data plane runs on a Kubernetes stack and hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on.
+Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to their runtime(data plane) clusters. Choreo’s data plane runs on a Kubernetes stack under the hood and benefits from all its features such as auto-scaling, auto-healing, secret management, liveness and readiness checks, and so on.
 
-Once you deploy the REST API to the development environment, it is then exposed through an API Gateway with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
+Once you deploy a REST API to the development environment, it gets exposed through an API Gateway with API security enabled. At this time, Choreo provides a test URL for the API, which you can use to verify the functionality of the API.
 
-## Choreo Environments
+## Choreo environments
 
-Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
+Choreo provides a development environment by default and a production environment in two separate Kubernetes clusters. Once you deploy an API to the development environment and verify its functionality, you can promote the API to the production environment.
 
 ![Deploy view](assets/img/rest-apis/deploy-promote.png){.cInlineImage-full}
 
-Once you have promoted the API to production, Choreo then shows a second URL that developers can use in production applications to invoke the API.
+Once you promote an API to production, Choreo provides a second URL that you can use in a production application to invoke the API.
 
-## API Management
+## API management
 
-API Management is automatically turned on in REST APIs (and other APIs) on Choreo. Developers can use its capabilities to manage the exposure of APIs to their consumers. Developers can configure the API’s security settings, set rate limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. The following image shows how developers can execute the consumer-facing Lifecycle of the API.
+Choreo provides API management capabilities by default for REST APIs (and other APIs) so that you can manage the exposure of APIs to consumers. With Choreo's API management, you can also configure API security settings, set rate limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. The following image shows how you can execute the consumer-facing lifecycle of an API.
 
 ![Manage API lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
 
-Consuming the published APIs is made easy with the inbuilt Choreo Developer Portal. Application developers can discover and invoke published APIs using the Choreo Developer Portal. Learn more about the Choreo Developer Portal.
+Choreo's inbuilt Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](../manage/developer-portal.md)
 
-Learn about Choreo's full API Management capabilities of REST APIs from [here](link to the API Management doc page).
 
 ## Observability
 
-Choreo allows you to visualize and monitor the performance of REST APIs deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data, diagnostic data, and logs. Developers can efficiently detect and troubleshoot anomalies in your REST APIs by using Choreo Observability.
+Choreo allows you to visualize and monitor the performance of REST APIs deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data, diagnostic data, and logs. Developers can efficiently detect and troubleshoot anomalies in REST APIs using  Choreo Observability.
 
-Learn more about Choreo's observability capabilities from [here]().
+For more information about Choreo's observability capabilities, see [Observability](../observability/observability-overview.md).
 
-## Business Insights
+## Business insights
 
-Once you take your APIs to production, you need to constantly analyze your APIs to fully understand the usage of your APIs. 
+Once you take your APIs to production, you need to constantly analyze your APIs to get a good understanding of their usage.
 
