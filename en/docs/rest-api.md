@@ -10,7 +10,7 @@ A Representational State Transfer(REST) API is an Application Programming Interf
 
 Designing a REST API is the process of declaring the resources, the appropriate HTTP verbs, paths, and input (request) and output (response) data formats to showcase the capabilities of the API. Designing an API based on a standard helps to do the design well and provide a consistent experience to the users of your API. [The Open API Specification](https://github.com/OAI/OpenAPI-Specification) is the most widely used standard for declaring HTTP/REST APIs. The design of an API is a crucial factor that determines the usability and the value of the API. A well-designed API is easily adopted and thereby is profitable. 
 
-Choreo’s low-code editor allows developers to design (and develop) high-quality REST APIs with ease. To start designing a REST API in Choreo, you must create a REST API component. Developers can choose to design the REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. The road map of Choreo also includes the capability to design a REST API by importing an OpenAPI document, which will be available soon.
+Choreo’s low-code editor allows developers to design (and develop) high-quality REST APIs with ease. To design a REST API in Choreo, you must create a REST API component. You can design a REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. The Choreo roadmap also includes the capability to design a REST API by importing an OpenAPI document, which will be available soon.
 
 ![Add resource](assets/img/rest-apis/add-resource.png){.cInlineImage-full}
 
@@ -26,11 +26,11 @@ Choreo supports spec-driven API development. Once you have carefully designed an
 
 ### Low-code mode
 
-The following image shows the low-code diagram view in Choreo for a simple API implemented to retrieve information such as population and GDP for a specified country. Here, the [World Bank connector](https://lib.ballerina.io/ballerinax/worldbank/1.2.0) is used to extract the required data, which is then sent as a JSON response.
+The following image shows the low-code diagram view in Choreo for a simple API designed to retrieve information such as population and GDP for a specified country. Here, the [World Bank connector](https://lib.ballerina.io/ballerinax/worldbank/1.2.0) extracts the required data and sends the extracted data as a JSON response.
 
 ![Low-code view](assets/img/rest-apis/low-code-view.png){.cInlineImage-full}
 
-The low-code programming model allows developers to use common programming constructs such as loops, conditional statements, variable declarations and assignments, logs, data transformations(visual data mapping), and more in a graphical editor. It also allows developers to connect to built-in or custom-developed connectors.
+The low-code programming model allows developers to use general programming constructs such as loops, conditional statements, variable declarations and assignments, logs, data transformations(visual data mapping), and more in a graphical editor. It also allows developers to connect to built-in or custom-developed connectors.
 
 The main advantage of the low-code programming mode is that it can increase developer productivity multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the API, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io/) source code for the API. This speeds up the developer learning process significantly and thereby boosts overall productivity.
 
@@ -40,7 +40,7 @@ The pro-code mode of Choreo allows developers to directly edit code in a manner 
 
 ![Low code and pro-code view](assets/img/rest-apis/low-code-and-pro-code-view.png){.cInlineImage-full}
 
-Choreo gives developers the flexibility to use the pro-code mode only or to use it for implementing specific parts of the API while using the low-code mode for the rest, based on their preference. Choreo treats the source code (generated and handwritten) of the API as the single source of truth and has no limitations or restrictions on the mode developers can choose to implement their API's functionality.
+Choreo gives developers the flexibility to use the pro-code mode only or to use it for implementing specific parts of the API while using the low-code mode for the rest, based on their preference. Choreo treats the source code (generated and handwritten) as the single source of truth and has no limitations or restrictions on the mode you can choose to implement API functionality.
 
 ## Lifecycle of a REST API
 
@@ -52,7 +52,7 @@ The following diagram illustrates the procedure to deploy an API in Choreo to th
 
 ![Deploy API](assets/img/rest-apis/deploy-api.png){.cInlineImage-full}
 
-Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to their runtime(data plane) clusters. Choreo’s data plane runs on a Kubernetes stack under the hood and benefits from all its features such as auto-scaling, auto-healing, secret management, liveness and readiness checks, and so on.
+Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to their runtime(data plane) clusters. The data plane of Choreo runs on a Kubernetes stack under the hood. Therefore, you can benefit from its features such as auto-scaling, auto-healing, secret-management, liveness and readiness checks, etc.
 
 Once you deploy a REST API to the development environment, it gets exposed through an API Gateway with API security enabled. At this time, Choreo provides a test URL for the API, which you can use to verify the functionality of the API.
 
@@ -70,14 +70,14 @@ Choreo provides API management capabilities by default for REST APIs (and other 
 
 ![Manage API lifecycle](assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
 
-Choreo's inbuilt Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](manage/developer-portal.md)
+The inbuilt Choreo Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](manage/developer-portal.md).
 
 
 ## Observability
 
 Choreo allows you to visualize and monitor the performance of REST APIs deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data, diagnostic data, and logs. Developers can efficiently detect and troubleshoot anomalies in REST APIs using  Choreo Observability.
 
-For more information about Choreo's observability capabilities, see [Observability](observability/observability-overview.md).
+For more information about observability capabilities of Choreo, see [Observability](observability/observability-overview.md).
 
 ## Business insights
 
