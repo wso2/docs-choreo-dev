@@ -24,9 +24,9 @@ Choreo pricing is based on the number of [steps](#what-is-a-step) in your integr
 The Choreo free tier allows you to execute 5,000 [steps](#what-is-a-step) per month, limited to a maximum of 3 components. If you exceed the free tier, your application cannot make any additional requests to Choreo. 
 
 #### Pay As You Go (PAYG) 
-Pay As You Go is a flexible usage-based payment plan. While the first 5,000 steps are free per month, Choreo will charge you $0.005 for each additional step, for example, $5 for 1,000 steps based on your usage per month. 
+Pay As You Go is a flexible usage-based payment plan. While the first 5,000 steps are free per month, Choreo charges you $0.005 for each additional step based on your usage per month. For example, for 1,000 steps Choreo charges you $5. 
 
-Let’s say you have used a total of 12,500 [steps](#what-is-a-step) for a particular month, your monthly usage for that month under the PAYG plan will be:
+Let’s assume you have used a total of 12,500 [steps](#what-is-a-step) for a particular month, your monthly usage for that month under the PAYG plan will be:
 
     Chargeable steps usage: 12,500 - 5,000 = 7,500
     The total charge for the usage: 7,500 * $0.005 ($5 for every 1,000 steps) = $37.50
@@ -47,7 +47,7 @@ An organization has a flight booking system on Choreo. This system involves seve
 
 #### Scenario
 
-To make a booking through the web application, a client will first search for available flights and then proceed to make the booking. The client application (web application) upon receiving the request will make a call to the [Search API](#searchAPI) to search for available flights. When the client receives the search results the client will proceed to make a reservation using the [Reservations API](#reservationsAPI).
+To make a booking through the web application, a client first searches for available flights and then proceeds to make the booking. The client application (web application) upon receiving the request makes a call to the [Search API](#searchAPI) to search for available flights. When the client receives the search results the client proceeds to make a reservation using the [Reservations API](#reservationsAPI).
 
 The following two diagrams illustrate the interactions in the system while searching and reserving a flight.
 <br/>
@@ -57,7 +57,7 @@ The following two diagrams illustrate the interactions in the system while searc
 - <a class="pricing" id="bookingsAPI">Bookings API</a>: An internal API in Choreo that updates the Bookings database when a booking for a certain flight is made.
 - <a class="pricing" id="reservationsAPI">Reservations API</a>: An external-facing API in Choreo that is used by client applications (web apps, mobile apps) to make flight bookings.
 - <a class="pricing" id="twillioAPI">Twilio API</a>: A third-party API that is used by the Reservations API in Choreo to send SMS notifications to customers when a booking has been made, canceled, or updated.
-- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between a request sent to response received.
+- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between  sending a request and recieving a response.
 <br/>
 <br/>
 
