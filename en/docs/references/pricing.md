@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. You can use Choreo by paying only for your usage: nothing more, nothing less. Choreo has payment plans for all types of users. You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go model if you use more than 5,000 [steps](#what-is-a-step) per month. If you plan to use Choreo significantly, you can also opt for an Enterprise plan and enjoy special discount rates.
+Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. You can use Choreo by paying only for your usage: nothing more, nothing less. Choreo has payment plans for all types of users. You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go model if you use more than 5,000 [steps](#what-is-a-step) per month. If you plan to use Choreo extensively, you can also opt for an Enterprise plan and enjoy special discount rates.
 
 ## Plans
 
@@ -53,11 +53,11 @@ The following two diagrams illustrate the interactions in the system while searc
 <br/>
 
 #### Glossary
-- <a class="pricing" id="searchAPI"> Search API</a>: An external-facing API in Choreo that searches for the availability of flights and seats given the destinations.
+- <a class="pricing" id="searchAPI"> Search API</a>: An external-facing API in Choreo that searches for the availability of flights and seats for the specified destinations.
 - <a class="pricing" id="bookingsAPI">Bookings API</a>: An internal API in Choreo that updates the Bookings database when a booking for a certain flight is made.
 - <a class="pricing" id="reservationsAPI">Reservations API</a>: An external-facing API in Choreo that is used by client applications (web apps, mobile apps) to make flight bookings.
 - <a class="pricing" id="twillioAPI">Twilio API</a>: A third-party API that is used by the Reservations API in Choreo to send SMS notifications to customers when a booking has been made, canceled, or updated.
-- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between  sending a request and recieving a response.
+- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between sending a request and recieving a response.
 <br/>
 <br/>
 
@@ -71,7 +71,7 @@ Let’s see how steps are calculated for the search process:
 - The web application then makes **1 API call to the [Search API](#searchAPI)** in Choreo. This is counted as **1 step**.
 - The search API in Choreo then makes **1 call to the Flights Database** to retrieve the information according to the search criteria entered by the client. This is counted as **1 step**. 
 
-- **Assuming the entire [execution time](#executionTime) for the search process takes less than 500ms** (starting from making a call to Choreo, and Choreo making a call to the database), the search process thereby results in a **total of 2 steps**.
+- **Assuming the entire [execution time](#executionTime) for the search process takes less than 500ms** (starting from the web application making a call to Choreo, and Choreo making a call to the database), the search process thereby results in a **total of 2 steps**.
 
 <br/>
 
@@ -81,8 +81,8 @@ Let’s see how steps are calculated for the search process:
 
 Let’s see how steps are calculated for the reservation process:
 
-- As illustrated above, the client initiates the reservation process through the Web Application.
-- The Web Application proceeds to make **1 API call to the [Reservations API](#reservationsAPI)**. This is counted as 1 step.
+- As illustrated above, the client initiates the reservation process through the web application.
+- The web application proceeds to make **1 API call to the [Reservations API](#reservationsAPI)**. This is counted as 1 step.
 - The Reservation API then makes **1 API call to the [Bookings API](#bookingsAPI)**. This is counted as **1 step**. 
 - The bookings API makes **1 API call to the Booking Database** to update it with the booking details. This is counted as **1 step**.
 - Upon receiving the booking confirmation, the Reservation API makes **1 call to the [Twilio API](#twillioAPI)** to send an SMS confirmation to the customer. This is counted as **1 step**.
@@ -110,7 +110,7 @@ An organization exposes a flight tracking API as a managed API on Choreo. This s
 
 #### Scenario
 
-To search for real-time flight data, a client will enter search criteria, and search through the web application. Upon receiving the request, the client application (web application) will make a call to the [Flights Status API](#flightStatusAPI), a managed API on Choreo, to search for flight data. Choreo will then invoke the backend API, the [Real-Time Flight API](#realtimeFlightAPI). The backend API will invoke a database to get the information and pass it to the client.
+To search for real-time flight data, a client enters a search criteria, and searches through the web application. Upon receiving the request, the client application (web application) makes a call to the [Flights Status API](#flightStatusAPI), a managed API on Choreo, to search for flight data. Choreo then invokes the backend API, the [Real-Time Flight API](#realtimeFlightAPI). The backend API then invokes a database to get the information and passes it to the client.
 
 #### Glossary
 
@@ -125,27 +125,28 @@ To search for real-time flight data, a client will enter search criteria, and se
 
 ![Get flight status](../assets/img/references/api-proxy-example1.png)
 
-Let’s see how the steps are calculated for the get flight status process:
+Let’s see how the steps are calculated for the process to obtain the flight status:
 
 - As illustrated above, the client initiates a search request for flight data through the web application. 
 - The web application then makes **1 API call to the [Flight Status API](#flightStatusAPI)** in Choreo. This is counted as **1 step**.
 - The Flight Status API in Choreo then makes **1 call to the [Real-Time Flight API](#realtimeFlightAPI)** with the search criteria entered by the client. This is counted as **1 step**. 
 - The Real-Time Flight API then invokes the database to retrieve the information.
 
-- **Assuming the entire execution time for the get flight status process takes less than 500ms** (starting from making a call to Choreo, and Choreo making a call to the backend API),the get flight status process thereby results in a **total of 2 steps**.
+- **Assuming the entire execution time for the process to obtain the flight status takes less than 500ms** (starting from the web application making a call to Choreo, and Choreo making a call to the backend API),this process thereby results in a **total of 2 steps**.
 
 <br/>
+
 ### Example 3: Webhook
 An airport has its flight information display system (FIDS) in Choreo.  This system involves APIs and webhooks.
 
 #### Scenario
-This scenario describes a hypothetical maintenance process carried out by airline maintenance. The airline uses Choreo to generate alerts by using Webhooks when the aircraft maintenance status is updated. 
-The Aircraft Maintenance team carries out maintenance for each flight before take-off. A supervisor updates the maintenance status of the aircraft on a [Aircraft Maintenance Sheet](#AircraftMaintenanceSheet), which is a Google sheet. Upon updating the sheet, the [Aircraft Status Notifier](#aircraftNotifWebhook) webhook on Choreo gets triggered and updates the [Flight Scheduling Database](#flightSchedulingDatabase) that confirms if the aircraft is ready for take off,  if it will be delayed due to maintenance, or if it is not suitable for take off.
+This scenario describes a hypothetical maintenance process carried out by airline maintenance. The airline uses Choreo to generate alerts by using webhooks when the aircraft maintenance status is updated. 
+The Aircraft Maintenance team carries out maintenance for each flight before take-off. A supervisor updates the maintenance status of the aircraft on a [Aircraft Maintenance Sheet](#AircraftMaintenanceSheet), which is a Google sheet. Upon updating the sheet, the [Aircraft Status Notifier](#aircraftNotifWebhook) webhook on Choreo gets triggered and updates the [Flight Scheduling Database](#flightSchedulingDatabase) that confirms if the aircraft is ready for take off,  whether it will be delayed due to maintenance, or whether it is not suitable for take off.
 
 #### Glossary
 
 - <a class="pricing" id="aircraftNotifWebhook">Aircraft Status Notifier</a>:A webhook in Choreo that listens to any events that trigger when the Aircraft maintenance sheet is updated.
-- <a class="pricing" id="AircraftMaintenanceSheet">Aircraft Maintenance Sheet</a>: A Google sheet that maintains the list of aircraft, their information,  the maintenance schedule, and the maintenance status.
+- <a class="pricing" id="AircraftMaintenanceSheet">Aircraft Maintenance Sheet</a>: A Google sheet that maintains the list of aircraft, their information, the maintenance schedule, and the maintenance status.
 - <a class="pricing" id="flightSchedulingDatabase">Flight Scheduling Database</a>:The database that includes details about  flights, the aircraft assigned to the flight route, and their maintenance state.
 
 <br/>
@@ -169,7 +170,7 @@ Let’s see how the steps are calculated for the update maintenance process:
 <br/>
 
 ### Example 4: Scheduled Job 
-An airline will revise its ticket prices based on the price of jet fuel. This typically happens once a day. The airline uses a scheduled task on Choreo to run this job and to update the jet fuel price once a day.
+An airline revises its ticket prices based on the price of jet fuel. This typically happens once a day. The airline uses a scheduled task on Choreo to run this job and to update the jet fuel price once a day.
 
 #### Scenario 
  
@@ -177,14 +178,14 @@ Airlines compute ticket prices typically once per day. The ticket prices depend 
 
 The [scheduler](#scheduler) on Choreo runs once per day and fetches the oil prices for the day from the [Oil Price API](#oilPriceAPI). It then computes the jet fuel price applying the price calculation formula. The scheduler then updates the daily jet fuel price in the [Air Fare Database](#airFareDatabase).
 
-Having the jet fuel price, the scheduler is able to now calculate the airfare for each route. The Scheduler retrieves the airline routes from the [Airline Routes API](#airlineRoutesAPI). Upon receiving the airline routes, it iterates over each route, computes the airfare, and updates the AirFare database.
+Having the jet fuel price, the scheduler is now able to now calculate the airfare for each route. The Scheduler retrieves the airline routes from the [Airline Routes API](#airlineRoutesAPI). Upon receiving the airline routes, it iterates over each route, computes the airfare, and updates the AirFare database.
 
 #### Glossary 
 
 - <a class="pricing" id="scheduler">Scheduler</a>: A scheduled task created on Choreo that runs every day.
 - <a class="pricing" id="oilPriceAPI">Oil Price API</a>: An external-facing API that returns the crude oil price for the day.
 - <a class="pricing" id="airFareDatabase">Air Fare Database</a>: The database that stores the jet fuel price which is used to compute the airfare for each route.
-- <a class="pricing" id="airlineRoutesAPI">Airline Routes API</a>: An external-facing API that  provides details about the airline routes and a list of airline routes.
+- <a class="pricing" id="airlineRoutesAPI">Airline Routes API</a>: An external-facing API that provides details about the airline routes and a list of airline routes.
 - <a class="pricing" id="airlineRoutesDatabase">Airline Routes Database</a>: The database that stores the airline routes information.
 
 <br/>
@@ -197,7 +198,7 @@ Let’s see how we can calculate the steps for the update maintenance process:
 
 - The scheduled task ([scheduler](#scheduler)) on Choreo runs once per day.
 - The scheduler makes **1 API call to the [Oil Price API](#oilPriceAPI)** to  retrieve the daily oil price.  This is counted as **1 step**. 
-- Upon receiving the daily oil price, the Scheduler then applies the formula to calculate the jet fuel price and calculates daily jet fuel price.
+- Upon receiving the daily oil price, the Scheduler then applies the formula to calculate the jet fuel price and calculates the daily jet fuel price.
 - The Scheduler on Choreo then makes **1 database call to the [Air Fare Database](#airFareDatabase)** to update the daily jet fuel price. This is counted as **1 step**. 
 
 
@@ -219,7 +220,7 @@ Let’s see how we can calculate the steps for the update process:
 - The Scheduler makes **1 API call to the [Airline Routes API](#airlineRoutesAPI)** to  retrieve the airline routes.  This is counted as **1 step**. 
 For ease of explanation, let’s *assume the above API call returns 5 airline routes*. 
 - Upon receiving the airline routes, the Scheduler then loops through the 5 airline routes and computes the airfare.  
-- The Scheduler on Choreo then makes **1 database call to the [Air Fare Database](#airFareDatabase)** to update the airfare for the airline routes. This is counted as **5 steps** as the database call was made for all airline routes received from the above API call.
+- The Scheduler on Choreo then makes **1 database call to the [Air Fare Database](#airFareDatabase)** to update the airfare for the airline routes. This is counted as **5 steps** because the database call was made for all airline routes received from the above API call.
 
 
 - **Assuming the entire execution time for the update process takes 750ms**, the total number of steps can be calculated as follows:
