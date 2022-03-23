@@ -170,7 +170,6 @@ AlertSummaries
 alertSummaryFilter
 AlertSummaryFilter
 getSuccessAPIsUsageByApplications
-getSuccessAPIsUsageByApplicationsWithOnPremKey
 SuccessAPIUsageByApplication
 successAPIUsageByAppFilter
 SuccessAPIUsageByAppFilter
@@ -249,44 +248,8 @@ envId
 10-minute
 GraphQL
 ballerinax
-500ms
-vCPU
-unmanaged
-Webhook
-webhooks
-webhook
-onPremKey
-getCustomReportOvertime
-CustomReportOvertime
-groupByFields
-GroupByField
-groupByValues
-groupByField
-getCustomReportTopOvertime
-CustomReportTopOvertime
-getGroupByValues
-groupBy
-CustomReportGroupBy
-groupByValue
-CustomReportUsage
-CustomReports
-API_NAME
-API_VERSION
-API_RESOURCE_TEMPLATE
-API_METHOD
-API_CREATOR
-APPLICATION_NAME
-APPLICATION_OWNER
-USER_AGENT
-TARGET_RESPONSE_CODE
-HIT_COUNT
-RESPONSE_CACHE_HIT
-REQUEST_MEDIATION_LATENCY
-RESPONSE_MEDIATION_LATENCY
-BACKEND_LATENCY
-TOTAL_LATENCY
-API_ERRORS
-TARGET_ERRORS
+CountryCode
+undeploy
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -392,16 +355,9 @@ main.js
 github
 linkedin
 site_version
-choreo-insights-api
-programmatic-access-choreo-insights-api
-pricing.md
  - theme/material/templates/home-page.html
 doctype
 html
  - docs/insights/choreo-insights-api.md
 listOrganizations
 uuid
- - docs/references/pricing.md
-1200ms
-1.2s
-750ms
