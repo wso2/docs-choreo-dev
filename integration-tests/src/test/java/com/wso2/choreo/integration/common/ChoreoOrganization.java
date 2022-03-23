@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
 package com.wso2.choreo.integration.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,12 +22,17 @@ import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -70,23 +88,32 @@ public class ChoreoOrganization {
         };
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(Configuration.CHOREO_ENDPOINT.concat("/graphql")))
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        int statusCode = response.statusCode();
-        if (statusCode != HttpStatus.OK.value()) {
-            throw new ProjectCreationException(statusCode, response.body());
+
+        HttpPost request = new HttpPost(Configuration.CHOREO_ENDPOINT.concat("/graphql"));
+
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new ProjectCreationException(statusCode, responseBody);
+            }
+
+            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonObject projectJsonObject = bodyJsonObject.getAsJsonObject("data").getAsJsonObject("createProject");
+            String projectId = projectJsonObject.get("id").isJsonNull() ? "" : projectJsonObject.get("id").getAsString();
+            Gson gson = new Gson();
+            ChoreoProject project = gson.fromJson(projectJsonObject.toString(), ChoreoProject.class);
+            projectMap.put(projectId, project);
+            return project;
         }
-        JsonObject bodyJsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-        JsonObject projectJsonObject = bodyJsonObject.getAsJsonObject("data").getAsJsonObject("createProject");
-        String projectId = projectJsonObject.get("id").isJsonNull() ? "" : projectJsonObject.get("id").getAsString();
-        Gson gson = new Gson();
-        ChoreoProject project = gson.fromJson(projectJsonObject.toString(), ChoreoProject.class);
-        projectMap.put(projectId, project);
-        return project;
     }
 
     public String getOrgHandle() {
