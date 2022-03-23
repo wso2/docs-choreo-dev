@@ -23,7 +23,6 @@ resources:
   - dp-utility-api.yaml
   - email-service.yaml
   - frontend.yaml
-  - language-server.yaml
   - loggingapi.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml

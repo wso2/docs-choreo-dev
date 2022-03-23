@@ -1,9 +1,0 @@
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: language-server
-spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      choreo.component: language-server
