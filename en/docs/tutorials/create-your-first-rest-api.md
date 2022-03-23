@@ -20,7 +20,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
     ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
-3. Enter the name and the description for the project as follows:
+3. Enter a unique name and the description for the project. For this tutorial, let's enter the following values:
 
     | **Field**       | **Value**                             |
     |-----------------|---------------------------------------|
@@ -43,7 +43,7 @@ Let's create a new REST API component as follows:
 
 3. Click on **Create an API from scratch**.
 
-4. Enter a name and a description for the API as follows:
+4. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
 
     | **Field**       | **Value**             |
     |-----------------|-----------------------|
@@ -95,11 +95,11 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
 4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
 
-    1. Click **Connector** to add a connector. Then search for the COVID-19 connector, and click on it once it appears in the search results.
+    1. Click **Connector** to add a connector. Then search for the **COVID-19 by ballerinax** connector, and click on it once it appears in the search results.
 
     2. In the **Connector** panel, `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-    3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+    3. In the **Covid19 API Connection** window, click **Continue to Invoke API**.
 
     4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
@@ -110,11 +110,11 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     5. Click **Save**.
 
-6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
+5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Under **Statements**, select **Variable** and enter details as follows:
+    2. Click **Variable** and enter details as follows:
 
        | **Field**         | **Value**                     |
        |-------------------|-------------------------------|
@@ -128,7 +128,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Click **Connector** to add a connector. Then search for the World Bank connector, and click on it once it appears in the search results.
+    2. Click **Connector** to add a connector. Then search for the **World Bank by ballerinax** connector, and click on it once it appears in the search results.
 
     3. In the **Connector** panel that appears on the right of the page, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
 
@@ -145,7 +145,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
         1. Click the last **+** icon in the low-code diagram.
 
-        2. Under **Statements**, select **Variable** and enter details as follows:
+        2. Click **Variable** and enter details as follows:
 
             | **Field**         | **Value**                                         |
             |-------------------|---------------------------------------------------|
@@ -159,7 +159,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Under **Statements**, select **Variable** and enter details as follows:
+    2. Click **Variable** and enter details as follows:
 
         | **Field**         | **Value**                                    |
         |-------------------|----------------------------------------------|
@@ -202,13 +202,17 @@ import ballerinax/worldbank;
 import ballerinax/covid19;
 import ballerina/http;
 
-service /CovidStats on new http:Listener(9090) {
-    resource function get stats/[string country]() returns json|error {
-        covid19:Client covid19Client = check new ({});
-        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
+# A service representing a network-accessible API
+# bound to port `9090`.
+service / on new http:Listener(9090) {
+
+    resource function get stats/[string country]() returns json|error? {
+
+        covid19:Client covid19Endpoint = check new ({});
+        covid19:CovidCountry statusByCountry = check covid19Endpoint->getStatusByCountry(country);
         int totalCases = <int>statusByCountry.cases;
-        worldbank:Client worldbankClient = check new ({});
-        worldbank:IndicatorInformation[] populationByCountry = check worldbankClient->getPopulationByCountry(country);
+        worldbank:Client worldbankEndpoint = check new ({});
+        worldbank:IndicatorInformation[] populationByCountry = check worldbankEndpoint->getPopulationByCountry(country);
         int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
         decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
         json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
@@ -220,7 +224,7 @@ Now you can run the REST API and test it to see whether it works as expected.
 
 ### Step 1.4: Run and test the REST API 
 
-Let's run the REST API you designed in the VS Code Editor to check whether it can be started successfully without errors.
+Let's run the REST API you designed in the Web Editor to check whether it can be started successfully without errors.
 
 1. Click **Run** (above the low-code diagram).
 
