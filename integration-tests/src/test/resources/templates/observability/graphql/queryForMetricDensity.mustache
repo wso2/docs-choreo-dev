@@ -1,0 +1,14 @@
+query metricDensity($observeId: String!, $version: String!, $timeRanges: [String]!) {
+  metricDensity(
+    obsId: "{{obsId}}",
+    version "{{version}}",
+    timeRanges: {{timeRanges}}
+ ) {
+    metricCounts {
+      range
+      count
+      __typename
+    }
+    __typename
+  }
+}

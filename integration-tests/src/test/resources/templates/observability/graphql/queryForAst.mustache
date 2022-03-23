@@ -1,0 +1,9 @@
+query getAST($obsId: String!, $version: String!) {
+  ast(
+    obsId: {{obsId}},
+    version: {{version}}
+  ) {
+    ast
+    __typename
+  }
+}
