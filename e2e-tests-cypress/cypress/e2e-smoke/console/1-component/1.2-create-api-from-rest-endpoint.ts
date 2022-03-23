@@ -32,14 +32,9 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { Environment } from "../../../support/console/pages/enum/environment";
-import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
-import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
-import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
-import { generateAppName } from "../../../support/devportal/utils";
+
 
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");

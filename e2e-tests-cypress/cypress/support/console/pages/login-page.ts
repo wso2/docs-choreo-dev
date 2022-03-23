@@ -23,7 +23,7 @@ export class LoginPage {
       log: false,
     });
     cy.get('button[type="submit"]').click();
-      cy.intercept({
+    cy.intercept({
       method: "POST",
       url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
       times: 1,
@@ -62,12 +62,23 @@ export class LoginPage {
     cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
     cy.get('button[type="submit"]').click();
 
-
     LoginPage.persistOrgs();
     LoginPage.persistApimToken();
     LoginPage.persistLogoutURL();
     LoginPage.persistCookies();
 
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
+    cy.url().then((url) => {
+      cy.log(url)
+      if (url.includes("sample=true")) {
+        const { handle } = Cypress.env("userData");
+        const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
+        cy.wait(5000)
+        cy.visit(tmpURL);
+      }
+    });
   }
 
   private static persistLogoutURL() {
@@ -126,14 +137,14 @@ export class LoginPage {
   }
 
   private static persistApimToken() {
-    cy.intercept("POST", `${Cypress.env("appSvcURL")}/graphql`).as("gquery");
+    cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("gquery");
     cy.wait("@gquery", { timeout: 150000 }).then((intercept) => {
       Cypress.env("apim_token", intercept.request.headers.authorization);
       const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
       GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
-      this.deleteOnPremKeys()
+      this.deleteOnPremKeys();
     });
   }
 
@@ -148,7 +159,9 @@ export class LoginPage {
       const keys = res.body as [];
       keys.forEach((key) => {
         let { handle } = key;
-        let revokeUrl = `${Cypress.env("appSvcURL")}/orgs/${orgHandle}/keys/${handle}/revoke`;
+        let revokeUrl = `${Cypress.env(
+          "appSvcURL"
+        )}/orgs/${orgHandle}/keys/${handle}/revoke`;
         Utils.sendPostRequest(revokeUrl, headers, {});
       });
     });

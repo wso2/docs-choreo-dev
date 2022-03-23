@@ -55,7 +55,7 @@ export class Apis {
 
       Cypress.env("devportal_auth", header);
 
-      this.afterTwoMinutes = Date.now() + 300000;
+      this.afterTwoMinutes = Date.now() + 600000;
       this.verifyAPI(url, header, versionCount);
     });
     this.searchAPI(textApiName);
@@ -90,7 +90,7 @@ export class Apis {
       } else {
         let k = this.afterTwoMinutes - Date.now();
         if (k >= 0) {
-          cy.wait(60000);
+          cy.wait(80000);
           this.verifyAPI(url, header, versionCount);
         }
       }
