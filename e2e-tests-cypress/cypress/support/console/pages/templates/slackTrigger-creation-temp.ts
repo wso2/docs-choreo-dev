@@ -24,6 +24,8 @@ export class TriggersTemplate {
     cy.get('[data-cyid="Slack"]').click();
     cy.get("#mui-component-select-triggerChannel").click();
     cy.get('[data-cyid="SlackEventsAppService"]').click();
+    cy.get('[data-cyid="create-webhook-next"]').click();
+    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-cyid="btn-create"]').click();
     Utils.saveProjectData(fileID)
   }
