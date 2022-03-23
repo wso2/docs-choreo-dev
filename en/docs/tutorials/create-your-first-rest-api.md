@@ -20,7 +20,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
    ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
-3. Enter a unique name and the description for the project. For this tutorial, let's enter the following values:
+3. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
 
    | **Field**       | **Value**                             |
        |-----------------|---------------------------------------|
