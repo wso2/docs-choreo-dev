@@ -40,7 +40,7 @@ can configure the <code>provider</code> parameter to further filter the APIs by 
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-The name of the API provider
+The name of the API provider.
 
 </td>
 </tr>
@@ -49,7 +49,7 @@ The name of the API provider
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data Filter
+The data filter.
 
 </td>
 </tr>
@@ -68,7 +68,7 @@ can configure the <code>applicationFilter</code> parameter to further filter the
 <td valign="top"><a href="#applicationfilter">ApplicationFilter</a></td>
 <td>
 
-Application filter
+The application filter.
 
 </td>
 </tr>
@@ -77,7 +77,7 @@ Application filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data Filter
+The data filter.
 
 </td>
 </tr>
@@ -95,7 +95,7 @@ Fetches all the APIs with the given combination of tenant ID, environment ID, an
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data Filter
+The data filter.
 
 </td>
 </tr>
@@ -114,7 +114,7 @@ can configure the <code>subscriberFilter</code> parameter to further filter the 
 <td valign="top"><a href="#subscriberfilter">SubscriberFilter</a></td>
 <td>
 
-Subscriber filter
+The subscriber filter.
 
 </td>
 </tr>
@@ -123,7 +123,7 @@ Subscriber filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -150,7 +150,7 @@ Fetches all the environments of an organization.
 <td valign="top"><a href="#orgfilter">OrgFilter</a>!</td>
 <td>
 
-Organization filter
+The organization filter.
 
 </td>
 </tr>
@@ -168,7 +168,7 @@ Fetches all the tenants with the given combination of environment ID and organiz
 <td valign="top"><a href="#tenantdatafilter">TenantDataFilter</a>!</td>
 <td>
 
-Tenant Filter
+The tenant filter.
 
 </td>
 </tr>
@@ -187,7 +187,7 @@ and organization ID.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -196,7 +196,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -215,7 +215,7 @@ ID, environment ID, and organization ID.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -224,7 +224,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -243,7 +243,7 @@ combination of tenant ID, environment ID, and organization ID.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -252,7 +252,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -272,7 +272,7 @@ for the given combination of tenant ID, environment ID, and organization ID. Opt
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -281,7 +281,7 @@ Time filter
 <td valign="top"><a href="#latencysummaryfilter">LatencySummaryFilter</a></td>
 <td>
 
-Latency summary filter
+The latency summary filter.
 
 </td>
 </tr>
@@ -290,7 +290,7 @@ Latency summary filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -310,7 +310,7 @@ range for the given combination of tenant ID, environment ID, and organization I
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -319,7 +319,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -328,7 +328,7 @@ Data filter
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value
+The granularity value.
 
 </td>
 </tr>
@@ -348,7 +348,7 @@ ID. Optionally, you can configure the <code>granularity</code> parameter to over
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -357,7 +357,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -366,7 +366,7 @@ Data filter
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Granularity value
+The granularity value.
 
 </td>
 </tr>
@@ -387,7 +387,7 @@ results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -396,7 +396,7 @@ Time filter
 <td valign="top"><a href="#errorsbycategoryfilter">ErrorsByCategoryFilter</a></td>
 <td>
 
-Errors by category filter
+The errors by category filter.
 
 </td>
 </tr>
@@ -405,7 +405,7 @@ Errors by category filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -425,7 +425,7 @@ the given combination of tenant ID, environment ID, and organization ID. Optiona
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -434,7 +434,7 @@ Time filter
 <td valign="top"><a href="#errorsdetailsfilter">ErrorsDetailsFilter</a></td>
 <td>
 
-Error details filter
+The error details filter.
 
 </td>
 </tr>
@@ -443,7 +443,7 @@ Error details filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -464,7 +464,7 @@ parameter to further filter the results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -473,7 +473,7 @@ Time filter
 <td valign="top"><a href="#errorsbystatuscodefilter">ErrorsByStatusCodeFilter</a></td>
 <td>
 
-Errors by status code filter
+The errors by status code filter.
 
 </td>
 </tr>
@@ -482,7 +482,7 @@ Errors by status code filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -501,7 +501,7 @@ time range for the given combination of tenant ID, environment ID, and organizat
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -510,7 +510,7 @@ Time filter
 <td valign="top"><a href="#errorcountbystatuscodefilter">ErrorCountByStatusCodeFilter</a>!</td>
 <td>
 
-Error count by status code filter
+The error count by status code filter.
 
 </td>
 </tr>
@@ -519,7 +519,7 @@ Error count by status code filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -539,7 +539,7 @@ time range.
 <td valign="top"><a href="#timefilter">TimeFilter</a></td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -548,7 +548,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -557,7 +557,7 @@ Data filter
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API ID
+The API ID.
 
 </td>
 </tr>
@@ -566,9 +566,9 @@ API ID
 <td valign="top">[<a href="#apiusageovertime">APIUsageOverTime</a>]</td>
 <td>
 
-Returns a list of details related to the usage of each API over time for each time granularity within the specified time range for
-the given combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
-<code>apiUsageOvertimeFilter</code> parameter to further filter the results.
+Returns a list of details related to the usage of each API over time for each time granularity within the specified
+time range for the given combination of tenant ID, environment ID, and organization ID. Optionally, you can
+configure the <code>apiUsageOvertimeFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -577,7 +577,7 @@ the given combination of tenant ID, environment ID, and organization ID. Optiona
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -586,7 +586,7 @@ Time filter
 <td valign="top"><a href="#apiusageovertimefilter">APIUsageOverTimeFilter</a></td>
 <td>
 
-API usage overtime time filter
+The API usage overtime filter.
 
 </td>
 </tr>
@@ -595,7 +595,7 @@ API usage overtime time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -615,7 +615,7 @@ given combination of tenant ID, environment ID, and organization ID. Optionally,
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -624,7 +624,7 @@ Time filter
 <td valign="top"><a href="#apiusageovertimefilter">APIUsageOverTimeFilter</a></td>
 <td>
 
-API usage overtime filter
+The API usage overtime filter.
 
 </td>
 </tr>
@@ -633,7 +633,7 @@ API usage overtime filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -653,7 +653,7 @@ combination of tenant ID, environment ID, and organization ID. Optionally, you c
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -662,7 +662,7 @@ Time filter
 <td valign="top"><a href="#apiusagebybackendovertimefilter">APIUsageByBackendOverTimeFilter</a></td>
 <td>
 
-API usage by backend overtime filter
+The API usage by backend overtime filter.
 
 </td>
 </tr>
@@ -671,7 +671,7 @@ API usage by backend overtime filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -691,7 +691,7 @@ results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -700,7 +700,7 @@ Time filter
 <td valign="top"><a href="#resourceusagefilter">ResourceUsageFilter</a></td>
 <td>
 
-Resource usage filter
+The resource usage filter.
 
 </td>
 </tr>
@@ -709,7 +709,7 @@ Resource usage filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -728,7 +728,7 @@ Optionally, you can configure the <code>filter</code> parameter to further filte
 <td valign="top"><a href="#timefilter">TimeFilter</a></td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -737,7 +737,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -746,7 +746,7 @@ Data filter
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API ID
+The API ID.
 
 </td>
 </tr>
@@ -765,7 +765,7 @@ range for the given combination of tenant ID, environment ID, and organization I
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -774,7 +774,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -783,7 +783,7 @@ Data filter
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Limit for the slow APIs list
+The limit for the slow APIs list.
 
 </td>
 </tr>
@@ -803,7 +803,7 @@ ID.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -812,7 +812,7 @@ Time filter
 <td valign="top"><a href="#latencyfilter">LatencyFilter</a>!</td>
 <td>
 
-Latency filter
+The latency filter.
 
 </td>
 </tr>
@@ -821,7 +821,7 @@ Latency filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -841,7 +841,7 @@ results by a given time range.
 <td valign="top"><a href="#timefilter">TimeFilter</a></td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -850,7 +850,7 @@ Time filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -859,7 +859,7 @@ Data filter
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-API ID
+The API ID.
 
 </td>
 </tr>
@@ -879,7 +879,7 @@ organization ID.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -888,7 +888,7 @@ Time filter
 <td valign="top"><a href="#cachefilter">CacheFilter</a></td>
 <td>
 
-Cache filter
+The cache filter.
 
 </td>
 </tr>
@@ -897,7 +897,7 @@ Cache filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -918,7 +918,7 @@ Optionally, you can configure the <code>deviceFilter</code> parameter to further
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -927,7 +927,7 @@ Time filter
 <td valign="top"><a href="#devicefilter">DeviceFilter</a></td>
 <td>
 
-Device filter
+The device filter.
 
 </td>
 </tr>
@@ -936,7 +936,7 @@ Device filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -957,7 +957,7 @@ count. Optionally, you can configure the <code>deviceFilter</code> parameter to 
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -966,7 +966,7 @@ Time filter
 <td valign="top"><a href="#devicefilter">DeviceFilter</a></td>
 <td>
 
-Device filter
+The device filter.
 
 </td>
 </tr>
@@ -975,7 +975,7 @@ Device filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -997,7 +997,7 @@ and organization ID. Optionally, you can configure the <code>geoLocationFilter</
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1006,7 +1006,7 @@ Time filter
 <td valign="top"><a href="#geolocationfilter">GeoLocationFilter</a></td>
 <td>
 
-Geolocation filter
+The geolocation filter.
 
 </td>
 </tr>
@@ -1015,7 +1015,7 @@ Geolocation filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1024,9 +1024,9 @@ Data filter
 <td valign="top">[<a href="#apiusagebyapplication">APIUsageByApplication</a>]</td>
 <td>
 
-Returns details relating to the usage of each API by application within the specified time range for the given combination of
-tenant ID, environment ID, and organization ID. Optionally, you can configure the <code>apiUsageByAppFilter</code> parameter to
-further filter the results.
+Returns details relating to the usage of each API by application within the specified time range for the given
+combination of tenant ID, environment ID, and organization ID. Optionally, you can configure the
+<code>apiUsageByAppFilter</code> parameter to further filter the results.
 
 </td>
 </tr>
@@ -1035,7 +1035,7 @@ further filter the results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1044,7 +1044,7 @@ Time filter
 <td valign="top"><a href="#apiusagebyappfilter">APIUsageByAppFilter</a></td>
 <td>
 
-API usage by app filter
+The API usage by app filter.
 
 </td>
 </tr>
@@ -1053,7 +1053,7 @@ API usage by app filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1073,7 +1073,7 @@ further filter the results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1082,7 +1082,7 @@ Time filter
 <td valign="top"><a href="#topapisbyalertcountfilter">TopAPIsByAlertCountFilter</a></td>
 <td>
 
-Top APIs by alert count filter
+The top APIs by alert count filter.
 
 </td>
 </tr>
@@ -1091,7 +1091,7 @@ Top APIs by alert count filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1111,7 +1111,7 @@ filter the results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1120,7 +1120,7 @@ Time filter
 <td valign="top"><a href="#alertsummaryfilter">AlertSummaryFilter</a></td>
 <td>
 
-Alert summary filter
+The alert summary filter.
 
 </td>
 </tr>
@@ -1129,7 +1129,7 @@ Alert summary filter
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1151,7 +1151,7 @@ filter the results.
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1160,7 +1160,7 @@ Time filter
 <td valign="top"><a href="#successapiusagebyappfilter">SuccessAPIUsageByAppFilter</a></td>
 <td>
 
-Successful API usage by application filter.
+The successful API usage by application filter.
 
 </td>
 </tr>
@@ -1180,7 +1180,7 @@ filter the results.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Value of the On-Prem key
+The value of the On-Prem key.
 
 </td>
 </tr>
@@ -1189,7 +1189,7 @@ Value of the On-Prem key
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1198,7 +1198,7 @@ Time filter
 <td valign="top"><a href="#successapiusagebyappfilter">SuccessAPIUsageByAppFilter</a></td>
 <td>
 
-Successful API usage by application filter.
+The successful API usage by application filter.
 
 </td>
 </tr>
@@ -1207,7 +1207,7 @@ Successful API usage by application filter.
 <td valign="top"><a href="#customreportovertime">CustomReportOvertime</a></td>
 <td>
 
-Returns summary of hits/ latency data for the inquired time frame grouped into timeSpans
+Returns the summary of hits or latency data as specified for the selected time duration, grouped by time spans.
 
 </td>
 </tr>
@@ -1216,7 +1216,7 @@ Returns summary of hits/ latency data for the inquired time frame grouped into t
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1225,7 +1225,7 @@ Data filter
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1234,7 +1234,7 @@ Time filter
 <td valign="top"><a href="#metric">Metric</a>!</td>
 <td>
 
-Metric to retrieve data for
+The metric for which data needs to be retrieved.
 
 </td>
 </tr>
@@ -1243,7 +1243,7 @@ Metric to retrieve data for
 <td valign="top">[<a href="#groupbyfield">GroupByField</a>]!</td>
 <td>
 
-Column/ Field to group the data by
+The column/field by which data needs to be retrieved.
 
 </td>
 </tr>
@@ -1252,7 +1252,7 @@ Column/ Field to group the data by
 <td valign="top">[<a href="#string">String</a>]!</td>
 <td>
 
-Value to filter by on the groupByField
+The value used to filter by the <code>groupByField</code>.
 
 </td>
 </tr>
@@ -1270,8 +1270,8 @@ The granularity value for which data is retrieved.
 <td valign="top"><a href="#customreporttopovertime">CustomReportTopOvertime</a></td>
 <td>
 
-Returns summary of hits/ latency data for the inquired time frame grouped into timeSpans for the top N values
-for the selected groupByField
+Returns the summary of hits or latency data as specified for the selected time duration, grouped by time spans for
+the top N values for the selected groupByField.
 
 </td>
 </tr>
@@ -1280,7 +1280,7 @@ for the selected groupByField
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1289,7 +1289,7 @@ Data filter
 <td valign="top"><a href="#timefilter">TimeFilter</a>!</td>
 <td>
 
-Time filter
+The time filter.
 
 </td>
 </tr>
@@ -1298,7 +1298,7 @@ Time filter
 <td valign="top"><a href="#metric">Metric</a>!</td>
 <td>
 
-Metric to retrieve data for
+The metric for which data needs to be retrieved.
 
 </td>
 </tr>
@@ -1307,7 +1307,7 @@ Metric to retrieve data for
 <td valign="top">[<a href="#groupbyfield">GroupByField</a>]!</td>
 <td>
 
-Column/ Field to group the data by
+The column/field by which the data should be grouped.
 
 </td>
 </tr>
@@ -1316,7 +1316,7 @@ Column/ Field to group the data by
 <td valign="top">[<a href="#string">String</a>]!</td>
 <td>
 
-Value to filter by on the groupByField
+The value used to filter by the <code>groupByField</code>.
 
 </td>
 </tr>
@@ -1334,7 +1334,7 @@ The granularity value for which data is retrieved.
 <td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-Returns a list of distinct group by values for the data available for a selected groupByField
+Returns a list of values by which you can group the data available for the selected <code>groupBy</code> field
 
 </td>
 </tr>
@@ -1343,7 +1343,7 @@ Returns a list of distinct group by values for the data available for a selected
 <td valign="top"><a href="#datafilter">DataFilter</a>!</td>
 <td>
 
-Data filter
+The data filter.
 
 </td>
 </tr>
@@ -1352,7 +1352,7 @@ Data filter
 <td valign="top">[<a href="#groupbyfield">GroupByField</a>]!</td>
 <td>
 
-Column/ Field to get the distinct values for
+The column/field for which the API needs to retrieve distinct values.
 
 </td>
 </tr>
@@ -1361,7 +1361,7 @@ Column/ Field to get the distinct values for
 <td valign="top">[<a href="#string">String</a>]!</td>
 <td>
 
-Value to filter by on the groupByField
+The value used to filter by the <code>groupByField</code>.
 
 </td>
 </tr>
@@ -1398,7 +1398,7 @@ The ID of the API.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API name.
+The API name.
 
 </td>
 </tr>
@@ -1407,7 +1407,7 @@ API name.
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-API version.
+The API version.
 
 </td>
 </tr>
@@ -1824,7 +1824,7 @@ A list containing the alert summary for each alert. Returns an empty array if no
 <td valign="top"><a href="#pagination">Pagination</a>!</td>
 <td>
 
-Pagination details.
+The pagination details.
 
 </td>
 </tr>
@@ -1898,7 +1898,7 @@ The severity level of the alert. Possible values are <code>LOW</code>, <code>MED
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Alert details.
+The alert details.
 
 </td>
 </tr>
@@ -2044,7 +2044,7 @@ The granularity value for which data is retrieved.
 
 ### CustomReportGroupBy
 
-Represents usage data overtime for the selected paramters for a certain groupByValue
+Represents the usage data overtime for the selected parameters of a specific <code>groupByValue</code>.
 
 <table>
 <thead>
@@ -2061,7 +2061,7 @@ Represents usage data overtime for the selected paramters for a certain groupByV
 <td valign="top"><a href="#id">ID</a>!</td>
 <td>
 
-Distinct group by value used as an ID
+The distinct group-by value that is used as an ID.
 
 </td>
 </tr>
@@ -2070,7 +2070,7 @@ Distinct group by value used as an ID
 <td valign="top">[<a href="#customreportusage">CustomReportUsage</a>]</td>
 <td>
 
-A list containing the usage values. Returns an empty array if no data is available.
+A list containing the usage values. This returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2079,7 +2079,7 @@ A list containing the usage values. Returns an empty array if no data is availab
 
 ### CustomReportOvertime
 
-Represents usage data overtime for the selected paramters
+Represents usage data overtime for the selected parameters.
 
 <table>
 <thead>
@@ -2096,7 +2096,7 @@ Represents usage data overtime for the selected paramters
 <td valign="top">[<a href="#customreportusage">CustomReportUsage</a>]</td>
 <td>
 
-A list containing the usage values. Returns an empty array if no data is available.
+A list containing the usage values. This returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -2114,7 +2114,7 @@ The granularity value for which data is retrieved.
 
 ### CustomReportTopOvertime
 
-Represents usage data overtime for the selected paramters grouped by the top N groupByValues
+Represents usage data overtime for the selected parameters grouped by the top N <code>groupByValues</code>.
 
 <table>
 <thead>
@@ -2131,7 +2131,7 @@ Represents usage data overtime for the selected paramters grouped by the top N g
 <td valign="top">[<a href="#customreportgroupby">CustomReportGroupBy</a>]</td>
 <td>
 
-A list containing the usage values grouped by the selected groupByField. Returns an empty array if no data is
+A list containing the usage values grouped by the selected <code>groupByField</code>. This returns an empty array if no data is
 available.
 
 </td>
@@ -2150,7 +2150,7 @@ The granularity value for which data is retrieved.
 
 ### CustomReportUsage
 
-Represents usage data for a single timestamp in CustomReports
+Represents usage data for a single timestamp in CustomReports.
 
 <table>
 <thead>
@@ -2179,7 +2179,7 @@ e.g., <code>timeSpan: '2021-06-21T00:00:00.0000000+05:30'</code>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Usage value (Hit Count/ Latency)
+The usage value (Hit Count/ Latency).
 
 </td>
 </tr>
@@ -2214,7 +2214,7 @@ A list containing error details over time. Returns an empty array if no data is 
 <td valign="top"><a href="#pagination">Pagination</a>!</td>
 <td>
 
-Pagination details.
+The pagination details.
 
 </td>
 </tr>
@@ -3474,7 +3474,7 @@ A list containing top APIs by alert count. Returns an empty array if no data is 
 <td valign="top"><a href="#pagination">Pagination</a>!</td>
 <td>
 
-Pagination details.
+The pagination details.
 
 </td>
 </tr>
@@ -4537,7 +4537,7 @@ Represents an error code type.
 <td valign="top"><strong>_4XX</strong></td>
 <td>
 
-Client-side errors.
+The client-side errors.
 
 </td>
 </tr>
@@ -4545,7 +4545,7 @@ Client-side errors.
 <td valign="top"><strong>_5XX</strong></td>
 <td>
 
-Server-side errors.
+The server-side errors.
 
 </td>
 </tr>
@@ -4566,7 +4566,7 @@ Represents an error type.
 <td valign="top"><strong>PROXY</strong></td>
 <td>
 
-Proxy-related errors.
+The proxy-related errors.
 
 </td>
 </tr>
@@ -4574,7 +4574,7 @@ Proxy-related errors.
 <td valign="top"><strong>TARGET</strong></td>
 <td>
 
-Target-related errors.
+The target-related errors.
 
 </td>
 </tr>
@@ -4583,7 +4583,7 @@ Target-related errors.
 
 ### GroupByField
 
-Represents an groupByField used in CustomReports.
+Represents an <code>groupByField</code> used in <code>CustomReports</code>.
 
 <table>
 <thead>
@@ -4595,7 +4595,7 @@ Represents an groupByField used in CustomReports.
 <td valign="top"><strong>API_NAME</strong></td>
 <td>
 
-API Name
+The API name.
 
 </td>
 </tr>
@@ -4603,7 +4603,7 @@ API Name
 <td valign="top"><strong>API_VERSION</strong></td>
 <td>
 
-API Version
+The API version.
 
 </td>
 </tr>
@@ -4611,7 +4611,7 @@ API Version
 <td valign="top"><strong>API_RESOURCE_TEMPLATE</strong></td>
 <td>
 
-API Resource Template
+The API resource template.
 
 </td>
 </tr>
@@ -4619,7 +4619,7 @@ API Resource Template
 <td valign="top"><strong>API_METHOD</strong></td>
 <td>
 
-API Method
+The API method.
 
 </td>
 </tr>
@@ -4627,7 +4627,7 @@ API Method
 <td valign="top"><strong>API_CREATOR</strong></td>
 <td>
 
-API Creator
+The API creator.
 
 </td>
 </tr>
@@ -4635,7 +4635,7 @@ API Creator
 <td valign="top"><strong>APPLICATION_NAME</strong></td>
 <td>
 
-Application Name
+The name of the application.
 
 </td>
 </tr>
@@ -4643,7 +4643,7 @@ Application Name
 <td valign="top"><strong>APPLICATION_OWNER</strong></td>
 <td>
 
-Application Owner
+The owner of the application.
 
 </td>
 </tr>
@@ -4651,7 +4651,7 @@ Application Owner
 <td valign="top"><strong>DESTINATION</strong></td>
 <td>
 
-Destination
+The destination.
 
 </td>
 </tr>
@@ -4659,7 +4659,7 @@ Destination
 <td valign="top"><strong>USER_AGENT</strong></td>
 <td>
 
-User Agent
+The user Agent.
 
 </td>
 </tr>
@@ -4667,7 +4667,7 @@ User Agent
 <td valign="top"><strong>PLATFORM</strong></td>
 <td>
 
-Platform
+The platform.
 
 </td>
 </tr>
@@ -4675,7 +4675,7 @@ Platform
 <td valign="top"><strong>TARGET_RESPONSE_CODE</strong></td>
 <td>
 
-Target Response Code
+The target response code.
 
 </td>
 </tr>
@@ -4696,7 +4696,7 @@ Represents a metric used in CustomReports.
 <td valign="top"><strong>HIT_COUNT</strong></td>
 <td>
 
-Number of API calls
+The number of API calls.
 
 </td>
 </tr>
@@ -4704,7 +4704,7 @@ Number of API calls
 <td valign="top"><strong>RESPONSE_CACHE_HIT</strong></td>
 <td>
 
-Number of API calls that used Response Cache
+The number of API calls that used the response cache.
 
 </td>
 </tr>
@@ -4712,7 +4712,7 @@ Number of API calls that used Response Cache
 <td valign="top"><strong>REQUEST_MEDIATION_LATENCY</strong></td>
 <td>
 
-Request Mediation Latency
+The request mediation latency.
 
 </td>
 </tr>
@@ -4720,7 +4720,7 @@ Request Mediation Latency
 <td valign="top"><strong>RESPONSE_MEDIATION_LATENCY</strong></td>
 <td>
 
-Response Mediation Latency
+The response mediation latency.
 
 </td>
 </tr>
@@ -4728,7 +4728,7 @@ Response Mediation Latency
 <td valign="top"><strong>BACKEND_LATENCY</strong></td>
 <td>
 
-Backend Latency
+The backend latency.
 
 </td>
 </tr>
@@ -4736,7 +4736,7 @@ Backend Latency
 <td valign="top"><strong>TOTAL_LATENCY</strong></td>
 <td>
 
-Total Latency
+The total latency.
 
 </td>
 </tr>
@@ -4744,7 +4744,7 @@ Total Latency
 <td valign="top"><strong>API_ERRORS</strong></td>
 <td>
 
-Number of hits with API errors returning
+The number of hits for which API errors are returned.
 
 </td>
 </tr>
@@ -4752,7 +4752,7 @@ Number of hits with API errors returning
 <td valign="top"><strong>TARGET_ERRORS</strong></td>
 <td>
 
-Number of hits with target errors returning
+The number of hits for which target errors are returned.
 
 </td>
 </tr>
