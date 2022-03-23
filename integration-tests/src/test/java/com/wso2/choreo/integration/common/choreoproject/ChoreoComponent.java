@@ -1,6 +1,12 @@
 package com.wso2.choreo.integration.common.choreoproject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+import com.google.gson.*;
+import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,7 +24,10 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundExce
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,6 +73,8 @@ public abstract class ChoreoComponent {
     private ComponentRepository repository;
     private String updatedAt;
     private String version;
+    private ChoreoProject project;
+    private ChoreoOrganization organization;
 
     /**
      * Retrieve commit history of a component
@@ -386,6 +398,190 @@ public abstract class ChoreoComponent {
         throw new NoLatestApiVersionFoundException();
     }
 
+    /**
+     * Get Component information query for the graphql call
+     *
+     * @return request body containing graphql query
+     */
+    public String getComponentInformation() throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentInformation.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("projectId", project.getId());
+        queryParams.put("componentHandler", handler);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(gqlRequestPayload);
+    }
+
+    /**
+     * Get Component environment information graphql query
+     *
+     * @return request body containing graphql query
+     */
+    public String getComponentEnvironments() throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("orgUUID", organization.getOrgUUID());
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(gqlRequestPayload);
+    }
+
+    /**
+     * Get Component environment information graphql query
+     *
+     * @param releaseId release id for your component
+     * @return request body containing graphql query
+     */
+    public String getComponentObservabilityIds(String releaseId) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityIds.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("releaseId", releaseId);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(gqlRequestPayload);
+    }
+
+    /**
+     * Get Component environment information graphql query
+     *
+     * @param accessToken   OAuth token to invoke the Chorea backend
+     * @param componentType type of the component
+     * @param environment   environment of the deployment
+     * @return Invoke information related to requested environment
+     */
+    public InvokeInformation getInvokeInformation(String accessToken, String componentType, String environment) throws
+            IOException, NoLatestApiVersionFoundException, InterruptedException, ComponentInvokeInformationCheckException, InvokeInformationNotFoundException {
+        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/deploy/graphql/queryForInvokeInformation.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("orgHandler", organization.getOrgHandle());
+        queryParams.put("orgUuid", organization.getOrgUUID());
+        queryParams.put("componentId", id);
+        String latestVersionId = getLatestApiVersion().getId();
+        queryParams.put("versionId", latestVersionId);
+        queryParams.put("componentType", componentType);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestURI))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int statusCode = response.statusCode();
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new ComponentInvokeInformationCheckException(statusCode, response.body());
+        }
+        JsonObject bodyJsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+        JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
+        Gson gson = new Gson();
+        InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
+        for (InvokeInformation envInvokeInformation : invokeInformation) {
+            if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
+                return envInvokeInformation;
+            }
+        }
+        throw new InvokeInformationNotFoundException();
+    }
+
+    /**
+     * Get api-key to invoke the application from APIM
+     *
+     * @param accessToken OAuth token to invoke the Chorea backend
+     * @param apiId apiId for the deployed component
+     * @return request body containing graphql query
+     */
+    public String getAPIKeyForInvoke(String accessToken, String apiId) throws InterruptedException, IOException,
+            GenerateAPIKeyCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
+        String requestURI = Configuration.STS_ENDPOINT.
+                concat(Constant.APIS_ENDPOINT)
+                .concat("/")
+                .concat(apiId)
+                .concat("/generate-key")
+                .concat("?")
+                .concat(Constant.ORGANIZATION_ID)
+                .concat("=")
+//                TODO : revert for regular
+//                .concat(Configuration.TEST_CHOREO_ORG_UUID);
+                .concat(organization.getOrgUUID());
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestURI))
+                .POST(HttpRequest.BodyPublishers.ofString(""))
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON)
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int statusCode = response.statusCode();
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new GenerateAPIKeyCheckException(statusCode, response.body());
+        }
+        JsonObject responseBody = new JsonParser().parse(response.body()).getAsJsonObject();
+        String apiKey = responseBody.get("apikey").toString();
+        if (apiKey != null) {
+            return apiKey;
+        }
+        throw new ApiKeyNotFoundException();
+    }
+
+//    public String getObsId() {
+//        String releaseId = getApiVersions()
+//                .get(0)
+//                .getAppEnvVersions()
+//                .get(0)
+//                .getReleaseId();
+//        Writer writer = new StringWriter();
+//            String graphQlQuery = writer.toString();
+//        System.out.println("query invoke " + graphQlQuery);
+//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+//            {
+//                put("query", graphQlQuery);
+//            }
+//        };
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+//        System.out.println("request uri " + requestURI);
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create(requestURI))
+//                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+//                .header(HttpHeaders.AUTHORIZATION, accessToken)
+//                .build();
+//        return  "";
+//    }
+
     public String getId() {
         return id;
     }
@@ -553,4 +749,21 @@ public abstract class ChoreoComponent {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    public ChoreoProject getProject() {
+        return project;
+    }
+
+    public void setProject(ChoreoProject project) {
+        this.project = project;
+    }
+
+    public ChoreoOrganization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(ChoreoOrganization organization) {
+        this.organization = organization;
+    }
+
 }
