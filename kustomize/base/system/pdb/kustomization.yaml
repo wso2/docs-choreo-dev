@@ -24,7 +24,6 @@ resources:
   - dp-utility-api.yaml
   - email-service.yaml
   - frontend.yaml
-  - linker.yaml
   - loggingapi.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - negotiator.yaml
