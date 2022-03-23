@@ -247,6 +247,9 @@ envId
 2021-08-16T12
 10-minute
 GraphQL
+ballerinax
+CountryCode
+undeploy
 
 
  - docs/references/upgrading-from-the-previous-version.md
