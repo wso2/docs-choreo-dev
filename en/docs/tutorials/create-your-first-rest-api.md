@@ -257,8 +257,6 @@ The REST API you designed is currently available only in the Web Editor. To use 
 
 1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red).
 
-   ![Sync with Choreo upstreeam](../assets/img/tutorials/scheduled-task/sync-with-choreo-upstream.png){.cInlineImage-full}
-
    In the message that appears as a result, click **Sync my changes with Choreo**.
 
 2. In the left panel, enter a commit message (e.g., `Implement REST API`) and click the tick.
