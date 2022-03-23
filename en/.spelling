@@ -170,6 +170,7 @@ AlertSummaries
 alertSummaryFilter
 AlertSummaryFilter
 getSuccessAPIsUsageByApplications
+getSuccessAPIsUsageByApplicationsWithOnPremKey
 SuccessAPIUsageByApplication
 successAPIUsageByAppFilter
 SuccessAPIUsageByAppFilter
@@ -254,6 +255,38 @@ unmanaged
 Webhook
 webhooks
 webhook
+onPremKey
+getCustomReportOvertime
+CustomReportOvertime
+groupByFields
+GroupByField
+groupByValues
+groupByField
+getCustomReportTopOvertime
+CustomReportTopOvertime
+getGroupByValues
+groupBy
+CustomReportGroupBy
+groupByValue
+CustomReportUsage
+CustomReports
+API_NAME
+API_VERSION
+API_RESOURCE_TEMPLATE
+API_METHOD
+API_CREATOR
+APPLICATION_NAME
+APPLICATION_OWNER
+USER_AGENT
+TARGET_RESPONSE_CODE
+HIT_COUNT
+RESPONSE_CACHE_HIT
+REQUEST_MEDIATION_LATENCY
+RESPONSE_MEDIATION_LATENCY
+BACKEND_LATENCY
+TOTAL_LATENCY
+API_ERRORS
+TARGET_ERRORS
 
 
  - docs/references/upgrading-from-the-previous-version.md
