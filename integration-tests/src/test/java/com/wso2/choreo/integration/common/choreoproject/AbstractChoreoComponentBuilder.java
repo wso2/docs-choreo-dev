@@ -103,6 +103,7 @@ public abstract class AbstractChoreoComponentBuilder {
                 "        description," +
                 "        displayType," +
                 "        displayName," +
+                "        ownerName," +
                 "        orgId," +
                 "        orgHandler," +
                 "        version," +
@@ -116,7 +117,8 @@ public abstract class AbstractChoreoComponentBuilder {
                 "          nameConfig," +
                 "          branch," +
                 "          organizationApp," +
-                "          organizationConfig" +
+                "          organizationConfig," +
+                "          isUserManage" +
                 "        }," +
                 "        apiVersions{" +
                 "          apiVersion," +
@@ -126,6 +128,7 @@ public abstract class AbstractChoreoComponentBuilder {
                 "          id," +
                 "          state," +
                 "          latest," +
+                "          branch," +
                 "          appEnvVersions{" +
                 "            environmentId," +
                 "            releaseId," +
@@ -138,31 +141,6 @@ public abstract class AbstractChoreoComponentBuilder {
                 "              environment," +
                 "              gitHash," +
                 "              gitOpsHash," +
-                "              latestDeployment{" +
-                "                pending," +
-                "                deploymentHistoryId," +
-                "                deploymentHistory{" +
-                "                  id," +
-                "                  appEnvironment," +
-                "                  appEnvironmentId," +
-                "                  changeMessage," +
-                "                  containerImages {" +
-                "                    imageId," +
-                "                    containerId," +
-                "                    image {" +
-                "                      imageVersion," +
-                "                      imageName," +
-                "                      imageRegistry," +
-                "                      imageRegistryId," +
-                "                      tagName," +
-                "                      tags," +
-                "                      gitHash," +
-                "                      committer," +
-                "                      commitMsg," +
-                "                    }" +
-                "                  }" +
-                "                }" +
-                "              }" +
                 "            }" +
                 "          }" +
                 "        }" +
