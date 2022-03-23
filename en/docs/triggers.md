@@ -29,7 +29,7 @@ Additionally, you can define any configurations needed to run the Trigger.
 
 ![Low Code](assets/img/triggers/low-code-trigger.png)
 
-The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments, logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed [connectors](TODO: add a link to connectors).
+The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments, logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed [connectors](https://central.ballerina.io).
 
 Choreo allows you to add multiple triggers and channels to your trigger implementation via the low-code editor. It also shows the configurations needed to deploy the Trigger. 
 
@@ -44,8 +44,6 @@ In addition to the low-code mode, Choreo provides a pro code mode of implementin
 Choreo gives the developers the flexibility to use the pro-code mode only or use it for implementing certain parts of the API and use the low-code mode for the rest, based on their preference. Choreo treats the source code (generated and handwritten) of the API as the single source of truth and therefore has no limitations or restrictions on which mode developers may choose to implement their Trigger's functionality.
 
 ## Deploy a Trigger
-
- TODO: Written only based on HTTP-based triggers. 
 
 Choreo provides an easy, interactive UI to help you deploy the Trigger in Choreo to the default development environment. On deployment, Choreo prompts to add the configuration values that the developer has configured.
 

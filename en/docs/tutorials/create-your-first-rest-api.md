@@ -4,7 +4,7 @@ A RESTful API (Application Program Interface) uses HTTP requests to access and u
 
 Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
-- Design a REST API that addresses the described requirement, test it in the VS Code Editor, and then commit it so that it is available in the Chore Console.
+- Design a REST API that addresses the described requirement, test it in the web editor, and then commit it so that it is available in the Chore Console.
 - Deploy the REST API you created to make it available for use.
 - Test the REST API after deploying it to check whether it works as expected.
 
@@ -20,7 +20,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
     ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
-3. Enter the name and the description for the project as follows:
+3. Enter a unique name and a description for the project. For example:
 
     | **Field**       | **Value**                             |
     |-----------------|---------------------------------------|
@@ -39,7 +39,7 @@ Let's create a new REST API component as follows:
 
 3. Click on **Create an API from scratch**.
 
-4. Enter a name and a description for the API as follows:
+4. Enter a unique name and a description for the API. For example:
 
     | **Field**       | **Value**             |
     |-----------------|-----------------------|
@@ -54,12 +54,10 @@ The `Statistics` REST API opens on a separate page.
 
 Let's design the REST API as follows:
 
-1. To open the REST API component in the VS Code Editor, click **Edit with VSCode Online**.
-
-    Then click **Open Link in New Tab** in the message that appears to indicate that the code server is ready.
+1. To open the REST API component in the web editor, click **Edit Code**.
     
     !!! info
-        Opening the VS Code Editor may take a little while if you are a first-time user.
+        Opening the web editor may take a little while if you are a first-time user.
 
 2. Add a new construct and an API resource as follows:
 
@@ -71,7 +69,7 @@ Let's design the REST API as follows:
 
         | **Field**             | **Value**             |
         |-----------------------|-----------------------|
-        | **Service Base Path** | `COVID19-Statistics`  |
+        | **Service Base Path** | `COVID19_Statistics`  |
         | **Listener Port**     | `9090`                |
 
         Select the **Define Inline** check box, and then click **Save**.
@@ -82,32 +80,30 @@ Let's design the REST API as follows:
 
         By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
 
-    4. Click **Advanced** and in the **Return Type** field, enter `json|error` to get the return in `json` or `error1` format.
+    4. Click **Advanced** and in the **Return Type** field, enter `json|error` to get the return in `json` or `error` format.
 
-    5. Click **Save API**.
+    5. Click **Save**.
 
 3. To connect to the COVID-19 API and retrieve data, follow the sub-steps below.
 
-    1. Click on the API resource you edited, and then click on the first **+** icon after the **Start** statement.
+    1. Select **Connector** and then select **COVID-19 by ballerinax**.
 
-    2. Click **Connector** and then select **Covid19 API**.
+    2. In the **Covid19 API Connection**  and click **Continue to Invoke API**.
 
-    3. In the **Covid19 API Connection** window, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
-
-    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+    3. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
         | **Field**                  | **Value**         |
         |----------------------------|-------------------|
         | **Country**                | `country`         |
         | **Response Variable Name** | `statusByCountry` |
 
-    5. Click **Save**.
+    4. Click **Save**.
 
-    6. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
+    5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
         1. Click the last **+** icon in the low-code diagram.
 
-        2. Under **Statements**, select **Variable** and enter details as follows:
+        2. Select **Variable** and enter details as follows:
 
             | **Field**         | **Value**                     |
             |-------------------|-------------------------------|
@@ -123,7 +119,7 @@ Let's design the REST API as follows:
 
     2. Click **Connector** and then select **World Bank API**.
 
-    3. In the **World Bank API Connection** window, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
+    3. In the **World Bank by ballerinax** and click **Continue to Invoke API**.
 
     4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
 
@@ -138,7 +134,7 @@ Let's design the REST API as follows:
 
         1. Click the last **+** icon in the low-code diagram.
 
-        2. Under **Statements**, select **Variable** and enter details as follows:
+        2. Select **Variable** and enter details as follows:
 
             | **Field**         | **Value**                                         |
             |-------------------|---------------------------------------------------|
@@ -152,7 +148,7 @@ Let's design the REST API as follows:
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Under **Statements**, select **Variable** and enter details as follows:
+    2. Select **Variable** and enter details as follows:
 
         | **Field**         | **Value**                                    |
         |-------------------|----------------------------------------------|
@@ -197,13 +193,19 @@ import ballerinax/worldbank;
 import ballerinax/covid19;
 import ballerina/http;
 
-service /CovidStats on new http:Listener(9090) {
+service /COVID19_Statistics on new http:Listener(9090) {
+
+    resource function get country() returns string|error {
+
+        covid19:Client covid19Endpoint1 = check new ({});
+        covid19:CovidCountry getStatusByCountryResponse = check covid19Endpoint1->getStatusByCountry("country");
+    }
     resource function get stats/[string country]() returns json|error {
-        covid19:Client covid19Client = check new ({});
-        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
+        covid19:Client covid19Endpoint = check new ({});
+        covid19:CovidCountry statusByCountry = check covid19Endpoint->getStatusByCountry("country");
         int totalCases = <int>statusByCountry.cases;
-        worldbank:Client worldbankClient = check new ({});
-        worldbank:IndicatorInformation[] populationByCountry = check worldbankClient->getPopulationByCountry(country);
+        worldbank:Client worldbankEndpoint = check new ({});
+        worldbank:IndicatorInformation[] populationByCountry = check worldbankEndpoint->getPopulationByCountry("country");
         int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
         decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
         json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
@@ -215,7 +217,7 @@ Now you can run the REST API and test it to see whether it works as expected.
 
 ### Step 1.4: Run and test the REST API 
 
-Let's run the REST API you designed in the VS Code Editor to check whether it can be started successfully without errors.
+Let's run the REST API you designed in the web editor to check whether it can be started successfully without errors.
 
 1. Click **Run** (above the low-code diagram).
 
@@ -244,7 +246,7 @@ The REST API you created works as expected. Therefore, now you can commit it.
 
 ### Step 1.5: Commit the REST API to GitHub
 
-The REST API you designed is currently available only in the VS Code Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
+The REST API you designed is currently available only in the web editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
 
 1. Click **Sync with Choreo Upstream** (at the bottom of the page), and then click **Sync my changes with Choreo**.
 
@@ -258,7 +260,7 @@ The REST API you designed is currently available only in the VS Code Editor. To 
 
     ![Push changes](../assets/img/tutorials/rest-api/git-action-menu.png){.cInlineImage-half}
 
-Once the changes are successfully pushed to the GitHub repository, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
+Once the changes are successfully pushed to the GitHub repository, the web editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
 ## Step 2: Deploy
 
