@@ -95,79 +95,79 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
 4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
 
-   1. Click **Connector** to add a connector. Then search for the **COVID-19 by ballerinax** connector, and click on it once it appears in the search results.
+    1. Click **Connector** to add a connector. Then search for the **COVID-19 by ballerinax** connector, and click on it once it appears in the search results.
 
-   2. In the **Connector** panel, `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+    2. In the **Connector** panel, `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
-   3. In the **Covid19 API Connection** window, click **Continue to Invoke API**.
+    3. In the **Covid19 API Connection** window, click **Continue to Invoke API**.
 
-   4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
-       | **Field**                  | **Value**         |
-       |----------------------------|-------------------|
-       | **Country**                | `country`         |
-       | **Response Variable Name** | `statusByCountry` |
+        | **Field**                  | **Value**         |
+        |----------------------------|-------------------|
+        | **Country**                | `country`         |
+        | **Response Variable Name** | `statusByCountry` |
 
-   5. Click **Save**.
+    5. Click **Save**.
 
 5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
-   1. Click the last **+** icon in the low-code diagram.
+    1. Click the last **+** icon in the low-code diagram.
 
-   2. Click **Variable** and enter details as follows:
+    2. Click **Variable** and enter details as follows:
 
-       | **Field**         | **Value**                     |
-       |-------------------|-------------------------------|
-       | **Variable Type** | `int`                         |
-       | **VariableName**  | `totalCases`                  |
-       | Expression        | `<int>statusByCountry.cases`  |
+        | **Field**         | **Value**                     |
+        |-------------------|-------------------------------|
+        | **Variable Type** | `int`                         |
+        | **VariableName**  | `totalCases`                  |
+        | Expression        | `<int>statusByCountry.cases`  |
 
-   3. Click **Save**.
+    3. Click **Save**.
 
 6. To retrieve the population data, connect to the World Bank API as follows:
 
-   1. Click the last **+** icon in the low-code diagram.
+    1. Click the last **+** icon in the low-code diagram.
 
-   2. Click **Connector** to add a connector. Then search for the **World Bank by ballerinax** connector, and click on it once it appears in the search results.
+    2. Click **Connector** to add a connector. Then search for the **World Bank by ballerinax** connector, and click on it once it appears in the search results.
 
-   3. In the **Connector** panel that appears on the right of the page, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
+    3. In the **Connector** panel that appears on the right of the page, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
 
-   4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
+    4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
 
-       | **Field**                  | **Value**            |
-       |----------------------------|----------------------|
-       | **Country Code**           | `country`            |
-       | **Response Variable Name** | `populationByCountry`|
+        | **Field**                  | **Value**            |
+        |----------------------------|----------------------|
+        | **Country Code**           | `country`            |
+        | **Response Variable Name** | `populationByCountry`|
 
-   5. Click **Save**.
+    5. Click **Save**.
 
 7. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. To do this, follow this procedure:
 
-   1. Click the last **+** icon in the low-code diagram.
+    1. Click the last **+** icon in the low-code diagram.
 
-   2. Click **Variable** and enter details as follows:
+    2. Click **Variable** and enter details as follows:
 
-       | **Field**         | **Value**                                         |
-       |-------------------|---------------------------------------------------|
-       | **Variable Type** | `int`                                             |
-       | **Variable Name** | `populationMillions`                              |
-       | Expression        | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
+        | **Field**         | **Value**                                         |
+        |-------------------|---------------------------------------------------|
+        | **Variable Type** | `int`                                             |
+        | **Variable Name** | `populationMillions`                              |
+        | Expression        | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
 
-   3. Click **Save**.
+    3. Click **Save**.
 
 8. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
 
-   1. Click the last **+** icon in the low-code diagram.
+    1. Click the last **+** icon in the low-code diagram.
 
-   2. Click **Variable** and enter details as follows:
+    2. Click **Variable** and enter details as follows:
 
-       | **Field**         | **Value**                                    |
-       |-------------------|----------------------------------------------|
-       | **Variable Type** | `decimal`                                    |
-       | **Variable Name** | `totalCasesPerMillion`                       |
-       | Expression*       | `<decimal>(totalCases / populationMillions)` |
+        | **Field**         | **Value**                                    |
+        |-------------------|----------------------------------------------|
+        | **Variable Type** | `decimal`                                    |
+        | **Variable Name** | `totalCasesPerMillion`                       |
+        | Expression*       | `<decimal>(totalCases / populationMillions)` |
 
-   3. Click **Save**.
+    3. Click **Save**.
 
 9. To build the JSON payload with data of the total cases per million in the population, add a variable.
 
@@ -222,18 +222,19 @@ service / on new http:Listener(9090) {
 ```
 Now you can run the REST API and test it to see whether it works as expected.
 
+
 ### Step 1.4: Run and test the REST API
 
 Let's run the REST API you designed in the Web Editor to check whether it can be started successfully without errors.
 
 1. Click **Run** (above the low-code diagram).
 
-   Once the REST API is successfully started, the following appears in the terminal log.
+    Once the REST API is successfully started, the following appears in the terminal log.
 
-    ```
-    Running executable
-    ```
-   Now you can try out the REST API.
+     ```
+     Running executable
+     ```
+    Now you can try out the REST API.
 
 2. Click **Try it**. As a result, a test view opens on the right of the page.
 
@@ -245,9 +246,9 @@ Let's run the REST API you designed in the Web Editor to check whether it can be
 
 6. Click **Execute**.
 
-A response is displayed as follows in the **Response body** field under **Responses**.
+    A response is displayed as follows in the **Response body** field under **Responses**.
 
-![Try-out response](../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
+    ![Try-out response](../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
 
 The REST API you created works as expected. Therefore, now you can commit it.
 
@@ -257,11 +258,11 @@ The REST API you designed is currently available only in the Web Editor. To use 
 
 1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red).
 
-    In the message that appears as a result, click **Sync my changes with Choreo**.
+    In the message that appears, click **Sync my changes with Choreo**.
 
 2. In the left panel, enter a commit message (e.g., `Implement REST API`) and click the tick.
 
-    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-half}
+    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-full}
 
     Select **Yes** in the message that appears to specify that you need the changes to be staged.
 
@@ -270,9 +271,9 @@ The REST API you designed is currently available only in the Web Editor. To use 
     !!! info
         This icon appears only after the committing process is completed.
 
-    ![Push changes](../assets/img/tutorials/rest-api/push-changes.png){.cInlineImage-half}
+    ![Push changes](../assets/img/tutorials/rest-api/push-changes.png){.cInlineImage-full}
 
-Once the changes are successfully pushed to the GitHub repository, the VS Code Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
+Once the changes are successfully pushed to the GitHub repository, the Web Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
 ## Step 2: Deploy
 
@@ -308,9 +309,9 @@ In this tutorial, let's test via the OpenAPI Console:
 
 4. Click **Execute**.
 
-The following is displayed as the response body under **Responses**.
+    The following is displayed as the response body under **Responses**.
 
-![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
+    ![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
 
 Congratulations! You have now successfully created and tested a REST API in Choreo!
 
