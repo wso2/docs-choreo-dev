@@ -2150,7 +2150,7 @@ The granularity value for which data is retrieved.
 
 ### CustomReportUsage
 
-Represents usage data for a single timestamp in CustomReports.
+Represents usage data for a single timestamp in <code>CustomReports</code>.
 
 <table>
 <thead>
@@ -4684,7 +4684,7 @@ The target response code.
 
 ### Metric
 
-Represents a metric used in CustomReports.
+Represents a metric used in <code>CustomReports</code>.
 
 <table>
 <thead>
