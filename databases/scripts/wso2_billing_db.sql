@@ -19,32 +19,28 @@ BEGIN
         id VARCHAR(128) NOT NULL,
         tier_id VARCHAR(128) NOT NULL,
         product_id VARCHAR(128) NOT NULL,
-        monthly_price_id VARCHAR(128) NOT NULL,
-        cost INTEGER NOT NULL,
+        price_id VARCHAR(128) NOT NULL,
         cloud_type VARCHAR(10) NOT NULL,
         UNIQUE (product_id),
-        UNIQUE (monthly_price_id),
+        UNIQUE (price_id),
         UNIQUE (tier_id),
         PRIMARY KEY (id)
     );
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_yearly_plan' and xtype='U')
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_support_plan' and xtype='U')
 BEGIN
-    CREATE TABLE billing_yearly_plan (
+    CREATE TABLE billing_support_plan (
         id VARCHAR(128) NOT NULL,
-        tier_id VARCHAR(128) NOT NULL,
+        name VARCHAR(256) NOT NULL,
+        cost INTEGER NOT NULL, 
         product_id VARCHAR(128) NOT NULL,
-        annual_price_id VARCHAR(128) NOT NULL,
-        monthly_price_id VARCHAR(128) NOT NULL,
+        price_id VARCHAR(128) NOT NULL,
         cloud_type VARCHAR(10) NOT NULL,
         UNIQUE (product_id),
-        UNIQUE (annual_price_id),
-        UNIQUE (monthly_price_id),
-        UNIQUE (tier_id),
-        PRIMARY KEY (id),
-        CONSTRAINT FK_monthly_tier_id FOREIGN KEY (tier_id) REFERENCES billing_plan(tier_id),
+        UNIQUE (price_id),
+        PRIMARY KEY (id)
     );
 END
 GO
@@ -66,19 +62,19 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='billing_subscription' and xt
 BEGIN
     CREATE TABLE billing_subscription (
         id VARCHAR(128) NOT NULL,
-        billing_tier_id VARCHAR(128) NOT NULL,
+        billing_tier_id VARCHAR(128),
+        billing_support_plan_id VARCHAR(128),
         billing_account_id VARCHAR(128) NOT NULL,
-        subscription_id VARCHAR(128) NOT NULL,
-        monthly_stripe_subscription_id VARCHAR(128) NOT NULL,
-        annual_stripe_subscription_id VARCHAR(128),
-        monthly_stripe_subscription_item_id VARCHAR(128) NOT NULL,
-        annual_stripe_subscription_item_id VARCHAR(128),
+        subscription_id VARCHAR(128),
+        stripe_subscription_id VARCHAR(128) NOT NULL,
+        stripe_subscription_item_id VARCHAR(128) NOT NULL,
         cloud_type VARCHAR(10) NOT NULL,
-        UNIQUE (subscription_id),
-        UNIQUE (monthly_stripe_subscription_item_id),
-        PRIMARY KEY (subscription_id, monthly_stripe_subscription_id),
+        subscription_type VARCHAR(256) NOT NULL,
+        UNIQUE (stripe_subscription_item_id),
+        PRIMARY KEY (id, stripe_subscription_id),
         CONSTRAINT FK_Tier FOREIGN KEY (billing_tier_id) REFERENCES billing_plan(id),
-        CONSTRAINT FK_account_subscription FOREIGN KEY (billing_account_id) REFERENCES billing_account(id)
+        CONSTRAINT FK_Support_plan FOREIGN KEY (billing_support_plan_id) REFERENCES billing_support_plan(id),
+        CONSTRAINT FK_account_subscription FOREIGN KEY (billing_account_id) REFERENCES billing_account(id) ON DELETE CASCADE ON UPDATE CASCADE
     );
 END
 GO
@@ -92,8 +88,7 @@ BEGIN
         timestamp BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
         operation VARCHAR(128) NOT NULL,
         cloud_type VARCHAR(10) NOT NULL,
-        PRIMARY KEY (id),
-        CONSTRAINT FK_account_history FOREIGN KEY (billing_account_id) REFERENCES billing_account(id)
+        PRIMARY KEY (id)
     );
 END
 GO
@@ -107,7 +102,7 @@ BEGIN
         invoice_line_id VARCHAR(128) NOT NULL,
         cloud_type VARCHAR(10) NOT NULL,
         PRIMARY KEY (invoice_id,invoice_line_id),
-        CONSTRAINT FK_account_innvoice FOREIGN KEY (billing_account_id) REFERENCES billing_account(id)
+        CONSTRAINT FK_account_innvoice FOREIGN KEY (billing_account_id) REFERENCES billing_account(id) ON DELETE CASCADE ON UPDATE CASCADE
     );
 END
 GO

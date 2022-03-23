@@ -1,9 +1,9 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: language-server
+  name: choreo-linker-0-pdb
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: language-server
+      app: "choreo-linker-0.1.2"

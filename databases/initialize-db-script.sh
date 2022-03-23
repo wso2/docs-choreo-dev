@@ -30,6 +30,15 @@ PASSWORD=${SA_PASSWORD}      # get from env var MSSQL_SA_PASSWORD
 DATABASE_NAME="choreo_db"    # database name
 #####################################################################################
 
+# Waiting for server to startup as otherwise the creation of tables will not work
+while true
+do
+  if /opt/mssql-tools/bin/sqlcmd -S "${HOST}" -U "${USERNAME}" -P "${PASSWORD}" -Q 'SELECT 1' > /dev/null; then
+    break
+  fi
+  sleep 1s
+  echo "Waiting for server to startup and user ${USERNAME} to be ready"
+done
 
 /opt/mssql-tools/bin/sqlcmd -S "${HOST}" -U "${USERNAME}" -P "${PASSWORD}" -Q 'CREATE DATABASE choreo_db'
 

@@ -7,7 +7,7 @@ public class ComponentCreationTimeoutException extends Throwable {
 
     @Override
     public String toString() {
-        String message = "Component deployment status check timed out";
+        String message = "Component creation status check timed out";
         return "ComponentCreationTimeoutException{" +
                 "message='" + message + '\'' +
                 '}';

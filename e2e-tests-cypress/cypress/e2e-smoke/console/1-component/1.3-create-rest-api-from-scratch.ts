@@ -88,12 +88,12 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deploy();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
+    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {

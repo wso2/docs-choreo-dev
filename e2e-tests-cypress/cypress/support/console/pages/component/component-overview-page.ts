@@ -13,7 +13,7 @@
 
 export class ComponentOverviewPage {
   static goBack() {
-    cy.contains("Go Back").should("be.visible").click();
+    cy.get("button>span>p").contains("Components").should("be.visible").click();
   }
 
   static navigateToDevelop() {
