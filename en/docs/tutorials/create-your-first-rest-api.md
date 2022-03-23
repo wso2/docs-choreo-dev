@@ -4,7 +4,7 @@ A RESTful API (Application Program Interface) uses HTTP requests to access and u
 
 Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
-- Design a REST API that addresses the described requirement, test it in the VS Code Editor, and then commit it so that it is available in the Chore Console.
+- Design a REST API that addresses the described requirement, test it in the Web Editor, and then commit it so that it is available in the Choreo Console.
 - Deploy the REST API you created to make it available for use.
 - Test the REST API after deploying it to check whether it works as expected.
 
