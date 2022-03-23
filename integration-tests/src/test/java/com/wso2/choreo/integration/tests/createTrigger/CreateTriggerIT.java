@@ -173,6 +173,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 "        description," +
                 "        displayType," +
                 "        displayName," +
+                "        ownerName," +
                 "        orgId," +
                 "        orgHandler," +
                 "        version," +
@@ -186,7 +187,8 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 "          nameConfig," +
                 "          branch," +
                 "          organizationApp," +
-                "          organizationConfig" +
+                "          organizationConfig," +
+                "          isUserManage" +
                 "        }," +
                 "        apiVersions{" +
                 "          apiVersion," +
@@ -196,6 +198,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 "          id," +
                 "          state," +
                 "          latest," +
+                "          branch," +
                 "          appEnvVersions{" +
                 "            environmentId," +
                 "            releaseId," +
@@ -208,31 +211,6 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 "              environment," +
                 "              gitHash," +
                 "              gitOpsHash," +
-                "              latestDeployment{" +
-                "                pending," +
-                "                deploymentHistoryId," +
-                "                deploymentHistory{" +
-                "                  id," +
-                "                  appEnvironment," +
-                "                  appEnvironmentId," +
-                "                  changeMessage," +
-                "                  containerImages {" +
-                "                    imageId," +
-                "                    containerId," +
-                "                    image {" +
-                "                      imageVersion," +
-                "                      imageName," +
-                "                      imageRegistry," +
-                "                      imageRegistryId," +
-                "                      tagName," +
-                "                      tags," +
-                "                      gitHash," +
-                "                      committer," +
-                "                      commitMsg," +
-                "                    }" +
-                "                  }" +
-                "                }" +
-                "              }" +
                 "            }" +
                 "          }" +
                 "        }" +
