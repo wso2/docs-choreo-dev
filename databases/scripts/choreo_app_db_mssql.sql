@@ -1607,6 +1607,17 @@ CREATE TABLE [dbo].[configuration_value](
     CONSTRAINT config_mount_id_fk FOREIGN KEY (config_mount_id) REFERENCES [configuration_mount](id) ON DELETE CASCADE
 )
 
+CREATE TABLE [dbo].[tos_consent](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [idp_id] [nvarchar](255) NOT NULL,
+    [accepted] [bit] NOT NULL DEFAULT 0,
+    [version] [nvarchar](10) NOT NULL,
+    [service_name] [nvarchar](50) NOT NULL,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT id_service_name_uk UNIQUE(id, service_name)
+)
+
 CREATE TABLE [dbo].[permission]
 (
     [id] [int] IDENTITY(1,1) NOT NULL ,
