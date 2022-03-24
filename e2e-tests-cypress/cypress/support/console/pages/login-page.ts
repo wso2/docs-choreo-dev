@@ -137,8 +137,8 @@ export class LoginPage {
   }
 
   private static persistApimToken() {
-    cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("gquery");
-    cy.wait("@gquery", { timeout: 150000 }).then((intercept) => {
+    cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("orgs");
+    cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       Cypress.env("apim_token", intercept.request.headers.authorization);
       const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
