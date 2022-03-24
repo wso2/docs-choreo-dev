@@ -11,6 +11,8 @@
  * associated services.
  */
 
+
+
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
     cy.get('[data-testid="develop-resources-header"]', { timeout: 120000 })
@@ -23,15 +25,14 @@ export class APIDevelop {
         cy.get('[data-testid="delete-all-operations-btn"]').click();
       }
     });
-
     this.addHTTPVerb(verbs);
-    this.addResource(path);
+    this.addResource(verbs,path);
   }
 
-  private static addResource(path: string) {
+  private static addResource(verbs: string[],path: string) {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
-
+    this.generateOperationId(verbs,path)
     cy.get("button").then((buttons) => {
       if (buttons.length > 0) {
         buttons.each(function () {
@@ -84,5 +85,15 @@ export class APIDevelop {
     );
     cy.wait(1000);
     cy.log("Endpoint configuration updated successfully");
+  }
+
+  private static generateOperationId(httpVerb: string[], resourcePath: string) {
+    httpVerb.forEach((verb) => {
+      let header =`[id="panel-/${resourcePath}/${verb.toLocaleLowerCase()}-header"]`
+      let input = `[id="panel-/${resourcePath}/${verb.toLocaleLowerCase()}-content"]  div>input[type="text"]`;
+      let operationId =`${verb}${resourcePath.replace(/\\/g,'')}`
+      cy.get(header).click()
+      cy.get(input).eq(0).type(operationId)
+    });
   }
 }
