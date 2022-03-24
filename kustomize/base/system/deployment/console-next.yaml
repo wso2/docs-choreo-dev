@@ -51,6 +51,12 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
+          env:
+            - name: REACT_APP_BALLERINA_LOW_CODE_RESOURCES_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-variables
+                  key: BALLERINA_LOW_CODE_RESOURCES_VERSION
           envFrom:
             - configMapRef:
                 name: env-console-next     
