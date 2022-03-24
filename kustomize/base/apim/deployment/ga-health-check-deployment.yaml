@@ -21,7 +21,6 @@ kind: Deployment
 metadata:
   name: global-adapter-health-check-client
   annotations:
-    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
 spec:
   replicas: 1
@@ -39,8 +38,12 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: global-adapter-health-check-client
-        image: ga-new:1
-        imagePullPolicy: Never
+        volumeMounts:
+        - name: secret-asb
+          mountPath: /mnt/csi/secret-asb
+          readOnly: true
+        image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:latest
+        imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
           runAsUser: 10500
@@ -49,7 +52,6 @@ spec:
           capabilities:
             drop:
               - all
-            add: [ "NET_RAW" ]
           readOnlyRootFilesystem: true
         env:
         - name: SERVER_PORT
@@ -60,7 +62,7 @@ spec:
               name: secret-asb
               key: ASB_CONNECTION_STRING
         - name: TOPIC_CLIENT_ID
-          value: 520bc16b-6ff6-4d94-970e-1fa9c4708084
+          value: "520bc16b-6ff6-4d94-970e-1fa9c4708084"
         - name: IDLE_TIMEOUT
           value: "1800000"
         - name: PRICING_TIER
