@@ -205,14 +205,14 @@ export class GraphQL {
   }
 
   private static callGraphQL(token: string, query: any) {
-    const appSvcURL = Cypress.env("appSvcURL");
+    const appSvcURL = Cypress.env("newAppSvcURL");
     const header = {
       Authorization: `Bearer ${token}`,
       "content-type": "application/json",
     };
     return cy.request({
       method: "POST",
-      url: `${appSvcURL}/graphql`,
+      url: `${appSvcURL}/projects/1.0.0/graphql`,
       body: JSON.stringify(query),
       headers: header,
       failOnStatusCode: false,
