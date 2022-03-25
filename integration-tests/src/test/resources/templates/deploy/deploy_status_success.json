@@ -1,0 +1,14 @@
+{
+  "data":{
+    "DeploymentStatus":{
+      "success":true,
+      "message":"GITHUB ACTION RUNS FETCHED",
+      "data":[
+        {
+          "conclusion":"success",
+          "status":"completed"
+        }
+      ]
+    }
+  }
+}

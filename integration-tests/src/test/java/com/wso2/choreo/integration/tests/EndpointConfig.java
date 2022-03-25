@@ -47,4 +47,13 @@ public class EndpointConfig {
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.ALERT.CHOREO_GW_HOST)
                 .build();
     }
+
+    @Bean
+    public HttpClient choreoTestClientForGithub() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.GITHUB_ENDPOINT)
+                .build();
+    }
 }
