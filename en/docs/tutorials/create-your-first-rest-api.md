@@ -83,13 +83,13 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
     |-----------------|--------------------------|
     | **HTTP Method** | `GET`                    |
     | **Path**        | `stats/[string country]` |
-    | **Return Type** | `json|error?`            |
+    | **Return Type** | `json|error`            |
 
     Here, you are configuring a GET resource to fetch statistics related to COVID-19.
 
     By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
 
-    The specified return type allows the REST API to return the output in either JSON or error? format.
+    The specified return type allows the REST API to return the output in either JSON or error format.
 
     Click **Save**.
 
@@ -208,7 +208,7 @@ import ballerina/http;
 # bound to port `9090`.
 service / on new http:Listener(9090) {
 
-    resource function get stats/[string country]() returns json|error? {
+    resource function get stats/[string country]() returns json|error {
 
         covid19:Client covid19Endpoint = check new ({});
         covid19:CovidCountry statusByCountry = check covid19Endpoint->getStatusByCountry(country);
