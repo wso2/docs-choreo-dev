@@ -142,12 +142,12 @@ spec:
         - containerPort: 9843
         livenessProbe:
           exec:
-            command: [ "sh", "check_health.sh" ]
+            command: [ "sh", "check_health.sh", "liveness" ]
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
           exec:
-            command: [ "sh", "check_health.sh" ]
+            command: [ "sh", "check_health.sh", "readiness" ]
           initialDelaySeconds: 8
           periodSeconds: 5
       volumes:
