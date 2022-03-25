@@ -66,6 +66,26 @@ spec:
             secretKeyRef:
               name: secret-telemetry
               key: EVENTHUB_CONNECTION_STRING
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PORT
+              name: cm-negotiator
+        - name: REDIS_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_SSL
+              name: cm-negotiator
+        - name: REDIS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_DATABASE
+              name: cm-negotiator
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
         envFrom:
           - configMapRef:
               name: env-telemetry
@@ -82,6 +102,9 @@ spec:
         volumeMounts:
         - name: secret-telemetry
           mountPath: "/mnt/csi/secret-telemetry"
+          readOnly: true
+        - name: secret-redis
+          mountPath: "/mnt/csi/secret-redis"
           readOnly: true
         ports:
         - containerPort: 9090
@@ -125,6 +148,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-telemetry
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-redis
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-redis
           nodePublishSecretRef:
             name: csi-secret-store-azure
       restartPolicy: Always
