@@ -40,8 +40,8 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 
 /**
  * $(http()
- * <p>
- * project creation related tests
+ *
+ * tests related to component creation from user managed repos
  */
 public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private static String accessToken;
