@@ -38,7 +38,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
  */
 public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @Autowired
-    private HttpClient choreoAlertTestClient;
+    private HttpClient choreoCPTestClient;
     private static String accessToken;
 
     @BeforeClass
@@ -69,7 +69,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 + "}";
 
         $(http()
-                .client(choreoAlertTestClient)
+                .client(choreoCPTestClient)
                 .send()
                 .post(Constant.ALERT.NOTIFICATION_SERVICE_RESOURCE)
                 .message()
@@ -79,7 +79,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
         $(http()
-                .client(choreoAlertTestClient)
+                .client(choreoCPTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
