@@ -40,15 +40,15 @@ describe("Verify project creation functionality", () => {
   const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
+  const NEW_BRANCH = "feature";
+  const API_NEW_VERSION = "1.1.0";
 
-
-  before(()=>{
-    LoginPage.login()
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, key);
@@ -62,18 +62,23 @@ describe("Verify project creation functionality", () => {
     ComponentDevelopPage.getComponentURL(key);
   });
 
+  it("Verify component deployment", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.deploy();
+    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
+  });
+
+  it("Verify component promote to prod", () => {
+    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
+  });
+
   it("Edit code in VScode", () => {
+    ComponentOverviewPage.navigateToDevelop();
     LoginPage.navigateToCodespace(key);
+    VSExplorer.createNewBranch();
     VSExplorer.typeCode("Numbers.bal");
-    VSExplorer.selectSourceControl();
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
-    );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
+    VSExplorer.commitPush(commitMessage);
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
@@ -82,11 +87,24 @@ describe("Verify project creation functionality", () => {
     ComponentDevelopPage.addLabels(labels).then((arr) => {
       expect(arr).to.deep.eq(labels);
     });
+    // ComponentDevelopPage.selectBranch(NEW_BRANCH)
+    // ComponentDevelopPage.refreshBranchCommit();
+    ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => {
+      expect(arr).to.include(NEW_BRANCH);
+    });
     ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
-  it("Verify component deployment", () => {
+  it("Verify new version creation", () => {
     ComponentOverviewPage.navigateToDeploy();
+    ComponentOverviewPage.createNewVersion(API_NEW_VERSION,NEW_BRANCH);
+    ComponentDevelopPage.getVersion().should(
+      "eq",
+      "Version " + API_NEW_VERSION
+    );
+  });
+
+  it("Verify component deployment", () => {
     ComponentDeployPage.deploy();
     ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });

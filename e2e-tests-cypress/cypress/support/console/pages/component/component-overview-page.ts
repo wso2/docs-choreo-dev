@@ -52,14 +52,33 @@ export class ComponentOverviewPage {
       .then((text) => text.replace("overview", "").trim());
   }
 
-  static createNewVersion(version: string) {
+  static createNewVersion(version: string, newBranch: string ) {
     cy.get("#version-picker").click();
     cy.get("[data-cyid=btn-create-version]").click();
+    this.selectBranch(newBranch)
     cy.get("[data-cyid=text-field-new-version]").within(() => {
       cy.get("input").clear();
       cy.get("input").type(version);
     });
     cy.get("[data-testid=create-version-create]").click();
+    if(!newBranch){
+      this.newVersion();
+    }
+  
+    cy.wait(2000);
+  }
+
+  private static selectBranch(branch:string){
+    cy.contains("Create new version",{timeout:180000})
+    cy.get("body").then((body) => {
+      if (body.find('[role="dialog"]>div>div').length > 0) {
+        cy.get('div>[aria-label="Without label"]').click();
+        cy.get(`[data-value=${branch}]`).click();
+      }
+    });
+  }
+
+  private static newVersion() {
     cy.intercept({
       method: "GET",
       url: `${Cypress.env(
@@ -68,6 +87,5 @@ export class ComponentOverviewPage {
       times: 1,
     }).as("version");
     cy.wait("@version", { timeout: 120000 });
-    cy.wait(5000);
   }
 }
