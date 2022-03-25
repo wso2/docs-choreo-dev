@@ -21,6 +21,7 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        config.linkerd.io/skip-outbound-ports: 8081
     spec:
       automountServiceAccountToken: true
       securityContext:
@@ -33,11 +34,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen:latest
           resources:
             limits:
-              cpu: 350m
-              memory: 400Mi
+              cpu: 1
+              memory: 768Mi
             requests:
-              cpu: 300m
-              memory: 300Mi
+              cpu: 500m
+              memory: 512Mi
           envFrom:
             - configMapRef:
                 name: env-dp-mizzen
