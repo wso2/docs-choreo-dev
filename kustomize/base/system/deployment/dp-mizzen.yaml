@@ -22,6 +22,7 @@ spec:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         config.linkerd.io/skip-outbound-ports: 8081
+        config.linkerd.io/skip-inbound-ports: 8081
     spec:
       automountServiceAccountToken: true
       securityContext:
