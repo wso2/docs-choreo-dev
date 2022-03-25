@@ -33,10 +33,10 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
           resources:
             limits:
-              cpu: 350m
-              memory: 400Mi
+              cpu: 1
+              memory: 768Mi
             requests:
-              cpu: 300m
+              cpu: 500m
               memory: 300Mi
           envFrom:
             - configMapRef:
