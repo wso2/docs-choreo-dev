@@ -50,7 +50,9 @@ Let's create a new REST API component as follows:
     | **Name**        | `Statistics`          |
     | **Description** | `COVID-19 Statistics` |
 
-5. Click **Create**.
+5. Click **Next**.
+
+6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or in a repository managed by you. For this tutorial, let's select **Choreo-managed repository** and click **Create**.
 
     The `Statistics` REST API opens on a separate page.
 
@@ -130,7 +132,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     2. Click **Connector** to add a connector. Then search for the **World Bank by ballerinax** connector, and click on it once it appears in the search results.
 
-    3. In the **Connector** panel that appears on the right of the page, enter `worldBankClient` as the **Connection Name** and click **Continue to Invoke API**.
+    3. In the **Connector** panel that appears on the right of the page, click **Continue to Invoke API**.
 
     4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
 
