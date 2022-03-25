@@ -97,7 +97,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     1. Click **Connector** to add a connector. Then search for the **COVID-19 by ballerinax** connector, and click on it once it appears in the search results.
 
-    2. In the **Connector** panel, `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+    2. In the **Connector** panel, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
 
     3. In the **Covid19 API Connection** window, click **Continue to Invoke API**.
 
