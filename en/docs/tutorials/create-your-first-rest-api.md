@@ -181,15 +181,15 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     Click **Save**.
 
-10. To respond with the JSON payload, add a `Return` statement.
+10. To respond with the JSON payload, add a `Return` statement as follows:
 
-    Click the last **+** icon in the low-code diagram and click **Return**.
+    1. Click the last **+** icon in the low-code diagram and click **Return**.
 
-    In the **Return Expression** field, enter `payload`.
+    2. In the **Return Expression** field, enter `payload`.
 
-    Click **Save**.
+    3. Click **Save**.
 
-Now you have completed designing the `CovidStatus` service.
+Now you have completed designing the `Statistics` REST API.
 
 The low-code diagram looks as follows:
 
