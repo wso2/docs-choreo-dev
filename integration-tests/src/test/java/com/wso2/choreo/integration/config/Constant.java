@@ -27,7 +27,7 @@ public final class Constant {
             "apim:publisher_settings environments:view_prod environments:view_dev";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
-    public static final String TEST_PROJECT_NAME_PREFIX = "testprojectABC";
+    public static final String TEST_PROJECT_NAME_PREFIX = "testproject";
     public static final String TEST_COMPONENT_NAME = "testcomponent";
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
     public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
