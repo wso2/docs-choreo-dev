@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         choreo.component: analytics-subs
+        antiaffinity: analytics-subs
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -97,19 +98,19 @@ spec:
               - ALL
         name: analytics-subs
         readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: healthz
-             path: /subsmgt/healthz
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: healthz
+            path: /subsmgt/healthz
         livenessProbe:
-            initialDelaySeconds: 30
-            httpGet:
-             port: healthz
-             path: /subsmgt/healthz
+          initialDelaySeconds: 30
+          httpGet:
+            port: healthz
+            path: /subsmgt/healthz
         ports:
         - containerPort: 9090
           name: anl-sub-port
@@ -139,3 +140,15 @@ spec:
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - analytics-subs
+              topologyKey: kubernetes.io/hostname

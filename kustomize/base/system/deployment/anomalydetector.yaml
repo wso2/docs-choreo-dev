@@ -19,6 +19,7 @@ spec:
     metadata:
       labels:
         choreo.component: anomalydetector
+        antiaffinity: anomalydetector
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -51,8 +52,9 @@ spec:
           runAsGroup: 10500
           capabilities:
             drop:
-              - all
-            add: [ "NET_RAW" ]
+            - all
+            add:
+            - NET_RAW
         resources:
           limits:
             cpu: 300m
@@ -110,8 +112,9 @@ spec:
           runAsGroup: 10500
           capabilities:
             drop:
-              - all
-            add: [ "NET_RAW" ]
+            - all
+            add:
+            - NET_RAW
       volumes:
       - name: anomalydetector-models
         emptyDir: {}
@@ -133,3 +136,15 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - anomalydetector
+              topologyKey: kubernetes.io/hostname

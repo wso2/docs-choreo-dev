@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,6 +24,7 @@ spec:
     metadata:
       labels:
         choreo.component: organization-remover
+        antiaffinity: organization-remover
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -88,3 +88,15 @@ spec:
           configMap:
             name: cm-organization-remover
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - organization-remover
+              topologyKey: kubernetes.io/hostname

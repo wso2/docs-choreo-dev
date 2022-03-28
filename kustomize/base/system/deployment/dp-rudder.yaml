@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         choreo.component: dp-rudder
+        antiaffinity: dp-rudder
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -44,12 +45,12 @@ spec:
           env:
           - name: MSSQL_PASSWORD
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-rudder
                 key: MSSQL_PASSWORD
           - name: APIM_REST_API_CONSUMER_SECRET
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-rudder
                 key: APIM_REST_API_CONSUMER_SECRET
                 optional: true
@@ -100,3 +101,15 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-rudder
+              topologyKey: kubernetes.io/hostname

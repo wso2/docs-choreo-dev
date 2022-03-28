@@ -20,6 +20,7 @@ spec:
     metadata:
       labels:
         choreo.component: negotiator
+        antiaffinity: negotiator
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -42,9 +43,9 @@ spec:
               name: cm-choreo-program-db
         - name: CHOREO_DB_PASSWORD
           valueFrom:
-           secretKeyRef:
-             name: secret-program-db
-             key: CHOREO_DB_PASSWORD
+            secretKeyRef:
+              name: secret-program-db
+              key: CHOREO_DB_PASSWORD
         - name: CHOREO_DB_MAX_POOL
           valueFrom:
             configMapKeyRef:
@@ -83,23 +84,23 @@ spec:
           readOnlyRootFilesystem: true
         name: negotiator
         readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: health
-             path: /health/readiness
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: health
+            path: /health/readiness
         livenessProbe:
-            initialDelaySeconds: 30
-            timeoutSeconds: 15
-            periodSeconds: 30
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: health
-             path: /health/liveness
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: health
+            path: /health/liveness
         lifecycle:
           preStop:
             exec:
@@ -152,3 +153,15 @@ spec:
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - negotiator
+              topologyKey: kubernetes.io/hostname

@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         choreo.component: multivariate-anomaly-detector-notification-manager
+        antiaffinity: multivariate-anomaly-detector-notification-manager
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -96,3 +97,15 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - multivariate-anomaly-detector-notification-manager
+              topologyKey: kubernetes.io/hostname

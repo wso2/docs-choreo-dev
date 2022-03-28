@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         choreo.component: app-deployer
+        antiaffinity: app-deployer
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -66,11 +67,16 @@ spec:
           name: grpc-port
         readinessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+            command:
+            - /bin/grpc_health_probe
+            - -addr=:8080
           initialDelaySeconds: 5
         livenessProbe:
           exec:
-            command: ["/bin/sh", "-c", "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"]
+            command:
+            - /bin/sh
+            - -c
+            - bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING
           initialDelaySeconds: 20
         resources:
           limits:
@@ -145,3 +151,15 @@ spec:
       - name: tmp
         emptyDir: {}
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - app-deployer
+              topologyKey: kubernetes.io/hostname

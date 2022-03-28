@@ -25,6 +25,7 @@ spec:
     metadata:
       labels:
         choreo.component: apim-service
+        antiaffinity: apim-service-deployment
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -114,3 +115,15 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - apim-service-deployment
+              topologyKey: kubernetes.io/hostname
