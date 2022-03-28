@@ -11,16 +11,29 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-deployment-default-p10
+        antiaffinity: choreo-connect-deployment-default-p10
     spec:
-     initContainers:
-       - name: init-adapter-service
-         command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p10 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
-     containers:
-       - name: choreo-connect-enforcer
-         env:
-         - name: ADAPTER_HOST
-           value: adapter-default-p10
-       - name: choreo-connect-router
-         env:
-         - name: ADAPTER_HOST
-           value: adapter-default-p10
+      initContainers:
+      - name: init-adapter-service
+        command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p10 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+      containers:
+      - name: choreo-connect-enforcer
+        env:
+        - name: ADAPTER_HOST
+          value: adapter-default-p10
+      - name: choreo-connect-router
+        env:
+        - name: ADAPTER_HOST
+          value: adapter-default-p10
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - choreo-connect-deployment-default-p10
+              topologyKey: kubernetes.io/hostname

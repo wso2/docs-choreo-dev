@@ -11,15 +11,28 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-adapter-dev-us-east-azure-p5
+        antiaffinity: choreo-connect-adapter-dev-us-east-azure-p5
     spec:
-     containers:
-       - name: choreo-connect-adapter
-         env:
-         - name: localLabel
-           value: dev-us-east-azure-p5
-         - name: environmentLabel
-           value: dev-us-east-azure
-     volumes:
-        - name: global-adapter-keystore-vol
-          configMap:
-            name: global-adapter-keystore-vol
+      containers:
+      - name: choreo-connect-adapter
+        env:
+        - name: localLabel
+          value: dev-us-east-azure-p5
+        - name: environmentLabel
+          value: dev-us-east-azure
+      volumes:
+      - name: global-adapter-keystore-vol
+        configMap:
+          name: global-adapter-keystore-vol
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - choreo-connect-adapter-dev-us-east-azure-p5
+              topologyKey: kubernetes.io/hostname

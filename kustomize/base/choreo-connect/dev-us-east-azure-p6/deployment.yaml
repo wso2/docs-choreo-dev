@@ -11,20 +11,33 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-deployment-dev-us-east-azure-p6
+        antiaffinity: choreo-connect-deployment-dev-us-east-azure-p6
     spec:
-     initContainers:
-       - name: init-adapter-service
-         command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-dev-us-east-azure-p6 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
-     containers:
-       - name: choreo-connect-enforcer
-         env:
-         - name: ADAPTER_HOST
-           value: adapter-dev-us-east-azure-p6
-         - name: ENFORCER_LABEL
-           value: dev-us-east-azure
-       - name: choreo-connect-router
-         env:
-         - name: ADAPTER_HOST
-           value: adapter-dev-us-east-azure-p6
-         - name: ROUTER_LABEL
-           value: dev-us-east-azure           
+      initContainers:
+      - name: init-adapter-service
+        command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-dev-us-east-azure-p6 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
+      containers:
+      - name: choreo-connect-enforcer
+        env:
+        - name: ADAPTER_HOST
+          value: adapter-dev-us-east-azure-p6
+        - name: ENFORCER_LABEL
+          value: dev-us-east-azure
+      - name: choreo-connect-router
+        env:
+        - name: ADAPTER_HOST
+          value: adapter-dev-us-east-azure-p6
+        - name: ROUTER_LABEL
+          value: dev-us-east-azure
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - choreo-connect-deployment-dev-us-east-azure-p6
+              topologyKey: kubernetes.io/hostname
