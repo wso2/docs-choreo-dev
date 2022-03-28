@@ -21,6 +21,7 @@ spec:
         linkerd.io/inject: enabled
       labels:
         choreo.component: dp-mizzen-agent
+        antiaffinity: dp-mizzen-agent
     spec:
       automountServiceAccountToken: true
       securityContext:
@@ -72,4 +73,15 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: dp-mizzen-agent-sa
-
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-mizzen-agent
+              topologyKey: kubernetes.io/hostname
