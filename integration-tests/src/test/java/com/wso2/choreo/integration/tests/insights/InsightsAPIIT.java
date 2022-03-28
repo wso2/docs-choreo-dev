@@ -88,7 +88,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException {
 
         TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         orgUUID = org.getOrgUUID();

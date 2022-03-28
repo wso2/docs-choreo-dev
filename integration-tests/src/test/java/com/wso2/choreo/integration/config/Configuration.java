@@ -16,6 +16,9 @@ public class Configuration {
     public static final String STS_CLIENT_ID = System.getenv("STS_CLIENT_ID");
     public static final String STS_CLIENT_SECRET = System.getenv("STS_CLIENT_SECRET");
 
+    public static final String CP_APP_CLIENT_ID = System.getenv("CP_APP_CLIENT_ID");
+    public static final String CP_APP_CLIENT_SECRET = System.getenv("CP_APP_CLIENT_SECRET");
+
     public static final String TEST_CHOREO_ORG_HANDLE = System.getenv("TEST_CHOREO_ORG_HANDLE");
     public static final int TEST_CHOREO_ORG_ID = Integer.parseInt(System.getenv("TEST_CHOREO_ORG_ID"));
     public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");

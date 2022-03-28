@@ -46,6 +46,8 @@ public class TokenHandler {
     private final String testUserPassword = Configuration.TEST_USER_PASSWORD;
     private final String stsClientId = Configuration.STS_CLIENT_ID;
     private final String stsClientSecret = Configuration.STS_CLIENT_SECRET;
+    private final String cpAppClientId = Configuration.CP_APP_CLIENT_ID;
+    private final String cpAppClientSecret = Configuration.CP_APP_CLIENT_SECRET;
 
     /**
      * Retrieve oauth token to be used when invoking choreo APIs
@@ -59,6 +61,18 @@ public class TokenHandler {
         String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
         String stsToken = getStsToken(stsClientId, stsClientSecret, userToken);
         return stsToken;
+    }
+
+    /**
+     * Retrieve oauth token to be used when invoking Control Plane exposed choreo APIs
+     *
+     * @return oauth token
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws TokenRetrievalException if token retrieval fails
+     */
+    public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException {
+        String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
+        return getStsToken(cpAppClientId, cpAppClientSecret, userToken);
     }
 
     /**

@@ -44,7 +44,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass() throws Exception, TokenRetrievalException {
         TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
     }
 
     @Test
