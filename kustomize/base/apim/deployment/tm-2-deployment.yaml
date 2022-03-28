@@ -37,7 +37,20 @@ spec:
       labels:
         deployment: choreo-tm-2
         choreo.component: apim-tm
+        antiaffinity: choreo-apim-tm-2-deployment
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-apim-tm-2-deployment
+              topologyKey: kubernetes.io/hostname
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
@@ -69,7 +82,10 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/api-manager.sh stop']
+                command:
+                  - sh
+                  - -c
+                  - ${WSO2_SERVER_HOME}/bin/api-manager.sh stop
           resources:
             requests:
               memory: 4Gi
@@ -85,7 +101,8 @@ spec:
             capabilities:
               drop:
                 - all
-              add: ["NET_RAW"]
+              add:
+                - NET_RAW
           ports:
             - containerPort: 9711
               protocol: "TCP"
@@ -94,8 +111,8 @@ spec:
             - containerPort: 5672
               protocol: "TCP"
           envFrom:
-          - configMapRef:
-              name: cm-feature-flags
+            - configMapRef:
+                name: cm-feature-flags
           env:
             - name: NODE_IP
               valueFrom:
@@ -104,7 +121,7 @@ spec:
             - name: NODE_ID
               valueFrom:
                 fieldRef:
-                    fieldPath: metadata.name
+                  fieldPath: metadata.name
             - name: PRIMARY_KEYSTORE_PSWD
               valueFrom:
                 secretKeyRef:
@@ -154,7 +171,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: CHOREO_IS_ADMIN_PSWD
-                  name: secret-apim 
+                  name: secret-apim
             - name: JVM_MEM_OPTS
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
@@ -197,7 +214,7 @@ spec:
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: apim-vol
-          emptyDir: {}
+          emptyDir: { }
         - name: wso2am-conf
           configMap:
             name: choreo-apim-tm-2-conf
@@ -209,7 +226,7 @@ spec:
             name: choreo-apim-docker-entrypoint
             defaultMode: 0407
         - name: mysql-connector-jar
-          emptyDir: {}
+          emptyDir: { }
         - name: secret-apim-keystore-passwords
           csi:
             driver: secrets-store.csi.k8s.io
@@ -253,4 +270,3 @@ spec:
               secretProviderClass: secret-apim
             nodePublishSecretRef:
               name: csi-secret-store-azure
-

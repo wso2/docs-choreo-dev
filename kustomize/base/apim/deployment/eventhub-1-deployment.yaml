@@ -39,10 +39,23 @@ spec:
         deployment: choreo-eventhub
         node: choreo-eventhub-1
         choreo.component: apim-eventhub
+        antiaffinity: choreo-apim-eventhub-1-deployment
       annotations:
         linkerd.io/inject: enabled
         config.linkerd.io/skip-outbound-ports: "3306"
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-apim-eventhub-1-deployment
+              topologyKey: kubernetes.io/hostname
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
@@ -70,7 +83,10 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/api-manager.sh stop']
+                command:
+                  - sh
+                  - -c
+                  - ${WSO2_SERVER_HOME}/bin/api-manager.sh stop
           resources:
             requests:
               memory: 4Gi
@@ -86,7 +102,8 @@ spec:
             capabilities:
               drop:
                 - all
-              add: ["NET_RAW"]
+              add:
+                - NET_RAW
           ports:
             - containerPort: 9763
               protocol: "TCP"
@@ -99,8 +116,8 @@ spec:
             - containerPort: 5672
               protocol: "TCP"
           envFrom:
-          - configMapRef:
-              name: cm-feature-flags
+            - configMapRef:
+                name: cm-feature-flags
           env:
             - name: NODE_IP
               valueFrom:
@@ -109,7 +126,7 @@ spec:
             - name: NODE_ID
               valueFrom:
                 fieldRef:
-                    fieldPath: metadata.name
+                  fieldPath: metadata.name
             - name: PRIMARY_KEYSTORE_PSWD
               valueFrom:
                 secretKeyRef:
@@ -178,25 +195,25 @@ spec:
             - name: MONGO_DB_PSWD
               valueFrom:
                 secretKeyRef:
-                    key: MONGO_DB_PSWD
-                    name: secret-apim-mongodb
+                  key: MONGO_DB_PSWD
+                  name: secret-apim-mongodb
             - name: MONGO_DB_ATLAS_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                    key: MONGO_DB_ATLAS_PRIVATE_KEY
-                    name: secret-apim-mongodb
+                  key: MONGO_DB_ATLAS_PRIVATE_KEY
+                  name: secret-apim-mongodb
             - name: MONGO_DB_ATLAS_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
-                    key: MONGO_DB_ATLAS_PUBLIC_KEY
-                    name: secret-apim-mongodb   
+                  key: MONGO_DB_ATLAS_PUBLIC_KEY
+                  name: secret-apim-mongodb
             - name: JVM_MEM_OPTS
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
               value: traffic-manager
           volumeMounts:
             - name: apim-vol
-              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT            
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
               subPath: eventhub-1-deployment.toml
@@ -241,7 +258,7 @@ spec:
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: apim-vol
-          emptyDir: {}
+          emptyDir: { }
         - name: wso2am-conf
           configMap:
             name: choreo-apim-eventhub-1-conf
@@ -250,7 +267,7 @@ spec:
             name: choreo-apim-docker-entrypoint
             defaultMode: 0407
         - name: mysql-connector-jar
-          emptyDir: {}
+          emptyDir: { }
         - name: secret-apim-keystore-passwords
           csi:
             driver: secrets-store.csi.k8s.io
@@ -326,4 +343,3 @@ spec:
               secretProviderClass: secret-apim-mongodb
             nodePublishSecretRef:
               name: csi-secret-store-azure
-
