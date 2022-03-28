@@ -42,6 +42,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,12 +53,15 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_API_RESOURCE;
 import static org.hamcrest.Matchers.greaterThan;
@@ -92,7 +96,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testGetEnvironmentsFormInsightsAPI() throws IOException {
+    public void testGetEnvironments() throws IOException {
         String graphQlQuery =
                 "query($orgFilter: OrgFilter!) {" +
                 "   listEnvironments(org: $orgFilter) {" +
@@ -144,20 +148,35 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = { "testGetEnvironmentsFormInsightsAPI" })
+    @Test(dependsOnMethods = { "testGetEnvironments" })
     @CitrusTest
-    public void testInsightsAPI() throws IOException {
+    public void testUtilityOperations() throws IOException {
         String graphQlQuery =
-                "query($dataFilter: DataFilter!, $timeFilter: TimeFilter!) {" +
-                "    getTotalTraffic(filter: $timeFilter, dataFilter: $dataFilter)" +
-                "}";
+                "query ($dataFilter: DataFilter!, $tenantDataFilter: TenantDataFilter!) {" +
+                        "  listAllAPI(dataFilter: $dataFilter) {" +
+                        "    id" +
+                        "    name" +
+                        "    version" +
+                        "    provider" +
+                        "  }" +
+                        "  listApplications(dataFilter: $dataFilter) {" +
+                        "    id" +
+                        "    name" +
+                        "    owner" +
+                        "  }" +
+                        "  listProviders(dataFilter: $dataFilter) {" +
+                        "    name" +
+                        "  }" +
+                        "  listSubscribers(dataFilter: $dataFilter) {" +
+                        "    name" +
+                        "  }" +
+                        "  listTenants(tenantDataFilter: $tenantDataFilter)" +
+                        "}";
 
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/insights/graphql/queryVariables.mustache");
+        Mustache mustache = mf.compile("templates/insights/graphql/utilQueryVariables.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("from", "2021-03-01T10:38:00.000+05:30");
-        queryParams.put("to", "2022-05-24T23:10:00.000+05:30");
         queryParams.put("orgId", orgUUID);
         queryParams.put("environmentId", environmentId);
         queryParams.put("tenant", "carbon.super");
@@ -181,6 +200,77 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .validate(jsonPath().expression("$.data.getTotalTraffic", greaterThan(0L))));
+                .body(new ClassPathResource("templates/insights/utilQuerySuccess.json"))
+                .validate(json()
+                        .ignore("$.data.listAllAPI")
+                        .ignore("$.data.listApplications")
+                        .ignore("$.data.listProviders")
+                        .ignore("$.data.listSubscribers")
+                        .ignore("$.data.listTenants")
+                )
+                .validate(jsonPath()
+                        .expression("$.data.listAllAPI.size()",  greaterThan(0))
+                        .expression("$.data.listApplications.size()",  greaterThan(0))
+                        .expression("$.data.listProviders.size()",  greaterThan(0))
+                        .expression("$.data.listSubscribers.size()",  greaterThan(0))
+                        .expression("$.data.listTenants.size()",  greaterThan(0))
+                )
+        );
+    }
+
+    @Test(dependsOnMethods = { "testGetEnvironments" })
+    @CitrusTest
+    public void testOverviewOperations() throws IOException {
+        String graphQlQuery =
+                "query($dataFilter: DataFilter!, $timeFilter: TimeFilter!) {" +
+                "    getTotalTraffic(filter: $timeFilter, dataFilter: $dataFilter)" +
+                "    getTotalErrors(filter: $timeFilter, dataFilter: $dataFilter)" +
+                "    getOverallLatency(filter: $timeFilter, dataFilter: $dataFilter)" +
+                "}";
+
+        OffsetDateTime currentDateTimeAtUTC = OffsetDateTime.now(ZoneOffset.UTC);
+        OffsetDateTime sixMonthsAgoDateTimeAtUTC = currentDateTimeAtUTC.minusMonths(6);
+
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/insights/graphql/overviewQueryVariables.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("from", sixMonthsAgoDateTimeAtUTC.toString());
+        queryParams.put("to", currentDateTimeAtUTC.toString());
+        queryParams.put("orgId", orgUUID);
+        queryParams.put("environmentId", environmentId);
+        queryParams.put("tenant", "carbon.super");
+        mustache.execute(writer, queryParams).flush();
+        String graphQlVariables = writer.toString();
+        String requestBody = "{\"query\":\"" + graphQlQuery + "\",\"variables\":" + graphQlVariables + "}";
+
+        $(http()
+                .client(choreoCPTestClient)
+                .send()
+                .post(INSIGHTS_API_RESOURCE)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+        $(http()
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/insights/overviewQuerySuccess.json"))
+                .validate(json()
+                        .ignore("$.data.getTotalTraffic")
+                        .ignore("$.data.getTotalErrors")
+                        .ignore("$.data.getOverallLatency")
+                )
+                .validate(jsonPath()
+                        .expression("$.data.getTotalTraffic", greaterThan(0L))
+                        .expression("$.data.getTotalErrors", greaterThan(-1L))
+                        .expression("$.data.getOverallLatency", greaterThan(0.0))
+                )
+        );
     }
 }
