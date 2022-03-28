@@ -19,7 +19,6 @@ export class APIDevelop {
       .contains("Resources")
       .should("be.visible");
     cy.get('[id="backdrop-loader"]').should("not.exist");
-
     cy.get("body").then((body) => {
       if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
         cy.get('[data-testid="delete-all-operations-btn"]').click();
