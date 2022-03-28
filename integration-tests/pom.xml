@@ -170,5 +170,11 @@
       <artifactId>compiler</artifactId>
       <version>0.9.6</version>
     </dependency>
+    <dependency>
+      <groupId>com.consol.citrus</groupId>
+      <artifactId>citrus-validation-hamcrest</artifactId>
+      <version>${citrus.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
