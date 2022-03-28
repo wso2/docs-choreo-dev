@@ -42,8 +42,7 @@ spec:
         - name: secret-asb
           mountPath: /mnt/csi/secret-asb
           readOnly: true
-        image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:latest
-        imagePullPolicy: Always
+        image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:invalid
         securityContext:
           runAsNonRoot: true
           runAsUser: 10500
