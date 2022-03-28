@@ -1,3 +1,4 @@
+import { EntryPlugin } from "webpack";
 import { ComponentTemplate } from "../enum/component-template";
 
 export class VSExplorer {
@@ -44,6 +45,7 @@ export class VSExplorer {
         });
       }
     });
+    cy.wait(3000)
   }
 
   static pushChangesToChoreo(commitMessage: string) {
@@ -61,7 +63,7 @@ export class VSExplorer {
     cy.get('[aria-label="Ballerina Low-Code"]').should("be.visible").click();
   }
 
-  static enterCommandInTerminal(command: string) {
+  static enterCommandInTerminal(command: string,waitTime:number=20000) {
     cy.get("body").then((bd) => {
       if (bd.find(".xterm-helpers").length == 0) {
         cy.wrap(bd).type("{ctrl}`");
@@ -69,12 +71,25 @@ export class VSExplorer {
     });
     cy.get(VSExplorer.terminal, { timeout: 120000 }).click();
     cy.get(VSExplorer.terminal).type(`${command}{enter}`);
-    cy.wait(20000);
+    cy.wait(waitTime);
+  }
+
+  static createNewBranch(){
+    this.waitTillCodespaceLoad();
+    this.closeTab();
+    this.enterCommandInTerminal("git branch feature",2000)
+    this.enterCommandInTerminal("git checkout feature",2000)
+  }
+
+  static commitPush(commitMessage){
+    this.enterCommandInTerminal( "bash /config/workspace/.githooks/pre-commit")
+    this.enterCommandInTerminal("rm /config/workspace/.githooks/pre-commit",2000)
+    this.enterCommandInTerminal("git add .",2000)
+    this.enterCommandInTerminal(`git commit -m "${commitMessage}"`,2000)
+    this.enterCommandInTerminal("git push --set-upstream origin feature",2000)
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
-    this.waitTillCodespaceLoad();
-    this.closeTab();
     this.createFile(fileName);
     this.selectExplorer();
     cy.contains(fileName).click();
@@ -99,8 +114,7 @@ export class VSExplorer {
   }
 
   private static createFile(fileName: string) {
-    cy.get('[aria-label="Diagram Explorer"] .monaco-icon-name-container')
-      .eq(0)
+    cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon')
       .click();
     cy.wait(2000);
     cy.get('[title="New File"]').eq(0).should("be.visible").click();

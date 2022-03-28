@@ -20,13 +20,13 @@ export class ComponentDevelopPage {
     this.currentTime.getTime() + Cypress.env("recTime")
   );
 
-  static getComponentURL(fileID="") {
+  static getComponentURL(fileID = "") {
     cy.get('[data-testid="component-develop-edit-code"]', { timeout: 120000 })
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
         cy.url().then((url) => {
-          Utils.saveComponentURL(fileID)
+          Utils.saveComponentURL(fileID);
           const accessURL =
             url.split("/organizations")[0] +
             href.replace(/ /g, "").replace(/\n/g, "");
@@ -37,8 +37,6 @@ export class ComponentDevelopPage {
     const orgData = Cypress.env(`${fileID}_orgData`);
     const authData = Cypress.env(`${fileID}_authData`);
   }
-
-
 
   static addResources(path: string, ...verbs) {
     cy.get('[id="backdrop-loader"').should("not.exist");
@@ -82,9 +80,26 @@ export class ComponentDevelopPage {
     cy.get(`[title*="${commitMessage}"]`).should("be.visible");
   }
 
+  static selectBranch(newBranch: string) {
+    let branches = [];
+    cy.get('[aria-label="Without label"]').click();
+    cy.get("[data-value]").each((q) => {
+      branches.push(q.text());
+      if (q.text() === newBranch) {
+        cy.wrap(q).click();
+      }
+    });
+
+    return cy.wrap(branches);
+  }
   static getVersion() {
     return cy.get('[id="version-picker"]>div').then((v) => {
       return v.text().trim();
     });
+  }
+
+  static refreshBranchCommit() {
+    cy.get('[title="Refetch Branches"]').should("be.visible").click();
+    cy.get('[title="Refetch Commits"]').should("be.visible").click();
   }
 }
