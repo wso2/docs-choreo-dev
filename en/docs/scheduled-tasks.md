@@ -64,6 +64,8 @@ Choreo by default provides a development environment and a production environmen
 
 ![Promote scheduled task](assets/img/scheduled-tasks/promote-scheduled-task-to-production.png){.cInlineImage-full}
 
+If required, you can change the time interval of the scheduled task before you promote it to the production environment.
+
 ## Observe a scheduled task
 
 You can assess the performance of your scheduled task by observing the success and failure rates of the requests sent to it. The observability view allows you to visualize the performance statistics via interactive graphs.
