@@ -12,11 +12,7 @@
  */
 
 export class ProjectListingPage {
-  static createNewProject(
-    projectName: string,
-    description: string,
-    fileID: string
-  ) {
+  static createNewProject(projectName: string, description: string) {
     cy.get('[data-testid="version-picker"]', { timeout: 120000 }).click();
     cy.get('[aria-labelledby="version-picker"]>button').click();
     cy.wait(5000);

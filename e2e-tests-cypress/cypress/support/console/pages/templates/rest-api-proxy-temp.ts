@@ -18,7 +18,7 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="project-template-list-httpProxyApi"]').click();
   }
 
-  static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint, fileID) {
+  static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
@@ -28,13 +28,13 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
 
-    Utils.saveProjectData(fileID);
+    Utils.saveProjectData();
 
     cy.get('[data-testid="delete-all-operations-btn"]', {
       timeout: 120000,
     }).should("be.visible");
 
-    Utils.saveComponentURL(fileID);
+    Utils.saveComponentURL();
   }
 
   static createOpenApi(filepath: string = "", url: string = "") {

@@ -24,7 +24,7 @@ export class VSExplorer {
   }
 
   static selectExplorer() {
-    cy.get('a[aria-label="Explorer (Ctrl+Shift+E)"]')
+    cy.get('.codicon-explorer-view-icon')
       .should("be.visible")
       .click();
   }
@@ -37,7 +37,7 @@ export class VSExplorer {
   }
 
   static closeTab() {
-    cy.get('[title="Close (Ctrl+W)"]').then((b) => {
+    cy.get('.codicon-close').then((b) => {
       if (b.length > 0) {
         b.each(function () {
           // can not use an arrow function as this scope changes.
@@ -45,7 +45,7 @@ export class VSExplorer {
         });
       }
     });
-    cy.wait(3000)
+    cy.wait(3000);
   }
 
   static pushChangesToChoreo(commitMessage: string) {
@@ -63,7 +63,7 @@ export class VSExplorer {
     cy.get('[aria-label="Ballerina Low-Code"]').should("be.visible").click();
   }
 
-  static enterCommandInTerminal(command: string,waitTime:number=20000) {
+  static enterCommandInTerminal(command: string, waitTime: number = 20000) {
     cy.get("body").then((bd) => {
       if (bd.find(".xterm-helpers").length == 0) {
         cy.wrap(bd).type("{ctrl}`");
@@ -74,19 +74,23 @@ export class VSExplorer {
     cy.wait(waitTime);
   }
 
-  static createNewBranch(){
-    this.waitTillCodespaceLoad();
+  static createNewBranch() {
     this.closeTab();
-    this.enterCommandInTerminal("git branch feature",2000)
-    this.enterCommandInTerminal("git checkout feature",2000)
+    cy.wait(5000)
+    this.waitTillCodespaceLoad();
+    this.enterCommandInTerminal("git branch feature", 2000);
+    this.enterCommandInTerminal("git checkout feature", 2000);
   }
 
-  static commitPush(commitMessage){
-    this.enterCommandInTerminal( "bash /config/workspace/.githooks/pre-commit")
-    this.enterCommandInTerminal("rm /config/workspace/.githooks/pre-commit",2000)
-    this.enterCommandInTerminal("git add .",2000)
-    this.enterCommandInTerminal(`git commit -m "${commitMessage}"`,2000)
-    this.enterCommandInTerminal("git push --set-upstream origin feature",2000)
+  static commitPush(commitMessage) {
+    this.enterCommandInTerminal("bash /config/workspace/.githooks/pre-commit");
+    this.enterCommandInTerminal(
+      "rm /config/workspace/.githooks/pre-commit",
+      2000
+    );
+    this.enterCommandInTerminal("git add .", 2000);
+    this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 2000);
+    this.enterCommandInTerminal("git push --set-upstream origin feature", 2000);
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
@@ -114,8 +118,9 @@ export class VSExplorer {
   }
 
   private static createFile(fileName: string) {
-    cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon')
-      .click();
+    cy.get(
+      '[aria-label="Diagram Explorer"] .workspace-name-folder-icon'
+    ).click();
     cy.wait(2000);
     cy.get('[title="New File"]').eq(0).should("be.visible").click();
     cy.wait(2000);
