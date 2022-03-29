@@ -103,7 +103,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ 'assets/stylesheets/choreo-docs-theme.css' | url }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
   </head>
 
@@ -278,13 +277,7 @@
   {% include "partials/footer.html" %}
   {% endblock %}
     </footer>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
-  <script type="text/javascript"> docsearch({
-    apiKey: 'ec4809d281d5e07f5d0c8c36063739a4',
-    appId:'TYOC0645HN',
-    indexName: 'wso2_choreo',
-    inputSelector: ".md-search__input",
-    debug: false // Set debug to true if you want to inspect the dropdown
-  });
+  <script src=src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  <script> docsearch();
   </script>
 </html>

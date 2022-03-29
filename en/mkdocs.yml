@@ -113,6 +113,7 @@ markdown_extensions:
       base_path: docs
 plugins:
   - search
+  - localsearch
   - markdownextradata: {}
 extra_css:
   - assets/lib/highlightjs/default.min.css
@@ -127,6 +128,7 @@ extra_javascript:
   - assets/js/prism-ballerina.js
   - assets/lib/backtotop/js/util.js
   - assets/lib/backtotop/js/main.js
+  - search/search_index.js
 extra:
   social:
     - type: github

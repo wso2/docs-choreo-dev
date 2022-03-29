@@ -537,15 +537,4 @@ html .md-footer-meta.md-typeset a,
   }
 
   /* Highlighted text */
-  .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    color: #545CEC !important;
-    background-color: #f1f1f1 !important
-  }
 
-  .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion.suggestion-layout-simple {
-    background-color: #f1f1f1 !important;
-  }
-
-  .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content {
-    background-color: #f1f1f1 !important;
-  }
