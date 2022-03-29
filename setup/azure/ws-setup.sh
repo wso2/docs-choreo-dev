@@ -63,22 +63,22 @@ command -v helm >/dev/null 2>&1 || {
     fi
 }
 
-############### Install Step Cli
-echo "--- Installing Step to generate Keys..."
-step_installed="true"
-command -v step >/dev/null 2>&1 || {
-    step_installed="false"
-    if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        wget https://github.com/smallstep/cli/releases/download/v0.14.6/step-cli_0.14.6_amd64.deb -O /tmp/step-cli_0.14.6_amd64.deb
-        sudo dpkg -i /tmp/step-cli_0.14.6_amd64.deb
-        step_installed="true"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install step
-        step_installed="true"
-    else
-        echo "Could not install step. Unsupported operating system. Please manually install it.."
-    fi
-}
+################ Install Step Cli
+#echo "--- Installing Step to generate Keys..."
+#step_installed="true"
+#command -v step >/dev/null 2>&1 || {
+#    step_installed="false"
+#    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+#        wget https://github.com/smallstep/cli/releases/download/v0.14.6/step-cli_0.14.6_amd64.deb -O /tmp/step-cli_0.14.6_amd64.deb
+#        sudo dpkg -i /tmp/step-cli_0.14.6_amd64.deb
+#        step_installed="true"
+#    elif [[ "$OSTYPE" == "darwin"* ]]; then
+#        brew install step
+#        step_installed="true"
+#    else
+#        echo "Could not install step. Unsupported operating system. Please manually install it.."
+#    fi
+#}
 
 ############### Install Certmanager
 echo "--- Installing Cert Manager..."
@@ -137,7 +137,7 @@ if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"
     helm3_installed=false
 fi
-if [[ "${step_installed}" == "false" ]]; then
-    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
-    step_installed=false
-fi
+#if [[ "${step_installed}" == "false" ]]; then
+#    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
+#    step_installed=false
+#fi
