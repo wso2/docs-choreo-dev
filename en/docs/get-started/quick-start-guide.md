@@ -2,6 +2,9 @@
 
 Choreo is a cloud-native low-code engineering platform that allows you to create APIs, API Proxies, triggers, and scheduled tasks to implement your integration solution. 
 
+!!! tip
+        Take a look at the [Choreo playlist](https://youtube.com/playlist?list=PLdjnDnxI3SA85otCxxvyGBJp5Bc19NpaS) for video tutorials that guide you through the steps to create, publish, deploy, consume, and observe your APIs. 
+
 This quick start guide walks you through the steps to create, develop, publish, deploy, and invoke a REST API using Choreo. 
 
 ## Create your first REST API 
