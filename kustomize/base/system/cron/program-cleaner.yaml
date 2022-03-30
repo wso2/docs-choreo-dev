@@ -79,10 +79,10 @@ spec:
               resources:
                 limits:
                   cpu: 300m
-                  memory: 1024Mi
-                requests:
-                  cpu: 200m
                   memory: 512Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
               volumeMounts:
                 - mountPath: /mnt/csi/secret-program-db
                   name: secret-program-db
