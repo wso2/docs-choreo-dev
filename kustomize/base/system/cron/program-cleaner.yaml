@@ -1,11 +1,11 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: ast-archiver
+  name: program-cleaner
   labels:
-    choreo.component: ast-archiver
+    choreo.component: program-cleaner
 spec:
-  schedule: 0 0 * * *
+  schedule: 30 16 * * 3
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -16,7 +16,7 @@ spec:
             seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
           labels:
-            choreo.component: ast-archiver
+            choreo.component: program-cleaner
         spec:
           automountServiceAccountToken: false
           securityContext:
@@ -25,8 +25,8 @@ spec:
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
-            - name: ast-archiver
-              image: choreocontrolplane.azurecr.io/choreoipaas/ast-archiver:latest
+            - name: program-cleaner
+              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-programcleaner:latest
               securityContext:
                 runAsUser: 10500
                 runAsGroup: 10500
@@ -36,26 +36,11 @@ spec:
                   drop:
                   - all
               env:
-                - name: AZURE_DL_TENANT_ID
-                  valueFrom:
-                    configMapKeyRef:
-                      key: AZURE_DL_TENANT_ID
-                      name: cm-datalake-ast
-                - name: AZURE_DL_CONTAINER_NAME
-                  valueFrom:
-                    configMapKeyRef:
-                      key: AZURE_DL_CONTAINER_NAME
-                      name: cm-datalake-ast
                 - name: AZURE_DL_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
                       key: AZURE_DL_AST_CLIENT_SECRET
                       name: secret-datalake
-                - name: LAST_ACTIVE_DURATION_IN_DAYS
-                  valueFrom:
-                    configMapKeyRef:
-                      key: LAST_ACTIVE_DURATION_IN_DAYS
-                      name: cm-datalake-ast
                 - name: CHOREO_PROGRAM_DB_NAME
                   valueFrom:
                     configMapKeyRef:
@@ -89,6 +74,8 @@ spec:
               envFrom:
                 - configMapRef:
                     name: env-datalake-ast
+                - configMapRef:
+                    name: cm-datalake-ast
               resources:
                 limits:
                   cpu: 300m
