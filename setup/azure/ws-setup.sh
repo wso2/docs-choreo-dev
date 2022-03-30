@@ -114,6 +114,13 @@ bash workspace/configure-csi-secret-store.sh
 echo "--- Setup Nginx Ingress"
 bash workspace/install-nginx-ingress.sh
 
+echo "--- Enable HPA/PDB for Ingress Controller"
+kubectl apply -f ingress-plus/hpa.yaml
+kubectl apply -f ingress-plus/pdb.yaml
+
+echo "--- Enable PDB for Cert Manager"
+kubectl apply -f cert-manager/pdb.yaml
+
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
 if [[ -r ${azuredfile} ]]

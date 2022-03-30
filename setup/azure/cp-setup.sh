@@ -206,6 +206,9 @@ bash controlplane/install-nginx-ingress.sh
 echo "--- Enable HPA for Ingress Controller"
 kubectl apply -f ingress/hpa.yaml
 
+echo "--- Enable PDB for Cert Manager"
+kubectl apply -f cert-manager/pdb.yaml
+
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
 if [[ -r ${azuredfile} ]]
