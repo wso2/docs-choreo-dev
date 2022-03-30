@@ -100,6 +100,22 @@ command -v helm >/dev/null 2>&1 || {
 #    fi
 #}
 
+############### Install Helm 3
+echo "--- Installing LinkerD CLI..."
+linkerd_installed="true"
+command -v linkerd >/dev/null 2>&1 || {
+    linkerd_installed="false"
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | bash
+        linkerd_installed="true"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install linkerd
+        linkerd_installed="true"
+    else
+        echo "Could not install linkerd cli. Unsupported operating system. Please manually install it.."
+    fi
+}
+
 ############### Install Certmanager
 echo "--- Installing Cert Manager..."
 kubectl create ns cert-manager
