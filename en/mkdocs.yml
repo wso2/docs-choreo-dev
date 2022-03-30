@@ -43,6 +43,9 @@ theme:
   highlightjs: true
   feature:
     tabs: true
+    search:
+      suggest: true
+      highlight: true
   font:
     text: 'Montserrat'
   language: 'en'
