@@ -225,6 +225,10 @@ if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"
     helm3_installed=false
 fi
+if [[ "${linkerd_installed}" == "false" ]]; then
+    echo "[FAILED] linkerd cli installation. See https://linkerd.io/2.11/getting-started/"
+    linkerd_installed=false
+fi
 #if [[ "${step_installed}" == "false" ]]; then
 #    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
 #    step_installed=false
