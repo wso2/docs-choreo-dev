@@ -57,7 +57,7 @@ The following two diagrams illustrate the interactions in the system while searc
 - <a class="pricing" id="bookingsAPI">Bookings API</a>: An internal API in Choreo that updates the Bookings database when a booking for a certain flight is made.
 - <a class="pricing" id="reservationsAPI">Reservations API</a>: An external-facing API in Choreo that is used by client applications (web apps, mobile apps) to make flight bookings.
 - <a class="pricing" id="twillioAPI">Twilio API</a>: A third-party API that is used by the Reservations API in Choreo to send SMS notifications to customers when a booking has been made, canceled, or updated.
-- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between sending a request and recieving a response.
+- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between sending a request and receiving a response.
 <br/>
 <br/>
 
