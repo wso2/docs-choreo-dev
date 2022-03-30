@@ -28,7 +28,7 @@ If you want to connect your own GitHub repository during component creation in C
 
 4. Click **Create** to proceed with component initialization. This displays the following request:.
 
-    ![Pull request](../assets/img/tutorials/connect-own-repo/pull-request.png){.cInlineImage-full}
+    ![View pull request](../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
 
 5. Click **View Pull Request**.
 6. Review and merge the pull request.
