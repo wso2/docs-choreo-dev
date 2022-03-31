@@ -20,22 +20,22 @@ export class ComponentDevelopPage {
     this.currentTime.getTime() + Cypress.env("recTime")
   );
 
-  static getComponentURL(fileID = "") {
+  static getComponentURL() {
     cy.get('[data-testid="component-develop-edit-code"]', { timeout: 120000 })
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
         cy.url().then((url) => {
-          Utils.saveComponentURL(fileID);
+          Utils.saveComponentURL();
           const accessURL =
             url.split("/organizations")[0] +
             href.replace(/ /g, "").replace(/\n/g, "");
-          Cypress.env(`${fileID}_accessURL`, accessURL);
+          Cypress.env(`accessURL`, accessURL);
         });
       });
 
-    const orgData = Cypress.env(`${fileID}_orgData`);
-    const authData = Cypress.env(`${fileID}_authData`);
+    const orgData = Cypress.env(`orgData`);
+    const authData = Cypress.env(`authData`);
   }
 
   static addResources(path: string, ...verbs) {

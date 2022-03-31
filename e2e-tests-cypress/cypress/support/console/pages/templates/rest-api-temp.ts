@@ -20,8 +20,7 @@ export class RestAPITemplate {
 
   static createApiFromScratch(
     componentName: string,
-    description: string,
-    fileID: string
+    description: string
   ) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);

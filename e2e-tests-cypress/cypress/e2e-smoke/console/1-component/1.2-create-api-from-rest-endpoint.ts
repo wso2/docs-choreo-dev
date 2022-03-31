@@ -25,7 +25,6 @@ import { APIDeployment } from "../../../support/console/pages/apis/api-deploymen
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
-import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
@@ -48,7 +47,6 @@ describe("Verify project creation functionality", () => {
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
 
   before(() => {
@@ -59,22 +57,16 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify Rest API creation from existing endpoint", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.designNewRestApi(
       API_NAME,
       API_VERSION,
       API_BASE_PATH,
-      API_ENDPOINT,
-      FILE_ID
+      API_ENDPOINT
     );
     APIDevelop.addResources(OPERATION_USERS, HTTPMethod.GET);
-    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
@@ -110,12 +102,8 @@ describe("Verify project creation functionality", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    ComponentDevelopPage.getVersion().should(
-      "eq",
-      "Version " + API_NEW_VERSION
-    );
+    ComponentDevelopPage.getVersion().should("eq", `Version ${API_VERSION}`);
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
-    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
@@ -179,12 +167,11 @@ describe("Verify project creation functionality", () => {
     TryOut.SelectResource(null, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    cy.wait(5000);
     TryOut.GetResponse();
   });
 
   it("Verify application suspension", () => {
-    LoginPage.reLoginToChoreo(FILE_ID);
+    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

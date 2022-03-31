@@ -105,19 +105,20 @@ export class Utils {
     });
   }
 
-  static saveComponentURL(testKey="") {
+  static saveComponentURL() {
     cy.url().then((url) => {
-      Cypress.env(`${testKey}_componentURL`, url);
+      Cypress.env(`componentURL`, url);
     });
   }
 
-  static saveProjectData(testKey="") {
-    cy.intercept(`${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as("proj_create");
+  static saveProjectData() {
+    cy.intercept(`${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as(
+      "proj_create"
+    );
     cy.wait("@proj_create", { timeout: 180000 }).then((intercept) => {
       const { id, projectId } = intercept.response.body.data.createComponent;
-      Cypress.env(`${testKey}_component_id`, id);
-      Cypress.env(`${testKey}_projectId`, projectId);
-      
+      Cypress.env(`component_id`, id);
+      Cypress.env(`projectId`, projectId);
     });
   }
 
@@ -143,7 +144,6 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status });
     });
   }
-
 
   static sendDeleteRequest(url: string, headers: any = {}) {
     const request = {

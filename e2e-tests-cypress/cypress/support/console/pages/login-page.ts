@@ -37,8 +37,8 @@ export class LoginPage {
     });
   }
 
-  static reLoginToChoreo(fileID: string = "") {
-    const componentURL = Cypress.env(`${fileID}_componentURL`);
+  static reLoginToChoreo() {
+    const componentURL = Cypress.env(`componentURL`);
     cy.visit(componentURL);
     cy.intercept(componentURL).then(() => {
       cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
@@ -51,8 +51,8 @@ export class LoginPage {
     });
   }
 
-  static navigateToCodespace(fileID: string = "") {
-    cy.visit(Cypress.env(`${fileID}_accessURL`));
+  static navigateToCodespace() {
+    cy.visit(Cypress.env(`accessURL`));
   }
 
   static login() {
@@ -93,6 +93,7 @@ export class LoginPage {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
     cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
+      cy.log(JSON.stringify(res.requestHeaders))
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
