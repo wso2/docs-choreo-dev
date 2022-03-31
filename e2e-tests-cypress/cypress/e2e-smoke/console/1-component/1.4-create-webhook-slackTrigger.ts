@@ -29,7 +29,6 @@ import { Utils } from "../../../support/console/utils";
 
 describe("Verify webhook creation functionality", () => {
   const WEBHOOK_NAME = Utils.generateComponentName("SlackHook");
-  const FILE_ID = "slacktrigger";
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
@@ -48,18 +47,18 @@ describe("Verify webhook creation functionality", () => {
   it("Verify slack trigger creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
+      PROJECT_DESCRIPTION
+      
     );
     ProjectOverviewPage.addNewComponent();
     TriggersTemplate.SelectWebhookTemplate();
-    TriggersTemplate.createSlackTriggerFromTemplate(WEBHOOK_NAME, FILE_ID);
+    TriggersTemplate.createSlackTriggerFromTemplate(WEBHOOK_NAME);
 
-    ComponentDevelopPage.getComponentURL(FILE_ID);
+    ComponentDevelopPage.getComponentURL();
   });
 
   it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace(FILE_ID);
+    LoginPage.navigateToCodespace();
     VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
     VSExplorer.selectSourceControl();
 
@@ -75,7 +74,7 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo(FILE_ID);
+    LoginPage.reLoginToChoreo();
     ComponentDevelopPage.addLabels(labels).then((arr) => {
       expect(arr).to.deep.eq(labels);
     });

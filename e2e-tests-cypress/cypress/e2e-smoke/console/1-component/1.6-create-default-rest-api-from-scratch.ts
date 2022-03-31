@@ -30,7 +30,6 @@ describe("Verify project creation functionality", () => {
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "restapidefault";
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
@@ -48,15 +47,15 @@ describe("Verify project creation functionality", () => {
   it("Verify REST API component creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
+      PROJECT_DESCRIPTION
+      
     );
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
     RestAPITemplate.createApiFromScratch(
       COMPONENT_NAME,
-      COMPONENT_DESCRIPTION,
-      FILE_ID
+      COMPONENT_DESCRIPTION
+      
     );
   });
 
@@ -90,7 +89,7 @@ describe("Verify project creation functionality", () => {
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(
-      `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
+      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -118,7 +117,7 @@ describe("Verify project creation functionality", () => {
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(
-      `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
+      `${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -154,7 +153,7 @@ describe("Verify project creation functionality", () => {
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
     Curl.getRequestComponents(
-      `${FILE_ID}${Environment.DEVELOPMENT}${RESOURCE_NAME}`
+      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -167,7 +166,7 @@ describe("Verify project creation functionality", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.PRODUCTION);
     Curl.getRequestComponents(
-      `${FILE_ID}${Environment.PRODUCTION}${RESOURCE_NAME}`
+      `${Environment.PRODUCTION}${RESOURCE_NAME}`
     ).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.body).equal(MATCHING_STRING);

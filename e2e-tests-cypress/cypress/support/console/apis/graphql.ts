@@ -59,7 +59,7 @@ export class GraphQL {
       e2eProjects.forEach((project) => {
         if (this.isProjectOld(project.name)) {
           this.deleteComponentsInProject(project.id, orgHandle, token);
-          this.deleteProject(orgId, project.id, token);
+      //    this.deleteProject(orgId, project.id, token); --> query is not available yet. 
         }
       });
     });
@@ -180,7 +180,7 @@ export class GraphQL {
     token: string
   ) {
     const query = {
-      query: `mutation{ deleteProjectV2(
+      query: `mutation{ deleteProject(
         orgId: ${orgId}, projectId: "${projectId}"){ id }}`,
     };
 

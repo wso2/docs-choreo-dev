@@ -56,9 +56,6 @@ export class ComponentDeployPage {
         cy.get('[placeholder="Required value"]').type(value);
       }
     });
-    // cy.get(
-    //   '[class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"]'
-    // ).type(value);
     cy.get('button[type="submit"]').click();
   }
 
