@@ -10,13 +10,11 @@ spec:
   podSelector: {}
   ingress: []
   egress: []
-
 ---
-
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: nginx-ingress-network-policy
+  name: nginx-controller-network-policy
   namespace: dev-choreo-system-nginx-ingress
 spec:
   podSelector:
@@ -28,8 +26,18 @@ spec:
   - Ingress
   - Egress
   ingress:
-  - ports:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          linkerd.io/extension: viz
+    ports:
     - port: 80
+      protocol: TCP
     - port: 443
+      protocol: TCP
   egress:
-  - {}
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
