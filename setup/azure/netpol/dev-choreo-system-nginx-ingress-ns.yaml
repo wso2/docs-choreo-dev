@@ -30,7 +30,6 @@ spec:
     - namespaceSelector:
         matchLabels:
           linkerd.io/extension: viz
-      podSelector: {}
   - ports:
     - port: 80
     - port: 443
