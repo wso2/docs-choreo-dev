@@ -24,7 +24,7 @@ export class ProjectListingPage {
     cy.get('[data-testid="create-version-create"]').click();
   }
 
-  static selectProject(projectName: string) {
+  static selectProject(projectName: string="Default Project") {
     cy.get('[data-testid="version-picker"]').click();
     cy.get(`li>div`).contains(projectName).click();
   }

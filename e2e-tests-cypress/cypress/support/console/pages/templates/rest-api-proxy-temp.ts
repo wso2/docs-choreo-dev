@@ -59,7 +59,7 @@ export class RestAPIProxyTemplate {
     endpoint: string,
     version: string = "",
     validateResourceName: string = "",
-    key: string
+
   ) {
     cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
 
@@ -76,7 +76,7 @@ export class RestAPIProxyTemplate {
     }
     cy.get("button>span").contains("Create").click();
     this.interceptValidate(); // workaround
-    Utils.saveProjectData(key);
+    Utils.saveProjectData();
 
   
     let resourceIdentifier = "resource-/intensity";
@@ -87,7 +87,7 @@ export class RestAPIProxyTemplate {
     cy.get(`[data-testid="${resourceIdentifier}"]`, { timeout: 120000 }).should(
       "be.visible"
     );
-    Utils.saveComponentURL(key);
+    Utils.saveComponentURL();
   }
 
   private static interceptValidate() {
