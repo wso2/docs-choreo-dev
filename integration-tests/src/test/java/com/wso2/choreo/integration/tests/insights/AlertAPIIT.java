@@ -51,14 +51,18 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_LATENCY_ALERT_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_TRAFFIC_ALERT_API_RESOURCE;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+/**
+ * Alert API test cases.
+ */
 public class AlertAPIIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String organization;
     private static String trafficAlertConfigurationId;
     private static String latencyAlertConfigurationId;
     private static String apiName;
+    private static final String tenant = "carbon.super";
 
     @Autowired
     private HttpClient choreoCPTestClient;
@@ -96,7 +100,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .get(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -120,7 +124,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .post(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -158,7 +162,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .put(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -198,7 +202,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .delete(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -222,7 +226,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .get(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -246,7 +250,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .post(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -284,7 +288,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .put(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -325,7 +329,7 @@ public class AlertAPIIT extends TestNGCitrusSpringSupport {
                 .delete(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
                 .queryParam("organization", organization)
                 .queryParam("environment", Configuration.INSIGHTS_ALERT_ENVIRONMENT)
-                .queryParam("tenant", "carbon.super")
+                .queryParam("tenant", tenant)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
