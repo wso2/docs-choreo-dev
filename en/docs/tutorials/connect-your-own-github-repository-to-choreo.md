@@ -13,7 +13,7 @@ You can opt to connect your own GitHub repository to Choreo when you create any 
 If you want to connect your own GitHub repository during component creation in Choreo, you must follow these steps:
 
 !!! tip
-        As of now, Choreo does not allow you to connect GitHub repositories that have any existing Ballerina projects.
+        As of now, Choreo does not allow you to connect GitHub repositories that have any existing [Ballerina](https://ballerina.io/) projects.
 
 1. Authorize Choreo to access your GitHub account.
 
