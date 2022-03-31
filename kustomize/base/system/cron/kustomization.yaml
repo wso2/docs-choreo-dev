@@ -5,3 +5,4 @@ resources:
   - choreo-step-aggregator.yaml
   - choreo-step-enforcer.yaml
   - choreo-step-usage-publisher.yaml
+  - program-cleaner.yaml
