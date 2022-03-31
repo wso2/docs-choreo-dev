@@ -2,7 +2,7 @@
 
 By default, Choreo provides a source repository from an internal Choreo-managed GitHub organization to maintain the configuration of a Choreo component at the time you create it.
 
-Choreo also allows you to connect your own GitHub repository to maintain the configurations of components you create. This capability enables multiple developers to work together on a particular Choreo component by collaborating with pull requests on a shared repository.
+Choreo also allows you to connect your own GitHub repository to maintain the configurations of components you create. This capability enables multiple developers to work together on a particular Choreo component by collaborating via pull requests on a shared repository.
 
 You can opt to connect your own GitHub repository to Choreo when you create any of the following components:
 - REST API
