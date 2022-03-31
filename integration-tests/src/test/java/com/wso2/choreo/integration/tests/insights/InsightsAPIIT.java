@@ -153,6 +153,12 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
     public void testUtilityOperations() throws IOException {
         String graphQlQuery =
                 "query ($dataFilter: DataFilter!, $tenantDataFilter: TenantDataFilter!) {" +
+                        "  listOrganizations {" +
+                        "    id" +
+                        "    uuid" +
+                        "    handle" +
+                        "    name" +
+                        "  }" +
                         "  listAllAPI(dataFilter: $dataFilter) {" +
                         "    id" +
                         "    name" +
@@ -202,6 +208,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/insights/utilQuerySuccess.json"))
                 .validate(json()
+                        .ignore("$.data.listOrganizations")
                         .ignore("$.data.listAllAPI")
                         .ignore("$.data.listApplications")
                         .ignore("$.data.listProviders")
@@ -209,6 +216,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                         .ignore("$.data.listTenants")
                 )
                 .validate(jsonPath()
+                        .expression("$.data.listOrganizations.size()",  greaterThan(0))
                         .expression("$.data.listAllAPI.size()",  greaterThan(0))
                         .expression("$.data.listApplications.size()",  greaterThan(0))
                         .expression("$.data.listProviders.size()",  greaterThan(0))
