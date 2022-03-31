@@ -112,9 +112,8 @@ export class Utils {
   }
 
   static saveProjectData(testKey="") {
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
+    cy.intercept(`${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as("proj_create");
     cy.wait("@proj_create", { timeout: 180000 }).then((intercept) => {
-
       const { id, projectId } = intercept.response.body.data.createComponent;
       Cypress.env(`${testKey}_component_id`, id);
       Cypress.env(`${testKey}_projectId`, projectId);

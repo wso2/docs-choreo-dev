@@ -18,8 +18,8 @@ BEGIN
     CREATE TABLE billing_plan (
         id VARCHAR(128) NOT NULL,
         tier_id VARCHAR(128) NOT NULL,
-        product_id VARCHAR(128) NOT NULL,
-        price_id VARCHAR(128) NOT NULL,
+        product_id VARCHAR(128) NULL,
+        price_id VARCHAR(128) NULL,
         cloud_type VARCHAR(10) NOT NULL,
         UNIQUE (product_id),
         UNIQUE (price_id),

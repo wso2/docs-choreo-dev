@@ -20,6 +20,8 @@ export class TriggersTemplate {
 
   static createManualTriggerFromTemplate(manualName: string, fileID: string) {
     cy.get('input[name="name"]').clear().type(manualName);
+    cy.get('[data-cyid="create-manual-trigger-next"]').click();
+    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-cyid="btn-create-mannual-trigger"]').click();
     Utils.saveProjectData(fileID);
   }

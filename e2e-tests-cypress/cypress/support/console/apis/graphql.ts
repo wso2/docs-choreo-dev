@@ -156,16 +156,17 @@ export class GraphQL {
     token: string
   ) {
     const query = {
-      query: `mutation{ deleteComponent(
+      query: `mutation{ deleteComponentV2(
         orgHandler: "${orgHandle}",
         projectId: "${projectId}",
-        componentId: "${componentId}"){ id }}`,
+        componentId: "${componentId}"){status, canDelete, message}}`,
     };
 
     this.callGraphQL(token, query).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Component  ${componentId}`);
       } else {
+        cy.log(response.body)
         cy.log(
           `Could not delete Component: ${componentId}, status returned: ${response.status}`
         );
@@ -179,7 +180,7 @@ export class GraphQL {
     token: string
   ) {
     const query = {
-      query: `mutation{ deleteProject(
+      query: `mutation{ deleteProjectV2(
         orgId: ${orgId}, projectId: "${projectId}"){ id }}`,
     };
 
@@ -187,6 +188,7 @@ export class GraphQL {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Project  ${projectId}`);
       } else {
+        cy.log(response.body)
         cy.log(
           `Could not delete Project: ${projectId}, status returned: ${response.status}`
         );
@@ -203,14 +205,14 @@ export class GraphQL {
   }
 
   private static callGraphQL(token: string, query: any) {
-    const appSvcURL = Cypress.env("appSvcURL");
+    const appSvcURL = Cypress.env("newAppSvcURL");
     const header = {
       Authorization: `Bearer ${token}`,
       "content-type": "application/json",
     };
     return cy.request({
       method: "POST",
-      url: `${appSvcURL}/graphql`,
+      url: `${appSvcURL}/projects/1.0.0/graphql`,
       body: JSON.stringify(query),
       headers: header,
       failOnStatusCode: false,

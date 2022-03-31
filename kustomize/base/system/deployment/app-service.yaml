@@ -124,23 +124,6 @@ spec:
             secretKeyRef:
               name: secret-runtime
               key: APIM_CLIENT_SECRET
-        # temporary: migration-related configs start
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: secret-app-deployer
-              key: GITHUB_TOKEN
-        - name: IDP_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: secret-idp
-              key: IDP_CLIENT_SECRET
-        - name: MIGRATION_IDP_USER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-app-service
-              key: MIGRATION_IDP_USER_PASSWORD
-        # temporary: migration-related configs end
         envFrom:
         - configMapRef:
             name: env-app-service
@@ -204,11 +187,6 @@ spec:
         - name: secret-runtime
           mountPath: "/mnt/csi/secret-runtime"
           readOnly: true
-        # temporary: migration-related configs start
-        - name: secret-app-deployer
-          mountPath: "/mnt/csi/secret-app-deployer"
-          readOnly: true
-        # temporary: migration-related configs end
       volumes:
       - name: config
         configMap:
@@ -293,14 +271,4 @@ spec:
             secretProviderClass: secret-runtime
           nodePublishSecretRef:
             name: csi-secret-store-azure
-      # temporary: migration-related configs start
-      - name: secret-app-deployer
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-app-deployer
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      # temporary: migration-related configs end
       serviceAccountName: sa-choreo-default

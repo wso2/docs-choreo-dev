@@ -32,14 +32,8 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { Environment } from "../../../support/console/pages/enum/environment";
-import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
-import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
-import { ProductionKeys } from "../../../support/devportal/pages/applications/production-keys";
-import { Subscriptions } from "../../../support/devportal/pages/applications/subscriptions";
-import { generateAppName } from "../../../support/devportal/utils";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
@@ -57,15 +51,12 @@ describe("Verify project creation functionality", () => {
   const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
 
-
-
-  before(()=>{
-    LoginPage.login()
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(
@@ -118,7 +109,7 @@ describe("Verify project creation functionality", () => {
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentOverviewPage.createNewVersion(API_NEW_VERSION);
+    ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
     ComponentDevelopPage.getVersion().should(
       "eq",
       "Version " + API_NEW_VERSION
@@ -132,13 +123,12 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
-
   });
 
-  it("Promote to Prod",()=>{
+  it("Promote to Prod", () => {
     APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
-  })
+  });
 
   it("Test in dev", () => {
     APITest.testAPI();
@@ -170,18 +160,18 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-it("Verify api invoke urls",()=>{
-  ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-  Apis.verifyAPIname().should("eq", API_NAME);
-  Apis.getInvokeUrl().then(urls=>{
-    expect(urls).have.lengthOf(2)
-    expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`))
-    expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`))
-  })
-})
+  it("Verify api invoke urls", () => {
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    Apis.verifyAPIname().should("eq", API_NAME);
+    Apis.getInvokeUrl().then((urls) => {
+      expect(urls).have.lengthOf(2);
+      expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`));
+      expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`));
+    });
+  });
 
   it("Test in devportal", () => {
-    Apis.searchApiAndSelect(API_NAME,2);
+    Apis.searchApiAndSelect(API_NAME, 2);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
@@ -193,11 +183,9 @@ it("Verify api invoke urls",()=>{
     TryOut.GetResponse();
   });
 
-
-  it("Verify application suspension",()=>{
+  it("Verify application suspension", () => {
     LoginPage.reLoginToChoreo(FILE_ID);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
-  })
-
+    ComponentDeployPage.stopAllDeployment();
+  });
 });

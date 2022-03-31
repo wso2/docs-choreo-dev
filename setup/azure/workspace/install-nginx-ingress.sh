@@ -17,7 +17,7 @@ echo "--- Installing Workspace Nginx Ingress using Helm 3..."
 helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingress \
   --namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/nginx-plus-ingress" \
-  --set controller.replicaCount=1 \
+  --set controller.replicaCount=2 \
   --set controller.image.tag="2.0.3-SNAPSHOT-66e69fe" \
   --set controller.nginxplus=true \
   --set controller.service.loadBalancerIP="${WORKSPACE_INGRESS_LOADBALANCER_IP}" \

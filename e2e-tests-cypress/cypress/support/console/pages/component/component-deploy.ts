@@ -18,19 +18,19 @@ export class ComponentDeployPage {
       .click();
   }
 
-
-  static deployScheduleTask(){
-    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 }).should('be.enabled').click()
-    cy.get('button:not([data-cyid])').contains("Deploy").click()
+  static deployScheduleTask() {
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
+      .should("be.enabled")
+      .click();
+    cy.get("button:not([data-cyid])").contains("Deploy").click();
   }
 
-
-  static promoteScheduleTask(){
+  static promoteScheduleTask() {
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
-    .should("be.visible")
-    .click();
-    cy.get('button:not([data-cyid])').contains("Deploy").click()
-    cy.get('[value="*/1 * * * *"]').should('have.length',2)
+      .should("be.visible")
+      .click();
+    cy.get("button:not([data-cyid])").contains("Deploy").click();
+    cy.get('[value="*/1 * * * *"]').should("have.length", 2);
   }
 
   static configureAndDeploy(configValue: string) {
@@ -42,9 +42,23 @@ export class ComponentDeployPage {
 
   static addConfiguration(value: string) {
     cy.contains("Configure & Deploy").should("be.visible").click();
-    cy.get(
-      '[class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"]'
-    ).type(value);
+    cy.get("body").then((body) => {
+      if (!body.find('[placeholder="Required value"]').length) {
+        cy.get("form button[aria-expanded]")
+          .invoke("attr", "aria-expanded")
+          .then((attr) => {
+            if (attr) {
+              cy.get('[placeholder="Required value"]').type(value);
+            }
+          });
+      } else {
+        cy.get("form button[aria-expanded]").click();
+        cy.get('[placeholder="Required value"]').type(value);
+      }
+    });
+    // cy.get(
+    //   '[class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"]'
+    // ).type(value);
     cy.get('button[type="submit"]').click();
   }
 
@@ -117,7 +131,9 @@ export class ComponentDeployPage {
   static stopAllDeployment() {
     cy.get('[data-cyid*="btn-stop"]', {
       timeout: 120000,
-    }).should("exist").click({multiple:true});
+    })
+      .should("exist")
+      .click({ multiple: true });
     // cy.get("body").then((body) => {
     //   if (body.find('[data-cyid="btn-stop-redeploy"]').length > 0) {
     //     cy.get('[data-cyid="btn-stop-redeploy"]', { timeout: 180000 })

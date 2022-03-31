@@ -33,6 +33,7 @@ CREATE INDEX version_index ON version (program_id, version);
 
 ALTER TABLE program ADD COLUMN `release_id` VARCHAR(255) NULL DEFAULT NULL AFTER `app_id`;
 CREATE UNIQUE INDEX `uc_release_id` ON program(release_id);
+ALTER TABLE program ADD COLUMN `to_delete` TINYINT(1) NOT NULL DEFAULT 0;
 
 DELIMITER //
 CREATE PROCEDURE GetObsId(IN projsec VARCHAR(255), IN appid VARCHAR(255), 
