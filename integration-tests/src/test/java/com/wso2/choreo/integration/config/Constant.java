@@ -50,7 +50,8 @@ public final class Constant {
     public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
 
     public static final String INSIGHTS_API_RESOURCE = "/insights/1.0.0/query-api";
-
+    public static final String INSIGHTS_TRAFFIC_ALERT_API_RESOURCE = "/insightsalert/1.0.0/trafficConfigs";
+    public static final String INSIGHTS_LATENCY_ALERT_API_RESOURCE = "/insightsalert/1.0.0/latencyConfigs";
     public enum displayType {
         restAPI,
         proxy,
