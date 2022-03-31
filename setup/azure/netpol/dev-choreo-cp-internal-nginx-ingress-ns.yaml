@@ -32,8 +32,8 @@ spec:
           linkerd.io/extension: viz
       podSelector: {}
   - ports:
-      - port: 80
-      - port: 443
+    - port: 80
+    - port: 443
   egress:
   - to:
     - ipBlock:

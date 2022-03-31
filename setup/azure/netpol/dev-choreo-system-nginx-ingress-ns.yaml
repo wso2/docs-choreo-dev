@@ -10,9 +10,7 @@ spec:
   podSelector: {}
   ingress: []
   egress: []
-
 ---
-
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -34,12 +32,11 @@ spec:
           linkerd.io/extension: viz
       podSelector: {}
   - ports:
-      - port: 80
-      - port: 443
+    - port: 80
+    - port: 443
   egress:
   - to:
     - ipBlock:
         cidr: 0.0.0.0/0
         except:
         - 169.254.169.254/32
-  
