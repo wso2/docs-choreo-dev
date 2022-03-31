@@ -48,6 +48,9 @@ public final class Constant {
     public static final String QUERY = "query";
     public static long COMPONENT_CREATE_TIMEOUT = 30000;
     public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
+
+    public static final String INSIGHTS_API_RESOURCE = "/insights/1.0.0/query-api";
+
     public enum displayType {
         restAPI,
         proxy,

@@ -10,10 +10,10 @@ spec:
      image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
      resources:
        limits:
-         cpu: '1.5'
+         cpu: '2.0'
          memory: 1Gi
        requests:
-         cpu: '1.0'
+         cpu: '1.5'
          memory: 1Gi
      tolerations:
       - effect: NoSchedule

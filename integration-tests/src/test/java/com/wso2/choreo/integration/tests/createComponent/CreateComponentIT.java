@@ -152,4 +152,40 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
                 .validate(json()
                     .ignore("$.message"))));
   }
+
+  @Test(dependsOnMethods = {"testCreatedComponentStatus"})
+  @CitrusTest
+  public void testDeleteRestApiComponent() throws JsonProcessingException  {
+    String graphqlQuery = "mutation { deleteComponentV2(" + 
+      "orgHandler: \""+ orgHandle + "\"," +
+      "componentId: \""+ componentId  + "\"," +
+      "projectId: \""+ projectId + "\"){ id }" +
+      "}";
+
+    HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+      {
+        put("query", graphqlQuery);
+      }
+    };
+    ObjectMapper objectMapper = new ObjectMapper();
+    String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+
+    $(http()
+            .client(choreoTestClient)
+            .send()
+            .post("/graphql")
+            .message()
+            .header(HttpHeaders.AUTHORIZATION, accessToken)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .body(requestBody)
+            .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+    $(http()
+            .client(choreoTestClient)
+            .receive()
+            .response(HttpStatus.OK)
+            .message()
+            .type(MessageType.JSON)
+            .body(new ClassPathResource("templates/createComponent/mutation_delete_component_success.json"))
+            .validate(json()));
+  }
 }

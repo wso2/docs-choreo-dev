@@ -26,6 +26,8 @@ export class RestAPITemplate {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);
+    cy.get('[data-cyid="create-api-from-scratch-next"]').click();
+    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
     Utils.saveProjectData();
   }
