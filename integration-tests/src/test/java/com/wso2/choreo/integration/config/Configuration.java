@@ -23,6 +23,9 @@ public class Configuration {
     public static final int TEST_CHOREO_ORG_ID = Integer.parseInt(System.getenv("TEST_CHOREO_ORG_ID"));
     public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");
 
+    public static final String INSIGHTS_ENDPOINT = System.getenv("INSIGHTS_ENDPOINT");
+    public static final String INSIGHTS_ONPREM_KEY = System.getenv("INSIGHTS_ONPREM_KEY");
+
     public static final class ALERT {
         public static final String MAIL_IMAP_PASS = System.getenv("ALERT_MAIL_IMAP_PASS");
         public static final String ORG_UUID = System.getenv("ALERT_ORG_UUID");
