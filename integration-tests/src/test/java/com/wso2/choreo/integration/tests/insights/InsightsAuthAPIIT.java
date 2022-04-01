@@ -14,22 +14,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
-import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
@@ -58,13 +40,7 @@ public class InsightsAuthAPIIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoInsightsTestClient;
 
     @BeforeClass
-    public void beforeClass()
-            throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
-            ComponentCreationStatusCheckException, ComponentDeploymentException,
-            ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
-            ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
-            NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException {
+    public void beforeClass() throws Exception {
         accessToken = Constant.BEARER_PREFIX.concat(Configuration.INSIGHTS_ONPREM_KEY);
     }
 
