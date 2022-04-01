@@ -28,6 +28,4 @@ public class Configuration {
         public static final String ORG_UUID = System.getenv("ALERT_ORG_UUID");
         public static final String RELEASE_ID = System.getenv("ALERT_RELEASE_ID");
     }
-
-    public static final String INSIGHTS_ALERT_ENVIRONMENT = System.getenv("INSIGHTS_ALERT_ENVIRONMENT");
 }
