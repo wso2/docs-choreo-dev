@@ -28,8 +28,6 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
 
-    Utils.saveProjectData();
-
     cy.get('[data-testid="delete-all-operations-btn"]', {
       timeout: 120000,
     }).should("be.visible");
@@ -76,8 +74,6 @@ export class RestAPIProxyTemplate {
     }
     cy.get("button>span").contains("Create").click();
     this.interceptValidate(); // workaround
-    Utils.saveProjectData();
-
   
     let resourceIdentifier = "resource-/intensity";
     if (validateResourceName) {

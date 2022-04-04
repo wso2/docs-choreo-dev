@@ -102,7 +102,7 @@ describe("Verify project creation functionality", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    ComponentDevelopPage.getVersion().should("eq", `Version ${API_VERSION}`);
+    ComponentDevelopPage.getVersion().should("eq", `Version ${API_NEW_VERSION}`);
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
     APIDevelop.addEndpoints();
   });

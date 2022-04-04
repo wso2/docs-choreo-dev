@@ -76,8 +76,6 @@ export class VSExplorer {
 
   static createNewBranch() {
     this.closeTab();
-    cy.wait(5000)
-    this.waitTillCodespaceLoad();
     this.enterCommandInTerminal("git branch feature", 2000);
     this.enterCommandInTerminal("git checkout feature", 2000);
   }
@@ -94,6 +92,7 @@ export class VSExplorer {
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
+    this.waitTillCodespaceLoad();
     this.createFile(fileName);
     this.selectExplorer();
     cy.contains(fileName).click();
