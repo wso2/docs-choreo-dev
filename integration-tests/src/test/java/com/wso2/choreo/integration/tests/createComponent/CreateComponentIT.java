@@ -159,7 +159,7 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
     String graphqlQuery = "mutation { deleteComponentV2(" + 
       "orgHandler: \""+ orgHandle + "\"," +
       "componentId: \""+ componentId  + "\"," +
-      "projectId: \""+ projectId + "\"){ id }" +
+      "projectId: \""+ projectId + "\"){ status }" +
       "}";
 
     HashMap<String, String> gqlRequestPayload = new HashMap<>() {

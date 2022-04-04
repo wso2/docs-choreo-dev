@@ -30,6 +30,8 @@ public final class Constant {
     public static final String TEST_PROJECT_NAME_PREFIX = "testproject";
     public static final String TEST_COMPONENT_NAME = "testcomponent";
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
+    public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
+    public static final String GITHUB_AUTH_HEADER_PREFIX = "token ";
 
     public static final String DEV_ENVIRONMENT = "dev";
 
@@ -44,6 +46,7 @@ public final class Constant {
     public static final String ID = "id";
     public static final String API_VALIDATE_ENDPOINT = "/api/am/publisher/v2/apis/validate";
     public static final String APIS_ENDPOINT = "/api/am/publisher/v2/apis";
+    public static final String GENERATE_KEY_ENDPOINT_SUFFIX = "/generate-key";
     public static final String ORGANIZATION_ID = "organizationId";
     public static final String QUERY = "query";
     public static long COMPONENT_CREATE_TIMEOUT = 30000;
