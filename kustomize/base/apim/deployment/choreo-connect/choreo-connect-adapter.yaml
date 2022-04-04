@@ -66,18 +66,6 @@ spec:
             - mountPath: /home/wso2/security/truststore/global-adapter.pem
               name: global-adapter-keystore-vol
               subPath: global-adapter.pem
-            - mountPath: /home/wso2/security/truststore/consul/consul-agent-ca.pem
-              name: secret-mgw-adapter-consul
-              readOnly: true
-              subPath: CONSUL_AGENT_CERTIFICATE
-            - mountPath: /home/wso2/security/truststore/consul/local-dc-client-consul-0-key.pem
-              name: secret-mgw-adapter-consul
-              readOnly: true
-              subPath: CONSUL_DC_CLIENT_KEY
-            - mountPath: /home/wso2/security/truststore/consul/local-dc-client-consul-0.pem
-              name: secret-mgw-adapter-consul
-              readOnly: true
-              subPath: CONSUL_DC_CLIENT_CERTIFICATE
             - mountPath: /home/wso2/conf
               name: adapter-config
             - name: secret-mgw
@@ -181,14 +169,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-truststore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-adapter-consul
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-adapter-consul
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-asb
