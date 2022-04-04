@@ -74,7 +74,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 /**
  * Alert API test cases.
  */
-public class AlertAPIIT extends TestNGCitrusSpringSupport {
+public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static String organization;
     private static String trafficAlertConfigurationId;
