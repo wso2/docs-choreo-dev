@@ -14,6 +14,7 @@
             <class name="com.wso2.choreo.integration.tests.createTrigger.CreateTriggerIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
+            <class name="com.wso2.choreo.integration.tests.insights.AlertAPIIT"/>
         </classes>
     </test>
 </suite>
