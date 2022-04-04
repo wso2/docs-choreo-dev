@@ -22,6 +22,12 @@ public class Configuration {
     public static final String TEST_CHOREO_ORG_HANDLE = System.getenv("TEST_CHOREO_ORG_HANDLE");
     public static final int TEST_CHOREO_ORG_ID = Integer.parseInt(System.getenv("TEST_CHOREO_ORG_ID"));
     public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");
+    public static final String GITHUB_ENDPOINT = System.getenv("GITHUB_ENDPOINT");
+    public static final String GITHUB_ORG = System.getenv("GITHUB_ORG");
+    public static final String GITHUB_PAT = System.getenv("GITHUB_PAT");;
+
+    public static final String INSIGHTS_ENDPOINT = System.getenv("INSIGHTS_ENDPOINT");
+    public static final String INSIGHTS_ONPREM_KEY = System.getenv("INSIGHTS_ONPREM_KEY");
 
     public static final class ALERT {
         public static final String MAIL_IMAP_PASS = System.getenv("ALERT_MAIL_IMAP_PASS");

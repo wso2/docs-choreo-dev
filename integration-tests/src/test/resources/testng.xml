@@ -13,6 +13,8 @@
             <class name="com.wso2.choreo.integration.tests.addConfigurations.AddConfigurationsIT"/>
             <class name="com.wso2.choreo.integration.tests.createTrigger.CreateTriggerIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
         </classes>
     </test>
 </suite>

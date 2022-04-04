@@ -51,11 +51,13 @@ CONTROLPLANE_APIM_INTERNAL_INGRESS_TLS_KEY_FILE_PATH=xxxxxxxxxxxxxxxxx
 Follow the following chart to obtain the required CERT and KEY files, for first time execution. 
 Proceed to store the file values in the CSI Key Vault for further reference
 
-| Cert/Key File Pair                   | First Execution          | CSI Key Vault Secret for reference                                                                          |
-|--------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------------|
-| Subscription Ingress                 | Obtain from DigiOps team | `subscription-ingress-TLS-KEY` <br/> `subscription-ingress-TLS-CERTIFICATE`                                 |
-| ControlPlane System Internal Ingress | Obtain from SecOps team  | `controlplane-system-internal-ingress-TLS-KEY` <br/> `controlplane-system-internal-ingress-TLS-CERTIFICATE` |
-| ControlPlane APIM Internal Ingress   | Obtain from SecOps team  | `controlplane-apim-internal-ingress-TLS-KEY` <br/> `controlplane-apim-internal-ingress-TLS-CERTIFICATE`     |
+| Cert/Key File Pair                      | First Execution          | CSI Key Vault Secret for reference                                                                      |
+|-----------------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------|
+| Subscription Ingress                    | Obtain from DigiOps team | `subscription-ingress-TLS-KEY` <br/> `subscription-ingress-TLS-CERTIFICATE`                             |
+| ControlPlane System Internal Ingress    | Obtain from SecOps team  | `controlplane-system-internal-ingress-TLS-KEY` <br/> `controlplane-system-internal-ingress-TLS-CERTIFICATE` |
+| ControlPlane APIM Internal Ingress      | Obtain from SecOps team  | `controlplane-apim-internal-ingress-TLS-KEY` <br/> `controlplane-apim-internal-ingress-TLS-CERTIFICATE` |
+| BCentral APIM Internal Ingress          | Obtain from SecOps team  | `bcentral-apim-internal-ingress-TLS-KEY` <br/> `bcentral-apim-internal-ingress-TLS-CERTIFICATE`         |
+| BCentral GlobalAdapter Internal Ingress | Obtain from SecOps team  | `bcentral-ga-internal-ingress-TLS-KEY` <br/> `bcentral-ga-internal-ingress-TLS-CERTIFICATE`       |
 
 ### Buoyant Cloud Setup
 > NOTE: Buoyant Cloud setup is required for Stage and Prod environments only
