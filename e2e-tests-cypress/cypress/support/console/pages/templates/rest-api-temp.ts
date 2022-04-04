@@ -28,6 +28,5 @@ export class RestAPITemplate {
     cy.get('[data-cyid="create-api-from-scratch-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
-    Utils.saveProjectData();
   }
 }

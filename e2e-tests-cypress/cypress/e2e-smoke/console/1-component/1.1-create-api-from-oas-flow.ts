@@ -55,8 +55,7 @@ describe("Choreo APIM publisher scenarios", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
+      PROJECT_DESCRIPTION
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
@@ -66,8 +65,7 @@ describe("Choreo APIM publisher scenarios", () => {
       API_BASE_PATH,
       "",
       "",
-      "",
-      FILE_ID
+      ""
     );
   });
 
@@ -105,7 +103,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
+      `${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
@@ -133,7 +131,7 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(
-      `${FILE_ID}${Environment.DEVELOPMENT}intensity`
+      `${Environment.DEVELOPMENT}intensity`
     ).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.status).equal(200);
@@ -160,7 +158,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify consumers", () => {
-    LoginPage.reLoginToChoreo(FILE_ID);
+    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectConsumers();
     ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");

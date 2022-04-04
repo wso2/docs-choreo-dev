@@ -23,6 +23,6 @@ export class TriggersTemplate {
     cy.get('[data-cyid="create-manual-trigger-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-cyid="btn-create-mannual-trigger"]').click();
-    Utils.saveProjectData();
+    // Utils.saveProjectData();
   }
 }

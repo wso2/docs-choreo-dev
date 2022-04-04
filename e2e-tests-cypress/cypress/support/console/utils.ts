@@ -111,17 +111,6 @@ export class Utils {
     });
   }
 
-  static saveProjectData() {
-    cy.intercept(`${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as(
-      "proj_create"
-    );
-    cy.wait("@proj_create", { timeout: 180000 }).then((intercept) => {
-      const { id, projectId } = intercept.response.body.data.createComponent;
-      Cypress.env(`component_id`, id);
-      Cypress.env(`projectId`, projectId);
-    });
-  }
-
   static sendPostRequest(url: string, headers, body) {
     const request = {
       method: "POST",

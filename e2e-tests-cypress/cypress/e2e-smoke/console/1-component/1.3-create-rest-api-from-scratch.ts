@@ -39,7 +39,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
   const NEW_BRANCH = "feature";
-  const API_NEW_VERSION = "1.1.0";
+  const API_NEW_VERSION = "1.1";
 
   before(() => {
     LoginPage.login();

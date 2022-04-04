@@ -19,7 +19,7 @@ export class ProjectOverviewPage {
 
   static addNewComponent() {
     cy.contains('Time to create your first component',{timeout:120000}).should('be.visible')
-    cy.get('button[class*="MuiButton-containedPrimary"]')
+    cy.get('.MuiContainer-root button')
       .should('be.visible')
       .click(); // Need to add a id for the Create button
   }
