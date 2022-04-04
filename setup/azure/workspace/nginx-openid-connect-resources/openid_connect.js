@@ -24,6 +24,21 @@ function auth(r) {
             r.return(500, r.variables.internal_error_message);
             return;
         }
+
+        // Check required parameters are passed
+        var requiredParams = ["state", "fidp"];
+        var missingRequiredParams = []
+        for (var i in requiredParams) {
+            if (!r.variables[requiredParams[i]] || r.variables[requiredParams[i]] == "") {
+                missingRequiredParams.push(requiredParams[i]);
+            }
+        }
+        if (missingRequiredParams.length) {
+            r.error("Missing required variables: "+ missingConfig.join(" "));
+            r.return(500, r.variables.internal_error_message);
+            return;
+        }
+
         // Redirect the client to the IdP login page with the cookies we need for state
         r.return(302, r.variables.oidc_authz_endpoint + getAuthZArgs(r));
         return;
@@ -258,7 +273,7 @@ function getAuthZArgs(r) {
         var pkce_code_challenge = c.createHash('sha256').update(pkce_code_verifier).digest('base64url');
         r.variables.pkce_code_verifier = pkce_code_verifier;
 
-        authZArgs += "&code_challenge_method=S256&code_challenge=" + pkce_code_challenge + "&state=" + r.variables.uuid;
+        authZArgs += "&code_challenge_method=S256&code_challenge=" + pkce_code_challenge + "&state=" + r.variables.uuid + "&fidp=" + r.variables.fidp ;
     } else {
         authZArgs += "&state=" + r.variables.uuid;
     }
