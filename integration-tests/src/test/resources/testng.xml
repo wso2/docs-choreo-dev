@@ -12,6 +12,7 @@
             <class name="com.wso2.choreo.integration.tests.deploy.DeployIT"/>
             <class name="com.wso2.choreo.integration.tests.addConfigurations.AddConfigurationsIT"/>
             <class name="com.wso2.choreo.integration.tests.createTrigger.CreateTriggerIT"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedComponent"/>
         </classes>
     </test>
 </suite>
