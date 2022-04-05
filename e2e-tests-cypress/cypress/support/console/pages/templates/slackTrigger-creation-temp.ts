@@ -18,7 +18,7 @@ export class TriggersTemplate {
     cy.get('[data-testid="project-template-list-webhook"]').click();
   }
 
-  static createSlackTriggerFromTemplate(webhookName: string, fileID: string) {
+  static createSlackTriggerFromTemplate(webhookName: string) {
     cy.get('input[name="webhookName"]').clear().type(webhookName);
     cy.get("#mui-component-select-triggerType").click();
     cy.get('[data-cyid="Slack"]').click();
@@ -27,7 +27,6 @@ export class TriggersTemplate {
     cy.get('[data-cyid="create-webhook-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-cyid="btn-create"]').click();
-    Utils.saveProjectData(fileID)
   }
 
 }

@@ -38,8 +38,7 @@ describe("Create proxy api using existing url", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
+      PROJECT_DESCRIPTION
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
@@ -49,8 +48,7 @@ describe("Create proxy api using existing url", () => {
       API_BASE_PATH,
       `${URL}/v2`,
       "1.0.0",
-      "pet",
-      FILE_ID
+      "pet"
     );
   });
 });

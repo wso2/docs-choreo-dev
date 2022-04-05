@@ -23,7 +23,7 @@ export class LoginPage {
       log: false,
     });
     cy.get('button[type="submit"]').click();
-      cy.intercept({
+    cy.intercept({
       method: "POST",
       url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
       times: 1,
@@ -37,8 +37,8 @@ export class LoginPage {
     });
   }
 
-  static reLoginToChoreo(fileID: string = "") {
-    const componentURL = Cypress.env(`${fileID}_componentURL`);
+  static reLoginToChoreo() {
+    const componentURL = Cypress.env(`componentURL`);
     cy.visit(componentURL);
     cy.intercept(componentURL).then(() => {
       cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
@@ -51,8 +51,8 @@ export class LoginPage {
     });
   }
 
-  static navigateToCodespace(fileID: string = "") {
-    cy.visit(Cypress.env(`${fileID}_accessURL`));
+  static navigateToCodespace() {
+    cy.visit(Cypress.env(`accessURL`));
   }
 
   static login() {
@@ -62,12 +62,23 @@ export class LoginPage {
     cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
     cy.get('button[type="submit"]').click();
 
-
     LoginPage.persistOrgs();
     LoginPage.persistApimToken();
     LoginPage.persistLogoutURL();
     LoginPage.persistCookies();
 
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
+    cy.url().then((url) => {
+      cy.log(url)
+      if (url.includes("sample=true")) {
+        const { handle } = Cypress.env("userData");
+        const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
+        cy.wait(5000)
+        cy.visit(tmpURL);
+      }
+    });
   }
 
   private static persistLogoutURL() {
@@ -82,6 +93,7 @@ export class LoginPage {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
     cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
+      cy.log(JSON.stringify(res.requestHeaders))
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
@@ -126,14 +138,14 @@ export class LoginPage {
   }
 
   private static persistApimToken() {
-    cy.intercept("POST", `${Cypress.env("appSvcURL")}/graphql`).as("gquery");
-    cy.wait("@gquery", { timeout: 150000 }).then((intercept) => {
+    cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("orgs");
+    cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       Cypress.env("apim_token", intercept.request.headers.authorization);
       const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
       GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
-      this.deleteOnPremKeys()
+      this.deleteOnPremKeys();
     });
   }
 
@@ -148,7 +160,9 @@ export class LoginPage {
       const keys = res.body as [];
       keys.forEach((key) => {
         let { handle } = key;
-        let revokeUrl = `${Cypress.env("appSvcURL")}/orgs/${orgHandle}/keys/${handle}/revoke`;
+        let revokeUrl = `${Cypress.env(
+          "appSvcURL"
+        )}/orgs/${orgHandle}/keys/${handle}/revoke`;
         Utils.sendPostRequest(revokeUrl, headers, {});
       });
     });

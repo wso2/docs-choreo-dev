@@ -40,11 +40,20 @@ public class EndpointConfig {
     }
 
     @Bean
-    public HttpClient choreoAlertTestClient() {
+    public HttpClient choreoCPTestClient() {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.ALERT.CHOREO_GW_HOST)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.CHOREO_CP_GW_ENDPOINT)
+                .build();
+    }
+
+    @Bean
+    public HttpClient choreoInsightsTestClient() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.INSIGHTS_ENDPOINT)
                 .build();
     }
 

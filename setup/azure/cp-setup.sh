@@ -83,20 +83,36 @@ command -v helm >/dev/null 2>&1 || {
     fi
 }
 
-############### Install Step Cli
-echo "--- Installing Step to generate Keys..."
-step_installed="true"
-command -v step >/dev/null 2>&1 || {
-    step_installed="false"
+################ Install Step Cli
+#echo "--- Installing Step to generate Keys..."
+#step_installed="true"
+#command -v step >/dev/null 2>&1 || {
+#    step_installed="false"
+#    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+#        wget https://github.com/smallstep/cli/releases/download/v0.14.6/step-cli_0.14.6_amd64.deb -O /tmp/step-cli_0.14.6_amd64.deb
+#        sudo dpkg -i /tmp/step-cli_0.14.6_amd64.deb
+#        step_installed="true"
+#    elif [[ "$OSTYPE" == "darwin"* ]]; then
+#        brew install step
+#        step_installed="true"
+#    else
+#        echo "Could not install step. Unsupported operating system. Please manually install it.."
+#    fi
+#}
+
+############### Install Helm 3
+echo "--- Installing LinkerD CLI..."
+linkerd_installed="true"
+command -v linkerd >/dev/null 2>&1 || {
+    linkerd_installed="false"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        wget https://github.com/smallstep/cli/releases/download/v0.14.6/step-cli_0.14.6_amd64.deb -O /tmp/step-cli_0.14.6_amd64.deb
-        sudo dpkg -i /tmp/step-cli_0.14.6_amd64.deb
-        step_installed="true"
+        curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | bash
+        linkerd_installed="true"
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install step
-        step_installed="true"
+        brew install linkerd
+        linkerd_installed="true"
     else
-        echo "Could not install step. Unsupported operating system. Please manually install it.."
+        echo "Could not install linkerd cli. Unsupported operating system. Please manually install it.."
     fi
 }
 
@@ -116,6 +132,10 @@ helm install \
 
 echo "--- Creating secrets for DNS-01 challenge..."
 kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
+
+############### Install Linkerd2
+echo "--- Installing linkerd2... "
+linkerd install --ha | kubectl apply -f -
 
 ############### Install Linkerd2 using Helm 3
 #echo "--- Creating namespace for linkerd..."
@@ -206,6 +226,9 @@ bash controlplane/install-nginx-ingress.sh
 echo "--- Enable HPA for Ingress Controller"
 kubectl apply -f ingress/hpa.yaml
 
+echo "--- Enable PDB for Cert Manager"
+kubectl apply -f cert-manager/pdb.yaml
+
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
 if [[ -r ${azuredfile} ]]
@@ -229,7 +252,11 @@ if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"
     helm3_installed=false
 fi
-if [[ "${step_installed}" == "false" ]]; then
-    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
-    step_installed=false
+if [[ "${linkerd_installed}" == "false" ]]; then
+    echo "[FAILED] linkerd cli installation. See https://linkerd.io/2.11/getting-started/"
+    linkerd_installed=false
 fi
+#if [[ "${step_installed}" == "false" ]]; then
+#    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"
+#    step_installed=false
+#fi

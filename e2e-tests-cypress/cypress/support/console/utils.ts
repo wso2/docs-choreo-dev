@@ -105,20 +105,9 @@ export class Utils {
     });
   }
 
-  static saveComponentURL(testKey="") {
+  static saveComponentURL() {
     cy.url().then((url) => {
-      Cypress.env(`${testKey}_componentURL`, url);
-    });
-  }
-
-  static saveProjectData(testKey="") {
-    cy.intercept(Cypress.env("appSvcURL") + "/graphql").as("proj_create");
-    cy.wait("@proj_create", { timeout: 180000 }).then((intercept) => {
-
-      const { id, projectId } = intercept.response.body.data.createComponent;
-      Cypress.env(`${testKey}_component_id`, id);
-      Cypress.env(`${testKey}_projectId`, projectId);
-      
+      Cypress.env(`componentURL`, url);
     });
   }
 
@@ -144,7 +133,6 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status });
     });
   }
-
 
   static sendDeleteRequest(url: string, headers: any = {}) {
     const request = {

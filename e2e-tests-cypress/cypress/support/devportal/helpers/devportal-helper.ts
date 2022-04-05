@@ -21,8 +21,7 @@ export class DevPortalHelper {
   static createDeployComponent(API_Name) {
     ProjectListingPage.createNewProject(
       DevPortalHelper.PROJECT_NAME,
-      DevPortalHelper.PROJECT_DESCRIPTION,
-      DevPortalHelper.FILE_ID
+      DevPortalHelper.PROJECT_DESCRIPTION
     );
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
@@ -32,8 +31,7 @@ export class DevPortalHelper {
       DevPortalHelper.API_BASE_PATH,
       "",
       "",
-      "",
-      DevPortalHelper.FILE_ID
+      ""
     );
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();

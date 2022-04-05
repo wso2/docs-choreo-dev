@@ -26,7 +26,7 @@ export class ComponentListingPage {
   }
 
   private static verifyDeletion() {
-    cy.intercept("POST", `${Cypress.env("appSvcURL")}/graphql`).as("delete");
+    cy.intercept("POST", `${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as("delete");
     cy.wait("@delete", { timeout: 180000 }).then((i) => {
       const { status, canDelete } = i.response.body.data["deleteComponentV2"];
       expect(status).equal("success");

@@ -89,4 +89,9 @@ describe("Schedule task", () => {
     ComponentObservePage.gotoLogs(LONG_TIME);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT).should('be.true')
   });
+  
+  it("Verify application suspension",()=>{
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment()
+  })
 });

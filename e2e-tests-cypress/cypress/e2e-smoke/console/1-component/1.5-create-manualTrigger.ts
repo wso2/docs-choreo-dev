@@ -27,7 +27,7 @@ import { Utils } from "../../../support/console/utils";
 
 describe("Verify manual trigger creation functionality", () => {
   const MANUAL_NAME = Utils.generateComponentName("ManualTrigger");
-  const FILE_ID = "manualTrigger";
+
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
   before(() => {
@@ -40,13 +40,12 @@ describe("Verify manual trigger creation functionality", () => {
   it("Verify manual trigger component creation", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
+      PROJECT_DESCRIPTION
     );
     ProjectOverviewPage.addNewComponent();
     TriggersTemplate.selectManualTriggerTemplate();
-    TriggersTemplate.createManualTriggerFromTemplate(MANUAL_NAME, FILE_ID);
-    ComponentDevelopPage.getComponentURL(FILE_ID);
+    TriggersTemplate.createManualTriggerFromTemplate(MANUAL_NAME);
+    ComponentDevelopPage.getComponentURL();
   });
 
   it("Verify component deployment", () => {

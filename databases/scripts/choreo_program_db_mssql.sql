@@ -36,6 +36,8 @@ CREATE TABLE [dbo].[program](
     GO
 ALTER TABLE dbo.program ADD release_id varchar(255) DEFAULT NULL NULL
     GO
+ALTER TABLE dbo.program ADD to_delete BIT DEFAULT 0 NOT NULL
+    GO
 /****** Object:  Table [dbo].[version]    Script Date: 9/10/2021 7:36:09 AM ******/
     SET ANSI_NULLS ON
     GO
@@ -121,6 +123,9 @@ ALTER TABLE [dbo].[program]  WITH CHECK ADD  CONSTRAINT [program$fk_last_version
     REFERENCES [dbo].[version] ([id])
     GO
 ALTER TABLE [dbo].[program] CHECK CONSTRAINT [program$fk_last_version_id]
+    GO
+ALTER TABLE [dbo].[version] WITH CHECK ADD CONSTRAINT [version$program_id] FOREIGN KEY([program_id])
+    REFERENCES [dbo].[program] ([id]) ON DELETE CASCADE
     GO
 /****** Object:  StoredProcedure [dbo].[DeleteVersion]    Script Date: 9/10/2021 7:36:09 AM ******/
     SET ANSI_NULLS ON
