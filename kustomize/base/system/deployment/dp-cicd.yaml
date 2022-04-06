@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         choreo.component: dp-cicd
+        antiaffinity: dp-cicd
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -41,7 +42,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-cicd
-          env:  
+          env:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -104,3 +105,15 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-cicd
+              topologyKey: kubernetes.io/hostname

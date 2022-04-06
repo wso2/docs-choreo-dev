@@ -18,6 +18,7 @@ spec:
         linkerd.io/inject: enabled
       labels:
         choreo.component: dp-kv-resolver
+        antiaffinity: dp-kv-resolver
     spec:
       automountServiceAccountToken: true
       securityContext:
@@ -98,26 +99,26 @@ spec:
           env:
           - name: AZURE_KEYVAULT_CLIENT_ID
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-kv-resolver
                 key: AZURE_KEYVAULT_CLIENT_ID
                 optional: true
           - name: AZURE_KEYVAULT_CLIENT_SECRET
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-kv-resolver
                 key: AZURE_KEYVAULT_CLIENT_SECRET
                 optional: true
           - name: AZURE_KEYVAULT_TENANT_ID
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-kv-resolver
                 key: AZURE_KEYVAULT_TENANT_ID
                 optional: true
           volumeMounts:
             - name: secret-dp-kv-resolver
               mountPath: /mnt/csi/secret-dp-kv-resolver
-              readonly: true     
+              readonly: true
       volumes:
         - name: secret-dp-kv-resolver
           csi:
@@ -130,3 +131,15 @@ spec:
       restartPolicy: Always
       serviceAccountName: dp-kv-resolver-controller-manager
       terminationGracePeriodSeconds: 10
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-kv-resolver
+              topologyKey: kubernetes.io/hostname

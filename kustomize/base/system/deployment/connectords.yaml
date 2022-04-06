@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         choreo.component: connectords
+        antiaffinity: connectords
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -52,23 +53,23 @@ spec:
             drop:
             - all
         readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: health
-             path: /health
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: health
+            path: /health
         livenessProbe:
-            initialDelaySeconds: 10
-            timeoutSeconds: 15
-            periodSeconds: 30
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: health
-             path: /health
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: health
+            path: /health
         ports:
         - containerPort: 9090
           name: cds-sport
@@ -93,3 +94,15 @@ spec:
       - configMap:
           name: cm-connectords
         name: bal-config-volume
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - connectords
+              topologyKey: kubernetes.io/hostname

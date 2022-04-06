@@ -42,7 +42,20 @@ spec:
       labels:
         deployment: choreo-nginx
         choreo.component: nginx
+        antiaffinity: choreo-nginx-deployment
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-nginx-deployment
+              topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500
@@ -53,8 +66,8 @@ spec:
       containers:
         - name: nginx
           envFrom:
-          - configMapRef:
-              name: redis-config
+            - configMapRef:
+                name: redis-config
           env:
             - name: REDIS_HOST
               valueFrom:
@@ -95,7 +108,9 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: [ "sh", "init.sh" ]
+                command:
+                  - sh
+                  - init.sh
           securityContext:
             runAsNonRoot: true
             runAsUser: 10500
@@ -105,7 +120,8 @@ spec:
             capabilities:
               drop:
                 - all
-              add: ["NET_RAW"]
+              add:
+                - NET_RAW
           ports:
             - containerPort: 8080
           resources:
@@ -171,7 +187,8 @@ spec:
             capabilities:
               drop:
                 - all
-              add: ["NET_RAW"]
+              add:
+                - NET_RAW
           resources:
             requests:
               memory: "64Mi"
@@ -180,8 +197,8 @@ spec:
               memory: "128Mi"
               cpu: "512m"
           volumeMounts:
-          - name: redis-subscribe-folder
-            mountPath: /redis
+            - name: redis-subscribe-folder
+              mountPath: /redis
       volumes:
       - name: redis-subscribe-folder
         emptyDir: {}

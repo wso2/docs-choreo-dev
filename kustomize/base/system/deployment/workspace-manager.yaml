@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         choreo.component: workspace-manager
+        antiaffinity: workspace-manager
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -56,11 +57,16 @@ spec:
           name: grpc-port
         readinessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+            command:
+            - "/bin/grpc_health_probe"
+            - "-addr=:8080"
           initialDelaySeconds: 5
         livenessProbe:
           exec:
-            command: ["/bin/sh", "-c", "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"]
+            command:
+            - "/bin/sh"
+            - "-c"
+            - "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"
           initialDelaySeconds: 20
         resources:
           limits:
@@ -135,3 +141,15 @@ spec:
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-workspace-manager
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - workspace-manager
+              topologyKey: kubernetes.io/hostname

@@ -22,9 +22,22 @@ spec:
     metadata:
       labels:
         choreo.component: apim-devportal
+        antiaffinity: apim-devportal-deployment
       annotations:
         linkerd.io/inject: enabled
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - apim-devportal-deployment
+              topologyKey: kubernetes.io/hostname
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -40,12 +53,13 @@ spec:
             capabilities:
               drop:
                 - all
-              add: ["NET_RAW"]
+              add:
+                - NET_RAW
             readOnlyRootFilesystem: true
           name: apim-devportal
           envFrom:
-          - configMapRef:
-              name: cm-feature-flags
+            - configMapRef:
+                name: cm-feature-flags
           readinessProbe:
             initialDelaySeconds: 15
             timeoutSeconds: 15
@@ -89,7 +103,7 @@ spec:
           configMap:
             name: choreo-apim-devportal-conf
         - name: devportal-var-cache-dir
-          emptyDir: {}
+          emptyDir: { }
         - name: devportal-var-run-dir
-          emptyDir: {}
+          emptyDir: { }
       serviceAccountName: sa-choreo-apim
