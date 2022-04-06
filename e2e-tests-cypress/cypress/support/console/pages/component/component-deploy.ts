@@ -13,7 +13,7 @@
 
 export class ComponentDeployPage {
   static deploy() {
-    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 120000 })
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
       .should("be.enabled")
       .click();
   }
@@ -68,7 +68,7 @@ export class ComponentDeployPage {
   }
 
   static promoteToProd() {
-    cy.get('[data-cyid*="promote"]', { timeout: 120000 })
+    cy.get('[data-cyid*="promote"]', { timeout: 180000 })
       .should("be.visible")
       .click();
 
