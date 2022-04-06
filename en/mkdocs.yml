@@ -66,6 +66,8 @@ nav:
      # - API Security: manage/api-security.md
      # - API Lifecycle: manage/api-lifecycle.md
       - Developer Portal: manage/developer-portal.md
+      - Advanced Topics:
+        - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
@@ -78,7 +80,6 @@ nav:
      - Root Cause Analysis: observability/root-cause-analysis.md
   - References:
      - Performance Analysis: references/performance-analysis.md
-     - Connect to an External Identity Provider: references/connect-to-an-external-identity-provider.md
 # - Choreo DevOps: devops/overview.md
 # Extensions
 markdown_extensions:
