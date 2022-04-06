@@ -39,7 +39,7 @@ spec:
             allowPrivilegeEscalation: false
             runAsUser: 11000
             runAsGroup: 12000
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: ture
             capabilities:
               drop:
                 - ALL
@@ -123,8 +123,8 @@ spec:
               secretProviderClass: secret-billing
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - emptyDir: {}
-          name: tmp
+        - name: tmp
+          emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
