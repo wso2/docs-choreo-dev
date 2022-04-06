@@ -29,12 +29,12 @@ function auth(r) {
         var requiredParams = ["state", "fidp"];
         var missingRequiredParams = []
         for (var i in requiredParams) {
-            if (!r.variables[requiredParams[i]] || r.variables[requiredParams[i]] == "") {
+            if (!r.variables[requiredParams[i]] || r.variables[requiredParams[i]] === "") {
                 missingRequiredParams.push(requiredParams[i]);
             }
         }
         if (missingRequiredParams.length) {
-            r.error("Missing required variables: "+ missingConfig.join(" "));
+            r.error("Missing required variables: "+ missingRequiredParams.join(" "));
             r.return(500, r.variables.internal_error_message);
             return;
         }
