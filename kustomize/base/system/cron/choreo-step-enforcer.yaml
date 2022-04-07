@@ -1,11 +1,11 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: step-enforcer
   labels:
     choreo.component: step-enforcer
 spec:
-  schedule: 0 * * * *
+  schedule: "10,25,40,55 * * * *"
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
   jobTemplate:
