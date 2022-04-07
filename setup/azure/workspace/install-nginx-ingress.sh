@@ -11,10 +11,14 @@ kubectl label namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" purp
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" linkerd.io/inject=enabled
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
 
+helm repo add nginx-stable https://helm.nginx.com/stable
+helm repo update
+
 echo "--- Installing Workspace Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
 
 helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingress \
+  --version 0.11.3 \
   --namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/nginx-plus-ingress" \
   --set controller.replicaCount=2 \
@@ -29,6 +33,7 @@ helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingre
   --set controller.resources.limits."memory"=1Gi \
   --set controller.ingressClass="${WORKSPACE_INGRESS_NAMESPACE}-nginx" \
   --set controller.enableSnippets=true \
+  --set controller.wildcardTLS.secret="cert-manager/${ENV}-choreo-workspace-wildcard-tls" \
   --set-string controller.config.server-tokens=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=\"true\"" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
