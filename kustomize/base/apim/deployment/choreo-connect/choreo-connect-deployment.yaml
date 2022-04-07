@@ -66,17 +66,18 @@ spec:
         - name: choreo-connect-enforcer
           volumeMounts:
             - mountPath: /home/wso2/security/truststore/wso2carbon.pem
-              name: secret-mgw-enforcer-truststore
+              name: enforcer-truststore
               readOnly: true
-              subPath: ADAPTER_CONNECTION_CERTIFICATE
-            - name: enforcer-truststore
-              mountPath: /home/wso2/security/truststore/publisher-truststore.pem
+              subPath: wso2carbon.pem
+            - mountPath: /home/wso2/security/truststore/publisher-truststore.pem
+              name: enforcer-truststore
+              readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: secret-mgw-enforcer-truststore
+              name: enforcer-truststore
               readOnly: true
-              subPath: ENFORCER_TRUSTSTORE_CERTIFICATE
-            - name: enforcer-km-public-cert
+              subPath: mg.pem
+            - name: enforcer-truststore
               mountPath: /home/wso2/security/truststore/apim-service-root.pem
               subPath: apim-service-root.pem
             - mountPath: /home/wso2/security/keystore/mg.key
@@ -274,9 +275,6 @@ spec:
         - name: enforcer-config
           configMap:
             name: mgw-adapter-enforcer-conf
-        - name: enforcer-km-public-cert
-          configMap:
-            name: mgw-keymanager-public-cert
         - name: secret-mgw-enforcer-keystore
           csi:
             driver: secrets-store.csi.k8s.io
@@ -291,14 +289,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-enforcer-jwt-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-enforcer-truststore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-enforcer-truststore
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-mgw-router-keystore
