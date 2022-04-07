@@ -39,9 +39,7 @@ export class ComponentObservePage {
 
 
   static navigateToSampleApp() {
-    const observabilityViewUrl =
-      Cypress.env("baseUrl") +
-      "/observe/sample";
+    const observabilityViewUrl = Cypress.env("baseUrl") + "/observe/sample";
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
