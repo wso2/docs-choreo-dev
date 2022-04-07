@@ -1,0 +1,16 @@
+{
+  "tenant":"carbon.super",
+  "environment":"XXXXXXXXXX",
+  "organization":"XXXXXXXXXX",
+  "alertConfiguration":{
+    "id":"XXXXXXXXXX",
+    "apiName":"XXXXXXXXXX",
+    "apiVersion":"1.0.0",
+    "threshold":255,
+    "emails":[
+      "choreo-integration-test-user-dev@wso2.com"
+    ],
+    "category":"LATENCY",
+    "metric":"RESPONSE_LATENCY"
+  }
+}

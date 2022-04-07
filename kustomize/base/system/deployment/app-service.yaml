@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         choreo.component: app-service
+        antiaffinity: app-service
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -124,23 +125,6 @@ spec:
             secretKeyRef:
               name: secret-runtime
               key: APIM_CLIENT_SECRET
-        # temporary: migration-related configs start
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: secret-app-deployer
-              key: GITHUB_TOKEN
-        - name: IDP_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: secret-idp
-              key: IDP_CLIENT_SECRET
-        - name: MIGRATION_IDP_USER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-app-service
-              key: MIGRATION_IDP_USER_PASSWORD
-        # temporary: migration-related configs end
         envFrom:
         - configMapRef:
             name: env-app-service
@@ -149,11 +133,16 @@ spec:
           name: grpc-port
         readinessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+            command:
+            - /bin/grpc_health_probe
+            - -addr=:8080
           initialDelaySeconds: 5
         livenessProbe:
           exec:
-            command: ["/bin/sh", "-c", "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"]
+            command:
+            - "/bin/sh"
+            - "-c"
+            - "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"
           initialDelaySeconds: 20
         resources:
           limits:
@@ -204,11 +193,6 @@ spec:
         - name: secret-runtime
           mountPath: "/mnt/csi/secret-runtime"
           readOnly: true
-        # temporary: migration-related configs start
-        - name: secret-app-deployer
-          mountPath: "/mnt/csi/secret-app-deployer"
-          readOnly: true
-        # temporary: migration-related configs end
       volumes:
       - name: config
         configMap:
@@ -293,14 +277,16 @@ spec:
             secretProviderClass: secret-runtime
           nodePublishSecretRef:
             name: csi-secret-store-azure
-      # temporary: migration-related configs start
-      - name: secret-app-deployer
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-app-deployer
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      # temporary: migration-related configs end
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - app-service
+              topologyKey: kubernetes.io/hostname

@@ -31,7 +31,20 @@ spec:
     metadata:
       labels:
         choreo.component: global-adapter-health-check-client
+        antiaffinity: global-adapter-health-check-client
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - global-adapter-health-check-client
+              topologyKey: kubernetes.io/hostname
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -42,8 +55,7 @@ spec:
         - name: secret-asb
           mountPath: /mnt/csi/secret-asb
           readOnly: true
-        image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:latest
-        imagePullPolicy: Always
+        image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:invalid
         securityContext:
           runAsNonRoot: true
           runAsUser: 10500

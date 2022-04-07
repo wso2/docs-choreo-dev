@@ -16,18 +16,11 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 
 describe("Observability tests", () => {
-  const FILE_ID = "observability";
-  before(()=>{
-    LoginPage.login()
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
-
-
-  it("Deploy sample App", () => {
-    const obsUrlRegexMatch = ComponentObservePage.deploySampleApp();
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
   });
 
   it("Test logs view", () => {
@@ -44,6 +37,4 @@ describe("Observability tests", () => {
     ComponentObservePage.navigateToSampleApp();
     ComponentObservePage.verifyDiagnosticView();
   });
-
-
 });

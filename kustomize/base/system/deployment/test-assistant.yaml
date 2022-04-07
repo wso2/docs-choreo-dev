@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         choreo.component: test-assistant
+        antiaffinity: test-assistant
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -53,8 +54,9 @@ spec:
           runAsGroup: 10500
           capabilities:
             drop:
-              - all
-            add: [ "NET_RAW" ]
+            - all
+            add:
+            - NET_RAW
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
         name: test-assistant
@@ -101,8 +103,9 @@ spec:
           runAsGroup: 10500
           capabilities:
             drop:
-              - all
-            add: [ "NET_RAW" ]
+            - all
+            add:
+            - NET_RAW
       volumes:
       - name: test-assistant-models
         emptyDir: {}
@@ -122,3 +125,15 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - test-assistant
+              topologyKey: kubernetes.io/hostname

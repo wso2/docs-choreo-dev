@@ -20,6 +20,7 @@ spec:
     metadata:
       labels:
         choreo.component: connector-builder
+        antiaffinity: connector-builder
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -80,6 +81,17 @@ spec:
       volumes:
         - emptyDir: {}
           name: tmp
-
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - connector-builder
+              topologyKey: kubernetes.io/hostname

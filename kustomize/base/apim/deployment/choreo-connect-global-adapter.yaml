@@ -32,7 +32,20 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-global-adapter
+        antiaffinity: choreo-connect-global-adapter
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-connect-global-adapter
+              topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500

@@ -44,9 +44,9 @@ spec:
           env:
             - name: DB_PASSWORD
               valueFrom:
-                secretKeyRef: 
+                secretKeyRef:
                   key: DB_PASSWORD
-                  name: secret-dp-cloud-manager       
+                  name: secret-dp-cloud-manager
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
@@ -94,3 +94,15 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-cloud-manager
+              topologyKey: kubernetes.io/hostname

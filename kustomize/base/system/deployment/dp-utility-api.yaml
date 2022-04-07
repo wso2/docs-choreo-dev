@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         choreo.component: dp-utility-api
+        antiaffinity: dp-utility-api
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -62,3 +63,15 @@ spec:
                 - all
               add: [ "NET_RAW" ]
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-utility-api
+              topologyKey: kubernetes.io/hostname

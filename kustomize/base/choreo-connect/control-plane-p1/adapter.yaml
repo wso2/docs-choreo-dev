@@ -11,18 +11,31 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-adapter-control-plane-p1
+        antiaffinity: choreo-connect-adapter-control-plane-p1
     spec:
-     containers:
-       - name: choreo-connect-adapter
-         env:
-         - name: localLabel
-           value: control-plane-p1
-         - name: environmentLabel
-           value: control-plane
-     volumes:
+      containers:
+        - name: choreo-connect-adapter
+          env:
+            - name: localLabel
+              value: control-plane-p1
+            - name: environmentLabel
+              value: control-plane
+      volumes:
         - name: global-adapter-keystore-vol
           configMap:
             name: global-adapter-keystore-vol
         - name: adapter-config
           configMap:
             name: mgw-ga-cp-adapter-conf
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-connect-adapter-control-plane-p1
+              topologyKey: kubernetes.io/hostname

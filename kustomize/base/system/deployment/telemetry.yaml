@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         choreo.component: telemetry
+        antiaffinity: telemetry
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -70,17 +71,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: REDIS_PORT
-              name: cm-negotiator
+              name: cm-telemetry
         - name: REDIS_SSL
           valueFrom:
             configMapKeyRef:
               key: REDIS_SSL
-              name: cm-negotiator
+              name: cm-telemetry
         - name: REDIS_DATABASE
           valueFrom:
             configMapKeyRef:
               key: REDIS_DATABASE
-              name: cm-negotiator
+              name: cm-telemetry
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -117,23 +118,23 @@ spec:
           name: healthz
           protocol: TCP
         readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 15
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: health
-             path: /readiness
+          initialDelaySeconds: 5
+          timeoutSeconds: 15
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: health
+            path: /readiness
         livenessProbe:
-            initialDelaySeconds: 10
-            timeoutSeconds: 15
-            periodSeconds: 30
-            failureThreshold: 3
-            successThreshold: 1
-            httpGet:
-             port: health
-             path: /liveness
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+          httpGet:
+            port: health
+            path: /liveness
         resources:
           limits:
             cpu: 500m
@@ -160,3 +161,15 @@ spec:
             name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - telemetry
+              topologyKey: kubernetes.io/hostname

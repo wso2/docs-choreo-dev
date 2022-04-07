@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         choreo.component: sys-obsapi
+        antiaffinity: sys-obsapi
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -135,3 +136,15 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - sys-obsapi
+              topologyKey: kubernetes.io/hostname

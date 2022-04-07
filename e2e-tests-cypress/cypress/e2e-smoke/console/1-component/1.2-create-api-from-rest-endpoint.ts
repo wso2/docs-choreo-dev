@@ -25,7 +25,6 @@ import { APIDeployment } from "../../../support/console/pages/apis/api-deploymen
 import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
-import { RandomTextGenerator } from "../../../support/console/pages/component/common/random-text-generator";
 import { Utils } from "../../../support/console/utils";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
@@ -34,7 +33,6 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-
 
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
@@ -49,36 +47,26 @@ describe("Verify project creation functionality", () => {
   const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const FILE_ID = "apirestep";
   const idpUser = "choreoe2etest";
 
-
-
-  before(()=>{
-    LoginPage.login()
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
+  before(() => {
+    LoginPage.login();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Verify Rest API creation from existing endpoint", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.designNewRestApi(
       API_NAME,
       API_VERSION,
       API_BASE_PATH,
-      API_ENDPOINT,
-      FILE_ID
+      API_ENDPOINT
     );
     APIDevelop.addResources(OPERATION_USERS, HTTPMethod.GET);
-    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
@@ -113,13 +101,9 @@ describe("Verify project creation functionality", () => {
 
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentOverviewPage.createNewVersion(API_NEW_VERSION);
-    ComponentDevelopPage.getVersion().should(
-      "eq",
-      "Version " + API_NEW_VERSION
-    );
+    ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
+    ComponentDevelopPage.getVersion().should("eq", `Version ${API_NEW_VERSION}`);
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
-    cy.wait(3000);
     APIDevelop.addEndpoints();
   });
 
@@ -127,13 +111,12 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
-
   });
 
-  it("Promote to Prod",()=>{
+  it("Promote to Prod", () => {
     APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
-  })
+  });
 
   it("Test in dev", () => {
     APITest.testAPI();
@@ -165,18 +148,18 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-it("Verify api invoke urls",()=>{
-  ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-  Apis.verifyAPIname().should("eq", API_NAME);
-  Apis.getInvokeUrl().then(urls=>{
-    expect(urls).have.lengthOf(2)
-    expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`))
-    expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`))
-  })
-})
+  it("Verify api invoke urls", () => {
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    Apis.verifyAPIname().should("eq", API_NAME);
+    Apis.getInvokeUrl().then((urls) => {
+      expect(urls).have.lengthOf(2);
+      expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`));
+      expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`));
+    });
+  });
 
   it("Test in devportal", () => {
-    Apis.searchApiAndSelect(API_NAME,2);
+    Apis.searchApiAndSelect(API_NAME, 2);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
@@ -184,15 +167,12 @@ it("Verify api invoke urls",()=>{
     TryOut.SelectResource(null, OPERATION_USERS);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
-    cy.wait(5000);
     TryOut.GetResponse();
   });
 
-
-  it("Verify application suspension",()=>{
-    LoginPage.reLoginToChoreo(FILE_ID);
+  it("Verify application suspension", () => {
+    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
-  })
-
+    ComponentDeployPage.stopAllDeployment();
+  });
 });
