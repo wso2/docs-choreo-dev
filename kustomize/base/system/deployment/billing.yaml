@@ -5,7 +5,6 @@ metadata:
     reloader.stakater.com/auto: "true"
     seccomp.security.alpha.kubernetes.io/pod: "docker/default"
     checkov.io/skip1: CKV_K8S_38=Required by linkerd
-    checkov.io/skip2: CKV_K8S_22=Ballerina grpc client limitation
   labels:
     choreo.component: billing
   name: billing
@@ -40,7 +39,7 @@ spec:
             allowPrivilegeEscalation: false
             runAsUser: 11000
             runAsGroup: 12000
-            readOnlyRootFilesystem: false
+            readOnlyRootFilesystem: ture
             capabilities:
               drop:
                 - ALL
@@ -112,6 +111,8 @@ spec:
               mountPath: /home/ballerina/security/subscription.dev.rootasgardeo.internal.crt
               subPath: BAL_CERT
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
       restartPolicy: Always
       volumes:
         - name: secret-billing
@@ -122,6 +123,8 @@ spec:
               secretProviderClass: secret-billing
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: tmp
+          emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
