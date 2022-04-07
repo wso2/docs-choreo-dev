@@ -37,36 +37,11 @@ export class ComponentObservePage {
     });
   }
 
-  static deploySampleApp() {
-    cy.visit(Cypress.env("baseUrl") + "/observability");
-
-    cy.get('[data-testid="btn-observability-try-sample"]')
-      .should("be.visible")
-      .click();
-
-    cy.url()
-      .should("contain", "/observe/app/")
-      .then((url) => {
-        const obsUrlRegexMatch = url.match(this.obsUrlRegexp);
-
-        expect(obsUrlRegexMatch).to.have.lengthOf(3);
-
-        let obsId = obsUrlRegexMatch[1];
-        let version = obsUrlRegexMatch[2];
-
-        Cypress.env(`obsSampleId`, obsId);
-        Cypress.env(`obsSampleVersion`, version);
-      });
-  }
 
   static navigateToSampleApp() {
     const observabilityViewUrl =
       Cypress.env("baseUrl") +
-      "/observe/app/" +
-      Cypress.env(`obsSampleId`) +
-      "/" +
-      Cypress.env(`obsSampleVersion`) +
-      "?isSample=true";
+      "/observe/sample";
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
@@ -75,24 +50,27 @@ export class ComponentObservePage {
   static verifyLogsView() {
     const connectionErrorLogEntry = "error while connecting to the hr-service";
     const employeeInfoNotFoundLogEntry = "No logs found from";
-    const systemLogEntry = "ballerina: started publishing metrics to Choreo";
+    const commonLogLine = "employee information not found in the hr-service";
     // const downloadedLogEntry = '[INFO] [ballerina/http] started HTTP/WS listener 0.0.0.0:8090'
 
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible");
     cy.get('[data-testid="panel-Logs-btn"]').click();
 
-    cy.log("Asserting mandatory log entry without any filter");
-    cy.contains('[data-testid="log-panel"]', systemLogEntry).should("exist");
+    cy.log("Asserting mandatory log entry with part of the search phrase");
+    cy.get('#log-search').should("be.visible");
+    cy.get('#log-search').type(commonLogLine.substring(0, 13));
+    cy.get('[data-testid="log-search-btn"]').click();
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should("exist");
 
     cy.log("Asserting mandatory log entry by providing a search phrase");
-    cy.get('[data-testid="log-search"]').type(systemLogEntry);
+    cy.get('[data-testid="log-search"]').clear();
+    cy.get('[data-testid="log-search"]').type(commonLogLine);
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel"]', systemLogEntry).should("exist");
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should("exist");
     cy.contains(
       '[data-testid="log-panel"]',
       employeeInfoNotFoundLogEntry
     ).should("not.exist");
-
     // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4058 is fixed
     // cy.log('Asserting log download');
     // cy.get('[data-testid="log-search"]').click().clear().type("ballerina");
@@ -225,7 +203,6 @@ export class ComponentObservePage {
         }
         cy.get('[data-testid="time-interval-5"]').should("not.exist");
         cy.get('[data-testid="logs-partition-5"]').should("not.exist");
-
         cy.log("Verifying whether all the graphs are rendered");
         cy.get('[data-testid="error-graph"]', { timeout: 60000 }).should(
           "exist"
@@ -241,72 +218,43 @@ export class ComponentObservePage {
           "exist"
         );
 
+        cy.log("Scroll the graph and check selector repositioning");
         cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
+        cy.get('[data-testid="rca-container"]').scrollTo('top');
+        cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
+        cy.get('[data-testid="flame-graph-btn"]').should('be.visible');
 
-        cy.log(
-          "Finding the position to move the slider for accessing the flame graph"
+        cy.log("Test Flame Graph view");
+        cy.get('[data-testid="flame-graph-btn"]').click();
+        cy.get('[data-testid="flame-graph-loader"]').should(
+          "not.exist"
         );
-        cy.get('[data-testid="bin-divider-1"]')
-          .invoke("position")
-          .then((d1) => {
-            cy.get('[data-testid="bin-divider-2"]')
-              .invoke("position")
-              .then((d2) => {
-                let middleOfdiv1Ndiv2 =
-                  d1.top + Math.round((d2.top - d1.top) / 2);
 
-                cy.log("Dragging the diagnostics view slider");
-                cy.get('[data-testid="diagnostics-view-slider"]').then(
-                  ($el) => {
-                    cy.wrap($el)
-                      .trigger("mousedown", { button: 0 })
-                      .trigger("mousemove", {
-                        clientX: 0,
-                        clientY: middleOfdiv1Ndiv2,
-                      })
-                      .scrollTo("bottom");
-                    //.trigger("mouseup", { force: true });
-                  }
-                );
+        cy.get('[data-testid="flame-graph-message-container"]', {
+          timeout: 60000,
+        }).should("not.exist");
 
-                cy.log("Asserting the flame graph");
-                cy.get('[data-testid="flame-graph-btn"]').should("exist");
-                cy.get('[data-testid="flame-graph-btn"]')
-                  .click()
-                  .then(() => {
-                    cy.get('[data-testid="flame-graph-loader"]').should(
-                      "not.exist"
-                    );
-                    cy.get('[data-testid="flame-graph-message-container"]', {
-                      timeout: 60000,
-                    }).should("not.exist");
-
-                    cy.get('[data-testid="flame-graph"]').should("exist");
-                    cy.get('[data-testid="latencies-for-flame-graph"]').should(
-                      "exist"
-                    );
-                    cy.get('[data-testid="flame-graph-slider"]').should(
-                      "be.visible"
-                    );
-
-                    // TODO: Move the flame graph slider and assert the flame graph once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
-
-                    cy.log(
-                      "Close the flame graph and navigate to the diagnostics view again"
-                    );
-                    cy.get('[data-testid="flame-graph-close-btn"]').should(
-                      "be.visible"
-                    );
-                    cy.get('[data-testid="flame-graph-close-btn"]')
-                      .click()
-                      .then(() => {
-                        cy.get('[data-testid="cpu-graph-loader"]').should(
-                          "not.exist"
-                        );
-                        cy.get('[data-testid="cpu-graph"]').should("exist");
-                      });
-                  });
-              });
+        cy.get('[data-testid="flame-graph"]').should("exist");
+        cy.get('[data-testid="latencies-for-flame-graph"]').should(
+          "exist"
+        );
+        cy.get('[data-testid="flame-graph-slider"]').should(
+          "exist"
+        );
+        // TODO: Move the flame graph slider and assert the flame graph once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
+        cy.log(
+          "Close the flame graph and navigate to the diagnostics view again"
+        );
+        cy.get('[data-testid="flame-graph-close-btn"]').should(
+          "be.visible"
+        );
+        cy.get('[data-testid="flame-graph-close-btn"]')
+          .click()
+          .then(() => {
+            cy.get('[data-testid="cpu-graph-loader"]').should(
+              "not.exist"
+            );
+            cy.get('[data-testid="cpu-graph"]').should("exist");
           });
       });
   }
