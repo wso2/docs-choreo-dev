@@ -5,7 +5,7 @@ metadata:
   labels:
     choreo.component: step-enforcer
 spec:
-  schedule: 0 * * * *
+  schedule: "10,25,40,55 * * * *"
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
   jobTemplate:
