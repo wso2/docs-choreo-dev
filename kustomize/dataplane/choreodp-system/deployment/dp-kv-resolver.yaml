@@ -45,11 +45,11 @@ spec:
               port: 8443
           resources:
             requests:
-              cpu: 1
-              memory: 2Gi
+              cpu: 150m
+              memory: 256Mi
             limits:
-              cpu: 1.5
-              memory: 2.5Gi
+              cpu: 300m
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -81,7 +81,7 @@ spec:
               cpu: 1
             limits:
               memory: 1.5Gi
-              cpu: 1
+              cpu: 2
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
