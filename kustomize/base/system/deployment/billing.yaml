@@ -39,7 +39,7 @@ spec:
             allowPrivilegeEscalation: false
             runAsUser: 11000
             runAsGroup: 12000
-            readOnlyRootFilesystem: ture
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
