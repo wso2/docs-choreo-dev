@@ -16,7 +16,7 @@ spec:
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: nginx-ingress-network-policy
+  name: nginx-controller-network-policy
   namespace: stage-choreo-system-nginx-ingress
 spec:
   podSelector:
@@ -25,27 +25,17 @@ spec:
       app.kubernetes.io/instance: stage-choreo-system
       app.kubernetes.io/name: ingress-nginx
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
   - ports:
     - port: 80
+      protocol: TCP
     - port: 443
+      protocol: TCP
   egress:
-  - {}
----
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: default-allow-buoyant-network-policy
-  namespace: stage-choreo-system-nginx-ingress
-spec:
-  podSelector: {}
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              linkerd.io/extension: buoyant
-          podSelector: {}
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
