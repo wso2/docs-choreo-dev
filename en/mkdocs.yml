@@ -58,6 +58,7 @@ nav:
       - Create Your First REST API: tutorials/create-your-first-rest-api.md
       - Expose an existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md
       - Create Your First Scheduled Task: tutorials/create-your-first-scheduled-task.md
+      - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
   - Triggers: triggers.md
@@ -66,6 +67,8 @@ nav:
      # - API Security: manage/api-security.md
      # - API Lifecycle: manage/api-lifecycle.md
       - Developer Portal: manage/developer-portal.md
+      - Advanced Topics:
+        - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
