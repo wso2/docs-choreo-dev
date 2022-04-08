@@ -19,7 +19,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-private-global-adapter
+  name: trimble-private-global-adapter
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
@@ -27,12 +27,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-connect-private-global-adapter
+      choreo.component: trimble-private-global-adapter
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-private-global-adapter
-        antiaffinity: choreo-connect-private-global-adapter
+        choreo.component: trimble-private-global-adapter
+        antiaffinity: trimble-private-global-adapter
     spec:
       affinity:
         podAntiAffinity:
@@ -44,7 +44,7 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - choreo-connect-private-global-adapter
+                      - trimble-private-global-adapter
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
@@ -53,7 +53,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: choreo-connect-private-global-adapter
+      - name: trimble-private-global-adapter
         volumeMounts:
         - mountPath: /home/wso2/security/keystore/mg.key
           name: secret-mgw-keystore
