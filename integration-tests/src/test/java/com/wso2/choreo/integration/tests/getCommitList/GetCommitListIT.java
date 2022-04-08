@@ -52,9 +52,10 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
 
   private static String componentId;
   private static String accessToken;
+  private static String projectsAPIAccessToken;
 
   @Autowired
-  private HttpClient choreoTestClient;
+  private HttpClient choreoProjectsTestClient;
 
   @BeforeClass
   public void beforeClass()
@@ -63,12 +64,13 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
       TokenRetrievalException {
     TokenHandler tokenHandler = new TokenHandler();
     accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+    projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-    ChoreoProject project = org.createProject(accessToken);
+    ChoreoProject project = org.createProject(projectsAPIAccessToken);
     RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
     RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project
-        .createChoreoComponent(restApiComponentBuilder, accessToken);
+        .createChoreoComponent(restApiComponentBuilder, accessToken, projectsAPIAccessToken);
     componentId = restApiComponent.getId();
   }
 
@@ -95,16 +97,16 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
     ObjectMapper objectMapper = new ObjectMapper();
     String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
     $(http()
-        .client(choreoTestClient)
+        .client(choreoProjectsTestClient)
         .send()
         .post("/graphql")
         .message()
-        .header(HttpHeaders.AUTHORIZATION, accessToken)
+        .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .body(requestBody)
         .accept(String.valueOf(MediaType.APPLICATION_JSON)));
     $(http()
-        .client(choreoTestClient)
+        .client(choreoProjectsTestClient)
         .receive()
         .response(HttpStatus.OK)
         .message()

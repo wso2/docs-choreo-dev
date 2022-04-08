@@ -155,6 +155,46 @@ public class TokenHandler {
     }
 
     /**
+     * @param stsClientId     client id for STS SP
+     * @param stsClientSecret client secret for STS SP
+     * @param userToken       test user token
+     * @return sts access token
+     * @throws TokenRetrievalException
+     * @throws IOException
+     */
+    public String getTokenForGQL(String stsClientId, String stsClientSecret, String userToken)
+            throws TokenRetrievalException, IOException {
+        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
+        String stsEndPoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+
+        HttpPost request = new HttpPost(stsEndPoint);
+
+        request.setHeader(HttpHeaders.AUTHORIZATION, tokenAuthHeader);
+
+        List<NameValuePair> urlParameters = new ArrayList<>();
+        urlParameters.add(new BasicNameValuePair("grant_type", Constant.OAUTH_TOKEN_EXCHANGE_GRANT_TYPE));
+        urlParameters.add(new BasicNameValuePair("subject_token", userToken));
+        urlParameters.add(new BasicNameValuePair("subject_token_type", Constant.SUBJECT_TOKEN_TYPE));
+        urlParameters.add(new BasicNameValuePair("requested_token_type", Constant.REQUESTED_TOKEN_TYPE));
+        urlParameters.add(new BasicNameValuePair("orgHandle", Configuration.TEST_CHOREO_ORG_HANDLE));
+        urlParameters.add(new BasicNameValuePair("scope", Constant.OAUTH_SCOPES));
+
+        request.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new TokenRetrievalException(statusCode, responseBody);
+            }
+
+            return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonPrimitive("access_token")
+                    .getAsString();
+        }
+    }
+
+    /**
      * Encode the credentials with Base64
      *
      * @param clientId     generated for test org application

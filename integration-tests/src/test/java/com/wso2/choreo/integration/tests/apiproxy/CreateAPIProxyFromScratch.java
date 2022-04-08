@@ -48,6 +48,7 @@ import java.util.HashMap;
 
 public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     private static String accessToken;
+    private static String projectsAPIAccessToken;
     private static String projectHandler;
     private static String projectId;
     private static String firstAPIName;
@@ -59,13 +60,17 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoTestClientForSTS;
 
+    @Autowired
+    private HttpClient choreoProjectsTestClient;
+
     @BeforeClass
     public void beforeClass() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+        projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
         ChoreoOrganization testOrg = new ChoreoOrganization(TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-        ChoreoProject testProject = testOrg.createProject(accessToken);
+        ChoreoProject testProject = testOrg.createProject(projectsAPIAccessToken);
         projectHandler = testProject.getHandler();
         projectId = testProject.getId();
         // Create a unique API Name and a Context.
@@ -112,16 +117,16 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
 
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody));
 
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()

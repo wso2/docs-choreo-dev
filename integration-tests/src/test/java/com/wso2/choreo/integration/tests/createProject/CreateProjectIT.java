@@ -50,13 +50,13 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
   private String orgId;
 
   @Autowired
-  private HttpClient choreoTestClient;
+  private HttpClient choreoProjectsTestClient;
 
   @BeforeClass
   public void beforeClass()
       throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
     TokenHandler tokenHandler = new TokenHandler();
-    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
     orgHandle = org.getOrgHandle();
@@ -84,7 +84,7 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
     ObjectMapper objectMapper = new ObjectMapper();
     String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
     $(http()
-        .client(choreoTestClient)
+        .client(choreoProjectsTestClient)
         .send()
         .post("/graphql")
         .message()
@@ -94,7 +94,7 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
         .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
     $(http()
-        .client(choreoTestClient)
+        .client(choreoProjectsTestClient)
         .receive()
         .response(HttpStatus.OK)
         .message()

@@ -3,6 +3,7 @@ package com.wso2.choreo.integration.config;
 
 public class Configuration {
     public static final String CHOREO_ENDPOINT = System.getenv("CHOREO_ENDPOINT");
+    public static final String CHOREO_CP_PROJECTS_ENDPOINT = System.getenv("CHOREO_CP_PROJECTS_ENDPOINT");
     public static final String STS_ENDPOINT = System.getenv("STS_ENDPOINT");
     public static final String ASGARDEO_ENDPOINT = System.getenv("ASGARDEO_ENDPOINT");
     public static final String CHOREO_CP_GW_ENDPOINT = System.getenv("CHOREO_CP_GW_ENDPOINT");

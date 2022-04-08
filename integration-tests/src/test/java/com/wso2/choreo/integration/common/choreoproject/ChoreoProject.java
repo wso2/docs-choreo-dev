@@ -30,11 +30,11 @@ public class ChoreoProject {
      * @param accessToken      OAuth token to invoke the Chorea backend
      * @return A Choreo component
      */
-    public ChoreoComponent createChoreoComponent(AbstractChoreoComponentBuilder componentBuilder, String accessToken)
+    public ChoreoComponent createChoreoComponent(AbstractChoreoComponentBuilder componentBuilder, String accessToken, String projectsAPIAcessToken)
             throws ComponentCreationTimeoutException,
             ComponentCreationStatusCheckException, IOException, ComponentCreationException, ComponentRetrieveException,
             InterruptedException {
-        ChoreoComponent choreoComponent = componentBuilder.createChoreoComponent(accessToken);
+        ChoreoComponent choreoComponent = componentBuilder.createChoreoComponent(accessToken, projectsAPIAcessToken);
         componentMap.put(choreoComponent.getId(), choreoComponent);
         return choreoComponent;
     }
