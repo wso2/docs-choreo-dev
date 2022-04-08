@@ -76,8 +76,8 @@ export class VSExplorer {
 
   static createNewBranch() {
     this.closeTab();
-    this.enterCommandInTerminal("git branch feature", 2000);
-    this.enterCommandInTerminal("git checkout feature", 2000);
+    this.enterCommandInTerminal("git branch feature", 4000);
+    this.enterCommandInTerminal("git checkout feature", 4000);
   }
 
   static commitPush(commitMessage) {
@@ -86,9 +86,9 @@ export class VSExplorer {
       "rm /config/workspace/.githooks/pre-commit",
       2000
     );
-    this.enterCommandInTerminal("git add .", 2000);
-    this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 2000);
-    this.enterCommandInTerminal("git push --set-upstream origin feature", 2000);
+    this.enterCommandInTerminal("git add .", 4000);
+    this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 4000);
+    this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
@@ -113,7 +113,7 @@ export class VSExplorer {
 
   static waitTillCodeSyncWithChoreo() {
     cy.get('[id="wso2.ballerina"]>a').should("not.have.attr", "style", true);
-    cy.wait(10000);
+    cy.wait(5000);
   }
 
   private static createFile(fileName: string) {

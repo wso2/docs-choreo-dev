@@ -109,10 +109,13 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-    cy.get('[data-cyid*="btn-stop"]', {
+    cy.wait(2000)
+    cy.get('[data-cyid="btn-stop-redeploy"]', {
       timeout: 120000,
     })
       .should("exist")
       .click({ multiple: true });
+
+      cy.contains("Redeploy").should('have.length',2)
   }
 }
