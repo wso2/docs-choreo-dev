@@ -25,8 +25,8 @@ spec:
       app.kubernetes.io/instance: stage-choreo-system
       app.kubernetes.io/name: ingress-nginx
   policyTypes:
-    - Ingress
-    - Egress
+  - Ingress
+  - Egress
   ingress:
   - ports:
     - port: 80
