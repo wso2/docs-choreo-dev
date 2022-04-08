@@ -21,7 +21,7 @@ export class ComponentDevelopPage {
   );
 
   static getComponentURL() {
-    cy.get('[data-testid="component-develop-edit-code"]', { timeout: 120000 })
+    cy.get('[data-testid="component-develop-edit-code"]', { timeout: 180000 })
       .should("be.visible")
       .invoke("attr", "href")
       .then((href) => {
