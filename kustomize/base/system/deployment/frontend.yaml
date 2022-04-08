@@ -14,11 +14,12 @@ spec:
   selector:
     matchLabels:
       choreo.component: frontend
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:
         choreo.component: frontend
+        antiaffinity: frontend
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -105,3 +106,15 @@ spec:
               memory: 256Mi
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - frontend
+              topologyKey: kubernetes.io/hostname

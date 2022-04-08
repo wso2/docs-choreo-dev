@@ -18,6 +18,7 @@ spec:
         linkerd.io/inject: enabled
       labels:
         choreo.component: dp-kv-resolver
+        antiaffinity: dp-kv-resolver
     spec:
       automountServiceAccountToken: true
       securityContext:
@@ -45,11 +46,11 @@ spec:
               port: 8443
           resources:
             requests:
-              cpu: 1
-              memory: 2Gi
+              cpu: 150m
+              memory: 256Mi
             limits:
-              cpu: 1.5
-              memory: 2.5Gi
+              cpu: 300m
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -78,10 +79,10 @@ spec:
           resources:
             requests:
               memory: 1Gi
-              cpu: 1
+              cpu: 1.5
             limits:
               memory: 1.5Gi
-              cpu: 1
+              cpu: 3
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -98,26 +99,26 @@ spec:
           env:
           - name: AZURE_KEYVAULT_CLIENT_ID
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-kv-resolver
                 key: AZURE_KEYVAULT_CLIENT_ID
                 optional: true
           - name: AZURE_KEYVAULT_CLIENT_SECRET
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-kv-resolver
                 key: AZURE_KEYVAULT_CLIENT_SECRET
                 optional: true
           - name: AZURE_KEYVAULT_TENANT_ID
             valueFrom:
-              secretKeyRef: 
+              secretKeyRef:
                 name: secret-dp-kv-resolver
                 key: AZURE_KEYVAULT_TENANT_ID
                 optional: true
           volumeMounts:
             - name: secret-dp-kv-resolver
               mountPath: /mnt/csi/secret-dp-kv-resolver
-              readonly: true     
+              readonly: true
       volumes:
         - name: secret-dp-kv-resolver
           csi:
@@ -130,3 +131,15 @@ spec:
       restartPolicy: Always
       serviceAccountName: dp-kv-resolver-controller-manager
       terminationGracePeriodSeconds: 10
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-kv-resolver
+              topologyKey: kubernetes.io/hostname

@@ -37,10 +37,23 @@ spec:
       labels:
         deployment: choreo-am
         choreo.component: apim-am
+        antiaffinity: choreo-apim-am-deployment
       annotations:
         linkerd.io/inject: enabled
         config.linkerd.io/skip-outbound-ports: "3306"
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-apim-am-deployment
+              topologyKey: kubernetes.io/hostname
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
@@ -68,7 +81,10 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/api-manager.sh stop']
+                command:
+                  - sh
+                  - -c
+                  - ${WSO2_SERVER_HOME}/bin/api-manager.sh stop
           resources:
             requests:
               memory: 4Gi
@@ -84,15 +100,16 @@ spec:
             capabilities:
               drop:
                 - all
-              add: ["NET_RAW"]
+              add:
+                - NET_RAW
           ports:
             - containerPort: 9763
               protocol: "TCP"
             - containerPort: 9443
               protocol: "TCP"
           envFrom:
-          - configMapRef:
-              name: cm-feature-flags
+            - configMapRef:
+                name: cm-feature-flags
           env:
             - name: NODE_IP
               valueFrom:
@@ -166,18 +183,18 @@ spec:
             - name: MONGO_DB_PSWD
               valueFrom:
                 secretKeyRef:
-                    key: MONGO_DB_PSWD
-                    name: secret-apim-mongodb
+                  key: MONGO_DB_PSWD
+                  name: secret-apim-mongodb
             - name: MONGO_DB_ATLAS_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                    key: MONGO_DB_ATLAS_PRIVATE_KEY
-                    name: secret-apim-mongodb
+                  key: MONGO_DB_ATLAS_PRIVATE_KEY
+                  name: secret-apim-mongodb
             - name: MONGO_DB_ATLAS_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
-                    key: MONGO_DB_ATLAS_PUBLIC_KEY
-                    name: secret-apim-mongodb
+                  key: MONGO_DB_ATLAS_PUBLIC_KEY
+                  name: secret-apim-mongodb
             - name: ASB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
@@ -236,7 +253,7 @@ spec:
       serviceAccountName: sa-choreo-apim
       volumes:
         - name: apim-vol
-          emptyDir: {}
+          emptyDir: { }
         - name: wso2am-conf
           configMap:
             name: choreo-apim-am-conf
@@ -245,7 +262,7 @@ spec:
             name: choreo-apim-docker-entrypoint
             defaultMode: 0407
         - name: mysql-connector-jar
-          emptyDir: {}
+          emptyDir: { }
         - name: secret-apim-keystore-passwords
           csi:
             driver: secrets-store.csi.k8s.io

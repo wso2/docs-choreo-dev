@@ -18,7 +18,20 @@ spec:
     metadata:
       labels:
         app: pause-buffer-workload
+        antiaffinity: pause-buffer-workload
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - pause-buffer-workload
+              topologyKey: kubernetes.io/hostname
       securityContext:
         seccompProfile:
           type: RuntimeDefault

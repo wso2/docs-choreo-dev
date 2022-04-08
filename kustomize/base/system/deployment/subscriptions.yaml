@@ -20,6 +20,7 @@ spec:
     metadata:
       labels:
         choreo.component: subscriptions
+        antiaffinity: subscriptions
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -54,7 +55,7 @@ spec:
                   key: CHOREO_STEP_DB_PASSWORD
           envFrom:
             - configMapRef:
-                name: env-subscriptions                  
+                name: env-subscriptions
           ports:
             - containerPort: 9090
               name: grpc-port
@@ -135,3 +136,15 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - subscriptions
+              topologyKey: kubernetes.io/hostname
