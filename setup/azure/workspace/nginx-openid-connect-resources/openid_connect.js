@@ -26,7 +26,7 @@ function auth(r) {
         }
 
         // Check required parameters are passed
-        var requiredParams = ["state", "fidp"];
+        var requiredParams = ["uuid", "fidp"];
         var missingRequiredParams = []
         for (var i in requiredParams) {
             if (!r.variables[requiredParams[i]] || r.variables[requiredParams[i]] === "") {
