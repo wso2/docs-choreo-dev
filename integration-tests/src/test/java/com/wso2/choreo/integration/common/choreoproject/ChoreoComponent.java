@@ -36,6 +36,7 @@ import org.springframework.http.MediaType;
 public abstract class ChoreoComponent {
 
     private static final String CHOREO_ENDPOINT = Configuration.CHOREO_ENDPOINT;
+    private static final String CHOREO_CP_PROJECTS_ENDPOINT = Configuration.CHOREO_CP_PROJECTS_ENDPOINT;
     private static final HttpClient client = HttpClient.newHttpClient();
     private String id;
     private String apiId;
@@ -65,7 +66,7 @@ public abstract class ChoreoComponent {
      */
     public JsonArray getCommitHistory(String accessToken)
             throws IOException, InterruptedException, GetCommitHistoryException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = CHOREO_CP_PROJECTS_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", "query {" +
                     "      commitHistory(componentId: \"" + id + "\") {" +
@@ -103,10 +104,10 @@ public abstract class ChoreoComponent {
      * @param accessToken OAuth token to invoke the Chorea backend
      * @param orgHandler  Choreo organization handle
      */
-    public void addConfigurations(String accessToken, String orgHandler)
+    public void addConfigurations(String accessToken, String projectAPIAccessToken, String orgHandler)
             throws GetCommitHistoryException, NoLatestCommitHashFoundException, IOException, InterruptedException,
             AddConfigurationsException, NoLatestAppEnvIdFoundException, NoLatestApiVersionFoundException {
-        JsonArray commitHistory = getCommitHistory(accessToken);
+        JsonArray commitHistory = getCommitHistory(projectAPIAccessToken);
         String latestCommitSha = getLatestCommitHash(commitHistory);
         String latestVersionId = getLatestApiVersion().getId();
         String devEnvIdToDeploy = getLatestAppEnvId("dev");
@@ -143,11 +144,11 @@ public abstract class ChoreoComponent {
      * @param orgHandle   Choreo organization handle
      * @param orgUUID     Choreo organization UUID
      */
-    public void deploy(String accessToken, String orgHandle, String orgUUID)
+    public void deploy(String accessToken, String projectAPIAccessToken, String orgHandle, String orgUUID)
             throws IOException, InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
             ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException {
-        JsonArray commitHistory = getCommitHistory(accessToken);
+        JsonArray commitHistory = getCommitHistory(projectAPIAccessToken);
         String latestCommitSha = getLatestCommitHash(commitHistory);
         String latestVersionId = getLatestApiVersion().getId();
         String devEnvIdToDeploy = getLatestAppEnvId(Constant.DEV_ENVIRONMENT);

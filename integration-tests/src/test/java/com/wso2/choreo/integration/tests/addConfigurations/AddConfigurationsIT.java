@@ -74,17 +74,18 @@ public class AddConfigurationsIT extends TestNGCitrusSpringSupport {
       TokenRetrievalException, NoLatestApiVersionFoundException {
     TokenHandler tokenHandler = new TokenHandler();
     accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+    String projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
     orgHandler = org.getOrgHandle();
-    ChoreoProject project = org.createProject(accessToken);
+    ChoreoProject project = org.createProject(projectsAPIAccessToken);
     projectId = project.getId();
 
     RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
     RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project
-        .createChoreoComponent(restApiComponentBuilder, accessToken);
+        .createChoreoComponent(restApiComponentBuilder, accessToken, projectsAPIAccessToken);
     componentId = restApiComponent.getId();
-    JsonArray commitHistory = restApiComponent.getCommitHistory(accessToken);
+    JsonArray commitHistory = restApiComponent.getCommitHistory(projectsAPIAccessToken);
     latestCommitSha = restApiComponent.getLatestCommitHash(commitHistory);
     latestVersionId = restApiComponent.getLatestApiVersion().getId();
     devEnvIdToDeploy = restApiComponent.getLatestAppEnvId("dev");
