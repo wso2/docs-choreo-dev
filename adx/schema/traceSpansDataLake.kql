@@ -37,3 +37,10 @@ to table TraceSpansDataLake
 with
 (intervalBetweenRuns=1h)
 <| traceSpans
+| extend srcModule = extractjson("$.['src.module']", tostring(tags))
+| extend efModule = extractjson("$.['entrypoint.function.module']", tostring(tags))
+| extend srcModuleHash = hash_sha256(tostring(srcModule))
+| extend efModuleHash = hash_sha256(tostring(efModule))
+| extend tags = todynamic(replace_string(replace_string(tostring(tags), srcModule, srcModuleHash), efModule, efModuleHash))
+| extend checkpoints = todynamic(replace_string(replace_string(tostring(checkpoints), srcModule, srcModuleHash), efModule, efModuleHash))
+| project-away srcModule, efModule, srcModuleHash, efModuleHash
