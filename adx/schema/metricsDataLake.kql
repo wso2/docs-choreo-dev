@@ -33,3 +33,9 @@ with
 (intervalBetweenRuns=1h)
 <| metrics
 | where metricName != 'telemetry_health_check'
+| extend srcModule = iff(metricName == 'up', '', extractjson("$.['src.module']", tostring(tags)))
+| extend efModule = iff(metricName == 'up', '', extractjson("$.['entrypoint.function.module']", tostring(tags)))
+| extend srcModuleHash = iff(metricName == 'up', '', hash_sha256(tostring(srcModule)))
+| extend efModuleHash = iff(metricName == 'up', '', hash_sha256(tostring(efModule)))
+| extend tags = iff(metricName == 'up', tags, todynamic(replace_string(replace_string(tostring(tags), srcModule, srcModuleHash), efModule, efModuleHash)))
+| project-away srcModule, efModule, srcModuleHash, efModuleHash
