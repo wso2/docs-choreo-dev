@@ -57,31 +57,6 @@ spec:
             - configMapRef:
                 name: redis-config
           env:
-            - name: REDIS_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_HOST
-            - name: REDIS_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_PORT
-            - name: REDIS_SSL
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_SSL
-            - name: REDIS_SSL_VERIFY
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_SSL_VERIFY
-            - name: REDIS_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_DATABASE
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
