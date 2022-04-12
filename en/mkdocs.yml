@@ -80,6 +80,7 @@ nav:
      - Root Cause Analysis: observability/root-cause-analysis.md
   - References:
      - Performance Analysis: references/performance-analysis.md
+     - Alerting: references/alerting.md
 # - Choreo DevOps: devops/overview.md
 # Extensions
 markdown_extensions:
