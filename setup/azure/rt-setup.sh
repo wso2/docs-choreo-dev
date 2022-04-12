@@ -92,7 +92,10 @@ helm install \
   --namespace cert-manager \
   --version v1.2.0 \
   -n cert-manager \
-  --set installCRDs=true
+  --set installCRDs=true \
+  --set replicaCount=2 \
+  --set webhook.replicaCount=2 \
+  --set cainjector.replicaCount=2
 
 echo "--- Creating secrets for DNS-01 challenge..."
 kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -

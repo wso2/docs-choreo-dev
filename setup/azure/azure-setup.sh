@@ -95,7 +95,10 @@ helm install \
   --namespace cert-manager \
   --version v1.2.0 \
   -n cert-manager \
-  --set installCRDs=true
+  --set installCRDs=true \
+  --set replicaCount=2 \
+  --set webhook.replicaCount=2 \
+  --set cainjector.replicaCount=2
 
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
