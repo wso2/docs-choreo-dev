@@ -16,10 +16,10 @@
   },
   "scripts": {
     "pretest": "npm run clean:reports",
-    "e2etest:headless": "npx cypress run --headless",
-    "devportal-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/devportal/*.ts'",
-    "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*'",
-    "console-prod-periodic-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*' --config-file prod-periodic.json",
+    "e2etest:headless": "npx cypress run -headless",
+    "devportal-e2etest:headless": "npx cypress run -headless --spec 'cypress/e2e-smoke/devportal/*.ts'",
+    "console-e2etest:headless": "npx cypress run -headless --spec 'cypress/e2e-smoke/console/**/*'",
+    "console-prod-periodic-e2etest:headless": "npx cypress run -headless --spec 'cypress/e2e-smoke/console/**/*' --config-file prod-periodic.json",
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
     "local": "npm run e2etest:headless || npm run posttest"
   },
