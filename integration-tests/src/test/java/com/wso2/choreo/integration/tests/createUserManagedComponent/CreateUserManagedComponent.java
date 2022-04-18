@@ -58,6 +58,64 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private String repoName;
     private static ChoreoComponent testComponent;
 
+    private String getComponentDetailsQuery(String projectId, String componentHandler) {
+        String graphQlQuery = "query{ component(" +
+                "        projectId: \"" + projectId + "\"," +
+                "        componentHandler: \"" + componentHandler + "\"," +
+                "      ){" +
+                "        id," +
+                "        name," +
+                "        handler," +
+                "        description," +
+                "        displayType," +
+                "        displayName," +
+                "        ownerName," +
+                "        orgId," +
+                "        orgHandler," +
+                "        version," +
+                "        labels," +
+                "        createdAt," +
+                "        updatedAt," +
+                "        projectId," +
+                "        apiId," +
+                "        repository{" +
+                "          nameApp," +
+                "          nameConfig," +
+                "          branch," +
+                "          branchApp," +
+                "          organizationApp," +
+                "          organizationConfig," +
+                "          isUserManage" +
+                "        }," +
+                "        apiVersions{" +
+                "          apiVersion," +
+                "          proxyName," +
+                "          proxyUrl," +
+                "          proxyId," +
+                "          id," +
+                "          state," +
+                "          latest," +
+                "          branch," +
+                "          appEnvVersions{" +
+                "            environmentId," +
+                "            releaseId," +
+                "            release{" +
+                "              id," +
+                "              metadata{" +
+                "                choreoEnv" +
+                "              }," +
+                "              environmentId," +
+                "              environment," +
+                "              gitHash," +
+                "              gitOpsHash," +
+                "            }" +
+                "          }" +
+                "        }" +
+                "      }" +
+                "    }";
+        return graphQlQuery;
+    }
+
     @Autowired
     private HttpClient choreoTestClient;
 
@@ -317,60 +375,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testPRMerge"})
     @CitrusTest
     public void testComponentRetrieval() throws JsonProcessingException {
-        String graphQlQuery = "query{ component(" +
-                "        projectId: \"" + projectId + "\"," +
-                "        componentHandler: \"" + componentHandler + "\"," +
-                "      ){" +
-                "        id," +
-                "        name," +
-                "        handler," +
-                "        description," +
-                "        displayType," +
-                "        displayName," +
-                "        ownerName," +
-                "        orgId," +
-                "        orgHandler," +
-                "        version," +
-                "        labels," +
-                "        createdAt," +
-                "        updatedAt," +
-                "        projectId," +
-                "        apiId," +
-                "        repository{" +
-                "          nameApp," +
-                "          nameConfig," +
-                "          branch," +
-                "          branchApp," +
-                "          organizationApp," +
-                "          organizationConfig," +
-                "          isUserManage" +
-                "        }," +
-                "        apiVersions{" +
-                "          apiVersion," +
-                "          proxyName," +
-                "          proxyUrl," +
-                "          proxyId," +
-                "          id," +
-                "          state," +
-                "          latest," +
-                "          branch," +
-                "          appEnvVersions{" +
-                "            environmentId," +
-                "            releaseId," +
-                "            release{" +
-                "              id," +
-                "              metadata{" +
-                "                choreoEnv" +
-                "              }," +
-                "              environmentId," +
-                "              environment," +
-                "              gitHash," +
-                "              gitOpsHash," +
-                "            }" +
-                "          }" +
-                "        }" +
-                "      }" +
-                "    }";
+        String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);
@@ -649,60 +654,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .client(choreoTestClientForGithub)
                 .receive()
                 .response(HttpStatus.NO_CONTENT));
-        String graphQlQuery = "query{ component(" +
-                "        projectId: \"" + projectId + "\"," +
-                "        componentHandler: \"" + componentHandler + "\"," +
-                "      ){" +
-                "        id," +
-                "        name," +
-                "        handler," +
-                "        description," +
-                "        displayType," +
-                "        displayName," +
-                "        ownerName," +
-                "        orgId," +
-                "        orgHandler," +
-                "        version," +
-                "        labels," +
-                "        createdAt," +
-                "        updatedAt," +
-                "        projectId," +
-                "        apiId," +
-                "        repository{" +
-                "          nameApp," +
-                "          nameConfig," +
-                "          branch," +
-                "          branchApp," +
-                "          organizationApp," +
-                "          organizationConfig," +
-                "          isUserManage" +
-                "        }," +
-                "        apiVersions{" +
-                "          apiVersion," +
-                "          proxyName," +
-                "          proxyUrl," +
-                "          proxyId," +
-                "          id," +
-                "          state," +
-                "          latest," +
-                "          branch," +
-                "          appEnvVersions{" +
-                "            environmentId," +
-                "            releaseId," +
-                "            release{" +
-                "              id," +
-                "              metadata{" +
-                "                choreoEnv" +
-                "              }," +
-                "              environmentId," +
-                "              environment," +
-                "              gitHash," +
-                "              gitOpsHash," +
-                "            }" +
-                "          }" +
-                "        }" +
-                "      }" +
-                "    }";
+        String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);
