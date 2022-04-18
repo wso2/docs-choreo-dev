@@ -654,6 +654,8 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .client(choreoTestClientForGithub)
                 .receive()
                 .response(HttpStatus.NO_CONTENT));
+
+        // Check whether component details call return 404
         String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
