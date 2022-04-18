@@ -1,0 +1,10 @@
+{
+  "networkError":{
+    "statusCode":"404"
+  },
+  "message":"Not Found",
+  "metadata":{
+    "errorCode":"Repository Not Accessible",
+    "additionalData":"http://github.com/test-user/test-repo"
+  }
+}
