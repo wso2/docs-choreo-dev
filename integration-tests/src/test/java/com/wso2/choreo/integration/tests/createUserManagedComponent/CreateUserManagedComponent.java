@@ -58,6 +58,64 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private String repoName;
     private static ChoreoComponent testComponent;
 
+    private String getComponentDetailsQuery(String projectId, String componentHandler) {
+        String graphQlQuery = "query{ component(" +
+                "        projectId: \"" + projectId + "\"," +
+                "        componentHandler: \"" + componentHandler + "\"," +
+                "      ){" +
+                "        id," +
+                "        name," +
+                "        handler," +
+                "        description," +
+                "        displayType," +
+                "        displayName," +
+                "        ownerName," +
+                "        orgId," +
+                "        orgHandler," +
+                "        version," +
+                "        labels," +
+                "        createdAt," +
+                "        updatedAt," +
+                "        projectId," +
+                "        apiId," +
+                "        repository{" +
+                "          nameApp," +
+                "          nameConfig," +
+                "          branch," +
+                "          branchApp," +
+                "          organizationApp," +
+                "          organizationConfig," +
+                "          isUserManage" +
+                "        }," +
+                "        apiVersions{" +
+                "          apiVersion," +
+                "          proxyName," +
+                "          proxyUrl," +
+                "          proxyId," +
+                "          id," +
+                "          state," +
+                "          latest," +
+                "          branch," +
+                "          appEnvVersions{" +
+                "            environmentId," +
+                "            releaseId," +
+                "            release{" +
+                "              id," +
+                "              metadata{" +
+                "                choreoEnv" +
+                "              }," +
+                "              environmentId," +
+                "              environment," +
+                "              gitHash," +
+                "              gitOpsHash," +
+                "            }" +
+                "          }" +
+                "        }" +
+                "      }" +
+                "    }";
+        return graphQlQuery;
+    }
+
     @Autowired
     private HttpClient choreoTestClient;
 
@@ -317,60 +375,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testPRMerge"})
     @CitrusTest
     public void testComponentRetrieval() throws JsonProcessingException {
-        String graphQlQuery = "query{ component(" +
-                "        projectId: \"" + projectId + "\"," +
-                "        componentHandler: \"" + componentHandler + "\"," +
-                "      ){" +
-                "        id," +
-                "        name," +
-                "        handler," +
-                "        description," +
-                "        displayType," +
-                "        displayName," +
-                "        ownerName," +
-                "        orgId," +
-                "        orgHandler," +
-                "        version," +
-                "        labels," +
-                "        createdAt," +
-                "        updatedAt," +
-                "        projectId," +
-                "        apiId," +
-                "        repository{" +
-                "          nameApp," +
-                "          nameConfig," +
-                "          branch," +
-                "          branchApp," +
-                "          organizationApp," +
-                "          organizationConfig," +
-                "          isUserManage" +
-                "        }," +
-                "        apiVersions{" +
-                "          apiVersion," +
-                "          proxyName," +
-                "          proxyUrl," +
-                "          proxyId," +
-                "          id," +
-                "          state," +
-                "          latest," +
-                "          branch," +
-                "          appEnvVersions{" +
-                "            environmentId," +
-                "            releaseId," +
-                "            release{" +
-                "              id," +
-                "              metadata{" +
-                "                choreoEnv" +
-                "              }," +
-                "              environmentId," +
-                "              environment," +
-                "              gitHash," +
-                "              gitOpsHash," +
-                "            }" +
-                "          }" +
-                "        }" +
-                "      }" +
-                "    }";
+        String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);
@@ -624,7 +629,62 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                                 .type(MessageType.PLAINTEXT)));
     }
 
+    /**
+     * If an external GitHub repo associated with a component is deleted, trying to access the Component from Chroreo
+     * will result in a 404
+     *
+     * @throws JsonProcessingException
+     */
     @Test(dependsOnMethods = {"testAPIInvocation"})
+    @CitrusTest
+    public void testComponentRetrievalOnRepoDeletion() throws JsonProcessingException {
+        String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
+        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+
+        // Delete repository
+        $(http()
+                .client(choreoTestClientForGithub)
+                .send()
+                .delete(requestURI)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, authHeader)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoTestClientForGithub)
+                .receive()
+                .response(HttpStatus.NO_CONTENT));
+
+        // Check whether component details call return 404
+        String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        $(http()
+                .client(choreoProjectsTestClient)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoProjectsTestClient)
+                .receive()
+                .response(HttpStatus.NOT_FOUND)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/createUserManagedComponent/get_component_repo_not_accessible.json"))
+                .validate(json()
+                        .ignore("$.metadata.additionalData")));
+    }
+
+    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"})
     @CitrusTest
     public void testDeleteRestApiComponent() throws JsonProcessingException {
         String graphqlQuery = "mutation { deleteComponentV2(" +
@@ -659,27 +719,6 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/createComponent/mutation_delete_component_success.json"))
                 .validate(json()));
-    }
-
-    @Test(dependsOnMethods = {"testDeleteRestApiComponent"})
-    @CitrusTest
-    public void testDeleteRepo() {
-        String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
-        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
-
-        // Delete repository
-        $(http()
-                .client(choreoTestClientForGithub)
-                .send()
-                .delete(requestURI)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, authHeader)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoTestClientForGithub)
-                .receive()
-                .response(HttpStatus.NO_CONTENT));
     }
 }
 
