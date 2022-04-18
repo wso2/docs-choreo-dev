@@ -6,10 +6,10 @@ metadata:
     choreo.component: dp-mizzen-agent
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_8=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_9=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Required by linkerD
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_8=Does not utilize a livenessProbe by design
+    checkov.io/skip3: CKV_K8S_9=Does not utilize a readinessProbe by design
+    checkov.io/skip4: CKV_K8S_38=Required to access the kube-apiserver
 spec:
   replicas: 1
   selector:
@@ -21,6 +21,7 @@ spec:
         linkerd.io/inject: enabled
       labels:
         choreo.component: dp-mizzen-agent
+        antiaffinity: dp-mizzen-agent
     spec:
       automountServiceAccountToken: true
       securityContext:
@@ -72,4 +73,15 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: dp-mizzen-agent-sa
-
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - dp-mizzen-agent
+              topologyKey: kubernetes.io/hostname

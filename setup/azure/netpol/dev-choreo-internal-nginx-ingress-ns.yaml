@@ -26,11 +26,7 @@ spec:
     - Ingress
     - Egress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          linkerd.io/extension: viz
-    ports:
+  - ports:
     - port: 80
       protocol: TCP
     - port: 443

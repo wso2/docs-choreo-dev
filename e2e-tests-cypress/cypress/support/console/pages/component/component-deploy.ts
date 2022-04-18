@@ -13,7 +13,7 @@
 
 export class ComponentDeployPage {
   static deploy() {
-    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 120000 })
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
       .should("be.enabled")
       .click();
   }
@@ -68,7 +68,7 @@ export class ComponentDeployPage {
   }
 
   static promoteToProd() {
-    cy.get('[data-cyid*="promote"]', { timeout: 120000 })
+    cy.get('[data-cyid*="promote"]', { timeout: 180000 })
       .should("be.visible")
       .click();
 
@@ -86,7 +86,7 @@ export class ComponentDeployPage {
 
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 120000 })
+      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 180000 })
       .eq(0)
       .invoke("attr", "value");
   }
@@ -109,10 +109,13 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-    cy.get('[data-cyid*="btn-stop"]', {
+    cy.wait(2000);
+    cy.get('[data-cyid="btn-stop-redeploy"]', {
       timeout: 120000,
     })
       .should("exist")
       .click({ multiple: true });
+
+    cy.contains("Redeploy").should("have.length", 2);
   }
 }

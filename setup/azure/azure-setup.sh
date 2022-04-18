@@ -95,7 +95,10 @@ helm install \
   --namespace cert-manager \
   --version v1.2.0 \
   -n cert-manager \
-  --set installCRDs=true
+  --set installCRDs=true \
+  --set replicaCount=2 \
+  --set webhook.replicaCount=2 \
+  --set cainjector.replicaCount=2
 
 ############### Install Linkerd2 using Helm 3
 echo "-- Creating namespace linkerd"
@@ -123,16 +126,6 @@ helm upgrade --install linkerd2 --wait \
   --set identity.issuer.scheme=kubernetes.io/tls \
   --set installNamespace=false --set linkerdVersion=stable-2.10.0 \
   -n linkerd --version 2.10.0
-
-# Execute for Stage and Prod Environments only
-echo "---  Installing Buoyant Cloud... "
-kubectl create -f buoyant-cloud/buoyant-setup.sh
-kubectl create secret generic buoyant-cloud-id -n buoyant-cloud \
-  --from-literal=id="${BUOYANT_CLOUD_AGENT_ID}" \
-  --from-literal=key="${BUOYANT_CLOUD_AGENT_KEY}" \
-  --from-literal=downloadKey="${BUOYANT_CLOUD_AGENT_DOWNLOAD_KEY}" \
-  --from-literal=name="${BUOYANT_CLOUD_NAME}"
-kubectl label secret buoyant-cloud-id -n buoyant-cloud app.kubernetes.io/part-of=buoyant-cloud
 
 ## TODO: Migrate to Buoyant Cloud for Linkerd Monitoring
 echo "--- Installing linkerd viz extension... "

@@ -95,7 +95,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION,NEW_BRANCH);
     ComponentDevelopPage.getVersion().should(
       "eq",
-      "Version " + API_NEW_VERSION
+      "API Version " + "1.1.0"
     );
   });
 

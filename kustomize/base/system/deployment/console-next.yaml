@@ -26,6 +26,7 @@ spec:
     metadata:
       labels:
         choreo.component: console-next
+        antiaffinity: console-next
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -59,5 +60,17 @@ spec:
                   key: BALLERINA_LOW_CODE_RESOURCES_VERSION
           envFrom:
             - configMapRef:
-                name: env-console-next     
+                name: env-console-next
       serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: antiaffinity
+                  operator: In
+                  values:
+                  - console-next
+              topologyKey: kubernetes.io/hostname

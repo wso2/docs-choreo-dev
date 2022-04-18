@@ -40,7 +40,7 @@ public class RestApiChoreoComponentBuilder extends AbstractChoreoComponentBuilde
      * @param accessToken OAuth token to invoke the Chorea backend
      * @return A RestApiChoreoComponent
      */
-    public RestApiChoreoComponent createChoreoComponent(String accessToken) throws
+    public RestApiChoreoComponent createChoreoComponent(String accessToken, String projectsAPIAcessToken) throws
             IOException, InterruptedException, ComponentCreationException, ComponentCreationStatusCheckException,
             ComponentRetrieveException, ComponentCreationTimeoutException {
         String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
@@ -73,7 +73,7 @@ public class RestApiChoreoComponentBuilder extends AbstractChoreoComponentBuilde
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAcessToken)
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         int statusCode = response.statusCode();
@@ -88,7 +88,7 @@ public class RestApiChoreoComponentBuilder extends AbstractChoreoComponentBuilde
                 choreoComponentJsonObject.get("handler").getAsString();
         waitForComponentCreationSuccess(accessToken, org.getOrgHandle(), project.getId(), componentId);
         JsonObject retrievedChoreoComponent =
-                retrieveComponentJsonObject(accessToken, project.getId(), componentHandle);
+                retrieveComponentJsonObject(projectsAPIAcessToken, project.getId(), componentHandle);
         Gson gson = new Gson();
         return gson.fromJson(retrievedChoreoComponent.toString(), RestApiChoreoComponent.class);
     }
