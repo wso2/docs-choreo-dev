@@ -624,9 +624,15 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                                 .type(MessageType.PLAINTEXT)));
     }
 
+    /**
+     * If an external GitHub repo associated with a component is deleted, trying to access the Component from Chroreo
+     * will result in a 404
+     *
+     * @throws JsonProcessingException
+     */
     @Test(dependsOnMethods = {"testAPIInvocation"})
     @CitrusTest
-    public void testDeleteRepo() {
+    public void testComponentRetrievalOnRepoDeletion() throws JsonProcessingException {
         String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
         String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
 
@@ -643,11 +649,6 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .client(choreoTestClientForGithub)
                 .receive()
                 .response(HttpStatus.NO_CONTENT));
-    }
-
-    @Test(dependsOnMethods = {"testDeleteRepo"})
-    @CitrusTest
-    public void testComponentRepoNotAccessible() throws JsonProcessingException {
         String graphQlQuery = "query{ component(" +
                 "        projectId: \"" + projectId + "\"," +
                 "        componentHandler: \"" + componentHandler + "\"," +
@@ -729,9 +730,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                         .ignore("$.metadata.additionalData")));
     }
 
-
-
-    @Test(dependsOnMethods = {"testComponentRepoNotAccessible"})
+    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"})
     @CitrusTest
     public void testDeleteRestApiComponent() throws JsonProcessingException {
         String graphqlQuery = "mutation { deleteComponentV2(" +
