@@ -131,6 +131,7 @@ export class LoginPage {
         userEmail: userEmail,
         orgId: userOrg.id,
         handle: userOrg.handle,
+        uuid: userOrg.uuid
       };
       cy.log("userData: ", JSON.stringify(userData));
       Cypress.env("userData", userData);

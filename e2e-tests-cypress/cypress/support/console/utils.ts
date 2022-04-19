@@ -124,6 +124,7 @@ export class Utils {
   }
 
   static sendGetRequest(url: string, headers: any = {}) {
+    cy.log(url)
     const request = {
       method: "GET",
       url,
