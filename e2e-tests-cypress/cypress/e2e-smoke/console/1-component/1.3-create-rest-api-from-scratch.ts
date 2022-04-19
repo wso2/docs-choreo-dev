@@ -73,7 +73,7 @@ describe("Verify project creation functionality", () => {
   it("Edit code in VScode", () => {
     ComponentOverviewPage.navigateToDevelop();
     LoginPage.navigateToCodespace();
-    VSExplorer.createNewBranch();
+    VSExplorer.creteNewBranch(NEW_BRANCH);
     VSExplorer.typeCode("Numbers.bal");
     VSExplorer.commitPush(commitMessage);
     VSExplorer.waitTillCodeSyncWithChoreo();

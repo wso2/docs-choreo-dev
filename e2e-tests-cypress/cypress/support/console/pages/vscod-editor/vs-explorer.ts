@@ -9,9 +9,7 @@ export class VSExplorer {
   static count: number = 0;
 
   static waitTillCodespaceLoad() {
-    cy.get('[aria-label*=".bal Diagram"]', { timeout: 300000 }).should(
-      "be.visible"
-    );
+ 
     cy.get(".monaco-highlighted-label").contains(".bal").click();
     cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]')
       .should("be.visible")
@@ -37,6 +35,9 @@ export class VSExplorer {
   }
 
   static closeTab() {
+       cy.get('[title*=".bal Diagram"]', { timeout: 300000 }).should(
+      "be.visible"
+    );
     cy.get('.codicon-close').then((b) => {
       if (b.length > 0) {
         b.each(function () {
@@ -74,10 +75,13 @@ export class VSExplorer {
     cy.wait(waitTime);
   }
 
-  static createNewBranch() {
-    this.closeTab();
-    this.enterCommandInTerminal("git branch feature", 4000);
-    this.enterCommandInTerminal("git checkout feature", 4000);
+  static creteNewBranch(branchName:string){
+    cy.get('[id="wso2.ballerina"]',{timeout:300000}).should('be.visible')
+    cy.get('[id="status.scm"]',{timeout:200000}).eq(0).click()
+    cy.get('.quick-input-widget',{timeout:180000}).should('be.visible')
+    cy.get('[aria-describedby="quickInput_message"]').type(`${branchName}{enter}`)
+    cy.wait(3000)
+
   }
 
   static commitPush(commitMessage) {
@@ -92,6 +96,7 @@ export class VSExplorer {
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
+    this.closeTab();
     this.waitTillCodespaceLoad();
     this.createFile(fileName);
     this.selectExplorer();
