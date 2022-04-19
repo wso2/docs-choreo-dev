@@ -107,6 +107,22 @@ ENV=xxxxx
 EOF
 ```
 
+### Private Data Plane Cluster
+
+```bash
+APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
+ROUTING_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
+LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
+USERAPPS_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+USERAPPS_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
+AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ENV=xxxxx
+EOF
+```
+
 ### Workspace Cluster
 
 ```bash
