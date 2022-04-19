@@ -146,7 +146,7 @@ export class GraphQL {
           const { handler } = component;
           const { uuid } = Cypress.env("userData");
           cy.log(`uuid ${uuid}, component handler ${handler}`);
-          this.fetchComponentDetails(projectId, handler, token);
+          this.changeComponentLifeCycle(projectId, handler, token);
           this.deleteComponent(component.id, projectId, orgHandle, token);
         });
       } else {
@@ -223,7 +223,7 @@ export class GraphQL {
     });
   }
 
-  private static fetchComponentDetails(
+  private static changeComponentLifeCycle(
     projectId: string,
     componentHandler,
     token: string
@@ -272,16 +272,12 @@ export class GraphQL {
       Authorization: `Bearer ${token}`,
     };
 
-    Utils.sendPostRequest(
-      `${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`,
-      headers,
-      query
-    ).then((res) => {
+    this.callGraphQL(token,query).then((res) => {
       const apiVersion: [] = res.body.data.component.apiVersions;
       apiVersion.forEach((e) => {
         const { proxyId } = e;
         if (proxyId) {
-          this.getComponentVersionPublishStatus(proxyId, token);
+          this.deprecateComponent(proxyId, token);
         } else {
           cy.log(`ProxyID is :: ${proxyId}`);
         }
@@ -289,7 +285,7 @@ export class GraphQL {
     });
   }
 
-  private static getComponentVersionPublishStatus(
+  private static deprecateComponent(
     apiId: string,
     token: string
   ) {
@@ -304,9 +300,6 @@ export class GraphQL {
       const { state } = res.body;
       if (state === "Published") {
         this.sendDeprecateRetireRequest(apiId, uuid, token);
-      }
-      if (state === "Created") {
-        this.sendPublishDeprecateRetireRequest(apiId, uuid, token);
       }
     });
   }
