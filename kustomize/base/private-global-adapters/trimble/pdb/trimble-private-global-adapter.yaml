@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: trimble-private-global-adapter
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: trimble-private-global-adapter

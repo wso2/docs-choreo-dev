@@ -26,6 +26,7 @@ import org.springframework.http.HttpStatus;
  */
 public abstract class AbstractChoreoComponentBuilder {
     protected static final String CHOREO_ENDPOINT = Configuration.CHOREO_ENDPOINT;
+    protected static final String CHOREO_CP_PROJECTS_ENDPOINT = Configuration.CHOREO_CP_PROJECTS_ENDPOINT;
     protected static final HttpClient client = HttpClient.newHttpClient();
     protected ChoreoProject project;
     protected ChoreoOrganization org;
@@ -47,7 +48,7 @@ public abstract class AbstractChoreoComponentBuilder {
      * @param accessToken OAuth token to invoke the Chorea backend
      * @return A ChoreoComponent
      */
-    public abstract ChoreoComponent createChoreoComponent(String accessToken) throws
+    public abstract ChoreoComponent createChoreoComponent(String accessToken, String projectsAPIAccessToken) throws
             IOException, InterruptedException, ComponentCreationException, ComponentCreationStatusCheckException,
             ComponentRetrieveException, ComponentCreationTimeoutException;
 
@@ -91,7 +92,7 @@ public abstract class AbstractChoreoComponentBuilder {
      */
     public JsonObject retrieveComponentJsonObject(String accessToken, String projectId, String componentHandle) throws
             IOException, InterruptedException, ComponentRetrieveException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = CHOREO_CP_PROJECTS_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         String graphQlQuery = "query{" +
                 "      component(" +
                 "        projectId: \"" + projectId + "\"" +

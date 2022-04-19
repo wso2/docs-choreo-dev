@@ -1607,6 +1607,17 @@ CREATE TABLE [dbo].[configuration_value](
     CONSTRAINT config_mount_id_fk FOREIGN KEY (config_mount_id) REFERENCES [configuration_mount](id) ON DELETE CASCADE
 )
 
+CREATE TABLE [dbo].[tos_consent](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [idp_id] [nvarchar](255) NOT NULL,
+    [accepted] [bit] NOT NULL DEFAULT 0,
+    [version] [nvarchar](10) NOT NULL,
+    [service_name] [nvarchar](50) NOT NULL,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT id_service_name_uk UNIQUE(idp_id, service_name)
+)
+
 CREATE TABLE [dbo].[permission]
 (
     [id] [int] IDENTITY(1,1) NOT NULL ,
@@ -1761,6 +1772,26 @@ END
 GO
 ALTER TABLE [dbo].[role_tag] ENABLE TRIGGER [role_tag_UpdateTimeTrigger]
     GO
+
+/****** Object:  Trigger [dbo].[tos_consent] ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TRIGGER [dbo].[tos_consent_UpdatedTimeTrigger] ON [dbo].[tos_consent]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [tos_consent] AS tble
+             INNER JOIN inserted AS i
+                        ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[tos_consent] ENABLE TRIGGER [tos_consent_UpdatedTimeTrigger]
+GO
 
 /****** Add default Permission list ******/
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Admin Operations','apim:admin','APIM-ADMIN','Manage all admin operations');

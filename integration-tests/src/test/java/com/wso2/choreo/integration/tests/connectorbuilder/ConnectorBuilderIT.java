@@ -62,16 +62,17 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
             ComponentDeploymentFailureException, TokenRetrievalException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+        String projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = org.createProject(projectsAPIAccessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         RestApiChoreoComponent restApiComponent =
-                (RestApiChoreoComponent) project.createChoreoComponent(restApiComponentBuilder, accessToken);
+                (RestApiChoreoComponent) project.createChoreoComponent(restApiComponentBuilder, accessToken, projectsAPIAccessToken);
         componentId = restApiComponent.getId();
         apiId = restApiComponent.getLatestApiVersion().getProxyId();
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
-        restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
+        restApiComponent.addConfigurations(accessToken, projectsAPIAccessToken, org.getOrgHandle());
+        restApiComponent.deploy(accessToken, projectsAPIAccessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.getLatestApiVersion()
                 .changeApiLifeCycle(accessToken, org.getOrgUUID(), Constant.apiLIifCycleState.Publish);
     }

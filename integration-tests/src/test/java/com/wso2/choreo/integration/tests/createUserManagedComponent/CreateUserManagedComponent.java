@@ -45,6 +45,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  */
 public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private static String accessToken;
+    private static String projectsAPIAccessToken;
     private String orgHandle;
     private String orgId;
     private String orgUUID;
@@ -57,8 +58,69 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private String repoName;
     private static ChoreoComponent testComponent;
 
+    private String getComponentDetailsQuery(String projectId, String componentHandler) {
+        String graphQlQuery = "query{ component(" +
+                "        projectId: \"" + projectId + "\"," +
+                "        componentHandler: \"" + componentHandler + "\"," +
+                "      ){" +
+                "        id," +
+                "        name," +
+                "        handler," +
+                "        description," +
+                "        displayType," +
+                "        displayName," +
+                "        ownerName," +
+                "        orgId," +
+                "        orgHandler," +
+                "        version," +
+                "        labels," +
+                "        createdAt," +
+                "        updatedAt," +
+                "        projectId," +
+                "        apiId," +
+                "        repository{" +
+                "          nameApp," +
+                "          nameConfig," +
+                "          branch," +
+                "          branchApp," +
+                "          organizationApp," +
+                "          organizationConfig," +
+                "          isUserManage" +
+                "        }," +
+                "        apiVersions{" +
+                "          apiVersion," +
+                "          proxyName," +
+                "          proxyUrl," +
+                "          proxyId," +
+                "          id," +
+                "          state," +
+                "          latest," +
+                "          branch," +
+                "          appEnvVersions{" +
+                "            environmentId," +
+                "            releaseId," +
+                "            release{" +
+                "              id," +
+                "              metadata{" +
+                "                choreoEnv" +
+                "              }," +
+                "              environmentId," +
+                "              environment," +
+                "              gitHash," +
+                "              gitOpsHash," +
+                "            }" +
+                "          }" +
+                "        }" +
+                "      }" +
+                "    }";
+        return graphQlQuery;
+    }
+
     @Autowired
     private HttpClient choreoTestClient;
+
+    @Autowired
+    private HttpClient choreoProjectsTestClient;
 
     @Autowired
     private HttpClient choreoTestClientForGithub;
@@ -71,12 +133,13 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
             throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
         TokenHandler tokenHandler = new TokenHandler();
         accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
+        projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         orgHandle = org.getOrgHandle();
         orgId = org.getOrgId();
         orgUUID = org.getOrgUUID();
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = org.createProject(projectsAPIAccessToken);
         projectId = project.getId();
     }
 
@@ -145,16 +208,16 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
         ObjectMapper componentObjectMapper = new ObjectMapper();
         String componentRequestBody = componentObjectMapper.writeValueAsString(gqlRequestPayload);
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(componentRequestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -178,7 +241,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     public void testCreatedComponentStatus() {
         // Poll component create status
         $(repeatOnError()
-                .until("i = 15")
+                .until("i = 20")
                 .index("i")
                 .autoSleep(5000)
                 .actions(
@@ -223,16 +286,16 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
 
         // Check if initial PR has been generated
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -291,15 +354,15 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .autoSleep(5000)
                 .actions(
                         http()
-                                .client(choreoTestClient)
+                                .client(choreoProjectsTestClient)
                                 .send()
                                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(listPrRequestBody),
-                        http().client(choreoTestClient)
+                        http().client(choreoProjectsTestClient)
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()
@@ -312,60 +375,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testPRMerge"})
     @CitrusTest
     public void testComponentRetrieval() throws JsonProcessingException {
-        String graphQlQuery = "query{ component(" +
-                "        projectId: \"" + projectId + "\"," +
-                "        componentHandler: \"" + componentHandler + "\"," +
-                "      ){" +
-                "        id," +
-                "        name," +
-                "        handler," +
-                "        description," +
-                "        displayType," +
-                "        displayName," +
-                "        ownerName," +
-                "        orgId," +
-                "        orgHandler," +
-                "        version," +
-                "        labels," +
-                "        createdAt," +
-                "        updatedAt," +
-                "        projectId," +
-                "        apiId," +
-                "        repository{" +
-                "          nameApp," +
-                "          nameConfig," +
-                "          branch," +
-                "          branchApp," +
-                "          organizationApp," +
-                "          organizationConfig," +
-                "          isUserManage" +
-                "        }," +
-                "        apiVersions{" +
-                "          apiVersion," +
-                "          proxyName," +
-                "          proxyUrl," +
-                "          proxyId," +
-                "          id," +
-                "          state," +
-                "          latest," +
-                "          branch," +
-                "          appEnvVersions{" +
-                "            environmentId," +
-                "            releaseId," +
-                "            release{" +
-                "              id," +
-                "              metadata{" +
-                "                choreoEnv" +
-                "              }," +
-                "              environmentId," +
-                "              environment," +
-                "              gitHash," +
-                "              gitOpsHash," +
-                "            }" +
-                "          }" +
-                "        }" +
-                "      }" +
-                "    }";
+        String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);
@@ -374,16 +384,16 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -401,7 +411,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
             NoLatestCommitHashFoundException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException {
-        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+        JsonArray commitHistory = testComponent.getCommitHistory(projectsAPIAccessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
         String latestVersionId = testComponent.getLatestApiVersion().getId();
         String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
@@ -460,16 +470,16 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
 
         // Deploy component
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -508,14 +518,14 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .autoSleep(5000)
                 .actions(
                         http()
-                                .client(choreoTestClient)
+                                .client(choreoProjectsTestClient)
                                 .send()
                                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                                 .body(requestBody)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-                        http().client(choreoTestClient)
+                        http().client(choreoProjectsTestClient)
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()
@@ -548,16 +558,16 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
 
         // Get invokeUrl and apiId
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -619,7 +629,62 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                                 .type(MessageType.PLAINTEXT)));
     }
 
+    /**
+     * If an external GitHub repo associated with a component is deleted, trying to access the Component from Chroreo
+     * will result in a 404
+     *
+     * @throws JsonProcessingException
+     */
     @Test(dependsOnMethods = {"testAPIInvocation"})
+    @CitrusTest
+    public void testComponentRetrievalOnRepoDeletion() throws JsonProcessingException {
+        String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
+        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+
+        // Delete repository
+        $(http()
+                .client(choreoTestClientForGithub)
+                .send()
+                .delete(requestURI)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, authHeader)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoTestClientForGithub)
+                .receive()
+                .response(HttpStatus.NO_CONTENT));
+
+        // Check whether component details call return 404
+        String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        $(http()
+                .client(choreoProjectsTestClient)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoProjectsTestClient)
+                .receive()
+                .response(HttpStatus.NOT_FOUND)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/createUserManagedComponent/get_component_repo_not_accessible.json"))
+                .validate(json()
+                        .ignore("$.metadata.additionalData")));
+    }
+
+    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"})
     @CitrusTest
     public void testDeleteRestApiComponent() throws JsonProcessingException {
         String graphqlQuery = "mutation { deleteComponentV2(" +
@@ -638,43 +703,22 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
 
         // Delete component
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoTestClient)
+                .client(choreoProjectsTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/createComponent/mutation_delete_component_success.json"))
                 .validate(json()));
-    }
-
-    @Test(dependsOnMethods = {"testDeleteRestApiComponent"})
-    @CitrusTest
-    public void testDeleteRepo() {
-        String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
-        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
-
-        // Delete repository
-        $(http()
-                .client(choreoTestClientForGithub)
-                .send()
-                .delete(requestURI)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, authHeader)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoTestClientForGithub)
-                .receive()
-                .response(HttpStatus.NO_CONTENT));
     }
 }
 

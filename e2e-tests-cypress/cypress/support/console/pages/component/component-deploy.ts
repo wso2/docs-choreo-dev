@@ -86,7 +86,7 @@ export class ComponentDeployPage {
 
   static verifyDevInvokeURL() {
     return cy
-      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 120000 })
+      .get('[data-cyid="text-field-invoke-url"] input', { timeout: 180000 })
       .eq(0)
       .invoke("attr", "value");
   }
@@ -109,13 +109,13 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-    cy.wait(2000)
+    cy.wait(2000);
     cy.get('[data-cyid="btn-stop-redeploy"]', {
       timeout: 120000,
     })
       .should("exist")
       .click({ multiple: true });
 
-      cy.contains("Redeploy").should('have.length',2)
+    cy.contains("Redeploy").should("have.length", 2);
   }
 }
