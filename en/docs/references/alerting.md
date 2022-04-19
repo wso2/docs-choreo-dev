@@ -1,6 +1,6 @@
 # Alerts
 
-Choreo notifies you when your production applications are in trouble. Whenever a Critical error (Out Of Memory ) occurs or whenever an error is logged by your application, your organization admins will be notified via an email about this incident. This email also contains a link that will take you to the Observability view and also highlights the metrics and logs during the erroneous interval. The alerts are collected every 5 mins (alerting interval) and published to the users.
+Alerts are notifications sent by the system when the components that you are running in the production environment are not functioning as expected. Whenever a critical error (e.g., Out Of Memory) occurs of when the component logs an error, members of your organization with admin rights are notified about it via an email. This email also contains a link to the [Observability](../observability/observability-overview.md) view where the metrics and logs that occurred during the time interval in which the error occurred are highlighted. The alerting interval is five minutes long. At every alerting interval, the alerts are collected and sent to the users.
 
 
 ## Types of Alert email notifications
