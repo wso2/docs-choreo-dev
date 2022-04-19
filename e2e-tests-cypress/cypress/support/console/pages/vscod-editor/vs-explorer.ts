@@ -137,4 +137,26 @@ export class VSExplorer {
 
     cy.contains(fileName).should("be.visible");
   }
+
+  static getCodeLense(index: number) {
+    return cy.get(`[widgetId="codelens.widget-${index}"]`).eq(0);
+  }
+
+  static matchCodeLense(index: number, regex: RegExp) {
+    return VSExplorer.getCodeLense(index).invoke('text').should("match", regex);
+  }
+
+  static getActiveWebview() {
+    return cy.get('iframe[class="webview ready"]').eq(1).its('0.contentDocument').should('exist').its('body').
+      should('not.be.undefined').then((body) => {
+        return cy.wrap(body).find('#active-frame').its('0.contentDocument').should('exist').its('body').should('not.be.undefined')
+          .then((body) => {
+            return cy.wrap(body);
+          });
+      });
+  }
+
+  static clickPerfGraph(index: number) {
+    VSExplorer.getActiveWebview().find(".diagram").eq(0).find("circle").eq(index).click({ force: true })
+  }
 }
