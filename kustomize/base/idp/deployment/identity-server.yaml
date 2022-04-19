@@ -186,6 +186,13 @@ spec:
               scheme: HTTPS
             initialDelaySeconds: 300
             periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /api/health-check/v1.0/health
+              port: 9443
+              scheme: HTTPS
+            failureThreshold: 30
+            periodSeconds: 10
           lifecycle:
             preStop:
               exec:
