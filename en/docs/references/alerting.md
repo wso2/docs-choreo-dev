@@ -1,4 +1,4 @@
-# Alerting
+# Alerts
 
 Choreo notifies you when your production applications are in trouble. Whenever a Critical error (Out Of Memory ) occurs or whenever an error is logged by your application, your organization admins will be notified via an email about this incident. This email also contains a link that will take you to the Observability view and also highlights the metrics and logs during the erroneous interval. The alerts are collected every 5 mins (alerting interval) and published to the users.
 
