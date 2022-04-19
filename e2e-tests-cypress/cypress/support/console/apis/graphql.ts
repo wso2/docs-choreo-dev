@@ -304,21 +304,6 @@ export class GraphQL {
     });
   }
 
-  private static sendPublishDeprecateRetireRequest(
-    apiId: string,
-    uuid: string,
-    token: string
-  ) {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const deprecateRequest = `${Cypress.env(
-      "apimSvcURL"
-    )}/api/am/publisher/v2/apis/change-lifecycle?organizationId=${uuid}&apiId=${apiId}&action=Publish`;
-    Utils.sendPostRequest(deprecateRequest, headers, {});
-    this.sendDeprecateRetireRequest(apiId, uuid, token);
-  }
-
   private static sendDeprecateRetireRequest(
     apiId: string,
     uuid: string,
