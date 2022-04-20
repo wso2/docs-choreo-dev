@@ -20,7 +20,11 @@ If you want to connect your own GitHub repository during component creation in C
     !!! info
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account.
 
-2. Select one or more repositories to install the **Choreo GitHub App**.
+2. Select one or more repositories to install the **[Choreo GitHub App](https://github.com/marketplace/choreo-apps)**.
+
+    !!! info
+        The Choreo GitHub App requires **Read and write access to code and pull requests** & **Read access to issues and metadata**. However, write permissions are used only to send a PR to the user repository, and Choreo will not push any changes directly.
+
 3. Select a **GitHub Account** and a **GitHub Repository** that has a **Choreo GitHub App** installation.
 
     !!! info
