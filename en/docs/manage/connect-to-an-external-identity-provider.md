@@ -125,7 +125,7 @@ Follow this procedure:
 
     ![Select an identity provider](../assets/img/references/external-identity-provider/select-an-identity-provider.png){.cInlineImage-half}
 
-   This displays the steps you need to follow to generate a token:
+    This displays the steps you need to follow to generate a token:
 
     ![User keys](../assets/img/references/external-identity-provider/user-keys.png){.cInlineImage-half}
    
