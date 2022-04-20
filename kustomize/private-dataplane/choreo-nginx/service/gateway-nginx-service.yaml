@@ -19,7 +19,7 @@ metadata:
   name: choreo-nginx-service
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "choreo-dev-rt-loadbalancer-subnet"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "choreo-poc-dp-loadbalancer-subnet"
 spec:
   selector:
     deployment: choreo-nginx
@@ -28,4 +28,4 @@ spec:
       targetPort: 9443
       name: https
   type: LoadBalancer
-  loadBalancerIP: 10.2.64.6
+  loadBalancerIP: 10.91.129.6
