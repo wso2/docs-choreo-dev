@@ -18,7 +18,7 @@ Due to this, the out-of-memory error can be very adverse for your component. The
 ![Out of Memory alert email](../assets/img/alerting/oom-email.png){.cInlineImage-full}
 
 This email contains details about your component and how many times this event occurred within the alert monitoring period.
-You can check the logs and the memory usage during that time period by clicking the **Check in Portal** button. This will take you to the Observability view of that particular component. You can also get support from WSO2 by using the **Contact us**  link provided at the bottom of  the alert email.
+You can check the logs and the memory usage during that time interval by clicking **Check in Portal**. This takes you to the Observability view of that particular component. You can also contact WSO2 for support via the **Contact us** link provided at the bottom of the alert email.
 
 #### How to troubleshoot Out of Memory error in the Observability view
 
