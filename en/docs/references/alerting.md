@@ -20,7 +20,7 @@ Due to this, the out-of-memory error can be very adverse for your component. The
 This email contains details about your component and the number of times this event occurred within the alert monitoring period.
 You can check the logs and the memory usage during that time interval by clicking **Check in Portal**. This takes you to the Observability view of that particular component. You can also contact WSO2 for support via the **Contact us** link provided at the bottom of the alert email.
 
-#### How to troubleshoot Out of Memory error in the Observability view
+#### Troubleshoot Out of Memory error
 
 When you click the Check in Portal button you will be redirected to the Observe page of the component in the Choreo console.
 
@@ -44,13 +44,11 @@ If you want to change the automatically selected time interval (i.e., one hour) 
 
     ![Custom Time range](../assets/img/alerting/custom-time-range.png){.cInlineImage-half}
 
-2. Specify the time range for which you want to view logs in the **Diagnostics View** tab by entering the required times in the **From** and **To** fields.
+2. Click **Custom**
+   
+3. Specify the time range for which you want to view logs in the **Diagnostics View** tab by entering the required times in the **From** and **To** fields.
 
-3. Click **Apply**.
-
-![Custom Time range](../assets/img/alerting/custom-time-range.png){.cInlineImage-half}
-
-Then you can select the **Custom** option, this will automatically add the time range that is already given by the alert email. You can modify them to see the **Diagnostic View** for that  specific time range.
+4. Click **Apply**.
 
 For more information on how to use the Observability view for root cause analysis, see [Root Cause Analysis](../observability/root-cause-analysis.md).
 
@@ -62,9 +60,7 @@ This alert is triggered when you use the **“log:printError()”** function in 
 
 This email provides details about the component. You can click **Check in Portal** to open the Observability view in the Choreo Console for this component. You can also get support from WSO2 via the **Contact us** link provided in the email.
 
-![Application Error email](../assets/img/alerting/application-error-email.png){.cInlineImage-full}
-
-#### How to troubleshoot Application error in the Observability view
+#### Troubleshoot Application error
 
 Once you click on the **Check in Portal** link you will be redirected to the observe page of the component in the Choreo console
 
