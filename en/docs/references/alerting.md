@@ -36,7 +36,7 @@ Item **2** is the one-hour time range around the point of time at which the erro
 
 When you hover over the graph, you can view the memory usage. You can note that it has increased steadily during the time interval and reached the maximum value. This causes the application to log the out-of-memory error and restart.
 
-### Select custom time range
+#### Select a custom time range
 
 If you want to change the automatically selected time interval (i.e., one hour) for debugging purposes, do as follows:
 
