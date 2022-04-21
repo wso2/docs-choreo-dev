@@ -26,9 +26,7 @@ When you click **Check in Portal**, you are redirected to the **Observe** tab of
 
 ![OOM Troubleshooting](../assets/img/alerting/oom-troubleshooting.png){.cInlineImage-full}
 
-The item marked **1** in the above image shows the time bin where the out-of-memory error that occurred is highlighted and the other logs that occurred during that time are displayed within the scrollable **Logs** column. It also contains the count of such logs.
-
-![Log bins](../assets/img/alerting/log-bins.png){.cInlineImage-half}
+The item marked **1** in the above image shows the time bin where the out-of-memory error that occurred is highlighted and the other logs that occurred during that time are displayed within the scrollable **Logs** column. The column also displays the number of times the log occurred.
 
 Item **2** is the one-hour time range around the point of time at which the error occurred (i.e. error time +/- 30mins). In the **Diagnostic View** tab, this time range is further divided into 5 similar-sized time bins. In this scenario, the size of each bin is 12 minutes. These 12-minute bins are marked **3**.
 
