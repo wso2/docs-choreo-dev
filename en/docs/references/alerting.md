@@ -9,7 +9,7 @@ When an alert occurs for the first time during the alerting interval, the system
 
 ## Types of alerts
 
-### Out Of Memory Alert
+### Out of Memory alert
 
 If the Kubernetes pod that runs your component goes out of memory, it restarts immediately. However, during that interval, the service becomes unavailable and the requests that it was processing at the time can become erroneous.
 Due to this, the out-of-memory error can be very adverse for your component. Therefore, when an out-of-memory error occurs, the admin members of the organization that owns the component receive an alert email similar to the sample given below.
@@ -34,21 +34,33 @@ Item **2** is the one-hour time range around the point of time at which the erro
 
 ![Diagnostic view](../assets/img/alerting/diagnostic-view-values.png){.cInlineImage-half}
 
-When you hover over the graph, you can see the Memory usage and it growing steadily and reaching the maximum value. This will cause the application to restart and it will log the Out of Memory error.
+When you hover over the graph, you can view the memory usage. You can note that it has increased steadily during the time interval and reached the maximum value. This causes the application to log the out-of-memory error and restart.
 
-#### Selecting custom time ranges
+Select custom time range
 
-If the time range that is selected automatically for you is not enough, you can select the time range that you desire and debug further. You can do this by clicking on the Time selection drop down bar shown by 1.
+If you want to change the automatically selected time interval (i.e., one hour) for debugging purposes, do as follows:
+
+1. Click the drop-down bar for time selection (marked in the image below).
+
+    ![Custom Time range](../assets/img/alerting/custom-time-range.png){.cInlineImage-half}
+
+2. Specify the time range for which you want to view logs in the **Diagnostics View** tab by entering the required times in the **From** and **To** fields.
+
+3. Click **Apply**.
 
 ![Custom Time range](../assets/img/alerting/custom-time-range.png){.cInlineImage-half}
 
 Then you can select the **Custom** option, this will automatically add the time range that is already given by the alert email. You can modify them to see the **Diagnostic View** for that  specific time range.
 
-For more information on how to use the Observability view for Root cause analysis check out the following [page](https://wso2.com/choreo/docs/observability/root-cause-analysis/). 
+For more information on how to use the Observability view for root cause analysis, see [Root Cause Analysis](../observability/root-cause-analysis.md).
 
-### Application Error Alert
+### Application Error alert
 
-This alert is triggered when you use the **“log:printError()”** function in your component and it logs an error. We consider that your component must have faced some serious problem and send you an email to notify you about this. The sample email will look like this. The email will provide details about the application and the **Check in Portal** link to view this log along with the request that caused this. You can also get support from WSO2 to troubleshoot this issue by using the **Contact us** link provided in the email.
+This alert is triggered when you use the **“log:printError()”** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via an email so that you can troubleshoot them. The following is a sample of such a notification email. 
+
+![Application Error email](../assets/img/alerting/application-error-email.png){.cInlineImage-full}
+
+This email provides details about the component. You can click **Check in Portal** to open the Observability view in the Choreo Console for this component. You can also get support from WSO2 via the **Contact us** link provided in the email.
 
 ![Application Error email](../assets/img/alerting/application-error-email.png){.cInlineImage-full}
 
