@@ -1,6 +1,6 @@
 # Alerts
 
-Alerts are notifications sent by the system when the components that you are running in the production environment are not functioning as expected. Whenever a critical error (e.g., Out Of Memory) occurs of when the component logs an error, members of your organization with admin rights are notified about it via an email. This email also contains a link to the [Observability](../observability/observability-overview.md) view where the metrics and logs that occurred during the time interval in which the error occurred are highlighted. The alerting interval is five minutes long. At every alerting interval, the alerts are collected and sent to the users.
+Alerts are notifications sent by the system when the components that run in the production environment are not functioning as expected. Whenever a critical error (e.g., Out Of Memory error) occurs, the component logs an error and notifies the members of your organization with admin rights via an email. This email contains a link to the [**Observability**](../observability/observability-overview.md) tab of the component where the metrics and logs applicable to the time interval in which the error occurred are highlighted. The system collects and sends alerts to admin users every five minutes. 
 
 
 ## Types of alert email notifications
