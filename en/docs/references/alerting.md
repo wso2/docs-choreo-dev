@@ -62,8 +62,16 @@ This email provides details about the component. You can click **Check in Portal
 
 #### Troubleshoot Application error
 
-Once you click on the **Check in Portal** link you will be redirected to the observe page of the component in the Choreo console
+Once you click **Check in Portal** in the notification email, you are redirected to the **Observe** tab of the component in the Choreo Console.
 
 ![Application Error Troubleshooting](../assets/img/alerting/application-error-troubleshooting.png){.cInlineImage-full}
 
-This will open the **Throughput and Latency** view and automatically select the request that caused this error log. This is shown in **1**, it will show you the throughput and latency of the particular request. The color of the graph will tell you whether that request is successful or an error. You can also see the status of the request; its latency and status code indicated in a green colored circle in **4**. You will also see the error log that triggered the alert email in **2**. The time range used to highlight the relevant error log is indicated in **3**.  But you can scroll up and down and get more logs within the time range specified in **5**. You can also diagnose further by changing the selected time ranges. See the (**Selecting custom time ranges**) section above.
+This opens the **Throughput and Latency** view in which the request that caused the error log is automatically selected (see **1**  in the image above). The graphs in this tab display the throughput and the latency for this request. The color of the graph indicates whether the request was successfully processed or whether it resulted in an error. 
+
+In addition, you can observe the following:
+
+- The error log that triggered the alert mail (marked **2** in the image).
+
+- The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes via the drop-down field marked **5** in the image. You can update this time range as explained under [Select custom time range](#select-custom-time-range).
+
+- The status and the latency of the request (marked **4** in the image).
