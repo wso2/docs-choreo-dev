@@ -18,11 +18,11 @@ Due to this, the out-of-memory error can be very adverse for your component. The
 ![Out of Memory alert email](../assets/img/alerting/oom-email.png){.cInlineImage-full}
 
 This email contains details about your component and the number of times this event occurred within the alert monitoring period.
-You can check the logs and the memory usage during that time interval by clicking **Check in Portal**. This takes you to the Observability view of that particular component. You can also contact WSO2 for support via the **Contact us** link provided at the bottom of the alert email.
+You can check the logs and the memory usage during that time interval by clicking **Check in Portal**. This takes you to the **Observability** tab of that particular component. You can also contact WSO2 for support via the **Contact us** link provided at the bottom of the alert email.
 
 #### Troubleshoot Out of Memory error
 
-When you click the Check in Portal button you will be redirected to the Observe page of the component in the Choreo console.
+When you click **Check in Portal**, you are redirected to the **Observe** tab of the component in the Choreo Console.
 
 ![OOM Troubleshooting](../assets/img/alerting/oom-troubleshooting.png){.cInlineImage-full}
 
@@ -30,7 +30,7 @@ The item marked  **1** in the above image shows the time bin where the Out of Me
 
 ![Log bins](../assets/img/alerting/log-bins.png){.cInlineImage-half}
 
-Item **2** is the one-hour time range around the point of time at which the error occurred (i.e. error time +/- 30mins). In the **Diagnostic View** tab, this  time range is further divided into 5 similar sized time bins. In this scenario, the size of each bin is 12 minutes. These 12-minute bins are shown by **3**.
+Item **2** is the one-hour time range around the point of time at which the error occurred (i.e. error time +/- 30mins). In the **Diagnostic View** tab, this time range is further divided into 5 similar-sized time bins. In this scenario, the size of each bin is 12 minutes. These 12-minute bins are marked **3**.
 
 ![Diagnostic view](../assets/img/alerting/diagnostic-view-values.png){.cInlineImage-half}
 
@@ -44,13 +44,13 @@ If you want to change the automatically selected time interval (i.e., one hour) 
 
     ![Custom Time range](../assets/img/alerting/custom-time-range.png){.cInlineImage-half}
 
-2. Click **Custom**
+2. Click **Custom**.
    
 3. Specify the time range for which you want to view logs in the **Diagnostics View** tab by entering the required times in the **From** and **To** fields.
 
 4. Click **Apply**.
 
-For more information on how to use the Observability view for root cause analysis, see [Root Cause Analysis](../observability/root-cause-analysis.md).
+For more information on how to use the **Observe** tab for root cause analysis, see [Root Cause Analysis](../observability/root-cause-analysis.md).
 
 ### Application Error alert
 
@@ -58,9 +58,9 @@ This alert is triggered when you use the **“log:printError()”** function in 
 
 ![Application Error email](../assets/img/alerting/application-error-email.png){.cInlineImage-full}
 
-This email provides details about the component. You can click **Check in Portal** to open the Observability view in the Choreo Console for this component. You can also get support from WSO2 via the **Contact us** link provided in the email.
+This email provides details about the component. You can click **Check in Portal** to open the **Observe** tab in the Choreo Console for this component. You can also get support from WSO2 via the **Contact us** link provided in the email.
 
-#### Troubleshoot Application error
+#### Troubleshoot application error
 
 Once you click **Check in Portal** in the notification email, you are redirected to the **Observe** tab of the component in the Choreo Console.
 
@@ -72,6 +72,6 @@ In addition, you can observe the following:
 
 - The error log that triggered the alert mail (marked **2** in the image).
 
-- The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes via the drop-down field marked **5** in the image. You can update this time range as explained under [Select custom time range](#select-custom-time-range).
+- The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes. This time range is selected via the drop-down field marked **5** in the image. You can update this time range as explained under [Select custom time range](#select-custom-time-range).
 
 - The status and the latency of the request (marked **4** in the image).
