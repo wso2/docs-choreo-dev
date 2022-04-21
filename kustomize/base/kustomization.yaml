@@ -6,6 +6,7 @@ resources:
 - apim-analytics
 - choreo-connect
 - idp
+- private-global-adapters
 - system
 
 commonLabels:
