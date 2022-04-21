@@ -12,7 +12,7 @@ When an alert occurs for the first time during the alerting interval, the system
 ### Out Of Memory Alert
 
 If the Kubernetes pod that runs your component goes out of memory, it restarts immediately. However, during that interval, the service becomes unavailable and the requests that it was processing at the time can become erroneous.
-Because of this reason this error is very adverse for your application. Once an Out Of Memory occurs you will get an alert email like the one shown below.
+Due to this, the out-of-memory error can be very adverse for your component. Therefore, when an out-of-memory error occurs, the admin members of the organization that owns the component receive an alert email similar to the sample given below.
 
 
 ![Out of Memory alert email](../assets/img/alerting/oom-email.png){.cInlineImage-full}
