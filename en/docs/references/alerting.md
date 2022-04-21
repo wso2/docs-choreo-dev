@@ -11,7 +11,7 @@ When an alert occurs for the first time during the alerting interval, the system
 
 ### Out Of Memory Alert
 
-If the pod running your Choreo component goes out of memory, it will restart automatically. but during that interval the service will be unavailable and all the currently processing requests may become erroneous.
+If the Kubernetes pod that runs your component goes out of memory, it restarts immediately. However, during that interval, the service becomes unavailable and the requests that it was processing at the time can become erroneous.
 Because of this reason this error is very adverse for your application. Once an Out Of Memory occurs you will get an alert email like the one shown below.
 
 
