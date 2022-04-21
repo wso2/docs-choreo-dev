@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { ONE_HOUR } from "../constants";
 import { Utils } from "../utils";
 
@@ -60,7 +59,6 @@ export class GraphQL {
       e2eProjects.forEach((project) => {
         if (this.isProjectOld(project.name)) {
           this.deleteComponentsInProject(project.id, orgHandle, token);
-          cy.wait(5000);
           this.deleteProject(orgId, project.id, token);
         }
       });
@@ -144,8 +142,7 @@ export class GraphQL {
       if (response.status === SUCCESS_STATUS_CODE) {
         response.body.data.components.forEach((component) => {
           const { handler } = component;
-          const { uuid } = Cypress.env("userData");
-          cy.log(`uuid ${uuid}, component handler ${handler}`);
+
           this.changeComponentLifeCycle(projectId, handler, token);
           this.deleteComponent(component.id, projectId, orgHandle, token);
         });
@@ -228,6 +225,7 @@ export class GraphQL {
     componentHandler,
     token: string
   ) {
+    cy.log(`changeComponentLifeCycle ==> Project Id ${projectId}`);
     const query = {
       query: `query{    component(      projectId: "${projectId}"      componentHandler: "${componentHandler}"    )
 {      id,     
@@ -272,7 +270,7 @@ export class GraphQL {
       Authorization: `Bearer ${token}`,
     };
 
-    this.callGraphQL(token,query).then((res) => {
+    this.callGraphQL(token, query).then((res) => {
       const apiVersion: [] = res.body.data.component.apiVersions;
       apiVersion.forEach((e) => {
         const { proxyId } = e;
@@ -285,10 +283,7 @@ export class GraphQL {
     });
   }
 
-  private static deprecateComponent(
-    apiId: string,
-    token: string
-  ) {
+  private static deprecateComponent(apiId: string, token: string) {
     const { uuid } = Cypress.env("userData");
     const statusRequest = `${Cypress.env(
       "apimSvcURL"
