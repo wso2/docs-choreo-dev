@@ -90,7 +90,7 @@ command -v helm >/dev/null 2>&1 || {
 #helm install \
 #  cert-manager jetstack/cert-manager \
 #  --namespace cert-manager \
-#  --version v1.2.0 \
+#  --version v1.8.0 \
 #  -n cert-manager \
 #  --set installCRDs=true
 
