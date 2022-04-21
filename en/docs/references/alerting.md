@@ -26,7 +26,7 @@ When you click the Check in Portal button you will be redirected to the Observe 
 
 ![OOM Troubleshooting](../assets/img/alerting/oom-troubleshooting.png){.cInlineImage-full}
 
-**1** shows the time bin where the Out of Memory error occurred will be highlighted for you and the logs that occurred during that time will be given within the scrollable Logs column. It will also contain the counts of how many such logs occurred.
+The item marked  **1** in the above image shows the time bin where the Out of Memory error that occurred is highlighted and the other logs that occurred during that time are displayed within the scrollable Logs column. It also contains the count of such logs.
 
 ![Log bins](../assets/img/alerting/log-bins.png){.cInlineImage-half}
 
