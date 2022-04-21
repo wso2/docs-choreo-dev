@@ -7,7 +7,7 @@ Alerts are notifications sent by the system when the components that run in the 
 
 When an alert occurs for the first time during the alerting interval, the system sends an alert email immediately. When there are multiple occurrences of the same type of alert for a particular component, the system suppresses the alerts for 15 minutes and generates a single email that specifies the event count to denote how many such errors occurred during an alerting interval.
 
-## Types of Alerts
+## Types of alerts
 
 ### Out Of Memory Alert
 
