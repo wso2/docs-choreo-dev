@@ -5,7 +5,7 @@ Alerts are notifications sent by the system when the components that you are run
 
 ## Types of Alert email notifications
 
-When an alert occurs for the first time during the alerting interval, it is sent immediately. However, if there are multiple occurrences of the same type of alert for a particular component, then those alerts are suppressed and sent as one email with the **Event Count** to denote how many such alerts occurred during the alerting period. The suppression period used in the Alerting feature is 15 mins.
+When an alert occurs for the first time during the alerting interval, the system sends an alert email immediately. When there are multiple occurrences of the same type of alert for a particular component, the system suppresses the alerts for 15 minutes and generates a single email that specifies the event count to denote how many such errors occurred during an alerting interval.
 
 ## Types of Alerts
 
