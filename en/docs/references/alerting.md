@@ -72,6 +72,6 @@ In addition, you can observe the following:
 
 - The error log that triggered the alert mail (marked **2** in the image).
 
-- The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes. This time range is selected via the drop-down field marked **5** in the image. You can update this time range as explained under [Select custom time range](#select-custom-time-range).
+- The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes. This time range is selected via the drop-down field marked **5** in the image. You can update this time range as explained under [Select custom time range](#select-a-custom-time-range).
 
 - The status and the latency of the request (marked **4** in the image).
