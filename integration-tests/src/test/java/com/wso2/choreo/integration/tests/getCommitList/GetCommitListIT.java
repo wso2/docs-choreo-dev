@@ -52,7 +52,6 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
 
   private static String componentId;
   private static String accessToken;
-  private static String projectsAPIAccessToken;
 
   @Autowired
   private HttpClient choreoProjectsTestClient;
@@ -63,14 +62,13 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
       ComponentCreationException, ComponentRetrieveException, ComponentCreationTimeoutException,
       TokenRetrievalException {
     TokenHandler tokenHandler = new TokenHandler();
-    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
-    projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-    ChoreoProject project = org.createProject(projectsAPIAccessToken);
+    ChoreoProject project = org.createProject(accessToken);
     RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
     RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project
-        .createChoreoComponent(restApiComponentBuilder, accessToken, projectsAPIAccessToken);
+        .createChoreoComponent(restApiComponentBuilder, accessToken);
     componentId = restApiComponent.getId();
   }
 
@@ -101,7 +99,7 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
         .send()
         .post("/graphql")
         .message()
-        .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+        .header(HttpHeaders.AUTHORIZATION, accessToken)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .body(requestBody)
         .accept(String.valueOf(MediaType.APPLICATION_JSON)));

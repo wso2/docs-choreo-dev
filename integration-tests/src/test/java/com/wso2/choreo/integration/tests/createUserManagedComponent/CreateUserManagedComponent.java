@@ -45,7 +45,6 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  */
 public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static String projectsAPIAccessToken;
     private String orgHandle;
     private String orgId;
     private String orgUUID;
@@ -132,14 +131,13 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
         TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
-        projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         orgHandle = org.getOrgHandle();
         orgId = org.getOrgId();
         orgUUID = org.getOrgUUID();
-        ChoreoProject project = org.createProject(projectsAPIAccessToken);
+        ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
     }
 
@@ -212,7 +210,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(componentRequestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -290,7 +288,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -358,7 +356,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                                 .send()
                                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(listPrRequestBody),
@@ -388,7 +386,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -411,7 +409,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
             NoLatestCommitHashFoundException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException {
-        JsonArray commitHistory = testComponent.getCommitHistory(projectsAPIAccessToken);
+        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
         String latestVersionId = testComponent.getLatestApiVersion().getId();
         String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
@@ -474,7 +472,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -522,7 +520,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                                 .send()
                                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .body(requestBody)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(choreoProjectsTestClient)
@@ -562,7 +560,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -669,7 +667,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -707,7 +705,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
