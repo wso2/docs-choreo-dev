@@ -9,7 +9,7 @@ When an alert occurs for the first time during the alerting interval, the system
 
 ## Types of alerts
 
-### Out of Memory alert
+### Out-of-memory alert
 
 If the Kubernetes pod that runs your component goes out of memory, it restarts immediately. However, during that interval, the service becomes unavailable and the requests that it was processing at the time can become erroneous.
 Due to this, the out-of-memory error can be very adverse for your component. Therefore, when an out-of-memory error occurs, the admin members of the organization that owns the component receive an alert email similar to the sample given below.
