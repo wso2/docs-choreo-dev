@@ -1,24 +1,24 @@
-# Alerting
+# Alerts
 
-Choreo notifies you when your production applications are in trouble. Whenever a Critical error (Out Of Memory ) occurs or whenever an error is logged by your application, your organization admins will be notified via an email about this incident. This email also contains a link that will take you to the Observability view and also highlights the metrics and logs during the erroneous interval. The alerts are collected every 5 mins (alerting interval) and published to the users.
+Alerts are notifications sent by the system when the components that you are running in the production environment are not functioning as expected. Whenever a critical error (e.g., Out Of Memory) occurs of when the component logs an error, members of your organization with admin rights are notified about it via an email. This email also contains a link to the [Observability](../observability/observability-overview.md) view where the metrics and logs that occurred during the time interval in which the error occurred are highlighted. The alerting interval is five minutes long. At every alerting interval, the alerts are collected and sent to the users.
 
 
 ## Types of Alert email notifications
 
-When an alert occurs for the first time during the alerting interval, it is sent immediately. However, if there are multiple occurrences of the same type of alert for a particular component, then those alerts are suppressed and sent as one email with the **Event Count** to denote how many such alerts occurred during the alerting period. The suppression period used in the Alerting feature is 15 mins.
+When an alert occurs for the first time during the alerting interval, the system sends an alert email immediately. When there are multiple occurrences of the same type of alert for a particular component, the system suppresses the alerts for 15 minutes and generates a single email that specifies the event count to denote how many such errors occurred during an alerting interval.
 
 ## Types of Alerts
 
 ### Out Of Memory Alert
 
-If the pod running your Choreo component goes out of memory, it will restart automatically. but during that interval the service will be unavailable and all the currently processing requests may become erroneous.
-Because of this reason this error is very adverse for your application. Once an Out Of Memory occurs you will get an alert email like the one shown below.
+If the Kubernetes pod that runs your component goes out of memory, it restarts immediately. However, during that interval, the service becomes unavailable and the requests that it was processing at the time can become erroneous.
+Due to this, the out-of-memory error can be very adverse for your component. Therefore, when an out-of-memory error occurs, the admin members of the organization that owns the component receive an alert email similar to the sample given below.
 
 
 ![Out of Memory alert email](../assets/img/alerting/oom-email.png){.cInlineImage-full}
 
 This email contains details about your component and how many times this event occurred within the alert monitoring period.
-You can check the logs and the memory usage during that time period by clicking the **Check in Portal** button. This will take you to the Observability view of that particular component. You can also get support from WSO2 by using the **Contact us**  link provided at the bottom of  the alert email.
+You can check the logs and the memory usage during that time interval by clicking **Check in Portal**. This takes you to the Observability view of that particular component. You can also contact WSO2 for support via the **Contact us** link provided at the bottom of the alert email.
 
 #### How to troubleshoot Out of Memory error in the Observability view
 
@@ -26,11 +26,11 @@ When you click the Check in Portal button you will be redirected to the Observe 
 
 ![OOM Troubleshooting](../assets/img/alerting/oom-troubleshooting.png){.cInlineImage-full}
 
-**1** shows the time bin where the Out of Memory error occurred will be highlighted for you and the logs that occurred during that time will be given within the scrollable Logs column. It will also contain the counts of how many such logs occurred.
+The item marked  **1** in the above image shows the time bin where the Out of Memory error that occurred is highlighted and the other logs that occurred during that time are displayed within the scrollable Logs column. It also contains the count of such logs.
 
 ![Log bins](../assets/img/alerting/log-bins.png){.cInlineImage-half}
 
-The link given in the alert email will select a 1hour time range around the time in which the error occurred (i.e. error time +/- 30mins). This is shown in the diagram as **2**. The **Diagnostic View** is divided into 5 similar sized time bins. In this case, the size of each bin will be 12 mins. This is shown by **3**.
+Item **2** is the one-hour time range around the point of time at which the error occurred (i.e. error time +/- 30mins). In the **Diagnostic View** tab, this  time range is further divided into 5 similar sized time bins. In this scenario, the size of each bin is 12 minutes. These 12-minute bins are shown by **3**.
 
 ![Diagnostic view](../assets/img/alerting/diagnostic-view-values.png){.cInlineImage-half}
 
