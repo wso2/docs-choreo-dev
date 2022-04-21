@@ -30,7 +30,7 @@ The item marked  **1** in the above image shows the time bin where the Out of Me
 
 ![Log bins](../assets/img/alerting/log-bins.png){.cInlineImage-half}
 
-The link given in the alert email will select a 1hour time range around the time in which the error occurred (i.e. error time +/- 30mins). This is shown in the diagram as **2**. The **Diagnostic View** is divided into 5 similar sized time bins. In this case, the size of each bin will be 12 mins. This is shown by **3**.
+Item **2** is the one-hour time range around the point of time at which the error occurred (i.e. error time +/- 30mins). In the **Diagnostic View** tab, this  time range is further divided into 5 similar sized time bins. In this scenario, the size of each bin is 12 minutes. These 12-minute bins are shown by **3**.
 
 ![Diagnostic view](../assets/img/alerting/diagnostic-view-values.png){.cInlineImage-half}
 
