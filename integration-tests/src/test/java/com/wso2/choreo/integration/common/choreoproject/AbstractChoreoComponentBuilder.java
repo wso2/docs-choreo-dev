@@ -48,7 +48,7 @@ public abstract class AbstractChoreoComponentBuilder {
      * @param accessToken OAuth token to invoke the Chorea backend
      * @return A ChoreoComponent
      */
-    public abstract ChoreoComponent createChoreoComponent(String accessToken, String projectsAPIAccessToken) throws
+    public abstract ChoreoComponent createChoreoComponent(String accessToken) throws
             IOException, InterruptedException, ComponentCreationException, ComponentCreationStatusCheckException,
             ComponentRetrieveException, ComponentCreationTimeoutException;
 
