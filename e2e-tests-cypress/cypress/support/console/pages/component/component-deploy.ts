@@ -108,14 +108,27 @@ export class ComponentDeployPage {
       .invoke("attr", "value");
   }
 
+
   static stopAllDeployment() {
-    cy.wait(2000);
-    cy.get('[data-cyid="btn-stop-redeploy"]', {
+    cy.wait(5000);
+    this.stopDevContainer();
+    this.stopProdContainer();
+  }
+
+  private static stopDevContainer() {
+    cy.get('[data-testid="btn-stop-redeploy"]', {
       timeout: 120000,
     })
-      .should("exist")
-      .click({ multiple: true });
+      .eq(0)
+      .click();
+    cy.contains("Redeploy", { timeout: 300000 }).should("have.length", 1);
+  }
 
-    cy.contains("Redeploy").should("have.length", 2);
+  private static stopProdContainer() {
+    cy.get('[data-testid="btn-stop-redeploy"]', {
+      timeout: 120000,
+    })
+      .eq(1)
+      .click();
   }
 }
