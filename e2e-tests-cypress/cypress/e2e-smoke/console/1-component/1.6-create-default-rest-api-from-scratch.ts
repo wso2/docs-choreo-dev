@@ -18,6 +18,7 @@ import { Curl } from "../../../support/console/pages/component/UI-components/cur
 import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
+import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
@@ -175,10 +176,12 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it("Verify manage functionality", () => {
+    it("Verify manage functionality and Publish Connector", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector();
+    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+      "be.visible"
+    );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });

@@ -140,14 +140,6 @@ describe("Verify project creation functionality", () => {
     //   SwaggerUI.GetResponse();
   });
 
-  it("Publish connector", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
-  });
-
   it("Verify api invoke urls", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
