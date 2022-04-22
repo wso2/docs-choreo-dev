@@ -138,10 +138,10 @@ spec:
         resources:
           limits:
             cpu: 500m
-            memory: 768Mi
+            memory: 1Gi
           requests:
-            cpu: 300m
-            memory: 512Mi
+            cpu: 500m
+            memory: 1Gi
       volumes:
       - name: secret-telemetry
         csi:
