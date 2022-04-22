@@ -10,7 +10,7 @@ CREATE TABLE [cluster](
     [cluster_id] VARCHAR(50) NOT NULL,
     [region] VARCHAR(40) NOT NULL,
     [hostname] VARCHAR(50) NOT NULL UNIQUE,
-    [total] INT NOT NULL,
+    [codeserver_count] INT NOT NULL,
     [last_clean_timestamp] DATETIME DEFAULT GETUTCDATE(),
     CONSTRAINT PK_cluster PRIMARY KEY( [cluster_id] )
 )
@@ -25,20 +25,20 @@ CREATE TABLE [codeserver](
     [project_id] NVARCHAR(60) NOT NULL,
     [cluster_id] VARCHAR(50) NOT NULL,
     CONSTRAINT PK_codeserver PRIMARY KEY ([id]),
-    CONSTRAINT UC_codeserver UNIQUE ([user_id],[organization_id],[component_id],[project_id]),
+    CONSTRAINT UC_codeserver UNIQUE ([user_id], [organization_id], [component_id], [project_id]),
     CONSTRAINT FK_cluster_codeserver FOREIGN KEY ([cluster_id]) REFERENCES [cluster]([cluster_id])
     ON DELETE CASCADE
     ON UPDATE CASCADE
 )
 GO
 
-CREATE TRIGGER [TRG_deducte_codeserver_total] 
+CREATE TRIGGER [TRG_deduct_codeserver_total] 
 ON [codeserver]
 AFTER DELETE
 AS BEGIN 
     SET NOCOUNT ON;
     UPDATE [cluster]
-    SET [total] = [total] - 1
-    WHERE [cluster_id] IN (SELECT [cluster_id] FROM deleted) AND [total] >= 1
+    SET [codeserver_count] = [codeserver_count] - 1
+    WHERE [cluster_id] IN (SELECT [cluster_id] FROM deleted) AND [codeserver_count] >= 1
 END
 GO
