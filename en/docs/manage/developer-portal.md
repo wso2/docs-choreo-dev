@@ -36,7 +36,7 @@ The subscription process is authenticated in Choreo using OAuth 2.0 by default. 
 
 ![Authentication](../assets/img/api-management/authentication.png){.cInlineImage-full}
 
-### Business Plans
+### Business plans
 Developers need to select a business plan for each API subscription. The business plan determines the number of requests allowed for the API per minute. Therefore, this is also the rate limit that applies to a subscription.
 
 ![Business Plans](../assets/img/api-management/business-plans.png){.cInlineImage-full}
