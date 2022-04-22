@@ -112,6 +112,7 @@ html .md-typeset .superfences-tabs > label:hover {
 
 .md-search__input {
     background-color: #dedede;
+    padding-left: 3rem;
 }
 
 .md-search__input::placeholder {
