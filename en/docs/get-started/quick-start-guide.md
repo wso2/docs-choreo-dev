@@ -98,8 +98,8 @@ Follow this procedure to further develop the API by adding a new resource and si
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
-     | **Type** | `string` |
-     | **name** | `message` |
+     | **Variable Type** | `string` |
+     | **Variable Name** | `message` |
      | **string** |`"Hello "+ name`|
 
      ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
@@ -108,7 +108,6 @@ Follow this procedure to further develop the API by adding a new resource and si
 
 9. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
-
    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
 10. Click **Save**.
