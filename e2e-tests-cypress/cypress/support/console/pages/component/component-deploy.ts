@@ -121,7 +121,7 @@ export class ComponentDeployPage {
     })
       .eq(0)
       .click();
-    cy.contains("Redeploy", { timeout: 300000 }).should("have.length", 1);
+    cy.contains("Redeploy", { timeout: 120000 }).should("have.length", 1);
   }
 
   private static stopProdContainer() {

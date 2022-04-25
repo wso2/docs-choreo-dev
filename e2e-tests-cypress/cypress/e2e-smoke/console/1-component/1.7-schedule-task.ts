@@ -33,7 +33,8 @@ describe("Schedule task", () => {
   const API_Name = Utils.generateComponentName("sch");
   const API_BASE_PATH = Utils.generateBasePath();
   const commitMessage = "adding task method";
-  const EXPECTED_RESULT ='{"userId":1,"id":1,"title":"delectus aut autem","completed":false}'
+  const EXPECTED_RESULT =
+    '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
 
   before(() => {
     LoginPage.login();
@@ -44,11 +45,7 @@ describe("Schedule task", () => {
 
   it("Creating a schedule task", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     ScheduleTask.selectTask();
     ScheduleTask.createTask(API_Name, PROJECT_DESCRIPTION);
@@ -87,11 +84,11 @@ describe("Schedule task", () => {
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
     ComponentObservePage.gotoLogs(LONG_TIME);
-    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT).should('be.true')
+    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT).should("be.true");
   });
-  
-  it("Verify application suspension",()=>{
+
+  it("Verify application suspension", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
-  })
+    ComponentDeployPage.stopAllDeployment();
+  });
 });

@@ -16,7 +16,7 @@ import { Utils } from "../utils";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
-export const NO_CONTENT_STATUS_CODE = 201;
+export const NO_CONTENT_STATUS_CODE = 204;
 export class GraphQL {
   static createDefaultProjectIfNotExists(
     orgId: number,
@@ -317,7 +317,7 @@ export class GraphQL {
     Utils.sendPostRequest(retireRequest, headers, {});
   }
 
-  private static deleteConnectors(pkg: any, token) {
+  private static deleteConnector(pkg: any, token) {
     const { organization, name, version } = pkg;
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -334,7 +334,7 @@ export class GraphQL {
     });
   }
 
-  private static getOrgConnectors(token: string) {
+  private static deleteConnectors(token: string) {
     const { handle } = Cypress.env("userData");
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -343,7 +343,7 @@ export class GraphQL {
     Utils.sendGetRequest(url, headers).then((res) => {
       const packages = res.body as [];
       if (packages.length > 0) {
-        packages.forEach((p) => this.deleteConnectors(p, token));
+        packages.forEach((p) => this.deleteConnector(p, token));
       }
     });
   }
