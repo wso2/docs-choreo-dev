@@ -1,0 +1,15 @@
+resources:
+  - adapter
+  - am
+  - tm
+
+configMapGenerator:
+  - name: cm-feature-flags
+    behavior: create
+    literals:
+      - FEATURE_FLAG_DEFAULT=true
+      - FEATURE_FLAG_REPLACE_EVENT_HUB=true
+      - FEATURE_STEP_QUOTA_LIMITING=true
+      - FEATURE_FLAG_MONGODB_DIRECT_SEARCH=true
+      - FEATURE_FLAG_URL_VALIDATION=true
+      - LOG4J_FORMAT_MSG_NO_LOOKUPS=true

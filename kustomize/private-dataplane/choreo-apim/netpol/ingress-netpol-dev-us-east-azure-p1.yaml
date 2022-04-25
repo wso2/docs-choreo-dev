@@ -1,0 +1,12 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-router-ingress-network-policy-east-azure-p1
+spec:
+  policyTypes:
+  - Ingress
+  podSelector:
+    matchLabels:
+      choreo.component: choreo-connect-deployment-dev-us-east-azure-p1
+  ingress:
+  - {}

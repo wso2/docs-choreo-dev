@@ -1,0 +1,7 @@
+configMapGenerator:
+  - name: mgw-adapter-enforcer-conf
+    behavior: create
+    files:
+      - config.toml
+      - log4j2.properties
+      - log_config.toml
