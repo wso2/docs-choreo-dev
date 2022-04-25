@@ -98,14 +98,6 @@ spec:
               name: secret-choreo-connect
               readOnly: true
               subPath: ENFORCER_KEYSTORE_CERTIFICATE
-            - mountPath: /home/wso2/security/jwt/key.pem
-              name: secret-choreo-connect
-              readOnly: true
-              subPath: ENFORCER_JWT_KEYSTORE_KEY
-            - mountPath: /home/wso2/security/jwt/cert.pem
-              name: secret-choreo-connect
-              readOnly: true
-              subPath: ENFORCER_JWT_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/conf
               name: enforcer-config
             - mountPath: /home/wso2/lib/dropins
