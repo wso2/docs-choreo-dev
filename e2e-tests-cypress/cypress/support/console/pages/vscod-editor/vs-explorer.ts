@@ -76,12 +76,13 @@ export class VSExplorer {
   }
 
   static creteNewBranch(branchName:string){
+    cy.get("[title*='.bal Diagram']",{timeout:300000}).should('be.visible')
+    cy.wait(6000)
     cy.get('[id="wso2.ballerina"]',{timeout:300000}).should('be.visible')
     cy.get('[id="status.scm"]',{timeout:200000}).eq(0).click()
     cy.get('.quick-input-widget',{timeout:180000}).should('be.visible')
     cy.get('[aria-describedby="quickInput_message"]').type(`${branchName}{enter}`)
     cy.wait(3000)
-
   }
 
   static commitPush(commitMessage) {
@@ -90,7 +91,7 @@ export class VSExplorer {
       "rm /config/workspace/.githooks/pre-commit",
       2000
     );
-    this.enterCommandInTerminal("git add .", 4000);
+    this.enterCommandInTerminal("git add .", 2000);
     this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 4000);
     this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
   }

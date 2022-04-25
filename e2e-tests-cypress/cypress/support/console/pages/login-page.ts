@@ -52,7 +52,17 @@ export class LoginPage {
   }
 
   static navigateToCodespace() {
-    cy.visit(Cypress.env(`accessURL`));
+    const csurl = Cypress.env(`accessURL`);
+    cy.visit(csurl);
+    // cy.intercept(csurl).then(() => {
+    //   cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
+    //     path: "/",
+    //     domain: "consolev2.preview-dv.choreo.dev",
+    //     secure: true,
+    //     httpOnly: true,
+    //     sameSite: "no_restriction",
+    //   });
+    // });
   }
 
   static login() {
@@ -71,11 +81,11 @@ export class LoginPage {
       timeout: 180000,
     }).should("be.visible");
     cy.url().then((url) => {
-      cy.log(url)
+      cy.log(url);
       if (url.includes("sample=true")) {
         const { handle } = Cypress.env("userData");
         const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
-        cy.wait(5000)
+        cy.wait(5000);
         cy.visit(tmpURL);
       }
     });
@@ -93,7 +103,7 @@ export class LoginPage {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
     cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
-      cy.log(JSON.stringify(res.requestHeaders))
+      cy.log(JSON.stringify(res.requestHeaders));
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
@@ -131,7 +141,7 @@ export class LoginPage {
         userEmail: userEmail,
         orgId: userOrg.id,
         handle: userOrg.handle,
-        uuid: userOrg.uuid
+        uuid: userOrg.uuid,
       };
       cy.log("userData: ", JSON.stringify(userData));
       Cypress.env("userData", userData);
@@ -168,4 +178,7 @@ export class LoginPage {
       });
     });
   }
+
+
+
 }
