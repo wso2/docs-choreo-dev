@@ -1,0 +1,9 @@
+configMapGenerator:
+  - name: choreo-apim-tm-1-conf
+    behavior: create
+    files:
+      - tm-1-deployment.toml
+  - name: choreo-apim-tm-2-conf
+    behavior: create
+    files:
+      - tm-2-deployment.toml
