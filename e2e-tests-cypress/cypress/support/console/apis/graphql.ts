@@ -142,7 +142,7 @@ export class GraphQL {
       if (response.status === SUCCESS_STATUS_CODE) {
         response.body.data.components.forEach((component) => {
           const { handler } = component;
-          this.getOrgConnectors(token);
+          this.deleteConnectors(token);
           this.changeComponentLifeCycle(projectId, handler, token);
           this.deleteComponent(component.id, projectId, orgHandle, token);
         });
