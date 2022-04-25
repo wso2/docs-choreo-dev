@@ -98,6 +98,7 @@ helm install \
   --set cainjector.replicaCount=2
 
 echo "--- Creating secrets for DNS-01 challenge..."
+DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id ${DNS01_CHALLENGE_CLIENT_ID} --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
 kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
 echo "--- Installing Emberstack reflector..."
@@ -107,7 +108,10 @@ helm repo update
 helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
 echo "--- Creating AKS view cluster role binding to AAD"
+cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
+sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml
 kubectl apply -f conf/view-cluster-role-binding.yaml
+mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
 echo "--- Add OMS Agent Config"
 kubectl apply -f oms/container-azm-ms-agentconfig.yaml
