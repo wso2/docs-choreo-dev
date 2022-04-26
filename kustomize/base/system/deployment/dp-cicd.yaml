@@ -58,6 +58,11 @@ spec:
                 secretKeyRef:
                   key: CHOREO-GITHUB-APP-PRIVATE-KEY
                   name: secret-dp-cicd
+            - name: LOG-ANALYTICS-KEY
+              valueFrom:
+                secretKeyRef:
+                  key: LOG-ANALYTICS-KEY
+                  name: secret-dp-cicd
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
