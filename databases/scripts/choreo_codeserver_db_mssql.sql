@@ -9,7 +9,7 @@ IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[c
 CREATE TABLE [cluster](
     [cluster_id] VARCHAR(50) NOT NULL,
     [region] VARCHAR(40) NOT NULL,
-    [hostname] VARCHAR(50) NOT NULL UNIQUE,
+    [hostname] VARCHAR(253) NOT NULL UNIQUE,
     [codeserver_count] INT NOT NULL,
     [last_clean_timestamp] DATETIME DEFAULT GETUTCDATE(),
     CONSTRAINT PK_cluster PRIMARY KEY( [cluster_id] )
