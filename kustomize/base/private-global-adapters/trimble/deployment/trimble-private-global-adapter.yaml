@@ -32,7 +32,7 @@ spec:
     metadata:
       labels:
         choreo.component: trimble-private-global-adapter
-        private.ga.enabled: true
+        global.adapter: private
         antiaffinity: trimble-private-global-adapter
     spec:
       affinity:
