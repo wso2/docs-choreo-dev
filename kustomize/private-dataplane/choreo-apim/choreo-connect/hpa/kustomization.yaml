@@ -1,3 +1,2 @@
 resources:
-- default-p1.yaml
-- dev-us-east-azure-p1.yaml
+  - default-p1.yaml
