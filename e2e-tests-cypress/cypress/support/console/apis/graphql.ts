@@ -25,10 +25,6 @@ export class GraphQL {
   ) {
     this.getProjects(orgId, token).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      // const projects = response.body.data.projects as [];
-      // if (projects === undefined || !projects.length) {
-      //   this.createDefaultProject(orgId, orgHandle, token);
-      // }
     });
   }
 
@@ -341,10 +337,13 @@ export class GraphQL {
     };
     const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
     Utils.sendGetRequest(url, headers).then((res) => {
+  
       const packages = res.body as [];
       if (packages.length > 0) {
         packages.forEach((p) => this.deleteConnector(p, token));
       }
     });
   }
+
+
 }

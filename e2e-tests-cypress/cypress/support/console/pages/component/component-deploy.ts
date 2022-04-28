@@ -108,7 +108,6 @@ export class ComponentDeployPage {
       .invoke("attr", "value");
   }
 
-
   static stopAllDeployment() {
     cy.wait(5000);
     this.stopDevContainer();
@@ -116,19 +115,10 @@ export class ComponentDeployPage {
   }
 
   private static stopDevContainer() {
-    cy.get('[data-testid="btn-stop-redeploy"]', {
-      timeout: 120000,
-    })
-      .eq(0)
-      .click();
-    cy.contains("Redeploy", { timeout: 120000 }).should("have.length", 1);
+    cy.get(".MuiButton-label").contains("Stop").eq(0).click();
   }
 
   private static stopProdContainer() {
-    cy.get('[data-testid="btn-stop-redeploy"]', {
-      timeout: 120000,
-    })
-      .eq(1)
-      .click();
+    cy.get(".MuiButton-label").contains("Stop").eq(0).click();
   }
 }
