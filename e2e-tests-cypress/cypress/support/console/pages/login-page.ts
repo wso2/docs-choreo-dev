@@ -54,15 +54,25 @@ export class LoginPage {
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
-    // cy.intercept(csurl).then(() => {
-    //   cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
-    //     path: "/",
-    //     domain: "consolev2.preview-dv.choreo.dev",
-    //     secure: true,
-    //     httpOnly: true,
-    //     sameSite: "no_restriction",
-    //   });
-    // });
+
+    if (Cypress.env("loginURL").includes("consolev2.preview-dv")) {
+      cy.intercept(csurl).then(() => {
+        cy.setCookie("opbs", Cypress.env(`asgardeo_opbs`), {
+          path: "/t/a/",
+          domain: Cypress.env("asgardeoDomain"),
+          secure: true,
+          httpOnly: true,
+          sameSite: "no_restriction",
+        });
+        cy.setCookie("commonAuthId", Cypress.env(`asgardeo_commonauth`), {
+          path: "/t/a/",
+          domain: Cypress.env("asgardeoDomain"),
+          secure: true,
+          httpOnly: true,
+          sameSite: "no_restriction",
+        });
+      });
+    }
   }
 
   static login() {
@@ -72,16 +82,18 @@ export class LoginPage {
     cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
     cy.get('button[type="submit"]').click();
 
-    LoginPage.persistOrgs();
-    LoginPage.persistApimToken();
-    LoginPage.persistLogoutURL();
-    LoginPage.persistCookies();
+    cy.setCookie("fidpId", "choreoe2etest");
+
+    this.persistCommonAuth();
+    this.persistOrgs();
+    this.persistApimToken();
+    this.persistLogoutURL();
+    this.persistCookies();
 
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
     }).should("be.visible");
     cy.url().then((url) => {
-      cy.log(url);
       if (url.includes("sample=true")) {
         const { handle } = Cypress.env("userData");
         const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
@@ -103,7 +115,6 @@ export class LoginPage {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
     cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
-      cy.log(JSON.stringify(res.requestHeaders));
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
@@ -151,34 +162,40 @@ export class LoginPage {
   private static persistApimToken() {
     cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("orgs");
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
-      Cypress.env("apim_token", intercept.request.headers.authorization);
       const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
+      Cypress.env("apim_token", token);
       GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
-      this.deleteOnPremKeys();
     });
   }
 
-  private static deleteOnPremKeys() {
-    const orgHandle = Cypress.env("userData")["handle"];
-    const header = Cypress.env("apim_token");
-    const url = `${Cypress.env("appSvcURL")}/orgs/${orgHandle}/keys`;
-    const headers = {
-      Authorization: `${header}`,
-    };
-    Utils.sendGetRequest(url, headers).then((res) => {
-      const keys = res.body as [];
-      keys.forEach((key) => {
-        let { handle } = key;
-        let revokeUrl = `${Cypress.env(
-          "appSvcURL"
-        )}/orgs/${orgHandle}/keys/${handle}/revoke`;
-        Utils.sendPostRequest(revokeUrl, headers, {});
+  private static persistCommonAuth() {
+    if (Cypress.env("loginURL").includes("consolev2.preview-dv")) {
+      // should remove after enabling sso in stg
+      cy.intercept("GET", Cypress.env("asgardeoTokenURL")).as("asgCommonAuth");
+
+      cy.wait("@asgCommonAuth", { timeout: 180000 }).then((intercept) => {
+        const cookies = intercept.response.headers["set-cookie"] as string[];
+
+        const asg_cookie = intercept.request.headers["cookie"] as string;
+        const asg_cookies = asg_cookie.split(";");
+
+        cookies.forEach((c) => {
+          if (c.includes("opbs") || c.includes("commonAuthId")) {
+            const obps = c.split(";")[0].replace("opbs=", "").trim();
+            Cypress.env("asgardeo_opbs", obps);
+          }
+        });
+
+        asg_cookies.forEach((c) => {
+          if (c.includes("commonAuthId")) {
+            const asgardeo_commonAuth = c.replace("commonAuthId=", "").trim();
+            cy.log(`Asgardeo Common Auth ID :: ${asgardeo_commonAuth}`);
+            Cypress.env("asgardeo_commonauth", asgardeo_commonAuth);
+          }
+        });
       });
-    });
+    }
   }
-
-
-
 }

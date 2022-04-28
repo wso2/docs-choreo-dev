@@ -126,7 +126,6 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
     SwaggerUI.invokeResource(OPERATION_POSTS);
     SwaggerUI.getResponseCode().should("eq", "200");
-    //   SwaggerUI.GetResponse();
   });
 
   it("Test in prod", () => {
@@ -137,7 +136,6 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
     SwaggerUI.invokeResource(OPERATION_POSTS);
     SwaggerUI.getResponseCode().should("eq", "200");
-    //   SwaggerUI.GetResponse();
   });
 
   it("Publish the API", () => {

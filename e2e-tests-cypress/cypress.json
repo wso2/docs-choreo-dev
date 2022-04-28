@@ -1,18 +1,16 @@
 {
-    "defaultCommandTimeout": 80000,
-    "pageLoadTimeout": 120000,
-    "responseTimeout": 120000,
-    "integrationFolder": "cypress/e2e-smoke/",
-    "testFiles": [
-        "./**/*.ts"
-    ],
-    "viewportHeight": 1080,
-    "viewportWidth": 1920,
-    "chromeWebSecurity": false,
-    "video":true,
-    "screenshotsFolder": "cypress/screenshots/e2e-smoke",
-    "videosFolder": "cypress/videos/e2e-smoke",
-    "videoUploadOnPasses": false,
-    "videoCompression": false,
-    "watchForFileChanges": false
+  "defaultCommandTimeout": 80000,
+  "pageLoadTimeout": 120000,
+  "responseTimeout": 120000,
+  "integrationFolder": "cypress/e2e-smoke/",
+  "testFiles": ["./**/*.ts"],
+  "viewportHeight": 1080,
+  "viewportWidth": 1920,
+  "chromeWebSecurity": false,
+  "video": true,
+  "screenshotsFolder": "cypress/screenshots/e2e-smoke",
+  "videosFolder": "cypress/videos/e2e-smoke",
+  "videoUploadOnPasses": false,
+  "videoCompression": false,
+  "watchForFileChanges": false
 }
