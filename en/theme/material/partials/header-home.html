@@ -47,8 +47,38 @@
           {% endif %}
         </div>
       </div>
-    
+      <div class="md-flex__cell md-flex__cell--shrink topBarActionsCont">
+        <div class="topBarActions">
+          {% if config.theme.slack %}
+          <a
+            href="https://join.slack.com/t/wso2-choreo/shared_invite/zt-qm86tg1f-R2kXf~26GB6X6Ux0GcuYbQ"
+            class="actionLink"
+          >
+            <img
+              class="actionImg"
+              src="{{ config.theme.slack | url }}"
+              alt="Slack"
+            />
+            <div class="text">Get Help</div>
+          </a>
+          {% endif %} {% if config.theme.choreo_logo %}
+
+          <a href="https://console.choreo.dev/login" class="actionLink">
+            <img
+              class="actionImg"
+              src="{{ config.theme.choreo_logo | url }}"
+              alt="choreo logo icon"
+            />
+            <div class="text">Try Choreo</div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink" style="width: 12rem;">
+      </div>
     </div>
+    </div>
+    
   </nav>
 
 
