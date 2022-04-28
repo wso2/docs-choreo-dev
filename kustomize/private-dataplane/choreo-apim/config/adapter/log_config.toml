@@ -1,0 +1,27 @@
+# The logging configuration file for control plane
+######### root Level ########
+logfile = "/dev/null"
+logLevel = "DEBG"
+
+[rotation]
+MaxSize = 10    #meabytes
+MaxBackups = 3
+MaxAge =  2   #days
+Compress = true
+
+######### package Level ############
+# LogLevels = "DEBG", "FATL", "ERRO", "WARN", "INFO", "PANC"
+
+[[pkg]]
+name = "github.com/wso2/micro-gw/pkg/mgw"
+logLevel = "INFO"
+
+[[pkg]]
+name = "github.com/wso2/micro-gw/pkg/oasparser"
+logLevel = "INFO"
+
+
+[accessLogs]
+enable = true
+logfile = "/dev/stdout"
+format = "[%START_TIME%] '%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%' %RESPONSE_CODE% %RESPONSE_FLAGS% %BYTES_RECEIVED% %BYTES_SENT% %DURATION% %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)% '%REQ(X-FORWARDED-FOR)%' '%REQ(USER-AGENT)%' '%REQ(X-REQUEST-ID)%' '%REQ(:AUTHORITY)%' '%UPSTREAM_HOST%' '%REQ(X-CORRELATION-ID)%'\n"

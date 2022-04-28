@@ -44,24 +44,6 @@ spec:
         runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
-      initContainers:
-        - name: init-adapter-service
-          image: busybox:1.31
-          imagePullPolicy: Always
-          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
-          resources:
-            requests:
-              memory: "100Mi"
-              cpu: "100m"
-            limits:
-              memory: "100Mi"
-              cpu: "100m"
       containers:
         - name: choreo-connect-enforcer
           volumeMounts:

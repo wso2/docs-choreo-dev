@@ -27,31 +27,6 @@ spec:
           type: RuntimeDefault
       containers:
         - env:
-            - name: b7a_log_level
-              valueFrom:
-                configMapKeyRef:
-                  key: B7A_LOG_LEVEL
-                  name: cm-loglevel-sys-obsapi
-            - name: IDP_ISSUER
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_ISSUER
-                  name: env-idp-replica
-            - name: IDP_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_CLIENT_ID
-                  name: env-idp-replica
-            - name: IDP_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_HOST
-                  name: env-idp-replica
-            - name: IDP_JWKS_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_JWKS_ENDPOINT
-                  name: cm-idp-replica
             - name: AZURE_LA_TENANT_ID
               valueFrom:
                 configMapKeyRef:
@@ -73,8 +48,6 @@ spec:
                   name: secret-sys-obsapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           envFrom:
-            - configMapRef:
-                name: env-k8sservice-replica
             - configMapRef:
                 name: cm-sys-obsapi
             - configMapRef:

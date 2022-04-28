@@ -32,6 +32,7 @@ spec:
     metadata:
       labels:
         choreo.component: trimble-private-global-adapter
+        global.adapter: private
         antiaffinity: trimble-private-global-adapter
     spec:
       affinity:
@@ -172,7 +173,7 @@ spec:
           name: global-adapter-truststore-vol
       - name: global-adapter-config
         configMap:
-          name: cc-global-adapter-conf
+          name: cc-ga-conf-trimble
       - name: secret-mgw-keystore
         csi:
           driver: secrets-store.csi.k8s.io

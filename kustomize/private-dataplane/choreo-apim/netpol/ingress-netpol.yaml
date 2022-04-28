@@ -1,0 +1,12 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-router-ingress-network-policy
+spec:
+  policyTypes:
+  - Ingress
+  podSelector:
+    matchLabels:
+      choreo.component: choreo-connect-deployment-default-p1
+  ingress:
+  - {}

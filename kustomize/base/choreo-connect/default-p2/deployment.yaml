@@ -13,9 +13,6 @@ spec:
         choreo.component: choreo-connect-deployment-default-p2
         antiaffinity: choreo-connect-deployment-default-p2
     spec:
-      initContainers:
-        - name: init-adapter-service
-          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p2 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
       containers:
         - name: choreo-connect-enforcer
           env:

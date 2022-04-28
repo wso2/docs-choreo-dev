@@ -2,10 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - configs
   - deployment
   - hpa
   - pdb
   - service
-  # - partition-endpoints
 
 namespace: choreo-apim
+
+commonLabels:
+  app: choreo-routing
