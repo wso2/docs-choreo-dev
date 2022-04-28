@@ -1,5 +1,3 @@
 resources:
   - choreo-connect-adapter-default-p1.yaml
-  - choreo-connect-adapter-dev-us-east-azure-p1.yaml
   - choreo-connect-deployment-default-p1.yaml
-  - choreo-connect-deployment-dev-us-east-azure-p1.yaml
