@@ -14,7 +14,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 ### Step 1.1: Create a project and add a REST API component
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-rest-api-product-link'});">https://console.choreo.dev/</a>.
 
 2. Expand the drop-down menu for projects and click **+ Create New**.
 

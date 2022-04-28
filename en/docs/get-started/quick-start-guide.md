@@ -11,7 +11,7 @@ This quick start guide walks you through the steps to create, develop, publish, 
 
 ### Step 1: Create a REST API
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-quick-start-guide-product-link'});">https://console.choreo.dev/</a>.
 
 2. On the **Home** page, scroll to the **Use a sample and get started** section. 
 
