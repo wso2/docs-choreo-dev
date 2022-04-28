@@ -75,6 +75,8 @@ spec:
                 secretKeyRef:
                   name: secret-redis
                   key: REDIS_PASSWORD
+            - name: PARTITION_ENABLED
+              value: false
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
