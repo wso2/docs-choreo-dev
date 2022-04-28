@@ -131,6 +131,7 @@ extra_javascript:
   - assets/js/prism-ballerina.js
   - assets/lib/backtotop/js/util.js
   - assets/lib/backtotop/js/main.js
+  - assets/lib/insights/insights.js
 extra:
   social:
     - type: github
