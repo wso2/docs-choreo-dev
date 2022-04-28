@@ -55,7 +55,7 @@ export class LoginPage {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
 
-    if (Cypress.env("loginURL").includes("dev")) {
+    if (Cypress.env("loginURL").includes("consolev2.preview-dv")) {
       cy.intercept(csurl).then(() => {
         cy.setCookie("opbs", Cypress.env(`asgardeo_opbs`), {
           path: "/t/a/",
@@ -171,7 +171,7 @@ export class LoginPage {
   }
 
   private static persistCommonAuth() {
-    if (Cypress.env("loginURL").includes("dev")) {
+    if (Cypress.env("loginURL").includes("consolev2.preview-dv")) {
       // should remove after enabling sso in stg
       cy.intercept("GET", Cypress.env("asgardeoTokenURL")).as("asgCommonAuth");
 
