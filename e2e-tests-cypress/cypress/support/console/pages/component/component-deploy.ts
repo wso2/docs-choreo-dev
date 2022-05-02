@@ -109,13 +109,16 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-    cy.wait(2000);
-    cy.get('[data-cyid="btn-stop-redeploy"]', {
-      timeout: 120000,
-    })
-      .should("exist")
-      .click({ multiple: true });
+    cy.wait(5000);
+    this.stopDevContainer();
+    this.stopProdContainer();
+  }
 
-    cy.contains("Redeploy").should("have.length", 2);
+  private static stopDevContainer() {
+    cy.get(".MuiButton-label").contains("Stop").eq(0).click();
+  }
+
+  private static stopProdContainer() {
+    cy.get(".MuiButton-label").contains("Stop").eq(0).click();
   }
 }

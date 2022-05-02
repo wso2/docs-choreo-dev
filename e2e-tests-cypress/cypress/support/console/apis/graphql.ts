@@ -16,7 +16,7 @@ import { Utils } from "../utils";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
-
+export const NO_CONTENT_STATUS_CODE = 204;
 export class GraphQL {
   static createDefaultProjectIfNotExists(
     orgId: number,
@@ -25,10 +25,6 @@ export class GraphQL {
   ) {
     this.getProjects(orgId, token).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      // const projects = response.body.data.projects as [];
-      // if (projects === undefined || !projects.length) {
-      //   this.createDefaultProject(orgId, orgHandle, token);
-      // }
     });
   }
 
@@ -142,7 +138,7 @@ export class GraphQL {
       if (response.status === SUCCESS_STATUS_CODE) {
         response.body.data.components.forEach((component) => {
           const { handler } = component;
-
+          this.deleteConnectors(token);
           this.changeComponentLifeCycle(projectId, handler, token);
           this.deleteComponent(component.id, projectId, orgHandle, token);
         });
@@ -316,4 +312,38 @@ export class GraphQL {
     Utils.sendPostRequest(deprecateRequest, headers, {});
     Utils.sendPostRequest(retireRequest, headers, {});
   }
+
+  private static deleteConnector(pkg: any, token) {
+    const { organization, name, version } = pkg;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const url = `${Cypress.env("balRegistryURL")}/packages/${organization}/${name}/${version}?force=true`;
+    Utils.sendDeleteRequest(url, headers).then((res) => {
+      if (res.status === NO_CONTENT_STATUS_CODE) {
+        cy.log(`Successfully deleted Connector  ${name}`);
+      } else {
+        cy.log(
+          `Could not delete connector: ${name}, status returned: ${res.status}`
+        );
+      }
+    });
+  }
+
+  private static deleteConnectors(token: string) {
+    const { handle } = Cypress.env("userData");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
+    Utils.sendGetRequest(url, headers).then((res) => {
+  
+      const packages = res.body as [];
+      if (packages.length > 0) {
+        packages.forEach((p) => this.deleteConnector(p, token));
+      }
+    });
+  }
+
+
 }

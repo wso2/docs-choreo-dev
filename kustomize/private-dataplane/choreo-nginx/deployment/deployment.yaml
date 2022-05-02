@@ -14,11 +14,12 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-# Deployment for nginx
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    choreo.component: nginx
+  name: choreo-nginx-deployment
   annotations:
     checkov.io/skip1: CKV_K8S_8=Suppressing since the sidecar should be only run once after container starts
     checkov.io/skip2: CKV_K8S_9=Readiness probe not required
@@ -28,12 +29,8 @@ metadata:
     checkov.io/skip6: CKV_K8S_28=Temporarily suppressing till fixing
     checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
     checkov.io/skip8: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
-    reloader.stakater.com/auto: "true"
-  labels:
-    choreo.component: nginx
-  name: choreo-nginx-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       deployment: choreo-nginx
@@ -44,6 +41,18 @@ spec:
         choreo.component: nginx
         antiaffinity: choreo-nginx-deployment
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - choreo-nginx-deployment
+                topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500
@@ -66,6 +75,8 @@ spec:
                 secretKeyRef:
                   name: secret-redis
                   key: REDIS_PASSWORD
+            - name: PARTITION_ENABLED
+              value: true
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
@@ -138,9 +149,6 @@ spec:
             - name: choreo-api-e1-us-east-azure-wildcard-tls
               mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
               readOnly: true
-            - name: choreo-api-e2-us-east-azure-wildcard-tls
-              mountPath: /etc/nginx/ssl/choreo/e2-us-east-gateway
-              readOnly: true
             - name: secret-redis
               mountPath: /mnt/csi/secret-redis
               readOnly: true
@@ -202,9 +210,6 @@ spec:
         - name: choreo-api-e1-us-east-azure-wildcard-tls
           secret:
             secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls
-        - name: choreo-api-e2-us-east-azure-wildcard-tls
-          secret:
-            secretName: dev-choreo-api-e2-us-east-azure-wildcard-tls
         - name: secret-redis
           csi:
             driver: secrets-store.csi.k8s.io
@@ -214,15 +219,3 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - choreo-nginx-deployment
-              topologyKey: kubernetes.io/hostname

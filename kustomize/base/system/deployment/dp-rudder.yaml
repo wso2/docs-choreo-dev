@@ -54,6 +54,10 @@ spec:
                 name: secret-dp-rudder
                 key: APIM_REST_API_CONSUMER_SECRET
                 optional: true
+          - name: JOB_TTL_SECONDS_AFTER_FINISHED
+            value: "86400"
+          - name: APIM_REVISION_LIMIT
+            value: "20"
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:

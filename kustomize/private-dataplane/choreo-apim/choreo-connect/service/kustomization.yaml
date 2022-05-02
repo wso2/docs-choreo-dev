@@ -1,0 +1,4 @@
+resources:
+  - choreo-connect-adapter-default-p1.yaml
+  - choreo-connect-deployment-default-p1.yaml
+  - choreo-connect-deployment-default-p1-lb.yaml
