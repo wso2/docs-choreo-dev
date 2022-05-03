@@ -17,9 +17,12 @@ Developing a scheduled task is the process of configuring an action to be execut
 !!! tip
 The development stage does not require you to specify the time interval at which this action needs to be repeatedly executed. You can specify this when you deploy the Scheduled Task component.
 
-e.g., If you need to schedule a health check log for an application, you need to configure a scheduled task that gets the heartbeat of the application, and then define the conditions based on which the log indicates that the application is healthy or unhealthy.
+e.g., If you need to schedule a health check log for an application, you may need to configure the following:
+- How the Scheduled Task component gets the heartbeat of the application it is monitoring.
+- The conditions based on which the Scheduled Task component can determine whether the application is healthy or not.
+- A log that indicates whether the application is healthy or not to the end-user.
 
-You can configure this scheduled task in low-code mode or pro-code mode.
+You can develop a scheduled task with such configurations in low-code mode or pro-code mode.
 
 ### Low-code mode
 
