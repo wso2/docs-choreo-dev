@@ -1,12 +1,12 @@
 # Scheduled Tasks
 
-Learn how to execute routine tasks at specified time intervals via scheduled tasks.
+Learn how to use scheduled tasks to execute routing tasks at specified time intervals.
 
 ## What is a scheduled task?
 
 A scheduled task performs a routine task at scheduled time intervals. Following are examples of scenarios where you can schedule tasks:
 
-- Logging a session time-out message for a user at a specific time interval (e.g., every 1 hour).
+- Logging a session time-out message for a user at a specific time interval.
 - Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat of a team every day at a specific time.
 - Periodically checking whether an application is active or inactive.
 
@@ -27,7 +27,7 @@ You can configure this scheduled task in low-code mode or pro-code mode.
 
 The scheduled task shown above checks whether the heartbeat of an application is received via the `HealthCheckAPI` (which is a connector). Then it logs `Healthy` if the application responds with a heartbeat, or `Unhealthy` if there is no response from the application.
 
-The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments, logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed connectors.
+The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments), logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed connectors.
 
 The main advantage of the low-code programming mode is that it increases the developer productivity by multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the integration logic for the scheduled task, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io) source code of the scheduled task. This speeds up the developer's learning process significantly and thereby boosts overall productivity.
 
