@@ -1,0 +1,6 @@
+configMapGenerator:
+  - name: trimble-ga-truststore-vol
+    behavior: create
+    files:
+      - controlplane.pem
+      - local-adapter.pem
