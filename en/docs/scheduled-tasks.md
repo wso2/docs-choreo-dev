@@ -15,7 +15,7 @@ A scheduled task performs a routine task at scheduled time intervals. Following 
 Developing a scheduled task is the process of configuring an action to be executed.
 
 !!! tip
-The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled task. You can specify this when you deploy the Scheduled Task component.
+The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled task. You need to specify it only when you deploy the Scheduled Task component.
 
 e.g., If you need to schedule a health check log for an application, you may need to configure the following:
 - How the Scheduled Task component gets the heartbeat of the application it is monitoring.
@@ -28,20 +28,20 @@ You can develop a scheduled task with such configurations in low-code mode or pr
 
 ![Scheduled task low-code view](assets/img/scheduled-tasks/scheduled-task-low-code.png){.cInlineImage-full}
 
-The scheduled task shown above checks whether the heartbeat of an application is received via the `HealthCheckAPI` (which is a connector). Then it logs `Healthy` if the application responds with a heartbeat, or `Unhealthy` if there is no response from the application.
+The scheduled task shown in the image above checks for the heartbeat of an application via the `HealthCheckAPI` connector. It logs `Healthy` if the application responds with a heartbeat or `Unhealthy` if the application does not respond.
 
-The low-code programming model allows developers to use common programming constructs such as loops, conditions(if/else, variable declarations and assignments), logs, data transformations(visual data mapping), and much more in a graphical editor. It also allows developers to connect to any built-in or custom-developed connectors.
+The low-code programming model allows developers to use commonly known programming constructs such as loops, conditions(if/else, variable declarations and assignments), logs, data transformations(visual data mapping), and many more in a graphical editor. It also allows developers to connect to any built-in or custom-developed connectors.
 
-The main advantage of the low-code programming mode is that it increases the developer productivity by multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the integration logic for the scheduled task, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io) source code of the scheduled task. This speeds up the developer's learning process significantly and thereby boosts overall productivity.
+The main advantage of the low-code programming mode is that it increases the developer productivity by multiple folds by eliminating the need to write complex code. As developers use constructs on the low-code editor to implement the integration logic for the scheduled task, the IDE automatically writes the corresponding [Ballerina](https://ballerina.io) source code of the scheduled task, speeding up the developer's learning process significantly and boosting overall productivity.
 
 
 ### Pro-code mode
 
-In addition to the low-code mode, Choreo provides a pro-code mode of implementing the functionality of a scheduled task with the ability to alternate between low-code and pro-code at any time. Choreo's online IDE allows viewing the low-code and pro-code editors side by side as shown below.
+In addition to the low-code view, Choreo provides a pro-code view for implementing the functionality of a scheduled task with the ability to alternate between the two views at any time. Choreo's online IDE allows viewing the low-code and pro-code editors side-by-side as shown below.
 
 ![Scheduled task pro-code view](assets/img/scheduled-tasks/scheduled-task-pro-code.png){.cInlineImage-full}
 
-Choreo gives the developers the flexibility to use the pro-code mode only or use it for implementing certain parts of the scheduled task and use the low-code mode for the rest, based on their preference. Choreo treats the source code of the scheduled task (irrespective of whether it is generated or written manually by the developer) as the single source of truth. Therefore, there are no limitations or restrictions on which mode developers may choose to implement the functionality of the scheduled task.
+Choreo gives the developers the flexibility to use the pro-code view only or use it for implementing certain parts of the scheduled task and use the low-code mode for the rest, based on their preference. Choreo treats the source code of the scheduled task (irrespective of whether it is generated or written manually by the developer) as the single source of truth. Therefore, there are no limitations or restrictions on which mode developers may choose to implement the functionality of the scheduled task.
 
 ## Deploy a scheduled task
 
