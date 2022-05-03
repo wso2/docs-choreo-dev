@@ -7,7 +7,7 @@ Learn how to use scheduled tasks to execute routing tasks at specified time inte
 A scheduled task performs a routine task at scheduled time intervals. Following are examples of scenarios where you can schedule tasks:
 
 - Logging a session time-out message for a user at a specific time interval.
-- Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat of a team every day at a specific time.
+- Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat window of a team every day at a specific time.
 - Periodically checking whether an application is active or inactive.
 
 ## Develop a scheduled task
@@ -15,7 +15,7 @@ A scheduled task performs a routine task at scheduled time intervals. Following 
 Developing a scheduled task is the process of configuring an action to be executed.
 
 !!! tip
-The development stage does not require you to specify the time interval at which this action needs to be repeatedly executed. You can specify this when you deploy the Scheduled Task component.
+The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled task. You can specify this when you deploy the Scheduled Task component.
 
 e.g., If you need to schedule a health check log for an application, you may need to configure the following:
 - How the Scheduled Task component gets the heartbeat of the application it is monitoring.
@@ -45,7 +45,7 @@ Choreo gives the developers the flexibility to use the pro-code mode only or use
 
 ## Deploy a scheduled task
 
-At the deployment stage, Choreo prompts you to specify the time interval at which the scheduled task must be run to execute the configured action.
+At the deployment stage, Choreo prompts you to specify the time interval at which it should run the scheduled task to execute the configured action.
 
 ![Specify time interval](assets/img/scheduled-tasks/specify-time-interval.png){.cInlineImage-full}
 
@@ -53,17 +53,17 @@ Once you specify the time interval and proceed to deploy, Choreo starts the proc
 
 ![Deploy scheduled task](assets/img/scheduled-tasks/deploy-scheduled-task.png){.cInlineImage-full}
 
-Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo’s data plane runs on a Kubernetes stack and hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on.
+Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, the data plane of Choreo runs on a Kubernetes stack and therefore benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, etc.
 
-Once you deploy the scheduled task to the development environment, it is then exposed through an API Gateway with API security turned on.
+Once you deploy the scheduled task to the development environment, the system exposes it through an API Gateway with API security turned on.
 
-When you deploy the scheduled task to the development environment, it is active in the developer environment. When you are ready to take the code to production, you can promote the deployment and enable the functionality to your consumers.
+When you deploy the scheduled task to the development environment, it is active in the developer environment. When you are ready to take the code to production, you can promote the deployment and enable the functionality for your consumers.
 
-Choreo allows you to view the deployment logs through the **Deploy** view. This helps you troubleshoot and view the status of the builds and deployment.
+Choreo allows you to view the deployment logs through the **Deploy** view. Therefore you can troubleshoot and view the status of the builds and deployment.
 
 ## Choreo environments
 
-Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the scheduled task to the development environment and its functionality has been verified, you can promote it to the production environment.
+Choreo provides a development environment and a production environment in two separate Kubernetes clusters by default. Once you have deployed the scheduled task to the development environment and verified whether it functions as expected, you can promote it to the production environment.
 
 ![Promote scheduled task](assets/img/scheduled-tasks/promote-scheduled-task-to-production.png){.cInlineImage-full}
 
