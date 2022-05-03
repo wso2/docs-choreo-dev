@@ -8,7 +8,7 @@ A scheduled task performs a routine action at scheduled time intervals. Followin
 
 - Logging a session time-out message for a user at a specific time interval
 - Publishing a summary of GitHub issues (i.e., with details such as the number of GitHub issues in each status) as a message in a group chat window of a team every day at a specific time
-- Periodically checking whether an application is active or inactive
+- Periodically checking whether an application is active or not
 
 ## Develop a scheduled task
 
