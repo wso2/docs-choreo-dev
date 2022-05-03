@@ -104,7 +104,7 @@ spec:
             add: ["NET_RAW"]
         envFrom:
         - configMapRef:
-            name: cm-feature-flags
+            name: trimble-feature-flags
         env:
         - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
           value: /home/wso2/security/keystore/global-adapter.key
