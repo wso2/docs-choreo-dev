@@ -103,7 +103,7 @@ spec:
                 name: env-choreo-connect
           env:
             - name: localLabel
-              value: default-p1
+              value: poc-dev-p1
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ADAPTER_PUBLIC_CERT_PATH
