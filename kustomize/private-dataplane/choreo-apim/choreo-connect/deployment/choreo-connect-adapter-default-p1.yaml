@@ -99,11 +99,11 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
+            - configMapRef:
+                name: env-choreo-connect
           env:
             - name: localLabel
               value: default-p1
-            - name: environmentLabel
-              value: Production and Sandbox
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ADAPTER_PUBLIC_CERT_PATH
