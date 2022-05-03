@@ -95,6 +95,7 @@ command -v helm >/dev/null 2>&1 || {
 #  --set installCRDs=true
 
 #echo "--- Creating secrets for DNS-01 challenge..."
+# shellcheck disable=SC2154
 #kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
 #echo "--- Installing Emberstack reflector..."
