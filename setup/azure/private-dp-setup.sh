@@ -87,7 +87,7 @@ kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-helm install \
+helm upgrade --install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --version v1.8.0 \
@@ -98,17 +98,18 @@ helm install \
   --set cainjector.replicaCount=2
 
 echo "--- Creating secrets for DNS-01 challenge..."
-DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id "${DNS01_CHALLENGE_CLIENT_ID}" --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
-kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
+#DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id ${DNS01_CHALLENGE_CLIENT_ID} --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
+#kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
 echo "--- Installing Emberstack reflector..."
+
 helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
 helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
 echo "--- Creating AKS view cluster role binding to AAD"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
-sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml
+sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml 
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
@@ -116,17 +117,32 @@ echo "--- Add OMS Agent Config"
 kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 
 echo "--- Configure CSI Secret Store"
-bash workspace/configure-csi-secret-store.sh
+#bash private-dataplane/configure-csi-secret-store.sh
 
 echo "--- Setup Nginx Ingress"
-bash workspace/install-nginx-ingress.sh
+bash private-dataplane/install-nginx-ingress.sh
 
-echo "--- Enable HPA/PDB for Ingress Controller"
-kubectl apply -f ingress-plus/hpa.yaml
-kubectl apply -f ingress-plus/pdb.yaml
+echo "--- Setup LetsEncrypt issuer"
+kubectl apply -f private-dataplane/certs/choreoapis-e1-us-east-dev-letsencrypt-prod.yaml
+kubectl apply -f private-dataplane/certs/choreoapis-dev-letsencrypt-prod.yaml
+kubectl apply -f private-dataplane/certs/choreoapis-dev-gateway-letsencrypt-prod.yaml
 
-echo "--- Enable PDB for Cert Manager"
-kubectl apply -f cert-manager/pdb.yaml
+echo "-- Setup LetsEncrypt cert"
+cp private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml.backup
+cp private-dataplane/certs/choreo-api-wildcard-cert.yaml private-dataplane/certs/choreo-api-wildcard-cert.yaml.backup
+cp private-dataplane/certs/choreo-gateway-wildcard-cert.yaml private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup
+
+sed -i "s/PARTITION_DNS_NAME/${PARTITION_DNS_NAME}/g" private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+sed -i "s/WILDCARD_DNS_NAME/${WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreo-api-wildcard-cert.yaml
+sed -i "s/GATEWAY_WILDCARD_DNS_NAME/${GATEWAY_WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+
+kubectl apply -f private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+kubectl apply -f private-dataplane/certs/choreo-api-wildcard-cert.yaml
+kubectl apply -f private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+
+mv private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml.backup private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+mv private-dataplane/certs/choreo-api-wildcard-cert.yaml.backup private-dataplane/certs/choreo-api-wildcard-cert.yaml
+mv private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
@@ -145,7 +161,7 @@ fi
 successful="true"
 # shellcheck disable=SC2154
 if [[ "${successful}" == "true" ]]; then
-    echo "Choreo Workspace cluster has been successfully configured"
+    echo "Choreo Data Plane cluster has been successfully configured"
 fi
 if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"

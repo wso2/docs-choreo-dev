@@ -3,6 +3,7 @@
 ### Control Plane Cluster
 
 ```bash
+CLUSTER_NAME=xxxxxxxxxxxxxxxxx
 SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
 INTERNAL_INGRESS_NAMESPACE=xxxxxxxxxxxxxxxxx
@@ -17,12 +18,8 @@ IDP_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
 SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 IDP_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-IDP_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
-DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 ENV=xxxxx
 LINKERD_VIZ_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
@@ -77,15 +74,14 @@ Obtain the value for the above-mentioned secrets by inspecting the yaml file tha
 ### Routing Cluster
 
 ```bash
+CLUSTER_NAME=xxxxxxxxxxxxxxxxx
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
 ROUTING_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
 DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 ENV=xxxxx
@@ -95,14 +91,31 @@ EOF
 ### Data Plane Cluster
 
 ```bash
+CLUSTER_NAME=xxxxxxxxxxxxxxxxx
 APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
 DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
-DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ENV=xxxxx
+EOF
+```
+
+### Private Data Plane Cluster
+
+```bash
+CLUSTER_NAME=xxxxxxxxxxxxxxxxx
+APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
+ROUTING_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
+LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
+LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
+USERAPPS_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+DNS01_CHALLENGE_CLIENT_ID=xxxxxxxxxxxxxxxxx
+AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+PARTITION_DNS_NAME=xxxxxxxxxxxxxxxxx
+WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
+GATEWAY_WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
 ENV=xxxxx
 EOF
 ```
@@ -110,17 +123,13 @@ EOF
 ### Workspace Cluster
 
 ```bash
-APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
+CLUSTER_NAME=xxxxxxxxxxxxxxxxx
 DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 WORKSPACE_INGRESS_NAMESPACE=xxxxxxxxxxxxxxxxx
 WORKSPACE_INGRESS_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
 SYSTEM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
-APIM_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
-APIM_CSI_KEY_VAULT_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
-DNS01_CHALLENGE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 NGINX_OIDC_AUTH_ENDPOINT=xxxxxxxxxxxxxxxxx
 NGINX_OIDC_TOKEN_ENDPOINT=xxxxxxxxxxxxxxxxx
