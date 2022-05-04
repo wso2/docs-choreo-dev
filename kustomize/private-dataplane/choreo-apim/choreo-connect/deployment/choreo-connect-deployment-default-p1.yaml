@@ -137,7 +137,7 @@ spec:
             - name: ADAPTER_XDS_PORT
               value: "18000"
             - name: ENFORCER_LABEL
-              value: "Production and Sandbox"
+              value: "poc-dev"
             - name: ENFORCER_REGION
               value: "UNKNOWN"
             - name: XDS_MAX_MSG_SIZE
@@ -218,7 +218,7 @@ spec:
             - name: ROUTER_CLUSTER
               value: "default_cluster"
             - name: ROUTER_LABEL
-              value: "Production and Sandbox"
+              value: "poc-dev"
             - name: ROUTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ROUTER_PUBLIC_CERT_PATH
