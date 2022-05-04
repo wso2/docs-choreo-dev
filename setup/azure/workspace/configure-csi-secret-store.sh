@@ -10,7 +10,7 @@ helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provid
 
 ################ Install CSI Secret Store Class Secret ########
 # shellcheck disable=SC2154
-SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id ${SYSTEM_CSI_KEY_VAULT_CLIENT_ID} --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
+SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${SYSTEM_CSI_KEY_VAULT_CLIENT_ID}" --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
 
 kubectl create namespace "${DP_SYSTEM_NAMESPACE}"
 kubectl create secret generic csi-secret-store-azure --from-literal clientid="${SYSTEM_CSI_KEY_VAULT_CLIENT_ID}" --from-literal clientsecret="${SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET}" -n "${DP_SYSTEM_NAMESPACE}"
