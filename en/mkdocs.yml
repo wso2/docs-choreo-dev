@@ -74,6 +74,7 @@ nav:
       - Configure Alerts: insights/configure-alerts.md
       - Choreo Insights API: insights/choreo-insights-api.md
       - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
+      - Generate Custom Reports: insights/generate-custom-reports.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
