@@ -2,14 +2,14 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   annotations:
-  name: choreoapis-dev-letsencrypt-prod
+  name: choreoapis-dev-gateway-letsencrypt-prod
   namespace: cert-manager
 spec:
   acme:
     email: techops@wso2.com
     preferredChain: ""
     privateKeySecretRef:
-      name: choreoapis-dev-letsencrypt-prod
+      name: choreoapis-dev-gateway-letsencrypt-prod
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
     - dns01:

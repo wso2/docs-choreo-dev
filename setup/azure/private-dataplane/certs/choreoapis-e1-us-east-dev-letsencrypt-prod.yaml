@@ -1,8 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  annotations:
-  name: choreoapis-dev-letsencrypt-prod
+  name: choreoapis-e1-us-east-dev-letsencrypt-prod
   namespace: cert-manager
 spec:
   acme:

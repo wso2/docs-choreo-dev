@@ -8,8 +8,8 @@ metadata:
   namespace: cert-manager
 spec:
   dnsNames:
-  - "DNS_NAME_1"
+  - "PARTITION_DNS_NAME"
   issuerRef:
     kind: Issuer
-    name: choreoapis-e1-us-east-dev-poc-letsencrypt-prod
+    name: choreoapis-e1-us-east-dev-letsencrypt-prod
   secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls

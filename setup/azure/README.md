@@ -113,7 +113,9 @@ LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
 USERAPPS_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
 DNS01_CHALLENGE_CLIENT_ID=xxxxxxxxxxxxxxxxx
 AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
-DNS_NAME_1=xxxxxxxxxxxxxxxxx
+PARTITION_DNS_NAME=xxxxxxxxxxxxxxxxx
+WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
+GATEWAY_WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
 ENV=xxxxx
 EOF
 ```

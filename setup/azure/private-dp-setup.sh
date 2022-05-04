@@ -123,13 +123,26 @@ echo "--- Setup Nginx Ingress"
 bash private-dataplane/install-nginx-ingress.sh
 
 echo "--- Setup LetsEncrypt issuer"
+kubectl apply -f private-dataplane/certs/choreoapis-e1-us-east-dev-letsencrypt-prod.yaml
 kubectl apply -f private-dataplane/certs/choreoapis-dev-letsencrypt-prod.yaml
+kubectl apply -f private-dataplane/certs/choreoapis-dev-gateway-letsencrypt-prod.yaml
 
 echo "-- Setup LetsEncrypt cert"
 cp private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml.backup
-sed -i "s/DNS_NAME_1/${DNS_NAME_1}/g" private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+cp private-dataplane/certs/choreo-api-wildcard-cert.yaml private-dataplane/certs/choreo-api-wildcard-cert.yaml.backup
+cp private-dataplane/certs/choreo-gateway-wildcard-cert.yaml private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup
+
+sed -i "s/PARTITION_DNS_NAME/${PARTITION_DNS_NAME}/g" private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+sed -i "s/WILDCARD_DNS_NAME/${WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreo-api-wildcard-cert.yaml
+sed -i "s/GATEWAY_WILDCARD_DNS_NAME/${GATEWAY_WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+
 kubectl apply -f private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+kubectl apply -f private-dataplane/certs/choreo-api-wildcard-cert.yaml
+kubectl apply -f private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+
 mv private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml.backup private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
+mv private-dataplane/certs/choreo-api-wildcard-cert.yaml.backup private-dataplane/certs/choreo-api-wildcard-cert.yaml
+mv private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
