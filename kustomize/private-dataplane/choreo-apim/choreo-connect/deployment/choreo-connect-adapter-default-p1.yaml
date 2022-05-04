@@ -100,7 +100,7 @@ spec:
             - configMapRef:
                 name: cm-feature-flags
             - configMapRef:
-                name: env-choreo-connect
+                name: env-choreo-connect-adapter
           env:
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
