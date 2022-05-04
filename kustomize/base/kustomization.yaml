@@ -8,6 +8,7 @@ resources:
 - idp
 - private-global-adapters
 - system
+- actions-runner-system
 
 commonLabels:
   app: choreo-control-plane
