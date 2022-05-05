@@ -3,10 +3,10 @@
 ############### Install Workspace Nginx Plus Ingress Controller using Helm 3
 echo "--- Setting up Workspace Nginx Ingress Controller.."
 echo "--- Creating namespace ${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus..."
-kubectl create namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus" --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" --dry-run=client -o yaml | kubectl apply -f -
 
 # Add label to Nginx ingress namespace
-kubectl label namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus" purpose="${WORKSPACE_INGRESS_NAMESPACE}-ingress-traffic"
+kubectl label namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" purpose="${WORKSPACE_INGRESS_NAMESPACE}-ingress-traffic"
 
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" linkerd.io/inject=enabled
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
@@ -33,19 +33,19 @@ sed -i "s/NGINX_OIDC_HMAC/${NGINX_OIDC_HMAC}/g" $openid_connect_configuration_pa
 sed -i "s/NGINX_OIDC_REDIRECT_ENDPOINT/${NGINX_OIDC_REDIRECT_ENDPOINT}/g" $openid_connect_configuration_path
 sed -i "s/NGINX_OIDC_SCOPES/${NGINX_OIDC_SCOPES}/g" $openid_connect_configuration_path
 
-sed -i "s/NGINX_OIDC_HEADLESS_SERVICE_NAMESPACE/${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus/g" $zone_sync_path
+sed -i "s/NGINX_OIDC_HEADLESS_SERVICE_NAMESPACE/${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress/g" $zone_sync_path
 
 echo "--- Creating OpenID ConfigMap..."
 
-kubectl create configmap openid-connect-configmap --from-file=$openid_connect_configuration_path --from-file=$openid_connect_path --from-file=$openid_connect_server_path -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus"
+kubectl create configmap openid-connect-configmap --from-file=$openid_connect_configuration_path --from-file=$openid_connect_path --from-file=$openid_connect_server_path -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress"
 
 echo "--- Creating Zone-Sync ConfigMap..."
 
-kubectl create configmap zone-sync-configmap --from-file=$zone_sync_path -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus"
+kubectl create configmap zone-sync-configmap --from-file=$zone_sync_path -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress"
 
 helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingress \
   --version 0.11.3 \
-  --namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus" \
+  --namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/nginx-plus-ingress-openid-connect" \
   --set controller.replicaCount=2 \
   --set controller.image.tag="2" \
@@ -75,7 +75,7 @@ helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingre
   --set controller.resources.requests."cpu"=500m \
   --set controller.resources.limits."cpu"=1000m \
   --set controller.resources.limits."memory"=1Gi \
-  --set controller.ingressClass="choreo-workspace-ingress-nginx-plus" \
+  --set controller.ingressClass="${WORKSPACE_INGRESS_NAMESPACE}-nginx" \
   --set controller.enableSnippets=true \
   --set controller.wildcardTLS.secret="cert-manager/${WORKSPACE_INGRESS_NAMESPACE}-wildcard-tls" \
   --set-string controller.config.server-tokens=false \
@@ -85,4 +85,4 @@ helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingre
 
 echo "--- Creating Nginx Ingress Headless Service..."
 
-kubectl expose deployment "${WORKSPACE_INGRESS_NAMESPACE}-nginx-ingress" -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus" --port=10113 --target-port=10113 --name=nginx-ingress-headless --cluster-ip=None
+kubectl expose deployment "${WORKSPACE_INGRESS_NAMESPACE}-nginx-ingress" -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" --port=10113 --target-port=10113 --name=nginx-ingress-headless --cluster-ip=None
