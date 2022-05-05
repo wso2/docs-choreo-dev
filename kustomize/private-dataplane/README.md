@@ -11,6 +11,9 @@
         - [choreo-apim](#choreo-apim)
             - [config/kustomization.yaml](#configkustomizationyaml)
             - [secretproviderclass](#apimSecretProviderClass)
+              - [secret-apim](#secret-apim)
+              - [secret-choreo-connect](#secret-choreo-connect)
+            - [kustomization.yaml](#apimKustomization)
         - [choreo-nginx](#choreo-nginx)
         - [choreodp-system](#choreodp-system)
     - [Prerequisites](#Prerequisites)
@@ -101,8 +104,8 @@ You can add a prefix or suffix of your choice to the following namespaces.
 - choreo-apim
 - choreodp-system
 
-The resources will then be deployed in those namespaces. The following transformer (`namespace-transformer.yaml) will add the `dev-` prefix to above
-namespaces. So the resulting namespaces would be,
+The resources will then be deployed in those namespaces. The following transformer (`namespace-transformer.yaml`) will
+add the `dev-` prefix to above namespaces. So the resulting namespaces would be,
 
 - dev-choreo-apim
 - dev-choreodp-system
@@ -201,6 +204,7 @@ as shown below.
 
 
 The `kustomization.yaml` will look something like below
+
 ```yaml
 configMapGenerator:
   - name: env-choreo-connect-adapter
@@ -220,28 +224,11 @@ configMapGenerator:
 
 <h5 id="apimSecretProviderClass">secretproviderclass</h5>
 
+This directory contains following 2 secretProviderClasses.
+- secret-apim
+- secret-choreo-connect
 
-#### choreo-nginx
-
-#### choreodp-system
-
-The following prerequisites need to be fulfilled before preparing the overlay.
-
-### Prerequisites
-
-#### Preparing SecretProviderClasses
-
-SecretProviderClasses listed in the following table are needed in the private dataplane deployment.
-
-| Name                    | Namespace        |
-| ------------------------| -----------------|
-| secret-apim             | *choreo-apim     |
-| secret-choreo-connect   | *choreo-apim     |
-| secret-redis            | *choreo-apim     |
-| secret-dp-kv-resolver   | *choreodp-system |
-| secret-dp-mizzen-agent  | *choreodp-system |
-
-##### secret-apim
+###### secret-apim
 
 This class should create two secret objects named as,
 
@@ -373,7 +360,7 @@ spec:
           objectVersion: ""
 ```
 
-##### secret-choreo-connect
+###### secret-choreo-connect
 
 This class should create 2 secret objects named as,
 
@@ -480,6 +467,30 @@ spec:
           objectAlias: ASB_CONNECTION_STRING
           objectVersion: ""
 ```
+
+<h5 id="apimKustomization">kustomization.yaml</h5>
+
+
+
+#### choreo-nginx
+
+#### choreodp-system
+
+The following prerequisites need to be fulfilled before preparing the overlay.
+
+### Prerequisites
+
+#### Preparing SecretProviderClasses
+
+SecretProviderClasses listed in the following table are needed in the private dataplane deployment.
+
+| Name                    | Namespace        |
+| ------------------------| -----------------|
+| secret-apim             | *choreo-apim     |
+| secret-choreo-connect   | *choreo-apim     |
+| secret-redis            | *choreo-apim     |
+| secret-dp-kv-resolver   | *choreodp-system |
+| secret-dp-mizzen-agent  | *choreodp-system |
 
 ##### secret-redis
 
