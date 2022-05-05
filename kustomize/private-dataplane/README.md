@@ -9,30 +9,36 @@
             - [Namespace transformer (optional)](#namespace-transformer-optional)
             - [kustomization.yaml](#kustomizationyaml)
         - [choreo-apim](#choreo-apim)
-            - [config/kustomization.yaml](#configkustomizationyaml)
+            - [configs/kustomization.yaml](#configskustomizationyaml)
             - [secretproviderclass](#apimSecretProviderClass)
                 - [secret-apim](#secret-apim)
                 - [secret-choreo-connect](#secret-choreo-connect)
                 - [kustomization.yaml](#apimSPCKustomization)
             - [kustomization.yaml](#apimKustomization)
         - [choreo-nginx](#choreo-nginx)
-          - [configs](#nginxConfigs)
-            - [kustomization.yaml](#nginxConfigsKustomization)
-          - [secretproviderclass](#nginxSecretProviderClass)
-            - [secret-redis](#secret-redis)
-            - [kustomization.yaml](#nginxSPCKustomization)
-          - [kustomization.yaml](#nginxKustomization)
+            - [configs](#nginxConfigs)
+                - [kustomization.yaml](#nginxConfigsKustomization)
+            - [secretproviderclass](#nginxSecretProviderClass)
+                - [secret-redis](#secret-redis)
+                - [kustomization.yaml](#nginxSPCKustomization)
+            - [kustomization.yaml](#nginxKustomization)
         - [choreodp-system](#choreodp-system)
-          - [config/kustomization.yaml](#dpConfigKustomization)
-          - [secretproviderclass](#dpSecretProviderClass)
-            - [secret-dp-kv-resolver](#secret-dp-kv-resolver)
-            - [secret-dp-mizzen-agent](#secret-dp-mizzen-agent)
-            - [kustomization.yaml](#dpSPCKustomization)
-    - [Prerequisites](#Prerequisites)
-        - [Preparing SecretProviderClasses](#Preparing-SecretProviderClasses)
-            - [secret-apim](#secret-apim)
+            - [configs/kustomization.yaml](#dpConfigKustomization)
+            - [secretproviderclass](#dpSecretProviderClass)
+                - [secret-dp-kv-resolver](#secret-dp-kv-resolver)
+                - [secret-dp-mizzen-agent](#secret-dp-mizzen-agent)
+                - [kustomization.yaml](#dpSPCKustomization)
+            - [kustomization.yaml](#dpKustomization)
+        - [namespaces](#namespaces)
+            - [kustomization.yaml](#namespaceKustomization)
+        - [secretproviderclass-patch.yaml](#secretproviderclass-patchyaml)
+        - [secretproviderclasstransformer.yaml](#secretproviderclasstransformeryaml)
+        - [kustomization.yaml](#outerKustomization)
+- [Generating Kubernetes Resources](#generating-kubernetes-resources)
 
 ## Preparing the Overlay
+
+Create a new Github repository complying to the following sample directory structure.
 
 ### Sample Overlay Structure
 
@@ -43,7 +49,7 @@
 │   ├── load-balancer-patch.yaml
 │   └── namespace-transformer.yaml
 ├── choreo-apim
-│   ├── config
+│   ├── configs
 │   │   └── kustomization.yaml
 │   ├── kustomization.yaml
 │   └── secretproviderclass
@@ -69,7 +75,7 @@
 │       ├── dp-mizzen-agent.yaml
 │       └── kustomization.yaml
 ├── kustomization.yaml
-├── namespace
+├── namespaces
 │   ├── choreo-apim-namespace.yaml
 │   ├── choreodp-system-namespace.yaml
 │   └── kustomization.yaml
@@ -162,7 +168,7 @@ patchesStrategicMerge:
 
 #### choreo-apim
 
-##### config/kustomization.yaml
+##### configs/kustomization.yaml
 
 This needs to generate the following 3 configMaps,
 
@@ -499,7 +505,7 @@ prefix/suffix
 
 ```yaml
 resources:
-  - config
+  - configs
   - secretproviderclass
 
 namespace: choreo-apim # specify with prefix/suffix; ex: dev-choreo-apim if the prefix is 'dev'
@@ -642,7 +648,6 @@ spec:
           objectVersion: ""
 ```
 
-
 <h6 id="nginxSPCKustomization">kustomization.yaml</h5>
 
 The `kustomization.yaml` should accumulate the above secretproviderclass as shown below.
@@ -663,7 +668,7 @@ resources:
   - configs
   - secretproviderclass
 
-namespace: dev-choreo-apim
+namespace: dev-choreo-apim # specify with prefix/suffix; ex: dev-choreo-apim if the prefix is 'dev'
 
 commonLabels:
   app: choreo-routing
@@ -671,7 +676,7 @@ commonLabels:
 
 #### choreodp-system
 
-<h5 id="dpConfigKustomization">config/kustomization.yaml</h5>
+<h5 id="dpConfigKustomization">configs/kustomization.yaml</h5>
 
 This needs to generate the following 3 configMaps,
 
@@ -776,7 +781,7 @@ spec:
         - objectName: AZURE_KEYVAULT_TENANT_ID
           key: AZURE_KEYVAULT_TENANT_ID
   parameters:
-    objects:  |
+    objects: |
       array:
         - |
           objectName: dp-kv-resolver-AZURE-KEYVAULT-CLIENT-ID
@@ -836,3 +841,139 @@ resources:
   - dp-kv-resolver.yaml
   - dp-mizzen-agent.yaml
 ```
+
+<h5 id="dpKustomization">kustomization.yaml</h5>
+
+The `kustomization.yaml` will look similar to what is provided below. Remember to use the correct namespace here. If you
+have added a [namespace-transformer](#namespace-transformer-optional), you have to specify the namespace with that
+prefix/suffix
+
+```yaml
+resources:
+  - configs
+  - secretproviderclass
+
+namespace: choreodp-system # specify with prefix/suffix; ex: dev-choreodp-system if the prefix is 'dev'
+
+commonLabels:
+  app: choreo-dataplane
+```
+
+#### namespaces
+
+This should deploy the following 2 namespaces with their labels set to `userapp-ingress-allowed: "true"`.
+
+- choreo-apim (or with the suffix or prefix you added in [namespace-transformer](#namespace-transformer-optional))
+- choreodp-system (or with the suffix or prefix you added in [namespace-transformer](#namespace-transformer-optional))
+
+Sample namespaces are shown below (with the namespace transformer applied)
+
+`choreo-apim-namespace.yaml`
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-choreo-apim
+  labels:
+    userapp-ingress-allowed: "true"
+```
+
+`choreodp-system-namespace.yaml`
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-choreodp-system
+  labels:
+    userapp-ingress-allowed: "true"
+```
+
+<h5 id="namespaceKustomization">kustomization.yaml</h5>
+
+This should accumulate above two namespace resources as shown below.
+
+```yaml
+resources:
+  - choreodp-system-namespace.yaml
+  - choreo-apim-namespace.yaml
+```
+
+#### secretproviderclass-patch.yaml
+
+This is used to add Azure keyvault specifications to the above secretproviderclasses. Please replace the `keyvaultName`
+and `tenantId` placeholders with yours (in the `value` fields).
+
+```yaml
+- op: replace
+  path: '/spec/provider'
+  value: 'azure'
+- op: replace
+  path: '/spec/parameters/usePodIdentity'
+  value: 'false'
+- op: replace
+  path: '/spec/parameters/keyvaultName'
+  value: '<your keyvaultName>'
+- op: replace
+  path: '/spec/parameters/tenantId'
+  value: '<your tenantId>'
+
+```
+
+#### secretproviderclasstransformer.yaml
+
+This is used to add a hash suffix to the above secretProviderClasses based on their specs (object versions, object names
+etc.). This eliminates the necessity of manually restarting the deployments in the cluster, each time we update
+the `objectVersions` in the secretProviderClasses.
+
+```yaml
+apiVersion: wso2/transformers/v1
+kind: SecretProviderClassHasher
+metadata:
+  name: spc-hasher
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: choreocontrolplane.azurecr.io/choreoipaas/secretproviderclasshasher:v1.0.0
+spec:
+  enableSecretProviderClassHashSuffix: true
+```
+
+<h4 id="outerKustomization">kustomization.yaml</h5>
+
+This accumulates all the above top-level overlays.
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - base
+  - choreo-apim
+  - choreo-nginx
+  - choreodp-system
+  - namespaces
+
+patches:
+  - path: secretproviderclass-patch.yaml
+    target:
+      group: secrets-store.csi.x-k8s.io
+      version: v1alpha1
+      kind: SecretProviderClass
+
+transformers:
+  - secretproviderclasstransformer.yaml
+```
+
+## Generating Kubernetes Resources
+
+Once prepared the overlay as above, you can generate the Kubernetes manifests by executing the following command in the
+directory which holds the top-level [kustomization.yaml](#outerKustomization).
+
+```shell
+kustomize build --enable-alpha-plugins > output.yaml
+```
+
+This `output.yaml` can be deployed to the cluster using `kubectl apply -f` command. You can also use `kapp` to deploy
+only the diff between the current and previous versions.
