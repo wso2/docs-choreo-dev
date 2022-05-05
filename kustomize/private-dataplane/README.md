@@ -66,8 +66,8 @@ Now let's go through each folder and their contents.
 
 #### base
 
-This is used to patch the resources from this repository. You can use namespace transformers as well. This contains
-following patch.
+This is used to overlay the resources from this repository. You can use namespace transformers as well. This contains
+following overlay.
 
 - Load balancer patch
 
