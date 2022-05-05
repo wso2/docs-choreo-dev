@@ -11,11 +11,23 @@
         - [choreo-apim](#choreo-apim)
             - [config/kustomization.yaml](#configkustomizationyaml)
             - [secretproviderclass](#apimSecretProviderClass)
-              - [secret-apim](#secret-apim)
-              - [secret-choreo-connect](#secret-choreo-connect)
+                - [secret-apim](#secret-apim)
+                - [secret-choreo-connect](#secret-choreo-connect)
+                - [kustomization.yaml](#apimSPCKustomization)
             - [kustomization.yaml](#apimKustomization)
         - [choreo-nginx](#choreo-nginx)
+          - [configs](#nginxConfigs)
+            - [kustomization.yaml](#nginxConfigsKustomization)
+          - [secretproviderclass](#nginxSecretProviderClass)
+            - [secret-redis](#secret-redis)
+            - [kustomization.yaml](#nginxSPCKustomization)
+          - [kustomization.yaml](#nginxKustomization)
         - [choreodp-system](#choreodp-system)
+          - [config/kustomization.yaml](#dpConfigKustomization)
+          - [secretproviderclass](#dpSecretProviderClass)
+            - [secret-dp-kv-resolver](#secret-dp-kv-resolver)
+            - [secret-dp-mizzen-agent](#secret-dp-mizzen-agent)
+            - [kustomization.yaml](#dpSPCKustomization)
     - [Prerequisites](#Prerequisites)
         - [Preparing SecretProviderClasses](#Preparing-SecretProviderClasses)
             - [secret-apim](#secret-apim)
@@ -225,6 +237,7 @@ configMapGenerator:
 <h5 id="apimSecretProviderClass">secretproviderclass</h5>
 
 This directory contains following 2 secretProviderClasses.
+
 - secret-apim
 - secret-choreo-connect
 
@@ -468,35 +481,142 @@ spec:
           objectVersion: ""
 ```
 
+<h6 id="apimSPCKustomization">kustomization.yaml</h5>
+
+The `kustomization.yaml` should accumulate the above 2 secretproviderclasses as shown below.
+
+```yaml
+resources:
+  - secret-apim.yaml
+  - secret-choreo-connect.yaml
+```
+
 <h5 id="apimKustomization">kustomization.yaml</h5>
 
+The `kustomization.yaml` will look similar to what is provided below. Remember to use the correct namespace here. If you
+have added a [namespace-transformer](#namespace-transformer-optional), you have to specify the namespace with that
+prefix/suffix
 
+```yaml
+resources:
+  - config
+  - secretproviderclass
+
+namespace: choreo-apim # specify with prefix/suffix; ex: dev-choreo-apim if the prefix is 'dev'
+
+commonLabels:
+  app: choreo-apim
+```
 
 #### choreo-nginx
 
-#### choreodp-system
+<h5 id="nginxConfigs">configs</h5>
 
-The following prerequisites need to be fulfilled before preparing the overlay.
+The following configMaps need to be generated in this directory.
 
-### Prerequisites
+- nginx-vhosts
+- redis-config
+- nginx-feature-flags
 
-#### Preparing SecretProviderClasses
+<table>
+    <thead>
+        <tr>
+            <th>ConfigMap</th>
+            <th>Literals/Files</th>
+            <th>Accepted Values/Format</th>
+            <th>Choosing the Correct Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3">nginx-vhosts</td>
+            <td>poc-dv.choreoapis.dev.conf</td>
+            <td>
+                Add line breaks properly<br>so that the cell would look normal
+                <!--<ul>
+                    <li>include</li>
+                    <li>pointwise</li>
+                </ul>-->
+            </td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>dev.poc-dv.choreoapis.dev.conf</td>
+            <td><!--Add your description--></td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>e1-us-east-azure.poc-dv.choreoapis.dev.conf</td>
+            <td><!--Add your description--></td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td rowspan="5">redis-config</td>
+            <td>REDIS_HOST</td>
+            <td><!--Add your description--></td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>REDIS_PORT</td>
+            <td><!--Add your description--></td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>REDIS_SSL</td>
+            <td>boolean</td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>REDIS_SSL_VERIFY</td>
+            <td>boolean</td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>REDIS_DATABASE</td>
+            <td>int</td>
+            <td><!--Add your description--></td>
+        </tr>
+        <tr>
+            <td>nginx-feature-flags</td>
+            <td>PARTITION_ENABLED</td>
+            <td>boolean</td>
+            <td><!--Add your description--></td>
+        </tr>
+    </tbody>
+</table>
 
-SecretProviderClasses listed in the following table are needed in the private dataplane deployment.
+<h6 id="nginxConfigsKustomization">kustomization.yaml</h5>
 
-| Name                    | Namespace        |
-| ------------------------| -----------------|
-| secret-apim             | *choreo-apim     |
-| secret-choreo-connect   | *choreo-apim     |
-| secret-redis            | *choreo-apim     |
-| secret-dp-kv-resolver   | *choreodp-system |
-| secret-dp-mizzen-agent  | *choreodp-system |
+The `kustomization.yaml` will look like below once all the above are properly configured. Be sure to add the
+above `*.conf` files to the same directory.
 
-##### secret-redis
+```yaml
+configMapGenerator:
+  - name: nginx-vhosts
+    behavior: create
+    files:
+      - poc-dv.choreoapis.dev.conf
+      - dev.poc-dv.choreoapis.dev.conf
+      - e1-us-east-azure.poc-dv.choreoapis.dev.conf
+  - name: redis-config
+    behavior: create
+    literals:
+      - REDIS_HOST=choreo-dev-global-adapter.redis.cache.windows.net
+      - REDIS_PORT=6380
+      - REDIS_SSL=true
+      - REDIS_SSL_VERIFY=true
+      - REDIS_DATABASE=0
+  - name: nginx-feature-flags
+    behavior: create
+    literals:
+      - PARTITION_ENABLED=false
+```
+
+<h5 id="nginxSecretProviderClass">secretproviderclass</h5>
 
 This class should create 1 secret objects named as,
 
-1. secret-redis
+- secret-redis
 
 Which should contain ‘REDIS_PASSWORD’. A sample secretproviderclass is provided below.
 
@@ -520,4 +640,199 @@ spec:
           objectType: secret
           objectAlias: REDIS_PASSWORD
           objectVersion: ""
+```
+
+
+<h6 id="nginxSPCKustomization">kustomization.yaml</h5>
+
+The `kustomization.yaml` should accumulate the above secretproviderclass as shown below.
+
+```yaml
+resources:
+  - secret-redis.yaml
+```
+
+<h5 id="nginxKustomization">kustomization.yaml</h5>
+
+The `kustomization.yaml` will look similar to what is provided below. Remember to use the correct namespace here. If you
+have added a [namespace-transformer](#namespace-transformer-optional), you have to specify the namespace with that
+prefix/suffix
+
+```yaml
+resources:
+  - configs
+  - secretproviderclass
+
+namespace: dev-choreo-apim
+
+commonLabels:
+  app: choreo-routing
+```
+
+#### choreodp-system
+
+<h5 id="dpConfigKustomization">config/kustomization.yaml</h5>
+
+This needs to generate the following 3 configMaps,
+
+- env-dp-mizzen-agent
+- env-dp-kv-resolver
+
+as shown below.
+
+<table>
+    <thead>
+        <tr>
+            <th>ConfigMap</th>
+            <th>Literal/s</th>
+            <th>Accepted Values/Format</th>
+            <th>Choosing the Correct Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">env-dp-mizzen-agent</td>
+            <td>SERVER_FQDN</td>
+            <td>
+                String (websocket url)<br>Eg. ws://mizzen.dev-controlplane.internal
+                <!--<ul>
+                    <li>include</li>
+                    <li>pointwise</li>
+                </ul>-->
+            </td>
+            <td>Provided by SRE<br>(private DNS to the private link service)</td>
+        </tr>
+        <tr>
+            <td>ENV</td>
+            <td>String<br>{development, staging, production}</td>
+            <td>Depending on the connected CP environment<br>(this is only used for logging)</td>
+        </tr>
+        <tr>
+            <td rowspan="2">env-dp-kv-resolver</td>
+            <td>AZURE_KEYVAULT_NAME</td>
+            <td>String</td>
+            <td>Name of the UserKV mapped to the current DP<br>cluster.<br>Eg. “poc-userapps-123”</td>
+        </tr>
+        <tr>
+            <td>MAX_CONCURRENT_RECONCILES</td>
+            <td>Integer<br>(default should be 100)</td>
+            <td>This is used to tweak the throughput.<br>Current recommendation is 100</td>
+        </tr>
+    </tbody>
+</table>
+
+
+The `kustomization.yaml` will look something like below
+
+```yaml
+configMapGenerator:
+  - name: env-dp-mizzen-agent
+    behavior: create
+    literals:
+      - SERVER_FQDN="ws://mizzen.dev-controlplane.internal"
+      - ENV=development
+  - name: env-dp-kv-resolver
+    behavior: create
+    literals:
+      - AZURE_KEYVAULT_NAME=poc-userapps-28
+      - MAX_CONCURRENT_RECONCILES=100
+```
+
+<h5 id="dpSecretProviderClass">secretproviderclass</h5>
+
+This directory contains following 2 secretProviderClasses.
+
+- secret-dp-kv-resolver
+- secret-dp-mizzen-agent
+
+###### secret-dp-kv-resolver
+
+This class should create the following secret objects named as,
+
+- secret-dp-kv-resolver
+
+it should contain the following 3 objects as secrets.
+
+- AZURE_KEYVAULT_CLIENT_ID
+- AZURE_KEYVAULT_CLIENT_SECRET
+- AZURE_KEYVAULT_TENANT_ID
+
+A sample secretproviderclass is provided below.
+
+```yaml
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-kv-resolver
+spec:
+  secretObjects:
+    - secretName: secret-dp-kv-resolver
+      type: Opaque
+      data:
+        - objectName: AZURE_KEYVAULT_CLIENT_ID
+          key: AZURE_KEYVAULT_CLIENT_ID
+        - objectName: AZURE_KEYVAULT_CLIENT_SECRET
+          key: AZURE_KEYVAULT_CLIENT_SECRET
+        - objectName: AZURE_KEYVAULT_TENANT_ID
+          key: AZURE_KEYVAULT_TENANT_ID
+  parameters:
+    objects:  |
+      array:
+        - |
+          objectName: dp-kv-resolver-AZURE-KEYVAULT-CLIENT-ID
+          objectType: secret
+          objectAlias: AZURE_KEYVAULT_CLIENT_ID
+          objectVersion: ""
+        - |
+          objectName: dp-kv-resolver-AZURE-KEYVAULT-CLIENT-SECRET
+          objectType: secret
+          objectAlias: AZURE_KEYVAULT_CLIENT_SECRET
+          objectVersion: ""
+        - |
+          objectName: dp-kv-resolver-AZURE-KEYVAULT-TENANT-ID
+          objectType: secret
+          objectAlias: AZURE_KEYVAULT_TENANT_ID
+          objectVersion: ""
+```
+
+###### secret-dp-mizzen-agent
+
+This class should create a secret objects named as,
+
+- secret-dp-mizzen-agent
+
+which contains `TOKEN` as the secret object.
+
+A sample secretproviderclass is provided below.
+
+```yaml
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-mizzen-agent
+spec:
+  secretObjects:
+    - secretName: secret-dp-mizzen-agent
+      type: Opaque
+      data:
+        - objectName: TOKEN
+          key: TOKEN
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: dp-mizzen-agent-poc-TOKEN
+          objectType: secret
+          objectAlias: TOKEN
+          objectVersion: ""
+```
+
+<h6 id="dpSPCKustomization">kustomization.yaml</h5>
+
+The `kustomization.yaml` should accumulate the above 2 secretproviderclasses as shown below.
+
+```yaml
+resources:
+  - dp-kv-resolver.yaml
+  - dp-mizzen-agent.yaml
 ```
