@@ -105,8 +105,6 @@ EOF
 
 ```bash
 CLUSTER_NAME=xxxxxxxxxxxxxxxxx
-APIM_NAMESPACE=xxxxxxxxxxxxxxxxx
-DP_SYSTEM_NAMESPACE=xxxxxxxxxxxxxxxxx
 ROUTING_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
@@ -116,7 +114,7 @@ AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
 PARTITION_DNS_NAME=xxxxxxxxxxxxxxxxx
 WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
 GATEWAY_WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
-ENV=xxxxx
+ENV=xxxx
 EOF
 ```
 
