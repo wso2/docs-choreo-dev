@@ -267,15 +267,19 @@ export class GraphQL {
     };
 
     this.callGraphQL(token, query).then((res) => {
-      const apiVersion: [] = res.body.data.component.apiVersions;
-      apiVersion.forEach((e) => {
-        const { proxyId } = e;
-        if (proxyId) {
-          this.deprecateComponent(proxyId, token);
-        } else {
-          cy.log(`ProxyID is :: ${proxyId}`);
-        }
-      });
+      if (res.status === SUCCESS_STATUS_CODE) {
+        const apiVersion: [] = res.body.data.component.apiVersions;
+        apiVersion.forEach((e) => {
+          const { proxyId } = e;
+          if (proxyId) {
+            this.deprecateComponent(proxyId, token);
+          } else {
+            cy.log(`ProxyID is :: ${proxyId}`);
+          }
+        });
+      }else{
+        cy.log(`Status Code For changeComponentLifeCycle ==> ${res.status}`)
+      }
     });
   }
 
@@ -318,7 +322,9 @@ export class GraphQL {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    const url = `${Cypress.env("balRegistryURL")}/packages/${organization}/${name}/${version}?force=true`;
+    const url = `${Cypress.env(
+      "balRegistryURL"
+    )}/packages/${organization}/${name}/${version}?force=true`;
     Utils.sendDeleteRequest(url, headers).then((res) => {
       if (res.status === NO_CONTENT_STATUS_CODE) {
         cy.log(`Successfully deleted Connector  ${name}`);
@@ -337,13 +343,10 @@ export class GraphQL {
     };
     const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
     Utils.sendGetRequest(url, headers).then((res) => {
-  
       const packages = res.body as [];
       if (packages.length > 0) {
         packages.forEach((p) => this.deleteConnector(p, token));
       }
     });
   }
-
-
 }
