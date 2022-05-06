@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    reflector.v1.k8s.emberstack.com/secret-reflection-allowed: "true"
+    reflector.v1.k8s.emberstack.com/secret-reflection-auto-enabled: "true"
+  name: dev-choreo-gateway-wildcard-cert
+  namespace: cert-manager
+spec:
+  dnsNames:
+  - GATEWAY_WILDCARD_DNS_NAME
+  - '*.GATEWAY_WILDCARD_DNS_NAME'
+  issuerRef:
+    kind: Issuer
+    name: choreoapis-dev-gateway-letsencrypt-prod
+  secretName: dev-choreo-api-gateway-wildcard-tls

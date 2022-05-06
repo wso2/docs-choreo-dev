@@ -123,6 +123,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
+            - configMapRef:
+                name: env-choreo-connect-enforcer
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -136,8 +138,6 @@ spec:
               value: "adapter-default-p1"
             - name: ADAPTER_XDS_PORT
               value: "18000"
-            - name: ENFORCER_LABEL
-              value: "Production and Sandbox"
             - name: ENFORCER_REGION
               value: "UNKNOWN"
             - name: XDS_MAX_MSG_SIZE
@@ -210,6 +210,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
+            - configMapRef:
+                name: env-choreo-connect-router
           env:
             - name: ROUTER_ADMIN_HOST
               value: "0.0.0.0"
@@ -217,8 +219,6 @@ spec:
               value: "9000"
             - name: ROUTER_CLUSTER
               value: "default_cluster"
-            - name: ROUTER_LABEL
-              value: "Production and Sandbox"
             - name: ROUTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ROUTER_PUBLIC_CERT_PATH
