@@ -6,7 +6,7 @@ kubectl create namespace "${ENV}-actions-runner-system" --dry-run=client -o yaml
 
 helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
 
-helm install actions-runner-controller actions-runner-controller/actions-runner-controller --namespace "${ENV}-actions-runner-system" --set=authSecret.create=true \
+helm upgrade --install actions-runner-controller actions-runner-controller/actions-runner-controller  --version 0.18.0 --namespace "${ENV}-actions-runner-system" --set=authSecret.create=true \
     --set=authSecret.github_token="${GITHUB_TOKEN}" --set=githubWebhookServer.enabled=true --set=githubWebhookServer.ports[0].nodePort=33080 \
     --set=nodeSelector.execution-mode=ghrunner --set=tolerations[0].operator=Exists,tolerations[0].effect=NoSchedule,tolerations[0].key=ghrunner \
     --set=githubWebhookServer.nodeSelector.execution-mode=ghrunner \
