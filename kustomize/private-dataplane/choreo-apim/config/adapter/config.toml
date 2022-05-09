@@ -277,7 +277,7 @@ reconnectRetryCount = 60
 # Global Adapter related configurations
 [globalAdapter]
   # Enable Choreo Connect Global adapter client
-  enabled = true
+  enabled = false
   # Global adapter Service URL (<Hostname>:<Port>)
   serviceUrl = "dev.dev-global-adapter.internal:18000"
   # Local Adapter Label
