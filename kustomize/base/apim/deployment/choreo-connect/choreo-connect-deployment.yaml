@@ -56,7 +56,7 @@ spec:
               readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: enforcer-truststore
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
             - name: enforcer-truststore
@@ -67,9 +67,9 @@ spec:
               readOnly: true
               subPath: ENFORCER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-enforcer-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ENFORCER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/jwt/key.pem
               name: secret-mgw-enforcer-jwt-keystore
               readOnly: true
@@ -161,15 +161,15 @@ spec:
         - name: choreo-connect-router
           volumeMounts:
             - mountPath:  /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-router-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-router-keystore
               readOnly: true
               subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: router-truststore
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
@@ -286,9 +286,9 @@ spec:
         - name: enforcer-truststore
           configMap:
             name: mgw-enforcer-truststore
-        - name: router-truststore
+        - name: mgw-common-cert-vol
           configMap:
-            name: mgw-router-truststore
+            name: mgw-common-cert
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io

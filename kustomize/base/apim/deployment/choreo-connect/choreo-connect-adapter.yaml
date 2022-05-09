@@ -52,15 +52,15 @@ spec:
               readOnly: true
               subPath: ADAPTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ADAPTER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/truststore/controlplane.pem
               name: mgw-adapter-truststore-vol
               readOnly: true
               subPath: controlplane.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-common-truststore-vol
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
             - mountPath: /home/wso2/security/truststore/global-adapter.pem
@@ -149,9 +149,9 @@ spec:
         - name: mgw-adapter-truststore-vol
           configMap:
             name: mgw-adapter-truststore
-        - name: mgw-common-truststore
+        - name: mgw-common-cert-vol
           configMap:
-            name: mgw-common-truststore
+            name: mgw-common-cert
         - name: secret-mgw
           csi:
             driver: secrets-store.csi.k8s.io
