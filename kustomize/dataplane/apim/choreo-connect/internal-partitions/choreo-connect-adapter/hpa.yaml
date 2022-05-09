@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    choreo.component: choreo-connect-adapter-internal
+  name: choreo-connect-adapter-internal
+spec:
+  maxReplicas: 3
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-connect-adapter-internal
+  targetCPUUtilizationPercentage: 75
