@@ -44,7 +44,7 @@ spec:
               name: http-port
           readinessProbe:
             initialDelaySeconds: 5
-            timeoutSeconds: 15
+            timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 3
             successThreshold: 1
@@ -75,9 +75,6 @@ spec:
           volumeMounts:
             - name: secret-image-share-service
               mountPath: "/mnt/csi/secret-image-share-service"
-              readOnly: true
-            - name: secret-idp
-              mountPath: "/mnt/csi/secret-idp"
               readOnly: true
       restartPolicy: Always
       volumes:
