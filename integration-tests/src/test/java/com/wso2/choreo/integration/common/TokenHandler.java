@@ -42,8 +42,9 @@ public class TokenHandler {
 
     private final String asgardeoClientId = Configuration.ASGARDEO_CLIENT_ID;
     private final String asgardeoClientSecret = Configuration.ASGARDEO_CLIENT_SECRET;
-    private final String testUserEmail = Configuration.TEST_USER_EMAIL;
-    private final String testUserPassword = Configuration.TEST_USER_PASSWORD;
+    private String testChoreoOrgHandle = Configuration.TEST_CHOREO_ORG_HANDLE;
+    private String testUserEmail = Configuration.TEST_USER_EMAIL;
+    private String testUserPassword = Configuration.TEST_USER_PASSWORD;
     private final String stsClientId = Configuration.STS_CLIENT_ID;
     private final String stsClientSecret = Configuration.STS_CLIENT_SECRET;
     private final String cpAppClientId = Configuration.CP_APP_CLIENT_ID;
@@ -136,7 +137,7 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("subject_token", userToken));
         urlParameters.add(new BasicNameValuePair("subject_token_type", Constant.SUBJECT_TOKEN_TYPE));
         urlParameters.add(new BasicNameValuePair("requested_token_type", Constant.REQUESTED_TOKEN_TYPE));
-        urlParameters.add(new BasicNameValuePair("orgHandle", Configuration.TEST_CHOREO_ORG_HANDLE));
+        urlParameters.add(new BasicNameValuePair("orgHandle", testChoreoOrgHandle));
         urlParameters.add(new BasicNameValuePair("scope", Constant.OAUTH_SCOPES));
 
         request.setEntity(new UrlEncodedFormEntity(urlParameters));
@@ -164,5 +165,32 @@ public class TokenHandler {
     private String encodeCredentials(String clientId, String clientSecret) {
         String concatenateCredentials = clientId.concat(":").concat(clientSecret);
         return Base64.getEncoder().encodeToString(concatenateCredentials.getBytes());
+    }
+
+    /**
+     * Set the Test User's Organization Handle in testChoreoOrgHandle variable
+     * 
+     * @param orgHandle
+     */
+    public void setTestChoreoOrgHandle(String orgHandle) {
+        testChoreoOrgHandle = orgHandle;
+    }
+
+    /**
+     * Set the Test User's Email address in testUserEmail variable
+     * 
+     * @param email
+     */
+    public void setTestUserEmail(String emailAddress){
+        testUserEmail = emailAddress;
+    }
+
+    /**
+     * Set the Test User's password in testUserPassword variable
+     * 
+     * @param password
+     */
+    public void setTestUserPassword(String password){
+        testUserPassword = password;
     }
 }

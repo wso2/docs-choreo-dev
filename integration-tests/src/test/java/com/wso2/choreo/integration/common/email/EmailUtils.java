@@ -11,8 +11,6 @@
 package com.wso2.choreo.integration.common.email;
 
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,28 +28,26 @@ import java.util.Properties;
 public class EmailUtils extends TestNGCitrusSpringSupport {
     private final static Logger log = LoggerFactory.getLogger(EmailUtils.class);
 
-    public static boolean checkForMail(final String searchText) throws Exception {
-
+    public static boolean checkForMail(String imapHost, String imapPassword, int imapPort, final String searchText, String imapUser, long receivedTimestamp) throws Exception {
         Properties properties = new Properties();
-        properties.put("mail.imap.host", Constant.ALERT.MAIL_IMAP_HOST);
-        properties.put("mail.imap.port", Constant.ALERT.MAIL_IMAP_PORT);
+        properties.put("mail.imap.host", imapHost);
+        properties.put("mail.imap.port", imapPort);
         properties.put("mail.imap.starttls.enable", "true");
         Session emailSession = Session.getDefaultInstance(properties);
 
         try (Store store = emailSession.getStore("imaps")) {
-            store.connect(Constant.ALERT.MAIL_IMAP_HOST, Constant.ALERT.MAIL_IMAP_USER,
-                    Configuration.ALERT.MAIL_IMAP_PASS);
+            store.connect(imapHost, imapUser, imapPassword);
             try (Folder emailFolder = store.getFolder("INBOX")) {
                 emailFolder.open(Folder.READ_ONLY);
-                return search(emailFolder, searchText);
+                return search(emailFolder, receivedTimestamp, searchText);
             }
         }
     }
 
-    private static boolean search(Folder emailFolder, String searchText) throws Exception {
+    private static boolean search(Folder emailFolder, long receivedTimestamp, String searchText) throws Exception {
         int i = 0;
         while (i++ < 300) {
-            Message[] messages = emailFolder.search(new EmailSearchCondition(searchText));
+            Message[] messages = emailFolder.search(new EmailSearchCondition(receivedTimestamp, searchText));
             if (messages.length > 0) {
                 log.info("Found '{}' emails for the given criteria", messages.length);
                 for (Message message : messages) {
@@ -69,15 +65,17 @@ public class EmailUtils extends TestNGCitrusSpringSupport {
 
     static class EmailSearchCondition extends SearchTerm {
         private String searchText;
+        private long receivedTimestamp;
 
-        public EmailSearchCondition(String searchText) {
+        public EmailSearchCondition(long receivedTimestamp, String searchText) {
+            this.receivedTimestamp = receivedTimestamp;
             this.searchText = searchText;
         }
 
         @Override
         public boolean match(Message message) {
             try {
-                if (message.getSubject().contains(this.searchText)) {
+                if (message.getSubject().contains(this.searchText) && message.getReceivedDate().getTime() >= receivedTimestamp) {
                     return true;
                 }
             } catch (MessagingException ex) {

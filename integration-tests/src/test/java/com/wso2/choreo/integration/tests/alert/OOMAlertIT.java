@@ -50,6 +50,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void testImmediateAlert() throws Exception {
+        long testStartTimestamp = Instant.now().toEpochMilli();
         String appName = UUID.randomUUID().toString();
         String body = "{\n"
                 + "\t\"orgId\": \"" + Configuration.ALERT.ORG_UUID + "\",\n"
@@ -86,7 +87,12 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/alert/post_alert_suceess.json")));
 
-        boolean isMailReceived = EmailUtils.checkForMail(appName);
+        boolean isMailReceived = EmailUtils.checkForMail(Constant.ALERT.MAIL_IMAP_HOST, 
+                                                         Configuration.ALERT.MAIL_IMAP_PASS, 
+                                                         Constant.ALERT.MAIL_IMAP_PORT, 
+                                                         appName, 
+                                                         Constant.ALERT.MAIL_IMAP_USER,
+                                                         testStartTimestamp);
         Assert.assertTrue(isMailReceived);
     }
 }

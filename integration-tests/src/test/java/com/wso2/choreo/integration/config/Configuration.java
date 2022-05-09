@@ -35,4 +35,20 @@ public class Configuration {
         public static final String ORG_UUID = System.getenv("ALERT_ORG_UUID");
         public static final String RELEASE_ID = System.getenv("ALERT_RELEASE_ID");
     }
+
+    public static final class ANOMALY_DETECTION {
+        public static final String MAIL_IMAP_PASS = System.getenv("ANOMALY_DETECTION_MAIL_IMAP_PASS");
+        public static final String PASSTHROUGH_CLIENT_ID = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID");
+        public static final String PASSTHROUGH_CLIENT_SECRET = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET");
+        public static final String PASSTHROUGH_COMPONENT_ID = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID");
+        public static final String PASSTHROUGH_COMPONENT_NAME = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME");
+        public static final String PASSTHROUGH_RELEASE_ID = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID");
+        public static final String PASSTHROUGH_INVOKE_URL = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL");
+        public static final String PROJECT_ID = System.getenv("ANOMALY_DETECTION_PROJECT_ID");
+        public static final String TEST_CHOREO_ORG_ID = System.getenv("ANOMALY_DETECTION_TEST_CHOREO_ORG_ID");
+        public static final String TEST_CHOREO_ORG_UUID = System.getenv("ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID");
+        public static final String TEST_USER_EMAIL = System.getenv("ANOMALY_DETECTION_TEST_USER_EMAIL");
+        public static final String TEST_CHOREO_ORG_HANDLE = System.getenv("ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE");
+        public static final String TEST_USER_PASSWORD = System.getenv("ANOMALY_DETECTION_TEST_USER_PASSWORD");
+    }
 }

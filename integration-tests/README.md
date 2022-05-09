@@ -17,6 +17,21 @@
     - ASGARDEO_CLIENT_ID
     - ASGARDEO_CLIENT_SECRET
 
+(Optional) Setup the following configurations as environment variables if you need to run the anomaly detection test  
+- ANOMALY_DETECTION_ORG_ID  
+- ANOMALY_DETECTION_ORG_UUID  
+- ANOMALY_DETECTION_PROJECT_ID  
+- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID  
+- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET  
+- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID  
+- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME  
+- ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL  
+- ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID  
+- ANOMALY_DETECTION_MAIL_IMAP_PASS  
+- ANOMALY_DETECTION_TEST_USER_EMAIL  
+- ANOMALY_DETECTION_TEST_USER_PASSWORD  
+- ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE  
+
 Please talk to your EM or any QA team member to get these dev test user credentials. 
 
 ## 2. Run
@@ -91,6 +106,14 @@ integration-tests/src/test
 				3) Retrieved the details of the published connector<br/>
 			</td>
 		</tr>
-    </tbody>
+        <tr>
+            <td>anomalyDetector</td>
+            <td>Detecting a backend failure anomaly</td>
+            <td>
+                1) Invoke Passthrough Choreo component which has a backend that returns an HTTP error <br>
+                2) Check if an anomaly detection email is received
+            </td>
+        </tr>
+        </tbody>
 
 </table>

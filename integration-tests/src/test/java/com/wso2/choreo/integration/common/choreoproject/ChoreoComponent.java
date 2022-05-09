@@ -29,6 +29,11 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 /**
  * Abstract class to represent Choreo component
@@ -307,6 +312,40 @@ public abstract class ChoreoComponent {
 
     public String getId() {
         return id;
+    }
+
+    
+    /**
+     * Redeploy a stopped component
+     * 
+     * @param accessToken
+     * @param componentId
+     * @param releaseId
+     * @param orgHandle
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void redeploy(String accessToken, String componentId, String releaseId, String orgHandle) throws IOException, InterruptedException {
+        String graphQlQuery = "mutation { redeployDeployment(orgHandler: \"" + orgHandle + "\", componentId: \"" + componentId + "\", releaseId: \"" + releaseId + "\", type: \"restAPI\" )}";
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+
+        HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
+
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        httpClient.execute(request);
     }
 
     public void setId(String id) {
