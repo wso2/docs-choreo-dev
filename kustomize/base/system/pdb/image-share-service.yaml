@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: image-share-service
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: image-share-service
+      

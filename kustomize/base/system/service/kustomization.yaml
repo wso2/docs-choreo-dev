@@ -35,3 +35,4 @@ resources:
   - test-assistant.yaml
   - testbase.yaml
   - workspace-manager.yaml
+  - image-share-service.yaml
