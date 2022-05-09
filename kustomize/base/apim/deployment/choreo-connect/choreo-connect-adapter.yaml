@@ -56,15 +56,15 @@ spec:
               readOnly: true
               subPath: ADAPTER_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/security/truststore/controlplane.pem
-              name: secret-mgw-truststore
+              name: mgw-adapter-truststore-vol
               readOnly: true
-              subPath: CONTROL_PLANE_CERTIFICATE
+              subPath: controlplane.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: secret-mgw-truststore
+              name: mgw-common-truststore-vol
               readOnly: true
-              subPath: ADAPTER_TRUSTSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/truststore/global-adapter.pem
-              name: global-adapter-keystore-vol
+              name: mgw-adapter-truststore-vol
               subPath: global-adapter.pem
             - mountPath: /home/wso2/conf
               name: adapter-config
@@ -146,9 +146,12 @@ spec:
         - name: adapter-config
           configMap:
             name: mgw-adapter-enforcer-conf
-        - name: global-adapter-keystore-vol
+        - name: mgw-adapter-truststore-vol
           configMap:
-            name: global-adapter-keystore-vol
+            name: mgw-adapter-truststore
+        - name: mgw-common-truststore
+          configMap:
+            name: mgw-common-truststore
         - name: secret-mgw
           csi:
             driver: secrets-store.csi.k8s.io
@@ -163,14 +166,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-truststore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-truststore
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-asb

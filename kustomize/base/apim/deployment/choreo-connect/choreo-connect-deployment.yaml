@@ -169,9 +169,9 @@ spec:
               readOnly: true
               subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: secret-mgw-router-truststore
+              name: router-truststore
               readOnly: true
-              subPath: ROUTER_TRUSTSTORE
+              subPath: mg.pem
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
@@ -281,19 +281,14 @@ spec:
               secretProviderClass: secret-mgw-router-keystore
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - name: secret-mgw-router-truststore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-router-truststore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: dropins-vol
           emptyDir: {}
         - name: enforcer-truststore
           configMap:
             name: mgw-enforcer-truststore
+        - name: router-truststore
+          configMap:
+            name: mgw-router-truststore
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io
