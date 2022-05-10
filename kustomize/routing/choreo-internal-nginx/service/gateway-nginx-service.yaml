@@ -29,4 +29,4 @@ spec:
       targetPort: 9443
       name: https
   type: LoadBalancer
-  loadBalancerIP: 10.2.64.7
+  loadBalancerIP: 10.2.64.8
