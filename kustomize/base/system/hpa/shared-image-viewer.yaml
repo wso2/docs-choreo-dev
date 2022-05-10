@@ -1,9 +1,6 @@
-
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  annotations:
-    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
   labels:
     choreo.component: shared-image-viewer
   name: shared-image-viewer
