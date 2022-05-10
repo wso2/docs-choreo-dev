@@ -32,12 +32,6 @@ spec:
       containers:
         - name: shared-image-viewer
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-shared-image-viewer:latest
-          env:
-          # - name: IMAGE_SHARE_SERVICE_SECRET
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: secret-shared-image-viewer
-          #       key: IMAGE_SHARE_SERVICE_SECRET
           envFrom:
             - configMapRef:
                 name: env-shared-image-viewer
@@ -74,23 +68,11 @@ spec:
             runAsUser: 100
             runAsGroup: 1000
             readOnlyRootFilesystem: true
-          # volumeMounts:
-          #   - name: secret-shared-image-viewer
-          #     mountPath: "/mnt/csi/secret-shared-image-viewer"
-          #     readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
           configMap:
             name: cm-shared-image-viewer-config
-        # - name: secret-shared-image-viewer
-        #   csi:
-        #     driver: secrets-store.csi.k8s.io
-        #     readOnly: true
-        #     volumeAttributes:
-        #       secretProviderClass: secret-shared-image-viewer
-        #     nodePublishSecretRef:
-        #       name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
