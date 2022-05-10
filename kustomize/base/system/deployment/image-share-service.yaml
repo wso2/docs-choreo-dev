@@ -38,6 +38,9 @@ spec:
               secretKeyRef:
                 name: secret-image-share-service
                 key: IMAGE_SHARE_SERVICE_SECRET
+          envFrom:
+            - configMapRef:
+                name: env-image-share-service
           ports:
             - containerPort: 9090
               name: http-port
