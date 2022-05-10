@@ -261,7 +261,7 @@ disableSslVerification = false
 
 [controlPlane]
 enabled = true
-serviceUrl = "http://dev.dev-global-adapter.internal:9745"
+serviceUrl = "http://dev.dev-global-adapter.internal:9745/"
 username="choreo_dev_apim_admin"
 password="$env{cp_admin_pwd}"
 environmentLabels = ["$env{environmentLabel}"]
