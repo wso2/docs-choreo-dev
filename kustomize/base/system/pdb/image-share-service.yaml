@@ -7,4 +7,3 @@ spec:
   selector:
     matchLabels:
       choreo.component: image-share-service
-      
