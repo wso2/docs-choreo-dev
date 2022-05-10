@@ -36,4 +36,4 @@ resources:
   - dp-cloud-manager.yaml
   - dp-project-manager.yaml
   - dp-rudder.yaml
-  - image-share-service
+  - image-share-service.yaml
