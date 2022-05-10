@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    choreo.component: internal-nginx
+  name: choreo-internal-nginx-hpa
+spec:
+  maxReplicas: 3
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: choreo-internal-nginx-deployment
+  targetCPUUtilizationPercentage: 75
