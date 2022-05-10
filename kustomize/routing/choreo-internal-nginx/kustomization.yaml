@@ -18,9 +18,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - choreo-internal-nginx
-  - choreo-nginx
-  - choreodp-system
+  - deployment
+  - hpa
+  - pdb
+  - service
 
-commonLabels:
-  app: choreo-routing
+namespace: choreo-apim
