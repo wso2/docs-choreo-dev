@@ -66,8 +66,8 @@ export class LoginPage {
     cy.setCookie("fidpId", "choreoe2etest");
 
     this.persistOrgs();
-    this.persistApimToken();
     this.persistLogoutURL();
+    this.persistApimToken();
     this.persistCookies();
 
     cy.get('[data-testid="header-user-profile-menu"]', {

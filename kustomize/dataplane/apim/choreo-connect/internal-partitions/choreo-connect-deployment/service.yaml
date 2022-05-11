@@ -14,13 +14,21 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+# service for router
 
-resources:
-  - choreo-internal-nginx
-  - choreo-nginx
-  - choreodp-system
-
-commonLabels:
-  app: choreo-routing
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-connect-deployment-internal
+  name: router-internal
+spec:
+  selector:
+    choreo.component: choreo-connect-deployment-internal
+  ports:
+    - name: "http-routeradmin"
+      port: 9000
+      protocol: TCP
+    - name: "https-router"
+      port: 9095
+      protocol: TCP

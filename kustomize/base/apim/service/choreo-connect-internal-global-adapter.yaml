@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2021, WSO2 Inc. (http://wso2.com).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,23 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+# Service for Global Adapter
 
-resources:
-  - choreo-internal-nginx
-  - choreo-nginx
-  - choreodp-system
-
-commonLabels:
-  app: choreo-routing
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-connect-internal-global-adapter
+  name: choreo-connect-internal-global-adapter
+spec:
+  selector:
+    choreo.component: choreo-connect-internal-global-adapter
+  ports:
+  - name: "http-gamanagementserver"
+    port: 18000
+    targetPort: 18000
+    protocol: TCP
+  - name: "https-global-adapter"
+    port: 9843
+    targetPort: 9843
+    protocol: TCP

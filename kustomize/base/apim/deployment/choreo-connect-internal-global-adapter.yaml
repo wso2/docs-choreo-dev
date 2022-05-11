@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2022, WSO2 Inc. (http://wso2.com).
+# Copyright (c) 2021, WSO2 Inc. (http://wso2.com).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trimble-private-global-adapter
+  name: choreo-connect-internal-global-adapter
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
@@ -27,13 +27,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: trimble-private-global-adapter
+      choreo.component: choreo-connect-internal-global-adapter
   template:
     metadata:
       labels:
-        choreo.component: trimble-private-global-adapter
-        global.adapter: private
-        antiaffinity: trimble-private-global-adapter
+        choreo.component: choreo-connect-internal-global-adapter
+        antiaffinity: choreo-connect-internal-global-adapter
     spec:
       affinity:
         podAntiAffinity:
@@ -45,7 +44,7 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - trimble-private-global-adapter
+                      - choreo-connect-internal-global-adapter
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
@@ -54,7 +53,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: trimble-private-global-adapter
+      - name: choreo-connect-global-adapter
         volumeMounts:
         - mountPath: /home/wso2/security/keystore/mg.key
           name: secret-mgw-keystore
@@ -81,6 +80,9 @@ spec:
           subPath: ADAPTER_TRUSTSTORE_CERTIFICATE
         - mountPath: /home/wso2/conf
           name: global-adapter-config
+        - name: secret-mgw
+          mountPath: /mnt/csi/secret-mgw
+          readOnly: true
         - name: secret-redis
           mountPath: /mnt/csi/secret-redis
           readOnly: true
@@ -104,7 +106,7 @@ spec:
             add: ["NET_RAW"]
         envFrom:
         - configMapRef:
-            name: trimble-feature-flags
+            name: internal-ga-feature-flags
         env:
         - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
           value: /home/wso2/security/keystore/global-adapter.key
@@ -152,31 +154,39 @@ spec:
         - containerPort: 18000
         - containerPort: 9843
         livenessProbe:
-          tcpSocket:
-            port: 9745
+          exec:
+            command: [ "sh", "check_health.sh", "liveness" ]
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
-          tcpSocket:
-            port: 9745
+          exec:
+            command: [ "sh", "check_health.sh", "readiness" ]
           initialDelaySeconds: 8
           periodSeconds: 5
       volumes:
       - name: global-adapter-keystore-vol
         configMap:
-          name: trimble-ga-keystore-vol
+          name: internal-ga-keystore-vol
       - name: global-adapter-truststore-vol
         configMap:
-          name: trimble-ga-truststore-vol
+          name: internal-ga-truststore-vol
       - name: global-adapter-config
         configMap:
-          name: cc-ga-conf-trimble
+          name: cc-internal-ga-conf
       - name: secret-mgw-keystore
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-mgw-keystore
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-mgw
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-mgw
           nodePublishSecretRef:
             name: csi-secret-store-azure
       - name: secret-cc-ga-keystore
