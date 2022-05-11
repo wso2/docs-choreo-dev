@@ -65,6 +65,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: redis-config
+            - configMapRef:
+                name: nginx-feature-flags
           env:
             - name: NAMESPACE
               valueFrom:
@@ -75,8 +77,6 @@ spec:
                 secretKeyRef:
                   name: secret-redis
                   key: REDIS_PASSWORD
-            - name: PARTITION_ENABLED
-              value: true
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
