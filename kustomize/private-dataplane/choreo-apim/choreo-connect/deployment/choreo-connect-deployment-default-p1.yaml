@@ -87,7 +87,7 @@ spec:
               readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-enforcer-truststore-vol
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
             - name: mgw-enforcer-truststore-vol
