@@ -28,31 +28,6 @@ spec:
       containers:
         - name: loggingapi
           env:
-            - name: b7a_log_level
-              valueFrom:
-                configMapKeyRef:
-                  key: B7A_LOG_LEVEL
-                  name: cm-loglevel-loggingapi
-            - name: IDP_ISSUER
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_ISSUER
-                  name: env-idp-replica
-            - name: IDP_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_CLIENT_ID
-                  name: env-idp-replica
-            - name: IDP_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_HOST
-                  name: env-idp-replica
-            - name: IDP_JWKS_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_JWKS_ENDPOINT
-                  name: cm-idp-replica-control
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
