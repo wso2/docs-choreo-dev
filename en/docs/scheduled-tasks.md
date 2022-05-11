@@ -1,6 +1,6 @@
 # Scheduled Tasks
 
-Learn how to use scheduled tasks to execute routing tasks at specified time intervals.
+Learn how to use scheduled tasks to execute routine tasks at specified time intervals.
 
 ## What is a scheduled task?
 
