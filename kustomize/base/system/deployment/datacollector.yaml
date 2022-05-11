@@ -50,7 +50,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
-                  name: cm-idp-replica
+                  name: cm-idp-replica-control
             - name: EVENTHUB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:

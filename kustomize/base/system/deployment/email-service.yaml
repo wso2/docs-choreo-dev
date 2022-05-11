@@ -41,7 +41,7 @@ spec:
               memory: 300Mi
           envFrom:
             - configMapRef:
-                name: cm-email-service
+                name: cm-email-service-control
             - configMapRef:
                 name: env-email-service
           env:

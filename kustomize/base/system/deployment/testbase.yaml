@@ -47,32 +47,32 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
-              name: cm-idp-replica
+              name: cm-idp-replica-control
         - name: CHOREO_DB_NAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-testbase-db
+              name: cm-choreo-testbase-db-control
         - name: CHOREO_DB_MAX_POOL
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_MAX_POOL
-              name: cm-choreo-testbase-db
+              name: cm-choreo-testbase-db-control
         - name: CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
               key: CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS
-              name: cm-testbase
+              name: cm-testbase-control
         - name: CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
               key: CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS
-              name: cm-testbase
+              name: cm-testbase-control
         - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
               key: CHOREO_APP_SERVICE_GRPC_ADDRESS
-              name: cm-testbase
+              name: cm-testbase-control
         - name: CHOREO_DB_PASSWORD
           valueFrom:
             secretKeyRef:

@@ -45,7 +45,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_NAME
-                      name: cm-choreo-program-db
+                      name: cm-choreo-program-db-control
                 - name: CHOREO_PROGRAM_DB_USERNAME
                   valueFrom:
                     configMapKeyRef:
@@ -75,7 +75,7 @@ spec:
                 - configMapRef:
                     name: env-datalake-ast
                 - configMapRef:
-                    name: cm-datalake-ast
+                    name: cm-datalake-ast-control
               resources:
                 limits:
                   cpu: 300m

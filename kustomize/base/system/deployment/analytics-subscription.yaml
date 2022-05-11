@@ -38,7 +38,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-app-db
+              name: cm-choreo-app-db-control
         - name: CHOREO_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -68,7 +68,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
-              name: cm-idp-replica
+              name: cm-idp-replica-control
         - name: IDP_ISSUER
           valueFrom:
             configMapKeyRef:

@@ -31,7 +31,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-sys-obsapi
+                  name: cm-sys-obsapi-control
             - name: AZURE_LA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -49,7 +49,7 @@ spec:
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
           envFrom:
             - configMapRef:
-                name: cm-sys-obsapi
+                name: cm-sys-obsapi-control
             - configMapRef:
                 name: env-sys-obsapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sys-obsapi:latest

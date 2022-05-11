@@ -48,23 +48,23 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: DISABLE_ON_PREMISE_APPS
-                  name: cm-frontend
+                  name: cm-frontend-control
             - name: APIM_SAMPLE_URL
               valueFrom:
                 configMapKeyRef:
                   key: APIM_SAMPLE_URL
-                  name: cm-frontend
+                  name: cm-frontend-control
             - name: SENTRY_DSN
               valueFrom:
                 configMapKeyRef:
                   key: SENTRY_DSN
-                  name: cm-frontend
+                  name: cm-frontend-control
                   optional: true
             - name: ANALYTICS_PORTAL_DOCUMENTATION
               valueFrom:
                 configMapKeyRef:
                   key: ANALYTICS_PORTAL_DOCUMENTATION
-                  name: cm-frontend
+                  name: cm-frontend-control
           envFrom:
             - configMapRef:
                 name: cm-feature-flags

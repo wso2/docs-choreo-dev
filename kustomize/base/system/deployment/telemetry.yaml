@@ -36,32 +36,32 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: NEGOTIATOR_GRPC_ADDRESS
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: NEGOTIATOR_HEALTHZ_ADDRESS
           valueFrom:
             configMapKeyRef:
               key: NEGOTIATOR_HEALTHZ_ADDRESS
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: PROJECT_SECRET_CACHE_CAPACITY
           valueFrom:
             configMapKeyRef:
               key: PROJECT_SECRET_CACHE_CAPACITY
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: PROJECT_SECRET_CACHE_EVICTION_FACTOR
           valueFrom:
             configMapKeyRef:
               key: PROJECT_SECRET_CACHE_EVICTION_FACTOR
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: PROJECT_SECRET_CACHE_MAX_AGE
           valueFrom:
             configMapKeyRef:
               key: PROJECT_SECRET_CACHE_MAX_AGE
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
           valueFrom:
             configMapKeyRef:
               key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: EVENTHUB_CONNECTION_STRING
           valueFrom:
             secretKeyRef:
@@ -71,17 +71,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: REDIS_PORT
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: REDIS_SSL
           valueFrom:
             configMapKeyRef:
               key: REDIS_SSL
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: REDIS_DATABASE
           valueFrom:
             configMapKeyRef:
               key: REDIS_DATABASE
-              name: cm-telemetry
+              name: cm-telemetry-control
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:

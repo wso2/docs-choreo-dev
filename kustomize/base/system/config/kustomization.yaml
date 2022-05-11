@@ -15,3 +15,130 @@ configMapGenerator:
     behavior: create
     literals:
     - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
+  - name: cm-choreo-testbase-db-control
+    behavior: create
+    literals:
+      - CHOREO_DB_NAME=choreo_testbase_db
+      - CHOREO_DB_MAX_POOL=50
+  - name: cm-testbase-control
+    behavior: create
+    literals:
+      - CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS=http://app-deployer:8080
+      - CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS=http://workspace-manager:8080
+      - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+  - name: cm-idp-replica-control
+    behavior: create
+    literals:
+      - IDP_AUTH_RESPONSE_COOKIE_MAX_AGE="86400"
+      - IDP_TOKEN_ENDPOINT=/oauth2/token
+      - IDP_JWKS_ENDPOINT=/oauth2/jwks
+      - IDP_SCIM_USERS_ENDPOINT=/wso2/scim/Users
+  - name: cm-obsapi-control
+    behavior: create
+    literals:
+      - AZURE_ADX_DB=observability
+      - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - AZURE_ADX_METRIC_TABLE=metrics
+      - AZURE_ADX_TRACE_TABLE=traceSpans
+      - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
+      - APPSERVICE_GRPC_ADDRESS=app-service:8080
+      - AST_CACHE_MAX_SIZE_MB=100
+      - LOG_LEVEL=INFO
+      - SKIP_AUTH=false
+  - name: cm-frontend-control
+    behavior: create
+    literals:
+      - DISABLE_ON_PREMISE_APPS=true
+      - APIM_SAMPLE_URL=https://raw.githubusercontent.com/ballerina-platform/ballerinax-openapi-connectors/main/openapi/covid19/openapi.yaml
+      - SENTRY_DSN="https://48e24d50c8fb45d3adebfcfd8b1dd310@o350818.ingest.sentry.io/5808256"
+      - ANALYTICS_PORTAL_DOCUMENTATION="https://apim.docs.wso2.com/en/4.0.0/observe/api-manager-analytics/configure-analytics/configure-synapse-gateway/"
+  - name: cm-email-service-control
+    behavior: create
+    literals:
+      - MAIL_SMTP_AUTH="true"
+      - MAIL_SMTPNSTARTTLS_ENABLE="false"
+      - templates_contents_BCENTRAL_EMAIL_INVITATION="templates/bcentral/confirmation.txt"
+      - templates_contents_BCENTRAL_EMAIL_INVITATION_SUCCESS="templates/bcentral/welcome-invitee.txt"
+      - templates_contents_BCENTRAL_EMAIL_NEW_ORG="templates/bcentral/welcome-new-org.txt"
+      - templates_contents_CHOREO_EMAIL_INVITATION="templates/choreo/org-invitation.txt"
+      - templates_subjects_CHOREO_EMAIL_INVITATION_SUBJECT="You have been invited to join the '$organization' organization in Choreo"
+  - name: cm-sys-obsapi-control
+    behavior: create
+    literals:
+      - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+      - RUDDER_ADDRESS=http://dp-rudder:3000
+  - name: cm-telemetry-control
+    behavior: create
+    literals:
+      - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
+      - NEGOTIATOR_HEALTHZ_ADDRESS=http://negotiator:9093
+      - PROJECT_SECRET_CACHE_CAPACITY=300
+      - PROJECT_SECRET_CACHE_EVICTION_FACTOR=0.2
+      - PROJECT_SECRET_CACHE_MAX_AGE=600
+      - PROJECT_SECRET_CACHE_CLEANUP_INTERVAL=720
+      - LAST_ACTIVE_UPDATION_INTERVAL_IN_MINS=10
+      - REDIS_PORT=6380
+      - REDIS_SSL=true
+      - REDIS_DATABASE=4
+  - name: cm-negotiator-control
+    behavior: create
+    literals:
+      - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
+      - REDIS_PORT="6380"
+      - REDIS_SSL=true
+      - REDIS_DATABASE=3
+  - name: cm-choreo-program-db-control
+    behavior: create
+    literals:
+      - CHOREO_DB_NAME=choreo_program_db
+      - CHOREO_DB_MAX_POOL=50
+  - name: cm-datalake-ast-control
+    behavior: create
+    literals:
+      - AZURE_DL_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - AZURE_DL_CONTAINER_NAME=ast
+      - LAST_ACTIVE_DURATION_IN_DAYS=45
+  - name: cm-linker-control
+    behavior: create
+    literals:
+      - APPSERVICE_GRPC_ADDRESS=http://app-service:8080
+      - JWKS_ENDPOINT_PROTOCOL=https
+  - name: cm-loggingapi-control
+    behavior: create
+    literals:
+      - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - JWKS_ENDPOINT_PROTOCOL=https
+      - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
+      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+  - name: cm-observability-data-generator-control
+    behavior: create
+    literals:
+      - APP_SERVICE_ADDRESS=app-service:8080
+      - APP_DEPLOYER_ADDRESS=app-deployer:8080
+      - WS_MANAGER_SERVICE_ADDRESS=workspace-manager:8080
+  - name: cm-connector-builder-control
+    behavior: create
+    literals:
+      - APIM_PROXY_PUBLISHER_API=/apim/proxy/api/am/publisher/v2/apis
+      - GITHUB_API=https://api.github.com      
+  - name: cm-choreo-app-db-control
+    behavior: create
+    literals:
+      - CHOREO_DB_NAME=choreo_app_db
+  - name: cm-dp-mizzen-control
+    behavior: create
+    literals:
+      - PORT=8080
+      - SERVICE_RUDDER_URL=http://dp-rudder
+      - SENTRY_DSN=https://5bc6ca6a627941518c1323e51d7a1985@o350818.ingest.sentry.io/5597771
+      - REDIS_TLS=1
+  - name: cm-multivariate-anomaly-detector-notification-manager-control
+    behavior: create
+    literals:
+      - SYSTEM_USER_ID="choreo:system"
+      - APPSERVICE_GRPC_URL="http://app-service:8080"
+      - EMAIL_SERVICE_URL="https://email-service:443"
+      - RUDDER_URL="http://dp-rudder:80"
+      - PROJECT_MANAGER_URL="http://dp-project-manager:80"
+      - APPROVED_EMAILS="nilushan@wso2.com,isururuh@wso2.com,malithj@wso2.com,choreoanomalydetectortest@gmail.com"

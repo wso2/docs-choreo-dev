@@ -45,7 +45,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                      name: cm-loggingapi
+                      name: cm-loggingapi-control
                 - name: AZURE_LA_WORKSPACE_ID
                   valueFrom:
                     configMapKeyRef:
@@ -70,7 +70,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: AZURE_DL_TENANT_ID
-                      name: cm-datalake-ast
+                      name: cm-datalake-ast-control
                 - name: AZURE_DL_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:

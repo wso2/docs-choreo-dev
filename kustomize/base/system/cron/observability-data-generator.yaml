@@ -40,17 +40,17 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: APP_DEPLOYER_ADDRESS
-                      name: cm-observability-data-generator
+                      name: cm-observability-data-generator-control
                 - name: APP_SERVICE_ADDRESS
                   valueFrom:
                     configMapKeyRef:
                       key: APP_SERVICE_ADDRESS
-                      name: cm-observability-data-generator
+                      name: cm-observability-data-generator-control
                 - name: WS_MANAGER_SERVICE_ADDRESS
                   valueFrom:
                     configMapKeyRef:
                       key: WS_MANAGER_SERVICE_ADDRESS
-                      name: cm-observability-data-generator
+                      name: cm-observability-data-generator-control
                 - name: APIM_CLIENT_ID
                   valueFrom:
                     secretKeyRef:

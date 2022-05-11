@@ -52,12 +52,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: IDP_JWKS_ENDPOINT
-                  name: cm-idp-replica
+                  name: cm-idp-replica-control
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-loggingapi
+                  name: cm-loggingapi-control
             - name: AAD_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -79,7 +79,7 @@ spec:
             - configMapRef:
                 name: env-loganalytics-replica
             - configMapRef:
-                name: cm-loggingapi
+                name: cm-loggingapi-control
             - configMapRef:
                 name: env-loggingapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest

@@ -33,9 +33,9 @@ spec:
             - configMapRef:
                 name: env-connector-builder
             - configMapRef:
-                name: cm-idp-replica
+                name: cm-idp-replica-control
             - configMapRef:
-                name: cm-connector-builder
+                name: cm-connector-builder-control
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder:latest
           securityContext:
             allowPrivilegeEscalation: false

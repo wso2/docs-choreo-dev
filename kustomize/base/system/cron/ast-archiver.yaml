@@ -40,12 +40,12 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: AZURE_DL_TENANT_ID
-                      name: cm-datalake-ast
+                      name: cm-datalake-ast-control
                 - name: AZURE_DL_CONTAINER_NAME
                   valueFrom:
                     configMapKeyRef:
                       key: AZURE_DL_CONTAINER_NAME
-                      name: cm-datalake-ast
+                      name: cm-datalake-ast-control
                 - name: AZURE_DL_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
@@ -55,12 +55,12 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: LAST_ACTIVE_DURATION_IN_DAYS
-                      name: cm-datalake-ast
+                      name: cm-datalake-ast-control
                 - name: CHOREO_PROGRAM_DB_NAME
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_NAME
-                      name: cm-choreo-program-db
+                      name: cm-choreo-program-db-control
                 - name: CHOREO_PROGRAM_DB_USERNAME
                   valueFrom:
                     configMapKeyRef:
