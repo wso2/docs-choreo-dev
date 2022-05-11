@@ -59,6 +59,7 @@ spec:
                 - nc -z localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
             exec:
               command:
@@ -67,6 +68,7 @@ spec:
                 - nc -z localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
+            timeoutSeconds: 5
           lifecycle:
             preStop:
               exec:
