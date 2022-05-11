@@ -13,7 +13,9 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -27,6 +29,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -74,6 +78,32 @@ public class TokenHandler {
     public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException {
         String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
         return getStsToken(cpAppClientId, cpAppClientSecret, userToken);
+    }
+
+    /**
+     * Obtain a test token to invoke an exposed API
+     * 
+     * @return Test Token
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws GetApiTestTokenStatusCheckException
+     */
+    public String getApiTestToken(String clientId, String clientSecret) throws IOException, InterruptedException, GetApiTestTokenStatusCheckException{
+        String authorizationBasicToken = Base64.getEncoder().encodeToString(clientId.concat(":").concat(clientSecret).getBytes());
+        HttpPost request = new HttpPost(Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX));
+        request.setHeader("Content-type", "application/x-www-form-urlencoded");
+        request.setHeader("Authorization", "Basic ".concat(authorizationBasicToken));
+        StringEntity requestEntity = new StringEntity("grant_type=client_credentials",ContentType.APPLICATION_FORM_URLENCODED);
+        request.setEntity(requestEntity);
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        CloseableHttpResponse response = httpClient.execute(request);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String responseBody = EntityUtils.toString(response.getEntity());
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new GetApiTestTokenStatusCheckException(statusCode, responseBody);
+        }
+        JsonObject responseBodyJson = new JsonParser().parse(responseBody).getAsJsonObject();
+        return responseBodyJson.get("access_token").toString().replaceAll("\"", "");
     }
 
     /**

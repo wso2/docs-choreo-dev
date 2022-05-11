@@ -11,9 +11,11 @@ import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureE
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.RedeployException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
@@ -29,11 +31,13 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 /**
  * Abstract class to represent Choreo component
@@ -262,6 +266,78 @@ public abstract class ChoreoComponent {
     }
 
     /**
+     * Get details about the deployments of a component
+     * 
+     * @param accessToken
+     * @param orgHandle
+     * @param orgUUID
+     * @param versionId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws ComponentDeploymentStatusCheckException
+     * @throws ComponentDeploymentTimeoutException
+     * @throws GetDeploymentsStatusCheckException
+     */
+    public JsonArray getDeployments(String accessToken, String orgHandle, String orgUUID,
+                                                  String versionId)
+            throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
+            ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
+        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        HashMap<String, String> requestBodyMap = new HashMap<>() {{
+            put("query", "query {" +
+                    "  deployments(" +
+                    "    orgHandler: \"" + orgHandle + "\"" +
+                    "    orgUuid:\"" + orgUUID + "\"" +
+                    "    componentId: \"" + id + "\"" +
+                    "    versionId: \"" + versionId + "\"" +
+                    "  ) {" +
+                    "    environmentId" +
+                    "    environmentName" +
+                    "    configCount" +
+                    "    apiId" +
+                    "    releaseId" +
+                    "    build{" +
+                    "      buildId" +
+                    "      deployedAt" +
+                    "      commit {" +
+                    "        author {" +
+                    "          name" +
+                    "          date" +
+                    "          email" +
+                    "          avatarUrl" +
+                    "        }" +
+                    "        sha" +
+                    "        message" +
+                    "        isLatest" +
+                    "      }" +
+                    "    }" +
+                    "    invokeUrl" +
+                    "    versionId" +
+                    "    deploymentStatus" +
+                    "    version" +
+                    "    cron" +
+                    "  }" +
+                    "}");
+        }};
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestURI))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int statusCode = response.statusCode();
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new GetDeploymentsStatusCheckException(statusCode, response.body());
+        }
+        JsonArray deploymentJsonArray = new JsonParser().parse(response.body()).getAsJsonObject()
+                .getAsJsonObject("data").getAsJsonArray("deployments");
+        return deploymentJsonArray;
+    }
+
+    /**
      * Get the latest commit hash from list of commit hashes
      *
      * @param commitHistory The list of commit hashes
@@ -324,8 +400,9 @@ public abstract class ChoreoComponent {
      * @param orgHandle
      * @throws IOException
      * @throws InterruptedException
+     * @throws RedeployException
      */
-    public void redeploy(String accessToken, String componentId, String releaseId, String orgHandle) throws IOException, InterruptedException {
+    public void redeploy(String accessToken, String componentId, String releaseId, String orgHandle) throws IOException, InterruptedException, RedeployException {
         String graphQlQuery = "mutation { redeployDeployment(orgHandler: \"" + orgHandle + "\", componentId: \"" + componentId + "\", releaseId: \"" + releaseId + "\", type: \"restAPI\" )}";
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
@@ -345,7 +422,12 @@ public abstract class ChoreoComponent {
         request.setEntity(requestEntity);
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        httpClient.execute(request);
+        CloseableHttpResponse response = httpClient.execute(request);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String responseBody = EntityUtils.toString(response.getEntity());
+        if (statusCode != HttpStatus.OK.value()) {
+           throw new RedeployException(statusCode, responseBody);
+        }
     }
 
     public void setId(String id) {

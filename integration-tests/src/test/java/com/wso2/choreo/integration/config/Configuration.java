@@ -44,6 +44,7 @@ public class Configuration {
         public static final String PASSTHROUGH_COMPONENT_NAME = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME");
         public static final String PASSTHROUGH_RELEASE_ID = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID");
         public static final String PASSTHROUGH_INVOKE_URL = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL");
+        public static final String PASSTHROUGH_VERSION_ID = System.getenv("ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID");
         public static final String PROJECT_ID = System.getenv("ANOMALY_DETECTION_PROJECT_ID");
         public static final String TEST_CHOREO_ORG_ID = System.getenv("ANOMALY_DETECTION_TEST_CHOREO_ORG_ID");
         public static final String TEST_CHOREO_ORG_UUID = System.getenv("ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID");

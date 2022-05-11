@@ -10,7 +10,6 @@
 
 package com.wso2.choreo.integration.common.email;
 
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +24,7 @@ import java.util.Properties;
 /**
  * Base class for email related tests.
  */
-public class EmailUtils extends TestNGCitrusSpringSupport {
+public class EmailUtils {
     private final static Logger log = LoggerFactory.getLogger(EmailUtils.class);
 
     public static boolean checkForMail(String imapHost, String imapPassword, int imapPort, final String searchText, String imapUser, long receivedTimestamp) throws Exception {
