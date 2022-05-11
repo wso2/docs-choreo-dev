@@ -34,3 +34,7 @@ spec:
     port: 9843
     targetPort: 9843
     protocol: TCP
+  - name: "http-global-api-proxy"
+    port: 9745
+    targetPort: 9745
+    protocol: TCP

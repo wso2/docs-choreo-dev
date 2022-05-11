@@ -14,13 +14,23 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+# Service for adapter
 
-resources:
-  - choreo-internal-nginx
-  - choreo-nginx
-  - choreodp-system
-
-commonLabels:
-  app: choreo-routing
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-connect-adapter-internal
+  name: adapter-internal
+spec:
+  selector:
+    choreo.component: choreo-connect-adapter-internal
+  ports:
+    - name: "http-adaptermanagementserver"
+      port: 18000
+      targetPort: 18000
+      protocol: TCP
+    - name: "https-adapter"
+      port: 9843
+      targetPort: 9843
+      protocol: TCP

@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2021, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-adapter-default-p1
+  name: choreo-connect-adapter-internal
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
 spec:
-  replicas: 2
+  replicas: 0
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -32,25 +32,12 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      choreo.component: choreo-connect-adapter-default-p1
+      choreo.component: choreo-connect-adapter-internal
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-adapter-default-p1
-        antiaffinity: choreo-connect-adapter-default-p1
+        choreo.component: choreo-connect-adapter-internal
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: antiaffinity
-                      operator: In
-                      values:
-                        - choreo-connect-adapter-default-p1
-                topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500
@@ -61,29 +48,31 @@ spec:
         - name: choreo-connect-adapter
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: secret-choreo-connect
+              name: secret-mgw-keystore
               readOnly: true
               subPath: ADAPTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: mgw-common-cert-vol
+              name: secret-mgw-keystore
               readOnly: true
-              subPath: mg.pem
+              subPath: ADAPTER_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/security/truststore/controlplane.pem
-              name: mgw-adapter-truststore-vol
+              name: secret-mgw-truststore
               readOnly: true
-              subPath: controlplane.pem
+              subPath: CONTROL_PLANE_CERTIFICATE
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: mgw-common-cert-vol
+              name: secret-mgw-truststore
               readOnly: true
-              subPath: mg.pem
+              subPath: ADAPTER_TRUSTSTORE_CERTIFICATE
             - mountPath: /home/wso2/security/truststore/global-adapter.pem
-              name: mgw-adapter-truststore-vol
-              readOnly: true
+              name: global-adapter-keystore-vol
               subPath: global-adapter.pem
             - mountPath: /home/wso2/conf
               name: adapter-config
-            - name: secret-choreo-connect
-              mountPath: /mnt/csi/secret-choreo-connect
+            - name: secret-mgw
+              mountPath: /mnt/csi/secret-mgw
+              readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
               readOnly: true
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
@@ -96,29 +85,37 @@ spec:
             capabilities:
               drop:
                 - all
-              add: [ "NET_RAW" ]
+              add: ["NET_RAW"]
           envFrom:
-            - configMapRef:
-                name: cm-feature-flags
-            - configMapRef:
-                name: env-choreo-connect-adapter
+          - configMapRef:
+              name: cm-feature-flags
           env:
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ADAPTER_PUBLIC_CERT_PATH
               value: "/home/wso2/security/keystore/mg.pem"
+            - name: adapter_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: ADAPTER_ADMIN_PASSWORD
+                  name: secret-mgw
+            - name: enforcer_managemenet_password
+              valueFrom:
+                secretKeyRef:
+                  key: ENFORCER_MANAGEMENT_PASSWORD
+                  name: secret-mgw
             - name: cp_admin_pwd
               valueFrom:
                 secretKeyRef:
                   key: SUPER_ADMIN_PSWD
-                  name: apim-passwords
+                  name: secret-apim
             - name: ASB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
                   name: secret-asb
                   key: ASB_CONNECTION_STRING
             - name: AZURE_SDK_GO_LOGGING
-              value: "all"
+              value: "all"      
           resources:
             requests:
               memory: "500Mi"
@@ -144,23 +141,44 @@ spec:
             exec:
               command: [ "sh", "check_health.sh" ]
             periodSeconds: 5
-            failureThreshold: 60
+            failureThreshold: 60  
       volumes:
         - name: adapter-config
           configMap:
             name: mgw-adapter-enforcer-conf
-        - name: mgw-common-cert-vol
+        - name: global-adapter-keystore-vol
           configMap:
-            name: mgw-common-cert
-        - name: mgw-adapter-truststore-vol
-          configMap:
-            name: mgw-adapter-truststore
-        - name: secret-choreo-connect
+            name: global-adapter-keystore-vol
+        - name: secret-mgw
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-choreo-connect
+              secretProviderClass: secret-mgw
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-keystore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-keystore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-truststore
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-truststore
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-apim
