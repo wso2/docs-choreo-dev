@@ -36,6 +36,7 @@ resources:
   - test-assistant.yaml
   - testbase.yaml
   - workspace-manager.yaml
+  - shared-image-viewer.yaml
   - image-share-service.yaml
 
 commonAnnotations:
