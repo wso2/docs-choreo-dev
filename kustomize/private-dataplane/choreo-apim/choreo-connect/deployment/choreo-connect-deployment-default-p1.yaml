@@ -296,6 +296,9 @@ spec:
         - name: mgw-enforcer-truststore-vol
           configMap:
             name: mgw-enforcer-truststore
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io
