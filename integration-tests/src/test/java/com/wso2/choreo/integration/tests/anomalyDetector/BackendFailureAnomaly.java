@@ -32,12 +32,6 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +43,7 @@ import org.testng.Assert;
 /**
  * Contains a test to check if the multivariate anomaly detector detects a backend failure anomaly
  */
-public class backendFailureAnomaly extends TestNGCitrusSpringSupport {
+public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
 
   private TokenHandler invokeAccessTokenHandler;
   private String orgHandler;
@@ -60,7 +54,7 @@ public class backendFailureAnomaly extends TestNGCitrusSpringSupport {
   private RestApiChoreoComponent restApiComponent;
   private long testStartTimestamp;
 
-  private final static Logger log = LoggerFactory.getLogger(backendFailureAnomaly.class);
+  private final static Logger log = LoggerFactory.getLogger(BackendFailureAnomaly.class);
 
   @BeforeClass
   public void beforeClass() throws InterruptedException, IOException, TokenRetrievalException, RedeployException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
@@ -87,7 +81,8 @@ public class backendFailureAnomaly extends TestNGCitrusSpringSupport {
 
       // Deployed components may get stopped automatically by Choreo. Therefore check if it's stopped (SUSPENDED) and redeploy if so
       JsonArray deployments = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
-      JsonElement passthroughDeployment = new JsonParser().parse("{}").getAsJsonObject();
+      System.out.println(deployments);
+      JsonElement passthroughDeployment = new JsonParser().parse("{}");
       for (JsonElement jsonElement : deployments) {
         if (jsonElement.getAsJsonObject().getAsJsonPrimitive("releaseId").getAsString().equals(passthroughReleaseId)) {
           passthroughDeployment = jsonElement;
@@ -96,6 +91,7 @@ public class backendFailureAnomaly extends TestNGCitrusSpringSupport {
           }
         }
       }
+      System.out.println("before while");
       while (!passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("ACTIVE")){
           log.info("Waiting for redeployed component to become ready...");
           Thread.sleep(10000);
@@ -105,40 +101,20 @@ public class backendFailureAnomaly extends TestNGCitrusSpringSupport {
   }
 
   /**
-   * Invokes the passthrough component from a pool of threads inorder to inject a backend failure anomaly 
-   * 
-   * @throws IOException
-   * @throws InterruptedException
-   * @throws ExecutionException
-   * @throws GetApiTestTokenStatusCheckException
-   */
-  @Test                                                  
-  @CitrusTest
-  public void injectAnomaly() throws IOException, InterruptedException, ExecutionException, GetApiTestTokenStatusCheckException {
-      ExecutorService executor = Executors.newFixedThreadPool(20);
-      List<Future<?>> futures = new ArrayList<Future<?>>();
-      String authorizationBearerToken = invokeAccessTokenHandler.getApiTestToken(Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_ID, Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_SECRET);
-      log.info("Starting to send requests to the passthrough component...");
-      for (int i = 0; i < 500; i++) {
-        Runnable worker = new InvokePassthroughComponent(Configuration.ANOMALY_DETECTION.PASSTHROUGH_INVOKE_URL + "/", authorizationBearerToken, "helloword");
-        Future<?> f = executor.submit(worker);
-        futures.add(f);
-      }
-      for(Future<?> future : futures) {
-          future.get();
-      }
-  }
-  
-  /**
    * 
    * Log into the email account and check if the alert for the anomaly injected through injectAnomaly() above 
    * was received.
    *  
    * @throws Exception
+   * @throws GetApiTestTokenStatusCheckException
    */
   @Test
   @CitrusTest
-  public void testEmailAlert() throws Exception {
+  public void testEmailAlert() throws Exception, GetApiTestTokenStatusCheckException {
+      InvokeApi.invokePassthroughComponentConcurrently(invokeAccessTokenHandler, 
+                                                       Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_ID, 
+                                                       Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_SECRET, 
+                                                       Configuration.ANOMALY_DETECTION.PASSTHROUGH_INVOKE_URL);
       log.info("Waiting for 5 minutes to allow the anomaly to be detected...");
       Thread.sleep(300000);
       String searchString = "[Choreo ALERT] Anomaly detected in " + Configuration.ANOMALY_DETECTION.PASSTHROUGH_COMPONENT_NAME;
