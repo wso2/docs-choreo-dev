@@ -41,7 +41,7 @@ In addition to the low-code view, Choreo provides a pro-code view for implementi
 
 ![Scheduled task pro-code view](assets/img/scheduled-tasks/scheduled-task-pro-code.png){.cInlineImage-full}
 
-Choreo gives the developers the flexibility to implement the complete scheduled task using the pro-code view or to use to pro-code view for only some parts of the implementation and then use the low-code view for the rest, based on their preference. Choreo treats the source code of the scheduled task as the single source of truth irrespective of whether it is auto-generated from the low-code implementation or written manually by the developer. Therefore, there are no limitations or restrictions on which view developers may choose to implement the functionality of the scheduled task.
+Choreo gives the developers the flexibility to implement the complete scheduled task using the pro-code view or to use the pro-code view for only some parts of the implementation and then use the low-code view for the rest, based on their preference. Choreo treats the source code of the scheduled task as the single source of truth irrespective of whether it is auto-generated from the low-code implementation or written manually by the developer. Therefore, there are no limitations or restrictions on which view developers may choose to implement the functionality of the scheduled task.
 
 ## Deploy a scheduled task
 
