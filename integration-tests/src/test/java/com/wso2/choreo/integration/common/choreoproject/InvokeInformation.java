@@ -5,7 +5,6 @@ package com.wso2.choreo.integration.common.choreoproject;
  */
 public class InvokeInformation {
     private String apiId;
-    private String apiRevision;
     private String environmentChoreoName;
     private String environmentId;
     private String environmentName;
@@ -22,14 +21,6 @@ public class InvokeInformation {
 
     public void setApiId(String apiId) {
         this.apiId = apiId;
-    }
-
-    public String getApiRevision() {
-        return apiRevision;
-    }
-
-    public void setApiRevision(String apiRevision) {
-        this.apiRevision = apiRevision;
     }
 
     public String getEnvironmentChoreoName() {

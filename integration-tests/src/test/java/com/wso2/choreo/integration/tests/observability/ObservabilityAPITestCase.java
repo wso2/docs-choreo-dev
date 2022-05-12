@@ -55,7 +55,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
 
     @Autowired
-    private HttpClient choreoObsAPITestClient;
+    private HttpClient choreoCPTestClient;
 
     @BeforeClass
     public void beforeClass()
@@ -96,9 +96,9 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .send()
-                .post()
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -106,7 +106,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -139,16 +139,16 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .send()
-                .post("")
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -179,16 +179,16 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .send()
-                .post("")
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -221,16 +221,16 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .send()
-                .post("")
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                        .client(choreoObsAPITestClient)
+                        .client(choreoCPTestClient)
                         .receive()
                         .response(HttpStatus.OK)
                         .message()
@@ -266,16 +266,16 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .send()
-                .post("")
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
@@ -291,7 +291,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testObservabilityTraceList"})
     @CitrusTest
     public void testObservabilityTraceInformation() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String requestURI = Configuration.CHOREO_OBS_ENDPOINT;
+        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
@@ -331,16 +331,16 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         queryTraceInformation.execute(traceInformationWriter, traceInformationQueryParams).flush();
         body = traceInformationWriter.toString();
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .send()
-                .post("")
+                .post(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
-                .client(choreoObsAPITestClient)
+                .client(choreoCPTestClient)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()

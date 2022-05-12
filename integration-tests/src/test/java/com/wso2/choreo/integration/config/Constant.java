@@ -86,4 +86,5 @@ public final class Constant {
 
     // Observability related constants
     public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
+    public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
 }
