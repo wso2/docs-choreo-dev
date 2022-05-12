@@ -56,7 +56,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - nc -z localhost 9611
+                - nc -z -v localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
             timeoutSeconds: 5
@@ -65,7 +65,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - nc -z localhost 9611
+                - nc -z -v localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
             timeoutSeconds: 5
