@@ -7,6 +7,7 @@ public class Configuration {
     public static final String STS_ENDPOINT = System.getenv("STS_ENDPOINT");
     public static final String ASGARDEO_ENDPOINT = System.getenv("ASGARDEO_ENDPOINT");
     public static final String CHOREO_CP_GW_ENDPOINT = System.getenv("CHOREO_CP_GW_ENDPOINT");
+    public static final String CHOREO_OBS_ENDPOINT = System.getenv("OBSERVABILITY_ENDPOINT");
 
     public static final String TEST_USER_EMAIL = System.getenv("TEST_USER_EMAIL");
     public static final String TEST_USER_PASSWORD = System.getenv("TEST_USER_PASSWORD");

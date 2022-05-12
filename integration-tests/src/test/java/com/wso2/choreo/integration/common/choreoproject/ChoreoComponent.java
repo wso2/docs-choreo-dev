@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -75,6 +77,8 @@ public abstract class ChoreoComponent {
     private String version;
     private ChoreoProject project;
     private ChoreoOrganization organization;
+    private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
+
 
     /**
      * Retrieve commit history of a component
@@ -449,7 +453,7 @@ public abstract class ChoreoComponent {
      * @param releaseId release id for your component
      * @return request body containing graphql query
      */
-    public String getComponentObservabilityIds(String releaseId) throws IOException {
+    public String getComponentObservabilityIdsQuery(String releaseId) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityIds.mustache");
         Writer writer = new StringWriter();
@@ -467,7 +471,40 @@ public abstract class ChoreoComponent {
     }
 
     /**
-     * Get Component environment information graphql query
+     * Get Component observability ids
+     *
+     * @param accessToken OAuth token to invoke the Chorea backend
+     * @param releaseId release id for your component
+     * @return request body containing graphql query
+     */
+    public ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String accessToken, String releaseId) throws IOException, ObservabilityIdCheckException, InterruptedException, ObservabilityIdNotFoundException {
+        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestBody = getComponentObservabilityIdsQuery(releaseId);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestURI))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int statusCode = response.statusCode();
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new ObservabilityIdCheckException(statusCode, response.body());
+        }
+        JsonObject bodyJsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+        JsonArray obsIdJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("observerbilityIds");
+        Gson gson = new Gson();
+        ObservabilityIdInformation[] obsIds = gson.fromJson(obsIdJsonArray, ObservabilityIdInformation[].class);
+        for (ObservabilityIdInformation obsId : obsIds) {
+            if (obsId.getReleaseId().equals(releaseId)) {
+                return obsId;
+            }
+        }
+        throw new ObservabilityIdNotFoundException();
+
+    }
+
+    /**
+     * Get Component invoke information
      *
      * @param accessToken   OAuth token to invoke the Chorea backend
      * @param componentType type of the component
@@ -535,8 +572,6 @@ public abstract class ChoreoComponent {
                 .concat("?")
                 .concat(Constant.ORGANIZATION_ID)
                 .concat("=")
-//                TODO : revert for regular
-//                .concat(Configuration.TEST_CHOREO_ORG_UUID);
                 .concat(organization.getOrgUUID());
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
@@ -557,30 +592,52 @@ public abstract class ChoreoComponent {
         throw new ApiKeyNotFoundException();
     }
 
-//    public String getObsId() {
-//        String releaseId = getApiVersions()
-//                .get(0)
-//                .getAppEnvVersions()
-//                .get(0)
-//                .getReleaseId();
-//        Writer writer = new StringWriter();
-//            String graphQlQuery = writer.toString();
-//        System.out.println("query invoke " + graphQlQuery);
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//        System.out.println("request uri " + requestURI);
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create(requestURI))
-//                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-//                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                .build();
-//        return  "";
-//    }
+    public String getReleaseIdForEnvironment(String env) throws ReleaseIdNotFoundException {
+         AppEnvVersion[] appEnvVersions = getApiVersions().get(0).getAppEnvVersions().toArray(new AppEnvVersion[0]);
+        for (AppEnvVersion appEnvVersion : appEnvVersions) {
+            if (appEnvVersion.getEnvironment().equals(env)) {
+                return appEnvVersion.getReleaseId();
+            }
+        }
+        throw new ReleaseIdNotFoundException();
+    }
+
+    public void waitTillObservabilityDataPopulate(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException {
+        String requestURI = Configuration.CHOREO_OBS_ENDPOINT;
+        String releaseId = getReleaseIdForEnvironment("dev");
+        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("observeId", observabilityIdInformation.getObsId());
+        queryParams.put("version", observabilityIdInformation.getVerzion());
+        mustache.execute(writer, queryParams).flush();
+        String body = writer.toString();
+        int attempts = 0;
+        log.info("Waiting till observability data appear");
+        while (attempts < 10) {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(requestURI))
+                    .POST(HttpRequest.BodyPublishers.ofString(body))
+                    .header(HttpHeaders.AUTHORIZATION, accessToken)
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            int count =  new JsonParser().parse(response.body()).getAsJsonObject().getAsJsonObject("data")
+                    .getAsJsonObject("metricDensity").getAsJsonArray("metricCounts").get(0).getAsJsonObject().get("count").getAsInt();
+            if(count > 0) {
+                break;
+            }
+            log.debug("Observability data has not appeared, trying aga in. Attemp : " + attempts);
+            Thread.sleep(3000);
+            attempts++;
+            if(attempts == 10 ){
+                throw new ObservabilityDataNotFoundException();
+            }
+        }
+        log.debug("Exceeding maximum number of attempts for checking observability data.");
+
+    }
 
     public String getId() {
         return id;

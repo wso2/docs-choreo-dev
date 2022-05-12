@@ -18,7 +18,7 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedComponent"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
-            <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAppRetrievalTestCase"/>
+            <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
         </classes>
     </test>
 </suite>

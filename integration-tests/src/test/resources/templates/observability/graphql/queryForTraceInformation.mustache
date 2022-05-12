@@ -1,0 +1,12 @@
+{
+    "operationName": "trace",
+    "variables": {
+        "observeId": "{{observeId}}",
+        "version": "{{version}}",
+        "moduleId": "{{moduleId}}",
+        "from": "{{from}}",
+        "to": "{{to}}",
+        "traceId": "{{traceId}}"
+    },
+    "query": "query trace($observeId: String!, $version: String!, $from: String!, $to: String!, $traceId: String!, $moduleId: String!) {\n  traceById(\n    obsId: $observeId\n    version: $version\n    from: $from\n    to: $to\n    traceId: $traceId\n    module: $moduleId\n  ) {\n    spans {\n      position\n      duration\n      httpStatusCode\n      errorStatus\n      errorMsg\n      checkpoints {\n        moduleId\n        positionId\n        timestamp\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

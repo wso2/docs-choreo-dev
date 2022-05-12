@@ -9,6 +9,7 @@ public class AppEnvVersion {
     private String environmentId;
     private String releaseId;
     private Release release;
+    private String environment;
 
     public boolean isDev() {
         String choreoEnv = getRelease().getMetadata().getChoreoEnv();
@@ -37,5 +38,13 @@ public class AppEnvVersion {
 
     public void setRelease(Release release) {
         this.release = release;
+    }
+
+    public String getEnvironment() {
+        return getRelease().getMetadata().getChoreoEnv();
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = getRelease().getMetadata().getChoreoEnv();
     }
 }
