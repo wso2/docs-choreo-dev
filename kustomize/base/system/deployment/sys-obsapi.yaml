@@ -63,6 +63,9 @@ spec:
                 - all
           name: sys-obsapi
           volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
             - name: secret-sys-obsapi
               mountPath: "/mnt/csi/secret-sys-obsapi"
               readOnly: true
@@ -99,6 +102,9 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
+        - name: config
+          configMap:
+            name: cm-sys-obsapi-config
         - name: secret-sys-obsapi
           csi:
             driver: secrets-store.csi.k8s.io

@@ -101,6 +101,9 @@ spec:
             - all
         name: telemetry
         volumeMounts:
+        - name: config
+          mountPath: /home/ballerina/Config.toml
+          subPath: Config.toml
         - name: secret-telemetry
           mountPath: "/mnt/csi/secret-telemetry"
           readOnly: true
@@ -143,6 +146,9 @@ spec:
             cpu: 500m
             memory: 1Gi
       volumes:
+      - name: config
+        configMap:
+          name: cm-telemetry-config
       - name: secret-telemetry
         csi:
           driver: secrets-store.csi.k8s.io
