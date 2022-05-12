@@ -7,6 +7,7 @@ metadata:
     checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
     checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
     checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip5: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
   labels:
     choreo.component: shared-image-viewer
   name: shared-image-viewer
@@ -21,9 +22,6 @@ spec:
       labels:
         choreo.component: shared-image-viewer
         antiaffinity: shared-image-viewer
-      annotations:
-        linkerd.io/inject: enabled
-        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
         allowPrivilegeEscalation: false
