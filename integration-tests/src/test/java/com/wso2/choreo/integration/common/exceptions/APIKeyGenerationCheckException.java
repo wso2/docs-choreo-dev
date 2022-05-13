@@ -11,10 +11,26 @@
  * associated services.
  */
 
+
 package com.wso2.choreo.integration.common.exceptions;
 
 /**
- * An exception to be thrown if the given environment invoke information is not found in response
+ * An exception to be thrown if the API call to generate an API-key does not receive expected status code
  */
-public class ReleaseIdNotFoundException extends Exception {
+public class APIKeyGenerationCheckException extends Exception {
+    private final int statusCode;
+    private final String message;
+
+    public APIKeyGenerationCheckException(int statusCode, String message) {
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "GenerateAPIKeyCheckException{" +
+                "statusCode=" + statusCode +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

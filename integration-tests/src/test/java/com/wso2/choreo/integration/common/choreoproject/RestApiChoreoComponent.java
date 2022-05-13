@@ -1,6 +1,19 @@
+/*
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+
 package com.wso2.choreo.integration.common.choreoproject;
 
-import com.wso2.choreo.integration.common.email.EmailUtils;
 import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.Constant;
 import org.slf4j.Logger;
@@ -13,7 +26,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Instant;
 
 /**
  * A class to represent a Rest API Choreo component
@@ -33,7 +45,7 @@ public class RestApiChoreoComponent extends ChoreoComponent {
      */
     public void invokeGetApplication(String accessToken, String componentType, String environment, int count) throws
             ComponentInvokeInformationCheckException, NoLatestApiVersionFoundException, IOException,
-            InterruptedException, GenerateAPIKeyCheckException, ApiKeyNotFoundException, InvokeInformationNotFoundException, InvokeAPICheckException {
+            InterruptedException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeInformationNotFoundException, InvokeAPICheckException {
         InvokeInformation invokeInformation = getInvokeInformation(accessToken, componentType, environment);
         String requestURI = invokeInformation.getInvokeUrl()
                 .concat("/")

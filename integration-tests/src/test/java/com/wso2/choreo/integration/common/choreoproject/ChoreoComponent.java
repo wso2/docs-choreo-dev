@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
 package com.wso2.choreo.integration.common.choreoproject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -284,7 +297,7 @@ public abstract class ChoreoComponent {
 
     /**
      * Get details about the deployments of a component
-     * 
+     *
      * @param accessToken
      * @param orgHandle
      * @param orgUUID
@@ -297,7 +310,7 @@ public abstract class ChoreoComponent {
      * @throws GetDeploymentsStatusCheckException
      */
     public JsonArray getDeployments(String accessToken, String orgHandle, String orgUUID,
-                                                  String versionId)
+                                    String versionId)
             throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
             ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
         String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
@@ -475,33 +488,36 @@ public abstract class ChoreoComponent {
      * Get Component observability ids
      *
      * @param accessToken OAuth token to invoke the Chorea backend
-     * @param releaseId release id for your component
+     * @param releaseId   release id for your component
      * @return request body containing graphql query
      */
     public ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String accessToken, String releaseId) throws IOException, ObservabilityIdCheckException, InterruptedException, ObservabilityIdNotFoundException {
         String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         String requestBody = getComponentObservabilityIdsQuery(releaseId);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestURI))
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        int statusCode = response.statusCode();
-        if (statusCode != HttpStatus.OK.value()) {
-            throw new ObservabilityIdCheckException(statusCode, response.body());
-        }
-        JsonObject bodyJsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-        JsonArray obsIdJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("observerbilityIds");
-        Gson gson = new Gson();
-        ObservabilityIdInformation[] obsIds = gson.fromJson(obsIdJsonArray, ObservabilityIdInformation[].class);
-        for (ObservabilityIdInformation obsId : obsIds) {
-            if (obsId.getReleaseId().equals(releaseId)) {
-                return obsId;
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new ObservabilityIdCheckException(statusCode, responseBody);
             }
+            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray obsIdJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("observerbilityIds");
+            Gson gson = new Gson();
+            ObservabilityIdInformation[] obsIds = gson.fromJson(obsIdJsonArray, ObservabilityIdInformation[].class);
+            for (ObservabilityIdInformation obsId : obsIds) {
+                if (obsId.getReleaseId().equals(releaseId)) {
+                    return obsId;
+                }
+            }
+            throw new ObservabilityIdNotFoundException();
         }
-        throw new ObservabilityIdNotFoundException();
-
     }
 
     /**
@@ -534,37 +550,41 @@ public abstract class ChoreoComponent {
         };
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestURI))
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        int statusCode = response.statusCode();
-        if (statusCode != HttpStatus.OK.value()) {
-            throw new ComponentInvokeInformationCheckException(statusCode, response.body());
-        }
-        JsonObject bodyJsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-        JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
-        Gson gson = new Gson();
-        InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
-        for (InvokeInformation envInvokeInformation : invokeInformation) {
-            if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
-                return envInvokeInformation;
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new ComponentInvokeInformationCheckException(statusCode, responseBody);
             }
+            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
+            Gson gson = new Gson();
+            InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
+            for (InvokeInformation envInvokeInformation : invokeInformation) {
+                if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
+                    return envInvokeInformation;
+                }
+            }
+            throw new InvokeInformationNotFoundException();
         }
-        throw new InvokeInformationNotFoundException();
     }
 
     /**
      * Get api-key to invoke the application from APIM
      *
      * @param accessToken OAuth token to invoke the Chorea backend
-     * @param apiId apiId for the deployed component
+     * @param apiId       apiId for the deployed component
      * @return request body containing graphql query
      */
     public String getAPIKeyForInvoke(String accessToken, String apiId) throws InterruptedException, IOException,
-            GenerateAPIKeyCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
+            APIKeyGenerationCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
         String requestURI = Configuration.STS_ENDPOINT.
                 concat(Constant.APIS_ENDPOINT)
                 .concat("/")
@@ -574,27 +594,30 @@ public abstract class ChoreoComponent {
                 .concat(Constant.ORGANIZATION_ID)
                 .concat("=")
                 .concat(organization.getOrgUUID());
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestURI))
-                .POST(HttpRequest.BodyPublishers.ofString(""))
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON)
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        int statusCode = response.statusCode();
-        if (statusCode != HttpStatus.OK.value()) {
-            throw new GenerateAPIKeyCheckException(statusCode, response.body());
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                "",
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new APIKeyGenerationCheckException(statusCode, responseBody);
+            }
+            JsonObject responseJSON = new JsonParser().parse(responseBody).getAsJsonObject();
+            String apiKey = responseJSON.get("apikey").toString();
+            if (apiKey != null) {
+                return apiKey;
+            }
+            throw new ApiKeyNotFoundException();
         }
-        JsonObject responseBody = new JsonParser().parse(response.body()).getAsJsonObject();
-        String apiKey = responseBody.get("apikey").toString();
-        if (apiKey != null) {
-            return apiKey;
-        }
-        throw new ApiKeyNotFoundException();
     }
 
     public String getReleaseIdForEnvironment(String env) throws ReleaseIdNotFoundException {
-         AppEnvVersion[] appEnvVersions = getApiVersions().get(0).getAppEnvVersions().toArray(new AppEnvVersion[0]);
+        AppEnvVersion[] appEnvVersions = getApiVersions().get(0).getAppEnvVersions().toArray(new AppEnvVersion[0]);
         for (AppEnvVersion appEnvVersion : appEnvVersions) {
             if (appEnvVersion.getEnvironment().equals(env)) {
                 return appEnvVersion.getReleaseId();
@@ -614,40 +637,52 @@ public abstract class ChoreoComponent {
         queryParams.put("observeId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
         mustache.execute(writer, queryParams).flush();
-        String body = writer.toString();
+        String requestBody = writer.toString();
         int attempts = 0;
         log.info("Waiting till observability data appear");
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
         while (attempts < 10) {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(requestURI))
-                    .POST(HttpRequest.BodyPublishers.ofString(body))
-                    .header(HttpHeaders.AUTHORIZATION, accessToken)
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            int count =  new JsonParser().parse(response.body()).getAsJsonObject().getAsJsonObject("data")
-                    .getAsJsonObject("metricDensity").getAsJsonArray("metricCounts").get(0).getAsJsonObject().get("count").getAsInt();
-            if(count > 0) {
-                break;
-            }
-            log.debug("Observability data has not appeared, trying aga in. Attemp : " + attempts);
-            Thread.sleep(3000);
-            attempts++;
-            if(attempts == 10 ){
-                throw new ObservabilityDataNotFoundException();
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                int count = new JsonParser()
+                        .parse(responseBody)
+                        .getAsJsonObject()
+                        .getAsJsonObject("data")
+                        .getAsJsonObject("metricDensity")
+                        .getAsJsonArray("metricCounts")
+                        .get(0)
+                        .getAsJsonObject()
+                        .get("count")
+                        .getAsInt();
+                if (count > 0) {
+                    break;
+                }
+                log.debug("Observability data has not appeared, trying again. Attempt : " + attempts);
+                Thread.sleep(3000);
+                attempts++;
+                if (attempts == 10) {
+                    log.warn("Exceeding maximum number of attempts for checking observability data.");
+                    throw new ObservabilityDataNotFoundException();
+                }
             }
         }
-        log.debug("Exceeding maximum number of attempts for checking observability data.");
-
     }
 
     public String getId() {
         return id;
     }
 
-    
+
     /**
      * Redeploy a stopped component
-     * 
+     *
      * @param accessToken
      * @param componentId
      * @param releaseId
@@ -680,7 +715,7 @@ public abstract class ChoreoComponent {
         int statusCode = response.getStatusLine().getStatusCode();
         String responseBody = EntityUtils.toString(response.getEntity());
         if (statusCode != HttpStatus.OK.value()) {
-           throw new RedeployException(statusCode, responseBody);
+            throw new RedeployException(statusCode, responseBody);
         }
     }
 
