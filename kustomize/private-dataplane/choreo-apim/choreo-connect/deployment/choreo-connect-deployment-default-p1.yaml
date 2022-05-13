@@ -146,11 +146,6 @@ spec:
               value: "3"
             - name: JAVA_OPTS
               value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
-            - name: tm_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  key: SUPER_ADMIN_PSWD
-                  name: apim-passwords
             - name: analytics_authToken
               valueFrom:
                 secretKeyRef:

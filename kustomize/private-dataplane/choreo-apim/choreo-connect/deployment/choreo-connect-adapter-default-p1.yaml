@@ -107,11 +107,6 @@ spec:
               value: "/home/wso2/security/keystore/mg.key"
             - name: ADAPTER_PUBLIC_CERT_PATH
               value: "/home/wso2/security/keystore/mg.pem"
-            - name: cp_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  key: SUPER_ADMIN_PSWD
-                  name: apim-passwords
             - name: ASB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
