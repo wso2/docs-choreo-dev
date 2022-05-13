@@ -60,6 +60,9 @@ spec:
               drop:
                 - all
           volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
             - name: secret-loggingapi
               mountPath: "/mnt/csi/secret-loggingapi"
               readOnly: true
@@ -96,6 +99,9 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
+        - name: config
+          configMap:
+            name: cm-loggingapi-config
         - name: secret-loggingapi
           csi:
             driver: secrets-store.csi.k8s.io
