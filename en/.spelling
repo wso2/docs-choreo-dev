@@ -287,7 +287,8 @@ BACKEND_LATENCY
 TOTAL_LATENCY
 API_ERRORS
 TARGET_ERRORS
-
+CountryCode
+undeploy
 
  - docs/references/upgrading-from-the-previous-version.md
 DefaultProject
