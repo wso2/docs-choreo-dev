@@ -9,7 +9,7 @@ server_role = "traffic-manager"
 
 [super_admin]
 username = "choreo_dev_apim_admin"
-password = "$env{SUPER_ADMIN_PSWD}"
+password = "$env{TM_ADMIN_PASSWORD}"
 create_admin_account = true
 
 [user_store]
@@ -259,7 +259,10 @@ password = "${admin.password}"
 proxyPort = 443
 
 [apim.event_hub]
-service_url = "https://am.dev-controlplane.internal:443"
+service_url = "http://dev.dev-global-adapter.internal:9745"
+username="choreo_dev_ga_admin"
+password="$env{ga_admin_pwd}"
+
 #event_listening_endpoints = ["tcp://choreo-eventhub-1-service:5672","tcp://choreo-eventhub-2-service:5672"]
 
 # [[apim.event_hub.publish.url_group]]
