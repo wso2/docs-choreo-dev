@@ -98,6 +98,8 @@ spec:
                 name: keystore-passwords
             - secretRef:
                 name: apim-passwords
+            - secretRef:
+                name: secret-tm-admin-credentials
           env:
             - name: NODE_IP
               valueFrom:
@@ -111,6 +113,11 @@ spec:
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
               value: traffic-manager
+            - name: ga_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  name: secret-private-ga-tbl-credentials
+                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           volumeMounts:
             - name: apim-vol
               mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
@@ -140,6 +147,9 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
+            - name: secret-choreo-connect
+              mountPath: /mnt/csi/secret-choreo-connect
+              readOnly: true
       volumes:
         - name: apim-vol
           emptyDir: { }
@@ -161,6 +171,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-choreo-connect
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-connect
             nodePublishSecretRef:
               name: csi-secret-store-azure
       affinity:
