@@ -196,7 +196,7 @@ disableSslVerification = false
 [enforcer.security.authHeader]
     enableOutboundAuthHeader = false
     authorizationHeader = "authorization"
-    testConsoleHeaderName = "internal-key"
+    testConsoleHeaderName = "api-key"
 
 # JWT token authorization configurations. You can provide multiple JWT issuers
 # Issuer 1
