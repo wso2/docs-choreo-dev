@@ -74,4 +74,13 @@ public class EndpointConfig {
                 .requestUrl(com.wso2.choreo.integration.config.Configuration.GITHUB_ENDPOINT)
                 .build();
     }
+
+    @Bean
+    public HttpClient adPassthroughTestClient() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.ANOMALY_DETECTION.PASSTHROUGH_INVOKE_URL.split("(?<=choreoapis.dev)/")[0])
+                .build();
+    }
 }

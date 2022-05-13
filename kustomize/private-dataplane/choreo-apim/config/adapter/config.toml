@@ -196,7 +196,7 @@ disableSslVerification = false
 [enforcer.security.authHeader]
     enableOutboundAuthHeader = false
     authorizationHeader = "authorization"
-    testConsoleHeaderName = "internal-key"
+    testConsoleHeaderName = "api-key"
 
 # JWT token authorization configurations. You can provide multiple JWT issuers
 # Issuer 1
@@ -261,6 +261,7 @@ disableSslVerification = false
 
 [controlPlane]
 enabled = true
+sendRevisionUpdate = true
 serviceUrl = "http://dev.dev-global-adapter.internal:9745/"
 username="choreo_dev_ga_admin"
 password="$env{ga_admin_pwd}"

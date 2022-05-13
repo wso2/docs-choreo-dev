@@ -68,17 +68,19 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - nc -z localhost 9611
+                - nc -z -v -w 4 localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
             exec:
               command:
                 - /bin/sh
                 - -c
-                - nc -z localhost 9611
+                - nc -z -v -w 4 localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
+            timeoutSeconds: 5
           lifecycle:
             preStop:
               exec:

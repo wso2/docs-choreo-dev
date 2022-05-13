@@ -13,7 +13,9 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -27,6 +29,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -42,8 +46,9 @@ public class TokenHandler {
 
     private final String asgardeoClientId = Configuration.ASGARDEO_CLIENT_ID;
     private final String asgardeoClientSecret = Configuration.ASGARDEO_CLIENT_SECRET;
-    private final String testUserEmail = Configuration.TEST_USER_EMAIL;
-    private final String testUserPassword = Configuration.TEST_USER_PASSWORD;
+    private String testChoreoOrgHandle = Configuration.TEST_CHOREO_ORG_HANDLE;
+    private String testUserEmail = Configuration.TEST_USER_EMAIL;
+    private String testUserPassword = Configuration.TEST_USER_PASSWORD;
     private final String stsClientId = Configuration.STS_CLIENT_ID;
     private final String stsClientSecret = Configuration.STS_CLIENT_SECRET;
     private final String cpAppClientId = Configuration.CP_APP_CLIENT_ID;
@@ -73,6 +78,32 @@ public class TokenHandler {
     public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException {
         String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
         return getStsToken(cpAppClientId, cpAppClientSecret, userToken);
+    }
+
+    /**
+     * Obtain a test token to invoke an exposed API
+     * 
+     * @return Test Token
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws GetApiTestTokenStatusCheckException
+     */
+    public String getApiTestToken(String clientId, String clientSecret) throws IOException, InterruptedException, GetApiTestTokenStatusCheckException{
+        String authorizationBasicToken = Base64.getEncoder().encodeToString(clientId.concat(":").concat(clientSecret).getBytes());
+        HttpPost request = new HttpPost(Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX));
+        request.setHeader("Content-type", "application/x-www-form-urlencoded");
+        request.setHeader("Authorization", "Basic ".concat(authorizationBasicToken));
+        StringEntity requestEntity = new StringEntity("grant_type=client_credentials",ContentType.APPLICATION_FORM_URLENCODED);
+        request.setEntity(requestEntity);
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        CloseableHttpResponse response = httpClient.execute(request);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String responseBody = EntityUtils.toString(response.getEntity());
+        if (statusCode != HttpStatus.OK.value()) {
+            throw new GetApiTestTokenStatusCheckException(statusCode, responseBody);
+        }
+        JsonObject responseBodyJson = new JsonParser().parse(responseBody).getAsJsonObject();
+        return responseBodyJson.get("access_token").toString().replaceAll("\"", "");
     }
 
     /**
@@ -136,7 +167,7 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("subject_token", userToken));
         urlParameters.add(new BasicNameValuePair("subject_token_type", Constant.SUBJECT_TOKEN_TYPE));
         urlParameters.add(new BasicNameValuePair("requested_token_type", Constant.REQUESTED_TOKEN_TYPE));
-        urlParameters.add(new BasicNameValuePair("orgHandle", Configuration.TEST_CHOREO_ORG_HANDLE));
+        urlParameters.add(new BasicNameValuePair("orgHandle", testChoreoOrgHandle));
         urlParameters.add(new BasicNameValuePair("scope", Constant.OAUTH_SCOPES));
 
         request.setEntity(new UrlEncodedFormEntity(urlParameters));
@@ -164,5 +195,32 @@ public class TokenHandler {
     private String encodeCredentials(String clientId, String clientSecret) {
         String concatenateCredentials = clientId.concat(":").concat(clientSecret);
         return Base64.getEncoder().encodeToString(concatenateCredentials.getBytes());
+    }
+
+    /**
+     * Set the Test User's Organization Handle in testChoreoOrgHandle variable
+     * 
+     * @param orgHandle
+     */
+    public void setTestChoreoOrgHandle(String orgHandle) {
+        testChoreoOrgHandle = orgHandle;
+    }
+
+    /**
+     * Set the Test User's Email address in testUserEmail variable
+     * 
+     * @param email
+     */
+    public void setTestUserEmail(String emailAddress){
+        testUserEmail = emailAddress;
+    }
+
+    /**
+     * Set the Test User's password in testUserPassword variable
+     * 
+     * @param password
+     */
+    public void setTestUserPassword(String password){
+        testUserPassword = password;
     }
 }
