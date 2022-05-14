@@ -156,6 +156,11 @@ spec:
                 secretKeyRef:
                   name: secret-tm-admin-credentials
                   key: TM_ADMIN_PASSWORD
+            - name: ga_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  name: secret-private-ga-tbl-credentials
+                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           resources:
             requests:
               memory: "3Gi"
