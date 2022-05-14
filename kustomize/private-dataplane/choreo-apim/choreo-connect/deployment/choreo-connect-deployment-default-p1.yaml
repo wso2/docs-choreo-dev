@@ -151,6 +151,11 @@ spec:
                 secretKeyRef:
                   key: PROD_ANALYTICS_AUTH_TOKEN
                   name: secret-mgw-analytics
+            - name: tm_admin_pwd
+              valueFrom:
+                secretKeyRef:
+                  name: secret-tm-admin-credentials
+                  key: TM_ADMIN_PASSWORD
           resources:
             requests:
               memory: "3Gi"
