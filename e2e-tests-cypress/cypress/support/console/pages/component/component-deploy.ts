@@ -63,11 +63,11 @@ export class ComponentDeployPage {
     return cy.get('[title="Build Success"]', { timeout: 90000 });
   }
 
-  static ismanualDeploymentSuccessful() {
-    return cy.get('[title="Deployed successfully"]', { timeout: 90000 });
-  }
-
   static promoteToProd() {
+    cy.get('[data-testid="undeploy-info"]', { timeout: 180000 }).should(
+      "be.visible"
+    );
+    cy.wait(2000)
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
       .should("be.visible")
       .click();
