@@ -32,7 +32,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-loggingapi-control
+                  name: cm-loggingapi-cp
             - name: AAD_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -47,7 +47,7 @@ spec:
             - configMapRef:
                 name: env-loganalytics-replica
             - configMapRef:
-                name: cm-loggingapi-control
+                name: cm-loggingapi-cp
             - configMapRef:
                 name: env-loggingapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
