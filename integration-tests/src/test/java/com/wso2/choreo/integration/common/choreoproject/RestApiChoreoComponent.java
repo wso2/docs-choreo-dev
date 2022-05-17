@@ -14,13 +14,16 @@
 
 package com.wso2.choreo.integration.common.choreoproject;
 
-import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
-import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
-import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
-import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.Constant;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -58,29 +61,31 @@ public class RestApiChoreoComponent extends ChoreoComponent {
         // Escaping the quotations
         String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
         int iteration = 0;
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestURI))
-                .GET()
-                .header("API-Key", apiKey)
-                .header(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON)
-                .build();
+        HttpGet request = new HttpGet(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
+        request.setHeader("API-Key", apiKey);
+
         while (iteration < count) {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            int statusCode = response.statusCode();
-            if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
-                // Adding a sleep for invocation, otherwise upstream connect error occurs
-                log.debug("API is not deployed yet, and waiting to retry");
-                Thread.sleep(3000);
-                continue;
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
+                    // Adding a sleep for invocation, otherwise upstream connect error occurs
+                    log.debug("API is not deployed yet, and waiting to retry");
+                    Thread.sleep(3000);
+                    continue;
+                }
+                if (statusCode != HttpStatus.OK.value()) {
+                    throw new InvokeAPICheckException(statusCode, responseBody);
+                }
+                // Waiting 2 seconds to avoid choreo extenstion sampling
+                if (iteration % 2 == 0) {
+                    Thread.sleep(1000);
+                }
+                iteration++;
             }
-            if (statusCode != HttpStatus.OK.value()) {
-                throw new InvokeAPICheckException(statusCode, response.body());
-            }
-            // Waiting 2 seconds to avoid choreo extenstion sampling
-            if (iteration % 2  == 0) {
-                Thread.sleep(1000);
-            }
-            iteration++;
         }
     }
 }
