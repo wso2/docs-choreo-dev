@@ -54,8 +54,7 @@ import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.*;
 
 public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
@@ -297,6 +296,11 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                         .expression("$.data.requestTraceGroup.keySet()", hasItems("__typename", "traces", "totalCount"))
                         .expression("$.data.requestTraceGroup.traces[0].keySet()", hasItems("__typename", "duration", "errorStatus", "httpStatusCode", "startTime", "traceId"))
                         .expression("$.data.requestTraceGroup.traces.size()", greaterThan(1))
+                        .expression("$.data.requestTraceGroup.totalCount", 4)
+                        .expression("$.data.requestTraceGroup.traces[*].httpStatusCode", everyItem(containsString("200")))
+                        .expression("$.data.requestTraceGroup.traces[*].errorStatus", everyItem(containsString("false")))
+                        .expression("$.data.requestTraceGroup.traces[*].traceId", everyItem(is(not(emptyString()))))
+                        .expression("$.data.requestTraceGroup.traces[*].duration", everyItem(greaterThan(1L)))
                 )
         );
     }
@@ -362,8 +366,13 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                         .expression("$.data.traceById.__typename", "traceById")
                         .expression("$.data.traceById.keySet()", hasItems("__typename", "spans"))
                         .expression("$.data.traceById.spans.size()", greaterThan(0))
-                                .expression("$.data.traceById.spans[0].checkpoints[0].keySet()", hasItems("__typename", "moduleId", "positionId", "timestamp"))
-                                .expression("$.data.traceById.spans[0].keySet()", hasItems("__typename", "checkpoints", "duration", "errorMsg", "errorStatus", "httpStatusCode", "position"))
+                        .expression("$.data.traceById.spans[0].checkpoints[0].keySet()", hasItems("__typename", "moduleId", "positionId", "timestamp"))
+                        .expression("$.data.traceById.spans[0].keySet()", hasItems("__typename", "checkpoints", "duration", "errorMsg", "errorStatus", "httpStatusCode", "position"))
+                        .expression("$.data.traceById.spans[0].checkpoints[*].__typename", everyItem(containsString("checkpoint")))
+                        .expression("$.data.traceById.spans[0].checkpoints[*].__typename", everyItem(containsString("checkpoint")))
+                        .expression("$.data.traceById.spans[0].checkpoints[*].moduleId", everyItem(containsString(moduleId)))
+                        .expression("$.data.traceById.spans[0].checkpoints[*].positionId", allOf(is(not(emptyString()))))
+
                 )
         );
     }
