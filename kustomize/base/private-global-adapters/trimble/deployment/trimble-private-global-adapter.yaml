@@ -93,6 +93,9 @@ spec:
         - name: secret-apim
           mountPath: /mnt/csi/secret-apim
           readOnly: true
+        - name: secret-private-ga-tbl
+          mountPath: /mnt/csi/secret-private-ga-tbl
+          readOnly: true
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter:latest
         imagePullPolicy: Always
         securityContext:
@@ -119,8 +122,8 @@ spec:
         - name: ga_admin_pwd
           valueFrom:
             secretKeyRef:
-              key: GLOBAL_ADAPTER_ADMIN_PASSWORD
-              name: secret-cc-ga-credentials
+              key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
+              name: secret-private-ga-tbl-credentials
         - name: ga_db_pwd
           valueFrom:
             secretKeyRef:
@@ -152,13 +155,13 @@ spec:
         - containerPort: 18000
         - containerPort: 9843
         livenessProbe:
-          exec:
-            command: [ "sh", "check_health.sh", "liveness" ]
+          tcpSocket:
+            port: 9745
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
-          exec:
-            command: [ "sh", "check_health.sh", "readiness" ]
+          tcpSocket:
+            port: 9745
           initialDelaySeconds: 8
           periodSeconds: 5
       volumes:
@@ -225,6 +228,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-apim
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-private-ga-tbl
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-private-ga-tbl
           nodePublishSecretRef:
             name: csi-secret-store-azure
       restartPolicy: Always

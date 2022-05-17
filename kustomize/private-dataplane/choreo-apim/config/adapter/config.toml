@@ -196,7 +196,7 @@ disableSslVerification = false
 [enforcer.security.authHeader]
     enableOutboundAuthHeader = false
     authorizationHeader = "authorization"
-    testConsoleHeaderName = "internal-key"
+    testConsoleHeaderName = "api-key"
 
 # JWT token authorization configurations. You can provide multiple JWT issuers
 # Issuer 1
@@ -261,9 +261,10 @@ disableSslVerification = false
 
 [controlPlane]
 enabled = true
-serviceUrl = "https://am.dev-controlplane.internal:443/"
-username="choreo_dev_apim_admin"
-password="$env{cp_admin_pwd}"
+sendRevisionUpdate = true
+serviceUrl = "http://dev.dev-global-adapter.internal:9745/"
+username="choreo_dev_ga_admin"
+password="$env{ga_admin_pwd}"
 environmentLabels = ["$env{environmentLabel}"]
 retryInterval = 20
 skipSSLVerification=true
@@ -277,7 +278,7 @@ reconnectRetryCount = 60
 # Global Adapter related configurations
 [globalAdapter]
   # Enable Choreo Connect Global adapter client
-  enabled = true
+  enabled = false
   # Global adapter Service URL (<Hostname>:<Port>)
   serviceUrl = "dev.dev-global-adapter.internal:18000"
   # Local Adapter Label
