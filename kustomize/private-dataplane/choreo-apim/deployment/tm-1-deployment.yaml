@@ -116,7 +116,7 @@ spec:
             - name: ga_admin_pwd
               valueFrom:
                 secretKeyRef:
-                  name: secret-private-ga-tbl-credentials
+                  name: secret-private-ga-credentials
                   key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           volumeMounts:
             - name: apim-vol
