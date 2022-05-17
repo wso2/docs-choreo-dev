@@ -690,6 +690,7 @@ CREATE TABLE [dbo].[user](
     [id] [int] IDENTITY(1,1) NOT NULL,
     [idp_id] [nvarchar](255) NOT NULL,
     [is_anonymous] [smallint] NOT NULL,
+    [is_enterprise] [bit] NOT NULL DEFAULT 0,
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
     CONSTRAINT [PK_user_id] PRIMARY KEY CLUSTERED
