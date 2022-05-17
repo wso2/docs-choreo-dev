@@ -14,7 +14,12 @@
 
 package com.wso2.choreo.integration.common.choreoproject;
 
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +39,6 @@ public class RestApiChoreoComponent extends ChoreoComponent {
     private static final HttpClient client = HttpClient.newHttpClient();
     private final static Logger log = LoggerFactory.getLogger(RestApiChoreoComponent.class);
 
-
     /**
      * Invoke the application for a given number of iterations
      *
@@ -52,7 +56,7 @@ public class RestApiChoreoComponent extends ChoreoComponent {
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
-        String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"","");
+        String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
         int iteration = 0;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
@@ -71,6 +75,10 @@ public class RestApiChoreoComponent extends ChoreoComponent {
             }
             if (statusCode != HttpStatus.OK.value()) {
                 throw new InvokeAPICheckException(statusCode, response.body());
+            }
+            // Waiting 2 seconds to avoid choreo extenstion sampling
+            if (iteration % 2  == 0) {
+                Thread.sleep(1000);
             }
             iteration++;
         }
