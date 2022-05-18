@@ -98,8 +98,6 @@ spec:
                 name: keystore-passwords
             - secretRef:
                 name: apim-passwords
-            - secretRef:
-                name: secret-tm-admin-credentials
           env:
             - name: NODE_IP
               valueFrom:
