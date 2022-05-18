@@ -206,7 +206,7 @@ You can proceed to the next section to observe the scheduled task, see whether i
 
 ## Step 3: Observe
 
-You can observe the scheduled task to verify whether it runs every two minutes as expected and check whether is successfully retrieves the specified data.
+You can observe the scheduled task to verify whether it runs every two minutes as expected and check whether it successfully retrieves the specified data.
 
 To open the Observability statistics, click **Observe** in the **Development** card. Alternatively, you can click the **Observe** icon**.
 
