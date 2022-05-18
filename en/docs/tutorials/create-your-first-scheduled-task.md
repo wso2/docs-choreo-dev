@@ -6,7 +6,7 @@ A scheduled task is a routine task at a given time interval. The following are a
 - Daily presenting the number of COVID-19 cases reported for the day
 - Logging the hourly sales total of an online store
 
-Choreo’s low-code editor allows you to easily design complex processes to be carried out routinely. Once the design is implemented, you can schedule them by specifying the time interval at which they need to be carried out.
+In the low-code editor, you can easily design complex processes that Choreo can carry out out routinely. Once you implement the design, you can schedule them by specifying a time interval at which the designed process should run (e.g., every hour).
 
 To try it out, let's consider a scenario where a statistician needs to monitor the USA population every two minutes to present an analysis. In this tutorial, you will address this requirement by doing the following:
 
@@ -116,7 +116,7 @@ Let's design the functionality of the scheduled task by following this procedure
 
     2. Click **Log** to add a log statement.
    
-    3. In the **Expression** field, enter `payload.toString()`. This gets the value of the `payload` variable statement you added, converts it to a string format, and logs it.
+    3. In the **Expression** field, enter `payload.toString()`. This expression gets the value of the `payload` variable statement you added, converts it to a string format, and logs it.
    
     4. Click **Save**.
 
@@ -171,7 +171,7 @@ The scheduled task configuration you created is currently only saved in the Web 
 
     ![Commit message](../assets/img/tutorials/scheduled-task/commit-message.png){.cInlineImage-full}
 
-    Select **Yes** in the message that appears to specify that you need the changes to be staged.
+    Select **Yes** in the message that appears to specify that you need to stage the changes.
 
 3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom panel.
 
@@ -182,7 +182,7 @@ The scheduled task configuration you created is currently only saved in the Web 
 
     Then click **OK** in the message that appears to confirm.
 
-Once the changes are successfully pushed to the GitHub repository, the Web Editor indicates by displaying the text **In sync with Choreo upstream** for the `main.bal` file as shown below.
+Once the Web Editor has successfully pushed the changes to the GitHub repository, it indicates this by displaying the text **In sync with Choreo upstream** for the `main.bal` file as shown below.
 
 ![In sync](../assets/img/tutorials/scheduled-task/in-sync-with-choreo-upstream.png){.cInlineImage-full}
 
@@ -200,17 +200,17 @@ Once the changes are successfully pushed to the GitHub repository, the Web Edito
 
 3. Click **Deploy** in the **Configure & Deploy** panel.
 
-Once the deployment process is completed, a message appears to notify you of it. From the time the deployment is completed, the scheduled task starts running continuously, retrieving the population of the USA every two minutes until you undeploy it.
+Once the deployment process is complete, a message appears to notify you of it. From the time you deploy a scheduled task, it starts running continuously, retrieving the population of the USA every two minutes until you undeploy it.
 
 You can proceed to the next section to observe the scheduled task, see whether it is run every two minutes as expected, and check whether the data retrievals are successfully carried out.
 
 ## Step 3: Observe
 
-By observing the scheduled task, you can verify whether it is run every two minutes as expected and check whether the data retrievals are successfully carried out.
+You can observe the scheduled task to verify whether it runs every two minutes as expected and check whether is successfully retrieves the specified data.
 
 To open the Observability statistics, click **Observe** in the **Development** card. Alternatively, you can click the **Observe** icon**.
 
-The logs section displays the logs generated every two minutes with population statistics of the USA. In addition, the graphs are populated with throughput and latency statistics.
+The logs section displays the logs generated every two minutes with population statistics of the USA. In addition, the graphs visualize the throughput and latency statistics.
 
 ![observability](../assets/img/tutorials/scheduled-task/observe.png){.cInlineImage-full}
 
