@@ -6,6 +6,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -56,8 +57,7 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
   @BeforeClass
   public void beforeClass()
       throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
-    TokenHandler tokenHandler = new TokenHandler();
-    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+    accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
     orgHandle = org.getOrgHandle();

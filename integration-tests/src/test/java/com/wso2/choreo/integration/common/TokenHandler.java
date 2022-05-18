@@ -13,14 +13,12 @@
 
 package com.wso2.choreo.integration.common;
 
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
-import java.net.http.HttpClient;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -29,8 +27,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -42,17 +38,83 @@ import org.springframework.http.HttpStatus;
  * Handles retrieving a OAuth token to test API calls
  */
 public class TokenHandler {
-    private static final HttpClient client = HttpClient.newHttpClient();
 
-    private final String asgardeoClientId = Configuration.ASGARDEO_CLIENT_ID;
-    private final String asgardeoClientSecret = Configuration.ASGARDEO_CLIENT_SECRET;
-    private String testChoreoOrgHandle = Configuration.TEST_CHOREO_ORG_HANDLE;
-    private String testUserEmail = Configuration.TEST_USER_EMAIL;
-    private String testUserPassword = Configuration.TEST_USER_PASSWORD;
-    private final String stsClientId = Configuration.STS_CLIENT_ID;
-    private final String stsClientSecret = Configuration.STS_CLIENT_SECRET;
-    private final String cpAppClientId = Configuration.CP_APP_CLIENT_ID;
-    private final String cpAppClientSecret = Configuration.CP_APP_CLIENT_SECRET;
+    public static class Builder {
+        private String asgardeoClientId;
+        private String asgardeoClientSecret;
+        private final String testChoreoOrgHandle;
+        private final String testUserEmail;
+        private final String testUserPassword;
+        private String stsClientId;
+        private String stsClientSecret;
+        private String cpAppClientId;
+        private String cpAppClientSecret;
+
+        public Builder(String testChoreoOrgHandle, String testUserEmail, String testUserPassword) {
+            this.testChoreoOrgHandle = testChoreoOrgHandle;
+            this.testUserEmail = testUserEmail;
+            this.testUserPassword = testUserPassword;
+        }
+
+        public Builder asgardeoClientId(String asgardeoClientId) {
+            this.asgardeoClientId = asgardeoClientId;
+            return this;
+        }
+
+        public Builder asgardeoClientSecret(String asgardeoClientSecret) {
+            this.asgardeoClientSecret = asgardeoClientSecret;
+            return this;
+        }
+
+        public Builder stsClientId(String stsClientId) {
+            this.stsClientId = stsClientId;
+            return this;
+        }
+
+        public Builder stsClientSecret(String stsClientSecret) {
+            this.stsClientSecret = stsClientSecret;
+            return this;
+        }
+
+        public Builder cpAppClientId(String cpAppClientId) {
+            this.cpAppClientId = cpAppClientId;
+            return this;
+        }
+
+        public Builder cpAppClientSecret(String cpAppClientSecret) {
+            this.cpAppClientSecret = cpAppClientSecret;
+            return this;
+        }
+
+        public TokenHandler build() {
+            return new TokenHandler(this);
+        }
+    }
+
+    private final String asgardeoClientId;
+    private final String asgardeoClientSecret;
+    private final String testChoreoOrgHandle;
+    private final String testUserEmail;
+    private final String testUserPassword;
+    private final String stsClientId;
+    private final String stsClientSecret;
+    private final String cpAppClientId;
+    private final String cpAppClientSecret;
+
+    private String stsAccessToken = "";
+    private long tokenExpiryTime = 0;
+
+    private TokenHandler(Builder builder) {
+        asgardeoClientId = builder.asgardeoClientId;
+        asgardeoClientSecret = builder.asgardeoClientSecret;
+        testChoreoOrgHandle = builder.testChoreoOrgHandle;
+        testUserEmail = builder.testUserEmail;
+        testUserPassword = builder.testUserPassword;
+        stsClientId = builder.stsClientId;
+        stsClientSecret = builder.stsClientSecret;
+        cpAppClientId = builder.cpAppClientId;
+        cpAppClientSecret = builder.cpAppClientSecret;
+    }
 
     /**
      * Retrieve oauth token to be used when invoking choreo APIs
@@ -76,34 +138,17 @@ public class TokenHandler {
      * @throws TokenRetrievalException if token retrieval fails
      */
     public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException {
-        String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-        return getStsToken(cpAppClientId, cpAppClientSecret, userToken);
-    }
-
-    /**
-     * Obtain a test token to invoke an exposed API
-     * 
-     * @return Test Token
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws GetApiTestTokenStatusCheckException
-     */
-    public String getApiTestToken(String clientId, String clientSecret) throws IOException, InterruptedException, GetApiTestTokenStatusCheckException{
-        String authorizationBasicToken = Base64.getEncoder().encodeToString(clientId.concat(":").concat(clientSecret).getBytes());
-        HttpPost request = new HttpPost(Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX));
-        request.setHeader("Content-type", "application/x-www-form-urlencoded");
-        request.setHeader("Authorization", "Basic ".concat(authorizationBasicToken));
-        StringEntity requestEntity = new StringEntity("grant_type=client_credentials",ContentType.APPLICATION_FORM_URLENCODED);
-        request.setEntity(requestEntity);
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        CloseableHttpResponse response = httpClient.execute(request);
-        int statusCode = response.getStatusLine().getStatusCode();
-        String responseBody = EntityUtils.toString(response.getEntity());
-        if (statusCode != HttpStatus.OK.value()) {
-            throw new GetApiTestTokenStatusCheckException(statusCode, responseBody);
+        if (!isTokenValid()) {
+            synchronized (TokenHandler.class) {
+                if (!isTokenValid()) {
+                    String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
+                    stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken);
+                    readTokenExpiryTime();
+                }
+            }
         }
-        JsonObject responseBodyJson = new JsonParser().parse(responseBody).getAsJsonObject();
-        return responseBodyJson.get("access_token").toString().replaceAll("\"", "");
+
+        return Constant.BEARER_PREFIX.concat(stsAccessToken);
     }
 
     /**
@@ -112,11 +157,10 @@ public class TokenHandler {
      * @param asgardeoClientId     client id for Asgardeo SP
      * @param asgardeoClientSecret client secret for Asgardeo SP
      * @return user token
-     * @throws IOException             if an IO error occurs when sending or receiving request
      * @throws TokenRetrievalException if token retrieval fails
      */
-    public String getTestUserToken(String asgardeoClientId, String asgardeoClientSecret)
-            throws TokenRetrievalException, IOException {
+    private String getTestUserToken(String asgardeoClientId, String asgardeoClientSecret)
+            throws TokenRetrievalException {
         String tokenAuthHeader =
                 Constant.BASIC_PREFIX.concat(encodeCredentials(asgardeoClientId, asgardeoClientSecret));
         String asgardeoTokenEndpoint = Configuration.ASGARDEO_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
@@ -130,18 +174,22 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("username", testUserEmail));
         urlParameters.add(new BasicNameValuePair("password", testUserPassword));
 
-        request.setEntity(new UrlEncodedFormEntity(urlParameters));
+        try {
+            request.setEntity(new UrlEncodedFormEntity(urlParameters));
 
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-             CloseableHttpResponse response = httpClient.execute(request)) {
-            int statusCode = response.getStatusLine().getStatusCode();
-            String responseBody = EntityUtils.toString(response.getEntity());
-            if (statusCode != HttpStatus.OK.value()) {
-                throw new TokenRetrievalException(statusCode, responseBody);
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode != HttpStatus.OK.value()) {
+                    throw new TokenRetrievalException(statusCode, responseBody);
+                }
+
+                return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonPrimitive("access_token")
+                        .getAsString();
             }
-
-            return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonPrimitive("access_token")
-                    .getAsString();
+        } catch (IOException e) {
+            throw new TokenRetrievalException("Error while getting Asgardio token", e);
         }
     }
 
@@ -153,8 +201,8 @@ public class TokenHandler {
      * @throws TokenRetrievalException
      * @throws IOException
      */
-    public String getStsToken(String stsClientId, String stsClientSecret, String userToken)
-            throws TokenRetrievalException, IOException {
+    private String getStsToken(String stsClientId, String stsClientSecret, String userToken)
+            throws TokenRetrievalException {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
         String stsEndPoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
 
@@ -170,18 +218,22 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("orgHandle", testChoreoOrgHandle));
         urlParameters.add(new BasicNameValuePair("scope", Constant.OAUTH_SCOPES));
 
-        request.setEntity(new UrlEncodedFormEntity(urlParameters));
+        try {
+            request.setEntity(new UrlEncodedFormEntity(urlParameters));
 
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-             CloseableHttpResponse response = httpClient.execute(request)) {
-            int statusCode = response.getStatusLine().getStatusCode();
-            String responseBody = EntityUtils.toString(response.getEntity());
-            if (statusCode != HttpStatus.OK.value()) {
-                throw new TokenRetrievalException(statusCode, responseBody);
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode != HttpStatus.OK.value()) {
+                    throw new TokenRetrievalException(statusCode, responseBody);
+                }
+
+                return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonPrimitive("access_token")
+                        .getAsString();
             }
-
-            return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonPrimitive("access_token")
-                    .getAsString();
+        } catch (IOException e) {
+            throw new TokenRetrievalException("Error while getting Choreo STS token", e);
         }
     }
 
@@ -197,30 +249,24 @@ public class TokenHandler {
         return Base64.getEncoder().encodeToString(concatenateCredentials.getBytes());
     }
 
-    /**
-     * Set the Test User's Organization Handle in testChoreoOrgHandle variable
-     * 
-     * @param orgHandle
-     */
-    public void setTestChoreoOrgHandle(String orgHandle) {
-        testChoreoOrgHandle = orgHandle;
+    private boolean isTokenValid() {
+        if (!stsAccessToken.isEmpty()) {
+            long currentTime = Instant.now().getEpochSecond();
+
+            return tokenExpiryTime - currentTime > 30;
+        }
+
+        return false;
     }
 
-    /**
-     * Set the Test User's Email address in testUserEmail variable
-     * 
-     * @param email
-     */
-    public void setTestUserEmail(String emailAddress){
-        testUserEmail = emailAddress;
-    }
+    private void readTokenExpiryTime() {
+        String[] splits = stsAccessToken.split("\\.");
 
-    /**
-     * Set the Test User's password in testUserPassword variable
-     * 
-     * @param password
-     */
-    public void setTestUserPassword(String password){
-        testUserPassword = password;
+        if (splits.length != 3) {
+            throw new IllegalStateException("Access token does not consist of 3 parts");
+        }
+
+        String payload = new String(Base64.getDecoder().decode(splits[1]));
+        tokenExpiryTime = new JsonParser().parse(payload).getAsJsonObject().getAsJsonPrimitive("exp").getAsLong();
     }
 }

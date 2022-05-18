@@ -3,7 +3,7 @@ package com.wso2.choreo.integration.common.exceptions;
 /**
  * An exception to be thrown if the API call to retrieve the commit history of a Choreo component does not receive expected status code
  */
-public class GetCommitHistoryException extends Throwable {
+public class GetCommitHistoryException extends Exception {
     private final int statusCode;
     private final String message;
 
