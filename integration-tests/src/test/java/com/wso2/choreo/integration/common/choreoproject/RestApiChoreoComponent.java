@@ -14,13 +14,15 @@
 
 package com.wso2.choreo.integration.common.choreoproject;
 
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.config.Constant;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -30,10 +32,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 /**
  * A class to represent a Rest API Choreo component

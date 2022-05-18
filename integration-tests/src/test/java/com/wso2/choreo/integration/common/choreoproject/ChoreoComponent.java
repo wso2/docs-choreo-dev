@@ -858,5 +858,4 @@ public abstract class ChoreoComponent {
     public void setOrganization(ChoreoOrganization organization) {
         this.organization = organization;
     }
-
 }

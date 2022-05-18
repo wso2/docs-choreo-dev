@@ -170,7 +170,6 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                         .expression("$.data.metricDensity.keySet()", hasItems("__typename", "metricCounts"))
                         .expression("$.data.metricDensity.metricCounts.size()", 4)
                         .expression("$.data.metricDensity.metricCounts[0].keySet()", hasItems("__typename", "count", "range"))
-
                 )
         );
     }
@@ -372,7 +371,6 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                         .expression("$.data.traceById.spans[0].checkpoints[*].__typename", everyItem(containsString("checkpoint")))
                         .expression("$.data.traceById.spans[0].checkpoints[*].moduleId", everyItem(containsString(moduleId)))
                         .expression("$.data.traceById.spans[0].checkpoints[*].positionId", allOf(is(not(emptyString()))))
-
                 )
         );
     }
