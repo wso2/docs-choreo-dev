@@ -151,10 +151,10 @@ spec:
                 secretKeyRef:
                   key: PROD_ANALYTICS_AUTH_TOKEN
                   name: secret-mgw-analytics
-            - name: tm_admin_pwd
+            - name: TM_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-tm-admin-credentials
+                  name: apim-passwords
                   key: TM_ADMIN_PASSWORD
             - name: ga_admin_pwd
               valueFrom:
