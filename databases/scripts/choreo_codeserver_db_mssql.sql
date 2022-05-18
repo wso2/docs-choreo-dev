@@ -12,7 +12,7 @@ CREATE TABLE [cluster](
     [hostname] VARCHAR(253) NOT NULL UNIQUE,
     [codeserver_count] INT NOT NULL,
     [last_clean_timestamp] DATETIME DEFAULT GETUTCDATE(),
-    CONSTRAINT PK_cluster PRIMARY KEY( [cluster_id] )
+    CONSTRAINT PK_cluster PRIMARY KEY ([cluster_id])
 )
 GO
 
@@ -27,15 +27,14 @@ CREATE TABLE [codeserver](
     CONSTRAINT PK_codeserver PRIMARY KEY ([id]),
     CONSTRAINT UC_codeserver UNIQUE ([user_id], [organization_id], [component_id], [project_id]),
     CONSTRAINT FK_cluster_codeserver FOREIGN KEY ([cluster_id]) REFERENCES [cluster]([cluster_id])
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+    ON DELETE CASCADE ON UPDATE CASCADE
 )
 GO
 
 CREATE TRIGGER [TRG_deduct_codeserver_total] 
 ON [codeserver]
-AFTER DELETE
-AS BEGIN 
+AFTER DELETE AS
+BEGIN 
     SET NOCOUNT ON;
     UPDATE [cluster]
     SET [codeserver_count] = [codeserver_count] - 1
