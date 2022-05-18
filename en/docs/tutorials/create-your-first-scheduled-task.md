@@ -6,7 +6,7 @@ A scheduled task is a routine task at a given time interval. The following are a
 - Daily presenting the number of COVID-19 cases reported for the day
 - Logging the hourly sales total of an online store
 
-In the low-code editor, you can easily design complex processes that Choreo can carry out out routinely. Once you implement the design, you can schedule them by specifying a time interval at which the designed process should run (e.g., every hour).
+In the low-code editor, you can easily design complex processes that Choreo can carry out routinely. Once you implement the design, you can schedule them by specifying a time interval at which the designed process should run (e.g., every hour).
 
 To try it out, let's consider a scenario where a statistician needs to monitor the USA population every two minutes to present an analysis. In this tutorial, you will address this requirement by doing the following:
 
