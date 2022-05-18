@@ -78,9 +78,6 @@ spec:
               readOnly: true
       restartPolicy: Always
       volumes:
-        - name: config
-          configMap:
-            name: cm-image-share-service-config
         - name: secret-image-share-service
           csi:
             driver: secrets-store.csi.k8s.io

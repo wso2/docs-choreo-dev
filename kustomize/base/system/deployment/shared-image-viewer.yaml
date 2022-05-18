@@ -67,10 +67,6 @@ spec:
             runAsGroup: 1000
             readOnlyRootFilesystem: true
       restartPolicy: Always
-      volumes:
-        - name: config
-          configMap:
-            name: cm-shared-image-viewer-config
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
