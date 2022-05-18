@@ -1,6 +1,25 @@
+/*
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
 package com.wso2.choreo.integration.common.choreoproject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+import com.google.gson.*;
+import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,7 +37,10 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundExce
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -27,7 +49,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,6 +89,10 @@ public abstract class ChoreoComponent {
     private ComponentRepository repository;
     private String updatedAt;
     private String version;
+    private ChoreoProject project;
+    private ChoreoOrganization organization;
+    private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
+
 
     /**
      * Retrieve commit history of a component
@@ -267,7 +297,7 @@ public abstract class ChoreoComponent {
 
     /**
      * Get details about the deployments of a component
-     * 
+     *
      * @param accessToken
      * @param orgHandle
      * @param orgUUID
@@ -280,7 +310,7 @@ public abstract class ChoreoComponent {
      * @throws GetDeploymentsStatusCheckException
      */
     public JsonArray getDeployments(String accessToken, String orgHandle, String orgUUID,
-                                                  String versionId)
+                                    String versionId)
             throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
             ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
         String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
@@ -386,14 +416,273 @@ public abstract class ChoreoComponent {
         throw new NoLatestApiVersionFoundException();
     }
 
+    /**
+     * Get Component information query for the graphql call
+     *
+     * @return request body containing graphql query
+     */
+    public String getComponentInformation() throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentInformation.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("projectId", project.getId());
+        queryParams.put("componentHandler", handler);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(gqlRequestPayload);
+    }
+
+    /**
+     * Get Component environment information graphql query
+     *
+     * @return request body containing graphql query
+     */
+    public String getComponentEnvironments() throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("orgUUID", organization.getOrgUUID());
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(gqlRequestPayload);
+    }
+
+    /**
+     * Get Component environment information graphql query
+     *
+     * @param releaseId release id for your component
+     * @return request body containing graphql query
+     */
+    public String getComponentObservabilityIdsQuery(String releaseId) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityIds.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("releaseId", releaseId);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(gqlRequestPayload);
+    }
+
+    /**
+     * Get Component observability ids
+     *
+     * @param accessToken OAuth token to invoke the Chorea backend
+     * @param releaseId   release id for your component
+     * @return request body containing graphql query
+     */
+    public ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String accessToken, String releaseId) throws IOException, ObservabilityIdCheckException, InterruptedException, ObservabilityIdNotFoundException {
+        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestBody = getComponentObservabilityIdsQuery(releaseId);
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new ObservabilityIdCheckException(statusCode, responseBody);
+            }
+            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray obsIdJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("observerbilityIds");
+            Gson gson = new Gson();
+            ObservabilityIdInformation[] obsIds = gson.fromJson(obsIdJsonArray, ObservabilityIdInformation[].class);
+            for (ObservabilityIdInformation obsId : obsIds) {
+                if (obsId.getReleaseId().equals(releaseId)) {
+                    return obsId;
+                }
+            }
+            throw new ObservabilityIdNotFoundException();
+        }
+    }
+
+    /**
+     * Get Component invoke information
+     *
+     * @param accessToken   OAuth token to invoke the Chorea backend
+     * @param componentType type of the component
+     * @param environment   environment of the deployment
+     * @return Invoke information related to requested environment
+     */
+    public InvokeInformation getInvokeInformation(String accessToken, String componentType, String environment) throws
+            IOException, NoLatestApiVersionFoundException, InterruptedException, ComponentInvokeInformationCheckException, InvokeInformationNotFoundException {
+        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/deploy/graphql/queryForInvokeInformation.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("orgHandler", organization.getOrgHandle());
+        queryParams.put("orgUuid", organization.getOrgUUID());
+        queryParams.put("componentId", id);
+        String latestVersionId = getLatestApiVersion().getId();
+        queryParams.put("versionId", latestVersionId);
+        queryParams.put("componentType", componentType);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new ComponentInvokeInformationCheckException(statusCode, responseBody);
+            }
+            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
+            Gson gson = new Gson();
+            InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
+            for (InvokeInformation envInvokeInformation : invokeInformation) {
+                if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
+                    return envInvokeInformation;
+                }
+            }
+            throw new InvokeInformationNotFoundException();
+        }
+    }
+
+    /**
+     * Get api-key to invoke the application from APIM
+     *
+     * @param accessToken OAuth token to invoke the Chorea backend
+     * @param apiId       apiId for the deployed component
+     * @return request body containing graphql query
+     */
+    public String getAPIKeyForInvoke(String accessToken, String apiId) throws InterruptedException, IOException,
+            APIKeyGenerationCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
+        String requestURI = Configuration.STS_ENDPOINT.
+                concat(Constant.APIS_ENDPOINT)
+                .concat("/")
+                .concat(apiId)
+                .concat("/generate-key")
+                .concat("?")
+                .concat(Constant.ORGANIZATION_ID)
+                .concat("=")
+                .concat(organization.getOrgUUID());
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                "",
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new APIKeyGenerationCheckException(statusCode, responseBody);
+            }
+            JsonObject responseJSON = new JsonParser().parse(responseBody).getAsJsonObject();
+            String apiKey = responseJSON.get("apikey").toString();
+            if (apiKey != null) {
+                return apiKey;
+            }
+            throw new ApiKeyNotFoundException();
+        }
+    }
+
+    public String getReleaseIdForEnvironment(String env) throws ReleaseIdNotFoundException {
+        AppEnvVersion[] appEnvVersions = getApiVersions().get(0).getAppEnvVersions().toArray(new AppEnvVersion[0]);
+        for (AppEnvVersion appEnvVersion : appEnvVersions) {
+            if (appEnvVersion.getEnvironment().equals(env)) {
+                return appEnvVersion.getReleaseId();
+            }
+        }
+        throw new ReleaseIdNotFoundException();
+    }
+
+    public void waitTillObservabilityDataPopulate(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException {
+        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String releaseId = getReleaseIdForEnvironment("dev");
+        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("observeId", observabilityIdInformation.getObsId());
+        queryParams.put("version", observabilityIdInformation.getVerzion());
+        mustache.execute(writer, queryParams).flush();
+        String requestBody = writer.toString();
+        int attempts = 0;
+        log.info("Waiting till observability data appear");
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        while (attempts < 10) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                int count = new JsonParser()
+                        .parse(responseBody)
+                        .getAsJsonObject()
+                        .getAsJsonObject("data")
+                        .getAsJsonObject("metricDensity")
+                        .getAsJsonArray("metricCounts")
+                        .get(0)
+                        .getAsJsonObject()
+                        .get("count")
+                        .getAsInt();
+                if (count > 0) {
+                    break;
+                }
+                log.debug("Observability data has not appeared, trying again. Attempt : " + attempts);
+                Thread.sleep(3000);
+                attempts++;
+                if (attempts == 10) {
+                    log.warn("Exceeding maximum number of attempts for checking observability data.");
+                    throw new ObservabilityDataNotFoundException();
+                }
+            }
+        }
+    }
+
     public String getId() {
         return id;
     }
 
-    
+
     /**
      * Redeploy a stopped component
-     * 
+     *
      * @param accessToken
      * @param componentId
      * @param releaseId
@@ -426,7 +715,7 @@ public abstract class ChoreoComponent {
         int statusCode = response.getStatusLine().getStatusCode();
         String responseBody = EntityUtils.toString(response.getEntity());
         if (statusCode != HttpStatus.OK.value()) {
-           throw new RedeployException(statusCode, responseBody);
+            throw new RedeployException(statusCode, responseBody);
         }
     }
 
@@ -552,5 +841,21 @@ public abstract class ChoreoComponent {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public ChoreoProject getProject() {
+        return project;
+    }
+
+    public void setProject(ChoreoProject project) {
+        this.project = project;
+    }
+
+    public ChoreoOrganization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(ChoreoOrganization organization) {
+        this.organization = organization;
     }
 }
