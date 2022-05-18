@@ -99,7 +99,7 @@ spec:
             - secretRef:
                 name: apim-passwords
             - secretRef:
-                name: secret-tm-admin-credentials
+                name: secret-private-ga-credentials
           env:
             - name: NODE_IP
               valueFrom:
@@ -113,11 +113,6 @@ spec:
               value: "-Xms2048m -Xmx2048m"
             - name: PROFILE_NAME
               value: traffic-manager
-            - name: ga_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  name: secret-private-ga-credentials
-                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           volumeMounts:
             - name: apim-vol
               mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT

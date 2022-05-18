@@ -125,6 +125,8 @@ spec:
                 name: cm-feature-flags
             - configMapRef:
                 name: env-choreo-connect-enforcer
+            - secretRef:
+                name: secret-private-ga-credentials
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -151,16 +153,11 @@ spec:
                 secretKeyRef:
                   key: PROD_ANALYTICS_AUTH_TOKEN
                   name: secret-mgw-analytics
-            - name: tm_admin_pwd
+            - name: TM_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-tm-admin-credentials
+                  name: apim-passwords
                   key: TM_ADMIN_PASSWORD
-            - name: ga_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  name: secret-private-ga-credentials
-                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           resources:
             requests:
               memory: "3Gi"
