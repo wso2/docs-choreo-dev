@@ -45,7 +45,9 @@ describe("Choreo APIM publisher scenarios", () => {
   const appName = generateAppName("-e2etest");
 
   before(() => {
+ // Cypress.env("privateOrg","privatedatatplanetests")
     LoginPage.login();
+    ChoreoHomePage.switchOrganization()
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -75,9 +77,15 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
+
+  it("Verify component promote to stg", () => {
+    APIDeployment.promoteToStg();
+    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
+  });
+
   it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
+    APIDeployment.PromoteToProd();
+    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
