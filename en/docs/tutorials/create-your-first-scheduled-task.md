@@ -202,8 +202,7 @@ Once the Web Editor has successfully pushed the changes to the GitHub repository
 
 Once the deployment process is complete, a message appears to notify you of it. From the time you deploy a scheduled task, it starts running continuously, retrieving the population of the USA every two minutes until you undeploy it.
 
-You can proceed to the next section to observe the scheduled task, see whether it is run every two minutes as expected, and check whether the data retrievals are successfully carried out.
-
+You can proceed to the next section to observe the scheduled task.
 ## Step 3: Observe
 
 You can observe the scheduled task to verify whether it runs every two minutes as expected and check whether it successfully retrieves the specified data.
