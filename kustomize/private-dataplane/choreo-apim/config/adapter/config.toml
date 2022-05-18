@@ -242,7 +242,7 @@ disableSslVerification = false
   [analytics.enforcer]
     [analytics.enforcer.configProperties]
       authURL = "https://analytics-event-auth.dv.choreo.dev/auth/v1"
-      authToken = "$env{analytics_authToken}"
+      authToken = "$env{ANALYTICS_AUTH_TOKEN}"
       isChoreoDeployment = "true"
 
     [analytics.enforcer.LogReceiver]

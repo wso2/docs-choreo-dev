@@ -127,6 +127,8 @@ spec:
                 name: env-choreo-connect-enforcer
             - secretRef:
                 name: secret-private-ga-credentials
+            - secretRef:
+                name: secret-mgw-analytics
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -148,11 +150,6 @@ spec:
               value: "3"
             - name: JAVA_OPTS
               value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
-            - name: analytics_authToken
-              valueFrom:
-                secretKeyRef:
-                  key: PROD_ANALYTICS_AUTH_TOKEN
-                  name: secret-mgw-analytics
             - name: TM_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
