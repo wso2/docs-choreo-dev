@@ -31,7 +31,7 @@ spec:
         - name: image-share-service
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-image-share-service:latest
           env:
-          - name: IMAGE_SHARE_SERVICE_SECRET
+          - name: AZURE_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: secret-image-share-service
