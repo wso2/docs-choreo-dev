@@ -20,12 +20,12 @@ IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[c
 CREATE TABLE [codeserver]( 
     [id] INT NOT NULL IDENTITY(1,1),
     [user_idp_id] NVARCHAR(50) NOT NULL,
-    [organization_uuid]  NVARCHAR(50) NOT NULL,
+    [organization_id] INT NOT NULL,
     [component_uuid] NVARCHAR(50) NOT NULL,
     [project_uuid] NVARCHAR(50) NOT NULL,
     [cluster_id] VARCHAR(40) NOT NULL,
     CONSTRAINT PK_codeserver PRIMARY KEY ([id]),
-    CONSTRAINT UC_codeserver UNIQUE ([user_idp_id], [organization_uuid], [component_uuid], [project_uuid]),
+    CONSTRAINT UC_codeserver UNIQUE ([user_idp_id], [organization_id], [component_uuid], [project_uuid]),
     CONSTRAINT FK_cluster_codeserver FOREIGN KEY ([cluster_id]) REFERENCES [cluster]([cluster_id])
     ON DELETE CASCADE ON UPDATE CASCADE
 )
