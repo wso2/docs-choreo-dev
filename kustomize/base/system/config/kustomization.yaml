@@ -43,7 +43,6 @@ configMapGenerator:
       - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
       - AST_CACHE_MAX_SIZE_MB=100
-      - LOG_LEVEL=INFO
       - SKIP_AUTH=false
   - name: cm-frontend-cp
     behavior: create
