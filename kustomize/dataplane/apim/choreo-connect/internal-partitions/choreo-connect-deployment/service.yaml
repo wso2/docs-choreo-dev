@@ -32,3 +32,22 @@ spec:
     - name: "https-router"
       port: 9095
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-connect-deployment-internal
+  name: router-internal-lb
+spec:
+  selector:
+    choreo.component: choreo-connect-deployment-internal
+  ports:
+    - name: "http-routeradmin"
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: "https-router"
+      port: 9095
+      protocol: TCP
+      targetPort: 9095
