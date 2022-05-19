@@ -118,7 +118,7 @@ configMapGenerator:
   - name: cm-connector-builder-cp
     behavior: create
     literals:
-      - APIM_PROXY_PUBLISHER_API=/apim/proxy/api/am/publisher/v2/apis
+      - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
       - GITHUB_API=https://api.github.com      
   - name: cm-choreo-app-db-cp
     behavior: create
