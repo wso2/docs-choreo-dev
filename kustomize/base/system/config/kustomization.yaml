@@ -116,12 +116,6 @@ configMapGenerator:
     behavior: create
     literals:
       - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
-  - name: cm-observability-data-generator-cp
-    behavior: create
-    literals:
-      - APP_SERVICE_ADDRESS=app-service:8080
-      - APP_DEPLOYER_ADDRESS=app-deployer:8080
-      - WS_MANAGER_SERVICE_ADDRESS=workspace-manager:8080
   - name: cm-connector-builder-cp
     behavior: create
     literals:
