@@ -109,9 +109,8 @@ configMapGenerator:
     behavior: create
     literals:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
-      - JWKS_ENDPOINT_PROTOCOL=https
-      - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+      - RUDDER_ADDRESS=http://dp-rudder:80
   - name: cm-connectords-cp
     behavior: create
     literals:
@@ -119,7 +118,7 @@ configMapGenerator:
   - name: cm-connector-builder-cp
     behavior: create
     literals:
-      - APIM_PROXY_PUBLISHER_API=/apim/proxy/api/am/publisher/v2/apis
+      - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
       - GITHUB_API=https://api.github.com      
   - name: cm-choreo-app-db-cp
     behavior: create
