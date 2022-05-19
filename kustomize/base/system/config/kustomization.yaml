@@ -67,7 +67,7 @@ configMapGenerator:
     literals:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
-      - RUDDER_ADDRESS=http://dp-rudder:3000
+      - RUDDER_ADDRESS=http://dp-rudder:80
   - name: cm-telemetry-cp
     behavior: create
     literals:
@@ -80,7 +80,7 @@ configMapGenerator:
       - LAST_ACTIVE_UPDATION_INTERVAL_IN_MINS=10
       - REDIS_PORT=6380
       - REDIS_SSL=true
-      - REDIS_DATABASE=4
+      - REDIS_DATABASE=3
   - name: cm-negotiator-cp
     behavior: create
     literals:
@@ -88,6 +88,7 @@ configMapGenerator:
       - REDIS_PORT="6380"
       - REDIS_SSL=true
       - REDIS_DATABASE=3
+      - RUDDER_URL=http://dp-rudder:80
   - name: cm-choreo-program-db-cp
     behavior: create
     literals:
@@ -111,6 +112,10 @@ configMapGenerator:
       - JWKS_ENDPOINT_PROTOCOL=https
       - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+  - name: cm-connectords-cp
+    behavior: create
+    literals:
+      - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
   - name: cm-observability-data-generator-cp
     behavior: create
     literals:

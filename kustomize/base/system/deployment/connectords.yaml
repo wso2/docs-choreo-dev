@@ -39,7 +39,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_APP_SERVICE_GRPC_ADDRESS
-              name: cm-connectords
+              name: cm-connectords-cp
         envFrom:
         - configMapRef:
             name: env-connectords
