@@ -1,2 +1,2 @@
 resources:
-  - deployment.yaml
+  - choreo-nginx-deployment.yaml

@@ -3,6 +3,7 @@
 <suite name="choreoIntegrationTests">
     <test name="choreo">
         <classes>
+            <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/>
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
@@ -17,6 +18,7 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedComponent"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
+            <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
         </classes>
     </test>
 </suite>

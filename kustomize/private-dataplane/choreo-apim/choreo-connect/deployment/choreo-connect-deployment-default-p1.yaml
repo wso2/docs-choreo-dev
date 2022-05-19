@@ -79,18 +79,18 @@ spec:
         - name: choreo-connect-enforcer
           volumeMounts:
             - mountPath: /home/wso2/security/truststore/wso2carbon.pem
-              name: enforcer-truststore
+              name: mgw-enforcer-truststore-vol
               readOnly: true
               subPath: wso2carbon.pem
             - mountPath: /home/wso2/security/truststore/publisher-truststore.pem
-              name: enforcer-truststore
+              name: mgw-enforcer-truststore-vol
               readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: enforcer-truststore
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
-            - name: enforcer-truststore
+            - name: mgw-enforcer-truststore-vol
               mountPath: /home/wso2/security/truststore/apim-service-root.pem
               subPath: apim-service-root.pem
             - mountPath: /home/wso2/security/keystore/mg.key
@@ -98,9 +98,9 @@ spec:
               readOnly: true
               subPath: ENFORCER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: secret-choreo-connect
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ENFORCER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/conf
               name: enforcer-config
             - mountPath: /home/wso2/lib/dropins
@@ -125,6 +125,10 @@ spec:
                 name: cm-feature-flags
             - configMapRef:
                 name: env-choreo-connect-enforcer
+            - secretRef:
+                name: secret-private-ga-credentials
+            - secretRef:
+                name: secret-mgw-analytics
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -146,16 +150,11 @@ spec:
               value: "3"
             - name: JAVA_OPTS
               value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
-            - name: tm_admin_pwd
+            - name: TM_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: SUPER_ADMIN_PSWD
                   name: apim-passwords
-            - name: analytics_authToken
-              valueFrom:
-                secretKeyRef:
-                  key: PROD_ANALYTICS_AUTH_TOKEN
-                  name: secret-mgw-analytics
+                  key: TM_ADMIN_PASSWORD
           resources:
             requests:
               memory: "3Gi"
@@ -184,17 +183,17 @@ spec:
         - name: choreo-connect-router
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: secret-choreo-connect
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_KEYSTORE_KEY
+              subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-choreo-connect
               readOnly: true
               subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: secret-choreo-connect
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_TRUSTSTORE
+              subPath: mg.pem
             - name: secret-choreo-connect
               mountPath: /mnt/csi/secret-choreo-connect
               readOnly: true
@@ -293,9 +292,12 @@ spec:
               name: csi-secret-store-azure
         - name: dropins-vol
           emptyDir: { }
-        - name: enforcer-truststore
+        - name: mgw-enforcer-truststore-vol
           configMap:
             name: mgw-enforcer-truststore
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io

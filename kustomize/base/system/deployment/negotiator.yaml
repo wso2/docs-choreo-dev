@@ -71,6 +71,11 @@ spec:
             secretKeyRef:
               name: secret-redis
               key: REDIS_PASSWORD
+        - name: RUDDER_URL
+          valueFrom:
+            configMapKeyRef:
+              key: RUDDER_URL
+              name: cm-negotiator
         envFrom:
           - configMapRef:
               name: env-negotiator

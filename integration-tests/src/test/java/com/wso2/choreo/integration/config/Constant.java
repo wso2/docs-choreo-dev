@@ -76,4 +76,15 @@ public final class Constant {
         public static final int MAIL_IMAP_PORT = 993;
         public static final String MAIL_IMAP_USER = "choreoalert@gmail.com";
     }
+
+    // Anomaly Detection test related constants
+    public static final class ANOMALY_DETECTION {
+        public static final String MAIL_IMAP_HOST = "imap.gmail.com";
+        public static final int MAIL_IMAP_PORT = 993;
+        public static final String MAIL_IMAP_USER = "choreoanomalydetectortest@gmail.com";
+    }
+
+    // Observability related constants
+    public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
+    public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
 }

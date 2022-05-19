@@ -139,12 +139,12 @@ disableSslVerification = false
     # The message broker context factory
     jmsConnectionInitialContextFactory = "org.wso2.andes.jndi.PropertiesFileInitialContextFactory"
     # The message broker connection URL
-    jmsConnectionProviderUrl = "amqp://choreo_dev_apim_admin:$env{tm_admin_pwd}@carbon/carbon?brokerlist='tcp://choreo-tm-1-service:5672;tcp://tchoreo-tm-2-service:5672'"
+    jmsConnectionProviderUrl = "amqp://choreo_dev_apim_admin:$env{TM_ADMIN_PASSWORD}@carbon/carbon?brokerlist='tcp://choreo-tm-1-service:5672;tcp://tchoreo-tm-2-service:5672'"
     # Throttling configurations related to event publishing using a binary connection
     [enforcer.throttling.publisher]
     # Credentials required to establish connection between Traffic Manager
     username = "choreo_dev_apim_admin"
-    password = "$env{tm_admin_pwd}"
+    password = "$env{TM_ADMIN_PASSWORD}"
     # Receiver URL and the authentication URL of the Traffic manager node/nodes
     [[enforcer.throttling.publisher.urlGroup]]
         receiverURLs = ["tcp://choreo-tm-1-service:9611"]
@@ -196,7 +196,7 @@ disableSslVerification = false
 [enforcer.security.authHeader]
     enableOutboundAuthHeader = false
     authorizationHeader = "authorization"
-    testConsoleHeaderName = "internal-key"
+    testConsoleHeaderName = "api-key"
 
 # JWT token authorization configurations. You can provide multiple JWT issuers
 # Issuer 1
@@ -242,7 +242,7 @@ disableSslVerification = false
   [analytics.enforcer]
     [analytics.enforcer.configProperties]
       authURL = "https://analytics-event-auth.dv.choreo.dev/auth/v1"
-      authToken = "$env{analytics_authToken}"
+      authToken = "$env{ANALYTICS_AUTH_TOKEN}"
       isChoreoDeployment = "true"
 
     [analytics.enforcer.LogReceiver]
@@ -261,9 +261,10 @@ disableSslVerification = false
 
 [controlPlane]
 enabled = true
+sendRevisionUpdate = true
 serviceUrl = "http://dev.dev-global-adapter.internal:9745/"
-username="choreo_dev_apim_admin"
-password="$env{cp_admin_pwd}"
+username="choreo_dev_ga_admin"
+password="$env{PRIVATE_GLOBAL_ADAPTER_PASSWORD}"
 environmentLabels = ["$env{environmentLabel}"]
 retryInterval = 20
 skipSSLVerification=true

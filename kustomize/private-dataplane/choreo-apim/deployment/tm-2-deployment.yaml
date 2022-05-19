@@ -53,7 +53,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - nc -z localhost 9611
+                - nc -z -v -w 4 localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
           readinessProbe:
@@ -61,7 +61,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - nc -z localhost 9611
+                - nc -z -v -w 4 localhost 9611
             initialDelaySeconds: 120
             periodSeconds: 10
           lifecycle:
@@ -98,6 +98,8 @@ spec:
                 name: keystore-passwords
             - secretRef:
                 name: apim-passwords
+            - secretRef:
+                name: secret-private-ga-credentials
           env:
             - name: NODE_IP
               valueFrom:
@@ -140,6 +142,9 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
+            - name: secret-choreo-connect
+              mountPath: /mnt/csi/secret-choreo-connect
+              readOnly: true
       volumes:
         - name: apim-vol
           emptyDir: { }
@@ -161,6 +166,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-choreo-connect
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-connect
             nodePublishSecretRef:
               name: csi-secret-store-azure
       affinity:

@@ -1,0 +1,11 @@
+{
+    "operationName": "metricDensityHistogram",
+    "variables": {
+        "observeId": "{{observeId}}",
+        "version": "{{version}}",
+        "fromTime": "{{from}}",
+        "toTime": "{{to}}",
+        "breakSize": "1800s"
+    },
+    "query": "query metricDensityHistogram($observeId: String!, $version: String!, $fromTime: String!, $toTime: String!, $breakSize: String!) {\n  metricDensityHistogram(\n    obsId: $observeId\n    version: $version\n    from: $fromTime\n    to: $toTime\n    breakSize: $breakSize\n  ) {\n    metricDensityHistogram {\n      time\n      value\n      __typename\n    }\n    __typename\n  }\n}\n"
+}
