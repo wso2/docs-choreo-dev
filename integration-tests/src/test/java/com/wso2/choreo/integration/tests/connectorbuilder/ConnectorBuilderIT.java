@@ -87,6 +87,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .body("{" +
                         "    \"apiId\": \"" + apiId + "\"," +
                         "    \"organizationId\": \"" + Configuration.TEST_CHOREO_ORG_UUID + "\"," +
@@ -106,6 +107,35 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testPublishConnector"})
     @CitrusTest
+    public void testRepublishConnector() {
+        $(http()
+                .client(choreoTestClient)
+                .send()
+                .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(Configuration.TEST_CHOREO_ORG_HANDLE)
+                        .concat("/").concat(componentId).concat("/republish"))
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
+                .body("{" +
+                        "    \"apiId\": \"" + apiId + "\"," +
+                        "    \"organizationId\": \"" + Configuration.TEST_CHOREO_ORG_UUID + "\"," +
+                        "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
+                        "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
+                        "}")
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+        $(http()
+                .client(choreoTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
+    }
+
+    @Test(dependsOnMethods = {"testPublishConnector"})
+    @CitrusTest
     public void testGetConnectorStatus() throws InterruptedException {
         $(repeatOnError()
                 .until("i = 15")
@@ -120,6 +150,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                                         .concat(componentId).concat("/status"))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)
                                 ),
                         http().client(choreoTestClient)
@@ -148,6 +179,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .queryParam("version=".concat(Constant.TEST_CONNECTOR_VERSION))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
                 .client(choreoTestClient)
