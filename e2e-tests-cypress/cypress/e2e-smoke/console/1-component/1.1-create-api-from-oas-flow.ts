@@ -33,6 +33,7 @@ import { Subscriptions } from "../../../support/devportal/pages/applications/sub
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -62,82 +63,68 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deploy();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  (Cypress.env("isPrivateOrg") ? it : it.skip)("Verify component promote to stg", () => {
-    APIDeployment.promoteToStg();
+  it("Verify component promote and stg invoke url", () => {
+    APIDeployment.promote();
     APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
   });
 
-  it("Verify component promote to prod", () => {
-    APIDeployment.PromoteToProd();
+  it("Verify prod invoke url", () => {
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    APITest.testAPI();
-    ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("intensity");
-    SwaggerUI.GetResponse();
+    TestHelper.testOnSwagger(Environment.DEVELOPMENT, "intensity").then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
   });
 
-  (Cypress.env("isPrivateOrg") ? it : it.skip)(
-    "Verify test functionality using Swagger UI in Stg",
-    () => {
-      APITest.testAPI();
-      ComponentTestPage.selectEnvironment(Environment.STAGING);
-      ComponentTestPage.getTestKey();
-      SwaggerUI.invokeResource("intensity");
-      SwaggerUI.GetResponse();
-    }
-  );
+  it("Verify test functionality using Swagger UI in Stg", () => {
+    TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
-    APITest.testAPI();
-    ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("intensity");
-    SwaggerUI.GetResponse();
+    TestHelper.testOnSwagger(Environment.PRODUCTION, "intensity").then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.DEVELOPMENT);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(`${Environment.DEVELOPMENT}intensity`).then(
-      (curl) =>
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET).then(
+      (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.status).equal(200);
-        })
+        });
+      }
     );
   });
 
-  (Cypress.env("isPrivateOrg") ? it : it.skip)("Verify test functionality using generated curl in Stg", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.STAGING);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(`${Environment.STAGING}intensity`).then((curl) =>
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-      })
-    );
+  it("Verify test functionality using generated curl in Stg", () => {
+    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then((curl) => {
+      if (curl != null) {
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.status).equal(200);
+        });
+      }
+    });
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.PRODUCTION);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(`${Environment.PRODUCTION}intensity`).then(
-      (curl) =>
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET).then(
+      (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.status).equal(200);
-        })
+        });
+      }
     );
   });
 

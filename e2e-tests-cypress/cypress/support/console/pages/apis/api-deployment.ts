@@ -17,7 +17,7 @@ export class APIDeployment {
     cy.get('[id="backdrop-loader"').should("not.exist");
   }
 
-  static DeployToDev() {
+  static deploy() {
     cy.get('[data-cyid="btn-deploy-proxy"]', { timeout: 120000 })
       .should("not.be.disabled")
       .click();
@@ -30,7 +30,8 @@ export class APIDeployment {
     );
   }
 
-  static promoteToStg() {
+
+  static promote() {
     let isPrivateOrg = Cypress.env("isPrivateOrg");
     if (isPrivateOrg) {
       cy.get('[data-cyid*="promote"]').eq(0).click();
@@ -43,11 +44,6 @@ export class APIDeployment {
         .invoke("val")
         .should("not.be.empty");
     }
-  }
-
-  static PromoteToProd() {
-    let isPrivateOrg = Cypress.env("isPrivateOrg");
-
     if (isPrivateOrg) {
       cy.get('[data-cyid*="promote"]').eq(1).click();
       cy.get('[id="securityHeaderInput"')
@@ -92,11 +88,10 @@ export class APIDeployment {
         .eq(1)
         .invoke("attr", "value");
     }
-    return cy.wrap("skip")
+    return cy.wrap("skip");
   }
 
   static verifyProdInvokeURL() {
-    cy.wait(5000);
     let isPrivateOrg = Cypress.env("isPrivateOrg");
     if (isPrivateOrg) {
       return cy

@@ -73,17 +73,14 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deploy();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-
   it("Verify component deployment", () => {
-    APIDeployment.PromoteToProd();
+    APIDeployment.promote();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
-
-
 
   it("Verify test functionality", () => {
     APITest.testAPI();
@@ -119,17 +116,16 @@ describe("Verify project creation functionality", () => {
 
   it("Deploy to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deploy();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
   it("Verify component promote to stg", () => {
-    APIDeployment.promoteToStg();
+    APIDeployment.promote();
     APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
   });
 
-  it("Promote to Prod", () => {
-    APIDeployment.PromoteToProd();
+  it("Verify prod invoke url", () => {
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 

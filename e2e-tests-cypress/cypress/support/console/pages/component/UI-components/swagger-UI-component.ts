@@ -41,9 +41,7 @@ export class SwaggerUI {
   }
 
   static getResponseCode() {
-    return cy
-      .get(".live-responses-table tbody tr .response-col_status")
-      .invoke("text");
+    return cy.get("tbody>.response>.response-col_status").eq(0).invoke("text");
   }
 
   static enterValue(placeholder: string, value: string) {
