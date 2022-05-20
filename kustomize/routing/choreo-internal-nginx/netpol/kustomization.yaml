@@ -14,14 +14,5 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
 resources:
-  - deployment
-  - hpa
-  - netpol
-  - pdb
-  - service
-
-namespace: choreo-apim
+  - allow-internal-nginx-netpol.yaml
