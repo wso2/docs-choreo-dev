@@ -20,6 +20,8 @@ CREATE TABLE user
     id              int(11)      NOT NULL AUTO_INCREMENT,
     idp_id          varchar(255) NOT NULL,
     created_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_anonymous    boolean      NOT NULL DEFAULT FALSE,
+    is_enterprise   boolean      NOT NULL DEFAULT FALSE,
     updated_at      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY idp_id_unique (idp_id)

@@ -1,0 +1,8 @@
+{
+    "operationName": "getAST",
+    "variables": {
+        "obsId": "{{obsId}}",
+        "version": "{{version}}"
+    },
+    "query": "query getAST($obsId: String!, $version: String!) {\n  ast(obsId: $obsId, version: $version) {\n    ast\n    __typename\n  }\n}\n"
+}

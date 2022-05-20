@@ -261,7 +261,7 @@ proxyPort = 443
 [apim.event_hub]
 service_url = "http://dev.dev-global-adapter.internal:9745"
 username="choreo_dev_ga_admin"
-password="$env{ga_admin_pwd}"
+password="$env{PRIVATE_GLOBAL_ADAPTER_PASSWORD}"
 
 #event_listening_endpoints = ["tcp://choreo-eventhub-1-service:5672","tcp://choreo-eventhub-2-service:5672"]
 

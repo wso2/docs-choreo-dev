@@ -102,6 +102,8 @@ spec:
                 name: cm-feature-flags
             - configMapRef:
                 name: env-choreo-connect-adapter
+            - secretRef:
+                name: secret-private-ga-credentials
           env:
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -114,11 +116,6 @@ spec:
                   key: ASB_CONNECTION_STRING
             - name: AZURE_SDK_GO_LOGGING
               value: "all"
-            - name: ga_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  name: secret-private-ga-tbl-credentials
-                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           resources:
             requests:
               memory: "500Mi"
