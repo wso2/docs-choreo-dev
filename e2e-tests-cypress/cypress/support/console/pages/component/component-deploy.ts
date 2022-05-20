@@ -16,6 +16,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
       .should("be.enabled")
       .click();
+    this.hideSharePopover();
   }
 
   static deployScheduleTask() {
@@ -23,6 +24,7 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cy.get("button:not([data-cyid])").contains("Deploy").click();
+    this.hideSharePopover();
   }
 
   static promoteScheduleTask() {
@@ -38,6 +40,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
+    this.hideSharePopover();
   }
 
   static addConfiguration(value: string) {
@@ -120,5 +123,11 @@ export class ComponentDeployPage {
 
   private static stopProdContainer() {
     cy.get(".MuiButton-label").contains("Stop").eq(0).click();
+  }
+
+  private static hideSharePopover() {
+    cy.get('[data-testid="dialog-close-icon"]', { timeout: 200000 })
+      .should("be.visible")
+      .click();
   }
 }

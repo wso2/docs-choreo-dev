@@ -88,7 +88,6 @@ public class ChoreoOrganization {
         };
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-
         HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);

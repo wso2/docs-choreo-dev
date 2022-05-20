@@ -125,6 +125,10 @@ spec:
                 name: cm-feature-flags
             - configMapRef:
                 name: env-choreo-connect-enforcer
+            - secretRef:
+                name: secret-private-ga-credentials
+            - secretRef:
+                name: secret-mgw-analytics
           env:
             - name: ENFORCER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
@@ -146,28 +150,18 @@ spec:
               value: "3"
             - name: JAVA_OPTS
               value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
-            - name: analytics_authToken
+            - name: TM_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: PROD_ANALYTICS_AUTH_TOKEN
-                  name: secret-mgw-analytics
-            - name: tm_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  name: secret-tm-admin-credentials
+                  name: apim-passwords
                   key: TM_ADMIN_PASSWORD
-            - name: ga_admin_pwd
-              valueFrom:
-                secretKeyRef:
-                  name: secret-private-ga-credentials
-                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
           resources:
             requests:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "1Gi"
+              cpu: "1"
             limits:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "1.5Gi"
+              cpu: "1.5"
           ports:
             - containerPort: 8081
             - containerPort: 9001
@@ -246,11 +240,11 @@ spec:
               value: "/home/wso2/security/truststore/mg.pem"
           resources:
             requests:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "500Mi"
+              cpu: "1"
             limits:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "1Gi"
+              cpu: "1.5"
           ports:
             - containerPort: 9000
             - containerPort: 9095
