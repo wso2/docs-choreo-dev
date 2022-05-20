@@ -36,7 +36,7 @@ public final class Constant {
     public static final String DEV_ENVIRONMENT = "dev";
 
     public static final String USER_CONNECTORS_ENDPOINT_SUFFIX = "/user-connectors";
-    public static final String TEST_CONNECTOR_VISIBILITY = "public";
+    public static final String TEST_CONNECTOR_VISIBILITY = "private";
     public static final String TEST_CONNECTOR_VERSION = "1.0.0";
     // API Proxy related constants
     public static final String DEFAULT_API_NAME = "DefaultAPI";
