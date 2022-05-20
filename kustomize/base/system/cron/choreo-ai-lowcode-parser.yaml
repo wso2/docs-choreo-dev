@@ -17,12 +17,11 @@ spec:
         metadata:
           annotations:
             linkerd.io/inject: disabled # https://github.com/linkerd/linkerd2/issues/2833
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
           labels:
             choreo.component: lowcode-parser
         spec:
-          securityContext:
-            seccompProfile:
-              type: RuntimeDefault
+          automountServiceAccountToken: false
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
