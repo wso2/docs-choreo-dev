@@ -21,6 +21,9 @@ spec:
           labels:
             choreo.component: lowcode-parser
         spec:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
           automountServiceAccountToken: false
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
