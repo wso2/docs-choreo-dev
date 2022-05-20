@@ -61,6 +61,8 @@ spec:
                 cpu: 150m
                 memory: 256Mi
             volumeMounts:
+              - name: lowcode-parser-config
+                mountPath: lowcode-parser/parser/config/
               - name: secret-lowcode-parser
                 mountPath: "/mnt/csi/secret-lowcode-parser"
                 readOnly: true
@@ -68,6 +70,10 @@ spec:
                 mountPath: "/mnt/csi/secret-program-db"
                 readOnly: true
           volumes:
+            - configMap:
+                defaultMode: 420
+                name: cm-lowcode-parser
+              name: lowcode-parser-config
             - name: secret-lowcode-parser
               csi:
                 driver: secrets-store.csi.k8s.io
