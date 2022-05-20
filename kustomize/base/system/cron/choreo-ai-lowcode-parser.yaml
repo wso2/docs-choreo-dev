@@ -1,13 +1,12 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: lowcode-parser
   annotations:
-    checkov.io/skip1: CKV_K8S_31=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_25=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    choreo.component: lowcode-parser
+    choreo.component: choreo-lowcode-parser
 spec:
   schedule: 0 9 * * 3
   startingDeadlineSeconds: 600
