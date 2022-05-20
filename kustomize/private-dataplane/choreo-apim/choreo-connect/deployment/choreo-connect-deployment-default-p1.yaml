@@ -157,11 +157,11 @@ spec:
                   key: TM_ADMIN_PASSWORD
           resources:
             requests:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "1Gi"
+              cpu: "1"
             limits:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "1.5Gi"
+              cpu: "1.5"
           ports:
             - containerPort: 8081
             - containerPort: 9001
@@ -240,11 +240,11 @@ spec:
               value: "/home/wso2/security/truststore/mg.pem"
           resources:
             requests:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "500Mi"
+              cpu: "1"
             limits:
-              memory: "3Gi"
-              cpu: "2"
+              memory: "1Gi"
+              cpu: "1.5"
           ports:
             - containerPort: 9000
             - containerPort: 9095
