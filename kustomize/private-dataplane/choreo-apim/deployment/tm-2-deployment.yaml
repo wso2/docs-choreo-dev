@@ -70,11 +70,11 @@ spec:
                 command: [ 'sh', '-c', '${WSO2_SERVER_HOME}/bin/api-manager.sh stop' ]
           resources:
             requests:
-              memory: 4Gi
-              cpu: 3000m
+              memory: 2Gi
+              cpu: "2"
             limits:
-              memory: 4Gi
-              cpu: 3000m
+              memory: 2.5Gi
+              cpu: "2.5"
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
