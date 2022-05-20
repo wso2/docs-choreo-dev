@@ -87,7 +87,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("x-correlation-id", Configuration.TEST_CHOREO_ORG_UUID)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .body("{" +
                         "    \"apiId\": \"" + apiId + "\"," +
                         "    \"organizationId\": \"" + Configuration.TEST_CHOREO_ORG_UUID + "\"," +
@@ -116,7 +116,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("x-correlation-id", Configuration.TEST_CHOREO_ORG_UUID)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .body("{" +
                         "    \"apiId\": \"" + apiId + "\"," +
                         "    \"organizationId\": \"" + Configuration.TEST_CHOREO_ORG_UUID + "\"," +
@@ -150,7 +150,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                                         .concat(componentId).concat("/status"))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header("x-correlation-id", Configuration.TEST_CHOREO_ORG_UUID)
+                                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)
                                 ),
                         http().client(choreoTestClient)
@@ -179,7 +179,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .queryParam("version=".concat(Constant.TEST_CONNECTOR_VERSION))
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header("x-correlation-id", Configuration.TEST_CHOREO_ORG_UUID)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
                 .client(choreoTestClient)
