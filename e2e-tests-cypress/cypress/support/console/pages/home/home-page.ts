@@ -63,11 +63,11 @@ export class ChoreoHomePage {
   }
 
   static switchOrganization() {
-    const pdpOrg = Cypress.env("privateOrg");
+    const pdpOrg = Cypress.env("isPrivateOrg");
+    const orgName = Cypress.env("privateOrgName")
     if (pdpOrg) {
       cy.get("#org-picker").click();
-      cy.get(`[data-value="${pdpOrg}"]`).click();
-      Cypress.env("isPrivateOrg",true)
+      cy.get(`[data-value="${orgName}"]`).click();
     }
   }
 }

@@ -35,7 +35,6 @@ import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_NAME = Utils.generateComponentName("oas");
@@ -45,9 +44,8 @@ describe("Choreo APIM publisher scenarios", () => {
   const appName = generateAppName("-e2etest");
 
   before(() => {
- // Cypress.env("privateOrg","privatedatatplanetests")
     LoginPage.login();
-    ChoreoHomePage.switchOrganization()
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -55,20 +53,11 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_NAME,
-      API_BASE_PATH,
-      "",
-      "",
-      ""
-    );
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -77,8 +66,7 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-
-  it("Verify component promote to stg", () => {
+  (Cypress.env("isPrivateOrg") ? it : it.skip)("Verify component promote to stg", () => {
     APIDeployment.promoteToStg();
     APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
   });
@@ -90,18 +78,28 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     APITest.testAPI();
+    ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource("intensity");
     SwaggerUI.GetResponse();
+  });
 
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("intensity/factors");
-    SwaggerUI.GetResponse();
+  (Cypress.env("isPrivateOrg") ? it : it.skip)(
+    "Verify test functionality using Swagger UI in Stg",
+    () => {
+      APITest.testAPI();
+      ComponentTestPage.selectEnvironment(Environment.STAGING);
+      ComponentTestPage.getTestKey();
+      SwaggerUI.invokeResource("intensity");
+      SwaggerUI.GetResponse();
+    }
+  );
 
+  it("Verify test functionality using Swagger UI in Prod", () => {
     APITest.testAPI();
+    ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("generation");
+    SwaggerUI.invokeResource("intensity");
     SwaggerUI.GetResponse();
   });
 
@@ -110,12 +108,36 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(
-      `${Environment.DEVELOPMENT}intensity`
-    ).then((curl) =>
+    Curl.getRequestComponents(`${Environment.DEVELOPMENT}intensity`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.status).equal(200);
+        })
+    );
+  });
+
+  (Cypress.env("isPrivateOrg") ? it : it.skip)("Verify test functionality using generated curl in Stg", () => {
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.STAGING);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("intensity");
+    Curl.getRequestComponents(`${Environment.STAGING}intensity`).then((curl) =>
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       })
+    );
+  });
+
+  it("Verify test functionality using generated curl in Prod", () => {
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(Environment.PRODUCTION);
+    Curl.selectMethod(HTTPMethod.GET);
+    Curl.enterPathParameter("intensity");
+    Curl.getRequestComponents(`${Environment.PRODUCTION}intensity`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 
@@ -138,12 +160,11 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(
-      `${Environment.DEVELOPMENT}intensity`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Environment.DEVELOPMENT}intensity`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 

@@ -97,7 +97,6 @@ export class APIDeployment {
 
   static verifyProdInvokeURL() {
     cy.wait(5000);
-
     let isPrivateOrg = Cypress.env("isPrivateOrg");
     if (isPrivateOrg) {
       return cy

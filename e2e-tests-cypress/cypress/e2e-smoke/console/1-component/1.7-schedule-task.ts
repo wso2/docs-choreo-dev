@@ -38,6 +38,7 @@ describe("Schedule task", () => {
 
   before(() => {
     LoginPage.login();
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
