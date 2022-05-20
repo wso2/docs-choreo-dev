@@ -4,7 +4,6 @@ metadata:
   name: lowcode-parser
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: choreo-lowcode-parser
 spec:
@@ -39,11 +38,6 @@ spec:
                 add: [ "NET_RAW" ]
               allowPrivilegeEscalation: false
             env:
-              - name: CHOREO_TABLESTORAGE_CONNECTIONSTRING
-                valueFrom:
-                  secretKeyRef:
-                    key: CHOREO_TABLESTORAGE_CONNECTIONSTRING
-                    name: secret-lowcode-parser
               - name: CHOREO_PROG_DB_PASSWORD
                 valueFrom:
                   secretKeyRef:
@@ -52,6 +46,8 @@ spec:
             envFrom:
               - configMapRef:
                   name: env-choreo-program-db
+              - secretRef:
+                  name: secret-lowcode-parser
             resources:
               limits:
                 cpu: 500m
@@ -89,4 +85,3 @@ spec:
                   secretProviderClass:  secret-program-db
                 nodePublishSecretRef:
                   name: csi-secret-store-azure
-          serviceAccountName: sa-choreo-default
