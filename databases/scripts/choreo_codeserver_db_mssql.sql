@@ -1,8 +1,8 @@
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'choreo_codeserver_db')
-CREATE DATABASE [choreo_codeserver_db]
-GO
-
-USE choreo_codeserver_db;
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'choreo_codeserver_db_user') 
+BEGIN 
+    CREATE USER [choreo_codeserver_db_user] FOR LOGIN [choreo_codeserver_db_user] 
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON DATABASE::choreo_codeserver_db TO choreo_codeserver_db_user 
+END; 
 GO
 
 IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[cluster]') AND TYPE IN (N'U'))

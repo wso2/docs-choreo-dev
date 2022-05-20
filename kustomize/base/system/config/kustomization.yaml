@@ -293,5 +293,8 @@ configMapGenerator:
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
       - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=webWorker
-      
-      
+  - name: cm-workspace-manager-cp
+    behavior: create
+    literals:
+      - CSM_DB_NAME=choreo_codeserver_db
+      - CSM_DB_USERNAME=choreo_codeserver_db_user

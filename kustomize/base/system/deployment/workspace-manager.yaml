@@ -45,11 +45,6 @@ spec:
             secretKeyRef:
               name: secret-runtime
               key: APIM_CLIENT_SECRET
-        - name: CSM_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret-codeserver-db
-              key: CSM_DB_PASSWORD
         envFrom:
         - configMapRef:
             name: common-env-variables
@@ -57,6 +52,10 @@ spec:
             name: env-workspace-manager
         - configMapRef:
             name: env-workspace-manager-shared
+        - configMapRef:
+            name: cm-workspace-manager-cp
+        - secretRef:
+            name: secret-codeserver-db
         ports:
         - containerPort: 8080
           name: grpc-port
