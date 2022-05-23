@@ -97,6 +97,9 @@ configMapGenerator:
     literals:
       - CHOREO_DB_NAME=choreo_program_db
       - CHOREO_DB_MAX_POOL=50
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_program_db_user
+      - CHOREO_DB_DRIVER=sqlserver
   - name: cm-datalake-ast-cp
     behavior: create
     literals:
@@ -134,6 +137,9 @@ configMapGenerator:
     behavior: create
     literals:
       - CHOREO_DB_NAME=choreo_app_db
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_app_db_user
+      - CHOREO_DB_DRIVER=sqlserver
   - name: cm-dp-mizzen-cp
     behavior: create
     literals:
@@ -184,18 +190,6 @@ configMapGenerator:
       - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
       - CHOREO_APP_DB_PORT=1433
       - CHOREO_APP_DB_USERNAME=choreo_app_db_user
-  - name: cm-choreo-program-db-cp
-    behavior: create
-    literals:
-      - CHOREO_DB_PORT=1433
-      - CHOREO_DB_USERNAME=choreo_program_db_user
-      - CHOREO_DB_DRIVER=sqlserver
-  - name: cm-choreo-app-db-cp
-    behavior: create
-    literals:
-      - CHOREO_DB_PORT=1433
-      - CHOREO_DB_USERNAME=choreo_app_db_user
-      - CHOREO_DB_DRIVER=sqlserver
   - name: cm-dp-cicd-cp
     behavior: create
     literals:
