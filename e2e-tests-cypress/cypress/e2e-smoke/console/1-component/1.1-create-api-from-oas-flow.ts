@@ -33,9 +33,9 @@ import { Subscriptions } from "../../../support/devportal/pages/applications/sub
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_NAME = Utils.generateComponentName("oas");
@@ -43,9 +43,11 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
+  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
 
   before(() => {
     LoginPage.login();
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -53,20 +55,11 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_NAME,
-      API_BASE_PATH,
-      "",
-      "",
-      ""
-    );
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -75,39 +68,63 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
+  it_privatedp("Verify component promote and stg invoke url", () => {
+    APIDeployment.promoteToStg();
+    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
+  });
+
+  it("Verify prod invoke url", () => {
+    APIDeployment.PromoteToProd();
+    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("intensity");
-    SwaggerUI.GetResponse();
+    TestHelper.testOnSwagger(Environment.DEVELOPMENT, "intensity").then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
+  });
 
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("intensity/factors");
-    SwaggerUI.GetResponse();
+  it_privatedp("Verify test functionality using Swagger UI in Stg", () => {
+    TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
+  });
 
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource("generation");
-    SwaggerUI.GetResponse();
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    TestHelper.testOnSwagger(Environment.PRODUCTION, "intensity").then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.DEVELOPMENT);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(
-      `${Environment.DEVELOPMENT}intensity`
-    ).then((curl) =>
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET).then(
+      (curl) => {
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.status).equal(200);
+        });
+      }
+    );
+  });
+
+  it_privatedp("Verify test functionality using generated curl in Stg", () => {
+    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
-      })
+      });
+    });
+  });
+
+  it("Verify test functionality using generated curl in Prod", () => {
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET).then(
+      (curl) => {
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.status).equal(200);
+        });
+      }
     );
   });
 
@@ -130,12 +147,11 @@ describe("Choreo APIM publisher scenarios", () => {
     Curl.selectEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(
-      `${Environment.DEVELOPMENT}intensity`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Environment.DEVELOPMENT}intensity`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 

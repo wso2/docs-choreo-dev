@@ -27,8 +27,8 @@ export class SwaggerUI {
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
-  static ExecuteResourceFunction() {
-    cy.get(".execute-wrapper>button").click();
+  static ExecuteResourceFunction(resource) {
+    cy.get(`div[id*="${resource}"] .execute-wrapper>button`).click();
     cy.log("Execution is successful");
   }
 
@@ -41,9 +41,7 @@ export class SwaggerUI {
   }
 
   static getResponseCode() {
-    return cy
-      .get(".live-responses-table tbody tr .response-col_status")
-      .invoke("text");
+    return cy.get("tbody>.response>.response-col_status").eq(0).invoke("text");
   }
 
   static enterValue(placeholder: string, value: string) {
@@ -61,6 +59,6 @@ export class SwaggerUI {
     if (key) {
       this.enterValue(key, value);
     }
-    this.ExecuteResourceFunction();
+    this.ExecuteResourceFunction(resource);
   }
 }

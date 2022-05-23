@@ -61,4 +61,13 @@ export class ChoreoHomePage {
       timeout: 120000,
     }).click();
   }
+
+  static switchOrganization() {
+    const pdpOrg = Cypress.env("isPrivateOrg");
+    const orgName = Cypress.env("privateOrgName")
+    if (pdpOrg) {
+      cy.get("#org-picker").click();
+      cy.get(`[data-value="${orgName}"]`).click();
+    }
+  }
 }

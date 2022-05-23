@@ -88,9 +88,9 @@ export class APIDevelop {
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     httpVerb.forEach((verb) => {
-      let header = `[id="panel-/${resourcePath}/${verb.toLocaleLowerCase()}-header"]`;
-      let input = `[id="panel-/${resourcePath}/${verb.toLocaleLowerCase()}-content"]  div>input[type="text"]`;
-      let operationId = `${verb}${resourcePath.replace(/\\/g, "")}`;
+      let header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
+      let input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-content"]  div>input[type="text"]`;
+      let operationId = `${verb.toLowerCase()}${resourcePath.replace(/\\/g, "")}`;
       cy.get(header).click();
       cy.get(input).eq(0).type(operationId);
     });
