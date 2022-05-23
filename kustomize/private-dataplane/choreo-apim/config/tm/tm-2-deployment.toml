@@ -259,7 +259,7 @@ password = "${admin.password}"
 proxyPort = 443
 
 [apim.event_hub]
-service_url = "http://dev.dev-global-adapter.internal:9745"
+service_url = "https://dev.dev-global-adapter.internal:9745"
 username="choreo_dev_ga_admin"
 password="$env{PRIVATE_GLOBAL_ADAPTER_PASSWORD}"
 

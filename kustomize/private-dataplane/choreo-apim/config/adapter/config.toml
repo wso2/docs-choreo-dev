@@ -262,7 +262,7 @@ disableSslVerification = false
 [controlPlane]
 enabled = true
 sendRevisionUpdate = true
-serviceUrl = "http://dev.dev-global-adapter.internal:9745/"
+serviceUrl = "https://dev.dev-global-adapter.internal:9745/"
 username="choreo_dev_ga_admin"
 password="$env{PRIVATE_GLOBAL_ADAPTER_PASSWORD}"
 environmentLabels = ["$env{environmentLabel}"]
