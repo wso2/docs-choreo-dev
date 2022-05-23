@@ -55,14 +55,14 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
 Let's design the functionality of the scheduled task by following this procedure:
 
-1. Click **Edit Code** to design the process that the scheduled task needs to carry out. As a result, the Web Editor in which you can develop the scheduled task opens. In this Web Editor you can develop in low-code, pro-code, or both simultaneously.
+1. Click **Edit Code** to design the process that the scheduled task needs to carry out. As a result, the Web Editor in which you can develop the scheduled task opens. In this Web Editor, you can develop in low-code, pro-code, or both simultaneously.
 
     !!! info
         Opening the Web Editor may take a little while if you are a first-time user.
 
     The low-code diagram that you can see in the Web Editor is the default scheduled task configuration created by Choreo.
 
-2. First let's clean up the Web Editor by removing the default scheduled task configuration that you will not be using. To do this, hover over it and click the delete icon.
+2. First, let's clean up the Web Editor by removing the default scheduled task configuration that you will not be using. To do this, hover over it and click the delete icon.
 
     ![Hover over main function](../assets/img/tutorials/scheduled-task/hover-over-main-function.png){.cInlineImage-half}
 
@@ -190,7 +190,7 @@ Once the Web Editor has successfully pushed the changes to the GitHub repository
 
  Once you have developed a scheduled task and synced its configuration to the Choreo Console, you need to deploy it to be able to run it. To deploy it, follow this procedure:
 
-1. Navigate back to the Choreo Console. Be sure that you are currently viewing your scheduled task in the **Components** page.
+1. Navigate back to the Choreo Console. Be sure that you are currently viewing your scheduled task on the **Components** page.
 
 2. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
 
