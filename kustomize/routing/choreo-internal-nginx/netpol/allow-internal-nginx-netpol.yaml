@@ -14,14 +14,17 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - deployment
-  - hpa
-  - netpol
-  - pdb
-  - service
-
-namespace: choreo-apim
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-internal-nginx-ingress-network-policy
+spec:
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - port: 9443
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      choreo.component: internal-nginx
