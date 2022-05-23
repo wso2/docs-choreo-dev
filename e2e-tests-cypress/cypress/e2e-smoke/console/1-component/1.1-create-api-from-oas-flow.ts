@@ -43,7 +43,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
-  const fn = Cypress.env("isPrivateOrg") ? it : it.skip;
+  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
 
   before(() => {
     LoginPage.login();
@@ -68,7 +68,7 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  fn("Verify component promote and stg invoke url", () => {
+  it_privatedp("Verify component promote and stg invoke url", () => {
     APIDeployment.promoteToStg();
     APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
   });
@@ -86,12 +86,10 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Verify test functionality using Swagger UI in Stg", () => {
-    if (Cypress.env("isPrivateOrg")) {
-      TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
-        expect(res.statusCode).to.be.equal("200");
-      });
-    }
+  it_privatedp("Verify test functionality using Swagger UI in Stg", () => {
+    TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -112,16 +110,12 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  fn("Verify test functionality using generated curl in Stg", () => {
-    if (Cypress.env("isPrivateOrg")) {
-      TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then(
-        (curl) => {
-          Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-            expect(res.status).equal(200);
-          });
-        }
-      );
-    }
+  it_privatedp("Verify test functionality using generated curl in Stg", () => {
+    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+      });
+    });
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
