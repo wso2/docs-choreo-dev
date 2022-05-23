@@ -21,7 +21,8 @@
     "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*'",
     "console-prod-periodic-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-smoke/console/**/*' --config-file prod-periodic.json",
     "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
-    "local": "npm run e2etest:headless || npm run posttest"
+    "local": "npm run e2etest:headless || npm run posttest",
+    "e2etest:pdp": "npx cypress open -C cypress.pdp.json "
   },
   "author": "",
   "license": "ISC"

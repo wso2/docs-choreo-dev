@@ -22,40 +22,28 @@ import { SwaggerUI } from "../UI-components/swagger-UI-component";
 export class TestHelper {
   public static testOnSwagger(
     env: Environment,
-    resourcePath: string,
-    expectedStatusCode = "200"
+    resourcePath: string
   ) {
-    const e = env === "Staging" ? Cypress.env("isPrivateOrg") === true : true;
+    APITest.testAPI();
+    ComponentTestPage.selectEnvironment(env);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.invokeResource(resourcePath);
 
-    if (e) {
-      APITest.testAPI();
-      ComponentTestPage.selectEnvironment(env);
-      ComponentTestPage.getTestKey();
-      SwaggerUI.invokeResource(resourcePath);
-
-      return SwaggerUI.getResponseCode().then((res) => {
-        return SwaggerUI.GetResponse().then((r) => {
-          return cy.wrap({
-            response: r,
-            statusCode: res,
-          });
+    return SwaggerUI.getResponseCode().then((res) => {
+      return SwaggerUI.GetResponse().then((r) => {
+        return cy.wrap({
+          response: r,
+          statusCode: res,
         });
       });
-    } else {
-      return cy.wrap({ statusCode: expectedStatusCode });
-    }
+    });
   }
 
   public static testOnCurl(env: Environment, httpMethod: HTTPMethod) {
-    const e = env === "Staging" ? Cypress.env("isPrivateOrg") === true : true;
-    if (e) {
-      ComponentTestPage.selectCurl();
-      Curl.selectEnvironment(env);
-      Curl.selectMethod(httpMethod);
-      Curl.enterPathParameter("intensity");
-      return Curl.getRequestComponents(`${env}intensity`);
-    } else {
-      return cy.wrap(null);
-    }
+    ComponentTestPage.selectCurl();
+    Curl.selectEnvironment(env);
+    Curl.selectMethod(httpMethod);
+    Curl.enterPathParameter("intensity");
+    return Curl.getRequestComponents(`${env}intensity`);
   }
 }

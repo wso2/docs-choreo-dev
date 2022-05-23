@@ -43,6 +43,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
+  const fn = Cypress.env("isPrivateOrg") ? it : it.skip;
 
   before(() => {
     LoginPage.login();
@@ -63,16 +64,17 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deploy();
+    APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it("Verify component promote and stg invoke url", () => {
-    APIDeployment.promote();
+  fn("Verify component promote and stg invoke url", () => {
+    APIDeployment.promoteToStg();
     APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
   });
 
   it("Verify prod invoke url", () => {
+    APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
@@ -85,9 +87,11 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Stg", () => {
-    TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
+    if (Cypress.env("isPrivateOrg")) {
+      TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
+        expect(res.statusCode).to.be.equal("200");
+      });
+    }
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
@@ -108,14 +112,16 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Verify test functionality using generated curl in Stg", () => {
-    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then((curl) => {
-      if (curl != null) {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.status).equal(200);
-        });
-      }
-    });
+  fn("Verify test functionality using generated curl in Stg", () => {
+    if (Cypress.env("isPrivateOrg")) {
+      TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then(
+        (curl) => {
+          Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+            expect(res.status).equal(200);
+          });
+        }
+      );
+    }
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
