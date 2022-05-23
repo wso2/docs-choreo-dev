@@ -119,7 +119,14 @@ configMapGenerator:
     behavior: create
     literals:
       - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
-      - GITHUB_API=https://api.github.com      
+      - GITHUB_API=https://api.github.com  
+      - GATEWAY_JWKS_ENDPOINT=/oauth2/jwks
+      - SERVICE_PORT=9090
+      - HEALTH_SERVICE_PROT=9091
+      - CHOREO_BALLERINA_VERSION=2201.0.0
+      - DP_CLOUD_MANAGER_ENDPOINT=http://dp-cloud-manager:80
+      - CP_GRAPHQL_ENDPOINT=http://cp-graphql:9095
+      - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090    
   - name: cm-choreo-app-db-cp
     behavior: create
     literals:
@@ -131,6 +138,13 @@ configMapGenerator:
       - SERVICE_RUDDER_URL=http://dp-rudder
       - SENTRY_DSN=https://5bc6ca6a627941518c1323e51d7a1985@o350818.ingest.sentry.io/5597771
       - REDIS_TLS=1
+      - MSSQL_PORT=1443
+      - MSSQL_USERNAME=choreo_mizzen_admin_db_user
+      - MSSQL_DATABASE=choreo_mizzen_db
+      - SERVICE_BUS_REQUEST_TOPIC=dp-mizzen-request
+      - SERVICE_BUS_RESPONSE_QUEUE=dp-mizzen-response
+      - REDIS_PORT=6380
+      - AGENT_IMAGE_URL=""
   - name: cm-multivariate-anomaly-detector-notification-manager-cp
     behavior: create
     literals:
@@ -140,3 +154,152 @@ configMapGenerator:
       - RUDDER_URL="http://dp-rudder:80"
       - PROJECT_MANAGER_URL="http://dp-project-manager:80"
       - APPROVED_EMAILS="nilushan@wso2.com,isururuh@wso2.com,malithj@wso2.com,choreoanomalydetectortest@gmail.com"
+  - name: cm-app-deployer-cp
+    behavior: create
+    literals:
+      - DB_USERNAME=choreo_app_db_user
+      - DB_PORT=1433
+      - DB_DRIVER=sqlserver
+  - name: cm-app-service-cp
+    behavior: create
+    literals:
+      - DB_USERNAME=choreo_app_db_user
+      - DB_PORT=1433
+      - DB_DRIVER=sqlserver
+      - ORG_REMOVER_REQUEST_TOPIC=org-remover-request
+      - ORG_REMOVER_RESULT_TOPIC=org-remover-result
+      - MARKETING_CONSENT_APP_CLIENT_KEY=0S5JcJ6y3BAIvUuY_mJ6aqKBhfQa
+      - APIM_TOKEN_EP=https://sts.choreo.dev/oauth2/token
+      - PARDOT_EP=go.pardot.com/l/142131/2021-11-01/9yzthx
+      - PARDOT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/7g2z/wso2-pardot-form-handler/1.0.0/pardot/api/formhandle
+      - EMAIL_CONSENT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/3qk2/gdpr-email-consent-check/1.0.0
+  - name: cm-perf-analyzer-cp
+    behavior: create
+    literals:
+      - CHOREO_DB_DRIVER=sqlserver
+      - CHOREO_PERF_DB_PORT=1433
+      - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
+      - CHOREO_APP_DB_PORT=1433
+      - CHOREO_APP_DB_USERNAME=choreo_app_db_user
+  - name: cm-choreo-testbase-db-cp
+    behavior: create
+    literals:
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_testbase_db_user
+      - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-choreo-program-db-cp
+    behavior: create
+    literals:
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_program_db_user
+      - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-choreo-app-db-cp
+    behavior: create
+    literals:
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_app_db_user
+      - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-dp-cicd-cp
+    behavior: create
+    literals:
+      - SERVER_PORT=8080
+      - DB_NAME=choreo_cicd_db
+      - DB_PORT=1433
+      - DB_USERNAME=choreo_cicd_admin_db_user
+      - DB_TYPE=mssql
+      - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
+      - SENTRY=https://b3d0a52a966b46edb34287daff8d411c@o350818.ingest.sentry.io/5599109
+      - GITOPS_ORG_ID=0
+      - GITOPS_ORG_PROJECT_ID=global
+      - APP_ORG_ID=0
+      - APP_ORG_PROJECT_ID=global
+      - REGISTRY_ORG_ID=0
+      - REGISTRY_PROJECT_ID=global
+      - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
+      - RUDDER_API_URL=http://dp-rudder
+      - AZURE_LOGS_TABLE=GithubWorkflowLogs
+  - name: cm-dp-cloud-manager-cp
+    behavior: create
+    literals:
+      - SECRET_MANAGER_URL=http://dp-secret-manager/api/v1
+      - RUDDER_URL=http://dp-rudder/api/v1/
+      - SERVER_PORT=3200
+      - DB_USERNAME=choreo_cloud_manager_admin_db_user
+      - DB_NAME=choreo_cloud_manager_db
+      - DB_PORT=1443
+      - DB_TYPE=mssql
+      - ACR_URL_TEMPLATE="https://%s/acr/v1/%s"
+  - name: cm-organization-remover-cp
+    behavior: create
+    literals:
+      - ASB_REQUEST_TOPIC=org-remover-request
+      - ASB_RESULT_TOPIC=org-remover-result
+      - ASB_RESULT_SUB=org-remover
+      - ORG_REMOVER_DB_USERNAME=choreo_org_remover_db_user
+      - ORG_REMOVER_DB_PORT=1433
+      - ORG_REMOVER_DB_DRIVER=sqlserver
+      - BASIC_AUTH_USERNAME=admin
+      - SERVER_PORT=8080
+  - name: cm-alert-notification-service-cp
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder"
+      - APPSERVICE_GRPC_URL="http://app-service:8080"
+      - SYSTEM_USER_ID="choreo:system"
+      - PROJECT_MANAGER_URL="http://dp-project-manager"
+      - RETRY_INTERVAL=3
+      - RETRY_ATTEMPTS=3
+      - BACKOFF_FACTOR=2.0
+      - MAX_WAIT_INTERVAL=20
+      - CONNECTION_TIMEOUT=2
+  - name: cm-dp-delete-manager-cp
+    behavior: create
+    literals:
+      - PORT=8000
+      - MSSQL_PORT=1433
+      - MSSQL_USER=choreo_delete_manager_admin_db_user
+      - MSSQL_DBNAME=choreo_delete_manager_db
+      - RUDDER_URL=http://dp-rudder
+      - CICD_URL=http://dp-cicd
+      - PROJECT_MANAGER_URL=http://dp-project-manager
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - ASB_DELETE_QUEUE_NAME=delete-manager
+      - API_SERVER_URL=http://api-server
+  - name: cm-logsarchiver-cp
+    behavior: create
+    literals:
+      - TABLE_LIST=InsightsMetrics,KubePVInventory,Operation,Perf
+      - AZURE_DL_CONTAINER_NAME=loganalytics1
+  - name: cm-dp-rudder-cp
+    behavior: create
+    literals:
+      - MSSQL_USER=choreo_rudder_admin_db_user
+      - MSSQL_DBNAME=choreo_rudder_db
+      - MSSQL_PORT=1433
+      - SECRET_MANAGER_URL=http://dp-secret-manager
+      - MIZZEN_URL="http://dp-mizzen"
+      - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
+      - HELPER_URL=http://dp-utility-api
+      - AUTH_URL=http://dp-project-manager
+      - CICD_URL=http://dp-cicd
+      - NEGOTIATOR_ADDRESS=negotiator:9092
+      - OBS_ADDRESS=obsapi:9096
+      - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
+      - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
+      - CUSTOM_URL_CLUSTER_ISSUER=letsencrypt-prod
+      - CUSTOM_URL_SERVICE_NAME=choreo-nginx-internal
+      - CUSTOM_URL_SERVICE_PORT=9443
+      - CUSTOM_URL_SERVICE_PATH=/
+  - name: cm-console-next-cp
+    behavior: create
+    literals:
+      - REACT_APP_FIDP_GOOGLE=google
+      - REACT_APP_FIDP_GITHUB=github
+      - REACT_APP_FIDP_ENTERPRISE=EnterpriseIDP
+      - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
+      - REACT_APP_FIDP_ANONYMOUS=choreoanonymous
+      - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
+      - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
+      - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=webWorker
+      
+      

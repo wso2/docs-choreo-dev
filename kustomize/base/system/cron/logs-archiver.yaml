@@ -79,6 +79,8 @@ spec:
               envFrom:
                 - configMapRef:
                     name: env-logsarchiver
+                - configMapRef:
+                    name: cm-logsarchiver-cp
               resources:
                 limits:
                   cpu: 300m

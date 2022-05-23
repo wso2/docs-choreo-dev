@@ -81,6 +81,8 @@ spec:
               name: env-negotiator
           - configMapRef:
               name: env-choreo-program-db
+          - configMapRef:
+              name: cm-choreo-program-db-cp
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
           allowPrivilegeEscalation: false

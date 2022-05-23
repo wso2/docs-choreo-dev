@@ -42,6 +42,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-rudder
+            - configMapRef:
+                name: cm-dp-rudder-cp
           env:
           - name: MSSQL_PASSWORD
             valueFrom:
