@@ -2,17 +2,17 @@
 
 A scheduled task is a routine task at a given time interval. The following are a few examples:
 
-- Routinely carrying out a health check of a machine
-- Daily presenting the number of COVID-19 cases reported for the day
-- Logging the hourly sales total of an online store
+- Routinely carrying out a health check of a machine.
+- Daily presenting the number of COVID-19 cases reported for the day.
+- Logging the hourly sales total of an online store.
 
 In the low-code editor, you can easily design complex processes that Choreo can carry out routinely. Once you implement the design, you can schedule them by specifying a time interval at which the designed process should run (e.g., every hour).
 
 To try it out, let's consider a scenario where a statistician needs to monitor the USA population every two minutes to present an analysis. In this tutorial, you will address this requirement by doing the following:
 
-- Designing and implementing the process to capture the required statistics
-- Setting the time interval at which the scheduled task needs to run
-- Observing whether the scheduled task is functioning as expected
+- Designing and implementing the process to capture the required statistics.
+- Setting the time interval at which the scheduled task needs to run.
+- Observing whether the scheduled task is functioning as expected.
 
 ## Step 1: Develop
 
@@ -55,14 +55,14 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
 Let's design the functionality of the scheduled task by following this procedure:
 
-1. To design the process that the scheduled task needs to carry out, click **Edit Code**. As a result, the Web Editor in which you can develop the scheduled task in low-code or pro-code opens.
+1. Click **Edit Code** to design the process that the scheduled task needs to carry out. As a result, the Web Editor in which you can develop the scheduled task opens. In this Web Editor you can develop in low-code, pro-code, or both simultaneously.
 
     !!! info
         Opening the Web Editor may take a little while if you are a first-time user.
 
     The low-code diagram that you can see in the Web Editor is the default scheduled task configuration created by Choreo.
 
-2. To remove the construct of the default scheduled task configuration (which is of the `Main` type), hover over it until two icons appear for editing and deleting as shown in the image below.
+2. First let's clean up the Web Editor by removing the default scheduled task configuration that you will not be using. To do this, hover over it and click the delete icon.
 
     ![Hover over main function](../assets/img/tutorials/scheduled-task/hover-over-main-function.png){.cInlineImage-half}
 
@@ -82,7 +82,7 @@ Let's design the functionality of the scheduled task by following this procedure
 
     1. Click **Connector**.
    
-    2. In the **Connectors** panel that opens on the right of the page, search for `World Bank by ballerinax`.
+    2. In the **Connectors** panel that opens on the right of the page, search for `World Bank`.
    
         When the **World Bank by ballerinax** connector appears in the search results, click on it.
    
@@ -110,7 +110,7 @@ Let's design the functionality of the scheduled task by following this procedure
 
     3. Click **Save**.
 
-6. Now let's add a log statement to log the payload generated via the last variable as follows:
+6. Let's add a log statement to log the payload generated via the last variable by following these steps:
 
     1. Click the last **+** icon in the low-code diagram.
 
@@ -163,7 +163,7 @@ The scheduled task configuration you created is currently only saved in the Web 
 !!! info
     You are saving the scheduled task in a Choreo-maintained repository as specified in [Step 1.1: Create a new project and add a scheduled task component](#step-11-create-a-new-project-and-add-a-scheduled-task-component).
 
-1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red). In the message that appears, click **Sync my changes with Choreo**.
+1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red). Then click **Sync my changes with Choreo**.
 
     ![Sync with Choreo upstreeam](../assets/img/tutorials/scheduled-task/sync-with-choreo-upstream.png){.cInlineImage-full}
 
@@ -171,7 +171,7 @@ The scheduled task configuration you created is currently only saved in the Web 
 
     ![Commit message](../assets/img/tutorials/scheduled-task/commit-message.png){.cInlineImage-full}
 
-    Select **Yes** in the message that appears to specify that you need to stage the changes.
+    Select **Yes** in the message that appears. This will stage your changes.
 
 3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom panel.
 
@@ -190,7 +190,9 @@ Once the Web Editor has successfully pushed the changes to the GitHub repository
 
  Once you have developed a scheduled task and synced its configuration to the Choreo Console, you need to deploy it to be able to run it. To deploy it, follow this procedure:
 
-1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
+1. Navigate back to the Choreo Console. Be sure that you are currently viewing your scheduled task in the **Components** page.
+
+2. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
 
     ![Deploy scheduled task](../assets/img/tutorials/scheduled-task/deploy-scheduled-task.png){.cInlineImage-full}
 
@@ -210,6 +212,9 @@ You can observe the scheduled task to verify whether it runs every two minutes a
 To open the Observability statistics, click **Observe** in the **Development** card. Alternatively, you can click the **Observe** icon**.
 
 The logs section displays the logs generated every two minutes with population statistics of the USA. In addition, the graphs visualize the throughput and latency statistics.
+
+!!! tip
+    This page displays information in real-time. Refresh it to see the latest statistics.
 
 ![observability](../assets/img/tutorials/scheduled-task/observe.png){.cInlineImage-full}
 
