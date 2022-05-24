@@ -81,6 +81,8 @@ spec:
         envFrom:
         - configMapRef:
             name: env-choreo-testbase-db
+        - configMapRef:
+            name: cm-choreo-testbase-db-cp
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-testbase:v0.7.2
         securityContext:
           allowPrivilegeEscalation: false
