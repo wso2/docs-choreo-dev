@@ -55,7 +55,7 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
 Let's design the functionality of the scheduled task by following this procedure:
 
-1. Click **Edit Code** to design the process that the scheduled task needs to carry out. As a result, the Web Editor in which you can develop the scheduled task opens. In this Web Editor, you can develop in low-code, pro-code, or both simultaneously.
+1. To design the process that the scheduled task needs to carry out, click **Edit Code**. As a result, the Web Editor in which you can develop the scheduled task opens. In this Web Editor, you can develop in low-code, pro-code, or both simultaneously.
 
     !!! info
         Opening the Web Editor may take a little while if you are a first-time user.
