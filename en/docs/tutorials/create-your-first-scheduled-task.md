@@ -182,7 +182,7 @@ The scheduled task configuration you created is currently only saved in the Web 
 
     Then click **OK** in the message that appears to confirm.
 
-Once the Web Editor has successfully pushed the changes to the GitHub repository, it indicates this by displaying the text **In sync with Choreo upstream** for the `main.bal` file as shown below.
+Once the Web Editor has successfully pushed the changes to the GitHub repository, it indicates this by displaying the text **In sync with Choreo upstream** for the `main.bal` file in the bottom panel as shown below.
 
 ![In sync](../assets/img/tutorials/scheduled-task/in-sync-with-choreo-upstream.png){.cInlineImage-full}
 
