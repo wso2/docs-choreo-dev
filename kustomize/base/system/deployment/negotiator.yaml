@@ -75,7 +75,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: RUDDER_URL
-              name: cm-negotiator
+              name: cm-negotiator-cp
         envFrom:
           - configMapRef:
               name: env-negotiator
