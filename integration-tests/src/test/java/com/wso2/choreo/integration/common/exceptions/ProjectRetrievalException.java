@@ -16,7 +16,7 @@ package com.wso2.choreo.integration.common.exceptions;
 /**
  * An exception to be thrown if the API call to retrieve a Choreo project does not receive expected status code
  */
-public class ProjectRetrievalException extends Exception{
+public class ProjectRetrievalException extends Exception {
 
     public ProjectRetrievalException(int statusCode, String message) {
         super("{ statusCode=" + statusCode +

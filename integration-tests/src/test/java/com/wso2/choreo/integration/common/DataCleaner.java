@@ -67,9 +67,9 @@ public class DataCleaner  {
 
         long createdDateTime = Long.parseLong(projectName.split(Constant.TEST_PROJECT_NAME_PREFIX)[1]);
 
-        long currentDatTime = new Date().getTime();
+        long currentDateTime = new Date().getTime();
 
-        return currentDatTime - createdDateTime > hourInMilliseconds;
+        return currentDateTime - createdDateTime > hourInMilliseconds;
     }
 
 }

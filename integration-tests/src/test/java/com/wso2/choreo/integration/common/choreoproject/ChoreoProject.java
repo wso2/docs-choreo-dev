@@ -4,7 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
+import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.slf4j.Logger;
@@ -23,6 +27,7 @@ import java.util.Optional;
 public class ChoreoProject {
 
     private final static Logger log = LoggerFactory.getLogger(ChoreoProject.class);
+    private final static Gson gson = new Gson();
 
     private final HashMap<String, ChoreoComponent> componentMap = new HashMap<>();
     private String id;
@@ -229,7 +234,6 @@ public class ChoreoProject {
             JsonObject componentJson = body.getAsJsonObject().getAsJsonObject("data")
                     .getAsJsonObject("component");
 
-            Gson gson = new Gson();
             return Optional.of(gson.fromJson(componentJson.toString(), (Type) RestApiChoreoComponent.class));
         } catch (GraphQLException e) {
             throw new ComponentRetrieveException(e);
@@ -245,8 +249,6 @@ public class ChoreoProject {
 
             JsonArray componentsJson = body.getAsJsonObject().getAsJsonObject("data")
                     .getAsJsonArray("components");
-
-            Gson gson = new Gson();
 
             for (int i = 0; i < componentsJson.size(); ++i) {
                 JsonObject componentJson = componentsJson.get(i).getAsJsonObject();

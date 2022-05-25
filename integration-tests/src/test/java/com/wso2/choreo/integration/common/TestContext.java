@@ -16,8 +16,6 @@ package com.wso2.choreo.integration.common;
 import com.wso2.choreo.integration.config.Configuration;
 import org.testng.annotations.BeforeSuite;
 
-import java.util.Vector;
-
 /**
  * The TestContext manages shared state between integration tests.
  * It is also responsible for setting up preconditions in preparation
@@ -47,12 +45,10 @@ public class TestContext {
             .cpAppClientId(Configuration.CP_APP_CLIENT_ID)
             .cpAppClientSecret(Configuration.CP_APP_CLIENT_SECRET).build();
 
-
     @BeforeSuite
     public void setup() throws Exception {
         DataCleaner.removeOldTestData(testUserTokenHandler.getTestTokenForCPAPIs(), testOrg);
     }
-
 
     public static ChoreoOrganization getTestOrg() {
         return testOrg;

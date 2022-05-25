@@ -17,24 +17,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.exceptions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
 import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
 import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.GraphQLException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
+import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 
@@ -86,6 +94,7 @@ public abstract class ChoreoComponent {
     private ChoreoProject project;
     private ChoreoOrganization organization;
     private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
+    private final static Gson gson = new Gson();
 
 
     /**
@@ -533,7 +542,6 @@ public abstract class ChoreoComponent {
             }
             JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
             JsonArray obsIdJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("observerbilityIds");
-            Gson gson = new Gson();
             ObservabilityIdInformation[] obsIds = gson.fromJson(obsIdJsonArray, ObservabilityIdInformation[].class);
             for (ObservabilityIdInformation obsId : obsIds) {
                 if (obsId.getReleaseId().equals(releaseId)) {
@@ -589,7 +597,6 @@ public abstract class ChoreoComponent {
             }
             JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
             JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
-            Gson gson = new Gson();
             InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
             for (InvokeInformation envInvokeInformation : invokeInformation) {
                 if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {

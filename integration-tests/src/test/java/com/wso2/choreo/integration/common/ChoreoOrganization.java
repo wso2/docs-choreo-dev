@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ChoreoOrganization {
     private final static Logger log = LoggerFactory.getLogger(ChoreoOrganization.class);
+    private final static Gson gson = new Gson();
 
     private final HashMap<String, ChoreoProject> projectMap;
     private String orgHandle;
@@ -73,13 +74,10 @@ public class ChoreoOrganization {
                 Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())),
                 Constant.TEST_PROJECT_DESCRIPTION);
 
-
         try {
             JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
             JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
-            Gson gson = new Gson();
-            ChoreoProject project = gson.fromJson(projectJson.toString(), ChoreoProject.class);
-            return project;
+            return gson.fromJson(projectJson.toString(), ChoreoProject.class);
         } catch (GraphQLException e) {
             throw new ProjectCreationException(e);
         }
@@ -111,7 +109,6 @@ public class ChoreoOrganization {
                 JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
 
                 JsonArray projectsJson = body.getAsJsonObject("data").getAsJsonArray("projects");
-                Gson gson = new Gson();
 
                 for (int i = 0; i < projectsJson.size(); ++i) {
                     JsonObject projectJson = projectsJson.get(i).getAsJsonObject();
@@ -131,9 +128,7 @@ public class ChoreoOrganization {
         try {
             JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
             JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
-            Gson gson = new Gson();
-            ChoreoProject project = gson.fromJson(projectJson.toString(), ChoreoProject.class);
-            return project;
+            return gson.fromJson(projectJson.toString(), ChoreoProject.class);
         } catch (GraphQLException e) {
             throw new ProjectCreationException(e);
         }
