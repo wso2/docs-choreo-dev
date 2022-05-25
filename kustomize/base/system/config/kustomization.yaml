@@ -286,6 +286,7 @@ configMapGenerator:
     literals:
       - REACT_APP_FIDP_GOOGLE=google
       - REACT_APP_FIDP_GITHUB=github
+      - REACT_APP_FIDP_MICROSOFT=microsoft
       - REACT_APP_FIDP_ENTERPRISE=EnterpriseIDP
       - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
       - REACT_APP_FIDP_ANONYMOUS=choreoanonymous
