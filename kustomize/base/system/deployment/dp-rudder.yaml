@@ -60,6 +60,10 @@ spec:
             value: "86400"
           - name: APIM_REVISION_LIMIT
             value: "20"
+          - name: HPA_ENABLED
+            value: "true"
+          - name: PDB_ENABLED
+            value: "true"
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
