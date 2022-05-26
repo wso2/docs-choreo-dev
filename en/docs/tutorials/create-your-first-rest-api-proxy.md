@@ -21,7 +21,7 @@ Choreo gives you two options to create a REST API proxy:
 
 In this tutorial, you will be importing an OpenAPI specification and creating a REST API proxy:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-rest-api-proxy-product-link', properties: { utm_source: 'choreo_docs' }});">https://console.choreo.dev/</a>.
 
 2. Expand the project dropdown on the console header and click **+ Create New** to create a new project.
    ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}

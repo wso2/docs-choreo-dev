@@ -71,6 +71,7 @@ nav:
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
+      - Generate Custom Reports: insights/generate-custom-reports.md
       - Configure Alerts: insights/configure-alerts.md
       - Choreo Insights API: insights/choreo-insights-api.md
       - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
@@ -131,6 +132,7 @@ extra_javascript:
   - assets/js/prism-ballerina.js
   - assets/lib/backtotop/js/util.js
   - assets/lib/backtotop/js/main.js
+  - assets/lib/insights/insights.js
 extra:
   social:
     - type: github
