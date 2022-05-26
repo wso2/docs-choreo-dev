@@ -23,6 +23,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
@@ -78,14 +79,13 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
             ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent =
-                (RestApiChoreoComponent) project.createChoreoComponent(restApiComponentBuilder, accessToken);
+                (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);
         restApiComponent.setOrganization(org);
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle());

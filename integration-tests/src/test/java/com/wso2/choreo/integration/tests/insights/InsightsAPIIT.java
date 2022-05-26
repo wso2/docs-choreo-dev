@@ -22,7 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.TokenHandler;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
 import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
@@ -40,7 +40,6 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundExce
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -87,8 +86,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException {
 
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         orgUUID = org.getOrgUUID();

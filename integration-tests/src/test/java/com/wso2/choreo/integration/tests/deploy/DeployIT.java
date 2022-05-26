@@ -18,6 +18,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
@@ -74,8 +75,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
       GetCommitHistoryException, NoLatestCommitHashFoundException, NoLatestAppEnvIdFoundException,
       ComponentCreationStatusCheckException, TokenRetrievalException, NoLatestApiVersionFoundException,
       AddConfigurationsException {
-    TokenHandler tokenHandler = new TokenHandler();
-    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+    accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
         String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
     orgHandler = org.getOrgHandle();
@@ -83,7 +83,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     projectId = project.getId();
     RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
     RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project
-        .createChoreoComponent(restApiComponentBuilder, accessToken);
+        .createChoreoComponent(accessToken, restApiComponentBuilder);
     componentId = restApiComponent.getId();
     restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
     JsonArray commitHistory = restApiComponent.getCommitHistory(accessToken);
