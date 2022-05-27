@@ -77,7 +77,7 @@ export class VSExplorer {
 
   static creteNewBranch(branchName:string){
     cy.get("[title*='.bal Diagram']",{timeout:300000}).should('be.visible')
-    cy.wait(6000)
+    cy.wait(4000)
     cy.get('[id="wso2.ballerina"]',{timeout:300000}).should('be.visible')
     cy.get('[id="status.scm"]',{timeout:200000}).eq(0).click()
     cy.get('.quick-input-widget',{timeout:180000}).should('be.visible')

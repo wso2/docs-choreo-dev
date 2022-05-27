@@ -60,9 +60,9 @@ spec:
           readOnly: true
           subPath: ADAPTER_KEYSTORE_KEY
         - mountPath: /home/wso2/security/keystore/mg.pem
-          name: secret-mgw-keystore
+          name: mgw-common-cert-vol
           readOnly: true
-          subPath: ADAPTER_KEYSTORE_CERTIFICATE
+          subPath: mg.pem
         - mountPath: /home/wso2/security/keystore/global-adapter.key
           name: secret-cc-ga-keystore
           readOnly: true
@@ -71,13 +71,13 @@ spec:
           name: global-adapter-keystore-vol
           subPath: global-adapter.pem
         - mountPath: /home/wso2/security/truststore/controlplane.pem
-          name: secret-mgw-truststore
+          name: mgw-adapter-truststore-vol
           readOnly: true
-          subPath: CONTROL_PLANE_CERTIFICATE
+          subPath: controlplane.pem
         - mountPath: /home/wso2/security/truststore/local-adapter.pem
-          name: secret-mgw-truststore
+          name: mgw-common-cert-vol
           readOnly: true
-          subPath: ADAPTER_TRUSTSTORE_CERTIFICATE
+          subPath: mg.pem
         - mountPath: /home/wso2/conf
           name: global-adapter-config
         - name: secret-mgw
@@ -173,6 +173,12 @@ spec:
       - name: global-adapter-config
         configMap:
           name: cc-internal-ga-conf
+      - name: mgw-common-cert-vol
+        configMap:
+          name: mgw-common-cert
+      - name: mgw-adapter-truststore-vol
+        configMap:
+          name: mgw-adapter-truststore
       - name: secret-mgw-keystore
         csi:
           driver: secrets-store.csi.k8s.io
@@ -211,14 +217,6 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-redis
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
-      - name: secret-mgw-truststore
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-mgw-truststore
           nodePublishSecretRef:
             name: csi-secret-store-azure
       - name: secret-asb

@@ -28,6 +28,7 @@ describe("Verify the functionality in Choreo Marketplace", () => {
 
   before(()=>{
     LoginPage.login()
+    ChoreoHomePage.switchOrganization();
   })
   after(()=>{
     ChoreoHomePage.logout()

@@ -42,6 +42,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-cicd
+            - configMapRef:
+                name: cm-dp-cicd-cp
           env:
             - name: DB_PASSWORD
               valueFrom:

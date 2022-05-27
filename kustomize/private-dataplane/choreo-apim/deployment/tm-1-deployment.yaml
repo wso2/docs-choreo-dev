@@ -1,5 +1,4 @@
----
-# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+# Copyright (c) 2022, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -73,7 +72,7 @@ spec:
               memory: 2Gi
               cpu: "2"
             limits:
-              memory: 2.5Gi
+              memory: 3Gi
               cpu: "2.5"
           securityContext:
             allowPrivilegeEscalation: false

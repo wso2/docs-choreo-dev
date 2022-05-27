@@ -42,6 +42,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-delete-manager
+            - configMapRef:
+                name: cm-dp-delete-manager-cp
           env:
             - name: MSSQL_PASSWORD
               valueFrom:

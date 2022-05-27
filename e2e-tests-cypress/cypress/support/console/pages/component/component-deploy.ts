@@ -16,7 +16,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
       .should("be.enabled")
       .click();
-    this.hideSharePopover();
+ //   this.hideSharePopover();
   }
 
   static deployScheduleTask() {
@@ -24,11 +24,17 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cy.get("button:not([data-cyid])").contains("Deploy").click();
-    this.hideSharePopover();
+    cy.get('[value="*/1 * * * *"]', { timeout: 180000 }).should(
+      "have.length",
+      1
+    );
+    cy.wait(2000);
+ //   this.hideSharePopover();
   }
 
   static promoteScheduleTask() {
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
+      .eq(0)
       .should("be.visible")
       .click();
     cy.get("button:not([data-cyid])").contains("Deploy").click();
@@ -40,22 +46,17 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
-    this.hideSharePopover();
+  //  this.hideSharePopover();
   }
 
   static addConfiguration(value: string) {
     cy.contains("Configure & Deploy").should("be.visible").click();
-    cy.get("body").then((body) => {
-      if (!body.find('[placeholder="Required value"]').length) {
-        cy.get("form button[aria-expanded]")
-          .invoke("attr", "aria-expanded")
-          .then((attr) => {
-            if (attr) {
-              cy.get('[placeholder="Required value"]').type(value);
-            }
-          });
+    cy.get(".ConfigForm").then((frm) => {
+      const le = frm.find('[placeholder="Required value"]').length;
+      if (!le) {
+        cy.get(".ConfigForm .MuiIconButton-label").click();
+        cy.get('[placeholder="Required value"]').type(value);
       } else {
-        cy.get("form button[aria-expanded]").click();
         cy.get('[placeholder="Required value"]').type(value);
       }
     });
@@ -70,21 +71,25 @@ export class ComponentDeployPage {
     cy.get('[data-testid="undeploy-info"]', { timeout: 180000 }).should(
       "be.visible"
     );
-    cy.wait(2000)
+    cy.wait(2000);
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
+      .eq(0)
       .should("be.visible")
       .click();
+  }
 
-    cy.get("body").then((b) => {
-      if (
-        b.find('[data-cyid="btn-deploy-api"]').text() === "Configure & Deploy"
-      ) {
-        cy.contains("Next").click();
-        cy.get(".ConfigForm button", { timeout: 120000 })
-          .contains("Promote")
-          .click();
-      }
-    });
+  static promoteManualTriggerToProd() {
+    cy.get('[data-cyid*="promote"]', { timeout: 180000 }).should("be.visible");
+    cy.wait(2000);
+    cy.get('[data-cyid*="promote"]').eq(0).should("be.enabled").click();
+  }
+
+  static promoteWebHookToProd() {
+    this.promoteToProd();
+    cy.get(".MuiCardContent-root button").contains("Next").click();
+    cy.get(".ConfigForm button", { timeout: 120000 })
+      .contains("Promote")
+      .click();
   }
 
   static verifyDevInvokeURL() {
@@ -112,8 +117,9 @@ export class ComponentDeployPage {
   }
 
   static stopAllDeployment() {
-    cy.wait(5000);
+    cy.wait(3000);
     this.stopDevContainer();
+    this.stopStgContainer();
     this.stopProdContainer();
   }
 
@@ -125,9 +131,14 @@ export class ComponentDeployPage {
     cy.get(".MuiButton-label").contains("Stop").eq(0).click();
   }
 
-  private static hideSharePopover() {
-    cy.get('[data-testid="dialog-close-icon"]', { timeout: 200000 })
-      .should("be.visible")
-      .click();
+  private static stopStgContainer() {
+    if (Cypress.env("isPrivateOrg")) {
+      cy.get(".MuiButton-label").contains("Stop").eq(0).click();
+    }
   }
+  // private static hideSharePopover() {
+  //   cy.get('[data-testid="dialog-close-icon"]', { timeout: 200000 })
+  //     .should("be.visible")
+  //     .click();
+  // }
 }
