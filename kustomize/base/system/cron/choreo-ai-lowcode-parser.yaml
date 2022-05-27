@@ -59,7 +59,7 @@ spec:
                 memory: 256Mi
             volumeMounts:
               - name: lowcode-parser-config
-                mountPath: lowcode-parser/parser/config/
+                mountPath: /home/python-ai/lowcode-parser/parser/config/
               - name: secret-lowcode-parser
                 mountPath: "/mnt/csi/secret-lowcode-parser"
                 readOnly: true
