@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: organization-management
+  name: organization-management
+spec:
+  ports:
+    - name: http
+      port: 9090
+      targetPort: http
+    - name: health-public
+      port: 9092
+      targetPort: health-public
+
+  selector:
+    component: organization-management

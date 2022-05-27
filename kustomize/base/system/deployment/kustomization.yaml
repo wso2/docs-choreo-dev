@@ -38,6 +38,7 @@ resources:
   - workspace-manager.yaml
   - shared-image-viewer.yaml
   - image-share-service.yaml
+  - organization-management.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433
