@@ -49,6 +49,8 @@ export class LoginPage {
         sameSite: "no_restriction",
       });
     });
+
+    window.localStorage.setItem("hideSocialShareModel", "true");
   }
 
   static navigateToCodespace() {
@@ -73,7 +75,7 @@ export class LoginPage {
     cy.get('button[type="submit"]').click();
 
     cy.setCookie("fidpId", "choreoe2etest");
-
+  
     this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
@@ -93,21 +95,25 @@ export class LoginPage {
   }
 
   static enterpriseLogin() {
-    cy.visit(Cypress.env("enterpriseLoginUrl"))
-    cy.get('button[id="enterprise-sign-in"]').should("be.visible", { timeout: 180000 });
+    cy.visit(Cypress.env("enterpriseLoginUrl"));
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
+      timeout: 180000,
+    });
 
-    cy.get('button[id="enterprise-sign-in"]').click()
+    cy.get('button[id="enterprise-sign-in"]').click();
 
     cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
-    cy.contains('Continue').click();
+    cy.contains("Continue").click();
 
     cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
     cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
-    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false });
-    cy.contains('Continue').click();
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), {
+      log: false,
+    });
+    cy.contains("Continue").click();
 
     cy.get('[data-testid="header-user-profile-menu"]', {
-        timeout: 180000,
+      timeout: 180000,
     }).should("be.visible");
 
     this.persistLogoutURL();
@@ -178,7 +184,7 @@ export class LoginPage {
       const current_org = { id, uuid, handle };
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
-      GraphQL.deleteProjectsCreatedByTests(id,handle,token)
+      GraphQL.deleteProjectsCreatedByTests(id, handle, token);
     });
   }
 }

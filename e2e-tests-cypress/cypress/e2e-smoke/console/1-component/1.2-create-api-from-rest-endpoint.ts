@@ -193,21 +193,22 @@ describe("Verify project creation functionality", () => {
   it("Verify api invoke urls", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.getInvokeUrl().then((urls) => {
-      if (Cypress.env("isPrivateOrg")) {
-        expect(urls).have.lengthOf(3);
-        expect(urls).contains(
-          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
-        );
-        expect(urls).contains(Cypress.env(`${Environment.STAGING}_test_url`));
-        expect(urls).contains(
-          Cypress.env(`${Environment.PRODUCTION}_test_url`)
-        );
-      }
-      expect(urls).have.lengthOf(2);
-      expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`));
-      expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`));
-    });
+    Apis.verifyInvokeUrl()
+    // Apis.getInvokeUrl().then((urls) => {
+    //   if (Cypress.env("isPrivateOrg")) {
+    //     expect(urls).have.lengthOf(3);
+    //     expect(urls).contains(
+    //       Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+    //     );
+    //     expect(urls).contains(Cypress.env(`${Environment.STAGING}_test_url`));
+    //     expect(urls).contains(
+    //       Cypress.env(`${Environment.PRODUCTION}_test_url`)
+    //     );
+    //   }
+    //   expect(urls).have.lengthOf(2);
+    //   expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`));
+    //   expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`));
+    // });
   });
 
   it("Test in devportal", () => {

@@ -11,7 +11,6 @@
  * associated services.
  */
 
-import { Utils } from "../../../utils";
 import { APITest } from "../../apis/api-test";
 import { Environment } from "../../enum/environment";
 import { HTTPMethod } from "../../enum/http-method-enum";
@@ -50,25 +49,3 @@ export class TestHelper {
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 }
-
-// static invokeResource(
-//   resource: string,
-//   key: string = "",
-//   value: string = ""
-// ) {
-//   this.SelectResource(resource);
-//   this.TryoutAPI();
-//   if (key) {
-//     this.enterValue(key, value);
-//   }
-//   this.ExecuteResourceFunction(resource);
-// }
-// }
-// ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
-// ComponentTestPage.getTestKey();
-// SwaggerUI.SelectResource("root");
-// SwaggerUI.TryoutAPI();
-// SwaggerUI.enterValue("number", "2");
-// SwaggerUI.ExecuteResourceFunction("root");
-// SwaggerUI.GetResponse().should("eq", "4");
-// SwaggerUI.getResponseCode().should("eq", "200");
