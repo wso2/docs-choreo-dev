@@ -101,7 +101,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET).then(
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET,"intensity").then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.status).equal(200);
@@ -111,7 +111,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it_privatedp("Verify test functionality using generated curl in Stg", () => {
-    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET).then((curl) => {
+    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET,"intensity").then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });
@@ -119,7 +119,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET).then(
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET,"intensity").then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.status).equal(200);

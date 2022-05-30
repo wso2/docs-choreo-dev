@@ -79,7 +79,7 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.SelectResource(RESOURCE_NAME);
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue(PARAM_NAME, PARAM_VALUE);
-    SwaggerUI.ExecuteResourceFunction();
+    SwaggerUI.ExecuteResourceFunction("greeting");
     SwaggerUI.GetResponse().should("eq", MATCHING_STRING);
     SwaggerUI.getResponseCode().should("eq", "200");
   });
@@ -107,7 +107,7 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.SelectResource(RESOURCE_NAME);
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue(PARAM_NAME, PARAM_VALUE);
-    SwaggerUI.ExecuteResourceFunction();
+    SwaggerUI.ExecuteResourceFunction("greeting");
     SwaggerUI.GetResponse().should("eq", MATCHING_STRING);
     SwaggerUI.getResponseCode().should("eq", "200");
   });

@@ -277,14 +277,16 @@ export class GraphQL {
             cy.log(`ProxyID is :: ${proxyId}`);
           }
         });
-      }else{
-        cy.log(`Status Code For changeComponentLifeCycle ==> ${res.status}`)
+      } else {
+        cy.log(`Status Code For changeComponentLifeCycle ==> ${res.status}`);
       }
     });
   }
 
   private static deprecateComponent(apiId: string, token: string) {
-    const { uuid } = Cypress.env("userData");
+    const { uuid } = Cypress.env("current_org");
+    cy.log(`Current UUID ==> ${uuid}`);
+
     const statusRequest = `${Cypress.env(
       "apimSvcURL"
     )}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
@@ -337,7 +339,8 @@ export class GraphQL {
   }
 
   private static deleteConnectors(token: string) {
-    const { handle } = Cypress.env("userData");
+    const { handle } = Cypress.env("current_org");
+    cy.log(`Current handle ==> ${handle}`);
     const headers = {
       Authorization: `Bearer ${token}`,
     };

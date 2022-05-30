@@ -4,7 +4,7 @@ export class InsightsPage {
   static selectEnvironment(env: Environment) {
     cy.contains("Environment").should("be.visible");
     cy.contains("Environment").next().click();
-    cy.contains(`${env}-Choreo`).click();
+    cy.contains(env).click();
 
   }
 

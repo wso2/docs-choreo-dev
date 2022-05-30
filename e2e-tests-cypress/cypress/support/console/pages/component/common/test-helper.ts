@@ -11,7 +11,6 @@
  * associated services.
  */
 
-import { Utils } from "../../../utils";
 import { APITest } from "../../apis/api-test";
 import { Environment } from "../../enum/environment";
 import { HTTPMethod } from "../../enum/http-method-enum";
@@ -22,12 +21,14 @@ import { SwaggerUI } from "../UI-components/swagger-UI-component";
 export class TestHelper {
   public static testOnSwagger(
     env: Environment,
-    resourcePath: string
+    resourcePath: string,
+    key: string = "",
+    value: string = ""
   ) {
     APITest.testAPI();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(resourcePath);
+    SwaggerUI.invokeResource(resourcePath,key,value);
 
     return SwaggerUI.getResponseCode().then((res) => {
       return SwaggerUI.GetResponse().then((r) => {
@@ -39,11 +40,12 @@ export class TestHelper {
     });
   }
 
-  public static testOnCurl(env: Environment, httpMethod: HTTPMethod) {
+  public static testOnCurl(env: Environment, httpMethod: HTTPMethod,pathParm:string,queryParameters1=[]) {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(env);
     Curl.selectMethod(httpMethod);
-    Curl.enterPathParameter("intensity");
-    return Curl.getRequestComponents(`${env}intensity`);
+    Curl.enterPathParameter(pathParm);
+    Curl.addQueryParameter(queryParameters1);
+    return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 }
