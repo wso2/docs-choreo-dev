@@ -19,7 +19,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: choreo-connect-adapter-internal
+  name: choreo-connect-adapter
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
@@ -32,11 +32,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      choreo.component: choreo-connect-adapter-internal
+      choreo.component: choreo-connect-adapter
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-adapter-internal
+        choreo.component: choreo-connect-adapter
     spec:
       automountServiceAccountToken: false
       securityContext:

@@ -17,9 +17,9 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: choreo-connect-adapter-internal
+  name: choreo-connect-adapter
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: choreo-connect-adapter-internal
+      choreo.component: choreo-connect-adapter
