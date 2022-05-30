@@ -60,6 +60,16 @@ spec:
                 secretKeyRef:
                   name: secret-delete-manager
                   key: APIM_REST_API_CONSUMER_SECRET
+            - name: GCHAT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-delete-manager
+                  key: GCHAT_KEY
+            - name: GCHAT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: secret-delete-manager
+                  key: GCHAT_TOKEN
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
