@@ -25,29 +25,106 @@ export class APIDeployment {
       .contains("Active")
       .should("be.visible");
     cy.get('[id="securityHeaderInput"').invoke("val").should("not.be.empty");
-    cy.get('[data-cyid="btn-proxy-promote"]', { timeout: 120000 }).should(
+    cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
       "not.be.disabled"
     );
   }
 
-  static PromoteToProd() {
-    cy.get('[data-cyid="btn-proxy-promote"]').click();
+  static promoteToStg() {
+    cy.get('[data-cyid*="promote"]').eq(0).click();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
-      .contains("Production")
-      .should("be.visible");
-    cy.get('[data-cyid="deployment-status"]')
-      .should("have.length", 2)
-      .eq(1)
-      .contains("Active")
+      .contains("Staging-PoC")
       .should("be.visible");
     cy.get('[id="securityHeaderInput"')
       .should("have.length", 2)
       .eq(1)
       .invoke("val")
       .should("not.be.empty");
-    cy.get('[data-cyid="btn-proxy-promote"]', { timeout: 120000 }).should(
+  }
+
+  static PromoteToProd() {
+    let isPrivateOrg = Cypress.env("isPrivateOrg");
+
+    if (isPrivateOrg) {
+      cy.get('[data-cyid*="promote"]').eq(1).click();
+      cy.get('[id="securityHeaderInput"')
+        .should("have.length", 3)
+        .eq(2)
+        .invoke("val")
+        .should("not.be.empty");
+    } else {
+      cy.get('[data-cyid*="promote"]').click();
+      cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+        .contains("Production")
+        .should("be.visible");
+      cy.get('[data-cyid="deployment-status"]')
+        .should("have.length", 2)
+        .eq(1)
+        .contains("Active")
+        .should("be.visible");
+      cy.get('[id="securityHeaderInput"')
+        .should("have.length", 2)
+        .eq(1)
+        .invoke("val")
+        .should("not.be.empty");
+      cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
+        "not.be.disabled"
+      );
+    }
+  }
+
+  static deploy() {
+    cy.get('[data-cyid="btn-deploy-proxy"]', { timeout: 120000 })
+      .should("not.be.disabled")
+      .click();
+    cy.get('[data-cyid="deployment-status"]')
+      .contains("Active")
+      .should("be.visible");
+    cy.get('[id="securityHeaderInput"').invoke("val").should("not.be.empty");
+    cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
       "not.be.disabled"
     );
+  }
+
+  static promote() {
+    let isPrivateOrg = Cypress.env("isPrivateOrg");
+    if (isPrivateOrg) {
+      cy.get('[data-cyid*="promote"]').eq(0).click();
+      cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+        .contains("Staging-PoC")
+        .should("be.visible");
+      cy.get('[id="securityHeaderInput"')
+        .should("have.length", 2)
+        .eq(1)
+        .invoke("val")
+        .should("not.be.empty");
+    }
+    if (isPrivateOrg) {
+      cy.get('[data-cyid*="promote"]').eq(1).click();
+      cy.get('[id="securityHeaderInput"')
+        .should("have.length", 3)
+        .eq(2)
+        .invoke("val")
+        .should("not.be.empty");
+    } else {
+      cy.get('[data-cyid*="promote"]').click();
+      cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+        .contains("Production")
+        .should("be.visible");
+      cy.get('[data-cyid="deployment-status"]')
+        .should("have.length", 2)
+        .eq(1)
+        .contains("Active")
+        .should("be.visible");
+      cy.get('[id="securityHeaderInput"')
+        .should("have.length", 2)
+        .eq(1)
+        .invoke("val")
+        .should("not.be.empty");
+      cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
+        "not.be.disabled"
+      );
+    }
   }
 
   static verifyDevInvokeURL() {
@@ -57,8 +134,26 @@ export class APIDeployment {
       .invoke("attr", "value");
   }
 
+  static verifyStgeInvokeURL() {
+    let isPrivateOrg = Cypress.env("isPrivateOrg");
+    if (isPrivateOrg) {
+      cy.wait(5000);
+      return cy
+        .get('[data-cyid="text-field-invoke-url"] input')
+        .eq(1)
+        .invoke("attr", "value");
+    }
+    return cy.wrap("skip");
+  }
+
   static verifyProdInvokeURL() {
-    cy.wait(5000);
+    let isPrivateOrg = Cypress.env("isPrivateOrg");
+    if (isPrivateOrg) {
+      return cy
+        .get('[data-cyid="text-field-invoke-url"] input')
+        .eq(2)
+        .invoke("attr", "value");
+    }
     return cy
       .get('[data-cyid="text-field-invoke-url"] input')
       .eq(1)

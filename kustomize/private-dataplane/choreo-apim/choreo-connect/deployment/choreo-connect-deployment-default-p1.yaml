@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2021, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,24 +57,6 @@ spec:
         runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
-      initContainers:
-        - name: init-adapter-service
-          image: busybox:1.31
-          imagePullPolicy: Always
-          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-default-p1 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
-          resources:
-            requests:
-              memory: "100Mi"
-              cpu: "100m"
-            limits:
-              memory: "100Mi"
-              cpu: "100m"
       containers:
         - name: choreo-connect-enforcer
           volumeMounts:

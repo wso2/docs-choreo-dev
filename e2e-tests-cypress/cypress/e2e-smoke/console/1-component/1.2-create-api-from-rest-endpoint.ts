@@ -51,6 +51,7 @@ describe("Verify project creation functionality", () => {
 
   before(() => {
     LoginPage.login();
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -70,11 +71,14 @@ describe("Verify project creation functionality", () => {
     APIDevelop.addEndpoints();
   });
 
-  it("Verify component deployment", () => {
+  it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deploy();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
-    APIDeployment.PromoteToProd();
+  });
+
+  it("Verify component deployment", () => {
+    APIDeployment.promote();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
@@ -102,19 +106,26 @@ describe("Verify project creation functionality", () => {
   it("Create new version from the created API", () => {
     ComponentOverviewPage.navigateToDevelop();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
-    ComponentDevelopPage.getVersion().should("eq", `Version ${API_NEW_VERSION}`);
+    ComponentDevelopPage.getVersion().should(
+      "eq",
+      `Version ${API_NEW_VERSION}`
+    );
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
     APIDevelop.addEndpoints();
   });
 
   it("Deploy to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployToDev();
+    APIDeployment.deploy();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it("Promote to Prod", () => {
-    APIDeployment.PromoteToProd();
+  it("Verify component promote to stg", () => {
+    APIDeployment.promote();
+    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
+  });
+
+  it("Verify prod invoke url", () => {
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
@@ -143,7 +154,6 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector();
   });
-
 
   it("Verify api invoke urls", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);

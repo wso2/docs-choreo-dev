@@ -27,8 +27,9 @@ public final class Constant {
             "apim:publisher_settings environments:view_prod environments:view_dev";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
-    public static final String TEST_PROJECT_NAME_PREFIX = "testproject";
-    public static final String TEST_COMPONENT_NAME = "testcomponent";
+    public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
+    public static final String TEST_OLD_PROJECT_NAME_PREFIX = "testproject"; // Prefix used to create tests earlier before update the format to TEST_PROJECT_NAME_PREFIX
+    public static final String TEST_COMPONENT_NAME = "automationtestcomponent";
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
     public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
     public static final String GITHUB_AUTH_HEADER_PREFIX = "token ";
@@ -36,7 +37,8 @@ public final class Constant {
     public static final String DEV_ENVIRONMENT = "dev";
 
     public static final String USER_CONNECTORS_ENDPOINT_SUFFIX = "/user-connectors";
-    public static final String TEST_CONNECTOR_VISIBILITY = "public";
+    public static final String X_CORRELATION_UUID = UUID.randomUUID().toString();
+    public static final String TEST_CONNECTOR_VISIBILITY = "private";
     public static final String TEST_CONNECTOR_VERSION = "1.0.0";
     // API Proxy related constants
     public static final String DEFAULT_API_NAME = "DefaultAPI";

@@ -50,12 +50,12 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_USERNAME
-                      name: env-choreo-program-db
+                      name: cm-choreo-program-db-cp
                 - name: CHOREO_DB_DRIVER
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_DRIVER
-                      name: env-choreo-program-db
+                      name: cm-choreo-program-db-cp
                 - name: CHOREO_PROGRAM_DB_HOST
                   valueFrom:
                     configMapKeyRef:
@@ -65,7 +65,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_PORT
-                      name: env-choreo-program-db
+                      name: cm-choreo-program-db-cp
                 - name: CHOREO_PROGRAM_DB_PASSWORD
                   valueFrom:
                     secretKeyRef:

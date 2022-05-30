@@ -14,6 +14,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.email.EmailUtils;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -42,9 +43,8 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
     @BeforeClass
-    public void beforeClass() throws Exception, TokenRetrievalException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+    public void beforeClass() throws Exception {
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test

@@ -32,6 +32,7 @@ describe("Verify manual trigger creation functionality", () => {
   const PROJECT_DESCRIPTION = "Manual Trigger";
   before(() => {
     LoginPage.login();
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -54,6 +55,6 @@ describe("Verify manual trigger creation functionality", () => {
   });
 
   it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteManualTriggerToProd();
   });
 });

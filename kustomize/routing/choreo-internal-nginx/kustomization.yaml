@@ -20,6 +20,7 @@ kind: Kustomization
 resources:
   - deployment
   - hpa
+  - netpol
   - pdb
   - service
 

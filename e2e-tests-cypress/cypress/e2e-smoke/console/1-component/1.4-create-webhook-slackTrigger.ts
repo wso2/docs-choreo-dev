@@ -38,6 +38,7 @@ describe("Verify webhook creation functionality", () => {
 
   before(()=>{
     LoginPage.login()
+    ChoreoHomePage.switchOrganization();
   })
   after(()=>{
     ChoreoHomePage.logout()
@@ -88,7 +89,7 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Component promotion to prod", () => {
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteWebHookToProd();
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 

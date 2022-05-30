@@ -78,7 +78,7 @@ spec:
                       name: secret-datalake
               envFrom:
                 - configMapRef:
-                    name: env-logsarchiver
+                    name: cm-logsarchiver-cp
               resources:
                 limits:
                   cpu: 300m
