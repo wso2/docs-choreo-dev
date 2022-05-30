@@ -102,7 +102,7 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testGroupedLogs() throws IOException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException, ReleaseIdNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
+    public void testSystemMetrics() {
         String requestPath = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX
                 .concat(obsId)
                 .concat("/metricsV2");
@@ -127,11 +127,11 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
                 .message()
                 .type(MessageType.JSON)
                 .validate(jsonPath()
-                        .expression("$.data.keySet()", hasItems("columns", "rows"))
-                        .expression("$.data.columns[*].name", hasItems("cpu", "memory", "cpuPercentage", "memoryPercentage", "TimeGenerated"))
-                        .expression("$.data.columns[*].type", hasItems("dynamic", "dynamic", "dynamic", "dynamic", "dynamic"))
-                        .expression("$.data.rows.size()", greaterThan(1))
-                        .expression("$.data.rows[*]", allOf(is(not(emptyString()))))
+                        .expression("$.keySet()", hasItems("columns", "rows"))
+                        .expression("$.columns[*].name", hasItems("cpu", "memory", "cpuPercentage", "memoryPercentage", "TimeGenerated"))
+                        .expression("$.columns[*].type", hasItems("dynamic", "dynamic", "dynamic", "dynamic", "dynamic"))
+                        .expression("$.rows.size()", greaterThan(0))
+                        .expression("$.rows[*]", allOf(is(not(emptyString()))))
                 )
         );
     }

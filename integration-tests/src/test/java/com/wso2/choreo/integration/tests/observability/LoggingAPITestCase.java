@@ -117,9 +117,6 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    System.out.println("payload" + message.getPayload().toString());
-                })
                 .validate(jsonPath()
                         .expression("$.keySet()", hasItems("columns", "rows"))
                         .expression("$.columns.size()", greaterThan(1))
@@ -158,9 +155,6 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    System.out.println("payload" + message.getPayload().toString());
-                })
                 .validate(jsonPath()
                         .expression("$.keySet()", hasItems("columns", "rows"))
                         .expression("$.columns.size()", greaterThan(1))

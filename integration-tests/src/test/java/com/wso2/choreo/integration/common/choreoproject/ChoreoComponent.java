@@ -738,7 +738,6 @@ public abstract class ChoreoComponent {
     }
 
     public void waitForObservabilityLogs(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException {
-        System.out.println("waiting till observe data appear");
         String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
                 .concat(obsId)
                 .concat("/logsV2");
@@ -756,7 +755,7 @@ public abstract class ChoreoComponent {
         HttpGet request = new HttpGet(builder.build());
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
-        while (attempts < 500) {
+        while (attempts < 50) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                  CloseableHttpResponse response = httpClient.execute(request)) {
                 int statusCode = response.getStatusLine().getStatusCode();
@@ -764,20 +763,18 @@ public abstract class ChoreoComponent {
                 if (statusCode != HttpStatus.OK.value()) {
                     throw new ObservabilityLogsCheckException(statusCode, responseBody);
                 }
-                System.out.println("status code " + statusCode);
                 int count = new JsonParser()
                         .parse(responseBody)
                         .getAsJsonObject()
                         .getAsJsonArray("rows")
                         .size();
-                System.out.println("response body " + attempts + " : " + responseBody);
                 if (count > 0) {
                     break;
                 }
                 log.debug("Observability logs has not appeared, trying again. Attempt : " + attempts);
                 Thread.sleep(6000);
                 attempts++;
-                if (attempts == 500) {
+                if (attempts == 50) {
                     log.warn("Exceeding maximum number of attempts for checking observability logs.");
                     throw new ObservabilityLogsNotFoundException();
                 }
@@ -786,7 +783,6 @@ public abstract class ChoreoComponent {
     }
 
     public void waitForObservabilitySystemMetrics(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilitySystemMetricsCheckException, ObservabilitySystemMetricsNotFoundException {
-        System.out.println("waiting till observe data appear");
         String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
                 .concat(obsId)
                 .concat("/metricsV2");
@@ -795,15 +791,15 @@ public abstract class ChoreoComponent {
         log.info("Waiting till observability data appear");
         URIBuilder builder = new URIBuilder(requestURI);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+        builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusDays(1)))
+                .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).plusMinutes(10)))
                 .setParameter("releaseId", releaseId)
                 .setParameter("namespace", namespace)
                 .setParameter("interval", "15");
         HttpGet request = new HttpGet(builder.build());
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
-        while (attempts < 500) {
+        while (attempts < 50) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                  CloseableHttpResponse response = httpClient.execute(request)) {
                 int statusCode = response.getStatusLine().getStatusCode();
@@ -811,20 +807,18 @@ public abstract class ChoreoComponent {
                 if (statusCode != HttpStatus.OK.value()) {
                     throw new ObservabilitySystemMetricsCheckException(statusCode, responseBody);
                 }
-                System.out.println("status code " + statusCode);
                 int count = new JsonParser()
                         .parse(responseBody)
                         .getAsJsonObject()
                         .getAsJsonArray("rows")
                         .size();
-                System.out.println("response body " + attempts + " : " + responseBody);
                 if (count > 0) {
                     break;
                 }
                 log.debug("Observability system metrics has not appeared, trying again. Attempt : " + attempts);
                 Thread.sleep(6000);
                 attempts++;
-                if (attempts == 500) {
+                if (attempts == 50) {
                     log.warn("Exceeding maximum number of attempts for checking observability system metrics.");
                     throw new ObservabilitySystemMetricsNotFoundException();
                 }
