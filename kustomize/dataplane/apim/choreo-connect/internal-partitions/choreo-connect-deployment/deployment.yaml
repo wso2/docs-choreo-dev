@@ -22,7 +22,7 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
-  name: choreo-connect-deployment-internal
+  name: choreo-connect-deployment
 spec:
   replicas: 2
   strategy:
@@ -32,11 +32,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      choreo.component: choreo-connect-deployment-internal
+      choreo.component: choreo-connect-deployment
   template:
     metadata:
       labels:
-        choreo.component: choreo-connect-deployment-internal
+        choreo.component: choreo-connect-deployment
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -56,7 +56,7 @@ spec:
               readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: enforcer-truststore
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
             - name: enforcer-truststore
@@ -67,9 +67,9 @@ spec:
               readOnly: true
               subPath: ENFORCER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-enforcer-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ENFORCER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/jwt/key.pem
               name: secret-mgw-enforcer-jwt-keystore
               readOnly: true
@@ -161,17 +161,17 @@ spec:
         - name: choreo-connect-router
           volumeMounts:
             - mountPath:  /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-router-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-router-keystore
               readOnly: true
               subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: secret-mgw-router-truststore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_TRUSTSTORE
+              subPath: mg.pem
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
@@ -257,6 +257,9 @@ spec:
         - name: enforcer-config
           configMap:
             name: mgw-adapter-enforcer-conf
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
         - name: secret-mgw-enforcer-keystore
           csi:
             driver: secrets-store.csi.k8s.io
@@ -279,14 +282,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-router-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-router-truststore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-router-truststore
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: dropins-vol

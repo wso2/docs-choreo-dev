@@ -92,6 +92,27 @@ export class LoginPage {
     });
   }
 
+  static enterpriseLogin() {
+    cy.visit(Cypress.env("enterpriseLoginUrl"))
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", { timeout: 180000 });
+
+    cy.get('button[id="enterprise-sign-in"]').click()
+
+    cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
+    cy.contains('Continue').click();
+
+    cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
+    cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false });
+    cy.contains('Continue').click();
+
+    cy.get('[data-testid="header-user-profile-menu"]', {
+        timeout: 180000,
+    }).should("be.visible");
+
+    this.persistLogoutURL();
+  }
+
   private static persistLogoutURL() {
     cy.window()
       .its("sessionStorage")
