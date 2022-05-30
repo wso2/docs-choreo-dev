@@ -53,38 +53,43 @@ public class RestApiChoreoComponent extends ChoreoComponent {
             ComponentInvokeInformationCheckException, NoLatestApiVersionFoundException, IOException,
             InterruptedException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeInformationNotFoundException, InvokeAPICheckException {
         InvokeInformation invokeInformation = getInvokeInformation(accessToken, componentType, environment);
-        String requestURI = invokeInformation.getInvokeUrl()
-                .concat("/")
-                .concat("greeting")
-                .concat("?name=testUser");
-        // Escaping the quotations
-        String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
-        int iteration = 0;
-        HttpGet request = new HttpGet(requestURI);
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-        request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
-        request.setHeader("API-Key", apiKey);
+        try {
+            String requestURI = invokeInformation.getInvokeUrl()
+                    .concat("/")
+                    .concat("greeting")
+                    .concat("?name=testUser");
+            // Escaping the quotations
+            String apiKey = getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+            int iteration = 0;
+            HttpGet request = new HttpGet(requestURI);
+            request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+            request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
+            request.setHeader("API-Key", apiKey);
 
-        while (iteration < count) {
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
-                    // Adding a sleep for invocation, otherwise upstream connect error occurs
-                    log.debug("API is not deployed yet, and waiting to retry");
-                    Thread.sleep(3000);
-                    continue;
+            while (iteration < count) {
+                try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                     CloseableHttpResponse response = httpClient.execute(request)) {
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    String responseBody = EntityUtils.toString(response.getEntity());
+                    if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
+                        // Adding a sleep for invocation, otherwise upstream connect error occurs
+                        log.debug("API is not deployed yet, and waiting to retry");
+                        Thread.sleep(3000);
+                        continue;
+                    }
+                    if (statusCode != HttpStatus.OK.value()) {
+                        throw new InvokeAPICheckException(statusCode, responseBody);
+                    }
+                    // Waiting 2 seconds to avoid choreo extenstion sampling
+                    if (iteration % 2 == 0) {
+                        Thread.sleep(1000);
+                    }
+                    iteration++;
                 }
-                if (statusCode != HttpStatus.OK.value()) {
-                    throw new InvokeAPICheckException(statusCode, responseBody);
-                }
-                // Waiting 2 seconds to avoid choreo extenstion sampling
-                if (iteration % 2 == 0) {
-                    Thread.sleep(1000);
-                }
-                iteration++;
             }
+        } catch (NullPointerException e) {
+            throw new InvokeInformationNotFoundException();
         }
+
     }
 }
