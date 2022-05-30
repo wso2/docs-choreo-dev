@@ -28,6 +28,16 @@ export class GraphQL {
     });
   }
 
+  static deleteUsersProjects(orgs:[],token:string){
+    orgs.forEach(org=>{
+      const {id,handle} = org
+      cy.log(id)
+      cy.log(handle)
+      this.deleteProjectsCreatedByTests(id,handle,token)
+    })
+    
+  }
+
   static deleteProjectsCreatedByTests(
     orgId: number,
     orgHandle: string,
@@ -284,7 +294,16 @@ export class GraphQL {
   }
 
   private static deprecateComponent(apiId: string, token: string) {
-    const { uuid } = Cypress.env("userData");
+    // let uuid =""
+    // if(Cypress.env("isPrivateOrg")){
+    //    uuid ="c29cf63e-e5bc-488e-998a-81866d2b266b"
+    // }else{
+    //     uuid  = Cypress.env("userData")["uuid"];
+    // }
+
+    const {uuid} =  Cypress.env("current_org");
+    cy.log(`Current UUID ==> ${uuid}`)
+   
     const statusRequest = `${Cypress.env(
       "apimSvcURL"
     )}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
@@ -337,7 +356,14 @@ export class GraphQL {
   }
 
   private static deleteConnectors(token: string) {
-    const { handle } = Cypress.env("userData");
+   const {handle} =  Cypress.env("current_org");
+    // let handle =""
+    // if(Cypress.env("isPrivateOrg")){
+    //    handle ="privatedatatplanetests"
+    // }else{
+    //     handle  = Cypress.env("userData")["handle"];
+    // }
+    cy.log(`Current handle ==> ${handle}`)
     const headers = {
       Authorization: `Bearer ${token}`,
     };

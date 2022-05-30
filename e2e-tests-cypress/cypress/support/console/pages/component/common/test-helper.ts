@@ -22,12 +22,14 @@ import { SwaggerUI } from "../UI-components/swagger-UI-component";
 export class TestHelper {
   public static testOnSwagger(
     env: Environment,
-    resourcePath: string
+    resourcePath: string,
+    key: string = "",
+    value: string = ""
   ) {
     APITest.testAPI();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(resourcePath);
+    SwaggerUI.invokeResource(resourcePath,key,value);
 
     return SwaggerUI.getResponseCode().then((res) => {
       return SwaggerUI.GetResponse().then((r) => {
@@ -39,11 +41,34 @@ export class TestHelper {
     });
   }
 
-  public static testOnCurl(env: Environment, httpMethod: HTTPMethod) {
+  public static testOnCurl(env: Environment, httpMethod: HTTPMethod,pathParm:string,queryParameters1=[]) {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(env);
     Curl.selectMethod(httpMethod);
-    Curl.enterPathParameter("intensity");
-    return Curl.getRequestComponents(`${env}intensity`);
+    Curl.enterPathParameter(pathParm);
+    Curl.addQueryParameter(queryParameters1);
+    return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 }
+
+// static invokeResource(
+//   resource: string,
+//   key: string = "",
+//   value: string = ""
+// ) {
+//   this.SelectResource(resource);
+//   this.TryoutAPI();
+//   if (key) {
+//     this.enterValue(key, value);
+//   }
+//   this.ExecuteResourceFunction(resource);
+// }
+// }
+// ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
+// ComponentTestPage.getTestKey();
+// SwaggerUI.SelectResource("root");
+// SwaggerUI.TryoutAPI();
+// SwaggerUI.enterValue("number", "2");
+// SwaggerUI.ExecuteResourceFunction("root");
+// SwaggerUI.GetResponse().should("eq", "4");
+// SwaggerUI.getResponseCode().should("eq", "200");

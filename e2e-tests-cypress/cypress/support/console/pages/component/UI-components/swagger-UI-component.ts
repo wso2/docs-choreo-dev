@@ -27,7 +27,7 @@ export class SwaggerUI {
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
-  static ExecuteResourceFunction(resource) {
+  static ExecuteResourceFunction(resource="_get") {
     cy.get(`div[id*="${resource}"] .execute-wrapper>button`).click();
     cy.log("Execution is successful");
   }

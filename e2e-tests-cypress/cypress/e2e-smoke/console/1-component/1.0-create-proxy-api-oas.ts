@@ -34,7 +34,7 @@ describe("Create proxy api using existing url", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Creating and publishing an API from open API specification", () => {
+  it.skip("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
