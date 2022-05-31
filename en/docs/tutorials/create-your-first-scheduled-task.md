@@ -37,7 +37,7 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
     Then click **Create**.
 
-    This takes you to the **Components** page shown below.
+    As a result, the **Components** page opens as shown below.
 
     ![Create component](../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
 
