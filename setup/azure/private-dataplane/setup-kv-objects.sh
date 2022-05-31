@@ -36,17 +36,17 @@ openssl req -x509 -sha256 -nodes -days 10950 -newkey rsa:2048 -keyout primary.ke
 echo "--- Generating TLS, Internal and Primary Keystore PFX files ---"
 
 TLS_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
-openssl pkcs12 -export -out tls-keystore.pfx -inkey wso2carbon.key -in wso2carbon.pem -name wso2carbon -password pass:${TLS_KEYSTORE_PWD}
+openssl pkcs12 -export -out tls-keystore.pfx -inkey wso2carbon.key -in wso2carbon.pem -name wso2carbon -password pass:"${TLS_KEYSTORE_PWD}"
 
 echo "TLS Keystore Password is: ${TLS_KEYSTORE_PWD}"
 
 INTERNAL_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
-openssl pkcs12 -export -out internal-keystore.pfx -inkey internal.key -in internal.pem -name internal -password pass:${INTERNAL_KEYSTORE_PWD}
+openssl pkcs12 -export -out internal-keystore.pfx -inkey internal.key -in internal.pem -name internal -password pass:"${INTERNAL_KEYSTORE_PWD}"
 
 echo "Internal Keystore Password is: ${INTERNAL_KEYSTORE_PWD}"
 
 PRIMARY_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
-openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.pem -name primary -password pass:${PRIMARY_KEYSTORE_PWD}
+openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.pem -name primary -password pass:"${PRIMARY_KEYSTORE_PWD}"
 
 echo "Primary Keystore Password is: ${PRIMARY_KEYSTORE_PWD}"
 
@@ -72,8 +72,7 @@ sed -i "s/apim_INTERNAL_KEYSTORE_KEY_PSWD/${INTERNAL_KEYSTORE_PWD}/g" ${SECRET_F
 sed -i "s/apim_TRUSTSTORE_PSWD/${apim_TRUSTSTORE_PSWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_H2_SHARED_DB_PSWD/${apim_H2_SHARED_DB_PSWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/asb_CONNECTION_STRING/${asb_CONNECTION_STRING}/g" ${SECRET_FILE_PATH}
-sed -i "s/apim_ANALYTICS_AUTH_TOKEN_PROD/${apim_ANALYTICS_AUTH_TOKEN_PROD}/g" ${SECRET_FILE_PATH}
-sed -i "s/apim_ANALYTICS_AUTH_TOKEN_DEV/${apim_ANALYTICS_AUTH_TOKEN_DEV}/g" ${SECRET_FILE_PATH}
+sed -i "s/apim_ANALYTICS_AUTH_TOKEN/${apim_ANALYTICS_AUTH_TOKEN}/g" ${SECRET_FILE_PATH}
 sed -i "s/CUSTOMER_NAME/${CUSTOMER_NAME}/g" ${SECRET_FILE_PATH}
 sed -i "s/ga_PASSWORD/${GA_PWD}/g" ${SECRET_FILE_PATH}
 
