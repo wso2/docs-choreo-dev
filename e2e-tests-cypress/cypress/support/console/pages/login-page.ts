@@ -49,8 +49,6 @@ export class LoginPage {
         sameSite: "no_restriction",
       });
     });
-
-    window.localStorage.setItem("hideSocialShareModel", "true");
   }
 
   static navigateToCodespace() {
