@@ -47,7 +47,7 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
     2. In the **Name** field, enter `us-population-stats` and click **Next**. The **Scheduled Task** dialog box opens.
 
-    3. For this tutorial, let's create the scheduled task configuration in a Choreo-managed repository. Therefore, leave the **Choreo-managed repository** selected (as by default) and click **Create**.
+    3. For this tutorial, let's save the scheduled task implementation in a Choreo-managed repository. Therefore, leave the **Choreo-managed repository** selected (as by default) and click **Create**.
        
     As a result, this Scheduled Task component opens on a separate page.
 
@@ -60,9 +60,9 @@ Let's design the functionality of the scheduled task by following this procedure
     !!! info
         Opening the Web Editor may take a little while if you are a first-time user.
 
-    The low-code diagram that you can see in the Web Editor is the default scheduled task configuration created by Choreo.
+    The low-code diagram that you can see in the Web Editor is the default scheduled task implementation created by Choreo.
 
-2. First, let's clean up the Web Editor by removing the default scheduled task configuration that you will not be using. To do this, hover over it and click the delete icon.
+2. First, let's clean up the Web Editor by removing the default scheduled task implementation that you will not be using. To do this, hover over it and click the delete icon.
 
     ![Hover over main function](../assets/img/tutorials/scheduled-task/hover-over-main-function.png){.cInlineImage-half}
 
@@ -150,7 +150,7 @@ To check whether the scheduled task is executable, click **Run**.
 
 ![Run scheduled task](../assets/img/tutorials/scheduled-task/run-scheduled-task.png){.cInlineImage-half}
 
-If the scheduled task configuration is free of errors, the following appears in the terminal log.
+If the scheduled task implementation is executable, the following appears in the terminal log.
 
  ```
  Running executable
@@ -158,7 +158,7 @@ If the scheduled task configuration is free of errors, the following appears in 
 
 ### Step 1.4: Sync changes with Choreo Console
 
-The scheduled task configuration you created is currently only saved in the Web Editor. To deploy it and run it, you need to push this configuration to the Choreo Console by saving it in a GitHub repository. To do this, follow this procedure:
+The scheduled task implementation you created is currently only saved in the Web Editor. To deploy it and run it, you need to push this implementation to the Choreo Console by saving it in a GitHub repository. To do this, follow this procedure:
 
 !!! info
     You are saving the scheduled task in a Choreo-maintained repository as specified in [Step 1.1: Create a new project and add a scheduled task component](#step-11-create-a-new-project-and-add-a-scheduled-task-component).
@@ -188,7 +188,12 @@ Once the Web Editor has successfully pushed the changes to the GitHub repository
 
 ## Step 2: Deploy
 
- Once you have developed a scheduled task and synced its configuration to the Choreo Console, you need to deploy it to be able to run it. To deploy it, follow this procedure:
+Once you have developed a scheduled task implementation and synced it to the Choreo Console, you need to deploy it to be able to run it.
+
+!!! info
+    When you deploy the REST API, Choreo gets the REST API implementation from the Git repository where you previously saved it and deploys it in a Kubernetes container.
+
+To deploy it, follow this procedure:
 
 1. Navigate back to the Choreo Console. Be sure that you are currently viewing your scheduled task on the **Components** page.
 
@@ -198,9 +203,9 @@ Once the Web Editor has successfully pushed the changes to the GitHub repository
 
     As a result, the **Configure & Deploy** panel appears on the right of the page.
  
-2. To run the scheduled task every two minutes, enter `2` in the **Every** field. 
+3. To run the scheduled task every two minutes, enter `2` in the **Every** field. 
 
-3. Click **Deploy** in the **Configure & Deploy** panel.
+4. Click **Deploy** in the **Configure & Deploy** panel.
 
 Once the deployment process is complete, a message appears to notify you of it. From the time you deploy a scheduled task, it starts running continuously, retrieving the population of the USA every two minutes until you undeploy it.
 
