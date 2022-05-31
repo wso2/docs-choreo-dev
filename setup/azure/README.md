@@ -105,6 +105,7 @@ EOF
 
 ```bash
 CLUSTER_NAME=xxxxxxxxxxxxxxxxx
+CUSTOMER_NAME=xxx
 ROUTING_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
 LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
 LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
