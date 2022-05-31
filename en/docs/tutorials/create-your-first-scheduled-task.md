@@ -47,7 +47,7 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
     2. In the **Name** field, enter `us-population-stats` and click **Next**. The **Scheduled Task** dialog box opens.
 
-    3. For this tutorial, let's save the scheduled task implementation in a Choreo-managed repository. Therefore, leave the **Choreo-managed repository** selected (as by default) and click **Create**.
+    3. In this tutorial, let's save the scheduled task implementation in a Choreo-managed repository. Therefore, leave the **Choreo-managed repository** selected (as by default) and click **Create**.
        
     As a result, this Scheduled Task component opens on a separate page.
 
