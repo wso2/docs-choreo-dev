@@ -43,7 +43,7 @@ First, let's create a new project and add a Scheduled Task component to it as fo
 
 3. Add a component as follows:
 
-    1. On the Components page, click **Create**, and then click **Scheduled Task**.
+    1. On the Components page, click **Create** and click **Scheduled Task**.
 
     2. In the **Name** field, enter `us-population-stats` and click **Next**. The **Scheduled Task** dialog box opens.
 
@@ -76,7 +76,7 @@ Let's design the functionality of the scheduled task by following this procedure
 
     In the panel that appears on the right of the page, click **Save** to proceed with the default settings.
 
-4. To define the functionality of the scheduled task, you can update the low-code diagram that appears below the construct you added.
+4. To define the functionality of the scheduled task, you can update the low-code diagram that appears for the construct you added.
 
     You can start the design by adding and configuring the World Bank connector in Choreo so that you can extract the population of the United States using it. To add it, follow this procedure:
 
@@ -96,7 +96,7 @@ Let's design the functionality of the scheduled task by following this procedure
    
 5. Let's add a variable to get the output of the World Bank connector by following the procedure below:
 
-    1. Click the last **+** icon in the low-code diagram, and then click **Variable**.
+    1. Click the last **+** icon in the low-code diagram and click **Variable**.
    
     2. In the **Variable** panel that opens on the right of the page, enter the following information:
 
@@ -171,7 +171,7 @@ The scheduled task implementation you created is currently only saved in the Web
 
     ![Commit message](../assets/img/tutorials/scheduled-task/commit-message.png){.cInlineImage-full}
 
-    Select **Yes** in the message that appears. This will stage your changes.
+    Select **Yes** in the message that appears. As a result, Choreo stages your changes.
 
 3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom panel.
 
