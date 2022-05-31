@@ -66,6 +66,7 @@ export class ChoreoHomePage {
 
   static switchOrganization() {
     const pdpOrg = Cypress.env("isPrivateOrg");
+    cy.log(pdpOrg);
     const orgName = Cypress.env("privateOrgName")
     if (pdpOrg) {
       cy.get("#org-picker").click();
