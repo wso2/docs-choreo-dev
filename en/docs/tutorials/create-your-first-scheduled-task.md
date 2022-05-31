@@ -10,7 +10,7 @@ In the low-code editor, you can easily design complex processes that Choreo can 
 
 To try it out, let's consider a scenario where a statistician needs to monitor the USA population every two minutes to present an analysis. In this tutorial, you will do the following to address this requirement:
 
-- Desig and implement the process to capture the required statistics.
+- Design and implement the process to capture the required statistics.
 - Set the time interval at which the scheduled task needs to run.
 - Observe whether the scheduled task is functioning as expected.
 
