@@ -522,15 +522,10 @@ public abstract class ChoreoComponent {
             }
             JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
             JsonArray environmentInfoArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("environments");
-            try {
-                for (JsonElement environmentInfo : environmentInfoArray) {
-
-                    if (environmentInfo.getAsJsonObject().get("choreoEnv").getAsString().equals(environment)) {
-                        return environmentInfo.getAsJsonObject().get("namespace").getAsString();
-                    }
+            for (JsonElement environmentInfo : environmentInfoArray) {
+                if (environmentInfo.getAsJsonObject().has("choreoEnv") && environmentInfo.getAsJsonObject().get("choreoEnv").getAsString().equals(environment)) {
+                    return environmentInfo.getAsJsonObject().get("namespace").getAsString();
                 }
-            } catch (NullPointerException e) {
-                throw new NamespaceNotFoundException();
             }
             throw new NamespaceNotFoundException();
         }
