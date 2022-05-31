@@ -176,7 +176,7 @@ The scheduled task configuration you created is currently only saved in the Web 
 3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom panel.
 
     !!! tip
-        This link appears only after the system completes the committing process.
+        This link appears after the system completes the committing process.
 
     ![Push changes](../assets/img/tutorials/scheduled-task/push-changes.png){.cInlineImage-full}
 
