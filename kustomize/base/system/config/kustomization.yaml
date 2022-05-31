@@ -256,6 +256,7 @@ configMapGenerator:
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - API_SERVER_URL=http://api-server
+      - GCHAT_URL=https://chat.googleapis.com
   - name: cm-logsarchiver-cp
     behavior: create
     literals:
