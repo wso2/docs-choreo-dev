@@ -150,7 +150,7 @@ To check whether the scheduled task is executable, click **Run**.
 
 ![Run scheduled task](../assets/img/tutorials/scheduled-task/run-scheduled-task.png){.cInlineImage-half}
 
-If the scheduled task implementation is executable, the following appears in the terminal log.
+If the scheduled task implementation is executable, the following appears in the terminal.
 
  ```
  Running executable
@@ -158,7 +158,7 @@ If the scheduled task implementation is executable, the following appears in the
 
 ### Step 1.4: Sync changes with Choreo Console
 
-The scheduled task implementation you created is currently only saved in the Web Editor. To deploy it and run it, you need to push this implementation to the Choreo Console by saving it in a GitHub repository. To do this, follow this procedure:
+The scheduled task implementation you created is currently only saved in the Web Editor. To deploy and run it, you need to push this implementation to a Git repository from where the Choreo Console can read it. To do this, follow this procedure:
 
 !!! info
     You are saving the scheduled task in a Choreo-maintained repository as specified in [Step 1.1: Create a new project and add a scheduled task component](#step-11-create-a-new-project-and-add-a-scheduled-task-component).
