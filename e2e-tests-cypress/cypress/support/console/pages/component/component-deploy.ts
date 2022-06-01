@@ -28,23 +28,33 @@ export class ComponentDeployPage {
 
   static promoteToProd() {
     let isPrivateOrg = Cypress.env("isPrivateOrg");
-
+    window.localStorage.setItem("hideSocialShareModel", "true");
     if (isPrivateOrg) {
+      cy.get('[data-cyid="btn-api-settings"]', { timeout: 180000 }).should(
+        "have.length",
+        1
+      );
+      cy.wait(2000);
       cy.get('[data-cyid*="promote"]', { timeout: 120000 })
-        .eq(1)
+        .eq(1).focus()
         .should("be.visible");
       cy.wait(2000);
       cy.get('[data-cyid*="promote"]').eq(1).click();
-      cy.get('[id="securityHeaderInput"')
-        .should("have.length", 3)
+      cy.get('[id="securityHeaderInput"]')
+        .should("have.length", 2)
         .eq(2)
         .invoke("val")
         .should("not.be.empty");
     } else {
-      cy.get('[data-cyid*="promote"]',{ timeout: 180000 }).click();
-      cy.get('[id="securityHeaderInput"')
-        .should("have.length", 2)
-        .eq(1)
+      cy.get('[data-cyid="btn-api-settings"]', { timeout: 180000 }).should(
+        "have.length",
+        1
+      );
+      cy.wait(2000);
+      cy.get('[data-cyid*="promote"]', { timeout: 180000 }).focus().click();
+      cy.get('[id="securityHeaderInput"]')
+        .should("have.length", 1)
+        .eq(0)
         .invoke("val")
         .should("not.be.empty");
       cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
@@ -52,23 +62,13 @@ export class ComponentDeployPage {
       );
     }
   }
-  static deploy() {
-    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
-      .should("be.enabled")
-      .click();
-  }
 
   static deployToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
       .should("be.enabled")
       .click();
-    cy.get('[id="securityHeaderInput"]', { timeout: 180000 })
-      .invoke("val")
-      .should("not.be.empty");
-    cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
-      "not.be.disabled"
-    );
+   cy.get('[data-testid="btn-stop-redeploy"]', { timeout: 180000 }).should('be.visible')
   }
 
   static deployScheduleTask() {
@@ -77,13 +77,16 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cy.get("button:not([data-cyid])").contains("Deploy").click();
+
+  }
+
+  static promoteScheduleTask() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[value="*/1 * * * *"]', { timeout: 180000 }).should(
       "have.length",
       1
     );
-  }
-
-  static promoteScheduleTask() {
+    cy.wait(2000);
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
       .eq(0)
       .should("be.visible")
@@ -119,7 +122,8 @@ export class ComponentDeployPage {
   }
 
   static promoteManualTriggerToProd() {
-    cy.get('[data-cyid*="promote"]', { timeout: 180000 }).should("be.visible");
+    cy.get('[data-testid="no-invoke-url-info"]',{timeout:180000}).should('be.visible')
+    cy.get('[data-cyid*="promote"]', { timeout: 180000 }).focus().should("be.visible");
     cy.wait(2000);
     cy.get('[data-cyid*="promote"]').eq(0).should("be.enabled").click();
   }
@@ -151,12 +155,6 @@ export class ComponentDeployPage {
   static verifyProdInvokeURL() {
     let isPrivateOrg = Cypress.env("isPrivateOrg");
     if (isPrivateOrg) {
-      cy.get('[data-cyid="deployment-status"]')
-        .should("have.length", 3)
-        .eq(1)
-        .contains("Active")
-        .should("be.visible");
-
       cy.get('[data-cyid="text-field-invoke-url"] input', {
         timeout: 120000,
       }).should("have.length", 3);
@@ -166,11 +164,6 @@ export class ComponentDeployPage {
         .eq(2)
         .invoke("attr", "value");
     }
-    cy.get('[data-cyid="deployment-status"]')
-      .should("have.length", 2)
-      .eq(1)
-      .contains("Active")
-      .should("be.visible");
 
     cy.get('[data-cyid="text-field-invoke-url"] input', {
       timeout: 120000,

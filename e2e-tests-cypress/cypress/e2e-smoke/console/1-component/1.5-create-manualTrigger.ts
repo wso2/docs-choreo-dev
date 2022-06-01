@@ -51,7 +51,7 @@ describe("Verify manual trigger creation functionality", () => {
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deploy();
+    ComponentDeployPage.deployToDev();
   });
 
   it("Verify component promote to prod", () => {

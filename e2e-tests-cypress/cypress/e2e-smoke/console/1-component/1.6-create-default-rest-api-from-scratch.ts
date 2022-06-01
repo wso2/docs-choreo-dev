@@ -63,7 +63,7 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deploy();
+    ComponentDeployPage.deployToDev();
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
