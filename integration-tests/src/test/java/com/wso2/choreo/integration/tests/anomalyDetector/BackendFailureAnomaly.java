@@ -77,21 +77,25 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
 
       // Deployed components may get stopped automatically by Choreo. Therefore check if it's stopped (SUSPENDED) and redeploy if so
       JsonArray deployments = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
-      System.out.println(deployments);
       JsonElement passthroughDeployment = new JsonParser().parse("{}");
       for (JsonElement jsonElement : deployments) {
         if (jsonElement.getAsJsonObject().getAsJsonPrimitive("releaseId").getAsString().equals(passthroughReleaseId)) {
           passthroughDeployment = jsonElement;
           if (passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("SUSPENDED")){
+            log.info("Deployment is currently stopped. Redeploying now...");
             restApiComponent.redeploy(projectsAPIAccessToken, passthroughComponentId, passthroughReleaseId, Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE);
           }
+          while (!passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("ACTIVE")){
+            log.info("Waiting for redeployed component to become ready...");
+            Thread.sleep(10000);
+            deployments = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
+            for (JsonElement deployment : deployments) {
+              if (deployment.getAsJsonObject().getAsJsonPrimitive("releaseId").getAsString().equals(passthroughReleaseId)) {
+                passthroughDeployment = deployment;
+              }
+            }
+          }
         }
-      }
-      System.out.println("before while");
-      while (!passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("ACTIVE")){
-          log.info("Waiting for redeployed component to become ready...");
-          Thread.sleep(10000);
-          passthroughDeployment = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
       }
       testStartTimestamp = Instant.now().toEpochMilli();
   }
