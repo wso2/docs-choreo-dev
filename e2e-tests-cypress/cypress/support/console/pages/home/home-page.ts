@@ -66,8 +66,9 @@ export class ChoreoHomePage {
 
   static switchOrganization() {
     const pdpOrg = Cypress.env("isPrivateOrg");
-    const orgName = Cypress.env("privateOrgName")
-    if (pdpOrg) {
+    const orgName = Cypress.env("privateOrgName");
+    
+    if (pdpOrg && pdpOrg !== "False" && pdpOrg!=="false") {
       cy.get("#org-picker").click();
       cy.get(`[data-value="${orgName}"]`).click();
       LoginPage.persistApimToken();
