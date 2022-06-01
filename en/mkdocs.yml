@@ -82,7 +82,7 @@ nav:
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
-     - Enterprise Loging: references/enterprise-login.md
+     - Enterprise Login: references/enterprise-login.md
 # - Choreo DevOps: devops/overview.md
 # Extensions
 markdown_extensions:
