@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-################ Install GH runner ########
+################ Install GH Runners ########
 echo "--- Creating namespace actions-runner-system..."
 kubectl create namespace "${ENV}-actions-runner-system" --dry-run=client -o yaml | kubectl apply -f -
 
 helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
+helm repo update
 
 helm upgrade --install actions-runner-controller actions-runner-controller/actions-runner-controller  --version 0.18.0 --namespace "${ENV}-actions-runner-system" --set=authSecret.create=true \
     --set=authSecret.github_token="${GITHUB_TOKEN}" --set=githubWebhookServer.enabled=true --set=githubWebhookServer.ports[0].nodePort=33080 \
