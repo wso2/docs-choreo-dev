@@ -38,15 +38,6 @@ else
     echo "File ${azuredfile} not found"; exit 1
 fi
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-kubectl create ns reloader
-if [[ -f "../reloader.yaml" ]]; then
-    kubectl apply -n reloader -f ../reloader.yaml
-else
-    kubectl apply -n reloader -f reloader.yaml
-fi
-
 ############### Install Helm 3
 echo "--- Installing Helm 3..."
 helm3_installed="true"
@@ -80,50 +71,33 @@ command -v helm >/dev/null 2>&1 || {
 #    fi
 #}
 
-############### Install Certmanager
-echo "--- Installing Cert Manager..."
-kubectl create ns cert-manager
-kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --version v1.8.0 \
-  -n cert-manager \
-  --set installCRDs=true \
-  --set replicaCount=2 \
-  --set webhook.replicaCount=2 \
-  --set cainjector.replicaCount=2
-
-echo "--- Creating secrets for DNS-01 challenge..."
-DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id "${DNS01_CHALLENGE_CLIENT_ID}" --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
-kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
-
-echo "--- Installing Emberstack reflector..."
-
-helm repo add emberstack https://emberstack.github.io/helm-charts
-helm repo update
-helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
-
 echo "--- Creating AKS view cluster role binding to AAD"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
 sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
+############## Install Reloader
+echo "--- Installing Reloader..."
+bash routing/reloader/configure-reloader.sh
+
+echo "--- Installing Cert Manager..."
+bash routing/cert-manager/configure-cert-manager.sh
+
+echo "--- Installing Emberstack reflector..."
+bash routing/reflector/configure-reflector.sh
+
+echo "--- Creating secrets for DNS-01 challenge..."
+bash routing/lets-encrypt-certs/configure-lets-encrypt-certs.sh
+
 echo "--- Add OMS Agent Config"
-kubectl apply -f oms/container-azm-ms-agentconfig.yaml
+bash routing/oms-agent/configure-oms-agent.sh
 
 echo "--- Configure CSI Secret Store"
-bash routing/configure-csi-secret-store.sh
+bash routing/secret-store-csi-driver/configure-csi-secret-store.sh
 
 echo "--- Setup Routing Nginx Ingress Controller"
-bash routing/install-nginx-ingress.sh
-
-echo "--- Enable PDB for Cert Manager"
-kubectl apply -f cert-manager/pdb.yaml
+bash routing/nginx-ingress-controllers/configure-ingress-controllers.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
