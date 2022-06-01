@@ -15,3 +15,8 @@ command -v linkerd >/dev/null 2>&1 || {
         echo "Could not install linkerd cli. Unsupported operating system. Please manually install it.."
     fi
 }
+
+if [[ "${linkerd_installed}" == "false" ]]; then
+    echo "[FAILED] linkerd cli installation. See https://linkerd.io/2.11/getting-started/"
+    linkerd_installed=false
+fi
