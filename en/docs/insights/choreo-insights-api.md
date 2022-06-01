@@ -1331,10 +1331,10 @@ The granularity value for which data is retrieved.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>getGroupByValues</strong></td>
-<td valign="top">[<a href="#string">String</a>]</td>
+<td valign="top">[[<a href="#string">String</a>]]</td>
 <td>
 
-Returns a list of values by which you can group the data available for the selected <code>groupBy</code> field
+Returns a list of value sets by which you can group the data available for the selected <code>groupBy</code> fields.
 
 </td>
 </tr>
@@ -2255,11 +2255,11 @@ The environment name.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#environmenttype">EnvironmentType</a>!</td>
 <td>
 
-The environment type. A Choreo environment is labeled as <code>CHOREO</code>, and the on-premise environment is labeled as
-<code>ON_PREM</code>.
+The environment type. A Choreo environment is labeled as <code>CHOREO</code>, a private Choreo environment is labeled as
+<code>CHOREO_PRIVATE</code>, and the on-premise environment is labeled as <code>ON_PREM</code>.
 
 </td>
 </tr>
@@ -4522,6 +4522,43 @@ The search filter.
 </table>
 
 ## Enums
+
+### EnvironmentType
+
+Represents an error type.
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>CHOREO</strong></td>
+<td>
+
+The Choreo environments.
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>CHOREO_PRIVATE</strong></td>
+<td>
+
+The private data-plane Choreo environments.
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>ON_PREM</strong></td>
+<td>
+
+The On-Premise environments.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ### ErrorCodeType
 
