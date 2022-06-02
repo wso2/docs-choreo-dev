@@ -1,4 +1,4 @@
-# Choreo Enterprise Login
+# Enterprise Login
 
 Choreo's enterprise login feature allows your users residing in an external IdP (Identity Provider) to login into Choreo seamlessly without changing their credentials.
 
