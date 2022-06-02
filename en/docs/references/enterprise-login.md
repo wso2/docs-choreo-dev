@@ -19,7 +19,7 @@ Let's begin...
 ## Step 2: Configure enterprise login for your Choreo organization
 
 1. Expand the drop-down for your profile and click **Settings**.
-2. Click the **Copy Handle** button to copy the organization handler into the clipboard.
+2. Click the **Copy Handle** button to copy the organization handle into the clipboard.
      ![Copy organization name](../assets/img/references/enterprise-login/copy-organization-name.png){.cInlineImage-half}
 
 3. Next, As Choreo reserves the organization name to that specific user account, we need to create an organization on the Choreo IdP(Asgardeo) with the same name. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> using the credentials that was used to register to Choreo. 
