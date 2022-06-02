@@ -20,6 +20,8 @@
             <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedComponent"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.observability.SysObsAPITestCase"/>
         </classes>
     </test>
 </suite>
