@@ -1,8 +1,8 @@
 # Connect Your Own GitHub Repository to Choreo
 
-By default, Choreo provides a source repository from an internal Choreo-managed GitHub organization to maintain the source code of a Choreo component at the time you create it. This repository is created in a Choreo-owned GitHub organization and is not accessible to the user outside of Choreo. Therefore its not ideal for scenarios where multiple developers need to develop a component in collaboration.
+By default, Choreo provides a source repository from an internal Choreo-managed GitHub organization to maintain the source code of a Choreo component at the time of creation. This repository is created in a Choreo-owned GitHub organization and is not accessible to the user outside of Choreo. Therefore,  collaborative development is **not** recommended with the default approach.
 
-Choreo also allows you to connect your own GitHub repository to maintain the source code of components you create. This capability enables multiple developers to work together on a particular Choreo component by collaborating via pull requests on a shared repository. Furthermore, this allows the developers to keep the source repository within their control and adhere any enterprise specific best practices or development guildelines (PR checks, code analysis and styling preferences, etc.).
+Choreo supports collaborative development by allowing you to connect your own GitHub repository. This capability lets you maintain the source code of the components you create and enables collaborative-development on a particular Choreo component via pull requests on a shared repository. Furthermore, this allows the developers to keep the source repository within their control and adhere to enterprise-specific best practices or development guidelines (PR checks, code analysis, styling preferences, etc.).
 
 You can opt to connect your own GitHub repository to Choreo when you create any of the following components:
 - REST API
@@ -13,7 +13,7 @@ You can opt to connect your own GitHub repository to Choreo when you create any 
 If you want to connect your own GitHub repository during component creation in Choreo, you must follow these steps:
 
 !!! tip
-        As of now, Choreo does not allow you to connect GitHub repositories that have any existing [Ballerina](https://ballerina.io/) projects.
+       Currently, Choreo does not allow you to connect GitHub repositories containing [Ballerina](https://ballerina.io/) projects.
 
 1. Authorize Choreo to access your GitHub account.
 
@@ -31,12 +31,12 @@ If you want to connect your own GitHub repository during component creation in C
         
         However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-3. Select a **GitHub Account** and a **GitHub Repository** that has a **Choreo GitHub App** installation.
+3. Select a **GitHub Account** and a **GitHub Repository** having a **Choreo GitHub App** installation.
 
     !!! info
         If the selected repository is already integrated with Choreo to create a component, you cannot reuse it to create another Choreo component.
 
-4. Click **Create** to proceed with component initialization. This displays the following request:.
+4. Click **Create** to proceed with component initialization. You will see the following request:
 
     ![View pull request](../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
 
@@ -45,4 +45,4 @@ If you want to connect your own GitHub repository during component creation in C
    When you merge the pull request, it adds the necessary metadata files to connect your GitHub repository to Choreo so that you can proceed to create the component.
 7. Navigate back to the Choreo Console window and click **Edit Code** to develop the component depending on your requirement.
 
-When you connect your GitHub repository to Choreo, multiple developers can either use the same upstream repository to create a shared component in the same organization, develop and push changes to the respective tracking branch and eventually send a PR to the main branch. Developers can also create their forks from the shared upstream repository, connect to individual components, commit and send PRs to the upstream repository.
+When you connect your GitHub repository to Choreo, multiple developers can either use the same upstream repository to create a shared component in the same organization, develop and push changes to the respective tracking branch and eventually send a PR to the main branch. Developers can also create their forks from the shared upstream repository, connect to individual components, and commit and send PRs to the upstream repository.
