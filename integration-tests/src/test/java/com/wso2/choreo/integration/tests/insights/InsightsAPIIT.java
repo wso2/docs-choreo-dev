@@ -138,7 +138,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
                     Type collectionType = new TypeToken<Collection<Environment>>(){}.getType();
                     List<Environment> environmentList = gson.fromJson(environments.toString(), collectionType);
                     for (Environment env : environmentList) {
-                        if (env.getType().equals("CHOREO") && env.getName().equals("Development-Choreo")) {
+                        if (env.getType().equals("CHOREO") && env.getName().equals("Development")) {
                             environmentId = env.getId();
                             break;
                         }
