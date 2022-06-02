@@ -32,6 +32,19 @@ Let's begin...
    1. Organization name or handle. For example, “Stark Industries” or “starkindustries”
    2. Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu”.
 
+!!!info "Email Sample"       
+              Subject : [Stark Industries] Configure enterprise login
+              Content:
+                     Hi CS team,
+                     Configure enterprise login to my organization and please find the relevant information below.
+                     Organization name or handle
+                     Eg: “Stark Industries” or “starkindustries”
+
+
+                     Email domains specific to your organization
+                     Eg: “@stark.com”, “@starkindustries.com”, “@stark.eu”
+                     Thank you!
+
 That's it! 
 Once our support team configures an enterprise login for your organization, you will receive an Email.
 
