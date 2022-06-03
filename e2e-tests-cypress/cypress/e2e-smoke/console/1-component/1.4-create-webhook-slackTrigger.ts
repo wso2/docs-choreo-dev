@@ -33,7 +33,7 @@ describe("Verify webhook creation functionality", () => {
   const PROJECT_DESCRIPTION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding slacktrigger bal file";
-  
+  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
   
 
   before(()=>{
@@ -87,6 +87,12 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.configureAndDeploy("pkKgDNr5vGND364IsHzwGM7O");
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
+
+  it_privatedp("Component promotion to stg", () => {
+    ComponentDeployPage.promoteWebHookToSTG();
+    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
+  });
+
 
   it("Component promotion to prod", () => {
     ComponentDeployPage.promoteWebHookToProd();

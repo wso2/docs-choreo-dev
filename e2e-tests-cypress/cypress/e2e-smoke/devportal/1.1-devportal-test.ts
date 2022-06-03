@@ -91,6 +91,6 @@ describe("API overview comment and rating scenario", () => {
   it("Verify suspending Dev deployed component", () => {
     LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+    ComponentDeployPage.stopDevContainer();
   });
 });

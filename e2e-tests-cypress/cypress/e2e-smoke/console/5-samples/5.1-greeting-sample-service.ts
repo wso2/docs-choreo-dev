@@ -73,7 +73,7 @@ describe("Create Greeting sample in Choreo", () => {
 
   it("Verify suspending deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+    ComponentDeployPage.stopDevContainer();
   });
 
   it("Verify component deletion",()=>{
