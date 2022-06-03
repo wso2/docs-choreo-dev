@@ -32,17 +32,18 @@ export class ComponentDeployPage {
     if (isPrivateOrg) {
       cy.get('[data-cyid="btn-api-settings"]', { timeout: 180000 }).should(
         "have.length",
-        1
+        2
       );
       cy.wait(2000);
       cy.get('[data-cyid*="promote"]', { timeout: 120000 })
-        .eq(1).focus()
+        .eq(1)
+        .focus()
         .should("be.visible");
       cy.wait(2000);
       cy.get('[data-cyid*="promote"]').eq(1).click();
       cy.get('[id="securityHeaderInput"]')
         .should("have.length", 2)
-        .eq(2)
+        .eq(1)
         .invoke("val")
         .should("not.be.empty");
     } else {
@@ -68,7 +69,10 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
       .should("be.enabled")
       .click();
-   cy.get('[data-testid="btn-stop-redeploy"]', { timeout: 180000 }).should('be.visible')
+    this.closePopup();
+    cy.get('[data-testid="btn-stop-redeploy"]', { timeout: 180000 }).should(
+      "be.visible"
+    );
   }
 
   static deployScheduleTask() {
@@ -77,7 +81,7 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     cy.get("button:not([data-cyid])").contains("Deploy").click();
-
+    this.closePopup();
   }
 
   static promoteScheduleTask() {
@@ -101,6 +105,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
+    this.closePopup();
   }
 
   static addConfiguration(value: string) {
@@ -122,21 +127,58 @@ export class ComponentDeployPage {
   }
 
   static promoteManualTriggerToProd() {
-    cy.get('[data-testid="no-invoke-url-info"]',{timeout:180000}).should('be.visible')
-    cy.get('[data-cyid*="promote"]', { timeout: 180000 }).focus().should("be.visible");
+    cy.get('[data-testid="no-invoke-url-info"]', { timeout: 180000 }).should(
+      "be.visible"
+    );
+    cy.get('[data-cyid*="promote"]', { timeout: 180000 })
+      .focus()
+      .should("be.visible");
     cy.wait(2000);
     cy.get('[data-cyid*="promote"]').eq(0).should("be.enabled").click();
   }
 
   static promoteWebHookToProd() {
-    this.promoteToProd();
-    cy.wait(2000);
-    cy.get(".MuiCardContent-root button", { timeout: 120000 })
-      .contains("Next")
-      .click();
-    cy.get(".ConfigForm button", { timeout: 120000 })
-      .contains("Promote")
-      .click();
+    const isPrivateOrg = Cypress.env("isPrivateOrg");
+
+    if (isPrivateOrg) {
+      cy.get('[data-cyid*="promote"]').should("have.length", 1);
+      cy.wait(2000);
+      cy.get('[data-cyid*="promote"]').click();
+      cy.get(".MuiCardContent-root button", { timeout: 120000 })
+        .contains("Next", { timeout: 120000 })
+        .should("be.visible")
+        .click();
+      cy.get(".ConfigForm button", { timeout: 120000 })
+        .contains("Promote")
+        .click();
+    } else {
+      this.promoteToProd();
+      cy.wait(2000);
+      cy.get(".MuiCardContent-root button", { timeout: 120000 })
+        .contains("Next")
+        .should("be.visible")
+        .click();
+      cy.get(".ConfigForm button", { timeout: 120000 })
+        .contains("Promote")
+        .click();
+    }
+  }
+
+  static promoteWebHookToSTG() {
+    cy.get('[data-testid="securityHeaderInput"]')
+    .should("have.length", 1)
+    .eq(0)
+    .invoke("val")
+    .should("not.be.empty");
+      cy.wait(2000);
+      cy.get('[data-cyid*="promote"]').should('be.enabled').click();
+      cy.get(".MuiCardContent-root button", { timeout: 120000 })
+        .contains("Next", { timeout: 120000 })
+        .should("be.visible")
+        .click();
+      cy.get(".ConfigForm button", { timeout: 120000 })
+        .contains("Promote")
+        .click();
   }
 
   static verifyDevInvokeURL() {
@@ -182,17 +224,26 @@ export class ComponentDeployPage {
     this.stopProdContainer();
   }
 
-  private static stopDevContainer() {
+  public static stopDevContainer() {
     cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
   }
 
-  private static stopProdContainer() {
+  public static stopProdContainer() {
     cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
   }
 
-  private static stopStgContainer() {
+  public static stopStgContainer() {
     if (Cypress.env("isPrivateOrg")) {
       cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
     }
+  }
+
+  private static closePopup() {
+    cy.get('[title="Initialization is completed"]', { timeout: 180000 }).should(
+      "be.visible"
+    );
+    cy.get(".splitterH>div>div>div>div>div>div>div>button", { timeout: 180000 })
+      .should("be.visible")
+      .click();
   }
 }
