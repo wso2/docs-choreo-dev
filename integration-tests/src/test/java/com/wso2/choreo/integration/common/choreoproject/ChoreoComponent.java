@@ -45,10 +45,22 @@ import com.wso2.choreo.integration.common.exceptions.RedeployException;
 import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.common.exceptions.EnvironmentDetailsCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityDataCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NamespaceNotFoundException;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URISyntaxException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,10 +70,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -353,39 +367,39 @@ public abstract class ChoreoComponent {
                                     String versionId)
             throws GetDeploymentsStatusCheckException {
         String gqlQuery = "query {" +
-                    "  deployments(" +
-                    "    orgHandler: \"" + orgHandle + "\"" +
-                    "    orgUuid:\"" + orgUUID + "\"" +
-                    "    componentId: \"" + id + "\"" +
-                    "    versionId: \"" + versionId + "\"" +
-                    "  ) {" +
-                    "    environmentId" +
-                    "    environmentName" +
-                    "    configCount" +
-                    "    apiId" +
-                    "    releaseId" +
-                    "    build{" +
-                    "      buildId" +
-                    "      deployedAt" +
-                    "      commit {" +
-                    "        author {" +
-                    "          name" +
-                    "          date" +
-                    "          email" +
-                    "          avatarUrl" +
-                    "        }" +
-                    "        sha" +
-                    "        message" +
-                    "        isLatest" +
-                    "      }" +
-                    "    }" +
-                    "    invokeUrl" +
-                    "    versionId" +
-                    "    deploymentStatus" +
-                    "    version" +
-                    "    cron" +
-                    "  }" +
-                    "}";
+                "  deployments(" +
+                "    orgHandler: \"" + orgHandle + "\"" +
+                "    orgUuid:\"" + orgUUID + "\"" +
+                "    componentId: \"" + id + "\"" +
+                "    versionId: \"" + versionId + "\"" +
+                "  ) {" +
+                "    environmentId" +
+                "    environmentName" +
+                "    configCount" +
+                "    apiId" +
+                "    releaseId" +
+                "    build{" +
+                "      buildId" +
+                "      deployedAt" +
+                "      commit {" +
+                "        author {" +
+                "          name" +
+                "          date" +
+                "          email" +
+                "          avatarUrl" +
+                "        }" +
+                "        sha" +
+                "        message" +
+                "        isLatest" +
+                "      }" +
+                "    }" +
+                "    invokeUrl" +
+                "    versionId" +
+                "    deploymentStatus" +
+                "    version" +
+                "    cron" +
+                "  }" +
+                "}";
 
         try {
             JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
@@ -473,11 +487,12 @@ public abstract class ChoreoComponent {
     }
 
     /**
-     * Get Component environment information graphql query
+     * Get Component namespace for given environment
      *
-     * @return request body containing graphql query
+     * @return request namespace
      */
-    public String getComponentEnvironments() throws IOException {
+    public String getNamespaceForEnvironment(String accessToken, String environment) throws IOException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
+        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
         Writer writer = new StringWriter();
@@ -491,7 +506,29 @@ public abstract class ChoreoComponent {
             }
         };
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(gqlRequestPayload);
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new EnvironmentDetailsCheckException(statusCode, responseBody);
+            }
+            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray environmentInfoArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("environments");
+            for (JsonElement environmentInfo : environmentInfoArray) {
+                if (environmentInfo.getAsJsonObject().has("choreoEnv") && environmentInfo.getAsJsonObject().get("choreoEnv").getAsString().equals(environment)) {
+                    return environmentInfo.getAsJsonObject().get("namespace").getAsString();
+                }
+            }
+            throw new NamespaceNotFoundException();
+        }
     }
 
     /**
@@ -657,7 +694,7 @@ public abstract class ChoreoComponent {
         throw new ReleaseIdNotFoundException();
     }
 
-    public void waitTillObservabilityDataPopulate(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException {
+    public void waitTillObservabilityDataPopulate(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
         String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = getReleaseIdForEnvironment("dev");
         ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
@@ -682,6 +719,9 @@ public abstract class ChoreoComponent {
                  CloseableHttpResponse response = httpClient.execute(request)) {
                 int statusCode = response.getStatusLine().getStatusCode();
                 String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                    throw new ObservabilityDataCheckException(statusCode, responseBody);
+                }
                 int count = new JsonParser()
                         .parse(responseBody)
                         .getAsJsonObject()
@@ -701,6 +741,95 @@ public abstract class ChoreoComponent {
                 if (attempts == 10) {
                     log.warn("Exceeding maximum number of attempts for checking observability data.");
                     throw new ObservabilityDataNotFoundException();
+                }
+            }
+        }
+    }
+
+    public void waitForObservabilityLogs(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, URISyntaxException {
+        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
+                .concat(obsId)
+                .concat("/logsV2");
+
+        int attempts = 0;
+        log.info("Waiting till observability data appear");
+        URIBuilder builder = new URIBuilder(requestURI);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
+                .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                .setParameter("releaseId", releaseId)
+                .setParameter("namespace", namespace)
+                .setParameter("sort", "desc")
+                .setParameter("limit", "95");
+        HttpGet request = new HttpGet(builder.build());
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        while (attempts < 50) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                    throw new ObservabilityLogsCheckException(statusCode, responseBody);
+                }
+                int count = new JsonParser()
+                        .parse(responseBody)
+                        .getAsJsonObject()
+                        .getAsJsonArray("rows")
+                        .size();
+                if (count > 0) {
+                    break;
+                }
+                log.debug("Observability logs has not appeared, trying again. Attempt : " + attempts);
+                Thread.sleep(6000);
+                attempts++;
+                if (attempts == 50) {
+                    log.warn("Exceeding maximum number of attempts for checking observability logs.");
+                    throw new ObservabilityLogsNotFoundException();
+                }
+            }
+        }
+    }
+
+    public void waitForObservabilitySystemMetrics(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilitySystemMetricsCheckException, ObservabilitySystemMetricsNotFoundException {
+        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
+                .concat(obsId)
+                .concat("/metricsV2");
+
+        int attempts = 0;
+        log.info("Waiting till observability data appear");
+        URIBuilder builder = new URIBuilder(requestURI);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusDays(1)))
+                .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).plusMinutes(10)))
+                .setParameter("releaseId", releaseId)
+                .setParameter("namespace", namespace)
+                .setParameter("interval", "15");
+        HttpGet request = new HttpGet(builder.build());
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        while (attempts < 50) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                    throw new ObservabilitySystemMetricsCheckException(statusCode, responseBody);
+                }
+                int count = new JsonParser()
+                        .parse(responseBody)
+                        .getAsJsonObject()
+                        .getAsJsonArray("rows")
+                        .size();
+                if (count > 0) {
+                    break;
+                }
+                log.debug("Observability system metrics has not appeared, trying again. Attempt : " + attempts);
+                Thread.sleep(6000);
+                attempts++;
+                if (attempts == 50) {
+                    log.warn("Exceeding maximum number of attempts for checking observability system metrics.");
+                    throw new ObservabilitySystemMetricsNotFoundException();
                 }
             }
         }
@@ -741,7 +870,7 @@ public abstract class ChoreoComponent {
         request.setEntity(requestEntity);
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        CloseableHttpResponse response = httpClient.execute(request)) {
+             CloseableHttpResponse response = httpClient.execute(request)) {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity());
             if (statusCode != HttpStatus.SC_OK) {

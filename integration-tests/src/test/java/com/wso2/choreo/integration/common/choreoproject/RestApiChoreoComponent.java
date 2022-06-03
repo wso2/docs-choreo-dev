@@ -53,8 +53,11 @@ public class RestApiChoreoComponent extends ChoreoComponent {
             ComponentInvokeInformationCheckException, NoLatestApiVersionFoundException, IOException,
             InterruptedException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeInformationNotFoundException, InvokeAPICheckException {
         InvokeInformation invokeInformation = getInvokeInformation(accessToken, componentType, environment);
-        String requestURI = invokeInformation.getInvokeUrl()
-                .concat("/")
+        String requestURI = invokeInformation.getInvokeUrl();
+        if (requestURI == null) {
+            throw new InvokeInformationNotFoundException();
+        }
+        requestURI = requestURI.concat("/")
                 .concat("greeting")
                 .concat("?name=testUser");
         // Escaping the quotations
