@@ -113,12 +113,12 @@ export class ComponentDeployPage {
   static addConfiguration(value: string) {
     cy.contains("Configure & Deploy").should("be.visible").click();
     cy.get(".ConfigForm").then((frm) => {
-      const le = frm.find('[placeholder="Required value"]').length;
-      if (!le) {
+      const le = frm.find('.Mui-required').length;
+      if (le<2) {
         cy.get(".ConfigForm .MuiIconButton-label").click();
-        cy.get('[placeholder="Required value"]').type(value);
+        cy.get('.MuiFormControl-fullWidth>div>input').eq(1).type(value);
       } else {
-        cy.get('[placeholder="Required value"]').type(value);
+        cy.get('.MuiFormControl-fullWidth>div>input').eq(1).type(value);
       }
     });
     cy.get('button[type="submit"]').click();
