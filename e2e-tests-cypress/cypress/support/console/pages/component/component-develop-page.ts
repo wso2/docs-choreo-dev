@@ -93,7 +93,7 @@ export class ComponentDevelopPage {
     return cy.wrap(branches);
   }
   static getVersion() {
-    return cy.get('[id="version-picker"]>div').then((v) => {
+    return cy.get('[data-cyid="version-picker"]>div').then((v) => {
       return v.text().trim();
     });
   }
