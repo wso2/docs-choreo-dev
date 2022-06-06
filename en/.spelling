@@ -287,6 +287,10 @@ BACKEND_LATENCY
 TOTAL_LATENCY
 API_ERRORS
 TARGET_ERRORS
+Asgardeo
+Auth0
+Keycloak
+WSO2_LOGIN
 
 
  - docs/references/upgrading-from-the-previous-version.md
@@ -405,3 +409,5 @@ uuid
 1200ms
 1.2s
 750ms
+ - docs/references/enterprise-login.md
+cInlineImage-small
