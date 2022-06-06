@@ -4,7 +4,7 @@ Choreo's Enterprise Login feature allows your users residing in an external IdP 
 
 This guide takes you through the steps you need to follow to configure an enterprise login for your organization in Choreo. 
 
-Let's begin...
+Let's begin!
 
 ## Step 1: Create an organization in Choreo
 
