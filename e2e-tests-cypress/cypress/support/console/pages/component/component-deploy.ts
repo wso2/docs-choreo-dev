@@ -18,6 +18,8 @@ export class ComponentDeployPage {
       1
     );
     cy.wait(2000);
+    cy.get('[data-cyid*="promote"]').eq(0).focus().should("be.visible");
+    cy.wait(2000);
     cy.get('[data-cyid*="promote"]').eq(0).click();
     cy.get('[id="securityHeaderInput"')
       .should("have.length", 2)
@@ -166,19 +168,19 @@ export class ComponentDeployPage {
 
   static promoteWebHookToSTG() {
     cy.get('[data-testid="securityHeaderInput"]')
-    .should("have.length", 1)
-    .eq(0)
-    .invoke("val")
-    .should("not.be.empty");
-      cy.wait(2000);
-      cy.get('[data-cyid*="promote"]').should('be.enabled').click();
-      cy.get(".MuiCardContent-root button", { timeout: 120000 })
-        .contains("Next", { timeout: 120000 })
-        .should("be.visible")
-        .click();
-      cy.get(".ConfigForm button", { timeout: 120000 })
-        .contains("Promote")
-        .click();
+      .should("have.length", 1)
+      .eq(0)
+      .invoke("val")
+      .should("not.be.empty");
+    cy.wait(2000);
+    cy.get('[data-cyid*="promote"]').should("be.enabled").click();
+    cy.get(".MuiCardContent-root button", { timeout: 120000 })
+      .contains("Next", { timeout: 120000 })
+      .should("be.visible")
+      .click();
+    cy.get(".ConfigForm button", { timeout: 120000 })
+      .contains("Promote")
+      .click();
   }
 
   static verifyDevInvokeURL() {
