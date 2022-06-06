@@ -107,3 +107,9 @@ GO
 --	WHERE name = 'choreo-aiexp-db-reader')
 --CREATE LOGIN choreo-aiexp-db-reader with password = N'xxxxxxxxxxxxx'
 --GO
+
+IF NOT EXISTS
+	(SELECT name FROM master.sys.sql_logins
+	WHERE name = 'choreo_codeserver_db_user')
+CREATE LOGIN choreo_codeserver_db_user with password = N'xxxxxxxxxxxxx'
+GO

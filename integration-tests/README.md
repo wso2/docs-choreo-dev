@@ -115,6 +115,158 @@ integration-tests/src/test
                 2) Check if an anomaly detection email is received
             </td>
         </tr>
+       <tr>
+            <td>createAPIProxyFromScratch</td>
+            <td>Check valid and invalid APInames for proxy</td>
+            <td>
+                1) Check APIName Validation for APIProxy Creation <br>
+                2) Check APIBasePath Validation forA PIProxyCreation <br>
+            </td>
+       </tr>
+          <tr>
+            <td>createProjectIT</td>
+            <td>Project creation</td>
+            <td>
+                1) Check project creation <br>
+            </td>
+       </tr>
+       <tr>
+            <td>getCommitListIT</td>
+            <td>Check CommitList</td>
+            <td>
+                1) Get commit list <br>
+            </td>
+       </tr>
+      <tr>
+			<td>createComponentIT</td>
+			<td>Create a component, check status and delete </td>
+			<td>
+				1) Create RESTAPI component <br/>
+				2) Check created component status<br/>
+				3) Delete the component<br/>
+			</td>
+		</tr>
+<tr>
+			<td>oomAlertIT</td>
+			<td>Check OOM alert </td>
+			<td>
+				1) Verify OOM alert using IMAP <br/>
+			</td>
+		</tr>
+         <tr>
+			<td>deployIT</td>
+			<td>Deploy RestAPI component </td>
+			<td>
+				1) Verify RestAPI component deployment <br/>
+			</td>
+		</tr>
+        <tr>
+			<td>addConfigurationsIT</td>
+			<td>Add Configurations </td>
+			<td>
+				1) Verify adding configurations to a component <br/>
+			</td>
+		</tr>
+       <tr>
+			<td>createTriggerIT</td>
+			<td>Create webhook component and deploy </td>
+			<td>
+				1) Verify adding webhook component <br/>
+                2) Verify retrieving the created component <br/>
+                3) Verify deploying the component <br/>
+			</td>
+		</tr>
+      <tr>
+			<td>insightsAPIIT</td>
+			<td>Get test environments and check insights metrics </td>
+			<td>
+				1) Verify test environments <br/>
+                2) Verify invoke utility Operations <br/>
+                3) Verify insights overview results <br/>
+			</td>
+		</tr>
+        <tr>
+			<td>insightsAuthAPIIT</td>
+			<td>Get insights auth token </td>
+			<td>
+				1) Verify auth token <br/>
+			</td>
+		</tr>
+       <tr>
+			<td>insightsAlertAPIIT</td>
+			<td>Verify the insights metrics in env list</td>
+			<td>
+				1) Verify get traffic <br/>
+                2) Verify post traffic <br/>
+                3) Verify put traffic <br/>
+                4) Verify delete traffic <br/>
+                5) Verify get latency <br/>
+                6) Verify post latency <br/>
+                7) Verify put latency <br/>
+                8) Verify delete latency <br/>
+            </td>
+         <tr>
+			<td>createUserManagedComponent</td>
+			<td>Create BYOR component using GH,deploy,test and delete </td>
+			<td>
+				1) Verify creating user managed component <br/>
+                2) Verify created component status <br/>
+                3) Verify initial PR Generation <br/>
+                4) Verify PR merge <br/>
+                5) Verify component retrieval <br/>
+                6) Verify component deployment <br/>
+                7) Verify component deployment status <br/>
+                8) Verify API invocation <br/>
+                9) Verify component retrieval for deleted repo <br/>
+               10) Verify component deletion  <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createDeployInvokeWebhookIT</td>
+			<td>Create webhook component,deploy,test,observability logs and delete </td>
+			<td>
+				1) Verify creating user managed component <br/>
+                2) Verify created component status <br/>
+                3) Verify initial PR Generation <br/>
+                4) Verify PR merge <br/>
+                5) Verify getting sha of webhookBal  <br/>
+                6) Verify commit <br/>
+                7) Verify component retrieval <br/>
+                8) Verify component deployment <br/>
+                9) Verify component deployment status <br/>
+                10) Verify API invocation <br/>
+                11) Verify fetch observabilityId <br/>
+                12) Verify observabilityLogs <br/> 
+                13) Verify component deletion  <br/>
+                14) Verify github repo deletion  <br/>
+            </td>
+        </tr>
+      <tr>
+			<td>observabilityAPITestCase</td>
+			<td>Verify observability metrics from a RESTAPI component </td>
+			<td>
+				1) Verify observability AST <br/>
+                2) Verify observability metrics density <br/>
+                3) Verify observability metric density histogram <br/>
+                4) Verify observability stats<br/>
+                5) Verify observability trace list  <br/>
+                6) Verify observability trace information <br/>
+            </td>
+        </tr>
+           <tr>
+			<td>loggingAPITestCase</td>
+			<td>Verify observability metrics from a RESTAPI component </td>
+			<td>
+				1) Verify observability grouped logs <br/>
+                2) Verify observability live logs <br/>
+            </td>
+        </tr>
+         <tr>
+			<td>sysObsAPITestCase</td>
+			<td>Verify observability metrics from a RESTAPI component </td>
+			<td>
+				1) Verify observability system metrics <br/>
+            </td>
+        </tr>
         </tbody>
-
 </table>
