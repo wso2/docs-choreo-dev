@@ -115,7 +115,7 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify suspending Prod deployed component", () => {
      ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
+    ComponentDeployPage.stopDevContainer()
   });
 
 
