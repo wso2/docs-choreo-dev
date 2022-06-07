@@ -38,19 +38,18 @@ echo "--- Generating TLS, Internal and Primary Keystore PFX files ---"
 TLS_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 openssl pkcs12 -export -out tls-keystore.pfx -inkey wso2carbon.key -in wso2carbon.pem -name wso2carbon -password pass:"${TLS_KEYSTORE_PWD}"
 
-echo "TLS Keystore Password is: ${TLS_KEYSTORE_PWD}"
-
 INTERNAL_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 openssl pkcs12 -export -out internal-keystore.pfx -inkey internal.key -in internal.pem -name internal -password pass:"${INTERNAL_KEYSTORE_PWD}"
-
-echo "Internal Keystore Password is: ${INTERNAL_KEYSTORE_PWD}"
 
 PRIMARY_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.pem -name primary -password pass:"${PRIMARY_KEYSTORE_PWD}"
 
-echo "Primary Keystore Password is: ${PRIMARY_KEYSTORE_PWD}"
+TM_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 
-echo "Private Global Adapter Password is: ${GA_PWD}"
+echo "--- Creating Client Truststore JKS ---"
+apim_TRUSTSTORE_PSWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
+keytool -import -file wso2carbon.pem -alias wso2carbon -keystore client-truststore.jks -storepass "${apim_TRUSTSTORE_PSWD}" -noprompt
+keytool -import -file global-adapter.pem -alias global-adapter -keystore client-truststore.jks -storepass "${apim_TRUSTSTORE_PSWD}" -noprompt
 
 echo "--- Uploading secrets to Key Vault ---"
 
@@ -63,43 +62,59 @@ cp ${SECRET_FILE_PATH} ${SECRET_FILE_PATH}.bak
 cp ${CERT_FILE_PATH} ${CERT_FILE_PATH}.bak
 cp ${PEM_FILE_PATH} ${PEM_FILE_PATH}.bak
 
+CUSTOMER_NAME_CAPS=$(echo "${CUSTOMER_NAME}" | tr [:lower:] [:upper:])
 sed -i "s/apim_PRIMARY_KEYSTORE_PSWD/${PRIMARY_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_PRIMARY_KEYSTORE_KEY_PSWD/${PRIMARY_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_TLS_KEYSTORE_PSWD/${TLS_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_TLS_KEYSTORE_KEY_PSWD/${TLS_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_INTERNAL_KEYSTORE_PSWD/${INTERNAL_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_INTERNAL_KEYSTORE_KEY_PSWD/${INTERNAL_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
-#sed -i "s/apim_TRUSTSTORE_PSWD/${apim_TRUSTSTORE_PSWD}/g" ${SECRET_FILE_PATH}
-#sed -i "s/apim_H2_SHARED_DB_PSWD/${apim_H2_SHARED_DB_PSWD}/g" ${SECRET_FILE_PATH}
-#sed -i "s/asb_CONNECTION_STRING/${asb_CONNECTION_STRING}/g" ${SECRET_FILE_PATH}
-#sed -i "s/apim_ANALYTICS_AUTH_TOKEN/${apim_ANALYTICS_AUTH_TOKEN}/g" ${SECRET_FILE_PATH}
-sed -i "s/CUSTOMER_NAME/${CUSTOMER_NAME}/g" ${SECRET_FILE_PATH}
+sed -i "s/apim_TRUSTSTORE_PSWD/${apim_TRUSTSTORE_PSWD}/g" ${SECRET_FILE_PATH}
+sed -i "s/apim_H2_SHARED_DB_PSWD/wso2carbon/g" ${SECRET_FILE_PATH}
+sed -i "s/asb_CONNECTION_STRING/${asb_CONNECTION_STRING}/g" ${SECRET_FILE_PATH}
+sed -i "s/apim_ANALYTICS_AUTH_TOKEN/${apim_ANALYTICS_AUTH_TOKEN}/g" ${SECRET_FILE_PATH}
+sed -i "s/CUSTOMER_NAME/${CUSTOMER_NAME_CAPS}/g" ${SECRET_FILE_PATH}
 sed -i "s/ga_PASSWORD/${GA_PWD}/g" ${SECRET_FILE_PATH}
+sed -i "s/tm_PASSWORD/${TM_PWD}/g" ${SECRET_FILE_PATH}
 
 TLS_KEYSTORE_PATH="${CERT_BASE_PATH}/tls-keystore.pfx"
 INTERNAL_KEYSTORE_PATH="${CERT_BASE_PATH}/internal-keystore.pfx"
 PRIMARY_KEYSTORE_PATH="${CERT_BASE_PATH}/primary-keystore.pfx"
-ROUTER_KEYSTORE_PATH="${CERT_BASE_PATH}/mg.key"
 
 sed -i -e "s|TLS_KEYSTORE_PATH|${TLS_KEYSTORE_PATH}|g" ${CERT_FILE_PATH}
 sed -i -e "s|INTERNAL_KEYSTORE_PATH|${INTERNAL_KEYSTORE_PATH}|g" ${CERT_FILE_PATH}
 sed -i -e "s|PRIMARY_KEYSTORE_PATH|${PRIMARY_KEYSTORE_PATH}|g" ${CERT_FILE_PATH}
-sed -i -e "s|ROUTER_KEYSTORE_PATH|${ROUTER_KEYSTORE_PATH}|g" ${CERT_FILE_PATH}
+
+sed -i -e "s|TLS_KEYSTORE_PSWD|${TLS_KEYSTORE_PWD}|g" ${CERT_FILE_PATH}
+sed -i -e "s|INTERNAL_KEYSTORE_PSWD|${INTERNAL_KEYSTORE_PWD}|g" ${CERT_FILE_PATH}
+sed -i -e "s|PRIMARY_KEYSTORE_PSWD|${PRIMARY_KEYSTORE_PWD}|g" ${CERT_FILE_PATH}
 
 ADAPTER_KEYSTORE_PATH="${CERT_BASE_PATH}/mg.key"
 ENFORCER_KEYSTORE_PATH="${CERT_BASE_PATH}/mg.key"
+ROUTER_KEYSTORE_PATH="${CERT_BASE_PATH}/mg.key"
 
 sed -i "s|ADAPTER_KEYSTORE_PATH|${ADAPTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 sed -i "s|ENFORCER_KEYSTORE_PATH|${ENFORCER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
+sed -i "s|ROUTER_KEYSTORE_PATH|${ROUTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 
-#az keyvault secret set --name mgw-ADAPTER-KEYSTORE-KEY --vault-name ${USERAPPS_VAULT_NAME} --file mg.key
-#az keyvault secret set --name mgw-ENFORCER-KEYSTORE-KEY --vault-name ${USERAPPS_VAULT_NAME} --file mg.key
-#az keyvault certificate import mgw-ROUTER-KEYSTORE --vault-name ${USERAPPS_VAULT_NAME} --file mg.key
+KEYVAULT_NAME=
+bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${SECRET_FILE_PATH}" -t secret
+bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${PEM_FILE_PATH}" -t pem
+bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${CERT_FILE_PATH}" -t securecert 
 
-#kv-secretuploader.sh
+echo "--- Cleaning up configuration files ---"
+rm client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary*
 
-#echo "--- Cleaning up configuration files ---"
-#rm cert-req*
-#mv ${SECRET_FILE_PATH}.bak ${SECRET_FILE_PATH}
-#mv ${CERT_FILE_PATH}.bak ${CERT_FILE_PATH}
-#mv ${PEM_FILE_PATH}.bak ${PEM_FILE_PATH}
+mv ${SECRET_FILE_PATH}.bak ${SECRET_FILE_PATH}
+mv ${CERT_FILE_PATH}.bak ${CERT_FILE_PATH}
+mv ${PEM_FILE_PATH}.bak ${PEM_FILE_PATH}
+
+echo "TLS Keystore Password is: ${TLS_KEYSTORE_PWD}"
+
+echo "Internal Keystore Password is: ${INTERNAL_KEYSTORE_PWD}"
+
+echo "Primary Keystore Password is: ${PRIMARY_KEYSTORE_PWD}"
+
+echo "Private Global Adapter Password is: ${GA_PWD}"
+
+echo "Traffic Manager Password is: ${TM_PWD}"
