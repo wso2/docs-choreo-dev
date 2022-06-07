@@ -8,6 +8,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
@@ -45,7 +46,6 @@ import com.google.gson.JsonParser;
 public class CreateTriggerIT extends TestNGCitrusSpringSupport {
 
     private static String accessToken;
-    private static String projectsAPIAccessToken;
     private String orgHandle;
     private String orgId;
     private String projectId;
@@ -63,14 +63,12 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
-        projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         orgHandle = org.getOrgHandle();
         orgId = org.getOrgId();
-        ChoreoProject project = org.createProject(projectsAPIAccessToken);
+        ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
     }
 
@@ -109,7 +107,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 .send()
                 .post("/graphql")
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -233,7 +231,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 .send()
                 .post("/graphql")
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
@@ -256,7 +254,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testTriggerDeploy() throws IOException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException,
             GetCommitHistoryException, InterruptedException, NoLatestCommitHashFoundException {
-        JsonArray commitHistory = testComponent.getCommitHistory(projectsAPIAccessToken);
+        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
         String latestVersionId = testComponent.getLatestApiVersion().getId();
         String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");

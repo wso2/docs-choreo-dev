@@ -9,9 +9,7 @@ export class VSExplorer {
   static count: number = 0;
 
   static waitTillCodespaceLoad() {
-    cy.get('[aria-label*=".bal Diagram"]', { timeout: 300000 }).should(
-      "be.visible"
-    );
+ 
     cy.get(".monaco-highlighted-label").contains(".bal").click();
     cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]')
       .should("be.visible")
@@ -37,6 +35,9 @@ export class VSExplorer {
   }
 
   static closeTab() {
+       cy.get('[title*=".bal Diagram"]', { timeout: 300000 }).should(
+      "be.visible"
+    );
     cy.get('.codicon-close').then((b) => {
       if (b.length > 0) {
         b.each(function () {
@@ -74,10 +75,14 @@ export class VSExplorer {
     cy.wait(waitTime);
   }
 
-  static createNewBranch() {
-    this.closeTab();
-    this.enterCommandInTerminal("git branch feature", 4000);
-    this.enterCommandInTerminal("git checkout feature", 4000);
+  static creteNewBranch(branchName:string){
+    cy.get("[title*='.bal Diagram']",{timeout:300000}).should('be.visible')
+    cy.wait(4000)
+    cy.get('[id="wso2.ballerina"]',{timeout:300000}).should('be.visible')
+    cy.get('[id="status.scm"]',{timeout:200000}).eq(0).click()
+    cy.get('.quick-input-widget',{timeout:180000}).should('be.visible')
+    cy.get('[aria-describedby="quickInput_message"]').type(`${branchName}{enter}`)
+    cy.wait(3000)
   }
 
   static commitPush(commitMessage) {
@@ -86,12 +91,13 @@ export class VSExplorer {
       "rm /config/workspace/.githooks/pre-commit",
       2000
     );
-    this.enterCommandInTerminal("git add .", 4000);
+    this.enterCommandInTerminal("git add .", 2000);
     this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 4000);
     this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
   }
 
   static typeCode(fileName: string, template = ComponentTemplate.REST) {
+    this.closeTab();
     this.waitTillCodespaceLoad();
     this.createFile(fileName);
     this.selectExplorer();
@@ -136,5 +142,27 @@ export class VSExplorer {
       .click();
 
     cy.contains(fileName).should("be.visible");
+  }
+
+  static getCodeLense(index: number) {
+    return cy.get(`[widgetId="codelens.widget-${index}"]`).eq(0);
+  }
+
+  static matchCodeLense(index: number, regex: RegExp) {
+    return VSExplorer.getCodeLense(index).invoke('text').should("match", regex);
+  }
+
+  static getActiveWebview() {
+    return cy.get('iframe[class="webview ready"]').eq(1).its('0.contentDocument').should('exist').its('body').
+      should('not.be.undefined').then((body) => {
+        return cy.wrap(body).find('#active-frame').its('0.contentDocument').should('exist').its('body').should('not.be.undefined')
+          .then((body) => {
+            return cy.wrap(body);
+          });
+      });
+  }
+
+  static clickPerfGraph(index: number) {
+    VSExplorer.getActiveWebview().find(".diagram").eq(0).find("circle").eq(index).click({ force: true })
   }
 }

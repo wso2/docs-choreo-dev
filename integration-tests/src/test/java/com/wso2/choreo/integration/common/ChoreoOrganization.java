@@ -13,34 +13,33 @@
 
 package com.wso2.choreo.integration.common;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
+import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
-import java.net.http.HttpClient;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Maintain information of the choreo organization used for tests
  */
 public class ChoreoOrganization {
-    protected static final HttpClient client = HttpClient.newHttpClient();
+    private final static Logger log = LoggerFactory.getLogger(ChoreoOrganization.class);
+    private final static Gson gson = new Gson();
+
     private final HashMap<String, ChoreoProject> projectMap;
     private String orgHandle;
     private String orgId;
@@ -71,49 +70,109 @@ public class ChoreoOrganization {
      */
     public ChoreoProject createProject(String accessToken) throws
             IOException, InterruptedException, ProjectCreationException {
-        String graphQlQuery = "mutation{ createProject(project: {" +
-                "      name: \"" + Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())) +
+        String gqlQuery = getCreateProjectMutation(
+                Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())),
+                Constant.TEST_PROJECT_DESCRIPTION);
+
+        try {
+            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
+            return gson.fromJson(projectJson.toString(), ChoreoProject.class);
+        } catch (GraphQLException e) {
+            throw new ProjectCreationException(e);
+        }
+    }
+
+    Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
+        loadProjects(accessToken);
+
+        for (ChoreoProject project : projectMap.values()) {
+            if (project.getName().equals(name)) {
+                return Optional.of(project);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    List<ChoreoProject> getProjects(String accessToken) throws ProjectRetrievalException {
+        loadProjects(accessToken);
+
+        return new ArrayList<>(projectMap.values());
+    }
+
+    private void loadProjects(String accessToken) throws ProjectRetrievalException {
+        if (projectMap.isEmpty()) {
+            try {
+                String gqlQuery = getProjectsQuery();
+
+                JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+
+                JsonArray projectsJson = body.getAsJsonObject("data").getAsJsonArray("projects");
+
+                for (int i = 0; i < projectsJson.size(); ++i) {
+                    JsonObject projectJson = projectsJson.get(i).getAsJsonObject();
+                    ChoreoProject project = gson.fromJson(projectJson.toString(), (Type) ChoreoProject.class);
+                    projectMap.put(project.getId(), project);
+                }
+            } catch (GraphQLException e) {
+                throw new ProjectRetrievalException(e);
+            }
+        }
+    }
+
+    ChoreoProject createProject(String accessToken, String name, String description)
+            throws ProjectCreationException {
+        String gqlQuery = getCreateProjectMutation(name, description);
+
+        try {
+            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
+            return gson.fromJson(projectJson.toString(), ChoreoProject.class);
+        } catch (GraphQLException e) {
+            throw new ProjectCreationException(e);
+        }
+
+    }
+
+    boolean deleteProject(String accessToken, String projectId) {
+        String gqlQuery = getDeleteProjectMutation(projectId);
+
+        try {
+            ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+            projectMap.remove(projectId);
+            return true;
+        } catch (GraphQLException e) {
+            log.error("Error while deleting project", e);
+        }
+
+        return false;
+    }
+
+    private String getDeleteProjectMutation(String projectId) {
+        return "mutation{ deleteProject(" +
+                "        orgId: " + orgId + "," +
+                "        projectId: \"" + projectId + "\"){ status, details }}";
+    }
+
+    private String getCreateProjectMutation(String name, String description) {
+        return  "mutation{ createProject(project: {" +
+                "      name: \"" + name +
                 "\", " +
-                "      description: \"" + Constant.TEST_PROJECT_DESCRIPTION + "\"," +
+                "      description: \"" + description + "\"," +
                 "      orgId: " + orgId + "," +
                 "      orgHandler: \"" + orgHandle + "\"," +
                 "      version: \"1.0.0\"," +
                 "    }){ " +
                 "      id, orgId, name, version, createdDate, handler," +
                 "    } }";
-        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-            {
-                put("query", graphQlQuery);
-            }
-        };
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+    }
 
-        HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
-
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-
-        StringEntity requestEntity = new StringEntity(
-                requestBody,
-                ContentType.APPLICATION_JSON);
-        request.setEntity(requestEntity);
-
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-             CloseableHttpResponse response = httpClient.execute(request)) {
-            int statusCode = response.getStatusLine().getStatusCode();
-            String responseBody = EntityUtils.toString(response.getEntity());
-            if (statusCode != HttpStatus.OK.value()) {
-                throw new ProjectCreationException(statusCode, responseBody);
-            }
-
-            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
-            JsonObject projectJsonObject = bodyJsonObject.getAsJsonObject("data").getAsJsonObject("createProject");
-            String projectId = projectJsonObject.get("id").isJsonNull() ? "" : projectJsonObject.get("id").getAsString();
-            Gson gson = new Gson();
-            ChoreoProject project = gson.fromJson(projectJsonObject.toString(), ChoreoProject.class);
-            projectMap.put(projectId, project);
-            return project;
-        }
+    private String getProjectsQuery() {
+        return "query{projects(orgId: " + orgId + "," +
+                "    ){ \n" +
+                "     id, orgId, name, version, createdDate, handler,\n" +
+                "    } }";
     }
 
     public String getOrgHandle() {

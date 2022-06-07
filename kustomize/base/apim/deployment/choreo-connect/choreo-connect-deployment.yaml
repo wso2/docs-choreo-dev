@@ -44,24 +44,6 @@ spec:
         runAsGroup: 10500
         seccompProfile:
           type: RuntimeDefault
-      initContainers:
-        - name: init-adapter-service
-          image: busybox:1.31
-          imagePullPolicy: Always
-          command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
-          resources:
-            requests:
-              memory: "100Mi"
-              cpu: "100m"
-            limits:
-              memory: "100Mi"
-              cpu: "100m"
       containers:
         - name: choreo-connect-enforcer
           volumeMounts:
@@ -74,7 +56,7 @@ spec:
               readOnly: true
               subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: enforcer-truststore
+              name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
             - name: enforcer-truststore
@@ -85,9 +67,9 @@ spec:
               readOnly: true
               subPath: ENFORCER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-enforcer-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ENFORCER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/jwt/key.pem
               name: secret-mgw-enforcer-jwt-keystore
               readOnly: true
@@ -179,17 +161,17 @@ spec:
         - name: choreo-connect-router
           volumeMounts:
             - mountPath:  /home/wso2/security/keystore/mg.pem
-              name: secret-mgw-router-keystore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_KEYSTORE_CERTIFICATE
+              subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-mgw-router-keystore
               readOnly: true
               subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
-              name: secret-mgw-router-truststore
+              name: mgw-common-cert-vol
               readOnly: true
-              subPath: ROUTER_TRUSTSTORE
+              subPath: mg.pem
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
           imagePullPolicy: Always
           securityContext:
@@ -231,6 +213,8 @@ spec:
               value: "18090"
             - name: ENFORCER_CA_CERT_PATH
               value: "/home/wso2/security/truststore/mg.pem"
+            - name: TRAILING_ARGS
+              value: "--component-log-level config:debug"
           resources:
             requests:
               memory: "2Gi"
@@ -299,19 +283,14 @@ spec:
               secretProviderClass: secret-mgw-router-keystore
             nodePublishSecretRef:
               name: csi-secret-store-azure
-        - name: secret-mgw-router-truststore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-router-truststore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: dropins-vol
           emptyDir: {}
         - name: enforcer-truststore
           configMap:
             name: mgw-enforcer-truststore
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io

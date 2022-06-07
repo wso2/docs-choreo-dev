@@ -14,6 +14,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.email.EmailUtils;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -42,14 +43,14 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
 
     @BeforeClass
-    public void beforeClass() throws Exception, TokenRetrievalException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+    public void beforeClass() throws Exception {
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test
     @CitrusTest
     public void testImmediateAlert() throws Exception {
+        long testStartTimestamp = Instant.now().toEpochMilli();
         String appName = UUID.randomUUID().toString();
         String body = "{\n"
                 + "\t\"orgId\": \"" + Configuration.ALERT.ORG_UUID + "\",\n"
@@ -86,7 +87,12 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/alert/post_alert_suceess.json")));
 
-        boolean isMailReceived = EmailUtils.checkForMail(appName);
+        boolean isMailReceived = EmailUtils.checkForMail(Constant.ALERT.MAIL_IMAP_HOST, 
+                                                         Configuration.ALERT.MAIL_IMAP_PASS, 
+                                                         Constant.ALERT.MAIL_IMAP_PORT, 
+                                                         appName, 
+                                                         Constant.ALERT.MAIL_IMAP_USER,
+                                                         testStartTimestamp);
         Assert.assertTrue(isMailReceived);
     }
 }

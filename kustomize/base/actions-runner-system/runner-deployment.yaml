@@ -1,0 +1,27 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: runners
+spec:
+ replicas: 0
+ template:
+   spec:
+     organization: choreo-userapps-gitops-dev
+     image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
+     resources:
+       limits:
+         cpu: '2.0'
+         memory: 1Gi
+       requests:
+         cpu: '1.5'
+         memory: 1Gi
+     tolerations:
+      - effect: NoSchedule
+        key: ghrunner
+        operator: Exists
+     nodeSelector:
+        execution-mode: ghrunner
+     workDir: /home/runner/workspace
+     env: []
+     labels:
+       - choreo-custom-runner

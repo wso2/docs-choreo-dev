@@ -13,26 +13,14 @@
 
 package com.wso2.choreo.integration.tests.getCommitList;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.TokenHandler;
-import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -41,42 +29,33 @@ import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+
 import java.util.HashMap;
 
 /**
- * git commit list related tests
+ * git commit list related tests.
  */
 public class GetCommitListIT extends TestNGCitrusSpringSupport {
 
   private static String componentId;
-  private static String accessToken;
-  private static String projectsAPIAccessToken;
 
   @Autowired
   private HttpClient choreoProjectsTestClient;
 
   @BeforeClass
   public void beforeClass()
-      throws IOException, InterruptedException, ProjectCreationException, ComponentCreationStatusCheckException,
-      ComponentCreationException, ComponentRetrieveException, ComponentCreationTimeoutException,
-      TokenRetrievalException {
-    TokenHandler tokenHandler = new TokenHandler();
-    accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
-    projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
-    ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-        String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-    ChoreoProject project = org.createProject(projectsAPIAccessToken);
-    RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
-    RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project
-        .createChoreoComponent(restApiComponentBuilder, accessToken, projectsAPIAccessToken);
-    componentId = restApiComponent.getId();
+      throws Exception {
+    ChoreoComponent component = ComponentUtils.getReusableComponent(
+            TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), this.getClass().getSimpleName());
+
+    componentId = component.getId();
   }
 
   @Test
   @CitrusTest
-  public void testGetCommitList() throws JsonProcessingException {
+  public void testGetCommitList() throws Exception {
     HashMap<String, String> gqlRequestPayload = new HashMap<>() {
       {
         put("query", "query {" +
@@ -101,7 +80,7 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
         .send()
         .post("/graphql")
         .message()
-        .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+        .header(HttpHeaders.AUTHORIZATION, TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs())
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .body(requestBody)
         .accept(String.valueOf(MediaType.APPLICATION_JSON)));

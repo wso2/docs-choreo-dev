@@ -7,5 +7,6 @@ resources:
 - tm-1-service.yaml
 - tm-2-service.yaml
 - choreo-connect-global-adapter.yaml
+- choreo-connect-internal-global-adapter.yaml
 - gateway-nginx-service.yaml
 - choreo-connect

@@ -16,7 +16,7 @@ import { Utils } from "../utils";
 
 export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
-
+export const NO_CONTENT_STATUS_CODE = 204;
 export class GraphQL {
   static createDefaultProjectIfNotExists(
     orgId: number,
@@ -25,10 +25,6 @@ export class GraphQL {
   ) {
     this.getProjects(orgId, token).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      // const projects = response.body.data.projects as [];
-      // if (projects === undefined || !projects.length) {
-      //   this.createDefaultProject(orgId, orgHandle, token);
-      // }
     });
   }
 
@@ -59,7 +55,7 @@ export class GraphQL {
       e2eProjects.forEach((project) => {
         if (this.isProjectOld(project.name)) {
           this.deleteComponentsInProject(project.id, orgHandle, token);
-         this.deleteProject(orgId, project.id, token); 
+          this.deleteProject(orgId, project.id, token);
         }
       });
     });
@@ -141,6 +137,9 @@ export class GraphQL {
     this.getComponents(projectId, orgHandle, token).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         response.body.data.components.forEach((component) => {
+          const { handler } = component;
+          this.deleteConnectors(token);
+          this.changeComponentLifeCycle(projectId, handler, token);
           this.deleteComponent(component.id, projectId, orgHandle, token);
         });
       } else {
@@ -166,7 +165,6 @@ export class GraphQL {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Component  ${componentId}`);
       } else {
-        cy.log(response.body)
         cy.log(
           `Could not delete Component: ${componentId}, status returned: ${response.status}`
         );
@@ -188,7 +186,6 @@ export class GraphQL {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Project  ${projectId}`);
       } else {
-        cy.log(response.body)
         cy.log(
           `Could not delete Project: ${projectId}, status returned: ${response.status}`
         );
@@ -216,6 +213,143 @@ export class GraphQL {
       body: JSON.stringify(query),
       headers: header,
       failOnStatusCode: false,
+    });
+  }
+
+  private static changeComponentLifeCycle(
+    projectId: string,
+    componentHandler,
+    token: string
+  ) {
+    cy.log(`changeComponentLifeCycle ==> Project Id ${projectId}`);
+    const query = {
+      query: `query{    component(      projectId: "${projectId}"      componentHandler: "${componentHandler}"    )
+{      id,     
+ name,      
+ handler,      
+ description,      
+ displayType,      
+ displayName,      
+ ownerName,      
+ orgId,      
+ orgHandler,      
+ version,      
+ labels,      
+ createdAt,      
+ updatedAt,      
+ projectId,      
+ apiId,      
+ repository{        
+ nameApp,        
+ nameConfig,        
+ branch,        
+ branchApp,        
+ organizationApp,        
+ organizationConfig,        
+ isUserManage      },      
+ apiVersions{       
+ apiVersion,        
+ proxyName,        
+ proxyUrl,        
+ proxyId,        
+ id,        
+ state,        
+ latest,       
+ branch,        
+ appEnvVersions{         
+ environmentId,          
+ releaseId,          
+ release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
+    };
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    this.callGraphQL(token, query).then((res) => {
+      if (res.status === SUCCESS_STATUS_CODE) {
+        const apiVersion: [] = res.body.data.component.apiVersions;
+        apiVersion.forEach((e) => {
+          const { proxyId } = e;
+          if (proxyId) {
+            this.deprecateComponent(proxyId, token);
+          } else {
+            cy.log(`ProxyID is :: ${proxyId}`);
+          }
+        });
+      } else {
+        cy.log(`Status Code For changeComponentLifeCycle ==> ${res.status}`);
+      }
+    });
+  }
+
+  private static deprecateComponent(apiId: string, token: string) {
+    const { uuid } = Cypress.env("current_org");
+    cy.log(`Current UUID ==> ${uuid}`);
+
+    const statusRequest = `${Cypress.env(
+      "apimSvcURL"
+    )}/api/am/publisher/v2/apis/${apiId}/lifecycle-state?organizationId=${uuid}`;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return Utils.sendGetRequest(statusRequest, headers).then((res) => {
+      const { state } = res.body;
+      if (state === "Published") {
+        this.sendDeprecateRetireRequest(apiId, uuid, token);
+      }
+    });
+  }
+
+  private static sendDeprecateRetireRequest(
+    apiId: string,
+    uuid: string,
+    token: string
+  ) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const deprecateRequest = `${Cypress.env(
+      "apimSvcURL"
+    )}/api/am/publisher/v2/apis/change-lifecycle?organizationId=${uuid}&apiId=${apiId}&action=Deprecate`;
+    const retireRequest = `${Cypress.env(
+      "apimSvcURL"
+    )}/api/am/publisher/v2/apis/change-lifecycle?organizationId=${uuid}&apiId=${apiId}&action=Retire`;
+    Utils.sendPostRequest(deprecateRequest, headers, {});
+    Utils.sendPostRequest(retireRequest, headers, {});
+  }
+
+  private static deleteConnector(pkg: any, token) {
+    const { organization, name, version } = pkg;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const url = `${Cypress.env(
+      "balRegistryURL"
+    )}/packages/${organization}/${name}/${version}?force=true`;
+    Utils.sendDeleteRequest(url, headers).then((res) => {
+      if (res.status === NO_CONTENT_STATUS_CODE) {
+        cy.log(`Successfully deleted Connector  ${name}`);
+      } else {
+        cy.log(
+          `Could not delete connector: ${name}, status returned: ${res.status}`
+        );
+      }
+    });
+  }
+
+  private static deleteConnectors(token: string) {
+    const { handle } = Cypress.env("current_org");
+    cy.log(`Current handle ==> ${handle}`);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const url = `${Cypress.env("balRegistryURL")}/packages/${handle}`;
+    Utils.sendGetRequest(url, headers).then((res) => {
+      const packages = res.body as [];
+      if (packages.length > 0) {
+        packages.forEach((p) => this.deleteConnector(p, token));
+      }
     });
   }
 }

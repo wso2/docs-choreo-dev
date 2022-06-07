@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: "${AKS_READONLY_AD_GROUP_ID}"
+  name: "AKS_READONLY_AD_GROUP_ID"

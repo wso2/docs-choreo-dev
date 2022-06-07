@@ -46,6 +46,8 @@ spec:
         envFrom:
           - configMapRef:
               name: env-perf-analyzer
+          - configMapRef:
+                  name: cm-perf-analyzer-cp
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 30

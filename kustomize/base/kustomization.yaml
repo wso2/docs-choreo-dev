@@ -6,7 +6,9 @@ resources:
 - apim-analytics
 - choreo-connect
 - idp
+- private-global-adapters
 - system
+- actions-runner-system
 
 commonLabels:
   app: choreo-control-plane

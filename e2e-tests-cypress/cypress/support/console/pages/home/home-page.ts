@@ -11,11 +11,13 @@
  * associated services.
  */
 
+import { LoginPage } from "../login-page";
+
 export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
-    const handle = Cypress.env("userData")["handle"];
+    const handle = Cypress.env("current_org")["handle"];
     cy.get(`[href="/organizations/${handle}/home"]`).eq(1).click();
   }
 
@@ -60,5 +62,16 @@ export class ChoreoHomePage {
     cy.get('[data-testid="main-left-nav-item-Settings"]', {
       timeout: 120000,
     }).click();
+  }
+
+  static switchOrganization() {
+    const pdpOrg = Cypress.env("isPrivateOrg");
+    cy.log(`isPrivateOrg : ${pdpOrg}`);
+    const orgName = Cypress.env("privateOrgName")
+    if (pdpOrg) {
+      cy.get("#org-picker").click();
+      cy.get(`[data-value="${orgName}"]`).click();
+      LoginPage.persistApimToken();
+    }
   }
 }

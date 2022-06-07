@@ -6,6 +6,7 @@ resources:
 - tm-1-deployment.yaml
 - tm-2-deployment.yaml
 - choreo-connect-global-adapter.yaml
+- choreo-connect-internal-global-adapter.yaml
 - gateway-nginx-deployment.yaml
 - choreo-connect
 - ga-health-check-deployment.yaml

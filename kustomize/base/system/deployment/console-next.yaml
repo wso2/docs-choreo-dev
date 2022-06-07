@@ -61,6 +61,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-console-next
+            - configMapRef:
+                name: cm-console-next-cp
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:

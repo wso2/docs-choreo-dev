@@ -1,0 +1,16 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+ name: runner-deployment-autoscaler
+spec:
+ minReplicas: 20
+ maxReplicas: 30
+ scaleTargetRef:
+   name: runners
+ scaleUpTriggers:
+ - githubEvent:
+     checkRun:
+       types: ["created"]
+       status: "queued"
+   amount: 1
+   duration: "2m"

@@ -6,7 +6,6 @@ resources:
   - apim-service.yaml
   - app-deployer.yaml
   - app-service.yaml
-  - billing.yaml
   - connector-builder.yaml
   - connectords.yaml
   - console-next.yaml
@@ -37,6 +36,8 @@ resources:
   - test-assistant.yaml
   - testbase.yaml
   - workspace-manager.yaml
+  - shared-image-viewer.yaml
+  - image-share-service.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433

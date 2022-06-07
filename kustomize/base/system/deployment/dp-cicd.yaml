@@ -42,6 +42,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-cicd
+            - configMapRef:
+                name: cm-dp-cicd-cp
           env:
             - name: DB_PASSWORD
               valueFrom:
@@ -57,6 +59,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: CHOREO-GITHUB-APP-PRIVATE-KEY
+                  name: secret-dp-cicd
+            - name: LOG_ANALYTICS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: LOG-ANALYTICS-KEY
                   name: secret-dp-cicd
           securityContext:
             allowPrivilegeEscalation: false

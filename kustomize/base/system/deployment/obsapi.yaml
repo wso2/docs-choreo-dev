@@ -26,29 +26,6 @@ spec:
           type: RuntimeDefault
       containers:
       - env:
-        # --------------------------------------------------------
-          # IDP
-        - name: IDP_URL
-          valueFrom:
-            configMapKeyRef:
-              name: env-idp-replica
-              key: IDP_URL
-        - name: IDP_TOKEN_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: cm-idp-replica
-              key: IDP_TOKEN_ENDPOINT
-        - name: IDP_JWKS_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: cm-idp-replica
-              key: IDP_JWKS_ENDPOINT
-        - name: IDP_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              name: env-idp-replica
-              key: IDP_CLIENT_ID
-          # AZURE ADX
         - name: AZURE_ADX_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
@@ -56,10 +33,9 @@ spec:
               key: AZURE_ADX_CLIENT_SECRET
         envFrom:
           - configMapRef:
-              name: cm-obsapi
+              name: cm-obsapi-cp
           - configMapRef:
               name: env-obsapi
-        # --------------------------------------------------------
         image: choreocontrolplane.azurecr.io/choreoipaas/observability-api:latest
         securityContext:
           runAsUser: 10500

@@ -25,6 +25,7 @@ import com.consol.citrus.message.MessageType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
@@ -48,7 +49,6 @@ import java.util.HashMap;
 
 public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static String projectsAPIAccessToken;
     private static String projectHandler;
     private static String projectId;
     private static String firstAPIName;
@@ -65,12 +65,10 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void beforeClass() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestToken());
-        projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoOrganization testOrg = new ChoreoOrganization(TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-        ChoreoProject testProject = testOrg.createProject(projectsAPIAccessToken);
+        ChoreoProject testProject = testOrg.createProject(accessToken);
         projectHandler = testProject.getHandler();
         projectId = testProject.getId();
         // Create a unique API Name and a Context.
@@ -121,7 +119,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
                 .send()
                 .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
                 .message()
-                .header(HttpHeaders.AUTHORIZATION, projectsAPIAccessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(requestBody));
 

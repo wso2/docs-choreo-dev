@@ -41,6 +41,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-cloud-manager
+            - configMapRef:
+                name: cm-dp-cloud-manager-cp
           env:
             - name: DB_PASSWORD
               valueFrom:

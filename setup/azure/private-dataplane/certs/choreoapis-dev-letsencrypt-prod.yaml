@@ -1,0 +1,25 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  annotations:
+  name: choreoapis-dev-letsencrypt-prod
+  namespace: cert-manager
+spec:
+  acme:
+    email: techops@wso2.com
+    preferredChain: ""
+    privateKeySecretRef:
+      name: choreoapis-dev-letsencrypt-prod
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        azureDNS:
+          clientID: 6634629f-e772-4b83-84f1-a3e9cedd4c1d
+          clientSecretSecretRef:
+            key: client-secret
+            name: choreo-secret-azuredns-config
+          environment: AzurePublicCloud
+          hostedZoneName: choreoapis.dev
+          resourceGroupName: CHOREO-DNS-RG
+          subscriptionID: 0a7b14d7-05f7-4c32-8929-619eb4fb7aeb
+          tenantID: da76d684-740f-4d94-8717-9d5fb21dd1f9

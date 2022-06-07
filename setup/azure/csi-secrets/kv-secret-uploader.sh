@@ -47,6 +47,7 @@ while read -r line || [ -n "$line" ]; do
     IFS=" " read -r -a inputs <<< "$line"
     secretName=${inputs[0]}
     secretValue=${inputs[1]}
+    secretPassword=${inputs[2]}
     if [ "$type" = "secret" ]
     then
         output=$(az keyvault secret set --name "${secretName}" --vault-name "${vault}" --value "${secretValue}" --query '["id"][0]')
@@ -56,6 +57,9 @@ while read -r line || [ -n "$line" ]; do
     elif [ "$type" = "cert" ]
     then
         output=$(az keyvault certificate import --name "${secretName}" --vault-name "${vault}" --file "${secretValue}" --query '["id"][0]')
+    elif [ "$type" = "securecert" ]
+    then
+	output=$(az keyvault certificate import --name "${secretName}" --vault-name "${vault}" --file "${secretValue}" --password "${secretPassword}" --query '["id"][0]')
     else
         echo "Unknown type, Please use secret, pem or cert as type"
         break

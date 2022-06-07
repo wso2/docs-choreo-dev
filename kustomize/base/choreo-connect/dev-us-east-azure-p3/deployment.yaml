@@ -13,9 +13,6 @@ spec:
         choreo.component: choreo-connect-deployment-dev-us-east-azure-p3
         antiaffinity: choreo-connect-deployment-dev-us-east-azure-p3
     spec:
-      initContainers:
-      - name: init-adapter-service
-        command: [ 'sh', '-c', 'echo -e "Checking for the availability of Adapter"; while ! nc -z adapter-dev-us-east-azure-p3 18000; do sleep 1; printf "-"; done; echo -e "  >> Adapter has started";' ]
       containers:
       - name: choreo-connect-enforcer
         env:

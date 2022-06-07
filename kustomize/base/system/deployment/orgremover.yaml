@@ -51,6 +51,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-organization-remover
+            - configMapRef:
+                name: cm-organization-remover-cp
           ports:
             - containerPort: 8080
               name: org-rem-port

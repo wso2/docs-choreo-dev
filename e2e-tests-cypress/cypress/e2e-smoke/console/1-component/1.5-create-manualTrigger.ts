@@ -30,8 +30,10 @@ describe("Verify manual trigger creation functionality", () => {
 
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
+  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
   before(() => {
     LoginPage.login();
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -50,10 +52,20 @@ describe("Verify manual trigger creation functionality", () => {
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deploy();
+    ComponentDeployPage.deployToDev();
+  });
+
+  it_privatedp("Verify component deployment", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToStg();
+  });
+
+  it("Verify component deployment", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
   });
 
   it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteManualTriggerToProd();
   });
 });

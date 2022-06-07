@@ -70,13 +70,13 @@ spec:
             httpGet:
               path: /services/Version
               port: 9763
-            initialDelaySeconds: 180
+            initialDelaySeconds: 300
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /services/Version
               port: 9763
-            initialDelaySeconds: 180
+            initialDelaySeconds: 300
             periodSeconds: 10
           lifecycle:
             preStop:

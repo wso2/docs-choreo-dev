@@ -31,7 +31,6 @@ import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
 
 describe("API overview comment and rating scenario", () => {
-  const FILE_ID = "oasflow";
   const API_Name = Utils.generateComponentName("oas");
   const idpUser = "choreoe2etest";
   const OPERATION_USERS = "intensity";
@@ -90,8 +89,8 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Verify suspending Dev deployed component", () => {
-    LoginPage.reLoginToChoreo(FILE_ID);
+    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+    ComponentDeployPage.stopDevContainer();
   });
 });

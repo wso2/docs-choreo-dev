@@ -28,36 +28,11 @@ spec:
       containers:
         - name: loggingapi
           env:
-            - name: b7a_log_level
-              valueFrom:
-                configMapKeyRef:
-                  key: B7A_LOG_LEVEL
-                  name: cm-loglevel-loggingapi
-            - name: IDP_ISSUER
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_ISSUER
-                  name: env-idp-replica
-            - name: IDP_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_CLIENT_ID
-                  name: env-idp-replica
-            - name: IDP_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_HOST
-                  name: env-idp-replica
-            - name: IDP_JWKS_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  key: IDP_JWKS_ENDPOINT
-                  name: cm-idp-replica
             - name: AAD_TENANT_ID
               valueFrom:
                 configMapKeyRef:
                   key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                  name: cm-loggingapi
+                  name: cm-loggingapi-cp
             - name: AAD_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -68,18 +43,11 @@ spec:
                 secretKeyRef:
                   name: secret-loggingapi
                   key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-            - name: AZURE_K8S_SERVICE_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: secret-loggingapi
-                  key: AZURE_K8S_API_SERVER_ACCESS_TOKEN
           envFrom:
-            - configMapRef:
-                name: env-k8sservice-replica
             - configMapRef:
                 name: env-loganalytics-replica
             - configMapRef:
-                name: cm-loggingapi
+                name: cm-loggingapi-cp
             - configMapRef:
                 name: env-loggingapi
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-logging:latest
@@ -92,6 +60,9 @@ spec:
               drop:
                 - all
           volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
             - name: secret-loggingapi
               mountPath: "/mnt/csi/secret-loggingapi"
               readOnly: true
@@ -128,6 +99,9 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
+        - name: config
+          configMap:
+            name: cm-loggingapi-config
         - name: secret-loggingapi
           csi:
             driver: secrets-store.csi.k8s.io

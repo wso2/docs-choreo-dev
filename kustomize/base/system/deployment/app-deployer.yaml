@@ -62,6 +62,8 @@ spec:
         envFrom:
         - configMapRef:
             name: env-app-deployer
+        - configMapRef:
+            name: cm-app-deployer-cp
         ports:
         - containerPort: 8080
           name: grpc-port

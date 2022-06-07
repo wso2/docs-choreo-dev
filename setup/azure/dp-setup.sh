@@ -38,15 +38,6 @@ else
     echo "File ${azuredfile} not found"; exit 1
 fi
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-kubectl create ns reloader
-if [[ -f "../reloader.yaml" ]]; then
-    kubectl apply -n reloader -f ../reloader.yaml
-else
-    kubectl apply -n reloader -f reloader.yaml
-fi
-
 ############### Install Helm 3
 echo "--- Installing Helm 3..."
 helm3_installed="true"
@@ -90,11 +81,12 @@ command -v helm >/dev/null 2>&1 || {
 #helm install \
 #  cert-manager jetstack/cert-manager \
 #  --namespace cert-manager \
-#  --version v1.2.0 \
+#  --version v1.8.0 \
 #  -n cert-manager \
 #  --set installCRDs=true
 
 #echo "--- Creating secrets for DNS-01 challenge..."
+# shellcheck disable=SC2154
 #kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
 #echo "--- Installing Emberstack reflector..."
@@ -104,16 +96,23 @@ command -v helm >/dev/null 2>&1 || {
 #helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
 echo "--- Creating AKS view cluster role binding to AAD"
+cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
+sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml
 kubectl apply -f conf/view-cluster-role-binding.yaml
+mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
+
+############## Install Reloader
+echo "--- Installing Reloader..."
+bash dataplane/reloader/configure-reloader.sh
 
 echo "--- Add OMS Agent Config"
-kubectl apply -f oms/container-azm-ms-agentconfig.yaml
+bash dataplane/oms-agent/configure-oms-agent.sh
 
 echo "--- Configure CSI Secret Store"
-bash dataplane/configure-csi-secret-store.sh
+bash dataplane/secret-store-csi-driver/configure-csi-secret-store.sh
 
 #echo "--- Setup Nginx Ingress"
-#bash routing/install-nginx-ingress.sh
+#bash routing/nginx-ingress-controllers/configure-ingress-controllers.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"

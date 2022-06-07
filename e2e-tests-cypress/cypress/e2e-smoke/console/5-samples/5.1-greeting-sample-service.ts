@@ -26,12 +26,12 @@ import { GreetingSample } from "../../../support/console/pages/samples/greeting"
 import { Utils } from "../../../support/console/utils";
 
 describe("Create Greeting sample in Choreo", () => {
-  const FILE_ID = "oasflow";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
 ;
   before(() => {
     LoginPage.login();
+    ChoreoHomePage.switchOrganization();
   });
   after(() => {
     ChoreoHomePage.logout();
@@ -39,8 +39,7 @@ describe("Create Greeting sample in Choreo", () => {
   it("Creating a project and add Greeting sample", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      FILE_ID
+      PROJECT_DESCRIPTION
     );
     ProjectOverviewPage.addNewComponent();
     GreetingSample.selectSample()
@@ -50,7 +49,7 @@ describe("Create Greeting sample in Choreo", () => {
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deploy();
+    ComponentDeployPage.deployToDev();
     ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
@@ -72,9 +71,9 @@ describe("Create Greeting sample in Choreo", () => {
      SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify suspending deployed componen", () => {
+  it("Verify suspending deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+    ComponentDeployPage.stopDevContainer();
   });
 
   it("Verify component deletion",()=>{

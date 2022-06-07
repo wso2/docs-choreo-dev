@@ -117,9 +117,10 @@ export class Utils {
       url,
       headers,
       body,
+      failOnStatusCode: false,
     };
     return cy.request(request).then((res) => {
-      return cy.wrap({ body: res.body, status: res.status });
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
 
@@ -128,9 +129,10 @@ export class Utils {
       method: "GET",
       url,
       headers,
+      failOnStatusCode: false,
     };
     return cy.request(request).then((res) => {
-      return cy.wrap({ body: res.body, status: res.status });
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
 
@@ -139,9 +141,10 @@ export class Utils {
       method: "DELETE",
       url,
       headers,
+      failOnStatusCode: false,
     };
     return cy.request(request).then((res) => {
-      return cy.wrap({ body: res.body, status: res.status });
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
 }

@@ -52,7 +52,17 @@ export class LoginPage {
   }
 
   static navigateToCodespace() {
-    cy.visit(Cypress.env(`accessURL`));
+    const csurl = Cypress.env(`accessURL`);
+    cy.visit(csurl);
+    cy.intercept(csurl).then(() => {
+      cy.setCookie("fidpId", "choreoe2etest", {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
+    });
   }
 
   static login() {
@@ -62,23 +72,49 @@ export class LoginPage {
     cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
     cy.get('button[type="submit"]').click();
 
-    LoginPage.persistOrgs();
-    LoginPage.persistApimToken();
-    LoginPage.persistLogoutURL();
-    LoginPage.persistCookies();
+    cy.setCookie("fidpId", "choreoe2etest");
+  
+    this.persistOrgs();
+    this.persistLogoutURL();
+    this.persistApimToken();
+    this.persistCookies();
 
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
     }).should("be.visible");
     cy.url().then((url) => {
-      cy.log(url)
       if (url.includes("sample=true")) {
         const { handle } = Cypress.env("userData");
         const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
-        cy.wait(5000)
+        cy.wait(5000);
         cy.visit(tmpURL);
       }
     });
+  }
+
+  static enterpriseLogin() {
+    cy.visit(Cypress.env("enterpriseLoginUrl"));
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
+      timeout: 180000,
+    });
+
+    cy.get('button[id="enterprise-sign-in"]').click();
+
+    cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
+    cy.contains("Continue").click();
+
+    cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
+    cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), {
+      log: false,
+    });
+    cy.contains("Continue").click();
+
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
+
+    this.persistLogoutURL();
   }
 
   private static persistLogoutURL() {
@@ -93,7 +129,6 @@ export class LoginPage {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
     cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
-      cy.log(JSON.stringify(res.requestHeaders))
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
@@ -131,40 +166,23 @@ export class LoginPage {
         userEmail: userEmail,
         orgId: userOrg.id,
         handle: userOrg.handle,
+        uuid: userOrg.uuid,
       };
       cy.log("userData: ", JSON.stringify(userData));
       Cypress.env("userData", userData);
     });
   }
 
-  private static persistApimToken() {
+  static persistApimToken() {
     cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("orgs");
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
-      Cypress.env("apim_token", intercept.request.headers.authorization);
-      const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
-      GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
-      this.deleteOnPremKeys();
-    });
-  }
-
-  private static deleteOnPremKeys() {
-    const orgHandle = Cypress.env("userData")["handle"];
-    const header = Cypress.env("apim_token");
-    const url = `${Cypress.env("appSvcURL")}/orgs/${orgHandle}/keys`;
-    const headers = {
-      Authorization: `${header}`,
-    };
-    Utils.sendGetRequest(url, headers).then((res) => {
-      const keys = res.body as [];
-      keys.forEach((key) => {
-        let { handle } = key;
-        let revokeUrl = `${Cypress.env(
-          "appSvcURL"
-        )}/orgs/${orgHandle}/keys/${handle}/revoke`;
-        Utils.sendPostRequest(revokeUrl, headers, {});
-      });
+      const { id, uuid, handle } = intercept.response.body.organization;
+      const current_org = { id, uuid, handle };
+      Cypress.env("apim_token", token);
+      Cypress.env("current_org", current_org);
+      GraphQL.deleteProjectsCreatedByTests(id, handle, token);
     });
   }
 }

@@ -53,7 +53,7 @@ export class ComponentOverviewPage {
   }
 
   static createNewVersion(version: string, newBranch: string) {
-    cy.get("#version-picker").click();
+    cy.get('[data-cyid="version-picker"]').click();
     cy.get("[data-cyid=btn-create-version]").click();
 
     if (newBranch) {
