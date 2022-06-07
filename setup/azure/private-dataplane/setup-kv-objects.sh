@@ -47,9 +47,9 @@ openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.
 TM_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 
 echo "--- Creating Client Truststore JKS ---"
-apim_TRUSTSTORE_PSWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
-keytool -import -file wso2carbon.pem -alias wso2carbon -keystore client-truststore.jks -storepass "${apim_TRUSTSTORE_PSWD}" -noprompt
-keytool -import -file global-adapter.pem -alias global-adapter -keystore client-truststore.jks -storepass "${apim_TRUSTSTORE_PSWD}" -noprompt
+APIM_TRUSTSTORE_PSWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
+keytool -import -file wso2carbon.pem -alias wso2carbon -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
+keytool -import -file global-adapter.pem -alias global-adapter -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
 
 echo "--- Uploading secrets to Key Vault ---"
 
@@ -69,10 +69,10 @@ sed -i "s/apim_TLS_KEYSTORE_PSWD/${TLS_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_TLS_KEYSTORE_KEY_PSWD/${TLS_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_INTERNAL_KEYSTORE_PSWD/${INTERNAL_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_INTERNAL_KEYSTORE_KEY_PSWD/${INTERNAL_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
-sed -i "s/apim_TRUSTSTORE_PSWD/${apim_TRUSTSTORE_PSWD}/g" ${SECRET_FILE_PATH}
+sed -i "s/apim_TRUSTSTORE_PSWD/${APIM_TRUSTSTORE_PSWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_H2_SHARED_DB_PSWD/wso2carbon/g" ${SECRET_FILE_PATH}
-sed -i "s/asb_CONNECTION_STRING/${asb_CONNECTION_STRING}/g" ${SECRET_FILE_PATH}
-sed -i "s/apim_ANALYTICS_AUTH_TOKEN/${apim_ANALYTICS_AUTH_TOKEN}/g" ${SECRET_FILE_PATH}
+sed -i "s/asb_CONNECTION_STRING/${ASB_CONNECTION_STRING}/g" ${SECRET_FILE_PATH}
+sed -i "s/apim_ANALYTICS_AUTH_TOKEN/${APIM_ANALYTICS_AUTH_TOKEN}/g" ${SECRET_FILE_PATH}
 sed -i "s/CUSTOMER_NAME/${CUSTOMER_NAME_CAPS}/g" ${SECRET_FILE_PATH}
 sed -i "s/ga_PASSWORD/${GA_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/tm_PASSWORD/${TM_PWD}/g" ${SECRET_FILE_PATH}
