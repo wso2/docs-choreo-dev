@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "--- Generating Certificate and Private Key for use in Enforcer, Adapter and Router ---"
 
@@ -62,7 +62,7 @@ cp ${SECRET_FILE_PATH} ${SECRET_FILE_PATH}.bak
 cp ${CERT_FILE_PATH} ${CERT_FILE_PATH}.bak
 cp ${PEM_FILE_PATH} ${PEM_FILE_PATH}.bak
 
-CUSTOMER_NAME_CAPS=$(echo "${CUSTOMER_NAME}" | tr [:lower:] [:upper:])
+CUSTOMER_NAME_CAPS=$(echo "${CUSTOMER_NAME}" | tr "[:lower:]" "[:upper:]")
 sed -i "s/apim_PRIMARY_KEYSTORE_PSWD/${PRIMARY_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_PRIMARY_KEYSTORE_KEY_PSWD/${PRIMARY_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/apim_TLS_KEYSTORE_PSWD/${TLS_KEYSTORE_PWD}/g" ${SECRET_FILE_PATH}
@@ -97,10 +97,10 @@ sed -i "s|ADAPTER_KEYSTORE_PATH|${ADAPTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 sed -i "s|ENFORCER_KEYSTORE_PATH|${ENFORCER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 sed -i "s|ROUTER_KEYSTORE_PATH|${ROUTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 
-KEYVAULT_NAME=
-bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${SECRET_FILE_PATH}" -t secret
-bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${PEM_FILE_PATH}" -t pem
-bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${CERT_FILE_PATH}" -t securecert 
+#KEYVAULT_NAME=
+#bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${SECRET_FILE_PATH}" -t secret
+#bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${PEM_FILE_PATH}" -t pem
+#bash ../csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${CERT_FILE_PATH}" -t securecert 
 
 echo "--- Cleaning up configuration files ---"
 rm client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary*
@@ -118,3 +118,4 @@ echo "Primary Keystore Password is: ${PRIMARY_KEYSTORE_PWD}"
 echo "Private Global Adapter Password is: ${GA_PWD}"
 
 echo "Traffic Manager Password is: ${TM_PWD}"
+
