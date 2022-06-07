@@ -65,7 +65,7 @@ public class DataCleaner  {
     private static boolean shouldProjectBeDeleted(String projectName) {
         // Projects that can be deleted that were created with the Old project name prefix have already been removed.
         // What remains are those that cannot be deleted due to connectors being published.
-        if (projectName.contains(Constant.TEST_OLD_PROJECT_NAME_PREFIX)) {
+        if (projectName.startsWith(Constant.TEST_OLD_PROJECT_NAME_PREFIX)) {
             return false;
         }
 
