@@ -44,6 +44,8 @@ public class ComponentUtils {
             restAPI = component.get();
         }
 
+        restAPI.setOrganization(org);
+
         return restAPI;
     }
 }

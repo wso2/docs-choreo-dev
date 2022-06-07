@@ -22,12 +22,16 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Is responsible for cleaning up reoccurring data that is introduced by integration tests.
+ */
 public class DataCleaner  {
-    private final static Logger log = LoggerFactory.getLogger(DataCleaner.class);
-    private final static int hourInMilliseconds = 60 * 60 * 1000;
+    private static final Logger log = LoggerFactory.getLogger(DataCleaner.class);
+    private static final int hourInMilliseconds = 60 * 60 * 1000;
 
-    public static void removeOldTestData(String accessToken, ChoreoOrganization org) throws Exception {
-        List<ChoreoProject> projects = org.getProjects(accessToken);
+    public static void removeOldTestData(ChoreoOrganization org) throws Exception {
+        TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+        List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());
 
@@ -41,13 +45,13 @@ public class DataCleaner  {
 
                 ++numberOfTestProjects;
                 if (shouldProjectBeDeleted(project.getName())) {
-                    List<ChoreoComponent> components = project.getComponents(accessToken);
+                    List<ChoreoComponent> components = project.getComponents(tokenHandler.getTestTokenForCPAPIs());
 
                     for (ChoreoComponent component : components) {
-                        project.deleteComponent(accessToken, component.getId());
+                        project.deleteComponent(tokenHandler.getTestTokenForCPAPIs(), component.getId());
                     }
 
-                    if (org.deleteProject(accessToken, project.getId())) {
+                    if (org.deleteProject(tokenHandler.getTestTokenForCPAPIs(), project.getId())) {
                         ++numberOfTestProjectsDeleted;
                     }
                 }
