@@ -257,26 +257,30 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-                // Check if initial PR has been generated
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
+                $(repeatOnError()
+                        .until("i = 5")
+                        .index("i")
+                        .autoSleep(5000)
+                        .actions(
+                                http()
+                                        .client(choreoProjectsTestClient)
+                                        .send()
+                                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                        .body(requestBody)
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                http()
+                                        .client(choreoProjectsTestClient)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .type(MessageType.JSON)
+                                        .body(new ClassPathResource(
                                                 "templates/createUserManagedComponent/get_pull_requests.json"))
-                                .validate(json()
-                                                .ignore("$.data.componentPullRequests[0].url")));
+                                        .validate(json()
+                                                .ignore("$.data.componentPullRequests[0].url"))));
         }
 
         @Test(dependsOnMethods = {
