@@ -39,12 +39,12 @@ else
 fi
 
 ENV=$(echo "${ENV}" | tr "[:upper:]" "[:lower:]")
-export "$ENV"
-echo "$ENV"
+export "${ENV}"
+echo "${ENV}"
 
 CUSTOMER_NAME=$(echo "${CUSTOMER_NAME}" | tr "[:upper:]" "[:lower:]")
-export "$CUSTOMER_NAME"
-echo "$CUSTOMER_NAME"
+export "${CUSTOMER_NAME}"
+echo "${CUSTOMER_NAME}"
 
 ############## Install Reloader
 echo "--- Installing Reloader..."
