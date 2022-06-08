@@ -9,9 +9,7 @@ Choreo allows you to either proceed with a Choreo-managed repository or connect 
 
 The Choreo-managed repository is in a Choreo-owned GitHub organization that is not accessible to external users. Therefore, it is not ideal for scenarios where multiple developers need to develop a component in collaboration. To overcome this limitation, Choreo provides the capability to connect your own GitHub repository to maintain the source code of a Choreo component you create. This enables multiple developers to work on a particular Choreo component by collaborating via pull requests on a shared repository. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as PR checks, code analysis, styling preferences, etc.
 
-This tutorial walks you through the steps to connect your own GitHub repository when creating a component.
-
-In this tutorial, you will,
+This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will,
 
 - Create a REST API component and connect it to your own GitHub repository.
 - Design the REST API and try it out via the Web Editor.
@@ -30,7 +28,6 @@ In this tutorial, you will,
       | **Description** | Maintain COVID-19 Statistics |
 
 4. Click **Create**. This takes you to the **Components** page.
-
 
 ## Step 2: Add a REST API component and connect it to your own GitHub repository
 
@@ -76,11 +73,9 @@ In this tutorial, you will,
 
 Follow the step-by-step instructions under [step 1.3](https://wso2.com/choreo/docs/tutorials/create-your-first-rest-api/#step-13-design-the-rest-api) in the Create Your First REST API tutorial. 
 
-
 ## Step 4: Run and try out the REST API
 
 Follow the step-by-step instructions under [step 1.4](https://wso2.com/choreo/docs/tutorials/create-your-first-rest-api/#step-14-run-and-test-the-rest-api) in the Create Your First REST API tutorial.
-
 
 ## Step 5: Commit the source code of the REST API component to your GitHub repository
 
@@ -121,6 +116,3 @@ Developers can collaborate via any of the following approaches:
 - Create their forks from the shared upstream repository, connect to individual components, commit, and send PRs to the upstream repository.
 
 Once you collaborate and complete developing the REST API component, you can deploy it and test it. For step-by-step instructions, see [steps 2 and 3 in the Create Your First REST API tutorial](https://wso2.com/choreo/docs/tutorials/create-your-first-rest-api/#step-2-deploy).
-
-
-
