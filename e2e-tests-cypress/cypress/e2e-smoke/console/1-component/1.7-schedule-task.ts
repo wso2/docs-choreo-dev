@@ -16,6 +16,7 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
+import { Environment } from "../../../support/console/pages/enum/environment";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
@@ -84,11 +85,19 @@ describe("Schedule task", () => {
   it("Verify task execution in observability ", () => {
     ComponentOverviewPage.navigateToObserve();
     ComponentObservePage.gotoLogs(LONG_TIME);
-    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT).should("be.true");
+  });
+  it("Verify dev env logs", () => {
+    ComponentObservePage.selectEnv(Environment.DEVELOPMENT);
+    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
+  });
+
+  it("Verify dev env logs", () => {
+    ComponentObservePage.selectEnv(Environment.PRODUCTION);
+    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 
   it("Verify application suspension", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+    ComponentDeployPage.stopScheduleTask();
   });
 });
