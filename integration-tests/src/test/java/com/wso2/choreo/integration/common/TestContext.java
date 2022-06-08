@@ -47,7 +47,7 @@ public class TestContext {
 
     @BeforeSuite
     public void setup() throws Exception {
-        DataCleaner.removeOldTestData(testUserTokenHandler.getTestTokenForCPAPIs(), testOrg);
+        DataCleaner.removeOldTestData(testOrg);
     }
 
     public static ChoreoOrganization getTestOrg() {
