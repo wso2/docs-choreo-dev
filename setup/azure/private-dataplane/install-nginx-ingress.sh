@@ -11,7 +11,25 @@ kubectl label namespace "${ENV}-choreo-apim-nginx-ingress" purpose="${ENV}-chore
 kubectl annotate namespace "${ENV}-choreo-apim-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${ENV}-choreo-apim-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
-kubectl apply -f ./netpol/"${ENV}-choreo-apim-nginx-ingress-ns.yaml"
+kubectl apply -f netpol/"${ENV}-choreo-apim-nginx-ingress-ns.yaml"
+
+LOADBALANCER_IP_RG=$(az group show --name choreo-"${CUSTOMER_NAME}"-dataplane-"${ENV}"-network-rg --query "name" --output tsv)
+
+echo "LB IP RG is: ${LOADBALANCER_IP_RG}"
+
+LOADBALANCER_VNET_NAME=$(az network vnet show --name choreo-"${CUSTOMER_NAME}"-dataplane-"${ENV}"-virtual-network --resource-group "${LOADBALANCER_IP_RG}" --query "name" --output tsv)
+
+echo "LB VNET NAME is: ${LOADBALANCER_VNET_NAME}"
+
+LOADBALANCER_SUBNET_NAME=$(az network vnet subnet show --resource-group "${LOADBALANCER_IP_RG}" --vnet-name "${LOADBALANCER_VNET_NAME}" --name choreo-"${CUSTOMER_NAME}"-dp-"${ENV}"-loadbalancer-subnet --query "name" --output tsv)
+
+echo "LB SUBNET NAME is: ${LOADBALANCER_SUBNET_NAME}"
+
+az config set extension.use_dynamic_install=yes_without_prompt
+
+ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
+
+echo "ROUTING LB IP is: ${ROUTING_LOADBALANCER_IP}"
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
