@@ -321,7 +321,3 @@ configMapGenerator:
     behavior: create
     files:
       - perfanalyzer/application.properties
-  - name: cm-quota-limiter-config-cp
-    behavior: create
-    files:
-      - quota-limiter/Config.toml

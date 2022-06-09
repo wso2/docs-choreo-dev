@@ -43,9 +43,6 @@ spec:
                 secretKeyRef:
                   name: secret-quota-limiter
                   key: QUOTA_LIMITER_APIM_CLIENT_SECRET
-          envFrom:
-            - configMapRef:
-                name: env-quota-limiter
           ports:
             - containerPort: 9090
               name: grpc-port
@@ -94,7 +91,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-quota-limiter-config-cp
+            name: cm-quota-limiter-config
         - name: secret-quota-limiter
           csi:
             driver: secrets-store.csi.k8s.io
