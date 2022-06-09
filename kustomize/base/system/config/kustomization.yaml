@@ -317,3 +317,7 @@ configMapGenerator:
     behavior: create
     files:
       - lowcode-parser/application.properties
+  - name: cm-perfanalyzer-cp
+    behavior: create
+    files:
+      - perfanalyzer/application.properties
