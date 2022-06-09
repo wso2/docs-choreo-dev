@@ -79,11 +79,6 @@ spec:
                 secretKeyRef:
                   name: secret-redis
                   key: REDIS_PASSWORD
-            - name: ORGANIZATION_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: nginx-lua-config
-                  key: ORGANIZATION_ID
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
