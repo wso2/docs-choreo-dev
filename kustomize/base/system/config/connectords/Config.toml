@@ -1,0 +1,5 @@
+
+[connectordataservice]
+IDP_JWKS_ENDPOINT = "/oauth2/jwks"
+JWKS_ENDPOINT_PROTOCOL = "https"
+CHOREO_APP_SERVICE_GRPC_ADDRESS = "http://app-service:8080"
