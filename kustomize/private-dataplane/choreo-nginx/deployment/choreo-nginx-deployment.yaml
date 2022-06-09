@@ -67,6 +67,8 @@ spec:
                 name: redis-config
             - configMapRef:
                 name: nginx-feature-flags
+            - configMapRef:
+                name: nginx-lua-config
           env:
             - name: NAMESPACE
               valueFrom:

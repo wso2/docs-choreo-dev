@@ -296,8 +296,16 @@ configMapGenerator:
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
       - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=webWorker
+      - REACT_APP_AUTHENTICATOR_GOOGLE=GoogleOIDCAuthenticator
+      - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
+      - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
+      - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
   - name: cm-workspace-manager-cp
     behavior: create
     literals:
       - CSM_DB_NAME=choreo_codeserver_db
       - CSM_DB_USERNAME=choreo_codeserver_db_user
+  - name: cm-anomalydetector-cp
+    behavior: create
+    files:
+      - anomalydetector/application.properties
