@@ -83,6 +83,8 @@ nav:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
      - Enterprise Login: references/enterprise-login.md
+     - Troubleshooting:
+         - Add Non-Ballerina Files to Choreo: references/troubleshooting/add-non-ballerina-files-to-choreo.md 
 # - Choreo DevOps: devops/overview.md
 # Extensions
 markdown_extensions:
