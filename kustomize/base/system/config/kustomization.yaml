@@ -313,3 +313,7 @@ configMapGenerator:
     behavior: create
     files:
       - apim-service/Config.toml
+  - name: cm-lowcode-parser-cp
+    behavior: create
+    files:
+      - lowcode-parser/application.properties
