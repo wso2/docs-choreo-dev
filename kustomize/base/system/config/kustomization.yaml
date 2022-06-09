@@ -121,6 +121,8 @@ configMapGenerator:
     behavior: create
     literals:
       - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+    files:
+      - connectords/Config.toml
   - name: cm-connector-builder-cp
     behavior: create
     literals:
@@ -307,6 +309,10 @@ configMapGenerator:
     behavior: create
     files:
       - anomalydetector/application.properties
+  - name: cm-choreo-apim-service-cp
+    behavior: create
+    files:
+      - apim-service/Config.toml
   - name: cm-lowcode-parser-cp
     behavior: create
     files:
