@@ -107,7 +107,11 @@ bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${PEM_FILE_PATH
 bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${CERT_FILE_PATH}" -t securecert 
 
 echo "--- Cleaning up configuration files ---"
-rm client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary*
+#rm client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary*
+
+mkdir cert-files
+
+mv client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary* cert-files/
 
 mv ${SECRET_FILE_PATH}.bak ${SECRET_FILE_PATH}
 mv ${CERT_FILE_PATH}.bak ${CERT_FILE_PATH}
