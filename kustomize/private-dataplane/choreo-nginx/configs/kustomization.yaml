@@ -33,7 +33,3 @@ configMapGenerator:
     behavior: create
     files:
       - nginx.conf
-  - name: nginx-lua-config
-    behavior: create
-    literals:
-      - ORGANIZATION_ID=c29cf63e-e5bc-488e-998a-81866d2b266b
