@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Environment } from "../enum/environment";
+
 export class ComponentObservePage {
   private static obsUrlRegexp = /.+\/observe\/app\/(.{36})\/(.{36})\b/;
 
@@ -23,20 +25,24 @@ export class ComponentObservePage {
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible").click();
   }
 
+  static selectEnv(env: Environment) {
+    cy.get("#environment-selector").should("be.visible").click();
+    cy.get("#menu->div>ul>li").contains(env).click({ force: true });
+  }
+
   static verifyTextInLogs(text: string) {
-    cy.log(text);
-    return cy.get('[data-testid="log-panel-entry"]>span').each(($e) => {
+    cy.get('[data-testid="log-panel-entry"]').each(($e) => {
       let log = $e
         .text()
         .replace("ballerina: sending metrics to Choreo", "")
         .trim()
         .toString();
       if (log.includes(text)) {
-        return cy.wrap(true);
+        const exactText = log.slice(log.indexOf("{"), log.indexOf("}") + 1);
+        expect(text).to.be.eq(exactText);
       }
     });
   }
-
 
   static navigateToSampleApp() {
     const observabilityViewUrl = Cypress.env("baseUrl") + "/observe/sample";
@@ -55,16 +61,20 @@ export class ComponentObservePage {
     cy.get('[data-testid="panel-Logs-btn"]').click();
 
     cy.log("Asserting mandatory log entry with part of the search phrase");
-    cy.get('#log-search').should("be.visible");
-    cy.get('#log-search').type(commonLogLine.substring(0, 13));
+    cy.get("#log-search").should("be.visible");
+    cy.get("#log-search").type(commonLogLine.substring(0, 13));
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should("exist");
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should(
+      "exist"
+    );
 
     cy.log("Asserting mandatory log entry by providing a search phrase");
     cy.get('[data-testid="log-search"]').clear();
     cy.get('[data-testid="log-search"]').type(commonLogLine);
     cy.get('[data-testid="log-search-btn"]').click();
-    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should("exist");
+    cy.contains('[data-testid="log-panel-entry"]', commonLogLine).should(
+      "exist"
+    );
     cy.contains(
       '[data-testid="log-panel"]',
       employeeInfoNotFoundLogEntry
@@ -218,40 +228,30 @@ export class ComponentObservePage {
 
         cy.log("Scroll the graph and check selector repositioning");
         cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
-        cy.get('[data-testid="rca-container"]').scrollTo('top');
+        cy.get('[data-testid="rca-container"]').scrollTo("top");
         cy.get('[data-testid="diagnostics-view-slider"]').should("be.visible");
-        cy.get('[data-testid="flame-graph-btn"]').should('be.visible');
+        cy.get('[data-testid="flame-graph-btn"]').should("be.visible");
 
         cy.log("Test Flame Graph view");
         cy.get('[data-testid="flame-graph-btn"]').click();
-        cy.get('[data-testid="flame-graph-loader"]').should(
-          "not.exist"
-        );
+        cy.get('[data-testid="flame-graph-loader"]').should("not.exist");
 
         cy.get('[data-testid="flame-graph-message-container"]', {
           timeout: 60000,
         }).should("not.exist");
 
         cy.get('[data-testid="flame-graph"]').should("exist");
-        cy.get('[data-testid="latencies-for-flame-graph"]').should(
-          "exist"
-        );
-        cy.get('[data-testid="flame-graph-slider"]').should(
-          "exist"
-        );
+        cy.get('[data-testid="latencies-for-flame-graph"]').should("exist");
+        cy.get('[data-testid="flame-graph-slider"]').should("exist");
         // TODO: Move the flame graph slider and assert the flame graph once https://github.com/wso2-enterprise/choreo/issues/4310 is fixed
         cy.log(
           "Close the flame graph and navigate to the diagnostics view again"
         );
-        cy.get('[data-testid="flame-graph-close-btn"]').should(
-          "be.visible"
-        );
+        cy.get('[data-testid="flame-graph-close-btn"]').should("be.visible");
         cy.get('[data-testid="flame-graph-close-btn"]')
           .click()
           .then(() => {
-            cy.get('[data-testid="cpu-graph-loader"]').should(
-              "not.exist"
-            );
+            cy.get('[data-testid="cpu-graph-loader"]').should("not.exist");
             cy.get('[data-testid="cpu-graph"]').should("exist");
           });
       });

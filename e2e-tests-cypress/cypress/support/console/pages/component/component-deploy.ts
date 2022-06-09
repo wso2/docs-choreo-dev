@@ -95,7 +95,7 @@ export class ComponentDeployPage {
     cy.wait(2000);
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
       .eq(0)
-      .should("be.visible")
+      .should("be.enabled")
       .click();
     cy.get("button:not([data-cyid])").contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]').should("have.length", 2);
@@ -113,12 +113,12 @@ export class ComponentDeployPage {
   static addConfiguration(value: string) {
     cy.contains("Configure & Deploy").should("be.visible").click();
     cy.get(".ConfigForm").then((frm) => {
-      const le = frm.find('.Mui-required').length;
-      if (le<2) {
+      const le = frm.find(".Mui-required").length;
+      if (le < 2) {
         cy.get(".ConfigForm .MuiIconButton-label").click();
-        cy.get('.MuiFormControl-fullWidth>div>input').eq(1).type(value);
+        cy.get(".MuiFormControl-fullWidth>div>input").eq(1).type(value);
       } else {
-        cy.get('.MuiFormControl-fullWidth>div>input').eq(1).type(value);
+        cy.get(".MuiFormControl-fullWidth>div>input").eq(1).type(value);
       }
     });
     cy.get('button[type="submit"]').click();
@@ -224,6 +224,11 @@ export class ComponentDeployPage {
     this.stopDevContainer();
     this.stopStgContainer();
     this.stopProdContainer();
+  }
+
+  static stopScheduleTask(){
+    cy.contains("Stop").eq(0).click({multiple:true})
+    cy.contains("Stop").eq(0).click({multiple:true})
   }
 
   public static stopDevContainer() {
