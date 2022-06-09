@@ -27,11 +27,6 @@ spec:
           type: RuntimeDefault
       containers:
       - env:
-        - name: b7a_log_level
-          valueFrom:
-            configMapKeyRef:
-              key: B7A_LOG_LEVEL
-              name: cm-loglevel-telemetry
         - name: NEGOTIATOR_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:
@@ -41,26 +36,6 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: NEGOTIATOR_HEALTHZ_ADDRESS
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_CAPACITY
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_CAPACITY
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_EVICTION_FACTOR
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_EVICTION_FACTOR
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_MAX_AGE
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_MAX_AGE
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
               name: cm-telemetry-cp
         - name: EVENTHUB_CONNECTION_STRING
           valueFrom:

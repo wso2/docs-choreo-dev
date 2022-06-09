@@ -46,8 +46,6 @@ configMapGenerator:
       - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
-      - AST_CACHE_MAX_SIZE_MB=100
-      - SKIP_AUTH=false
   - name: cm-frontend-cp
     behavior: create
     literals:
@@ -76,11 +74,6 @@ configMapGenerator:
     literals:
       - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
       - NEGOTIATOR_HEALTHZ_ADDRESS=http://negotiator:9093
-      - PROJECT_SECRET_CACHE_CAPACITY=300
-      - PROJECT_SECRET_CACHE_EVICTION_FACTOR=0.2
-      - PROJECT_SECRET_CACHE_MAX_AGE=600
-      - PROJECT_SECRET_CACHE_CLEANUP_INTERVAL=720
-      - LAST_ACTIVE_UPDATION_INTERVAL_IN_MINS=10
       - REDIS_PORT=6380
       - REDIS_SSL=true
       - REDIS_DATABASE=3
