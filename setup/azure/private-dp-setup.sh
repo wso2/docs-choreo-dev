@@ -24,7 +24,7 @@ do
     esac
 done
 
-echo "--- Setting Properties values as environmental variables"
+echo -e "\n --- Setting Properties values as environmental variables --- \n"
 if [[ -r ${azuredfile} ]]
 then
     while IFS= read -r line
@@ -47,7 +47,7 @@ export "${CUSTOMER_NAME?}"
 echo "${CUSTOMER_NAME}"
 
 ############## Install Reloader
-echo "--- Installing Reloader..."
+echo -e "\n --- Installing Reloader --- \n"
 kubectl create ns reloader
 if [[ -f "../reloader.yaml" ]]; then
     kubectl apply -n reloader -f ../reloader.yaml
@@ -56,7 +56,7 @@ else
 fi
 
 ############### Install Helm 3
-echo "--- Installing Helm 3..."
+echo -e "\n --- Installing Helm 3 --- \n"
 helm3_installed="true"
 command -v helm >/dev/null 2>&1 || {
     helm3_installed="false"
@@ -89,7 +89,7 @@ command -v helm >/dev/null 2>&1 || {
 #}
 
 ############### Install Certmanager
-echo "--- Installing Cert Manager..."
+echo -e "\n --- Installing Cert Manager --- \n"
 kubectl create ns cert-manager
 kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
@@ -105,17 +105,17 @@ helm upgrade --install \
   --set webhook.replicaCount=2 \
   --set cainjector.replicaCount=2
 
-echo "--- Creating secrets for DNS-01 challenge..."
+echo -e "\n --- Creating secrets for DNS-01 challenge --- \n"
 #DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id "${DNS01_CHALLENGE_CLIENT_ID}" --append --credential-description "dataplane-${ENV}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
 #kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
 
-echo "--- Installing Emberstack reflector..."
+echo -e "\n --- Installing Emberstack reflector --- \n"
 
 helm repo add emberstack https://emberstack.github.io/helm-charts
 helm repo update
 helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
 
-echo "--- Creating AKS view cluster role binding to AAD"
+echo -e "\n --- Creating AKS view cluster role binding to AAD --- \n"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
 
 AKS_RESOURCE_ID=$(az aks show --name choreo-"${CUSTOMER_NAME}"-dataplane-"${ENV}" --resource-group choreo-tbl-dataplane-dev-aks-rg --query "id" --output tsv)
@@ -125,16 +125,16 @@ sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-clus
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
-echo "--- Add OMS Agent Config"
+echo -e "\n --- Add OMS Agent Config --- \n"
 kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 
-echo "--- Configure CSI Secret Store"
+echo -e "\n --- Configure CSI Secret Store --- \n"
 bash private-dataplane/configure-csi-secret-store.sh
 
-echo "--- Setup Nginx Ingress"
+echo -e "\n --- Setup Nginx Ingress --- \n"
 bash private-dataplane/install-nginx-ingress.sh
 
-echo "--- Setup APIM Secrets and Certificates ---"
+echo -e "\n --- Setup APIM Secrets and Certificates --- \n"
 bash private-dataplane/setup-kv-objects.sh
 
 #echo "--- Setup LetsEncrypt issuer"
@@ -160,7 +160,7 @@ bash private-dataplane/setup-kv-objects.sh
 #mv private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
 
 ############ Cleanup
-echo "--- Unsetting Properties values set as environmental variables"
+echo -e "\n --- Unsetting Properties values set as environmental variables --- \n"
 if [[ -r ${azuredfile} ]]
 then
     while IFS= read -r line

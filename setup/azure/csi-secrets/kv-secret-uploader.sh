@@ -34,7 +34,7 @@ then
     exit 1
 fi
 
-#rm -f object_versions.txt
+rm -f object_versions.txt
 echo "--- Creating secrets/certificates..."
 echo "--- Secrets/certificates will be added to the ${vault} key vault"
 
