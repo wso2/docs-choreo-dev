@@ -25,17 +25,13 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - env:
-        - name: AZURE_ADX_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: secret-obsapi
-              key: AZURE_ADX_CLIENT_SECRET
-        envFrom:
+      - envFrom:
           - configMapRef:
               name: cm-obsapi-cp
           - configMapRef:
               name: env-obsapi
+          - secretRef:
+              name: secret-obsapi
         image: choreocontrolplane.azurecr.io/choreoipaas/observability-api:latest
         securityContext:
           runAsUser: 10500
