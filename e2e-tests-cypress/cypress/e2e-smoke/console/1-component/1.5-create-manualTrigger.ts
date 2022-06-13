@@ -52,7 +52,7 @@ describe("Verify manual trigger creation functionality", () => {
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployManualTriggerToDev();
   });
 
   it_privatedp("Verify component deployment", () => {
@@ -62,7 +62,7 @@ describe("Verify manual trigger creation functionality", () => {
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteManualTriggerToProd();
   });
 
   it("Verify component promote to prod", () => {

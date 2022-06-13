@@ -3,10 +3,7 @@ metadata:
   name: "choreo-linker-0-deployment"
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=Required by linkerD
 spec:
   template:
     metadata:
@@ -14,15 +11,17 @@ spec:
         linkerd.io/inject: enabled
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
       - name: "choreo-linker-0-deployment"
         securityContext:
           allowPrivilegeEscalation: false
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 10500
+          runAsGroup: 10500
           readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

@@ -82,8 +82,8 @@ export class ComponentDevelopPage {
 
   static selectBranch(newBranch: string) {
     let branches = [];
-    cy.get('[aria-label="Without label"]').click();
-    cy.get("[data-value]").each((q) => {
+    cy.get('[aria-label="Without label"]',{timeout:18000}).should('be.visible').click();
+    cy.get("[data-value]>span").each((q) => {
       branches.push(q.text());
       if (q.text() === newBranch) {
         cy.wrap(q).click();
