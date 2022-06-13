@@ -19,5 +19,5 @@ To avoid the error `no such file or directory` and to copy the non-Ballerina fil
  ```
  
 !!! note
- - **sourceFile**: the file's relative path to the repository root. (For example, `dir1/file1.json` and not `/config/workspace/dir1/file1.json`)
- - **target**: The target is where Choreo copies the artifacts in the Docker container. **The target must always have the path prefix /home/ballerina/**.
+    - **sourceFile**: the file's relative path to the repository root. (For example, `dir1/file1.json` and not `/config/workspace/dir1/file1.json`)
+    - **target**: the target is where Choreo copies the artifacts in the Docker container. **The target must always have the path prefix /home/ballerina/**.
