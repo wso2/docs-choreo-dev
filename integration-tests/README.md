@@ -108,7 +108,7 @@ integration-tests/src/test
 			</td>
 		</tr>
         <tr>
-            <td>anomalyDetector</td>
+            <td>anomalyDetector (Temporarily disabled - https://github.com/wso2-enterprise/choreo/issues/13626)</td>
             <td>Detecting a backend failure anomaly</td>
             <td>
                 1) Invoke Passthrough Choreo component which has a backend that returns an HTTP error <br>
