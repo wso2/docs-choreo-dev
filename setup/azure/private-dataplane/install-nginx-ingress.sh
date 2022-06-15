@@ -37,8 +37,6 @@ if [[ "${CHOREO_ENV}" == "dev" ]]; then
 	    ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
 fi
 
-#ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
-
 echo "ROUTING LB IP is: ${ROUTING_LOADBALANCER_IP}"
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx

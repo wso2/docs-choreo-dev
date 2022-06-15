@@ -113,11 +113,9 @@ if [[ "${CHOREO_ENV}" == "dev" ]]; then
 	BASTION_PUBLIC_IP=$(az vm show --name choreo-stg-dp-bastion --resource-group choreo-stg-hub-network-rg --show-details --query publicIps -o tsv)
 
     else
-            ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
+        BASTION_PUBLIC_IP=$(az vm show --name choreo-"${CUSTOMER_NAME}"-dp-bastion --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --show-details --query publicIps -o tsv)
 fi
 
-
-BASTION_PUBLIC_IP=$(az vm show --name choreo-"${CUSTOMER_NAME}"-dp-bastion --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --show-details --query publicIps -o tsv)
 
 az keyvault set-policy -n "${KEYVAULT_NAME}" --secret-permissions get set list  --certificate-permissions get list import update --object-id "${SIGNED_IN_USERID}" --output none
 
