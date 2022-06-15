@@ -298,4 +298,6 @@ You can hover over the highlighted countries to view the country name and the to
 ![Geo Map by country](../assets/img/insights/geomap-requests-by-country.png){.cInlineImage-half}
 
 !!! Note
-    This feature only available for On Premise environments. The feature will not be visible for Choreo environment customers.
+    Currently, this feature is only available for On Premise environments.
+
+Optionally the geo map data can be downloaded in a tabular format using the pdf,csv download options using the <icon> on top right corner.
