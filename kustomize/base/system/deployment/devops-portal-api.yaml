@@ -38,8 +38,8 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: healthz
-              path: /readiness
+              port: devopsapi-port
+              path: /
           livenessProbe:
             initialDelaySeconds: 30
             timeoutSeconds: 15
@@ -47,8 +47,8 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: healthz
-              path: /liveness
+              port: devopsapi-port
+              path: /
           resources:
             limits:
               cpu: "1"
