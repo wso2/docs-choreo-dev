@@ -30,7 +30,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-devops-portal-api:latest
           ports:
             - containerPort: 8089
-              name: devops-portal-api-port
+              name: devopsapi-port
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
