@@ -3,13 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip3: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip6: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip8: CKV_K8S_31=Temporarily suppressing till fixing
-    checkov.io/skip10: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
-    checkov.io/skip11: CKV_K8S_23=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_38=This is required by LinkerD
   labels:
     choreo.component: devops-portal
   name: devops-portal
@@ -39,8 +33,12 @@ spec:
               protocol: TCP
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 101
-            runAsGroup: 101
+            runAsUser: 10000
+            runAsGroup: 10000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
