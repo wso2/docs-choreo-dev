@@ -39,8 +39,12 @@ spec:
               protocol: TCP
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 101
-            runAsGroup: 101
+            runAsUser: 10000
+            runAsGroup: 10000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
