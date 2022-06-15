@@ -27,7 +27,17 @@ echo "LB SUBNET NAME is: ${LOADBALANCER_SUBNET_NAME}"
 
 az config set extension.use_dynamic_install=yes_without_prompt
 
-ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
+if [[ "${CHOREO_ENV}" == "dev" ]]; then
+	    ROUTING_LOADBALANCER_IP=$(az network firewall policy rule-collection-group collection list --policy-name choreo-dev-hub-fw-policy --resource-group choreo-dev-network-rg --rcg-name 'DefaultDnatRuleCollectionGroup' --query "[1].rules[?contains(name, 'public-ip-apim-https')].translatedAddress" --output tsv)
+	
+    elif [[ "${CHOREO_ENV}" == "stage" ]]; then
+	    #todo; change this to same as dev once the Firewall has been upgraded to premium in Stage
+	    ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-stg-dp-fw --resource-group choreo-stg-hub-network-rg --collection-name choreo-stg-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-http')].translatedAddress" --output tsv)
+    else
+	    ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
+fi
+
+#ROUTING_LOADBALANCER_IP=$(az network firewall nat-rule collection show --firewall-name choreo-"${CUSTOMER_NAME}"-dp-fw --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --collection-name choreo-"${CUSTOMER_NAME}"-dnat-rule-collection-http --query "rules[?contains(name, 'public-ip-apim-${ENV}-http')].translatedAddress" --output tsv)
 
 echo "ROUTING LB IP is: ${ROUTING_LOADBALANCER_IP}"
 
