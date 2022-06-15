@@ -104,7 +104,18 @@ KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-
 
 SIGNED_IN_USERID=$(az ad signed-in-user show --query "id" --output tsv)
 
-BASTION_PUBLIC_IP=$(az vm show --name choreo-"${CUSTOMER_NAME}"-dp-bastion --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --show-details --query publicIps -o tsv)
+if [[ "${CHOREO_ENV}" == "dev" ]]; then
+
+	BASTION_PUBLIC_IP=$(az vm show --name choreo-dev-common-bastion --resource-group choreo-dev-network-rg --show-details --query publicIps -o tsv)
+
+    elif [[ "${CHOREO_ENV}" == "stage" ]]; then
+
+	BASTION_PUBLIC_IP=$(az vm show --name choreo-stg-dp-bastion --resource-group choreo-stg-hub-network-rg --show-details --query publicIps -o tsv)
+
+    else
+        BASTION_PUBLIC_IP=$(az vm show --name choreo-"${CUSTOMER_NAME}"-dp-bastion --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --show-details --query publicIps -o tsv)
+fi
+
 
 az keyvault set-policy -n "${KEYVAULT_NAME}" --secret-permissions get set list  --certificate-permissions get list import update --object-id "${SIGNED_IN_USERID}" --output none
 
