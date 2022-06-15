@@ -25,10 +25,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
-        runAsUser: 10000
-        runAsGroup: 1000
-        readOnlyRootFilesystem: true
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -62,6 +58,11 @@ spec:
             requests:
               cpu: 300m
               memory: 768Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10000
+            runAsGroup: 10000
+            readOnlyRootFilesystem: true
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
