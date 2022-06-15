@@ -139,10 +139,10 @@ spec:
                   key: TM_ADMIN_PASSWORD
           resources:
             requests:
-              memory: "1Gi"
+              memory: "4Gi"
               cpu: "1"
             limits:
-              memory: "1.5Gi"
+              memory: "4Gi"
               cpu: "1.5"
           ports:
             - containerPort: 8081
