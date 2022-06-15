@@ -64,8 +64,6 @@ spec:
             capabilities:
               drop:
                 - all
-              add:
-                - NET_RAW
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
