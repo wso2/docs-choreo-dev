@@ -281,3 +281,21 @@ These widgets allow you to download monthly reports for the last three months.
 
 To download a pregenerated report, click **Download** for the relevant month and then click on the required format.
 
+### Geo Map
+
+The **Geo Map** page allows you to see a geographical representation of your API usage. You can use this page to make business decisions such as identifying growing regions, analyzing the impact of a region specific marketing campaign, etc.
+
+![Geo Map page](../assets/img/insights/geomap-page-full.png){.cInlineImage-full}
+
+To filter the information displayed on this page by API, select the required API(s) in the **API** field. **All** is selected by default.
+
+This heat map displays the relative 
+
+#### Viewing number of requests by country
+
+You can hover over the highlighted countries to view the country name and the total hit counts originated from that location. The map can be zoomed and panned using mouse gestures.
+
+![Geo Map by country](../assets/img/insights/geomap-requests-by-country.png){.cInlineImage-half}
+
+!!! Note
+    This feature only available for On Premise environments. The feature will not be visible for Choreo environment customers.
