@@ -6,8 +6,8 @@ metadata:
   name: devops-portal
 spec:
   ports:
-    - name: devops-portal-port
+    - name: do-portal-port
       port: 80
-      targetPort: devops-portal-port
+      targetPort: do-portal-port
   selector:
     choreo.component: devops-portal

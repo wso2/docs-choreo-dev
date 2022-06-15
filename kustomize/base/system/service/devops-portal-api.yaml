@@ -6,9 +6,9 @@ metadata:
   name: devops-portal-api
 spec:
   ports:
-    - name: devops-portal-api-port
+    - name: devopsapi-port
       port: 8089
-      targetPort: devops-portal-api-port
+      targetPort: devopsapi-port
 
   selector:
     choreo.component: devops-portal-api
