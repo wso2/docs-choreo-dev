@@ -300,4 +300,4 @@ You can hover over the highlighted countries to view the country name and the to
 !!! Note
     Currently, this feature is only available for On Premise environments.
 
-Optionally the geo map data can be downloaded in a tabular format using the PDF or CSV download options using the [download](../assets/img/insights/insights-download-report.svg) on top right corner.
+Optionally the geo map data can be downloaded in a tabular format using the PDF or CSV download options using the ![download](../assets/img/insights/insights-download-report.svg) on top right corner.
