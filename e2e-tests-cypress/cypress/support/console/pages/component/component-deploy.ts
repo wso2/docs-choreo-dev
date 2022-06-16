@@ -263,13 +263,24 @@ export class ComponentDeployPage {
 
   public static stopDevContainer() {
     cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
-    cy.get("body").then((body) => {
-      if (body.find('[data-testid="btn-view-logs"]').length > 0) {
-        cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
-      } else {
-        cy.get('data-cyid=["proxy-deploy-card"]').should("have.length", 2);
-      }
-    });
+
+    if (Cypress.env("isPrivateOrg")) {
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 3);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 3);
+        }
+      });
+    } else {
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 2);
+        }
+      });
+    }
 
     cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
       .eq(0)
@@ -280,15 +291,13 @@ export class ComponentDeployPage {
   public static stopProdContainer() {
     if (Cypress.env("isPrivateOrg")) {
       cy.get('[data-testid="btn-stop-redeploy"]').eq(2).click();
-
       cy.get("body").then((body) => {
         if (body.find('[data-testid="btn-view-logs"]').length > 0) {
-          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 3);
         } else {
-          cy.get('data-cyid=["proxy-deploy-card"]').should("have.length", 3);
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 3);
         }
       });
-
       cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
         .eq(2)
         .invoke("text")
@@ -299,7 +308,7 @@ export class ComponentDeployPage {
         if (body.find('[data-testid="btn-view-logs"]').length > 0) {
           cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
         } else {
-          cy.get('data-cyid=["proxy-deploy-card"]').should("have.length", 2);
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 2);
         }
       });
       cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
@@ -314,9 +323,9 @@ export class ComponentDeployPage {
       cy.get('[data-testid="btn-stop-redeploy"]').eq(1).click();
       cy.get("body").then((body) => {
         if (body.find('[data-testid="btn-view-logs"]').length > 0) {
-          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 3);
         } else {
-          cy.get('data-cyid=["proxy-deploy-card"]').should("have.length", 3);
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 3);
         }
       });
       cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
