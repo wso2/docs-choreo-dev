@@ -28,7 +28,7 @@ spec:
         - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-devops-portal:latest
           name: devops-portal
           ports:
-            - containerPort: 80
+            - containerPort: 8001
               name: do-portal-port
               protocol: TCP
           securityContext:
