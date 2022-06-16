@@ -33,24 +33,19 @@ describe("Verify webhook creation functionality", () => {
   const PROJECT_DESCRIPTION = "Slack Trigger";
   const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
   const commitMessage = "adding slacktrigger bal file";
+  const config = "pkKgDNr5vGND364IsHzwGM7O";
   const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
-  
 
-  before(()=>{
-    LoginPage.login()
+  before(() => {
+    LoginPage.login();
     ChoreoHomePage.switchOrganization();
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Verify slack trigger creation", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-      
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     TriggersTemplate.SelectWebhookTemplate();
     TriggersTemplate.createSlackTriggerFromTemplate(WEBHOOK_NAME);
@@ -84,15 +79,14 @@ describe("Verify webhook creation functionality", () => {
 
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.configureAndDeploy("pkKgDNr5vGND364IsHzwGM7O");
+    ComponentDeployPage.configureAndDeploy(config);
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
   it_privatedp("Component promotion to stg", () => {
-    ComponentDeployPage.promoteWebHookToSTG();
+    ComponentDeployPage.promoteWebHookToSTG(config);
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
-
 
   it("Component promotion to prod", () => {
     ComponentDeployPage.promoteWebHookToProd();
@@ -114,10 +108,7 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Verify suspending Prod deployed component", () => {
-     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopDevContainer()
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopDevContainer();
   });
-
-
-
 });
