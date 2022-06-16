@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_8=Fixed after the health probs are implemented
+    checkov.io/skip2: CKV_K8S_9=Fixed after the health probs are implemented
+    checkov.io/skip3: CKV_K8S_38=Required by linkerd
+  labels:
+    choreo.component: alert-configuration-service
+  name: alert-configuration-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: alert-configuration-service
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        choreo.component: alert-configuration-service
+        antiaffinity: alert-configuration-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/alert-configuration-service:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          name: alert-configuration-service
+          ports:
+            - containerPort: 8080
+              name: an-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - alert-configuration-service
+              topologyKey: kubernetes.io/hostname
