@@ -42,6 +42,7 @@ public class RestAPIBasedEmailUtils {
     private static final List<String> SCOPES = Arrays.asList(GmailScopes.GMAIL_LABELS, GmailScopes.GMAIL_READONLY);
     private static final String GMAIL_AUTH_URI = "https://accounts.google.com/o/oauth2/auth";
     private static final String GMAIL_TOKEN_URI = "https://oauth2.googleapis.com/token";
+    private static final int DEFAULT_RE_TRY_COUNT = 300;
 
     private static final String DEFAULT_USER_ID = "me";
     private static final String DEFAULT_INBOX_LABEL = "INBOX";
@@ -105,7 +106,7 @@ public class RestAPIBasedEmailUtils {
 
     public boolean reTrySearch(String label, String searchText) throws Exception {
         int i = 0;
-        while (i++ < 300) {
+        while (i++ < DEFAULT_RE_TRY_COUNT) {
             List<Message> messages = searchMailBySubject(label, searchText);
             if (messages != null && messages.size() > 0) {
                 log.info("Found '{}' emails for the given criteria", messages.size());
