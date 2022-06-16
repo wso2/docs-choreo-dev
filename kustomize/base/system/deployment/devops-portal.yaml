@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip4: CKV_K8S_38=This is required by LinkerD
   labels:
     choreo.component: devops-portal
   name: devops-portal
@@ -18,9 +17,9 @@ spec:
         choreo.component: devops-portal
         antiaffinity: devops-portal
       annotations:
-        linkerd.io/inject: enabled
-        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        linkerd.io/inject: disabled
     spec:
+      automountServiceAccountToken: false
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -33,15 +32,15 @@ spec:
               protocol: TCP
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 10000
-            runAsGroup: 10000
             readOnlyRootFilesystem: true
+            runAsUser: 10014
+            runAsGroup: 10014
             capabilities:
               drop:
                 - all
           readinessProbe:
             initialDelaySeconds: 5
-            timeoutSeconds: 15
+            timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 3
             successThreshold: 1
@@ -49,8 +48,8 @@ spec:
               path: /
               port: do-portal-port
           livenessProbe:
-            initialDelaySeconds: 10
-            timeoutSeconds: 15
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
             periodSeconds: 30
             failureThreshold: 3
             successThreshold: 1
@@ -67,7 +66,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-devops-portal
-      serviceAccountName: sa-choreo-default
+          volumeMounts:
+            - mountPath: /var/cache/nginx
+              name: cache-volume
+            - mountPath: /var/run
+              name: pid-volume
+      volumes:
+        - name: cache-volume
+          emptyDir: {}
+        - name: pid-volume
+          emptyDir: {}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
