@@ -38,3 +38,5 @@ resources:
   - workspace-manager.yaml
   - shared-image-viewer.yaml
   - image-share-service.yaml
+  - devops-portal.yaml
+  - devops-portal-api.yaml

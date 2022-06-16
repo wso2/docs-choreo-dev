@@ -92,7 +92,7 @@ spec:
       serviceAccountName: sa-choreo-default
       volumes:
       - configMap:
-          name: cm-connectords-cp
+          name: cm-connectords
         name: bal-config-volume
       affinity:
         podAntiAffinity:

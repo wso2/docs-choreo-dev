@@ -46,6 +46,13 @@ CUSTOMER_NAME=$(echo "${CUSTOMER_NAME}" | tr "[:upper:]" "[:lower:]")
 export "${CUSTOMER_NAME?}"
 echo "${CUSTOMER_NAME}"
 
+if [[ -z "${CHOREO_ENV}" ]]; then
+	echo "Setting up choreo for ${CUSTOMER_NAME}"
+  else
+	CHOREO_ENV=$(echo "${CHOREO_ENV}" | tr "[:upper:]" "[:lower:]")
+	export "${CHOREO_ENV?}"
+fi
+
 ############## Install Reloader
 echo -e "\n --- Installing Reloader --- \n"
 kubectl create ns reloader
