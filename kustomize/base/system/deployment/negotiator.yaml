@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
   labels:
     choreo.component: negotiator
   name: negotiator
@@ -26,7 +23,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -85,9 +81,12 @@ spec:
               name: cm-choreo-program-db-cp
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
+          capabilities:
+            drop:
+              - ALL
           allowPrivilegeEscalation: false
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 10100
+          runAsGroup: 10100
           readOnlyRootFilesystem: true
         name: negotiator
         readinessProbe:

@@ -47,6 +47,9 @@ public class Configuration {
         public static final String MAIL_IMAP_PASS = System.getenv("ALERT_MAIL_IMAP_PASS");
         public static final String ORG_UUID = System.getenv("ALERT_ORG_UUID");
         public static final String RELEASE_ID = System.getenv("ALERT_RELEASE_ID");
+        public static final String GMAIL_API_CK = System.getenv("GMAIL_API_CK");
+        public static final String GMAIL_API_CS = System.getenv("GMAIL_API_CS");
+        public static final String GMAIL_API_REFRESH_TOKEN = System.getenv("GMAIL_API_REFRESH_TOKEN");
     }
 
     public static final class ANOMALY_DETECTION {
