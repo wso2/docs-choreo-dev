@@ -47,8 +47,9 @@ export "${CUSTOMER_NAME?}"
 echo "${CUSTOMER_NAME}"
 
 if [[ -z "${CHOREO_ENV}" ]]; then
-	echo "Setting up choreo for ${CUSTOMER_NAME}"
+	echo "Setting up Choreo for ${CUSTOMER_NAME}"
   else
+	echo "Setting up Choreo for internal use in ${CHOREO_ENV}"
 	CHOREO_ENV=$(echo "${CHOREO_ENV}" | tr "[:upper:]" "[:lower:]")
 	export "${CHOREO_ENV?}"
 fi
