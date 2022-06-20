@@ -47,8 +47,9 @@ export "${CUSTOMER_NAME?}"
 echo "${CUSTOMER_NAME}"
 
 if [[ -z "${CHOREO_ENV}" ]]; then
-	echo "Setting up choreo for ${CUSTOMER_NAME}"
+	echo "Setting up Choreo for ${CUSTOMER_NAME}"
   else
+	echo "Setting up Choreo for internal use in ${CHOREO_ENV}"
 	CHOREO_ENV=$(echo "${CHOREO_ENV}" | tr "[:upper:]" "[:lower:]")
 	export "${CHOREO_ENV?}"
 fi
@@ -125,8 +126,8 @@ helm upgrade --install reflector emberstack/reflector --namespace cert-manager -
 echo -e "\n --- Creating AKS view cluster role binding to AAD --- \n"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
 
-AKS_RESOURCE_ID=$(az aks show --name choreo-"${CUSTOMER_NAME}"-dataplane-"${ENV}" --resource-group choreo-tbl-dataplane-dev-aks-rg --query "id" --output tsv)
-AKS_READONLY_AD_GROUP_ID=$(az role assignment list --scope "${AKS_RESOURCE_ID}" --query "[?contains(principalName, 'choreo-${CUSTOMER_NAME}-aks-rbac-reader')].{principalId:principalId}" --output tsv)
+AKS_RESOURCE_ID=$(az aks show --name choreo-"${CUSTOMER_NAME}"-dataplane-"${ENV}" --resource-group choreo-"${CUSTOMER_NAME}"-dataplane-"${ENV}"-aks-rg --query "id" --output tsv)
+AKS_READONLY_AD_GROUP_ID=$(az role assignment list --scope "${AKS_RESOURCE_ID}" --query "[?contains(principalName, 'choreo-${CUSTOMER_NAME}-dataplane-${ENV}-aks-rbac-reader')].{principalId:principalId}" --output tsv)
 
 sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml 
 kubectl apply -f conf/view-cluster-role-binding.yaml
