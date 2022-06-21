@@ -195,7 +195,7 @@ export class ComponentDeployPage {
     }
   }
 
-  static promoteWebHookToSTG() {
+  static promoteWebHookToSTG(config: string) {
     cy.get('[data-testid="securityHeaderInput"]')
       .should("have.length", 1)
       .eq(0)
@@ -207,6 +207,7 @@ export class ComponentDeployPage {
       .contains("Next", { timeout: 120000 })
       .should("be.visible")
       .click();
+    cy.get(".ConfigForm input").type(config);
     cy.get(".ConfigForm button", { timeout: 120000 })
       .contains("Promote")
       .click();
@@ -262,15 +263,75 @@ export class ComponentDeployPage {
 
   public static stopDevContainer() {
     cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
+
+    if (Cypress.env("isPrivateOrg")) {
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 3);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 3);
+        }
+      });
+    } else {
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 2);
+        }
+      });
+    }
+
+    cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
+      .eq(0)
+      .invoke("text")
+      .should("eq", "Suspended");
   }
 
   public static stopProdContainer() {
-    cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
+    if (Cypress.env("isPrivateOrg")) {
+      cy.get('[data-testid="btn-stop-redeploy"]').eq(2).click();
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 3);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 3);
+        }
+      });
+      cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
+        .eq(2)
+        .invoke("text")
+        .should("eq", "Suspended");
+    } else {
+      cy.get('[data-testid="btn-stop-redeploy"]').eq(1).click();
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 2);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 2);
+        }
+      });
+      cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
+        .eq(1)
+        .invoke("text")
+        .should("eq", "Suspended");
+    }
   }
 
   public static stopStgContainer() {
     if (Cypress.env("isPrivateOrg")) {
-      cy.get('[data-testid="btn-stop-redeploy"]').eq(0).click();
+      cy.get('[data-testid="btn-stop-redeploy"]').eq(1).click();
+      cy.get("body").then((body) => {
+        if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+          cy.get('[data-cyid="api-deploy-status"]').should("have.length", 3);
+        } else {
+          cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", 3);
+        }
+      });
+      cy.get('[data-cyid="deployment-status"]>p', { timeout: 180000 })
+        .eq(1)
+        .invoke("text")
+        .should("eq", "Suspended");
     }
   }
 

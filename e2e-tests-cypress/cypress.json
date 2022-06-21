@@ -1,5 +1,5 @@
 {
-  "defaultCommandTimeout": 80000,
+  "defaultCommandTimeout": 120000,
   "pageLoadTimeout": 300000,
   "responseTimeout": 300000,
   "integrationFolder": "cypress/e2e-smoke/",
