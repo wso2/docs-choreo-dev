@@ -65,6 +65,10 @@ spec:
               drop:
                 - all
       restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-devops-portal-api-config
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
