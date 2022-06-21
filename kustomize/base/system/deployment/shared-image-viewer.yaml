@@ -3,9 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+    checkov.io/skip2: CKV_K8S_38=Required by LinkerD
   labels:
     choreo.component: shared-image-viewer
   name: shared-image-viewer
@@ -20,7 +18,11 @@ spec:
       labels:
         choreo.component: shared-image-viewer
         antiaffinity: shared-image-viewer
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
+      automountServiceAccountToken: true
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
