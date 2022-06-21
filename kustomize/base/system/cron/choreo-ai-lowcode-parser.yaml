@@ -51,7 +51,7 @@ spec:
               - configMapRef:
                   name: env-lowcode-parser
               - configMapRef:
-                  name: cm-choreo-program-db-cp
+                  name: cm-choreo-program-db
               - secretRef:
                   name: secret-lowcode-parser
             resources:

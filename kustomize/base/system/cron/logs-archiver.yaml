@@ -45,7 +45,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: AZURE_ACTIVEDIRECTORY_TENANT_ID
-                      name: cm-loggingapi-cp
+                      name: cm-loggingapi
                 - name: AZURE_LA_WORKSPACE_ID
                   valueFrom:
                     configMapKeyRef:
@@ -70,7 +70,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: AZURE_DL_TENANT_ID
-                      name: cm-datalake-ast-cp
+                      name: cm-datalake-ast
                 - name: AZURE_DL_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
@@ -78,7 +78,7 @@ spec:
                       name: secret-datalake
               envFrom:
                 - configMapRef:
-                    name: cm-logsarchiver-cp
+                    name: cm-logsarchiver
               resources:
                 limits:
                   cpu: 300m

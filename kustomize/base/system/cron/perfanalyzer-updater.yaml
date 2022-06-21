@@ -59,7 +59,7 @@ spec:
               - configMapRef:
                   name: env-perf-analyzer
               - configMapRef:
-                  name: cm-perf-analyzer-cp
+                  name: cm-perf-analyzer
             resources:
               limits:
                 cpu: 1500m

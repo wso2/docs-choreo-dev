@@ -15,7 +15,7 @@ configMapGenerator:
     behavior: create
     literals:
     - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
-  - name: cm-choreo-testbase-db-cp
+  - name: cm-choreo-testbase-db
     behavior: create
     literals:
       - CHOREO_DB_NAME=choreo_testbase_db
@@ -23,20 +23,20 @@ configMapGenerator:
       - CHOREO_DB_PORT=1433
       - CHOREO_DB_USERNAME=choreo_testbase_db_user
       - CHOREO_DB_DRIVER=sqlserver
-  - name: cm-testbase-cp
+  - name: cm-testbase
     behavior: create
     literals:
       - CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS=http://app-deployer:8080
       - CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS=http://workspace-manager:8080
       - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
-  - name: cm-idp-replica-cp
+  - name: cm-idp-replica
     behavior: create
     literals:
       - IDP_AUTH_RESPONSE_COOKIE_MAX_AGE="86400"
       - IDP_TOKEN_ENDPOINT=/oauth2/token
       - IDP_JWKS_ENDPOINT=/oauth2/jwks
       - IDP_SCIM_USERS_ENDPOINT=/wso2/scim/Users
-  - name: cm-obsapi-cp
+  - name: cm-obsapi
     behavior: create
     literals:
       - AZURE_ADX_DB=observability
@@ -46,14 +46,14 @@ configMapGenerator:
       - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
-  - name: cm-frontend-cp
+  - name: cm-frontend
     behavior: create
     literals:
       - DISABLE_ON_PREMISE_APPS=true
       - APIM_SAMPLE_URL=https://raw.githubusercontent.com/ballerina-platform/ballerinax-openapi-connectors/main/openapi/covid19/openapi.yaml
       - SENTRY_DSN="https://48e24d50c8fb45d3adebfcfd8b1dd310@o350818.ingest.sentry.io/5808256"
       - ANALYTICS_PORTAL_DOCUMENTATION="https://apim.docs.wso2.com/en/4.0.0/observe/api-manager-analytics/configure-analytics/configure-synapse-gateway/"
-  - name: cm-email-service-cp
+  - name: cm-email-service
     behavior: create
     literals:
       - MAIL_SMTP_AUTH="true"
@@ -63,13 +63,13 @@ configMapGenerator:
       - templates_contents_BCENTRAL_EMAIL_NEW_ORG="templates/bcentral/welcome-new-org.txt"
       - templates_contents_CHOREO_EMAIL_INVITATION="templates/choreo/org-invitation.txt"
       - templates_subjects_CHOREO_EMAIL_INVITATION_SUBJECT="You have been invited to join the '$organization' organization in Choreo"
-  - name: cm-sys-obsapi-cp
+  - name: cm-sys-obsapi
     behavior: create
     literals:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
-  - name: cm-telemetry-cp
+  - name: cm-telemetry
     behavior: create
     literals:
       - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
@@ -77,7 +77,7 @@ configMapGenerator:
       - REDIS_PORT=6380
       - REDIS_SSL=true
       - REDIS_DATABASE=3
-  - name: cm-negotiator-cp
+  - name: cm-negotiator
     behavior: create
     literals:
       - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
@@ -85,7 +85,7 @@ configMapGenerator:
       - REDIS_SSL=true
       - REDIS_DATABASE=3
       - RUDDER_URL=http://dp-rudder:80
-  - name: cm-choreo-program-db-cp
+  - name: cm-choreo-program-db
     behavior: create
     literals:
       - CHOREO_DB_NAME=choreo_program_db
@@ -93,18 +93,18 @@ configMapGenerator:
       - CHOREO_DB_PORT=1433
       - CHOREO_DB_USERNAME=choreo_program_db_user
       - CHOREO_DB_DRIVER=sqlserver
-  - name: cm-datalake-ast-cp
+  - name: cm-datalake-ast
     behavior: create
     literals:
       - AZURE_DL_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - AZURE_DL_CONTAINER_NAME=ast
       - LAST_ACTIVE_DURATION_IN_DAYS=45
-  - name: cm-linker-cp
+  - name: cm-linker
     behavior: create
     literals:
       - APPSERVICE_GRPC_ADDRESS=http://app-service:8080
       - JWKS_ENDPOINT_PROTOCOL=https
-  - name: cm-loggingapi-cp
+  - name: cm-loggingapi
     behavior: create
     literals:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
@@ -116,7 +116,7 @@ configMapGenerator:
       - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
     files:
       - connectords/Config.toml
-  - name: cm-connector-builder-cp
+  - name: cm-connector-builder
     behavior: create
     literals:
       - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
@@ -128,14 +128,14 @@ configMapGenerator:
       - DP_CLOUD_MANAGER_ENDPOINT=http://dp-cloud-manager:80
       - CP_GRAPHQL_ENDPOINT=http://cp-graphql:9095
       - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090    
-  - name: cm-choreo-app-db-cp
+  - name: cm-choreo-app-db
     behavior: create
     literals:
       - CHOREO_DB_NAME=choreo_app_db
       - CHOREO_DB_PORT=1433
       - CHOREO_DB_USERNAME=choreo_app_db_user
       - CHOREO_DB_DRIVER=sqlserver
-  - name: cm-dp-mizzen-cp
+  - name: cm-dp-mizzen
     behavior: create
     literals:
       - PORT=8080
@@ -149,7 +149,7 @@ configMapGenerator:
       - SERVICE_BUS_RESPONSE_QUEUE=dp-mizzen-response
       - REDIS_PORT=6380
       - AGENT_IMAGE_URL=""
-  - name: cm-multivariate-anomaly-detector-notification-manager-cp
+  - name: cm-multivariate-anomaly-detector-notification-manager
     behavior: create
     literals:
       - SYSTEM_USER_ID="choreo:system"
@@ -177,7 +177,7 @@ configMapGenerator:
       - PARDOT_EP=go.pardot.com/l/142131/2021-11-01/9yzthx
       - PARDOT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/7g2z/wso2-pardot-form-handler/1.0.0/pardot/api/formhandle
       - EMAIL_CONSENT_SVC_URL=https://60efab9a-6d2d-4518-9c9d-33e750c6e816-prod.e1-us-east-azure.choreoapis.dev/3qk2/gdpr-email-consent-check/1.0.0
-  - name: cm-perf-analyzer-cp
+  - name: cm-perf-analyzer
     behavior: create
     literals:
       - CHOREO_DB_DRIVER=sqlserver
@@ -185,7 +185,7 @@ configMapGenerator:
       - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
       - CHOREO_APP_DB_PORT=1433
       - CHOREO_APP_DB_USERNAME=choreo_app_db_user
-  - name: cm-dp-cicd-cp
+  - name: cm-dp-cicd
     behavior: create
     literals:
       - SERVER_PORT=8080
@@ -204,7 +204,7 @@ configMapGenerator:
       - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
       - RUDDER_API_URL=http://dp-rudder
       - AZURE_LOGS_TABLE=GithubWorkflowLogs
-  - name: cm-dp-cloud-manager-cp
+  - name: cm-dp-cloud-manager
     behavior: create
     literals:
       - SECRET_MANAGER_URL=http://dp-secret-manager/api/v1
@@ -226,7 +226,7 @@ configMapGenerator:
       - ORG_REMOVER_DB_DRIVER=sqlserver
       - BASIC_AUTH_USERNAME=admin
       - SERVER_PORT=8080
-  - name: cm-alert-notification-service-cp
+  - name: cm-alert-notification-service
     behavior: create
     literals:
       - RUDDER_URL="http://dp-rudder"
@@ -238,7 +238,7 @@ configMapGenerator:
       - BACKOFF_FACTOR=2.0
       - MAX_WAIT_INTERVAL=20
       - CONNECTION_TIMEOUT=2
-  - name: cm-dp-delete-manager-cp
+  - name: cm-dp-delete-manager
     behavior: create
     literals:
       - PORT=8000
@@ -252,12 +252,12 @@ configMapGenerator:
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - API_SERVER_URL=http://api-server
       - GCHAT_URL=https://chat.googleapis.com
-  - name: cm-logsarchiver-cp
+  - name: cm-logsarchiver
     behavior: create
     literals:
       - TABLE_LIST=InsightsMetrics,KubePVInventory,Operation,Perf
       - AZURE_DL_CONTAINER_NAME=loganalytics1
-  - name: cm-dp-rudder-cp
+  - name: cm-dp-rudder
     behavior: create
     literals:
       - MSSQL_USER=choreo_rudder_admin_db_user
@@ -277,7 +277,7 @@ configMapGenerator:
       - CUSTOM_URL_SERVICE_NAME=choreo-nginx-internal
       - CUSTOM_URL_SERVICE_PORT=9443
       - CUSTOM_URL_SERVICE_PATH=/
-  - name: cm-console-next-cp
+  - name: cm-console-next
     behavior: create
     literals:
       - REACT_APP_FIDP_GOOGLE=google

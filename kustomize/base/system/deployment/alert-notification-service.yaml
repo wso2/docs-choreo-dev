@@ -37,7 +37,7 @@ spec:
             - configMapRef:
                 name: env-alert-notification-service
             - configMapRef:
-                name: cm-alert-notification-service-cp
+                name: cm-alert-notification-service
           image: choreocontrolplane.azurecr.io/choreoipaas/alert-notification-service:latest
           securityContext:
             allowPrivilegeEscalation: false
