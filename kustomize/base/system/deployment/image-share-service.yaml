@@ -4,8 +4,6 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
   labels:
     choreo.component: image-share-service
   name: image-share-service
@@ -20,6 +18,9 @@ spec:
       labels:
         choreo.component: image-share-service
         antiaffinity: image-share-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
         allowPrivilegeEscalation: false
