@@ -108,8 +108,8 @@ EOF
 ### Private Data Plane Cluster
 
 ```bash
-CUSTOMER_NAME=xxx
 ENV=xxxx
+CUSTOMER_NAME=xxx
 DNS01_CHALLENGE_CLIENT_ID=xxxxxxxxxxxxxxxxx
 ASB_CONNECTION_STRING=xxxxxxxxxxxxxxxxx
 APIM_ANALYTICS_AUTH_TOKEN=xxxxxxxxxxxxxxxxx

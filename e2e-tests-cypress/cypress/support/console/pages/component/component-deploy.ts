@@ -28,6 +28,22 @@ export class ComponentDeployPage {
       .should("not.be.empty");
   }
 
+  static promoteManualTriggerToStg() {
+    cy.get('[data-testid="no-invoke-url-info"]', { timeout: 180000 }).should(
+      "have.length",
+      1
+    );
+    cy.wait(2000);
+    cy.get('[data-cyid*="promote"]').eq(0).focus().should("be.visible");
+    cy.wait(2000);
+    cy.get('[data-cyid*="promote"]').eq(0).click();
+    cy.get('[id="securityHeaderInput"')
+      .should("have.length", 2)
+      .eq(1)
+      .invoke("val")
+      .should("not.be.empty");
+  }
+
   static promoteToProd() {
     let isPrivateOrg = Cypress.env("isPrivateOrg");
     window.localStorage.setItem("hideSocialShareModel", "true");
@@ -54,7 +70,9 @@ export class ComponentDeployPage {
         1
       );
       cy.wait(2000);
-      cy.get('[data-cyid*="promote"]', { timeout: 180000 }).focus().click();
+      cy.get('[data-cyid*="promote"]', { timeout: 180000 }).focus();
+      cy.wait(2000);
+      cy.get('[data-cyid*="promote"]', { timeout: 180000 }).click();
       cy.get('[id="securityHeaderInput"]')
         .should("have.length", 1)
         .eq(0)
@@ -73,6 +91,17 @@ export class ComponentDeployPage {
       .click();
     this.closePopup();
     cy.get('[data-testid="btn-stop-redeploy"]', { timeout: 180000 }).should(
+      "be.visible"
+    );
+  }
+
+  static deployManualTriggerToDev() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 180000 })
+      .should("be.enabled")
+      .click();
+    this.closePopup();
+    cy.get('[data-testid="no-invoke-url-info"]', { timeout: 180000 }).should(
       "be.visible"
     );
   }
@@ -226,9 +255,9 @@ export class ComponentDeployPage {
     this.stopProdContainer();
   }
 
-  static stopScheduleTask(){
-    cy.contains("Stop").eq(0).click({multiple:true})
-    cy.contains("Stop").eq(0).click({multiple:true})
+  static stopScheduleTask() {
+    cy.contains("Stop").eq(0).click({ multiple: true });
+    cy.contains("Stop").eq(0).click({ multiple: true });
   }
 
   public static stopDevContainer() {

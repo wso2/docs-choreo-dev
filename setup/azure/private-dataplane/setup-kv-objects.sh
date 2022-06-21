@@ -10,7 +10,7 @@ cp "${TEMPLATE_CERT_PATH}" cert-req-enforcer-router-adapter.conf
 
 openssl req -x509 -sha256 -nodes -days 10950 -newkey rsa:2048 -keyout mg.key -out mg.pem -config cert-req-enforcer-router-adapter.conf -extensions 'v3_req'
 
-echo "--- Generating Certificate and Private Key for use in Global Adapter ---"
+echo -e "\n --- Generating Certificate and Private Key for use in Global Adapter --- \n"
 
 GA_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 
@@ -19,7 +19,7 @@ cp "${TEMPLATE_CERT_PATH}" cert-req-global-adapter.conf
 
 openssl req -x509 -sha256 -nodes -days 10950 -newkey rsa:2048 -keyout global-adapter.key -out global-adapter.pem -config cert-req-global-adapter.conf -extensions 'v3_req'
 
-echo "--- Generating Certificate and Private Key for use in Traffic Manager ---"
+echo -e "\n --- Generating Certificate and Private Key for use in Traffic Manager --- \n"
 
 cp "${TEMPLATE_CERT_PATH}" cert-req-wso2carbon.conf
 /bin/echo -e "DNS.1 = choreo-eventhub-service\nDNS.2 = choreo-eventhub-1-service\nDNS.3 = choreo-eventhub-3-service\nDNS.4 = choreo-tm-1-service\nDNS.5 = choreo-tm-2-service" >> cert-req-wso2carbon.conf
@@ -36,7 +36,7 @@ cp "${TEMPLATE_CERT_PATH}" cert-req-primary-keystore.conf
 
 openssl req -x509 -sha256 -nodes -days 10950 -newkey rsa:2048 -keyout primary.key -out primary.pem -config cert-req-primary-keystore.conf -extensions 'v3_req'
 
-echo "--- Generating TLS, Internal and Primary Keystore PFX files ---"
+echo -e "\n --- Generating TLS, Internal and Primary Keystore PFX files --- \n"
 
 TLS_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 openssl pkcs12 -export -out tls-keystore.pfx -inkey wso2carbon.key -in wso2carbon.pem -name wso2carbon -password pass:"${TLS_KEYSTORE_PWD}"
@@ -49,12 +49,12 @@ openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.
 
 TM_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 
-echo "--- Creating Client Truststore JKS ---"
+echo -e "\n --- Creating Client Truststore JKS --- \n"
 APIM_TRUSTSTORE_PSWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 keytool -import -file wso2carbon.pem -alias wso2carbon -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
 keytool -import -file global-adapter.pem -alias global-adapter -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
 
-echo "--- Uploading secrets to Key Vault ---"
+echo -e "\n --- Uploading secrets to Key Vault --- \n"
 CUSTOMER_NAME_CAPS=$(echo "${CUSTOMER_NAME}" | tr "[:lower:]" "[:upper:]")
 
 SECRET_FILE_PATH="csi-secrets/choreo-private-dp-secrets.properties"
@@ -102,16 +102,45 @@ sed -i "s|ROUTER_KEYSTORE_PATH|${ROUTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 
 KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --query "[?contains(name, '${CUSTOMER_NAME}-userapps-${ENV}')].name" --output tsv)
 
-bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${SECRET_FILE_PATH}" -t secret
-bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${PEM_FILE_PATH}" -t pem
-bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${CERT_FILE_PATH}" -t securecert 
+SIGNED_IN_USERID=$(az ad signed-in-user show --query "id" --output tsv)
 
-echo "--- Cleaning up configuration files ---"
-rm client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary*
+BASTION_PUBLIC_IP=$(az vm show --name choreo-"${CUSTOMER_NAME}"-dp-bastion --resource-group choreo-"${CUSTOMER_NAME}"-hub-network-rg --show-details --query publicIps -o tsv)
+
+az keyvault set-policy -n "${KEYVAULT_NAME}" --secret-permissions get set list  --certificate-permissions get list import update --object-id "${SIGNED_IN_USERID}" --output none
+
+az keyvault network-rule add --name "${KEYVAULT_NAME}" --ip-address "${BASTION_PUBLIC_IP}" --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --output none
+
+bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${SECRET_FILE_PATH}" -t secret
+cat object_versions.txt >> object-versions-apim.txt
+
+bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${PEM_FILE_PATH}" -t pem
+cat object_versions.txt >> object-versions-apim.txt
+
+bash csi-secrets/kv-secret-uploader.sh -v "${KEYVAULT_NAME}" -i "${CERT_FILE_PATH}" -t securecert 
+cat object_versions.txt >> object-versions-apim.txt
+
+az keyvault network-rule remove --name "${KEYVAULT_NAME}" --ip-address "${BASTION_PUBLIC_IP}" --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --output none
+
+echo -e "\n --- Storing certificate files in the cert-files directory --- \n"
+
+if [[ -d cert-files ]]
+then
+	echo "cert-files directory already exists. Storing certificate files.."
+else
+	mkdir cert-files
+fi
+
+echo -e "\n Key Vault object versions are stored in the object-versions-apim.txt \n"
+
+echo -e "\n --- Cleaning up configuration files --- \n"
+#rm client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary*
+mv client-truststore.jks mg.* tls-keystore.pfx wso2carbon.* global-adapter.* internal* cert-req-* primary* cert-files/
 
 mv ${SECRET_FILE_PATH}.bak ${SECRET_FILE_PATH}
 mv ${CERT_FILE_PATH}.bak ${CERT_FILE_PATH}
 mv ${PEM_FILE_PATH}.bak ${PEM_FILE_PATH}
+
+echo -e "\n"
 
 echo "TLS Keystore Password is: ${TLS_KEYSTORE_PWD}"
 

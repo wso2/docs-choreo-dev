@@ -31,7 +31,7 @@ export class ComponentObservePage {
   }
 
   static verifyTextInLogs(text: string) {
-    cy.get('[data-testid="log-panel-entry"]').each(($e) => {
+    cy.get('[data-testid="log-panel-entry"]',{timeout:180000}).should('be.visible').each(($e) => {
       let log = $e
         .text()
         .replace("ballerina: sending metrics to Choreo", "")
