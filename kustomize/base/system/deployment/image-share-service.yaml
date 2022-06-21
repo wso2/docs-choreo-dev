@@ -72,7 +72,7 @@ spec:
             runAsGroup: 10500
             capabilities:
               drop:
-              - all
+              - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
             - name: secret-image-share-service
