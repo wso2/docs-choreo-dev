@@ -4,7 +4,6 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
     checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
     checkov.io/skip5: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
   labels:
@@ -24,11 +23,6 @@ spec:
     spec:
       securityContext:
         allowPrivilegeEscalation: false
-        runAsUser: 10500
-        runAsGroup: 10500
-        capabilities:
-          drop:
-          - all
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -73,8 +67,11 @@ spec:
               memory: 768Mi
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 100
-            runAsGroup: 1000
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+              - all
             readOnlyRootFilesystem: true
           volumeMounts:
             - name: secret-image-share-service
