@@ -125,7 +125,7 @@ spec:
       - name: anomalydetector-application-properties
         configMap:
           defaultMode: 420
-          name: cm-anomalydetector
+          name: cm-anomalydetector-cp
       - name: secret-anomalydetector
         csi:
           driver: secrets-store.csi.k8s.io

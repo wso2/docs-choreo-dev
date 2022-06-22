@@ -10,6 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+;
 
 export class ComponentOverviewPage {
   static goBack() {
@@ -30,6 +31,7 @@ export class ComponentOverviewPage {
 
   static navigateToTest() {
     cy.contains("Test").should("be.visible").click();
+    cy.wait(12000) // will remove this after deployment issue is fixed
   }
 
   static navigateToManage() {
@@ -44,6 +46,13 @@ export class ComponentOverviewPage {
     cy.contains("Devops").should("be.visible").click();
   }
 
+  static navigateToDevPortal(){
+    cy.get('.choreo-btn-dev-portal').invoke('attr','href').then(href=>{
+      cy.visit(href)
+    })
+  return  cy.get('header>div>div>p').invoke('text')
+  }
+
   static getComponentName() {
     return cy
       .get("#root .MuiCardHeader-content span")
@@ -53,7 +62,7 @@ export class ComponentOverviewPage {
   }
 
   static createNewVersion(version: string, newBranch: string) {
-    cy.get("#version-picker").click();
+    cy.get('[data-cyid="version-picker"]').click();
     cy.get("[data-cyid=btn-create-version]").click();
 
     if (newBranch) {
@@ -81,7 +90,7 @@ export class ComponentOverviewPage {
       .clear()
       .type(version);
       cy.get("[data-testid=create-version-create]").click();
-
+cy.get('[data-testid="dialog-close-icon"]',{timeout:120000}).should('not.exist')
   }
 
   private static newVersion() {

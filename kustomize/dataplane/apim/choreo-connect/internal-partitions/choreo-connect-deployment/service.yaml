@@ -20,11 +20,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: choreo-connect-deployment-internal
-  name: router-internal
+    choreo.component: choreo-connect-deployment
+  name: router
 spec:
   selector:
-    choreo.component: choreo-connect-deployment-internal
+    choreo.component: choreo-connect-deployment
   ports:
     - name: "http-routeradmin"
       port: 9000
@@ -37,11 +37,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: choreo-connect-deployment-internal
-  name: router-internal-lb
+    choreo.component: choreo-connect-deployment
+  name: router-lb
 spec:
   selector:
-    choreo.component: choreo-connect-deployment-internal
+    choreo.component: choreo-connect-deployment
   ports:
     - name: "http-routeradmin"
       port: 9000

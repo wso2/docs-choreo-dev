@@ -1,6 +1,6 @@
 <h1>Tests</h1>
 
-<h2>1. backendFailureAnomaly </h2>
+<h2>1. Backend Failure Anomaly </h2>
 <h3>Overview</h3>
 This scenario tests if the multivariete Anomaly Detector detects a backend failure in a Choreo component
 <br><br>

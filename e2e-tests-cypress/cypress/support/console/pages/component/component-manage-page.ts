@@ -20,6 +20,22 @@ import { Environment } from "../enum/environment";
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
 
+  static republishConnector() {
+    cy.get('[data-testid="republish-connector-btn"]', { timeout: 180000 })
+      .should("be.visible")
+      .click();
+    cy.get(".MuiDialog-paper div>button>span").contains("Republish").click();
+    cy.intercept({
+      method: "POST",
+      url: `${Cypress.env("appSvcURL")}/user-connectors/*/*/republish`,
+    }).as("publish");
+    cy.wait("@publish", { timeout: 80000 }).then((res) => {
+      const { success } = res.response.body;
+      expect(success).to.be.equal("ok");
+      cy.log(JSON.stringify(res.response.body));
+    });
+  }
+
   static manageLifecycle() {
     cy.get('[data-testid="Lifecycle"]').click();
   }
@@ -235,12 +251,11 @@ export class ComponentAPILifecycle {
     });
   }
 
-
-  static selectConsumers(){
-cy.get('[data-cyid="Consumers"]').should('be.visible').click()
+  static selectConsumers() {
+    cy.get('[data-cyid="Consumers"]').should("be.visible").click();
   }
 
-  static verifyConsumer(appName:string){
-    return cy.get(`[value=${appName}]`)
+  static verifyConsumer(appName: string) {
+    return cy.get(`[value=${appName}]`);
   }
 }

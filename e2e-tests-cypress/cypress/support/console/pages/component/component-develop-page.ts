@@ -20,6 +20,8 @@ export class ComponentDevelopPage {
     this.currentTime.getTime() + Cypress.env("recTime")
   );
 
+  
+
   static getComponentURL() {
     cy.get('[data-testid="component-develop-edit-code"]', { timeout: 180000 })
       .should("be.visible")
@@ -82,8 +84,8 @@ export class ComponentDevelopPage {
 
   static selectBranch(newBranch: string) {
     let branches = [];
-    cy.get('[aria-label="Without label"]').click();
-    cy.get("[data-value]").each((q) => {
+    cy.get('[aria-label="Without label"]',{timeout:18000}).should('be.visible').click();
+    cy.get("[data-value]>span").each((q) => {
       branches.push(q.text());
       if (q.text() === newBranch) {
         cy.wrap(q).click();
@@ -93,7 +95,7 @@ export class ComponentDevelopPage {
     return cy.wrap(branches);
   }
   static getVersion() {
-    return cy.get('[id="version-picker"]>div').then((v) => {
+    return cy.get('[data-cyid="version-picker"]>div').then((v) => {
       return v.text().trim();
     });
   }

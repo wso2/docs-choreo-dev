@@ -58,15 +58,6 @@ fi
 #    ;;
 #esac
 
-############## Install Reloader
-echo "--- Installing Reloader..."
-kubectl create ns reloader
-if [[ -f "../reloader.yaml" ]]; then
-    kubectl apply -n reloader -f ../reloader.yaml
-else
-    kubectl apply -n reloader -f reloader.yaml
-fi
-
 ############### Install Helm 3
 echo "--- Installing Helm 3..."
 helm3_installed="true"
@@ -100,86 +91,47 @@ command -v helm >/dev/null 2>&1 || {
 #    fi
 #}
 
-############### Install Helm 3
-echo "--- Installing LinkerD CLI..."
-linkerd_installed="true"
-command -v linkerd >/dev/null 2>&1 || {
-    linkerd_installed="false"
-    if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | bash
-        linkerd_installed="true"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install linkerd
-        linkerd_installed="true"
-    else
-        echo "Could not install linkerd cli. Unsupported operating system. Please manually install it.."
-    fi
-}
-
-############### Install Certmanager
-echo "--- Installing Cert Manager..."
-kubectl create ns cert-manager
-kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --version v1.8.0 \
-  -n cert-manager \
-  --set installCRDs=true \
-  --set replicaCount=2 \
-  --set webhook.replicaCount=2 \
-  --set cainjector.replicaCount=2
-
-echo "--- Creating secrets for DNS-01 challenge..."
-DNS01_CHALLENGE_CLIENT_SECRET=$(az ad app credential reset --id "${DNS01_CHALLENGE_CLIENT_ID}" --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
-kubectl create secret generic "choreo-secret-azuredns-config" --from-literal=client-secret="${DNS01_CHALLENGE_CLIENT_SECRET}" -n cert-manager --dry-run=client -o yaml | kubectl apply -f -
-
-############### Install Linkerd2
-echo "--- Installing linkerd2... "
-linkerd install --ha | kubectl apply -f -
-
-# Execute only for dev environment
-echo "---  Installing Linkerd Viz... "
-linkerd viz install | kubectl apply -f -
-
-# Execute for Stage and Prod Environments only
-echo "---  Installing Buoyant Cloud... "
-kubectl create -f buoyant-cloud/buoyant-setup.sh
-kubectl create secret generic buoyant-cloud-id -n buoyant-cloud \
-  --from-literal=id="${BUOYANT_CLOUD_AGENT_ID}" \
-  --from-literal=key="${BUOYANT_CLOUD_AGENT_KEY}" \
-  --from-literal=downloadKey="${BUOYANT_CLOUD_AGENT_DOWNLOAD_KEY}" \
-  --from-literal=name="${BUOYANT_CLOUD_NAME}"
-kubectl label secret buoyant-cloud-id -n buoyant-cloud app.kubernetes.io/part-of=buoyant-cloud
-
-################ Install emberstack reflector ########
-helm repo add emberstack https://emberstack.github.io/helm-charts
-helm repo update
-helm upgrade --install reflector emberstack/reflector --namespace cert-manager --version 5.4.17
-
 echo "--- Creating AKS view cluster role binding to AAD"
 cp conf/view-cluster-role-binding.yaml conf/view-cluster-role-binding.yaml.backup
 sed -i "s/AKS_READONLY_AD_GROUP_ID/${AKS_READONLY_AD_GROUP_ID}/g" conf/view-cluster-role-binding.yaml
 kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
+############## Install Reloader
+echo "--- Installing Reloader..."
+bash controlplane/reloader/configure-reloader.sh
+
+echo "--- Installing Cert Manager..."
+bash controlplane/cert-manager/configure-cert-manager.sh
+
+echo "--- Installing Emberstack reflector..."
+bash controlplane/reflector/configure-reflector.sh
+
+echo "--- Creating secrets for DNS-01 challenge..."
+bash controlplane/lets-encrypt-certs/configure-lets-encrypt-certs.sh
+
+############### Install Linkerd2
+bash controlplane/linkerd/configure-linkerd.sh
+
+# Execute only for dev environment
+echo "---  Installing Linkerd Viz... "
+bash controlplane/linkerd-viz/configure-linkerd-viz.sh
+
+# Execute for Stage and Prod Environments only
+echo "---  Installing Buoyant Cloud... "
+bash controlplane/buoyant-cloud/configure-buoyant-cloud.sh
+
 echo "--- Add OMS Agent Config"
-kubectl apply -f oms/container-azm-ms-agentconfig.yaml
+bash controlplane/oms-agent/configure-oms-agent.sh
 
 echo "--- Configure CSI Secret Store"
-bash controlplane/configure-csi-secret-store.sh
+bash controlplane/secret-store-csi-driver/configure-csi-secret-store.sh
 
 echo "--- Setup Nginx Ingress"
-bash controlplane/install-nginx-ingress.sh
+bash controlplane/nginx-ingress-controllers/configure-ingress-controllers.sh
 
-echo "--- Enable HPA for Ingress Controller"
-kubectl apply -f ingress/hpa.yaml
-
-echo "--- Enable PDB for Cert Manager"
-kubectl apply -f cert-manager/pdb.yaml
+echo "--- Create Internal Ingress TLS secrets"
+bash controlplane/internal-ingress-tls-secrets/create-ingress-tls-secrets.sh
 
 ############ Cleanup
 echo "--- Unsetting Properties values set as environmental variables"
@@ -203,10 +155,6 @@ fi
 if [[ "${helm3_installed}" == "false" ]]; then
     echo "[FAILED] helm3 installation. See https://helm.sh/docs/intro/install/"
     helm3_installed=false
-fi
-if [[ "${linkerd_installed}" == "false" ]]; then
-    echo "[FAILED] linkerd cli installation. See https://linkerd.io/2.11/getting-started/"
-    linkerd_installed=false
 fi
 #if [[ "${step_installed}" == "false" ]]; then
 #    echo "[FAILED] step cli installation. See https://smallstep.com/docs/getting-started/#1-installing-step-and-step-ca"

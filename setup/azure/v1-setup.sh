@@ -61,11 +61,8 @@ esac
 ############## Install Reloader
 echo "--- Installing Reloader..."
 kubectl create ns reloader
-if [[ -f "../reloader.yaml" ]]; then
-    kubectl apply -n reloader -f ../reloader.yaml
-else
-    kubectl apply -n reloader -f reloader.yaml
-fi
+kubectl apply -n reloader -f reloader/reloader.yaml
+
 
 ############### Install Helm 3
 echo "--- Installing LinkerD CLI..."
@@ -194,13 +191,10 @@ echo "--- Add OMS Agent Config"
 kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 
 echo "--- Configure CSI Secret Store"
-bash controlplane/configure-csi-secret-store.sh
+bash v1-configure-csi-secret-store.sh
 
 echo "--- Setup Nginx Ingress"
-bash controlplane/install-nginx-ingress.sh
-
-echo "--- Enable HPA for Ingress Controller"
-kubectl apply -f ingress/hpa.yaml
+bash v1-install-nginx-ingress.sh
 
 echo "--- Enable PDB for Cert Manager"
 kubectl apply -f cert-manager/pdb.yaml

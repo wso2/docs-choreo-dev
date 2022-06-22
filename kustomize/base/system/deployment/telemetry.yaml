@@ -27,61 +27,6 @@ spec:
           type: RuntimeDefault
       containers:
       - env:
-        - name: b7a_log_level
-          valueFrom:
-            configMapKeyRef:
-              key: B7A_LOG_LEVEL
-              name: cm-loglevel-telemetry
-        - name: NEGOTIATOR_GRPC_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              key: NEGOTIATOR_GRPC_ADDRESS
-              name: cm-telemetry-cp
-        - name: NEGOTIATOR_HEALTHZ_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              key: NEGOTIATOR_HEALTHZ_ADDRESS
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_CAPACITY
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_CAPACITY
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_EVICTION_FACTOR
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_EVICTION_FACTOR
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_MAX_AGE
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_MAX_AGE
-              name: cm-telemetry-cp
-        - name: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
-          valueFrom:
-            configMapKeyRef:
-              key: PROJECT_SECRET_CACHE_CLEANUP_INTERVAL
-              name: cm-telemetry-cp
-        - name: EVENTHUB_CONNECTION_STRING
-          valueFrom:
-            secretKeyRef:
-              name: secret-telemetry
-              key: EVENTHUB_CONNECTION_STRING
-        - name: REDIS_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: REDIS_PORT
-              name: cm-telemetry-cp
-        - name: REDIS_SSL
-          valueFrom:
-            configMapKeyRef:
-              key: REDIS_SSL
-              name: cm-telemetry-cp
-        - name: REDIS_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              key: REDIS_DATABASE
-              name: cm-telemetry-cp
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -89,7 +34,11 @@ spec:
               key: REDIS_PASSWORD
         envFrom:
           - configMapRef:
+              name: cm-telemetry
+          - configMapRef:
               name: env-telemetry
+          - secretRef:
+              name: secret-telemetry
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-telemetry:latest
         securityContext:
           runAsUser: 10500
@@ -141,10 +90,10 @@ spec:
         resources:
           limits:
             cpu: 500m
-            memory: 1Gi
+            memory: 2Gi
           requests:
             cpu: 500m
-            memory: 1Gi
+            memory: 2Gi
       volumes:
       - name: config
         configMap:

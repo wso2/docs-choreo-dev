@@ -33,6 +33,7 @@ import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-crede
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 
 describe("Verify project creation functionality", () => {
   const API_NAME = Utils.generateComponentName("CYE2E");
@@ -48,6 +49,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
+  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
 
   before(() => {
     LoginPage.login();
@@ -73,20 +75,42 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deploy();
+    APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it("Verify component deployment", () => {
-    APIDeployment.promote();
+  it_privatedp("Verify component promote and stg invoke url", () => {
+    APIDeployment.promoteToStg();
+    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
+  });
+
+  it("Verify prod invoke url", () => {
+    APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
-  it("Verify test functionality", () => {
-    APITest.testAPI();
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.GetResponse();
+  it("Verify test functionality using Swagger UI in Dev", () => {
+    TestHelper.testOnSwagger(Environment.DEVELOPMENT, OPERATION_USERS).then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
+  });
+
+  it_privatedp("Verify test functionality using Swagger UI in Stg", () => {
+    TestHelper.testOnSwagger(Environment.STAGING, OPERATION_USERS).then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
+  });
+
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    TestHelper.testOnSwagger(Environment.PRODUCTION, OPERATION_USERS).then(
+      (res) => {
+        expect(res.statusCode).to.be.equal("200");
+      }
+    );
   });
 
   it("Verify manage functionality", () => {
@@ -108,30 +132,45 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
     ComponentDevelopPage.getVersion().should(
       "eq",
-      `Version ${API_NEW_VERSION}`
+      `API Version ${API_NEW_VERSION}`
     );
-    APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
-    APIDevelop.addEndpoints();
+
   });
 
-  it("Deploy to Dev", () => {
+  it("Add  a new version",()=>{
+    APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
+    APIDevelop.addEndpoints();
+  })
+
+  it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.deploy();
+    APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it("Verify component promote to stg", () => {
-    APIDeployment.promote();
+  it_privatedp("Verify new component promote to stg", () => {
+    APIDeployment.promoteToStg();
     APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
   });
 
-  it("Verify prod invoke url", () => {
+  it("Verify new prod invoke url", () => {
+    APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Test in dev", () => {
     APITest.testAPI();
     APITest.selectEnvironment(Environment.DEVELOPMENT);
+    ComponentTestPage.getTestKey();
+    SwaggerUI.invokeResource(OPERATION_USERS);
+    SwaggerUI.getResponseCode().should("eq", "200");
+    SwaggerUI.invokeResource(OPERATION_POSTS);
+    SwaggerUI.getResponseCode().should("eq", "200");
+  });
+
+  it_privatedp("Test in stg", () => {
+    APITest.testAPI();
+    APITest.selectEnvironment(Environment.STAGING);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -158,11 +197,7 @@ describe("Verify project creation functionality", () => {
   it("Verify api invoke urls", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.getInvokeUrl().then((urls) => {
-      expect(urls).have.lengthOf(2);
-      expect(urls).contains(Cypress.env(`${Environment.DEVELOPMENT}_test_url`));
-      expect(urls).contains(Cypress.env(`${Environment.PRODUCTION}_test_url`));
-    });
+    Apis.verifyInvokeUrl()
   });
 
   it("Test in devportal", () => {

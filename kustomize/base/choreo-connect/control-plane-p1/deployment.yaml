@@ -15,10 +15,6 @@ spec:
     spec:
       containers:
         - name: choreo-connect-enforcer
-          volumeMounts:
-            - name: enforcer-km-public-cert
-              mountPath: /home/wso2/security/truststore/apim-service-root.pem
-              subPath: apim-service-root.pem
           env:
             - name: ADAPTER_HOST
               value: adapter-control-plane-p1
@@ -30,13 +26,6 @@ spec:
               value: adapter-control-plane-p1
             - name: ROUTER_LABEL
               value: control-plane
-      volumes:
-        - name: enforcer-config
-          configMap:
-            name: mgw-ga-cp-adapter-conf
-        - name: enforcer-km-public-cert
-          configMap:
-            name: mgw-keymanager-public-cert
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

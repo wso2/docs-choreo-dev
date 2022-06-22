@@ -52,6 +52,10 @@ spec:
             name: env-workspace-manager
         - configMapRef:
             name: env-workspace-manager-shared
+        - configMapRef:
+            name: cm-workspace-manager-cp
+        - secretRef:
+            name: secret-codeserver-db
         ports:
         - containerPort: 8080
           name: grpc-port
@@ -101,6 +105,9 @@ spec:
         - name: secret-runtime
           mountPath: "/mnt/csi/secret-runtime"
           readOnly: true
+        - name: secret-codeserver-db
+          mountPath: "/mnt/csi/secret-codeserver-db"
+          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -138,6 +145,14 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: secret-runtime
+          nodePublishSecretRef:
+            name: csi-secret-store-azure
+      - name: secret-codeserver-db
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: secret-codeserver-db
           nodePublishSecretRef:
             name: csi-secret-store-azure
       serviceAccountName: sa-choreo-workspace-manager

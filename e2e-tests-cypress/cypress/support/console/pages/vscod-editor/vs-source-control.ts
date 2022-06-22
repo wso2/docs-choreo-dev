@@ -12,7 +12,7 @@ export class VSSourceControl {
       .eq(0)
       .click()
       .type(`{backspace}{backspace}${commitMessage}`);
-      cy.wait(40000)// wait till git process complete.
+      cy.wait(10000)// wait till git process complete.
     cy.get('[title="Commit"]').should('be.visible').eq(0).click();
     cy.get('[aria-label="Staged Changes"]',{timeout:120000}).should('not.exist');
   }

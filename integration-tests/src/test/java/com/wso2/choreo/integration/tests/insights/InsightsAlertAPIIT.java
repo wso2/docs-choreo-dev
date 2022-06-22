@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.TokenHandler;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
 import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
@@ -96,8 +96,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
             ComponentCreationException, ComponentRetrieveException, ApiLifecycleChangeException,
             ComponentCreationTimeoutException, ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException,
             ComponentDeploymentFailureException, TokenRetrievalException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
 
@@ -145,7 +144,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
         Type collectionType = new TypeToken<Collection<Environment>>(){}.getType();
         List<Environment> environmentList = gson.fromJson(environments.toString(), collectionType);
         for (Environment env : environmentList) {
-            if (env.getType().equals("CHOREO") && env.getName().equals("Development-Choreo")) {
+            if (env.getType().equals("CHOREO") && env.getName().equals("Development")) {
                 environmentId = env.getId();
                 break;
             }

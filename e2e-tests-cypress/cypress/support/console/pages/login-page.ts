@@ -15,14 +15,25 @@ import { GraphQL } from "../apis/graphql";
 import { Utils } from "../utils";
 
 export class LoginPage {
-  static acceptInviteAsInvitedUser(timestamp: string) {
+
+
+  private static enterUserCredentials(
+    envUsername: string,
+    envPassword: string
+  ) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), {
-      log: false,
-    });
+    cy.get("#usernameUserInput").type(Cypress.env(envUsername));
+    cy.get("#password").type(Cypress.env(envPassword), { log: false });
     cy.get('button[type="submit"]').click();
+  }
+
+  
+  static acceptInviteAsInvitedUser(timestamp: string) {
+    this.enterUserCredentials(
+      "choreoIDPInvitedUsername",
+      "choreoIDPInvitedPassword"
+    );
     cy.intercept({
       method: "POST",
       url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
@@ -37,38 +48,15 @@ export class LoginPage {
     });
   }
 
-  static reLoginToChoreo() {
-    const componentURL = Cypress.env(`componentURL`);
-    cy.visit(componentURL);
-    cy.intercept(componentURL).then(() => {
-      cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
-        path: "/",
-        domain: "id.dv.choreo.dev",
-        secure: true,
-        httpOnly: true,
-        sameSite: "no_restriction",
-      });
-    });
-  }
-
-  static navigateToCodespace() {
-    const csurl = Cypress.env(`accessURL`);
-    cy.visit(csurl);
-  }
-
   static login() {
-    cy.visit(Cypress.env("loginURL"));
-    cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
-    cy.get('button[type="submit"]').click();
+    this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
 
     cy.setCookie("fidpId", "choreoe2etest");
 
     this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
-    this.persistCookies();
+    this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
 
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
@@ -83,6 +71,79 @@ export class LoginPage {
     });
   }
 
+  static reLoginToChoreo() {
+    const componentURL = Cypress.env(`componentURL`);
+    const common =
+      Cypress.env(`commonAuthId`) != null
+        ? Cypress.env(`commonAuthId`)
+        : "authtoken";
+    cy.visit(componentURL);
+    cy.intercept(componentURL).then(() => {
+      cy.setCookie("commonAuthId", common, {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
+    });
+  }
+
+  static navigateToCodespaceEP() {
+    const csurl = Cypress.env(`accessURL`);
+    cy.visit(csurl);
+    cy.intercept(csurl).then(() => {
+      cy.setCookie("fidpId", "EnterpriseIDP", {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
+    });
+  }
+
+  static navigateToCodespace() {
+    const csurl = Cypress.env(`accessURL`);
+    cy.visit(csurl);
+
+    cy.intercept(csurl).then(() => {
+      cy.setCookie("fidpId", "choreoe2etest", {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
+    });
+  }
+
+  static enterpriseLogin() {
+    cy.visit(Cypress.env("enterpriseLoginUrl"));
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
+      timeout: 180000,
+    });
+
+    cy.get('button[id="enterprise-sign-in"]').click();
+
+    cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
+    cy.contains("Continue").click();
+
+    cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
+    cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), {
+      log: false,
+    });
+    cy.contains("Continue").click();
+
+    cy.setCookie("fidpId", "EnterpriseIDP");
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
+
+    this.persistLogoutURL();
+  }
+
   private static persistLogoutURL() {
     cy.window()
       .its("sessionStorage")
@@ -91,10 +152,12 @@ export class LoginPage {
         Cypress.env("sign_out_url", url);
       });
   }
-  private static persistCookies() {
+
+
+  private static persistCookies(url: string) {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
-    cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
+    cy.request(url).then((res) => {
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
@@ -139,43 +202,16 @@ export class LoginPage {
     });
   }
 
-  private static persistApimToken() {
+  static persistApimToken() {
     cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("orgs");
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
-      const { orgId, handle } = Cypress.env("userData");
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
+      const { id, uuid, handle } = intercept.response.body.organization;
+      const current_org = { id, uuid, handle };
       Cypress.env("apim_token", token);
-      GraphQL.deleteProjectsCreatedByTests(orgId, handle, token);
+      Cypress.env("current_org", current_org);
+      GraphQL.deleteProjectsCreatedByTests(id, handle, token);
     });
   }
-
-  // private static persistCommonAuth() {
-  //   if (Cypress.env("loginURL").includes("consolev2.preview-dv")) {
-  //     // should remove after enabling sso in stg
-  //     cy.intercept("GET", Cypress.env("asgardeoTokenURL")).as("asgCommonAuth");
-
-  //     cy.wait("@asgCommonAuth", { timeout: 180000 }).then((intercept) => {
-  //       const cookies = intercept.response.headers["set-cookie"] as string[];
-
-  //       const asg_cookie = intercept.request.headers["cookie"] as string;
-  //       const asg_cookies = asg_cookie.split(";");
-
-  //       cookies.forEach((c) => {
-  //         if (c.includes("opbs") || c.includes("commonAuthId")) {
-  //           const obps = c.split(";")[0].replace("opbs=", "").trim();
-  //           Cypress.env("asgardeo_opbs", obps);
-  //         }
-  //       });
-
-  //       asg_cookies.forEach((c) => {
-  //         if (c.includes("commonAuthId")) {
-  //           const asgardeo_commonAuth = c.replace("commonAuthId=", "").trim();
-  //           cy.log(`Asgardeo Common Auth ID :: ${asgardeo_commonAuth}`);
-  //           Cypress.env("asgardeo_commonauth", asgardeo_commonAuth);
-  //         }
-  //       });
-  //     });
-  //   }
-  // }
 }

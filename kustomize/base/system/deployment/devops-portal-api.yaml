@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip2: CKV_K8S_38=This is required by LinkerD
+  labels:
+    choreo.component: devops-portal-api
+  name: devops-portal-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: devops-portal-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: devops-portal-api
+        antiaffinity: devops-portal-api
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: devops-portal-api
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-devops-portal-api:latest
+          ports:
+            - containerPort: 8089
+              name: devopsapi-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: devopsapi-port
+              path: /healthz
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: devopsapi-port
+              path: /healthz
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 300m
+              memory: 768Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10000
+            runAsGroup: 10000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-devops-portal-api-config
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - devops-portal-api
+                topologyKey: kubernetes.io/hostname

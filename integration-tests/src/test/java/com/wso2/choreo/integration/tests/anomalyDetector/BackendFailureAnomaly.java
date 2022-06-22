@@ -19,6 +19,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.email.EmailUtils;
@@ -58,14 +59,10 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
 
   @BeforeClass
   public void beforeClass() throws InterruptedException, IOException, TokenRetrievalException, RedeployException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
-      TokenHandler tokenHandler = new TokenHandler();
       String orgUuid = Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_UUID;
       String passthorughVersionId = Configuration.ANOMALY_DETECTION.PASSTHROUGH_VERSION_ID;
 
-      tokenHandler.setTestUserEmail(Configuration.ANOMALY_DETECTION.TEST_USER_EMAIL);
-      tokenHandler.setTestUserPassword(Configuration.ANOMALY_DETECTION.TEST_USER_PASSWORD);
-      tokenHandler.setTestChoreoOrgHandle(Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE);
-      projectsAPIAccessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+      projectsAPIAccessToken = TestContext.getAnomalyDetectionUserTokenHandler().getTestTokenForCPAPIs();
       ChoreoOrganization org = new ChoreoOrganization(Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE,
                                                       String.valueOf(Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_ID),
                                                       orgUuid);
@@ -77,25 +74,28 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
       restApiComponent.setProjectId(projectId);
       restApiComponent.setOrgHandler(orgHandler);
       restApiComponent.setId(passthroughComponentId);
-      invokeAccessTokenHandler = new TokenHandler();
 
       // Deployed components may get stopped automatically by Choreo. Therefore check if it's stopped (SUSPENDED) and redeploy if so
       JsonArray deployments = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
-      System.out.println(deployments);
       JsonElement passthroughDeployment = new JsonParser().parse("{}");
       for (JsonElement jsonElement : deployments) {
         if (jsonElement.getAsJsonObject().getAsJsonPrimitive("releaseId").getAsString().equals(passthroughReleaseId)) {
           passthroughDeployment = jsonElement;
           if (passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("SUSPENDED")){
+            log.info("Deployment is currently stopped. Redeploying now...");
             restApiComponent.redeploy(projectsAPIAccessToken, passthroughComponentId, passthroughReleaseId, Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE);
           }
+          while (!passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("ACTIVE")){
+            log.info("Waiting for redeployed component to become ready...");
+            Thread.sleep(10000);
+            deployments = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
+            for (JsonElement deployment : deployments) {
+              if (deployment.getAsJsonObject().getAsJsonPrimitive("releaseId").getAsString().equals(passthroughReleaseId)) {
+                passthroughDeployment = deployment;
+              }
+            }
+          }
         }
-      }
-      System.out.println("before while");
-      while (!passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("ACTIVE")){
-          log.info("Waiting for redeployed component to become ready...");
-          Thread.sleep(10000);
-          passthroughDeployment = restApiComponent.getDeployments(projectsAPIAccessToken, orgHandler, orgUuid, passthorughVersionId);
       }
       testStartTimestamp = Instant.now().toEpochMilli();
   }
@@ -111,8 +111,7 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
   @Test
   @CitrusTest
   public void testEmailAlert() throws Exception, GetApiTestTokenStatusCheckException {
-      InvokeApi.invokePassthroughComponentConcurrently(invokeAccessTokenHandler, 
-                                                       Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_ID, 
+      InvokeApi.invokePassthroughComponentConcurrently(Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_ID,
                                                        Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_SECRET, 
                                                        Configuration.ANOMALY_DETECTION.PASSTHROUGH_INVOKE_URL);
       log.info("Waiting for 5 minutes to allow the anomaly to be detected...");

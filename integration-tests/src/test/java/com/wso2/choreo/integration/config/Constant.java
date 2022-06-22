@@ -27,8 +27,9 @@ public final class Constant {
             "apim:publisher_settings environments:view_prod environments:view_dev";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
-    public static final String TEST_PROJECT_NAME_PREFIX = "testproject";
-    public static final String TEST_COMPONENT_NAME = "testcomponent";
+    public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
+    public static final String TEST_OLD_PROJECT_NAME_PREFIX = "testproject"; // Prefix used to create tests earlier before update the format to TEST_PROJECT_NAME_PREFIX
+    public static final String TEST_COMPONENT_NAME = "automationtestcomponent";
     public static final String TEST_PROJECT_DESCRIPTION = "test project description";
     public static final String TEST_REPO_NAME_PREFIX = "test-repo-";
     public static final String GITHUB_AUTH_HEADER_PREFIX = "token ";
@@ -87,5 +88,6 @@ public final class Constant {
 
     // Observability related constants
     public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
+    public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/";
     public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
 }

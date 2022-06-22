@@ -47,7 +47,7 @@ spec:
           - configMapRef:
               name: env-perf-analyzer
           - configMapRef:
-                  name: cm-perf-analyzer-cp
+                  name: cm-perf-analyzer
         readinessProbe:
           initialDelaySeconds: 5
           timeoutSeconds: 30
@@ -88,7 +88,7 @@ spec:
       volumes:
       - configMap:
           defaultMode: 420
-          name: cm-perfanalyzer
+          name: cm-perfanalyzer-cp
         name: perfanalyzer-config
       - name: secret-perfanalyzer
         csi:

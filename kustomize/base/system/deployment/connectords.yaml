@@ -34,7 +34,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
-              name: cm-idp-replica-cp
+              name: cm-idp-replica
         - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
           valueFrom:
             configMapKeyRef:

@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -97,8 +98,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         public void beforeClass()
                         throws IOException, InterruptedException, ProjectCreationException,
                         TokenRetrievalException {
-                TokenHandler tokenHandler = new TokenHandler();
-                accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+                accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID),
                                 Configuration.TEST_CHOREO_ORG_UUID);
@@ -257,26 +257,30 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-                // Check if initial PR has been generated
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
+                $(repeatOnError()
+                        .until("i = 5")
+                        .index("i")
+                        .autoSleep(5000)
+                        .actions(
+                                http()
+                                        .client(choreoProjectsTestClient)
+                                        .send()
+                                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                        .body(requestBody)
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                http()
+                                        .client(choreoProjectsTestClient)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .type(MessageType.JSON)
+                                        .body(new ClassPathResource(
                                                 "templates/createUserManagedComponent/get_pull_requests.json"))
-                                .validate(json()
-                                                .ignore("$.data.componentPullRequests[0].url")));
+                                        .validate(json()
+                                                .ignore("$.data.componentPullRequests[0].url"))));
         }
 
         @Test(dependsOnMethods = {

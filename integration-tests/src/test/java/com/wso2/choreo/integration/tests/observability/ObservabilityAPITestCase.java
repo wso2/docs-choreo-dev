@@ -23,7 +23,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
-import com.wso2.choreo.integration.common.TokenHandler;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
@@ -77,15 +77,14 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException {
-        TokenHandler tokenHandler = new TokenHandler();
-        accessToken = Constant.BEARER_PREFIX.concat(tokenHandler.getTestTokenForCPAPIs());
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
                 String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent =
-                (RestApiChoreoComponent) project.createChoreoComponent(restApiComponentBuilder, accessToken);
+                (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);
         restApiComponent.setOrganization(org);
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
@@ -249,7 +248,6 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                         .validate(jsonPath()
                                         .expression("$.data.invocationMetrics.__typename", "invocationMetrics")
                                         .expression("$.data.invocationMetrics.keySet()", hasItems("__typename", "failedInvocationCounts", "meanInvocationTimes", "successfulInvocationCounts"))
-                                        .expression("$.data.invocationMetrics.keySet()", hasItems("__typename", "failedInvocationCounts", "meanInvocationTimes", "successfulInvocationCounts"))
                                         .expression("$.data.invocationMetrics.meanInvocationTimes.size()", greaterThan(0))
                                         .expression("$.data.invocationMetrics.failedInvocationCounts.size()", greaterThan(0))
                                         .expression("$.data.invocationMetrics.successfulInvocationCounts.size()", greaterThan(0))
@@ -367,7 +365,6 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                         .expression("$.data.traceById.spans.size()", greaterThan(0))
                         .expression("$.data.traceById.spans[0].checkpoints[0].keySet()", hasItems("__typename", "moduleId", "positionId", "timestamp"))
                         .expression("$.data.traceById.spans[0].keySet()", hasItems("__typename", "checkpoints", "duration", "errorMsg", "errorStatus", "httpStatusCode", "position"))
-                        .expression("$.data.traceById.spans[0].checkpoints[*].__typename", everyItem(containsString("checkpoint")))
                         .expression("$.data.traceById.spans[0].checkpoints[*].__typename", everyItem(containsString("checkpoint")))
                         .expression("$.data.traceById.spans[0].checkpoints[*].moduleId", everyItem(containsString(moduleId)))
                         .expression("$.data.traceById.spans[0].checkpoints[*].positionId", allOf(is(not(emptyString()))))

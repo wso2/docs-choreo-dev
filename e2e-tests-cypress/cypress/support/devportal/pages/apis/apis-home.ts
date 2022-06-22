@@ -10,6 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { Environment } from "../../../console/pages/enum/environment";
 import { Utils } from "../../../console/utils";
 import { STANDARD_TIME_OUT } from "../../constants";
 
@@ -70,7 +71,7 @@ export class Apis {
       .click();
   }
 
-  static getInvokeUrl() {
+  private static getInvokeUrl() {
     let urls = [];
     cy.get('[aria-haspopup="listbox"]').click();
     cy.get("ul>li").each(($l) => {
@@ -78,6 +79,29 @@ export class Apis {
     });
 
     return cy.wrap(urls);
+  }
+
+  static verifyInvokeUrl() {
+    this.getInvokeUrl().then((urls) => {
+      if (Cypress.env("isPrivateOrg")) {
+        expect(urls).have.lengthOf(3);
+        expect(urls).contains(
+          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+        );
+        expect(urls).contains(Cypress.env(`${Environment.STAGING}_test_url`));
+        expect(urls).contains(
+          Cypress.env(`${Environment.PRODUCTION}_test_url`)
+        );
+      } else {
+        expect(urls).have.lengthOf(2);
+        expect(urls).contains(
+          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+        );
+        expect(urls).contains(
+          Cypress.env(`${Environment.PRODUCTION}_test_url`)
+        );
+      }
+    });
   }
 
   private static verifyAPI(url, header, versionCount) {

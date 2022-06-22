@@ -59,7 +59,7 @@ spec:
               - configMapRef:
                   name: env-perf-analyzer
               - configMapRef:
-                  name: cm-perf-analyzer-cp
+                  name: cm-perf-analyzer
             resources:
               limits:
                 cpu: 1500m
@@ -79,7 +79,7 @@ spec:
           volumes:
             - configMap:
                 defaultMode: 420
-                name: cm-perfanalyzer
+                name: cm-perfanalyzer-cp
               name: perfanalyzer-config
             - name: secret-perfanalyzer
               csi:

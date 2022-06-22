@@ -3,13 +3,16 @@
 ### Description
 Configure the  Workspace cluster to run GH self-hosted runner on top of it
 
-### Usage
-1) Initally ssh into relvant bastion and set the cluster context to Workspace
+### Prerequisites
+1) Helm 3 installed in execution environment 
 
-2) Export following environmental variable
+### Usage
+1) Initially ssh into relevant bastion and set the cluster context to Controlplane cluster
+
+2) Export following environmental variables
     ```bash
-    export GITHUB_TOKEN="test_token"
-    export ENV="environment" #dev, stage or prod
+    export GITHUB_TOKEN="xxxxxxxxxxxxxxxxx" # provided by DigiOps team
+    export ENV="xxxxxxxxxxxxxxxxx" #dev, stage or prod
     ```
 
 
@@ -17,3 +20,4 @@ Configure the  Workspace cluster to run GH self-hosted runner on top of it
     ```bash
     bash configure-runner.sh
     ```
+   
