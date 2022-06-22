@@ -12,7 +12,8 @@ export class InsightsPage {
     cy.get('div[class*="analytics"]>button').eq(0).click();
     cy.wait(3000)
     cy.get('ul>div').contains(timePeriod).click();
-    cy.wait(80000)
+    cy.get('.recharts-layer>path[fill*="url"]',{timeout:300000}).should('be.visible')
+    // cy.wait(80000)
   }
 
   static getTotalTraffic() {

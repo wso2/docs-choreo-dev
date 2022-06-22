@@ -39,9 +39,25 @@ export class LoginPage {
 
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
+    const common =
+      Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
     cy.visit(componentURL);
     cy.intercept(componentURL).then(() => {
-      cy.setCookie("commonAuthId", Cypress.env(`commonAuthId`), {
+      cy.setCookie("commonAuthId", common, {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
+    });
+  }
+
+  static navigateToCodespaceEP() {
+    const csurl = Cypress.env(`accessURL`);
+    cy.visit(csurl);
+    cy.intercept(csurl).then(() => {
+      cy.setCookie("fidpId", "EnterpriseIDP", {
         path: "/",
         domain: "id.dv.choreo.dev",
         secure: true,
@@ -54,6 +70,7 @@ export class LoginPage {
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
+
     cy.intercept(csurl).then(() => {
       cy.setCookie("fidpId", "choreoe2etest", {
         path: "/",
@@ -73,11 +90,11 @@ export class LoginPage {
     cy.get('button[type="submit"]').click();
 
     cy.setCookie("fidpId", "choreoe2etest");
-  
+
     this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
-    this.persistCookies();
+    this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
 
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
@@ -109,7 +126,8 @@ export class LoginPage {
       log: false,
     });
     cy.contains("Continue").click();
-
+    this.persistCookies("https://dev.api.asgardeo.io/t/choreouser/commonauth");
+    cy.setCookie("fidpId", "EnterpriseIDP");
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
     }).should("be.visible");
@@ -125,14 +143,15 @@ export class LoginPage {
         Cypress.env("sign_out_url", url);
       });
   }
-  private static persistCookies() {
+  private static persistCookies(url: string) {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
-    cy.request(`${Cypress.env("idpURL")}/commonauth`).then((res) => {
+    cy.request(url).then((res) => {
       const cookies = res.requestHeaders["cookie"].split(";");
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
           const commonAuthId = c.replace("commonAuthId=", "").trim();
+          cy.log(`common auth id =====> ${commonAuthId}`);
           Cypress.env(`commonAuthId`, commonAuthId);
           return;
         }

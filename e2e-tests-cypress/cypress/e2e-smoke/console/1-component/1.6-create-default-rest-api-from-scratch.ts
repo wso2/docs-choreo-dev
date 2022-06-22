@@ -37,28 +37,19 @@ describe("Verify project creation functionality", () => {
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
-  before(()=>{
-    LoginPage.login()
+  before(() => {
+    LoginPage.login();
     ChoreoHomePage.switchOrganization();
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-      
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(
-      COMPONENT_NAME,
-      COMPONENT_DESCRIPTION
-      
-    );
+    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
   });
 
   it("Verify component deployment", () => {
@@ -118,13 +109,12 @@ describe("Verify project creation functionality", () => {
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter(RESOURCE_NAME);
     Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents(
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Environment.PRODUCTION}${RESOURCE_NAME}`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.body).equal(MATCHING_STRING);
+          expect(res.status).equal(200);
+        })
     );
   });
 
@@ -167,30 +157,34 @@ describe("Verify project creation functionality", () => {
   it("Verify resource access without the token in prod", () => {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(Environment.PRODUCTION);
-    Curl.getRequestComponents(
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Environment.PRODUCTION}${RESOURCE_NAME}`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.body).equal(MATCHING_STRING);
+          expect(res.status).equal(200);
+        })
     );
   });
 
-    it("Verify manage functionality and Publish Connector", () => {
+  it("Verify manage functionality and Publish Connector", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
+  });
+
+  it("Verify connector republishing", () => {
+    ComponentAPILifecycle.republishConnector();
+  });
+
+  it("Verify settings configuration", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
+    ComponentDeployPage.stopAllDeployment();
   });
-
-
 });

@@ -31,9 +31,11 @@ describe("Verify webhook creation functionality", () => {
   const WEBHOOK_NAME = Utils.generateComponentName("SlackHook");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Slack Trigger";
-  const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding slacktrigger bal file";
-  const config = "pkKgDNr5vGND364IsHzwGM7O";
+  const LABELS = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
+  const COMMIT_MESSAGE = "adding slacktrigger bal file";
+  const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
+  const TRIGGER_TYPE = "Slack";
+  const TRIGGER_CHANNEL = "SlackEventsAppService";
   const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
 
   before(() => {
@@ -44,15 +46,16 @@ describe("Verify webhook creation functionality", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Verify slack trigger creation", () => {
+  it("Verify new project creation", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
-    TriggersTemplate.SelectWebhookTemplate();
-    TriggersTemplate.createSlackTriggerFromTemplate(WEBHOOK_NAME);
-
-    ComponentDevelopPage.getComponentURL();
   });
 
+  it("Verify slack trigger creation", () => {
+    TriggersTemplate.SelectWebhookTemplate();
+    TriggersTemplate.createTrigger(TRIGGER_TYPE, WEBHOOK_NAME, TRIGGER_CHANNEL);
+    ComponentDevelopPage.getComponentURL();
+  });
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace();
     VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
@@ -64,27 +67,27 @@ describe("Verify webhook creation functionality", () => {
     VSExplorer.enterCommandInTerminal(
       "rm /config/workspace/.githooks/pre-commit"
     );
-    VSSourceControl.commitChanges(commitMessage);
+    VSSourceControl.commitChanges(COMMIT_MESSAGE);
     VSExplorer.enterCommandInTerminal("git push");
     VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.addLabels(labels).then((arr) => {
-      expect(arr).to.deep.eq(labels);
+    ComponentDevelopPage.addLabels(LABELS).then((arr) => {
+      expect(arr).to.deep.eq(LABELS);
     });
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
+    ComponentDevelopPage.verifyLatestCommit(COMMIT_MESSAGE);
   });
 
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.configureAndDeploy(config);
+    ComponentDeployPage.configureAndDeploy(CONFIG);
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
   it_privatedp("Component promotion to stg", () => {
-    ComponentDeployPage.promoteWebHookToSTG(config);
+    ComponentDeployPage.promoteWebHookToSTG(CONFIG);
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 

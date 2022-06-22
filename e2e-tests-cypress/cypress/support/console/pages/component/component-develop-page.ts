@@ -20,6 +20,8 @@ export class ComponentDevelopPage {
     this.currentTime.getTime() + Cypress.env("recTime")
   );
 
+  
+
   static getComponentURL() {
     cy.get('[data-testid="component-develop-edit-code"]', { timeout: 180000 })
       .should("be.visible")
