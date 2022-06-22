@@ -58,7 +58,7 @@ describe("Verify webhook creation functionality", () => {
   });
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace();
-    VSExplorer.typeCode("slacktrigger.bal", ComponentTemplate.WEBHOOK);
+    VSExplorer.typeCode("slacktrigger.bal");
     VSExplorer.selectSourceControl();
 
     VSExplorer.enterCommandInTerminal(

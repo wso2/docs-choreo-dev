@@ -15,14 +15,25 @@ import { GraphQL } from "../apis/graphql";
 import { Utils } from "../utils";
 
 export class LoginPage {
-  static acceptInviteAsInvitedUser(timestamp: string) {
+
+
+  private static enterUserCredentials(
+    envUsername: string,
+    envPassword: string
+  ) {
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPInvitedUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPInvitedPassword"), {
-      log: false,
-    });
+    cy.get("#usernameUserInput").type(Cypress.env(envUsername));
+    cy.get("#password").type(Cypress.env(envPassword), { log: false });
     cy.get('button[type="submit"]').click();
+  }
+
+  
+  static acceptInviteAsInvitedUser(timestamp: string) {
+    this.enterUserCredentials(
+      "choreoIDPInvitedUsername",
+      "choreoIDPInvitedPassword"
+    );
     cy.intercept({
       method: "POST",
       url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
@@ -37,10 +48,35 @@ export class LoginPage {
     });
   }
 
+  static login() {
+    this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
+
+    cy.setCookie("fidpId", "choreoe2etest");
+
+    this.persistOrgs();
+    this.persistLogoutURL();
+    this.persistApimToken();
+    this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
+
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
+    cy.url().then((url) => {
+      if (url.includes("sample=true")) {
+        const { handle } = Cypress.env("userData");
+        const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
+        cy.wait(5000);
+        cy.visit(tmpURL);
+      }
+    });
+  }
+
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
     const common =
-      Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
+      Cypress.env(`commonAuthId`) != null
+        ? Cypress.env(`commonAuthId`)
+        : "authtoken";
     cy.visit(componentURL);
     cy.intercept(componentURL).then(() => {
       cy.setCookie("commonAuthId", common, {
@@ -82,33 +118,6 @@ export class LoginPage {
     });
   }
 
-  static login() {
-    cy.visit(Cypress.env("loginURL"));
-    cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-    cy.get("#usernameUserInput").type(Cypress.env("choreoIDPUsername"));
-    cy.get("#password").type(Cypress.env("choreoIDPPassword"), { log: false });
-    cy.get('button[type="submit"]').click();
-
-    cy.setCookie("fidpId", "choreoe2etest");
-
-    this.persistOrgs();
-    this.persistLogoutURL();
-    this.persistApimToken();
-    this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
-
-    cy.get('[data-testid="header-user-profile-menu"]', {
-      timeout: 180000,
-    }).should("be.visible");
-    cy.url().then((url) => {
-      if (url.includes("sample=true")) {
-        const { handle } = Cypress.env("userData");
-        const tmpURL = `${Cypress.env("baseUrl")}/organizations/${handle}/home`;
-        cy.wait(5000);
-        cy.visit(tmpURL);
-      }
-    });
-  }
-
   static enterpriseLogin() {
     cy.visit(Cypress.env("enterpriseLoginUrl"));
     cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
@@ -126,7 +135,7 @@ export class LoginPage {
       log: false,
     });
     cy.contains("Continue").click();
-    this.persistCookies("https://dev.api.asgardeo.io/t/choreouser/commonauth");
+
     cy.setCookie("fidpId", "EnterpriseIDP");
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
@@ -143,6 +152,8 @@ export class LoginPage {
         Cypress.env("sign_out_url", url);
       });
   }
+
+
   private static persistCookies(url: string) {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
@@ -151,7 +162,6 @@ export class LoginPage {
       cookies.forEach((c) => {
         if (c.trim().includes("commonAuthId")) {
           const commonAuthId = c.replace("commonAuthId=", "").trim();
-          cy.log(`common auth id =====> ${commonAuthId}`);
           Cypress.env(`commonAuthId`, commonAuthId);
           return;
         }

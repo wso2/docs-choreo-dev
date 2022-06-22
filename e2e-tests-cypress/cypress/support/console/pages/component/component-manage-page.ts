@@ -15,7 +15,7 @@ import { DocumentType } from "../enum/document-type";
 import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
-import { JsxEmit } from "typescript";
+
 
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
