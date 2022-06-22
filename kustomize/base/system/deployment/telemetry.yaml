@@ -34,7 +34,7 @@ spec:
               key: REDIS_PASSWORD
         envFrom:
           - configMapRef:
-              name: cm-telemetry-cp
+              name: cm-telemetry
           - configMapRef:
               name: env-telemetry
           - secretRef:
