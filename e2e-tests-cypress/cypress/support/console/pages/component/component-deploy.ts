@@ -101,7 +101,7 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     this.closePopup();
-    cy.get('[data-testid="no-invoke-url-info"]', { timeout: 180000 }).should(
+    cy.get('[data-cyid="btn-promote"]', { timeout: 180000 }).should(
       "be.visible"
     );
   }
@@ -158,14 +158,17 @@ export class ComponentDeployPage {
   }
 
   static promoteManualTriggerToProd() {
-    cy.get('[data-testid="no-invoke-url-info"]', { timeout: 180000 }).should(
+    cy.get('[data-cyid="btn-promote"]', { timeout: 180000 }).should(
       "be.visible"
     );
     cy.get('[data-cyid*="promote"]', { timeout: 180000 })
       .focus()
       .should("be.visible");
     cy.wait(2000);
-    cy.get('[data-cyid*="promote"]').eq(0).should("be.enabled").click();
+    cy.get('[data-cyid="btn-promote"]', { timeout: 180000 })
+      .eq(0)
+      .should("be.enabled")
+      .click();
   }
 
   static promoteWebHookToProd() {
