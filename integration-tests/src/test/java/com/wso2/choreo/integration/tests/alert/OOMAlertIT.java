@@ -15,9 +15,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
-import com.wso2.choreo.integration.common.email.EmailUtils;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.email.RestAPIBasedEmailUtils;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.apache.http.HttpHeaders;
@@ -33,6 +31,9 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.wso2.choreo.integration.config.Configuration.ALERT.GMAIL_API_CK;
+import static com.wso2.choreo.integration.config.Configuration.ALERT.GMAIL_API_CS;
+import static com.wso2.choreo.integration.config.Configuration.ALERT.GMAIL_API_REFRESH_TOKEN;
 
 /**
  * OOM alert test cases.
@@ -41,10 +42,12 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @Autowired
     private HttpClient choreoCPTestClient;
     private static String accessToken;
+    private RestAPIBasedEmailUtils restAPIBasedEmailUtils;
 
     @BeforeClass
     public void beforeClass() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        restAPIBasedEmailUtils = new RestAPIBasedEmailUtils(GMAIL_API_CK, GMAIL_API_CS, GMAIL_API_REFRESH_TOKEN);
     }
 
     @Test
@@ -86,13 +89,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/alert/post_alert_suceess.json")));
-
-        boolean isMailReceived = EmailUtils.checkForMail(Constant.ALERT.MAIL_IMAP_HOST, 
-                                                         Configuration.ALERT.MAIL_IMAP_PASS, 
-                                                         Constant.ALERT.MAIL_IMAP_PORT, 
-                                                         appName, 
-                                                         Constant.ALERT.MAIL_IMAP_USER,
-                                                         testStartTimestamp);
+        boolean isMailReceived = restAPIBasedEmailUtils.reTrySearch(appName);
         Assert.assertTrue(isMailReceived);
     }
 }

@@ -61,22 +61,22 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: "IDP_JWKS_ENDPOINT"
-              name: "cm-idp-replica-cp"
+              name: "cm-idp-replica"
         - name: "NEGOTIATOR_GRPC_ADDRESS"
           valueFrom:
             configMapKeyRef:
               key: "NEGOTIATOR_GRPC_ADDRESS"
-              name: "cm-negotiator-cp"
+              name: "cm-negotiator"
         - name: "JWKS_ENDPOINT_PROTOCOL"
           valueFrom:
             configMapKeyRef:
               key: "JWKS_ENDPOINT_PROTOCOL"
-              name: "cm-linker-cp"
+              name: "cm-linker"
         - name: "APPSERVICE_GRPC_ADDRESS"
           valueFrom:
             configMapKeyRef:
               key: "APPSERVICE_GRPC_ADDRESS"
-              name: "cm-linker-cp"
+              name: "cm-linker"
         envFrom:
           - configMapRef:
               name: env-linker
