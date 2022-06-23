@@ -112,6 +112,7 @@ Note: If the Private Data Plane is setup for internal use in WSO2 Choreo Subscri
 ENV=xxxx
 CUSTOMER_NAME=xxx
 CHOREO_ENV=xxxx
+GA_PWD=xxxxxxxx
 DNS01_CHALLENGE_CLIENT_ID=xxxxxxxxxxxxxxxxx
 ASB_CONNECTION_STRING=xxxxxxxxxxxxxxxxx
 APIM_ANALYTICS_AUTH_TOKEN=xxxxxxxxxxxxxxxxx
