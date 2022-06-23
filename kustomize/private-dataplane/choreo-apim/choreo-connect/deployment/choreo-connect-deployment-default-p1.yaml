@@ -72,9 +72,6 @@ spec:
               name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
-            - name: mgw-enforcer-truststore-vol
-              mountPath: /home/wso2/security/truststore/apim-service-root.pem
-              subPath: apim-service-root.pem
             - mountPath: /home/wso2/security/keystore/mg.key
               name: secret-choreo-connect
               readOnly: true
