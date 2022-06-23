@@ -79,7 +79,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+              - ALL
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
