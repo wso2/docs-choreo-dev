@@ -12,7 +12,7 @@ openssl req -x509 -sha256 -nodes -days 10950 -newkey rsa:2048 -keyout mg.key -ou
 
 echo -e "\n --- Generating Certificate and Private Key for use in Global Adapter --- \n"
 
-GA_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
+#GA_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 
 cp "${TEMPLATE_CERT_PATH}" cert-req-global-adapter.conf
 /bin/echo -e "DNS.1 = global-adapter" >> cert-req-global-adapter.conf
