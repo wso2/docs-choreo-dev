@@ -22,7 +22,7 @@ The information displayed is as follows:
 
   ![Total traffic](../assets/img/insights/overview-page-total-traffic.png){.cInlineImage-half}
 
-  This widget displays the total traffic your selected environment received during the selected time range. This includes both successful requests and error requests. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic** page](#traffic)
+  This widget displays the total traffic your selected environment received during the selected time range. This includes both successful requests and error requests. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic Page**](#traffic).
 
 - **Error Request Count**
 
@@ -34,13 +34,13 @@ The information displayed is as follows:
 
   ![Average error rate](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
 
-  This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the [**Errors** page](#errors).
+  This widget displays the average error rate (error count/total request count) in your selected environment for the selected time interval. You can use this widget as an indicator to know the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and open the [**Errors Page**](#errors).
 
 - **95th Percentile Latency**
 
   ![95th percentile latency](../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
 
-  This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency** page](#latency) where you can further analyze the latency.
+  This widget displays the 95th percentile of all API latencies in your selected environment for the selected time interval. You can use this widget to know whether the whole system operates under given SLAs. This metric gives the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency Page**](#latency) where you can further analyze the latency.
 
 - **API Request Summary**
 
@@ -75,11 +75,11 @@ You can view the following information for the APIs you have selected using the 
 
   ![API usage by application](../assets/img/insights/usage-by-application.png){.cInlineImage-half}
 
-- **API Usage By Backend**
+- **API Usage By Target**
 
   This widget shows the per-backend breakdown of requests for the APIs you selected. This is useful when multiple APIs are sharing the same backend, which has traffic restrictions. You can use these stats to proactively scale your backends. You can switch between the two views using the small icon at the upper-right corner of the widget.
 
-  ![API usage by backend](../assets/img/insights/usage-by-backend.png){.cInlineImage-half}
+  ![API usage by target](../assets/img/insights/usage-by-target.png){.cInlineImage-half}
 
 - **API Resource Usage**
 
@@ -123,15 +123,22 @@ The following widgets are available for monitoring errors when you selected **St
 
   ![Errors by status code](../assets/img/insights/error-by-status-code.png){.cInlineImage-full}
 
-- **Proxy Errors**
+- **Target Errors by Status Code**
 
-  Proxy errors heat map shows the HTTP response codes of errors that are sent to the client by the API Gateway. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+  This graph shows the distribution of HTTP status codes received for target errors over time for the selected period. Apply the required filters as explained above to select the APIs and status code groups to which this content applies. When you select multiple APIs, the target error count is grouped by the status code.
 
-  ![Proxy errors](../assets/img/insights/proxy-error-heatmap.png){.cInlineImage-full}
+  ![Target errors by status code](../assets/img/insights/target-error-by-status-code.png){.cInlineImage-full}
+
+
+- **Errors**
+
+  Errors heat map shows the HTTP response codes of errors that are sent to the client by the API Gateway. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+
+  ![Errors](../assets/img/insights/error-heatmap.png){.cInlineImage-full}
 
 - **Target Errors**
 
-  Target errors heat map shows the HTTP response codes of errors that are received by the API Gateway from the backend. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Errors by Status Code** graph.
+  Target errors heat map shows the HTTP response codes of errors that are received by the API Gateway from the backend. Each status code is shown against the selected APIs. The cell color is determined by the number of errors belonging to each status code. The cell color is red for higher numbers and white for lower numbers. Use this chart to further drill down on error code groups that you identified with the **Target Errors by Status Code** graph.
 
   ![Target errors](../assets/img/insights/target-error-heatmap.png){.cInlineImage-full}
 
@@ -171,15 +178,15 @@ The page displays the following statistics:
 
 - **Cache Hit Percentage**
 
-  This graph shows the percentage of requests that were handled via the response cache over time. This allows you to assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
+  This graph shows the percentage of requests that were handled via the response cache overtime and the total hits over time. This allows you to assess the efficiency with which the API requests are handled. For example, if the cache hit rate is low, it may indicate that the backend is handling the request to return the same response multiple times instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.
 
-  ![Cache hit percentagle](../assets/img/insights/cache-hit-percentage.png){.cInlineImage-full}
+  ![Cache hit percentage](../assets/img/insights/cache-statistics.png){.cInlineImage-full}
 
-- **Cache Hit/Miss**
+- **Latency**
 
-  This section shows the number of requests that hit and missed the cache over time, and the latency that occurred at the same times. Requests miss the cache for APIs for which you have not enabled response caching.
+  This section shows the total latency that occurred at the same times corresponding to the above **Cache Hit Percentage** graph.
 
-  ![Cache hits and misses](../assets/img/insights/cache-statistics.png){.cInlineImage-full}
+  ![Cache hits and misses](../assets/img/insights/cache-latency.png){.cInlineImage-full}
 
 ### Devices
 
@@ -207,6 +214,8 @@ The information displayed is as follows:
 
 The **Alerts** page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
 
+![Alerts statistics](../assets/img/insights/alerts-page-full.png){.cInlineImage-full}
+
 **Prerequisites**
 
 To use this page, be sure to configure alerts and have API invocations that trigger alerts. 
@@ -218,6 +227,7 @@ To use this page, be sure to configure alerts and have API invocations that trig
 
   This table lists down each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The drop-downs can be used to filter alerts based on the alert type and API.
 
+  ![Alert summary](../assets/img/insights/alert-summary.png){.cInlineImage-full}
 
 - **Top APIs by Alert Count**
 
