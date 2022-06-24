@@ -11,24 +11,21 @@
  * associated services.
  */
 
+
 export class SwaggerUI {
   static SelectResource(path: string) {
     const pathVariable = `[data-path="/${path}"]`;
-    cy.get(".swagger-ui").within(() => {
-      cy.get(pathVariable).click();
-    });
+    cy.get(".swagger-ui").within(() => { cy.get(pathVariable).click(); });
   }
 
   static TryoutAPI() {
-    cy.get('div > div > button[class="btn try-out__btn"]')
-      .contains("Try it out")
-      .should("exist")
-      .click({ force: true });
+    cy.get('div > div > button[class="btn try-out__btn"]').contains("Try it out").should("exist").click({ force: true });
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
-  static ExecuteResourceFunction(resource="_get") {
-    cy.get(`div[id*="${resource}"] .execute-wrapper>button`).click();
+  static ExecuteResourceFunction(resource = "_get") {
+    const modifiedResource = Cypress._.capitalize(resource)
+    cy.get(`div[id*="${modifiedResource}"] .execute-wrapper>button`).click();
     cy.log("Execution is successful");
   }
 
@@ -46,19 +43,13 @@ export class SwaggerUI {
 
   static enterValue(placeholder: string, value: string) {
     cy.wait(2000);
-    cy.get(`[placeholder="${placeholder}"]`).should("be.visible").type(value);
+    cy.get(`[placeholder="${placeholder}"]`).type(value);
   }
 
-  static invokeResource(
-    resource: string,
-    key: string = "",
-    value: string = ""
-  ) {
+  static invokeResource(resource: string, key: string = "", value: string = "") {
     this.SelectResource(resource);
     this.TryoutAPI();
-    if (key) {
-      this.enterValue(key, value);
-    }
+    if (key) { this.enterValue(key, value); }
     this.ExecuteResourceFunction(resource);
   }
 }

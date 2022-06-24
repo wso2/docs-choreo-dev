@@ -12,5 +12,6 @@
   "videosFolder": "cypress/videos/e2e-smoke",
   "videoUploadOnPasses": false,
   "videoCompression": false,
-  "watchForFileChanges": false
+  "watchForFileChanges": false,
+  "scrollBehavior":false
 }

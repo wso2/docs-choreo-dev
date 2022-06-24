@@ -69,7 +69,6 @@ describe("Verify webhook creation functionality", () => {
     );
     VSSourceControl.commitChanges(COMMIT_MESSAGE);
     VSExplorer.enterCommandInTerminal("git push");
-    VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
   it("Verify component commits", () => {

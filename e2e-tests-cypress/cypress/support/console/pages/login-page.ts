@@ -17,23 +17,10 @@ import { Utils } from "../utils";
 export class LoginPage {
 
 
-  private static enterUserCredentials(
-    envUsername: string,
-    envPassword: string
-  ) {
-    cy.visit(Cypress.env("loginURL"));
-    cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
-    cy.get("#usernameUserInput").type(Cypress.env(envUsername));
-    cy.get("#password").type(Cypress.env(envPassword), { log: false });
-    cy.get('button[type="submit"]').click();
-  }
 
-  
+
   static acceptInviteAsInvitedUser(timestamp: string) {
-    this.enterUserCredentials(
-      "choreoIDPInvitedUsername",
-      "choreoIDPInvitedPassword"
-    );
+    this.enterUserCredentials("choreoIDPInvitedUsername", "choreoIDPInvitedPassword");
     cy.intercept({
       method: "POST",
       url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
@@ -73,49 +60,25 @@ export class LoginPage {
 
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
-    const common =
-      Cypress.env(`commonAuthId`) != null
-        ? Cypress.env(`commonAuthId`)
-        : "authtoken";
+    const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
     cy.visit(componentURL);
-    cy.intercept(componentURL).then(() => {
-      cy.setCookie("commonAuthId", common, {
-        path: "/",
-        domain: "id.dv.choreo.dev",
-        secure: true,
-        httpOnly: true,
-        sameSite: "no_restriction",
-      });
-    });
+    this.setCookie(componentURL, "commonAuthId", common)
+
   }
 
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
-    cy.intercept(csurl).then(() => {
-      cy.setCookie("fidpId", "EnterpriseIDP", {
-        path: "/",
-        domain: "id.dv.choreo.dev",
-        secure: true,
-        httpOnly: true,
-        sameSite: "no_restriction",
-      });
-    });
+
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
 
-    cy.intercept(csurl).then(() => {
-      cy.setCookie("fidpId", "choreoe2etest", {
-        path: "/",
-        domain: "id.dv.choreo.dev",
-        secure: true,
-        httpOnly: true,
-        sameSite: "no_restriction",
-      });
-    });
+    this.setCookie(csurl, "fidpId", "choreoe2etest")
+
+
   }
 
   static enterpriseLogin() {
@@ -145,12 +108,7 @@ export class LoginPage {
   }
 
   private static persistLogoutURL() {
-    cy.window()
-      .its("sessionStorage")
-      .invoke("getItem", "sign_out_url")
-      .then((url) => {
-        Cypress.env("sign_out_url", url);
-      });
+    cy.window().its("sessionStorage").invoke("getItem", "sign_out_url").then((url) => Cypress.env("sign_out_url", url));
   }
 
 
@@ -212,6 +170,27 @@ export class LoginPage {
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
       GraphQL.deleteProjectsCreatedByTests(id, handle, token);
+    });
+  }
+
+
+  private static enterUserCredentials(envUsername: string, envPassword: string) {
+    cy.visit(Cypress.env("loginURL"));
+    cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
+    cy.get("#usernameUserInput").type(Cypress.env(envUsername));
+    cy.get("#password").type(Cypress.env(envPassword), { log: false });
+    cy.get('button[type="submit"]').click();
+  }
+
+  private static setCookie(url: string, cookieKey: string, cookieValue: string) {
+    cy.intercept(url).then(() => {
+      cy.setCookie(cookieKey, cookieValue, {
+        path: "/",
+        domain: "id.dv.choreo.dev",
+        secure: true,
+        httpOnly: true,
+        sameSite: "no_restriction",
+      });
     });
   }
 }

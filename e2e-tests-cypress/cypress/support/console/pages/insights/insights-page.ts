@@ -1,3 +1,4 @@
+import { Utils } from "../../utils";
 import { Environment } from "../enum/environment";
 
 export class InsightsPage {
@@ -9,15 +10,14 @@ export class InsightsPage {
   }
 
   static selectTimePeriod(timePeriod: string = "Past 15 minutes") {
-    cy.get('div[class*="analytics"]>button').eq(0).click();
-    cy.wait(3000)
+    cy.get('div[class*="analytics"]>button').eq(0).click().wait(2000);
     cy.get('ul>div').contains(timePeriod).click();
-    cy.get('.recharts-layer>path[fill*="url"]',{timeout:300000}).should('be.visible')
-    // cy.wait(80000)
+    cy.get('.recharts-layer>path[fill*="url"]')
+
   }
 
   static getTotalTraffic() {
-    cy.get('.recharts-area').should('be.visible')
+    cy.get('.recharts-area')
     cy.contains("Total Traffic").should("be.visible");
     return cy.get("main").find("span>span").eq(0).invoke("text");
   }

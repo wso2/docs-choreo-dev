@@ -20,28 +20,20 @@ export class ComponentDevelopPage {
     this.currentTime.getTime() + Cypress.env("recTime")
   );
 
-  
+
 
   static getComponentURL() {
-    cy.get('[data-testid="component-develop-edit-code"]', { timeout: 180000 })
-      .should("be.visible")
-      .invoke("attr", "href")
-      .then((href) => {
-        cy.url().then((url) => {
-          Utils.saveComponentURL();
-          const accessURL =
-            url.split("/organizations")[0] +
-            href.replace(/ /g, "").replace(/\n/g, "");
-          Cypress.env(`accessURL`, accessURL);
-        });
+    cy.get('[data-testid="component-develop-edit-code"]', ).invoke("attr", "href").then((href) => {
+      cy.url().then((url) => {
+        Utils.saveComponentURL();
+        const accessURL = `${url.split("/organizations")[0]}${href.replace(/ /g, "").replace(/\n/g, "")}`
+        Cypress.env(`accessURL`, accessURL);
       });
-
-    const orgData = Cypress.env(`orgData`);
-    const authData = Cypress.env(`authData`);
+    });
   }
 
   static addResources(path: string, ...verbs) {
-    cy.get('[id="backdrop-loader"').should("not.exist");
+    cy.get('[id="backdrop-loader"').should("not.exist")
     cy.get('[data-testid="delete-all-operations-btn"]').click();
     this.addHTTPVerb(verbs);
     cy.get("#operation-target").type(path);
@@ -52,10 +44,7 @@ export class ComponentDevelopPage {
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get("#mui-component-select-verbs").click();
-    verbs.forEach((verb) => {
-      cy.contains(verb.toUpperCase()).click();
-      cy.wait(1000);
-    });
+    verbs.forEach((verb) => { cy.contains(verb.toUpperCase()).click().wait(100); });
     cy.get("body").type("{esc}");
   }
 
@@ -64,44 +53,34 @@ export class ComponentDevelopPage {
     cy.contains("+ Add labels", { timeout: 120000 }).click();
     labels.forEach((label) => {
       cy.get("#labels-filled").click();
-      cy.contains(label).click();
-      cy.wait(200);
+      cy.contains(label).click().wait(100);
     });
-    cy.get('div[role="button"]>.MuiChip-label').should(
-      "have.length",
-      labels.length
-    );
-    cy.get('div[role="button"]>.MuiChip-label').each((e) => {
-      lblArr.push(e.text());
-    });
+    cy.get('div[role="button"]>.MuiChip-label').should("have.length", labels.length)
+    cy.get('div[role="button"]>.MuiChip-label').each((e) => { lblArr.push(e.text()); });
     cy.get('[data-testid="save-labels"]').click();
     return cy.wrap(lblArr);
   }
 
   static verifyLatestCommit(commitMessage: string) {
-    cy.get(`[title*="${commitMessage}"]`).should("be.visible");
+    cy.get(`[title*="${commitMessage}"]`);
   }
 
   static selectBranch(newBranch: string) {
     let branches = [];
-    cy.get('[aria-label="Without label"]',{timeout:18000}).should('be.visible').click();
+    cy.get('[aria-label="Without label"]').click();
     cy.get("[data-value]>span").each((q) => {
       branches.push(q.text());
-      if (q.text() === newBranch) {
-        cy.wrap(q).click();
-      }
+      if (q.text() === newBranch) { cy.wrap(q).click(); }
     });
-
     return cy.wrap(branches);
   }
+
   static getVersion() {
-    return cy.get('[data-cyid="version-picker"]>div').then((v) => {
-      return v.text().trim();
-    });
+    return cy.get('[data-cyid="version-picker"]>div').then((v) => v.text().trim());
   }
 
   static refreshBranchCommit() {
-    cy.get('[title="Refetch Branches"]').should("be.visible").click();
-    cy.get('[title="Refetch Commits"]').should("be.visible").click();
+    cy.get('[title="Refetch Branches"]').click();
+    cy.get('[title="Refetch Commits"]').click();
   }
 }
