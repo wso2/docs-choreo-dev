@@ -13,26 +13,33 @@
 
 import { Utils } from "../../utils";
 
+interface PromoteConfigs {
+  settingButtonCount: number,
+  promoButtonIndex?: number,
+  invokeUrlCount: number,
+  invokeUrlIndex?: number
+}
+
 export class ComponentDeployPage {
 
   static deployToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]').should( "be.enabled").wait(5000).click();
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").wait(5000).click();
     this.closePopup();
     cy.get('[data-testid="btn-stop-redeploy"]');
   }
 
   static promoteToStg() {
-    this.promote(1, 0, 2, 1)
+    this.promote({ settingButtonCount: 1, invokeUrlCount: 2, invokeUrlIndex: 1 })
   }
 
   static promoteToProd() {
     window.localStorage.setItem("hideSocialShareModel", "true");
 
     if (Cypress.env("isPrivateOrg")) {
-      this.promote(2, 1, 2, 1)
+      this.promote({ settingButtonCount: 2, promoButtonIndex: 1, invokeUrlCount: 2, invokeUrlIndex: 1 })
     } else {
-      this.promote(1, 0, 2, 1)
+      this.promote({ settingButtonCount: 1, invokeUrlCount: 2, invokeUrlIndex: 1 })
     }
   }
 
@@ -131,7 +138,7 @@ export class ComponentDeployPage {
   static verifyStgeInvokeURL() { return Utils.getInvokeUrl(1) }
 
   static verifyProdInvokeURL() {
-   if (Cypress.env("isPrivateOrg")) { return Utils.getInvokeUrl(2) }
+    if (Cypress.env("isPrivateOrg")) { return Utils.getInvokeUrl(2) }
     else { return Utils.getInvokeUrl(1) }
   }
 
@@ -173,10 +180,10 @@ export class ComponentDeployPage {
     cy.get(".splitterH>div>div>div>div>div>div>div>button").click();
   }
 
-  private static promote(sLength: number, promButton: number, inUrlLength: number, inUrl: number) {
-    cy.get('[data-cyid="btn-api-settings"]').should("have.length", sLength).wait(2000); // the number of `API Settings` buttons
-    cy.get('[data-cyid*="promote"]').should("be.enabled").wait(2000).eq(promButton).click(); // promote button
-    cy.get('[id="securityHeaderInput"]').should("have.length", inUrlLength).eq(inUrl).invoke("val").should("not.be.empty"); // the number of `Invoke URLs`
+  private static promote({ settingButtonCount, promoButtonIndex = 0, invokeUrlCount, invokeUrlIndex = 0 }: PromoteConfigs) {
+    cy.get('[data-cyid="btn-api-settings"]').should("have.length", settingButtonCount).wait(2000); // the number of `API Settings` buttons
+    cy.get('[data-cyid*="promote"]').should("be.enabled").wait(2000).eq(promoButtonIndex).click(); // promote button
+    cy.get('[id="securityHeaderInput"]').should("have.length", invokeUrlCount).eq(invokeUrlIndex).invoke("val").should("not.be.empty"); // the number of `Invoke URLs`
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
