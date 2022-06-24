@@ -38,7 +38,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-app-db-cp
+              name: cm-choreo-app-db
         - name: CHOREO_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -48,17 +48,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_PORT
-              name: cm-choreo-app-db-cp
+              name: cm-choreo-app-db
         - name: CHOREO_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_USERNAME
-              name: cm-choreo-app-db-cp
+              name: cm-choreo-app-db
         - name: CHOREO_DB_DRIVER
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_DRIVER
-              name: cm-choreo-app-db-cp
+              name: cm-choreo-app-db
         - name: IDP_HOST
           valueFrom:
             configMapKeyRef:
@@ -68,7 +68,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IDP_JWKS_ENDPOINT
-              name: cm-idp-replica-cp
+              name: cm-idp-replica
         - name: IDP_ISSUER
           valueFrom:
             configMapKeyRef:

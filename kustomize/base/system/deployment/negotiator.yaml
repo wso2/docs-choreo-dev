@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
   labels:
     choreo.component: negotiator
   name: negotiator
@@ -26,7 +23,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -40,7 +36,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_NAME
-              name: cm-choreo-program-db-cp
+              name: cm-choreo-program-db
         - name: CHOREO_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -50,22 +46,22 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CHOREO_DB_MAX_POOL
-              name: cm-choreo-program-db-cp
+              name: cm-choreo-program-db
         - name: REDIS_PORT
           valueFrom:
             configMapKeyRef:
               key: REDIS_PORT
-              name: cm-negotiator-cp
+              name: cm-negotiator
         - name: REDIS_SSL
           valueFrom:
             configMapKeyRef:
               key: REDIS_SSL
-              name: cm-negotiator-cp
+              name: cm-negotiator
         - name: REDIS_DATABASE
           valueFrom:
             configMapKeyRef:
               key: REDIS_DATABASE
-              name: cm-negotiator-cp
+              name: cm-negotiator
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -75,19 +71,22 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: RUDDER_URL
-              name: cm-negotiator-cp
+              name: cm-negotiator
         envFrom:
           - configMapRef:
               name: env-negotiator
           - configMapRef:
               name: env-choreo-program-db
           - configMapRef:
-              name: cm-choreo-program-db-cp
+              name: cm-choreo-program-db
         image: choreocontrolplane.azurecr.io/choreoipaas/choreo-negotiator:latest
         securityContext:
+          capabilities:
+            drop:
+              - ALL
           allowPrivilegeEscalation: false
-          runAsUser: 100
-          runAsGroup: 1000
+          runAsUser: 10100
+          runAsGroup: 10100
           readOnlyRootFilesystem: true
         name: negotiator
         readinessProbe:

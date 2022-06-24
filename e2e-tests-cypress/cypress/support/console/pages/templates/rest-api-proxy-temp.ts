@@ -22,16 +22,14 @@ export class RestAPIProxyTemplate {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
+
     if (apiBasePath) {
       cy.get('[data-testid="api-basepath"] input').clear().type(apiBasePath);
     }
+
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
-
-    cy.get('[data-testid="delete-all-operations-btn"]', {
-      timeout: 120000,
-    }).should("be.visible");
-
+    cy.get('[data-testid="delete-all-operations-btn"]')
     Utils.saveComponentURL();
   }
 
@@ -51,14 +49,7 @@ export class RestAPIProxyTemplate {
     cy.get('[id="next"]').click();
   }
 
-  static enterAPIdetails(
-    apiName: string,
-    apiBasePath: string,
-    endpoint: string,
-    version: string = "",
-    validateResourceName: string = "",
-
-  ) {
+  static enterAPIdetails(apiName: string, apiBasePath: string, endpoint: string, version: string = "", validateResourceName: string = "",) {
     cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
 
     if (version) {
@@ -74,24 +65,19 @@ export class RestAPIProxyTemplate {
     }
     cy.get("button>span").contains("Create").click();
     this.interceptValidate(); // workaround
-  
+
     let resourceIdentifier = "resource-/intensity";
     if (validateResourceName) {
       resourceIdentifier = "resource-/" + validateResourceName;
     }
 
-    cy.get(`[data-testid="${resourceIdentifier}"]`, { timeout: 120000 }).should(
-      "be.visible"
-    );
+    cy.get(`[data-testid="${resourceIdentifier}"]`)
     Utils.saveComponentURL();
   }
 
   private static interceptValidate() {
-    cy.intercept(
-      `${Cypress.env(
-        "apimSvcURL"
-      )}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`
-    ).as("validate");
+    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`).as("validate");
+
     cy.wait("@validate").then((r) => {
       if (r.response.statusCode == 404) {
         cy.get("button").then((buttons) => {

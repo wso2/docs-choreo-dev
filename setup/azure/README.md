@@ -106,20 +106,19 @@ EOF
 ```
 
 ### Private Data Plane Cluster
+Note: If the Private Data Plane is setup for internal use in WSO2 Choreo Subscriptions, set the CHOREO_ENV variable to 'dev' or 'stage'
 
 ```bash
-CLUSTER_NAME=xxxxxxxxxxxxxxxxx
+ENV=xxxx
 CUSTOMER_NAME=xxx
-ROUTING_LOADBALANCER_IP=xxxxxxxxxxxxxxxxx
-LOADBALANCER_IP_RG=xxxxxxxxxxxxxxxxx
-LOADBALANCER_SUBNET_NAME=xxxxxxxxxxxxxxxxx
-USERAPPS_CSI_KEY_VAULT_CLIENT_ID=xxxxxxxxxxxxxxxxx
+CHOREO_ENV=xxxx
+GA_PWD=xxxxxxxx
 DNS01_CHALLENGE_CLIENT_ID=xxxxxxxxxxxxxxxxx
-AKS_READONLY_AD_GROUP_ID=xxxxxxxxxxxxxxxxx
+ASB_CONNECTION_STRING=xxxxxxxxxxxxxxxxx
+APIM_ANALYTICS_AUTH_TOKEN=xxxxxxxxxxxxxxxxx
 PARTITION_DNS_NAME=xxxxxxxxxxxxxxxxx
 WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
 GATEWAY_WILDCARD_DNS_NAME=xxxxxxxxxxxxxxxxx
-ENV=xxxx
 EOF
 ```
 

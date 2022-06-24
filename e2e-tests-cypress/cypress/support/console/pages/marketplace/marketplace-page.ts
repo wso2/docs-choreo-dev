@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class Marketplace {
   static connectorResults = '[data-testid="search-results"]>a';
 
@@ -22,16 +24,12 @@ export class Marketplace {
 
   static filterByChoreo() {
     cy.get('[data-testid="choreo-filter"]').click();
-    cy.get('[data-testid="choreo-filter"]')
-      .contains("Choreo")
-      .should("be.visible");
+    cy.get('[data-testid="choreo-filter"]').contains("Choreo").should("be.visible");
   }
 
   static filterByMyOrganization() {
     cy.get('[data-testid="my-organization-filter"]').click();
-    cy.get('[data-testid="my-organization-filter"]')
-      .contains("My Organization")
-      .should("be.visible");
+    cy.get('[data-testid="my-organization-filter"]').contains("My Organization").should("be.visible");
   }
 
   static filterByFree() {
@@ -56,12 +54,9 @@ export class Marketplace {
 
   static filterByCategory(mainCategory: string, subCategory: string) {
     cy.get('[role="group"]>div>div').then((ele) => {
-      cy.wrap(ele)
-        .contains("See")
-        .then((e) => {
-          if (e.text() === "See More") {
-            cy.wrap(e).click();
-          }
+      cy.wrap(ele).contains("See").
+        then((e) => {
+          if (e.text() === "See More") { cy.wrap(e).click(); }
         });
     });
     cy.get(`[data-testid="${mainCategory}"]`).click();
@@ -81,9 +76,7 @@ export class Marketplace {
 
   static getConnectorTags() {
     const tags = [];
-    return cy
-      .get('[data-testid="search-results"] div>div>div>span')
-      .each((v) => tags.push(v.text()));
+    return cy.get('[data-testid="search-results"] div>div>div>span').each((v) => tags.push(v.text()));
   }
 
   // trigger related functions
@@ -103,23 +96,19 @@ export class Marketplace {
 
   static getTriggerTags() {
     const tags = [];
-    return cy
-      .get('[data-testid="search-results"] div>div>div>span')
-      .each((v) => tags.push(v.text()));
+    return cy.get('[data-testid="search-results"] div>div>div>span').each((v) => tags.push(v.text()));
   }
 
   static validateConnectorPopulation(tags: string[]) {
     cy.intercept({
       method: "GET",
-      url: Cypress.env("balRegistryURL") + "/connectors*",
+      url: `${Cypress.env("balRegistryURL")}/connectors*`,
       times: 1,
     }).as("balRegistry");
 
     cy.wait("@balRegistry", { timeout: 120000 }).then(() => {
       tags.forEach(function (tag) {
-        cy.get('[data-testid="connector-tag"]', { timeout: 10000 }).contains(
-          tag
-        );
+        cy.get('[data-testid="connector-tag"]').contains(tag);
       });
     });
   }

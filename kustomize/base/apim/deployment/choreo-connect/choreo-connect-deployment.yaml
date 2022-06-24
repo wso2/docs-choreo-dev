@@ -135,10 +135,10 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "2Gi"
+              memory: "2560Mi"
               cpu: "1500m"
             limits:
-              memory: "2Gi"
+              memory: "2560Mi"
               cpu: "1500m"
           ports:
             - containerPort: 8081

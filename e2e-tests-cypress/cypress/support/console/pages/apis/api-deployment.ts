@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class APIDeployment {
   static navigateToDeployment() {
     cy.contains("Deploy").should("be.visible").click();
@@ -18,28 +20,16 @@ export class APIDeployment {
   }
 
   static DeployToDev() {
-    cy.get('[data-cyid="btn-deploy-proxy"]', { timeout: 120000 })
-      .should("not.be.disabled")
-      .click();
-    cy.get('[data-cyid="deployment-status"]')
-      .contains("Active")
-      .should("be.visible");
-    cy.get('[id="securityHeaderInput"').invoke("val").should("not.be.empty");
-    cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
-      "not.be.disabled"
-    );
+    cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
+    cy.get('[data-cyid="deployment-status"]').contains("Active").should("be.visible");
+    cy.get('[id="securityHeaderInput"]').invoke("val").should("not.be.empty");
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled")
   }
 
   static promoteToStg() {
     cy.get('[data-cyid*="promote"]').eq(0).click();
-    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
-      .contains("Staging-PoC")
-      .should("be.visible");
-    cy.get('[id="securityHeaderInput"')
-      .should("have.length", 2)
-      .eq(1)
-      .invoke("val")
-      .should("not.be.empty");
+    cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains("Staging-PoC").should("be.visible");
+    cy.get('[id="securityHeaderInput"]').should("have.length", 2).eq(1).invoke("val").should("not.be.empty");
   }
 
   static PromoteToProd() {
@@ -47,64 +37,31 @@ export class APIDeployment {
 
     if (isPrivateOrg) {
       cy.get('[data-cyid*="promote"]').eq(1).click();
-      cy.get('[id="securityHeaderInput"')
-        .should("have.length", 3)
-        .eq(2)
-        .invoke("val")
-        .should("not.be.empty");
+      cy.get('[id="securityHeaderInput"]').should("have.length", 3).eq(2).invoke("val").should("not.be.empty");
     } else {
       cy.get('[data-cyid*="promote"]').click();
-      cy.get('[data-cyid="proxy-env-card-header"]>div>span')
-        .contains("Production")
-        .should("be.visible");
-      cy.get('[data-cyid="deployment-status"]')
-        .should("have.length", 2)
-        .eq(1)
-        .contains("Active")
-        .should("be.visible");
-      cy.get('[id="securityHeaderInput"')
-        .should("have.length", 2)
-        .eq(1)
-        .invoke("val")
-        .should("not.be.empty");
-      cy.get('[data-cyid*="promote"]', { timeout: 120000 }).should(
-        "not.be.disabled"
-      );
+      cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains("Production").should("be.visible");
+      cy.get('[data-cyid="deployment-status"]').should("have.length", 2).eq(1).contains("Active").should("be.visible");
+      cy.get('[id="securityHeaderInput"]').should("have.length", 2).eq(1).invoke("val").should("not.be.empty");
+      cy.get('[data-cyid*="promote"]').should("not.be.disabled")
     }
   }
 
-
-
-  static verifyDevInvokeURL() {
-    return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
-      .eq(0)
-      .invoke("attr", "value");
-  }
+  static verifyDevInvokeURL() { return Utils.getInvokeUrl(0); }
 
   static verifyStgeInvokeURL() {
-    let isPrivateOrg = Cypress.env("isPrivateOrg");
-    if (isPrivateOrg) {
+    if (Cypress.env("isPrivateOrg")) {
       cy.wait(5000);
-      return cy
-        .get('[data-cyid="text-field-invoke-url"] input')
-        .eq(1)
-        .invoke("attr", "value");
+      return Utils.getInvokeUrl(1);
     }
     return cy.wrap("skip");
   }
 
   static verifyProdInvokeURL() {
-    let isPrivateOrg = Cypress.env("isPrivateOrg");
-    if (isPrivateOrg) {
-      return cy
-        .get('[data-cyid="text-field-invoke-url"] input')
-        .eq(2)
-        .invoke("attr", "value");
-    }
-    return cy
-      .get('[data-cyid="text-field-invoke-url"] input')
-      .eq(1)
-      .invoke("attr", "value");
+    if (Cypress.env("isPrivateOrg")) { return Utils.getInvokeUrl(2); }
+    return Utils.getInvokeUrl(1);
   }
+
+
+
 }

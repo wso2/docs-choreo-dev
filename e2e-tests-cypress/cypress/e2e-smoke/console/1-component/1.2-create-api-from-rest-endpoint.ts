@@ -132,11 +132,15 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
     ComponentDevelopPage.getVersion().should(
       "eq",
-      `Version ${API_NEW_VERSION}`
+      `API Version ${API_NEW_VERSION}`
     );
+
+  });
+
+  it("Add  a new version", () => {
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
     APIDevelop.addEndpoints();
-  });
+  })
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();

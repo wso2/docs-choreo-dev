@@ -45,17 +45,17 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_NAME
-                      name: cm-choreo-program-db-cp
+                      name: cm-choreo-program-db
                 - name: CHOREO_PROGRAM_DB_USERNAME
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_USERNAME
-                      name: cm-choreo-program-db-cp
+                      name: cm-choreo-program-db
                 - name: CHOREO_DB_DRIVER
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_DRIVER
-                      name: cm-choreo-program-db-cp
+                      name: cm-choreo-program-db
                 - name: CHOREO_PROGRAM_DB_HOST
                   valueFrom:
                     configMapKeyRef:
@@ -65,7 +65,7 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       key: CHOREO_DB_PORT
-                      name: cm-choreo-program-db-cp
+                      name: cm-choreo-program-db
                 - name: CHOREO_PROGRAM_DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
@@ -75,7 +75,7 @@ spec:
                 - configMapRef:
                     name: env-datalake-ast
                 - configMapRef:
-                    name: cm-datalake-ast-cp
+                    name: cm-datalake-ast
               resources:
                 limits:
                   cpu: 300m

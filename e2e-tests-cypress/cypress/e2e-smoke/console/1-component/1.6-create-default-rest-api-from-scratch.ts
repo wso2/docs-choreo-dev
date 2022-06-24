@@ -10,12 +10,10 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
-import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
@@ -37,28 +35,19 @@ describe("Verify project creation functionality", () => {
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
 
-  before(()=>{
-    LoginPage.login()
+  before(() => {
+    LoginPage.login();
     ChoreoHomePage.switchOrganization();
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
+  });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-      
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(
-      COMPONENT_NAME,
-      COMPONENT_DESCRIPTION
-      
-    );
+    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
   });
 
   it("Verify component deployment", () => {
@@ -74,58 +63,43 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(RESOURCE_NAME);
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue(PARAM_NAME, PARAM_VALUE);
-    SwaggerUI.ExecuteResourceFunction("greeting");
-    SwaggerUI.GetResponse().should("eq", MATCHING_STRING);
-    SwaggerUI.getResponseCode().should("eq", "200");
+    TestHelper.testOnSwagger(Environment.DEVELOPMENT, RESOURCE_NAME, PARAM_NAME, PARAM_VALUE).
+      then((res) => {
+        expect(res.response).to.be.eq(MATCHING_STRING);
+        expect(res.statusCode).to.be.eq("200");
+      });
   });
 
   it("Verify test functionality of root resource in dev on curl", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.DEVELOPMENT);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter(RESOURCE_NAME);
-    Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents(
-      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
-    ).then((curl) =>
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+    then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
-      })
-    );
+      });
+    });
+
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {
+
     ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.PRODUCTION);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.SelectResource(RESOURCE_NAME);
-    SwaggerUI.TryoutAPI();
-    SwaggerUI.enterValue(PARAM_NAME, PARAM_VALUE);
-    SwaggerUI.ExecuteResourceFunction("greeting");
-    SwaggerUI.GetResponse().should("eq", MATCHING_STRING);
-    SwaggerUI.getResponseCode().should("eq", "200");
+    TestHelper.testOnSwagger(Environment.PRODUCTION, RESOURCE_NAME, PARAM_NAME, PARAM_VALUE).
+      then((res) => {
+        expect(res.response).to.be.eq(MATCHING_STRING);
+        expect(res.statusCode).to.be.eq("200");
+      });
   });
 
   it("Verify test functionality of root resource in prod on curl", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.PRODUCTION);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter(RESOURCE_NAME);
-    Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents(
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
-    ).then((curl) =>
+
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+    then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
-      })
-    );
+      });
+    });
   });
 
   it("Apply configs to dev", () => {
@@ -149,48 +123,45 @@ describe("Verify project creation functionality", () => {
 
   it("Verify resource access without the token in dev", () => {
     ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.DEVELOPMENT);
-    Curl.selectMethod(HTTPMethod.GET);
-    Curl.enterPathParameter(RESOURCE_NAME);
-    Curl.addQueryParameter(queryParameters1);
-    Curl.getRequestComponents(
-      `${Environment.DEVELOPMENT}${RESOURCE_NAME}`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+    then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
-      })
-    );
+      });
+    });
+    
   });
 
   it("Verify resource access without the token in prod", () => {
-    ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.PRODUCTION);
-    Curl.getRequestComponents(
-      `${Environment.PRODUCTION}${RESOURCE_NAME}`
-    ).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME).
+    then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
         expect(res.status).equal(200);
-      })
-    );
+      });
+    });
   });
 
-    it("Verify manage functionality and Publish Connector", () => {
+  it("Verify manage functionality and Publish Connector", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
+  });
+
+  it("Verify connector republishing", () => {
+    ComponentAPILifecycle.republishConnector();
+  });
+
+  it("Verify settings configuration", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment()
+    ComponentDeployPage.stopAllDeployment();
   });
-
-
 });

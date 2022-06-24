@@ -18,15 +18,17 @@ export class TriggersTemplate {
     cy.get('[data-testid="project-template-list-webhook"]').click();
   }
 
-  static createSlackTriggerFromTemplate(webhookName: string) {
-    cy.get('input[name="webhookName"]').clear().type(webhookName);
-    cy.get("#mui-component-select-triggerType").click();
-    cy.get('[data-cyid="Slack"]').click();
-    cy.get("#mui-component-select-triggerChannel").click();
-    cy.get('[data-cyid="SlackEventsAppService"]').click();
-    cy.get('[data-cyid="create-webhook-next"]').click();
-    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
-    cy.get('[data-cyid="btn-create"]').click();
-  }
 
+  static createTrigger(triggerType: string, triggerName: string, triggerChannel: string) {
+    cy.get('[data-testid="search-field"]>input').clear().type(triggerType);
+    cy.get('[data-testid="search-button"]>button').click();
+    cy.get(`.package-card-class>div:not([data-testid])`).realHover().wait(2000)
+    cy.get('[data-testid="Slack"]').realClick();
+    cy.get('[data-testid="webhook-name"]>div>input').clear().type(triggerName);
+    cy.get(".MuiAutocomplete-endAdornment").click();
+    cy.get("#trigger-channel-select-popup");
+    cy.get("li>div>h5").contains(triggerChannel).click();
+    cy.get('[data-cyid="create-webhook-next"]').click();
+    cy.get('[data-testid="create-btn"]').click();
+  }
 }
