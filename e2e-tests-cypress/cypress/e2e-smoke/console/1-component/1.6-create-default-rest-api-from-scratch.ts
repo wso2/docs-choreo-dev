@@ -134,7 +134,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME).
     then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
