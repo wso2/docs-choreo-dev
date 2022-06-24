@@ -64,6 +64,10 @@ spec:
               name: mgw-enforcer-truststore-vol
               readOnly: true
               subPath: wso2carbon.pem
+            - mountPath: /home/wso2/security/truststore/publisher-truststore.pem
+              name: mgw-enforcer-truststore-vol
+              readOnly: true
+              subPath: publisher-truststore.pem
             - mountPath: /home/wso2/security/truststore/mg.pem
               name: mgw-common-cert-vol
               readOnly: true
