@@ -10,7 +10,7 @@ export class ScheduleTask {
     cy.get('[data-cyid="create-scheduled-task-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-cyid="btn-create-"]').click();
-    cy.get('[data-testid="component-develop-edit-code"]', { timeout: 120000 });
+    cy.get('[data-testid="component-develop-edit-code"]');
     Utils.saveComponentURL();
   }
 }

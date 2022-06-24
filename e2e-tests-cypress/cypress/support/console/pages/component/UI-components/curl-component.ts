@@ -1,3 +1,4 @@
+
 import { Environment } from "../../enum/environment";
 
 export class Curl {
@@ -9,29 +10,24 @@ export class Curl {
   static addQueryParameter(parameters: object[]) {
     cy.wait(1000);
     for (let i = 0; i < parameters.length; i++) {
-      cy.get('[data-testid="add-btn"]').click();
-      cy.wait(1000);
+      cy.get('[data-testid="add-btn"]').click().wait(1000);
       cy.get('[id*="mui"]').eq(0).type(parameters[i].key);
       cy.get('[id*="mui"]').eq(1).type(parameters[i].value);
-      cy.get('td button[class*="MuiIconButton-colorInherit"]')
-        .eq(2 * i)
-        .click();
+      cy.get('td button[class*="MuiIconButton-colorInherit"]').eq(2 * i).click();
     }
   }
   static selectEnvironment(env: Environment) {
-    cy.get('[data-testid="add-btn"]').should("be.visible");
+    cy.get('[data-testid="add-btn"]')
     cy.get('[aria-haspopup="listbox"]').eq(1).click();
     cy.get("ul>li").contains(env).click();
   }
 
-  static getRequestComponents( env: string) {
+  static getRequestComponents(env: string) {
     const curlData = Cypress.env(`${env}`);
-    if (curlData) {
-      return cy.wrap(curlData);
-    }
-    return cy
-      .get("textarea")
-      .invoke("text")
+
+    if (curlData) { return cy.wrap(curlData); }
+
+    return cy.get("textarea").invoke("text")
       .then((c) => {
         const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
         const arrayURL = modifiedURL.split(" ");

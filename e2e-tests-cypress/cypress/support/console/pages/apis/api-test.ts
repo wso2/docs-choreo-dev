@@ -11,20 +11,18 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class APITest {
   static testAPI() {
     cy.contains("Test").should("be.visible").click();
-    cy.get('[id="backdrop-loader"').should("not.exist");
+    cy.get('[id="backdrop-loader"').should("not.exist")
   }
 
   static selectEnvironment(envName: string) {
     cy.get("[data-cyid=select-env]").click();
     cy.get("[data-cyid=item-env-name]").contains(envName).click();
-    cy.get('[data-cyid="text-field-endpoint"]>div>input')
-      .invoke("attr", "value")
-      .then((val) => {
-        cy.log(val);
-        Cypress.env(`${envName}_test_url`, val);
-      });
+    cy.get('[data-cyid="text-field-endpoint"]>div>input').invoke("attr", "value").
+    then((val) => { Cypress.env(`${envName}_test_url`, val); });
   }
 }

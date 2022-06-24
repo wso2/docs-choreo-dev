@@ -18,10 +18,7 @@ export class RestAPITemplate {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
   }
 
-  static createApiFromScratch(
-    componentName: string,
-    description: string
-  ) {
+  static createApiFromScratch(componentName: string, description: string) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);

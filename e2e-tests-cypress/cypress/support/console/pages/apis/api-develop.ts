@@ -11,12 +11,12 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
-    cy.get('[data-testid="develop-resources-header"]', { timeout: 120000 })
-      .contains("Resources")
-      .should("be.visible");
-    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get('[data-testid="develop-resources-header"]').contains("Resources").should("be.visible");
+    cy.get('[id="backdrop-loader"]').should("not.exist")
     cy.get("body").then((body) => {
       if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
         cy.log("trigger delete all");
@@ -44,24 +44,15 @@ export class APIDevelop {
     });
     cy.intercept({
       method: "PUT",
-      url: `${Cypress.env(
-        "apimSvcURL"
-      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+      url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
-    cy.wait("@swagger", { timeout: 120000 }).then((res) => {
-      expect(res.response.body.paths).to.have.property(`/${path}`);
-    });
-    cy.get(`[data-testid="resource-/${path}"]`, { timeout: 120000 }).should(
-      "be.visible"
-    );
+    cy.wait("@swagger", { timeout: 120000 }).then((res) => expect(res.response.body.paths).to.have.property(`/${path}`));
+    cy.get(`[data-testid="resource-/${path}"]`)
   }
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get('[data-testid="verb-selector"]').click();
-    verbs.forEach((verb) => {
-      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click();
-      cy.wait(1000);
-    });
+    verbs.forEach((verb) => cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click().wait(1000));
     cy.get("body").type("{esc}");
   }
 
@@ -72,17 +63,10 @@ export class APIDevelop {
 
   static updateEndpointConfiguration(newEndpoint: string) {
     cy.get('[data-testid="Endpoints"]').click();
-    cy.get('[data-testid="api-endpoint"]').within(() => {
-      cy.get("input").clear().type(newEndpoint);
-    });
+    cy.get('[data-testid="api-endpoint"]').within(() => cy.get("input").clear().type(newEndpoint));
     cy.contains("Save").click();
-
     cy.get('[id="circular-loader"]').should("not.exist");
-    cy.get('[data-testid="api-endpoint"] > div > input').should(
-      "have.value",
-      newEndpoint
-    );
-    cy.wait(1000);
+    cy.get('[data-testid="api-endpoint"] > div > input').should("have.value", newEndpoint).wait(1000)
     cy.log("Endpoint configuration updated successfully");
   }
 
@@ -95,4 +79,7 @@ export class APIDevelop {
       cy.get(input).eq(0).type(operationId);
     });
   }
+
+
+
 }

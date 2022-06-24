@@ -137,7 +137,7 @@ describe("Verify project creation functionality", () => {
 
   });
 
-  it("Add  a new version",()=>{
+  it("Add  a new version", () => {
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
     APIDevelop.addEndpoints();
   })

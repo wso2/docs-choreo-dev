@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 
 export class ConnectorOverviewPage {
   static navigateToHome() {

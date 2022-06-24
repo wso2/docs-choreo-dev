@@ -65,7 +65,6 @@ describe("Schedule task", () => {
     );
     VSSourceControl.commitChanges(commitMessage);
     VSExplorer.enterCommandInTerminal("git push");
-    VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
   it("Verify component commits", () => {

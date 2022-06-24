@@ -79,7 +79,6 @@ describe("Verify project creation functionality", () => {
     VSExplorer.creteNewBranch(NEW_BRANCH);
     VSExplorer.typeCode("Numbers.bal");
     VSExplorer.commitPush(commitMessage);
-    VSExplorer.waitTillCodeSyncWithChoreo();
   });
 
   it("Verify component commits", () => {
@@ -87,10 +86,8 @@ describe("Verify project creation functionality", () => {
     // ComponentDevelopPage.addLabels(labels).then((arr) => {
     //   expect(arr).to.deep.eq(labels);
     // });
-    ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => {
-      expect(arr).to.include(NEW_BRANCH);
-    });
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
+    ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => { expect(arr).to.include(NEW_BRANCH); });
+ //  ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
   it("Verify new version creation", () => {
@@ -116,77 +113,63 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Environment.DEVELOPMENT,
-      "root",
-      "number",
-      "2"
-    ).then((res) => {
-      expect(res.response).to.be.eq("4");
-      expect(res.statusCode).to.be.eq("200");
-    });
+    TestHelper.testOnSwagger(Environment.DEVELOPMENT, "root", "number", "2").
+      then((res) => {
+        expect(res.response).to.be.eq("4");
+        expect(res.statusCode).to.be.eq("200");
+      });
   });
 
-  it_privatedp(
-    "Verify test functionality of root resource in stg on swagger",
-    () => {
-      ComponentOverviewPage.navigateToTest();
-      TestHelper.testOnSwagger(Environment.STAGING, "root", "number", "2").then(
-        (res) => {
-          expect(res.response).to.be.eq("4");
-          expect(res.statusCode).to.be.eq("200");
-        }
-      );
-    }
+  it_privatedp("Verify test functionality of root resource in stg on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(Environment.STAGING, "root", "number", "2").then(
+      (res) => {
+        expect(res.response).to.be.eq("4");
+        expect(res.statusCode).to.be.eq("200");
+      }
+    );
+  }
   );
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Environment.PRODUCTION,
-      "root",
-      "number",
-      "2"
-    ).then((res) => {
-      expect(res.response).to.be.eq("4");
-      expect(res.statusCode).to.be.eq("200");
-    });
+    TestHelper.testOnSwagger(Environment.PRODUCTION, "root", "number", "2").
+      then((res) => {
+        expect(res.response).to.be.eq("4");
+        expect(res.statusCode).to.be.eq("200");
+      });
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    TestHelper.testOnCurl(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
-      "root",
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(4);
-        expect(res.status).equal(200);
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, "root", queryParameters1).
+      then((curl) => {
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.body).equal(4);
+          expect(res.status).equal(200);
+        });
       });
-    });
   });
 
   it_privatedp("Verify test functionality using generated curl in Stg", () => {
-    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET, "root").then(
-      (curl) => {
+    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET, "root").
+      then((curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         });
       }
-    );
+      );
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root").then(
-      (curl) => {
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root").
+      then((curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         });
       }
-    );
+      );
   });
 
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
@@ -202,20 +185,18 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it_privatedp(
-    "Verify test functionality of isOdd resource in stg on swagger",
-    () => {
-      ComponentOverviewPage.navigateToTest();
-      TestHelper.testOnSwagger(
-        Environment.STAGING,
-        "isOdd",
-        "number",
-        "5"
-      ).then((res) => {
-        expect(res.response).to.be.eq("true");
-        expect(res.statusCode).to.be.eq("200");
-      });
-    }
+  it_privatedp("Verify test functionality of isOdd resource in stg on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Environment.STAGING,
+      "isOdd",
+      "number",
+      "5"
+    ).then((res) => {
+      expect(res.response).to.be.eq("true");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  }
   );
 
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
