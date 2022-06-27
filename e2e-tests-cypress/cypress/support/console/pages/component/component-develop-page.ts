@@ -67,6 +67,7 @@ export class ComponentDevelopPage {
 
   static selectBranch(newBranch: string) {
     let branches = [];
+    cy.get('.diagram-canvas-wrap').should('exist')
     cy.get('[aria-label="Without label"]').click();
     cy.get("[data-value]>span").each((q) => {
       branches.push(q.text());

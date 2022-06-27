@@ -63,14 +63,13 @@ export class ComponentOverviewPage {
 
     if (newBranch) { this.createNewVersionRestApi(version, newBranch); }
     else { this.createNewVersionApiProxy(version) }
-    cy.wait(2000);
   }
 
   private static createNewVersionApiProxy(version: string) {
     cy.contains("Create new version", { timeout: 180000 });
     cy.get('[data-cyid="text-field-new-version"]>div>input').clear().type(version);
     cy.get("[data-testid=create-version-create]").click();
-    this.newVersion();
+    cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
   }
 
   private static createNewVersionRestApi(version: string, branch: string) {
@@ -79,15 +78,8 @@ export class ComponentOverviewPage {
     cy.get(`[data-value=${branch}]`).click();
     cy.get('[data-cyid="text-field-new-version"]>div>input').clear().type(version);
     cy.get("[data-testid=create-version-create]").click();
-    cy.get('[data-testid="dialog-close-icon"]').should( 'not.exist')
+    cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
   }
 
-  private static newVersion() {
-    cy.intercept({
-      method: "GET",
-      url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
-      times: 1,
-    }).as("version");
-    cy.wait("@version", { timeout: 120000 });
-  }
+
 }

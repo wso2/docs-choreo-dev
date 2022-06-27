@@ -3,8 +3,7 @@ export class VSExplorer {
 
   static terminal = ".xterm-helper-textarea";
 
-  static count: number = 0;
-
+  
   static waitTillCodespaceLoad() {
     cy.get(".monaco-highlighted-label").contains(".bal").click();
     cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]').click();

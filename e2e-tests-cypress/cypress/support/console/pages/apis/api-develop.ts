@@ -72,9 +72,11 @@ export class APIDevelop {
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     httpVerb.forEach((verb) => {
-      let header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
-      let input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-content"]  div>input[type="text"]`;
-      let operationId = `${verb.toLowerCase()}${resourcePath.replace(/\\/g, "")}`;
+      const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
+      const input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-content"]  div>input[type="text"]`;
+      const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
+      const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
+
       cy.get(header).click();
       cy.get(input).eq(0).type(operationId);
     });

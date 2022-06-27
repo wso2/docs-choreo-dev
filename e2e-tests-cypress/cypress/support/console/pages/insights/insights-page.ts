@@ -1,4 +1,4 @@
-import { Utils } from "../../utils";
+
 import { Environment } from "../enum/environment";
 
 export class InsightsPage {
