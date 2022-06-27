@@ -25,8 +25,8 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        runAsUser: 100
-        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: email-service
           imagePullPolicy: Always
@@ -71,8 +71,6 @@ spec:
                   key: SENDER_MAIL
           securityContext:
             allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
             readOnlyRootFilesystem: true
             runAsUser: 10500
             runAsGroup: 10500
