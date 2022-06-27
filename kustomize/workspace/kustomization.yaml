@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - choreodp-system
   - code-server-default-backend
-  - actions-runner-system
   - overprovisioning-buffer-deployment
 
 patches:
