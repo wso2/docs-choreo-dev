@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
+
 
 export class ProjectListingPage {
   static createNewProject(projectName: string, description: string) {

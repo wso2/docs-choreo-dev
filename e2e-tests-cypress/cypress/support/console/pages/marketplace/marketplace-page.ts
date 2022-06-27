@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
+
 
 export class Marketplace {
   static connectorResults = '[data-testid="search-results"]>a';

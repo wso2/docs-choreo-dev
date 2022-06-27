@@ -23,7 +23,7 @@ export class SwaggerUI {
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
-  static ExecuteResourceFunction(resource = "_get") {
+  static ExecuteResourceFunction(resource = "-get") {
     const modifiedResource = Cypress._.capitalize(resource)
     cy.get(`div[id*="${modifiedResource}"] .execute-wrapper>button`).click();
     cy.log("Execution is successful");

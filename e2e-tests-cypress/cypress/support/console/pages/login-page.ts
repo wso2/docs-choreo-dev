@@ -69,16 +69,22 @@ export class LoginPage {
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
-
+    // cy.intercept(csurl).then(() => {
+    //   cy.setCookie("fidpId", "EnterpriseIDP", {
+    //     path: "/",
+    //     domain: "id.dv.choreo.dev",
+    //     secure: true,
+    //     httpOnly: true,
+    //     sameSite: "no_restriction",
+    //   });
+    // });
+///    this.setCookie(csurl, "fidpId", "EnterpriseIDP")
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
-
     this.setCookie(csurl, "fidpId", "choreoe2etest")
-
-
   }
 
   static enterpriseLogin() {
