@@ -26,6 +26,7 @@ import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
 import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityASTCheckException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
 import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
@@ -694,7 +695,35 @@ public abstract class ChoreoComponent {
         throw new ReleaseIdNotFoundException();
     }
 
-    public void waitTillObservabilityDataPopulate(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
+    public JsonObject fetchAST(String accessToken, String env) throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException, ObservabilityASTCheckException {
+        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String releaseId = getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForAst.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("obsId", observabilityIdInformation.getObsId());
+        queryParams.put("version", observabilityIdInformation.getVerzion());
+        mustache.execute(writer, queryParams).flush();
+        String body = writer.toString();
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(body, ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build(); CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new ObservabilityASTCheckException(statusCode, responseBody);
+            }
+            JsonParser parser = new JsonParser();
+            String astString = new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonObject("data").getAsJsonObject("ast").get("ast").getAsString();
+            return (JsonObject) parser.parse(astString);
+        }
+    }
+
+    public void waitForMetricsData(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
         String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = getReleaseIdForEnvironment("dev");
         ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
@@ -740,6 +769,53 @@ public abstract class ChoreoComponent {
                 attempts++;
                 if (attempts == 10) {
                     log.warn("Exceeding maximum number of attempts for checking observability data.");
+                    throw new ObservabilityDataNotFoundException();
+                }
+            }
+        }
+    }
+
+    public void waitForTraceData(String accessToken, String env) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
+        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        JsonObject ast = fetchAST(accessToken, "dev");
+        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
+        String releaseId = getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForTraceList.mustache");
+        Writer writer = new StringWriter();
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("observeId", observabilityIdInformation.getObsId());
+        queryParams.put("version", observabilityIdInformation.getVerzion());
+        queryParams.put("moduleId", moduleId);
+        queryParams.put("entryPointFuncModule", moduleId);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        queryParams.put("from", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)));
+        queryParams.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
+        mustache.execute(writer, queryParams).flush();
+        String requestBody = writer.toString();
+        int attempts = 0;
+        log.info("Waiting till trace data appear");
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+        while (attempts < 10) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build(); CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                    throw new ObservabilityDataCheckException(statusCode, responseBody);
+                }
+                int count = new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonObject("data").getAsJsonObject("requestTraceGroup").get("totalCount").getAsInt();
+                if (count > 0) {
+                    break;
+                }
+                log.debug("Observability trace data has not appeared, trying again. Attempt : " + attempts);
+                Thread.sleep(3000);
+                attempts++;
+                if (attempts == 10) {
+                    log.warn("Exceeding maximum number of attempts for checking observability trace data.");
                     throw new ObservabilityDataNotFoundException();
                 }
             }

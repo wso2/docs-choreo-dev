@@ -80,7 +80,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-        restApiComponent.waitTillObservabilityDataPopulate(accessToken);
+        restApiComponent.waitForMetricsData(accessToken);
         releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
         namespace = restApiComponent.getNamespaceForEnvironment(accessToken, "dev");
         obsId = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId).getObsId();
@@ -154,10 +154,10 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
                 .type(MessageType.JSON)
                 .validate(jsonPath()
                         .expression("$.keySet()", hasItems("columns", "rows"))
-                        .expression("$.columns.size()", greaterThan(1))
+                        .expression("$.columns.size()", greaterThanOrEqualTo(1))
                         .expression("$.columns[*].name", hasItems("TimeGenerated", "LogLevel", "LogEntry", "LogContext"))
                         .expression("$.columns[*].type", hasItems("datetime", "string", "dynamic", "dynamic"))
-                        .expression("$.rows.size()", greaterThan(1))
+                        .expression("$.rows.size()", greaterThanOrEqualTo(1))
                         .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
                 )
         );
