@@ -275,6 +275,10 @@ configMapGenerator:
       - CUSTOM_URL_SERVICE_NAME=choreo-nginx-internal
       - CUSTOM_URL_SERVICE_PORT=9443
       - CUSTOM_URL_SERVICE_PATH=/
+      - DEV_PORTAL_CLUSTER_ISSUER=letsencrypt-prod
+      - DEV_PORTAL_SERVICE_NAME=devportal-external
+      - DEV_PORTAL_SERVICE_PORT=80
+      - DEV_PORTAL_SERVICE_PATH=/
   - name: cm-console-next
     behavior: create
     literals:
