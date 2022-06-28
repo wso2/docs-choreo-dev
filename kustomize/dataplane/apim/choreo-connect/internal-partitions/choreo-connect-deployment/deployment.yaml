@@ -135,10 +135,10 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "4Gi"
+              memory: "3Gi"
               cpu: "2"
             limits:
-              memory: "4Gi"
+              memory: "3Gi"
               cpu: "2"
           ports:
             - containerPort: 8081
@@ -256,7 +256,7 @@ spec:
       volumes:
         - name: enforcer-config
           configMap:
-            name: mgw-adapter-enforcer-conf
+            name: mgw-internal-adapter-enforcer-conf
         - name: mgw-common-cert-vol
           configMap:
             name: mgw-common-cert
