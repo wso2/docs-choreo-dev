@@ -104,7 +104,7 @@ spec:
           volumeMounts:
             - name: secret-dp-mizzen
               mountPath: /mnt/csi/secret-dp-mizzen
-              readonly: true
+              readOnly: true
       volumes:
         - name: secret-dp-mizzen
           csi:

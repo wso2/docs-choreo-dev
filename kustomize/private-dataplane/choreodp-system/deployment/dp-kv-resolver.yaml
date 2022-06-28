@@ -132,7 +132,7 @@ spec:
           volumeMounts:
             - name: secret-dp-kv-resolver
               mountPath: /mnt/csi/secret-dp-kv-resolver
-              readonly: true
+              readOnly: true
       volumes:
         - name: secret-dp-kv-resolver
           csi:
