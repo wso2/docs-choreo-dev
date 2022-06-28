@@ -113,9 +113,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secret-asb
-                  key: ASB_CONNECTION_STRING
-            - name: AZURE_SDK_GO_LOGGING
-              value: "all"      
+                  key: ASB_CONNECTION_STRING    
           resources:
             requests:
               memory: "500Mi"
