@@ -95,11 +95,11 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
-  it("Verify test functionality in Dev env", () => {
-    ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentTestPage.getTestKey();
-  });
+  // it("Verify test functionality in Dev env", () => {
+  //   ComponentOverviewPage.navigateToTest();
+  //   ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
+  //   ComponentTestPage.getTestKey();
+  // });
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();

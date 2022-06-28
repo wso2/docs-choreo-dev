@@ -95,12 +95,17 @@ export class ComponentDeployPage {
   static addConfiguration(value: string) {
     cy.contains("Configure & Deploy").should("be.visible").click();
     cy.get(".ConfigForm").then((frm) => {
-      const drpDown = frm.find(".Mui-required").length;
+      const drpDown = frm.find(".ConfigForm .MuiIconButton-label").length;
+      const input = frm.find(".ConfigForm div input").length
       if (drpDown < 2) {
-        cy.get(".ConfigForm .MuiIconButton-label").click();
-        cy.get(".MuiFormControl-fullWidth>div>input").eq(1).type(value);
+        cy.get(".ConfigForm .MuiIconButton-label").eq(0).click();
+        if (input == 0) {
+          cy.get(".ConfigForm .MuiIconButton-label").eq(1).click();
+        }
+
+        cy.get(".ConfigForm div input").type(value);
       } else {
-        cy.get(".MuiFormControl-fullWidth>div>input").eq(1).type(value);
+        cy.get(".ConfigForm div input").type(value);
       }
     });
     cy.get('button[type="submit"]').click();
@@ -118,9 +123,8 @@ export class ComponentDeployPage {
       cy.get(".MuiCardContent-root button").contains("Next", { timeout: 120000 }).should("be.visible").click();
       cy.get(".ConfigForm button").contains("Promote").click();
     } else {
-      this.promoteToProd();
-      cy.wait(2000);
-      cy.get(".MuiCardContent-root button").contains("Next").should("be.visible").click();
+      this.promote({ settingButtonCount: 1, invokeUrlCount: 1, invokeUrlIndex: 0 })
+      cy.get(".MuiCardContent-root >.MuiBox-root>div>div>button").should('have.length',3).contains("Next").should("be.visible").click();
       cy.get(".ConfigForm button").contains("Promote").click();
     }
   }
@@ -150,11 +154,13 @@ export class ComponentDeployPage {
   }
 
   private static stopContainer(stpButton: number, len: number) {
-    cy.get('[data-testid="btn-stop-redeploy"]').eq(stpButton).click();
+    //  cy.get('[data-testid="btn-stop-redeploy"]').eq(stpButton).click();
     cy.get("body").then((body) => {
       if (body.find('[data-testid="btn-view-logs"]').length > 0) {
+        cy.get('[data-testid="btn-stop-redeploy"]').should("have.length", len).eq(stpButton).click();
         cy.get('[data-cyid="api-deploy-status"]').should("have.length", len)
       } else {
+        cy.get('[data-testid="btn-stop-redeploy"]').should("have.length", len).eq(stpButton).click();
         cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", len)
       }
     });

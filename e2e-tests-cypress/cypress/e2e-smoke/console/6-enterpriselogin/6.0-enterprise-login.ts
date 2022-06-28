@@ -33,6 +33,7 @@ describe("Enterprise Login using auth0Idp", () => {
       client_id: Cypress.env("auth0ClientID"),
       returnTo: Cypress.env("enterpriseLoginUrl"),
     });
+    Cypress.env("ep",true)
   });
 
   after(() => {

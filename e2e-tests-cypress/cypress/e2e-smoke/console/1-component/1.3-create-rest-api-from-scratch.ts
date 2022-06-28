@@ -87,7 +87,7 @@ describe("Verify project creation functionality", () => {
     //   expect(arr).to.deep.eq(labels);
     // });
     ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => { expect(arr).to.include(NEW_BRANCH); });
-  ComponentDevelopPage.verifyLatestCommit(commitMessage);
+    ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
   it("Verify new version creation", () => {
