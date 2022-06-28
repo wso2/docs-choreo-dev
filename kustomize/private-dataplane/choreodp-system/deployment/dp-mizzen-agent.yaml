@@ -40,7 +40,6 @@ spec:
     spec:
       automountServiceAccountToken: true
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
