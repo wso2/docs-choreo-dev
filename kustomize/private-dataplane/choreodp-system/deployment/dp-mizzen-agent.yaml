@@ -75,7 +75,7 @@ spec:
           volumeMounts:
             - name: secret-dp-mizzen-agent
               mountPath: /mnt/csi/secret-dp-mizzen-agent
-              readonly: true
+              readOnly: true
       volumes:
         - name: secret-dp-mizzen-agent
           csi:

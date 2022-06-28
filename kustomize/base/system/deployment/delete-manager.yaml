@@ -81,7 +81,7 @@ spec:
           volumeMounts:
             - name: secret-delete-manager
               mountPath: /mnt/csi/secret-delete-manager
-              readonly: true
+              readOnly: true
       volumes:
         - name: secret-delete-manager
           csi:

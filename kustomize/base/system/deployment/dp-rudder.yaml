@@ -98,7 +98,7 @@ spec:
           volumeMounts:
           - name: secret-dp-rudder
             mountPath: /mnt/csi/secret-dp-rudder
-            readonly: true
+            readOnly: true
       volumes:
       - name: secret-dp-rudder
         csi:
