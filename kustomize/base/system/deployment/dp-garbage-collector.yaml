@@ -25,7 +25,6 @@ spec:
     spec:
       automountServiceAccountToken: true
       securityContext:
-        allowPrivilegeEscalation: false
         runAsUser: 1000
         runAsGroup: 1000
         seccompProfile:

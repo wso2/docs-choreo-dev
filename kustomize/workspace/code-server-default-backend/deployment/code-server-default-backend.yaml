@@ -21,7 +21,6 @@ spec:
         antiaffinity: default-backend
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
