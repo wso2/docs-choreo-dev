@@ -201,8 +201,6 @@ export class LoginPage {
     cy.get("#password").type(Cypress.env("selfSignupPassword"), { log: false });
     cy.get('[data-testid="login-page-continue-login-button"]').should("not.be.disabled").click();
     cy.wait(10000);
-    cy.contains("The future of APIs within Choreo").should(
-      "be.visible"
-    );
+    cy.get('[data-testid*="home-page-banner-title"]').should("be.visible").wait(2000);
   }
 }
