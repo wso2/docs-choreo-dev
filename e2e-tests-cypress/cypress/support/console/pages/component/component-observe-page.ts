@@ -55,7 +55,6 @@ export class ComponentObservePage {
     const connectionErrorLogEntry = "error while connecting to the hr-service";
     const employeeInfoNotFoundLogEntry = "No logs found from";
     const commonLogLine = "employee information not found in the hr-service";
-    // const downloadedLogEntry = '[INFO] [ballerina/http] started HTTP/WS listener 0.0.0.0:8090'
 
     cy.get('[data-testid="panel-Logs-btn"]').should("be.visible");
     cy.get('[data-testid="panel-Logs-btn"]').click();
@@ -79,13 +78,6 @@ export class ComponentObservePage {
       '[data-testid="log-panel"]',
       employeeInfoNotFoundLogEntry
     ).should("not.exist");
-    // TODO: Enable following assertion once https://github.com/wso2-enterprise/choreo/issues/4058 is fixed
-    // cy.log('Asserting log download');
-    // cy.get('[data-testid="log-search"]').click().clear().type("ballerina");
-    // cy.get('[data-testid="log-search-btn"]').click();
-    // cy.contains('[data-testid="log-panel"]', systemLogEntry, {timeout: 600000}).should('exist');
-    // cy.get('[data-testid="log-download-btn"]').click();
-    // cy.readFile('./cypress/downloads/employee-service-logs.txt').should('contain', downloadedLogEntry);
   }
 
   static verifyObserveOverview() {
@@ -101,9 +93,7 @@ export class ComponentObservePage {
     let finalY;
     cy.get(".diagram-canvas").should("exist");
     cy.get(".worker-line").should("exist");
-    //cy.get('[data-testid="refresh-btn"]').should("not.exist");
     cy.get('[data-testid="preloader"]').should("not.exist");
-    //cy.get(".metrics-text").contains("100% Success").should("exist");
 
     cy.contains(
       '[data-testid="histogram-throughput"]',

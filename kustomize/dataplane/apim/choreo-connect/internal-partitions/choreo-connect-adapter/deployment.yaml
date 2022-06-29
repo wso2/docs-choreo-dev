@@ -113,9 +113,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secret-asb
-                  key: ASB_CONNECTION_STRING
-            - name: AZURE_SDK_GO_LOGGING
-              value: "all"      
+                  key: ASB_CONNECTION_STRING    
           resources:
             requests:
               memory: "500Mi"
@@ -145,7 +143,7 @@ spec:
       volumes:
         - name: adapter-config
           configMap:
-            name: mgw-adapter-enforcer-conf
+            name: mgw-internal-adapter-enforcer-conf
         - name: global-adapter-keystore-vol
           configMap:
             name: global-adapter-keystore-vol

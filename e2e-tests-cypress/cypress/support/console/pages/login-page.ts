@@ -105,7 +105,6 @@ export class LoginPage {
     cy.window().its("sessionStorage").invoke("getItem", "sign_out_url").then((url) => Cypress.env("sign_out_url", url));
   }
 
-
   private static persistCookies(url: string) {
     cy.log("persistCookies()");
     cy.get('[alt="Choreo Logo"]', { timeout: 120000 });
@@ -186,5 +185,19 @@ export class LoginPage {
         sameSite: "no_restriction",
       });
     });
+  }
+
+  static selfSignup() {
+    cy.visit(Cypress.env("selfSignupLoginUrl"));
+    cy.get('button[data-testid="login-button"]').should("be.visible", {
+      timeout: 180000,
+    });
+    cy.get('button[data-testid="login-button"]').click()
+    cy.get('input[id="usernameUserInput"]').should("be.visible", { timeout: 18000 });
+    cy.get("#usernameUserInput").type(Cypress.env("selfSignupUsername"));
+    cy.get("#password").type(Cypress.env("selfSignupPassword"), { log: false });
+    cy.get('[data-testid="login-page-continue-login-button"]').should("not.be.disabled").click();
+    cy.wait(10000);
+    cy.get('[data-testid*="home-page-banner-title"]').should("be.visible").wait(2000);
   }
 }
