@@ -26,7 +26,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").wait(5000).click();
     this.closePopup();
-    cy.get('[data-testid="btn-stop-redeploy"]');
+    cy.get('[data-testid="btn-stop-redeploy"]',{timeout:360000}).should('be.visible');
   }
 
   static promoteToStg() {
@@ -47,7 +47,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     this.closePopup();
-    cy.get('[data-cyid="btn-promote"]');
+    cy.get('[data-cyid="btn-promote"]',{timeout:360000}).should('be.visible');
   }
 
   static promoteManualTriggerToStg() {
@@ -68,6 +68,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click()
     cy.get("button:not([data-cyid])").contains("Deploy").click();
     this.closePopup();
+    cy.get('[value="*/1 * * * *"]',{timeout:360000}).should("have.length", 1)
   }
 
   static promoteScheduleTask() {
