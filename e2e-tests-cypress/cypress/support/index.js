@@ -35,6 +35,6 @@ Cypress.on("window:before:load", (win) => {
   });
 });
 
-Cypress.on('fail', (error, runnable) => {} ) 
+// Cypress.on('fail', (error, runnable) => {} ) 
 
 
