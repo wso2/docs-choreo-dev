@@ -3,7 +3,6 @@ configMapGenerator:
     behavior: create
     files:
       - controlplane.pem
-      - local-adapter.pem
   - name: choreo-feature-flags
     behavior: create
     literals:
