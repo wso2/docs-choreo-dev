@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { GraphQL } from "../../apis/graphql";
+
 import { Utils } from "../../utils";
 
 export class ComponentDevelopPage {

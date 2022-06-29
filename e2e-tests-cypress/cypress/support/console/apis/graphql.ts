@@ -349,40 +349,5 @@ export class GraphQL {
     });
   }
 
-  private static startCS(orgId, orgHandler, projectId, componentId, token) {
-    const query = {
-      query: `mutation {    
-      startCodeServer(      
-        orgId: ${orgId},      
-        orgHandler: "${orgHandler}",      
-        projectId: "${projectId}",      
-        componentId: "${componentId}",      
-        fidp: "choreoe2etest"    )  }`
-    }
 
-    cy.log(`=============> ${JSON.stringify(query)}`)
-    return this.callGraphQL(token, query);
-  }
-
-
-  static startCodeServer(projectName: string, componentName: string) {
-
-    const { orgId, handle } = Cypress.env("userData")
-    const apim_token = Cypress.env("apim_token")
-    this.getProjects(orgId, apim_token).then(res => {
-
-      const projects = res.body.data.projects as []
-      cy.log(JSON.stringify(projects))
-      const { id } = projects.find(p => p["name"] === projectName)
-      this.getComponents(id, handle, apim_token).then(comRes => {
-        const components = comRes.body.data.components as []
-        const component = components.find(c => c["displayName"] === componentName)
-
-        this.startCS(orgId, handle, id, component["id"], apim_token).then(r => cy.log(JSON.stringify(r.body)))
-
-      })
-      cy.log(JSON.stringify(id))
-    })
-
-  }
 }

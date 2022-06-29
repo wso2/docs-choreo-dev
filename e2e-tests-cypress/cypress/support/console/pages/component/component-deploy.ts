@@ -116,7 +116,7 @@ export class ComponentDeployPage {
   }
 
   static promoteWebHookToProd() {
-    const isPrivateOrg = Cypress.env("isPrivateOrg");
+
     if (Cypress.env("isPrivateOrg")) {
       cy.get('[data-cyid*="promote"]').should("have.length", 1).wait(2000);
       cy.get('[data-cyid*="promote"]').click();
@@ -154,7 +154,6 @@ export class ComponentDeployPage {
   }
 
   private static stopContainer(stpButton: number, len: number) {
-    //  cy.get('[data-testid="btn-stop-redeploy"]').eq(stpButton).click();
     cy.get("body").then((body) => {
       if (body.find('[data-testid="btn-view-logs"]').length > 0) {
         cy.get('[data-testid="btn-stop-redeploy"]').should("have.length", len).eq(stpButton).click();

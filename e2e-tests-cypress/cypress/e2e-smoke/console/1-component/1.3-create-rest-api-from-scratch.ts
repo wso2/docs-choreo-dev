@@ -83,9 +83,6 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    // ComponentDevelopPage.addLabels(labels).then((arr) => {
-    //   expect(arr).to.deep.eq(labels);
-    // });
     ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => { expect(arr).to.include(NEW_BRANCH); });
     ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });

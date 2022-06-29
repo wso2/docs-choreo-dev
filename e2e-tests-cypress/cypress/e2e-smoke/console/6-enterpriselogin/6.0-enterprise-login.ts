@@ -26,14 +26,13 @@ describe("Enterprise Login using auth0Idp", () => {
   const COMPONENT_DESCRIPTION = "covid daily stats";
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
-  const commitMessage = "adding new service";
+
 
   before(() => {
     cy.request(Cypress.env("auth0LogoutUrl"), {
       client_id: Cypress.env("auth0ClientID"),
       returnTo: Cypress.env("enterpriseLoginUrl"),
     });
-    Cypress.env("ep",true)
   });
 
   after(() => {
@@ -48,7 +47,7 @@ describe("Enterprise Login using auth0Idp", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
+    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION, true);
     ComponentDevelopPage.getComponentURL();
   });
 

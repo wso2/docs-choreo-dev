@@ -18,7 +18,7 @@ export class RestAPITemplate {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
   }
 
-  static createApiFromScratch(componentName: string, description: string) {
+  static createApiFromScratch(componentName: string, description: string, isEPLogin: boolean = false) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);
@@ -26,9 +26,9 @@ export class RestAPITemplate {
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
 
-    if (Cypress.env("ep")) {
+    if (isEPLogin) {
       cy.setCookie("fidpId", "EnterpriseIDP")
-    }else{
+    } else {
       cy.setCookie("fidpId", "choreoe2etest");
     }
   }
