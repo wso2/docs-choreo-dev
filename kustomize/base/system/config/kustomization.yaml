@@ -1,8 +1,4 @@
 configMapGenerator:
-  - name: cm-anomalydetector-model-metadata
-    behavior: create
-    files:
-      - anomalydetector/models.properties
   - name: cm-datamapper
     behavior: create
     files:
@@ -300,10 +296,6 @@ configMapGenerator:
     literals:
       - CSM_DB_NAME=choreo_codeserver_db
       - CSM_DB_USERNAME=choreo_codeserver_db_user
-  - name: cm-anomalydetector-cp
-    behavior: create
-    files:
-      - anomalydetector/application.properties
   - name: cm-lowcode-parser-cp
     behavior: create
     files:
