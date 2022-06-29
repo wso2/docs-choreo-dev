@@ -20,6 +20,7 @@ export class ProjectListingPage {
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-testid="create-version-create"]').click();
+
   }
 
   static selectProject(projectName: string = "Default Project") {

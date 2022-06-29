@@ -18,7 +18,6 @@ import { Marketplace } from "../../../support/console/pages/marketplace/marketpl
 describe("Verify the functionality in Choreo Marketplace", () => {
   const MAIN_CATEGORY1 = "Business Intelligence";
   const MAIN_CATEGORY2 = "Marketing";
-  const FILE_ID = "1.1-marketplace-search.spec";
   const SUB_CATEGORY = "Email Newsletters";
   const CONNECTOR = "Slack";
   const TRIGGER = "GitHub";

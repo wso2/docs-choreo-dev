@@ -63,13 +63,8 @@ export class OrganizationComponent {
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get(
-      '[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]'
-    ).click();
-    // cy.get('[data-testid="Delete User"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
-      .contains("Delete")
-      .click();
+    cy.get('[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]').click();
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').contains("Delete").click();
     cy.contains("td", email).should("not.exist");
     cy.log("Member deleted successfully");
   }

@@ -15,7 +15,7 @@ import { DocumentType } from "../enum/document-type";
 import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
-import { Utils } from "../../utils";
+
 
 
 export class ComponentAPILifecycle {

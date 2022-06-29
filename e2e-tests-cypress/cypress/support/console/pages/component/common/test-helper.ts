@@ -23,7 +23,7 @@ export class TestHelper {
     APITest.testAPI();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-        SwaggerUI.invokeResource(resourcePath, key, value);
+    SwaggerUI.invokeResource(resourcePath, key, value);
 
     return SwaggerUI.getResponseCode().then((res) => {
       return SwaggerUI.GetResponse().then((r) => {

@@ -115,13 +115,7 @@ describe("Verify project creation functionality", () => {
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.configureSecuritySettings(
-      true,
-      false,
-      ALLOWED_ORIGINS,
-      ALLOWED_HEADERS,
-      ALLOWED_METHODS
-    );
+    ComponentAPILifecycle.configureSecuritySettings(true, false, ALLOWED_ORIGINS, ALLOWED_HEADERS, ALLOWED_METHODS);
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");

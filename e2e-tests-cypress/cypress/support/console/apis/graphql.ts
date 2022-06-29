@@ -115,11 +115,7 @@ export class GraphQL {
     });
   }
 
-  private static getComponents(
-    projectId: string,
-    orgHandle: string,
-    token: string
-  ) {
+  private static getComponents(projectId: string, orgHandle: string, token: string) {
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
       projectId, id, name, handler, displayName, displayType, version } }`,
@@ -352,4 +348,6 @@ export class GraphQL {
       }
     });
   }
+
+
 }
