@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: organization-management
   name: organization-management
@@ -26,7 +23,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -38,6 +34,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-db
                   key: CHOREO_DB_PASSWORD
+            - name: AZURE_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-organization-management
+                  key: AZURE_ACCESS_KEY
           envFrom:
             - configMapRef:
                 name: env-organization-management
@@ -75,19 +76,18 @@ spec:
               memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 100
-            runAsGroup: 1000
+            runAsUser: 10500
+            runAsGroup: 10500
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
             - name: secret-organization-management
               mountPath: "/mnt/csi/secret-organization-management"
-              readOnly: true
-            - name: secret-organization-management
-              mountPath: "/home/ballerina/resources/gateway.dev.public.cert"
-              subPath: GATEWAY_PUBLIC_CERT
               readOnly: true
             - name: secret-app-db
               mountPath: "/mnt/csi/secret-app-db"
