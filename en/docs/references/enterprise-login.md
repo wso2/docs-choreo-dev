@@ -8,7 +8,7 @@ Let's begin!
 
 ## Step 1: Create an organization in Choreo
 
-1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a>. using a Google / GitHub / Microsoft account.
+- Sign in to the Choreo Console at <a>https://console.choreo.dev/</a>. using a Google/ GitHub/ Microsoft account.
   
       If you are a:
 
@@ -63,10 +63,13 @@ Bring your own identity to Choreo by configuring a federated enterprise IdP on A
 2.  To configure a federated enterprise identity provider to your Asgardeo organization, follow the steps in [Asgardeo documentation - Add Standard-Based Login](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/).
 
 3. Next, navigate to **Develop** and select **Applications** from the left navigation. You will see an application prefixed “WSO2_LOGIN”. 
-   ![Asgardeo applications](../assets/img/references/enterprise-login/asgardeo-application.png){.cInlineImage-half}
+   
+    ![Asgardeo applications](../assets/img/references/enterprise-login/asgardeo-application.png){.cInlineImage-half}
+
 
 4. Click on the application and select the **Sign-in Method** tab. You can observe the connection you configured in step 2 of this section.
-   ![Asgardeo applications](../assets/img/references/enterprise-login/sign-in-method.png){.cInlineImage-half}
+
+    ![Asgardeo applications](../assets/img/references/enterprise-login/sign-in-method.png){.cInlineImage-half}
 
 You are all set! Your users in the enterprise IdP can now log into the Choreo Console using their user credentials.
 
