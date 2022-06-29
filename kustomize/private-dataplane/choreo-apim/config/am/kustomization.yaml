@@ -15,10 +15,6 @@
 # -----------------------------------------------------------------------
 
 configMapGenerator:
-  - name: choreo-apim-truststore
-    behavior: create
-    files:
-      - client-truststore.jks
   - name: choreo-apim-docker-entrypoint
     behavior: create
     files:
