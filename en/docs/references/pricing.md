@@ -77,7 +77,7 @@ Let’s see how steps are calculated for the search process:
 
 #### Reserving a flight
 
-![Reserving a flight](../assets/img/references/rest-api-example2.png){.cInlineImage-half}
+![Reserving a flight](../assets/img/references/rest-api-example2.png)
 
 Let’s see how steps are calculated for the reservation process:
 
