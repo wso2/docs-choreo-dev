@@ -54,10 +54,10 @@ To generate a custom report, follow the steps below:
 
     ![Generate](../assets/img/insights/custom-reports-step-6.png){.cInlineImage-full}
 
-## Download Report Data
+## Download Reports
 
-Choreo Insights allow you to download custom report data for each chart as either in **PDF** or **CSV** format. To download report data, continue on with the following steps, 
+Choreo Insights allow you to download report data for each chart as either **PDF** or **CSV** files. To download report data, continue on with the following steps, 
 
-7. Click on the download button above any of the charts and select the file type you want to download the report in
+7. Click on the download button that is on the top right side of any chart and select the file type you want to download the report in
 
     ![Download Report](../assets/img/insights/custom-reports-step-7.png){.cInlineImage-full}
