@@ -31,7 +31,7 @@ export class ComponentObservePage {
   }
 
   static verifyTextInLogs(text: string) {
-    cy.get('[data-testid="log-panel-entry"]',{timeout:180000}).should('be.visible').each(($e) => {
+    cy.get('[data-testid="log-panel-entry"]', { timeout: 180000 }).should('be.visible').each(($e) => {
       let log = $e
         .text()
         .replace("ballerina: sending metrics to Choreo", "")
@@ -45,7 +45,7 @@ export class ComponentObservePage {
   }
 
   static navigateToSampleApp() {
-    const observabilityViewUrl = Cypress.env("baseUrl") + "/observe/sample";
+    const observabilityViewUrl = Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") + "observe/sample";
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
