@@ -73,9 +73,9 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.addLabels(LABELS).then((arr) => {
-      expect(arr).to.deep.eq(LABELS);
-    });
+    // ComponentDevelopPage.addLabels(LABELS).then((arr) => {
+    //   expect(arr).to.deep.eq(LABELS);
+    // });
     ComponentDevelopPage.verifyLatestCommit(COMMIT_MESSAGE);
   });
 
@@ -91,7 +91,7 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Component promotion to prod", () => {
-    ComponentDeployPage.promoteWebHookToProd();
+    ComponentDeployPage.promoteWebHookToProd(CONFIG);
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
@@ -103,9 +103,15 @@ describe("Verify webhook creation functionality", () => {
     );
   });
 
-  it("Verify suspending Prod deployed component", () => {
+  it("Verify suspending Dev deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
+  });
+
+
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdContainer();
   });
 });
 

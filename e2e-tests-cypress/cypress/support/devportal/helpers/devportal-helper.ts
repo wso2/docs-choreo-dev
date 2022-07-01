@@ -49,6 +49,7 @@ export class DevPortalHelper {
     );
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
+    APIDeployment.PromoteToProd()
 
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
