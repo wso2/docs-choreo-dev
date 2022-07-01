@@ -34,7 +34,7 @@ Choreo Insights allow you to group metric data by the following fields:
 
 To generate a custom report, follow the steps below:
 
-1. In the left navigator, click **Custom Reports**.
+1. In the left navigation menu, click **Custom Reports**.
 
     ![Select Custom Reports](../assets/img/insights/custom-reports-step-1.png){.cInlineImage-full}
 
