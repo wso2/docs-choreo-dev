@@ -4,7 +4,7 @@ Choreo insights allow you to generate custom reports to view the information tha
 
 ## Metrics
 
-Choreo Insights allow you to retrieve data for the following metrics,
+Choreo Insights allow you to retrieve data for the following metrics:
 
  - Successful Hit Count
  - Response Cache Hits
@@ -15,11 +15,11 @@ Choreo Insights allow you to retrieve data for the following metrics,
  - API Errors
  - Target Errors
 
-## Group-by Fields
+## Group-by
 
-Group-by Fields determine how the metric data should be grouped. As an example you could retrieve Successful Hit Count **grouped by API Name**
+**Group-by** fields specify how to group the metric data. e.g., You can select **Successful Hit Count** in the **Metrics** field and **API Name** under **Group-by** to retrieve the successful hit count grouped by the API name.
 
-Choreo Insights allow you to group metric data by the following fields,
+Choreo Insights allow you to group metric data by the following fields:
 
  - API Name
  - API Version
@@ -34,7 +34,7 @@ Choreo Insights allow you to group metric data by the following fields,
 
 To generate a custom report, follow the steps below:
 
-1. Click on **Custom Reports** from the left navigation 
+1. In the left navigator, click **Custom Reports**.
 
     ![Select Custom Reports](../assets/img/insights/custom-reports-step-1.png){.cInlineImage-full}
 
@@ -56,8 +56,7 @@ To generate a custom report, follow the steps below:
 
 ## Download Reports
 
-Choreo Insights allow you to download report data for each chart as either **PDF** or **CSV** files. To download report data, continue on with the following steps, 
+Choreo Insights allow you to download report data related to each chart as a **PDF** or a **CSV** file.
 
-7. Click on the download button that is on the top right side of any chart and select the file type you want to download the report in
-
+To do this, click the **Download** icon on the top right of the relevant chart and select the required file format.
     ![Download Report](../assets/img/insights/custom-reports-step-7.png){.cInlineImage-full}
