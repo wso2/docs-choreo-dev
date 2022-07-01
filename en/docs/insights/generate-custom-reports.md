@@ -2,9 +2,39 @@
 
 Choreo insights allow you to generate custom reports to view the information that is important to you to make timely decisions for the betterment of your business. With custom reports, you can generate reports for a set of metrics of your choice and aggregate results by specific fields. Once generated, the metrics can be filtered out using any selected group-by filters. Custom reports support three visualizations: overtime charts, pie charts, and tables.
 
+## Metrics
+
+Choreo Insights allow you to retrieve data for the following metrics:
+
+ - Successful Hit Count
+ - Response Cache Hits
+ - Request Mediation Latency
+ - Response Mediation Latency
+ - Backend Latency
+ - Total Latency
+ - API Errors
+ - Target Errors
+
+## Group-by
+
+**Group-by** fields specify how to group the metric data. e.g., You can select **Successful Hit Count** in the **Metrics** field and **API Name** under **Group-by** to retrieve the successful hit count grouped by the API name.
+
+Choreo Insights allow you to group metric data by the following fields:
+
+ - API Name
+ - API Version
+ - API Resource Template
+ - API Method
+ - API Creator
+ - Application
+ - Application Owner
+ - Destination
+ - User Agent
+ - Platform
+
 To generate a custom report, follow the steps below:
 
-1. Click on **Reports** from the left navigation and select **Custom Reports**.
+1. In the left navigation menu, click **Custom Reports**.
 
     ![Select Custom Reports](../assets/img/insights/custom-reports-step-1.png){.cInlineImage-full}
 
@@ -23,3 +53,10 @@ To generate a custom report, follow the steps below:
 6. Click **Generate**.
 
     ![Generate](../assets/img/insights/custom-reports-step-6.png){.cInlineImage-full}
+
+## Download Reports
+
+Choreo Insights allow you to download report data related to each chart as a **PDF** or a **CSV** file.
+
+To do this, click the **Download** icon on the top right of the relevant chart and select the required file format.
+    ![Download Report](../assets/img/insights/custom-reports-step-7.png){.cInlineImage-full}
