@@ -22,7 +22,7 @@ The information displayed is as follows:
 
   ![Total traffic](../assets/img/insights/overview-page-total-traffic.png){.cInlineImage-half}
 
-  This widget displays the total traffic of the selected environment received during a given time interval. Both successful requests and failed requests are displayed. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic Page**](#traffic).
+  This widget displays the total traffic of the selected environment received during a given time interval. Both successful requests and failed requests are displayed. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the [**Traffic**](#traffic) page.
 
 - **Error Request Count**
 
@@ -34,13 +34,13 @@ The information displayed is as follows:
 
   ![Average error rate](../assets/img/insights/overview-page-error-rate.png){.cInlineImage-half}
 
-  This widget displays the average error rate (i.e., error count/total request count) of the selected environment for a given time interval. You can use this widget as an indicator to understand the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and opening the [**Errors Page**](#errors).
+  This widget displays the average error rate (i.e., error count/total request count) of the selected environment for a given time interval. You can use this widget as an indicator to understand the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and opening the [**Errors**](#errors) page.
 
 - **95th Percentile Latency**
 
   ![95th percentile latency](../assets/img/insights/overview-page-latency.png){.cInlineImage-half}
 
-  This widget displays the 95th percentile of all API latencies in your selected environment for the given time interval. You can use this widget to know whether the complete system operates under given SLAs. This metric provides the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency Page**](#latency) where you can further analyze the latency.
+  This widget displays the 95th percentile of all API latencies in your selected environment for the given time interval. You can use this widget to know whether the complete system operates under given SLAs. This metric provides the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the [**Latency**](#latency) page where you can further analyze the latency.
 
 - **API Request Summary**
 
