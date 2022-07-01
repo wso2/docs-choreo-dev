@@ -42,10 +42,10 @@ TLS_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 openssl pkcs12 -export -out tls-keystore.pfx -inkey wso2carbon.key -in wso2carbon.pem -name wso2carbon -password pass:"${TLS_KEYSTORE_PWD}"
 
 INTERNAL_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
-openssl pkcs12 -export -out internal-keystore.pfx -inkey internal.key -in internal.pem -name internal -password pass:"${INTERNAL_KEYSTORE_PWD}"
+openssl pkcs12 -export -out internal-keystore.pfx -inkey internal.key -in internal.pem -name wso2carbon -password pass:"${INTERNAL_KEYSTORE_PWD}"
 
 PRIMARY_KEYSTORE_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
-openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.pem -name primary -password pass:"${PRIMARY_KEYSTORE_PWD}"
+openssl pkcs12 -export -out primary-keystore.pfx -inkey primary.key -in primary.pem -name wso2carbon -password pass:"${PRIMARY_KEYSTORE_PWD}"
 
 TM_PWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 
@@ -53,6 +53,15 @@ echo -e "\n --- Creating Client Truststore JKS --- \n"
 APIM_TRUSTSTORE_PSWD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c8)
 keytool -import -file wso2carbon.pem -alias wso2carbon -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
 keytool -import -file global-adapter.pem -alias global-adapter -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
+
+echo -e "\n --- Creating Service Principal Credentials for KV Secret Manager --- \n"
+KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --query "[?contains(name, '${CUSTOMER_NAME}-userapps-${ENV}')].name" --output tsv)
+
+USERAPPS_CSI_KEY_VAULT_CLIENT_ID=$(az ad app list --all --query "[?contains(displayName, '${KEYVAULT_NAME}')].appId" --output tsv)
+
+USERAPPS_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${USERAPPS_CSI_KEY_VAULT_CLIENT_ID}" --append --display-name "dataplane-secret-manager-${ENV}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
+
+TENANT_ID=$(az account show --query tenantId --output tsv)
 
 echo -e "\n --- Uploading secrets to Key Vault --- \n"
 CUSTOMER_NAME_CAPS=$(echo "${CUSTOMER_NAME}" | tr "[:lower:]" "[:upper:]")
@@ -79,6 +88,9 @@ sed -i "s/apim_ANALYTICS_AUTH_TOKEN/${APIM_ANALYTICS_AUTH_TOKEN}/g" ${SECRET_FIL
 sed -i "s/CUSTOMER_NAME/${CUSTOMER_NAME_CAPS}/g" ${SECRET_FILE_PATH}
 sed -i "s/ga_PASSWORD/${GA_PWD}/g" ${SECRET_FILE_PATH}
 sed -i "s/tm_PASSWORD/${TM_PWD}/g" ${SECRET_FILE_PATH}
+sed -i "s/AZURE_KEYVAULT_CLIENT_ID/${USERAPPS_CSI_KEY_VAULT_CLIENT_ID}/g" ${SECRET_FILE_PATH}
+sed -i "s/AZURE_KEYVAULT_CLIENT_SECRET/${USERAPPS_CSI_KEY_VAULT_CLIENT_SECRET}/g" ${SECRET_FILE_PATH}
+sed -i "s/AZURE_KEYVAULT_TENANT_ID/${TENANT_ID}/g" ${SECRET_FILE_PATH}
 
 TLS_KEYSTORE_PATH="tls-keystore.pfx"
 INTERNAL_KEYSTORE_PATH="internal-keystore.pfx"
