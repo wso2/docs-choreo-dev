@@ -114,8 +114,6 @@ Choreo uses OAuth2.0 authentication.
 
 ### Consumers
 
-Consuming the published APIs is made easy with the inbuilt Choreo Developer Portal. Application developers can discover and invoke published APIs using the Choreo Developer Portal. Learn more about the Choreo Developer Portal.
+Consuming the published APIs is made easy with the inbuilt Choreo Developer Portal. Application developers can discover and invoke published APIs using the Choreo Developer Portal.
 
-Learn about Choreo's full API Management capabilities of REST APIs from [here](link to the API Management doc page).
-
-
+To learn more about the Choreo Developer Portal, see [Developer Portal](manage/developer-portal.md).
