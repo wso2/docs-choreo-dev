@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -53,6 +52,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.fail;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -277,10 +277,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                         .response(HttpStatus.OK)
                                         .message()
                                         .type(MessageType.JSON)
-                                        .body(new ClassPathResource(
-                                                "templates/createUserManagedComponent/get_pull_requests.json"))
-                                        .validate(json()
-                                                .ignore("$.data.componentPullRequests[0].url"))));
+                                        .validate(jsonPath()
+                                                .expression("$.data.componentPullRequests.size()",  greaterThan(0)))));
         }
 
         @Test(dependsOnMethods = {
