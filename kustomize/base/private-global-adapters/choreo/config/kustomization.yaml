@@ -1,9 +1,9 @@
 configMapGenerator:
-  - name: trimble-ga-truststore-vol
+  - name: choreo-ga-truststore-vol
     behavior: create
     files:
       - controlplane.pem
-  - name: trimble-feature-flags
+  - name: choreo-feature-flags
     behavior: create
     literals:
       - FEATURE_FLAG_DEFAULT=true

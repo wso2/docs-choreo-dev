@@ -54,7 +54,11 @@ spec:
                   type: array
                 lastKnownBase64:
                   type: string
+                lastKnownMD5:
+                  type: string
                 lastSuccessfulBase64:
+                  type: string
+                lastSuccessfulMD5:
                   type: string
               type: object
           type: object
