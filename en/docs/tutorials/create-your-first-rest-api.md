@@ -10,7 +10,7 @@ Choreo’s low-code editor allows developers to easily design (and then implemen
 
 ## Step 1: Develop
 
-In this section, let's develop the application that retrieves COVID-19 related statistics.
+In this section, let's develop the application that retrieves COVID-19-related statistics.
 
 ### Step 1.1: Create a project and add a REST API component
 
@@ -52,7 +52,7 @@ Let's create a new REST API component as follows:
 
 5. Click **Next**.
 
-6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or in a repository managed by you. In this tutorial, let's select **Choreo-managed repository** and click **Create**.
+6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or a repository managed by you. In this tutorial, let's select **Choreo-managed repository** and click **Create**.
 
     The `Statistics` REST API opens on a separate page.
 
