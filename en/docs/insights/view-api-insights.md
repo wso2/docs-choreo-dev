@@ -283,7 +283,7 @@ To download a pregenerated report, click **Download** for the relevant month and
 
 ### Geo Map
 
-The **Geo Map** page allows you to see a geographical representation of your API usage. You can use this page to make business decisions such as identifying growing regions, analyzing the impact of a region specific marketing campaign, etc.
+The **Geo Map** page allows you to see a geographical representation of your API usage. You can use this page to make business decisions such as identifying growing regions, analyzing the impact of a region-specific marketing campaign, etc.
 
 ![Geo Map page](../assets/img/insights/geomap-page-full.png){.cInlineImage-full}
 
