@@ -295,7 +295,7 @@ This heat map highlights the countries with the appropriate color based on the h
 
 #### Viewing number of requests by country
 
-You can hover over the highlighted countries to view the country name and the total hit counts originated from that location. The map can be zoomed and panned using mouse gestures.
+You can hold the pointer over the highlighted countries to view the country name and the total number of hits from that location. You can also use the mouse to zoom the map or pan it.
 
 ![Geo Map by country](../assets/img/insights/geomap-requests-by-country.png){.cInlineImage-half}
 
