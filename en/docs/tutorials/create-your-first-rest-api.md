@@ -52,7 +52,7 @@ Let's create a new REST API component as follows:
 
 5. Click **Next**.
 
-6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or in a repository managed by you. For this tutorial, let's select **Choreo-managed repository** and click **Create**.
+6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or in a repository managed by you. In this tutorial, let's select **Choreo-managed repository** and click **Create**.
 
     The `Statistics` REST API opens on a separate page.
 
@@ -97,20 +97,18 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
 4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
 
-    1. Click **Connector** to add a connector. Then search for the **COVID-19 by ballerinax** connector, and click on it once it appears in the search results.
+    1. Click **Connector** to add a connector. Then search for **COVID-19**, and select the **COVID-19 by ballerinax** connector when it appears in the search results.
 
-    2. In the **Connector** panel, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
+    2. In the **Connector** panel, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
 
-    3. In the **Covid19 API Connection** window, click **Continue to Invoke API**.
-
-    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+    3. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
 
         | **Field**                  | **Value**         |
         |----------------------------|-------------------|
         | **Country**                | `country`         |
         | **Response Variable Name** | `statusByCountry` |
 
-    5. Click **Save**.
+    4. Click **Save**.
 
 5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
 
@@ -130,7 +128,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     1. Click the last **+** icon in the low-code diagram.
 
-    2. Click **Connector** to add a connector. Then search for the **World Bank by ballerinax** connector, and click on it once it appears in the search results.
+    2. Click **Connector** to add a connector. Then search for **World Bank**, and select the **World Bank by ballerinax** connector when it appears in the search results.
 
     3. In the **Connector** panel that appears on the right of the page, click **Continue to Invoke API**.
 
@@ -210,8 +208,8 @@ service / on new http:Listener(9090) {
 
     resource function get stats/[string country]() returns json|error {
 
-        covid19:Client covid19Endpoint = check new ({});
-        covid19:CovidCountry statusByCountry = check covid19Endpoint->getStatusByCountry(country);
+        covid19:Client covid19Client = check new ({});
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
         int totalCases = <int>statusByCountry.cases;
         worldbank:Client worldbankEndpoint = check new ({});
         worldbank:IndicatorInformation[] populationByCountry = check worldbankEndpoint->getPopulationByCountry(country);
