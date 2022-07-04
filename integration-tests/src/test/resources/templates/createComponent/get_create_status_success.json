@@ -1,7 +1,8 @@
 {
   "success": true,
   "data": {
-      "status": "completed"
+      "status": "completed",
+      "conclusion": "success"
   },
   "message": "GITHUB ACTION RUNS FETCHED"
 }
