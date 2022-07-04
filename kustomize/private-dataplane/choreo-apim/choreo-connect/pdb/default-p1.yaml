@@ -14,7 +14,7 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: policy/v1beta1
+apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: choreo-connect-adapter-default-p1
@@ -24,7 +24,7 @@ spec:
     matchLabels:
       choreo.component: choreo-connect-adapter-default-p1
 ---
-apiVersion: policy/v1beta1
+apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: choreo-connect-deployment-default-p1
