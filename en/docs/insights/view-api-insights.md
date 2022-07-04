@@ -287,7 +287,7 @@ The **Geo Map** page allows you to see a geographical representation of your API
 
 ![Geo Map page](../assets/img/insights/geomap-page-full.png){.cInlineImage-full}
 
-To filter the information displayed on this page by API, select the required API(s) in the **API** field. **All** is selected by default.
+To filter the information displayed on this page by API, select the required API(s) in the **API** field. The default value is **All**.
 
 This heat map highlights the countries with the appropriate color measured by relative color scale measured based on highest hit count to lowest non-zero hit count.
 
