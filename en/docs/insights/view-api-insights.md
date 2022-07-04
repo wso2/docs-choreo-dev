@@ -300,6 +300,6 @@ You can hold the pointer over the highlighted countries to view the country name
 ![Geo Map by country](../assets/img/insights/geomap-requests-by-country.png){.cInlineImage-half}
 
 !!! Note
-    Currently, this feature is only available for On Premise environments.
+    Currently, this feature is only available for on-premise environments.
 
 Optionally the geo map data can be downloaded in a tabular format using the PDF or CSV download options using ![download](../assets/img/insights/insights-download-report.svg) on top right corner.
