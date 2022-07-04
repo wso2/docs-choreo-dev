@@ -108,7 +108,24 @@ export class VSExplorer {
     return cy.get(`div${VSExplorer.sourceControllerBtn}>div`).invoke("text");
   }
 
-
+  static pasteCode(fileName) {
+    this.closeTab();
+    this.waitTillCodespaceLoad();
+    this.createFile(fileName);
+    this.selectExplorer();
+    cy.contains(fileName).click();
+    cy.get('div[class="view-line"]').should("be.visible").click();
+    cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
+      cy.focused().then($destination => {
+        const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
+          clipboardData: {
+            getData: (type = 'text') => code,
+          },
+        });
+        $destination[0].dispatchEvent(pasteEvent);
+      });
+    });
+  }
 
   private static createFile(fileName: string) {
     cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon').click().wait(2000);
