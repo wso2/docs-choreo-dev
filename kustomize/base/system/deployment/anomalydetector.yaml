@@ -81,9 +81,6 @@ spec:
               secretKeyRef:
                 name: secret-anomalydetector
                 key: ALERTS_EVENT_HUBS_NAMESPACE_CONNECTION_STRING
-        envFrom:
-          - configMapRef:
-              name: env-anomaly-detector
         resources:
           limits:
             cpu: 200m
@@ -125,7 +122,7 @@ spec:
       - name: anomalydetector-application-properties
         configMap:
           defaultMode: 420
-          name: cm-anomalydetector-cp
+          name: cm-anomalydetector
       - name: secret-anomalydetector
         csi:
           driver: secrets-store.csi.k8s.io

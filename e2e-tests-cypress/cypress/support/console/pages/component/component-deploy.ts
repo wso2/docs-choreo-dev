@@ -116,17 +116,19 @@ export class ComponentDeployPage {
     return cy.get('[title="Build Success"]', { timeout: 90000 });
   }
 
-  static promoteWebHookToProd() {
+  static promoteWebHookToProd(configValue:string) {
 
     if (Cypress.env("isPrivateOrg")) {
       cy.get('[data-cyid*="promote"]').should("have.length", 1).wait(2000);
       cy.get('[data-cyid*="promote"]').click();
       cy.get(".MuiCardContent-root button").contains("Next", { timeout: 120000 }).should("be.visible").click();
       cy.get(".ConfigForm button").contains("Promote").click();
+      cy.get('[data-cyid="btn-api-settings"]').should('have.length',3)
     } else {
       this.promote({ settingButtonCount: 1, invokeUrlCount: 1, invokeUrlIndex: 0 })
       cy.get(".MuiCardContent-root >.MuiBox-root>div>div>button").should('have.length',3).contains("Next").should("be.visible").click();
-      cy.get(".ConfigForm button").contains("Promote").click();
+      this.addConfiguration(configValue);
+      cy.get('[data-cyid="btn-api-settings"]').should('have.length',2)
     }
   }
 
@@ -135,6 +137,7 @@ export class ComponentDeployPage {
     cy.get(".MuiCardContent-root button").contains("Next", { timeout: 120000 }).should("be.visible").click();
     cy.get(".ConfigForm input").type(config);
     cy.get(".ConfigForm button").contains("Promote").click();
+   
   }
 
 
@@ -161,7 +164,7 @@ export class ComponentDeployPage {
         cy.get('[data-cyid="api-deploy-status"]').should("have.length", len)
       } else {
         cy.get('[data-testid="btn-stop-redeploy"]').should("have.length", len).eq(stpButton).click();
-        cy.get('[data-cyid="proxy-deploy-card"]').should("have.length", len)
+        cy.get('[data-testid="btn-stop-redeploy"]').should("have.length", len)
       }
     });
     cy.get('[data-cyid="deployment-status"]>p').eq(stpButton).invoke("text").should("eq", "Suspended");
