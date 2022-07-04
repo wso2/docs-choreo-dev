@@ -293,7 +293,7 @@ This heat map highlights the countries with the appropriate color based on the h
 
 ![Geo Map Hit Scale](../assets/img/insights/geomap-hit-count-scale.png){.cInlineImage-half}
 
-#### Viewing number of requests by country
+#### Viewing the number of requests by country
 
 You can hold the pointer over the highlighted countries to view the country name and the total number of hits from that location. You can also use the mouse to zoom the map or pan it.
 
