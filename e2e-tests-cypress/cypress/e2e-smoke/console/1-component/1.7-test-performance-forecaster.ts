@@ -52,9 +52,7 @@ describe("Verify performance forecaster functionality", () => {
 
     // type code
     VSExplorer.pasteCode("perf-analyzer.bal");
-    cy.focused().then((e) => {
-      cy.wrap(e).type('{enter}');
-    });
+    
     cy.wait(5000);
     VSExplorer.matchCodeLense(1, /^Forecasted latency between \d+\.?\d*  (ms|s) - \d+\.?\d*  (ms|s) \(for concurrency \d+ - \d+\)/);
     VSExplorer.getCodeLense(1).click();
