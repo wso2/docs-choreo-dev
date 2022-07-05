@@ -52,7 +52,7 @@ Let's create a new REST API component as follows:
 
 5. Click **Next**.
 
-6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or a repository managed by you. In this tutorial, let's select **Choreo-managed repository** and click **Create**.
+In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. In this tutorial, let's select **Choreo-managed repository** and click **Create**.
 
     The `Statistics` REST API opens on a separate page.
 
