@@ -115,7 +115,7 @@ export class GraphQL {
     });
   }
 
-   static getComponents(projectId: string, orgHandle: string, token: string) {
+  static getComponents(projectId: string, orgHandle: string, token: string) {
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
@@ -204,17 +204,13 @@ export class GraphQL {
       "content-type": "application/json",
     };
 
-const re = {
-  method: "POST",
-  url: `${appSvcURL}/projects/1.0.0/graphql`,
-  body: JSON.stringify(query),
-  headers: header,
-  failOnStatusCode: false,
-}
-
-cy.log(JSON.stringify(re))
-
-    return cy.request(re);
+    return cy.request({
+      method: "POST",
+      url: `${appSvcURL}/projects/1.0.0/graphql`,
+      body: JSON.stringify(query),
+      headers: header,
+      failOnStatusCode: false,
+    });
   }
 
   private static changeComponentLifeCycle(
