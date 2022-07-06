@@ -6,8 +6,8 @@ metadata:
   name: alert-configuration-service
 spec:
   ports:
-  - name: an-port
-    port: 8080
-    targetPort: an-port
+    - name: an-port
+      port: 8080
+      targetPort: an-port
   selector:
     choreo.component: alert-configuration-service
