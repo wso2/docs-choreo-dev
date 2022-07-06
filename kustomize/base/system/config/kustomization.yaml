@@ -232,6 +232,11 @@ configMapGenerator:
       - BACKOFF_FACTOR=2.0
       - MAX_WAIT_INTERVAL=20
       - CONNECTION_TIMEOUT=2
+  - name: cm-alert-configuration-service
+    behavior: create
+    literals:
+      - ALERT_DB_PORT=1433
+      - ALERT_DB_NAME=choreo-alerts-db
   - name: cm-dp-delete-manager
     behavior: create
     literals:
@@ -296,11 +301,3 @@ configMapGenerator:
     literals:
       - CSM_DB_NAME=choreo_codeserver_db
       - CSM_DB_USERNAME=choreo_codeserver_db_user
-  - name: cm-lowcode-parser-cp
-    behavior: create
-    files:
-      - lowcode-parser/application.properties
-  - name: cm-perfanalyzer-cp
-    behavior: create
-    files:
-      - perfanalyzer/application.properties

@@ -144,9 +144,6 @@ spec:
             - name: choreo-api-wildcard-tls
               mountPath: /etc/nginx/ssl/choreo
               readOnly: true
-            - name: choreo-api-gateway-wildcard-tls
-              mountPath: /etc/nginx/ssl/choreo/gateway
-              readOnly: true
             - name: choreo-api-e1-us-east-azure-wildcard-tls
               mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
               readOnly: true
@@ -205,9 +202,6 @@ spec:
         - name: choreo-api-wildcard-tls
           secret:
             secretName: dev-choreo-api-wildcard-tls
-        - name: choreo-api-gateway-wildcard-tls
-          secret:
-            secretName: dev-choreo-api-gateway-wildcard-tls
         - name: choreo-api-e1-us-east-azure-wildcard-tls
           secret:
             secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls

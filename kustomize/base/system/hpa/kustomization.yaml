@@ -30,6 +30,7 @@ resources:
   - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - alert-notification-service.yaml
+  - alert-configuration-service.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
@@ -39,3 +40,4 @@ resources:
   - image-share-service.yaml
   - devops-portal.yaml
   - devops-portal-api.yaml
+  - organization-management.yaml

@@ -15,6 +15,7 @@ import { DocumentType } from "../enum/document-type";
 import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
+import { Utils } from "../../utils";
 
 
 
@@ -109,18 +110,22 @@ export class ComponentAPILifecycle {
   }
 
   static publishToMarketplace(connectorAudience: ConnectorAudience) {
+    cy.get('[data-testid="change-state-info"]').should('be.visible')
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]');
+    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
-    cy.get('[data-testid="marketplace-btn"]')
+
+    cy.get('[data-testid="marketplace-btn"]').should('be.visible')
     cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist")
   }
 
+
+
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]');
+    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
     cy.contains("No, Thanks").should("be.enabled").click();
   }
 

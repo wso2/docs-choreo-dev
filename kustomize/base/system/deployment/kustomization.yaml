@@ -1,5 +1,6 @@
 resources:
   - alert-notification-service.yaml
+  - alert-configuration-service.yaml
   - analytics-subscription.yaml
   - api-server.yaml
   - apim-service.yaml
@@ -39,6 +40,7 @@ resources:
   - image-share-service.yaml
   - devops-portal.yaml
   - devops-portal-api.yaml
+  - organization-management.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433
