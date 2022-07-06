@@ -27,7 +27,7 @@ spec:
       containers:
       - envFrom:
           - configMapRef:
-              name: cm-obsapi-cp
+              name: cm-obsapi
           - configMapRef:
               name: env-obsapi
           - secretRef:

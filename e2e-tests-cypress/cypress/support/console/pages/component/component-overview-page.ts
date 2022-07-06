@@ -1,3 +1,5 @@
+
+
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -10,6 +12,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+;
 
 export class ComponentOverviewPage {
   static goBack() {
@@ -21,7 +24,7 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDeploy() {
-    cy.get("[data-cyid=link-deploy]", { timeout: 180000 }).click();
+    cy.get("[data-cyid=link-deploy]").click();
   }
 
   static navigateToDeployFromTest() {
@@ -30,6 +33,7 @@ export class ComponentOverviewPage {
 
   static navigateToTest() {
     cy.contains("Test").should("be.visible").click();
+    cy.wait(12000) // will remove this after deployment issue is fixed
   }
 
   static navigateToManage() {
@@ -44,54 +48,38 @@ export class ComponentOverviewPage {
     cy.contains("Devops").should("be.visible").click();
   }
 
+  static navigateToDevPortal() {
+    cy.get('.choreo-btn-dev-portal').invoke('attr', 'href').then(href => cy.visit(href))
+    return cy.get('header>div>div>p').invoke('text')
+  }
+
   static getComponentName() {
-    return cy
-      .get("#root .MuiCardHeader-content span")
-      .should("be.visible")
-      .invoke("text")
-      .then((text) => text.replace("overview", "").trim());
+    return cy.get("#root .MuiCardHeader-content span").invoke("text").then((text) => text.replace("overview", "").trim());
   }
 
   static createNewVersion(version: string, newBranch: string) {
     cy.get('[data-cyid="version-picker"]').click();
     cy.get("[data-cyid=btn-create-version]").click();
 
-    if (newBranch) {
-      this.createNewVersionRestApi(version, newBranch);
-    } else {
-      this.createNewVersionApiProxy(version);
-    }
-    cy.wait(2000);
+    if (newBranch) { this.createNewVersionRestApi(version, newBranch); }
+    else { this.createNewVersionApiProxy(version) }
   }
 
   private static createNewVersionApiProxy(version: string) {
     cy.contains("Create new version", { timeout: 180000 });
-    cy.get('[data-cyid="text-field-new-version"]>div>input')
-      .clear()
-      .type(version);
-      cy.get("[data-testid=create-version-create]").click();
-      this.newVersion();
+    cy.get('[data-cyid="text-field-new-version"]>div>input').clear().type(version);
+    cy.get("[data-testid=create-version-create]").click();
+    cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
   }
 
   private static createNewVersionRestApi(version: string, branch: string) {
     cy.contains("Create new version", { timeout: 180000 });
     cy.get('div>[aria-label="Without label"]').click();
     cy.get(`[data-value=${branch}]`).click();
-    cy.get('[data-cyid="text-field-new-version"]>div>input')
-      .clear()
-      .type(version);
-      cy.get("[data-testid=create-version-create]").click();
-
+    cy.get('[data-cyid="text-field-new-version"]>div>input').clear().type(version);
+    cy.get("[data-testid=create-version-create]").click();
+    cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
   }
 
-  private static newVersion() {
-    cy.intercept({
-      method: "GET",
-      url: `${Cypress.env(
-        "apimSvcURL"
-      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
-      times: 1,
-    }).as("version");
-    cy.wait("@version", { timeout: 120000 });
-  }
+
 }

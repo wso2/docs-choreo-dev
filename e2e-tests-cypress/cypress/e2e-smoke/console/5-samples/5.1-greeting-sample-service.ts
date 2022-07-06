@@ -71,11 +71,16 @@ describe("Create Greeting sample in Choreo", () => {
      SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it("Verify suspending deployed component", () => {
+  it("Verify suspending Dev deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
   });
 
+
+  it("Verify suspending Prod deployed component", () => {
+
+    ComponentDeployPage.stopProdContainer();
+  });
   it("Verify component deletion",()=>{
     ComponentOverviewPage.goBack();
     ComponentListingPage.deleteComponent("Greetings")

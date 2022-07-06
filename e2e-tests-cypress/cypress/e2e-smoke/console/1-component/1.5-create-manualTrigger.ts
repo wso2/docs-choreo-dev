@@ -14,15 +14,11 @@
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTemplate } from "../../../support/console/pages/enum/component-template";
-import { Environment } from "../../../support/console/pages/enum/environment";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { TriggersTemplate } from "../../../support/console/pages/templates/manualTrigger-creation-temp";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
-import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
 import { Utils } from "../../../support/console/utils";
 
 describe("Verify manual trigger creation functionality", () => {
@@ -55,17 +51,12 @@ describe("Verify manual trigger creation functionality", () => {
     ComponentDeployPage.deployManualTriggerToDev();
   });
 
-  it_privatedp("Verify component deployment", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.promoteToStg();
+  it_privatedp("Verify component promotion to stg", () => {
+    ComponentDeployPage.promoteManualTriggerToStg();
   });
 
-  it("Verify component deployment", () => {
-    ComponentOverviewPage.navigateToDeploy();
+  it("Verify component promotion to prd", () => {
     ComponentDeployPage.promoteManualTriggerToProd();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteManualTriggerToProd();
-  });
 });

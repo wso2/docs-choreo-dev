@@ -25,7 +25,6 @@ spec:
     spec:
       automountServiceAccountToken: true
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -43,7 +42,7 @@ spec:
             - configMapRef:
                 name: env-dp-rudder
             - configMapRef:
-                name: cm-dp-rudder-cp
+                name: cm-dp-rudder
           env:
           - name: MSSQL_PASSWORD
             valueFrom:
@@ -99,7 +98,7 @@ spec:
           volumeMounts:
           - name: secret-dp-rudder
             mountPath: /mnt/csi/secret-dp-rudder
-            readonly: true
+            readOnly: true
       volumes:
       - name: secret-dp-rudder
         csi:

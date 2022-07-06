@@ -27,7 +27,6 @@ spec:
     spec:
       automountServiceAccountToken: true
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -45,7 +44,7 @@ spec:
             - configMapRef:
                 name: env-dp-mizzen
             - configMapRef:
-                name: cm-dp-mizzen-cp
+                name: cm-dp-mizzen
           env:
             - name: MSSQL_PASSWORD
               valueFrom:
@@ -105,7 +104,7 @@ spec:
           volumeMounts:
             - name: secret-dp-mizzen
               mountPath: /mnt/csi/secret-dp-mizzen
-              readonly: true
+              readOnly: true
       volumes:
         - name: secret-dp-mizzen
           csi:

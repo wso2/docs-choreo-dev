@@ -19,16 +19,11 @@ import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
 
 export class TestHelper {
-  public static testOnSwagger(
-    env: Environment,
-    resourcePath: string,
-    key: string = "",
-    value: string = ""
-  ) {
+  public static testOnSwagger(env: Environment, resourcePath: string, key: string = "", value: string = "") {
     APITest.testAPI();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(resourcePath,key,value);
+    SwaggerUI.invokeResource(resourcePath, key, value);
 
     return SwaggerUI.getResponseCode().then((res) => {
       return SwaggerUI.GetResponse().then((r) => {
@@ -40,7 +35,7 @@ export class TestHelper {
     });
   }
 
-  public static testOnCurl(env: Environment, httpMethod: HTTPMethod,pathParm:string,queryParameters1=[]) {
+  public static testOnCurl(env: Environment, httpMethod: HTTPMethod, pathParm: string, queryParameters1 = []) {
     ComponentTestPage.selectCurl();
     Curl.selectEnvironment(env);
     Curl.selectMethod(httpMethod);

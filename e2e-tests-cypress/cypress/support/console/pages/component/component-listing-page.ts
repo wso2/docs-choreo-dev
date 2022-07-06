@@ -11,26 +11,34 @@
  * associated services.
  */
 
+import { GraphQL } from "../../apis/graphql";
+import { Utils } from "../../utils";
+
 export class ComponentListingPage {
   static deleteComponent(componentName: string) {
     cy.get("tr p").contains(componentName).should("be.visible").realHover();
     cy.get("button>span").contains("Delete").click();
-    cy.get('[data-testid="confirm-name"]>div>input')
-      .should("be.visible")
-      .type(componentName);
-    cy.get(".MuiDialogActions-spacing button")
-      .eq(1)
-      .should("be.enabled")
-      .click();
+    cy.get('[data-testid="confirm-name"]>div>input').type(componentName);
+    cy.get(".MuiDialogActions-spacing button").should("be.enabled").eq(1).click();
     this.verifyDeletion();
   }
 
   private static verifyDeletion() {
-    cy.intercept("POST", `${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as("delete");
-    cy.wait("@delete", { timeout: 180000 }).then((i) => {
-      const { status, canDelete } = i.response.body.data["deleteComponentV2"];
-      expect(status).equal("success");
-      expect(canDelete).to.true;
-    });
+    cy.url().then(url=>{
+    const projectID =  url.slice(url.indexOf("projects/")+9,url.indexOf("/components"))
+    const {handle} = Cypress.env("userData")
+    const token = Cypress.env("apim_token")
+    cy.log(token)
+    cy.log(handle)
+    GraphQL.getComponents(projectID,handle,token).then(res=>cy.log(JSON.stringify(res.body)))
+    })
+    // cy.get('.MuiDialog-container ',{ timeout: 180000 }).should('not.exist')
+    // cy.intercept("POST", `${Cypress.env("newAppSvcURL")}/projects/1.0.0/graphql`).as("delete");
+    // cy.wait("@delete", { timeout: 180000 }).then((i) => {
+    //   cy.log(JSON.stringify(i.response.body))
+    //   const { status, canDelete } = i.response.body.data["deleteComponentV2"];
+    //   expect(status).equal("success");
+    //   expect(canDelete).to.true;
+    // });
   }
 }

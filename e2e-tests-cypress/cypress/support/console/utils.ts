@@ -147,4 +147,9 @@ export class Utils {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
+
+  static getInvokeUrl(urlLocation: number) {
+    return cy.get('[data-cyid="text-field-invoke-url"] input').eq(urlLocation).invoke("attr", "value");
+  }
+
 }

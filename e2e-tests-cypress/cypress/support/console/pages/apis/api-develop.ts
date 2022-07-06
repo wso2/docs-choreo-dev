@@ -11,12 +11,12 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 export class APIDevelop {
   static addResources(path: string, ...verbs) {
-    cy.get('[data-testid="develop-resources-header"]', { timeout: 120000 })
-      .contains("Resources")
-      .should("be.visible");
-    cy.get('[id="backdrop-loader"]').should("not.exist");
+    cy.get('[data-testid="develop-resources-header"]').contains("Resources").should("be.visible");
+    cy.get('[id="backdrop-loader"]').should("not.exist")
     cy.get("body").then((body) => {
       if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
         cy.log("trigger delete all");
@@ -32,36 +32,23 @@ export class APIDevelop {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
-    cy.get("button").then((buttons) => {
-      if (buttons.length > 0) {
-        buttons.each(function () {
-          if (this.innerText === "Save") {
-            this.click();
-            return;
-          }
-        });
-      }
-    });
+    cy.get(".MuiGrid-align-items-xs-center >div>button").should('be.enabled').realClick()
     cy.intercept({
       method: "PUT",
-      url: `${Cypress.env(
-        "apimSvcURL"
-      )}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
+      url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", { timeout: 120000 }).then((res) => {
-      expect(res.response.body.paths).to.have.property(`/${path}`);
+      const reqUrl = res.request.url
+      const geturl = reqUrl.replace("/swagger","")
+      cy.log(geturl)
+      expect(res.response.body.paths).to.have.property(`/${path}`)
     });
-    cy.get(`[data-testid="resource-/${path}"]`, { timeout: 120000 }).should(
-      "be.visible"
-    );
+    cy.get(`[data-testid="resource-/${path}"]`).should('exist')
   }
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get('[data-testid="verb-selector"]').click();
-    verbs.forEach((verb) => {
-      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click();
-      cy.wait(1000);
-    });
+    verbs.forEach((verb) => cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]`).click().wait(1000));
     cy.get("body").type("{esc}");
   }
 
@@ -72,27 +59,25 @@ export class APIDevelop {
 
   static updateEndpointConfiguration(newEndpoint: string) {
     cy.get('[data-testid="Endpoints"]').click();
-    cy.get('[data-testid="api-endpoint"]').within(() => {
-      cy.get("input").clear().type(newEndpoint);
-    });
+    cy.get('[data-testid="api-endpoint"]').within(() => cy.get("input").clear().type(newEndpoint));
     cy.contains("Save").click();
-
     cy.get('[id="circular-loader"]').should("not.exist");
-    cy.get('[data-testid="api-endpoint"] > div > input').should(
-      "have.value",
-      newEndpoint
-    );
-    cy.wait(1000);
+    cy.get('[data-testid="api-endpoint"] > div > input').should("have.value", newEndpoint).wait(1000)
     cy.log("Endpoint configuration updated successfully");
   }
 
   private static generateOperationId(httpVerb: string[], resourcePath: string) {
     httpVerb.forEach((verb) => {
-      let header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
-      let input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-content"]  div>input[type="text"]`;
-      let operationId = `${verb.toLowerCase()}${resourcePath.replace(/\\/g, "")}`;
+      const header = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-header"]`;
+      const input = `[id="panel-/${resourcePath}/${verb.toLowerCase()}-content"]  div>input[type="text"]`;
+      const modifiedResourcePath = Cypress._.capitalize(resourcePath.replace(/\\/g, ""))
+      const operationId = `${verb.toLowerCase()}${modifiedResourcePath}`;
+
       cy.get(header).click();
       cy.get(input).eq(0).type(operationId);
     });
   }
+
+
+
 }

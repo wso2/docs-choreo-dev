@@ -11,20 +11,19 @@
  * associated services.
  */
 
+
+
 export class ProjectListingPage {
   static createNewProject(projectName: string, description: string) {
-    cy.get('[data-testid="version-picker"]', { timeout: 120000 }).click();
-    cy.get('[aria-labelledby="version-picker"]>button').click();
-    cy.wait(5000);
-    cy.get('[name="Name"]').should("be.visible").clear().type(projectName);
-    cy.get('[name="Description"]')
-      .should("be.visible")
-      .clear()
-      .type(description);
+    cy.get('[data-testid="version-picker"]').click();
+    cy.get('[aria-labelledby="version-picker"]>button').click().wait(5000);
+    cy.get('[name="Name"]').clear().type(projectName);
+    cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-testid="create-version-create"]').click();
+
   }
 
-  static selectProject(projectName: string="Default Project") {
+  static selectProject(projectName: string = "Default Project") {
     cy.get('[data-testid="version-picker"]').click();
     cy.get(`li>div`).contains(projectName).click();
   }

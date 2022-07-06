@@ -24,7 +24,6 @@ spec:
     spec:
       automountServiceAccountToken: true
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -42,7 +41,7 @@ spec:
             - configMapRef:
                 name: env-dp-cloud-manager
             - configMapRef:
-                name: cm-dp-cloud-manager-cp
+                name: cm-dp-cloud-manager
           env:
             - name: DB_PASSWORD
               valueFrom:
@@ -84,7 +83,7 @@ spec:
           volumeMounts:
             - name: secret-dp-cloud-manager
               mountPath: /mnt/csi/secret-dp-cloud-manager
-              readonly: true
+              readOnly: true
       volumes:
         - name: secret-dp-cloud-manager
           csi:

@@ -11,22 +11,57 @@ entered into with WSO2 governing the purchase of this software and any
 associated services.
 */
 
-/// <reference types="cypress" />
+import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
+import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
+import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
+import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
+import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
+import { Utils } from "../../../support/console/utils";
 
 describe("Enterprise Login using auth0Idp", () => {
+  const COMPONENT_NAME = Utils.generateComponentName("rest");
+  const COMPONENT_DESCRIPTION = "covid daily stats";
+  const PROJECT_DESCRIPTION = "Covid stats project";
+  const PROJECT_NAME = Utils.generateProjectName();
 
-    before(() => {
-      cy.request(Cypress.env("auth0LogoutUrl"),{"client_id":Cypress.env("auth0ClientID"), "returnTo": Cypress.env("enterpriseLoginUrl")});
-    })
 
-    after(()=>{
-        ChoreoHomePage.logout()
-    })
+  before(() => {
+    cy.request(Cypress.env("auth0LogoutUrl"), {
+      client_id: Cypress.env("auth0ClientID"),
+      returnTo: Cypress.env("enterpriseLoginUrl"),
+    });
+  });
 
-    it('Enterprise login to console', () => {
-        LoginPage.enterpriseLogin()
-    })
-})
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 
+  it("Enterprise login to console", () => {
+    LoginPage.enterpriseLogin();
+  });
+
+  it("Verify REST API component creation", () => {
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.addNewComponent();
+    RestAPITemplate.selectHttpAPITemplate();
+    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION, true);
+    ComponentDevelopPage.getComponentURL();
+  });
+
+  it("Verify vscode sso login", () => {
+    ComponentOverviewPage.navigateToDevelop();
+    LoginPage.navigateToCodespaceEP();
+    VSExplorer.verifyVsCodeWorkspace();
+  });
+
+  it("Verify devportal sso login", () => {
+    LoginPage.reLoginToChoreo();
+    ComponentOverviewPage.navigateToDevPortal().should(
+      "eq",
+      "API Developer Portal"
+    );
+  });
+});

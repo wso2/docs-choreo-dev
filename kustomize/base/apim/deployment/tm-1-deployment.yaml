@@ -56,7 +56,6 @@ spec:
       #   fsGroup: 802
       automountServiceAccountToken: false
       securityContext:
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
