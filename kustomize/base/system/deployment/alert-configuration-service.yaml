@@ -32,7 +32,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secret-alert-configuration-service
-                  key: ALERT-CHOREO-DB-PASSWORD
+                  key: ALERT_CHOREO_DB_PASSWORD
           envFrom:
             - configMapRef:
                 name: env-alert-configuration-service
