@@ -70,7 +70,6 @@ describe("Verify project creation functionality", () => {
       API_ENDPOINT
     );
     APIDevelop.addResources(OPERATION_USERS, HTTPMethod.GET);
-    APIDevelop.addEndpoints();
   });
 
   it("Verify component deployment to dev", () => {
@@ -133,7 +132,6 @@ describe("Verify project creation functionality", () => {
 
   it("Add  a new version", () => {
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
-    APIDevelop.addEndpoints();
   })
 
   it("Deploy new version to Dev", () => {

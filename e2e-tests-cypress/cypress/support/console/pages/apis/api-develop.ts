@@ -32,22 +32,18 @@ export class APIDevelop {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
-    cy.get("button").then((buttons) => {
-      if (buttons.length > 0) {
-        buttons.each(function () {
-          if (this.innerText === "Save") {
-            this.click();
-            return;
-          }
-        });
-      }
-    });
+    cy.get(".MuiGrid-align-items-xs-center >div>button").should('be.enabled').realClick()
     cy.intercept({
       method: "PUT",
       url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
-    cy.wait("@swagger", { timeout: 120000 }).then((res) => expect(res.response.body.paths).to.have.property(`/${path}`));
-    cy.get(`[data-testid="resource-/${path}"]`)
+    cy.wait("@swagger", { timeout: 120000 }).then((res) => {
+      const reqUrl = res.request.url
+      const geturl = reqUrl.replace("/swagger","")
+      cy.log(geturl)
+      expect(res.response.body.paths).to.have.property(`/${path}`)
+    });
+    cy.get(`[data-testid="resource-/${path}"]`).should('exist')
   }
 
   private static addHTTPVerb(verbs: string[]) {
