@@ -43,7 +43,6 @@ describe("Verify performance forecaster functionality", () => {
     LoginPage.navigateToCodespace();
 
     VSExplorer.verifyVsCodeWorkspace();
-    cy.wait(2000);
 
     // pull bal modules
     VSExplorer.enterCommandInTerminal(
@@ -51,15 +50,15 @@ describe("Verify performance forecaster functionality", () => {
     );
 
     // type code
-    VSExplorer.pasteCode("perf-analyzer.bal");
+    VSExplorer.pasteCode("perf-analyzer.bal", true);
     
+    // wait till code lenses appear
     cy.wait(5000);
     VSExplorer.matchCodeLense(1, /^Forecasted latency between \d+\.?\d*  (ms|s) - \d+\.?\d*  (ms|s) \(for concurrency \d+ - \d+\)/);
-    VSExplorer.getCodeLense(1).click();
-    cy.wait(5000);
+    VSExplorer.clickCodeLense(1);
     VSExplorer.matchCodeLense(2, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/);
     VSExplorer.matchCodeLense(3, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/);
-    cy.wait(5000);
+
     VSExplorer.clickPerfGraph(1);
     VSExplorer.matchCodeLense(1, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);
     VSExplorer.matchCodeLense(2, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);
