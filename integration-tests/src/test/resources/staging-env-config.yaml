@@ -1,0 +1,47 @@
+accountInfo:
+  TEST_USER_EMAIL: choreo-integration-test-user-stage@wso2.com@carbon.super
+  #TEST_USER_PASSWORD:
+  #TEST_CHOREO_ORG_ID:
+  TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserstage
+  #TEST_CHOREO_ORG_UUID:
+authInfo:
+  STS_ENDPOINT: https://sts.st.choreo.dev
+  #STS_CLIENT_ID:
+  #STS_CLIENT_SECRET:
+  ASGARDEO_ENDPOINT: https://stage.api.asgardeo.io
+  #ASGARDEO_CLIENT_ID:
+  #ASGARDEO_CLIENT_SECRET:
+  #CP_APP_CLIENT_ID:
+  #CP_APP_CLIENT_SECRET:
+common:
+  CHOREO_ENDPOINT: https://app.st.choreo.dev
+  CHOREO_CP_PROJECTS_ENDPOINT: https://apis.st.choreo.dev/projects/1.0.0
+  CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.st.choreo.dev/v90f
+  GITHUB_ENDPOINT: https://api.github.com
+  GITHUB_ORG: choreo-test-apps
+  GITHUB_PAT: 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
+  GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
+  GMAIL_API_CS: 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
+  GMAIL_API_REFRESH_TOKEN: 1//0gr5UM0NQ4wnyCgYIARAAGBASNwF-L9IrF8sQhrCXxwLJa_331P0eFqu661kbZlP4Ur4ovLMMbndBqrPh_ceP5bH-DaOr56ed2oA
+insights:
+  INSIGHTS_ENDPOINT: https://analytics-event-auth.st.choreo.dev
+  INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
+alerts:
+  ALERT_MAIL_IMAP_PASS: choreoalert@123
+  ALERT_ORG_UUID: 29990a7a-98f0-4757-88c3-7f54c0d4b47a
+  ALERT_RELEASE_ID: f13c83b7-18fa-4f77-a3c0-38dfb6e70784
+anomalyDetection:
+  ANOMALY_DETECTION_MAIL_IMAP_PASS: Nba%f#naz$caLpQ1f+Y
+  ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID: uncnHszy9dBGcayoTimmPY_2QW4a
+  ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET: S6njM9xhwf5EfEXbDaEvfsdLTh8a
+  ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID: 6f451faf-3470-4ef6-ba72-5106e9732da0
+  ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME: stageintegrationtestpassthroughservice
+  ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID: ab89197a-0ebb-4824-886c-a1156611bc42
+  ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL: https://b8fb26a4-a72f-4c2a-96ee-3c556e0fd6bb-prod.e1-us-east-azure.st.choreoapis.dev/usbc/stageintegrationtestpassthroughservice/1.0.0
+  ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID: 53f66744-5046-4792-8938-6a03f92a8887
+  ANOMALY_DETECTION_PROJECT_ID: 2d175c77-98e4-42ed-a688-25aef3fbb7b3
+  ANOMALY_DETECTION_TEST_CHOREO_ORG_ID: 1567
+  ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID: b8fb26a4-a72f-4c2a-96ee-3c556e0fd6bb
+  ANOMALY_DETECTION_TEST_USER_EMAIL: choreoanomalydetectortest@gmail.com@carbon.super
+  ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE: choreoanomalydetectorteststageaeuhd
+  ANOMALY_DETECTION_TEST_USER_PASSWORD: nv(a8$hq@vLauZpQhTQsZ
