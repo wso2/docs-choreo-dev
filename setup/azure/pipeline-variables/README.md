@@ -18,9 +18,6 @@ Below is the folder hierarchy of properties files.
 |  |- choreo-ai-capacity-planner
 |  |  |- secrets.properties
 |  |
-|  |- choreo-ai-datamapper
-|  |  |- secrets.properties
-|  |
 |  |- choreo-ai-deployment-optimizer
 |  |  |- secrets.properties
 |  |  
