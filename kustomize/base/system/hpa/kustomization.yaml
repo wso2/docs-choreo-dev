@@ -1,5 +1,4 @@
 resources:
-  - anomalydetector.yaml
   - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml

@@ -1,8 +1,4 @@
 configMapGenerator:
-  - name: cm-anomalydetector-model-metadata
-    behavior: create
-    files:
-      - anomalydetector/models.properties
   - name: cm-datamapper
     behavior: create
     files:
