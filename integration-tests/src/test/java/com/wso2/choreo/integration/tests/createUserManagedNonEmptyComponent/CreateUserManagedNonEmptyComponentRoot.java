@@ -153,7 +153,7 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
                 String repoBranch = "dev";
                 String repoName = "byor-greetings-app1";
 
-                String srcGitHubURL = "https://github.com/".concat(Configuration.GITHUB_ORG).concat("/")
+                String srcGitHubURL = Constant.GITHUB_URL.concat(Configuration.GITHUB_ORG).concat("/")
                                 .concat(repoName);
                 String graphQlQuery = "mutation{ createComponent(" +
                                 "      component: {" +

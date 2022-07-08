@@ -153,9 +153,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 String repoType = "UserManagedNonEmpty";
                 String repoBranch = "feature";
                 String repoName = "byor-greetings-app2";
-                // String srcGitHubURL =
-                // "https://github.com/choreo-test-apps/byor-greetings-app2/tree/main/test";
-                String srcGitHubURL = "https://github.com/".concat(Configuration.GITHUB_ORG).concat("/")
+                String srcGitHubURL = Constant.GITHUB_URL.concat(Configuration.GITHUB_ORG).concat("/")
                                 .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
                 String graphQlQuery = "mutation{ createComponent(" +
                                 "      component: {" +
