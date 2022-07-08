@@ -72,7 +72,7 @@ export class VSExplorer {
   }
 
   static creteNewBranch(branchName: string) {
-    cy.get("[title*='.bal Diagram']").wait(4000);
+    cy.get("[title*='.bal Diagram']",{timeout:360000}).wait(4000);
     cy.get('[id="wso2.ballerina"]')
     cy.get('[id="status.scm"]').eq(0).click();
     cy.get(".quick-input-widget")
