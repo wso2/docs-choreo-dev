@@ -56,7 +56,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         private static String prNumber;
         private static String apiKey;
         private static String apiId;
-        private String repoName;
+        private String repoName = "byor-greetings-app2";
         private static ChoreoComponent testComponent;
 
         private String getComponentDetailsQuery(String projectId, String componentHandler) {
@@ -152,7 +152,6 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 String repoSubpath = "test";
                 String repoType = "UserManagedNonEmpty";
                 String repoBranch = "feature";
-                String repoName = "byor-greetings-app2";
                 String srcGitHubURL = Constant.GITHUB_URL.concat(Configuration.GITHUB_ORG).concat("/")
                                 .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
                 String graphQlQuery = "mutation{ createComponent(" +
@@ -296,7 +295,6 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         @Test(dependsOnMethods = { "testInitialPRGeneration" })
         @CitrusTest
         public void testPRMerge() throws JsonProcessingException {
-                String repoName = "byor-greetings-app2";
                 String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
                                 .concat("/pulls/" + prNumber + "/merge");
                 HashMap<String, Object> requestBodyMap = new HashMap<>() {
