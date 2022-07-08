@@ -1,9 +1,9 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: anomalydetector
+  name: alert-configuration-service
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      choreo.component: anomalydetector
+      choreo.component: alert-configuration-service

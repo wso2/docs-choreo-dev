@@ -1,5 +1,4 @@
 resources:
-  - anomalydetector.yaml
   - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
@@ -31,6 +30,7 @@ resources:
   - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - alert-notification-service.yaml
+  - alert-configuration-service.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
