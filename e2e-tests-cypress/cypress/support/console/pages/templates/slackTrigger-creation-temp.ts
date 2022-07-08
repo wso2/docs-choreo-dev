@@ -20,6 +20,7 @@ export class TriggersTemplate {
 
 
   static createTrigger(triggerType: string, triggerName: string, triggerChannel: string) {
+    cy.get('[data-testid="components-mt-api-item-1"]').should('be.visible').click()
 
     cy.get('[data-testid="search-field"]>input').clear().type(triggerType);
     cy.get('[data-testid="search-button"]>button').click();

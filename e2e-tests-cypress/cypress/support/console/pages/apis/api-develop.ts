@@ -21,7 +21,7 @@ export class APIDevelop {
       if (body.find("#panel1a-header>div>h4").text().trim() === "/*") {
         cy.log("trigger delete all");
         cy.get('[data-testid="delete-all-operations-btn"]').click();
-        cy.contains("Undo Delete", { timeout: 120000 }).should("be.visible");
+        cy.contains("Undo Delete", { timeout: 120000 }).should("be.visible").wait(3000);
       }
     });
     this.addHTTPVerb(verbs);
@@ -32,19 +32,20 @@ export class APIDevelop {
     cy.get("#operation-target").type(path);
     cy.get('[data-testid="add-btn"]').click();
     this.generateOperationId(verbs, path);
-    cy.get(".MuiGrid-align-items-xs-center >div>button").should('be.enabled').realClick()
+     cy.get(".MuiGrid-align-items-xs-center>div>button").should('be.enabled').click({force:true})
     cy.intercept({
       method: "PUT",
       url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/swagger?organizationId=*`,
     }).as("swagger");
     cy.wait("@swagger", { timeout: 120000 }).then((res) => {
       const reqUrl = res.request.url
-      const geturl = reqUrl.replace("/swagger","")
+      const geturl = reqUrl.replace("/swagger", "")
       cy.log(geturl)
       expect(res.response.body.paths).to.have.property(`/${path}`)
     });
     cy.get(`[data-testid="resource-/${path}"]`).should('exist')
   }
+
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get('[data-testid="verb-selector"]').click();
