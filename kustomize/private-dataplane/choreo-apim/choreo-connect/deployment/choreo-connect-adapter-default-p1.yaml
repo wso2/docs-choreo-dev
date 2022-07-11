@@ -33,13 +33,11 @@ spec:
   selector:
     matchLabels:
       choreo.component: choreo-connect-adapter-default-p1
-      app: choreo-connect-adapter
   template:
     metadata:
       labels:
         choreo.component: choreo-connect-adapter-default-p1
         antiaffinity: choreo-connect-adapter-default-p1
-        app: choreo-connect-adapter
     spec:
       affinity:
         podAntiAffinity:

@@ -33,12 +33,10 @@ spec:
   selector:
     matchLabels:
       choreo.component: choreo-connect-deployment
-      app: choreo-connect-deployment
   template:
     metadata:
       labels:
         choreo.component: choreo-connect-deployment
-        app: choreo-connect-deployment
     spec:
       automountServiceAccountToken: false
       securityContext:
