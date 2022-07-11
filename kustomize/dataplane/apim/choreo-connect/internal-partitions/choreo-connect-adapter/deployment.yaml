@@ -33,12 +33,11 @@ spec:
   selector:
     matchLabels:
       choreo.component: choreo-connect-adapter
-      app: choreo-connect-adapter
   template:
     metadata:
       labels:
         choreo.component: choreo-connect-adapter
-        app: choreo-connect-adapter
+        cc.component: choreo-connect-adapter
     spec:
       automountServiceAccountToken: false
       securityContext:
