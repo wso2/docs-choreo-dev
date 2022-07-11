@@ -43,6 +43,7 @@ import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundEx
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
+import com.wso2.choreo.integration.common.exceptions.UndeployException;
 import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -414,7 +415,6 @@ public abstract class ChoreoComponent {
 
             JsonArray deploymentJsonArray = response.getAsJsonObject()
                     .getAsJsonObject("data").getAsJsonArray("deployments");
-
             return deploymentJsonArray;
         } catch (GraphQLException e) {
             throw new GetDeploymentsStatusCheckException(e);
@@ -918,6 +918,7 @@ public abstract class ChoreoComponent {
         }
     }
 
+
     public String getId() {
         return id;
     }
@@ -958,6 +959,37 @@ public abstract class ChoreoComponent {
             String responseBody = EntityUtils.toString(response.getEntity());
             if (statusCode != HttpStatus.SC_OK) {
                 throw new RedeployException(statusCode, responseBody);
+            }
+        }
+    }
+    public void undeploy(String accessToken, String componentId, String releaseId, String orgHandle) throws IOException, UndeployException {
+        String graphQlQuery = "mutation { stopDeployment(orgHandler: \"" + orgHandle + "\", componentId: \"" + componentId + "\", releaseId: \"" + releaseId + "\", type: \"restAPI\" )}";
+
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        System.out.println("UndeployQuery");
+        System.out.println(graphQlQuery);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+
+        HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
+
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new UndeployException(statusCode, responseBody);
             }
         }
     }
