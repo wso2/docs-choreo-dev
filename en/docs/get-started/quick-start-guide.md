@@ -72,36 +72,15 @@ Follow this procedure to further develop the API by adding a new resource and si
   
     ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
 
-        <table>
-            <tr>
-                <td><strong>Field</strong></td>
-                <td><strong>Value</strong></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><strong>HTTP Method</strong></td>
-                <td><code>GET</code></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><strong>Path</strong></td>
-                <td><code>personalizedMessage</code></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><strong>Return Type</strong></td>
-                <td><code>string|error</code></td>
-                <td></td>
-            </tr>
-        </table>
+       **HTTP Method**: `GET`
+       **Path**:        `personalizedMessage`
+       **Return Type**: `string|error`
 
 
 4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
 
-     | **Field** | **Value** |
-     |-----------------|-----------------------|
-     | **Type** | `string` |
-     | **Name** | `name` |
+     **Type**: `string` 
+     **Name**: `name`
 
      ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
@@ -112,11 +91,9 @@ Follow this procedure to further develop the API by adding a new resource and si
 
     ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
-     | **Field** | **Value** |
-     |-----------------|-----------------------|
-     | **Variable Type** | `string` |
-     | **Variable Name** | `message` |
-     | **string** |`"Hello "+ name`|
+     **Variable Type**: `string`
+     **Variable Name**: `message`
+     **string**:        `"Hello "+ name`
 
      ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
 
