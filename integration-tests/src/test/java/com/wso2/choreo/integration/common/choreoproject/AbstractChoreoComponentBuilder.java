@@ -69,6 +69,10 @@ public abstract class AbstractChoreoComponentBuilder {
             timeTaken += 2000;
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             int statusCode = response.statusCode();
+
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
+                continue;
+            }
             if (statusCode != HttpStatus.OK.value()) {
                 throw new ComponentCreationStatusCheckException(statusCode, response.body());
             }

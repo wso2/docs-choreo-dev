@@ -41,12 +41,24 @@ describe("Verify performance forecaster functionality", () => {
 
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace();
-    VSExplorer.typeCode("perf-analyzer.bal");
+
+    VSExplorer.verifyVsCodeWorkspace();
+
+    // pull bal modules
+    VSExplorer.enterCommandInTerminal(
+      "bal pull ballerinax/worldbank && bal pull ballerinax/covid19", 10000
+    );
+
+    // type code
+    VSExplorer.pasteCode("perf-analyzer.bal", true);
+    
+    // wait till code lenses appear
+    cy.wait(5000);
     VSExplorer.matchCodeLense(1, /^Forecasted latency between \d+\.?\d*  (ms|s) - \d+\.?\d*  (ms|s) \(for concurrency \d+ - \d+\)/);
-    VSExplorer.getCodeLense(1).click();
+    VSExplorer.clickCodeLense(1);
     VSExplorer.matchCodeLense(2, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/);
     VSExplorer.matchCodeLense(3, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/);
-    cy.wait(4000);
+
     VSExplorer.clickPerfGraph(1);
     VSExplorer.matchCodeLense(1, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);
     VSExplorer.matchCodeLense(2, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);

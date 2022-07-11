@@ -116,6 +116,7 @@ export class GraphQL {
   }
 
   static getComponents(projectId: string, orgHandle: string, token: string) {
+
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
