@@ -33,6 +33,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: choreo-connect-adapter-default-p1
+
   template:
     metadata:
       labels:
