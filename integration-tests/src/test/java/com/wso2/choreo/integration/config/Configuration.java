@@ -54,7 +54,9 @@ public class Configuration {
     public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");
     public static final String GITHUB_ENDPOINT = System.getenv("GITHUB_ENDPOINT");
     public static final String GITHUB_ORG = System.getenv("GITHUB_ORG");
-    public static final String GITHUB_PAT = System.getenv("GITHUB_PAT");;
+    public static final String GITHUB_PAT = System.getenv("GITHUB_PAT");
+
+    public static final String THEME_ENDPOINT = System.getenv("THEME_ENDPOINT");
 
     public static final String INSIGHTS_ENDPOINT = System.getenv("INSIGHTS_ENDPOINT");
     public static final String INSIGHTS_ONPREM_KEY = System.getenv("INSIGHTS_ONPREM_KEY");
