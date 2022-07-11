@@ -76,7 +76,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      |-----------------|-----------------------|
      | **HTTP Method** | `GET` |
      | **Path** | `personalizedMessage` |
-     | **Return Type** | `string|error` |
+     | **Return Type** | `string | error` |
 
 
 4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
@@ -146,7 +146,7 @@ Once you update the REST API configuration as described above, you can verify wh
 
     ![REST API response](../assets/img/get-started/rest-api-response.png){.cInlineImage-half}
 
-### Step 3: Commit Changes to GitHub
+### Step 3: Commit changes to GitHub
 
 Choreo maintains source code in a private GitHub repository. When you create a component, Choreo creates it in the private-GitHub repository associated with your account. Therefore, you must commit and push your changes if you want to change the API Implementation.
 
