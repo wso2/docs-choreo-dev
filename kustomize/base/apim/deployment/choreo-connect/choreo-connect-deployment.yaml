@@ -37,6 +37,7 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-deployment
+        cc.component: choreo-connect-deployment
     spec:
       automountServiceAccountToken: false
       securityContext:

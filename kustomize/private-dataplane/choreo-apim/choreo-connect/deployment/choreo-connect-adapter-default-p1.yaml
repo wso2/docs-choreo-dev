@@ -37,6 +37,7 @@ spec:
     metadata:
       labels:
         choreo.component: choreo-connect-adapter-default-p1
+        cc.component: choreo-connect-adapter
         antiaffinity: choreo-connect-adapter-default-p1
     spec:
       affinity:
