@@ -72,15 +72,22 @@ Follow this procedure to further develop the API by adding a new resource and si
   
     ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
 
-       - **HTTP Method**: `GET`
-       - **Path**:        `personalizedMessage`
-       - **Return Type**: `string|error`
+     | **Field** | **Value** |
+     |-----------------|-----------------------|
+     | **HTTP Method** | `GET` |
+     | **Path** | `personalizedMessage` |
+     
+     For the REST API, to return a string or an error, enter the following in the **Return Type** field.
+     
+     ``string|error`
 
 
 4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
 
-     - **Type**: `string` 
-     - **Name**: `name`
+     | **Field** | **Value** |
+     |-----------------|-----------------------|
+     | **Type** | `string` |
+     | **Name** | `name` |
 
      ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
@@ -91,9 +98,11 @@ Follow this procedure to further develop the API by adding a new resource and si
 
     ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
-     - **Variable Type**: `string`
-     - **Variable Name**: `message`
-     - **string**:        `"Hello "+ name`
+     | **Field** | **Value** |
+     |-----------------|-----------------------|
+     | **Variable Type** | `string` |
+     | **Variable Name** | `message` |
+     | **string** |`"Hello "+ name`|
 
      ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
 
