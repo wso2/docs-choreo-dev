@@ -8,6 +8,7 @@ import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
@@ -25,8 +26,8 @@ import org.springframework.http.HttpStatus;
  * Abstract class handle the creation of Choreo component
  */
 public abstract class AbstractChoreoComponentBuilder {
-    protected static final String CHOREO_ENDPOINT = Configuration.CHOREO_ENDPOINT;
-    protected static final String CHOREO_CP_PROJECTS_ENDPOINT = Configuration.CHOREO_CP_PROJECTS_ENDPOINT;
+    protected final String choreoEndpoint;
+    protected final String choreoCpProjectsEndpoint;
     protected static final HttpClient client = HttpClient.newHttpClient();
     protected ChoreoProject project;
     protected ChoreoOrganization org;
@@ -40,6 +41,8 @@ public abstract class AbstractChoreoComponentBuilder {
     public AbstractChoreoComponentBuilder(ChoreoProject project, ChoreoOrganization org) {
         this.project = project;
         this.org = org;
+        choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+        choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT);
     }
 
     /**
@@ -56,7 +59,7 @@ public abstract class AbstractChoreoComponentBuilder {
                                                 String componentId)
             throws IOException, InterruptedException, ComponentCreationStatusCheckException,
             ComponentCreationTimeoutException {
-        String requestURI = CHOREO_ENDPOINT.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId +
+        String requestURI = choreoEndpoint.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId +
                 "/components/" + componentId + "/init/status");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
@@ -96,7 +99,7 @@ public abstract class AbstractChoreoComponentBuilder {
      */
     public JsonObject retrieveComponentJsonObject(String accessToken, String projectId, String componentHandle) throws
             IOException, InterruptedException, ComponentRetrieveException {
-        String requestURI = CHOREO_CP_PROJECTS_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         String graphQlQuery = "query{" +
                 "      component(" +
                 "        projectId: \"" + projectId + "\"" +
