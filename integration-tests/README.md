@@ -284,6 +284,7 @@ at Azure pipeline level.
 			<td>
 				1) Verify observability grouped logs <br/>
                 2) Verify observability live logs <br/>
+                2) Verify observability logs download <br/>
             </td>
         </tr>
          <tr>
