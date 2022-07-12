@@ -962,6 +962,7 @@ public abstract class ChoreoComponent {
             }
         }
     }
+
     public void undeploy(String accessToken, String componentId, String releaseId, String orgHandle) throws IOException, UndeployException {
         String graphQlQuery = "mutation { stopDeployment(orgHandler: \"" + orgHandle + "\", componentId: \"" + componentId + "\", releaseId: \"" + releaseId + "\", type: \"restAPI\" )}";
 
@@ -970,8 +971,7 @@ public abstract class ChoreoComponent {
                 put("query", graphQlQuery);
             }
         };
-        System.out.println("UndeployQuery");
-        System.out.println(graphQlQuery);
+
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
