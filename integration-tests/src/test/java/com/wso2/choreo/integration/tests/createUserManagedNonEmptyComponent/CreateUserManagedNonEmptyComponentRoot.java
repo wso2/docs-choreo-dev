@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.TokenHandler;
@@ -57,66 +58,9 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
         private static String apiKey;
         private static String apiId;
         private String repoName = "byor-greetings-app1";
+        private String repoType = "UserManagedNonEmpty";
+        private String repoBranch = "dev";
         private static ChoreoComponent testComponent;
-
-        private String getComponentDetailsQuery(String projectId, String componentHandler) {
-                String graphQlQuery = "query{ component(" +
-                                "        projectId: \"" + projectId + "\"," +
-                                "        componentHandler: \"" + componentHandler + "\"," +
-                                "      ){" +
-                                "        id," +
-                                "        name," +
-                                "        handler," +
-                                "        description," +
-                                "        displayType," +
-                                "        displayName," +
-                                "        ownerName," +
-                                "        orgId," +
-                                "        orgHandler," +
-                                "        version," +
-                                "        labels," +
-                                "        createdAt," +
-                                "        updatedAt," +
-                                "        projectId," +
-                                "        apiId," +
-                                "        repository{" +
-                                "          nameApp," +
-                                "          nameConfig," +
-                                "          branch," +
-                                "          branchApp," +
-                                "          organizationApp," +
-                                "          organizationConfig," +
-                                "          isUserManage" +
-                                "          appSubPath" +
-                                "        }," +
-                                "        apiVersions{" +
-                                "          apiVersion," +
-                                "          proxyName," +
-                                "          proxyUrl," +
-                                "          proxyId," +
-                                "          id," +
-                                "          state," +
-                                "          latest," +
-                                "          branch," +
-                                "          appEnvVersions{" +
-                                "            environmentId," +
-                                "            releaseId," +
-                                "            release{" +
-                                "              id," +
-                                "              metadata{" +
-                                "                choreoEnv" +
-                                "              }," +
-                                "              environmentId," +
-                                "              environment," +
-                                "              gitHash," +
-                                "              gitOpsHash," +
-                                "            }" +
-                                "          }" +
-                                "        }" +
-                                "      }" +
-                                "    }";
-                return graphQlQuery;
-        }
 
         @Autowired
         private HttpClient choreoTestClient;
@@ -149,8 +93,6 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-                String repoType = "UserManagedNonEmpty";
-                String repoBranch = "dev";
                 String srcGitHubURL = Constant.GITHUB_URL.concat(Configuration.GITHUB_ORG).concat("/")
                                 .concat(repoName);
                 String graphQlQuery = "mutation{ createComponent(" +
@@ -361,7 +303,8 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
         @Test(dependsOnMethods = { "testPRMerge" })
         @CitrusTest
         public void testComponentRetrieval() throws JsonProcessingException {
-                String graphQlQuery = getComponentDetailsQuery(projectId, componentHandler);
+                APICreator testAPI = new APICreator();
+                String graphQlQuery = testAPI.getComponentDetailsQuery(projectId, componentHandler);
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
                         {
                                 put("query", graphQlQuery);

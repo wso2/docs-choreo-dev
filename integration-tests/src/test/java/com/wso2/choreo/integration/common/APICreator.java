@@ -90,4 +90,63 @@ public class APICreator {
 
         return graphQlQuery;
     }
+
+    public String getComponentDetailsQuery(String projectId, String componentHandler) {
+        String graphQlQuery = "query{ component(" +
+                        "        projectId: \"" + projectId + "\"," +
+                        "        componentHandler: \"" + componentHandler + "\"," +
+                        "      ){" +
+                        "        id," +
+                        "        name," +
+                        "        handler," +
+                        "        description," +
+                        "        displayType," +
+                        "        displayName," +
+                        "        ownerName," +
+                        "        orgId," +
+                        "        orgHandler," +
+                        "        version," +
+                        "        labels," +
+                        "        createdAt," +
+                        "        updatedAt," +
+                        "        projectId," +
+                        "        apiId," +
+                        "        repository{" +
+                        "          nameApp," +
+                        "          nameConfig," +
+                        "          branch," +
+                        "          branchApp," +
+                        "          organizationApp," +
+                        "          organizationConfig," +
+                        "          isUserManage" +
+                        "          appSubPath" +
+                        "        }," +
+                        "        apiVersions{" +
+                        "          apiVersion," +
+                        "          proxyName," +
+                        "          proxyUrl," +
+                        "          proxyId," +
+                        "          id," +
+                        "          state," +
+                        "          latest," +
+                        "          branch," +
+                        "          appEnvVersions{" +
+                        "            environmentId," +
+                        "            releaseId," +
+                        "            release{" +
+                        "              id," +
+                        "              metadata{" +
+                        "                choreoEnv" +
+                        "              }," +
+                        "              environmentId," +
+                        "              environment," +
+                        "              gitHash," +
+                        "              gitOpsHash," +
+                        "            }" +
+                        "          }" +
+                        "        }" +
+                        "      }" +
+                        "    }";
+        return graphQlQuery;
+    }
 }
