@@ -54,7 +54,7 @@ public class Configuration {
     public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");
     public static final String GITHUB_ENDPOINT = System.getenv("GITHUB_ENDPOINT");
     public static final String GITHUB_ORG = System.getenv("GITHUB_ORG");
-    public static final String GITHUB_PAT = System.getenv("GITHUB_PAT");;
+    public static final String GITHUB_PAT = System.getenv("GITHUB_PAT");
 
     public static final String INSIGHTS_ENDPOINT = System.getenv("INSIGHTS_ENDPOINT");
     public static final String INSIGHTS_ONPREM_KEY = System.getenv("INSIGHTS_ONPREM_KEY");
@@ -108,6 +108,7 @@ public class Configuration {
             add(configYaml.alerts);
             add(configYaml.anomalyDetection);
             add(configYaml.insights);
+            add(configYaml.themeManagement);
         }};
 
         validateYamlConfigs(yamlConfigCollection);
@@ -154,7 +155,6 @@ public class Configuration {
                 testConfigs.put(configName, envValue);
             } else {
                 Optional<String> yamlValue = readYamlConfigValue(yamlConfigCollection, configName);
-
                 if (yamlValue.isPresent()) {
                     testConfigs.put(configName, yamlValue.get());
                 } else {

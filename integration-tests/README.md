@@ -293,5 +293,14 @@ at Azure pipeline level.
 				1) Verify observability system metrics <br/>
             </td>
         </tr>
+         <tr>
+			<td>themeManagementTestCase</td>
+			<td>Update custom theme assets, palette and typography </td>
+			<td>
+				1) Verify updating assets <br/>
+                2) Verify updating typography <br/>
+                3) Verify updating color palette <br/>
+            </td>
+        </tr>
         </tbody>
 </table>
