@@ -36,11 +36,11 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.contains("td", email).should("not.exist");
+    cy.get(`td[value="${email}"]`).should('not.exist')
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.contains("td", email).should("be.visible");
+    cy.get(`td[value="${email}"]`).should('exist')
   }
 
   static inviteMembers(email: string, ...roles) {
