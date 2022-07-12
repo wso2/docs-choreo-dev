@@ -3,37 +3,38 @@
 ## 1. Setup
 
 1. Setup following configurations as environment variables
-    - CHOREO_ENDPOINT
-    - STS_ENDPOINT
-    - TEST_CHOREO_ORG_ID
-    - TEST_CHOREO_ORG_HANDLE
-    - TEST_CHOREO_ORG_UUID
-    - STS_CLIENT_ID
-    - STS_CLIENT_SECRET
-    - ALERT_MAIL_IMAP_PASS
-    - TEST_USER_EMAIL
-    - TEST_USER_PASSWORD
-    - ASGARDEO_ENDPOINT
-    - ASGARDEO_CLIENT_ID
-    - ASGARDEO_CLIENT_SECRET
+   - CHOREO_ENDPOINT
+   - STS_ENDPOINT
+   - TEST_CHOREO_ORG_ID
+   - TEST_CHOREO_ORG_HANDLE
+   - TEST_CHOREO_ORG_UUID
+   - STS_CLIENT_ID
+   - STS_CLIENT_SECRET
+   - ALERT_MAIL_IMAP_PASS
+   - TEST_USER_EMAIL
+   - TEST_USER_PASSWORD
+   - ASGARDEO_ENDPOINT
+   - ASGARDEO_CLIENT_ID
+   - ASGARDEO_CLIENT_SECRET
 
-(Optional) Setup the following configurations as environment variables if you need to run the anomaly detection test  
-- ANOMALY_DETECTION_ORG_ID  
-- ANOMALY_DETECTION_ORG_UUID  
-- ANOMALY_DETECTION_PROJECT_ID  
-- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID  
-- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET  
-- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID  
-- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME  
-- ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL  
+(Optional) Setup the following configurations as environment variables if you need to run the anomaly detection test
+
+- ANOMALY_DETECTION_ORG_ID
+- ANOMALY_DETECTION_ORG_UUID
+- ANOMALY_DETECTION_PROJECT_ID
+- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID
+- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET
+- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID
+- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME
+- ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL
 - ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID
 - ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID
-- ANOMALY_DETECTION_MAIL_IMAP_PASS  
-- ANOMALY_DETECTION_TEST_USER_EMAIL  
-- ANOMALY_DETECTION_TEST_USER_PASSWORD  
-- ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE  
+- ANOMALY_DETECTION_MAIL_IMAP_PASS
+- ANOMALY_DETECTION_TEST_USER_EMAIL
+- ANOMALY_DETECTION_TEST_USER_PASSWORD
+- ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE
 
-Please talk to your EM or any QA team member to get these dev test user credentials. 
+Please talk to your EM or any QA team member to get these dev test user credentials.
 
 ## 2. Run
 
@@ -68,24 +69,24 @@ integration-tests/src/test
 **java/com/wso2/choreo/integration**
 
 1. **/common**
-    - Common Java implementations to run Choreo use-cases
+   - Common Java implementations to run Choreo use-cases
 
 2. **/config**
-    - Configurations needed to run common use-cases and Citrus integration tests
+   - Configurations needed to run common use-cases and Citrus integration tests
 
 3. **/tests**
-    - Citrus integration tests written for Choreo use-cases
-        - **/connectorbuilder** - connector publishing related integration tests
-        - ...
-    - **EndpointConfig.java**
-        - Spring bean configuration class that has the Citrus Endpoints defined
+   - Citrus integration tests written for Choreo use-cases
+      - **/connectorbuilder** - connector publishing related integration tests
+      - ...
+   - **EndpointConfig.java**
+      - Spring bean configuration class that has the Citrus Endpoints defined
 
 **resources**
 
 1. **/templates**
-    - Sample Json payload templates
-        - **/connectorbuilder** - connector publishing related Json payload templates
-        - ...
+   - Sample Json payload templates
+      - **/connectorbuilder** - connector publishing related Json payload templates
+      - ...
 
 ## 4. Adding a new test configuration
 
@@ -124,6 +125,16 @@ at Azure pipeline level.
 	</thead>
 	<tbody>
 		<tr>
+			<td> quotaLimitIT </td>
+			<td>checking whether the quota is limited </td>
+			<td>
+				1) Deploy 5 reusable components<br/>
+				2) Check whether the quota has been reached<br/>
+				3) Stop the deployment of the components<br/>
+			</td>
+		</tr>
+
+		<tr>
 			<td>connectorbuilder</td>
 			<td>Publish a connector </td>
 			<td>
@@ -132,6 +143,7 @@ at Azure pipeline level.
 				3) Retrieved the details of the published connector<br/>
 			</td>
 		</tr>
+
         <tr>
             <td>anomalyDetector (Temporarily disabled - https://github.com/wso2-enterprise/choreo/issues/13626)</td>
             <td>Detecting a backend failure anomaly</td>
@@ -171,6 +183,7 @@ at Azure pipeline level.
 				3) Delete the component<br/>
 			</td>
 		</tr>
+
 <tr>
 			<td>oomAlertIT</td>
 			<td>Check OOM alert </td>
