@@ -24,18 +24,6 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
     checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
 spec:
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-                - key: choreo.component
-                  operator: In
-                  values:
-                    - choreo-connect-adapter
-            topologyKey: kubernetes.io/hostname
   replicas: 1
   strategy:
     rollingUpdate:
@@ -44,6 +32,18 @@ spec:
     type: RollingUpdate
   template:
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: choreo.component
+                      operator: In
+                      values:
+                        - choreo-connect-adapter
+                topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500
