@@ -91,7 +91,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.THEME_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                    ConfigDefinition.THEME_ENDPOINT))
                 .build();
     }
 

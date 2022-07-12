@@ -20,10 +20,8 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import org.springframework.http.HttpHeaders;
@@ -49,7 +47,7 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateAssets() throws IOException, InterruptedException, ApiCreationException {
+        public void testUpdateAssets() throws IOException, InterruptedException {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
                                 .concat(TEST_CHOREO_ORG_UUID)
                                 .concat("/themes/default/assets");
@@ -78,7 +76,7 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateTypography() throws IOException, InterruptedException, ApiCreationException {
+        public void testUpdateTypography() throws IOException, InterruptedException {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
                                 .concat(TEST_CHOREO_ORG_UUID)
                                 .concat("/themes/default/typography");
@@ -105,7 +103,7 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateColorPalette() throws IOException, InterruptedException, ApiCreationException {
+        public void testUpdateColorPalette() throws IOException, InterruptedException {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
                                 .concat(TEST_CHOREO_ORG_UUID)
                                 .concat("/themes/default/palette");

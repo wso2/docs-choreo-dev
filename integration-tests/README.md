@@ -297,9 +297,9 @@ at Azure pipeline level.
 			<td>themeManagementTestCase</td>
 			<td>Update custom theme assets, palette and typography </td>
 			<td>
-				1) Verifgy updating assets <br/>
-                2) Verifgy updating typography <br/>
-                3) Verifgy updating color palette <br/>
+				1) Verify updating assets <br/>
+                2) Verify updating typography <br/>
+                3) Verify updating color palette <br/>
             </td>
         </tr>
         </tbody>

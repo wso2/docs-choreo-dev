@@ -110,6 +110,7 @@ public class Configuration {
             add(configYaml.alerts);
             add(configYaml.anomalyDetection);
             add(configYaml.insights);
+            add(configYaml.themeManagement);
         }};
 
         validateYamlConfigs(yamlConfigCollection);
@@ -156,7 +157,6 @@ public class Configuration {
                 testConfigs.put(configName, envValue);
             } else {
                 Optional<String> yamlValue = readYamlConfigValue(yamlConfigCollection, configName);
-
                 if (yamlValue.isPresent()) {
                     testConfigs.put(configName, yamlValue.get());
                 } else {
