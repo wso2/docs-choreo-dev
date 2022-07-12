@@ -1,0 +1,9 @@
+resources:
+  - cc-adapter-deployment.yaml
+  - cc-adapter-hpa.yaml
+  - cc-adapter-pdb.yaml
+  - cc-adapter-service.yaml
+
+commonLabels:
+  choreo.component: choreo-connect-adapter
+  cc.component: choreo-connect-adapter

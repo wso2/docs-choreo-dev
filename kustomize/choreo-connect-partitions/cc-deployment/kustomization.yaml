@@ -1,0 +1,10 @@
+resources:
+  - cc-deployment-hpa.yaml
+  - cc-deployment-lb-service.yaml
+  - cc-deployment-pdb.yaml
+  - cc-deployment-service.yaml
+  - choreo-connect-deployment.yaml
+
+commonLabels:
+  choreo.component: choreo-connect-deployment
+  cc.component: choreo-connect-deployment
