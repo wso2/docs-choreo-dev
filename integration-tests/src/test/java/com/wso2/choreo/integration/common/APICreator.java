@@ -32,6 +32,8 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 public class APICreator {
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
@@ -90,63 +92,18 @@ public class APICreator {
 
         return graphQlQuery;
     }
+   
+    public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache");
+        Writer writer = new StringWriter();
 
-    public String getComponentDetailsQuery(String projectId, String componentHandler) {
-        String graphQlQuery = "query{ component(" +
-                        "        projectId: \"" + projectId + "\"," +
-                        "        componentHandler: \"" + componentHandler + "\"," +
-                        "      ){" +
-                        "        id," +
-                        "        name," +
-                        "        handler," +
-                        "        description," +
-                        "        displayType," +
-                        "        displayName," +
-                        "        ownerName," +
-                        "        orgId," +
-                        "        orgHandler," +
-                        "        version," +
-                        "        labels," +
-                        "        createdAt," +
-                        "        updatedAt," +
-                        "        projectId," +
-                        "        apiId," +
-                        "        repository{" +
-                        "          nameApp," +
-                        "          nameConfig," +
-                        "          branch," +
-                        "          branchApp," +
-                        "          organizationApp," +
-                        "          organizationConfig," +
-                        "          isUserManage" +
-                        "          appSubPath" +
-                        "        }," +
-                        "        apiVersions{" +
-                        "          apiVersion," +
-                        "          proxyName," +
-                        "          proxyUrl," +
-                        "          proxyId," +
-                        "          id," +
-                        "          state," +
-                        "          latest," +
-                        "          branch," +
-                        "          appEnvVersions{" +
-                        "            environmentId," +
-                        "            releaseId," +
-                        "            release{" +
-                        "              id," +
-                        "              metadata{" +
-                        "                choreoEnv" +
-                        "              }," +
-                        "              environmentId," +
-                        "              environment," +
-                        "              gitHash," +
-                        "              gitOpsHash," +
-                        "            }" +
-                        "          }" +
-                        "        }" +
-                        "      }" +
-                        "    }";
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("projectId", projectId);
+        queryParams.put("componentHandler", componentHandler);
+        mustache.execute(writer, queryParams).flush();
+        String graphQlQuery = writer.toString();
+
         return graphQlQuery;
     }
 }

@@ -61,6 +61,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         private String repoSubpath = "test";
         private String repoType = "UserManagedNonEmpty";
         private String repoBranch = "feature";
+        private String prBranch;
         private static ChoreoComponent testComponent;
 
         @Autowired
@@ -304,7 +305,54 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
         @Test(dependsOnMethods = { "testPRMerge" })
         @CitrusTest
-        public void testComponentRetrieval() throws JsonProcessingException {
+        public void testBranchDelete() throws JsonProcessingException {
+                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                        .concat("/pulls/" + prNumber);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+
+                // get merged PR branch
+                $(http()
+                        .client(choreoTestClientForGithub)
+                        .send()
+                        .get(requestURI)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, authHeader)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                $(http()
+                        .client(choreoTestClientForGithub)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                JsonObject prBranchInformation = new JsonParser()
+                                        .parse((String) message.getPayload()).getAsJsonObject()
+                                        .getAsJsonObject("head");
+                                prBranch = prBranchInformation.get("ref").getAsString();
+                        }));
+
+                // delete merged PR branch
+                String deleteRequestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                        .concat("/git/refs/heads/" + prBranch);
+
+                $(http()
+                        .client(choreoTestClientForGithub)
+                        .send()
+                        .delete(deleteRequestURI)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, authHeader)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                $(http()
+                        .client(choreoTestClientForGithub)
+                        .receive()
+                        .response(HttpStatus.NO_CONTENT));
+        }
+
+        @Test(dependsOnMethods = { "testBranchDelete" })
+        @CitrusTest
+        public void testComponentRetrieval() throws JsonProcessingException, IOException {
                 APICreator testAPI = new APICreator();
                 String graphQlQuery = testAPI.getComponentDetailsQuery(projectId, componentHandler);
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
