@@ -11,7 +11,6 @@ resources:
   - console-next.yaml
   - cp-graphql.yaml
   - datacollector.yaml
-  - datamapper.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
