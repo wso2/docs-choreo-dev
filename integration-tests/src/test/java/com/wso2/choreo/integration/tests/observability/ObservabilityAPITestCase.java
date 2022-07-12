@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformati
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -306,7 +307,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testObservabilityTraceList"})
     @CitrusTest
     public void testObservabilityTraceInformation() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT)
+                .concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);

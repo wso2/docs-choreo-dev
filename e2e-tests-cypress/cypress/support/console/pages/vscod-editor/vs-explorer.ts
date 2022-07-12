@@ -18,7 +18,7 @@ export class VSExplorer {
 
   static terminal = ".xterm-helper-textarea";
 
-  
+
   static waitTillCodespaceLoad() {
     cy.get(".monaco-highlighted-label").contains(".bal").click();
     cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]').click();
@@ -108,7 +108,28 @@ export class VSExplorer {
     return cy.get(`div${VSExplorer.sourceControllerBtn}>div`).invoke("text");
   }
 
-
+  static pasteCode(fileName, enter: boolean = false) {
+    this.closeTab();
+    this.waitTillCodespaceLoad();
+    this.createFile(fileName);
+    this.selectExplorer();
+    cy.contains(fileName).click();
+    cy.get('div[class="view-line"]').should("be.visible").click();
+    cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
+      cy.focused().then($destination => {
+        const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
+          clipboardData: {
+            getData: (type = 'text') => code,
+          },
+        });
+        $destination[0].dispatchEvent(pasteEvent);
+        if (enter) {
+          cy.wait(3000);
+          cy.wrap($destination).type('{enter}');
+        }
+      });
+    });
+  }
 
   private static createFile(fileName: string) {
     cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon').click().wait(2000);
@@ -120,6 +141,11 @@ export class VSExplorer {
 
   static getCodeLense(index: number) {
     return cy.get(`[widgetId="codelens.widget-${index}"]`).eq(0);
+  }
+
+  static clickCodeLense(index: number) {
+    this.getCodeLense(index).click();
+    cy.wait(5000);
   }
 
   static matchCodeLense(index: number, regex: RegExp) {

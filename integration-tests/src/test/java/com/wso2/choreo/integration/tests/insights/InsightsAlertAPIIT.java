@@ -40,6 +40,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,6 @@ import java.util.Random;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static com.wso2.choreo.integration.config.Configuration.CHOREO_CP_GW_ENDPOINT;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_LATENCY_ALERT_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_TRAFFIC_ALERT_API_RESOURCE;
@@ -113,7 +113,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     }
 
     public static String getEnvironmentId(String orgUUID, String accessToken) throws IOException, InterruptedException {
-        String requestURI = CHOREO_CP_GW_ENDPOINT + "/" + INSIGHTS_API_RESOURCE;
+        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT) + "/" + INSIGHTS_API_RESOURCE;
         String graphQlQuery =
                 "query($orgFilter: OrgFilter!) {" +
                         "   listEnvironments(org: $orgFilter) {" +

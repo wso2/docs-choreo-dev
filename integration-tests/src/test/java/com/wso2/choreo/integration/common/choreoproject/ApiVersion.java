@@ -2,6 +2,7 @@ package com.wso2.choreo.integration.common.choreoproject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
@@ -19,7 +20,6 @@ import org.springframework.http.HttpStatus;
  * A class to represent a Choreo component API version
  */
 public class ApiVersion {
-    private static final String STS_ENDPOINT = Configuration.STS_ENDPOINT;
     private static final HttpClient client = HttpClient.newHttpClient();
     private String apiVersion;
     private String proxyName;
@@ -40,7 +40,8 @@ public class ApiVersion {
     public void changeApiLifeCycle(String accessToken, String organizationUuid, Constant.apiLIifCycleState toState)
             throws
             IOException, InterruptedException, ApiLifecycleChangeException {
-        String requestURI = STS_ENDPOINT.concat("/api/am/publisher/v2/apis/change-lifecycle?organizationId=")
+        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
+                .concat("/api/am/publisher/v2/apis/change-lifecycle?organizationId=")
                 .concat(organizationUuid).concat("&apiId=").concat(proxyId).concat("&action=")
                 .concat(String.valueOf(toState));
         HashMap<String, String> requestBodyMap = new HashMap<>();

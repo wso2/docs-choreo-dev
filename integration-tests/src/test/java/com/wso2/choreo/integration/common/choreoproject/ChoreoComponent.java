@@ -44,6 +44,7 @@ import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckExcepti
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
 import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.common.exceptions.EnvironmentDetailsCheckException;
@@ -88,8 +89,9 @@ import org.apache.http.util.EntityUtils;
  */
 public abstract class ChoreoComponent {
 
-    private static final String CHOREO_ENDPOINT = Configuration.CHOREO_ENDPOINT;
-    private static final String CHOREO_CP_PROJECTS_ENDPOINT = Configuration.CHOREO_CP_PROJECTS_ENDPOINT;
+    private final String choreoEndpoint;
+    private final String choreoCpProjectsEndpoint;
+    private final String configCPGatewayEndpoint;
     private String id;
     private String apiId;
     private List<ApiVersion> apiVersions = new ArrayList<>();
@@ -111,6 +113,11 @@ public abstract class ChoreoComponent {
     private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
     private final static Gson gson = new Gson();
 
+    public ChoreoComponent() {
+        choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+        choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT);
+        configCPGatewayEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT);
+    }
 
     /**
      * Retrieve commit history of a component
@@ -122,7 +129,7 @@ public abstract class ChoreoComponent {
      */
     public JsonArray getCommitHistory(String accessToken)
             throws IOException, GetCommitHistoryException {
-        String requestURI = CHOREO_CP_PROJECTS_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", "query {" +
                     "      commitHistory(componentId: \"" + id + "\") {" +
@@ -185,7 +192,7 @@ public abstract class ChoreoComponent {
             put("operation", 0);
             put("sourceUuid", "");
         }};
-        String requestURI = CHOREO_ENDPOINT.concat("/orgs/").concat(orgHandler).concat("/projects/").concat(projectId)
+        String requestURI = choreoEndpoint.concat("/orgs/").concat(orgHandler).concat("/projects/").concat(projectId)
                 .concat("/components/".concat(id).concat("/envs/").concat(devEnvIdToDeploy).concat("/")
                         .concat(latestVersionId).concat("/configurations"));
         ObjectMapper objectMapper = new ObjectMapper();
@@ -234,7 +241,7 @@ public abstract class ChoreoComponent {
             put("sha", latestCommitSha);
             put("branch", branch);
         }};
-        String requestURI = CHOREO_ENDPOINT.concat("/orgs/").concat(orgHandle).concat("/projects/").concat(projectId)
+        String requestURI = choreoEndpoint.concat("/orgs/").concat(orgHandle).concat("/projects/").concat(projectId)
                 .concat("/triggers/deployment");
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
@@ -277,7 +284,7 @@ public abstract class ChoreoComponent {
                                                   String versionId)
             throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
             ComponentDeploymentTimeoutException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", "query {" +
                     "  deployments(" +
@@ -493,7 +500,7 @@ public abstract class ChoreoComponent {
      * @return request namespace
      */
     public String getNamespaceForEnvironment(String accessToken, String environment) throws IOException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
         Writer writer = new StringWriter();
@@ -563,7 +570,7 @@ public abstract class ChoreoComponent {
      * @return request body containing graphql query
      */
     public ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String accessToken, String releaseId) throws IOException, ObservabilityIdCheckException, InterruptedException, ObservabilityIdNotFoundException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         String requestBody = getComponentObservabilityIdsQuery(releaseId);
         HttpPost request = new HttpPost(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
@@ -600,7 +607,7 @@ public abstract class ChoreoComponent {
      */
     public InvokeInformation getInvokeInformation(String accessToken, String componentType, String environment) throws
             IOException, NoLatestApiVersionFoundException, InterruptedException, ComponentInvokeInformationCheckException, InvokeInformationNotFoundException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/deploy/graphql/queryForInvokeInformation.mustache");
         Writer writer = new StringWriter();
@@ -654,8 +661,8 @@ public abstract class ChoreoComponent {
      */
     public String getAPIKeyForInvoke(String accessToken, String apiId) throws InterruptedException, IOException,
             APIKeyGenerationCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
-        String requestURI = Configuration.STS_ENDPOINT.
-                concat(Constant.APIS_ENDPOINT)
+        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
+                .concat(Constant.APIS_ENDPOINT)
                 .concat("/")
                 .concat(apiId)
                 .concat("/generate-key")
@@ -696,7 +703,7 @@ public abstract class ChoreoComponent {
     }
 
     public JsonObject fetchAST(String accessToken, String env) throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException, ObservabilityASTCheckException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
         MustacheFactory mf = new DefaultMustacheFactory();
@@ -724,7 +731,7 @@ public abstract class ChoreoComponent {
     }
 
     public void waitForMetricsData(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = getReleaseIdForEnvironment("dev");
         ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
         MustacheFactory mf = new DefaultMustacheFactory();
@@ -776,7 +783,7 @@ public abstract class ChoreoComponent {
     }
 
     public void waitForTraceData(String accessToken, String env) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         JsonObject ast = fetchAST(accessToken, "dev");
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         String releaseId = getReleaseIdForEnvironment(env);
@@ -823,7 +830,7 @@ public abstract class ChoreoComponent {
     }
 
     public void waitForObservabilityLogs(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, URISyntaxException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
                 .concat(obsId)
                 .concat("/logsV2");
 
@@ -868,7 +875,7 @@ public abstract class ChoreoComponent {
     }
 
     public void waitForObservabilitySystemMetrics(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilitySystemMetricsCheckException, ObservabilitySystemMetricsNotFoundException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
                 .concat(obsId)
                 .concat("/metricsV2");
 
@@ -936,7 +943,7 @@ public abstract class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-        HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
