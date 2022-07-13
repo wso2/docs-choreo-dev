@@ -1,7 +1,7 @@
 resources:
   - am-pdb.yaml
-  - choreo-connect-adapter.yaml
-  - choreo-connect-deployment.yaml
+#  - choreo-connect-adapter.yaml
+#  - choreo-connect-deployment.yaml
   - choreo-connect-global-adapter.yaml
   - choreo-connect-internal-global-adapter.yaml
   - devportal.yaml
