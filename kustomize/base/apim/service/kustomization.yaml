@@ -8,4 +8,3 @@ resources:
 - tm-2-service.yaml
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
-#- choreo-connect

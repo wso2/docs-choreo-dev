@@ -7,5 +7,4 @@ resources:
 - tm-2-deployment.yaml
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
-#- choreo-connect
 - ga-health-check-deployment.yaml
