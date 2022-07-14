@@ -61,10 +61,10 @@ Follow this procedure to further develop the API by adding a new resource and si
 
 1. Click **Develop** in the left pane.
 
-2. Click **Edit with VS Code Online**.
+2. Click **Edit Code**.
  
     !!! info
-        The VS Code Editor can take some time to open if you are a first-time user.
+        The Web Editor can take some time to open if you are a first-time user.
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
@@ -76,8 +76,8 @@ Follow this procedure to further develop the API by adding a new resource and si
      |-----------------|-----------------------|
      | **HTTP Method** | `GET` |
      | **Path** | `personalizedMessage` |
-     | **Return Type** | `string` |
-
+     | **Return Type** | `string\|error` |
+     
 
 4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
 
@@ -91,9 +91,8 @@ Follow this procedure to further develop the API by adding a new resource and si
 
  5. Click **Save**.
 
- 6. Expand the **GET personalizedMessage** resource. This displays the low-code diagram for it.
+ 6. Click **Variable** and configure it as follows: 
 
- 7. Click **Variable** and configure it as follows: 
     ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
      | **Field** | **Value** |
@@ -104,21 +103,52 @@ Follow this procedure to further develop the API by adding a new resource and si
 
      ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
 
-8. Click **Save**.
+ 7. Click **Save**.
 
-9. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
-   ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
-   ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
+ 8. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
+    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
+    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
-10. Click **Save**.
+ 9. Click **Save**.
 
 !!!info
-    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can choose to work in the low-code view or pro-code view, or both simultaneously.    
+    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can work in the low-code view or the pro-code view. You can also work in both views simultaneously.    
     ![Editor View](../assets/img/get-started/low-code-pro-code-side-by-side.png){.cInlineImage-full}
 
-### Step 2: Commit Changes to GitHub
+### Step 2: Run and test the REST API
 
-Choreo maintains source code in a private GitHub repository. When you create a component, Choreo creates it in the private-GitHub repository associated with your account. Therefore, you must commit and push your changes if you want to change the API Implementation.
+Once you update the REST API configuration as described above, you can verify whether it works as expected by following these steps:
+
+1. Click **Run**.
+
+    ![Run the REST API](../assets/img/get-started/run-the-rest-api.png){.cInlineImage-half}
+
+    A terminal opens with logs that indicate the status of the REST API. If you updated the REST API as instructed above, you will see the following log:
+
+    ```
+    Running executable
+    ```
+2. To invoke the REST API, click **Try it**.
+   
+    ![Try REST API](../assets/img/get-started/try-rest-api.png){.cInlineImage-half}
+
+    This opens the Swagger view with details of your REST API.
+
+3. Expand the GET resource and click **Try it out**.
+
+    ![Try out REST API](../assets/img/get-started/try-out-rest-api.png){.cInlineImage-full}
+
+4. In the **name** field, enter any value (for example, `Alice`).
+
+5. Click **Execute**.
+
+    The Swagger view displays the response under **Response Body** as shown in the image below:
+
+    ![REST API response](../assets/img/get-started/rest-api-response.png){.cInlineImage-half}
+
+### Step 3: Commit changes to GitHub
+
+Choreo maintains source code in a private GitHub repository. When you create a component, Choreo creates it in the private GitHub repository associated with your account. Therefore, you must commit and push your changes if you want to change the API Implementation.
 
 Follow this procedure to commit and push your changes to GitHub.
 
@@ -133,11 +163,15 @@ Follow this procedure to commit and push your changes to GitHub.
 
      ![Sync Changes](../assets/img/get-started/sync-changes.png){.cInlineImage-full}
 
-3. Enter a meaningful commit message and click **✓** on the toolbar. This commits the changes to your private GitHub repository.
+3. Enter a meaningful commit message and click **✓** on the toolbar. This commits the changes to the locally cloned copy of your private GitHub repository.
 
      ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
 4. On the top toolbar, click **...** and then click **Push**. 
+
+    ![Push changes](../assets/img/get-started/push-changes.png){.cInlineImage-full}
+
+    This pushes the local changes to your private GitHub repository.
 
 !!! tip
     If you want to re-deploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
