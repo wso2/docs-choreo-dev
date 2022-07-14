@@ -247,6 +247,36 @@ at Azure pipeline level.
             </td>
         </tr>
         <tr>
+			<td>createUserManagedComponentNonEmptyRoot</td>
+			<td>Create BYOR component with existing code in root directory using GH,deploy,test and delete </td>
+			<td>
+				1) Verify creating user managed component <br/>
+                2) Verify created component status <br/>
+                3) Verify initial PR Generation <br/>
+                4) Verify PR merge <br/>
+                5) Verify component retrieval <br/>
+                6) Verify component deployment <br/>
+                7) Verify component deployment status <br/>
+                8) Verify API invocation <br/>
+                9) Verify component deletion  <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createUserManagedComponentNonEmptySub</td>
+			<td>Create BYOR component with existing code in sub directory using GH,deploy,test and delete </td>
+			<td>
+				1) Verify creating user managed component <br/>
+                2) Verify created component status <br/>
+                3) Verify initial PR Generation <br/>
+                4) Verify PR merge <br/>
+                5) Verify component retrieval <br/>
+                6) Verify component deployment <br/>
+                7) Verify component deployment status <br/>
+                8) Verify API invocation <br/>
+               9) Verify component deletion  <br/>
+            </td>
+        </tr>
+        <tr>
 			<td>createDeployInvokeWebhookIT</td>
 			<td>Create webhook component,deploy,test,observability logs and delete </td>
 			<td>

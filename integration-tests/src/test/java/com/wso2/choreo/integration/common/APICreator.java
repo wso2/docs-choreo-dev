@@ -33,6 +33,8 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 public class APICreator {
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
@@ -87,6 +89,43 @@ public class APICreator {
         gql.setProjectId(projectId);
         gql.setApiId(apiId.replaceAll("\"", ""));
         mustache.execute(writer, gql).flush();
+        String graphQlQuery = writer.toString();
+
+        return graphQlQuery;
+    }
+
+    public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle,String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
+        Writer writer = new StringWriter();
+
+        GraphqlDTO gql = new GraphqlDTO();
+        gql.setApiName(componentName.toLowerCase());
+        gql.setOrgId(Integer.parseInt(orgId));
+        gql.setOrgHandler(orgHandle);
+        gql.setDiaplayName(componentName);
+        gql.setDisplayType(String.valueOf(Constant.displayType.restAPI));
+        gql.setProjectId(projectId);
+        gql.setSrcGitRepoUrl(srcGitRepoUrl);
+        gql.setRepoSubpath(repoSubpath);
+        gql.setRepoType(repoType);
+        gql.setRepoBranch(repoBranch);
+
+        mustache.execute(writer, gql).flush();
+        String graphQlQuery = writer.toString();
+
+        return graphQlQuery;
+    }
+   
+    public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache");
+        Writer writer = new StringWriter();
+
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("projectId", projectId);
+        queryParams.put("componentHandler", componentHandler);
+        mustache.execute(writer, queryParams).flush();
         String graphQlQuery = writer.toString();
 
         return graphQlQuery;
