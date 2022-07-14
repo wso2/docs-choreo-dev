@@ -107,26 +107,8 @@ spec:
             - configMapRef:
                 name: cm-feature-flags
             - configMapRef:
-                name: env-choreo-connect-enforcer
+                name: env-cc-enforcer
           env:
-            - name: ENFORCER_PRIVATE_KEY_PATH
-              value: "/home/wso2/security/keystore/mg.key"
-            - name: ENFORCER_PUBLIC_CERT_PATH
-              value: "/home/wso2/security/keystore/mg.pem"
-            - name: TRUSTED_CA_CERTS_PATH
-              value: "/home/wso2/security/truststore"
-            - name: ADAPTER_HOST_NAME
-              value: "adapter"
-            - name: ADAPTER_XDS_PORT
-              value: "18000"
-            - name: ENFORCER_REGION
-              value: "UNKNOWN"
-            - name: XDS_MAX_MSG_SIZE
-              value: "4194304"
-            - name: XDS_MAX_RETRIES
-              value: "3"
-            - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -189,32 +171,7 @@ spec:
             - configMapRef:
                 name: cm-feature-flags
             - configMapRef:
-                name: env-choreo-connect-router
-          env:
-            - name: ROUTER_ADMIN_HOST
-              value: "0.0.0.0"
-            - name: ROUTER_ADMIN_PORT
-              value: "9000"
-            - name: ROUTER_CLUSTER
-              value: "default_cluster"
-            - name: ROUTER_PRIVATE_KEY_PATH
-              value: "/home/wso2/security/keystore/mg.key"
-            - name: ROUTER_PUBLIC_CERT_PATH
-              value: "/home/wso2/security/keystore/mg.pem"
-            - name: ADAPTER_PORT
-              value: "18000"
-            - name: ADAPTER_CA_CERT_PATH
-              value: "/home/wso2/security/truststore/mg.pem"
-            - name: ENFORCER_HOST
-              value: "127.0.0.1"
-            - name: ENFORCER_PORT
-              value: "8081"
-            - name: ENFORCER_ANALYTICS_HOST
-              value: "127.0.0.1"
-            - name: ENFORCER_ANALYTICS_RECEIVER_PORT
-              value: "18090"
-            - name: ENFORCER_CA_CERT_PATH
-              value: "/home/wso2/security/truststore/mg.pem"
+                name: env-cc-router
           resources:
             requests:
               memory: "4Gi"

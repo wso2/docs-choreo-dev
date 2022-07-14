@@ -20,6 +20,16 @@ resources:
   - cc-adapter-pdb.yaml
   - cc-adapter-service.yaml
 
+configMapGenerator:
+  - name: env-cc-adapter
+    behavior: create
+    literals:
+      - ADAPTER_PRIVATE_KEY_PATH="/home/wso2/security/keystore/mg.key"
+      - ADAPTER_PUBLIC_CERT_PATH="/home/wso2/security/keystore/mg.pem"
+      - localLabel=""
+      - environmentLabel=""
+      - AZURE_SDK_GO_LOGGING=""
+
 commonLabels:
   choreo.component: choreo-connect-adapter
   cc.component: choreo-connect-adapter
