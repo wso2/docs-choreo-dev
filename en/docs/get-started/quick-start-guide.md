@@ -76,11 +76,8 @@ Follow this procedure to further develop the API by adding a new resource and si
      |-----------------|-----------------------|
      | **HTTP Method** | `GET` |
      | **Path** | `personalizedMessage` |
+     | **Return Type** | `string\|error` |
      
-     For the REST API, to return a string or an error, enter the following in the **Return Type** field.
-     
-     ``string|error`
-
 
 4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
 
