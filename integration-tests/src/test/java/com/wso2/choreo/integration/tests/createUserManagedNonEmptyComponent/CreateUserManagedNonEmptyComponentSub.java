@@ -91,41 +91,17 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
         @Test
         @CitrusTest
-        public void testCreateUserManagedComponent() throws JsonProcessingException {
+        public void testCreateUserManagedComponent() throws JsonProcessingException, IOException {
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
                 String srcGitHubURL = Constant.GITHUB_URL.concat(Configuration.GITHUB_ORG).concat("/")
                                 .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
-                String graphQlQuery = "mutation{ createComponent(" +
-                                "      component: {" +
-                                "        name: \"" + componentName + "\"," +
-                                "        orgId: " + orgId + "," +
-                                "        orgHandler: \"" + orgHandle + "\"," +
-                                "        displayName: \"" + componentName + "\"," +
-                                "        displayType: \"" + Constant.displayType.restAPI + "\"," +
-                                "        projectId: \"" + projectId + "\"," +
-                                "        labels: \"\"," +
-                                "        version: \"1.0.0\"," +
-                                "        description: \"\"," +
-                                "        apiId: \"\"," +
-                                "        ballerinaVersion: \"swan-lake-alpha5\"," +
-                                "        triggerChannels: \"\"," +
-                                "        triggerID: null," +
-                                "        httpBase: true," +
-                                "        sampleTemplate: \"\"," +
-                                "        srcGitRepoUrl: \"" + srcGitHubURL + "\"" +
-                                "        repositorySubPath: \"" + repoSubpath + "\"" +
-                                "        repositoryType: \"" + repoType + "\"" +
-                                "        repositoryBranch: \"" + repoBranch + "\"" +
-                                "      }){" +
-                                "        id, orgId, projectId, handler" +
-                                "      }}";
-                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-                        {
-                                put("query", graphQlQuery);
-                        }
-                };
+                APICreator testAPI = new APICreator();
+                String graphQlQuery = testAPI.createUserManagedNonEmptyComponentCreationQuery(componentName, orgId, orgHandle, projectId, srcGitHubURL, repoSubpath, repoType, repoBranch);
+                HashMap<String, String> gqlRequestPayload = new HashMap<>() {{
+                    put(Constant.QUERY, graphQlQuery);
+                }};
                 ObjectMapper componentObjectMapper = new ObjectMapper();
                 String componentRequestBody = componentObjectMapper.writeValueAsString(gqlRequestPayload);
                 $(http()

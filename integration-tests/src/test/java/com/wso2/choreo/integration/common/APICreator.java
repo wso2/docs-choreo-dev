@@ -93,6 +93,29 @@ public class APICreator {
 
         return graphQlQuery;
     }
+
+    public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle,String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
+        Writer writer = new StringWriter();
+
+        GraphqlDTO gql = new GraphqlDTO();
+        gql.setApiName(componentName.toLowerCase());
+        gql.setOrgId(Integer.parseInt(orgId));
+        gql.setOrgHandler(orgHandle);
+        gql.setDiaplayName(componentName);
+        gql.setDisplayType(String.valueOf(Constant.displayType.restAPI));
+        gql.setProjectId(projectId);
+        gql.setSrcGitRepoUrl(srcGitRepoUrl);
+        gql.setRepoSubpath(repoSubpath);
+        gql.setRepoType(repoType);
+        gql.setRepoBranch(repoBranch);
+
+        mustache.execute(writer, gql).flush();
+        String graphQlQuery = writer.toString();
+
+        return graphQlQuery;
+    }
    
     public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
