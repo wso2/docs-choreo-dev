@@ -13,6 +13,8 @@
 
 /// <reference types="cypress" />
 
+import { Utils } from "../../../utils";
+
 export class OrganizationComponent {
   static invitationEmail = Cypress.env("invitationUserEmail");
 
@@ -37,6 +39,7 @@ export class OrganizationComponent {
 
   static verifyEmailIsNotDisplayed(email: string) {
     cy.get(`td[value="${email}"]`).should('not.exist')
+    this.deleteInvitation(email)
   }
 
   static verifyEmailIsDisplayed(email: string) {
@@ -67,6 +70,23 @@ export class OrganizationComponent {
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').contains("Delete").click();
     cy.contains("td", email).should("not.exist");
     cy.log("Member deleted successfully");
+  }
+
+  static deleteInvitation(email: string) {
+    const { handle } = Cypress.env("userData")
+    const token = Cypress.env("apim_token")
+    const deleteRequest = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/invitations?email=${email}`
+    const headers = {
+      authorization: `Bearer ${token}`
+    }
+    Utils.sendDeleteRequest(deleteRequest, headers).then(res => {
+      if (res.status === 200) {
+        cy.log("Deleted Invited User")
+      } else {
+        cy.log("User Has Not Invited Or Error")
+      }
+    })
+
   }
 
   static selectPendingInvitation() {

@@ -22,6 +22,7 @@ const INVITATION_EMAIL = Cypress.env("invitationUserEmail");
 describe("Invite members", () => {
   before(() => {
     LoginPage.login();
+  // OrganizationComponent.deleteInvitation(INVITATION_EMAIL)
   });
   after(() => {
     ChoreoHomePage.logout();
