@@ -67,7 +67,7 @@ export class LoginPage {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
     cy.setCookie("fidpId", "EnterpriseIDP")
-   }
+  }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
