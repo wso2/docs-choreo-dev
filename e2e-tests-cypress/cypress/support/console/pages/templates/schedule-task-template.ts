@@ -20,6 +20,7 @@ export class ScheduleTask {
   }
 
   static createTask(name: string, description: string) {
+    cy.get('[data-testid="components-mt-api-item-1"]').should('be.visible').click()
     cy.get('[name="name"]').clear().type(name);
     cy.get('[data-cyid="create-scheduled-task-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();

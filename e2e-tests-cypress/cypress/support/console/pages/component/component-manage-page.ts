@@ -15,7 +15,6 @@ import { DocumentType } from "../enum/document-type";
 import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
-import { Utils } from "../../utils";
 
 
 
@@ -116,53 +115,12 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
-    //this.getPublishStatus()
+
     cy.get('[data-testid="marketplace-btn"]').should('be.visible')
     cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist")
   }
 
-  private static getPublishStatus() {
-    try {
-      cy.get('[data-testid="retry-btn"]', { timeout: 360000 }).click()
-      try {
-        cy.get('[data-testid="publish-btn"]', { timeout: 5000})
-        cy.get('[aria-label="close"]').click()
-      } catch (error1) {
-        cy.get('[data-testid="publish-btn"]', { timeout: 5000 }).click()
-        cy.log(error1)
-      }
-    } catch (error) {
-      cy.log(error)
-    }
-    // const { handle } = Cypress.env("userData")
-    // cy.intercept({
-    //   url: `https://appv2.preview-dv.choreo.dev/user-connectors/${handle}/*`,
-    //   method: "POST"
-    // }).as("publish_status")
 
-    // cy.wait("@publish_status", { timeout: 600000 }).then(status => {
-    //   const correlationId = status.request.headers["x-correlation-id"]
-    //   const url = `${status.request.url}/status`
-    //   const header = {
-    //     Authorization: `Bearer ${Cypress.env("apim_token")}`,
-    //     "x-correlation-id": `"${correlationId}`,
-    //     "content-type": "application/json",
-    //   };
-    //   cy.log(JSON.stringify(status.response.body))
-    //   Utils.sendGetRequest(url, header).then(res => {
-    //     cy.log(JSON.stringify(res.body))
-    //     cy.log(JSON.stringify(res.status))
-    //   })
-    //   const { success } = status.response.body
-    //   if (success === "ok") {
-    //     cy.get('body').then(bdy => {
-    //       if (bdy.find('[data-testid="retry-btn"]')) {
-    //         cy.get('[data-testid="retry-btn"]').click()
-    //       }
-    //     })
-    //   }
-    // })
-  }
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
@@ -191,25 +149,26 @@ export class ComponentAPILifecycle {
 
   private static addAllowedOrigins(origins: string[]) {
     if (origins.length > 0) {
-      cy.get('[data-testid="addBtn-origin"]').click();
-      origins.forEach((ori) => cy.get('[placeholder="Type and press enter to add Origins"]').type(`${ori}`).wait(1000).type("{enter}"));
+      origins.forEach((ori) => cy.get('[data-testid="cors-config-origins-input"]>div>div>input').type(`${ori}`).wait(1000).type("{enter}"));
     }
   }
 
   private static addAllowedAccessControlHeaders(headers: string[]) {
     if (headers.length > 0) {
-      cy.get('[data-testid="addBtn-header"]').click();
-      headers.forEach((meth) => cy.get('[placeholder="Type and press enter to add Headers"]').type(`${meth}`).wait(1000).type("{enter}"));
+      headers.forEach((meth) => {
+        cy.get('[data-testid="cors-config-header-input"]>div>div').click();
+        cy.get('[data-testid="cors-config-header-input"]>div>div>input').type(`${meth}`).wait(1000).type("{enter}")
+      });
     }
   }
 
   private static addAllowedAccessMethods(methods: string[]) {
     if (methods.length > 0) {
-      cy.get('[data-testid="addBtn-method"]').click();
+
       methods.forEach((meth) => {
-        cy.get('[aria-labelledby="demo-mutiple-name-label"]').click();
-        cy.get(`[data-value=${meth.toUpperCase()}]`).click();
-        cy.wait(1000);
+        cy.get('[data-testid="cors-config-methods-input"]>div>div>div.MuiAutocomplete-endAdornment>button').eq(1).click();
+        cy.contains(meth.toUpperCase()).click();
+
       });
     }
   }

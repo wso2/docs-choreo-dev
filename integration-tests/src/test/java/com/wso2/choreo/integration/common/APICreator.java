@@ -18,6 +18,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
@@ -40,7 +41,7 @@ public class APICreator {
 
     public String createAPI(String accessToken, String apiName, String apiContext) throws IOException,
             InterruptedException, ApiCreationException {
-        String requestURI = Configuration.STS_ENDPOINT.
+        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT).
                 concat(Constant.APIS_ENDPOINT).concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
                 .concat(Configuration.TEST_CHOREO_ORG_UUID);
         String requestBody = getRequestBodyForAPICreation(apiName, apiContext);

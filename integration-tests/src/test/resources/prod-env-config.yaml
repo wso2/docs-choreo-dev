@@ -1,0 +1,49 @@
+accountInfo:
+  TEST_USER_EMAIL: choreo-integration-test-user-prod@wso2.com@carbon.super
+  #TEST_USER_PASSWORD:
+  #TEST_CHOREO_ORG_ID:
+  TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserprod
+  #TEST_CHOREO_ORG_UUID:
+authInfo:
+  STS_ENDPOINT: https://sts.choreo.dev
+  #STS_CLIENT_ID:
+  #STS_CLIENT_SECRET:
+  ASGARDEO_ENDPOINT: https://api.asgardeo.io
+  #ASGARDEO_CLIENT_ID:
+  #ASGARDEO_CLIENT_SECRET:
+  #CP_APP_CLIENT_ID:
+  #CP_APP_CLIENT_SECRET:
+common:
+  CHOREO_ENDPOINT: https://app.choreo.dev
+  CHOREO_CP_PROJECTS_ENDPOINT: https://apis.choreo.dev/projects/1.0.0
+  CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.choreo.dev/93tu
+  GITHUB_ENDPOINT: https://api.github.com
+  GITHUB_ORG: choreo-test-apps
+  #GITHUB_PAT:
+  GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
+  #GMAIL_API_CS:
+  #GMAIL_API_REFRESH_TOKEN:
+insights:
+  INSIGHTS_ENDPOINT: https://analytics-event-auth.st.choreo.dev
+  INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
+alerts:
+  #ALERT_MAIL_IMAP_PASS:
+  ALERT_ORG_UUID: cde82885-2dee-492a-be36-60e13f7aab81
+  ALERT_RELEASE_ID: 156f5be1-9d3e-44e9-8dc2-50f37e6c21da
+anomalyDetection:
+  #ANOMALY_DETECTION_MAIL_IMAP_PASS:
+  ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID: MhBgF6FPCW_7lCYRmyuR6uJmekwa
+  #ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET:
+  ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID: e9d70312-deb8-4e85-b8f1-4fa9a6bdb233
+  ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME: integrationtestpassthroughservice
+  ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID: dcfd3d88-4a63-489c-9957-26f43e4dbca5
+  ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL: https://c6f792b0-1d0f-48fe-803b-9d25b08227b2-prod.e1-us-east-azure.choreoapis.dev/yxrg/integrationtestpassthroughservice/1.0.0
+  ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID: 3e1bea1c-149b-484d-8129-5eaf90dad6f6
+  ANOMALY_DETECTION_PROJECT_ID: a5cd0984-8f8a-4986-9426-e37cfd805900
+  ANOMALY_DETECTION_TEST_CHOREO_ORG_ID: 7563
+  ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID: c6f792b0-1d0f-48fe-803b-9d25b08227b2
+  ANOMALY_DETECTION_TEST_USER_EMAIL: choreoanomalydetectortest@gmail.com@carbon.super
+  ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE: choreoanomalydetectortestahdzd
+  #ANOMALY_DETECTION_TEST_USER_PASSWORD:
+themeManagement:
+  THEME_ENDPOINT: https://apis.choreo.dev

@@ -42,7 +42,7 @@ export class TryOut {
 
   static generateTestKeyAndVerify() {
     cy.get("[data-testid=get-test-key-btn]").should("be.visible").click();
-    cy.wait(LONG_TIME_OUT);
+    cy.get('#notistack-snackbar').should('be.visible')
     cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
   }
 

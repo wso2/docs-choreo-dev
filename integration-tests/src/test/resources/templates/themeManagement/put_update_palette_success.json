@@ -1,0 +1,11 @@
+{
+  "type": "light",
+  "background": {
+    "primary": { "light": "#f7f8fb", "dark": "#9A97EB" },
+    "secondary": { "light": "#ffffff", "dark": "#542C3A" }
+  },
+  "text": {
+    "primary": { "light": "#000000", "dark": "#493AA5" },
+    "secondary": { "light": "#000000", "dark": "#f50057" }
+  }
+}

@@ -12,13 +12,7 @@ There are several properties files related to this setup.
 Below is the folder hierarchy of properties files.
 ```
 |- control-plane-components
-|  |- choreo-ai-anomaly-detector
-|  |  |- secrets.properties
-|
 |  |- choreo-ai-capacity-planner
-|  |  |- secrets.properties
-|  |
-|  |- choreo-ai-datamapper
 |  |  |- secrets.properties
 |  |
 |  |- choreo-ai-deployment-optimizer

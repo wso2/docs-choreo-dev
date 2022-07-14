@@ -92,4 +92,7 @@ public final class Constant {
     public static final String OBSERVABILITY_LOGS_ENDPOINT_SUFFIX = "/observability/logging/0.1.0/applications/";
     public static final String OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX = "/observability/system/0.1.0/applications/";
     public static final String OBSERVABILITY_OBS_ENDPOINT_SUFFIX = "/observability/application/0.1.0";
+
+    // Theme management constants
+    public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
 }

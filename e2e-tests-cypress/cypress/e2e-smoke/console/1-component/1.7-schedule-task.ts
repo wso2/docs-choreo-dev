@@ -96,6 +96,6 @@ describe("Schedule task", () => {
 
   it("Verify application suspension", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopScheduleTask();
+    ComponentDeployPage.stopAllDeployment();
   });
 });

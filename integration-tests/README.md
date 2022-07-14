@@ -87,7 +87,32 @@ integration-tests/src/test
         - **/connectorbuilder** - connector publishing related Json payload templates
         - ...
 
-## 4. Scenarios
+## 4. Adding a new test configuration
+
+Test configurations are supported in 2 ways
+
+1. Defined environment variables
+2. Defined as yaml configuration
+
+When a config is evaluated at the test level, precedence will **first** be given to environment variables
+and then yaml configurations. Therefor a yaml configuration can be overridden by setting the corresponding 
+env variable.
+
+**Note**: _Give preference to defining new configs as yaml configurations because they are easier to manage.
+Env variables should only be considered values such as credentials that need to remain private._
+
+**Steps for defining a new configuration**
+
+- Add the new configuration name to the `ConfigDefinition.java` enum. This will act as the unique identifier
+   of the configuration.
+
+- For a yaml configuration, add the config to the _dev-env-config.yaml_, _staging-env-config.yaml_ and _prod-env-config.yaml_
+   (These do **not** need to be explicitly setup at Azure pipeline level)
+
+- Configs that are only set as env variables do not need to be added to the yaml and must be configured
+at Azure pipeline level.
+
+## 5. Scenarios
 
 <table>
 	<thead>
@@ -296,6 +321,15 @@ integration-tests/src/test
 			<td>Verify observability metrics from a RESTAPI component </td>
 			<td>
 				1) Verify observability system metrics <br/>
+            </td>
+        </tr>
+         <tr>
+			<td>themeManagementTestCase</td>
+			<td>Update custom theme assets, palette and typography </td>
+			<td>
+				1) Verify updating assets <br/>
+                2) Verify updating typography <br/>
+                3) Verify updating color palette <br/>
             </td>
         </tr>
         </tbody>
