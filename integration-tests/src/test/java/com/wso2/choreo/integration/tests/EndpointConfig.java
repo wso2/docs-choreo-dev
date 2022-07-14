@@ -86,5 +86,14 @@ public class EndpointConfig {
                 .build();
     }
 
+    @Bean
+    public HttpClient choreoTestClientForTheme() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                    ConfigDefinition.THEME_ENDPOINT))
+                .build();
+    }
 
 }

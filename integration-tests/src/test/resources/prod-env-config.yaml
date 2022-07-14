@@ -45,4 +45,5 @@ anomalyDetection:
   ANOMALY_DETECTION_TEST_USER_EMAIL: choreoanomalydetectortest@gmail.com@carbon.super
   ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE: choreoanomalydetectortestahdzd
   #ANOMALY_DETECTION_TEST_USER_PASSWORD:
-  
+themeManagement:
+  THEME_ENDPOINT: https://apis.choreo.dev

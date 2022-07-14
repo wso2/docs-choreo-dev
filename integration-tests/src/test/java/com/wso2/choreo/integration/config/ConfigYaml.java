@@ -38,4 +38,7 @@ public class ConfigYaml {
 
     @JsonProperty("anomalyDetection")
     Map<String, String> anomalyDetection;
+
+    @JsonProperty("themeManagement")
+    Map<String, String> themeManagement;
 }

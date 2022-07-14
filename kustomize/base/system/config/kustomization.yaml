@@ -1,8 +1,4 @@
 configMapGenerator:
-  - name: cm-datamapper
-    behavior: create
-    files:
-      - datamapper/models.properties
   - name: cm-test-assistant
     behavior: create
     files:

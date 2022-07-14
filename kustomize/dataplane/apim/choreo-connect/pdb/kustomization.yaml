@@ -9,3 +9,4 @@ resources:
   - dev-us-east-azure-p2.yaml
   - dev-us-east-azure-p3.yaml
   - dev-us-east-azure-p4.yaml
+  - dev-us-east-azure-p5.yaml
