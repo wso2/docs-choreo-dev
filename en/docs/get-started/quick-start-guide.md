@@ -148,7 +148,7 @@ Once you update the REST API configuration as described above, you can verify wh
 
 ### Step 3: Commit changes to GitHub
 
-Choreo maintains source code in a private GitHub repository. When you create a component, Choreo creates it in the private-GitHub repository associated with your account. Therefore, you must commit and push your changes if you want to change the API Implementation.
+Choreo maintains source code in a private GitHub repository. When you create a component, Choreo creates it in the private GitHub repository associated with your account. Therefore, you must commit and push your changes if you want to change the API Implementation.
 
 Follow this procedure to commit and push your changes to GitHub.
 
