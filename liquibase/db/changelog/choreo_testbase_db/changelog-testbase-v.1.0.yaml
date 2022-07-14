@@ -1,0 +1,352 @@
+databaseChangeLog:
+- changeSet:
+    id: 1657788392678-1
+    author: udhan@wso2.com (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            computed: false
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: PK_current_collection_info_id
+            name: id
+            startWith: 96
+            type: int
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: user_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: workspace_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: application_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: collection_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__current_c__creat__6C190EBB
+            name: created_at
+            type: datetime
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__current_c__updat__6D0D32F4
+            name: updated_at
+            type: datetime
+        tableName: current_collection_info
+- changeSet:
+    id: 1657788392678-2
+    author: udhan@wso2.com (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            computed: false
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: PK_openapi_definitions_id
+            name: id
+            startWith: 662
+            type: int
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: org_handle
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: app_handle
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: content
+            type: nvarchar(MAX)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: svc_file_digest
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__openapi_d__creat__6E01572D
+            name: created_at
+            type: datetime
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__openapi_d__updat__6EF57B66
+            name: updated_at
+            type: datetime
+        tableName: openapi_definitions
+- changeSet:
+    id: 1657788392678-3
+    author: udhan@wso2.com (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            computed: false
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: PK_postman_settings_id
+            name: id
+            startWith: 132
+            type: int
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: user_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: api_key
+            type: nvarchar(255)
+        - column:
+            computed: false
+            defaultValueComputed: 'NULL'
+            defaultValueConstraintName: DF__postman_s__defau__6FE99F9F
+            name: default_workspace_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueConstraintName: DF__postman_s__cache__70DDC3D8
+            defaultValueNumeric: 1
+            name: cache_workspaces
+            type: smallint
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueConstraintName: DF__postman_s__cache__71D1E811
+            defaultValueNumeric: 1
+            name: cache_collections
+            type: smallint
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__postman_s__creat__72C60C4A
+            name: created_at
+            type: datetime
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__postman_s__updat__73BA3083
+            name: updated_at
+            type: datetime
+        tableName: postman_settings
+- changeSet:
+    id: 1657788392678-4
+    author: udhan@wso2.com (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            computed: false
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: PK_postman_workspaces_id
+            name: id
+            startWith: 118
+            type: int
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: workspaces
+            type: nvarchar(MAX)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: postman_settings_id
+            type: int
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__postman_w__creat__74AE54BC
+            name: created_at
+            type: datetime
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__postman_w__updat__75A278F5
+            name: updated_at
+            type: datetime
+        tableName: postman_workspaces
+- changeSet:
+    id: 1657788392678-5
+    author: udhan@wso2.com (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            computed: false
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: PK_testcases_id
+            name: id
+            startWith: 470
+            type: int
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: user_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: organization_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: application_id
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: test_case_name
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: display_name
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            name: working_file
+            type: nvarchar(255)
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__testcases__creat__76969D2E
+            name: created_at
+            type: datetime
+        - column:
+            computed: false
+            constraints:
+              nullable: false
+            defaultValueComputed: getdate()
+            defaultValueConstraintName: DF__testcases__updat__778AC167
+            name: updated_at
+            type: datetime
+        tableName: testcases
+- changeSet:
+    id: 1657788392678-6
+    author: udhan@wso2.com (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: user_id, application_id, workspace_id
+        constraintName: current_collection_info$user_app_ws_id_unique
+        tableName: current_collection_info
+- changeSet:
+    id: 1657788392678-7
+    author: udhan@wso2.com (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: org_handle, app_handle, svc_file_digest
+        constraintName: openapi_definitions$swagger_def_id_unique
+        tableName: openapi_definitions
+- changeSet:
+    id: 1657788392678-8
+    author: udhan@wso2.com (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: user_id
+        constraintName: postman_settings$user_id_unique
+        tableName: postman_settings
+- changeSet:
+    id: 1657788392678-9
+    author: udhan@wso2.com (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: postman_settings_id
+        baseTableName: postman_workspaces
+        constraintName: postman_workspaces$fk_postmant_settings_id
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: postman_settings
+        validate: true
+- changeSet:
+    id: 1657788392678-10
+    author: udhan@wso2.com (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: postman_settings_id
+        constraintName: postman_workspaces$postman_settings_id_UNIQUE
+        tableName: postman_workspaces
+- changeSet:
+    id: 1657788392678-11
+    author: udhan@wso2.com (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: user_id, organization_id, application_id, test_case_name
+        constraintName: testcases$test_case_id_unique
+        tableName: testcases
+
