@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - apim
 - apim-analytics
-#- choreo-connect
+- choreo-connect
 - idp
 - private-global-adapters
 - system
