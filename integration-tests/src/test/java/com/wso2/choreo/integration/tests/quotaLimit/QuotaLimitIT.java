@@ -63,7 +63,6 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass() throws Exception {
 
-        System.out.println("QUOTALIMIT TEST BEGUN");
         String versionID;
         ChoreoComponent component;
         ChoreoOrganization org;
@@ -82,16 +81,15 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
             versionID = component.getLatestApiVersion().getId();
             componentList.add(component);
             componentIDList.add(componentId);
-            //testQuotaNotLimited();
+            testQuotaNotLimited();
 
-            //component.deploy(accessToken, orgHandle, orgUUID);
+
             JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUUID, versionID);
             JsonObject deployment = (JsonObject) deploymentArray.get(0);
             releaseID = deployment.get("releaseId").toString();
             releaseID = releaseID.substring(1, releaseID.length() - 1);
             releaseIDList.add(releaseID);
-            System.out.println("Deployed Component" + i + "Suceesfully");
-            //component.redeploy(accessToken, componentId, releaseID, orgHandle);
+
 
         }
     }
