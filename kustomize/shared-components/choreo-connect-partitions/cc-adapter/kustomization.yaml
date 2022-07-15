@@ -31,5 +31,4 @@ configMapGenerator:
       - AZURE_SDK_GO_LOGGING=""
 
 commonLabels:
-  choreo.component: choreo-connect-adapter
   cc.component: choreo-connect-adapter

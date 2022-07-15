@@ -56,5 +56,4 @@ configMapGenerator:
       - TRAILING_ARGS="--component-log-level config:debug"
 
 commonLabels:
-  choreo.component: choreo-connect-deployment
   cc.component: choreo-connect-deployment
