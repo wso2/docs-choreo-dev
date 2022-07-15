@@ -48,6 +48,7 @@ import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundEx
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsDownloadStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
@@ -86,6 +87,7 @@ import java.util.zip.ZipInputStream;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -217,7 +219,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void downloadZippedLogs() throws IOException, URISyntaxException, ObservabilityLogsDownloadStatusCheckException {
-        String requestPath = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
+        String requestPath = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT).concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
                 .concat(obsId)
                 .concat("/logsV2/zip/");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
