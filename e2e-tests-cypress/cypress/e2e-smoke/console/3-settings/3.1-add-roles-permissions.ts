@@ -18,9 +18,7 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 /// <reference types="cypress" />
 
 describe("Add roles and permissions", () => {
-  const FILE_ID = "1.1-add-roles-permissions";
-
-  const roleName = "E2EtestRole";
+   const roleName = "E2EtestRole";
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
