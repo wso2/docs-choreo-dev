@@ -43,6 +43,10 @@ spec:
                       operator: In
                       values:
                         - choreo-connect-adapter
+                    - key: choreo.component
+                      operator: In
+                      values:
+                        - choreo-connect
                 topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
