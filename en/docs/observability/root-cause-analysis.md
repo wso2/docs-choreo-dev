@@ -44,7 +44,7 @@ The actions you can perform in a throughput graph are as follows:
 
 - **View details per request:** Once you view data for a custom time range, each request that was sent during the selected time range is displayed in a pane above the low-code diagram as shown below.
 
-   ![View details per request](../assets/img/observability/view-details-per-request.png){.cInlineImage-full}
+    ![View details per request](../assets/img/observability/view-details-per-request.png){.cInlineImage-full}
 
     This pane displays the latency, the time at which the service received the request, and the status.
 
