@@ -98,10 +98,6 @@ spec:
             - configMapRef:
                 name: env-cc-adapter
           env:
-            - name: ADAPTER_PRIVATE_KEY_PATH
-              value: "/home/wso2/security/keystore/mg.key"
-            - name: ADAPTER_PUBLIC_CERT_PATH
-              value: "/home/wso2/security/keystore/mg.pem"
             - name: adapter_admin_pwd
               valueFrom:
                 secretKeyRef:

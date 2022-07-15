@@ -21,6 +21,40 @@ resources:
   - cc-deployment-service.yaml
   - choreo-connect-deployment.yaml
 
+configMapGenerator:
+  - name: env-cc-enforcer
+    behavior: create
+    literals:
+      - ENFORCER_PRIVATE_KEY_PATH="/home/wso2/security/keystore/mg.key"
+      - ENFORCER_PUBLIC_CERT_PATH="/home/wso2/security/keystore/mg.pem"
+      - TRUSTED_CA_CERTS_PATH="/home/wso2/security/truststore"
+      - ADAPTER_HOST_NAME="adapter"
+      - ADAPTER_XDS_PORT="18000"
+      - ENFORCER_REGION="UNKNOWN"
+      - XDS_MAX_MSG_SIZE="4194304"
+      - XDS_MAX_RETRIES="3"
+      - JAVA_OPTS="-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
+      - ADAPTER_HOST=adapter
+      - ENFORCER_LABEL=""
+  - name: env-cc-router
+    behavior: create
+    literals:
+      - ROUTER_ADMIN_HOST="0.0.0.0"
+      - ROUTER_ADMIN_PORT="9000"
+      - ROUTER_CLUSTER="default_cluster"
+      - ROUTER_PRIVATE_KEY_PATH="/home/wso2/security/keystore/mg.key"
+      - ROUTER_PUBLIC_CERT_PATH="/home/wso2/security/keystore/mg.pem"
+      - ADAPTER_PORT="18000"
+      - ADAPTER_CA_CERT_PATH="/home/wso2/security/truststore/mg.pem"
+      - ENFORCER_HOST="127.0.0.1"
+      - ENFORCER_PORT="8081"
+      - ENFORCER_ANALYTICS_HOST="127.0.0.1"
+      - ENFORCER_ANALYTICS_RECEIVER_PORT="18090"
+      - ENFORCER_CA_CERT_PATH="/home/wso2/security/truststore/mg.pem"
+      - ADAPTER_HOST=adapter
+      - ROUTER_LABEL=""
+      - TRAILING_ARGS="--component-log-level config:debug"
+
 commonLabels:
   choreo.component: choreo-connect-deployment
   cc.component: choreo-connect-deployment

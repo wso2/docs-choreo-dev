@@ -69,7 +69,7 @@ spec:
               mountPath: /home/wso2/security/truststore/apim-service-root.pem
               subPath: apim-service-root.pem
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: secret-mgw-enforcer-keystore
+              name: secret-cc-deployment
               readOnly: true
               subPath: ENFORCER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/mg.pem
@@ -77,11 +77,11 @@ spec:
               readOnly: true
               subPath: mg.pem
             - mountPath: /home/wso2/security/jwt/key.pem
-              name: secret-mgw-enforcer-jwt-keystore
+              name: secret-cc-deployment
               readOnly: true
               subPath: ENFORCER_JWT_KEYSTORE_KEY
             - mountPath: /home/wso2/security/jwt/cert.pem
-              name: secret-mgw-enforcer-jwt-keystore
+              name: secret-cc-deployment
               readOnly: true
               subPath: ENFORCER_JWT_KEYSTORE_CERTIFICATE
             - mountPath: /home/wso2/conf
@@ -93,6 +93,9 @@ spec:
               readOnly: true
             - name: secret-mgw-analytics
               mountPath: /mnt/csi/secret-mgw-analytics
+              readOnly: true
+            - name: secret-cc-deployment
+              mountPath: /mnt/csi/secret-cc-deployment
               readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
           imagePullPolicy: Always
@@ -107,26 +110,8 @@ spec:
             - configMapRef:
                 name: cm-feature-flags
             - configMapRef:
-                name: env-choreo-connect-enforcer
+                name: env-cc-enforcer
           env:
-            - name: ENFORCER_PRIVATE_KEY_PATH
-              value: "/home/wso2/security/keystore/mg.key"
-            - name: ENFORCER_PUBLIC_CERT_PATH
-              value: "/home/wso2/security/keystore/mg.pem"
-            - name: TRUSTED_CA_CERTS_PATH
-              value: "/home/wso2/security/truststore"
-            - name: ADAPTER_HOST_NAME
-              value: "adapter"
-            - name: ADAPTER_XDS_PORT
-              value: "18000"
-            - name: ENFORCER_REGION
-              value: "UNKNOWN"
-            - name: XDS_MAX_MSG_SIZE
-              value: "4194304"
-            - name: XDS_MAX_RETRIES
-              value: "3"
-            - name: JAVA_OPTS
-              value: "-Dhttpclient.hostnameVerifier=AllowAll -Xms2560m -Xmx2560m"
             - name: tm_admin_pwd
               valueFrom:
                 secretKeyRef:
@@ -139,11 +124,11 @@ spec:
                   name: secret-mgw-analytics
           resources:
             requests:
-              memory: "4Gi"
-              cpu: "2000m"
+              memory: "3Gi"
+              cpu: "2"
             limits:
-              memory: "4Gi"
-              cpu: "2000m"
+              memory: "3Gi"
+              cpu: "2"
           ports:
             - containerPort: 8081
             - containerPort: 9001
@@ -169,7 +154,7 @@ spec:
               readOnly: true
               subPath: mg.pem
             - mountPath: /home/wso2/security/keystore/mg.key
-              name: secret-mgw-router-keystore
+              name: secret-cc-deployment
               readOnly: true
               subPath: ROUTER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/truststore/mg.pem
@@ -189,39 +174,14 @@ spec:
             - configMapRef:
                 name: cm-feature-flags
             - configMapRef:
-                name: env-choreo-connect-router
-          env:
-            - name: ROUTER_ADMIN_HOST
-              value: "0.0.0.0"
-            - name: ROUTER_ADMIN_PORT
-              value: "9000"
-            - name: ROUTER_CLUSTER
-              value: "default_cluster"
-            - name: ROUTER_PRIVATE_KEY_PATH
-              value: "/home/wso2/security/keystore/mg.key"
-            - name: ROUTER_PUBLIC_CERT_PATH
-              value: "/home/wso2/security/keystore/mg.pem"
-            - name: ADAPTER_PORT
-              value: "18000"
-            - name: ADAPTER_CA_CERT_PATH
-              value: "/home/wso2/security/truststore/mg.pem"
-            - name: ENFORCER_HOST
-              value: "127.0.0.1"
-            - name: ENFORCER_PORT
-              value: "8081"
-            - name: ENFORCER_ANALYTICS_HOST
-              value: "127.0.0.1"
-            - name: ENFORCER_ANALYTICS_RECEIVER_PORT
-              value: "18090"
-            - name: ENFORCER_CA_CERT_PATH
-              value: "/home/wso2/security/truststore/mg.pem"
+                name: env-cc-router
           resources:
             requests:
-              memory: "4Gi"
-              cpu: "2000m"
+              memory: "3Gi"
+              cpu: "2"
             limits:
-              memory: "4Gi"
-              cpu: "2000m"
+              memory: "3Gi"
+              cpu: "2"
           ports:
             - containerPort: 9000
             - containerPort: 9095
@@ -259,30 +219,6 @@ spec:
         - name: enforcer-config
           configMap:
             name: mgw-adapter-enforcer-conf
-        - name: secret-mgw-enforcer-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-enforcer-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-enforcer-jwt-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-enforcer-jwt-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-mgw-router-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-mgw-router-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: dropins-vol
           emptyDir: { }
         - name: enforcer-truststore
@@ -305,6 +241,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-mgw-analytics
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-deployment
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-deployment
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
