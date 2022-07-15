@@ -22,12 +22,14 @@ const INVITATION_EMAIL = Cypress.env("invitationUserEmail");
 describe("Invite members", () => {
   before(() => {
     LoginPage.login();
+   
   });
   after(() => {
-    ChoreoHomePage.logout();
+   ChoreoHomePage.logout();
   });
 
   it("Invite a member to users org", () => {
+    OrganizationComponent.deleteInvitation(INVITATION_EMAIL)
     ChoreoHomePage.navigateToSettings();
     OrganizationComponent.verifyEmailIsNotDisplayed(INVITATION_EMAIL);
     OrganizationComponent.selectPendingInvitation();

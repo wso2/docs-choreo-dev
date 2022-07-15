@@ -45,21 +45,21 @@ export class ComponentDeployPage {
 
   static deployManualTriggerToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]',{timeout:360000}).should("be.enabled").click();
+    cy.get('[data-cyid="btn-deploy-api"]', { timeout: 360000 }).should("be.enabled").click();
     this.closePopup();
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should('be.visible');
   }
 
   static promoteManualTriggerToStg() {
-    cy.get('[data-cyid="btn-promote"]',{timeout:360000}).should("be.enabled").wait(2000).eq(0).click();
-    cy.get('[data-cyid="btn-promote"]',{timeout:360000}).should("not.be.disabled");
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).eq(0).click();
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("not.be.disabled");
   }
 
   static promoteManualTriggerToProd() {
     if (Cypress.env("isPrivateOrg")) {
-      cy.get('[data-cyid="btn-promote"]',{timeout:360000}).should("be.enabled").wait(2000).eq(1).click();
+      cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).eq(1).click();
     } else {
-      cy.get('[data-cyid="btn-promote"]',{timeout:360000}).should("be.enabled").wait(2000).eq(0).click();
+      cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).eq(0).click();
     }
   }
 
@@ -76,7 +76,7 @@ export class ComponentDeployPage {
     cy.get('[value="*/1 * * * *"]').should("have.length", 1).wait(2000)
     cy.get('[data-cyid*="promote"]').should("be.enabled").eq(0).click()
     cy.get("button:not([data-cyid])").contains("Deploy").click();
-    cy.get('[value="*/1 * * * *"]',{timeout:360000}).should("have.length", 2)
+    cy.get('[value="*/1 * * * *"]', { timeout: 360000 }).should("have.length", 2)
   }
 
   static stopScheduleTask() {
@@ -91,7 +91,7 @@ export class ComponentDeployPage {
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
     this.closePopup();
-    cy.get('[data-testid="securityHeaderInput"]', {timeout:360000}).should('have.length', 1)
+    cy.get('[data-testid="securityHeaderInput"]', { timeout: 360000 }).should('have.length', 1)
   }
 
   static addConfiguration(value: string) {
@@ -125,12 +125,12 @@ export class ComponentDeployPage {
       cy.get('[data-cyid*="promote"]').click();
       cy.get(".MuiCardContent-root button").contains("Next", { timeout: 360000 }).should("be.visible").click();
       cy.get(".ConfigForm button").contains("Promote").click();
-      cy.get('[data-cyid="btn-api-settings"]',{timeout:360000}).should('have.length', 3)
+      cy.get('[data-cyid="btn-api-settings"]', { timeout: 360000 }).should('have.length', 3)
     } else {
       this.promote({ settingButtonCount: 1, invokeUrlCount: 1, invokeUrlIndex: 0 })
       cy.get(".MuiCardContent-root >.MuiBox-root>div>div>button").should('have.length', 3).contains("Next").should("be.visible").click();
       this.addConfiguration(configValue);
-      cy.get('[data-cyid="btn-api-settings"]',{timeout:360000}).should('have.length', 2)
+      cy.get('[data-cyid="btn-api-settings"]', { timeout: 360000 }).should('have.length', 2)
     }
   }
 
@@ -191,10 +191,10 @@ export class ComponentDeployPage {
   }
 
   private static promote({ settingButtonCount, promoButtonIndex = 0, invokeUrlCount, invokeUrlIndex = 0 }: PromoteConfigs) {
-    cy.get('[data-cyid="btn-api-settings"]').should("have.length", settingButtonCount).wait(2000); // the number of `API Settings` buttons
-    cy.get('[data-cyid*="promote"]').should("be.enabled").wait(2000).eq(promoButtonIndex).click(); // promote button
-    cy.get('[id="securityHeaderInput"]',{timeout:360000}).should("have.length", invokeUrlCount).eq(invokeUrlIndex).invoke("val").should("not.be.empty"); // the number of `Invoke URLs`
-    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+    cy.get('[data-cyid="btn-api-settings"]', { timeout: 360000 }).should("have.length", settingButtonCount).wait(2000); // the number of `API Settings` buttons
+    cy.get('[data-cyid*="promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).eq(promoButtonIndex).click(); // promote button
+    cy.get('[id="securityHeaderInput"]', { timeout: 360000 }).should("have.length", invokeUrlCount).eq(invokeUrlIndex).invoke("val").should("not.be.empty"); // the number of `Invoke URLs`
+    cy.get('[data-cyid*="promote"]', { timeout: 360000 }).should("not.be.disabled");
   }
 
 

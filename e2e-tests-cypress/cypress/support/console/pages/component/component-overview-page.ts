@@ -73,7 +73,7 @@ export class ComponentOverviewPage {
   }
 
   private static createNewVersionRestApi(version: string, branch: string) {
-    cy.contains("Create new version", { timeout: 180000 });
+    cy.get('[data-testid="dialog-close-icon"]').should('exist')
     cy.get('div>[aria-label="Without label"]').click();
     cy.get(`[data-value=${branch}]`).click();
     cy.get('[data-cyid="text-field-new-version"]>div>input').clear().type(version);

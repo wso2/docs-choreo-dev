@@ -55,6 +55,13 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -63,12 +70,19 @@ import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
@@ -96,7 +110,12 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException, ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException {
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException,
+            APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException,
+            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException,
+            ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException,
+            ObservabilityLogsNotFoundException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -193,5 +212,57 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
                         .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
                 )
         );
+    }
+
+    @Test
+    @CitrusTest
+    public void downloadZippedLogs() throws IOException, URISyntaxException, ObservabilityLogsDownloadStatusCheckException {
+        String requestPath = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
+                .concat(obsId)
+                .concat("/logsV2/zip/");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        HttpGet request = new HttpGet(requestPath);
+        URI uri = new URIBuilder(request.getURI())
+                .addParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusDays(7)))
+                .addParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                .addParameter("releaseId", releaseId)
+                .addParameter("namespace", namespace)
+                .build();
+        request.setURI(uri);
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new ObservabilityLogsDownloadStatusCheckException(statusCode, EntityUtils.toString(response.getEntity()));
+            }
+            byte[] zipFile = EntityUtils.toByteArray(response.getEntity());
+            ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(zipFile));
+            String initialFileName = "logs-" + releaseId + "-1.txt";
+            Map<String, String> entries = readZipEntries(zis);
+            MatcherAssert.assertThat(entries.size(), greaterThan(0));
+            MatcherAssert.assertThat(entries.keySet(), hasItems(initialFileName));
+            String content = entries.get(initialFileName).toString();
+            MatcherAssert.assertThat(content, containsStringIgnoringCase(obsId));
+        }
+    }
+
+    private static Map<String, String> readZipEntries(ZipInputStream zis) throws IOException {
+        Map<String, String> entries = new HashMap<>();
+        ZipEntry zipEntry;
+        while ((zipEntry = zis.getNextEntry()) != null) {
+            String filename = zipEntry.getName();
+            StringBuilder sb = new StringBuilder();
+            byte[] data = new byte[1024];
+            int count;
+            while ((count = (zis.read(data, 0, 1024))) != -1) {
+                sb.append(new String(data, 0, count, StandardCharsets.UTF_8));
+            }
+            entries.put(filename, sb.toString());
+            zis.closeEntry();
+        }
+        zis.close();
+        return entries;
     }
 }
