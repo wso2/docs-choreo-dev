@@ -76,7 +76,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      |-----------------|-----------------------|
      | **HTTP Method** | `GET` |
      | **Path** | `personalizedMessage` |
-     | **Return Type** | `string\|error` |
+     | **Return Type** | `string|error` |
      
 
 4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
