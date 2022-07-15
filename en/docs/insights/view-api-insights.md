@@ -291,3 +291,25 @@ These widgets allow you to download monthly reports for the last three months.
 
 To download a pregenerated report, click **Download** for the relevant month and then click on the required format.
 
+### Geo Map
+
+The **Geo Map** page allows you to see a geographical representation of your API usage. You can use this page to make business decisions such as identifying growing regions, analyzing the impact of a region-specific marketing campaign, etc.
+
+![Geo Map page](../assets/img/insights/geomap-page-full.png){.cInlineImage-full}
+
+To filter the information displayed on this page by API, select the required API(s) in the **API** field. The default value is **All**.
+
+This heat map highlights the countries with the appropriate color based on the hit count. It uses a relative color scale to depict the highest hit count to the lowest non-zero hit count.
+
+![Geo Map Hit Scale](../assets/img/insights/geomap-hit-count-scale.png){.cInlineImage-half}
+
+#### Viewing the number of requests by country
+
+You can hold the pointer over the highlighted countries to view the country name and the total number of hits from that location. You can also use the mouse to zoom the map or pan it.
+
+![Geo Map by country](../assets/img/insights/geomap-requests-by-country.png){.cInlineImage-half}
+
+!!! Note
+    Currently, this feature is only available for on-premise environments.
+
+Optionally you can download geo map data in a tabular format using the PDF or CSV download options by clicking ![download](../assets/img/insights/insights-download-report.svg) on the top right corner.
