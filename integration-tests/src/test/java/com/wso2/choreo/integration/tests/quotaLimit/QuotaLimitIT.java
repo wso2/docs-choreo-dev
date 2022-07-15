@@ -7,9 +7,9 @@ import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.common.exceptions.QuotaLimitException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -63,13 +63,13 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass() throws Exception {
 
-
+        System.out.println("QUOTALIMIT TEST BEGUN");
         String versionID;
         ChoreoComponent component;
         ChoreoOrganization org;
 
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
             String name = "quotaLimitIT" + i;
             component = ComponentUtils.getReusableComponent(
@@ -83,19 +83,28 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
             componentList.add(component);
             componentIDList.add(componentId);
             //testQuotaNotLimited();
-            component.deploy(accessToken, orgHandle, orgUUID);
+
+            //component.deploy(accessToken, orgHandle, orgUUID);
             JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUUID, versionID);
             JsonObject deployment = (JsonObject) deploymentArray.get(0);
             releaseID = deployment.get("releaseId").toString();
-            releaseIDList.add(releaseID.substring(1, releaseID.length() - 1));
+            releaseID = releaseID.substring(1, releaseID.length() - 1);
+            releaseIDList.add(releaseID);
+            System.out.println("Deployed Component" + i + "Suceesfully");
+            //component.redeploy(accessToken, componentId, releaseID, orgHandle);
 
         }
     }
 
-
     @Test
     @CitrusTest
-    public void testQuotaLimited() throws QuotaLimitException, IOException {
+
+    public void testQuotaLimited() throws QuotaLimitException, IOException,InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
+            ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
+            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException,GetDeploymentsStatusCheckException  {
+        for (int i = 0; i < 6; i++) {
+            componentList.get(i).deploy(accessToken, orgHandle, orgUUID);
+        }
         String graphQlQuery = "query{" +
                 "  quotaLimitStatus( " +
                 "orgUuid: \"" + orgUUID + "\", resourceType:\"runningDeployment\"){\n" +
@@ -182,10 +191,24 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
         throw new QuotaLimitException(200, "Expected false returned true");
     }
 
+    @Test
+    @CitrusTest
+    public void QuotaExceeded() throws Exception, QuotaLimitException {
+        try {
+            componentList.get(5).deploy(accessToken, orgHandle, orgUUID);
+        } catch (ComponentDeploymentException e) {
+            int statusCode = e.getStatusCode();
+            if (statusCode == 429) {
+                return;
+            }
+            throw new QuotaLimitException(statusCode, e.getMessage());
+
+        }
+    }
+
 
     @AfterClass
     public void afterClass() throws Exception {
-
 
         for (int j = 0; j < 5; j++) {
             componentList.get(j).undeploy(accessToken, componentIDList.get(j), releaseIDList.get(j), orgHandle);

@@ -60,7 +60,7 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
+            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,GetDeploymentsStatusCheckException,
             ComponentCreationStatusCheckException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
