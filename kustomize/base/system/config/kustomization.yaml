@@ -265,6 +265,7 @@ configMapGenerator:
       - AUTH_URL=http://dp-project-manager
       - CICD_URL=http://dp-cicd
       - NEGOTIATOR_ADDRESS=negotiator:9092
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
       - OBS_ADDRESS=obsapi:9096
       - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
       - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
