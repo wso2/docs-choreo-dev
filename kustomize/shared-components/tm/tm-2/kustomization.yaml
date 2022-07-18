@@ -1,0 +1,15 @@
+resources:
+  - tm-2-deployment.yaml
+  - tm-2-hpa.yaml
+  - tm-2-pdb.yaml
+  - tm-2-service.yaml
+
+configMapGenerator:
+  - name: env-tm-2
+    behavior: create
+    literals:
+      - JVM_MEM_OPTS="-Xms2048m -Xmx2048m"
+      - PROFILE_NAME=traffic-manager
+
+commonLabels:
+  deployment: choreo-tm-2

@@ -1,0 +1,6 @@
+resources:
+  - tm-1
+  - tm-2
+
+commonLabels:
+  choreo.component: apim-tm
