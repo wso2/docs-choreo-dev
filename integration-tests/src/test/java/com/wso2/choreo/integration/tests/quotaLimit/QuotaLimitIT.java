@@ -10,6 +10,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -43,11 +44,11 @@ import org.testng.annotations.Test;
  * quota limit related tests
  */
 public class QuotaLimitIT extends TestNGCitrusSpringSupport {
+
+    private String choreoEndpoint;
     private String componentId;
-    private static final String CHOREO_ENDPOINT = Configuration.CHOREO_ENDPOINT;
 
     private String accessToken;
-
     private String orgHandle;
     private String releaseID;
     private String orgUUID;
@@ -62,7 +63,7 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void beforeClass() throws Exception {
-
+        choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
         String versionID;
         ChoreoComponent component;
         ChoreoOrganization org;
@@ -81,7 +82,6 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
             versionID = component.getLatestApiVersion().getId();
             componentList.add(component);
             componentIDList.add(componentId);
-            testQuotaNotLimited();
 
 
             JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUUID, versionID);
@@ -94,22 +94,67 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
         }
     }
 
-    @Test
-    @CitrusTest
-
-    public void testQuotaLimited() throws QuotaLimitException, IOException,InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
-            ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
-            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException,GetDeploymentsStatusCheckException  {
-        for (int i = 0; i < 6; i++) {
-            componentList.get(i).deploy(accessToken, orgHandle, orgUUID);
-        }
+//    @Test
+//    @CitrusTest
+    public void testQuotaNotLimited() throws QuotaLimitException, IOException {
         String graphQlQuery = "query{" +
                 "  quotaLimitStatus( " +
                 "orgUuid: \"" + orgUUID + "\", resourceType:\"runningDeployment\"){\n" +
                 "    isRunningComponentsLimited\n" +
                 "  }}\n";
 
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+
+        HashMap<String, String> requestBodyMap = new HashMap<>() {{
+            put("query", graphQlQuery);
+        }};
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            log.debug(responseBody);
+
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new QuotaLimitException(statusCode, responseBody);
+            }
+            JsonPrimitive isRateLimited = new JsonParser().parse(responseBody).getAsJsonObject()
+                    .getAsJsonObject("data").getAsJsonObject("quotaLimitStatus").getAsJsonPrimitive("isRunningComponentsLimited");
+
+            if (!isRateLimited.getAsBoolean()) {
+                return;
+            }
+        }
+
+
+        throw new QuotaLimitException(200, "Expected false returned true");
+    }
+
+    @Test
+    @CitrusTest
+
+    public void testQuotaLimited() throws QuotaLimitException, IOException, InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
+            ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
+            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException, GetDeploymentsStatusCheckException {
+//        for (int i = 0; i < 6; i++) {
+//            componentList.get(i).deploy(accessToken, orgHandle, orgUUID);
+//        }
+        String graphQlQuery = "query{" +
+                "  quotaLimitStatus( " +
+                "orgUuid: \"" + orgUUID + "\", resourceType:\"runningDeployment\"){\n" +
+                "    isRunningComponentsLimited\n" +
+                "  }}\n";
+
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
 
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", graphQlQuery);
@@ -145,49 +190,6 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
         throw new QuotaLimitException(200, "Expected true returned false");
     }
 
-
-    public void testQuotaNotLimited() throws QuotaLimitException, IOException {
-        String graphQlQuery = "query{" +
-                "  quotaLimitStatus( " +
-                "orgUuid: \"" + orgUUID + "\", resourceType:\"runningDeployment\"){\n" +
-                "    isRunningComponentsLimited\n" +
-                "  }}\n";
-
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-
-        HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("query", graphQlQuery);
-        }};
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-        HttpPost request = new HttpPost(requestURI);
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-        StringEntity requestEntity = new StringEntity(
-                requestBody,
-                ContentType.APPLICATION_JSON);
-        request.setEntity(requestEntity);
-
-
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-             CloseableHttpResponse response = httpClient.execute(request)) {
-            int statusCode = response.getStatusLine().getStatusCode();
-            String responseBody = EntityUtils.toString(response.getEntity());
-            log.debug(responseBody);
-
-            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
-                throw new QuotaLimitException(statusCode, responseBody);
-            }
-            JsonPrimitive isRateLimited = new JsonParser().parse(responseBody).getAsJsonObject()
-                    .getAsJsonObject("data").getAsJsonObject("quotaLimitStatus").getAsJsonPrimitive("isRunningComponentsLimited");
-
-            if (!isRateLimited.getAsBoolean()) {
-                return;
-            }
-        }
-
-
-        throw new QuotaLimitException(200, "Expected false returned true");
-    }
 
     @Test
     @CitrusTest

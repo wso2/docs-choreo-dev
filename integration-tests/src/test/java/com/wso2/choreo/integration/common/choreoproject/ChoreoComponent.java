@@ -258,7 +258,7 @@ public abstract class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
 
-        HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
@@ -988,7 +988,7 @@ public abstract class ChoreoComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-        HttpPost request = new HttpPost(Configuration.CHOREO_CP_PROJECTS_ENDPOINT.concat("/graphql"));
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
 
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
