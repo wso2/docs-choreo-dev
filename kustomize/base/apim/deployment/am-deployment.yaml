@@ -1,5 +1,5 @@
----
-# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+# --------------------------------------------------------------------
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# -----------------------------------------------------------------------
 
 apiVersion: apps/v1
 kind: Deployment
@@ -64,7 +65,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: wso2am
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:v4.0.0-r14062021.2
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
@@ -214,18 +215,18 @@ spec:
               subPath: docker-entrypoint.sh
             - name: mysql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
-            - name: secret-apim-keystore-passwords
-              mountPath: /mnt/csi/keystore-passwords
+            - name: secret-apim-keystores
+              mountPath: /mnt/csi/secret-apim-keystores
               readOnly: true
-            - name: secret-apim-primary-keystore
+            - name: secret-apim-keystores
               mountPath: /home/wso2carbon/wso2-keystores/primary-keystore.pfx
               readOnly: true
               subPath: APIM_PRIMARY_KEYSTORE
-            - name: secret-apim-tls-keystore
+            - name: secret-apim-keystores
               mountPath: /home/wso2carbon/wso2-keystores/tls-keystore.pfx
               readOnly: true
               subPath: APIM_TLS_KEYSTORE
-            - name: secret-apim-internal-keystore
+            - name: secret-apim-keystores
               mountPath: /home/wso2carbon/wso2-keystores/internal-keystore.pfx
               readOnly: true
               subPath: APIM_INTERNAL_KEYSTORE
@@ -263,36 +264,12 @@ spec:
             defaultMode: 0407
         - name: mysql-connector-jar
           emptyDir: { }
-        - name: secret-apim-keystore-passwords
+        - name: secret-apim-keystores
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-apim-keystore-passwords
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-primary-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-primary-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-tls-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-tls-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-internal-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-internal-keystore
+              secretProviderClass: secret-apim-keystores
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: apim-truststore
