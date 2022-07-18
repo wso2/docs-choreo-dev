@@ -37,6 +37,7 @@ import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationC
 import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
 import com.wso2.choreo.integration.common.exceptions.EnvironmentDetailsCheckException;
 import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.NamespaceNotFoundException;
@@ -112,12 +113,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException,
-            APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException,
-            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException,
-            ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException,
-            ObservabilityLogsNotFoundException {
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException, ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, GetDeploymentsStatusCheckException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);

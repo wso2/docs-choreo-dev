@@ -25,7 +25,7 @@ export class TriggersTemplate {
     cy.get('[data-testid="search-field"]>input').clear().type(triggerType);
     cy.get('[data-testid="search-button"]>button').click();
     cy.get(`.package-card-class>div:not([data-testid])`).realHover().wait(2000)
-    cy.get('[data-testid="Slack"]').realClick();
+    cy.get('[data-testid="Slack"]').realClick({position:"top"});
     cy.get('[data-testid="webhook-name"]>div>input').clear().type(triggerName);
     cy.get(".MuiAutocomplete-endAdornment").click();
     cy.get("#trigger-channel-select-popup");

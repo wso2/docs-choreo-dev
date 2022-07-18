@@ -1,4 +1,4 @@
 databaseChangeLog:
   - includeAll:
-      path: changelog
+      path: changelog/choreo_testbase_db
       relativeToChangelogFile: true

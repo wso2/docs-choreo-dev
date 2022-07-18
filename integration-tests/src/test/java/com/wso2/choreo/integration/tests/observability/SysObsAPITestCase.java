@@ -17,7 +17,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.google.gson.JsonObject;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -57,7 +56,7 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
+            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException, GetDeploymentsStatusCheckException,
             ComponentCreationStatusCheckException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
