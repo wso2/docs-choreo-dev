@@ -39,7 +39,7 @@ spec:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                    - key: choreo.component
+                    - key: cc.component
                       operator: In
                       values:
                         - choreo-connect-deployment
