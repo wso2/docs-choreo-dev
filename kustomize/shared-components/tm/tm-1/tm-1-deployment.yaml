@@ -35,15 +35,15 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: deployment
-                    operator: In
-                    values:
-                      - choreo-tm-1
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: deployment
+                      operator: In
+                      values:
+                        - choreo-tm-1
+                topologyKey: kubernetes.io/hostname
       # Remove fsGroup due to issue in init container. TODO: Remove init container.
       # securityContext:
       #   fsGroup: 802
@@ -182,18 +182,18 @@ spec:
               subPath: docker-entrypoint.sh
             - name: mysql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
-            - name: secret-apim-keystore-passwords
-              mountPath: /mnt/csi/keystore-passwords
+            - name: secret-apim-keystores
+              mountPath: /mnt/csi/secret-apim-keystores
               readOnly: true
-            - name: secret-apim-primary-keystore
+            - name: secret-apim-keystores
               mountPath: /home/wso2carbon/wso2-keystores/primary-keystore.pfx
               readOnly: true
               subPath: APIM_PRIMARY_KEYSTORE
-            - name: secret-apim-tls-keystore
+            - name: secret-apim-keystores
               mountPath: /home/wso2carbon/wso2-keystores/tls-keystore.pfx
               readOnly: true
               subPath: APIM_TLS_KEYSTORE
-            - name: secret-apim-internal-keystore
+            - name: secret-apim-keystores
               mountPath: /home/wso2carbon/wso2-keystores/internal-keystore.pfx
               readOnly: true
               subPath: APIM_INTERNAL_KEYSTORE
@@ -216,36 +216,12 @@ spec:
             defaultMode: 0407
         - name: mysql-connector-jar
           emptyDir: { }
-        - name: secret-apim-keystore-passwords
+        - name: secret-apim-keystores
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-apim-keystore-passwords
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-primary-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-primary-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-tls-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-tls-keystore
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-apim-internal-keystore
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-apim-internal-keystore
+              secretProviderClass: secret-apim-keystores
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: apim-truststore
