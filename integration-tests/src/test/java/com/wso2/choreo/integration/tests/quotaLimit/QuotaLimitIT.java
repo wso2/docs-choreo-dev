@@ -94,8 +94,8 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
         }
     }
 
-//    @Test
-//    @CitrusTest
+    @Test
+    @CitrusTest
     public void testQuotaNotLimited() throws QuotaLimitException, IOException {
         String graphQlQuery = "query{" +
                 "  quotaLimitStatus( " +
@@ -145,9 +145,9 @@ public class QuotaLimitIT extends TestNGCitrusSpringSupport {
     public void testQuotaLimited() throws QuotaLimitException, IOException, InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
             ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException, GetDeploymentsStatusCheckException {
-//        for (int i = 0; i < 6; i++) {
-//            componentList.get(i).deploy(accessToken, orgHandle, orgUUID);
-//        }
+        for (int i = 0; i < 5; i++) {
+            componentList.get(i).deploy(accessToken, orgHandle, orgUUID);
+        }
         String graphQlQuery = "query{" +
                 "  quotaLimitStatus( " +
                 "orgUuid: \"" + orgUUID + "\", resourceType:\"runningDeployment\"){\n" +
