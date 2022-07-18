@@ -30,28 +30,6 @@ import java.util.Optional;
 
 public class Configuration {
     private static final Map<String, String> testConfigs = new HashMap<>();
-
-    public static final String CHOREO_ENDPOINT = System.getenv("CHOREO_ENDPOINT");
-    public static final String CHOREO_CP_PROJECTS_ENDPOINT = System.getenv("CHOREO_CP_PROJECTS_ENDPOINT");
-    public static final String STS_ENDPOINT = System.getenv("STS_ENDPOINT");
-    public static final String ASGARDEO_ENDPOINT = System.getenv("ASGARDEO_ENDPOINT");
-    public static final String CHOREO_CP_GW_ENDPOINT = System.getenv("CHOREO_CP_GW_ENDPOINT");
-
-    public static final String TEST_USER_EMAIL = System.getenv("TEST_USER_EMAIL");
-    public static final String TEST_USER_PASSWORD = System.getenv("TEST_USER_PASSWORD");
-
-    public static final String ASGARDEO_CLIENT_ID = System.getenv("ASGARDEO_CLIENT_ID");
-    public static final String ASGARDEO_CLIENT_SECRET = System.getenv("ASGARDEO_CLIENT_SECRET");
-
-    public static final String STS_CLIENT_ID = System.getenv("STS_CLIENT_ID");
-    public static final String STS_CLIENT_SECRET = System.getenv("STS_CLIENT_SECRET");
-
-    public static final String CP_APP_CLIENT_ID = System.getenv("CP_APP_CLIENT_ID");
-    public static final String CP_APP_CLIENT_SECRET = System.getenv("CP_APP_CLIENT_SECRET");
-
-    public static final String TEST_CHOREO_ORG_HANDLE = System.getenv("TEST_CHOREO_ORG_HANDLE");
-    public static final int TEST_CHOREO_ORG_ID = Integer.parseInt(System.getenv("TEST_CHOREO_ORG_ID"));
-    public static final String TEST_CHOREO_ORG_UUID = System.getenv("TEST_CHOREO_ORG_UUID");
     public static final String GITHUB_ENDPOINT = System.getenv("GITHUB_ENDPOINT");
     public static final String GITHUB_ORG = System.getenv("GITHUB_ORG");
     public static final String GITHUB_PAT = System.getenv("GITHUB_PAT");

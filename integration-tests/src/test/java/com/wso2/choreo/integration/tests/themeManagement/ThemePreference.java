@@ -13,28 +13,31 @@
 
 package com.wso2.choreo.integration.tests.themeManagement;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.wso2.choreo.integration.config.Configuration.TEST_CHOREO_ORG_UUID;
-
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import org.springframework.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.core.io.ClassPathResource;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
+
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ThemePreference extends TestNGCitrusSpringSupport {
         private static String accessToken;
+        private String orgUuid;
 
         @Autowired
         private HttpClient choreoTestClientForTheme;
@@ -43,13 +46,14 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
         public void beforeClass()
                         throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+                orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         }
 
         @Test
         @CitrusTest
-        public void testUpdateAssets() throws IOException, InterruptedException {
+        public void testUpdateAssets() {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
-                                .concat(TEST_CHOREO_ORG_UUID)
+                                .concat(orgUuid)
                                 .concat("/themes/default/assets");
 
                 $(http()
@@ -76,9 +80,9 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateTypography() throws IOException, InterruptedException {
+        public void testUpdateTypography() {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
-                                .concat(TEST_CHOREO_ORG_UUID)
+                                .concat(orgUuid)
                                 .concat("/themes/default/typography");
 
                 $(http()
@@ -103,9 +107,9 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateColorPalette() throws IOException, InterruptedException {
+        public void testUpdateColorPalette() {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
-                                .concat(TEST_CHOREO_ORG_UUID)
+                                .concat(orgUuid)
                                 .concat("/themes/default/palette");
 
                 $(http()
