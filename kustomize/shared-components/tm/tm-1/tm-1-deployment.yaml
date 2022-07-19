@@ -110,6 +110,10 @@ spec:
                 name: cm-feature-flags
             - configMapRef:
                 name: env-tm-1
+            - secretRef:
+                name: secret-apim-keystore-passwords
+            - secretRef:
+                name: secret-apim
           env:
             - name: NODE_IP
               valueFrom:
@@ -119,56 +123,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: PRIMARY_KEYSTORE_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: PRIMARY_KEYSTORE_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: PRIMARY_KEYSTORE_KEY_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: PRIMARY_KEYSTORE_KEY_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: TLS_KEYSTORE_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: TLS_KEYSTORE_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: TLS_KEYSTORE_KEY_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: TLS_KEYSTORE_KEY_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: INTERNAL_KEYSTORE_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: INTERNAL_KEYSTORE_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: INTERNAL_KEYSTORE_KEY_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: INTERNAL_KEYSTORE_KEY_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: TRUSTSTORE_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: TRUSTSTORE_PSWD
-                  name: secret-apim-keystore-passwords
-            - name: H2_SHARED_DB_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: H2_SHARED_DB_PSWD
-                  name: secret-apim
-            - name: SUPER_ADMIN_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: SUPER_ADMIN_PSWD
-                  name: secret-apim
-            - name: CHOREO_IS_ADMIN_PSWD
-              valueFrom:
-                secretKeyRef:
-                  key: CHOREO_IS_ADMIN_PSWD
-                  name: secret-apim
           volumeMounts:
             - name: apim-vol
               mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
