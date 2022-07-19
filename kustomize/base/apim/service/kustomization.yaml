@@ -7,4 +7,3 @@ resources:
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
 - gateway-nginx-service.yaml
-- choreo-connect
