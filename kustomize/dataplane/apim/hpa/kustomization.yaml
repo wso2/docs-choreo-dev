@@ -1,3 +1,0 @@
-resources:
-  - tm-1-hpa.yaml
-  - tm-2-hpa.yaml
