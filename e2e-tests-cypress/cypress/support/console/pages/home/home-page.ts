@@ -54,7 +54,8 @@ export class ChoreoHomePage {
 
   static navigateToSettings() {
     cy.get("#backdrop-loader").should('not.exist')
-    cy.get('div>a[data-testid="main-left-nav-item-Settings"]').should("be.visible").click();
+    cy.get('[data-testid="header-user-profile-menu"]').click()
+    cy.get('[data-testid="header-user-profile-item-settings"]').should('be.visible').click()
   }
 
   static switchOrganization() {

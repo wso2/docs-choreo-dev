@@ -33,7 +33,6 @@ export class ComponentOverviewPage {
 
   static navigateToTest() {
     cy.contains("Test").should("be.visible").click();
-    cy.wait(12000) // will remove this after deployment issue is fixed
   }
 
   static navigateToManage() {

@@ -130,29 +130,16 @@ export class OrganizationComponent {
   }
 
   private static addRoles(roles: string[]) {
-    roles.forEach((v) => {
-      cy.get('ul[class="MuiList-root MuiMenu-list MuiList-padding"] >li').each(
-        ($e) => {
-          if ($e.text().toLocaleLowerCase() === v.toLocaleLowerCase()) {
-            cy.wrap($e)
-              .invoke("attr", "aria-selected")
-              .then((attr) => {
-                if (!attr) {
-                  cy.wrap($e).click();
-                }
-              });
-          } else {
-            cy.wrap($e)
-              .invoke("attr", "aria-selected")
-              .then((attr) => {
-                if (attr) {
-                  cy.wrap($e).click();
-                }
-              });
-          }
+
+
+    roles.forEach(v => {
+      cy.get('ul>li>div>span').each(e => {
+        if (e.text() === v) {
+          cy.wrap(e).scrollIntoView().click()
         }
-      );
-    });
+      })
+    })
+
   }
 
   static createRole(
