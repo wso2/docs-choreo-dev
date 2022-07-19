@@ -107,9 +107,9 @@ public class APICreator {
         gql.setDisplayType(String.valueOf(Constant.displayType.restAPI));
         gql.setProjectId(projectId);
         gql.setSrcGitRepoUrl(srcGitRepoUrl);
-        gql.setRepoSubpath(repoSubpath);
-        gql.setRepoType(repoType);
-        gql.setRepoBranch(repoBranch);
+        gql.setRepositorySubPath(repoSubpath);
+        gql.setRepositoryType(repoType);
+        gql.setRepositoryBranch(repoBranch);
 
         mustache.execute(writer, gql).flush();
         String graphQlQuery = writer.toString();
