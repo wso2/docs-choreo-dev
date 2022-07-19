@@ -1,8 +1,6 @@
 resources:
 - devportal-deployment.yaml
 - am-deployment.yaml
-- eventhub-1-deployment.yaml
-- eventhub-2-deployment.yaml
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
 - gateway-nginx-deployment.yaml
