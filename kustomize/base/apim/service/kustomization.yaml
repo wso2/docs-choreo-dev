@@ -3,4 +3,3 @@ resources:
 - am-service.yaml
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
-- gateway-nginx-service.yaml

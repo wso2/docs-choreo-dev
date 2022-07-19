@@ -2,5 +2,4 @@ resources:
   - am.yaml
   - choreo-connect-global-adapter.yaml
   - choreo-connect-internal-global-adapter.yaml
-  - choreo-gateway-nginx.yaml
   - devportal.yaml

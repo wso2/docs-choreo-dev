@@ -3,5 +3,4 @@ resources:
 - am-deployment.yaml
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
-- gateway-nginx-deployment.yaml
 - ga-health-check-deployment.yaml
