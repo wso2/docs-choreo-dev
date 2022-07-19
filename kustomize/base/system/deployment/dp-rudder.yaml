@@ -64,7 +64,7 @@ spec:
           - name: PDB_ENABLED
             value: "true"
           - name: GORM_PREPARED_STATEMENTS_ENABLED
-            value: "true"
+            value: "false"
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:

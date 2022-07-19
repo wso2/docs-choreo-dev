@@ -19,7 +19,6 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
@@ -34,8 +33,9 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
+
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -56,7 +56,8 @@ import org.springframework.core.io.ClassPathResource;
  */
 public class DeployIT extends TestNGCitrusSpringSupport {
 
-  private String orgHandler;
+  private String orgHandle;
+  private String orgId;
   private String projectId;
   private String componentId;
   private String accessToken;
@@ -76,9 +77,11 @@ public class DeployIT extends TestNGCitrusSpringSupport {
       ComponentCreationStatusCheckException, TokenRetrievalException, NoLatestApiVersionFoundException,
       AddConfigurationsException {
     accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-    ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-        String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-    orgHandler = org.getOrgHandle();
+    orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+    orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+    String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+    ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
+    orgHandle = org.getOrgHandle();
     ChoreoProject project = org.createProject(accessToken);
     projectId = project.getId();
     RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
@@ -105,7 +108,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
         put("branch", branch);
       }
     };
-    String requestURI = "".concat("/orgs/").concat(orgHandler).concat("/projects/").concat(projectId)
+    String requestURI = "".concat("/orgs/").concat(orgHandle).concat("/projects/").concat(projectId)
         .concat("/triggers/deployment");
     ObjectMapper objectMapper = new ObjectMapper();
     String requestBody = objectMapper.writeValueAsString(requestBodyMap);

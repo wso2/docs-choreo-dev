@@ -14,11 +14,18 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
 resources:
-  - choreo-connect
-  - tm
+  - tm-2-deployment.yaml
+  - tm-2-hpa.yaml
+  - tm-2-pdb.yaml
+  - tm-2-service.yaml
 
-namespace: choreo-apim
+configMapGenerator:
+  - name: env-tm-2
+    behavior: create
+    literals:
+      - JVM_MEM_OPTS="-Xms2048m -Xmx2048m"
+      - PROFILE_NAME=traffic-manager
+
+commonLabels:
+  deployment: choreo-tm-2

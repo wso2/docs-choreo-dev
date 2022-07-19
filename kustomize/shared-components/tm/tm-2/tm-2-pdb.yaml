@@ -14,11 +14,13 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - choreo-connect
-  - tm
-
-namespace: choreo-apim
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-apim-tm-2-pdb
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: apim-tm
+      deployment: choreo-tm-2

@@ -43,6 +43,7 @@ import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundEx
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
+import com.wso2.choreo.integration.common.exceptions.UndeployException;
 import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -225,28 +226,40 @@ public abstract class ChoreoComponent {
      * @param orgHandle   Choreo organization handle
      * @param orgUUID     Choreo organization UUID
      */
+
+
+
     public void deploy(String accessToken, String orgHandle, String orgUUID)
             throws IOException, InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
-            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException {
+            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException,GetDeploymentsStatusCheckException {
+
         JsonArray commitHistory = getCommitHistory(accessToken);
         String latestCommitSha = getLatestCommitHash(commitHistory);
         String latestVersionId = getLatestApiVersion().getId();
         String devEnvIdToDeploy = getLatestAppEnvId(Constant.DEV_ENVIRONMENT);
         String branch = getRepository().getBranch();
+
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("componentId", id);
-            put("versionId", latestVersionId);
-            put("envId", devEnvIdToDeploy);
-            put("sha", latestCommitSha);
-            put("branch", branch);
+            put("query","mutation {" +
+                    "     deployComponent(" +
+                    "     deployment: {" +
+                    "     componentId: \"" +id +"\"," +
+                    "     versionId: \""+latestVersionId+"\"," +
+                    "     envId: \""+devEnvIdToDeploy+"\"," +
+                    "     branch: \""+branch+"\"," +
+                    "     sha: \""+latestCommitSha+"\"," +
+                    "     cron: \"\" " +
+                    "     }) { " +
+                    "     message" +
+                    "     success" +
+                    "     } }");
         }};
-        String requestURI = choreoEndpoint.concat("/orgs/").concat(orgHandle).concat("/projects/").concat(projectId)
-                .concat("/triggers/deployment");
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
 
-        HttpPost request = new HttpPost(requestURI);
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
         StringEntity requestEntity = new StringEntity(
@@ -258,13 +271,11 @@ public abstract class ChoreoComponent {
              CloseableHttpResponse response = httpClient.execute(request)) {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity());
-
-            log.debug(responseBody);
-            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+            if (statusCode != HttpStatus.SC_OK) {
                 throw new ComponentDeploymentException(statusCode, responseBody);
             }
-
             JsonObject jsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+
             if (!jsonObject.get("success").getAsBoolean()) {
                 throw new ComponentDeploymentFailureException();
             }
@@ -281,81 +292,84 @@ public abstract class ChoreoComponent {
      * @param versionId   the ID of the latest API version
      */
     public void waitForComponentDeploymentSuccess(String accessToken, String orgHandle, String orgUUID,
-                                                  String versionId)
+                                                    String versionId)
             throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
-            ComponentDeploymentTimeoutException {
-        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-        HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("query", "query {" +
-                    "  deployments(" +
-                    "    orgHandler: \"" + orgHandle + "\"" +
-                    "    orgUuid:\"" + orgUUID + "\"" +
-                    "    componentId: \"" + id + "\"" +
-                    "    versionId: \"" + versionId + "\"" +
-                    "  ) {" +
-                    "    environmentId" +
-                    "    environmentName" +
-                    "    configCount" +
-                    "    apiId" +
-                    "    releaseId" +
-                    "    build{" +
-                    "      buildId" +
-                    "      deployedAt" +
-                    "      commit {" +
-                    "        author {" +
-                    "          name" +
-                    "          date" +
-                    "          email" +
-                    "          avatarUrl" +
-                    "        }" +
-                    "        sha" +
-                    "        message" +
-                    "        isLatest" +
-                    "      }" +
-                    "    }" +
-                    "    invokeUrl" +
-                    "    versionId" +
-                    "    deploymentStatus" +
-                    "    version" +
-                    "    cron" +
-                    "  }" +
-                    "}");
-        }};
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+            ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
 
-        HttpPost request = new HttpPost(requestURI);
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+            JsonArray deploymentJsonArray = getDeployments(accessToken, orgHandle, orgUUID, versionId);
 
-        StringEntity requestEntity = new StringEntity(
-                requestBody,
-                ContentType.APPLICATION_JSON);
-        request.setEntity(requestEntity);
+            JsonObject deployment = (JsonObject) deploymentJsonArray.get(0);
+            String envID = deployment.get("environmentId").toString();
+            String environmentID = envID.substring(1, envID.length() - 1);
+            String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+            HashMap<String, String> requestBodyMap = new HashMap<>() {{
+                put("query",
+                        "query {" +
+                                "      componentDeployment(" +
+                                "    orgHandler: \"" + orgHandle + "\"" +
+                                "    orgUuid:\"" + orgUUID + "\"" +
+                                "    componentId:\"" + id + "\" " +
+                                "    versionId:\"" + versionId + "\"" +
+                                "    environmentId:\"" + environmentID + "\") {        " +
+                                "    environmentId" +
+                                "    configCount" +
+                                "    apiId" +
+                                "    releaseId" +
+                                "    build{" +
+                                "    buildId" +
+                                "    deployedAt" +
+                                "    commit {" +
+                                "    author {" +
+                                "    name" +
+                                "    date" +
+                                "    email" +
+                                "    avatarUrl" +
+                                "    }" +
+                                "    sha" +
+                                "    message" +
+                                "    isLatest}}" +
+                                "    invokeUrl" +
+                                "    versionId" +
+                                "    deploymentStatus" +
+                                "    deploymentStatusV2" +
+                                "    version" +
+                                "    cron" +
+                                "    }}");
+            }};
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+            HttpPost request = new HttpPost(requestURI);
+            request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
-        long timeTaken = 0;
-        while (timeTaken <= Constant.COMPONENT_DEPLOY_TIMEOUT) {
-            TimeUnit.SECONDS.sleep(2);
-            timeTaken += 2000;
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
+            StringEntity requestEntity = new StringEntity(
+                    requestBody,
+                    ContentType.APPLICATION_JSON);
+            request.setEntity(requestEntity);
 
-                log.debug(responseBody);
-                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
-                    throw new ComponentDeploymentStatusCheckException(statusCode, responseBody);
-                }
+            long timeTaken = 0;
+            while (timeTaken <= Constant.COMPONENT_DEPLOY_TIMEOUT) {
+                TimeUnit.SECONDS.sleep(2);
+                timeTaken += 2000;
+                try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                     CloseableHttpResponse response = httpClient.execute(request)) {
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    String responseBody = EntityUtils.toString(response.getEntity());
+                    log.debug(responseBody);
+                    if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                        throw new ComponentDeploymentStatusCheckException(statusCode, responseBody);
+                    }
 
-                JsonArray deploymentJsonArray = new JsonParser().parse(responseBody).getAsJsonObject()
-                        .getAsJsonObject("data").getAsJsonArray("deployments");
-                if (deploymentJsonArray != null && deploymentJsonArray.size() > 0) {
-                    return;
+                    String status = new JsonParser().parse(responseBody).getAsJsonObject()
+                            .getAsJsonObject("data").getAsJsonObject("componentDeployment").get("deploymentStatusV2").toString();
+                    if (status.equals("ACTIVE")) {
+                        return;
+                    }
                 }
             }
-        }
+            throw new ComponentDeploymentTimeoutException();
 
-        throw new ComponentDeploymentTimeoutException();
     }
+
 
     /**
      * Get details about the deployments of a component
@@ -414,7 +428,6 @@ public abstract class ChoreoComponent {
 
             JsonArray deploymentJsonArray = response.getAsJsonObject()
                     .getAsJsonObject("data").getAsJsonArray("deployments");
-
             return deploymentJsonArray;
         } catch (GraphQLException e) {
             throw new GetDeploymentsStatusCheckException(e);
@@ -918,6 +931,7 @@ public abstract class ChoreoComponent {
         }
     }
 
+
     public String getId() {
         return id;
     }
@@ -940,6 +954,37 @@ public abstract class ChoreoComponent {
                 put("query", graphQlQuery);
             }
         };
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new RedeployException(statusCode, responseBody);
+            }
+        }
+    }
+
+    public void undeploy(String accessToken, String componentId, String releaseId, String orgHandle) throws IOException, UndeployException {
+        String graphQlQuery = "mutation { stopDeployment(orgHandler: \"" + orgHandle + "\", componentId: \"" + componentId + "\", releaseId: \"" + releaseId + "\", type: \"restAPI\" )}";
+
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
@@ -957,7 +1002,7 @@ public abstract class ChoreoComponent {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity());
             if (statusCode != HttpStatus.SC_OK) {
-                throw new RedeployException(statusCode, responseBody);
+                throw new UndeployException(statusCode, responseBody);
             }
         }
     }

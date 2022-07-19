@@ -22,7 +22,39 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ApiLifecycleChangeException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
+import com.wso2.choreo.integration.common.exceptions.EnvironmentDetailsCheckException;
+import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NamespaceNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityDataCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsDownloadStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -56,12 +88,15 @@ import java.util.zip.ZipInputStream;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasItems;
 
 public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static RestApiChoreoComponent restApiComponent;
-    private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
     private static String namespace;
     private static String releaseId;
     private static String obsId;
@@ -78,15 +113,13 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException,
-            APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException,
-            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException,
-            ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException,
-            ObservabilityLogsNotFoundException {
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException, ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, GetDeploymentsStatusCheckException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-                String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+
+        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent =
@@ -182,7 +215,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void downloadZippedLogs() throws IOException, URISyntaxException, ObservabilityLogsDownloadStatusCheckException {
-        String requestPath = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
+        String requestPath = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT).concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
                 .concat(obsId)
                 .concat("/logsV2/zip/");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");

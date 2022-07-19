@@ -9,6 +9,7 @@ import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusChec
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.slf4j.Logger;
@@ -60,7 +61,7 @@ public class ChoreoProject {
     private String getComponentsQuery() {
         return "query{" +
                 "      components(" +
-                "        orgHandler: \"" + Configuration.TEST_CHOREO_ORG_HANDLE + "\"," +
+                "        orgHandler: \"" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE) + "\"," +
                 "        projectId: \"" + id + "\"" +
                 "      ){\n" +
                 "        projectId," +
@@ -159,7 +160,7 @@ public class ChoreoProject {
 
     public String getDeleteComponentMutation(String componentId) {
         return "mutation{ deleteComponentV2(" +
-                "        orgHandler: \"" + Configuration.TEST_CHOREO_ORG_HANDLE + "\"," +
+                "        orgHandler: \"" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE) + "\"," +
                 "        projectId: \"" + id + "\",\n" +
                 "        componentId: \"" + componentId + "\"){status, canDelete, message" +
                 "}}";

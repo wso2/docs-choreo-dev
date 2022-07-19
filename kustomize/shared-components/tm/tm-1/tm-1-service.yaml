@@ -14,11 +14,22 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - choreo-connect
-  - tm
-
-namespace: choreo-apim
+apiVersion: v1
+kind: Service
+metadata:
+  name: choreo-tm-1-service
+spec:
+  # label keys and values that must match in order to receive traffic for this service
+  selector:
+    deployment: choreo-tm-1
+  ports:
+    # ports that this service should serve on
+    - name: binary
+      protocol: TCP
+      port: 9611
+    - name: binary-secure
+      protocol: TCP
+      port: 9711
+    - name: jms-tcp
+      protocol: TCP
+      port: 5672
