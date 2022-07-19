@@ -62,6 +62,8 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
         private String repoType = "UserManagedNonEmpty";
         private String repoBranch = "dev";
         private String prBranch;
+        private String githubOrg;
+        private String githubPAT;
         private static ChoreoComponent testComponent;
 
         @Autowired
@@ -83,6 +85,8 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+                githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
+                githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
                 ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
                 ChoreoProject project = org.createProject(accessToken);
                 projectId = project.getId();
@@ -94,7 +98,7 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-                String srcGitHubURL = Constant.GITHUB_URL.concat(Configuration.GITHUB_ORG).concat("/")
+                String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/")
                         .concat(repoName);
                 APICreator testAPI = new APICreator();
                 String repoSubpath = "";
@@ -216,7 +220,7 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
         @Test(dependsOnMethods = { "testInitialPRGeneration" })
         @CitrusTest
         public void testPRMerge() throws JsonProcessingException {
-                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                         .concat("/pulls/" + prNumber + "/merge");
                 HashMap<String, Object> requestBodyMap = new HashMap<>() {
                         {
@@ -225,7 +229,7 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
                 };
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
                 // Merge initial PR
                 $(http()
@@ -284,9 +288,9 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
         @Test(dependsOnMethods = { "testPRMerge" })
         @CitrusTest
         public void testBranchDelete() throws JsonProcessingException {
-                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                         .concat("/pulls/" + prNumber);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
                 // get merged PR branch
                 $(http()
@@ -311,7 +315,7 @@ public class CreateUserManagedNonEmptyComponentRoot extends TestNGCitrusSpringSu
                         }));
 
                 // delete merged PR branch
-                String deleteRequestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                String deleteRequestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                         .concat("/git/refs/heads/" + prBranch);
 
                 $(http()

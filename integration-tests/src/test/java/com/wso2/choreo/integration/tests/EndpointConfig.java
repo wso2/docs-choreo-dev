@@ -77,7 +77,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.INSIGHTS_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.INSIGHTS_ENDPOINT))
                 .build();
     }
 
@@ -86,7 +87,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.GITHUB_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.GITHUB_ENDPOINT))
                 .build();
     }
 
