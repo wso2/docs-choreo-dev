@@ -15,9 +15,8 @@ import { DomainsComponents } from "../../../support/console/pages/component/comm
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 
+const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 describe("Add developer portal custom domain", () => {
-    const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
-
     before(() => {
         LoginPage.login();
         ChoreoHomePage.navigateToSettings();
@@ -26,21 +25,36 @@ describe("Add developer portal custom domain", () => {
         DomainsComponents.navigateToDevPortalCustomDomain();
         DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
     });
+
     after(() => {
         ChoreoHomePage.logout();
     });
 
-    it("Create a Domain", () => {
+    it("Add a developer portal custom domain", () => {
         DomainsComponents.createDevportalDomain(CUSTOM_DOMAIN);
     });
+});
 
-    it("Access developer port with custom domain", () => {
+describe("Access developer portal with custom domain", () => {
+    it("Access developer portal with custom domain", () => {
         DomainsComponents.accessDevportalWithCustomDomain(CUSTOM_DOMAIN);
     });
+});
 
-    it("Delete created custom domain", () => {
+describe("Delete added custom domain", () => {
+    before(() => {
+        LoginPage.login();
+        ChoreoHomePage.navigateToSettings();
+
         DomainsComponents.navigateToDomainsSettings();
         DomainsComponents.navigateToDevPortalCustomDomain();
+    });
+
+    after(() => {
+        ChoreoHomePage.logout();
+    });
+
+    it("Delete added custom domain", () => {
         DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
     });
 });
