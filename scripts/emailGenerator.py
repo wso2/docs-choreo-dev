@@ -25,7 +25,7 @@ today = datetime.utcnow()
 
 def sendEmail(emailBody, image_list, csv_file_list):
     sender = "no-reply@internal.choreo.dev"
-    receiver = ["udhan@wso2.com", "chiranga@wso2.com"]
+    receiver = ["integration-choreo-group@wso2.com", "chiranga@wso2.com"]
 
     email_user = os.environ.get('EMAIL_USER')
     email_password = os.environ.get('EMAIL_PASSWORD')
