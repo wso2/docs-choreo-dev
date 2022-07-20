@@ -14,14 +14,14 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - deployment
-  - dp-mizzen
-  - hpa
-  - pdb
-  - rbac
-
-namespace: choreodp-system
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dp-mizzen-agent
+subjects:
+  - kind: ServiceAccount
+    name: dp-mizzen-agent-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: dp-mizzen-agent
