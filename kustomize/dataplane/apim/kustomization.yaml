@@ -18,7 +18,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - choreo-connect
   - tm
 
 namespace: choreo-apim
