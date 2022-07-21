@@ -29,68 +29,34 @@ metadata:
     checkov.io/skip7: CKV_K8S_37=Temporarily suppressing till fixing
     checkov.io/skip8: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
     reloader.stakater.com/auto: "true"
-  labels:
-    choreo.component: nginx
   name: choreo-nginx-deployment
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      deployment: choreo-nginx
   template:
-    metadata:
-      labels:
-        deployment: choreo-nginx
-        choreo.component: nginx
-        antiaffinity: choreo-nginx-deployment
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: deployment
+                      operator: In
+                      values:
+                        - choreo-nginx
+                topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10500
-        runAsGroup: 10500
-        allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
       containers:
         - name: nginx
-          envFrom:
-            - configMapRef:
-                name: redis-config
           env:
-            - name: REDIS_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_HOST
-            - name: REDIS_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_PORT
-            - name: REDIS_SSL
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_SSL
-            - name: REDIS_SSL_VERIFY
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_SSL_VERIFY
-            - name: REDIS_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-config
-                  key: REDIS_DATABASE
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-redis
-                  key: REDIS_PASSWORD
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
@@ -107,7 +73,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-                - all
+                - ALL
               add:
                 - NET_RAW
           ports:
@@ -134,8 +100,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
           volumeMounts:
-            - name: redis-subscribe-folder
-              mountPath: /mnt/redis
             - name: openresty-logs-folder
               mountPath: /usr/local/openresty/nginx/logs
             - name: openresty-run-path
@@ -154,52 +118,11 @@ spec:
               subPath: nginx.conf
             - name: nginx-vhosts
               mountPath: /etc/nginx/sites-enabled
-            - name: choreo-api-wildcard-tls
-              mountPath: /etc/nginx/ssl/choreo
-              readOnly: true
-            - name: choreo-api-gateway-wildcard-tls
-              mountPath: /etc/nginx/ssl/choreo/gateway
-              readOnly: true
-            - name: choreo-api-e1-us-east-azure-wildcard-tls
-              mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
-              readOnly: true
-            - name: secret-redis
-              mountPath: /mnt/csi/secret-redis
-              readOnly: true
-        - name: redis-subscribe
-          image: choreocontrolplane.azurecr.io/choreoipaas/redis-subscribe:latest
-          imagePullPolicy: Always
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 10500
-            runAsGroup: 10500
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - all
-              add:
-                - NET_RAW
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "256m"
-            limits:
-              memory: "128Mi"
-              cpu: "512m"
-          volumeMounts:
-            - name: redis-subscribe-folder
-              mountPath: /redis
       volumes:
-        - name: redis-subscribe-folder
-          emptyDir: { }
         - name: openresty-logs-folder
           emptyDir: { }
         - name: openresty-run-path
           emptyDir: { }
-        - name: redis-config
-          configMap:
-            name: redis-config
         - name: nginx-ca-cert
           configMap:
             name: nginx-ca-cert
@@ -215,33 +138,4 @@ spec:
         - name: nginx-vhosts
           configMap:
             name: nginx-vhosts
-        - name: choreo-api-wildcard-tls
-          secret:
-            secretName: dev-choreo-api-wildcard-tls
-        - name: choreo-api-gateway-wildcard-tls
-          secret:
-            secretName: dev-choreo-api-gateway-wildcard-tls
-        - name: choreo-api-e1-us-east-azure-wildcard-tls
-          secret:
-            secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls
-        - name: secret-redis
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-redis
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
       restartPolicy: Always
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - choreo-nginx-deployment
-              topologyKey: kubernetes.io/hostname
