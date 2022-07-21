@@ -77,7 +77,7 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDevelop();
     LoginPage.navigateToCodespace();
     VSExplorer.creteNewBranch(NEW_BRANCH);
-    VSExplorer.typeCode("Numbers.bal");
+    VSExplorer.pasteCode("Numbers.bal");
     VSExplorer.commitPush(commitMessage);
   });
 

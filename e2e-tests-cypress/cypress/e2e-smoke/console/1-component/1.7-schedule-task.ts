@@ -54,7 +54,7 @@ describe("Schedule task", () => {
 
   it("Verify code edit in vscode", () => {
     LoginPage.navigateToCodespace();
-    VSExplorer.typeCode("scheduletask.bal");
+    VSExplorer.pasteCode("scheduletask.bal");
     VSExplorer.selectSourceControl();
     VSExplorer.enterCommandInTerminal(
       "bash /config/workspace/.githooks/pre-commit"

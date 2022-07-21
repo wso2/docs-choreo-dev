@@ -72,7 +72,7 @@ export class VSExplorer {
   }
 
   static creteNewBranch(branchName: string) {
-    cy.get("[title*='.bal Diagram']",{timeout:360000}).wait(4000);
+    cy.get("[title*='.bal Diagram']", { timeout: 360000 }).wait(4000);
     cy.get('[id="wso2.ballerina"]')
     cy.get('[id="status.scm"]').eq(0).click();
     cy.get(".quick-input-widget")
@@ -87,26 +87,6 @@ export class VSExplorer {
     this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
   }
 
-  static typeCode(fileName: string) {
-    this.closeTab();
-    this.waitTillCodespaceLoad();
-    this.createFile(fileName);
-    this.selectExplorer();
-    cy.contains(fileName).click();
-    cy.get('div[class="view-line"]').should("be.visible").click();
-    cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
-      const codeArr = code.split("\n"); // create an array from the read file content.
-      codeArr.forEach((element) => {
-        if (element !== null && element !== "") {
-          // file may content empty lines. ignore them
-          cy.focused().then((e) => {
-            cy.wrap(e).type(`${element}\n`).wait(4000); // add time to code format
-          });
-        }
-      });
-    });
-    return cy.get(`div${VSExplorer.sourceControllerBtn}>div`).invoke("text");
-  }
 
   static pasteCode(fileName, enter: boolean = false) {
     this.closeTab();
