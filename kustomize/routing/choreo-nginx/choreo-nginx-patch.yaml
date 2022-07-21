@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-nginx-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: nginx
+          envFrom:
+            - configMapRef:
+                name: redis-config
+            - secretRef:
+                name: secret-redis
+          volumeMounts:
+            - name: redis-subscribe-folder
+              mountPath: /mnt/redis
+            - name: choreo-api-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo
+              readOnly: true
+            - name: choreo-api-gateway-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/gateway
+              readOnly: true
+            - name: choreo-api-e1-us-east-azure-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
+              readOnly: true
+            - name: secret-redis
+              mountPath: /mnt/csi/secret-redis
+              readOnly: true
+        - name: redis-subscribe
+          image: choreocontrolplane.azurecr.io/choreoipaas/redis-subscribe:latest
+          imagePullPolicy: Always
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_RAW
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
+          volumeMounts:
+            - name: redis-subscribe-folder
+              mountPath: /redis
+      volumes:
+        - name: redis-subscribe-folder
+          emptyDir: { }
+        - name: choreo-api-wildcard-tls
+          secret:
+            secretName: dev-choreo-api-wildcard-tls
+        - name: choreo-api-gateway-wildcard-tls
+          secret:
+            secretName: dev-choreo-api-gateway-wildcard-tls
+        - name: choreo-api-e1-us-east-azure-wildcard-tls
+          secret:
+            secretName: dev-choreo-api-e1-us-east-azure-wildcard-tls
+        - name: secret-redis
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-redis
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
