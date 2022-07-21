@@ -1,3 +1,0 @@
-resources:
-  - gateway-nginx-service.yaml
-  - gateway-nginx-internal-service.yaml

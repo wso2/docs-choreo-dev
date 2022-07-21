@@ -14,13 +14,13 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
 resources:
-  - ../../shared-components/choreo-nginx
+  - choreo-nginx-deployment.yaml
+  - choreo-nginx-hpa.yaml
+  - choreo-nginx-pdb.yaml
+  - gateway-nginx-internal-service.yaml
+  - gateway-nginx-service.yaml
 
-patchesStrategicMerge:
-  - choreo-nginx-patch.yaml
-
-namespace: choreo-apim
+commonLabels:
+  deployment: choreo-nginx
+  choreo.component: nginx
