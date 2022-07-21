@@ -17,7 +17,10 @@
 resources:
   - dp-kv-resolver-cr.yaml
   - dp-kv-resolver-crb.yaml
-  - dp-kv-resolver-sa.yaml
-  - dp-kv-resolver-role.yaml
-  - dp-kv-resolver-rb.yaml
   - dp-kv-resolver-crd.yaml
+  - dp-kv-resolver-deployment.yaml
+  - dp-kv-resolver-hpa.yaml
+  - dp-kv-resolver-pdb.yaml
+  - dp-kv-resolver-rb.yaml
+  - dp-kv-resolver-role.yaml
+  - dp-kv-resolver-sa.yaml

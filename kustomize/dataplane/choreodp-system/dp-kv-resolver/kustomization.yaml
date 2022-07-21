@@ -15,4 +15,4 @@
 # -----------------------------------------------------------------------
 
 resources:
-  - dp-kv-resolver.yaml
+  - ../../../shared-components/dp-kv-resolver
