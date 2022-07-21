@@ -67,12 +67,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-mizzen-agent
-          env:
-            - name: TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-mizzen-agent
-                  key: TOKEN
+            - secretRef:
+                name: secret-dp-mizzen-agent
           volumeMounts:
             - name: secret-dp-mizzen-agent
               mountPath: /mnt/csi/secret-dp-mizzen-agent

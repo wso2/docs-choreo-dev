@@ -14,5 +14,7 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-resources:
-  - dp-kv-resolver.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dp-kv-resolver-controller-manager
