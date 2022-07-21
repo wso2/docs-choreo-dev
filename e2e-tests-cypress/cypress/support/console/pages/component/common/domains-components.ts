@@ -72,8 +72,9 @@ export class DomainsComponents {
 
     static accessDevportalWithCustomDomain(domainName: string) {
         cy.visit(domainName);
-        cy.contains("API Developer Portal").should("be.visible");
-        cy.contains("Sign in with GitHub").should("be.visible");
-        cy.contains("Sign in with Google").should("be.visible");
+        cy.url().should('include', domainName);
+        cy.get('[data-cyid="sign-in-with-github"]').should("be.visible");
+        cy.get('[data-cyid="sign-in-with-google"]').should("be.visible");
+        cy.get('[data-cyid="sign-in-with-microsoft"]').should("be.visible");
     }
 }
