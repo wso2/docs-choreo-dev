@@ -57,6 +57,8 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     private static String apiKey;
     private static String apiId;
     private String repoName;
+    private String githubOrg;
+    private String githubPAT;
     private static ChoreoComponent testComponent;
 
     private String getComponentDetailsQuery(String projectId, String componentHandler) {
@@ -136,6 +138,8 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
+        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
         ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
         ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
@@ -154,10 +158,10 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                 put("gitignore_template", "nanoc");
             }
         };
-        String requestURI = "/orgs/".concat(Configuration.GITHUB_ORG).concat("/repos");
+        String requestURI = "/orgs/".concat(githubOrg).concat("/repos");
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
         $(http()
                 .client(choreoTestClientForGithub)
@@ -176,7 +180,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
 
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        String srcGitHubURL = "https://github.com/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
+        String srcGitHubURL = "https://github.com/".concat(githubOrg).concat("/").concat(repoName);
         String graphQlQuery = "mutation{ createComponent(" +
                 "      component: {" +
                 "        name: \"" + componentName + "\"," +
@@ -306,7 +310,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testInitialPRGeneration"})
     @CitrusTest
     public void testPRMerge() throws JsonProcessingException {
-        String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                 .concat("/pulls/1/merge");
         HashMap<String, Object> requestBodyMap = new HashMap<>() {
             {
@@ -315,7 +319,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
         };
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
         // Merge initial PR
         $(http()
@@ -636,8 +640,8 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAPIInvocation"})
     @CitrusTest
     public void testComponentRetrievalOnRepoDeletion() throws JsonProcessingException {
-        String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
-        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
+        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
         // Delete repository
         $(http()

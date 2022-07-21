@@ -274,13 +274,13 @@ public abstract class ChoreoComponent {
             if (statusCode != HttpStatus.SC_OK) {
                 throw new ComponentDeploymentException(statusCode, responseBody);
             }
-            JsonObject jsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
-
+            JsonObject jsonObject = new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonObject("data").getAsJsonObject("deployComponent");
             if (!jsonObject.get("success").getAsBoolean()) {
                 throw new ComponentDeploymentFailureException();
             }
-            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId);
         }
+            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId);
+
     }
 
     /**

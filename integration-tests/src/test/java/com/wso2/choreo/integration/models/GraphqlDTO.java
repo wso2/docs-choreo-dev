@@ -22,9 +22,9 @@ public class GraphqlDTO {
     private String projectId;
     private String apiId;
     private String srcGitRepoUrl;
-    private String repoSubpath;
-    private String repoType;
-    private String repoBranch;
+    private String repositorySubPath;
+    private String repositoryType;
+    private String repositoryBranch;
 
 
     public void setApiName(String apiName) {
@@ -90,27 +90,27 @@ public class GraphqlDTO {
     public void setSrcGitRepoUrl(String srcGitRepoUrl) {
         this.srcGitRepoUrl = srcGitRepoUrl;
     }
-    public String getRepoSubpath() {
-        return repoSubpath;
+    public String getRepositorySubPath() {
+        return repositorySubPath;
     }
 
-    public void setRepoSubpath(String repoSubpath) {
-        this.repoSubpath = repoSubpath;
+    public void setRepositorySubPath(String repositorySubPath) {
+        this.repositorySubPath = repositorySubPath;
     }
 
-    public String getRepoType() {
-        return repoType;
+    public String getRepositoryType() {
+        return repositoryType;
     }
 
-    public void setRepoType(String repoType) {
-        this.repoType = repoType;
+    public void setRepositoryType(String repositoryType) {
+        this.repositoryType = repositoryType;
     }
 
-    public String getRepoBranch() {
-        return repoBranch;
+    public String getRepositoryBranch() {
+        return repositoryBranch;
     }
 
-    public void setRepoBranch(String repoBranch) {
-        this.repoBranch = repoBranch;
+    public void setRepositoryBranch(String repositoryBranch) {
+        this.repositoryBranch = repositoryBranch;
     }
 }
