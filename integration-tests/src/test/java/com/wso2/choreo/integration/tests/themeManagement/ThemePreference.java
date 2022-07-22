@@ -135,4 +135,32 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                                 .body(new ClassPathResource(
                                                 "templates/themeManagement/put_update_palette_success.json")));
         }
+
+        @Test
+        @CitrusTest
+        public void testUpdateThemeConfig() throws IOException, InterruptedException {
+                String requestURL = Constant.THEME_ENDPOINT_SUFFIX
+                                .concat(orgUuid)
+                                .concat("/themes/default");
+
+                $(http()
+                                .client(choreoTestClientForTheme)
+                                .send()
+                                .post(requestURL)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(new ClassPathResource(
+                                                "templates/themeManagement/post_update_theme_success.json"))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+                $(http()
+                                .client(choreoTestClientForTheme)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(new ClassPathResource(
+                                                "templates/themeManagement/post_update_theme_success.json")));
+        }
 }
