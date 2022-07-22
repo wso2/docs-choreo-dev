@@ -14,22 +14,25 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: policy/v1
-kind: PodDisruptionBudget
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: choreo-connect-adapter-default-p1
+  name: choreo-nginx-deployment
 spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      choreo.component: choreo-connect-adapter-default-p1
----
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: choreo-connect-deployment-default-p1
-spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      choreo.component: choreo-connect-deployment-default-p1
+  template:
+    spec:
+      containers:
+        - name: nginx
+          envFrom:
+            - configMapRef:
+                name: nginx-feature-flags
+            - configMapRef:
+                name: nginx-lua-config
+          volumeMounts:
+            - name: choreo-api-e1-us-east-azure-wildcard-tls
+              mountPath: /etc/nginx/ssl/choreo/e1-us-east-gateway
+              readOnly: true
+      volumes:
+        - name: choreo-api-e1-us-east-azure-wildcard-tls
+          secret:
+            secretName: choreo-api-e1-us-east-azure-wildcard-tls

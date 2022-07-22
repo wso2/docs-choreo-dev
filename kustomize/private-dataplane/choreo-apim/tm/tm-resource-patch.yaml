@@ -14,12 +14,36 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: policy/v1
-kind: PodDisruptionBudget
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: choreo-nginx-pdb
+  name: choreo-apim-tm-1-deployment
 spec:
-  minAvailable: "50%"
-  selector:
-    matchLabels:
-      choreo.component: nginx
+  template:
+    spec:
+      containers:
+        - name: wso2am
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: "2"
+            limits:
+              memory: 3Gi
+              cpu: "2.5"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-apim-tm-2-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: wso2am
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: "2"
+            limits:
+              memory: 3Gi
+              cpu: "2.5"
