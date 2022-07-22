@@ -7,7 +7,7 @@ CREATE USER 'choreo_apim_shared_db_user'@'%' IDENTIFIED BY 'pw_apim_db_user';
 CREATE USER 'choreo_apim_user_db_user'@'%' IDENTIFIED BY 'pw_apim_db_user';
 CREATE USER 'choreo-aiexp-db-reader'@'%' IDENTIFIED BY 'pw_aiexp_db_reader';
 CREATE USER 'choreo_step_db_user'@'%' IDENTIFIED BY 'pw_step_db_user';
-CREATE USER 'choreo_proxy_deployer_db_user'@'%' IDENTIFIED BY 'pw_proxy_deployer_db_user'
+CREATE USER 'choreo_proxy_deployer_db_user'@'%' IDENTIFIED BY 'pw_proxy_deployer_db_user';
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_app_db`.* TO 'choreo_app_db_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON `choreo_perf_db`.* TO 'choreo_perf_db_user'@'%';
