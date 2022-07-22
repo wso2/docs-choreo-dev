@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
+
 
 export class TriggersTemplate {
   static SelectWebhookTemplate() {
@@ -20,15 +20,21 @@ export class TriggersTemplate {
 
 
   static createTrigger(triggerType: string, triggerName: string, triggerChannel: string) {
+    cy.get('[data-testid="components-mt-api-item-1"]').should('be.visible').click()
+
     cy.get('[data-testid="search-field"]>input').clear().type(triggerType);
     cy.get('[data-testid="search-button"]>button').click();
     cy.get(`.package-card-class>div:not([data-testid])`).realHover().wait(2000)
-    cy.get('[data-testid="Slack"]').realClick();
+    cy.get('[data-testid="Slack"]').realClick({position:"top"});
     cy.get('[data-testid="webhook-name"]>div>input').clear().type(triggerName);
     cy.get(".MuiAutocomplete-endAdornment").click();
     cy.get("#trigger-channel-select-popup");
     cy.get("li>div>h5").contains(triggerChannel).click();
     cy.get('[data-cyid="create-webhook-next"]').click();
     cy.get('[data-testid="create-btn"]').click();
+    cy.setCookie("fidpId", "choreoe2etest") // cypress clears the fidp cooke which is set in login()
+
   }
+
+
 }

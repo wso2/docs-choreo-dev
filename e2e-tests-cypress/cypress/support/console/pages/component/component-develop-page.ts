@@ -11,6 +11,7 @@
  * associated services.
  */
 
+
 import { Utils } from "../../utils";
 
 export class ComponentDevelopPage {
@@ -22,14 +23,19 @@ export class ComponentDevelopPage {
 
 
 
+
+
+
   static getComponentURL() {
-    cy.get('[data-testid="component-develop-edit-code"]', ).invoke("attr", "href").then((href) => {
+    cy.get('[data-testid="component-develop-edit-code"]',).invoke("attr", "href").then((href) => {
       cy.url().then((url) => {
         Utils.saveComponentURL();
         const accessURL = `${url.split("/organizations")[0]}${href.replace(/ /g, "").replace(/\n/g, "")}`
         Cypress.env(`accessURL`, accessURL);
       });
     });
+    
+   
   }
 
   static addResources(path: string, ...verbs) {

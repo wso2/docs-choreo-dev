@@ -27,11 +27,10 @@ import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-
 import { Utils } from "../../../support/console/utils";
 
 describe("Schedule task", () => {
-  const FILE_ID = "oasflow";
+
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = Utils.generateComponentName("sch");
-  const API_BASE_PATH = Utils.generateBasePath();
   const commitMessage = "adding task method";
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
@@ -55,7 +54,7 @@ describe("Schedule task", () => {
 
   it("Verify code edit in vscode", () => {
     LoginPage.navigateToCodespace();
-    VSExplorer.typeCode("scheduletask.bal");
+    VSExplorer.pasteCode("scheduletask.bal");
     VSExplorer.selectSourceControl();
     VSExplorer.enterCommandInTerminal(
       "bash /config/workspace/.githooks/pre-commit"
@@ -97,6 +96,6 @@ describe("Schedule task", () => {
 
   it("Verify application suspension", () => {
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopScheduleTask();
+    ComponentDeployPage.stopAllDeployment();
   });
 });

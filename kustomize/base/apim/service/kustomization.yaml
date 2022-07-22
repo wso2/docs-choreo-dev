@@ -1,12 +1,5 @@
 resources:
 - devportal-service.yaml
 - am-service.yaml
-- eventhub-service.yaml
-- eventhub-1-service.yaml
-- eventhub-2-service.yaml
-- tm-1-service.yaml
-- tm-2-service.yaml
 - choreo-connect-global-adapter.yaml
 - choreo-connect-internal-global-adapter.yaml
-- gateway-nginx-service.yaml
-- choreo-connect

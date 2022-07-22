@@ -43,7 +43,7 @@ public class RestApiChoreoComponentBuilder extends AbstractChoreoComponentBuilde
     public RestApiChoreoComponent createChoreoComponent(String accessToken) throws
             IOException, InterruptedException, ComponentCreationException, ComponentCreationStatusCheckException,
             ComponentRetrieveException, ComponentCreationTimeoutException {
-        String requestURI = CHOREO_ENDPOINT.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         String graphQlQuery = "mutation{ createComponent(" +
                 "      component: {" +

@@ -1,4 +1,4 @@
-import { TimeoutError } from "cypress/types/bluebird";
+
 import { Utils } from "../../utils";
 
 /*

@@ -18,6 +18,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
@@ -32,15 +33,17 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 public class APICreator {
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
 
     public String createAPI(String accessToken, String apiName, String apiContext) throws IOException,
             InterruptedException, ApiCreationException {
-        String requestURI = Configuration.STS_ENDPOINT.
+        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT).
                 concat(Constant.APIS_ENDPOINT).concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(Configuration.TEST_CHOREO_ORG_UUID);
+                .concat(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         String requestBody = getRequestBodyForAPICreation(apiName, apiContext);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
@@ -79,13 +82,50 @@ public class APICreator {
 
         GraphqlDTO gql = new GraphqlDTO();
         gql.setApiName(apiName.toLowerCase());
-        gql.setOrgId(Configuration.TEST_CHOREO_ORG_ID);
-        gql.setOrgHandler(Configuration.TEST_CHOREO_ORG_HANDLE);
+        gql.setOrgId(Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)));
+        gql.setOrgHandler(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE));
         gql.setDiaplayName(apiName);
         gql.setDisplayType(String.valueOf(Constant.displayType.proxy));
         gql.setProjectId(projectId);
         gql.setApiId(apiId.replaceAll("\"", ""));
         mustache.execute(writer, gql).flush();
+        String graphQlQuery = writer.toString();
+
+        return graphQlQuery;
+    }
+
+    public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle,String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
+        Writer writer = new StringWriter();
+
+        GraphqlDTO gql = new GraphqlDTO();
+        gql.setApiName(componentName.toLowerCase());
+        gql.setOrgId(Integer.parseInt(orgId));
+        gql.setOrgHandler(orgHandle);
+        gql.setDiaplayName(componentName);
+        gql.setDisplayType(String.valueOf(Constant.displayType.restAPI));
+        gql.setProjectId(projectId);
+        gql.setSrcGitRepoUrl(srcGitRepoUrl);
+        gql.setRepositorySubPath(repoSubpath);
+        gql.setRepositoryType(repoType);
+        gql.setRepositoryBranch(repoBranch);
+
+        mustache.execute(writer, gql).flush();
+        String graphQlQuery = writer.toString();
+
+        return graphQlQuery;
+    }
+   
+    public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache");
+        Writer writer = new StringWriter();
+
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("projectId", projectId);
+        queryParams.put("componentHandler", componentHandler);
+        mustache.execute(writer, queryParams).flush();
         String graphQlQuery = writer.toString();
 
         return graphQlQuery;

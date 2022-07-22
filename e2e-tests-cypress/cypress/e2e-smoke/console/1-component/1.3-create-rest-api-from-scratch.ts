@@ -77,17 +77,14 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToDevelop();
     LoginPage.navigateToCodespace();
     VSExplorer.creteNewBranch(NEW_BRANCH);
-    VSExplorer.typeCode("Numbers.bal");
+    VSExplorer.pasteCode("Numbers.bal");
     VSExplorer.commitPush(commitMessage);
   });
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    // ComponentDevelopPage.addLabels(labels).then((arr) => {
-    //   expect(arr).to.deep.eq(labels);
-    // });
     ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => { expect(arr).to.include(NEW_BRANCH); });
-  ComponentDevelopPage.verifyLatestCommit(commitMessage);
+    ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
   it("Verify new version creation", () => {
@@ -306,9 +303,7 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should("be.visible");
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });

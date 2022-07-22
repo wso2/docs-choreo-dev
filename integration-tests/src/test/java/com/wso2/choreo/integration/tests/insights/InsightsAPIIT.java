@@ -39,6 +39,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -87,9 +88,7 @@ public class InsightsAPIIT extends TestNGCitrusSpringSupport {
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException {
 
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-                String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-        orgUUID = org.getOrgUUID();
+        orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
     }
 
     @Test

@@ -27,6 +27,7 @@ export class DevPortalHomePage {
   }
 
   static logout(): void {
+    
     cy.window()
       .its("sessionStorage")
       .invoke("getItem", "sign_out_url")

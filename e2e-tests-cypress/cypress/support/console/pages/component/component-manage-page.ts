@@ -15,7 +15,7 @@ import { DocumentType } from "../enum/document-type";
 import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
-import { Utils } from "../../utils";
+
 
 
 export class ComponentAPILifecycle {
@@ -109,18 +109,22 @@ export class ComponentAPILifecycle {
   }
 
   static publishToMarketplace(connectorAudience: ConnectorAudience) {
+    cy.get('[data-testid="change-state-info"]').should('be.visible')
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]');
+    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
-    cy.get('[data-testid="marketplace-btn"]')
+
+    cy.get('[data-testid="marketplace-btn"]').should('be.visible')
     cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist")
   }
 
+
+
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]');
+    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
     cy.contains("No, Thanks").should("be.enabled").click();
   }
 
@@ -145,25 +149,26 @@ export class ComponentAPILifecycle {
 
   private static addAllowedOrigins(origins: string[]) {
     if (origins.length > 0) {
-      cy.get('[data-testid="addBtn-origin"]').click();
-      origins.forEach((ori) => cy.get('[placeholder="Type and press enter to add Origins"]').type(`${ori}`).wait(1000).type("{enter}"));
+      origins.forEach((ori) => cy.get('[data-testid="cors-config-origins-input"]>div>div>input').type(`${ori}`).wait(1000).type("{enter}"));
     }
   }
 
   private static addAllowedAccessControlHeaders(headers: string[]) {
     if (headers.length > 0) {
-      cy.get('[data-testid="addBtn-header"]').click();
-      headers.forEach((meth) => cy.get('[placeholder="Type and press enter to add Headers"]').type(`${meth}`).wait(1000).type("{enter}"));
+      headers.forEach((meth) => {
+        cy.get('[data-testid="cors-config-header-input"]>div>div').click();
+        cy.get('[data-testid="cors-config-header-input"]>div>div>input').type(`${meth}`).wait(1000).type("{enter}")
+      });
     }
   }
 
   private static addAllowedAccessMethods(methods: string[]) {
     if (methods.length > 0) {
-      cy.get('[data-testid="addBtn-method"]').click();
+
       methods.forEach((meth) => {
-        cy.get('[aria-labelledby="demo-mutiple-name-label"]').click();
-        cy.get(`[data-value=${meth.toUpperCase()}]`).click();
-        cy.wait(1000);
+        cy.get('[data-testid="cors-config-methods-input"]>div>div>div.MuiAutocomplete-endAdornment>button').eq(1).click();
+        cy.contains(meth.toUpperCase()).click();
+
       });
     }
   }

@@ -58,7 +58,7 @@ describe("Verify webhook creation functionality", () => {
   });
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace();
-    VSExplorer.typeCode("slacktrigger.bal");
+    VSExplorer.pasteCode("slacktrigger.bal");
     VSExplorer.selectSourceControl();
 
     VSExplorer.enterCommandInTerminal(
@@ -73,9 +73,6 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.addLabels(LABELS).then((arr) => {
-      expect(arr).to.deep.eq(LABELS);
-    });
     ComponentDevelopPage.verifyLatestCommit(COMMIT_MESSAGE);
   });
 
@@ -91,14 +88,8 @@ describe("Verify webhook creation functionality", () => {
   });
 
   it("Component promotion to prod", () => {
-    ComponentDeployPage.promoteWebHookToProd();
+    ComponentDeployPage.promoteWebHookToProd(CONFIG);
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
-  });
-
-  it("Verify test functionality in Dev env", () => {
-    ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentTestPage.getTestKey();
   });
 
   it("Verify manage functionality", () => {
@@ -109,9 +100,15 @@ describe("Verify webhook creation functionality", () => {
     );
   });
 
-  it("Verify suspending Prod deployed component", () => {
+  it("Verify suspending Dev deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
+  });
+
+
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopProdContainer();
   });
 });
 

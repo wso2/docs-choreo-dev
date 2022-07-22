@@ -1,5 +1,4 @@
 resources:
-  - anomalydetector.yaml
   - connector-builder.yaml
   - testbase.yaml
   - obsapi.yaml
@@ -16,7 +15,6 @@ resources:
   - connectords.yaml
   - apim-service.yaml
   - perfanalyzer-estimator.yaml
-  - datamapper.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
   - organization-remover.yaml
@@ -31,6 +29,7 @@ resources:
   - console-next.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - alert-notification-service.yaml
+  - alert-configuration-service.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
@@ -40,3 +39,4 @@ resources:
   - image-share-service.yaml
   - devops-portal.yaml
   - devops-portal-api.yaml
+  - organization-management.yaml

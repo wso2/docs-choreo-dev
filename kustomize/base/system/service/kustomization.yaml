@@ -1,5 +1,6 @@
 resources:
   - alert-notification-service.yaml
+  - alert-configuration-service.yaml
   - analytics-subscription.yaml
   - api-server.yaml
   - apim-service.yaml
@@ -10,7 +11,6 @@ resources:
   - console-next.yaml
   - cp-graphql.yaml
   - datacollector.yaml
-  - datamapper.yaml
   - delete-manager.yaml
   - dp-cicd.yaml
   - dp-cloud-manager.yaml
@@ -39,3 +39,4 @@ resources:
   - image-share-service.yaml
   - devops-portal.yaml
   - devops-portal-api.yaml
+  - organization-management.yaml

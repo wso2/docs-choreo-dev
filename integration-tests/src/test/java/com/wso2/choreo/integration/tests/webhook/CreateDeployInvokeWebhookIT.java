@@ -1,25 +1,38 @@
 package com.wso2.choreo.integration.tests.webhook;
 
-import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import org.apache.commons.codec.binary.Hex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -27,34 +40,21 @@ import java.security.NoSuchAlgorithmException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-
-import org.apache.commons.codec.binary.Hex;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.consol.citrus.message.MessageType;
-
-import org.springframework.core.io.ClassPathResource;
-
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static org.junit.Assert.fail;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.fail;
 
 /**
  * $(http()
@@ -81,6 +81,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         private static ChoreoComponent testComponent;
         private String namespace;
         private String obsId;
+        private String githubOrg;
+        private String githubPAT;
 
         @Autowired
         private HttpClient choreoTestClient;
@@ -99,12 +101,13 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                         throws IOException, InterruptedException, ProjectCreationException,
                         TokenRetrievalException {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-                ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-                                String.valueOf(Configuration.TEST_CHOREO_ORG_ID),
-                                Configuration.TEST_CHOREO_ORG_UUID);
-                orgHandle = org.getOrgHandle();
-                orgId = org.getOrgId();
-                orgUUID = org.getOrgUUID();
+                orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+                orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+                orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+                githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
+                githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
+
+                ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
                 ChoreoProject project = org.createProject(accessToken);
                 projectId = project.getId();
         }
@@ -122,10 +125,10 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                 put("gitignore_template", "nanoc");
                         }
                 };
-                String requestURI = "/orgs/".concat(Configuration.GITHUB_ORG).concat("/repos");
+                String requestURI = "/orgs/".concat(githubOrg).concat("/repos");
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
                 $(http()
                                 .client(choreoTestClientForGithub)
@@ -144,7 +147,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-                String srcGitHubURL = "https://github.com/".concat(Configuration.GITHUB_ORG).concat("/")
+                String srcGitHubURL = "https://github.com/".concat(githubOrg).concat("/")
                                 .concat(repoName);
                 String graphQlQuery = "mutation{ createComponent(" +
                                 " component: {" +
@@ -277,10 +280,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                         .response(HttpStatus.OK)
                                         .message()
                                         .type(MessageType.JSON)
-                                        .body(new ClassPathResource(
-                                                "templates/createUserManagedComponent/get_pull_requests.json"))
-                                        .validate(json()
-                                                .ignore("$.data.componentPullRequests[0].url"))));
+                                        .validate(jsonPath()
+                                                .expression("$.data.componentPullRequests.size()",  greaterThan(0)))));
         }
 
         @Test(dependsOnMethods = {
@@ -288,7 +289,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         })
         @CitrusTest
         public void testPRMerge() throws JsonProcessingException {
-                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                                 .concat("/pulls/1/merge");
                 HashMap<String, Object> requestBodyMap = new HashMap<>() {
                         {
@@ -297,7 +298,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 };
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
                 // Merge initial PR
                 $(http()
@@ -359,9 +360,9 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         })
         @CitrusTest
         public void testGetShaOfWebhookBal() {
-                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                                 .concat("/contents/webhook.bal");
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
                 $(http()
                                 .client(choreoTestClientForGithub)
                                 .send()
@@ -388,7 +389,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         })
         @CitrusTest
         public void testCommitFile() throws IOException {
-                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName)
+                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                                 .concat("/contents/webhook.bal");
                 HashMap<String, Object> requestBodyMap = new HashMap<>() {
                         {
@@ -401,7 +402,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 };
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
                 // Commit the webhook.bal file to the repository
                 $(http()
@@ -934,8 +935,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         }, alwaysRun = true)
         @CitrusTest
         public void testDeleteRepo() {
-                String requestURI = "/repos/".concat(Configuration.GITHUB_ORG).concat("/").concat(repoName);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.GITHUB_PAT);
+                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
                 // Delete repository
                 $(http()

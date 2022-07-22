@@ -37,9 +37,6 @@ export class LoginPage {
 
   static login() {
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
-
-    cy.setCookie("fidpId", "choreoe2etest");
-
     this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
@@ -69,13 +66,13 @@ export class LoginPage {
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
-   this.setCookie(csurl, "fidpId", "EnterpriseIDP")
+    cy.setCookie("fidpId", "EnterpriseIDP")
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
-    this.setCookie(csurl, "fidpId", "choreoe2etest")
+    cy.setCookie("fidpId", "choreoe2etest")
   }
 
   static enterpriseLogin() {
@@ -95,8 +92,6 @@ export class LoginPage {
       log: false,
     });
     cy.contains("Continue").click();
-
-    cy.setCookie("fidpId", "EnterpriseIDP");
     cy.get('[data-testid="header-user-profile-menu"]', {
       timeout: 180000,
     }).should("be.visible");
@@ -107,7 +102,6 @@ export class LoginPage {
   private static persistLogoutURL() {
     cy.window().its("sessionStorage").invoke("getItem", "sign_out_url").then((url) => Cypress.env("sign_out_url", url));
   }
-
 
   private static persistCookies(url: string) {
     cy.log("persistCookies()");
@@ -191,3 +185,4 @@ export class LoginPage {
     });
   }
 }
+

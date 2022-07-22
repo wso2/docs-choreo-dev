@@ -14,6 +14,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class InsightsAuthAPIIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void beforeClass() throws Exception {
-        accessToken = Constant.BEARER_PREFIX.concat(Configuration.INSIGHTS_ONPREM_KEY);
+        accessToken = Constant.BEARER_PREFIX.concat(Configuration.getConfig(ConfigDefinition.INSIGHTS_ONPREM_KEY));
     }
 
     @Test
