@@ -23,7 +23,7 @@ rules:
       - ""
     resources:
       - pods
-      - pods/logs
+      - pods/log
       - services
       - endpoints
       - secrets
