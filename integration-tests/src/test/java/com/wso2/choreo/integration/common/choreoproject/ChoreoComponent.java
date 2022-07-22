@@ -279,7 +279,7 @@ public abstract class ChoreoComponent {
                 throw new ComponentDeploymentFailureException();
             }
         }
-            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId);
+            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId, devEnvIdToDeploy);
 
     }
 
@@ -292,16 +292,10 @@ public abstract class ChoreoComponent {
      * @param versionId   the ID of the latest API version
      */
     public void waitForComponentDeploymentSuccess(String accessToken, String orgHandle, String orgUUID,
-                                                  String versionId)
-            throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
-            ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
-
+                                                  String versionId, String envId)
+            throws InterruptedException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException {
         waitForDeploymentStatusByVersion(accessToken, versionId);
-        JsonArray deploymentJsonArray = getDeployments(accessToken, orgHandle, orgUUID, versionId);
 
-        JsonObject deployment = (JsonObject) deploymentJsonArray.get(0);
-        String envID = deployment.get("environmentId").toString();
-        String environmentID = envID.substring(1, envID.length() - 1);
         String gqlQuery =
                 "query {" +
                         "      componentDeployment(" +
@@ -309,7 +303,7 @@ public abstract class ChoreoComponent {
                         "    orgUuid:\"" + orgUUID + "\"" +
                         "    componentId:\"" + id + "\" " +
                         "    versionId:\"" + versionId + "\"" +
-                        "    environmentId:\"" + environmentID + "\") {        " +
+                        "    environmentId:\"" + envId + "\") {        " +
                         "    environmentId" +
                         "    configCount" +
                         "    apiId" +
@@ -364,7 +358,7 @@ public abstract class ChoreoComponent {
 
                 log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " attempts, retrying");
             } catch (GraphQLException e) {
-                throw new GetDeploymentsStatusCheckException(e);
+                throw new ComponentDeploymentStatusCheckException(e);
             }
         }
         throw new ComponentDeploymentTimeoutException();
@@ -372,7 +366,7 @@ public abstract class ChoreoComponent {
     }
 
     private void waitForDeploymentStatusByVersion(String accessToken, String versionId)
-            throws InterruptedException, GetDeploymentsStatusCheckException {
+            throws InterruptedException, ComponentDeploymentStatusCheckException {
         String gqlQuery = "query {" +
                 "  deploymentStatusByVersion(" +
                 "    componentId: \"" + id + "\"" +
@@ -402,11 +396,23 @@ public abstract class ChoreoComponent {
 
                 JsonArray deploymentJsonArray = response.getAsJsonObject()
                         .getAsJsonObject("data").getAsJsonArray("deploymentStatusByVersion");
+
+                if (deploymentJsonArray.size() == 0) {
+                    continue;
+                }
+
                 String status = ((JsonObject) deploymentJsonArray.get(0)).get("status").getAsString();
 
                 if (status.equals("completed")) {
-                    log.debug("waitForDeploymentStatusByVersion()... " + numberOfTries + " tries taken to succeed");
-                    return;
+                    String conclusion = ((JsonObject) deploymentJsonArray.get(0)).get("conclusion").getAsString();
+
+                    if (conclusion.equals("success")) {
+                        log.debug("waitForDeploymentStatusByVersion()... " + numberOfTries + " tries taken to succeed");
+                        return;
+                    } else {
+                        throw new ComponentDeploymentStatusCheckException("Component deployment was not successful, " +
+                                "conclusion: " + conclusion);
+                    }
                 }
 
                 // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
@@ -417,7 +423,7 @@ public abstract class ChoreoComponent {
 
                 log.debug("waitForDeploymentStatusByVersion()... " + numberOfTries + " attempts, retrying");
             } catch (GraphQLException e) {
-                throw new GetDeploymentsStatusCheckException(e);
+                throw new ComponentDeploymentStatusCheckException(e);
             }
         }
     }
