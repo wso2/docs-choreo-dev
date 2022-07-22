@@ -113,3 +113,9 @@ IF NOT EXISTS
 	WHERE name = 'choreo_codeserver_db_user')
 CREATE LOGIN choreo_codeserver_db_user with password = N'xxxxxxxxxxxxx'
 GO
+
+IF NOT EXISTS
+	(SELECT name FROM master.sys.sql_logins
+	WHERE name = 'choreo_proxy_deployer_db_user')
+CREATE LOGIN choreo_proxy_deployer_db_user with password = N'xxxxxxxxxxxxx'
+GO

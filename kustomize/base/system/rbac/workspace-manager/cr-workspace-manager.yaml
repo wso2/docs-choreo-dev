@@ -4,7 +4,7 @@ metadata:
   name: choreo-workspace-manager
 rules:
 - apiGroups: [""]
-  resources: ["pods", "pods/logs", "services", "endpoints", "secrets"]
+  resources: ["pods", "pods/log", "services", "endpoints", "secrets"]
   verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
 - apiGroups: ["apps"]
   resources: ["deployments"]
