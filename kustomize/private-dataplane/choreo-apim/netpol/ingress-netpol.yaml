@@ -23,6 +23,6 @@ spec:
   - Ingress
   podSelector:
     matchLabels:
-      choreo.component: choreo-connect-deployment-default-p1
+      cc.component: choreo-connect-deployment
   ingress:
   - {}

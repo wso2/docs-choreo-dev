@@ -14,17 +14,29 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: choreo-nginx-service
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  name: choreo-connect-adapter
 spec:
-  selector:
-    deployment: choreo-nginx
-  ports:
-    - port: 443
-      targetPort: 9443
-      name: https
-  type: LoadBalancer
+  template:
+    spec:
+      containers:
+        - name: choreo-connect-adapter
+          env:
+            - name: adapter_admin_pwd
+              $patch: delete
+            - name: enforcer_management_password
+              $patch: delete
+            - name: cp_admin_pwd
+              $patch: delete
+            - name: PRIVATE_GLOBAL_ADAPTER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PRIVATE_GLOBAL_ADAPTER_PASSWORD
+                  name: secret-apim
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
