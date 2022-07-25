@@ -83,7 +83,8 @@ nav:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
      - Enterprise Login: references/enterprise-login.md
-     - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md 
+     - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
+     - Public IP Ranges: references/public-ip-ranges.md
 
 # - Choreo DevOps: devops/overview.md
 # Extensions
