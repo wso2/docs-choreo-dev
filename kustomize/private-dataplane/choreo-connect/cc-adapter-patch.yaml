@@ -40,3 +40,9 @@ spec:
                 secretKeyRef:
                   name: secret-asb
                   key: ASB_CONNECTION_STRING
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-mgw
+              $patch: delete
+      volumes:
+        - name: secret-mgw
+          $patch: delete
