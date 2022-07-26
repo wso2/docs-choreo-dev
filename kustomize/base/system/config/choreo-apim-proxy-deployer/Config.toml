@@ -1,5 +1,5 @@
 [cp.proxyDeployer.config]
-apimBasePath = "https://choreo-am-service.dev-choreo-apim:9443"
+apimBasePath = "$env{APIM_URL}"
 rudderBasePath = "http://dp-rudder:3000/api/v1"
 projectManagerBasePath = "http://dp-project-manager:3000/api/v1"
 maxRevisions = 20
