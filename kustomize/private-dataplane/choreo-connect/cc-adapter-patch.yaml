@@ -26,7 +26,7 @@ spec:
           env:
             - name: adapter_admin_pwd
               $patch: delete
-            - name: enforcer_management_password
+            - name: enforcer_managemenet_password
               $patch: delete
             - name: cp_admin_pwd
               $patch: delete
