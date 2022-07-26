@@ -8,8 +8,8 @@ dbUrl = "$env{PROXY_DEPLOYER_DB_URL}"
 dbUser = "choreo_proxy_deployer_db_user"
 dbPassword = "$env{SQL_DB_PASSWORD}"
 
-proxyDeployerPort = 9095;
-healthCheckPort = 9092;
+proxyDeployerPort = 9095
+healthCheckPort = 9092
 
 [ballerina.log]
 level = "DEBUG"

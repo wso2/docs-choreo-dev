@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=Required by linkerD
   labels:
     choreo.component: choreo-apim-proxy-deployer
   name: choreo-apim-proxy-deployer
@@ -70,9 +67,13 @@ spec:
               memory: 768Mi
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 100
+            runAsUser: 100001 # to fix CKV_K8S_40 use uid > 10000
             runAsGroup: 1000
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:          
+                - ALL  # Fixes CKV_K8S_37
+                - NET_RAW # Fixes CKV_K8S_28
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
