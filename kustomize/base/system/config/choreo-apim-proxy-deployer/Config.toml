@@ -1,6 +1,6 @@
 [cp.proxyDeployer.config]
-rudderBasePath = "http://dp-rudder:3000/api/v1"
-projectManagerBasePath = "http://dp-project-manager:3000/api/v1"
+rudderBasePath = "http://dp-rudder:3000"
+projectManagerBasePath = "http://dp-project-manager:3000"
 maxRevisions = 20
 
 dbUser = "choreo_proxy_deployer_db_user"
