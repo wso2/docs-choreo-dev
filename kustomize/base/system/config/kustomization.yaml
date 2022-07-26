@@ -304,3 +304,7 @@ configMapGenerator:
       - AZURE_TENANT_ID="08eae7d4-cdcb-400d-894e-b27d66419876"
       - AZURE_CLIENT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
       - RUDDER_HOST="http://dp-rudder:80"
+  - name: choreo-apim-proxy-deployer-config
+    behavior: create
+    files:
+      - choreo-apim-proxy-deployer/Config.toml
