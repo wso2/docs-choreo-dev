@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-apim-proxy-deployer
+  name: choreo-apim-proxy-deployer
+spec:
+  ports:
+    - name: healthz
+      port: 9092
+      targetPort: healthz
+    - name: http-port
+      port: 9095
+      targetPort: http-port
+
+  selector:
+    choreo.component: choreo-apim-proxy-deployer
