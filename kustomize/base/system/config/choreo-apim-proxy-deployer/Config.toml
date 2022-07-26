@@ -6,7 +6,7 @@ maxRevisions = 20
 dbUser = "choreo_proxy_deployer_db_user"
 
 proxyDeployerPort = 9095
-healthCheckPort = 9092
+healthCheckPort = 9091
 
 [ballerina.log]
 level = "DEBUG"
