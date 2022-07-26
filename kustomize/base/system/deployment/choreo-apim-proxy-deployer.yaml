@@ -67,8 +67,8 @@ spec:
               memory: 768Mi
           securityContext:
             allowPrivilegeEscalation: false
-            runAsUser: 100001 # to fix CKV_K8S_40 use uid > 10000
-            runAsGroup: 1000
+            runAsUser: 10001 # to fix CKV_K8S_40 use uid > 10000
+            runAsGroup: 10001
             readOnlyRootFilesystem: true
             capabilities:
               drop:          
