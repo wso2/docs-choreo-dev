@@ -6,9 +6,6 @@ metadata:
   name: choreo-apim-proxy-deployer
 spec:
   ports:
-    - name: proxy-deployer-port
-      port: 9090
-      targetPort: proxy-deployer-port
     - name: healthz
       port: 9092
       targetPort: healthz
