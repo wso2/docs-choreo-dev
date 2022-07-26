@@ -1,12 +1,9 @@
 [cp.proxyDeployer.config]
-apimBasePath = "$env{APIM_URL}"
 rudderBasePath = "http://dp-rudder:3000/api/v1"
 projectManagerBasePath = "http://dp-project-manager:3000/api/v1"
 maxRevisions = 20
 
-dbUrl = "$env{PROXY_DEPLOYER_DB_URL}"
 dbUser = "choreo_proxy_deployer_db_user"
-dbPassword = "$env{SQL_DB_PASSWORD}"
 
 proxyDeployerPort = 9095
 healthCheckPort = 9092
