@@ -15,7 +15,7 @@ A scheduled task performs a routine action at scheduled time intervals. Followin
 Developing a scheduled task is the process of configuring an action to be executed.
 
 !!! tip
-The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled task. You need to provide it only when you deploy the Scheduled Task component.
+    The development stage does not require you to specify the time interval at which the system needs to execute the action of the scheduled task. You need to provide it only when you deploy the Scheduled Task component.
 
 e.g., If you need to schedule a health check log for an application, you may need to configure the following:
 - How the Scheduled Task component gets the heartbeat of the application that it is monitoring
