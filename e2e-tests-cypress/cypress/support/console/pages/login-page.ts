@@ -67,14 +67,12 @@ export class LoginPage {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
     cy.setCookie("fidpId", "EnterpriseIDP")
-  //  this.setCookie(csurl, "fidpId", "EnterpriseIDP")
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
     cy.visit(csurl);
     cy.setCookie("fidpId", "choreoe2etest")
-    // this.setCookie(csurl, "fidpId", "choreoe2etest")
   }
 
   static enterpriseLogin() {
@@ -186,18 +184,5 @@ export class LoginPage {
       });
     });
   }
-
-  static selfSignup() {
-    cy.visit(Cypress.env("selfSignupLoginUrl"));
-    cy.get('button[data-testid="login-button"]').should("be.visible", {
-      timeout: 180000,
-    });
-    cy.get('button[data-testid="login-button"]').click()
-    cy.get('input[id="usernameUserInput"]').should("be.visible", { timeout: 18000 });
-    cy.get("#usernameUserInput").type(Cypress.env("selfSignupUsername"));
-    cy.get("#password").type(Cypress.env("selfSignupPassword"), { log: false });
-    cy.get('[data-testid="login-page-continue-login-button"]').should("not.be.disabled").click();
-    cy.wait(10000);
-    cy.get('[data-testid*="home-page-banner-title"]').should("be.visible").wait(2000);
-  }
 }
+

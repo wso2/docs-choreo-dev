@@ -9,4 +9,12 @@ public class ComponentDeploymentStatusCheckException extends Exception {
         super("{ statusCode=" + statusCode +
                 ", message='" + message + "'}");
     }
+
+    public ComponentDeploymentStatusCheckException(Throwable e) {
+        super(e);
+    }
+
+    public ComponentDeploymentStatusCheckException(String msg) {
+        super(msg);
+    }
 }

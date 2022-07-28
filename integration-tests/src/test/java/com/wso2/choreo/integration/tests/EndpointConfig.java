@@ -15,18 +15,31 @@ package com.wso2.choreo.integration.tests;
 
 import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 public class EndpointConfig {
+
+    @PostConstruct
+    public void loadEndpointConfig() throws Exception {
+        com.wso2.choreo.integration.config.Configuration.loadConfigs();
+        TestContext.setTestOrg();
+        TestContext.setTestUserTokenHandler();
+        TestContext.setAnomalyDetectionUserTokenHandler();
+    }
 
     @Bean
     public HttpClient choreoTestClient() {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.CHOREO_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CHOREO_ENDPOINT))
                 .build();
     }
 
@@ -35,7 +48,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.CHOREO_CP_PROJECTS_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT))
                 .build();
     }
 
@@ -44,7 +58,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.STS_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(ConfigDefinition.STS_ENDPOINT))
                 .build();
     }
 
@@ -53,7 +67,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.CHOREO_CP_GW_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CHOREO_CP_GW_ENDPOINT))
                 .build();
     }
 
@@ -62,7 +77,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.INSIGHTS_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.INSIGHTS_ENDPOINT))
                 .build();
     }
 
@@ -71,9 +87,19 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.GITHUB_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.GITHUB_ENDPOINT))
                 .build();
     }
 
+    @Bean
+    public HttpClient choreoTestClientForTheme() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                    ConfigDefinition.THEME_ENDPOINT))
+                .build();
+    }
 
 }

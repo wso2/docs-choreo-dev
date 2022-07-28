@@ -58,7 +58,7 @@ describe("Verify webhook creation functionality", () => {
   });
   it("Edit code in VScode", () => {
     LoginPage.navigateToCodespace();
-    VSExplorer.typeCode("slacktrigger.bal");
+    VSExplorer.pasteCode("slacktrigger.bal");
     VSExplorer.selectSourceControl();
 
     VSExplorer.enterCommandInTerminal(
@@ -73,9 +73,6 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    // ComponentDevelopPage.addLabels(LABELS).then((arr) => {
-    //   expect(arr).to.deep.eq(LABELS);
-    // });
     ComponentDevelopPage.verifyLatestCommit(COMMIT_MESSAGE);
   });
 

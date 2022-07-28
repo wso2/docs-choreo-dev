@@ -13,30 +13,24 @@
 
 package com.wso2.choreo.integration.tests.apiproxy;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
-import static com.wso2.choreo.integration.config.Configuration.TEST_CHOREO_ORG_HANDLE;
-import static com.wso2.choreo.integration.config.Configuration.TEST_CHOREO_ORG_ID;
-
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-
 import com.consol.citrus.message.MessageType;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
@@ -46,6 +40,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+
 
 public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     private static String accessToken;
@@ -53,6 +50,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     private static String projectId;
     private static String firstAPIName;
     private static String firstContext;
+    private static String orgUuid;
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -66,14 +64,16 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass() throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoOrganization testOrg = new ChoreoOrganization(TEST_CHOREO_ORG_HANDLE,
-                String.valueOf(TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+        orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        ChoreoOrganization testOrg = new ChoreoOrganization(orgHandle, orgId, orgUuid);
         ChoreoProject testProject = testOrg.createProject(accessToken);
         projectHandler = testProject.getHandler();
         projectId = testProject.getId();
         // Create a unique API Name and a Context.
         firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
-        firstContext = Configuration.TEST_CHOREO_ORG_UUID.concat("/").concat(projectHandler).concat("/")
+        firstContext = orgUuid.concat("/").concat(projectHandler).concat("/")
                 .concat(firstAPIName.toLowerCase());
     }
 
@@ -81,7 +81,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testAPINameValidationForAPIProxyCreation() throws IOException, InterruptedException, ApiCreationException {
         String requestURL = Constant.API_VALIDATE_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID)
-                .concat("=").concat(Configuration.TEST_CHOREO_ORG_UUID)
+                .concat("=").concat(orgUuid)
                 .concat("&query=name:").concat(firstAPIName);
         // Test API Name validation.
         $(http()
@@ -160,7 +160,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
                 .client(choreoTestClientForSTS)
                 .send()
                 .post(Constant.APIS_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                        .concat(Configuration.TEST_CHOREO_ORG_UUID))
+                        .concat(orgUuid))
                 .message()
                 .body(requestBody)
                 .header(HttpHeaders.AUTHORIZATION, accessToken)

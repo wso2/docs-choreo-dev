@@ -18,7 +18,7 @@ export class VSExplorer {
 
   static terminal = ".xterm-helper-textarea";
 
-  
+
   static waitTillCodespaceLoad() {
     cy.get(".monaco-highlighted-label").contains(".bal").click();
     cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]').click();
@@ -72,7 +72,7 @@ export class VSExplorer {
   }
 
   static creteNewBranch(branchName: string) {
-    cy.get("[title*='.bal Diagram']").wait(4000);
+    cy.get("[title*='.bal Diagram']", { timeout: 360000 }).wait(4000);
     cy.get('[id="wso2.ballerina"]')
     cy.get('[id="status.scm"]').eq(0).click();
     cy.get(".quick-input-widget")
@@ -87,7 +87,8 @@ export class VSExplorer {
     this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
   }
 
-  static typeCode(fileName: string) {
+
+  static pasteCode(fileName, enter: boolean = false) {
     this.closeTab();
     this.waitTillCodespaceLoad();
     this.createFile(fileName);
@@ -95,20 +96,20 @@ export class VSExplorer {
     cy.contains(fileName).click();
     cy.get('div[class="view-line"]').should("be.visible").click();
     cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
-      const codeArr = code.split("\n"); // create an array from the read file content.
-      codeArr.forEach((element) => {
-        if (element !== null && element !== "") {
-          // file may content empty lines. ignore them
-          cy.focused().then((e) => {
-            cy.wrap(e).type(`${element}\n`).wait(4000); // add time to code format
-          });
+      cy.focused().then($destination => {
+        const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
+          clipboardData: {
+            getData: (type = 'text') => code,
+          },
+        });
+        $destination[0].dispatchEvent(pasteEvent);
+        if (enter) {
+          cy.wait(3000);
+          cy.wrap($destination).type('{enter}');
         }
       });
     });
-    return cy.get(`div${VSExplorer.sourceControllerBtn}>div`).invoke("text");
   }
-
-
 
   private static createFile(fileName: string) {
     cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon').click().wait(2000);
@@ -120,6 +121,11 @@ export class VSExplorer {
 
   static getCodeLense(index: number) {
     return cy.get(`[widgetId="codelens.widget-${index}"]`).eq(0);
+  }
+
+  static clickCodeLense(index: number) {
+    this.getCodeLense(index).click();
+    cy.wait(5000);
   }
 
   static matchCodeLense(index: number, regex: RegExp) {

@@ -40,6 +40,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundExcept
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,6 @@ import java.util.Random;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import static com.wso2.choreo.integration.config.Configuration.CHOREO_CP_GW_ENDPOINT;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_LATENCY_ALERT_API_RESOURCE;
 import static com.wso2.choreo.integration.config.Constant.INSIGHTS_TRAFFIC_ALERT_API_RESOURCE;
@@ -76,7 +76,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
  */
 public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static String organization;
+    private static String orgUuid;
     private static String trafficAlertConfigurationId;
     private static String latencyAlertConfigurationId;
     private static String apiName;
@@ -97,10 +97,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
             ComponentCreationTimeoutException, ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException,
             ComponentDeploymentFailureException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-                String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
-
-        organization = org.getOrgUUID();
+        orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
         Random random = new Random();
         String generatedString = random.ints(97, 123)
@@ -109,11 +106,11 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .toString();
         apiName = "TestInsightsAlertAPI" + generatedString;
 
-        environmentId = getEnvironmentId(organization, accessToken);
+        environmentId = getEnvironmentId(orgUuid, accessToken);
     }
 
     public static String getEnvironmentId(String orgUUID, String accessToken) throws IOException, InterruptedException {
-        String requestURI = CHOREO_CP_GW_ENDPOINT + "/" + INSIGHTS_API_RESOURCE;
+        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT) + "/" + INSIGHTS_API_RESOURCE;
         String graphQlQuery =
                 "query($orgFilter: OrgFilter!) {" +
                         "   listEnvironments(org: $orgFilter) {" +
@@ -159,7 +156,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .get(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -183,7 +180,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .post(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -221,7 +218,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .put(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -261,7 +258,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .delete(INSIGHTS_TRAFFIC_ALERT_API_RESOURCE + "/" + trafficAlertConfigurationId)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -285,7 +282,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .get(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -309,7 +306,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .post(INSIGHTS_LATENCY_ALERT_API_RESOURCE)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -347,7 +344,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .put(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()
@@ -388,7 +385,7 @@ public class InsightsAlertAPIIT extends TestNGCitrusSpringSupport {
                 .client(choreoCPTestClient)
                 .send()
                 .delete(INSIGHTS_LATENCY_ALERT_API_RESOURCE + "/" + latencyAlertConfigurationId)
-                .queryParam("organization", organization)
+                .queryParam("organization", orgUuid)
                 .queryParam("environment", environmentId)
                 .queryParam("tenant", tenant)
                 .message()

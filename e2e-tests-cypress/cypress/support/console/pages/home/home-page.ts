@@ -53,7 +53,9 @@ export class ChoreoHomePage {
   }
 
   static navigateToSettings() {
-    cy.get('[data-testid="main-left-nav-item-Settings"]').click();
+    cy.get("#backdrop-loader").should('not.exist')
+    cy.get('[data-testid="header-user-profile-menu"]').click()
+    cy.get('[data-testid="header-user-profile-item-settings"]').should('be.visible').click()
   }
 
   static switchOrganization() {

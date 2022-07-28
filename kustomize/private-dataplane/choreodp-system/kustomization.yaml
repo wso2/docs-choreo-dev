@@ -18,10 +18,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - deployment
-  - hpa
-  - pdb
-  - rbac
+  - ../../shared-components/dp-kv-resolver
+  - ../../shared-components/dp-mizzen
 
 namespace: choreodp-system
 

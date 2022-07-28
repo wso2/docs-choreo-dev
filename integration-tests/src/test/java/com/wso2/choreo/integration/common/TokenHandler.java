@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.common;
 
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
@@ -163,7 +164,8 @@ public class TokenHandler {
             throws TokenRetrievalException {
         String tokenAuthHeader =
                 Constant.BASIC_PREFIX.concat(encodeCredentials(asgardeoClientId, asgardeoClientSecret));
-        String asgardeoTokenEndpoint = Configuration.ASGARDEO_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+        String asgardeoTokenEndpoint = Configuration.getConfig(ConfigDefinition.ASGARDEO_ENDPOINT)
+                .concat(Constant.TOKEN_ENDPOINT_SUFFIX);
 
         HttpPost request = new HttpPost(asgardeoTokenEndpoint);
 
@@ -204,7 +206,8 @@ public class TokenHandler {
     private String getStsToken(String stsClientId, String stsClientSecret, String userToken)
             throws TokenRetrievalException {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
-        String stsEndPoint = Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+        String stsEndPoint = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
+                .concat(Constant.TOKEN_ENDPOINT_SUFFIX);
 
         HttpPost request = new HttpPost(stsEndPoint);
 
