@@ -15,6 +15,15 @@
 
 
 module.exports = (on, config) => {
+  on('task', {
+    setAPIName: (val) => {
+      return (apiName = val);
+    },
+
+    getAPIName: () => {
+      return apiName;
+    }
+  });
   config.env.choreoIDPUsername = process.env.choreoIDPUsername;
   config.env.choreoIDPPassword = process.env.choreoIDPPassword;
   config.env.choreoOrgHandle = process.env.choreoOrgHandle;
