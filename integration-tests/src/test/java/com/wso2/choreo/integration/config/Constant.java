@@ -61,6 +61,8 @@ public final class Constant {
 
     public static final String INSIGHTS_TRAFFIC_ALERT_API_RESOURCE = "/insightsalert/1.0.0/trafficConfigs";
     public static final String INSIGHTS_LATENCY_ALERT_API_RESOURCE = "/insightsalert/1.0.0/latencyConfigs";
+    public static final int MAX_API_REVISIONS_LIMIT_DEPLOYMENTS = 20;
+    public static final int MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE = 19;
 
     public enum displayType {
         restAPI,

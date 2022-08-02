@@ -66,4 +66,31 @@ public class ComponentUtils {
         mustache.execute(writer, params).flush();
         return writer.toString();
     }
+
+    public static ChoreoComponent getReusableComponentForProject(String accessToken, String testName,
+                                                                 String projectName) throws Exception {
+        ChoreoOrganization org = TestContext.getTestOrg();
+
+        Optional<ChoreoProject> existingProject = org.getProjectByName(accessToken, projectName);
+        ChoreoProject project;
+        if (existingProject.isEmpty()) {
+            project = org.createProject(accessToken, projectName, projectName);
+        } else {
+            project = existingProject.get();
+        }
+
+        String componentName = testName + "Component";
+        Optional<ChoreoComponent> component = project.getComponentByName(accessToken, componentName);
+        ChoreoComponent restAPI;
+
+        if (component.isEmpty()) {
+            restAPI = project.createRestAPI(accessToken, componentName, org);
+        } else {
+            restAPI = component.get();
+        }
+
+        restAPI.setOrganization(org);
+
+        return restAPI;
+    }
 }
