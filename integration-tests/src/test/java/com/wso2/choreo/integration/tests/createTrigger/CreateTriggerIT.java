@@ -1,43 +1,45 @@
 package com.wso2.choreo.integration.tests.createTrigger;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.ComponentRetrieveException;
+import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.consol.citrus.message.MessageType;
-
-import org.springframework.core.io.ClassPathResource;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
 /**
  * $(http()
@@ -90,9 +92,13 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 "        apiId: \"\"," +
                 "        ballerinaVersion: \"swan-lake-alpha5\"," +
                 "        triggerChannels: \"IssuesService\"," +
-                "        triggerID: 25," +
+                "        triggerID: 58," +
                 "        httpBase: true," +
                 "        sampleTemplate: \"\"" +
+                "        accessibility: \"external\"," +
+                "        repositorySubPath: \"\"," +
+                "        repositoryType: \"\"," +
+                "        repositoryBranch: \"\"," +
                 "      }){" +
                 "        id, orgId, projectId, handler" +
                 "      }}";
