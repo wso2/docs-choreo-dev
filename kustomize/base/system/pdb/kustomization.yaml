@@ -40,3 +40,4 @@ resources:
   - devops-portal.yaml
   - devops-portal-api.yaml
   - organization-management.yaml
+  - choreo-apim-proxy-deployer.yaml

@@ -15,4 +15,7 @@
 # -----------------------------------------------------------------------
 
 resources:
-  - ingress-netpol.yaml
+  - ../../../shared-components/tm
+
+patchesStrategicMerge:
+  - tm-resource-patch.yaml

@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -243,7 +245,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     public void testCreatedComponentStatus() {
         // Poll component create status
         $(repeatOnError()
-                .until("i = 20")
+                .until("i = 50")
                 .index("i")
                 .autoSleep(5000)
                 .actions(
@@ -492,19 +494,23 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testComponentDeployment"})
     @CitrusTest
-    public void testComponentDeploymentStatus() throws JsonProcessingException {
+    public void testDeploymentStatusByVersion() throws Exception {
+        String versionId = testComponent.getLatestApiVersion().getId();
+
         String graphQlQuery = "query {" +
-                "      DeploymentStatus(" +
+                "      deploymentStatusByVersion(" +
                 "        componentId: \"" + componentId + "\"," +
-                "      ){" +
-                "        success," +
-                "        message," +
-                "        data {" +
-                "          conclusion," +
-                "          status" +
-                "        }" +
-                "      }" +
-                "    }";
+                "        versionId: \"" + versionId + "\"" +
+                "  ) {" +
+                "    id" +
+                "    sha" +
+                "    completed_at" +
+                "    started_at" +
+                "    name" +
+                "    status" +
+                "    conclusion" +
+                "  }" +
+                "}";
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);
@@ -532,9 +538,63 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
                                 .response(HttpStatus.OK)
                                 .message()
                                 .body(new ClassPathResource(
-                                        "templates/deploy/deploy_status_success.json"))
+                                        "templates/deploy/deploy_status_by_version_success.json"))
                                 .validate(json())));
 
+    }
+
+    @Test(dependsOnMethods = { "testDeploymentStatusByVersion" })
+    @CitrusTest
+    public void testComponentDeploymentStatus() throws Exception {
+        String versionId = testComponent.getLatestApiVersion().getId();
+        String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
+        Map<String, String> params = new HashMap<>();
+        params.put("orgHandler", orgHandle);
+        params.put("orgUuid", orgUUID);
+        params.put("componentId", componentId);
+        params.put("versionId", versionId);
+        params.put("environmentId", devEnvIdToDeploy);
+
+        String graphQlQuery = ComponentUtils.generateStringFromTemplate(
+                "templates/deploy/graphql/componentDeployment.mustache", params);
+        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+            {
+                put("query", graphQlQuery);
+            }
+        };
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+
+        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
+
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("environmentId", devEnvIdToDeploy);
+        responseParams.put("sha", latestCommitSha);
+        responseParams.put("versionId", versionId);
+
+        String expectedResponse = ComponentUtils.generateStringFromTemplate(
+                "templates/deploy/deploy_managed_status_success.mustache", responseParams);
+
+        // Poll deployment status
+        $(repeatOnError()
+                .until("i = 25")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(choreoTestClient)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(choreoTestClient)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .body(expectedResponse)));
     }
 
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})

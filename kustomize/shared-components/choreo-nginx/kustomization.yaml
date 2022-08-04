@@ -15,4 +15,12 @@
 # -----------------------------------------------------------------------
 
 resources:
-  - ingress-netpol.yaml
+  - choreo-nginx-deployment.yaml
+  - choreo-nginx-hpa.yaml
+  - choreo-nginx-pdb.yaml
+  - gateway-nginx-internal-service.yaml
+  - gateway-nginx-service.yaml
+
+commonLabels:
+  deployment: choreo-nginx
+  choreo.component: nginx

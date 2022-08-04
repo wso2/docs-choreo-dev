@@ -279,7 +279,7 @@ public abstract class ChoreoComponent {
                 throw new ComponentDeploymentFailureException();
             }
         }
-            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId);
+            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId, devEnvIdToDeploy);
 
     }
 
@@ -292,84 +292,141 @@ public abstract class ChoreoComponent {
      * @param versionId   the ID of the latest API version
      */
     public void waitForComponentDeploymentSuccess(String accessToken, String orgHandle, String orgUUID,
-                                                    String versionId)
-            throws IOException, InterruptedException, ComponentDeploymentStatusCheckException,
-            ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
+                                                  String versionId, String envId)
+            throws InterruptedException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException {
+        waitForDeploymentStatusByVersion(accessToken, versionId);
 
-            JsonArray deploymentJsonArray = getDeployments(accessToken, orgHandle, orgUUID, versionId);
+        String gqlQuery =
+                "query {" +
+                        "      componentDeployment(" +
+                        "    orgHandler: \"" + orgHandle + "\"" +
+                        "    orgUuid:\"" + orgUUID + "\"" +
+                        "    componentId:\"" + id + "\" " +
+                        "    versionId:\"" + versionId + "\"" +
+                        "    environmentId:\"" + envId + "\") {        " +
+                        "    environmentId" +
+                        "    configCount" +
+                        "    apiId" +
+                        "    releaseId" +
+                        "    build{" +
+                        "    buildId" +
+                        "    deployedAt" +
+                        "    commit {" +
+                        "    author {" +
+                        "    name" +
+                        "    date" +
+                        "    email" +
+                        "    avatarUrl" +
+                        "    }" +
+                        "    sha" +
+                        "    message" +
+                        "    isLatest}}" +
+                        "    invokeUrl" +
+                        "    versionId" +
+                        "    deploymentStatus" +
+                        "    deploymentStatusV2" +
+                        "    version" +
+                        "    cron" +
+                        "    }}";
 
-            JsonObject deployment = (JsonObject) deploymentJsonArray.get(0);
-            String envID = deployment.get("environmentId").toString();
-            String environmentID = envID.substring(1, envID.length() - 1);
-            String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-            HashMap<String, String> requestBodyMap = new HashMap<>() {{
-                put("query",
-                        "query {" +
-                                "      componentDeployment(" +
-                                "    orgHandler: \"" + orgHandle + "\"" +
-                                "    orgUuid:\"" + orgUUID + "\"" +
-                                "    componentId:\"" + id + "\" " +
-                                "    versionId:\"" + versionId + "\"" +
-                                "    environmentId:\"" + environmentID + "\") {        " +
-                                "    environmentId" +
-                                "    configCount" +
-                                "    apiId" +
-                                "    releaseId" +
-                                "    build{" +
-                                "    buildId" +
-                                "    deployedAt" +
-                                "    commit {" +
-                                "    author {" +
-                                "    name" +
-                                "    date" +
-                                "    email" +
-                                "    avatarUrl" +
-                                "    }" +
-                                "    sha" +
-                                "    message" +
-                                "    isLatest}}" +
-                                "    invokeUrl" +
-                                "    versionId" +
-                                "    deploymentStatus" +
-                                "    deploymentStatusV2" +
-                                "    version" +
-                                "    cron" +
-                                "    }}");
-            }};
-            ObjectMapper objectMapper = new ObjectMapper();
-            String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-            HttpPost request = new HttpPost(requestURI);
-            request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
-            StringEntity requestEntity = new StringEntity(
-                    requestBody,
-                    ContentType.APPLICATION_JSON);
-            request.setEntity(requestEntity);
+        int numberOfTries = 0;
+        long waitForSeconds = 6;
+        long timeTakenInSeconds = 0;
 
-            long timeTaken = 0;
-            while (timeTaken <= Constant.COMPONENT_DEPLOY_TIMEOUT) {
-                TimeUnit.SECONDS.sleep(2);
-                timeTaken += 2000;
-                try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                     CloseableHttpResponse response = httpClient.execute(request)) {
-                    int statusCode = response.getStatusLine().getStatusCode();
-                    String responseBody = EntityUtils.toString(response.getEntity());
-                    log.debug(responseBody);
-                    if (statusCode != org.apache.http.HttpStatus.SC_OK) {
-                        throw new ComponentDeploymentStatusCheckException(statusCode, responseBody);
-                    }
+        while (timeTakenInSeconds < Constant.COMPONENT_DEPLOY_TIMEOUT_SECONDS) {
+            TimeUnit.SECONDS.sleep(waitForSeconds);
+            timeTakenInSeconds += waitForSeconds;
+            ++numberOfTries;
 
-                    String status = new JsonParser().parse(responseBody).getAsJsonObject()
-                            .getAsJsonObject("data").getAsJsonObject("componentDeployment").get("deploymentStatusV2").toString();
-                    if (status.equals("ACTIVE")) {
-                        return;
-                    }
+            try  {
+                JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+
+                String status = response.getAsJsonObject()
+                        .getAsJsonObject("data").getAsJsonObject("componentDeployment")
+                        .get("deploymentStatusV2").getAsString();
+                if (status.equals("ACTIVE")) {
+                    log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " tries taken to succeed");
+                    return;
                 }
+
+                // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
+                // to reduce sending too many requests
+                if (numberOfTries == 10) {
+                    waitForSeconds += 2;
+                }
+
+                log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " attempts, retrying");
+            } catch (GraphQLException e) {
+                throw new ComponentDeploymentStatusCheckException(e);
             }
-            throw new ComponentDeploymentTimeoutException();
+        }
+        throw new ComponentDeploymentTimeoutException();
 
     }
 
+    private void waitForDeploymentStatusByVersion(String accessToken, String versionId)
+            throws InterruptedException, ComponentDeploymentStatusCheckException {
+        String gqlQuery = "query {" +
+                "  deploymentStatusByVersion(" +
+                "    componentId: \"" + id + "\"" +
+                "    versionId: \"" + versionId + "\"" +
+                "  ) {" +
+                "    id" +
+                "    sha" +
+                "    completed_at" +
+                "    started_at" +
+                "    name" +
+                "    status" +
+                "    conclusion" +
+                "  }" +
+                "}";
+
+        int numberOfTries = 0;
+        long waitForSeconds = 6;
+        long timeTakenInSeconds = 0;
+
+        while (timeTakenInSeconds < Constant.COMPONENT_DEPLOY_TIMEOUT_SECONDS) {
+            TimeUnit.SECONDS.sleep(waitForSeconds);
+            timeTakenInSeconds += waitForSeconds;
+            ++numberOfTries;
+
+            try {
+                JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
+
+                JsonArray deploymentJsonArray = response.getAsJsonObject()
+                        .getAsJsonObject("data").getAsJsonArray("deploymentStatusByVersion");
+
+                if (deploymentJsonArray.size() == 0) {
+                    continue;
+                }
+
+                String status = ((JsonObject) deploymentJsonArray.get(0)).get("status").getAsString();
+
+                if (status.equals("completed")) {
+                    String conclusion = ((JsonObject) deploymentJsonArray.get(0)).get("conclusion").getAsString();
+
+                    if (conclusion.equals("success")) {
+                        log.debug("waitForDeploymentStatusByVersion()... " + numberOfTries + " tries taken to succeed");
+                        return;
+                    } else {
+                        throw new ComponentDeploymentStatusCheckException("Component deployment was not successful, " +
+                                "conclusion: " + conclusion);
+                    }
+                }
+
+                // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
+                // to reduce sending too many requests
+                if (numberOfTries == 10) {
+                    waitForSeconds += 2;
+                }
+
+                log.debug("waitForDeploymentStatusByVersion()... " + numberOfTries + " attempts, retrying");
+            } catch (GraphQLException e) {
+                throw new ComponentDeploymentStatusCheckException(e);
+            }
+        }
+    }
 
     /**
      * Get details about the deployments of a component

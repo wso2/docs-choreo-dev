@@ -15,4 +15,8 @@
 # -----------------------------------------------------------------------
 
 resources:
-  - ingress-netpol.yaml
+  - ../../shared-components-ci/choreo-connect-partitions
+
+patchesStrategicMerge:
+  - cc-adapter-patch.yaml
+  - cc-deployment-patch.yaml

@@ -14,5 +14,12 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-resources:
-  - ingress-netpol.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: choreo-nginx-pdb
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      deployment: choreo-nginx

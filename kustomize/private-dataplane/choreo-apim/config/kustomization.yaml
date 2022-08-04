@@ -14,11 +14,6 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-resources:
-  - adapter
-  - am
-  - tm
-
 configMapGenerator:
   - name: cm-feature-flags
     behavior: create

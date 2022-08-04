@@ -46,6 +46,16 @@ spec:
                     secretKeyRef:
                       name: secret-step-enforcer
                       key: MSSQL_PASSWORD
+                - name: INSIGHT_SERVICE_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-enforcer
+                      key: CHOREO_INSIGHT_SERVICE_CLIENT_ID
+                - name: INSIGHT_SERVICE_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-step-enforcer
+                      key: CHOREO_INSIGHT_SERVICE_CLIENT_SECRET
               envFrom:
                 - configMapRef:
                     name: env-step-enforcer
