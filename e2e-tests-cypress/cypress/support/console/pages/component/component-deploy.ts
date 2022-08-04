@@ -104,11 +104,9 @@ export class ComponentDeployPage {
         if (input == 0) {
           cy.get(".ConfigForm .MuiIconButton-label").eq(1).click();
         }
-
-        cy.get(".ConfigForm div input").type(value);
-      } else {
-        cy.get(".ConfigForm div input").type(value);
       }
+      cy.get(".ConfigForm div input").type(value);
+
     });
     cy.get('button[type="submit"]').click();
 

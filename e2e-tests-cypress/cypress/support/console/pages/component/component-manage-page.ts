@@ -38,13 +38,11 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="Lifecycle"]').click();
   }
   static verifyDevRevision() {
-    this.selectSetting();
-    return cy.get(".MuiChip-outlined").eq(1).invoke("text");
+    return cy.get('.MuiBox-root >div>div>span[class*="MuiChip-label"]').eq(0).invoke("text");
   }
 
   static verifyProdRevision() {
-    this.selectSetting();
-    return cy.get(".MuiChip-outlined").eq(3).invoke("text");
+    return cy.get('.MuiBox-root >div>div>span[class*="MuiChip-label"]').eq(1).invoke("text");
   }
   static publish(audience: ConnectorAudience) {
     this.publishToMarketplace(audience);
@@ -190,20 +188,29 @@ export class ComponentAPILifecycle {
     cy.get(`[data-testid="resource-/${resource}"] [data-testid="security"]`).click();
   }
 
-  static applyConfiguration(env: Environment) {
+  static applyConfiguration(env: Environment, revision: string = "") {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get(`[aria-label="environment"]`).contains(env).click();
     cy.get("button").contains("Apply").click().wait(2000);
-    cy.intercept({
-      method: "POST",
-      url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
-    }).as("revision");
 
-    cy.get('[data-cyid="btn-delete-settings"]');
+    if(env===Environment.DEVELOPMENT){
+      cy.intercept({
+        method: "POST",
+        url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
+      }).as("revision");
+      cy.wait("@revision", { timeout: 180000 }).then((revision) => {
+        // const revi = revision.response.body.displayName
+        // expect(revi).equal(revision)
+        // cy.log(revision.response.body.displayName)
+      });
+    }
+
+    cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
+    cy.reload()
+    cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
+
   }
-  static getLatestRevision() {
-    return cy.wait("@revision").then((revision) => cy.wrap(revision.response.body.displayName));
-  }
+
 
   static selectConsumers() {
     cy.get('[data-cyid="Consumers"]').click();
