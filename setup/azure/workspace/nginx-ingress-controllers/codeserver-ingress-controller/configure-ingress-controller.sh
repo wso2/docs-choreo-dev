@@ -79,7 +79,7 @@ helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingre
   --set controller.enableSnippets=true \
   --set controller.wildcardTLS.secret="cert-manager/${WORKSPACE_INGRESS_NAMESPACE}-wildcard-tls" \
   --set-string controller.config.server-tokens=false \
-  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=\"true\"" \
+  --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal=true" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-resource-group=${LOADBALANCER_IP_RG}" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet=${LOADBALANCER_SUBNET_NAME}"
 
