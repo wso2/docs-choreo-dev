@@ -141,16 +141,19 @@ spec:
               command: [ "sh", "check_health.sh" ]
             periodSeconds: 5
             failureThreshold: 30
+            timeoutSeconds: 5
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
             initialDelaySeconds: 10
             periodSeconds: 15
+            timeoutSeconds: 5
           readinessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
             initialDelaySeconds: 8
             periodSeconds: 5
+            timeoutSeconds: 5
         - name: choreo-connect-router
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.pem
@@ -199,6 +202,7 @@ spec:
                   value: gw.wso2.com
             failureThreshold: 30
             periodSeconds: 5
+            timeoutSeconds: 5
           livenessProbe:
             httpGet:
               port: 9095
@@ -209,6 +213,7 @@ spec:
                   value: gw.wso2.com
             initialDelaySeconds: 20
             periodSeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               port: 9095
@@ -219,6 +224,7 @@ spec:
                   value: gw.wso2.com
             initialDelaySeconds: 20
             periodSeconds: 5
+            timeoutSeconds: 5
       volumes:
         - name: enforcer-config
           configMap:
