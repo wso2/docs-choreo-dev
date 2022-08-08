@@ -16,7 +16,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-rest-api-product-link', properties: { utm_source: 'choreo_docs' }});">https://console.choreo.dev/</a>.
 
-2. Expand the drop-down menu for projects and click **+ Create New**.
+2. In the **Project** field, expand the list and click **+ Create New**.
 
     ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
