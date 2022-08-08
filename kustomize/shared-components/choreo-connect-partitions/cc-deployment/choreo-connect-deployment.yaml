@@ -141,16 +141,19 @@ spec:
               command: [ "sh", "check_health.sh" ]
             periodSeconds: 5
             failureThreshold: 30
+            timeoutSeconds: 5
           livenessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
             initialDelaySeconds: 10
             periodSeconds: 15
+            timeoutSeconds: 5
           readinessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
             initialDelaySeconds: 8
             periodSeconds: 5
+            timeoutSeconds: 5
         - name: choreo-connect-router
           volumeMounts:
             - mountPath: /home/wso2/security/keystore/mg.pem
