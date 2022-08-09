@@ -58,21 +58,31 @@ export class LoginPage {
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
     const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
+    this.setOptAlertCookie();
     cy.visit(componentURL);
     this.setCookie(componentURL, "commonAuthId", common)
 
   }
+  private static setOptAlertCookie() {
+    cy.setCookie("fidpId", "choreoe2etest")
+    const dateString = new Date().toISOString();
+    cy.setCookie("OptanonAlertBoxClosed", dateString)
+  }
+
 
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
+    this.setOptAlertCookie()
     cy.visit(csurl);
     cy.setCookie("fidpId", "EnterpriseIDP")
+
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
-    cy.visit(csurl);
     cy.setCookie("fidpId", "choreoe2etest")
+    this.setOptAlertCookie()
+    cy.visit(csurl);
   }
 
   static enterpriseLogin() {
@@ -116,6 +126,8 @@ export class LoginPage {
         }
       });
     });
+    const dateString = new Date().toISOString();
+    cy.setCookie("OptanonAlertBoxClosed", dateString)
   }
 
   private static persistOrgs() {
