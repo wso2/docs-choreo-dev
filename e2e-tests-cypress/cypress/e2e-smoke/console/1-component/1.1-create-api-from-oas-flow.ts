@@ -18,7 +18,6 @@ import { APIDeployment } from "../../../support/console/pages/apis/api-deploymen
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { APITest } from "../../../support/console/pages/apis/api-test";
-import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -134,13 +133,12 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT, "Revision 3");
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Environment.DEVELOPMENT
     );
-    ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
-
+   
     // Verify that deployment has been updated by invoking the API without a token
     APITest.testAPI();
     ComponentTestPage.selectCurl();

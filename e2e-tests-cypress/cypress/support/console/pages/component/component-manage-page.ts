@@ -193,19 +193,19 @@ export class ComponentAPILifecycle {
     cy.get(`[aria-label="environment"]`).contains(env).click();
     cy.get("button").contains("Apply").click().wait(2000);
 
-    if(env===Environment.DEVELOPMENT){
+    if (env === Environment.DEVELOPMENT) {
       cy.intercept({
         method: "POST",
         url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
       }).as("revision");
-      cy.wait("@revision", { timeout: 180000 }).then((revision) => {
-        // const revi = revision.response.body.displayName
-        // expect(revi).equal(revision)
-        // cy.log(revision.response.body.displayName)
+      cy.wait("@revision", { timeout: 180000 }).then((r) => {
+        const { displayName } = r.response.body
+        expect(displayName).equal(revision)
       });
     }
 
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
+    // cy.get("#panel1a-header").should('be.visible')
     cy.reload()
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
 
