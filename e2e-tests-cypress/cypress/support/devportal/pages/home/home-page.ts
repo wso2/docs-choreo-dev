@@ -40,6 +40,12 @@ export class DevPortalHomePage {
     cy.get("[data-testid=apis-appbar-btn]").should("be.visible").click();
   }
 
+  static navigateToPerApiView(apiName: string): void {
+    cy.wait(60000);
+    cy.reload();
+    cy.get(`[data-testid=apiCard-${apiName}]`).should("be.visible").click();
+  }
+
   static navigateToAppsPage() {
     cy.get('[data-testid="applications-appbar-btn"]')
       .should("be.visible")

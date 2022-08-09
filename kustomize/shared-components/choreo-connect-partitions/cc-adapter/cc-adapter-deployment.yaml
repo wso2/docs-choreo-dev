@@ -138,16 +138,19 @@ spec:
               command: [ "sh", "check_health.sh" ]
             initialDelaySeconds: 10
             periodSeconds: 30
+            timeoutSeconds: 5
           readinessProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
             initialDelaySeconds: 8
             periodSeconds: 5
+            timeoutSeconds: 5
           startupProbe:
             exec:
               command: [ "sh", "check_health.sh" ]
             periodSeconds: 5
             failureThreshold: 60
+            timeoutSeconds: 5
       volumes:
         - name: adapter-config
           configMap:
