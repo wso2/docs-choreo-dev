@@ -17,43 +17,32 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.APIRevisionLimitExceedException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 import static com.wso2.choreo.integration.config.Constant.MAX_API_REVISIONS_LIMIT_DEPLOYMENTS;
 
+/**
+ * Create revision to exceed API revision limit reached with deployments
+ */
 public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSupport {
 
     private String accessToken;
@@ -78,10 +67,10 @@ public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSup
     public void beforeClass() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
-        String projectName = "max-revisions-test-project";
-        String componentName = "maxApiRevisions";
-        component = ComponentUtils.getReusableComponentForProject(
-                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName, projectName);
+        String componentName = "maxApiRevisionsUsingDeployments";
+        // Access a reusable component which has deployed 20 times to reach API revision limit (i.e. 20 revisions)
+        component = ComponentUtils.getReusableComponent(
+                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName);
 
         ChoreoOrganization org = component.getOrganization();
         orgUuid = org.getOrgUUID();
@@ -94,21 +83,22 @@ public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSup
     }
 
     @Test
-    @CitrusTest(name = "Create deployment to exceed API revision limit")
-    public void createDeploymentToExceedApiRevisionLimit() throws APIRevisionLimitExceedException {
-        try {
-            component.deploy(accessToken, orgHandle, orgUuid);
+    @CitrusTest(name = "Create revision using a deployment to exceed API revision limit")
+    public void createRevisionUsingDeploymentToExceedApiRevisionLimit() throws Exception {
+        // Each deployment creates a new revision.
+        component.deploy(accessToken, orgHandle, orgUuid);
 
-            JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
-            JsonObject deployment = (JsonObject) deploymentArray.get(0);
-            apiId = deployment.get("apiId").getAsString();
-            releaseId = deployment.get("releaseId").getAsString();
-        } catch (IOException | InterruptedException | NoLatestAppEnvIdFoundException | ComponentDeploymentException |
-                 ComponentDeploymentStatusCheckException | NoLatestCommitHashFoundException |
-                 GetCommitHistoryException | ComponentDeploymentTimeoutException | NoLatestApiVersionFoundException |
-                 ComponentDeploymentFailureException | GetDeploymentsStatusCheckException e) {
-            throw new APIRevisionLimitExceedException(e);
-        }
+        JsonArray deploymentArray = component.getDeployments(accessToken, orgHandle, orgUuid, versionId);
+        JsonObject deployment = (JsonObject) deploymentArray.get(0);
+        apiId = deployment.get("apiId").getAsString();
+        releaseId = deployment.get("releaseId").getAsString();
+
+        Map<String, Object> responseParams = new HashMap<>();
+        responseParams.put("REVISION_COUNT", MAX_API_REVISIONS_LIMIT_DEPLOYMENTS);
+
+        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+                "templates/maxApiRevisions/get_revisions_success.mustache",
+                responseParams);
 
         String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
                 .concat("/").concat("revisions")
@@ -128,17 +118,22 @@ public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSup
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    JsonObject component = new JsonParser().parse((String) message.getPayload())
-                            .getAsJsonObject();
-                    int count = component.get("count").getAsInt();
-                    Assert.assertEquals(count, MAX_API_REVISIONS_LIMIT_DEPLOYMENTS);
-                }));
+                .body(expectedResponse)
+                .validate(json()
+                        .ignore("$.list")));
     }
 
-    @Test(dependsOnMethods = {"createDeploymentToExceedApiRevisionLimit"})
-    @CitrusTest(name = "Create backup revision for existing state")
-    public void createBackupRevisionForExistingState() throws JsonProcessingException {
+    @Test(dependsOnMethods = {"createRevisionUsingDeploymentToExceedApiRevisionLimit"})
+    @CitrusTest(name = "Create revision using Settings page to exceed API revision limit")
+    public void createRevisionUsingSettingsPageToExceedApiRevisionLimit() throws Exception {
+        Map<String, Object> responseParams = new HashMap<>();
+        responseParams.put("API_ID", this.apiId);
+
+        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+                "templates/maxApiRevisions/api_revision_limit_exceed_error.mustache",
+                responseParams);
+
+        // A call is made to create a backup revision initially when using Settings page to create a revision.
         String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
                 .concat("/").concat("revisions")
                 .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid);
@@ -164,18 +159,24 @@ public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSup
                 .receive()
                 .response(HttpStatus.BAD_REQUEST)
                 .message()
-                .body(new ClassPathResource(
-                        "templates/maxApiRevisions/api_revision_limit_exceed_error.json"))
+                .type(MessageType.JSON)
+                .body(expectedResponse)
                 .validate(json()
-                        .ignore("$.description")
                         .ignore("$.moreInfo")
-                        .ignore("$.error"))
-                .type(MessageType.JSON));
+                        .ignore("$.error")));
     }
 
-    @Test(dependsOnMethods = {"createBackupRevisionForExistingState"})
-    @CitrusTest(name = "Create API revision using Settings page to exceed API revision limit")
-    public void createRevisionUsingSettingsPageToExceedApiRevisionLimit() {
+    @Test(dependsOnMethods = {"createRevisionUsingSettingsPageToExceedApiRevisionLimit"})
+    @CitrusTest(name = "Verify revision count after exceeding API revision limit")
+    public void verifyRevisionCountAfterExceedingApiRevisionLimit() throws Exception {
+        // Total revision count is maintained at API revision limit of deployments (i.e. 20).
+        Map<String, Object> responseParams = new HashMap<>();
+        responseParams.put("REVISION_COUNT", MAX_API_REVISIONS_LIMIT_DEPLOYMENTS);
+
+        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+                "templates/maxApiRevisions/get_revisions_success.mustache",
+                responseParams);
+
         String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
                 .concat("/").concat("revisions")
                 .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid);
@@ -194,12 +195,9 @@ public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSup
                 .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    JsonObject component = new JsonParser().parse((String) message.getPayload())
-                            .getAsJsonObject();
-                    int count = component.get("count").getAsInt();
-                    Assert.assertEquals(count, MAX_API_REVISIONS_LIMIT_DEPLOYMENTS);
-                }));
+                .body(expectedResponse)
+                .validate(json()
+                        .ignore("$.list")));
     }
 
     @AfterClass

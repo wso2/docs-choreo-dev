@@ -63,6 +63,11 @@ public final class Constant {
     public static final String INSIGHTS_LATENCY_ALERT_API_RESOURCE = "/insightsalert/1.0.0/latencyConfigs";
     public static final int MAX_API_REVISIONS_LIMIT_DEPLOYMENTS = 20;
     public static final int MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE = 19;
+    public static final int REVISION_COUNT_BEFORE_DELETION = 19;
+    public static final int REVISION_COUNT_AFTER_DELETION = 18;
+    public static final int REVISION_COUNT_AFTER_BACKUP_DELETION = 19;
+    public static final int INDEX_OF_REVISION_TO_DELETE = 0;
+    public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
     public enum displayType {
         restAPI,
