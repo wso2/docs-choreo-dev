@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_8=Liveness probe not required
     checkov.io/skip2: CKV_K8S_38=Required by LinkerD
     checkov.io/skip3: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
     checkov.io/skip4: CKV_K8S_40=Required to write to /app directory in entrypoint.sh
@@ -43,6 +42,13 @@ spec:
               drop:
                 - ALL
           readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /index.html
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
             httpGet:
               scheme: HTTP
               path: /index.html
