@@ -181,8 +181,10 @@ export class LoginPage {
     const dateString = new Date().toISOString();
     if (isEPLogin) {
       cy.setCookie("fidpId", "EnterpriseIDP")
+    }else{
+      cy.setCookie("fidpId", "choreoe2etest")
     }
-    cy.setCookie("fidpId", "choreoe2etest")
+  
     cy.setCookie("OptanonAlertBoxClosed", dateString)
   }
 }
