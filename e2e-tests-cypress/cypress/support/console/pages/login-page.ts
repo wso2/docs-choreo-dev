@@ -58,54 +58,35 @@ export class LoginPage {
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
     const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
-    this.setOptAlertCookie();
-    cy.visit(componentURL);
+    this.setBrowserCookie(false);
     this.setCookie(componentURL, "commonAuthId", common)
-
+    cy.visit(componentURL);
   }
-  private static setOptAlertCookie() {
-    cy.setCookie("fidpId", "choreoe2etest")
-    const dateString = new Date().toISOString();
-    cy.setCookie("OptanonAlertBoxClosed", dateString)
-  }
-
 
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
-    this.setOptAlertCookie()
+    this.setBrowserCookie(true)
     cy.visit(csurl);
-    cy.setCookie("fidpId", "EnterpriseIDP")
-
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
-    cy.setCookie("fidpId", "choreoe2etest")
-    this.setOptAlertCookie()
+    this.setBrowserCookie(false)
     cy.visit(csurl);
   }
 
   static enterpriseLogin() {
+    this.setBrowserCookie(true)
     cy.visit(Cypress.env("enterpriseLoginUrl"));
-    cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
-      timeout: 180000,
-    });
-
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", { timeout: 180000 });
     cy.get('button[id="enterprise-sign-in"]').click();
-
     cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
     cy.contains("Continue").click();
-
     cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
     cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
-    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), {
-      log: false,
-    });
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false, });
     cy.contains("Continue").click();
-    cy.get('[data-testid="header-user-profile-menu"]', {
-      timeout: 180000,
-    }).should("be.visible");
-
+    cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000, }).should("be.visible");
     this.persistLogoutURL();
   }
 
@@ -126,8 +107,6 @@ export class LoginPage {
         }
       });
     });
-    const dateString = new Date().toISOString();
-    cy.setCookie("OptanonAlertBoxClosed", dateString)
   }
 
   private static persistOrgs() {
@@ -178,6 +157,7 @@ export class LoginPage {
 
 
   private static enterUserCredentials(envUsername: string, envPassword: string) {
+    this.setBrowserCookie(false);
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env(envUsername));
@@ -195,6 +175,17 @@ export class LoginPage {
         sameSite: "no_restriction",
       });
     });
+  }
+
+  private static setBrowserCookie(isEPLogin: boolean) {
+    const dateString = new Date().toISOString();
+    if (isEPLogin) {
+      cy.setCookie("fidpId", "EnterpriseIDP")
+    }else{
+      cy.setCookie("fidpId", "choreoe2etest")
+    }
+  
+    cy.setCookie("OptanonAlertBoxClosed", dateString)
   }
 }
 

@@ -203,10 +203,11 @@ export class ComponentAPILifecycle {
         expect(displayName).equal(revision)
       });
     }
-
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    // cy.get("#panel1a-header").should('be.visible')
+    const dateString = new Date().toISOString();
+    cy.setCookie("OptanonAlertBoxClosed", dateString)
     cy.reload()
+   
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
 
   }
