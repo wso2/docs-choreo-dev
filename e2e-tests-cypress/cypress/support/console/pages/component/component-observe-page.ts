@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
 import { Environment } from "../enum/environment";
 
 export class ComponentObservePage {
@@ -46,6 +47,7 @@ export class ComponentObservePage {
 
   static navigateToSampleApp() {
     const observabilityViewUrl = Cypress.env("loginURL").replace("login?fidp=choreoe2etest", "") + "observe/sample";
+    Utils.setBrowserCookie(true)
     cy.visit(observabilityViewUrl);
     cy.url().should("eq", observabilityViewUrl);
     cy.get('[data-testid="backdrop-loader"]').should("not.exist");
