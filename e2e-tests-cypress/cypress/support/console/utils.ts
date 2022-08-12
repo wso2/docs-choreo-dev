@@ -152,4 +152,16 @@ export class Utils {
     return cy.get('[data-cyid="text-field-invoke-url"] input').eq(urlLocation).invoke("attr", "value");
   }
 
+
+  static setBrowserCookie(isEPLogin: boolean) {
+    const dateString = new Date().toISOString();
+    if (isEPLogin) {
+      cy.setCookie("fidpId", "EnterpriseIDP")
+    }else{
+      cy.setCookie("fidpId", "choreoe2etest")
+    }
+  
+    cy.setCookie("OptanonAlertBoxClosed", dateString)
+  }
+
 }

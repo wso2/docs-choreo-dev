@@ -58,25 +58,25 @@ export class LoginPage {
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
     const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
-    this.setBrowserCookie(false);
+    Utils.setBrowserCookie(false);
     this.setCookie(componentURL, "commonAuthId", common)
     cy.visit(componentURL);
   }
 
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
-    this.setBrowserCookie(true)
+    Utils.setBrowserCookie(true)
     cy.visit(csurl);
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
-    this.setBrowserCookie(false)
+    Utils.setBrowserCookie(false)
     cy.visit(csurl);
   }
 
   static enterpriseLogin() {
-    this.setBrowserCookie(true)
+    Utils.setBrowserCookie(true)
     cy.visit(Cypress.env("enterpriseLoginUrl"));
     cy.get('button[id="enterprise-sign-in"]').should("be.visible", { timeout: 180000 });
     cy.get('button[id="enterprise-sign-in"]').click();
@@ -157,7 +157,7 @@ export class LoginPage {
 
 
   private static enterUserCredentials(envUsername: string, envPassword: string) {
-    this.setBrowserCookie(false);
+    Utils.setBrowserCookie(false);
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env(envUsername));
@@ -177,15 +177,6 @@ export class LoginPage {
     });
   }
 
-  private static setBrowserCookie(isEPLogin: boolean) {
-    const dateString = new Date().toISOString();
-    if (isEPLogin) {
-      cy.setCookie("fidpId", "EnterpriseIDP")
-    }else{
-      cy.setCookie("fidpId", "choreoe2etest")
-    }
-  
-    cy.setCookie("OptanonAlertBoxClosed", dateString)
-  }
+
 }
 

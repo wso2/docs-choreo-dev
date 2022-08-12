@@ -15,6 +15,7 @@ import { DocumentType } from "../enum/document-type";
 import { DocumentSourceType } from "../enum/document-source";
 import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
+import { Utils } from "../../utils";
 
 
 
@@ -204,10 +205,9 @@ export class ComponentAPILifecycle {
       });
     }
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    const dateString = new Date().toISOString();
-    cy.setCookie("OptanonAlertBoxClosed", dateString)
+    Utils.setBrowserCookie(true)
     cy.reload()
-   
+
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
 
   }
