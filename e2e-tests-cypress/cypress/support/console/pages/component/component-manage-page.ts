@@ -196,11 +196,13 @@ export class ComponentAPILifecycle {
 
     if (env === Environment.DEVELOPMENT) {
       cy.intercept({
-        method: "POST",
+        method: "GET",
         url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
       }).as("revision");
       cy.wait("@revision", { timeout: 180000 }).then((r) => {
-        const { displayName } = r.response.body
+        const deployedRevisions = r.response.body.list as []
+        const latestRevision = deployedRevisions[deployedRevisions.length-1]
+        const {displayName} = latestRevision
         expect(displayName).equal(revision)
       });
     }
