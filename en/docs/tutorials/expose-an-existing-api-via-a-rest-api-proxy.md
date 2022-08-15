@@ -4,7 +4,7 @@ Choreo is a low-code cloud-native platform for building integration solutions. I
 
 1. Expose an existing API by creating a REST API proxy.
 2. Deploy the REST API proxy.
-3. Testing the REST API proxy to verify its functionality.
+Test the REST API proxy to verify its functionality.
 4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..."
