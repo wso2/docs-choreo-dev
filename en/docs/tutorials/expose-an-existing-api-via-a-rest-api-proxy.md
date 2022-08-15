@@ -1,6 +1,6 @@
 # Expose an existing API via a REST API proxy
 
-Choreo is a low-code cloud-native platform for building integration solutions. In this tutorial, you will explore REST API Proxies in Choreo by:
+Choreo is a low-code cloud-native platform for building integration solutions. In this tutorial, you will do the following to explore REST API Proxies in Choreo:
 
 1. Expose an existing API by creating a REST API proxy.
 2. Deploy the REST API proxy.
@@ -14,7 +14,7 @@ Test the REST API proxy to verify its functionality.
 Let's begin...
 ## Step 1: Create a REST API Proxy
 
-Choreo gives you two options to create a REST API proxy: 
+You can create a REST API proxy in one of the following methods: 
 
 - Design a new REST API proxy using an existing endpoint. 
 - Importing an OpenAPI specification of the existing API.
