@@ -54,7 +54,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
 
 ## Step 2: Developing the REST API Proxy
 
-1. Click **Develop** and then **Resources**. Notice all the resources on the OpenAPI specification are populated on Choreo.
+1. Click **Develop**. Notice all the resources on the OpenAPI specification are populated on Choreo.
 
 2. Click **API Definition** and view the OpenAPI specification. The API definition will include any modifications you made in the **Resources** tab.
 
