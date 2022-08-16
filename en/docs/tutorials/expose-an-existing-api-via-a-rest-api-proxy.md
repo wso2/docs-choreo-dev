@@ -75,7 +75,7 @@ Deploying the REST API proxy makes it invokable. Choreo maintains two environmen
 
 ## Step 4: Test your REST API Proxy
 
-In Choreo, you can test your REST API proxy before publishing it for consumers to use. Choreo provides you with 3 modes to test your REST API proxy: 
+In Choreo, you can test your REST API proxy before publishing it for consumers to use. Choreo provides you with three modes to test your REST API proxy: 
 
 - OpenAPI Console 
 - cURL
