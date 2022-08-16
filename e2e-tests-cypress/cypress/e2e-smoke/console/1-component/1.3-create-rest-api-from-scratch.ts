@@ -251,12 +251,11 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT,"Revision 3");
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Environment.DEVELOPMENT
     );
-    ComponentAPILifecycle.getLatestRevision().should("eq", "Revision 3");
   });
 
   it("Apply configs to prod", () => {

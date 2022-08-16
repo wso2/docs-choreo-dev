@@ -3,3 +3,6 @@
 
 # protect the CODEOWNERS file
 /.github/CODEOWNERS @a5anka @chirangaalwis @shafanaS @jsdjayanga @ramith @isurulucky
+
+# Code owners configuaration for liquibase changelogfiles
+/liquibase/db/changelog/ @a5anka @chirangaalwis @shafanaS @Hareendran7 @isurulucky @udhanMti @SachithKasthuriarachchi @shananjana @ranikamadurawe

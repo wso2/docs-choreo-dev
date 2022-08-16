@@ -133,7 +133,6 @@ at Azure pipeline level.
 				3) Stop the deployment of the components<br/>
 			</td>
 		</tr>
-
 		<tr>
 			<td>connectorbuilder</td>
 			<td>Publish a connector </td>
@@ -143,7 +142,6 @@ at Azure pipeline level.
 				3) Retrieved the details of the published connector<br/>
 			</td>
 		</tr>
-
         <tr>
             <td>anomalyDetector (Temporarily disabled - https://github.com/wso2-enterprise/choreo/issues/13626)</td>
             <td>Detecting a backend failure anomaly</td>
@@ -344,6 +342,33 @@ at Azure pipeline level.
 				1) Verify updating assets <br/>
                 2) Verify updating typography <br/>
                 3) Verify updating color palette <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createMaxAPIRevisionsUsingDeployments</td>
+			<td>Create revision to exceed API revision limit reached with deployments </td>
+			<td>
+				1) Verify creating revision using a deployment to exceed API revision limit <br/>
+                2) Verify creating revision using Settings page to exceed API revision limit <br/>
+                3) Verify revision count after exceeding API revision limit <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createMaxAPIRevisionsUsingSettingsPage</td>
+			<td>Create revision to exceed API revision limit reached with revision creation in Settings page </td>
+			<td>
+				1) Verify creating revision with a deployment to reach API revision limit <br/>
+                2) Verify getting revision to delete <br/>
+                3) Verify deleting oldest undeployed revision <br/>
+                4) Verify creating backup revision for existing state <br/>
+                5) Verify restoring revision for existing state <br/>
+                6) Verify creating revision for new state <br/>
+                7) Verify deploying revision with new state <br/>
+                8) Verify querying build by version <br/>
+                9) Verify creating revision in project manager <br/>
+                10) Verify restoring backup revision <br/>
+                11) Verify deleting backup revision <br/>
+                12) Verify revision count after exceeding API revision limit <br/>
             </td>
         </tr>
         </tbody>
