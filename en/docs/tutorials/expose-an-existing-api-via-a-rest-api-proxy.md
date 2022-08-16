@@ -109,7 +109,7 @@ First, let's review the security settings and add a rate limit to the API.
 
 1. Click **Manage** on the left navigation and click **Settings**.
 
-2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** at the bottom of the page and make the necessary changes. Once the changes are confirmed, you can save them by clicking on **Save**.
+2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** at the bottom of the page and make the necessary changes. Once the changes are confirmed, you can save them by clicking **Save**.
 
     ![Security Settings](../assets/img/tutorials/security-settings.png){.cInlineImage-full}
 
