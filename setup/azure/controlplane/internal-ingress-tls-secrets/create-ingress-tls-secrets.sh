@@ -21,3 +21,8 @@ kubectl create secret tls "${ENV}-choreo-controlplane-apim-internal-tls" \
    --cert "${CONTROLPLANE_APIM_INTERNAL_INGRESS_TLS_CERT_FILE_PATH}" \
    --key "${CONTROLPLANE_APIM_INTERNAL_INGRESS_TLS_KEY_FILE_PATH}" \
    --namespace "${APIM_NAMESPACE}"
+
+kubectl create secret tls "${ENV}"-bcentral-apim-internal-tls \
+   --cert "${BCENTRAL_APIM_INTERNAL_INGRESS_TLS_CERT_FILE_PATH}" \
+   --key "${BCENTRAL_APIM_INTERNAL_INGRESS_TLS_KEY_FILE_PATH}" \
+   --namespace "${APIM_NAMESPACE}"
