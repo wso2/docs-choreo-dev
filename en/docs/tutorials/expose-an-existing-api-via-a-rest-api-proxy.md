@@ -54,7 +54,9 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
 
 ## Step 2: Developing the REST API Proxy
 
-1. Click **Develop**. Notice all the resources on the OpenAPI specification are populated on Choreo.
+1. Click **Develop**. The Web Editor opens.
+
+    Notice all the resources on the OpenAPI specification are populated on Choreo.
 
 2. Click **API Definition** and view the OpenAPI specification. The API definition will include any modifications you made in the **Resources** tab.
 
@@ -62,7 +64,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
 
 Deploying the REST API proxy makes it invokable. Choreo maintains two environments by default: development and production. [Learn more](../api-proxies/#choreo-environments). 
 
-1. Click **Deploy** from the left navigation. 
+1. Return to the Choreo Console. In the left navigation, click **Deploy**. 
 
 2. Let's deploy the REST API proxy to the development environment. Click **Deploy** in the **Build Area** column.
     ![Deploy REST API proxy](../assets/img/tutorials/deploy-rest-api-proxy.png){.cInlineImage-full}
