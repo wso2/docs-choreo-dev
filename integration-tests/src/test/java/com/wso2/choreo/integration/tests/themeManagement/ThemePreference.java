@@ -51,21 +51,20 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateAssets() {
+        public void testUpdateThemeConfig() throws IOException, InterruptedException {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
                                 .concat(orgUuid)
-                                .concat("/themes/default/assets");
+                                .concat("/themes/default");
 
                 $(http()
                                 .client(choreoTestClientForTheme)
                                 .send()
-                                .put(requestURL)
+                                .post(requestURL)
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body("{\"logoUrl\":{\"header\":\"https://devportal.preview-dv.choreo.dev/themes/default/images/logo-black.svg\""
-                                                +
-                                                ",\"footer\":\"https://devportal.preview-dv.choreo.dev/themes/default/images/wso2-logo.svg\"}}")
+                                .body(new ClassPathResource(
+                                                "templates/themeManagement/post_update_theme_success.json"))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
                 $(http()
@@ -75,64 +74,6 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(new ClassPathResource(
-                                                "templates/themeManagement/put_update_assets_success.json")));
-        }
-
-        @Test
-        @CitrusTest
-        public void testUpdateTypography() {
-                String requestURL = Constant.THEME_ENDPOINT_SUFFIX
-                                .concat(orgUuid)
-                                .concat("/themes/default/typography");
-
-                $(http()
-                                .client(choreoTestClientForTheme)
-                                .send()
-                                .put(requestURL)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body("{\"headings\":{\"fontFamily\":\"Lato\"},\"body\":{\"fontFamily\":\"Roboto\"},\"p\":{\"fontFamily\":\"Arial\"}}")
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-                $(http()
-                                .client(choreoTestClientForTheme)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/themeManagement/put_update_typography_success.json")));
-        }
-
-        @Test
-        @CitrusTest
-        public void testUpdateColorPalette() {
-                String requestURL = Constant.THEME_ENDPOINT_SUFFIX
-                                .concat(orgUuid)
-                                .concat("/themes/default/palette");
-
-                $(http()
-                                .client(choreoTestClientForTheme)
-                                .send()
-                                .put(requestURL)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body("{\"type\":\"light\",\"background\":{\"primary\":{\"light\":\"#f7f8fb\",\"dark\":"
-                                                +
-                                                "\"#9A97EB\"},\"secondary\":{\"light\":\"#ffffff\",\"dark\":\"#542C3A\"}},\"text\""
-                                                +
-                                                ":{\"primary\":{\"light\":\"#000000\",\"dark\":\"#493AA5\"},\"secondary\":{\"light\":\"#000000\",\"dark\":\"#f50057\"}}}")
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-                $(http()
-                                .client(choreoTestClientForTheme)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/themeManagement/put_update_palette_success.json")));
+                                                "templates/themeManagement/post_update_theme_success.json")));
         }
 }

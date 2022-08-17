@@ -1,0 +1,48 @@
+{
+    "palette": {
+      "type": "light",
+      "background": {
+        "primary": {
+          "light": "#f7f8fb",
+          "dark": "#9A97EB"
+        },
+        "secondary": {
+          "light": "#ffffff",
+          "dark": "#542C3A"
+        }
+      },
+      "text": {
+        "primary": {
+          "light": "#000000",
+          "dark": "#493AA5"
+        },
+        "secondary": {
+          "light": "#000000",
+          "dark": "#f50057"
+        }
+      }
+    },
+    "typography": {
+      "headings": {
+        "fontFamily": "Lato"
+      },
+      "body": {
+        "fontFamily": "Lato"
+      },
+      "p": {
+        "fontFamily": "Gilmer"
+      }
+    },
+    "assets": {
+      "logoUrl": {
+        "header": "https://devportal.preview-dv.choreo.dev/themes/default/images/logo-black.svg",
+        "footer": "https://devportal.preview-dv.choreo.dev/themes/default/images/wso2-logo.svg",
+        "favicon": "https://devportal.preview-dv.choreo.dev/themes/default/images/favicon.ico"
+      }
+    },
+    "footerLinks": {
+      "terms": "https://wso2.com/choreo/terms-of-use/",
+      "privacyPolicy": "https://wso2.com/choreo/privacy-policy/",
+      "support": "https://wso2-choreo.slack.com/join/shared_invite/zt-qm86tg1f-R2kXf~26GB6X6Ux0GcuYbQ#/shared-invite/email"
+    }
+  }
