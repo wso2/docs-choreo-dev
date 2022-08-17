@@ -175,6 +175,8 @@ configMapGenerator:
       - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
       - CHOREO_APP_DB_PORT=1433
       - CHOREO_APP_DB_USERNAME=choreo_app_db_user
+    files:
+      - perfanalyzer/application.properties
   - name: cm-dp-cicd
     behavior: create
     literals:
@@ -310,3 +312,7 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-apim-proxy-deployer/Config.toml
+  - name: cm-lowcode-parser-cp
+    behavior: create
+    files:
+      - lowcode-parser/application.properties
