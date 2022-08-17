@@ -3,8 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
-    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: perfanalyzer-estimator
   name: perfanalyzer-estimator
@@ -30,6 +29,7 @@ spec:
       - image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-estimator:latest
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
           runAsUser: 10500
           runAsGroup: 10500
           capabilities:
@@ -84,6 +84,8 @@ spec:
         - name: secret-perfanalyzer
           mountPath: "/mnt/csi/secret-perfanalyzer"
           readOnly: true
+        - name: tmp-volume
+          mountPath: /tmp
       volumes:
       - configMap:
           defaultMode: 420
@@ -97,6 +99,11 @@ spec:
             secretProviderClass: secret-perfanalyzer
           nodePublishSecretRef:
             name: csi-secret-store-azure
+      ## gunicorn requires a temporary directory. When readOnlyRootFilesystem is set to true, the program raises a
+      ## FileNotFoundError because it can't find a writable temporary directory. Therefore the following emptyDir 
+      ## volume is created and mounted to /tmp as a solution 
+      - name: tmp-volume
+        emptyDir: {}
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
