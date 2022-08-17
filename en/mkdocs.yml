@@ -62,6 +62,7 @@ nav:
   - API Proxies: api-proxies.md
   - Triggers: triggers.md
   - Scheduled Tasks: scheduled-tasks.md
+  - GraphQL APIs: graphql-api.md
   - API Management:
      # - API Security: manage/api-security.md
      # - API Lifecycle: manage/api-lifecycle.md
@@ -83,6 +84,7 @@ nav:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
      - Enterprise Login: references/enterprise-login.md
+     - Preview Features: references/preview-features.md
      - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md 
 
 # - Choreo DevOps: devops/overview.md
