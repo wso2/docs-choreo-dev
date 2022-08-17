@@ -13,6 +13,8 @@
 
 /// <reference types="cypress" />
 
+import { Utils } from "../../../utils";
+
 export class OrganizationComponent {
   static invitationEmail = Cypress.env("invitationUserEmail");
 
@@ -36,11 +38,12 @@ export class OrganizationComponent {
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.contains("td", email).should("not.exist");
+    cy.get(`td[value="${email}"]`).should('not.exist')
+
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.contains("td", email).should("be.visible");
+    cy.get(`td[value="${email}"]`).should('exist')
   }
 
   static inviteMembers(email: string, ...roles) {
@@ -63,15 +66,50 @@ export class OrganizationComponent {
 
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get(
-      '[class="MuiButtonBase-root MuiIconButton-root sc-hKwDye iZMHze"]'
-    ).click();
-    // cy.get('[data-testid="Delete User"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
-      .contains("Delete")
-      .click();
+    cy.get('tr>td>div>button').click();
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').contains("Delete").click();
     cy.contains("td", email).should("not.exist");
     cy.log("Member deleted successfully");
+  }
+
+  static deleteInvitation(email: string) {
+    const { handle } = Cypress.env("userData");
+    const token = Cypress.env("apim_token")
+
+    const headers = {
+      authorization: `Bearer ${token}`
+    }
+    const deletePendingInvitation = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/invitations?email=${email}`
+    const getUsers = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users`
+
+
+    Utils.sendGetRequest(getUsers, headers).then(res => {
+      const list = res.body.list as []
+      const user = list.find(u => u["email"] === email)
+      cy.log(JSON.stringify(user))
+
+      if (user) {
+
+        const { idpId } = user
+        const deleteUserRequest = `${Cypress.env("appSvcURL")}/v2/orgs/dasunatwso2com/users/${idpId}`
+
+        Utils.sendDeleteRequest(deleteUserRequest, headers).then(res => {
+          if (res.status === 200) {
+            cy.log("Deleted Invited User")
+          } else {
+            cy.log("User Has Not Invited Or Error")
+          }
+        })
+      }
+      Utils.sendDeleteRequest(deletePendingInvitation, headers).then(res => {
+        if (res.status === 200) {
+          cy.log("Deleted Invited User")
+        } else {
+          cy.log("User Has Not Invited Or Error")
+        }
+      })
+    })
+
   }
 
   static selectPendingInvitation() {
@@ -92,29 +130,16 @@ export class OrganizationComponent {
   }
 
   private static addRoles(roles: string[]) {
-    roles.forEach((v) => {
-      cy.get('ul[class="MuiList-root MuiMenu-list MuiList-padding"] >li').each(
-        ($e) => {
-          if ($e.text().toLocaleLowerCase() === v.toLocaleLowerCase()) {
-            cy.wrap($e)
-              .invoke("attr", "aria-selected")
-              .then((attr) => {
-                if (!attr) {
-                  cy.wrap($e).click();
-                }
-              });
-          } else {
-            cy.wrap($e)
-              .invoke("attr", "aria-selected")
-              .then((attr) => {
-                if (attr) {
-                  cy.wrap($e).click();
-                }
-              });
-          }
+
+
+    roles.forEach(v => {
+      cy.get('ul>li>div>span').each(e => {
+        if (e.text() === v) {
+          cy.wrap(e).scrollIntoView().click()
         }
-      );
-    });
+      })
+    })
+
   }
 
   static createRole(

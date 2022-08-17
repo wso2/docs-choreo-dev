@@ -4,9 +4,12 @@
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.TestContext"/>
+            <!-- <class name="com.wso2.choreo.integration.tests.quotaLimit.QuotaLimitIT"/>-->
             <!-- <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/> -->
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingDeployments"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
             <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>
@@ -18,10 +21,13 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedComponent"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyComponentRoot"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyComponentSub"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.SysObsAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
         </classes>
     </test>
 </suite>

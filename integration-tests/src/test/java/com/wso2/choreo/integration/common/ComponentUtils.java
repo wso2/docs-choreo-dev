@@ -14,9 +14,16 @@
 package com.wso2.choreo.integration.common;
 
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -47,5 +54,23 @@ public class ComponentUtils {
         restAPI.setOrganization(org);
 
         return restAPI;
+    }
+
+    public static String generateStringFromTemplate(String templateRelativePath, Map<String, String> params)
+            throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile(templateRelativePath);
+        Writer writer = new StringWriter();
+        mustache.execute(writer, params).flush();
+        return writer.toString();
+    }
+
+    public static String generateStringPayloadFromTemplate(String templateRelativePath, Map<String, Object> params)
+            throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile(templateRelativePath);
+        Writer writer = new StringWriter();
+        mustache.execute(writer, params).flush();
+        return writer.toString();
     }
 }

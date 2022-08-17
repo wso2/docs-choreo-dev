@@ -1,12 +1,4 @@
 configMapGenerator:
-  - name: cm-anomalydetector-model-metadata
-    behavior: create
-    files:
-      - anomalydetector/models.properties
-  - name: cm-datamapper
-    behavior: create
-    files:
-      - datamapper/models.properties
   - name: cm-test-assistant
     behavior: create
     files:
@@ -183,6 +175,8 @@ configMapGenerator:
       - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
       - CHOREO_APP_DB_PORT=1433
       - CHOREO_APP_DB_USERNAME=choreo_app_db_user
+    files:
+      - perfanalyzer/application.properties
   - name: cm-dp-cicd
     behavior: create
     literals:
@@ -236,6 +230,11 @@ configMapGenerator:
       - BACKOFF_FACTOR=2.0
       - MAX_WAIT_INTERVAL=20
       - CONNECTION_TIMEOUT=2
+  - name: cm-alert-configuration-service
+    behavior: create
+    literals:
+      - ALERT_DB_PORT=1433
+      - ALERT_DB_NAME=choreo-alerts-db
   - name: cm-dp-delete-manager
     behavior: create
     literals:
@@ -267,7 +266,10 @@ configMapGenerator:
       - HELPER_URL=http://dp-utility-api
       - AUTH_URL=http://dp-project-manager
       - CICD_URL=http://dp-cicd
+      - RATE_LIMITER_SVC_ADDRESS=quota-limiter:9090
+      - APP_SERVICE_ADDRESS=app-service:8080
       - NEGOTIATOR_ADDRESS=negotiator:9092
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
       - OBS_ADDRESS=obsapi:9096
       - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
       - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
@@ -275,6 +277,10 @@ configMapGenerator:
       - CUSTOM_URL_SERVICE_NAME=choreo-nginx-internal
       - CUSTOM_URL_SERVICE_PORT=9443
       - CUSTOM_URL_SERVICE_PATH=/
+      - DEV_PORTAL_CLUSTER_ISSUER=letsencrypt-prod
+      - DEV_PORTAL_SERVICE_NAME=devportal-external
+      - DEV_PORTAL_SERVICE_PORT=80
+      - DEV_PORTAL_SERVICE_PATH=/
   - name: cm-console-next
     behavior: create
     literals:
@@ -296,15 +302,17 @@ configMapGenerator:
     literals:
       - CSM_DB_NAME=choreo_codeserver_db
       - CSM_DB_USERNAME=choreo_codeserver_db_user
-  - name: cm-anomalydetector-cp
+  - name: cm-userapps-image-deleter
+    behavior: create
+    literals:
+      - AZURE_TENANT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
+      - AZURE_CLIENT_ID="08eae7d4-cdcb-400d-894e-b27d66419876"
+      - RUDDER_HOST="http://dp-rudder:80"
+  - name: choreo-apim-proxy-deployer-config
     behavior: create
     files:
-      - anomalydetector/application.properties
+      - choreo-apim-proxy-deployer/Config.toml
   - name: cm-lowcode-parser-cp
     behavior: create
     files:
       - lowcode-parser/application.properties
-  - name: cm-perfanalyzer-cp
-    behavior: create
-    files:
-      - perfanalyzer/application.properties

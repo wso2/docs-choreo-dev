@@ -1,5 +1,5 @@
 {
-  "defaultCommandTimeout": 120000,
+  "defaultCommandTimeout": 180000,
   "pageLoadTimeout": 300000,
   "responseTimeout": 300000,
   "integrationFolder": "cypress/e2e-smoke/",
@@ -12,5 +12,7 @@
   "videosFolder": "cypress/videos/e2e-smoke",
   "videoUploadOnPasses": false,
   "videoCompression": false,
-  "watchForFileChanges": false
+  "watchForFileChanges": false,
+  "scrollBehavior":false
+
 }

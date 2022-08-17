@@ -16,6 +16,7 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.email.RestAPIBasedEmailUtils;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.apache.http.HttpHeaders;
@@ -31,9 +32,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-import static com.wso2.choreo.integration.config.Configuration.ALERT.GMAIL_API_CK;
-import static com.wso2.choreo.integration.config.Configuration.ALERT.GMAIL_API_CS;
-import static com.wso2.choreo.integration.config.Configuration.ALERT.GMAIL_API_REFRESH_TOKEN;
 
 /**
  * OOM alert test cases.
@@ -47,7 +45,9 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        restAPIBasedEmailUtils = new RestAPIBasedEmailUtils(GMAIL_API_CK, GMAIL_API_CS, GMAIL_API_REFRESH_TOKEN);
+        restAPIBasedEmailUtils = new RestAPIBasedEmailUtils(Configuration.getConfig(ConfigDefinition.GMAIL_API_CK),
+                Configuration.getConfig(ConfigDefinition.GMAIL_API_CS),
+                Configuration.getConfig(ConfigDefinition.GMAIL_API_REFRESH_TOKEN));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
         long testStartTimestamp = Instant.now().toEpochMilli();
         String appName = UUID.randomUUID().toString();
         String body = "{\n"
-                + "\t\"orgId\": \"" + Configuration.ALERT.ORG_UUID + "\",\n"
+                + "\t\"orgId\": \"" + Configuration.getConfig(ConfigDefinition.ALERT_ORG_UUID) + "\",\n"
                 + "\t\"envId\": \"" + Constant.ALERT.ENV_ID + "\",\n"
                 + "\t\"publisher\": \"Critical alert detector\",\n"
                 + "\t\"time\": \"" + Instant.now().toString() + "\",\n"
@@ -65,7 +65,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
                 + "        \"componentName\": \"" + appName + "\",\n"
                 + "        \"envName\": \"" + Constant.ALERT.ENV_ID + "\",\n"
                 + "        \"containerId\": \"" + Constant.ALERT.CONTAINER_ID + "\",\n"
-                + "        \"releaseId\": \"" + Configuration.ALERT.RELEASE_ID + "\",\n"
+                + "        \"releaseId\": \"" + Configuration.getConfig(ConfigDefinition.ALERT_RELEASE_ID) + "\",\n"
                 + "        \"alertType\": \"Out Of Memory error\"\n"
                 + "\t},\n"
                 + "\t\"properties\": {\n"

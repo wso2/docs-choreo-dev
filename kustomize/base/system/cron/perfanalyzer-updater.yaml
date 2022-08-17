@@ -79,7 +79,7 @@ spec:
           volumes:
             - configMap:
                 defaultMode: 420
-                name: cm-perfanalyzer-cp
+                name: cm-perf-analyzer
               name: perfanalyzer-config
             - name: secret-perfanalyzer
               csi:

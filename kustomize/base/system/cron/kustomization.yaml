@@ -8,3 +8,4 @@ resources:
   - program-cleaner.yaml
   - logs-archiver.yaml
   - choreo-ai-lowcode-parser.yaml
+  - choreo-userapps-image-deleter.yaml

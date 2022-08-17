@@ -3,37 +3,38 @@
 ## 1. Setup
 
 1. Setup following configurations as environment variables
-    - CHOREO_ENDPOINT
-    - STS_ENDPOINT
-    - TEST_CHOREO_ORG_ID
-    - TEST_CHOREO_ORG_HANDLE
-    - TEST_CHOREO_ORG_UUID
-    - STS_CLIENT_ID
-    - STS_CLIENT_SECRET
-    - ALERT_MAIL_IMAP_PASS
-    - TEST_USER_EMAIL
-    - TEST_USER_PASSWORD
-    - ASGARDEO_ENDPOINT
-    - ASGARDEO_CLIENT_ID
-    - ASGARDEO_CLIENT_SECRET
+   - CHOREO_ENDPOINT
+   - STS_ENDPOINT
+   - TEST_CHOREO_ORG_ID
+   - TEST_CHOREO_ORG_HANDLE
+   - TEST_CHOREO_ORG_UUID
+   - STS_CLIENT_ID
+   - STS_CLIENT_SECRET
+   - ALERT_MAIL_IMAP_PASS
+   - TEST_USER_EMAIL
+   - TEST_USER_PASSWORD
+   - ASGARDEO_ENDPOINT
+   - ASGARDEO_CLIENT_ID
+   - ASGARDEO_CLIENT_SECRET
 
-(Optional) Setup the following configurations as environment variables if you need to run the anomaly detection test  
-- ANOMALY_DETECTION_ORG_ID  
-- ANOMALY_DETECTION_ORG_UUID  
-- ANOMALY_DETECTION_PROJECT_ID  
-- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID  
-- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET  
-- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID  
-- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME  
-- ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL  
+(Optional) Setup the following configurations as environment variables if you need to run the anomaly detection test
+
+- ANOMALY_DETECTION_ORG_ID
+- ANOMALY_DETECTION_ORG_UUID
+- ANOMALY_DETECTION_PROJECT_ID
+- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID
+- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET
+- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID
+- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME
+- ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL
 - ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID
 - ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID
-- ANOMALY_DETECTION_MAIL_IMAP_PASS  
-- ANOMALY_DETECTION_TEST_USER_EMAIL  
-- ANOMALY_DETECTION_TEST_USER_PASSWORD  
-- ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE  
+- ANOMALY_DETECTION_MAIL_IMAP_PASS
+- ANOMALY_DETECTION_TEST_USER_EMAIL
+- ANOMALY_DETECTION_TEST_USER_PASSWORD
+- ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE
 
-Please talk to your EM or any QA team member to get these dev test user credentials. 
+Please talk to your EM or any QA team member to get these dev test user credentials.
 
 ## 2. Run
 
@@ -68,26 +69,51 @@ integration-tests/src/test
 **java/com/wso2/choreo/integration**
 
 1. **/common**
-    - Common Java implementations to run Choreo use-cases
+   - Common Java implementations to run Choreo use-cases
 
 2. **/config**
-    - Configurations needed to run common use-cases and Citrus integration tests
+   - Configurations needed to run common use-cases and Citrus integration tests
 
 3. **/tests**
-    - Citrus integration tests written for Choreo use-cases
-        - **/connectorbuilder** - connector publishing related integration tests
-        - ...
-    - **EndpointConfig.java**
-        - Spring bean configuration class that has the Citrus Endpoints defined
+   - Citrus integration tests written for Choreo use-cases
+      - **/connectorbuilder** - connector publishing related integration tests
+      - ...
+   - **EndpointConfig.java**
+      - Spring bean configuration class that has the Citrus Endpoints defined
 
 **resources**
 
 1. **/templates**
-    - Sample Json payload templates
-        - **/connectorbuilder** - connector publishing related Json payload templates
-        - ...
+   - Sample Json payload templates
+      - **/connectorbuilder** - connector publishing related Json payload templates
+      - ...
 
-## 4. Scenarios
+## 4. Adding a new test configuration
+
+Test configurations are supported in 2 ways
+
+1. Defined environment variables
+2. Defined as yaml configuration
+
+When a config is evaluated at the test level, precedence will **first** be given to environment variables
+and then yaml configurations. Therefor a yaml configuration can be overridden by setting the corresponding 
+env variable.
+
+**Note**: _Give preference to defining new configs as yaml configurations because they are easier to manage.
+Env variables should only be considered values such as credentials that need to remain private._
+
+**Steps for defining a new configuration**
+
+- Add the new configuration name to the `ConfigDefinition.java` enum. This will act as the unique identifier
+   of the configuration.
+
+- For a yaml configuration, add the config to the _dev-env-config.yaml_, _staging-env-config.yaml_ and _prod-env-config.yaml_
+   (These do **not** need to be explicitly setup at Azure pipeline level)
+
+- Configs that are only set as env variables do not need to be added to the yaml and must be configured
+at Azure pipeline level.
+
+## 5. Scenarios
 
 <table>
 	<thead>
@@ -98,6 +124,15 @@ integration-tests/src/test
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td> quotaLimitIT </td>
+			<td>checking whether the quota is limited </td>
+			<td>
+				1) Deploy 5 reusable components<br/>
+				2) Check whether the quota has been reached<br/>
+				3) Stop the deployment of the components<br/>
+			</td>
+		</tr>
 		<tr>
 			<td>connectorbuilder</td>
 			<td>Publish a connector </td>
@@ -146,6 +181,7 @@ integration-tests/src/test
 				3) Delete the component<br/>
 			</td>
 		</tr>
+
 <tr>
 			<td>oomAlertIT</td>
 			<td>Check OOM alert </td>
@@ -222,6 +258,36 @@ integration-tests/src/test
             </td>
         </tr>
         <tr>
+			<td>createUserManagedComponentNonEmptyRoot</td>
+			<td>Create BYOR component with existing code in root directory using GH,deploy,test and delete </td>
+			<td>
+				1) Verify creating user managed component <br/>
+                2) Verify created component status <br/>
+                3) Verify initial PR Generation <br/>
+                4) Verify PR merge <br/>
+                5) Verify component retrieval <br/>
+                6) Verify component deployment <br/>
+                7) Verify component deployment status <br/>
+                8) Verify API invocation <br/>
+                9) Verify component deletion  <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createUserManagedComponentNonEmptySub</td>
+			<td>Create BYOR component with existing code in sub directory using GH,deploy,test and delete </td>
+			<td>
+				1) Verify creating user managed component <br/>
+                2) Verify created component status <br/>
+                3) Verify initial PR Generation <br/>
+                4) Verify PR merge <br/>
+                5) Verify component retrieval <br/>
+                6) Verify component deployment <br/>
+                7) Verify component deployment status <br/>
+                8) Verify API invocation <br/>
+               9) Verify component deletion  <br/>
+            </td>
+        </tr>
+        <tr>
 			<td>createDeployInvokeWebhookIT</td>
 			<td>Create webhook component,deploy,test,observability logs and delete </td>
 			<td>
@@ -259,6 +325,7 @@ integration-tests/src/test
 			<td>
 				1) Verify observability grouped logs <br/>
                 2) Verify observability live logs <br/>
+                2) Verify observability logs download <br/>
             </td>
         </tr>
          <tr>
@@ -266,6 +333,42 @@ integration-tests/src/test
 			<td>Verify observability metrics from a RESTAPI component </td>
 			<td>
 				1) Verify observability system metrics <br/>
+            </td>
+        </tr>
+         <tr>
+			<td>themeManagementTestCase</td>
+			<td>Update custom theme assets, palette and typography </td>
+			<td>
+				1) Verify updating assets <br/>
+                2) Verify updating typography <br/>
+                3) Verify updating color palette <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createMaxAPIRevisionsUsingDeployments</td>
+			<td>Create revision to exceed API revision limit reached with deployments </td>
+			<td>
+				1) Verify creating revision using a deployment to exceed API revision limit <br/>
+                2) Verify creating revision using Settings page to exceed API revision limit <br/>
+                3) Verify revision count after exceeding API revision limit <br/>
+            </td>
+        </tr>
+        <tr>
+			<td>createMaxAPIRevisionsUsingSettingsPage</td>
+			<td>Create revision to exceed API revision limit reached with revision creation in Settings page </td>
+			<td>
+				1) Verify creating revision with a deployment to reach API revision limit <br/>
+                2) Verify getting revision to delete <br/>
+                3) Verify deleting oldest undeployed revision <br/>
+                4) Verify creating backup revision for existing state <br/>
+                5) Verify restoring revision for existing state <br/>
+                6) Verify creating revision for new state <br/>
+                7) Verify deploying revision with new state <br/>
+                8) Verify querying build by version <br/>
+                9) Verify creating revision in project manager <br/>
+                10) Verify restoring backup revision <br/>
+                11) Verify deleting backup revision <br/>
+                12) Verify revision count after exceeding API revision limit <br/>
             </td>
         </tr>
         </tbody>

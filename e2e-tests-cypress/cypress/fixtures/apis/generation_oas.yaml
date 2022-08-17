@@ -22,7 +22,7 @@ security:
 paths:
   /intensity:
     get:
-      operationId: operation_get_/intensity
+      operationId: getIntensity
       parameters: []
       responses:
         '200':
@@ -37,7 +37,7 @@ paths:
         optional: false
   /intensity/factors:
     get:
-      operationId: operation_get_/intensity/factors
+      operationId: getIntensityFactors
       parameters: []
       responses:
         '200':
@@ -52,7 +52,7 @@ paths:
         optional: false
   /generation:
     get:
-      operationId: operation_get_/generation
+      operationId: getGeneration
       parameters: []
       responses:
         '200':

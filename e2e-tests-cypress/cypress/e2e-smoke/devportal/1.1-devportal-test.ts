@@ -93,4 +93,10 @@ describe("API overview comment and rating scenario", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
   });
+
+
+  it("Verify suspending Prod deployed component", () => {
+
+    ComponentDeployPage.stopProdContainer();
+  });
 });

@@ -11,6 +11,7 @@
  * associated services.
  */
 
+
 import { LoginPage } from "../login-page";
 
 export class ChoreoHomePage {
@@ -22,9 +23,7 @@ export class ChoreoHomePage {
   }
 
   static navigateToComponents() {
-    cy.get('[data-testid="main-left-nav-item-Components"]')
-      .should("be.visible")
-      .click();
+    cy.get('[data-testid="main-left-nav-item-Components"]').click();
   }
 
   static selectHomeMenu() {
@@ -32,25 +31,20 @@ export class ChoreoHomePage {
   }
 
   static navigateToMarketPlace() {
-    cy.get('[data-testid="main-left-nav-item-Marketplace"]')
-      .should("be.visible")
-      .click();
+    cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
   }
 
   static navigateToInsights() {
-    cy.get('[data-testid="main-left-nav-item-Insights"]')
-      .should("be.visible")
-      .click();
+    cy.get('[data-testid="main-left-nav-item-Insights"]').click();
   }
 
   static isOrgHandleVisible(orgHandle: string) {
-    cy.get('[id="org-picker"]').should("be.visible");
     cy.get('[id="org-picker"]').click();
-    cy.get('[data-value="' + orgHandle + '"]').should("be.visible");
+    cy.get('[data-value="' + orgHandle + '"]')
   }
 
   static getLoggedUserEmail() {
-    cy.get(this.username).should("be.visible").click();
+    cy.get(this.username).click();
     return cy.get("ul>li>div>p").invoke("text");
   }
 
@@ -59,18 +53,15 @@ export class ChoreoHomePage {
   }
 
   static navigateToSettings() {
-    cy.get('[data-testid="main-left-nav-item-Settings"]', {
-      timeout: 120000,
-    }).click();
+    cy.get("#backdrop-loader").should('not.exist')
+    cy.get('[data-testid="header-user-profile-menu"]').click()
+    cy.get('[data-testid="header-user-profile-item-settings"]').should('be.visible').click()
   }
 
   static switchOrganization() {
-    const pdpOrg = Cypress.env("isPrivateOrg");
-    cy.log(`isPrivateOrg : ${pdpOrg}`);
-    const orgName = Cypress.env("privateOrgName")
-    if (pdpOrg) {
+    if (Cypress.env("isPrivateOrg")) {
       cy.get("#org-picker").click();
-      cy.get(`[data-value="${orgName}"]`).click();
+      cy.get(`[data-value="${Cypress.env("privateOrgName")}"]`).click();
       LoginPage.persistApimToken();
     }
   }

@@ -50,7 +50,6 @@ CREATE TABLE [dbo].[version](
     [ast_hash] [varchar](255) NOT NULL,
     [ast] [varchar](max) NULL,
     [inserted_at] [datetime] NULL,
-    [last_active] [datetime] NULL,
     CONSTRAINT [PK_version_id] PRIMARY KEY CLUSTERED
 (
 [id] ASC
@@ -116,8 +115,6 @@ ALTER TABLE [dbo].[program] ADD  DEFAULT ((0)) FOR [is_shared]
 ALTER TABLE [dbo].[version] ADD  DEFAULT (NULL) FOR [program_id]
     GO
 ALTER TABLE [dbo].[version] ADD  DEFAULT (getdate()) FOR [inserted_at]
-    GO
-ALTER TABLE [dbo].[version] ADD  DEFAULT (getdate()) FOR [last_active]
     GO
 ALTER TABLE [dbo].[program]  WITH CHECK ADD  CONSTRAINT [program$fk_last_version_id] FOREIGN KEY([latest_version_id])
     REFERENCES [dbo].[version] ([id])

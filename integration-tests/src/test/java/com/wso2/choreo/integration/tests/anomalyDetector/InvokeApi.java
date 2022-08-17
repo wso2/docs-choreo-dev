@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckException;
 
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -65,7 +66,8 @@ public class InvokeApi {
      */
     private static String getApiTestToken(String clientId, String clientSecret) throws IOException, InterruptedException, GetApiTestTokenStatusCheckException {
         String authorizationBasicToken = Base64.getEncoder().encodeToString(clientId.concat(":").concat(clientSecret).getBytes());
-        HttpPost request = new HttpPost(Configuration.STS_ENDPOINT.concat(Constant.TOKEN_ENDPOINT_SUFFIX));
+        HttpPost request = new HttpPost(Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
+                .concat(Constant.TOKEN_ENDPOINT_SUFFIX));
         request.setHeader("Content-type", "application/x-www-form-urlencoded");
         request.setHeader("Authorization", "Basic ".concat(authorizationBasicToken));
         StringEntity requestEntity = new StringEntity("grant_type=client_credentials", ContentType.APPLICATION_FORM_URLENCODED);

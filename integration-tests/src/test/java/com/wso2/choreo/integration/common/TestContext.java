@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import org.testng.annotations.BeforeSuite;
 
@@ -23,30 +24,18 @@ import org.testng.annotations.BeforeSuite;
  */
 public class TestContext {
 
-    private static final ChoreoOrganization testOrg = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-            String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
+    private static ChoreoOrganization testOrg;
 
-    private static final TokenHandler testUserTokenHandler = new TokenHandler.Builder(Configuration.TEST_CHOREO_ORG_HANDLE,
-            Configuration.TEST_USER_EMAIL, Configuration.TEST_USER_PASSWORD)
-            .asgardeoClientId(Configuration.ASGARDEO_CLIENT_ID)
-            .asgardeoClientSecret(Configuration.ASGARDEO_CLIENT_SECRET)
-            .stsClientId(Configuration.STS_CLIENT_ID)
-            .stsClientSecret(Configuration.STS_CLIENT_SECRET)
-            .cpAppClientId(Configuration.CP_APP_CLIENT_ID)
-            .cpAppClientSecret(Configuration.CP_APP_CLIENT_SECRET).build();
+    private static TokenHandler testUserTokenHandler;
 
-    private static final TokenHandler anomalyDetectionUserTokenHandler =
-            new TokenHandler.Builder(Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE,
-                    Configuration.ANOMALY_DETECTION.TEST_USER_EMAIL, Configuration.ANOMALY_DETECTION.TEST_USER_PASSWORD)
-            .asgardeoClientId(Configuration.ASGARDEO_CLIENT_ID)
-            .asgardeoClientSecret(Configuration.ASGARDEO_CLIENT_SECRET)
-            .stsClientId(Configuration.STS_CLIENT_ID)
-            .stsClientSecret(Configuration.STS_CLIENT_SECRET)
-            .cpAppClientId(Configuration.CP_APP_CLIENT_ID)
-            .cpAppClientSecret(Configuration.CP_APP_CLIENT_SECRET).build();
+    private static TokenHandler anomalyDetectionUserTokenHandler;
 
     @BeforeSuite
     public void setup() throws Exception {
+        Configuration.loadConfigs();
+        setTestOrg();
+        setTestUserTokenHandler();
+        setAnomalyDetectionUserTokenHandler();
         DataCleaner.removeOldTestData(testOrg);
     }
 
@@ -54,7 +43,49 @@ public class TestContext {
         return testOrg;
     }
 
-    public static TokenHandler getTestUserTokenHandler() { return testUserTokenHandler; }
+    public static synchronized void setTestOrg() {
+        if (testOrg == null) {
+            testOrg = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID),
+                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        }
+    }
 
-    public static TokenHandler getAnomalyDetectionUserTokenHandler() { return anomalyDetectionUserTokenHandler; }
+    public static TokenHandler getTestUserTokenHandler() {
+        return testUserTokenHandler;
+    }
+
+    public static synchronized void setTestUserTokenHandler() {
+        if (testUserTokenHandler == null) {
+            testUserTokenHandler = new TokenHandler.Builder(
+                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                    Configuration.getConfig(ConfigDefinition.TEST_USER_EMAIL),
+                    Configuration.getConfig(ConfigDefinition.TEST_USER_PASSWORD))
+                    .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                    .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                    .stsClientId(Configuration.getConfig(ConfigDefinition.STS_CLIENT_ID))
+                    .stsClientSecret(Configuration.getConfig(ConfigDefinition.STS_CLIENT_SECRET))
+                    .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                    .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+        }
+    }
+
+    public static TokenHandler getAnomalyDetectionUserTokenHandler() {
+        return anomalyDetectionUserTokenHandler;
+    }
+
+    public static synchronized void setAnomalyDetectionUserTokenHandler() {
+        if (anomalyDetectionUserTokenHandler == null) {
+            anomalyDetectionUserTokenHandler = new TokenHandler.Builder(
+                    Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE),
+                    Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_USER_EMAIL),
+                    Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_USER_PASSWORD))
+                    .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                    .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                    .stsClientId(Configuration.getConfig(ConfigDefinition.STS_CLIENT_ID))
+                    .stsClientSecret(Configuration.getConfig(ConfigDefinition.STS_CLIENT_SECRET))
+                    .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                    .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+        }
+    }
 }

@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformati
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,6 @@ import static org.hamcrest.Matchers.*;
 public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static JsonObject ast;
-    private static ChoreoProject project;
     private static RestApiChoreoComponent restApiComponent;
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
     private static final String V2_HEADER_NAME = "x-console-version";
@@ -72,15 +72,18 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
+            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException, GetDeploymentsStatusCheckException,
             ComponentCreationStatusCheckException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-                String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+
+        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent =
@@ -90,7 +93,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-        restApiComponent.waitTillObservabilityDataPopulate(accessToken);
+        restApiComponent.waitForMetricsData(accessToken);
+        restApiComponent.waitForTraceData(accessToken,"dev");
     }
 
     @Test
@@ -305,7 +309,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testObservabilityTraceList"})
     @CitrusTest
     public void testObservabilityTraceInformation() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String requestURI = Configuration.CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT)
+                .concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);

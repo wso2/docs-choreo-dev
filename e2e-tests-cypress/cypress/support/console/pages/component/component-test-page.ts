@@ -11,11 +11,12 @@
  * associated services.
  */
 
+
 import { Environment } from '../enum/environment';
 
 export class ComponentTestPage {
   static selectCurl() {
-    cy.get('[data-testid="cURL"]').click();
+   cy.get('[data-testid="cURL"]').click();
   }
 
   static getTestKey() {
@@ -23,7 +24,7 @@ export class ComponentTestPage {
   }
 
   static selectEnvironment(env: Environment) {
-    cy.get('.MuiFormControl-fullWidth >div').eq(0).click();
-    cy.get('ul>li').contains(env).click();
+   cy.get('.MuiFormControl-fullWidth >div').eq(0).click();
+   cy.get('ul>li').contains(env).click();
   }
 }

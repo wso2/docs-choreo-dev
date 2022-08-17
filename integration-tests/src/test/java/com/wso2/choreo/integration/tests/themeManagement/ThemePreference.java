@@ -1,0 +1,79 @@
+/*
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 Inc. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+package com.wso2.choreo.integration.tests.themeManagement;
+
+import com.consol.citrus.annotations.CitrusTest;
+import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.message.MessageType;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+
+public class ThemePreference extends TestNGCitrusSpringSupport {
+        private static String accessToken;
+        private String orgUuid;
+
+        @Autowired
+        private HttpClient choreoTestClientForTheme;
+
+        @BeforeClass
+        public void beforeClass()
+                        throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
+                accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+                orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        }
+
+        @Test
+        @CitrusTest
+        public void testUpdateThemeConfig() throws IOException, InterruptedException {
+                String requestURL = Constant.THEME_ENDPOINT_SUFFIX
+                                .concat(orgUuid)
+                                .concat("/themes/default");
+
+                $(http()
+                                .client(choreoTestClientForTheme)
+                                .send()
+                                .post(requestURL)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(new ClassPathResource(
+                                                "templates/themeManagement/post_update_theme_success.json"))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+                $(http()
+                                .client(choreoTestClientForTheme)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(new ClassPathResource(
+                                                "templates/themeManagement/post_update_theme_success.json")));
+        }
+}

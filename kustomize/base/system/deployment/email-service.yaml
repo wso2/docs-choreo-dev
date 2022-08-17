@@ -3,11 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
-    checkov.io/skip1: CKV_K8S_40=Temporarily suppressing till fixing
-    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
-    checkov.io/skip3: CKV_K8S_28=Temporarily suppressing till fixing
-    checkov.io/skip4: CKV_K8S_37=Temporarily suppressing till fixing
-    checkov.io/skip5: CKV_K8S_31=Temporarily suppressing till fixing
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
   labels:
     choreo.component: email-service
   name: email-service
@@ -26,8 +22,8 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       securityContext:
-        runAsUser: 100
-        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: email-service
           imagePullPolicy: Always
@@ -72,9 +68,12 @@ spec:
                   key: SENDER_MAIL
           securityContext:
             allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
             readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - ALL
           ports:
             - containerPort: 8082
               name: email-port

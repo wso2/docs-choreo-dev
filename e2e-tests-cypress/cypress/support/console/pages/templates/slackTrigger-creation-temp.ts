@@ -11,27 +11,30 @@
  * associated services.
  */
 
+
+
 export class TriggersTemplate {
   static SelectWebhookTemplate() {
     cy.get('[data-testid="project-template-list-webhook"]').click();
   }
 
- 
-  static createTrigger(
-    triggerType: string,
-    triggerName: string,
-    triggerChannel: string
-  ) {
+
+  static createTrigger(triggerType: string, triggerName: string, triggerChannel: string) {
+    cy.get('.MuiDialog-paperScrollPaper ul>div>div').eq(0).should('be.visible').click()
+
     cy.get('[data-testid="search-field"]>input').clear().type(triggerType);
     cy.get('[data-testid="search-button"]>button').click();
-    cy.get(`.package-card-class>div:not([data-testid])`).realHover();
-    cy.wait(2000)
-    cy.get('[data-testid="Slack"]').realClick();
+    cy.get(`.package-card-class>div:not([data-testid])`).realHover().wait(2000)
+    cy.get('[data-testid="Slack"]').realClick({position:"top"});
     cy.get('[data-testid="webhook-name"]>div>input').clear().type(triggerName);
     cy.get(".MuiAutocomplete-endAdornment").click();
-    cy.get("#trigger-channel-select-popup").should("be.visible");
+    cy.get("#trigger-channel-select-popup");
     cy.get("li>div>h5").contains(triggerChannel).click();
     cy.get('[data-cyid="create-webhook-next"]').click();
-    cy.get('[data-testid="create-btn"]').should("be.visible").click();
+    cy.get('[data-testid="create-btn"]').click();
+    cy.setCookie("fidpId", "choreoe2etest") // cypress clears the fidp cooke which is set in login()
+
   }
+
+
 }

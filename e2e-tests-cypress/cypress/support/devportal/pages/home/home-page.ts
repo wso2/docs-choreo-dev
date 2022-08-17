@@ -27,6 +27,7 @@ export class DevPortalHomePage {
   }
 
   static logout(): void {
+    
     cy.window()
       .its("sessionStorage")
       .invoke("getItem", "sign_out_url")
@@ -37,6 +38,12 @@ export class DevPortalHomePage {
 
   static navigateToApisPage(): void {
     cy.get("[data-testid=apis-appbar-btn]").should("be.visible").click();
+  }
+
+  static navigateToPerApiView(apiName: string): void {
+    cy.wait(60000);
+    cy.reload();
+    cy.get(`[data-testid=apiCard-${apiName}]`).should("be.visible").click();
   }
 
   static navigateToAppsPage() {

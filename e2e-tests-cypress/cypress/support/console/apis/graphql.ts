@@ -115,14 +115,11 @@ export class GraphQL {
     });
   }
 
-  private static getComponents(
-    projectId: string,
-    orgHandle: string,
-    token: string
-  ) {
+  static getComponents(projectId: string, orgHandle: string, token: string) {
+
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
-      projectId, id, name, handler, displayName, displayType, version } }`,
+        projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
     };
 
     return this.callGraphQL(token, query);
@@ -207,6 +204,7 @@ export class GraphQL {
       Authorization: `Bearer ${token}`,
       "content-type": "application/json",
     };
+
     return cy.request({
       method: "POST",
       url: `${appSvcURL}/projects/1.0.0/graphql`,
@@ -352,4 +350,6 @@ export class GraphQL {
       }
     });
   }
+
+
 }
