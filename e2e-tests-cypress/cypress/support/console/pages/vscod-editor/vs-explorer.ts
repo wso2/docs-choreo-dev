@@ -68,17 +68,19 @@ export class VSExplorer {
         cy.wrap(bd).type("{ctrl}`");
       }
     });
-    cy.get(VSExplorer.terminal).click().type(`${command}{enter}`).wait(waitTime);
+    cy.get(VSExplorer.terminal).click().then($d => this.paste($d, command, true)).wait(waitTime);
   }
 
   static creteNewBranch(branchName: string) {
-    cy.get("[title*='.bal Diagram']", { timeout: 360000 }).wait(4000);
+    this.waitTillWorkSpaceLoad()
     cy.get('[id="wso2.ballerina"]')
     cy.get('[id="status.scm"]').eq(0).click();
     cy.get(".quick-input-widget")
     cy.get('[aria-describedby="quickInput_message"]').type(`${branchName}{enter}`).wait(3000);
   }
-
+  static waitTillWorkSpaceLoad() {
+    cy.get("[title*='.bal Diagram']", { timeout: 360000 }).wait(4000);
+  }
   static commitPush(commitMessage) {
     this.enterCommandInTerminal("bash /config/workspace/.githooks/pre-commit");
     this.enterCommandInTerminal("rm /config/workspace/.githooks/pre-commit", 2000);
@@ -97,20 +99,20 @@ export class VSExplorer {
     cy.get('div[class="view-line"]').should("be.visible").click();
     cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
       cy.focused().then($destination => {
-        const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
-          clipboardData: {
-            getData: (type = 'text') => code,
-          },
-        });
-        $destination[0].dispatchEvent(pasteEvent);
-        if (enter) {
-          cy.wait(3000);
-          cy.wrap($destination).type('{enter}');
-        }
+        this.paste($destination, code, false)
       });
     });
   }
-
+  private static paste(obj, code, enter) {
+    const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
+      clipboardData: { getData: (type = 'text') => code, },
+    });
+    obj[0].dispatchEvent(pasteEvent);
+    if (enter) {
+      cy.wait(3000);
+      cy.wrap(obj).type('{enter}');
+    }
+  }
   private static createFile(fileName: string) {
     cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon').click().wait(2000);
     cy.get('[title="New File"]').eq(0).should("be.visible").click().wait(2000);

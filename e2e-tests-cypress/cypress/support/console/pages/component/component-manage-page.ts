@@ -143,6 +143,7 @@ export class ComponentAPILifecycle {
       cy.get('[role="button"]>span').contains("Save").click();
       cy.get("button").contains("Apply").click();
       cy.contains("Delete").should("be.visible");
+      cy.wait(6000)
     }
   }
 
@@ -207,10 +208,11 @@ export class ComponentAPILifecycle {
       });
     }
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    Utils.setBrowserCookie(true)
-    cy.reload()
-
+    // Utils.setBrowserCookie(true)
+    // cy.reload()
+    cy.get("#panel1a-header").should("be.visible")
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
+    cy.wait(6000)
 
   }
 
