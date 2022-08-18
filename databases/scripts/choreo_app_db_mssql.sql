@@ -1683,6 +1683,7 @@ CREATE TABLE [dbo].[org_custom_theme]
     [organization_uuid] [nvarchar](255) NOT NULL,
     [theme_name] [varchar](50) NOT NULL DEFAULT (N'default'),
     [config] [nvarchar](4000) NOT NULL,
+    [version] [varchar](15) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT theme_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id) ON DELETE CASCADE
 )

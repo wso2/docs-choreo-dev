@@ -1,0 +1,116 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: default-deny
+  namespace: superset
+spec:
+  podSelector:
+    matchLabels: {}
+  policyTypes:
+    - Ingress
+    - Egress
+
+---
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: superset-worker-egress
+  namespace: superset
+spec:
+  podSelector:
+    matchLabels:
+      app: superset-worker
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: superset
+  - ports:
+    - port: 443
+    - port: 53
+      protocol: UDP
+    - port: 53
+
+---
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: superset-init-db-egress
+  namespace: superset
+spec:
+  podSelector:
+    matchLabels:
+      job-name: superset-init-db
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: superset
+  - ports:
+    - port: 443
+    - port: 53
+      protocol: UDP
+    - port: 53
+
+---
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: redis-master-ingress
+  namespace: superset
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: master
+      app.kubernetes.io/instance: superset
+      app.kubernetes.io/name: redis
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: superset
+
+---
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: postgresql-ingress
+  namespace: superset
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: superset
+      app.kubernetes.io/name: postgresql
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: superset
+
+---
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: superset-ingress
+  namespace: superset
+spec:
+  podSelector:
+    matchLabels:
+      app: superset
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-choreo-system-nginx-ingress
+  egress:
+  - to: # all except VM metadata endpoint
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32

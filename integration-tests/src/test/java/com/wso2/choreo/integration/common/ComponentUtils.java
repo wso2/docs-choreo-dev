@@ -19,10 +19,22 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.InvokeInformation;
+import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.config.Constant;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -47,6 +59,7 @@ public class ComponentUtils {
 
         if (component.isEmpty()) {
             restAPI = project.createRestAPI(accessToken, componentName, org);
+            restAPI.setProjectId(project.getId());
         } else {
             restAPI = component.get();
         }
@@ -54,6 +67,48 @@ public class ComponentUtils {
         restAPI.setOrganization(org);
 
         return restAPI;
+    }
+
+    public static ChoreoComponent createRestAPI(String accessToken) throws Exception {
+        ChoreoOrganization org = TestContext.getTestOrg();
+
+        ChoreoProject project = org.createProject(accessToken);
+        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        ChoreoComponent restAPI = project.createRestAPI(accessToken, componentName, org);
+
+        restAPI.setOrganization(org);
+        restAPI.setProjectId(project.getId());
+
+        return restAPI;
+    }
+
+    public static void invokeDevEndpoint(String accessToken, ChoreoComponent component) throws Exception {
+        InvokeInformation invokeInformation = component.getInvokeInformation(accessToken,
+                Constant.displayType.restAPI.name(), Constant.Environment.Development.name());
+        String requestURI = invokeInformation.getInvokeUrl();
+        if (requestURI == null) {
+            throw new InvokeInformationNotFoundException();
+        }
+        requestURI = requestURI.concat("/")
+                .concat("greeting")
+                .concat("?name=testUser");
+        // Escaping the quotations
+        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
+        HttpGet request = new HttpGet(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
+        request.setHeader("API-Key", apiKey);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if (statusCode != HttpStatus.OK.value()) {
+                throw new InvokeAPICheckException(statusCode, responseBody);
+            }
+        }
+
     }
 
     public static String generateStringFromTemplate(String templateRelativePath, Map<String, String> params)

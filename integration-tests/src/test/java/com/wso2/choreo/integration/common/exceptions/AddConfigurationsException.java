@@ -3,7 +3,7 @@ package com.wso2.choreo.integration.common.exceptions;
 /**
  * An exception to be thrown if the API call to add Choreo component configurations does not receive expected status code
  */
-public class AddConfigurationsException extends Throwable {
+public class AddConfigurationsException extends Exception {
     private final int statusCode;
     private final String message;
 
