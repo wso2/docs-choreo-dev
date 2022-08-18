@@ -18,10 +18,12 @@ export class RestAPITemplate {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
   }
 
-  static createApiFromScratch(componentName: string, description: string, isEPLogin: boolean = false) {
+  static createApiFromScratch(componentName: string, description: string, isEPLogin: boolean = false, accessModes: string = "external") {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);
     cy.get('input[name="description"]').clear().type(description);
+    cy.get('.MuiInputBase-formControl>div:not([id])').click()
+    cy.get(`li[data-value=${accessModes}]`).click()
     cy.get('[data-cyid="create-api-from-scratch-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();

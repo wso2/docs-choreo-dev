@@ -41,6 +41,9 @@ export class TestHelper {
     Curl.selectMethod(httpMethod);
     Curl.enterPathParameter(pathParm);
     Curl.addQueryParameter(queryParameters1);
+    cy.get("textarea").invoke("text").then(curl=>{
+      Cypress.env(`int_curl_${env}`,curl)
+    })
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 }

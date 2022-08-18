@@ -15,18 +15,30 @@
 export class SwaggerUI {
   static SelectResource(path: string) {
     const pathVariable = `[data-path="/${path}"]`;
-    cy.get(".swagger-ui").within(() => { cy.get(pathVariable).click(); });
+    cy.get('body').then(b => {
+      if (b.find(`div[id*="${SwaggerUI.getModifiedResourceName(path)}"]>div>div>div>div>div>button`).length == 0) {
+        cy.get(pathVariable).click()
+      }
+    })
   }
 
-  static TryoutAPI() {
-    cy.get('div > div > button[class="btn try-out__btn"]').contains("Try it out").should("exist").click({ force: true });
-    cy.get(".opblock-section-header").contains("Cancel").should("exist");
+  static TryoutAPI(resource: string = "-get") {
+    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>button`).focus().click()
+    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>button[class*="cancel"]`).should("be.visible")
+
+  }
+
+  private static getModifiedResourceName(resource: string = "-get") {
+    return Cypress._.capitalize(resource)
   }
 
   static ExecuteResourceFunction(resource = "-get") {
-    const modifiedResource = Cypress._.capitalize(resource)
-    cy.get(`div[id*="${modifiedResource}"] .execute-wrapper>button`).click();
+
+
+    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>button[class*="execute"]`).focus().click();
+    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>div>div[class="curl-command"]`).should("be.visible")
     cy.log("Execution is successful");
+    cy.get(`div[id*="${SwaggerUI.getModifiedResourceName(resource)}"]>div>div>div>div>div>button[class*="cancel"]`).click()
   }
 
   static GetResponse() {
@@ -43,13 +55,14 @@ export class SwaggerUI {
 
   static enterValue(placeholder: string, value: string) {
     cy.wait(2000);
-    cy.get(`[placeholder="${placeholder}"]`).type(value);
+    cy.get(`[placeholder="${placeholder}"]`).clear().type(value);
   }
 
   static invokeResource(resource: string, key: string = "", value: string = "") {
     this.SelectResource(resource);
-    this.TryoutAPI();
+    this.TryoutAPI(resource);
     if (key) { this.enterValue(key, value); }
     this.ExecuteResourceFunction(resource);
+
   }
 }
