@@ -78,6 +78,10 @@ public final class Constant {
         Publish
     }
 
+    public enum Environment {
+        Development,
+        Production
+    }
     // Alert related const
     public static final class ALERT {
         public static final String NOTIFICATION_SERVICE_RESOURCE = "/notification-service/1.0.0/publishAlerts";
