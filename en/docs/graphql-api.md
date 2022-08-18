@@ -3,7 +3,7 @@
 Explore how you can easily design, develop, and manage GraphQL APIs in Choreo to implement your business API strategy.
 
 !!! tip
-    GraphQL API is currently available in Choreo as a preview feature. To enable it, see [Preview Features](references/preview-features.md).
+    GraphQL API is currently available in Choreo as a preview feature. For instructions to enable it, see [Preview Features](references/preview-features.md).
 
 ## What is a GraphQL API?
 
