@@ -143,6 +143,17 @@ export class ComponentDeployPage {
 
   static verifyDevInvokeURL() { return Utils.getInvokeUrl(0) }
 
+  static verifyInternalAPIdevWarning() {
+    cy.get('[data-testid="warning-banner"]', { timeout: 150000 }).eq(0).should("be.visible")
+    return cy.get('[data-testid="env.invoke.url.internal.endpoint.warning"]>p').eq(0).invoke('text')
+  }
+
+
+  static verifyInternalAPIprodWarning() {
+    cy.get('[data-testid="warning-banner"]', { timeout: 150000 }).eq(1).should("be.visible")
+    return cy.get('[data-testid="env.invoke.url.internal.endpoint.warning"]>p').eq(1).invoke('text')
+  }
+
   static verifyStgeInvokeURL() { return Utils.getInvokeUrl(1) }
 
   static verifyProdInvokeURL() {
