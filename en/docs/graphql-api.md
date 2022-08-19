@@ -2,18 +2,22 @@
 
 Explore how you can easily design, develop, and manage GraphQL APIs in Choreo to implement your business API strategy.
 
-!!! tip
-    GraphQL API is currently available in Choreo as a preview feature. For instructions to enable it, see [Preview Features](references/preview-features.md).
+??? note "Enable GraphQL components"
+    GraphQL API is currently available in Choreo as a preview feature. To enable it, follow these steps:</br></br>
+      1. Expand the profile menu and click **Feature Preview**.</br></br>
+         ![Feature preview](../assets/img/feature-preview/feature-preview.png){.cInlineImage-full}</br></br>
+      2. In the **Feature Preview** dialog, enable the required features.</br></br>
+         ![Enable preview features](../assets/img/feature-preview/enable-preview-feature.png){.cInlineImage-half}</br></br>
 
 ## What is a GraphQL API?
 
-[GraphQL](https://graphql.org) is a query language for APIs and a runtime for fulfilling those queries with your existing data. A GraphQL API is a category of APIs that supports this query language.
+[GraphQL](https://graphql.org) is a query language for APIs to fetch and persist data. A GraphQL API is a category of APIs that supports this query language.
 
-A GraphQL API is an alternative for a REST API to address the following limitations experienced by REST API users:
+A GraphQL API is an alternative for a REST API to address the following limitations experienced by REST API consumers:
 
 - A REST API may need to send multiple requests to several endpoints to retrieve all the required data. A GraphQL API can achieve this via a single query.
 
-    For example, a banking application needs to fetch the phone number and the current account balance of an account holder. To achieve this, a REST API may need to send three requests to call three endpoints (e.g., `/customers/<id>` to fetch the initial data, `/customers/<id>/contactInfo` to fetch the phone number, and `/customers/<id>/balances` to fetch the current account balance).
+    For example, a banking application has to fetch the phone number and the current account balance of an account holder. To achieve this, a REST API may need to send three requests to call three endpoints (e.g., `/customers/<id>` to fetch the initial data, `/customers/<id>/contactInfo` to fetch the phone number, and `/customers/<id>/balances` to fetch the current account balance).
 
     A GraphQL API can retrieve all these details via one query similar to the sample given below:
 
@@ -29,18 +33,25 @@ A GraphQL API is an alternative for a REST API to address the following limitati
     ```
     In this scenario, a single request by a REST API under-fetches data compared to a single request by a GraphQL API.
 
-- In certain scenarios, a REST API can over-fetch data. In the same example given above, a request sent by REST API to the `/customers/<id>/contactInfo` may result in fetching all the contact information in the array such as the phone number, work phone number, address, email, etc., whereas the application only needs the phone number.
+- In some scenarios, a REST API can over-fetch data. In the same example given above, a request sent by REST API to the `/customers/<id>/contactInfo` may result in fetching all the contact information in the array such as the phone number, work phone number, address, email, etc., whereas the application only needs the phone number.
 
     A GraphQL allows you to avoid this by writing queries with specific data requirements.
 
-By minimizing the number of requests it sends for a given purpose and avoiding over-fetching GraphQL API consumes a smaller amount of resources (such as the internet bandwidth, system memory, etc.) and is, therefore, more economical. Therefore it is useful to develop low-cost applications such as applications for mobile devices.
+By minimizing the number of requests it sends for a given purpose and avoiding over-fetching GraphQL API consumes a smaller amount of resources (such as the internet bandwidth, system memory, etc.). GraphQL APIs are therefore more economical. Therefore it is beneficial to consume GraphQL APIs for low-energy devices such as mobile devices compared to consuming REST APIs.
 
 
 ## Develop
 
 To create a GraphQL you need to add a GraphQL component.
 
-Choreo comes with the Web Editor which is an IDE designed based on Visual Studio Code for developers to implement API functionality. At present, developers can design GraphQL APIs in the Web Editor by writing code, and test the functionality via cURL commands before committing the design to a private/Choreo-managed GitHub repository. Once you commit the design, the GraphQL API is available in the Choreo Console where you can deploy, test, and observe it. 
+![Add GraphQL component](assets/img/graphql/add-grapql-component..png){.cInlineImage-full}
+
+Choreo comes with the Web Editor which is an IDE designed based on Visual Studio Code for developers to implement API functionality. At present, developers can design GraphQL APIs in the Web Editor by writing code, and test the functionality via cURL commands before committing the design to a private/Choreo-managed GitHub repository. Once you commit the design, the GraphQL API is available in the Choreo Console where you can deploy, test, and observe it.
+
+![Implement graphql API](assets/img/graphql/implement-graphql-api.png){.cInlineImage-full}
+
+!!! info
+    The current preview does not support editing the GraphQL API implementation in the low-code mode.
 
 ## Lifecycle
 
@@ -68,7 +79,7 @@ Once you promote an API to production, Choreo provides a second URL that you can
 
 Once you deploy your GraphQL API, you can test it using the GraphQL Console. The GraphQL Console is an interactive UI that guides you to write queries and mutations to test the GraphQL API.
 
-Choreo by default uses OAuth2.0 authentication to secure GraphQL APIs. Therefore, the GraphQl Console allows you to generate test keys to test the APIs.
+Choreo uses OAuth2.0 authentication to secure GraphQL APIs by default. Therefore, the GraphQl Console allows you to generate test keys to test the APIs.
 
 ![GraphQL Console](assets/img/graphql/graphql-console.png){.cInlineImage-full}
 
