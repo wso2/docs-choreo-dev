@@ -33,24 +33,14 @@ export class DevPortalHelper {
   static appName = generateAppName("-e2etest");
 
   static createDeployComponent(API_Name) {
-    ProjectListingPage.createNewProject(
-      DevPortalHelper.PROJECT_NAME,
-      DevPortalHelper.PROJECT_DESCRIPTION
-    );
+    ProjectListingPage.createNewProject(DevPortalHelper.PROJECT_NAME, DevPortalHelper.PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(
-      API_Name,
-      DevPortalHelper.API_BASE_PATH,
-      "",
-      "",
-      ""
-    );
+    RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "");
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.PromoteToProd()
-
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
