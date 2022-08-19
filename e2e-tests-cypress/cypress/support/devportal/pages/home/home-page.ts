@@ -43,7 +43,9 @@ export class DevPortalHomePage {
   static navigateToPerApiView(apiName: string): void {
     cy.wait(60000);
     cy.reload();
-    cy.get(`[data-testid=apiCard-${apiName}]`).should("be.visible").click();
+    cy.get('[data-testid="txt-api-name"]').should('be.visible').invoke('text').then(t=>{
+      expect(t).to.be.equal(apiName)
+    })
   }
 
   static navigateToAppsPage() {

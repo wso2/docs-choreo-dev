@@ -208,8 +208,6 @@ export class ComponentAPILifecycle {
       });
     }
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    // Utils.setBrowserCookie(true)
-    // cy.reload()
     cy.get("#panel1a-header").should("be.visible")
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
     cy.wait(6000)

@@ -31,13 +31,20 @@ import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helpe
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 
+
+
+
+
+
+
+
 describe("Create and deploy a component to test developer portal with custom domain", () => {
+    const API_Name = Utils.generateComponentName("oas");
     before(() => {
         ConsoleLoginPage.login();
     });
 
     it("Create and deploy a component", () => {
-        const API_Name = Utils.generateComponentName("oas");
         cy.task('setAPIName', API_Name);
         DevPortalHelper.createDeployComponent(API_Name);
     });
@@ -51,7 +58,6 @@ describe("Add developer portal custom domain", () => {
     before(() => {
         ConsoleLoginPage.login();
         ChoreoHomePage.navigateToSettings();
-
         DomainsComponents.navigateToDomainsSettings();
         DomainsComponents.navigateToDevPortalCustomDomain();
         DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
@@ -85,13 +91,13 @@ describe("Login and test developer portal with custom domain", () => {
     });
 
     it("Test in devportal", () => {
-        let API_Name = '';
         cy.task('getAPIName').then((apiName) => {
-            API_Name = apiName as string;
+            let API_Name = apiName as string;
             DevPortalHomePage.navigateToApisPage();
+            Apis.searchApiAndSelect(API_Name);
             DevPortalHomePage.navigateToPerApiView(API_Name);
             Apis.verifyAPIname().should("eq", API_Name);
-            Apis.searchApiAndSelect(API_Name);
+            // Apis.searchApiAndSelect(API_Name);
         });
     });
 
@@ -125,6 +131,7 @@ describe("Login and test developer portal with custom domain", () => {
     });
 
     it("Create a consumer application and tryout an API", () => {
+
         cy.task('getAPIName').then((API_Name) => {
             DevPortalHomePage.navigateToAppsPage();
             AppsList.createAnApplication(appName);
@@ -143,7 +150,6 @@ describe("Delete added custom domain", () => {
     before(() => {
         ConsoleLoginPage.login();
         ChoreoHomePage.navigateToSettings();
-
         DomainsComponents.navigateToDomainsSettings();
         DomainsComponents.navigateToDevPortalCustomDomain();
     });
@@ -156,3 +162,8 @@ describe("Delete added custom domain", () => {
         DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
     });
 });
+
+
+
+
+
