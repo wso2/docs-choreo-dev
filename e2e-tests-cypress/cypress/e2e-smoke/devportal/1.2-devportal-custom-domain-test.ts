@@ -97,7 +97,6 @@ describe("Login and test developer portal with custom domain", () => {
             Apis.searchApiAndSelect(API_Name);
             DevPortalHomePage.navigateToPerApiView(API_Name);
             Apis.verifyAPIname().should("eq", API_Name);
-            // Apis.searchApiAndSelect(API_Name);
         });
     });
 
