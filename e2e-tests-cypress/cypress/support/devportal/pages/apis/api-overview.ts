@@ -62,7 +62,7 @@ export class ApiOverview {
     cy.get('[for="hover-feedback-3"]').click({ force: true });
     cy.get('[class="MuiPopover-root"]').click({ force: true });
     cy.log("Changed the rate to 3 stars");
-    cy.get("body").type("{esc}");
+    cy.get(".MuiPopover-root").realClick({clickCount:2});
   }
 
   static validateRating(): void {

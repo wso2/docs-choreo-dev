@@ -28,15 +28,19 @@ import { Subscriptions } from "../../support/devportal/pages/applications/subscr
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
+import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
+import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
+const API_Name = "automationtestcomponentcustomdomainoas";
+
+
 
 
 describe("Create and deploy a component to test developer portal with custom domain", () => {
-    const API_Name = Utils.generateComponentName("oas");
+
     before(() => {
         ConsoleLoginPage.login();
-        cy.task('setAPIName', API_Name);
     });
 
     it("Create and deploy a component", () => {
@@ -49,6 +53,7 @@ describe("Create and deploy a component to test developer portal with custom dom
 });
 
 describe("Add developer portal custom domain", () => {
+
     before(() => {
         ConsoleLoginPage.login();
         ChoreoHomePage.navigateToSettings();
@@ -85,14 +90,10 @@ describe("Login and test developer portal with custom domain", () => {
     });
 
     it("Test in devportal", () => {
-
-        cy.task('getAPIName').then((apiName) => {
-            DevPortalHomePage.navigateToApisPage();
-            Apis.searchApiAndSelect(apiName);
-            DevPortalHomePage.navigateToPerApiView(apiName as string);
-            Apis.verifyAPIname().should("eq", apiName);
-
-        });
+        DevPortalHomePage.navigateToApisPage();
+        Apis.searchApiAndSelect(API_Name);
+        DevPortalHomePage.navigateToPerApiView(API_Name);
+        Apis.verifyAPIname().should("eq", API_Name);
     });
 
     it("Add and delete comment for the API", () => {
@@ -118,23 +119,16 @@ describe("Login and test developer portal with custom domain", () => {
     });
 
     it("Verify the downloaded SDK file", () => {
-
-
-        cy.task('getAPIName').then((apiName) => {
-            const sdkFile = apiName + "_1.0.0_android.zip";
-            APISdk.downloadSDK(sdkFile);
-        })
+        const sdkFile = API_Name + "_1.0.0_android.zip";
+        APISdk.downloadSDK(sdkFile);
     });
 
     it("Create a consumer application and tryout an API", () => {
-
-        cy.task('getAPIName').then((API_Name) => {
-            DevPortalHomePage.navigateToAppsPage();
-            AppsList.createAnApplication(appName);
-            ProductionKeys.generateTestToken();
-            Subscriptions.addSubscriptionToApplication(API_Name as string);
-            Subscriptions.validateResubscribingApi(API_Name as string);
-        });
+        DevPortalHomePage.navigateToAppsPage();
+        AppsList.createAnApplication(appName);
+        ProductionKeys.generateTestToken();
+        Subscriptions.addSubscriptionToApplication(API_Name);
+        Subscriptions.validateResubscribingApi(API_Name);
     });
 
     it("Delete a consumer application", () => {
@@ -152,6 +146,8 @@ describe("Delete added custom domain", () => {
 
     after(() => {
         ChoreoHomePage.logout();
+        ChoreoHomePage.navigateToComponents()
+        ComponentListingPage.deleteComponent(API_Name)
     });
 
     it("Delete added custom domain", () => {
