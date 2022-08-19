@@ -32,20 +32,14 @@ import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helpe
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 
 
-
-
-
-
-
-
 describe("Create and deploy a component to test developer portal with custom domain", () => {
     const API_Name = Utils.generateComponentName("oas");
     before(() => {
         ConsoleLoginPage.login();
+        cy.task('setAPIName', API_Name);
     });
 
     it("Create and deploy a component", () => {
-        cy.task('setAPIName', API_Name);
         DevPortalHelper.createDeployComponent(API_Name);
     });
 
@@ -91,12 +85,13 @@ describe("Login and test developer portal with custom domain", () => {
     });
 
     it("Test in devportal", () => {
+
         cy.task('getAPIName').then((apiName) => {
-            let API_Name = apiName as string;
             DevPortalHomePage.navigateToApisPage();
-            Apis.searchApiAndSelect(API_Name);
-            DevPortalHomePage.navigateToPerApiView(API_Name);
-            Apis.verifyAPIname().should("eq", API_Name);
+            Apis.searchApiAndSelect(apiName);
+            DevPortalHomePage.navigateToPerApiView(apiName as string);
+            Apis.verifyAPIname().should("eq", apiName);
+
         });
     });
 
@@ -123,6 +118,8 @@ describe("Login and test developer portal with custom domain", () => {
     });
 
     it("Verify the downloaded SDK file", () => {
+
+
         cy.task('getAPIName').then((apiName) => {
             const sdkFile = apiName + "_1.0.0_android.zip";
             APISdk.downloadSDK(sdkFile);
