@@ -2,6 +2,9 @@
 
 Preview features offer optional functionality that you can enable if required.
 
+!!! info
+    Preview features cannot be enabled when you are logged in anonymously.   
+
 To enable Choreo features that are released as preview features, follow these steps:
 
 1. Expand the profile menu and click **Feature Preview**.
