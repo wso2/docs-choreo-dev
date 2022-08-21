@@ -79,7 +79,7 @@ Once you promote an API to production, Choreo provides a second URL that you can
 
 Once you deploy your GraphQL API, you can test it using the GraphQL Console. The GraphQL Console is an interactive UI that guides you to write queries and mutations to test the GraphQL API.
 
-Choreo uses OAuth2.0 authentication to secure GraphQL APIs by default. Therefore, the GraphQl Console allows you to generate test keys to test the APIs.
+Choreo uses OAuth2.0 authentication to secure GraphQL APIs by default. Therefore, the GraphQL Console allows you to generate test keys to test the APIs.
 
 ![GraphQL Console](assets/img/graphql/graphql-console.png){.cInlineImage-full}
 
