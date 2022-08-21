@@ -44,7 +44,7 @@ By minimizing the number of requests it sends for a given purpose and avoiding o
 
 To create a GraphQL you need to add a GraphQL component.
 
-![Add GraphQL component](assets/img/graphql/add-grapql-component..png){.cInlineImage-full}
+![Add GraphQL component](assets/img/graphql/add-grapql-component.png){.cInlineImage-full}
 
 Choreo comes with the Web Editor which is an IDE designed based on Visual Studio Code for developers to implement API functionality. At present, developers can design GraphQL APIs in the Web Editor by writing code, and test the functionality via cURL commands before committing the design to a private/Choreo-managed GitHub repository. Once you commit the design, the GraphQL API is available in the Choreo Console where you can deploy, test, and observe it.
 
