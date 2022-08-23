@@ -15,6 +15,11 @@
 SUPERSET_DB_PASS=$(az keyvault secret show --name postgresql-SUPERSET-DB-PASSWORD --vault-name "${CSI-KEYVAULT-NAME}" --query value -o tsv)
 SUPERSET_ADMIN_USER_PASS=$(az keyvault secret show --name superset-ADMIN-PASSWORD --vault-name "${CSI-KEYVAULT-NAME}" --query value -o tsv)
 
+# Replace the password placeholders in Kubernetes Secret definition
+cp superset-custom-config-secret.yaml superset-custom-config-secret-tmp.yaml
+sed -i 's|SUPERSET_DB_PASS|'"$SUPERSET_DB_PASS"'|g' superset-custom-config-secret-tmp.yaml
+sed -i 's|SUPERSET_ADMIN_USER_PASS|'"$SUPERSET_ADMIN_USER_PASS"'|g' superset-custom-config-secret-tmp.yaml
+
 kubectl create ns superset
 
 # Login to helm registry
@@ -24,7 +29,8 @@ helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAM
 helm pull oci://choreocontrolplane.azurecr.io/helm/superset --version 0.7.1
 
 # Deploy customized configuration files + dependent service secrets via a Kubernetes Secret
-kubectl apply -f superset-custom-config-secret.yaml
+kubectl apply -f superset-custom-config-secret-tmp.yaml
+rm superset-custom-config-secret-tmp.yaml
 
 # Install
 helm upgrade --install superset superset-0.7.1.tgz \
