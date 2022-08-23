@@ -1,3 +1,14 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 Inc. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
 runAsUser: 10500
 
 image:
@@ -14,6 +25,22 @@ ingress:
   - secretName: dev-choreo-system-wildcard-tls
     hosts:
     - superset.dv.choreo.dev
+
+initImage:
+  repository: choreocontrolplane.azurecr.io/busybox
+  tag: 1.34_2022-08-17_10-57-44
+  pullPolicy: Always
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+configFromSecret: superset-secret-custom-config
+
 supersetNode:
   podSecurityContext:
     seccompProfile:
@@ -27,6 +54,13 @@ supersetNode:
     - name: wait-for-postgres
       image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
       imagePullPolicy: "{{ .Values.initImage.pullPolicy }}"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       envFrom:
         - secretRef:
             name: '{{ tpl .Values.envFromSecret . }}'
@@ -43,6 +77,13 @@ supersetNode:
         - ALL
       add:
         - NET_BIND_SERVICE
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 supersetWorker:
   podSecurityContext:
@@ -52,6 +93,13 @@ supersetWorker:
     - name: wait-for-postgres
       image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
       imagePullPolicy: "{{ .Values.initImage.pullPolicy }}"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       envFrom:
         - secretRef:
             name: '{{ tpl .Values.envFromSecret . }}'
@@ -66,6 +114,14 @@ supersetWorker:
     capabilities:
       drop:
         - ALL
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
 
 init:
   adminUser:
@@ -73,10 +129,18 @@ init:
     firstname: Superset
     lastname: Admin
     email: integration-choreo-group@wso2.com
+    password: superset_app_admin
   initContainers:
     - name: wait-for-postgres
       image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
       imagePullPolicy: "{{ .Values.initImage.pullPolicy }}"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       envFrom:
         - secretRef:
             name: '{{ tpl .Values.envFromSecret . }}'
@@ -95,6 +159,14 @@ init:
     capabilities:
       drop:
         - ALL
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
 
 postgresql:
   enabled: false
@@ -116,3 +188,10 @@ redis:
     podSecurityContext:
       seccompProfile:
         type: RuntimeDefault
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
