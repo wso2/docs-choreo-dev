@@ -63,7 +63,7 @@ Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to the
 
 Once you deploy a GraphQL API to the development environment, it gets exposed through an API Gateway with API security enabled. At this time, Choreo provides a test URL for the API, which you can use to verify the functionality of the API.
 
-## Choreo Environments
+## Choreo environments
 
 Choreo provides a development environment by default and a production environment in two separate Kubernetes clusters. Once you deploy an API to the development environment and verify its functionality, you can promote the API to the production environment.
 
