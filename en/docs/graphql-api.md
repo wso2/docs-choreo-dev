@@ -51,7 +51,7 @@ Choreo comes with the Web Editor which is an IDE designed based on Visual Studio
 
 ## Lifecycle
 
-Once you implement a GraphQL API, it needs to be built, tested, and eventually put into production. Choreo executes a CI/CD pipeline to manage the API lifecycle. Choreo stores the source code of APIs in a GitHub repository for the user account. This GitHub repository can be a Choreo-managed repository or a GitHub repository that you own.  It also provides the capability for developers to connect their own GitHub repositories containing the source code of their APIs. The CI/CD pipeline in Choreo takes an API through the complete process, starting from code checkout to compile, build, test, and finally deploy.
+Once you implement a GraphQL API, you can build, test, and eventually put it into production. Choreo executes a CI/CD pipeline to manage the API lifecycle. Choreo stores the source code of APIs in a GitHub repository for the user account. This GitHub repository can be a Choreo-managed repository or a GitHub repository that you own.  It also provides the capability for developers to connect their own GitHub repositories containing the source code of their APIs. The CI/CD pipeline in Choreo takes an API through the complete process, starting from code checkout to compile, build, test, and finally deploy.
 
 ## Deploy
 
