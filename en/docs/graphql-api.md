@@ -29,7 +29,7 @@ A GraphQL API is an alternative for a REST API to address the following limitati
     ```
     In this scenario, a single request by a REST API under-fetches data compared to a single request by a GraphQL API.
 
-- In some scenarios, a REST API can over-fetch data. In the same example given above, a request sent by REST API to the `/customers/<id>/contactInfo` may result in fetching all the contact information in the array such as the phone number, work phone number, address, email, etc., whereas the application only needs the phone number.
+- In some scenarios, a REST API can over-fetch data. In the same example given above, a request sent by REST API to the `/customers/<id>/contactInfo` can result in fetching all the contact information in the array such as the phone number, work phone number, address, email, etc., whereas the application only needs the phone number.
 
     A GraphQL allows you to avoid this by writing queries with specific data requirements.
 
