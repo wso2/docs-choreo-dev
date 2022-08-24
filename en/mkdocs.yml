@@ -62,6 +62,7 @@ nav:
   - API Proxies: api-proxies.md
   - Triggers: triggers.md
   - Scheduled Tasks: scheduled-tasks.md
+  - GraphQL APIs: graphql-api.md
   - API Management:
      # - API Security: manage/api-security.md
      # - API Lifecycle: manage/api-lifecycle.md
