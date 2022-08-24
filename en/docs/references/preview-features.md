@@ -1,9 +1,9 @@
 # Preview Features
 
-Preview features offer optional functionality that you can enable if required.
+Preview features offer early access to functionality that is not finalized by the Choreo team. You can enable if you would like to try them out during the early stages of their development.
 
 !!! info
-    Preview features cannot be enabled when you are logged in anonymously.   
+    You cannot enable preview features when you try Choreo anonymously.   
 
 To enable Choreo features that are released as preview features, follow these steps:
 
