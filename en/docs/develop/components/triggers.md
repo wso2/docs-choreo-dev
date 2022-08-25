@@ -1,9 +1,9 @@
-# Triggers
+# Webhook
 Explore how you can create event-driven integrations with Choreo triggers.
 
-## What is a Trigger?
+## What is a Webhook?
 
-A trigger is a cause that activates an action. Triggers in Choreo are no different and are user-defined callbacks. 
+A webhook is a cause that activates an action. Webhooks in Choreo are no different and are user-defined callbacks. 
 
 Triggers are used by developers to implement event-driven integrations. Before event-driven solutions,  to identify an event occurrence, systems had to keep polling other systems periodically.  With event-driven solutions, systems can focus on the main business-flow, and proactively be notified when an event of interest occurs in real-time. The following are some examples of scenarios where you can create webhooks for the mentioned platforms:
 
