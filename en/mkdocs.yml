@@ -54,27 +54,84 @@ nav:
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
       - Quick Start Guide: get-started/quick-start-guide.md
-  - Tutorials: 
-      - Create Your First REST API: tutorials/create-your-first-rest-api.md
-      - Expose an existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md      
-  - REST APIs: rest-api.md
-  - API Proxies: api-proxies.md
-  - Triggers: triggers.md
-  - Scheduled Tasks: scheduled-tasks.md
-  - API Management:
-     # - API Security: manage/api-security.md
-     # - API Lifecycle: manage/api-lifecycle.md
-      - Developer Portal: manage/developer-portal.md
-  - Marketplace: marketplace.md
-  - Business Insights: 
-      - View API Insights: insights/view-api-insights.md
-      - Configure Alerts: insights/configure-alerts.md
-  - Observability:
-     - Observability Overview: observability/observability-overview.md
-#    - View Logs: observability/view-logs.md
-     - Root Cause Analysis: observability/root-cause-analysis.md
-#    - Performance Analysis: observability/performance-analysis.md
-# - Choreo DevOps: devops/overview.md
+      - Key Concepts: get-started/key-concepts.md
+      - Tutorials: 
+          - Tutorials Overview: tutorials/tutorials.md
+          - Create Your First REST API: rest-api/create-your-first-rest-api.md
+          - Create Your First REST API Proxy: api-proxy/create-your-first-api-proxy.md
+          - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
+  - Develop:
+      - Overview: develop/overview.md
+      - Components:        
+          - REST APIs:  develop/components/api-proxies.md
+          - REST API Proxies: develop/components/rest-api.md
+          - Manual Triggers: develop/components/triggers.md
+          - Scheduled Tasks: develop/components/scheduled-tasks.md  
+          - Webhook: develop/components/scheduled-tasks.md  
+      - Manage Source Repository: develop/manage-source-repository.md
+      - Run and Test: develop/run-and-test.md
+      - Code Editor:
+          - Walkthrough: develop/code-editor/walkthough.md
+          - Ballerina.toml: develop/code-editor/ballerina-toml.md
+          - Cloud.toml: develop/code-editor/cloud-toml.md
+          - Dependencies.toml: develop/code-editor/dependencies-toml.md
+          - main.bal: develop/code-editor/main-bal.md
+          - Cheat Sheet: develop/code-editor/cheat-sheet.md
+      - Best Practices:
+          - Top Down Vs Bottom-Up Approach: develop/best-practices/developer-best-practices.md
+          - API Design: develop/best-practices/developer-best-practices.md
+          - Performance Tuning: develop/best-practices/developer-best-practices.md
+      - Advanced Topics:
+          - Handle Non-Ballerina Files: develop/advanced-topics/handle-non-ballerina-files.md
+          - Access RDBMS from Choreo: develop/advanced-topics/access-rdbms-from-choreo.md
+  - Deploy:
+      - Overview: deploy/overview.md
+      - Deploy Your Component: deploy/depoy-your-component.md
+  - Test:
+      - OpenAPI Console: test/open-api-console.md
+      - cURL: test/cURL.md
+      - Postman: test/postman.md
+  - Manage:
+      - Lifecycle: manage/lifecycle.md
+      - Consumers: manage/consumers.md
+      - Documents: manage/documents.md
+      - Usage Plans: manage/usage-plans.md
+      - Settings: manage/settings.md
+      - Properties: manage/properties.md
+  - Consume:
+      - Developer Portal Overview: consume/developer-portal-overview.md
+      - Discover APIs:  consume/discover-apis.md
+      - Manage Applications: consume/manage-application.md
+      - Test APIs: consume/test-apis.md
+      - Consumer Best Practices: consume/best-practices.md
+  - Marketplace: marketplace/marketplace.md
+  - Observe and Analyze:
+      - Observe:
+          - Overview: observe-and-analyze/observe/observability-overview.md
+          - Root Cause Analysis: observe-and-analyze/observe/root-cause-analysis.md
+      - Analyze:
+          - View API Insight: observe-and-analyze/analyze/view-api-insights.md
+          - Generate Custom Reports: observe-and-analyze/analyze/generate-custom-reports.md
+          - Choreo Insight API: observe-and-analyze/analyze/choreo-insights-api.md
+          - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md       
+  - DevOps:
+      - Overview: dev-ops/overview.md
+      - Private Data Plane: dev-ops/private-data-plane.md
+      - Availability: dev-ops/availability.md
+      - Scalability: dev-ops/scalability.md
+  - Administer:
+      - Manage Users: administer/manage-users/manage-users.md
+      - Manage Domains: administer/manage-domains.md
+      - Configure External IDP: administer/connect-to-an-external-identity-provider.md
+      - Enterprise Login: administer/enterprise-login.md 
+      - Customizing Choreo: administer/customizing-choreo.md
+  - Security: security/overview.md
+  - Error Handling: error-handling/overview.md
+  - Reference:
+      - Pricing: reference/pricing.md
+      - Troubleshooting: reference/troubleshooting.md
+      - FAQ: reference/faq.md
+      - Migrate Applications to the Latest Version: reference/migrate-applications-to-the-latest-version.md
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
@@ -124,6 +181,7 @@ extra_javascript:
   - assets/js/prism-ballerina.js
   - assets/lib/backtotop/js/util.js
   - assets/lib/backtotop/js/main.js
+  - assets/lib/insights/insights.js
 extra:
   social:
     - type: github
@@ -134,4 +192,3 @@ extra:
       link: https://www.linkedin.com/company/wso2
   site_version: 1.0.0
   #base_path: http://localhost:8000
-  base_path: http://localhost:8000

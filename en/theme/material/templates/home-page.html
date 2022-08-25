@@ -175,7 +175,7 @@
                   <label>Start Learning About Choreo, Now</label>
                   </div>
                   <div class=HomePageBannerTag>
-                    <label> Easily build your cloud-native, low-code integration solutions and expose it as an API in Choreo.</label>
+                    <label> Easily build your cloud-native, low-code integration solutions and expose them as APIs in Choreo.</label>
                   </div>
               </div>
                 <div class= "md-search-home" >
@@ -189,12 +189,12 @@
                  <div class="col-sm-12 col-md-12 col-lg-12">
                  <h1>Welcome to the Choreo Learning Portal</h1>
                  </div>
-                 <div class="col-sm-12 col-md-7 col-lg-9" >
+                 <div class="col-sm-12 col-md-7 col-lg-8" >
                     <p>Choreo is a digital innovation platform that allows you to develop, deploy, and manage cloud-native applications at scale. Its AI-assisted, low-code application development environment simplifies creating services, managing APIs, and building integrations while ensuring best practices and secure coding guidelines.</p>
                  </div>
               
               </div>
-              <a class="cChoreoDocsButtons" href="get-started/quick-start-guide/">Get Started with Choreo</a>
+              <a class="cChoreoDocsButtons" href="get-started/quick-start-guide/" onclick="appInsights.trackEvent({name: 'choreo-docs-home-get-started-button'});">Get Started with Choreo</a>
 
               <div class="cDocsContainer">
                 <h4>Explore Choreo</h4>
@@ -211,7 +211,7 @@
                              Design and build a REST API in low-code, pro-code, or both.
                            </div>
                            <div class="cDocsContainerLink">
-                            <a href="tutorials/create-rest-api-component/">Learn More</a>
+                            <a href="tutorials/create-your-first-rest-api/">Learn More</a>
                            </div>
                           </div>
                       </div>
@@ -311,22 +311,14 @@
       position: static;
     } */
 
-   .container{
-    max-width:0;
-    height: 0;
-  }
     .md-sidebar.md-sidebar--primary {
       top: 56px;
     }
 
     .md-search__input{
       background-color: white;
+      
     }
-
-    .md-search__input::selection{
-      background-color: white;
-    }
-
 
     .md-search__form, .md-search__input{
       border-radius: 2rem;
@@ -345,9 +337,6 @@
       margin: 0 13.2rem 1.2rem !important;
       width:70%;
 
-    }
-    .algolia-autocomplete ::placeholder{
-      padding-left: 1rem;
     }
 
     .cChoreoHeaderBar .cChoreoHeaderText{
@@ -458,7 +447,8 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
-  apiKey: 'c4c6e2af60050262289542d4687eeb6c',
+  apiKey: 'ec4809d281d5e07f5d0c8c36063739a4',
+  appId:'TYOC0645HN',
   indexName: 'wso2_choreo',
   inputSelector: ".md-search__input",
   debug: false // Set debug to true if you want to inspect the dropdown
