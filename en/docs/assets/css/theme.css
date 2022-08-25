@@ -92,10 +92,11 @@
 
 }
 
+@media only screen and (min-width: 76.25em) {
 .md-content__inner {
     margin: 0 14.2rem 1.2rem !important;
 }
-
+}
 
 
 html .md-typeset .superfences-tabs > label{
@@ -111,6 +112,7 @@ html .md-typeset .superfences-tabs > label:hover {
 
 .md-search__input {
     background-color: #dedede;
+    padding-left: 3rem;
 }
 
 .md-search__input::placeholder {
