@@ -15,7 +15,7 @@ First, let's create a new REST API:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. On the **Home** page, scroll to the **Use a sample and get started** section. 
+2. On the **Home** page, scroll to the **Get started with a template** section. 
 
 3. Go to the **Echo Service** card and click **Get Started**.
  
@@ -72,7 +72,7 @@ Follow this procedure to further develop the API by adding a new resource and si
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click **+** on the low-code diagram, click **Resource**, and configure it as follows: 
+3. Click **+** on the low-code diagram to nopen the resource, and configure it as follows: 
   
     ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
 
