@@ -288,8 +288,9 @@ configMapGenerator:
       - REACT_APP_FIDP_GITHUB=github
       - REACT_APP_FIDP_MICROSOFT=microsoft
       - REACT_APP_FIDP_ENTERPRISE=EnterpriseIDP
-      - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
+      - REACT_APP_FIDP_E2E=choreoe2etest
       - REACT_APP_FIDP_ANONYMOUS=choreoanonymous
+      - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
       - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=webWorker
