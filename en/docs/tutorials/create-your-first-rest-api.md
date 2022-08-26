@@ -2,10 +2,12 @@
 
 A RESTful API (Application Program Interface) uses HTTP requests to access and use data. The operations you can perform on data are GET (reading), PUT (updating), POST (creating), and DELETE (deleting).
 
-Choreo’s low-code editor allows developers to easily design (and then implement) high-quality REST APIs. To explore this capability, let's consider a scenario where an Analyst needs to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
+The low-code editor of Choreo allows developers to design (and then implement) high-quality REST APIs easily. To explore this capability, let's consider a scenario where an Analyst wants to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
-- Design a REST API that addresses the described requirement, test it in the Web Editor, and then commit it so that it is available in the Choreo Console.
+- Design a REST API that addresses the described requirement, test it in the Web Editor, and then commit it to make it available in the Choreo Console.
+
 - Deploy the REST API you created to make it available for use.
+
 - Test the REST API after deploying it to check whether it works as expected.
 
 ## Step 1: Develop
@@ -16,7 +18,7 @@ In this section, let's develop the application that retrieves COVID-19-related s
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Expand the drop-down menu for projects and click **+ Create New**.
+2. In the **Projects** field, select **+ Create New** from the list.
 
     ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
@@ -41,7 +43,7 @@ Let's create a new REST API component as follows:
 
 2. Click the **REST API** card.
 
-3. Click **Create an API from scratch**.
+3. Click **Start from scratch**.
 
 4. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
 
@@ -52,7 +54,9 @@ Let's create a new REST API component as follows:
 
 5. Click **Next**.
 
-In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. In this tutorial, let's select **Choreo-managed repository** and click **Create**.
+    In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. **Choreo-managed repository** is selected by default. For this tutorial, let's leave this selection unchanged.
+
+6. Click **Create**.
 
     The `Statistics` REST API opens on a separate page.
 
@@ -75,8 +79,6 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     ![Add resource](../assets/img/tutorials/rest-api/add-resource.png){.cInlineImage-half}
 
-    Then click **Resource**.
-
     As a result, a panel named **Configure Resource** appears on the right of the page. In this panel, enter information as follows:
 
     | **Field**       | **Value**                |
@@ -97,97 +99,180 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
 4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
 
-    1. Click **Connector** to add a connector. Then search for **COVID-19**, and select the **COVID-19 by ballerinax** connector when it appears in the search results.
+   1. Click **+** under **Start**.
+   
+   2. In the **Add Constructs** panel that appears, click **Connector**.
 
-    2. In the **Connector** panel, enter `covid19Client` as the **Endpoint Name** and click **Continue to Invoke API**.
+   3. Search for **COVID-19**, and select the **COVID-19 by ballerinax** connector when it appears in the search results. 
+   
+       In the **Endpoint** panel that appears, click **Save** to add the endpoint.
+   
+   4. To add a query parameter to the connector you added, click **+** below it.
+   
+       In the **Add Constructs** panel, click **Action**. The **Action** panel opens. Configure the action as follows:
 
-    3. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
+       1. In the **Action** panel, click **covid19Ep**.
+      
+       2. Click **getStatusByCountry**.
+      
+       3. In the action statement, double-click **`getStatusByCountryResponse`** variable name to edit it. Replace the default value with `statusByCountry`.
+      
+       4. In the **Parameters** tab, check whether the **country** check box is selected. If not, select it.
+      
+          This adds `country` as a query parameter in the connector configuration to allow the REST API to fetch COVID-19 statistics specific to a given country.
+        
+       5. Click **Save**.
+        
+   5. To extract the response of the **COVID-19** connector, add a variable by following these sub-steps.
+   
+       1. Click the last **+** in the low-code diagram.
+      
+       2. Click **Variable**.
+      
+          In the **Variable** panel, configure the variable as follows:
+      
+           1. On the variable statement, click **`var`**, and click **int** on the list that appears below in the **Suggestions** tab. Here, you are changing the variable type from `var` to `int`.
+         
+           2. To edit the variable name, double-click **`variable`**. Then enter `totalCases` as the variable name.
+         
+           3. Click  **`<add-expression>`** and click **statusByCountry** in the list that appears below in the **Suggestions** tab. Here, you are selecting the **statusByCountry** query parameter you previously added to derive information related to a specific country.
+         
+              Update the expression further as follows:
+         
+               1. In the list of second-level suggestions that appear in the **Suggestions** tab under **statusByCountry**, click **cases decimal**. Here, you are specifying that you want the total number of cases per country. The connector returns this information in the `decimal` format.
+               
+               2. To cast the total number of cases per country in `int` format instead of in the `decimal` format, follow these sub-steps:
+               
+                  1. Click **Expressions**. Click **<type>Es** under the **Type Cast** category.
+                   
+                  2. On the variable statement, click **`<<add-type>>`**.
+                   
+                  3. Click **Suggestions**, and click **int** in the list of suggestions.
+                   
+           4. Click **Save**.
+          
+                The statement should now be as follows:
+       
+                `<int>statusByCountry.cases`
+         
+   6. The REST API needs to further process the COVID-19 cases per country you derived to present the number of cases per one million people in the given country's population. Therefore, let's derive population statistics per country via the **World Bank** as follows:
+   
+       1. Click the last **+** in the low-code diagram.
+      
+       2. In the **Connectors** panel, click **World Bank by ballerinax**.
+      
+       3. Click **Save**.
+      
+       4. Click the last **+** in the low-code diagram (below the connector you added).
+      
+       5. In the **Add Constructs** panel, click **Action**.
+      
+       6. Click **worldbankEp** to define an action for the World Bank connector.
+      
+       7. To define an action for the World Bank connector, click **Get Country Population**.
+      
+       8. Double-click **`getPopulationByCountryResponse`** which is the default query parameter name to edit it. Change it to `populationByCountry`.
+      
+       9. In the **Parameters** tab, check whether the **countryCode** check box is selected. If not, select it.
 
-        | **Field**                  | **Value**         |
-        |----------------------------|-------------------|
-        | **Country**                | `country`         |
-        | **Response Variable Name** | `statusByCountry` |
+           You are adding the `countryCode` query parameter to the World Bank connector configuration to fetch population statistics for the country that the REST API user specifies.
+      
+       10. Click **Save**.
+      
+   7. The REST API needs to calculate the number of COVID-19 cases in every group of one million people in the specified country. Therefore, to calculate the number of groups with one million people in a country, add a variable as follows:
+   
+       1. Click the last **+** in the low-code diagram.
+      
+       2. Click **Variable**.
+      
+       3. In the variable expression, click **`var`**. In the list of suggestions that appear in the **Suggestions** tab, click **int**.
+      
+       4. Double-click **`variable`** which is the default variable name to edit it. Enter `populationMillions` as the new variable name.
+      
+       5. To derive the number of one million groups in a country's population, you must divide the total population by one million. Therefore, the expression you need to enter is `(populationByCountry[0]?.value ?: 0) / 1000000`. Let's add it as follows:
+      
+           1. Click **`<add-expression>`**.
+       
+           2. Click **Expressions** and under **Arithmetic**, click **Es / En** to add the expression template for a division.
+         
+           3. Double-click the first **`<add-expression>`** (the dividend) and enter the following as the expression:
+         
+              ```
+              (populationByCountry[0]?.value ?: 0)
+              ```
+              
+           4. Double-click the second **`<add-expression>`** (the divisor) and enter `1000000` as the expression.
+         
+           5. Click **Save**.
+         
+   8. To calculate the number of COVID-19 cases in each group of one million, add another variable as follows:
+   
+       1. Click the last **+** in the low-code diagram.
+      
+       2. Click **Variable**.
+      
+       3. On the variable statement, click **`var`**, and click **decimal** in the list of suggestions that appear in the **Suggestions** tab.
+      
+       4. Double-click **`variable`**, and enter `totalCasesPerMillion` as the variable name.
+      
+       5. The expression to calculate the number of COVID-19 cases in each group of one million is `totalCases / populationMillions`. Let's add it as follows:
+      
+           1. Click **`<add-expression>`** and click **Expressions**.
+         
+           2. Under **Arithmetic**, click **Es / En**. You will get the template for a division (i.e., **`<add-explression> / <add-expression>`**).
+         
+           3. Click the first **`<add-expression>`** (the dividend) and click **Suggestions**. In the list of suggestions, click **totalCases**.
+         
+           4. Click the second **`<add-expression>`** (the divisor) and click **populationMillions** in the list of suggestions.
+         
+           5. The values for `totalCases` and `populationMillions` variables are currently in integer format. Therefore, the value of the `totalCasesPerMillion` variable derived from those variables is also in the integer format. To convert it to decimal, follow these sub-steps:
+         
+               1. Select both expressions.
+            
+               2. Click **Expressions**, and under the **Type Cast** category, click **<type>Es**.
+            
+               3. Click **Suggestions** and in the list of suggestions, click **decimal**.
+            
+           6. Click **Save**.
+            
+   9. To generate the payload, add a variable as follows:
+      
+       1. Click the last **+** in the low-code diagram.
 
-    4. Click **Save**.
+       2. Click **Variable**.
 
-5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Variable** and enter details as follows:
-
-        | **Field**         | **Value**                     |
-        |-------------------|-------------------------------|
-        | **Variable Type** | `int`                         |
-        | **VariableName**  | `totalCases`                  |
-        | Expression        | `<int>statusByCountry.cases`  |
-
-    3. Click **Save**.
-
-6. To retrieve the population data, connect to the World Bank API as follows:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Connector** to add a connector. Then search for **World Bank**, and select the **World Bank by ballerinax** connector when it appears in the search results.
-
-    3. In the **Connector** panel that appears on the right of the page, click **Continue to Invoke API**.
-
-    4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
-
-        | **Field**                  | **Value**            |
-        |----------------------------|----------------------|
-        | **Country Code**           | `country`            |
-        | **Response Variable Name** | `populationByCountry`|
-
-    5. Click **Save**.
-
-7. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. To do this, follow this procedure:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Variable** and enter details as follows:
-
-        | **Field**         | **Value**                                         |
-        |-------------------|---------------------------------------------------|
-        | **Variable Type** | `int`                                             |
-        | **Variable Name** | `populationMillions`                              |
-        | Expression        | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
-
-    3. Click **Save**.
-
-8. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Variable** and enter details as follows:
-
-        | **Field**         | **Value**                                    |
-        |-------------------|----------------------------------------------|
-        | **Variable Type** | `decimal`                                    |
-        | **Variable Name** | `totalCasesPerMillion`                       |
-        | Expression*       | `<decimal>(totalCases / populationMillions)` |
-
-    3. Click **Save**.
-
-9. To build the JSON payload with data of the total cases per million in the population, add a variable.
-
-    Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
-
-    | **Field**         | **Value**                     |
-    |-------------------|-------------------------------|
-    | **Variable Type** | `json`                        |
-    | **Variable Name** | `payload`                     |
-    | Expression        | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
-
-    Click **Save**.
-
-10. To respond with the JSON payload, add a `Return` statement as follows:
-
-    1. Click the last **+** icon in the low-code diagram and click **Return**.
-
-    2. In the **Return Expression** field, enter `payload`.
-
-    3. Click **Save**.
+       3. On the variable statement, click **`var`**, and click **json** in the list of suggestions.
+         
+       4. Double-click **`variable`**, and enter `payload` as the variable name.
+         
+       5. Click **`add-expression>`**.
+         
+       6. To add the expression as a key-value pair, click **Expressions**, and under the **Structural Constructors**, click **{ key : value }**.
+         
+       7. Double-click **`key`** to edit it, and enter `country` as the key.
+         
+       8. Double-click **`<add-expression>`**, and click **Suggestions**. In the list of suggestions, click **country**.
+         
+       9. To add another key-value pair, click **+** after the key-value pair you added in the previous step.
+         
+       10. Double-click **`key`** to edit it, and enter `totalCasesPerMillion` as the key.
+         
+       11. Double-click **`<add-expression>`**, and click **Suggestions**. In the list of suggestions, click **totalCasesPerMillion**. Now the expression you constructed should look as follows:
+       
+            {country : country, totalCasesPerMillion : totalCasesPerMillion}
+       
+       12. Click **Save**.
+   
+   10. Now you can add a return statement to return the payload as follows:
+   
+       1. Click the last **+** in the low-code diagram.
+       
+       2. Click **Return**.
+       
+       3. Click **`<add-expression>`**, and in the list of suggestions, click **payload**.
+       
+       4. Click **Save**.
+         
 
 Now you have completed designing the `Statistics` REST API.
 
@@ -208,17 +293,21 @@ service / on new http:Listener(9090) {
 
     resource function get stats/[string country]() returns json|error {
 
-        covid19:Client covid19Client = check new ({});
-        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country);
+        covid19:Client covid19Ep = check new ();
+        covid19:CovidCountry statusByCountry = check covid19Ep->getStatusByCountry(country = "");
         int totalCases = <int>statusByCountry.cases;
-        worldbank:Client worldbankEndpoint = check new ({});
-        worldbank:IndicatorInformation[] populationByCountry = check worldbankEndpoint->getPopulationByCountry(country);
+        worldbank:Client worldbankEp = check new ();
+        worldbank:IndicatorInformation[] populationByCountry = check worldbankEp->getPopulationByCountry(countryCode = "");
         int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
-        decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
-        json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
+        decimal totalCasesPerMillion = <decimal>totalCases / populationMillions;
+        json payload = {
+            country: country,
+            totalCasesPerMillion: totalCasesPerMillion
+        };
         return payload;
     }
 }
+
 ```
 Now you can run the REST API and test it to see whether it works as expected.
 
