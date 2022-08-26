@@ -11,6 +11,8 @@ This quick start guide walks you through the steps to create, develop, publish, 
 
 ### Step 1: Create a REST API
 
+First, let's create a new REST API:
+
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
 2. On the **Home** page, scroll to the **Use a sample and get started** section. 
@@ -36,6 +38,8 @@ Choreo maintains two environments by default: development and production. Let's 
 Now let's test the REST API to verify whether it works as expected.
 
 ### Step 3: Test the REST API 
+
+To test the REST API, follow these sub-steps:
 
 1. Click **Test** in the left pane.
 
@@ -91,25 +95,41 @@ Follow this procedure to further develop the API by adding a new resource and si
 
  5. Click **Save**.
 
- 6. Click **Variable** and configure it as follows: 
+ 6. In the low-code diagram, click **+** after**Start**.
 
     ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
-     | **Field** | **Value** |
-     |-----------------|-----------------------|
-     | **Variable Type** | `string` |
-     | **Variable Name** | `message` |
-     | **string** |`"Hello "+ name`|
+     In the **Add Constructs** pane, click **Variable**.
 
-     ![Configure Variable](../assets/img/get-started/configure-variable.png){.cInlineImage-full}
+ 7. Update the given variable statement syntax (i.e., **`var variable = <add-statement>`**) to generate a personalized message by following these steps:
 
- 7. Click **Save**.
+    1. To generate the message in string format, click **`var`**, and click **string**.
 
- 8. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
-    ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
-    ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
+        ![Change variable type](../assets/img/get-started/change-variable-type.png){.cInlineImage-half}
+    
+    2. Double-click **`variable`** which is the default variable name to edit it. Enter `message` as the new variable name.
+    
+    3. To generate the personalized message, double-click **`<add-expression>`** and enter the following expression:
+
+        ```
+         "Hello "+ name
+        ```
+       
+        Now the variable statement is updated as follows:
+    
+        ```
+        string message = "Hello "+ name;
+        ```
+
+ 8. Click **Save**.
+
+ 9. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
+
+     ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
+
+      ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
- 9. Click **Save**.
+ 10. Click **Save**.
 
 !!!info
     You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can work in the low-code view or the pro-code view. You can also work in both views simultaneously.    
@@ -183,6 +203,7 @@ Follow this procedure to commit and push your changes to GitHub.
 Choreo provides full API management capabilities so that you can manage your REST API lifecycle, apply security, apply rate-limiting policies, configure usage plans, and add documentation.
 
 ### Step 1: Publish the API
+
 Follow this procedure to publish the API to the API Developer Portal so that external consumers can view and consume the API:
 
 1. Click **Manage** in the left pane.
@@ -190,9 +211,10 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 2. On the **Lifecycle Management** page, click **Publish**.
 
 3. Click **Go to Developer Portal**. 
+4. 
     ![Go to API Developer Portal](../assets/img/get-started/go-to-dev-portal.png){.cInlineImage-full}
  
-    You'll see the published API:
+    You will see the published API:
  
     ![List of published APIs in the API Developer Portal](../assets/img/get-started/developer-portal.png){.cInlineImage-full}
 
@@ -202,6 +224,7 @@ Follow this procedure to invoke the REST API via the API Developer Portal:
 1. Click **Credentials** in the left pane of the API Developer Portal.
 
 2. Click **Generate Credentials**. Choreo creates credentials for an internal application and subscribes this API to that internal application.
+
      ![Generate Credentials](../assets/img/get-started/generate-credentials.png){.cInlineImage-full}
 
 3. Click **Generate Access Token**, copy the generated access token, and click **Close**.
