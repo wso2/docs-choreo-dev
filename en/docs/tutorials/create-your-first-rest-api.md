@@ -79,7 +79,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     ![Add resource](../assets/img/tutorials/rest-api/add-resource.png){.cInlineImage-half}
 
-    As a result, a panel named **Configure Resource** appears on the right of the page. In this panel, enter information as follows:
+    As a result, a pane named **Configure Resource** appears on the right of the page. In this pane, enter information as follows:
 
     | **Field**       | **Value**                |
     |-----------------|--------------------------|
@@ -101,17 +101,17 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
    1. Click **+** under **Start**.
    
-   2. In the **Add Constructs** panel that appears, click **Connector**.
+   2. In the **Add Constructs** pane that appears, click **Connector**.
 
    3. Search for **COVID-19**, and select the **COVID-19 by ballerinax** connector when it appears in the search results. 
    
-       In the **Endpoint** panel that appears, click **Save** to add the endpoint.
+       In the **Endpoint** pane that appears, click **Save** to add the endpoint.
    
    4. To add a query parameter to the connector you added, click **+** below it.
    
-       In the **Add Constructs** panel, click **Action**. The **Action** panel opens. Configure the action as follows:
+       In the **Add Constructs** pane, click **Action**. The **Action** pane opens. Configure the action as follows:
 
-       1. In the **Action** panel, click **covid19Ep**.
+       1. In the **Action** pane, click **covid19Ep**.
       
        2. Click **getStatusByCountry**.
       
@@ -129,7 +129,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
       
        2. Click **Variable**.
       
-          In the **Variable** panel, configure the variable as follows:
+          In the **Variable** pane, configure the variable as follows:
       
            1. On the variable statement, click **`var`**, and click **int** on the list that appears below in the **Suggestions** tab. Here, you are changing the variable type from `var` to `int`.
          
@@ -159,13 +159,13 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
    
        1. Click the last **+** in the low-code diagram.
       
-       2. In the **Connectors** panel, click **World Bank by ballerinax**.
+       2. In the **Connectors** pane, click **World Bank by ballerinax**.
       
        3. Click **Save**.
       
        4. Click the last **+** in the low-code diagram (below the connector you added).
       
-       5. In the **Add Constructs** panel, click **Action**.
+       5. In the **Add Constructs** pane, click **Action**.
       
        6. Click **worldbankEp** to define an action for the World Bank connector.
       
@@ -345,17 +345,17 @@ The REST API you created works as expected. Therefore, now you can commit it.
 
 The REST API you designed is currently available only in the Web Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
 
-1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red).
+1. Click **Sync with Choreo Upstream** in the bottom pane of the page (highlighted in red).
 
     In the message that appears, click **Sync my changes with Choreo**.
 
-2. In the left panel, enter a commit message (e.g., `Implement REST API`) and click the tick.
+2. In the left pane, enter a commit message (e.g., `Implement REST API`) and click the tick.
 
     ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-full}
 
     Select **Yes** in the message that appears to specify that you need the changes to be staged.
 
-3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom panel.
+3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom pane.
 
     !!! info
         This icon appears only after the committing process is completed.
@@ -390,7 +390,7 @@ Once you have deployed the Choreo application you can test it via the OpenAPI Co
 
 In this tutorial, let's test via the OpenAPI Console:
 
-1. To open the test view, click **Test** in the **Development** card. Alternatively, you can click the **Test** icon in the left panel.
+1. To open the test view, click **Test** in the **Development** card. Alternatively, you can click the **Test** icon in the left pane.
 
 2. Click **Try it out**.
 
