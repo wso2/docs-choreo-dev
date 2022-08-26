@@ -15,7 +15,7 @@ First, let's create a new REST API:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. On the **Home** page, scroll to the **Use a sample and get started** section. 
+2. On the **Home** page, scroll to the **Get started with a template** section. 
 
 3. Go to the **Echo Service** card and click **Get Started**.
  
