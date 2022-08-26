@@ -83,7 +83,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      | **Return Type** | `string|error` |
      
 
-4. Click **Advanced** and then click **+ Add Query Param** to add a query parameter with the following values to get a name as an input:
+4. Click **+ Add Query Param** to add a query parameter.  Enter the following values to get a name as an input:
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
