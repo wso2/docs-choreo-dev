@@ -168,9 +168,6 @@ spec:
       - name: global-adapter-keystore-vol
         configMap:
           name: choreo-ga-keystore-vol
-      - name: global-adapter-truststore-vol
-        configMap:
-          name: choreo-ga-truststore-vol
       - name: global-adapter-config
         configMap:
           name: cc-ga-conf-choreo

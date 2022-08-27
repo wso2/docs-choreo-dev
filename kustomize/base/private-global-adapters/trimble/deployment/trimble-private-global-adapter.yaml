@@ -168,9 +168,6 @@ spec:
       - name: global-adapter-keystore-vol
         configMap:
           name: trimble-ga-keystore-vol
-      - name: global-adapter-truststore-vol
-        configMap:
-          name: trimble-ga-truststore-vol
       - name: global-adapter-config
         configMap:
           name: cc-ga-conf-trimble

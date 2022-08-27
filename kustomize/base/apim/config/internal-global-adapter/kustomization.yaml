@@ -1,9 +1,4 @@
 configMapGenerator:
-  - name: internal-ga-truststore-vol
-    behavior: create
-    files:
-      - controlplane.pem
-      - local-adapter.pem
   - name: internal-ga-feature-flags
     behavior: create
     literals:

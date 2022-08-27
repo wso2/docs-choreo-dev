@@ -1,8 +1,4 @@
 configMapGenerator:
-  - name: choreo-ga-truststore-vol
-    behavior: create
-    files:
-      - controlplane.pem
   - name: choreo-feature-flags
     behavior: create
     literals:

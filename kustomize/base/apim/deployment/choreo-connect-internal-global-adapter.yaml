@@ -167,9 +167,6 @@ spec:
       - name: global-adapter-keystore-vol
         configMap:
           name: internal-ga-keystore-vol
-      - name: global-adapter-truststore-vol
-        configMap:
-          name: internal-ga-truststore-vol
       - name: global-adapter-config
         configMap:
           name: cc-internal-ga-conf
