@@ -60,7 +60,6 @@ import static org.hamcrest.Matchers.*;
 public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static JsonObject ast;
-    private static ChoreoProject project;
     private static RestApiChoreoComponent restApiComponent;
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
     private static final String V2_HEADER_NAME = "x-console-version";
@@ -73,15 +72,18 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
+            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException, GetDeploymentsStatusCheckException,
             ComponentCreationStatusCheckException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
             ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoOrganization org = new ChoreoOrganization(Configuration.TEST_CHOREO_ORG_HANDLE,
-                String.valueOf(Configuration.TEST_CHOREO_ORG_ID), Configuration.TEST_CHOREO_ORG_UUID);
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+
+        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent =

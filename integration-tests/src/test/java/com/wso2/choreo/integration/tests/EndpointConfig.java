@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.tests;
 
 import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ public class EndpointConfig {
     @PostConstruct
     public void loadEndpointConfig() throws Exception {
         com.wso2.choreo.integration.config.Configuration.loadConfigs();
+        TestContext.setTestOrg();
+        TestContext.setTestUserTokenHandler();
+        TestContext.setAnomalyDetectionUserTokenHandler();
     }
 
     @Bean
@@ -73,7 +77,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.INSIGHTS_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.INSIGHTS_ENDPOINT))
                 .build();
     }
 
@@ -82,7 +87,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(com.wso2.choreo.integration.config.Configuration.GITHUB_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                                ConfigDefinition.GITHUB_ENDPOINT))
                 .build();
     }
 

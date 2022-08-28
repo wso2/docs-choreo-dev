@@ -17,8 +17,9 @@ const devportalLoginURL =
   Cypress.env("devPortalLoginURL") + "/" + handle + idpParam;
 
 export class LoginPage {
-  static loginToDevportal(): void {
-    cy.visit(devportalLoginURL);
+  static loginToDevportal(devportalUrl = ''): void {
+    const loginURL = devportalUrl ? devportalUrl + "/" + handle + idpParam : devportalLoginURL;
+    cy.visit(loginURL);
     cy.get('button[type="submit"]', { timeout: STANDARD_TIME_OUT }).should(
       "be.visible"
     );

@@ -58,44 +58,35 @@ export class LoginPage {
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
     const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
-    cy.visit(componentURL);
+    Utils.setBrowserCookie(false);
     this.setCookie(componentURL, "commonAuthId", common)
-
+    cy.visit(componentURL);
   }
 
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
+    Utils.setBrowserCookie(true)
     cy.visit(csurl);
-    cy.setCookie("fidpId", "EnterpriseIDP")
-   }
+  }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
+    Utils.setBrowserCookie(false)
     cy.visit(csurl);
-    cy.setCookie("fidpId", "choreoe2etest")
   }
 
   static enterpriseLogin() {
+    Utils.setBrowserCookie(true)
     cy.visit(Cypress.env("enterpriseLoginUrl"));
-    cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
-      timeout: 180000,
-    });
-
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", { timeout: 180000 });
     cy.get('button[id="enterprise-sign-in"]').click();
-
     cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
     cy.contains("Continue").click();
-
     cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
     cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
-    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), {
-      log: false,
-    });
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false, });
     cy.contains("Continue").click();
-    cy.get('[data-testid="header-user-profile-menu"]', {
-      timeout: 180000,
-    }).should("be.visible");
-
+    cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000, }).should("be.visible");
     this.persistLogoutURL();
   }
 
@@ -166,6 +157,7 @@ export class LoginPage {
 
 
   private static enterUserCredentials(envUsername: string, envPassword: string) {
+    Utils.setBrowserCookie(false);
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
     cy.get("#usernameUserInput").type(Cypress.env(envUsername));
@@ -184,5 +176,7 @@ export class LoginPage {
       });
     });
   }
+
+
 }
 

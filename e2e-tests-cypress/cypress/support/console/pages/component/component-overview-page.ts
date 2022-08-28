@@ -33,7 +33,6 @@ export class ComponentOverviewPage {
 
   static navigateToTest() {
     cy.contains("Test").should("be.visible").click();
-    cy.wait(12000) // will remove this after deployment issue is fixed
   }
 
   static navigateToManage() {
@@ -49,7 +48,7 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDevPortal() {
-    cy.get('.choreo-btn-dev-portal').invoke('attr', 'href').then(href => cy.visit(href))
+    cy.get('.choreo-header>div>div>a').eq(0).invoke('attr', 'href').then(href => cy.visit(href))
     return cy.get('header>div>div>p').invoke('text')
   }
 
@@ -73,7 +72,7 @@ export class ComponentOverviewPage {
   }
 
   private static createNewVersionRestApi(version: string, branch: string) {
-    cy.contains("Create new version", { timeout: 180000 });
+    cy.get('[data-testid="dialog-close-icon"]').should('exist')
     cy.get('div>[aria-label="Without label"]').click();
     cy.get(`[data-value=${branch}]`).click();
     cy.get('[data-cyid="text-field-new-version"]>div>input').clear().type(version);

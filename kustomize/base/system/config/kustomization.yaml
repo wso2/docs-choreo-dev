@@ -265,6 +265,7 @@ configMapGenerator:
       - AUTH_URL=http://dp-project-manager
       - CICD_URL=http://dp-cicd
       - NEGOTIATOR_ADDRESS=negotiator:9092
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
       - OBS_ADDRESS=obsapi:9096
       - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
       - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
@@ -297,3 +298,13 @@ configMapGenerator:
     literals:
       - CSM_DB_NAME=choreo_codeserver_db
       - CSM_DB_USERNAME=choreo_codeserver_db_user
+  - name: cm-userapps-image-deleter
+    behavior: create
+    literals:
+      - AZURE_TENANT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
+      - AZURE_CLIENT_ID="08eae7d4-cdcb-400d-894e-b27d66419876"
+      - RUDDER_HOST="http://dp-rudder:80"
+  - name: choreo-apim-proxy-deployer-config
+    behavior: create
+    files:
+      - choreo-apim-proxy-deployer/Config.toml

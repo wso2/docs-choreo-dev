@@ -19,7 +19,7 @@ export class TriggersTemplate {
   }
 
   static createManualTriggerFromTemplate(manualName: string) {
-    cy.get('[data-testid="components-mt-api-item-1"]').should('be.visible').click()
+    cy.get('.MuiDialog-paperScrollPaper ul>div>div').eq(0).should('be.visible').click()
    cy.get('input[name="name"]').clear().type(manualName);
    cy.get('[data-cyid="create-manual-trigger-next"]').click();
    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();

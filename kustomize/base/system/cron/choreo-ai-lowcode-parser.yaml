@@ -54,11 +54,11 @@ spec:
                   name: secret-lowcode-parser
             resources:
               limits:
-                cpu: 500m
-                memory: 512Mi
+                cpu: 1500m
+                memory: 1024Mi
               requests:
-                cpu: 150m
-                memory: 256Mi
+                cpu: 1000m
+                memory: 512Mi
             volumeMounts:
               - name: lowcode-parser-config
                 mountPath: /home/python-ai/lowcode-parser/parser/config/

@@ -54,13 +54,20 @@ public final class Constant {
     public static final String ORGANIZATION_ID = "organizationId";
     public static final String QUERY = "query";
     public static long COMPONENT_CREATE_TIMEOUT = 30000;
-    public static long COMPONENT_DEPLOY_TIMEOUT = 120000;
+    public static long COMPONENT_DEPLOY_TIMEOUT_SECONDS = 120;
 
     public static final String INSIGHTS_API_RESOURCE = "/insights/1.0.0/query-api";
     public static final String INSIGHTS_AUTH_API_RESOURCE = "/auth/v1/token";
 
     public static final String INSIGHTS_TRAFFIC_ALERT_API_RESOURCE = "/insightsalert/1.0.0/trafficConfigs";
     public static final String INSIGHTS_LATENCY_ALERT_API_RESOURCE = "/insightsalert/1.0.0/latencyConfigs";
+    public static final int MAX_API_REVISIONS_LIMIT_DEPLOYMENTS = 20;
+    public static final int MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE = 19;
+    public static final int REVISION_COUNT_BEFORE_DELETION = 19;
+    public static final int REVISION_COUNT_AFTER_DELETION = 18;
+    public static final int REVISION_COUNT_AFTER_BACKUP_DELETION = 19;
+    public static final int INDEX_OF_REVISION_TO_DELETE = 0;
+    public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
     public enum displayType {
         restAPI,

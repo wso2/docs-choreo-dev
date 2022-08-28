@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.exceptions.GetApiTestTokenStatusCheckE
 import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
 import com.wso2.choreo.integration.common.exceptions.RedeployException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import java.io.IOException;
@@ -59,17 +60,14 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
 
   @BeforeClass
   public void beforeClass() throws InterruptedException, IOException, TokenRetrievalException, RedeployException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
-      String orgUuid = Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_UUID;
-      String passthorughVersionId = Configuration.ANOMALY_DETECTION.PASSTHROUGH_VERSION_ID;
+      String orgUuid = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID);
+      String passthorughVersionId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID);
+      orgHandler = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE);
 
       projectsAPIAccessToken = TestContext.getAnomalyDetectionUserTokenHandler().getTestTokenForCPAPIs();
-      ChoreoOrganization org = new ChoreoOrganization(Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE,
-                                                      String.valueOf(Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_ID),
-                                                      orgUuid);
-      orgHandler = org.getOrgHandle();
-      passthroughComponentId = Configuration.ANOMALY_DETECTION.PASSTHROUGH_COMPONENT_ID;
-      passthroughReleaseId = Configuration.ANOMALY_DETECTION.PASSTHROUGH_RELEASE_ID;
-      projectId = Configuration.ANOMALY_DETECTION.PROJECT_ID;
+      passthroughComponentId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID);
+      passthroughReleaseId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID);
+      projectId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PROJECT_ID);
       restApiComponent = new RestApiChoreoComponent();
       restApiComponent.setProjectId(projectId);
       restApiComponent.setOrgHandler(orgHandler);
@@ -83,7 +81,7 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
           passthroughDeployment = jsonElement;
           if (passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("SUSPENDED")){
             log.info("Deployment is currently stopped. Redeploying now...");
-            restApiComponent.redeploy(projectsAPIAccessToken, passthroughComponentId, passthroughReleaseId, Configuration.ANOMALY_DETECTION.TEST_CHOREO_ORG_HANDLE);
+            restApiComponent.redeploy(projectsAPIAccessToken, passthroughComponentId, passthroughReleaseId, orgHandler);
           }
           while (!passthroughDeployment.getAsJsonObject().getAsJsonPrimitive("deploymentStatus").getAsString().equals("ACTIVE")){
             log.info("Waiting for redeployed component to become ready...");
@@ -101,27 +99,29 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
   }
 
   /**
-   * 
-   * Log into the email account and check if the alert for the anomaly injected through injectAnomaly() above 
+   *
+   * Log into the email account and check if the alert for the anomaly injected through injectAnomaly() above
    * was received.
-   *  
+   *
    * @throws Exception
    * @throws GetApiTestTokenStatusCheckException
    */
   @Test
   @CitrusTest
   public void testEmailAlert() throws Exception, GetApiTestTokenStatusCheckException {
-      InvokeApi.invokePassthroughComponentConcurrently(Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_ID,
-                                                       Configuration.ANOMALY_DETECTION.PASSTHROUGH_CLIENT_SECRET, 
-                                                       Configuration.ANOMALY_DETECTION.PASSTHROUGH_INVOKE_URL);
+      InvokeApi.invokePassthroughComponentConcurrently(
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID),
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET),
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL));
       log.info("Waiting for 5 minutes to allow the anomaly to be detected...");
       Thread.sleep(300000);
-      String searchString = "[Choreo ALERT] Anomaly detected in " + Configuration.ANOMALY_DETECTION.PASSTHROUGH_COMPONENT_NAME;
+      String searchString = "[Choreo ALERT] Anomaly detected in " +
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME);
       log.info("Starting to check if the email alert was received...");
-      boolean isMailReceived = EmailUtils.checkForMail(Constant.ANOMALY_DETECTION.MAIL_IMAP_HOST, 
-                                                       Configuration.ANOMALY_DETECTION.MAIL_IMAP_PASS, 
-                                                       Constant.ANOMALY_DETECTION.MAIL_IMAP_PORT, 
-                                                       searchString, 
+      boolean isMailReceived = EmailUtils.checkForMail(Constant.ANOMALY_DETECTION.MAIL_IMAP_HOST,
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_MAIL_IMAP_PASS),
+                                                       Constant.ANOMALY_DETECTION.MAIL_IMAP_PORT,
+                                                       searchString,
                                                        Constant.ANOMALY_DETECTION.MAIL_IMAP_USER,
                                                        testStartTimestamp);
       Assert.assertTrue(isMailReceived);

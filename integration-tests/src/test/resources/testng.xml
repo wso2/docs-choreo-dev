@@ -4,9 +4,12 @@
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.TestContext"/>
+            <!-- <class name="com.wso2.choreo.integration.tests.quotaLimit.QuotaLimitIT"/>-->
             <!-- <class name="com.wso2.choreo.integration.tests.anomalyDetector.BackendFailureAnomaly"/> -->
             <class name="com.wso2.choreo.integration.tests.connectorbuilder.ConnectorBuilderIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.CreateAPIProxyFromScratch"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingDeployments"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
             <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>

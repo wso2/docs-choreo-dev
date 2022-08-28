@@ -43,7 +43,7 @@ public class APICreator {
             InterruptedException, ApiCreationException {
         String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT).
                 concat(Constant.APIS_ENDPOINT).concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(Configuration.TEST_CHOREO_ORG_UUID);
+                .concat(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         String requestBody = getRequestBodyForAPICreation(apiName, apiContext);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
@@ -82,8 +82,8 @@ public class APICreator {
 
         GraphqlDTO gql = new GraphqlDTO();
         gql.setApiName(apiName.toLowerCase());
-        gql.setOrgId(Configuration.TEST_CHOREO_ORG_ID);
-        gql.setOrgHandler(Configuration.TEST_CHOREO_ORG_HANDLE);
+        gql.setOrgId(Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)));
+        gql.setOrgHandler(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE));
         gql.setDiaplayName(apiName);
         gql.setDisplayType(String.valueOf(Constant.displayType.proxy));
         gql.setProjectId(projectId);
@@ -107,9 +107,9 @@ public class APICreator {
         gql.setDisplayType(String.valueOf(Constant.displayType.restAPI));
         gql.setProjectId(projectId);
         gql.setSrcGitRepoUrl(srcGitRepoUrl);
-        gql.setRepoSubpath(repoSubpath);
-        gql.setRepoType(repoType);
-        gql.setRepoBranch(repoBranch);
+        gql.setRepositorySubPath(repoSubpath);
+        gql.setRepositoryType(repoType);
+        gql.setRepositoryBranch(repoBranch);
 
         mustache.execute(writer, gql).flush();
         String graphQlQuery = writer.toString();
