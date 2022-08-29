@@ -123,10 +123,15 @@ Follow this procedure to further develop the API by adding a new resource and si
 
  8. Click **Save**.
 
- 9. To return the personalized message, click **+** below the variable you created, click **Return**, and enter `message` as the **Return Expression**.
+ 9. To return the personalized message, click **+** below the variable you created, click **Return**. 
 
      ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
+ 
+     In the **Return** pane, the syntax for the return staement is dispalyed as **`return <add-expression>`**.
 
+     Click **`<add-expression`**, and click **message** in the list of suggestions that appear below the return statement syntax.
+
+      ![Select return expression](../assets/img/get-started/select-return-expression.png){.cInlineImage-half}
    
  10. Click **Save**.
 
