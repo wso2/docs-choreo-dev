@@ -79,11 +79,11 @@ Follow this procedure to further develop the API by adding a new resource and si
      | **Field** | **Value** |
      |-----------------|-----------------------|
      | **HTTP Method** | `GET` |
-     | **Path** | `personalizedMessage` |
+     | **Resource Path** | `personalizedMessage` |
      | **Return Type** | `string|error` |
      
 
-4. Click **+ Add Query Param** to add a query parameter.  Enter the following values to get a name as an input:
+4. Click **+ Add Parameter** to add a query parameter.  Enter the following values to get a name as an input:
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -127,7 +127,6 @@ Follow this procedure to further develop the API by adding a new resource and si
 
      ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
 
-      ![Select Return](../assets/img/get-started/select-return.png){.cInlineImage-full}
    
  10. Click **Save**.
 
