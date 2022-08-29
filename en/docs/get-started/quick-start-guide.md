@@ -95,7 +95,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
  5. Click **Save**.
 
- 6. In the low-code diagram, click **+** after**Start**.
+ 6. In the low-code diagram, click **+** after **Start**.
 
     ![Create Variable](../assets/img/get-started/create-variable.png){.cInlineImage-full}
 
