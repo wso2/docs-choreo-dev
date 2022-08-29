@@ -101,7 +101,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
      In the **Add Constructs** pane, click **Variable**.
 
- 7. Update the given variable statement syntax (i.e., **`var variable = <add-statement>`**) to generate a personalized message by following these steps:
+ 7. Update the given variable statement syntax (i.e., **`var variable = <add-expression>`**) to generate a personalized message by following these steps:
 
     1. To generate the message in string format, click **`var`**, and click **string**.
 
