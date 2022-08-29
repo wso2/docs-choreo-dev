@@ -88,7 +88,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      | **Field** | **Value** |
      |-----------------|-----------------------|
      | **Type** | `string` |
-     | **Name** | `name` |
+     | **Param Name** | `name` |
 
      ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
