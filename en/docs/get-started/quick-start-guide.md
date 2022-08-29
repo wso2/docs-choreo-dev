@@ -80,7 +80,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      |-----------------|-----------------------|
      | **HTTP Method** | `GET` |
      | **Resource Path** | `personalizedMessage` |
-     | **Return Type** | `string|error` |
+     | **Return Type** | `string | error` |
      
 
 4. Click **+ Add Parameter** to add a query parameter.  Enter the following values to get a name as an input:
