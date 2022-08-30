@@ -136,7 +136,7 @@ Follow this procedure to further develop the API by adding a new resource and si
  10. Click **Save**.
 
 !!!info
-    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can work in the low-code view or the pro-code view. You can also work in both views simultaneously.    
+    You can click the **</>** icon on the top left corner of the editor if you want to work in the code view. Depending on your expertise, you can work in the low-code view or the pro-code view. You can also work on both views simultaneously.    
     ![Editor View](../assets/img/get-started/low-code-pro-code-side-by-side.png){.cInlineImage-full}
 
 ### Step 2: Run and test the REST API
