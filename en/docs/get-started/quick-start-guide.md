@@ -123,7 +123,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
  8. Click **Save**.
 
- 9. To return the personalized message, click **+** below the variable you created, click **Return**. 
+ 9. To return the personalized message, click **+** below the variable you created and click **Return**. 
 
      ![Add Return Type](../assets/img/get-started/add-return-type.png){.cInlineImage-full}
  
