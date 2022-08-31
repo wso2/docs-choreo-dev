@@ -15,7 +15,7 @@ It provides the following:
 This guide walks you through the steps to build the following statement using the Statement-Editor.
 
 ```
-string maxValue = "Max : " + int0:(30, -89).toString();
+string maxValue = "Max : " + int0:max(30, -89).toString();
 ```
 
 The above is a variable statement named `maxValue` that derives the maximum value in a list of two integers and passes the value in string format (for example, as `"Max : 30"` ).
@@ -81,7 +81,7 @@ To build the statement, follow these steps:
 
      You will see some diagnostics generated for the library you selected. Move on to the next step to resolve them. 
 
-12. Click the **int0:max(n,ns)** function. 
+10. Click the **int0:max(n,ns)** function. 
 
      When you select a function or a method call, the **Parameters** tab opens by default. This tab displays information about the selected function or method call, including details about parameters, descriptions, and return type descriptions. In this tab, you can easily add parameters to the expression by selecting the check boxes for the relevant parameters.
 
@@ -90,17 +90,27 @@ To build the statement, follow these steps:
      !!! note
          When a parameter requires a function or a method call to work, the Statement Editor selects its check box for that parameter by default and does not allow you to clear it.
 
-13. Change the **n** and **ns** parameter values to integers. To make each parameter value editable, you can double-click on it. Let's change them as follows:
+11. Change the **n** and **ns** parameter values to integers. To make each parameter value editable, you can double-click on it. Let's change them as follows:
 
      | **Parameter** | **Value** |
      |---------------|-----------|
      | **n**         | **`30`**  |
      | **ns**        | **`-89`** |
 
-14. Select **int0:max(30,-89)** and click **Suggestions**. Click **toString()** in the suggestions list to convert the value that the expression derived to a string format.
+12. Select **int0:max(30,-89)** and click **Suggestions**. Click **toString()** in the suggestions list to convert the value that the expression derived to a string format.
 
      ![Convert to string](../assets/img/statement-sditor/convert-to-string.gif){.cInlineImage-half}
 
      Note that the Statement Editor has cleared all the diagnostics messages, indicating that the statement is valid.
 
-16. Click **Save**.
+     You will see the variable statement to be as follows:
+
+     ```
+     string maxValue = "Max : " + int0:max(30, -89).toString();
+     ```
+    
+Congratulations! You have constructed a valid statement via the Statement Editor!
+
+You can click **Save** and add the variable statement to the low-code diagram.
+
+
