@@ -1,0 +1,106 @@
+# Construct Statements
+
+The Statement Editor in the Choreo Web Editor is a tool that allows you to construct Ballerina statements in your Choreo Editor even without an in-depth knowledge of the Ballerina Programming Language.
+
+It provides the following:
+
+- Context-based suggestions
+
+- Ballerina libraries (standard libraries and language libraries)
+
+- Pre-defined expression templates
+
+- Documentation for functions and methods with the support to easily configure parameters
+
+This guide walks you through the steps to build the following statement using the Statement-Editor.
+
+```
+string maxValue = "Max : " + int0:(30, -89).toString();
+```
+
+The above is a variable statement named `maxValue` that derives the maximum value in a list of two integers and passes the value in string format (for example, as `"Max : 30"` ).
+
+To build the statement, follow these steps:
+
+1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
+
+2. On the **Home** page, scroll to the **Get started with a template** section. On the **Echo Service** template, click **Get Started**.
+
+    The REST API created via the template opens on a separate page.
+   
+3. Click **Edit Code**. The Web Editor opens.
+
+4. On the low-code diagram, click **+**. Then click **Variable** in the **Add Constructs** pane that opens.
+
+    ![Add variable statement](../assets/img/statement-sditor/add-variable-statement.png){.cInlineImage-full}
+
+    The **Variable** pane opens, displaying the syntax for a variable statement with **`<add-expression>`** selected by default.
+
+5. Click the **var** type descriptor on the statement and click **string** in the **Suggestions** tab.
+
+    !!! info
+        The **Suggestions** tab provides contextual suggestions based on the selected item. The **Suggestions** tab currently lists variable type suggestions because you selected the type descriptor.    
+
+    ![Change type descriptor](../assets/img/statement-sditor/change-type-descriptor.gif){.cInlineImage-half}
+
+    Here, you are specifying that the variable value is a string.
+
+6. To edit the variable name, double-click **`variable`** and type `maxValue` in the text box.
+
+    !!! info
+        Another way to make a part of a statement editable is by clicking on the required statement component and pressing  **Enter**/**Return**.
+
+    ![Edit variable name](../assets/img/statement-sditor/edit-variable-name.gif){.cInlineImage-half}
+
+7. Double click **`<add-expression>`** and type `"Max : "` in the text box.
+
+    !!! info
+        To navigate from one item on the statement to another, you can also press **Tab** / **Shift** + **Tab**.
+
+    ![Edit variable expression](../assets/img/statement-sditor/edit-variable-expression.gif){.cInlineImage-half}
+
+    Here, you are entering static text as a part of the variable value.
+
+8. Click **Expressions**, and under the **Arithmetic** section, click the **Es + Ex** expression.
+
+    !!! info
+        The **Expressions** tab lists all the pre-defined templates that you can use to define complex expressions.
+
+    ![Select expression template](../assets/img/statement-sditor/select-expression-template.gif){.cInlineImage-half}
+
+    In the `Es + Ex` expression template, `Es` refers to the existing expression you clicked and selected. `+ Ex` combines another expression with `Es`.
+
+9. Click **Libraries** and search for `max`. In the filtered list, click  **lang.int:max**.
+
+    !!! info
+        The **Libraries** tab lists all the Ballerina Standard and Language libraries.
+
+    ![Select library](../assets/img/statement-sditor/select-library.gif){.cInlineImage-half}
+
+    `lang.int:max` is a Ballerina standard library for deriving the maximum value.
+
+     You will see some diagnostics generated for the library you selected. Move on to the next step to resolve them. 
+
+12. Click the **int0:max(n,ns)** function. 
+
+     When you select a function or a method call, the **Parameters** tab opens by default. This tab displays information about the selected function or method call, including details about parameters, descriptions, and return type descriptions. In this tab, you can easily add parameters to the expression by selecting the check boxes for the relevant parameters.
+
+     ![Select function](../assets/img/statement-sditor/select-function.gif){.cInlineImage-half}
+
+     !!! note
+         When a parameter requires a function or a method call to work, the Statement Editor selects its check box for that parameter by default and does not allow you to clear it.
+
+13. Change the **n** and **ns** parameter values to integers. To make each parameter value editable, you can double-click on it. Let's change them as follows:
+
+     | **Parameter** | **Value** |
+     |---------------|-----------|
+     | **n**         | **`30`**  |
+     | **ns**        | **`-89`** |
+
+14. Select **int0:max(30,-89)** and click **Suggestions**. Click **toString()** in the suggestions list to convert the value that the expression derived to a string format.
+
+     ![Convert to string](../assets/img/statement-sditor/convert-to-string.gif){.cInlineImage-half}
+
+     Note that the Statement Editor has cleared all the diagnostics messages, indicating that the statement is valid.
+
+16. Click **Save**.
