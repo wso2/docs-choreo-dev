@@ -152,6 +152,7 @@ Once you update the REST API configuration as described above, you can verify wh
     ```
     Running executable
     ```
+    
 2. To invoke the REST API, click **Try it**.
    
     ![Try REST API](../assets/img/get-started/try-rest-api.png){.cInlineImage-half}
@@ -215,7 +216,7 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 2. On the **Lifecycle Management** page, click **Publish**.
 
 3. Click **Go to Developer Portal**. 
-4. 
+ 
     ![Go to API Developer Portal](../assets/img/get-started/go-to-dev-portal.png){.cInlineImage-full}
  
     You will see the published API:
