@@ -175,6 +175,8 @@ configMapGenerator:
       - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
       - CHOREO_APP_DB_PORT=1433
       - CHOREO_APP_DB_USERNAME=choreo_app_db_user
+  - name: cm-perfanalyzer
+    behavior: create
     files:
       - perfanalyzer/application.properties
   - name: cm-dp-cicd
