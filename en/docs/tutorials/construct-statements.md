@@ -113,4 +113,7 @@ Congratulations! You have constructed a valid statement via the Statement Editor
 
 You can click **Save** and add the variable statement to the low-code diagram.
 
+!!! tip
+    If you want to make changes to the content you have added to the statement that you are creating, you can undo and redo your actions via the relevant icons on the top right of the toolbar. You can also remove content via the icon for deleting.
+
 
