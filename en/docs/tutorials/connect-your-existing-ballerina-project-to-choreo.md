@@ -11,9 +11,7 @@ Connecting your existing Ballerina repository to Choreo allows you to keep the s
 
 This tutorial walks you through the steps to connect your existing Ballerina project to Choreo when you create a REST API component. 
 
-
 Let's get started!
-
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 2. Create a project to add the REST API component. You can follow the instructions under [step 1 in the Connect Your Own GitHub Repository to Choreo](../connect-your-own-github-repository-to-choreo/#step-1-create-a-project-to-add-the-rest-api-component) tutorial.
@@ -46,4 +44,3 @@ Let's get started!
 Now you have successfully connected your existing Ballerina project repository to Choreo. You can go back to the Choreo Console tab to design the component depending on your requirement.
 
 For details on how you can design, test, and commit a REST API component, follow the instructions from [step 3 onwards in the Connect Your Own GitHub Repository to Choreo](../connect-your-own-github-repository-to-choreo/#step-3-design-the-rest-api) tutorial.
-
