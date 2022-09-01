@@ -1,6 +1,6 @@
 # Connect Your Existing Ballerina Project to Choreo
 
-Choreo allows you to connect your existing Ballerina project repository to Choreo when you create any of the following components:
+You can connect your existing Ballerina project repository to Choreo when you create any of the following components:
 
 - REST API
 - Manual Trigger
