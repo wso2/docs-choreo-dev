@@ -32,7 +32,7 @@ To build the statement, follow these steps:
 
 4. On the low-code diagram, click **+**. Then click **Variable** in the **Add Constructs** pane that opens.
 
-    ![Add variable statement](../assets/img/statement-sditor/add-variable-statement.png){.cInlineImage-full}
+    ![Add variable statement](../assets/img/statement-editor/add-variable-statement.png){.cInlineImage-full}
 
     The **Variable** pane opens, displaying the syntax for a variable statement with **`<add-expression>`** selected by default.
 
@@ -41,7 +41,7 @@ To build the statement, follow these steps:
     !!! info
         The **Suggestions** tab provides contextual suggestions based on the selected item. The **Suggestions** tab currently lists variable type suggestions because you selected the type descriptor.    
 
-    ![Change type descriptor](../assets/img/statement-sditor/change-type-descriptor.gif){.cInlineImage-half}
+    ![Change type descriptor](../assets/img/statement-editor/change-type-descriptor.gif){.cInlineImage-half}
 
     Here, you are specifying that the variable value is a string.
 
@@ -50,14 +50,14 @@ To build the statement, follow these steps:
     !!! info
         Another way to make a part of a statement editable is by clicking on the required statement component and pressing  **Enter**/**Return**.
 
-    ![Edit variable name](../assets/img/statement-sditor/edit-variable-name.gif){.cInlineImage-half}
+    ![Edit variable name](../assets/img/statement-editor/edit-variable-name.gif){.cInlineImage-half}
 
 7. Double click **`<add-expression>`** and type `"Max : "` in the text box.
 
     !!! info
         To navigate from one item on the statement to another, you can also press **Tab** / **Shift** + **Tab**.
 
-    ![Edit variable expression](../assets/img/statement-sditor/edit-variable-expression.gif){.cInlineImage-half}
+    ![Edit variable expression](../assets/img/statement-editor/edit-variable-expression.gif){.cInlineImage-half}
 
     Here, you are entering static text as a part of the variable value.
 
@@ -66,7 +66,7 @@ To build the statement, follow these steps:
     !!! info
         The **Expressions** tab lists all the pre-defined templates that you can use to define complex expressions.
 
-    ![Select expression template](../assets/img/statement-sditor/select-expression-template.gif){.cInlineImage-half}
+    ![Select expression template](../assets/img/statement-editor/select-expression-template.gif){.cInlineImage-half}
 
     In the `Es + Ex` expression template, `Es` refers to the existing expression you clicked and selected. `+ Ex` combines another expression with `Es`.
 
@@ -75,7 +75,7 @@ To build the statement, follow these steps:
     !!! info
         The **Libraries** tab lists all the Ballerina Standard and Language libraries.
 
-    ![Select library](../assets/img/statement-sditor/select-library.gif){.cInlineImage-half}
+    ![Select library](../assets/img/statement-editor/select-library.gif){.cInlineImage-half}
 
     `lang.int:max` is a Ballerina standard library for deriving the maximum value.
 
@@ -85,7 +85,7 @@ To build the statement, follow these steps:
 
      When you select a function or a method call, the **Parameters** tab opens by default. This tab displays information about the selected function or method call, including details about parameters, descriptions, and return type descriptions. In this tab, you can easily add parameters to the expression by selecting the check boxes for the relevant parameters.
 
-     ![Select function](../assets/img/statement-sditor/select-function.gif){.cInlineImage-half}
+     ![Select function](../assets/img/statement-editor/select-function.gif){.cInlineImage-half}
 
      !!! note
          When a parameter requires a function or a method call to work, the Statement Editor selects its check box for that parameter by default and does not allow you to clear it.
@@ -99,7 +99,7 @@ To build the statement, follow these steps:
 
 12. Select **int0:max(30,-89)** and click **Suggestions**. Click **toString()** in the suggestions list to convert the value that the expression derived to a string format.
 
-     ![Convert to string](../assets/img/statement-sditor/convert-to-string.gif){.cInlineImage-half}
+     ![Convert to string](../assets/img/statement-editor/convert-to-string.gif){.cInlineImage-half}
 
      Note that the Statement Editor has cleared all the diagnostics messages, indicating that the statement is valid.
 
