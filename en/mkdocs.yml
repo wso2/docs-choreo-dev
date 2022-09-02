@@ -58,6 +58,7 @@ nav:
       - Create Your First REST API: tutorials/create-your-first-rest-api.md
       - Expose an Existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md
       - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
+      - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
   - Triggers: triggers.md
