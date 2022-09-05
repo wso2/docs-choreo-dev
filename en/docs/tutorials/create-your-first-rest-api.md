@@ -131,7 +131,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
       
           In the **Variable** pane, configure the variable as follows:
       
-           1. On the variable statement, click **`var`**, and click **int** on the list that appears below in the **Suggestions** tab. Here, you are changing the variable type from `var` to `int`.
+           1. On the variable statement, click **`var`**, and then click **int** on the list that appears below in the **Suggestions** tab. Here, you are changing the variable type from `var` to `int`.
          
            2. To edit the variable name, double-click **`variable`**. Then enter `totalCases` as the variable name.
          
