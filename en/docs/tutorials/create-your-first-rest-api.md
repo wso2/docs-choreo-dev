@@ -18,7 +18,7 @@ In this section, let's develop the application that retrieves COVID-19-related s
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. In the **Projects** field, select **+ Create New** from the list.
+2. In the **Projects** list, select **+ Create New**.
 
     ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
@@ -54,7 +54,7 @@ Let's create a new REST API component as follows:
 
 5. Click **Next**.
 
-    In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. **Choreo-managed repository** is selected by default. For this tutorial, let's leave this selection unchanged.
+    In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. The **Choreo-managed repository** option is selected by default. For this tutorial, let's leave this selection unchanged.
 
 6. Click **Create**.
 
@@ -81,11 +81,11 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     As a result, a pane named **Configure Resource** appears on the right of the page. In this pane, enter information as follows:
 
-    | **Field**       | **Value**                |
-    |-----------------|--------------------------|
-    | **HTTP Method** | `GET`                    |
-    | **Path**        | `stats/[string country]` |
-    | **Return Type** | `json|error`            |
+    | **Field**         | **Value**                |
+    |-------------------|--------------------------|
+    | **HTTP Method**   | `GET`                    |
+    | **Resource Path** | `stats/[string country]` |
+    | **Return Type**   | `json|error`             |
 
     Here, you are configuring a GET resource to fetch statistics related to COVID-19.
 
@@ -114,10 +114,10 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
        1. In the **Action** pane, click **covid19Ep**.
       
        2. Click **getStatusByCountry**.
+       
+       3. In the **Parameters** tab, check whether the **country** check box is selected. If not, select it.
       
-       3. In the action statement, double-click **`getStatusByCountryResponse`** variable name to edit it. Replace the default value with `statusByCountry`.
-      
-       4. In the **Parameters** tab, check whether the **country** check box is selected. If not, select it.
+       4. In the action statement, double-click **`getStatusByCountryResponse`** variable name to edit it. Replace the default value with `statusByCountry`.
       
           This adds `country` as a query parameter in the connector configuration to allow the REST API to fetch COVID-19 statistics specific to a given country.
         
@@ -135,7 +135,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
          
            2. To edit the variable name, double-click **`variable`**. Then enter `totalCases` as the variable name.
          
-           3. Click  **`<add-expression>`** and click **statusByCountry** in the list that appears below in the **Suggestions** tab. Here, you are selecting the **statusByCountry** query parameter you previously added to derive information related to a specific country.
+           3. Click <add-expression> and then click **statusByCountry** displayed in the list of suggestions. Here, you are selecting the **statusByCountry** query parameter you previously added to derive information related to a specific country.
          
               Update the expression further as follows:
          
@@ -158,22 +158,24 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
    6. The REST API needs to further process the COVID-19 cases per country you derived to present the number of cases per one million people in the given country's population. Therefore, let's derive population statistics per country via the **World Bank** as follows:
    
        1. Click the last **+** in the low-code diagram.
+       
+       2. In the **Add Constructs** pane that opens, click **Connector**.
       
-       2. In the **Connectors** pane, click **World Bank by ballerinax**.
+       3. In the **Connectors** pane, search for World Bank, and select the World Bank by ballerinax connector when it appears in the search results.
       
-       3. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
+       4. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
       
-       4. Click the last **+** in the low-code diagram (below the connector you added).
+       5. Click the last **+** in the low-code diagram (below the connector you added).
       
-       5. In the **Add Constructs** pane, click **Action**.
+       6. In the **Add Constructs** pane, click **Action**.
       
-       6. Click **worldbankEp** to define an action for the World Bank connector.
+       7. Click **worldbankEp** to define an action for the World Bank connector.
       
-       7. To define an action for the World Bank connector, click **Get Country Population**.
-      
-       8. Double-click **`getPopulationByCountryResponse`** which is the default query parameter name to edit it. Change it to `populationByCountry`.
-      
+       8. To define an action for the World Bank connector, click **Get Country Population**.
+       
        9. In the **Parameters** tab, check whether the **countryCode** check box is selected. If not, select it.
+      
+       10. Double-click **`getPopulationByCountryResponse`** which is the default query parameter name to edit it. Change it to `populationByCountry`.
 
            You are adding the `countryCode` query parameter to the World Bank connector configuration to fetch population statistics for the country that the REST API user specifies.
       
