@@ -51,6 +51,8 @@ Let's create a new REST API component as follows:
     |-----------------|-----------------------|
     | **Name**        | `Statistics`          |
     | **Description** | `COVID-19 Statistics` |
+    
+    The **Access mode** field allows you to select whether you want the REST API to be publicly accessible or to be accessible only within Choreo. By default, the API is publicly accessible. Let's leave this selection unchanged.
 
 5. Click **Next**.
 
