@@ -30,7 +30,7 @@ then
     while IFS= read -r line
     do
          k=$(cut -d "=" -f1 <<< "$line")
-         v=$(cut -d "=" -f2 <<< "$line")
+         v=$(cut -d "=" -f2- <<< "$line")
          export_command="export $k=$v"
          eval "${export_command}"
     done < "${azuredfile}"
@@ -53,6 +53,8 @@ if [[ -z "${CHOREO_ENV}" ]]; then
 	CHOREO_ENV=$(echo "${CHOREO_ENV}" | tr "[:upper:]" "[:lower:]")
 	export "${CHOREO_ENV?}"
 fi
+
+echo "${ASB_CONNECTION_STRING}"
 
 ############## Install Reloader
 echo -e "\n --- Installing Reloader --- \n"
@@ -134,7 +136,7 @@ kubectl apply -f conf/view-cluster-role-binding.yaml
 mv conf/view-cluster-role-binding.yaml.backup conf/view-cluster-role-binding.yaml
 
 echo -e "\n --- Add OMS Agent Config --- \n"
-kubectl apply -f oms/container-azm-ms-agentconfig.yaml
+#kubectl apply -f oms/container-azm-ms-agentconfig.yaml
 
 echo -e "\n --- Configure CSI Secret Store --- \n"
 bash private-dataplane/configure-csi-secret-store.sh
@@ -143,29 +145,19 @@ echo -e "\n --- Setup Nginx Ingress --- \n"
 bash private-dataplane/install-nginx-ingress.sh
 
 echo -e "\n --- Setup APIM Secrets and Certificates --- \n"
-bash private-dataplane/setup-kv-objects.sh
+#bash private-dataplane/setup-kv-objects.sh
 
-#echo "--- Setup LetsEncrypt issuer"
-#kubectl apply -f private-dataplane/certs/choreoapis-e1-us-east-dev-letsencrypt-prod.yaml
-#kubectl apply -f private-dataplane/certs/choreoapis-dev-letsencrypt-prod.yaml
-#kubectl apply -f private-dataplane/certs/choreoapis-dev-gateway-letsencrypt-prod.yaml
+echo "--- Setup LetsEncrypt issuer"
+#kubectl apply -f private-dataplane/certs/choreoapis-issuer.yaml
 
 #echo "-- Setup LetsEncrypt cert"
-#cp private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml.backup
-#cp private-dataplane/certs/choreo-api-wildcard-cert.yaml private-dataplane/certs/choreo-api-wildcard-cert.yaml.backup
-#cp private-dataplane/certs/choreo-gateway-wildcard-cert.yaml private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup
+#cp private-dataplane/certs/choreoapis-cert.yaml private-dataplane/certs/choreoapis-cert.yaml.backup
 
-#sed -i "s/PARTITION_DNS_NAME/${PARTITION_DNS_NAME}/g" private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
-#sed -i "s/WILDCARD_DNS_NAME/${WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreo-api-wildcard-cert.yaml
-#sed -i "s/GATEWAY_WILDCARD_DNS_NAME/${GATEWAY_WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+#sed -i "s/WILDCARD_DNS_NAME/${WILDCARD_DNS_NAME}/g" private-dataplane/certs/choreoapis-cert.yaml
 
-#kubectl apply -f private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
-#kubectl apply -f private-dataplane/certs/choreo-api-wildcard-cert.yaml
-#kubectl apply -f private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+#kubectl apply -f private-dataplane/certs/choreoapis-cert.yaml
 
-#mv private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml.backup private-dataplane/certs/dev-choreo-api-e1-us-east-azure-wildcard-cert.yaml
-#mv private-dataplane/certs/choreo-api-wildcard-cert.yaml.backup private-dataplane/certs/choreo-api-wildcard-cert.yaml
-#mv private-dataplane/certs/choreo-gateway-wildcard-cert.yaml.backup private-dataplane/certs/choreo-gateway-wildcard-cert.yaml
+#mv private-dataplane/certs/choreoapis-cert.yaml.backup private-dataplane/certs/choreoapis-cert.yaml
 
 ############ Cleanup
 echo -e "\n --- Unsetting Properties values set as environmental variables --- \n"

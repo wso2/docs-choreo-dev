@@ -8,7 +8,8 @@ metadata:
   namespace: cert-manager
 spec:
   dnsNames:
-  - "PARTITION_DNS_NAME"
+  - '*.WILDCARD_DNS_NAME'
+  -  WILDCARD_DNS_NAME
   issuerRef:
     kind: Issuer
     name: choreoapis-e1-us-east-dev-letsencrypt-prod
