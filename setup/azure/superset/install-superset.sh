@@ -36,8 +36,8 @@ rm superset-custom-config-secret-tmp.yaml
 # Install
 helm upgrade --install superset superset-0.7.1.tgz \
     --set init.adminUser.password="${SUPERSET_ADMIN_USER_PASS}" \
-    --values ./${ENV}-resources/superset-values.yaml \
+    --values ./"${ENV}"/superset-values.yaml \
     -n superset
 
 # Deploy network policies for Superset deployment
-kubectl apply -f ./${ENV}-resources/superset-netpols.yaml
+kubectl apply -f ./"${ENV}"/superset-netpols.yaml
