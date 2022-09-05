@@ -161,7 +161,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
       
        2. In the **Connectors** pane, click **World Bank by ballerinax**.
       
-       3. Click **Save**.
+       3. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
       
        4. Click the last **+** in the low-code diagram (below the connector you added).
       
