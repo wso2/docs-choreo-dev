@@ -95,8 +95,8 @@ supersetWorker:
       imagePullPolicy: "{{ .Values.initImage.pullPolicy }}"
       resources:
         limits:
-          cpu: 100m
-          memory: 128Mi
+          cpu: 200m
+          memory: 3072Mi
         requests:
           cpu: 100m
           memory: 128Mi
