@@ -46,6 +46,10 @@ CUSTOMER_NAME=$(echo "${CUSTOMER_NAME}" | tr "[:upper:]" "[:lower:]")
 export "${CUSTOMER_NAME?}"
 echo "${CUSTOMER_NAME}"
 
+CLUSTER_ENV=$(echo "${CLUSTER_ENV}" | tr "[:upper:]" "[:lower:]")
+export "${CLUSTER_ENV?}"
+echo "${CLUSTER_ENV}"
+
 if [[ -z "${CHOREO_ENV}" ]]; then
 	echo "Setting up Choreo for ${CUSTOMER_NAME}"
   else
