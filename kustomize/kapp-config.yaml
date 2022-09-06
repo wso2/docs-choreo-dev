@@ -2,14 +2,6 @@ apiVersion: kapp.k14s.io/v1alpha1
 kind: Config
 
 rebaseRules:
-  - path: [ spec, replicas ]
-    type: copy
-    sources: [ new, existing ]
-    resourceMatchers:
-      - apiVersionKindMatcher:
-          apiVersion: apps/v1
-          kind: Deployment
-
   - path: [ metadata, annotations, autoscaling.alpha.kubernetes.io/current-metrics ]
     type: copy
     sources: [ existing, new ]
