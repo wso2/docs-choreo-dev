@@ -46,25 +46,6 @@ spec:
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: superset-init-db-egress
-  namespace: superset
-spec:
-  podSelector:
-    matchLabels:
-      job-name: superset-init-db
-  egress:
-    - ports:
-        - port: 443
-        - port: 53
-          protocol: UDP
-        - port: 53
-        - port: 5432
-
----
-
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
   name: redis-master-ingress
   namespace: superset
 spec:
@@ -94,10 +75,53 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: dev-choreo-system-nginx-ingress
+              kubernetes.io/metadata.name: prod-choreo-system-nginx-ingress
   egress:
     - to: # all except VM metadata endpoint
         - ipBlock:
             cidr: 0.0.0.0/0
             except:
               - 169.254.169.254/32
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-buoyant-network-policy
+  namespace: superset
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          linkerd.io/extension: buoyant
+      podSelector: {}
+  podSelector: {}
+  policyTypes:
+  - Ingress
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-linkerd-network-policy
+  namespace: superset
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          linkerd.io/control-plane-ns: linkerd
+      podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          linkerd.io/control-plane-ns: linkerd
+      podSelector: {}
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress

@@ -19,6 +19,7 @@ SUPERSET_ADMIN_USER_PASS=$(az keyvault secret show --name superset-ADMIN-PASSWOR
 cp superset-custom-config-secret.yaml superset-custom-config-secret-tmp.yaml
 sed -i 's|SUPERSET_DB_PASS|'"$SUPERSET_DB_PASS"'|g' superset-custom-config-secret-tmp.yaml
 sed -i 's|SUPERSET_ADMIN_USER_PASS|'"$SUPERSET_ADMIN_USER_PASS"'|g' superset-custom-config-secret-tmp.yaml
+sed -i 's|ENV|'"$ENV"'|g' superset-custom-config-secret-tmp.yaml
 
 kubectl create ns superset
 
@@ -35,8 +36,8 @@ rm superset-custom-config-secret-tmp.yaml
 # Install
 helm upgrade --install superset superset-0.7.1.tgz \
     --set init.adminUser.password="${SUPERSET_ADMIN_USER_PASS}" \
-    --values superset-values.yaml \
+    --values ./"${ENV}"/superset-values.yaml \
     -n superset
 
 # Deploy network policies for Superset deployment
-kubectl apply -f superset-netpols.yaml
+kubectl apply -f ./"${ENV}"/superset-netpols.yaml
