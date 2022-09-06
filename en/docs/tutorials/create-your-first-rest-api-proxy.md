@@ -21,10 +21,10 @@ Choreo gives you two options to create a REST API proxy:
 
 In this tutorial, you will be importing an OpenAPI specification and creating a REST API proxy:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
 2. Expand the project dropdown on the console header and click **+ Create New** to create a new project.
- ![Create a new Project](../assets/img/tutorials/create-project.png){.cInlineImage-full}
+   ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
 3. Enter a unique name and description for your project and click **Create**. 
 
@@ -33,23 +33,20 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
     !!! tip
         Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
 
-4. Click **+Create** On the right-hand upper corner of the components landing page.
-    ![Create a new component](../assets/img/tutorials/create-component.png){.cInlineImage-full}
+4. Click the **REST API Proxy** card.
 
-5. Click the **REST API Proxy** card.
+5. Click **Import OpenAPI**.
 
-6. Click **Import OpenAPI**.
-
-7. Select the **Input Type** and provide the OpenAPI URL as follows:
+6. Select the **Input Type** and provide the OpenAPI URL as follows:
  
     | **Field** | **Value** |
     |-----------------|-----------------------|
     | **Input Type** | OpenAPI URL |
     | **OpenAPI URL** | `https://petstore3.swagger.io/api/v3/openapi.json` |
 
-8. Click **Next**.
+7. Click **Next**.
 
-9. Review the information( API Name, API Version, API Base Path, Endpoint) that Choreo extracted from the OpenAPI. You can make any changes to the fields if you require. Click **Create** to create your REST API Proxy.
+8. Review the information( API Name, API Version, API Base Path, Endpoint) that Choreo extracted from the OpenAPI. You can make any changes to the fields if you require. Click **Create** to create your REST API Proxy.
 
 ## Step 2: Developing the REST API Proxy
 
