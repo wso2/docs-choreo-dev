@@ -313,3 +313,7 @@ You can hold the pointer over the highlighted countries to view the country name
     Currently, this feature is only available for on-premise environments.
 
 Optionally you can download geo map data in a tabular format using the PDF or CSV download options by clicking ![download](../assets/img/insights/insights-download-report.svg) on the top right corner.
+
+!!! Note
+The geo-map page utilizes the IP address of the incoming request to derive the geolocation. The actual source IP address can be replaced if there are intermediate hosts between the client and the gateway node. Therefore, the reverse proxy or the load balancer fronting the gateway node must add the `x-forwarded-for` header to each request to preserve the source IP address. If you do not configure this correctly, the **Geo Map** page will not show any data. To test this, you can manually add an `x-forwarded-for` header to the request.
+
