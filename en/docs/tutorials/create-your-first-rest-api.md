@@ -51,12 +51,11 @@ Let's create a new REST API component as follows:
     |-----------------|-----------------------|
     | **Name**        | `Statistics`          |
     | **Description** | `COVID-19 Statistics` |
-    
-    The **Access mode** field allows you to select whether you want the REST API to be publicly accessible or to be accessible only within Choreo. By default, the API is publicly accessible. Let's leave this selection unchanged.
 
-5. Click **Next**.
-
-    In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. The **Choreo-managed repository** option is selected by default. For this tutorial, let's leave this selection unchanged.
+    !!! info
+        Leave the other selections unchanged:
+        - The **Access mode** field allows you to select whether you want the REST API to be publicly accessible or to be accessible only within Choreo. By default, the API is publicly accessible. Let's leave this selection unchanged.</br>
+        - In the **REST API** dialog box that opens, you can specify whether you want to save the REST API configuration in a Choreo-managed repository or a repository managed by you. The **Choreo-managed repository** option is selected by default. For this tutorial, let's leave this selection unchanged.
 
 6. Click **Create**.
 
