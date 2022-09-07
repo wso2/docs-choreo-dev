@@ -33,7 +33,7 @@ Let's get started!
        ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
 
    - **Grant Types:** The grant types used to generate the access token.
-   - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications  running on a browser or mobile device. 
+   - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications running on a browser or mobile device. 
    - **Application access token expiry time:** The access token expiry time (seconds).
    - **Refresh token expiry time:** The refresh token expiry time (seconds).
    - **ID token expiry time:** ID token expiry time (seconds).
