@@ -48,7 +48,7 @@ To build the statement, follow these steps:
 6. To edit the variable name, double-click **`variable`** and type `maxValue` in the text box.
 
     !!! info
-        Another way to make a part of a statement editable is by clicking on the required statement component and pressing  **Enter**/**Return**.
+        Another way to make a part of a statement editable is to click on the required statement component and press  **Enter**/**Return**.
 
     ![Edit variable name](../assets/img/statement-editor/edit-variable-name.gif){.cInlineImage-half}
 
