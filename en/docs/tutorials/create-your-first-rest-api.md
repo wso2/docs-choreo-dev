@@ -2,7 +2,7 @@
 
 A RESTful API (Application Program Interface) uses HTTP requests to access and use data. The operations you can perform on data are GET (reading), PUT (updating), POST (creating), and DELETE (deleting).
 
-The low-code editor of Choreo allows developers to design (and then implement) high-quality REST APIs easily. To explore this capability, let's consider a scenario where an Analyst wants to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
+The low-code editor of Choreo allows developers to design (and then implement) high-quality REST APIs easily. To explore this capability, let's consider a scenario where an analyst wants to retrieve the daily count of COVID-19 patients per one million population by country. In this tutorial, you will address this requirement by doing the following:
 
 - Design a REST API that addresses the described requirement, test it in the Web Editor, and then commit it to make it available in the Choreo Console.
 
