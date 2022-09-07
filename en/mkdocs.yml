@@ -80,8 +80,6 @@ nav:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
      - Root Cause Analysis: observability/root-cause-analysis.md
-  - Administration:   
-     - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
@@ -126,6 +124,9 @@ markdown_extensions:
 plugins:
   - search
   - markdownextradata: {}
+  - redirects:
+      redirect_maps:
+          'manage/developer-portal.md': 'https://wso2.com/choreo/docs/developer-portal/developer-portal/' 
 extra_css:
   - assets/lib/highlightjs/default.min.css
   - assets/css/theme.css
