@@ -372,7 +372,7 @@ Once you have designed, tested, and committed the REST API, you need to deploy i
 
 To deploy the API, follow the steps below:
 
-1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
+1. Click the **Deploy** icon. Then in the **Build Area** card, click **Manually Deploy**.
 
     ![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
 
