@@ -175,6 +175,8 @@ configMapGenerator:
       - CHOREO_PERF_DB_USERNAME=choreo_perf_db_user
       - CHOREO_APP_DB_PORT=1433
       - CHOREO_APP_DB_USERNAME=choreo_app_db_user
+  - name: cm-perfanalyzer
+    behavior: create
     files:
       - perfanalyzer/application.properties
   - name: cm-dp-cicd
@@ -266,7 +268,7 @@ configMapGenerator:
       - HELPER_URL=http://dp-utility-api
       - AUTH_URL=http://dp-project-manager
       - CICD_URL=http://dp-cicd
-      - RATE_LIMITER_SVC_ADDRESS=quota-limiter:9090
+      - QUOTA_LIMITER_SVC_ADDRESS=quota-limiter:9090
       - APP_SERVICE_ADDRESS=app-service:8080
       - NEGOTIATOR_ADDRESS=negotiator:9092
       - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
@@ -288,8 +290,9 @@ configMapGenerator:
       - REACT_APP_FIDP_GITHUB=github
       - REACT_APP_FIDP_MICROSOFT=microsoft
       - REACT_APP_FIDP_ENTERPRISE=EnterpriseIDP
-      - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
+      - REACT_APP_FIDP_E2E=choreoe2etest
       - REACT_APP_FIDP_ANONYMOUS=choreoanonymous
+      - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
       - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
       - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
       - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=webWorker

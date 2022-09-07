@@ -1,8 +1,4 @@
 configMapGenerator:
-  - name: trimble-ga-truststore-vol
-    behavior: create
-    files:
-      - controlplane.pem
   - name: trimble-feature-flags
     behavior: create
     literals:

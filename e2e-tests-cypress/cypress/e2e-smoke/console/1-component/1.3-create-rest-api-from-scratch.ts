@@ -78,7 +78,9 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => { expect(arr).to.include(NEW_BRANCH); });
+    ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => {
+      expect(arr).to.include(NEW_BRANCH);
+    });
     ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
@@ -101,45 +103,56 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(Environment.DEVELOPMENT, "root", "number", "2").
-      then((res) => {
-        expect(res.response).to.be.eq("4");
-        expect(res.statusCode).to.be.eq("200");
-      });
+    TestHelper.testOnSwagger(
+      Environment.DEVELOPMENT,
+      "root",
+      "number",
+      "2"
+    ).then((res) => {
+      expect(res.response).to.be.eq("4");
+      expect(res.statusCode).to.be.eq("200");
+    });
   });
-
 
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(Environment.PRODUCTION, "root", "number", "2").
-      then((res) => {
-        expect(res.response).to.be.eq("4");
-        expect(res.statusCode).to.be.eq("200");
-      });
+    TestHelper.testOnSwagger(
+      Environment.PRODUCTION,
+      "root",
+      "number",
+      "2"
+    ).then((res) => {
+      expect(res.response).to.be.eq("4");
+      expect(res.statusCode).to.be.eq("200");
+    });
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, "root", queryParameters1).
-      then((curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(4);
-          expect(res.status).equal(200);
-        });
+    TestHelper.testOnCurl(
+      Environment.DEVELOPMENT,
+      HTTPMethod.GET,
+      "root",
+      queryParameters1
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(4);
+        expect(res.status).equal(200);
       });
+    });
   });
 
  
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root").
-      then((curl) => {
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root").then(
+      (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
           expect(res.status).equal(200);
         });
       }
-      );
+    );
   });
 
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
@@ -202,7 +215,10 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT,"Revision 3");
+    ComponentAPILifecycle.applyConfiguration(
+      Environment.DEVELOPMENT,
+      "Revision 3"
+    );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Environment.DEVELOPMENT
@@ -253,7 +269,9 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should("be.visible");
+    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+      "be.visible"
+    );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });

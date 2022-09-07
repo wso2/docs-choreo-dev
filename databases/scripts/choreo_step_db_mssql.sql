@@ -49,6 +49,20 @@ CREATE TABLE app_request_step_count (
   FOREIGN KEY (job_id) REFERENCES job_status (id) ON DELETE CASCADE
 );
 
+IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[cpu_usage_step_count]') AND TYPE IN (N'U'))
+CREATE TABLE cpu_usage_step_count (
+  id UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID(),
+  job_id UNIQUEIDENTIFIER NOT NULL,
+  org_uuid VARCHAR(100) NOT NULL,
+  app_id VARCHAR(100) NOT NULL,
+  obs_id VARCHAR(100) NOT NULL,
+  obs_version VARCHAR(100) NOT NULL,
+  request_type VARCHAR(15) NOT NULL,
+  count INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (job_id) REFERENCES job_status (id) ON DELETE CASCADE
+);
+
 -- create daily step count tables
 
 IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[daily_api_proxy_step_count]') AND TYPE IN (N'U'))
@@ -67,6 +81,22 @@ CREATE TABLE daily_api_proxy_step_count (
 
 IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[daily_app_request_step_count]') AND TYPE IN (N'U'))
 CREATE TABLE daily_app_request_step_count (
+  id UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID(),
+  last_job_id UNIQUEIDENTIFIER NOT NULL,
+  day_start DATETIME2(0) NOT NULL,
+  to_timestamp DATETIME2(3) NOT NULL,
+  org_uuid VARCHAR(100) NOT NULL,
+  app_id VARCHAR(100) NOT NULL,
+  obs_id VARCHAR(100) NOT NULL,
+  obs_version VARCHAR(100) NOT NULL,
+  request_type VARCHAR(15) NOT NULL,
+  count INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (last_job_id) REFERENCES job_status (id)
+);
+
+IF NOT  EXISTS (SELECT * FROM SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[daily_cpu_usage_step_count]') AND TYPE IN (N'U'))
+CREATE TABLE daily_cpu_usage_step_count (
   id UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID(),
   last_job_id UNIQUEIDENTIFIER NOT NULL,
   day_start DATETIME2(0) NOT NULL,
@@ -134,6 +164,10 @@ CREATE INDEX daily_api_proxy_ind_by_day_start ON daily_api_proxy_step_count(day_
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'daily_app_request_ind_by_day_start')
 DROP INDEX daily_app_request_step_count.daily_app_request_ind_by_day_start
 CREATE INDEX daily_app_request_ind_by_day_start ON daily_app_request_step_count(day_start);
+
+IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'daily_cpu_usage_ind_by_day_start')
+DROP INDEX daily_cpu_usage_step_count.daily_cpu_usage_ind_by_day_start
+CREATE INDEX daily_cpu_usage_ind_by_day_start ON daily_cpu_usage_step_count(day_start);
 
 IF EXISTS (SELECT NAME FROM SYSINDEXES WHERE NAME = 'daily_total_ind_by_day_start')
 DROP INDEX daily_total_step_count.daily_total_ind_by_day_start
