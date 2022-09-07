@@ -12,7 +12,7 @@ It provides the following:
 
 - Documentation for functions and methods to easily configure parameters
 
-This guide walks you through the steps to build the following statement using the Statement-Editor.
+This guide walks you through the steps to build the following statement using the Statement Editor.
 
 ```
 string maxValue = "Max : " + int0:max(30, -89).toString();
@@ -57,7 +57,7 @@ To build the statement, follow these steps:
 4. Double click **`<add-expression>`** and type `"Max : "` in the text box.
 
     !!! info
-        To navigate from one item on the statement to another, you can also press **Tab** / **Shift** + **Tab**.
+        To navigate from one item on the statement to another, you can also press **Tab** or **Shift**, + **Tab**.
 
     ![Edit variable expression](../assets/img/statement-editor/edit-variable-expression.gif){.cInlineImage-half}
 
