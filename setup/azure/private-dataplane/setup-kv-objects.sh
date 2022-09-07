@@ -55,11 +55,11 @@ keytool -import -file wso2carbon.pem -alias wso2carbon -keystore client-truststo
 keytool -import -file global-adapter.pem -alias global-adapter -keystore client-truststore.jks -storepass "${APIM_TRUSTSTORE_PSWD}" -noprompt
 
 echo -e "\n --- Creating Service Principal Credentials for KV Secret Manager --- \n"
-KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --query "[?contains(name, '${CUSTOMER_NAME}-userapps-${ENV}')].name" --output tsv)
+KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --query "[?contains(name, '${CUSTOMER_NAME}-userapps-${CLUSTER_ENV}')].name" --output tsv)
 
 USERAPPS_CSI_KEY_VAULT_CLIENT_ID=$(az ad app list --all --query "[?contains(displayName, '${KEYVAULT_NAME}')].appId" --output tsv)
 
-USERAPPS_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${USERAPPS_CSI_KEY_VAULT_CLIENT_ID}" --append --display-name "dataplane-secret-manager-${ENV}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
+USERAPPS_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${USERAPPS_CSI_KEY_VAULT_CLIENT_ID}" --append --display-name "dataplane-secret-manager-${CLUSTER_ENV}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
 
 TENANT_ID=$(az account show --query tenantId --output tsv)
 
@@ -112,7 +112,7 @@ sed -i "s|ADAPTER_KEYSTORE_PATH|${ADAPTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 sed -i "s|ENFORCER_KEYSTORE_PATH|${ENFORCER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 sed -i "s|ROUTER_KEYSTORE_PATH|${ROUTER_KEYSTORE_PATH}|g" ${PEM_FILE_PATH}
 
-KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --query "[?contains(name, '${CUSTOMER_NAME}-userapps-${ENV}')].name" --output tsv)
+KEYVAULT_NAME=$(az keyvault list --resource-group choreo-"${CUSTOMER_NAME}"-key-vault-rg --query "[?contains(name, '${CUSTOMER_NAME}-userapps-${CLUSTER_ENV}')].name" --output tsv)
 
 SIGNED_IN_USERID=$(az ad signed-in-user show --query "id" --output tsv)
 
