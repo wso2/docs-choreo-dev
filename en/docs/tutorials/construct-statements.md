@@ -57,7 +57,7 @@ To build the statement, follow these steps:
 4. Double click **`<add-expression>`** and type `"Max : "` in the text box.
 
     !!! info
-        To navigate from one item on the statement to another, you can also press **Tab** or **Shift**, + **Tab**.
+        To navigate from one item on the statement to another, you can also press **Tab** or **Shift** + **Tab**.
 
     ![Edit variable expression](../assets/img/statement-editor/edit-variable-expression.gif){.cInlineImage-half}
 
