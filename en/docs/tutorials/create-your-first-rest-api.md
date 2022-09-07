@@ -103,7 +103,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
    
    2. In the **Add Constructs** pane that appears, click **Connector**.
 
-   3. Search for **COVID-19**, and select the **COVID-19 by ballerinax** connector when it appears in the search results. 
+   3. Search for **COVID-19** and select the **COVID-19 by ballerinax** connector when it appears in the search results. 
    
        In the **Endpoint** pane that appears, click **Save** to add the endpoint.
    
