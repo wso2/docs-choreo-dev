@@ -59,6 +59,7 @@ nav:
       - Expose an Existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md
       - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
       - Construct Statements: tutorials/construct-statements.md
+      - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
   - Triggers: triggers.md
@@ -85,7 +86,8 @@ nav:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
      - Enterprise Login: references/enterprise-login.md
-     - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md 
+     - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
+     - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
 
 # - Choreo DevOps: devops/overview.md
 # Extensions
