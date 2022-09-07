@@ -9,7 +9,9 @@ Let's get started!
 ## Create an application
 
 1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, you can click on the Developer Portal link on the Choreo console header. 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
+
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+    
 2. Click **Applications** and then, click **+Create**.
 3. Enter the application name, select the usage policy, and optionally, add the application description. Click **Create**.
 4. You are redirected to the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
