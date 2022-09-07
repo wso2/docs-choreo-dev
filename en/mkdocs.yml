@@ -64,12 +64,11 @@ nav:
   - Triggers: triggers.md
   - Scheduled Tasks: scheduled-tasks.md
   - GraphQL APIs: graphql-api.md
-  - API Management:
-     # - API Security: manage/api-security.md
-     # - API Lifecycle: manage/api-lifecycle.md
-      - Developer Portal: manage/developer-portal.md
-      - Advanced Topics:
-        - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
+  - Developer Portal:
+      - Overview: developer-portal/developer-portal.md
+      - Manage Application: developer-portal/manage-application.md
+      - Manage Subscription: developer-portal/manage-subscription.md
+      - Test API: developer-portal/test-api.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
@@ -81,6 +80,8 @@ nav:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
      - Root Cause Analysis: observability/root-cause-analysis.md
+  - Administration:   
+     - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
