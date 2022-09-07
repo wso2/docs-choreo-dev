@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
 
 
 export class RestAPITemplate {
@@ -24,14 +26,10 @@ export class RestAPITemplate {
     cy.get('input[name="description"]').clear().type(description);
     cy.get('.MuiInputBase-formControl>div:not([id])').click()
     cy.get(`li[data-value=${accessModes}]`).click()
-    cy.get('[data-cyid="create-api-from-scratch-next"]').click();
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
-
-    if (isEPLogin) {
-      cy.setCookie("fidpId", "EnterpriseIDP")
-    } else {
-      cy.setCookie("fidpId", "choreoe2etest");
-    }
+    // cy.get('[data-cyid="create-api-from-scratch-submit"]').click();
+ 
+  //  Utils.setBrowserCookie()
   }
 }

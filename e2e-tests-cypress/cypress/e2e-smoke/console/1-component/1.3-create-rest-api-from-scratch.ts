@@ -39,7 +39,7 @@ describe("Verify project creation functionality", () => {
   const queryParameters2 = [{ key: "number", value: "5" }];
   const NEW_BRANCH = "feature";
   const API_NEW_VERSION = "1.1";
-  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
+
 
   before(() => {
     LoginPage.login();
@@ -63,11 +63,6 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it_privatedp("Verify component promote to stg", () => {
-    ComponentDeployPage.promoteToStg();
-    ComponentDeployPage.verifyStgeInvokeURL().should("not.eq", "");
-  });
-
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
     ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
@@ -78,7 +73,7 @@ describe("Verify project creation functionality", () => {
     LoginPage.navigateToCodespace();
     VSExplorer.creteNewBranch(NEW_BRANCH);
     VSExplorer.pasteCode("Numbers.bal");
-    VSExplorer.commitPush(commitMessage);
+    VSExplorer.commitPush(commitMessage,true);
   });
 
   it("Verify component commits", () => {
@@ -98,10 +93,6 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it_privatedp("Verify component promote to stg", () => {
-    ComponentDeployPage.promoteToStg();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
-  });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
@@ -117,16 +108,7 @@ describe("Verify project creation functionality", () => {
       });
   });
 
-  it_privatedp("Verify test functionality of root resource in stg on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(Environment.STAGING, "root", "number", "2").then(
-      (res) => {
-        expect(res.response).to.be.eq("4");
-        expect(res.statusCode).to.be.eq("200");
-      }
-    );
-  }
-  );
+
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
@@ -147,16 +129,7 @@ describe("Verify project creation functionality", () => {
       });
   });
 
-  it_privatedp("Verify test functionality using generated curl in Stg", () => {
-    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET, "root").
-      then((curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(4);
-          expect(res.status).equal(200);
-        });
-      }
-      );
-  });
+ 
 
   it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root").
@@ -182,19 +155,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it_privatedp("Verify test functionality of isOdd resource in stg on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Environment.STAGING,
-      "isOdd",
-      "number",
-      "5"
-    ).then((res) => {
-      expect(res.response).to.be.eq("true");
-      expect(res.statusCode).to.be.eq("200");
-    });
-  }
-  );
 
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
@@ -223,16 +183,7 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it_privatedp("Verify test functionality using generated curl in Stg", () => {
-    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET, "isOdd").then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        });
-      }
-    );
-  });
+
 
   it("Verify test functionality using generated curl in prod", () => {
     TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "isOdd").then(

@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { Utils } from "../../../utils";
 import { APITest } from "../../apis/api-test";
 import { Environment } from "../../enum/environment";
 import { HTTPMethod } from "../../enum/http-method-enum";
@@ -19,7 +20,7 @@ import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
 
 export class TestHelper {
-  public static testOnSwagger(env: Environment, resourcePath: string, key: string = "", value: string = "") {
+  static testOnSwagger(env: Environment, resourcePath: string, key: string = "", value: string = "") {
     APITest.testAPI();
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
@@ -35,15 +36,35 @@ export class TestHelper {
     });
   }
 
-  public static testOnCurl(env: Environment, httpMethod: HTTPMethod, pathParm: string, queryParameters1 = []) {
+  static testOnCurl(env: Environment, httpMethod: HTTPMethod, pathParm: string, queryParameters1 = []) {
     ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(env);
+    Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
     Curl.enterPathParameter(pathParm);
     Curl.addQueryParameter(queryParameters1);
-    cy.get("textarea").invoke("text").then(curl=>{
-      Cypress.env(`int_curl_${env}`,curl)
+    cy.get("textarea").invoke("text").then(curl => {
+      Cypress.env(`int_curl_${env}`, curl)
     })
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
+
+  static testOnGraphiQL(env: Environment, code: string) {
+    cy.get('div[class="execute-button-wrap"]>button').should('be.visible')
+    Curl.selectEnvironment(env);
+    cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]').should('exist').then($p => {
+      Utils.paste($p, code, false)
+    })
+    cy.get('div[class="toolbar"]>button').eq(0).should('be.enabled').click()
+    cy.get('div[class="execute-button-wrap"]>button').click()
+  }
+
+  static getGqlResult() {
+    let result = '';
+    cy.wait(6000)
+    cy.get('.CodeMirror-sizer>div>div>div').eq(3).invoke('text').then(r => cy.log(r.replace('x','').trim()))
+
+
+    cy.log(result)
+  }
+
 }

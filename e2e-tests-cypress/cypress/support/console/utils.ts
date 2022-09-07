@@ -153,15 +153,27 @@ export class Utils {
   }
 
 
-  static setBrowserCookie(isEPLogin: boolean) {
+  static setBrowserCookie(isEPLogin: boolean=false) {
     const dateString = new Date().toISOString();
     if (isEPLogin) {
       cy.setCookie("fidpId", "EnterpriseIDP")
-    }else{
+    } else {
       cy.setCookie("fidpId", "choreoe2etest")
     }
-  
+
     cy.setCookie("OptanonAlertBoxClosed", dateString)
+  }
+
+
+  static paste(obj, code, enter) {
+    const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
+      clipboardData: { getData: (type = 'text') => code, },
+    });
+    obj[0].dispatchEvent(pasteEvent);
+    if (enter) {
+      cy.wait(3000);
+      cy.wrap(obj).type('{enter}');
+    }
   }
 
 }

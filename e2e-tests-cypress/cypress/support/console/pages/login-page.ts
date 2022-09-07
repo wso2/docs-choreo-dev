@@ -143,7 +143,11 @@ export class LoginPage {
   }
 
   static persistApimToken() {
-    cy.intercept("GET", `${Cypress.env("appSvcURL")}/orgs/*`).as("orgs");
+    cy.intercept({
+      method: "GET",
+      url: `${Cypress.env("appSvcURL")}/orgs/*`,
+      times: 1
+    }).as("orgs");
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
       const token = header.replace("Bearer", "").trim();
@@ -152,6 +156,7 @@ export class LoginPage {
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
       GraphQL.deleteProjectsCreatedByTests(id, handle, token);
+      cy.reload()
     });
   }
 
