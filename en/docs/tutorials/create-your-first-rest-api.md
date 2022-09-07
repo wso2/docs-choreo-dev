@@ -247,7 +247,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
          
        4. Double-click **`variable`**, and enter `payload` as the variable name.
          
-       5. Click **`add-expression>`**.
+       5. Click **`<add-expression>`**.
          
        6. To add the expression as a key-value pair, click **Expressions**, and under the **Structural Constructors**, click **{ key : value }**.
          
