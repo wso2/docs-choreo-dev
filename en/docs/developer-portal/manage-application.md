@@ -9,7 +9,9 @@ Let's get started!
 ## Create an application
 
 1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, you can click on the Developer Portal link on the Choreo console header. 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
+
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+    
 2. Click **Applications** and then, click **+Create**.
 3. Enter the application name, select the usage policy, and optionally, add the application description. Click **Create**.
 4. You are redirected to the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
@@ -25,12 +27,14 @@ This section will walk you through the steps to generating an API access token i
 Let's get started!
 
 1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
+
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+
 2. Click **Applications**.
 3. Click **Production Keys** -> **OAuth 2.0 Tokens** on the left panel.
 4. Expand the **Advanced Configurations** section and review the options. 
 
-       ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
+    ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
 
    - **Grant Types:** The grant types used to generate the access token.
    - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications running on a browser or mobile device. 
@@ -41,9 +45,9 @@ Let's get started!
 5. Click **Generate Credentials** to generate the credentials for the application for the first time. 
 6. Once you generate the keys, you can find the application's consumer key and consumer secret. 
 
-       ![Credentials](../assets/img/developer-portal/manage-applications/credentials.png){.cInlineImage-small}
+    ![Credentials](../assets/img/developer-portal/manage-applications/credentials.png){.cInlineImage-half}
 
 7. You can use the UI to generate a test token using the consumer key and consumer secret for the application, only for test purposes. We strongly recommend **NOT** using this token in your production environment. 
 8. Click **:// CURL** to copy the cURL command template for generating the access token. You can add the consumer key and consumer secret to the URL and invoke the token endpoint to generate an API access token.
 
-    ![cURL command](../assets/img/developer-portal/manage-applications/curl-command.png){.cInlineImage-small}
+    ![cURL command](../assets/img/developer-portal/manage-applications/curl-command.png){.cInlineImage-half}

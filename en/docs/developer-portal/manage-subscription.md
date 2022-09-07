@@ -9,12 +9,15 @@ This guide takes you through the steps to subscribe to APIs in Choreo.
 Let's get started!
 
 1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click on the Developer Portal link on the Choreo console header. 
-    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-small}
+
+    ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
+
 2. Click **Applications**. 
 3. Select and click on the application you want to subscribe to from the list. 
 4. Click **Subscriptions** from the left panel. 
 5. Click **+ Add APIs**. 
 6. Select the usage plan and click **Add** to subscribe to an API.  You can subscribe to multiple APIs. You can change the usage plan after subscription as well. 
-   ![Add APIs](../assets/img/developer-portal/manage-subscriptions/add-apis.png){.cInlineImage-small}
+
+   ![Add APIs](../assets/img/developer-portal/manage-subscriptions/add-apis.png){.cInlineImage-half}
 
 You can now invoke the API using the application keys. 
