@@ -73,7 +73,7 @@ To build the statement, follow these steps:
 9. Click **Libraries** and search for `max`. In the filtered list, click  **lang.int:max**.
 
     !!! info
-        The **Libraries** tab lists all the Ballerina Standard and Language libraries.
+        The **Libraries** tab lists all the Ballerina standard and language libraries.
 
     ![Select library](../assets/img/statement-editor/select-library.gif){.cInlineImage-half}
 
