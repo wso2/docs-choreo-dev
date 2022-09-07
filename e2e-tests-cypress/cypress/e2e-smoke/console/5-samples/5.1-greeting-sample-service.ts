@@ -42,7 +42,7 @@ describe("Create Greeting sample in Choreo", () => {
       PROJECT_DESCRIPTION
     );
     ProjectOverviewPage.addNewComponent();
-    GreetingSample.selectSample()
+    GreetingSample.selectSample("Greetings")
     ComponentDevelopPage.getComponentURL();
   });
 

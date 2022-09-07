@@ -36,7 +36,7 @@ describe("Verify webhook creation functionality", () => {
   const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
   const TRIGGER_TYPE = "Slack";
   const TRIGGER_CHANNEL = "SlackEventsAppService";
-  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
+
 
   before(() => {
     LoginPage.login();
@@ -82,10 +82,7 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
-  it_privatedp("Component promotion to stg", () => {
-    ComponentDeployPage.promoteWebHookToSTG(CONFIG);
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
-  });
+
 
   it("Component promotion to prod", () => {
     ComponentDeployPage.promoteWebHookToProd(CONFIG);

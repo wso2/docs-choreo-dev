@@ -198,7 +198,7 @@ export class GraphQL {
     return this.callGraphQL(token, query);
   }
 
-  private static callGraphQL(token: string, query: any) {
+   static callGraphQL(token: string, query: any) {
     const appSvcURL = Cypress.env("newAppSvcURL");
     const header = {
       Authorization: `Bearer ${token}`,

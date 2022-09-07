@@ -42,7 +42,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
-  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
+ 
 
   before(() => {
     LoginPage.login();
@@ -67,10 +67,6 @@ describe("Choreo APIM publisher scenarios", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it_privatedp("Verify component promote and stg invoke url", () => {
-    APIDeployment.promoteToStg();
-    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
-  });
 
   it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
@@ -85,12 +81,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it_privatedp("Verify test functionality using Swagger UI in Stg", () => {
-    TestHelper.testOnSwagger(Environment.STAGING, "intensity").then((res) => {
-      expect(res.statusCode).to.be.equal("200");
-    });
-  });
-
+  
   it("Verify test functionality using Swagger UI in Prod", () => {
     TestHelper.testOnSwagger(Environment.PRODUCTION, "intensity").then(
       (res) => {
@@ -100,7 +91,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET,"intensity").then(
+    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, "intensity").then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.status).equal(200);
@@ -109,16 +100,9 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it_privatedp("Verify test functionality using generated curl in Stg", () => {
-    TestHelper.testOnCurl(Environment.STAGING, HTTPMethod.GET,"intensity").then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(200);
-      });
-    });
-  });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET,"intensity").then(
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "intensity").then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.status).equal(200);
@@ -138,11 +122,11 @@ describe("Choreo APIM publisher scenarios", () => {
       "eq",
       Environment.DEVELOPMENT
     );
-   
+
     // Verify that deployment has been updated by invoking the API without a token
     APITest.testAPI();
     ComponentTestPage.selectCurl();
-    Curl.selectEnvironment(Environment.DEVELOPMENT);
+    Curl.selectCurlEnvironment(Environment.DEVELOPMENT);
     Curl.selectMethod(HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
     Curl.getRequestComponents(`${Environment.DEVELOPMENT}intensity`).then(
