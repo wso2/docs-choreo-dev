@@ -64,12 +64,11 @@ nav:
   - Triggers: triggers.md
   - Scheduled Tasks: scheduled-tasks.md
   - GraphQL APIs: graphql-api.md
-  - API Management:
-     # - API Security: manage/api-security.md
-     # - API Lifecycle: manage/api-lifecycle.md
-      - Developer Portal: manage/developer-portal.md
-      - Advanced Topics:
-        - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
+  - Developer Portal:
+      - Overview: developer-portal/developer-portal.md
+      - Manage Application: developer-portal/manage-application.md
+      - Manage Subscription: developer-portal/manage-subscription.md
+      - Test API: developer-portal/test-api.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
@@ -125,6 +124,9 @@ markdown_extensions:
 plugins:
   - search
   - markdownextradata: {}
+  - redirects:
+      redirect_maps:
+          'manage/developer-portal.md': 'https://wso2.com/choreo/docs/developer-portal/developer-portal/' 
 extra_css:
   - assets/lib/highlightjs/default.min.css
   - assets/css/theme.css
