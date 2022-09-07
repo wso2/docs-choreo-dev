@@ -1,6 +1,6 @@
 # Test API
  
- Before using your API in production, you can test it using the integrated OpenAPI console in Choreo. Once the API has is deployed in the required environment, an API consumer can use the application credentials, generate an OAuth 2.0 token, and invoke the API to test it's functionality by providing values for the required parameters. 
+Before using your API in production, you can test it using the integrated OpenAPI console in Choreo. Once the API is deployed in the required environment, an API consumer can use the application credentials, generate an OAuth 2.0 token, and invoke the API to test its functionality by providing values for the required parameters. 
 
 This guide will take you through the steps to test an API in Choreo. 
 
