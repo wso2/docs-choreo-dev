@@ -32,7 +32,7 @@ Let's get started!
 3. Click **Production Keys** -> **OAuth 2.0 Tokens** on the left panel.
 4. Expand the **Advanced Configurations** section and review the options. 
 
-       ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
+    ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
 
    - **Grant Types:** The grant types used to generate the access token.
    - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications running on a browser or mobile device. 
@@ -43,7 +43,7 @@ Let's get started!
 5. Click **Generate Credentials** to generate the credentials for the application for the first time. 
 6. Once you generate the keys, you can find the application's consumer key and consumer secret. 
 
-       ![Credentials](../assets/img/developer-portal/manage-applications/credentials.png){.cInlineImage-half}
+    ![Credentials](../assets/img/developer-portal/manage-applications/credentials.png){.cInlineImage-half}
 
 7. You can use the UI to generate a test token using the consumer key and consumer secret for the application, only for test purposes. We strongly recommend **NOT** using this token in your production environment. 
 8. Click **:// CURL** to copy the cURL command template for generating the access token. You can add the consumer key and consumer secret to the URL and invoke the token endpoint to generate an API access token.
