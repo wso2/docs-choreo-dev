@@ -36,7 +36,7 @@ To build the statement, follow these steps:
 
     The **Variable** pane opens, displaying the syntax for a variable statement with **`<add-expression>`** selected by default.
 
-5. Click the **var** type descriptor on the statement and click **string** in the **Suggestions** tab.
+5. Click the **var** type descriptor on the statement and click **string** on the **Suggestions** tab.
 
     !!! info
         The **Suggestions** tab provides contextual suggestions based on the selected item. The **Suggestions** tab currently lists variable type suggestions because you selected the type descriptor.    
