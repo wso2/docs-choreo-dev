@@ -12,7 +12,7 @@ Choreo’s low-code editor allows developers to easily design (and then implemen
 
 In this section, let's develop the application that retrieves COVID-19-related statistics.
 
-### Step 1.1: Create a project and add a REST API component
+### Step 1.1: Create a project 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
