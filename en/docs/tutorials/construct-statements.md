@@ -36,7 +36,7 @@ To build the statement, follow these steps:
 
     ![Add variable statement](../assets/img/statement-editor/add-variable-statement.png){.cInlineImage-full}
 
-    The **Variable** pane opens, displaying the syntax for a variable statement with **`<add-expression>`** selected by default.
+    The **Variable** pane opens displaying the syntax for a variable statement with **`<add-expression>`** selected by default.
 
 2. Click the **var** type descriptor on the statement and click **string** on the **Suggestions** tab.
 
