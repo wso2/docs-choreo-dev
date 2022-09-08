@@ -90,8 +90,6 @@ spec:
         - mountPath: /workspace-manager.yaml
           name: config
           subPath: workspace-manager.yaml
-        - mountPath: /apps
-          name: pvc-userappstorage
         - name: secret-redis
           mountPath: "/mnt/csi/secret-redis"
           readOnly: true
@@ -111,9 +109,6 @@ spec:
       - name: config
         configMap:
           name: cm-workspace-manager
-      - name: pvc-userappstorage
-        persistentVolumeClaim:
-          claimName: pvc-userappstorage
       - name: secret-redis
         csi:
           driver: secrets-store.csi.k8s.io
