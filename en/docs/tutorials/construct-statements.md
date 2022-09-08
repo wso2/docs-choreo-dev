@@ -85,7 +85,7 @@ To build the statement, follow these steps:
 
 7. Click the **int0:max(n,ns)** function. 
 
-     When you select a function or a method call, the **Parameters** tab opens by default. This tab displays information about the selected function or method call, including details about parameters, descriptions, and return type descriptions. On this tab, you can easily add parameters to the expression by selecting the check boxes for the relevant parameters.
+     When you select a function or a method call, the **Parameters** tab opens by default. This tab displays information about the selected function or method call, including details about parameters, descriptions, and return type descriptions. On this tab, you can easily add parameters to the expression by selecting the checkboxes for the relevant parameters.
 
      ![Select function](../assets/img/statement-editor/select-function.gif){.cInlineImage-half}
 
