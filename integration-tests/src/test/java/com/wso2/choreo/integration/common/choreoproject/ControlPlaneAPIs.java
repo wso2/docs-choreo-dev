@@ -98,17 +98,15 @@ public class ControlPlaneAPIs {
                  CloseableHttpResponse response = httpClient.execute(request)) {
                 int statusCode = response.getStatusLine().getStatusCode();
                 String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode != HttpStatus.SC_OK) {
-                    throw new ComponentCreationStatusCheckException(statusCode, responseBody);
-                }
+                if (statusCode == HttpStatus.SC_OK) {
+                    JsonObject dataJsonObject = new JsonParser().parse(responseBody).getAsJsonObject().
+                            getAsJsonObject("data");
 
-                JsonObject dataJsonObject = new JsonParser().parse(responseBody).getAsJsonObject().
-                        getAsJsonObject("data");
-
-                String creationStatus =
-                        dataJsonObject.get("status").isJsonNull() ? "" : dataJsonObject.get("status").getAsString();
-                if (creationStatus.equals("completed")) {
-                    return;
+                    String creationStatus =
+                            dataJsonObject.get("status").isJsonNull() ? "" : dataJsonObject.get("status").getAsString();
+                    if (creationStatus.equals("completed")) {
+                        return;
+                    }
                 }
             } catch (IOException e) {
                 throw new ComponentCreationStatusCheckException(e);

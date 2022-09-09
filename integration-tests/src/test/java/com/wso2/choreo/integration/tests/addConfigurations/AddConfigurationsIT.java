@@ -42,6 +42,6 @@ public class AddConfigurationsIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void testAddConfigurations() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, component);
+        Orgs.addConfiguration(choreoTestClient, this, component, "dev");
     }
 }
