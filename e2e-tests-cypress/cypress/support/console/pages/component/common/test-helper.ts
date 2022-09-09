@@ -53,7 +53,7 @@ export class TestHelper {
     Curl.selectEnvironment(env);
     cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]').should('exist').then($p => {
       Utils.paste($p, code, false)
-    })
+    }).wait(2000)
     cy.get('div[class="toolbar"]>button').eq(0).should('be.enabled').click()
     cy.get('div[class="execute-button-wrap"]>button').click()
   }
