@@ -153,14 +153,8 @@ export class Utils {
   }
 
 
-  static setBrowserCookie(isEPLogin: boolean=false) {
+  static setBrowserCookie(isEPLogin: boolean = false) {
     const dateString = new Date().toISOString();
-    if (isEPLogin) {
-      cy.setCookie("fidpId", "EnterpriseIDP")
-    } else {
-      cy.setCookie("fidpId", "choreoe2etest")
-    }
-
     cy.setCookie("OptanonAlertBoxClosed", dateString)
   }
 

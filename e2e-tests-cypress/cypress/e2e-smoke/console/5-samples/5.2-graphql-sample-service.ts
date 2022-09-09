@@ -17,7 +17,7 @@ describe("Graphql sample service test", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const commitMessage = "adding new service";
-  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
+
 
   const TEST_QUERY = '{greeting(name:"dasun")}'
 
@@ -43,7 +43,7 @@ describe("Graphql sample service test", () => {
   it("Edit code in VScode", () => {
     ComponentOverviewPage.navigateToDevelop();
     LoginPage.navigateToCodespace();
-    // VSExplorer.creteNewBranch(NEW_BRANCH);
+
     VSExplorer.pasteCode("gqlservice.bal");
     VSExplorer.commitPush(commitMessage);
   });
@@ -51,7 +51,7 @@ describe("Graphql sample service test", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    // ComponentDevelopPage.selectBranch(NEW_BRANCH).then((arr) => { expect(arr).to.include(NEW_BRANCH); });
+
     ComponentDevelopPage.refreshBranchCommit()
     ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
@@ -60,11 +60,6 @@ describe("Graphql sample service test", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
-  });
-
-  it_privatedp("Verify component promote to stg", () => {
-    ComponentDeployPage.promoteToStg();
     ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
