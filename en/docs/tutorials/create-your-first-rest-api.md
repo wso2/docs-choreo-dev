@@ -104,15 +104,19 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     2. In the **Add Constructs** pane that appears, click **Connector**.
 
-    3. Search for **COVID-19** and select the **COVID-19 by ballerinax** connector when it appears in the search results.
+        To search for the requred connector and add it with changes, follow the steps below:
 
-        In the **Endpoint** pane that appears, click **Save** to add the endpoint.
+         1. Search for **COVID-19** and select the **COVID-19 by ballerinax** connector when it appears in the search results.
 
-    4. To add a query parameter to the connector you added, click **+** below it.
+         2. On the connector statement displayed in the **Endpoint** pane, double-click **covid19Ep**. Replace `covid19Ep` with `covid19Client`.
+
+         3. Click **Save** to add the endpoint.
+
+    3. To add a query parameter to the connector you added, click **+** below it.
 
         In the **Add Constructs** pane, click **Action**. The **Action** pane opens. Configure the action as follows:
 
-        1. In the **Action** pane, click **covid19Ep**.
+        1. In the **Action** pane, click **covid19Client**.
 
         2. Click **getStatusByCountry**.
 
@@ -124,7 +128,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
         
         5. Click **Save**.
 
-    5. To extract the response of the **COVID-19** connector, add a variable by following these sub-steps.
+    4. To extract the response of the **COVID-19** connector, add a variable by following these sub-steps.
 
         1. Click the last **+** in the low-code diagram.
 
@@ -154,21 +158,25 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
                `<int>statusByCountry.cases`
 
-    6. The REST API needs to further process the COVID-19 cases per country you derived to present the number of cases per one million people in the given country's population. Therefore, let's derive population statistics per country via the **World Bank** as follows:
+    5. The REST API needs to further process the COVID-19 cases per country you derived to present the number of cases per one million people in the given country's population. Therefore, let's derive population statistics per country via the **World Bank** as follows:
 
         1. Click the last **+** in the low-code diagram.
 
         2. In the **Add Constructs** pane that opens, click **Connector**.
 
-        3. In the **Connectors** pane, search for World Bank, and select the **World Bank by ballerinax** connector when it appears in the search results.
+            To search for the requred connector and add it with changes, follow the steps below:
 
-        4. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
+            1. In the **Connectors** pane, search for World Bank, and select the **World Bank by ballerinax** connector when it appears in the search results.
+
+            2. On the connector statement displayed in the **Endpoint** pane, double-click **worldbankEp**. Replace `worldbankEp` with `worldbankClient`.
+
+            3. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
 
         5. Click the last **+** in the low-code diagram (below the connector you added).
 
         6. In the **Add Constructs** pane, click **Action**.
 
-        7. Click **worldbankEp** to define an action for the World Bank connector.
+        7. Click **worldbankClient** to define an action for the World Bank connector.
 
         8. Click **Get Country Population**. This allows you to fetch the population by country via the connector.
 
@@ -180,7 +188,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
         
         11. Click **Save**.
 
-    7. The REST API needs to calculate the number of COVID-19 cases in every group of one million people in the specified country. Therefore, to calculate the number of groups with one million people in a country, add a variable as follows:
+    6. The REST API needs to calculate the number of COVID-19 cases in every group of one million people in the specified country. Therefore, to calculate the number of groups with one million people in a country, add a variable as follows:
 
         1. Click the last **+** in the low-code diagram.
 
@@ -206,7 +214,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
             5. Click **Save**.
 
-    8. To calculate the number of COVID-19 cases in each group of one million, add another variable as follows:
+    7. To calculate the number of COVID-19 cases in each group of one million, add another variable as follows:
 
         1. Click the last **+** in the low-code diagram.
 
@@ -236,7 +244,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
             6. Click **Save**.
 
-    9. To generate the payload, add a variable as follows:
+    8. To generate the payload, add a variable as follows:
 
         1. Click the last **+** in the low-code diagram.
 
@@ -264,7 +272,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
         12. Click **Save**.
 
-    10. Now you can add a return statement to return the payload as follows:
+    9. Now you can add a return statement to return the payload as follows:
 
         1. Click the last **+** in the low-code diagram.
 
@@ -294,17 +302,21 @@ service / on new http:Listener(9090) {
 
     resource function get stats/[string country]() returns json|error {
 
-        covid19:Client covid19Ep = check new ();
-        covid19:CovidCountry statusByCountry = check covid19Ep->getStatusByCountry(country = "");
+        covid19:Client covid19Client = check new ();
+
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country = "");
         int totalCases = <int>statusByCountry.cases;
-        worldbank:Client worldbankEp = check new ();
-        worldbank:IndicatorInformation[] populationByCountry = check worldbankEp->getPopulationByCountry(countryCode = "");
+        worldbank:Client worldbankClient = check new ();
+        worldbank:IndicatorInformation[] populationByCountry = check worldbankClient->getPopulationByCountry(countryCode = "");
         int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
         decimal totalCasesPerMillion = <decimal>totalCases / populationMillions;
-        json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
+        json payload = {
+            country: country,
+            totalCasesPerMillion: totalCasesPerMillion
+        };
+        return payload;
     }
 }
-
 ```
 Now you can run the REST API and test it to see whether it works as expected.
 
