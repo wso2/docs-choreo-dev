@@ -124,7 +124,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
             This adds `country` as a query parameter in the connector configuration to allow the REST API to fetch COVID-19 statistics specific to a given country.
 
-        4. In the action statement, do the following changes: 
+        4. Update the action statement as follows:
         
             1. Double-click **`getStatusByCountryResponse`** variable name to edit it. Replace the default value with `statusByCountry`.
         
