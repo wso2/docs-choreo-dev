@@ -108,9 +108,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
          1. Search for **COVID-19** and select the **COVID-19 by ballerinax** connector when it appears in the search results.
 
-         2. On the connector statement displayed in the **Endpoint** pane, double-click **covid19Ep**. Replace `covid19Ep` with `covid19Client`.
-
-         3. Click **Save** to add the endpoint.
+         2. Click **Save** to add the endpoint.
 
     3. To add a query parameter to the connector you added, click **+** below it.
 
@@ -172,9 +170,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
             1. In the **Connectors** pane, search for World Bank, and select the **World Bank by ballerinax** connector when it appears in the search results.
 
-            2. On the connector statement displayed in the **Endpoint** pane, double-click **worldbankEp**. Replace `worldbankEp` with `worldbankClient`.
-
-            3. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
+            2. In the **Endpoint** pane that opens, click **Save** to add the endpoint.
 
         5. Click the last **+** in the low-code diagram (below the connector you added).
 
