@@ -124,7 +124,11 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
             This adds `country` as a query parameter in the connector configuration to allow the REST API to fetch COVID-19 statistics specific to a given country.
 
-        4. In the action statement, double-click **`getStatusByCountryResponse`** variable name to edit it. Replace the default value with `statusByCountry`.
+        4. In the action statement, do the following changes: 
+        
+            1. Double-click **`getStatusByCountryResponse`** variable name to edit it. Replace the default value with `statusByCountry`.
+        
+            2. Double-click **""**, and then click **Suggestions**. Click **country string**. Doing so specifies that the country for which the connector needs to fetch COVID statistics is the country you enter as the query parameter value.         
         
         5. Click **Save**.
 
@@ -184,7 +188,11 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
        
             You are adding the `countryCode` query parameter to the World Bank connector configuration to fetch population statistics for the country that the REST API user specifies.
        
-        10. Double-click **`getPopulationByCountryResponse`** which is the default query parameter name to edit it. Change it to `populationByCountry`.
+        10. Update the action statement as follows:
+        
+            1. Double-click **`getPopulationByCountryResponse`** which is the default query parameter name to edit it. Change it to `populationByCountry`.
+            
+            2. Double-click **""**, and then click **Suggestions**. Click **country string**. Doing so specifies that the country for which the connector needs to fetch population statistics is the country you enter as the query parameter value. 
         
         11. Click **Save**.
 
