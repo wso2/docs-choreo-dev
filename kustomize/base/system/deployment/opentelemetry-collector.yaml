@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
   labels:
     choreo.component: opentelemetry-collector
   name: opentelemetry-collector
@@ -18,7 +19,12 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        seccomp.security.alpha.kubernetes.io/pod: "docker/default"
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-opentelemetry-collector:latest
         name: otel-collector
