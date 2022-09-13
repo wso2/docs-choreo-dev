@@ -308,7 +308,7 @@ service / on new http:Listener(9090) {
 
         covid19:Client covid19Client = check new ();
 
-        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country = "");
+        covid19:CovidCountry statusByCountry = check covid19Client->getStatusByCountry(country = country);
         int totalCases = <int>statusByCountry.cases;
         worldbank:Client worldbankClient = check new ();
         worldbank:IndicatorInformation[] populationByCountry = check worldbankClient->getPopulationByCountry(countryCode = "");
