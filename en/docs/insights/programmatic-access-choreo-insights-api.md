@@ -39,9 +39,23 @@ To create an application and generate keys, follow the steps below:
 
     ![Generate-Credentials](../assets/img/insights/generate-credentials.png){.cInlineImage-full}
 
-5. Specify a suitable token expiry time and generate a token by clicking **Generate Test Token**.
+5. Specify a suitable token expiry time and click **Update**.
    
-    ![Generate-Test-Token](../assets/img/insights/generate-test-token.png){.cInlineImage-full}
+    ![Generate-Test-Token](../assets/img/insights/update-token-expirary-time.png){.cInlineImage-full}
+
+6. Execute the following curl command to generate an access token.
+
+    ```bash
+    curl --location --request POST 'https://sts.choreo.dev/oauth2/token' \
+    --header 'Authorization: Basic <BASE64_ENCODED_CONSUMER_KEY_AND_CONSUMER_SECRET_OF_YOUR_APP_HERE>' \
+    --header 'Content-Type: application/x-www-form-urlencoded' \
+    --data-urlencode 'grant_type=client_credentials' \
+    --data-urlencode 'orgHandle=<YOUR_ORG_HANDLE_HERE>' \
+    --data-urlencode 'scope=apim:api_manage'
+    ```
+
+    !!! info
+        You can find your handle name of your organization by sign in to [https://console.choreo.dev](https://console.choreo.dev), go to **Settings** and click on the **Copy Handle**.
 
     This token can then be used to access the Insights API exposed via [https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api](https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api).
 
