@@ -4,6 +4,7 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: opentelemetry-collector
   name: opentelemetry-collector
@@ -21,7 +22,6 @@ spec:
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
         seccomp.security.alpha.kubernetes.io/pod: "docker/default"
     spec:
-      automountServiceAccountToken: false
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -84,6 +84,7 @@ spec:
         - name: config
           configMap:
             name: opentelemetry-collector
+      serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
