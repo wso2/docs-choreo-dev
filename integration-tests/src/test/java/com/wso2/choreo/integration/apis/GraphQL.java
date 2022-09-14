@@ -80,6 +80,45 @@ public class GraphQL {
                 .validate(json()));
     }
 
+    public static void promoteComponent(HttpClient client, TestActionRunner runner, ChoreoComponent component)
+            throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+
+        Map<String, String> requestParams = new HashMap<>() {
+            {
+                put("componentId", component.getId());
+                put("apiVersionId", component.getLatestApiVersion().getId());
+                put("sourceReleaseId", component.getReleaseIdForEnvironment("dev"));
+                put("targetEnvironmentId", component.getLatestAppEnvId("prod"));
+            }
+        };
+
+        String graphQuery = MessageUtils.generateStringFromTemplate(
+                "templates/graphql/requests/promote.mustache",
+                requestParams);
+
+        String requestBody = MessageUtils.generateGQLPayload(graphQuery);
+
+        // Promote component
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(requestBody)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        runner.$(http()
+                .client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/graphql/responses/promoteSuccess.json"))
+                .validate(json()));
+    }
+
     public static void deploymentStatusByVersion(HttpClient client, TestActionRunner runner, ChoreoComponent component)
             throws Exception {
         Map<String, String> requestParams = new HashMap<>() {
@@ -119,15 +158,17 @@ public class GraphQL {
                                 .validate(json())));
     }
 
-    public static void componentDeployment(HttpClient client, TestActionRunner runner, ChoreoComponent component)
-            throws Exception {
+    public static void componentDeployment(HttpClient client, TestActionRunner runner,
+                                           ChoreoComponent component, String envName) throws Exception {
+        String envId = component.getLatestAppEnvId(envName);
+
         Map<String, String> requestParams = new HashMap<>() {
             {
                 put("orgHandler", component.getOrgHandler());
                 put("orgUuid", component.getOrganization().getOrgUUID());
                 put("componentId", component.getId());
                 put("versionId", component.getLatestApiVersion().getId());
-                put("environmentId", component.getLatestAppEnvId("dev"));
+                put("environmentId", envId);
             }
         };
 
@@ -142,7 +183,7 @@ public class GraphQL {
 
         Map<String, String> responseParams = new HashMap<>() {
             {
-                put("environmentId", component.getLatestAppEnvId("dev"));
+                put("environmentId", envId);
                 put("sha", latestCommitSha);
                 put("versionId", component.getLatestApiVersion().getId());
             }
@@ -153,7 +194,7 @@ public class GraphQL {
 
         // Poll deployment status
         runner.$(repeatOnError()
-                .until("i = 25")
+                .until("i = 30")
                 .index("i")
                 .autoSleep(5000)
                 .actions(

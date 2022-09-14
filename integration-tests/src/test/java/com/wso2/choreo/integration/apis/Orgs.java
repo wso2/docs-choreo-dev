@@ -32,11 +32,11 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
  * Implements Orgs API calls and their response validations.
  */
 public class Orgs {
-    public static void addConfiguration(HttpClient client, TestActionRunner runner, ChoreoComponent component)
-            throws Exception {
+    public static void addConfiguration(HttpClient client, TestActionRunner runner,
+                                        ChoreoComponent component, String envName) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
-        String devEnvIdToDeploy = component.getLatestAppEnvId("dev");
+        String envIdToDeploy = component.getLatestAppEnvId(envName);
         String latestVersionId = component.getLatestApiVersion().getId();
         JsonArray commitHistory = component.getCommitHistory(accessToken);
         String latestCommitSha = component.getLatestCommitHash(commitHistory);
@@ -45,7 +45,7 @@ public class Orgs {
 
         String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
                 .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
-                .concat(devEnvIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
+                .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
 
         Map<String, Object> requestBodyMap = new HashMap<>() {
             {

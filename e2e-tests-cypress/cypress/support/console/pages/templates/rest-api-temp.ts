@@ -11,6 +11,10 @@
  * associated services.
  */
 
+import { Utils } from "../../utils";
+
+
+
 export class RestAPITemplate {
   static selectHttpAPITemplate() {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
@@ -24,16 +28,10 @@ export class RestAPITemplate {
   ) {
     cy.get('[role="dialog"] ul>div:nth-child(1)').click();
     cy.get('[name="name"]').clear().type(componentName);
-    cy.get('input[name="description"]').clear().type(description);
-    cy.get(".MuiInputBase-formControl>div:not([id])").click();
-    cy.get(`li[data-value=${accessModes}]`).click();
+    cy.get('div>textarea').clear().type(description);
+    cy.get('.MuiInputBase-formControl>div:not([id])').click()
+    cy.get(`li[data-value=${accessModes}]`).click()
     cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-testid="create-api-from-scratch-submit"]').click();
-
-    if (isEPLogin) {
-      cy.setCookie("fidpId", "EnterpriseIDP");
-    } else {
-      cy.setCookie("fidpId", "choreoe2etest");
-    }
   }
 }

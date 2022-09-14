@@ -16,10 +16,14 @@ export class Curl {
       cy.get('td button[class*="MuiIconButton-colorInherit"]').eq(2 * i).click();
     }
   }
-  static selectEnvironment(env: Environment) {
-    cy.get('[data-testid="add-btn"]')
-    cy.get('[aria-haspopup="listbox"]').eq(1).click();
+
+  static selectCurlEnvironment(env: Environment) {
+    cy.get('div>.MuiInputBase-formControl').eq(0).click();
     cy.get("ul>li").contains(env).click();
+  }
+  static selectEnvironment(env: Environment) {
+    cy.get('[data-cyid="select-env"]').click()
+    cy.get('[data-cyid="item-env-name"]').contains(env).click()
   }
 
   static getRequestComponents(env: string) {

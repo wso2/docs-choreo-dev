@@ -82,9 +82,9 @@ public class ComponentUtils {
         return restAPI;
     }
 
-    public static void invokeDevEndpoint(String accessToken, ChoreoComponent component) throws Exception {
+    public static void invokeApiEndpoint(String accessToken, ChoreoComponent component, Constant.Environment env) throws Exception {
         InvokeInformation invokeInformation = component.getInvokeInformation(accessToken,
-                Constant.displayType.restAPI.name(), Constant.Environment.Development.name());
+                Constant.displayType.restAPI.name(), env.name());
         String requestURI = invokeInformation.getInvokeUrl();
         if (requestURI == null) {
             throw new InvokeInformationNotFoundException();

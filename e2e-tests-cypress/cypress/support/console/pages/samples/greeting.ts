@@ -11,11 +11,30 @@
  * associated services.
  */
 
+import { Utils } from "../../utils"
+
 
 export class GreetingSample {
-  static selectSample() {
-    cy.get(".choreo-sample-list .MuiGrid-item h3").should("have.length.greaterThan", 2)
-    cy.get(".choreo-sample-list .MuiPaper-elevation1").eq(0).realHover().wait(2000)
-    cy.get(".choreo-sample-list .MuiPaper-elevation1").eq(0).realClick()
+  static selectSample(service: string, isEPLogin: boolean = false) {
+    const sampleService =`[data-cyid=${service.toLowerCase().replace(" ", "_")}]`
+    Utils.setBrowserCookie(isEPLogin)
+    cy.contains("Get started with a template").should("be.visible")
+    cy.get("button>span>p").each($p => {
+      cy.log($p.text())
+      if ($p.text().trim() === 'View all') {
+        cy.wrap($p).click()
+      }
+    })
+    cy.get('div[class*=" MuiDialog-scrollPaper"]>div>div>div>div>div>div>div>button').click()
+    cy.get("div>div[data-cyid]>div>div>h3").should("have.length.greaterThan", 2)
+    cy.get('div[role="none presentation"]>div>div>div>div>div>div>div>div>div>div>input').should('be.visible').type(`${service}{enter}`)
+
+    cy.get(`${sampleService}`).should("be.visible")
+    cy.get(`${sampleService}`).eq(0).realHover().wait(2000)
+    Utils.setBrowserCookie(isEPLogin)
+    cy.get(`${sampleService}`).eq(0).realClick()
+
+
+    Utils.setBrowserCookie(isEPLogin)
   }
 }

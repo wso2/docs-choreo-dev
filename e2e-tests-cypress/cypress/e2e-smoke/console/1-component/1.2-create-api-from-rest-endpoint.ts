@@ -49,7 +49,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
-  const it_privatedp = Cypress.env("isPrivateOrg") ? it : it.skip;
+
 
   before(() => {
     LoginPage.login();
@@ -78,12 +78,7 @@ describe("Verify project creation functionality", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it_privatedp("Verify component promote and stg invoke url", () => {
-    APIDeployment.promoteToStg();
-    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
-  });
-
-  it("Verify prod invoke url", () => {
+   it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
@@ -96,13 +91,6 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-  it_privatedp("Verify test functionality using Swagger UI in Stg", () => {
-    TestHelper.testOnSwagger(Environment.STAGING, OPERATION_USERS).then(
-      (res) => {
-        expect(res.statusCode).to.be.equal("200");
-      }
-    );
-  });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
     TestHelper.testOnSwagger(Environment.PRODUCTION, OPERATION_USERS).then(
@@ -140,10 +128,7 @@ describe("Verify project creation functionality", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-  it_privatedp("Verify new component promote to stg", () => {
-    APIDeployment.promoteToStg();
-    APIDeployment.verifyStgeInvokeURL().should("not.eq", "");
-  });
+ 
 
   it("Verify new prod invoke url", () => {
     APIDeployment.PromoteToProd();
@@ -160,15 +145,6 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.getResponseCode().should("eq", "200");
   });
 
-  it_privatedp("Test in stg", () => {
-    APITest.testAPI();
-    APITest.selectEnvironment(Environment.STAGING);
-    ComponentTestPage.getTestKey();
-    SwaggerUI.invokeResource(OPERATION_USERS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-    SwaggerUI.invokeResource(OPERATION_POSTS);
-    SwaggerUI.getResponseCode().should("eq", "200");
-  });
 
   it("Test in prod", () => {
     APITest.testAPI();

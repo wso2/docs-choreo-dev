@@ -10,6 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
+import { Utils } from "../../utils";
 
 
 
@@ -34,7 +35,7 @@ export class VSExplorer {
   }
 
   static verifyVsCodeWorkspace() {
-    cy.get('[title*=".bal Diagram"]');
+    cy.get('[title*=".bal Diagram"]',{timeout:300000}).should("be.visible");
   }
 
   static closeTab() {
@@ -68,8 +69,9 @@ export class VSExplorer {
         cy.wrap(bd).type("{ctrl}`");
       }
     });
-    cy.get(VSExplorer.terminal).click().then($d => this.paste($d, command, true)).wait(waitTime);
+    cy.get(VSExplorer.terminal).click().then($d => Utils.paste($d, command, true)).wait(waitTime);
   }
+
 
   static creteNewBranch(branchName: string) {
     this.waitTillWorkSpaceLoad()
@@ -81,12 +83,16 @@ export class VSExplorer {
   static waitTillWorkSpaceLoad() {
     cy.get("[title*='.bal Diagram']", { timeout: 360000 }).wait(4000);
   }
-  static commitPush(commitMessage) {
+  static commitPush(commitMessage, isNewUpstreamBranch: boolean = false) {
     this.enterCommandInTerminal("bash /config/workspace/.githooks/pre-commit");
     this.enterCommandInTerminal("rm /config/workspace/.githooks/pre-commit", 2000);
     this.enterCommandInTerminal("git add .", 2000);
     this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 4000);
-    this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
+    if (isNewUpstreamBranch) {
+      this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
+    } else {
+      this.enterCommandInTerminal("git push", 4000);
+    }
   }
 
 
@@ -99,19 +105,9 @@ export class VSExplorer {
     cy.get('div[class="view-line"]').should("be.visible").click();
     cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
       cy.focused().then($destination => {
-        this.paste($destination, code, false)
+        Utils.paste($destination, code, false)
       });
     });
-  }
-  private static paste(obj, code, enter) {
-    const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
-      clipboardData: { getData: (type = 'text') => code, },
-    });
-    obj[0].dispatchEvent(pasteEvent);
-    if (enter) {
-      cy.wait(3000);
-      cy.wrap(obj).type('{enter}');
-    }
   }
   private static createFile(fileName: string) {
     cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon').click().wait(2000);
