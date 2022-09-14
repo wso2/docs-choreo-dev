@@ -13,9 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # -----------------------------------------------------------------------
-
-resources:
-  - choreo-apim
-  - choreo-nginx
-  - choreodp-system
-  - choreo-obs
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: opentelemetry-agent
+  name: opentelemetry-agent
+spec:
+  ports:
+  - name: otlp-grpc # Default endpoint for OpenTelemetry gRPC receiver.
+    port: 4317
+    protocol: TCP
+    targetPort: otlp-grpc
+  selector:
+    choreo.component: opentelemetry-agent

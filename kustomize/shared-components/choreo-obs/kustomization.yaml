@@ -15,7 +15,4 @@
 # -----------------------------------------------------------------------
 
 resources:
-  - choreo-apim
-  - choreo-nginx
-  - choreodp-system
-  - choreo-obs
+  - opentelemetry-agent
