@@ -55,7 +55,7 @@ To create an application and generate keys, follow the steps below:
     ```
 
     !!! info
-        You can find your handle name of your organization by sign in to [https://console.choreo.dev](https://console.choreo.dev), go to **Settings** and click on the **Copy Handle**.
+        To get your organization handle name, you must sign in to [https://console.choreo.dev](https://console.choreo.dev), go to **Settings** and click **Copy Handle**.
 
     This token can then be used to access the Insights API exposed via [https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api](https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api).
 
