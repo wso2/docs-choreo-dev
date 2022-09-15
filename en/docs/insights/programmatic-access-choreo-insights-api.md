@@ -43,7 +43,7 @@ To create an application and generate keys, follow the steps below:
    
     ![Generate-Test-Token](../assets/img/insights/update-token-expirary-time.png){.cInlineImage-full}
 
-6. Execute the following curl command to generate an access token.
+6. Execute the following curl command to generate an access token:
 
     ```bash
     curl --location --request POST 'https://sts.choreo.dev/oauth2/token' \
