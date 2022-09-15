@@ -19,7 +19,7 @@ export class ChoreoHomePage {
 
   static navigateToHome() {
     const handle = Cypress.env("current_org")["handle"];
-    cy.get(`[href="/organizations/${handle}/home"]`).eq(1).click();
+    cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
   }
 
   static navigateToComponents() {
