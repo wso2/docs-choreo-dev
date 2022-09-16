@@ -104,7 +104,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     2. In the **Add Constructs** pane that appears, click **Connector**.
 
-        To search for the requred connector and add it with changes, follow the steps below:
+        To search for the required connector and add it with changes, follow the steps below:
 
          1. Search for **COVID-19** and select the **COVID-19 by ballerinax** connector when it appears in the search results.
 
@@ -166,7 +166,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
         2. In the **Add Constructs** pane that opens, click **Connector**.
 
-            To search for the requred connector and add it with changes, follow the steps below:
+            To search for the required connector and add it with changes, follow the steps below:
 
             1. In the **Connectors** pane, search for World Bank, and select the **World Bank by ballerinax** connector when it appears in the search results.
 
