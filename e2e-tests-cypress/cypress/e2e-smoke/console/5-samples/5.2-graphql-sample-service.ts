@@ -11,7 +11,7 @@ import { GreetingSample } from "../../../support/console/pages/samples/greeting"
 import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { Utils } from "../../../support/console/utils";
 
-describe("Graphql sample service test", () => {
+describe("Graphql GQL service test", () => {
 
 
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -19,7 +19,10 @@ describe("Graphql sample service test", () => {
   const commitMessage = "adding new service";
 
 
-  const TEST_QUERY = '{greeting(name:"dasun")}'
+  const TEST_QUERY = '{greeting(name:"John")}'
+  const TEST_QUERY_RESPONSE="Hello, John"
+  const TEST_MUTATION='mutation{createUser(name:"John")}'
+  const TEST_MUTATION_RESPONSE='createUser": "User created with name: John'
 
   before(() => {
     LoginPage.login();
@@ -28,7 +31,7 @@ describe("Graphql sample service test", () => {
   after(() => {
     ChoreoHomePage.logout();
   });
-  it("Creating a project and add Greeting sample", () => {
+  it("Creating a project and add GQL sample", () => {
     ProjectListingPage.createNewProject(
       PROJECT_NAME,
       PROJECT_DESCRIPTION
@@ -69,10 +72,37 @@ describe("Graphql sample service test", () => {
   });
 
 
-  it("Verify test functionality of root resource in dev on swagger", () => {
+  it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_QUERY)
-    TestHelper.getGqlResult()
+    TestHelper.getGqlResult(TEST_QUERY_RESPONSE)
+
+  });
+
+
+  it("Verify test functionality of GQL query in Prod on swagger", () => {
+    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_QUERY)
+    TestHelper.getGqlResult(TEST_QUERY_RESPONSE)
+  });
+
+
+
+  it("Verify test functionality of GQL mutation in dev on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_MUTATION)
+    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE)
+
+  });
+
+
+  it("Verify test functionality of GQL mutation in Prod on swagger", () => {
+    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_MUTATION)
+    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE)
+  });
+
+  it("Verify suspending Prod deployed component", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.stopAllDeployment();
   });
 
 })
