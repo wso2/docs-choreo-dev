@@ -33,7 +33,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
     !!! tip
         Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
 
-4. On the **Conponents** landing page, click **Create**.
+4. On the **Components** landing page, click **Create**.
 
 5. Click the **REST API Proxy** card.
 
