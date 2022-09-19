@@ -14,8 +14,17 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-resources:
-  - opentelemetry-agent-deployment.yaml
-  - opentelemetry-agent-service.yaml
-  - opentelemetry-agent-hpa.yaml
-  - opentelemetry-agent-pdb.yaml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/metrics: '[{"type":"Resource","resource":{"name":"memory","targetAverageUtilization":75}}]'
+  name: opentelemetry-agent
+spec:
+  maxReplicas: 3
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: opentelemetry-agent
+  targetCPUUtilizationPercentage: 75

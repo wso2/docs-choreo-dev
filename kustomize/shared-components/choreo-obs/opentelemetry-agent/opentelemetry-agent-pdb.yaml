@@ -14,8 +14,12 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-resources:
-  - opentelemetry-agent-deployment.yaml
-  - opentelemetry-agent-service.yaml
-  - opentelemetry-agent-hpa.yaml
-  - opentelemetry-agent-pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: opentelemetry-agent
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: opentelemetry-agent
