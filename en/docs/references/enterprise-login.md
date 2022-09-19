@@ -10,7 +10,7 @@ This guide takes you through the steps you need to follow to configure an enterp
 
 ## Step 1: Create an organization in Choreo
 
-- Sign in to the Choreo Console at <a>https://console.choreo.dev/</a>. using a Google/ GitHub/ Microsoft account.
+- Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
   
       If you are a:
 
