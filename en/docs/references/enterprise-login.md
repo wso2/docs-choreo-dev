@@ -4,7 +4,9 @@ Choreo's Enterprise Login feature allows your users residing in an external IdP 
 
 This guide takes you through the steps you need to follow to configure an enterprise login for your organization in Choreo. 
 
-Let's begin!
+
+## Prerequisites 
+- Make sure you have a valid email domain. 
 
 ## Step 1: Create an organization in Choreo
 
@@ -27,30 +29,42 @@ Let's begin!
 
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
    To create your organization on the Choreo IdP, follow these steps:
-       1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to  create your Choreo account.
+       1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
        2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
      ![Create an organization in Asgardeo](../assets/img/references/enterprise-login/create-asgardeo-organization.png){.cInlineImage-half}
+4. 
 
-4. Finally, send an email to `choreo-help@wso2.com` requesting to configure enterprise login to your organization. 
- Mention the following information in the request:
-      - Organization name or handle. For example, “Stark Industries” or “starkindustries”
-      - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
+    - **If you already have a support account with us**, send us the organization name/handle and the email domains specific to your organization through our support portal. 
+    - **If you do not have a support account with us yet**, send an email to `choreo-help@wso2.com` requesting to enable enterprise login to your organization. 
+     
+        Mention the following information in the request:
 
-        !!!info "Sample Email"
-            Subject : [Stark Industries] Configure enterprise login
-               
-            Content:
-                
-                Hi CS team,
-                Configure enterprise login to my organization and please find the relevant information below.
-                Organization name/handle: “Stark Industries”/“starkindustries”
+        - Organization name or handle. For example, “Stark Industries” or “starkindustries”
+        - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
 
-                Email domains specific to my organization: “@stark.com”, “@starkindustries.com”, and “@stark.eu”
+                !!!info "Sample Email"
+                    Subject : [Stark Industries] Configure enterprise login
+                    
+                    Content:
+                        
+                        Hi CS team,
+                        Configure enterprise login to my organization and please find the relevant information below.
+                        Organization name/handle: “Stark Industries”/“starkindustries”
 
-                Thank you!
-               
-That's it! 
-Once our support team configures an enterprise login for your organization, you will receive an Email.
+                        Email domains specific to my organization: “@stark.com”, “@starkindustries.com”, and “@stark.eu”
+
+                        Thank you!
+
+5. To configure your enterprise login, our support team will send you an email with a verification code. Login to your domain host account and configure the DNS record for your email domain with the following values:
+
+    | **Field**                          | **Value**             |
+    |------------------------------------|-----------------------|
+    | **Name/Host/Alias**                | `@` or leave blank         |
+    | **Time to Live (TTL)**             | Leave default value or use `86400` |
+    |**Value/Answer/Destination**        | wso2-domain-verification:<`verification_code`>|
+
+
+**What's next?**
 
 Next, you can create a connection to the federated identity provider (For example, Auth0, ADFS, Keycloak, etc.), following the steps below:
 
