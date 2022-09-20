@@ -376,7 +376,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
                         NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
                         NoLatestAppEnvIdFoundException {
-                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+                JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
@@ -525,7 +525,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+                JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
 
                 Map<String, String> responseParams = new HashMap<>();

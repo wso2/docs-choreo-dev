@@ -172,6 +172,60 @@ public abstract class ChoreoComponent {
         }
     }
 
+
+    /**
+     * Retrieve commit history of a component with custom branch
+     *
+     * @param accessToken OAuth token to invoke the Chorea backend
+     * @return A JsonArray of commit history
+     * @throws IOException               if an IO error occurs when sending or receiving request
+     * @throws GetCommitHistoryException if retrieving the component commit history fails
+     */
+    public JsonArray getCommitHistorySub(String accessToken)
+            throws IOException, GetCommitHistoryException {
+        String requestURI = choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
+        String branchName = "feature1";
+        HashMap<String, String> requestBodyMap = new HashMap<>() {{
+            put("query", "query {" +
+                    "      commitHistory(componentId: \"" + id + "\", branch: \"" + branchName + "\") {" +
+                    "          author {" +
+                    "            name," +
+                    "            date," +
+                    "            email," +
+                    "            avatarUrl" +
+                    "          }," +
+                    "        message" +
+                    "        sha" +
+                    "        isLatest" +
+                    "    }" +
+                    "  }");
+        }};
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+
+        HttpPost request = new HttpPost(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            log.debug(responseBody);
+            if (statusCode != org.apache.http.HttpStatus.SC_OK) {
+                throw new GetCommitHistoryException(statusCode, responseBody);
+            }
+
+            return new JsonParser().parse(responseBody).getAsJsonObject().getAsJsonObject("data")
+                    .getAsJsonArray("commitHistory");
+        }
+    }
+
     /**
      * Add deployment configurations to a Choreo component
      *
