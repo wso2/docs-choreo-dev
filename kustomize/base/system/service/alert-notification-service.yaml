@@ -9,5 +9,8 @@ spec:
   - name: an-port
     port: 9090
     targetPort: an-port
+  - name: mgt-port
+    port: 9092
+    targetPort: mgt-port
   selector:
     choreo.component: alert-notification-service
