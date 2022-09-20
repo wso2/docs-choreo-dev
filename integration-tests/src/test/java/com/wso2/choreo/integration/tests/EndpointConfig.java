@@ -102,4 +102,13 @@ public class EndpointConfig {
                 .build();
     }
 
+    @Bean
+    public HttpClient choreoTestClientForCDNTheme() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl("https://choreodevdevportalcdn19.blob.core.windows.net/")
+                .build();
+    }
+
 }
