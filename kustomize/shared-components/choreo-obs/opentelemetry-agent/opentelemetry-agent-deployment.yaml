@@ -94,10 +94,6 @@ spec:
             mountPath: /app/config.yaml
             subPath: config.yaml
             readOnly: true
-          - name: config
-            mountPath: /app/data-planes.yaml
-            subPath: data-planes.yaml
-            readOnly: true
           - mountPath: /mnt/csi/secret-otel
             name: secret-otel
             readOnly: true
