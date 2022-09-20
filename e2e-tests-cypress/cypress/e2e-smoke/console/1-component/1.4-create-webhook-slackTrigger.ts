@@ -92,6 +92,7 @@ describe("Verify webhook creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
+    cy.get('[data-testid="feature-disable-info"]').should('be.visible');
   });
 
   it("Verify suspending Dev deployed component", () => {

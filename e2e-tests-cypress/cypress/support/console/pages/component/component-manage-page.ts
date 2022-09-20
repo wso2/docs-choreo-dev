@@ -37,7 +37,6 @@ export class ComponentAPILifecycle {
 
   static manageLifecycle() {
     cy.get('[data-testid="Lifecycle"]').click();
-    cy.get('[data-testid="feature-disable-info"]').should('be.visible');
   }
   static verifyDevRevision() {
     return cy.get('.MuiBox-root >div>div>span[class*="MuiChip-label"]').eq(0).invoke("text");
