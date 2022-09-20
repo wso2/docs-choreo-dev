@@ -44,27 +44,27 @@ spec:
             - configMapRef:
                 name: cm-dp-rudder
           env:
-          - name: MSSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: secret-dp-rudder
-                key: MSSQL_PASSWORD
-          - name: APIM_REST_API_CONSUMER_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: secret-dp-rudder
-                key: APIM_REST_API_CONSUMER_SECRET
-                optional: true
-          - name: JOB_TTL_SECONDS_AFTER_FINISHED
-            value: "86400"
-          - name: APIM_REVISION_LIMIT
-            value: "20"
-          - name: HPA_ENABLED
-            value: "true"
-          - name: PDB_ENABLED
-            value: "true"
-          - name: GORM_PREPARED_STATEMENTS_ENABLED
-            value: "false"
+            - name: MSSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-rudder
+                  key: MSSQL_PASSWORD
+            - name: APIM_REST_API_CONSUMER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-dp-rudder
+                  key: APIM_REST_API_CONSUMER_SECRET
+                  optional: true
+            - name: JOB_TTL_SECONDS_AFTER_FINISHED
+              value: "86400"
+            - name: APIM_REVISION_LIMIT
+              value: "20"
+            - name: HPA_ENABLED
+              value: "true"
+            - name: PDB_ENABLED
+              value: "true"
+            - name: GORM_PREPARED_STATEMENTS_ENABLED
+              value: "false"
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -98,29 +98,29 @@ spec:
               path: /healthz
               port: http-port
           volumeMounts:
-          - name: secret-dp-rudder
-            mountPath: /mnt/csi/secret-dp-rudder
-            readOnly: true
+            - name: secret-dp-rudder
+              mountPath: /mnt/csi/secret-dp-rudder
+              readOnly: true
       volumes:
-      - name: secret-dp-rudder
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-dp-rudder
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-dp-rudder
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-rudder
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - dp-rudder
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - dp-rudder
+                topologyKey: kubernetes.io/hostname

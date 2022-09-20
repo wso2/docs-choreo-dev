@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: quota-limiter
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -78,7 +78,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - ALL
+                - ALL
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
@@ -103,12 +103,12 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - quota-limiter
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - quota-limiter
+                topologyKey: kubernetes.io/hostname

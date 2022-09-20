@@ -119,12 +119,12 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - dp-mizzen
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - dp-mizzen
+                topologyKey: kubernetes.io/hostname

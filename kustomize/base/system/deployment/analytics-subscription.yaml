@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: analytics-subs
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -27,127 +27,127 @@ spec:
           type: RuntimeDefault
       automountServiceAccountToken: true
       containers:
-      - env:
-        - name: CHOREO_DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_HOST
-              name: env-choreo-app-db
-        - name: CHOREO_DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_NAME
-              name: cm-choreo-app-db
-        - name: CHOREO_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
+        - env:
+            - name: CHOREO_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_HOST
+                  name: env-choreo-app-db
+            - name: CHOREO_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_NAME
+                  name: cm-choreo-app-db
+            - name: CHOREO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-db
+                  key: CHOREO_DB_PASSWORD
+            - name: CHOREO_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_PORT
+                  name: cm-choreo-app-db
+            - name: CHOREO_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_USERNAME
+                  name: cm-choreo-app-db
+            - name: CHOREO_DB_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_DB_DRIVER
+                  name: cm-choreo-app-db
+            - name: IDP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_HOST
+                  name: env-idp-replica
+            - name: IDP_JWKS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_JWKS_ENDPOINT
+                  name: cm-idp-replica
+            - name: IDP_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_ISSUER
+                  name: env-idp-replica
+            - name: IDP_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_CLIENT_ID
+                  name: env-idp-replica
+            - name: ORG_API
+              valueFrom:
+                configMapKeyRef:
+                  key: ORG_API
+                  name: env-frontend
+          envFrom:
+            - configMapRef:
+                name: env-analytics-subsmgt
+          image: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt:latest
+          securityContext:
+            runAsUser: 10002
+            runAsGroup: 10002
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          name: analytics-subs
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: healthz
+              path: /subsmgt/healthz
+          livenessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              port: healthz
+              path: /subsmgt/healthz
+          ports:
+            - containerPort: 9090
+              name: anl-sub-port
+              protocol: TCP
+            - containerPort: 9093      # To be used for public health check (external)
+              name: healthz
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-app-db
               name: secret-app-db
-              key: CHOREO_DB_PASSWORD
-        - name: CHOREO_DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_PORT
-              name: cm-choreo-app-db
-        - name: CHOREO_DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_USERNAME
-              name: cm-choreo-app-db
-        - name: CHOREO_DB_DRIVER
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_DB_DRIVER
-              name: cm-choreo-app-db
-        - name: IDP_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_HOST
-              name: env-idp-replica
-        - name: IDP_JWKS_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_JWKS_ENDPOINT
-              name: cm-idp-replica
-        - name: IDP_ISSUER
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_ISSUER
-              name: env-idp-replica
-        - name: IDP_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_CLIENT_ID
-              name: env-idp-replica
-        - name: ORG_API
-          valueFrom:
-            configMapKeyRef:
-              key: ORG_API
-              name: env-frontend
-        envFrom:
-          - configMapRef:
-              name: env-analytics-subsmgt
-        image: choreocontrolplane.azurecr.io/choreoipaas/analytics-subscription-mgt:latest
-        securityContext:
-          runAsUser: 10002
-          runAsGroup: 10002
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-        name: analytics-subs
-        readinessProbe:
-          initialDelaySeconds: 5
-          timeoutSeconds: 15
-          periodSeconds: 10
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: healthz
-            path: /subsmgt/healthz
-        livenessProbe:
-          initialDelaySeconds: 30
-          httpGet:
-            port: healthz
-            path: /subsmgt/healthz
-        ports:
-        - containerPort: 9090
-          name: anl-sub-port
-          protocol: TCP
-        - containerPort: 9093      # To be used for public health check (external)
-          name: healthz
-          protocol: TCP
-        resources:
-          limits:
-            cpu: 500m
-            memory: 768Mi
-          requests:
-            cpu: 300m
-            memory: 512Mi
-        volumeMounts:
-        - mountPath: /mnt/csi/secret-app-db
-          name: secret-app-db
-          readOnly: true
+              readOnly: true
       restartPolicy: Always
       volumes:
-      - name: secret-app-db
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-app-db
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-app-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-app-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - analytics-subs
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - analytics-subs
+                topologyKey: kubernetes.io/hostname

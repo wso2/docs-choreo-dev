@@ -6,9 +6,9 @@ metadata:
   name: perfanalyzer-estimator
 spec:
   ports:
-  - name: perfan-port
-    port: 5005
-    protocol: TCP
-    targetPort: perfan-port
+    - name: perfan-port
+      port: 5005
+      protocol: TCP
+      targetPort: perfan-port
   selector:
     choreo.component: perfanalyzer-estimator

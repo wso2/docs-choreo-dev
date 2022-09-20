@@ -16,7 +16,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: datacollector
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -124,12 +124,12 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - datacollector
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - datacollector
+                topologyKey: kubernetes.io/hostname

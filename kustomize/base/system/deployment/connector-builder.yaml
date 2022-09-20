@@ -15,7 +15,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: connector-builder
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -79,19 +79,19 @@ spec:
               cpu: 300m
               memory: 512Mi
       volumes:
-        - emptyDir: {}
+        - emptyDir: { }
           name: tmp
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - connector-builder
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - connector-builder
+                topologyKey: kubernetes.io/hostname

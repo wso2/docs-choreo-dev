@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: shared-image-viewer
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -66,19 +66,19 @@ spec:
             runAsGroup: 10500
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - shared-image-viewer
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - shared-image-viewer
+                topologyKey: kubernetes.io/hostname

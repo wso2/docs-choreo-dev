@@ -6,11 +6,11 @@ metadata:
   name: obsapi
 spec:
   ports:
-  - name: obsapi-port
-    port: 9095
-    targetPort: obsapi-port
-  - name: grpc-port
-    port: 9096
-    targetPort: grpc-port
+    - name: obsapi-port
+      port: 9095
+      targetPort: obsapi-port
+    - name: grpc-port
+      port: 9096
+      targetPort: grpc-port
   selector:
     choreo.component: obsapi

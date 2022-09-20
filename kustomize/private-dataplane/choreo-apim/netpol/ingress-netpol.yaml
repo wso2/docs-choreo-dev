@@ -20,9 +20,9 @@ metadata:
   name: allow-router-ingress-network-policy
 spec:
   policyTypes:
-  - Ingress
+    - Ingress
   podSelector:
     matchLabels:
       cc.component: choreo-connect-deployment
   ingress:
-  - {}
+    - { }

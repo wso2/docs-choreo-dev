@@ -75,9 +75,9 @@ spec:
               name: pid-volume
       volumes:
         - name: cache-volume
-          emptyDir: {}
+          emptyDir: { }
         - name: pid-volume
-          emptyDir: {}
+          emptyDir: { }
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

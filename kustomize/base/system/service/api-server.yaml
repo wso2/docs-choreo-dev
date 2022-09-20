@@ -6,9 +6,9 @@ metadata:
   name: api-server
 spec:
   ports:
-  - name: api-server-port
-    port: 80
-    protocol: TCP
-    targetPort: http-port
+    - name: api-server-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
   selector:
     choreo.component: api-server
