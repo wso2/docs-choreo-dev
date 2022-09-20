@@ -61,6 +61,9 @@ spec:
             - containerPort: 9090
               name: an-port
               protocol: TCP
+            - containerPort: 9092
+              name: mgt-port
+              protocol: TCP
             - containerPort: 9091      # To be used for readiness/liveness probes (internal)
               name: health
               protocol: TCP
