@@ -92,9 +92,6 @@ describe("Verify webhook creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    cy.contains("This feature is disabled for webhook components.").should(
-      "be.visible"
-    );
   });
 
   it("Verify suspending Dev deployed component", () => {
