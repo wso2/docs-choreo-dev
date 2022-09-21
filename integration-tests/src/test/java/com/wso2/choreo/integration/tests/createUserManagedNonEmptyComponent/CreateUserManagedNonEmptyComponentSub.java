@@ -61,9 +61,9 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         private static String apiKey;
         private static String apiId;
         private String repoName = "byor-greetings-app2";
-        private String repoSubpath = "test";
+        private String repoSubpath = "hello_service";
         private String repoType = "UserManagedNonEmpty";
-        private String repoBranch = "feature";
+        private String repoBranch = "feature1";
         private String prBranch;
         private String githubOrg;
         private String githubPAT;
@@ -101,6 +101,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+                // The GH repository is initiated everyday with a new Ballerina project using a GH Action Workflow
                 String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/")
                                 .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
                 APICreator testAPI = new APICreator();

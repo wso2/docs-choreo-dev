@@ -17,6 +17,8 @@ import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Constant;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -107,7 +109,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl("https://choreodevdevportalcdn19.blob.core.windows.net/")
+                .requestUrl(Constant.CDN_THEME_ENDPOINT)
                 .build();
     }
 
