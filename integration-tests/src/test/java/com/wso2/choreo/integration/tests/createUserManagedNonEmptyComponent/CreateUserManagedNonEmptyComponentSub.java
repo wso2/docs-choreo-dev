@@ -63,7 +63,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         private String repoName = "byor-greetings-app2";
         private String repoSubpath = "hello_service";
         private String repoType = "UserManagedNonEmpty";
-        private String repoBranch = "feature1";
+        private String repoBranch = "feature";
         private String prBranch;
         private String githubOrg;
         private String githubPAT;

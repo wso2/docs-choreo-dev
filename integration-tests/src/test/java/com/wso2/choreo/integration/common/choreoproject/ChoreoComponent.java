@@ -184,7 +184,7 @@ public abstract class ChoreoComponent {
     public JsonArray getCommitHistorySub(String accessToken)
             throws IOException, GetCommitHistoryException {
         String requestURI = choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-        String branchName = "feature1";
+        String branchName = "feature";
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", "query {" +
                     "      commitHistory(componentId: \"" + id + "\", branch: \"" + branchName + "\") {" +
