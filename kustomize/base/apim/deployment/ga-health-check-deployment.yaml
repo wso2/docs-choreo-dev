@@ -35,10 +35,8 @@ spec:
     spec:
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
                   - key: antiaffinity
                     operator: In
@@ -50,70 +48,70 @@ spec:
           type: RuntimeDefault
       automountServiceAccountToken: false
       containers:
-      - name: global-adapter-health-check-client
-        volumeMounts:
-        - name: secret-asb
-          mountPath: /mnt/csi/secret-asb
-          readOnly: true
-        image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:invalid
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 10500
-          runAsGroup: 10500
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - all
-          readOnlyRootFilesystem: true
-        env:
-        - name: SERVER_PORT
-          value: "7777"
-        - name: ASB_CONNECTION_STRING
-          valueFrom:
-            secretKeyRef:
-              name: secret-asb
-              key: ASB_CONNECTION_STRING
-        - name: TOPIC_CLIENT_ID
-          value: "520bc16b-6ff6-4d94-970e-1fa9c4708084"
-        - name: IDLE_TIMEOUT
-          value: "1800000"
-        - name: PRICING_TIER
-          value: Standard
-        - name: MESSAGING_DESTINATION
-          value: notification
-        - name: HEALTH_CHECK_SCHEDULE
-          value: "*/60 * * * * *"
-        readinessProbe:
-          initialDelaySeconds: 15
-          timeoutSeconds: 15
-          periodSeconds: 10
-          failureThreshold: 3
-          successThreshold: 1
-          exec:
-            command:
-              - /bin/sh
-              - -c
-              - pgrep java
-        livenessProbe:
-          initialDelaySeconds: 20
-          timeoutSeconds: 15
-          periodSeconds: 30
-          failureThreshold: 3
-          successThreshold: 1
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - pgrep java
-        ports:
-        - containerPort: 7777
-        resources:
-          limits:
-            cpu: 300m
-            memory: 256Mi
-          requests:
-            cpu: 100m
-            memory: 256Mi
+        - name: global-adapter-health-check-client
+          volumeMounts:
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
+              readOnly: true
+          image: choreocontrolplane.azurecr.io/choreoipaas/ga-notification-health-check:invalid
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+          env:
+            - name: SERVER_PORT
+              value: "7777"
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-asb
+                  key: ASB_CONNECTION_STRING
+            - name: TOPIC_CLIENT_ID
+              value: "520bc16b-6ff6-4d94-970e-1fa9c4708084"
+            - name: IDLE_TIMEOUT
+              value: "1800000"
+            - name: PRICING_TIER
+              value: Standard
+            - name: MESSAGING_DESTINATION
+              value: notification
+            - name: HEALTH_CHECK_SCHEDULE
+              value: "*/60 * * * * *"
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pgrep java
+          livenessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pgrep java
+          ports:
+            - containerPort: 7777
+          resources:
+            limits:
+              cpu: 300m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
       volumes:
         - name: secret-asb
           csi:

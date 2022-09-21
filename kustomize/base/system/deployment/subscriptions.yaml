@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: subscriptions
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -93,7 +93,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+                - all
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
@@ -139,13 +139,11 @@ spec:
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - subscriptions
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - subscriptions
               topologyKey: kubernetes.io/hostname

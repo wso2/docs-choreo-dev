@@ -75,18 +75,16 @@ spec:
               name: pid-volume
       volumes:
         - name: cache-volume
-          emptyDir: {}
+          emptyDir: { }
         - name: pid-volume
-          emptyDir: {}
+          emptyDir: { }
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: antiaffinity
-                      operator: In
-                      values:
-                        - devops-portal
-                topologyKey: kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - devops-portal
+              topologyKey: kubernetes.io/hostname

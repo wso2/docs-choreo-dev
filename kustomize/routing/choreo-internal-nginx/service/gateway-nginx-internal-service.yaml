@@ -22,8 +22,8 @@ spec:
   selector:
     deployment: choreo-internal-nginx
   ports:
-  - name: https-port
-    port: 9443
-    protocol: TCP
-    targetPort: 9443
+    - name: https-port
+      port: 9443
+      protocol: TCP
+      targetPort: 9443
   type: ClusterIP

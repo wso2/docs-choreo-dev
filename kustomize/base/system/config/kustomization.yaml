@@ -6,7 +6,7 @@ configMapGenerator:
   - name: env-workspace-manager-shared # shared workspace-manager configs across environments
     behavior: create
     literals:
-    - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
+      - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
   - name: cm-choreo-testbase-db
     behavior: create
     literals:
@@ -110,14 +110,14 @@ configMapGenerator:
     behavior: create
     literals:
       - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
-      - GITHUB_API=https://api.github.com  
+      - GITHUB_API=https://api.github.com
       - GATEWAY_JWKS_ENDPOINT=/oauth2/jwks
       - SERVICE_PORT=9090
       - HEALTH_SERVICE_PROT=9091
       - CHOREO_BALLERINA_VERSION=2201.0.0
       - DP_CLOUD_MANAGER_ENDPOINT=http://dp-cloud-manager:80
       - CP_GRAPHQL_ENDPOINT=http://cp-graphql:9095
-      - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090    
+      - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090
   - name: cm-choreo-app-db
     behavior: create
     literals:

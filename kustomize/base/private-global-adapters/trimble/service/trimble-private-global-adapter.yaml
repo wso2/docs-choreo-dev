@@ -26,15 +26,15 @@ spec:
   selector:
     choreo.component: trimble-private-global-adapter
   ports:
-  - name: "http-gamanagementserver"
-    port: 18000
-    targetPort: 18000
-    protocol: TCP
-  - name: "https-global-adapter"
-    port: 9843
-    targetPort: 9843
-    protocol: TCP
-  - name: "http-global-api-proxy"
-    port: 9745
-    targetPort: 9745
-    protocol: TCP
+    - name: "http-gamanagementserver"
+      port: 18000
+      targetPort: 18000
+      protocol: TCP
+    - name: "https-global-adapter"
+      port: 9843
+      targetPort: 9843
+      protocol: TCP
+    - name: "http-global-api-proxy"
+      port: 9745
+      targetPort: 9745
+      protocol: TCP

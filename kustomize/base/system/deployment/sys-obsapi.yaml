@@ -117,13 +117,11 @@ spec:
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - sys-obsapi
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - sys-obsapi
               topologyKey: kubernetes.io/hostname

@@ -6,11 +6,11 @@ metadata:
   name: analytics-subs
 spec:
   ports:
-  - name: service-port
-    port: 9090
-    targetPort: 9090
-  - name: health-port
-    port: 9093
-    targetPort: 9093
+    - name: service-port
+      port: 9090
+      targetPort: 9090
+    - name: health-port
+      port: 9093
+      targetPort: 9093
   selector:
     choreo.component: analytics-subs
