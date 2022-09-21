@@ -38,15 +38,20 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class ThemePreference extends TestNGCitrusSpringSupport {
         private static String accessToken;
         private String orgUuid;
+        private String orgHandle;
 
         @Autowired
         private HttpClient choreoTestClientForTheme;
+        @Autowired
+        private HttpClient choreoTestClientForCDNTheme;
 
         @BeforeClass
         public void beforeClass()
                         throws TokenRetrievalException, IOException, InterruptedException, ProjectCreationException {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+                orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+
         }
 
         @Test
@@ -75,5 +80,52 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                                 .type(MessageType.JSON)
                                 .body(new ClassPathResource(
                                                 "templates/themeManagement/post_update_theme_success.json")));
+        }
+
+        @Test(dependsOnMethods = {"testUpdateThemeConfig"})
+        @CitrusTest
+        public void testChangeLive() throws IOException, InterruptedException {
+                String requestURL = Constant.THEME_ENDPOINT_SUFFIX
+                        .concat(orgUuid)
+                        .concat("/themes/default/change-live?action=upload");
+
+                $(http()
+                        .client(choreoTestClientForTheme)
+                        .send()
+                        .post(requestURL)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        );
+
+                $(http()
+                        .client(choreoTestClientForTheme)
+                        .receive()
+                        .response(HttpStatus.OK));
+        }
+
+        @Test(dependsOnMethods = {"testChangeLive"})
+        @CitrusTest
+        public void testCDNThemeConfig() throws IOException, InterruptedException {
+                String requestURL = orgHandle.concat("/default.json");
+
+                $(http()
+                        .client(choreoTestClientForCDNTheme)
+                        .send()
+                        .get(requestURL)
+                        .message()
+                        .header(HttpHeaders.CACHE_CONTROL, "no-cache")
+                        .header(HttpHeaders.PRAGMA, "no-cache")
+                        .header(HttpHeaders.EXPIRES, "0")
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                $(http()
+                        .client(choreoTestClientForCDNTheme)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .body(new ClassPathResource(
+                                "templates/themeManagement/post_update_theme_success.json")));
+
         }
 }

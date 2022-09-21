@@ -61,7 +61,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         private static String apiKey;
         private static String apiId;
         private String repoName = "byor-greetings-app2";
-        private String repoSubpath = "test";
+        private String repoSubpath = "hello_service";
         private String repoType = "UserManagedNonEmpty";
         private String repoBranch = "feature";
         private String prBranch;
@@ -101,6 +101,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+                // The GH repository is initiated everyday with a new Ballerina project using a GH Action Workflow
                 String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/")
                                 .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
                 APICreator testAPI = new APICreator();
@@ -376,7 +377,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
                         NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
                         NoLatestAppEnvIdFoundException {
-                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+                JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
@@ -525,7 +526,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
+                JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
 
                 Map<String, String> responseParams = new HashMap<>();
