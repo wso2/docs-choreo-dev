@@ -43,18 +43,9 @@ spec:
                 name: env-dp-rudder
             - configMapRef:
                 name: cm-dp-rudder
+            - secretRef:
+                name: secret-dp-rudder
           env:
-            - name: MSSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-rudder
-                  key: MSSQL_PASSWORD
-            - name: APIM_REST_API_CONSUMER_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-dp-rudder
-                  key: APIM_REST_API_CONSUMER_SECRET
-                  optional: true
             - name: JOB_TTL_SECONDS_AFTER_FINISHED
               value: "86400"
             - name: APIM_REVISION_LIMIT
