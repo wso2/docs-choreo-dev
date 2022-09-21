@@ -54,6 +54,7 @@ spec:
                     secretKeyRef:
                       name: secret-step-usage-publisher
                       key: AZURE_AUTH_APP_CLIENT_SECRET
+                      optional: true
               envFrom:
                 - configMapRef:
                     name: env-step-usage-publisher
