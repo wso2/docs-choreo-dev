@@ -57,7 +57,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: ORGBLOCKING_ENABLED
+            - name: ORG_BLOCKING_ENABLED
               envFrom:
                 - configMapRef:
                     name: nginx-feature-flags

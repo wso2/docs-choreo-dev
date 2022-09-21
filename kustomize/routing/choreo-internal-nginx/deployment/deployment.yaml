@@ -65,6 +65,10 @@ spec:
                 secretKeyRef:
                   name: secret-redis
                   key: REDIS_PASSWORD
+            - name: ORG_BLOCKING_ENABLED
+              envFrom:
+                - configMapRef:
+                    name: nginx-feature-flags
           image: choreocontrolplane.azurecr.io/choreoipaas/openresty:latest
           imagePullPolicy: Always
           lifecycle:
