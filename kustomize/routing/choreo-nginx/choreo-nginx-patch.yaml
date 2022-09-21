@@ -28,10 +28,8 @@ spec:
                 name: redis-config
             - secretRef:
                 name: secret-redis
-            - name: ORG_BLOCKING_ENABLED
-              envFrom:
-                - configMapRef:
-                    name: nginx-feature-flags
+            - configMapRef:
+                name: nginx-feature-flags
           volumeMounts:
             - name: redis-subscribe-folder
               mountPath: /mnt/redis
