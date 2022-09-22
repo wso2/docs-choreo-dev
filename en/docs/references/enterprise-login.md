@@ -35,9 +35,9 @@ To configure enterprise login for your Choreo organization, follow the steps bel
    
    To create your organization on the Choreo IdP, follow these steps:
 
-       1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
+    1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
 
-       2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
+    2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
 
          ![Create an organization in Asgardeo](../assets/img/references/enterprise-login/create-asgardeo-organization.png){.cInlineImage-half}
 
