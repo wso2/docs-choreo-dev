@@ -33,10 +33,10 @@ To configure enterprise login for your Choreo organization, follow the steps bel
 
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
    
-   To create your organization on the Choreo IdP, follow these steps:
-
+    To create your organization on the Choreo IdP, follow these steps:
+    
     1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
-
+    
     2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
 
          ![Create an organization in Asgardeo](../assets/img/references/enterprise-login/create-asgardeo-organization.png){.cInlineImage-half}
@@ -52,7 +52,7 @@ To configure enterprise login for your Choreo organization, follow the steps bel
         - Organization name or handle. For example, “Stark Industries” or “starkindustries”
         - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
 
-            !!!info "Sample Email"
+        !!!info "Sample Email"
 
                     Subject : [Stark Industries] Configure enterprise login
                     
