@@ -4,53 +4,78 @@ Choreo's Enterprise Login feature allows your users residing in an external IdP 
 
 This guide takes you through the steps you need to follow to configure an enterprise login for your organization in Choreo. 
 
-Let's begin!
+
+## Prerequisites 
+Make sure you have a valid email domain. 
 
 ## Step 1: Create an organization in Choreo
 
-- Sign in to the Choreo Console at <a>https://console.choreo.dev/</a>. using a Google/ GitHub/ Microsoft account.
+To create an organization in Choreo, follow the steps below:
+
+1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
   
-      If you are a:
-
-       - **New user**: enter a unique organization name and create an organization. For example, "Stark Industries".
-
+2. Create an organization as follows:
+ 
+    - **If you are a new user**: enter a unique organization name and create an organization. For example, "Stark Industries".
+    
         ![Create an organization in Choreo](../assets/img/references/enterprise-login/create-choreo-organization.png){.cInlineImage-small}
  
-       - **Returning user**: expand the drop-down for your profile and click **Settings**. Under **Organizations**, you can view the organization you created at sign-up. 
+    - **If you are a returning user**: expand the drop-down for your profile and click **Settings**. Under **Organizations**, you can view the organization you created at sign-up. 
  
 ## Step 2: Configure enterprise login for your Choreo organization
+
+To configure enterprise login for your Choreo organization, follow the steps below:
 
 1. Expand the drop-down for your profile and click **Settings**.
 2. Click **Copy Handle** to copy the organization handle to the clipboard.
 
-       ![Copy organization name](../assets/img/references/enterprise-login/copy-organization-name.png){.cInlineImage-half}
+    ![Copy organization name](../assets/img/references/enterprise-login/copy-organization-name.png){.cInlineImage-half}
 
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
-   To create your organization on the Choreo IdP, follow these steps:
-       1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to  create your Choreo account.
-       2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
-     ![Create an organization in Asgardeo](../assets/img/references/enterprise-login/create-asgardeo-organization.png){.cInlineImage-half}
+   
+    To create your organization on the Choreo IdP, follow these steps:
+    c
+    1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
+    
+    2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
 
-4. Finally, send an email to `choreo-help@wso2.com` requesting to configure enterprise login to your organization. 
- Mention the following information in the request:
-      - Organization name or handle. For example, “Stark Industries” or “starkindustries”
-      - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
+         ![Create an organization in Asgardeo](../assets/img/references/enterprise-login/create-asgardeo-organization.png){.cInlineImage-half}
+
+4.  To enable enterprise login for your organization, send us an email as follows:
+
+    - **If you already have a support account with us**, send us the organization name/handle and the email domains specific to your organization through our support portal. 
+
+    - **If you do not have a support account with us yet**, send an email to `choreo-help@wso2.com` requesting to enable enterprise login to your organization. 
+     
+        Mention the following information in the request:
+
+        - Organization name or handle. For example, “Stark Industries” or “starkindustries”
+        - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
 
         !!!info "Sample Email"
-            Subject : [Stark Industries] Configure enterprise login
-               
-            Content:
-                
-                Hi CS team,
-                Configure enterprise login to my organization and please find the relevant information below.
-                Organization name/handle: “Stark Industries”/“starkindustries”
 
-                Email domains specific to my organization: “@stark.com”, “@starkindustries.com”, and “@stark.eu”
+                    Subject : [Stark Industries] Configure enterprise login
+                    
+                    Content:
+                        
+                        Hi CS team,
+                        Configure enterprise login to my organization and please find the relevant information below.
+                        Organization name/handle: “Stark Industries”/“starkindustries”
 
-                Thank you!
-               
-That's it! 
-Once our support team configures an enterprise login for your organization, you will receive an Email.
+                        Email domains specific to my organization: “@stark.com”, “@starkindustries.com”, and “@stark.eu”
+
+                        Thank you!
+
+5. To configure your enterprise login, our support team will send you an email with a verification code. Login to your domain host account and configure the DNS record for your email domain with the following values:
+
+    | **Field**                          | **Value**             |
+    |------------------------------------|-----------------------|
+    | **Name/Host/Alias**                | `@` or leave blank         |
+    | **Time to Live (TTL)**             | Leave default value or use `86400` |
+    |**Value/Answer/Destination**        | wso2-domain-verification:<`verification_code`>|
+
+
+**What's next?**
 
 Next, you can create a connection to the federated identity provider (For example, Auth0, ADFS, Keycloak, etc.), following the steps below:
 
@@ -72,4 +97,3 @@ Bring your own identity to Choreo by configuring a federated enterprise IdP on A
     ![Asgardeo applications](../assets/img/references/enterprise-login/sign-in-method.png){.cInlineImage-half}
 
 You are all set! Your users in the enterprise IdP can now log into the Choreo Console using their user credentials.
-
