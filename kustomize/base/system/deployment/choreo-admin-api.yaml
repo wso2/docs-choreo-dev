@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-admin-api
+  name: choreo-admin-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-admin-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-admin-api
+        antiaffinity: choreo-admin-api
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-admin-api
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-admin-api:latest
+          env:
+            - name: CHOREO_SUBS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-choreo-admin-api
+                  key: MSSQL_PASSWORD
+            - name: CHOREO_APP_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-db
+                  key: CHOREO_DB_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: env-admin-api
+          ports:
+            - containerPort: 9090
+              name: service-port
+            - containerPort: 9093
+              name: health-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+                - NET_RAW
+          volumeMounts:
+            - name: secret-choreo-admin-api
+              mountPath: "/mnt/csi/secret-choreo-admin-api"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: secret-choreo-admin-api
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-admin-api
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: antiaffinity
+                      operator: In
+                      values:
+                        - choreo-admin-api
+                topologyKey: kubernetes.io/hostname
