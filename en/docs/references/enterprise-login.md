@@ -29,7 +29,7 @@ To configure enterprise login for your Choreo organization, follow the steps bel
 1. Expand the drop-down for your profile and click **Settings**.
 2. Click **Copy Handle** to copy the organization handle to the clipboard.
 
-       ![Copy organization name](../assets/img/references/enterprise-login/copy-organization-name.png){.cInlineImage-half}
+    ![Copy organization name](../assets/img/references/enterprise-login/copy-organization-name.png){.cInlineImage-half}
 
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
    To create your organization on the Choreo IdP, follow these steps:
@@ -39,7 +39,7 @@ To configure enterprise login for your Choreo organization, follow the steps bel
 4.  To enable enterprise login for your organization, send us an email as follows:
 
     - **If you already have a support account with us**, send us the organization name/handle and the email domains specific to your organization through our support portal. 
-    
+
     - **If you do not have a support account with us yet**, send an email to `choreo-help@wso2.com` requesting to enable enterprise login to your organization. 
      
         Mention the following information in the request:
