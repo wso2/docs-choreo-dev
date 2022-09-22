@@ -16,17 +16,17 @@ Let's get started!
 3. Enter the application name and select the usage policy. You can optionally also add the application description. Click **Create**.
 4. You are redirected to the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
 
-## Generate Keys
+## Generate keys
 
 Choreo provides an OAuth 2.0 bearer token-based authentication for API access. An API access token/key is a string that is used to authenticate the API access and is passed as an HTTP header of an API request. 
 
 Once you create an application in Choreo, you can generate the credentials for the application. You will receive a consumer key and consumer secret when you generate credentials. The consumer key becomes the application's unique identifier, similar to a user's username, and is used to authenticate the application or user. You can use the consumer key and consumer secret to generate an API access token by invoking the token endpoint. You can also revoke the access token by invoking the revoke endpoint. For testing purposes, you can generate a test token via the UI. However, we strongly recommend not to use the test token in your production environment.
 
-This section will walk you through the steps to generating an API access token in Choreo. 
+This section will walk you through the steps to generate an API access token in Choreo. 
 
 Let's get started!
 
-### Access Token for Production 
+### Access token for production 
 
 Depending on your use case, you can generate an access token using one of the two grant types available in Choreo: Client Credentials and Token Exchange. 
 
@@ -81,7 +81,7 @@ replace the `<application_consumer_key>` with the **Consumer Key** you copied at
     !!! tip
         Save the refresh token and access token since you won't be able to view it again.  
 
-### Access Token for Testing
+### Access token for testing
 
 1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
 2. Click **Applications**.
@@ -104,7 +104,7 @@ replace the `<application_consumer_key>` with the **Consumer Key** you copied at
 7. You can use the UI to generate a test token using the consumer key and consumer secret for the application, only for test purposes. We strongly recommend **NOT** using this token in your production environment. 
 8. Click **:// CURL** to copy the cURL command template for generating the access token. You can generate an API access token by adding the consumer key and consumer secret to the URL and invoking the token endpoint.
 
-### Renew an Access Token using the Refresh Token Grant Type
+### Renew an access token using the refresh token grant type
 
 !!! note
     - To use this grant type, you will need the refresh token you received when you generated your current access token.
@@ -135,9 +135,11 @@ curl -k -d "grant_type=refresh_token&refresh_token=3154090c-37f1-3268-90f9-8bd84
 
 The above API response grants you a new access token and a refresh token.
 
-## Grant Types
+## Grant types
 
-### Refresh Token Grant
+Choreo authentication is based on OAuth2.0. In OAuth 2.0, grant types are methods which allow client applications to obtain an access token depending on the type of the resource owner, type of the application and the trust relationship between the authorization server and the resource owner. 
+
+### Refresh token grant
 
 A refresh token is a token that you can use to get a new access token when your current access token is expired or when you need a new access token. You can use the refresh token grant type for this purpose. Issuing a refresh token is optional for the authorization server. If the authorization server issues a refresh token, it includes it in the response with the access token. You can use this refresh token and send it to the authorization server to obtain a new access token. Choreo's default authorization server, Asgardeo, issues refresh tokens for all other grant types other than the **client credentials** grant type, as recommended by the OAuth 2.0 specification.
 
@@ -146,7 +148,7 @@ A refresh token is a token that you can use to get a new access token when your 
     - Keep your refresh token private, similar to the access token. 
     - The process to get a new access token using the Refresh Token grant type requires no user interaction.
 
-### Token Exchange Grant 
+### Token exchange grant 
 
 Choreo supports the token exchange grant type. This grant type allows the client to obtain a Choreo access token by providing a JWT issued by an external IdP. The token exchange grant type uses the protocol defined in the OAuth 2.0 token exchange specification. The OAuth 2.0 token exchange specification describes how you can request and obtain security tokens from OAuth 2.0 authorization servers. The following diagram depicts the token exchange flow in Choreo:
 
