@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  projectId: $CYPRESS_PROJECT_ID,
   defaultCommandTimeout: 180000,
   pageLoadTimeout: 300000,
   responseTimeout: 300000,
