@@ -97,4 +97,3 @@ Bring your own identity to Choreo by configuring a federated enterprise IdP on A
     ![Asgardeo applications](../assets/img/references/enterprise-login/sign-in-method.png){.cInlineImage-half}
 
 You are all set! Your users in the enterprise IdP can now log into the Choreo Console using their user credentials.
-
