@@ -137,7 +137,7 @@ The above API response grants you a new access token and a refresh token.
 
 ## Grant types
 
-Choreo authentication is based on OAuth2.0. In OAuth 2.0, grant types are methods which allow client applications to obtain an access token depending on the type of the resource owner, type of the application and the trust relationship between the authorization server and the resource owner. 
+Choreo authentication is based on OAuth2.0. In OAuth 2.0, grant types are methods that allow client applications to obtain an access token depending on the type of the resource owner, the type of the application, and the trust relationship between the authorization server and the resource owner. 
 
 ### Refresh token grant
 
