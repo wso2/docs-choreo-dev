@@ -31,7 +31,7 @@ Let's get started!
 Depending on your use case, you can generate an access token using one of the two grant types available in Choreo: Client Credentials and Token Exchange. 
 
 !!! note
-    We recommend you use the **Token Exchange** grant type **for production use** and use the **Client Credentials** grant type to obtain an access token **for testing purposes**. 
+    We recommend you use the **Token Exchange** grant type to obtain an access token **for production use** and use the **Client Credentials** grant type **for testing purposes**. 
 
 Token Exchange grant type requires you to pass a subject_token as a parameter in the token invocation call. You can obtain a subject token (id token) by using the `open_id` scope. Follow the steps below to generate an access token from the IdP along with the subject token:
 
@@ -58,7 +58,7 @@ Token Exchange grant type requires you to pass a subject_token as a parameter in
 
 7. Click **Generate Credentials** to generate the credentials for the application for the first time. Copy the **Consumer Key** value.
 8. Generate an access token by invoking the token endpoint using the Token Exchange grant type as follows: 
-replace the `application_consumer_key>` with the **Consumer Key** you copied at step 7 and replace `<idp_id_token>` with the **id_token** value you obtained at step 2: 
+replace the `<application_consumer_key>` with the **Consumer Key** you copied at step 7 and replace `<idp_id_token>` with the **id_token** value you obtained at step 2: 
 
     ``` java tab="Format"
     curl -k -X POST https://sts.choreo.dev/oauth2/token -d "client_id=<application_consumer_key>" -d "subject_token_type=urn:ietf:params:oauth:token-type:jwt" -d "grant_type=urn:ietf:params:oauth:grant-type:token-exchange" -d "subject_token=<idp_id_token>"
@@ -107,7 +107,7 @@ replace the `application_consumer_key>` with the **Consumer Key** you copied at 
 ### Renew an Access Token using the Refresh Token Grant Type
 
 !!! note
-    - To use this grant type, you will need the refresh token you recieved when you generated your current access token.
+    - To use this grant type, you will need the refresh token you received when you generated your current access token.
     - Your application must have the **Refresh Token** grant type enabled.
     - You can use a refresh token only once.
 
@@ -139,12 +139,12 @@ The above API response grants you a new access token and a refresh token.
 
 ### Refresh Token Grant
 
-A refresh token is a token that you can obtain when your current access token is expired or when you need a new access token. You can use the refresh token grant type for this purpose. Issuing a refresh token is optional for the authorization server. If the authorization server issues a refresh token, it includes it in the response with the access token. You can use this refresh token and send it to the authorization server to obtain a new access token. Choreo's default authorization server, Asgardeo, issues refresh tokens for all other grant types other than the **client credentials** grant type, as recommended by the OAuth 2.0 specification.
+A refresh token is a token that you can use to get a new access token when your current access token is expired or when you need a new access token. You can use the refresh token grant type for this purpose. Issuing a refresh token is optional for the authorization server. If the authorization server issues a refresh token, it includes it in the response with the access token. You can use this refresh token and send it to the authorization server to obtain a new access token. Choreo's default authorization server, Asgardeo, issues refresh tokens for all other grant types other than the **client credentials** grant type, as recommended by the OAuth 2.0 specification.
 
 !!! note
     
     - Keep your refresh token private, similar to the access token. 
-    - The process to get a new access token requires no user interaction.
+    - The process to get a new access token using the Refresh Token grant type requires no user interaction.
 
 ### Token Exchange Grant 
 
