@@ -10,17 +10,21 @@ Make sure you have a valid email domain.
 
 ## Step 1: Create an organization in Choreo
 
-- Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
+To create an organization in Choreo, follow the steps below:
+
+1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
   
-      If you are a:
-
-       - **New user**: enter a unique organization name and create an organization. For example, "Stark Industries".
-
+2. Ceate an organization as follows:
+ 
+    - **If you are a new user**: enter a unique organization name and create an organization. For example, "Stark Industries".
+    
         ![Create an organization in Choreo](../assets/img/references/enterprise-login/create-choreo-organization.png){.cInlineImage-small}
  
-       - **Returning user**: expand the drop-down for your profile and click **Settings**. Under **Organizations**, you can view the organization you created at sign-up. 
+    - **If you are a returning user**: expand the drop-down for your profile and click **Settings**. Under **Organizations**, you can view the organization you created at sign-up. 
  
 ## Step 2: Configure enterprise login for your Choreo organization
+
+To configure enterprise login for your Choreo organization, follow the steps below:
 
 1. Expand the drop-down for your profile and click **Settings**.
 2. Click **Copy Handle** to copy the organization handle to the clipboard.
