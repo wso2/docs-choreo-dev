@@ -14,7 +14,7 @@ To create an organization in Choreo, follow the steps below:
 
 1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
   
-2. Ceate an organization as follows:
+2. Create an organization as follows:
  
     - **If you are a new user**: enter a unique organization name and create an organization. For example, "Stark Industries".
     
@@ -34,7 +34,7 @@ To configure enterprise login for your Choreo organization, follow the steps bel
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
    
     To create your organization on the Choreo IdP, follow these steps:
-    
+    c
     1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
     
     2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
