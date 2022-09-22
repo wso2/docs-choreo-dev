@@ -52,7 +52,8 @@ To configure enterprise login for your Choreo organization, follow the steps bel
         - Organization name or handle. For example, “Stark Industries” or “starkindustries”
         - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
 
-                !!!info "Sample Email"
+            !!!info "Sample Email"
+
                     Subject : [Stark Industries] Configure enterprise login
                     
                     Content:
