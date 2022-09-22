@@ -36,8 +36,10 @@ To configure enterprise login for your Choreo organization, follow the steps bel
        1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
        2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
      ![Create an organization in Asgardeo](../assets/img/references/enterprise-login/create-asgardeo-organization.png){.cInlineImage-half}
-4. 
+4.  To enable enterprise login for your organization, send us an email as follows:
+
     - **If you already have a support account with us**, send us the organization name/handle and the email domains specific to your organization through our support portal. 
+    
     - **If you do not have a support account with us yet**, send an email to `choreo-help@wso2.com` requesting to enable enterprise login to your organization. 
      
         Mention the following information in the request:
