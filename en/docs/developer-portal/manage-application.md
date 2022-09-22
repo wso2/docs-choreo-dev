@@ -31,7 +31,7 @@ Let's get started!
 Depending on your use case, you can generate an access token using one of the two grant types available in Choreo: Client Credentials and Token Exchange. 
 
 !!! note
-    We recommend you use the **Client Credentials** grant type to obtain an access token **for testing purposes** and use the **Token Exchange** grant type **for production use**. 
+    We recommend you use the **Token Exchange** grant type **for production use** and use the **Client Credentials** grant type to obtain an access token **for testing purposes**. 
 
 Token Exchange grant type requires you to pass a subject_token as a parameter in the token invocation call. You can obtain a subject token (id token) by using the `open_id` scope. Follow the steps below to generate an access token from the IdP along with the subject token:
 
