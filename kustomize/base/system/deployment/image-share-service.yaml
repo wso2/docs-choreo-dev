@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: image-share-service
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -30,11 +30,11 @@ spec:
         - name: image-share-service
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-image-share-service:latest
           env:
-          - name: AZURE_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: secret-image-share-service
-                key: IMAGE_SHARE_SERVICE_SECRET
+            - name: AZURE_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-image-share-service
+                  key: IMAGE_SHARE_SERVICE_SECRET
           envFrom:
             - configMapRef:
                 name: env-image-share-service
@@ -72,7 +72,7 @@ spec:
             runAsGroup: 10500
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
             - name: secret-image-share-service
@@ -91,13 +91,11 @@ spec:
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - image-share-service
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - image-share-service
               topologyKey: kubernetes.io/hostname

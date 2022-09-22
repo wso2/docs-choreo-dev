@@ -34,7 +34,7 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities:
                   drop:
-                  - all
+                    - all
               env:
                 - name: CHOREO_STEP_ENFORCER_ASB_CONN_STRING
                   valueFrom:

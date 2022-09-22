@@ -6,11 +6,11 @@ metadata:
   name: datacollector
 spec:
   ports:
-  - name: collector-port
-    port: 9090
-    targetPort: collector-port
-  - name: healthz
-    port: 9092
-    targetPort: healthz
+    - name: collector-port
+      port: 9090
+      targetPort: collector-port
+    - name: healthz
+      port: 9092
+      targetPort: healthz
   selector:
     choreo.component: datacollector

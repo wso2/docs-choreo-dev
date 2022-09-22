@@ -1,4 +1,4 @@
 resources:
-- sa-workspace-manager.yaml
-- cr-workspace-manager.yaml
-- crb-workspace-manager.yaml
+  - sa-workspace-manager.yaml
+  - cr-workspace-manager.yaml
+  - crb-workspace-manager.yaml

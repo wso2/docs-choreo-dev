@@ -20,6 +20,16 @@
           "light": "#000000",
           "dark": "#f50057"
         }
+      },
+      "button": {
+        "primary": {
+          "light": "#303f9f",
+          "dark": "#303f9f"
+        },
+        "secondary": {
+          "light": "#303f9f",
+          "dark": "#303f9f"
+        }
       }
     },
     "typography": {
@@ -39,6 +49,11 @@
         "footer": "https://devportal.preview-dv.choreo.dev/themes/default/images/wso2-logo.svg",
         "favicon": "https://devportal.preview-dv.choreo.dev/themes/default/images/favicon.ico"
       }
+    },
+    "homePage": {
+      "banner": "https://devportal.choreo.dev/themes/default/images/banner.svg",
+      "title": "Continue working with APIs",
+      "subtitle": "Use our APIs to automate, innovate, and connect to millions of customers."
     },
     "footerLinks": {
       "terms": "https://wso2.com/choreo/terms-of-use/",

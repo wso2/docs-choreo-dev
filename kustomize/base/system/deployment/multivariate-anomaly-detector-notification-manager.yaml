@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: multivariate-anomaly-detector-notification-manager
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -46,7 +46,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop:
-              - all
+                - all
           volumeMounts:
             - name: secret-multivariate-anomaly-detector-notification-manager
               mountPath: "/mnt/csi/secret-multivariate-anomaly-detector-notification-manager"
@@ -99,13 +99,11 @@ spec:
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - multivariate-anomaly-detector-notification-manager
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - multivariate-anomaly-detector-notification-manager
               topologyKey: kubernetes.io/hostname

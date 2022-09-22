@@ -33,6 +33,11 @@ spec:
                 secretKeyRef:
                   name: secret-alert-notification-service
                   key: EVENTHUB_SHARED_ACCESS_KEY
+            - name: ALERT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-alert-notification-service
+                  key: ALERT_CHOREO_DB_PASSWORD
           envFrom:
             - configMapRef:
                 name: env-alert-notification-service
@@ -55,6 +60,9 @@ spec:
           ports:
             - containerPort: 9090
               name: an-port
+              protocol: TCP
+            - containerPort: 9092
+              name: mgt-port
               protocol: TCP
             - containerPort: 9091      # To be used for readiness/liveness probes (internal)
               name: health
@@ -97,10 +105,8 @@ spec:
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
                   - key: antiaffinity
                     operator: In

@@ -6,8 +6,8 @@ metadata:
   name: connectords
 spec:
   ports:
-  - name: cds-sport
-    port: 9090
-    targetPort: cds-sport
+    - name: cds-sport
+      port: 9090
+      targetPort: cds-sport
   selector:
     choreo.component: connectords
