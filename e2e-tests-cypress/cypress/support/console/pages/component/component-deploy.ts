@@ -66,7 +66,7 @@ export class ComponentDeployPage {
   static deployScheduleTask() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click()
-    cy.get("button:not([data-cyid])").contains("Deploy").click();
+    cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
     this.closePopup();
     cy.get('[value="*/1 * * * *"]', { timeout: 360000 }).should("have.length", 1)
   }
@@ -75,7 +75,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[value="*/1 * * * *"]').should("have.length", 1).wait(2000)
     cy.get('[data-cyid*="promote"]').should("be.enabled").eq(0).click()
-    cy.get("button:not([data-cyid])").contains("Deploy").click();
+    cy.get('[data-cyid="btn-next"]').contains("Deploy").click();
     cy.get('[value="*/1 * * * *"]', { timeout: 360000 }).should("have.length", 2)
   }
 
