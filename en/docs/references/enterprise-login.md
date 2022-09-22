@@ -6,7 +6,7 @@ This guide takes you through the steps you need to follow to configure an enterp
 
 
 ## Prerequisites 
-- Make sure you have a valid email domain. 
+Make sure you have a valid email domain. 
 
 ## Step 1: Create an organization in Choreo
 
