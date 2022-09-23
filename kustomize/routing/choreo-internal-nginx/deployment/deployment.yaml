@@ -55,6 +55,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: internal-nginx-redis-config
+            - configMapRef:
+                name: nginx-feature-flags
           env:
             - name: NAMESPACE
               valueFrom:
