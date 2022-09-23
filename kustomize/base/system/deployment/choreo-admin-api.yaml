@@ -80,13 +80,21 @@ spec:
             capabilities:
               drop:
                 - ALL
-                - NET_RAW
           volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
             - name: secret-choreo-admin-api
               mountPath: "/mnt/csi/secret-choreo-admin-api"
               readOnly: true
+            - name: secret-app-db
+              mountPath: "/mnt/csi/secret-app-db"
+              readOnly: true
       restartPolicy: Always
       volumes:
+        - name: config
+          configMap:
+            name: cm-choreo-admin-api-config
         - name: secret-choreo-admin-api
           csi:
             driver: secrets-store.csi.k8s.io
@@ -95,15 +103,21 @@ spec:
               secretProviderClass: secret-choreo-admin-api
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: secret-app-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-app-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: antiaffinity
-                      operator: In
-                      values:
-                        - choreo-admin-api
-                topologyKey: kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-admin-api
+              topologyKey: kubernetes.io/hostname
