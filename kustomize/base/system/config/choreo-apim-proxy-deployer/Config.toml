@@ -9,4 +9,4 @@ proxyDeployerPort = 9095
 healthCheckPort = 9091
 
 [ballerina.log]
-level = "DEBUG"
+level = "INFO"

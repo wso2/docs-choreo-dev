@@ -1,4 +1,3 @@
-
 import { Utils } from "../../utils";
 
 /*
@@ -19,7 +18,7 @@ export class RestAPIProxyTemplate {
   }
 
   static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint) {
-    cy.get('[role="dialog"] ul>div:nth-child(1)').click();
+    cy.get('[data-cyid="btn-design-rest-api"]').click();
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
 
@@ -29,12 +28,12 @@ export class RestAPIProxyTemplate {
 
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
     cy.get("button>span").contains("Create").click();
-    cy.get('[data-testid="delete-all-operations-btn"]')
+    cy.get('[data-testid="delete-all-operations-btn"]');
     Utils.saveComponentURL();
   }
 
   static createOpenApi(filepath: string = "", url: string = "") {
-    cy.get('[role="dialog"] ul>div:nth-child(2)').click();
+    cy.get('[data-cyid="btn-import-open-api"]').click();
 
     if (filepath) {
       cy.get('[data-testid="open-api-file"]').click();
@@ -49,7 +48,13 @@ export class RestAPIProxyTemplate {
     cy.get('[id="next"]').click();
   }
 
-  static enterAPIdetails(apiName: string, apiBasePath: string, endpoint: string, version: string = "", validateResourceName: string = "",) {
+  static enterAPIdetails(
+    apiName: string,
+    apiBasePath: string,
+    endpoint: string,
+    version: string = "",
+    validateResourceName: string = ""
+  ) {
     cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
 
     if (version) {
@@ -71,12 +76,16 @@ export class RestAPIProxyTemplate {
       resourceIdentifier = "resource-/" + validateResourceName;
     }
 
-    cy.get(`[data-testid="${resourceIdentifier}"]`)
+    cy.get(`[data-testid="${resourceIdentifier}"]`);
     Utils.saveComponentURL();
   }
 
   private static interceptValidate() {
-    cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`).as("validate");
+    cy.intercept(
+      `${Cypress.env(
+        "apimSvcURL"
+      )}/api/am/publisher/v2/apis/validate?organizationId=*&query=*`
+    ).as("validate");
 
     cy.wait("@validate").then((r) => {
       if (r.response.statusCode == 404) {
