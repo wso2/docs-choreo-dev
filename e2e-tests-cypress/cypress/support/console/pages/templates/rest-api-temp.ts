@@ -11,9 +11,6 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
-
-
 
 export class RestAPITemplate {
   static selectHttpAPITemplate() {

@@ -1,7 +1,6 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  projectId:"2miy5a",
   defaultCommandTimeout: 180000,
   pageLoadTimeout: 300000,
   responseTimeout: 300000,
@@ -16,8 +15,6 @@ export default defineConfig({
   watchForFileChanges: false,
   scrollBehavior: false,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       let apiName;
       on('task', {
@@ -36,7 +33,7 @@ export default defineConfig({
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
       return config;
-      // return require('./cypress/plugins/index.js')(on, config)
+
     },
     specPattern: 'cypress/e2e-smoke//./**/*.ts',
   },

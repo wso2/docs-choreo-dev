@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 /*
  * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
@@ -12,22 +11,11 @@
  * associated services.
  */
 
+export class GraphQLTemplate{
+    
 
-
-module.exports = (on, config) => {
-  on('task', {
-    setAPIName: (val) => {
-      return (apiName = val);
-    },
-
-    getAPIName: () => {
-      return apiName;
+    static selectGQLTemplate(){
+        cy.get('[data-testid="project-template-list-graphql]')
+        cy.get('[data-testid="components-mt-api-item-1"]').should('be.visible').click()
     }
-  });
-  config.env.choreoIDPUsername = process.env.choreoIDPUsername;
-  config.env.choreoIDPPassword = process.env.choreoIDPPassword;
-  config.env.choreoOrgHandle = process.env.choreoOrgHandle;
-  config.env.userName = process.env.userName;
-  config.env.userEmail = process.env.userEmail;
-  return config;
-};
+}
