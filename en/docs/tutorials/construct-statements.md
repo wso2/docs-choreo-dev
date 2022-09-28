@@ -92,7 +92,7 @@ To build the statement, follow these steps:
     !!! note
         When a function or a method call requires a particular parameter to work, the Statement Editor selects the appropriate parameter by default and does not allow you to clear it.
 
-8. Change the **n** and **ns** parameter values to integers. To make each parameter value editable, you can double-click on the corresponding **`<add_expression>`** on the variable statement. Let's change them as follows:
+8. Change the **n** and **ns** parameter values to integers. To make each parameter value editable, you can double-click the corresponding **`<add_expression>`** on the variable statement. Let's change them as follows:
 
      | **Parameter** | **Value** |
      |---------------|-----------|
