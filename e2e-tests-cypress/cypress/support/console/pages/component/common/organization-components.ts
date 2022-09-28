@@ -91,7 +91,7 @@ export class OrganizationComponent {
       if (user) {
 
         const { idpId } = user
-        const deleteUserRequest = `${Cypress.env("appSvcURL")}/v2/orgs/dasunatwso2com/users/${idpId}`
+        const deleteUserRequest = `${Cypress.env("appSvcURL")}/v2/orgs/${handle }/users/${idpId}`
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then(res => {
           if (res.status === 200) {

@@ -67,6 +67,7 @@ describe("Delete members", () => {
 
   it("Delete a member", () => {
     ChoreoHomePage.navigateToSettings();
+    OrganizationComponent.selectPendingInvitation();
     OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
     OrganizationComponent.deleteMember(INVITATION_EMAIL);
   });

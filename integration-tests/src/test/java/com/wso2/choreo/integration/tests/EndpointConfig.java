@@ -113,4 +113,14 @@ public class EndpointConfig {
                 .build();
     }
 
+
+    @Bean
+    public HttpClient choreoTestClientForAsgardeo() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(ConfigDefinition.ASGARDEO_ENDPOINT))
+                .build();
+    }
+
 }

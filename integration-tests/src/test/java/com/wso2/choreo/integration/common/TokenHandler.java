@@ -127,8 +127,7 @@ public class TokenHandler {
      */
     public String getTestToken() throws InterruptedException, TokenRetrievalException, IOException {
         String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-        String stsToken = getStsToken(stsClientId, stsClientSecret, userToken);
-        return stsToken;
+        return getStsToken(stsClientId, stsClientSecret, userToken);
     }
 
     /**
@@ -160,12 +159,9 @@ public class TokenHandler {
      * @return user token
      * @throws TokenRetrievalException if token retrieval fails
      */
-    private String getTestUserToken(String asgardeoClientId, String asgardeoClientSecret)
-            throws TokenRetrievalException {
-        String tokenAuthHeader =
-                Constant.BASIC_PREFIX.concat(encodeCredentials(asgardeoClientId, asgardeoClientSecret));
-        String asgardeoTokenEndpoint = Configuration.getConfig(ConfigDefinition.ASGARDEO_ENDPOINT)
-                .concat(Constant.TOKEN_ENDPOINT_SUFFIX);
+    private String getTestUserToken(String asgardeoClientId, String asgardeoClientSecret) throws TokenRetrievalException {
+        String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(asgardeoClientId, asgardeoClientSecret));
+        String asgardeoTokenEndpoint = Configuration.getConfig(ConfigDefinition.ASGARDEO_ENDPOINT).concat(Constant.TOKEN_ENDPOINT_SUFFIX);
 
         HttpPost request = new HttpPost(asgardeoTokenEndpoint);
 
@@ -194,6 +190,31 @@ public class TokenHandler {
             throw new TokenRetrievalException("Error while getting Asgardio token", e);
         }
     }
+
+    /**
+     * @param clientId     client id
+     * @param clientSecret client secret
+     * @return sts access token
+     */
+    public String getEncodedCredentials(String clientId, String clientSecret) {
+        return Constant.BASIC_PREFIX.concat(encodeCredentials(clientId, clientSecret));
+    }
+
+    public String getUserTokenPayload() {
+        return "grant_type=" + Constant.OAUTH_PASSWORD_GRANT_TYPE + "&" +
+                "username=" + testUserEmail + "&" +
+                "password=" + testUserPassword;
+    }
+
+    public String getStsTokenPayload(String userToken) {
+        return "grant_type=" + Constant.OAUTH_TOKEN_EXCHANGE_GRANT_TYPE + "&" +
+                "subject_token=" + userToken + "&" +
+                "subject_token_type=" + Constant.SUBJECT_TOKEN_TYPE + "&" +
+                "requested_token_type=" + Constant.REQUESTED_TOKEN_TYPE + "&" +
+                "orgHandle" + testChoreoOrgHandle + "&" +
+                "scope" + Constant.OAUTH_SCOPES;
+    }
+
 
     /**
      * @param stsClientId     client id for STS SP
