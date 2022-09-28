@@ -126,10 +126,10 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
                 (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);
         restApiComponent.setOrganization(org);
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-        restApiComponent.waitForMetricsData(accessToken);
+        restApiComponent.waitForMetricsData(accessToken, "dev");
         releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
         namespace = restApiComponent.getNamespaceForEnvironment(accessToken, "dev");
         obsId = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId).getObsId();

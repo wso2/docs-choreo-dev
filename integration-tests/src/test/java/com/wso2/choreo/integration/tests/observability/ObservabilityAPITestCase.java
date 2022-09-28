@@ -90,11 +90,12 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                 (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);
         restApiComponent.setOrganization(org);
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
+
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-        restApiComponent.waitForMetricsData(accessToken);
-        restApiComponent.waitForTraceData(accessToken,"dev");
+        restApiComponent.waitForMetricsData(accessToken, Constant.DEV_ENVIRONMENT);
+        restApiComponent.waitForTraceData(accessToken, Constant.DEV_ENVIRONMENT);
     }
 
     @Test

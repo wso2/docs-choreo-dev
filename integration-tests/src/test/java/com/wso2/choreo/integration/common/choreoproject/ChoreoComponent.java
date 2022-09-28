@@ -23,6 +23,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
 import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
 import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
@@ -232,13 +233,13 @@ public abstract class ChoreoComponent {
      * @param accessToken OAuth token to invoke the Chorea backend
      * @param orgHandler  Choreo organization handle
      */
-    public void addConfigurations(String accessToken, String orgHandler)
+    public void addConfigurations(String accessToken, String orgHandler, String env)
             throws GetCommitHistoryException, NoLatestCommitHashFoundException, IOException, InterruptedException,
             AddConfigurationsException, NoLatestAppEnvIdFoundException, NoLatestApiVersionFoundException {
         JsonArray commitHistory = getCommitHistory(accessToken);
         String latestCommitSha = getLatestCommitHash(commitHistory);
         String latestVersionId = getLatestApiVersion().getId();
-        String devEnvIdToDeploy = getLatestAppEnvId("dev");
+        String targetEnvIdToDeploy = getLatestAppEnvId(env);
         HashMap<String, Object> requestBodyMap = new HashMap<>() {{
             put("applyNow", false);
             put("commitHash", latestCommitSha);
@@ -248,7 +249,7 @@ public abstract class ChoreoComponent {
             put("sourceUuid", "");
         }};
         String requestURI = choreoEndpoint.concat("/orgs/").concat(orgHandler).concat("/projects/").concat(projectId)
-                .concat("/components/".concat(id).concat("/envs/").concat(devEnvIdToDeploy).concat("/")
+                .concat("/components/".concat(id).concat("/envs/").concat(targetEnvIdToDeploy).concat("/")
                         .concat(latestVersionId).concat("/configurations"));
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestBodyMap);
@@ -280,9 +281,6 @@ public abstract class ChoreoComponent {
      * @param orgHandle   Choreo organization handle
      * @param orgUUID     Choreo organization UUID
      */
-
-
-
     public void deploy(String accessToken, String orgHandle, String orgUUID)
             throws IOException, InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
@@ -333,8 +331,61 @@ public abstract class ChoreoComponent {
                 throw new ComponentDeploymentFailureException();
             }
         }
-            waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId, devEnvIdToDeploy);
+        waitForComponentDeploymentSuccess(accessToken, orgHandle, orgUUID, latestVersionId, devEnvIdToDeploy);
 
+    }
+
+    /**
+     * Promote a component version from one environment to another.
+     *
+     * @param accessToken OAuth token to invoke the Chorea backend
+     * @param sourceEnv   Source environment from which the version should be picked up
+     * @param targetEnv   Target environment to which the version should be picked up
+     */
+    public void promote(String accessToken, String sourceEnv, String targetEnv)
+            throws NoLatestApiVersionFoundException, ReleaseIdNotFoundException, NoLatestAppEnvIdFoundException,
+            IOException, ComponentDeploymentStatusCheckException, InterruptedException,
+            ComponentDeploymentTimeoutException, ComponentDeploymentException, ComponentDeploymentFailureException {
+        String latestVersionId = getLatestApiVersion().getId();
+        String targetEnvId = getLatestAppEnvId(targetEnv);
+
+        Map<String, String> requestParams = new HashMap<>() {
+            {
+                put("componentId", getId());
+                put("apiVersionId", latestVersionId);
+                put("sourceReleaseId", getReleaseIdForEnvironment(sourceEnv));
+                put("targetEnvironmentId", targetEnvId);
+            }
+        };
+        String graphQuery = MessageUtils.generateStringFromTemplate(
+                "templates/graphql/requests/promote.mustache",
+                requestParams);
+        String requestBody = MessageUtils.generateGQLPayload(graphQuery);
+
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new ComponentDeploymentException(statusCode, responseBody);
+            }
+            String promoteResult = new JsonParser().parse(responseBody)
+                    .getAsJsonObject()
+                    .getAsJsonObject("data")
+                    .getAsJsonPrimitive("promote")
+                    .getAsString();
+            if (!"success".equals(promoteResult)) {
+                throw new ComponentDeploymentFailureException();
+            }
+        }
+        waitForComponentDeploymentSuccess(accessToken, orgHandler, orgId, latestVersionId, targetEnvId);
     }
 
     /**
@@ -854,9 +905,11 @@ public abstract class ChoreoComponent {
         }
     }
 
-    public void waitForMetricsData(String accessToken) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException {
+    public void waitForMetricsData(String accessToken, String env) throws ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException,
+            ObservabilityDataNotFoundException, ObservabilityDataCheckException {
         String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
-        String releaseId = getReleaseIdForEnvironment("dev");
+        String releaseId = getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
@@ -908,7 +961,7 @@ public abstract class ChoreoComponent {
 
     public void waitForTraceData(String accessToken, String env) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
         String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
-        JsonObject ast = fetchAST(accessToken, "dev");
+        JsonObject ast = fetchAST(accessToken, env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         String releaseId = getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
