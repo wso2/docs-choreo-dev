@@ -959,8 +959,9 @@ public abstract class ChoreoComponent {
         }
     }
 
-    public void waitForTraceData(String accessToken, String env) throws ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException, ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
-        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
+    public void waitForTraceData(String accessToken, String env) throws ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, IOException, InterruptedException,
+            ObservabilityDataNotFoundException, ObservabilityDataCheckException, ObservabilityASTCheckException {
         JsonObject ast = fetchAST(accessToken, env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         String releaseId = getReleaseIdForEnvironment(env);
@@ -978,12 +979,15 @@ public abstract class ChoreoComponent {
         queryParams.put("to", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)));
         mustache.execute(writer, queryParams).flush();
         String requestBody = writer.toString();
-        int attempts = 0;
+
         log.info("Waiting till trace data appear");
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         HttpPost request = new HttpPost(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
         request.setEntity(requestEntity);
+
+        int attempts = 0;
         while (attempts < 10) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build(); CloseableHttpResponse response = httpClient.execute(request)) {
                 int statusCode = response.getStatusLine().getStatusCode();
@@ -1006,13 +1010,18 @@ public abstract class ChoreoComponent {
         }
     }
 
-    public void waitForObservabilityLogs(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, URISyntaxException {
-        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
-                .concat(obsId)
-                .concat("/logsV2");
+    public void waitForObservabilityLogs(String accessToken, String env) throws IOException, InterruptedException,
+            ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, URISyntaxException,
+            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            EnvironmentDetailsCheckException, NamespaceNotFoundException {
+        String releaseId = getReleaseIdForEnvironment(env);
+        String namespace = getNamespaceForEnvironment(accessToken, env);
+        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
 
-        int attempts = 0;
         log.info("Waiting till observability data appear");
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
+                .concat(observabilityIdInformation.getObsId())
+                .concat("/logsV2");
         URIBuilder builder = new URIBuilder(requestURI);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
@@ -1024,6 +1033,7 @@ public abstract class ChoreoComponent {
         HttpGet request = new HttpGet(builder.build());
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
+        int attempts = 0;
         while (attempts < 50) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                  CloseableHttpResponse response = httpClient.execute(request)) {
@@ -1051,13 +1061,19 @@ public abstract class ChoreoComponent {
         }
     }
 
-    public void waitForObservabilitySystemMetrics(String accessToken, String obsId, String releaseId, String namespace) throws IOException, InterruptedException, URISyntaxException, ObservabilitySystemMetricsCheckException, ObservabilitySystemMetricsNotFoundException {
-        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
-                .concat(obsId)
-                .concat("/metricsV2");
+    public void waitForObservabilitySystemMetrics(String accessToken, String env) throws IOException,
+            InterruptedException, URISyntaxException, ObservabilitySystemMetricsCheckException,
+            ObservabilitySystemMetricsNotFoundException, ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
+            NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException {
+        String releaseId = getReleaseIdForEnvironment(env);
+        String namespace = getNamespaceForEnvironment(accessToken, env);
+        ObservabilityIdInformation observabilityIdInformation =
+                getComponentObservabilityIdForReleaseId(accessToken, releaseId);
 
-        int attempts = 0;
         log.info("Waiting till observability data appear");
+        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
+                .concat(observabilityIdInformation.getObsId())
+                .concat("/metricsV2");
         URIBuilder builder = new URIBuilder(requestURI);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusDays(1)))
@@ -1068,6 +1084,7 @@ public abstract class ChoreoComponent {
         HttpGet request = new HttpGet(builder.build());
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
+        int attempts = 0;
         while (attempts < 50) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                  CloseableHttpResponse response = httpClient.execute(request)) {

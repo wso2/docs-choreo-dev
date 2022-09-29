@@ -37,6 +37,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -59,15 +60,17 @@ import static org.hamcrest.Matchers.*;
 
 public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static JsonObject ast;
+    private static final Map<String, JsonObject> envSyntaxTrees = new HashMap<>(2);
     private static RestApiChoreoComponent restApiComponent;
     private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
-    private static final String V2_HEADER_NAME = "x-console-version";
-    private static final String V2_HEADER_VALUE = "v2";
-
 
     @Autowired
     private HttpClient choreoCPTestClient;
+
+    @DataProvider(name = "env-provider")
+    public Object[][] environment() {
+        return new Object[][] {{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
+    }
 
     @BeforeClass
     public void beforeClass()
@@ -94,23 +97,34 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
+
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.PROD_ENVIRONMENT);
+        restApiComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+        restApiComponent.invokeGetApplication(accessToken, "restAPI", "Production", 4);
+
         restApiComponent.waitForMetricsData(accessToken, Constant.DEV_ENVIRONMENT);
         restApiComponent.waitForTraceData(accessToken, Constant.DEV_ENVIRONMENT);
+        restApiComponent.waitForMetricsData(accessToken, Constant.PROD_ENVIRONMENT);
+        restApiComponent.waitForTraceData(accessToken, Constant.PROD_ENVIRONMENT);
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityAST() throws IOException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException, ReleaseIdNotFoundException {
-        String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testObservabilityAST(String env) throws IOException, ObservabilityIdNotFoundException,
+            ObservabilityIdCheckException, InterruptedException, ReleaseIdNotFoundException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForAst.mustache");
         Writer writer = new StringWriter();
-        Map<String, String> queryParams = new HashMap<String, String>();
+        Map<String, String> queryParams = new HashMap<>();
         queryParams.put("obsId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
+
         $(http()
                 .client(choreoCPTestClient)
                 .send()
@@ -118,7 +132,6 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(V2_HEADER_NAME, V2_HEADER_VALUE)
                 .body(body)
                 .accept(String.valueOf(MediaType.APPLICATION_JSON)));
         $(http()
@@ -136,24 +149,28 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
                     String astString = parser.parse((String) message.getPayload()).getAsJsonObject()
                             .getAsJsonObject("data")
                             .getAsJsonObject("ast").get("ast").getAsString();
-                    ast = (JsonObject) parser.parse(astString);
+                    envSyntaxTrees.put(env, parser.parse(astString).getAsJsonObject());
                 })
         );
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityMetricDensity() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testObservabilityMetricDensity(String env) throws IOException, ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
         Writer writer = new StringWriter();
-        Map<String, String> queryParams = new HashMap<String, String>();
+        Map<String, String> queryParams = new HashMap<>();
         queryParams.put("observeId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
+
         $(http()
                 .client(choreoCPTestClient)
                 .send()
@@ -178,21 +195,25 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityMetricDensityHistogram() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testObservabilityMetricDensityHistogram(String env) throws IOException, ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensityHistogram.mustache");
         Writer writer = new StringWriter();
-        Map<String, String> queryParams = new HashMap<String, String>();
+        Map<String, String> queryParams = new HashMap<>();
         queryParams.put("observeId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
         queryParams.put("from", Instant.now().minusSeconds(60 * 60 * 24).toString());
         queryParams.put("to", Instant.now().toString());
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
+
         $(http()
                 .client(choreoCPTestClient)
                 .send()
@@ -218,16 +239,21 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dependsOnMethods = {"testObservabilityAST"})
+    @Test(dependsOnMethods = {"testObservabilityAST"}, dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityStats() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
-        ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testObservabilityStats(String env) throws IOException, ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        JsonObject ast = envSyntaxTrees.get(env);
+        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
+                ast.get("packageVersion").getAsString();
+
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForObservabilityStats.mustache");
         Writer writer = new StringWriter();
-        Map<String, String> queryParams = new HashMap<String, String>();
+        Map<String, String> queryParams = new HashMap<>();
         queryParams.put("observeId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
         queryParams.put("moduleId", moduleId);
@@ -235,6 +261,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         queryParams.put("to", Instant.now().toString());
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
+
         $(http()
                 .client(choreoCPTestClient)
                 .send()
@@ -260,16 +287,21 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dependsOnMethods = {"testObservabilityAST"})
+    @Test(dependsOnMethods = {"testObservabilityAST"}, dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityTraceList() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
-        ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testObservabilityTraceList(String env) throws IOException, ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        JsonObject ast = envSyntaxTrees.get(env);
+        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
+                ast.get("packageVersion").getAsString();
+
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForTraceList.mustache");
         Writer writer = new StringWriter();
-        Map<String, String> queryParams = new HashMap<String, String>();
+        Map<String, String> queryParams = new HashMap<>();
         queryParams.put("observeId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
         queryParams.put("moduleId", moduleId);
@@ -279,6 +311,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         queryParams.put("to", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS)));
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();
+
         $(http()
                 .client(choreoCPTestClient)
                 .send()
@@ -307,18 +340,21 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dependsOnMethods = {"testObservabilityTraceList"})
+    @Test(dependsOnMethods = {"testObservabilityTraceList"}, dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityTraceInformation() throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
-        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT)
-                .concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
-        String releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
-        ObservabilityIdInformation observabilityIdInformation = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testObservabilityTraceInformation(String env) throws IOException, ReleaseIdNotFoundException,
+            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        JsonObject ast = envSyntaxTrees.get(env);
+        String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
+                ast.get("packageVersion").getAsString();
+
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache queryTraceList = mf.compile("templates/observability/graphql/queryForTraceList.mustache");
         Writer traceListWriter = new StringWriter();
-        Map<String, String> traceListQueryParams = new HashMap<String, String>();
+        Map<String, String> traceListQueryParams = new HashMap<>();
         traceListQueryParams.put("observeId", observabilityIdInformation.getObsId());
         traceListQueryParams.put("version", observabilityIdInformation.getVerzion());
         traceListQueryParams.put("moduleId", moduleId);
@@ -328,7 +364,10 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         traceListQueryParams.put("to", fmt.format(OffsetDateTime.now( ZoneOffset.UTC ).truncatedTo(ChronoUnit.SECONDS)));
         queryTraceList.execute(traceListWriter, traceListQueryParams).flush();
         String body = traceListWriter.toString();
+
         // Getting trace list
+        String requestURI = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT)
+                .concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURI))
                 .POST(HttpRequest.BodyPublishers.ofString(body))
@@ -340,7 +379,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
         // Getting specific traceInformation
         Mustache queryTraceInformation = mf.compile("templates/observability/graphql/queryForTraceInformation.mustache");
-        Map<String, String> traceInformationQueryParams = new HashMap<String, String>();
+        Map<String, String> traceInformationQueryParams = new HashMap<>();
         traceInformationQueryParams.put("observeId", observabilityIdInformation.getObsId());
         traceInformationQueryParams.put("version", observabilityIdInformation.getVerzion());
         traceInformationQueryParams.put("moduleId", moduleId);

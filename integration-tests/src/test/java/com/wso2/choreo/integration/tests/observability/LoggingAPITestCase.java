@@ -20,6 +20,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
@@ -44,6 +45,7 @@ import com.wso2.choreo.integration.common.exceptions.NamespaceNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityASTCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityDataCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
@@ -70,6 +72,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;
@@ -97,13 +100,14 @@ import static org.hamcrest.Matchers.hasItems;
 public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static RestApiChoreoComponent restApiComponent;
-    private static String namespace;
-    private static String releaseId;
-    private static String obsId;
-
 
     @Autowired
     private HttpClient choreoCPTestClient;
+
+    @DataProvider(name = "env-provider")
+    public Object[][] environment() {
+        return new Object[][] {{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
+    }
 
     @BeforeClass
     public void beforeClass()
@@ -113,7 +117,12 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException, ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, GetDeploymentsStatusCheckException {
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException,
+            APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException,
+            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException,
+            ObservabilityDataCheckException, URISyntaxException, ObservabilityLogsCheckException,
+            ObservabilityLogsNotFoundException, GetDeploymentsStatusCheckException, ObservabilityASTCheckException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -126,21 +135,31 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
                 (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);
         restApiComponent.setOrganization(org);
+
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-        restApiComponent.waitForMetricsData(accessToken, "dev");
-        releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        namespace = restApiComponent.getNamespaceForEnvironment(accessToken, "dev");
-        obsId = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId).getObsId();
-        restApiComponent.waitForObservabilityLogs(accessToken, obsId, releaseId, namespace);
+
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.PROD_ENVIRONMENT);
+        restApiComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+        restApiComponent.invokeGetApplication(accessToken, "restAPI", "Production", 4);
+
+        restApiComponent.waitForObservabilityLogs(accessToken, Constant.DEV_ENVIRONMENT);
+        restApiComponent.waitForObservabilityLogs(accessToken, Constant.PROD_ENVIRONMENT);
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testGroupedLogs() {
+    public void testGroupedLogs(String env) throws ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
+            IOException, NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        String namespace = restApiComponent.getNamespaceForEnvironment(accessToken, env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
-                .concat(obsId)
+                .concat(observabilityIdInformation.getObsId())
                 .concat("/groupedlogsV2");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         $(http()
@@ -174,11 +193,18 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testLiveLogs() {
+    public void testLiveLogs(String env) throws EnvironmentDetailsCheckException, IOException,
+            NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            InterruptedException, ReleaseIdNotFoundException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        String namespace = restApiComponent.getNamespaceForEnvironment(accessToken, env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
-                .concat(obsId)
+                .concat(observabilityIdInformation.getObsId())
                 .concat("/logsV2");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         $(http()
@@ -212,11 +238,19 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void downloadZippedLogs() throws IOException, URISyntaxException, ObservabilityLogsDownloadStatusCheckException {
+    public void downloadZippedLogs(String env) throws IOException, URISyntaxException,
+            ObservabilityLogsDownloadStatusCheckException, ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
+            NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        String namespace = restApiComponent.getNamespaceForEnvironment(accessToken, env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         String requestPath = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT).concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
-                .concat(obsId)
+                .concat(observabilityIdInformation.getObsId())
                 .concat("/logsV2/zip/");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         HttpGet request = new HttpGet(requestPath);
@@ -241,8 +275,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
             Map<String, String> entries = readZipEntries(zis);
             MatcherAssert.assertThat(entries.size(), greaterThan(0));
             MatcherAssert.assertThat(entries.keySet(), hasItems(initialFileName));
-            String content = entries.get(initialFileName).toString();
-            MatcherAssert.assertThat(content, containsStringIgnoringCase(obsId));
+            String content = entries.get(initialFileName);
+            MatcherAssert.assertThat(content, containsStringIgnoringCase(observabilityIdInformation.getObsId()));
         }
     }
 
