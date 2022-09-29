@@ -20,6 +20,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.*;
@@ -31,6 +32,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -46,22 +48,31 @@ import static org.hamcrest.Matchers.*;
 
 public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static String namespace;
-    private static String releaseId;
-    private static String obsId;
+    private static RestApiChoreoComponent restApiComponent;
 
     @Autowired
     private HttpClient choreoCPTestClient;
 
+    @DataProvider(name = "env-provider")
+    public Object[][] environment() {
+        return new Object[][] {{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
+    }
+
     @BeforeClass
     public void beforeClass()
             throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException, GetDeploymentsStatusCheckException,
-            ComponentCreationStatusCheckException, ComponentDeploymentException,
+            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
+            GetDeploymentsStatusCheckException, ComponentCreationStatusCheckException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
             ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
             NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException, ObservabilityDataCheckException, ObservabilityLogsNotFoundException, URISyntaxException, ObservabilityLogsCheckException, ObservabilitySystemMetricsCheckException, ObservabilitySystemMetricsNotFoundException {
+            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException,
+            APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException,
+            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException,
+            ObservabilityDataCheckException, ObservabilityLogsNotFoundException, URISyntaxException,
+            ObservabilityLogsCheckException, ObservabilitySystemMetricsCheckException,
+            ObservabilitySystemMetricsNotFoundException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -70,24 +81,34 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
         ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
-        RestApiChoreoComponent restApiComponent = (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
+        restApiComponent = (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);
         restApiComponent.setOrganization(org);
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
+
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-        releaseId = restApiComponent.getReleaseIdForEnvironment("dev");
-        namespace = restApiComponent.getNamespaceForEnvironment(accessToken, "dev");
-        obsId = restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId).getObsId();
-        restApiComponent.waitForObservabilitySystemMetrics(accessToken, obsId, releaseId, namespace);
 
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.PROD_ENVIRONMENT);
+        restApiComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+        restApiComponent.invokeGetApplication(accessToken, "restAPI", "Production", 4);
+
+        restApiComponent.waitForObservabilitySystemMetrics(accessToken, Constant.DEV_ENVIRONMENT);
+        restApiComponent.waitForObservabilitySystemMetrics(accessToken, Constant.PROD_ENVIRONMENT);
     }
 
-    @Test
+    @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testSystemMetrics() {
+    public void testSystemMetrics(String env) throws ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
+            IOException, NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
+            InterruptedException {
+        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
+        String namespace = restApiComponent.getNamespaceForEnvironment(accessToken, env);
+        ObservabilityIdInformation observabilityIdInformation =
+                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
         String requestPath = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX
-                .concat(obsId)
+                .concat(observabilityIdInformation.getObsId())
                 .concat("/metricsV2");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         $(http()
