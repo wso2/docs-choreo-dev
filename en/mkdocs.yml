@@ -78,7 +78,8 @@ nav:
       - Choreo Insights API: insights/choreo-insights-api.md
       - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
   - Administration:   
-      - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md    
+      - Connect to an External Identity Provider: administration/connect-to-an-external-identity-provider.md  
+      - Configure a Custom Domain for Developer Portal: administration/configure-custom-domain.md  
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
