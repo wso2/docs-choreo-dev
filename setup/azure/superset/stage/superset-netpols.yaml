@@ -59,6 +59,10 @@ spec:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: superset
+  egress:
+    - ports:
+        - port: 53
+          protocol: UDP
 
 ---
 
