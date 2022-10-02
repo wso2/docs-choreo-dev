@@ -16,13 +16,21 @@ The Organization admin can invite members by assigning them a role to the organi
 
 Choreo roles are defined as follows:
 
-- API Publisher: 
-- API Subscriber:
-- Admin:
-- Billing Admin:
-- Developer:
-- Env Manager: 
-- External API Subscriber: 
+
+- **API Publisher**: An API Publisher can discover, create, publish, delete, test, and manage an API.
+
+- **API Subscriber**:  An API Subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate, and manage api keys.
+
+- **Admin**: An admin is responsible for all administration tasks, including IDP creation, user management, customizing the dev portal, managing projects, enabling analytics, managing domains, etc.
+
+- **Billing Admin**:  Is responsible for billing administration that includes viewing tiers, creating and viewing organizations, managing invoices, viewing and creating subscriptions, and viewing and creating payment methods. 
+
+- **Developer**: A Developer focuses on developing components and solutions in Choreo. Developers can create, build, test, and manage any component type in Choreo: API, services, triggers, scheduled jobs, and Webhooks. 
+
+- **Env Manager**: Manages deployment environments. 
+
+- **External API Subscriber**: External API Subscribers are API consumers who have access only to the API Developer Portal. They join an organization with the sole purpose of consuming APIs. 
+
 
 ## Theme Preference
 
