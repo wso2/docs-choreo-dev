@@ -88,7 +88,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
         String componentName = "maxApiRevisionsUsingSettingsPage";
         // Access a reusable component which has a total of 18 revisions
         component = ComponentUtils.getReusableComponent(
-                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName);
+                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName.toLowerCase());
 
         ChoreoOrganization org = component.getOrganization();
         orgUuid = org.getOrgUUID();
