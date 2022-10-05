@@ -70,7 +70,7 @@ public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSup
         String componentName = "maxApiRevisionsUsingDeployments";
         // Access a reusable component which has deployed 20 times to reach API revision limit (i.e. 20 revisions)
         component = ComponentUtils.getReusableComponent(
-                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName);
+                TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(), componentName.toLowerCase());
 
         ChoreoOrganization org = component.getOrganization();
         orgUuid = org.getOrgUUID();
