@@ -42,9 +42,11 @@ spec:
           type: RuntimeDefault
       containers:
       - envFrom:
+          - configMapRef:
+              name: opentelemetry-agent-env
           - secretRef:
               name: opentelemetry-agent
-        image: otel/opentelemetry-agent-contrib:0.58.0
+        image: otel/opentelemetry-agent-contrib:0.60.0
         name: otel-collector
         resources:
           limits:
@@ -108,7 +110,7 @@ spec:
               name: csi-secret-store-azure
         - name: config
           configMap:
-            name: opentelemetry-agent
+            name: opentelemetry-agent-config
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
