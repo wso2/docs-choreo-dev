@@ -1,7 +1,7 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: obsapi
+  name: opentelemetry-collector
 spec:
   minAvailable: "50%"
   selector:
