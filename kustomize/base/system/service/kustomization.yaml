@@ -41,4 +41,5 @@ resources:
   - devops-portal-api.yaml
   - organization-management.yaml
   - choreo-apim-proxy-deployer-service.yaml
+  - opentelemetry-collector.yaml
   - choreo-admin-api.yaml
