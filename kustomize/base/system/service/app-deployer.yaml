@@ -6,9 +6,9 @@ metadata:
   name: app-deployer
 spec:
   ports:
-  - name: app-deployer-port
-    port: 8080
-    protocol: TCP
-    targetPort: grpc-port
+    - name: app-deployer-port
+      port: 8080
+      protocol: TCP
+      targetPort: grpc-port
   selector:
     choreo.component: app-deployer

@@ -149,7 +149,7 @@ export class Utils {
   }
 
   static getInvokeUrl(urlLocation: number) {
-    return cy.get('[data-cyid="text-field-invoke-url"] input').eq(urlLocation).invoke("attr", "value");
+    return cy.get('[data-cyid="text-field-invoke-url"] input').should('be.visible').eq(urlLocation).invoke("attr", "value");
   }
 
 

@@ -34,7 +34,7 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities:
                   drop:
-                  - all
+                    - all
               env:
                 - name: ADX_ANALYTICS_APP_CLIENT_SECRET
                   valueFrom:

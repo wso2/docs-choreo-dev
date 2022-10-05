@@ -36,16 +36,14 @@ spec:
           type: RuntimeDefault
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: deployment
-                      operator: In
-                      values:
-                        - wso2is
-                topologyKey: kubernetes.io/hostname
-              weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: deployment
+                    operator: In
+                    values:
+                      - wso2is
+              topologyKey: kubernetes.io/hostname
       initContainers:
         - name: init-is
           image: choreocontrolplane.azurecr.io/alpine:3.14

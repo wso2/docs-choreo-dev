@@ -55,6 +55,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: internal-nginx-redis-config
+            - configMapRef:
+                name: nginx-feature-flags
           env:
             - name: NAMESPACE
               valueFrom:
@@ -206,13 +208,11 @@ spec:
       restartPolicy: Always
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: antiaffinity
-                      operator: In
-                      values:
-                        - choreo-internal-nginx-deployment
-                topologyKey: kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-internal-nginx-deployment
+              topologyKey: kubernetes.io/hostname

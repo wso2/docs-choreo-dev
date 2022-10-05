@@ -156,7 +156,6 @@ export class LoginPage {
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
       GraphQL.deleteProjectsCreatedByTests(id, handle, token);
-      cy.reload()
     });
   }
 

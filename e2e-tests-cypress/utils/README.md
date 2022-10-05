@@ -1,0 +1,20 @@
+# Utility house keeping scripts
+This contains the util scripts for performing certain house keeping tasks, such as removing old test data that has not been removed due to an error encountered during the data cleanup task of the automated test run.
+
+
+## 1. Removal of dangling API Proxies on the Devportal
+This scenario has occurred where the API Proxy has been successfully removed from the Choreo Console but is still visible on the Devportal. This could lead to tests failures which cannot be rectified till the dangling API Proxies are removed.
+
+- Usage
+
+```
+node api-delete.js {dev|stage|prod} <access_token>
+```
+
+_Args_
+
+**env** - Env name that you are executing against(`dev`, `stage` or `prod`)
+
+**access_token** - JWT returned in the response of the POST call to the STS token endpoint of the respective Chroeo account, returned in the `access_token` field.
+
+

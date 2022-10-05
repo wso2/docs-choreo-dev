@@ -6,15 +6,15 @@ metadata:
   name: negotiator
 spec:
   ports:
-  - name: handshake-port
-    port: 9090
-    targetPort: handshake-port
-  - name: negotiator-port
-    port: 9092
-    targetPort: negotiator-port
-  - name: healthz
-    port: 9093
-    targetPort: healthz
+    - name: handshake-port
+      port: 9090
+      targetPort: handshake-port
+    - name: negotiator-port
+      port: 9092
+      targetPort: negotiator-port
+    - name: healthz
+      port: 9093
+      targetPort: healthz
 
   selector:
     choreo.component: negotiator

@@ -21,33 +21,39 @@ export class APIDeployment {
 
   static DeployToDev() {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
-    cy.get('[data-cyid="deployment-status"]').contains("Active").should("be.visible");
+    cy.get('[data-cyid="btn-next"]')
+      .contains("Deploy")
+      .should("be.visible")
+      .click();
+    cy.get('[data-cyid="deployment-status"]')
+      .contains("Active")
+      .should("be.visible");
     cy.get('[id="securityHeaderInput"]').invoke("val").should("not.be.empty");
-    cy.get('[data-cyid*="promote"]').should("not.be.disabled")
-  }
-
-  static promoteToStg() {
-    cy.get('[data-cyid*="promote"]').eq(0).click();
-    cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains("Staging-PoC").should("be.visible");
-    cy.get('[id="securityHeaderInput"]').should("have.length", 2).eq(1).invoke("val").should("not.be.empty");
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
   static PromoteToProd() {
-    let isPrivateOrg = Cypress.env("isPrivateOrg");
-
-    if (isPrivateOrg) {
-      cy.get('[data-cyid*="promote"]').eq(1).click();
-      cy.get('[id="securityHeaderInput"]').should("have.length", 3).eq(2).invoke("val").should("not.be.empty");
-    } else {
-      cy.get('[data-cyid*="promote"]').click();
-      cy.get('[data-cyid="proxy-env-card-header"]>div>span').contains("Production").should("be.visible");
-      cy.get('[data-cyid="deployment-status"]').should("have.length", 2).eq(1).contains("Active").should("be.visible");
-      cy.get('[id="securityHeaderInput"]').should("have.length", 2).eq(1).invoke("val").should("not.be.empty");
-      cy.get('[data-cyid*="promote"]').should("not.be.disabled")
-    }
+    cy.get('[data-cyid*="promote"]').click();
+    cy.get('[data-cyid="btn-next"]').click();
+    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+      .contains("Production")
+      .should("be.visible");
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+    cy.get('[id="securityHeaderInput"]')
+      .should("have.length", 2)
+      .eq(1)
+      .invoke("val")
+      .should("not.be.empty");
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
-  static verifyDevInvokeURL() { return Utils.getInvokeUrl(0); }
+  static verifyDevInvokeURL() {
+    return Utils.getInvokeUrl(0);
+  }
 
   static verifyStgeInvokeURL() {
     if (Cypress.env("isPrivateOrg")) {
@@ -58,10 +64,9 @@ export class APIDeployment {
   }
 
   static verifyProdInvokeURL() {
-    if (Cypress.env("isPrivateOrg")) { return Utils.getInvokeUrl(2); }
+    if (Cypress.env("isPrivateOrg")) {
+      return Utils.getInvokeUrl(2);
+    }
     return Utils.getInvokeUrl(1);
   }
-
-
-
 }

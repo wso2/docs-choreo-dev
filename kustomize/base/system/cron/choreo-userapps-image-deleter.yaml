@@ -34,7 +34,7 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities:
                   drop:
-                  - ALL
+                    - ALL
               env:
                 - name: AZURE_CLIENT_SECRET
                   valueFrom:

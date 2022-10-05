@@ -99,29 +99,27 @@ spec:
               port: email-port
               scheme: HTTPS
           volumeMounts:
-          - name: secret-email-service
-            mountPath: "/mnt/csi/secret-email-service"
-            readOnly: true
+            - name: secret-email-service
+              mountPath: "/mnt/csi/secret-email-service"
+              readOnly: true
       volumes:
-      - name: secret-email-service
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-email-service
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: secret-email-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-email-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - email-service
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - email-service
               topologyKey: kubernetes.io/hostname

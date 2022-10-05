@@ -7,10 +7,10 @@ metadata:
     choreo.component: dp-cicd
   name: dp-cicd
 spec:
-   maxReplicas: 5
-   minReplicas: 2
-   scaleTargetRef:
-     apiVersion: apps/v1
-     kind: Deployment
-     name: dp-cicd
-   targetCPUUtilizationPercentage: 75
+  maxReplicas: 5
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dp-cicd
+  targetCPUUtilizationPercentage: 75

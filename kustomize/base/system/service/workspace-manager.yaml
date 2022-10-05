@@ -6,9 +6,9 @@ metadata:
   name: workspace-manager
 spec:
   ports:
-  - name: workspace-manager-port
-    port: 8080
-    protocol: TCP
-    targetPort: grpc-port
+    - name: workspace-manager-port
+      port: 8080
+      protocol: TCP
+      targetPort: grpc-port
   selector:
     choreo.component: workspace-manager

@@ -14,4 +14,4 @@ spec:
         - podSelector:
             matchLabels:
               choreo.component: perfanalyzer-estimator
-  egress: []
+  egress: [ ]

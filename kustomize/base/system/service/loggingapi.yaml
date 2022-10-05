@@ -6,8 +6,8 @@ metadata:
   name: loggingapi
 spec:
   ports:
-  - name: logapi-port
-    port: 9097
-    targetPort: logapi-port
+    - name: logapi-port
+      port: 9097
+      targetPort: logapi-port
   selector:
     choreo.component: loggingapi

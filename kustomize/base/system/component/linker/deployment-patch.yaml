@@ -14,14 +14,14 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: "choreo-linker-0-deployment"
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 10500
-          runAsGroup: 10500
-          readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-              - ALL
+        - name: "choreo-linker-0-deployment"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
       restartPolicy: Always
       serviceAccountName: sa-choreo-default

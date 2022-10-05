@@ -7,9 +7,9 @@ metadata:
   name: dp-cloud-manager
 spec:
   ports:
-  - name: dp-cloud-manager-port
-    port: 80
-    protocol: TCP
-    targetPort: http-port
+    - name: dp-cloud-manager-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
   selector:
     choreo.component: dp-cloud-manager
