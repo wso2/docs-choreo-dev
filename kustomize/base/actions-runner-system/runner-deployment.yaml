@@ -22,6 +22,8 @@ spec:
       nodeSelector:
         execution-mode: ghrunner
       workDir: /home/runner/workspace
-      env: [ ]
+      env:
+        - name: DISABLE_RUNNER_UPDATE
+          value: "true"
       labels:
         - choreo-custom-runner
