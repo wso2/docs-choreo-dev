@@ -28,6 +28,7 @@
             <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.SysObsAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
+            <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"></class>
         </classes>
     </test>
 </suite>

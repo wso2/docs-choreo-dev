@@ -129,14 +129,6 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
                 body(new ClassPathResource("templates/createComponent/mutation_create_component_success.json")).
                 validate(json().ignore("$.data.createComponent.id").ignore("$.data.createComponent.handler").ignore("$.data.createComponent.projectId")).
                 validate((message, context) -> {
-
-                    System.out.println(message.getPayload().toString());
-                    JsonObject component = new JsonParser().
-                            parse((String) message.getPayload()).
-                            getAsJsonObject().
-                            getAsJsonObject("data").
-                            getAsJsonObject("createComponent");
-
                     response = ObjectMapperUtil.mapStringToObject(CreateComponent.class, message.getPayload().toString(), "createComponent");
 
                 }));
@@ -538,10 +530,6 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
                         type(MessageType.JSON).
                         body(new ClassPathResource("templates/jwt/decoded_jwt.json")).
                         validate(JsonMessageValidationContext.Builder.json())));
-
-
-
-
     }
 
 
