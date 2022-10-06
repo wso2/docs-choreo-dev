@@ -10,8 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.responses.CreateComponent;
 import com.wso2.choreo.integration.common.exceptions.*;
@@ -19,6 +22,8 @@ import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.common.utils.GQLutil;
 import com.wso2.choreo.integration.common.utils.GitUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -73,25 +78,15 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException {
 
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-//        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-//        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-//        orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
-//        orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-//        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-//        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
-//        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
-//        ChoreoProject project = org.createProject(accessToken);
-//        projectId = project.getId();
-
-
-        orgHandle = "dasunatwso2com";
-        orgId = "869";
-        orgUUID = "fec0832e-94dd-4749-aa0f-7da5ed9e0a31";
-        githubOrg = "dasunshakhya2";
-        githubPAT = "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";
-        projectId = "477419e5-43c4-490c-b48a-1dc8086ccd7b";
-        accessToken = "Bearer eyJ4NXQiOiJNbUV5WlRSaFpHTTROamc1WW1SbU9XVXlOalkxT1dReVpURXlNREJoTXpVd01ESTFOak5pWlRkalptWXhZMlkzWWpCaU4ySTRaRFppTW1Jek5qYzJPUSIsImtpZCI6Ik1tRXlaVFJoWkdNNE5qZzVZbVJtT1dVeU5qWTFPV1F5WlRFeU1EQmhNelV3TURJMU5qTmlaVGRqWm1ZeFkyWTNZakJpTjJJNFpEWmlNbUl6TmpjMk9RX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxYzY5MjMwNi1iOGIwLTQ1ODUtYjNjYy1lOGVmZjQ4ODk5YTEiLCJhdXQiOiJBUFBMSUNBVElPTl9VU0VSIiwiaXNzIjoiaHR0cHM6XC9cL3N0cy5wcmV2aWV3LWR2LmNob3Jlby5kZXY6NDQzXC9vYXV0aDJcL3Rva2VuIiwiYXVkIjpbIld4cXkwbGlDZkxCc2RwWE9oa2N4Wno2dUxQa2EiLCJodHRwczpcL1wvc3RzLnByZXZpZXctZHYuY2hvcmVvLmRldjo0NDNcL29hdXRoMlwvdG9rZW4iXSwibmJmIjoxNjY1MDI1NjMwLCJhenAiOiJXeHF5MGxpQ2ZMQnNkcFhPaGtjeFp6NnVMUGthIiwic2NvcGUiOiJhcGltOmFkbWluIGFwaW06YXBpX21hbmFnZSBhcGltOmFwaV9wdWJsaXNoIGFwaW06YXBpX3NldHRpbmdzIGFwaW06ZGNyOmFwcF9tYW5hZ2UgYXBpbTpkb2N1bWVudF9tYW5hZ2UgYXBpbTpwdWJsaXNoZXJfc2V0dGluZ3MgYXBpbTpzdWJzY3JpcHRpb25fbWFuYWdlIGFwaW06c3Vic2NyaXB0aW9uX3ZpZXcgYXBpbTp0aWVyX21hbmFnZSBjaG9yZW86Y29tcG9uZW50X21hbmFnZSBjaG9yZW86ZGVwbG95bWVudF9tYW5hZ2UgY2hvcmVvOmRldl9lbnZfbWFuYWdlIGNob3Jlbzpwcm9kX2Vudl9tYW5hZ2UgY2hvcmVvOnByb2plY3RfbWFuYWdlIGNob3Jlbzpyb2xlX21hbmFnZSBjaG9yZW86dXNlcl9tYW5hZ2UgZW52aXJvbm1lbnRzOnZpZXdfZGV2IGVudmlyb25tZW50czp2aWV3X3Byb2QiLCJvcmdhbml6YXRpb24iOnsiaGFuZGxlIjoiZGFzdW5hdHdzbzJjb20iLCJ1dWlkIjoiZmVjMDgzMmUtOTRkZC00NzQ5LWFhMGYtN2RhNWVkOWUwYTMxIn0sIm9yZ2FuaXphdGlvbnMiOlsiZmVjMDgzMmUtOTRkZC00NzQ5LWFhMGYtN2RhNWVkOWUwYTMxIiwiYzI5Y2Y2M2UtZTViYy00ODhlLTk5OGEtODE4NjZkMmIyNjZiIiwiYWJmNjRjM2ItMjU4ZC00NzQ2LTgyNzktZDZjNWY2M2VhNTU4Il0sImV4cCI6MTY2NTAyOTIzMCwiaWRwX2NsYWltcyI6eyJhdXQiOiJBUFBMSUNBVElPTl9VU0VSIiwiYXV0aGVudGljYXRlZF9pZHAiOiJHb29nbGUiLCJuYW1lIjoiRGFzdW4gU2FtYXJhc2luZ2hlIiwiZ2l2ZW5fbmFtZSI6IkRhc3VuIiwiZmFtaWx5X25hbWUiOiJTYW1hcmFzaW5naGUiLCJlbWFpbCI6ImRhc3VuQHdzbzIuY29tIn0sImlhdCI6MTY2NTAyNTYzMCwianRpIjoiMDI4NDJjYzAtZDM1Mi00YzY2LWJmNjctZmEwODViNGJlYjdiIn0.AgS3BWeyzF0BdlLxModCOfR7HrOPP8CI_-QXVf3HQni6TkXQsDT4OhHcQlaV_dWyR2euJ-kbL8Gqh9h2_wUvduPCWQp7GxOPzIcH4xtp8EOuHbb2h9oew8HKoQswCvzOuldUuoX_oqAZiUY_flfIQvjzcKbVvmo44l_1dQ1VcZqqfKYKHSkTaT8DUpUN79bY_M-j4HTg_uvYzuhfox9W2ghuUchaoWLBCwOahQjrJlhZ3QCzFxI__MNyZ9Xt2wEIlZxXUhgLl9q4oCvtZ0O6sZkabO4rIOJgPcL5NqExszkq2yD5mG7G4tHHch698DCcmj1_Asfoj6J4uxscg-37vD1cKiarpafK5xNDppT85GIXCq5dX0QLynePpA1Pb4m8WJp0grolmP3PKDq6YBSmVE6H5ujuTtvYK_yNBdeYXOD1Zv3rgfVxdAMGXaeDlODkys1v68x-lQmE-B-9cDtEpxZxostkHACr6kgWnKmxdanpQPEqDx5TXFsrvAuTv4doYOwRwiVwnmqlavy1f4Spc25o-jDYXf6WQ48a4RcwTDWMGTHbuiuZJcn65F_IBZEab9_erwmHjURohI_gV0ZZPNSUlus49Ddv1yBztoezqX1ZhBeUHiz33UlapMom1ssx21EFX1-wJmtmzJode6lERTROVX1B-jZxlfnHwVOEJxw";
-
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+        orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
+        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
+        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
+        ChoreoProject project = org.createProject(accessToken);
+        projectId = project.getId();
 
     }
 
