@@ -16,6 +16,8 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
+import com.wso2.choreo.integration.common.utils.GQLutil;
+import com.wso2.choreo.integration.common.utils.GitUtil;
 import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
@@ -47,7 +49,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  *
  * tests related to component creation from user managed repos
  */
-public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
+public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -150,19 +152,9 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void testCreateUserManagedComponent() throws JsonProcessingException {
-        // Creating new GitHub repo
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-        HashMap<String, Object> requestBodyMap = new HashMap<>() {
-            {
-                put("name", repoName);
-                put("auto_init", true);
-                put("private", true);
-                put("gitignore_template", "nanoc");
-            }
-        };
         String requestURI = "/orgs/".concat(githubOrg).concat("/repos");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
+        String requestBody = GitUtil.getGitRepo(repoName,true,true,"nanoc");
         String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
 
         $(http()
@@ -183,34 +175,11 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         String srcGitHubURL = "https://github.com/".concat(githubOrg).concat("/").concat(repoName);
-        String graphQlQuery = "mutation{ createComponent(" +
-                "      component: {" +
-                "        name: \"" + componentName + "\"," +
-                "        orgId: " + orgId + "," +
-                "        orgHandler: \"" + orgHandle + "\"," +
-                "        displayName: \"" + componentName + "\"," +
-                "        displayType: \"" + Constant.displayType.restAPI + "\"," +
-                "        projectId: \"" + projectId + "\"," +
-                "        labels: \"\"," +
-                "        version: \"1.0.0\"," +
-                "        description: \"\"," +
-                "        apiId: \"\"," +
-                "        ballerinaVersion: \"swan-lake-alpha5\"," +
-                "        triggerChannels: \"\"," +
-                "        triggerID: null," +
-                "        httpBase: true," +
-                "        sampleTemplate: \"\"," +
-                "        srcGitRepoUrl: \"" + srcGitHubURL + "\"" +
-                "      }){" +
-                "        id, orgId, projectId, handler" +
-                "      }}";
-        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-            {
-                put("query", graphQlQuery);
-            }
-        };
-        ObjectMapper componentObjectMapper = new ObjectMapper();
-        String componentRequestBody = componentObjectMapper.writeValueAsString(gqlRequestPayload);
+
+
+        String componentRequestBody =  GQLutil.createComponent(componentName, orgId,
+                orgHandle, Constant.displayType.restAPI.name(), projectId, srcGitHubURL, null, "");
+
         $(http()
                 .client(choreoProjectsTestClient)
                 .send()

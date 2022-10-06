@@ -46,9 +46,9 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 /**
  * $(http()
  *
- * tests related to component creation from user managed non empty repo subpath.
+ * tests related to component creation from user managed non empty repo root.
  */
-public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSupport {
+public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpringSupport {
         private static String accessToken;
         private String orgHandle;
         private String orgId;
@@ -60,10 +60,9 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         private static String prNumber;
         private static String apiKey;
         private static String apiId;
-        private String repoName = "byor-greetings-app2";
-        private String repoSubpath = "hello_service";
+        private String repoName = "byor-greetings-app1";
         private String repoType = "UserManagedNonEmpty";
-        private String repoBranch = "feature";
+        private String repoBranch = "dev";
         private String prBranch;
         private String githubOrg;
         private String githubPAT;
@@ -83,7 +82,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
         @BeforeClass
         public void beforeClass()
-                        throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+                throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -97,50 +96,51 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
         @Test
         @CitrusTest
-        public void testCreateUserManagedComponent() throws IOException {
+        public void testCreateUserManagedComponent() throws JsonProcessingException, IOException {
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-                // The GH repository is initiated everyday with a new Ballerina project using a GH Action Workflow
                 String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/")
-                                .concat(repoName).concat("/tree/").concat(repoBranch).concat("/").concat(repoSubpath);
+                        .concat(repoName);
                 APICreator testAPI = new APICreator();
+                String repoSubpath = "";
                 String graphQlQuery = testAPI.createUserManagedNonEmptyComponentCreationQuery(
                         componentName, orgId, orgHandle, projectId, srcGitHubURL, repoSubpath, repoType, repoBranch);
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {{
-                    put(Constant.QUERY, graphQlQuery);
+                        put(Constant.QUERY, graphQlQuery);
                 }};
+
                 ObjectMapper componentObjectMapper = new ObjectMapper();
                 String componentRequestBody = componentObjectMapper.writeValueAsString(gqlRequestPayload);
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(componentRequestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(componentRequestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/createComponent/mutation_create_component_success.json"))
-                                .validate(json()
-                                                .ignore("$.data.createComponent.id")
-                                                .ignore("$.data.createComponent.handler")
-                                                .ignore("$.data.createComponent.projectId"))
-                                .validate((message, context) -> {
-                                        JsonObject component = new JsonParser().parse((String) message.getPayload())
-                                                        .getAsJsonObject()
-                                                        .getAsJsonObject("data")
-                                                        .getAsJsonObject("createComponent");
-                                        componentHandler = component.get("handler").getAsString();
-                                        componentId = component.get("id").getAsString();
-                                }));
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .body(new ClassPathResource(
+                                "templates/createComponent/mutation_create_component_success.json"))
+                        .validate(json()
+                                .ignore("$.data.createComponent.id")
+                                .ignore("$.data.createComponent.handler")
+                                .ignore("$.data.createComponent.projectId"))
+                        .validate((message, context) -> {
+                                JsonObject component = new JsonParser().parse((String) message.getPayload())
+                                        .getAsJsonObject()
+                                        .getAsJsonObject("data")
+                                        .getAsJsonObject("createComponent");
+                                componentHandler = component.get("handler").getAsString();
+                                componentId = component.get("id").getAsString();
+                        }));
         }
 
         @Test(dependsOnMethods = { "testCreateUserManagedComponent" })
@@ -179,10 +179,10 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
         @CitrusTest
         public void testInitialPRGeneration() throws JsonProcessingException {
                 String graphQlQuery = "query{ componentPullRequests(" +
-                                "        componentId: \"" + componentId + "\"," +
-                                "      ){" +
-                                "        url, number" +
-                                "      }}";
+                        "        componentId: \"" + componentId + "\"," +
+                        "      ){" +
+                        "        url, number" +
+                        "      }}";
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
                         {
                                 put("query", graphQlQuery);
@@ -193,30 +193,30 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Check if initial PR has been generated
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/createUserManagedComponent/get_pull_requests.json"))
-                                .validate((message, context) -> {
-                                        JsonObject prInformation = new JsonParser().parse((String) message.getPayload())
-                                                        .getAsJsonObject()
-                                                        .getAsJsonObject("data")
-                                                        .getAsJsonArray("componentPullRequests").get(0)
-                                                        .getAsJsonObject();
-                                        prNumber = prInformation.get("number").getAsString();
-                                }));
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .body(new ClassPathResource(
+                                "templates/createUserManagedComponent/get_pull_requests.json"))
+                        .validate((message, context) -> {
+                                JsonObject prInformation = new JsonParser().parse((String) message.getPayload())
+                                        .getAsJsonObject()
+                                        .getAsJsonObject("data")
+                                        .getAsJsonArray("componentPullRequests").get(0)
+                                        .getAsJsonObject();
+                                prNumber = prInformation.get("number").getAsString();
+                        }));
         }
 
         @Test(dependsOnMethods = { "testInitialPRGeneration" })
@@ -341,43 +341,43 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 String graphQlQuery = testAPI.getComponentDetailsQuery(projectId, componentHandler);
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
                         {
-                                put("query", graphQlQuery);
+                                put(Constant.QUERY, graphQlQuery);
                         }
                 };
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .validate((message, context) -> {
-                                        JsonObject component = new JsonParser().parse((String) message.getPayload())
-                                                        .getAsJsonObject()
-                                                        .getAsJsonObject("data")
-                                                        .getAsJsonObject("component");
-                                        Gson gson = new Gson();
-                                        testComponent = gson.fromJson(component.toString(),
-                                                        RestApiChoreoComponent.class);
-                                }));
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                JsonObject component = new JsonParser().parse((String) message.getPayload())
+                                        .getAsJsonObject()
+                                        .getAsJsonObject("data")
+                                        .getAsJsonObject("component");
+                                Gson gson = new Gson();
+                                testComponent = gson.fromJson(component.toString(),
+                                        RestApiChoreoComponent.class);
+                        }));
         }
 
         @Test(dependsOnMethods = { "testComponentRetrieval" })
         @CitrusTest
         public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
-                        NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
-                        NoLatestAppEnvIdFoundException {
-                JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
+                NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
+                NoLatestAppEnvIdFoundException {
+                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
@@ -385,8 +385,8 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 String name = testComponent.getName();
 
                 String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
-                                .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
-                                .concat(devEnvIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
+                        .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
+                        .concat(devEnvIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
                 HashMap<String, Object> requestBodyMap = new HashMap<>() {
                         {
                                 put("moduleName", name);
@@ -403,29 +403,29 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Update configurations
                 $(http()
-                                .client(choreoTestClient)
-                                .send()
-                                .post(configurationsUpdateRequestURI)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(configurationsRequestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoTestClient)
+                        .send()
+                        .post(configurationsUpdateRequestURI)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(configurationsRequestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
                 $(http()
-                                .client(choreoTestClient)
-                                .receive()
-                                .response(HttpStatus.OK));
+                        .client(choreoTestClient)
+                        .receive()
+                        .response(HttpStatus.OK));
 
                 String graphQlQuery = "mutation {deployComponent(" +
-                                "        deployment: {" +
-                                "          componentId: \"" + componentId + "\"," +
-                                "          versionId: \"" + latestVersionId + "\"," +
-                                "          envId: \"" + devEnvIdToDeploy + "\"," +
-                                "          branch: \"" + branch + "\"," +
-                                "          sha: \"" + latestCommitSha + "\"," +
-                                "        }" +
-                                "      ) { message, success }}";
+                        "        deployment: {" +
+                        "          componentId: \"" + componentId + "\"," +
+                        "          versionId: \"" + latestVersionId + "\"," +
+                        "          envId: \"" + devEnvIdToDeploy + "\"," +
+                        "          branch: \"" + branch + "\"," +
+                        "          sha: \"" + latestCommitSha + "\"," +
+                        "        }" +
+                        "      ) { message, success }}";
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
                         {
                                 put("query", graphQlQuery);
@@ -436,22 +436,22 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Deploy component
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource("templates/deploy/gql_deploy_component_success.json"))
-                                .validate(json()));
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .body(new ClassPathResource("templates/deploy/gql_deploy_component_success.json"))
+                        .validate(json()));
         }
 
         @Test(dependsOnMethods = { "testComponentDeployment" })
@@ -526,7 +526,7 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-                JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
+                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
 
                 Map<String, String> responseParams = new HashMap<>();
@@ -564,13 +564,13 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String graphQlQuery = "query {" +
-                                "      invokeInformation(" +
-                                "        orgHandler: \"" + orgHandle + "\"," +
-                                "        orgUuid: \"" + orgUUID + "\"," +
-                                "        componentId: \"" + componentId + "\"," +
-                                "        versionId: \"" + latestVersionId + "\"," +
-                                "        componentType: \"restAPI\"" +
-                                "      ) { apiId, invokeUrl } }";
+                        "      invokeInformation(" +
+                        "        orgHandler: \"" + orgHandle + "\"," +
+                        "        orgUuid: \"" + orgUUID + "\"," +
+                        "        componentId: \"" + componentId + "\"," +
+                        "        versionId: \"" + latestVersionId + "\"," +
+                        "        componentType: \"restAPI\"" +
+                        "      ) { apiId, invokeUrl } }";
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
                         {
                                 put("query", graphQlQuery);
@@ -581,54 +581,54 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Get invokeUrl and apiId
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .validate((message, context) -> {
-                                        JsonObject invokeInformation = new JsonParser()
-                                                        .parse((String) message.getPayload()).getAsJsonObject()
-                                                        .getAsJsonObject("data")
-                                                        .getAsJsonArray("invokeInformation").get(0).getAsJsonObject();
-                                        invokeUrl = invokeInformation.get("invokeUrl").getAsString();
-                                        apiId = invokeInformation.get("apiId").getAsString();
-                                }));
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                JsonObject invokeInformation = new JsonParser()
+                                        .parse((String) message.getPayload()).getAsJsonObject()
+                                        .getAsJsonObject("data")
+                                        .getAsJsonArray("invokeInformation").get(0).getAsJsonObject();
+                                invokeUrl = invokeInformation.get("invokeUrl").getAsString();
+                                apiId = invokeInformation.get("apiId").getAsString();
+                        }));
 
                 String requestURI = Constant.APIS_ENDPOINT.concat("/").concat(apiId)
-                                .concat(Constant.GENERATE_KEY_ENDPOINT_SUFFIX).concat("?")
-                                .concat(Constant.ORGANIZATION_ID)
-                                .concat("=").concat(orgUUID);
+                        .concat(Constant.GENERATE_KEY_ENDPOINT_SUFFIX).concat("?")
+                        .concat(Constant.ORGANIZATION_ID)
+                        .concat("=").concat(orgUUID);
 
                 // Generate API key for invocation
                 $(http()
-                                .client(choreoTestClientForSTS)
-                                .send()
-                                .post(requestURI)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoTestClientForSTS)
+                        .send()
+                        .post(requestURI)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
                 $(http()
-                                .client(choreoTestClientForSTS)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .validate((message, context) -> {
-                                        apiKey = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
-                                                        .get("apikey").getAsString();
-                                }));
+                        .client(choreoTestClientForSTS)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                apiKey = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
+                                        .get("apikey").getAsString();
+                        }));
 
                 // Test API Invocation
                 // Retry on failure for few seconds since config update takes some time to
@@ -636,33 +636,33 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
                 String apiInvocationRequestURI = "/greeting?name=TestUser";
 
                 $(repeatOnError()
-                                .until("i = 15")
-                                .index("i")
-                                .autoSleep(6000)
-                                .actions(
-                                                http()
-                                                                .client(invokeUrl)
-                                                                .send()
-                                                                .get(apiInvocationRequestURI)
-                                                                .message()
-                                                                .header(HttpHeaders.ACCEPT, "text/plain")
-                                                                .header("API-Key", apiKey),
-                                                http()
-                                                                .client(invokeUrl)
-                                                                .receive()
-                                                                .response(HttpStatus.OK)
-                                                                .message()
-                                                                .type(MessageType.PLAINTEXT)));
+                        .until("i = 15")
+                        .index("i")
+                        .autoSleep(6000)
+                        .actions(
+                                http()
+                                        .client(invokeUrl)
+                                        .send()
+                                        .get(apiInvocationRequestURI)
+                                        .message()
+                                        .header(HttpHeaders.ACCEPT, "text/plain")
+                                        .header("API-Key", apiKey),
+                                http()
+                                        .client(invokeUrl)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .type(MessageType.PLAINTEXT)));
         }
 
         @Test(dependsOnMethods = { "testAPIInvocation" })
         @CitrusTest
         public void testDeleteRestApiComponent() throws JsonProcessingException {
                 String graphqlQuery = "mutation { deleteComponentV2(" +
-                                "orgHandler: \"" + orgHandle + "\"," +
-                                "componentId: \"" + componentId + "\"," +
-                                "projectId: \"" + projectId + "\"){ status }" +
-                                "}";
+                        "orgHandler: \"" + orgHandle + "\"," +
+                        "componentId: \"" + componentId + "\"," +
+                        "projectId: \"" + projectId + "\"){ status }" +
+                        "}";
 
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
                         {
@@ -674,22 +674,22 @@ public class CreateUserManagedNonEmptyComponentSub extends TestNGCitrusSpringSup
 
                 // Delete component
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
                 $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/createComponent/mutation_delete_component_success.json"))
-                                .validate(json()));
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK)
+                        .message()
+                        .type(MessageType.JSON)
+                        .body(new ClassPathResource(
+                                "templates/createComponent/mutation_delete_component_success.json"))
+                        .validate(json()));
         }
 }
