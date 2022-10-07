@@ -21,6 +21,7 @@ import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusChec
 import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import org.apache.http.HttpHeaders;
@@ -82,16 +83,20 @@ public class ControlPlaneAPIs {
         }
     }
 
-    static void waitForComponentCreationSuccess(String accessToken, String choreoOrgHandle, String projectId,
+    public  static void waitForComponentCreationSuccess(String accessToken, String choreoOrgHandle, String projectId,
                                                 String componentId)
             throws ComponentCreationStatusCheckException,
             ComponentCreationTimeoutException {
         String choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
-        String requestURI = choreoEndpoint.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId +
-                "/components/" + componentId + "/init/status");
+        String requestURI = choreoEndpoint.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId + "/components/" + componentId + "/init/status");
+
+
 
         HttpGet request = new HttpGet(requestURI);
+
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+
+
 
         for (int i = 0; i < 15; ++i) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();

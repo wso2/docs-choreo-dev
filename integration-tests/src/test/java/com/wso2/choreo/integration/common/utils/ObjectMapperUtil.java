@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.common.choreoproject.responses.CreateComponent;
+import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 
 import java.util.HashMap;
 
@@ -17,9 +17,19 @@ public class ObjectMapperUtil {
         return componentObjectMapper.writeValueAsString(objectMap);
     }
 
+    public  static String mapToGraphQLQuery(String query) throws JsonProcessingException {
+        ObjectMapper componentObjectMapper = new ObjectMapper();
+        HashMap<String, String > objectMap = new HashMap<>() {
+            {
+                put("query", query);
+            }
+        };
+        return componentObjectMapper.writeValueAsString(objectMap);
+    }
+
     public static <T> T mapStringToObject(Class<T> type, String jsonString, String val) {
 
-        if (jsonString.contains("data")) {
+        if (jsonString.contains("data") && val != null && !val.equals("")) {
 
             JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
                     getAsJsonObject("data").getAsJsonObject(val);
@@ -27,6 +37,17 @@ public class ObjectMapperUtil {
         }
         return GSON.fromJson(jsonString, type);
     }
+
+    public static <T> T[] mapToCollection(Class<T[]> tClass, String jsonString,String val){
+        if (jsonString.contains("data") && val != null && !val.equals("")) {
+
+            JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
+                    getAsJsonObject("data").getAsJsonArray(val);
+            return GSON.fromJson(je, tClass);
+        }
+        return GSON.fromJson(jsonString, tClass);
+    }
+
 }
 
 

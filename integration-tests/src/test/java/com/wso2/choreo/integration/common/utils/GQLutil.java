@@ -98,7 +98,13 @@ public class GQLutil {
     }
 
     public  static String deploy(String componentId,String latestVersionId,String devEnvIdToDeploy,String branch,String latestCommitSha) throws JsonProcessingException {
-        String graphQlQuery = "mutation {deployComponent(" + "        deployment: {" + "          componentId: \"" + componentId + "\"," + "          versionId: \"" + latestVersionId + "\"," + "          envId: \"" + devEnvIdToDeploy + "\"," + "          branch: \"" + branch + "\"," + "          sha: \"" + latestCommitSha + "\"," + "        }" + "      ) { message, success }}";
+        String graphQlQuery = "mutation {deployComponent(" + "        deployment: {" + "     " +
+                "     componentId: \"" + componentId + "\"," + "        " +
+                "  versionId: \"" + latestVersionId + "\"," + "    " +
+                "      envId: \"" + devEnvIdToDeploy + "\"," + "     " +
+                "     branch: \"" + branch + "\"," + "    " +
+                "      sha: \"" + latestCommitSha + "\"," + "      " +
+                "  }" + "      ) { message, success }}";
         HashMap<String, Object> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);
@@ -118,7 +124,14 @@ public class GQLutil {
     }
 
     public static String getInvokeUrlInformation(String orgHandle,String orgUUID,String componentId,String latestVersionId) throws JsonProcessingException {
-        String graphQlQuery = "query {" + "      invokeInformation(" + "        orgHandler: \"" + orgHandle + "\"," + "        orgUuid: \"" + orgUUID + "\"," + "        componentId: \"" + componentId + "\"," + "        versionId: \"" + latestVersionId + "\"," + "        componentType: \"restAPI\"" + "      ) { apiId, invokeUrl } }";
+        String graphQlQuery = "query {" +
+                "      invokeInformation(" +
+                "        orgHandler: \"" + orgHandle + "\"," +
+                "        orgUuid: \"" + orgUUID + "\"," +
+                "        componentId: \"" + componentId + "\"," +
+                "        versionId: \"" + latestVersionId + "\"," +
+                "        componentType: \"restAPI\"" +
+                "      ) { apiId, invokeUrl } }";
         HashMap<String, Object> gqlRequestPayload = new HashMap<>() {
             {
                 put("query", graphQlQuery);

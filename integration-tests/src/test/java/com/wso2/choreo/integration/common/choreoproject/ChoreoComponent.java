@@ -23,39 +23,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
-import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
-import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
-import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityASTCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.GraphQLException;
-import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.RedeployException;
-import com.wso2.choreo.integration.common.exceptions.UndeployException;
-import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
+import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
+import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.common.exceptions.EnvironmentDetailsCheckException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityDataCheckException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsCheckException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsCheckException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.NamespaceNotFoundException;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -120,6 +96,10 @@ public abstract class ChoreoComponent {
         choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT);
         configCPGatewayEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT);
     }
+
+
+
+
 
     /**
      * Retrieve commit history of a component
@@ -284,7 +264,7 @@ public abstract class ChoreoComponent {
     public void deploy(String accessToken, String orgHandle, String orgUUID)
             throws IOException, InterruptedException, NoLatestAppEnvIdFoundException, ComponentDeploymentException,
             ComponentDeploymentStatusCheckException, NoLatestCommitHashFoundException, GetCommitHistoryException,
-            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException,GetDeploymentsStatusCheckException {
+            ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException, ComponentDeploymentFailureException, GetDeploymentsStatusCheckException {
 
         JsonArray commitHistory = getCommitHistory(accessToken);
         String latestCommitSha = getLatestCommitHash(commitHistory);
@@ -293,14 +273,14 @@ public abstract class ChoreoComponent {
         String branch = getRepository().getBranch();
 
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
-            put("query","mutation {" +
+            put("query", "mutation {" +
                     "     deployComponent(" +
                     "     deployment: {" +
-                    "     componentId: \"" +id +"\"," +
-                    "     versionId: \""+latestVersionId+"\"," +
-                    "     envId: \""+devEnvIdToDeploy+"\"," +
-                    "     branch: \""+branch+"\"," +
-                    "     sha: \""+latestCommitSha+"\"," +
+                    "     componentId: \"" + id + "\"," +
+                    "     versionId: \"" + latestVersionId + "\"," +
+                    "     envId: \"" + devEnvIdToDeploy + "\"," +
+                    "     branch: \"" + branch + "\"," +
+                    "     sha: \"" + latestCommitSha + "\"," +
                     "     cron: \"\" " +
                     "     }) { " +
                     "     message" +
@@ -444,7 +424,7 @@ public abstract class ChoreoComponent {
             timeTakenInSeconds += waitForSeconds;
             ++numberOfTries;
 
-            try  {
+            try {
                 JsonObject response = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
 
                 String status = response.getAsJsonObject()
@@ -780,7 +760,7 @@ public abstract class ChoreoComponent {
      * @param environment   environment of the deployment
      * @return Invoke information related to requested environment
      */
-    public InvokeInformation getInvokeInformation(String accessToken, String componentType, String environment) throws
+    public com.wso2.choreo.integration.models.invokeinfor.InvokeInformation  getInvokeInformation(String accessToken, String componentType, String environment) throws
             IOException, NoLatestApiVersionFoundException, InterruptedException, ComponentInvokeInformationCheckException, InvokeInformationNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
@@ -817,8 +797,8 @@ public abstract class ChoreoComponent {
             }
             JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
             JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
-            InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
-            for (InvokeInformation envInvokeInformation : invokeInformation) {
+            com.wso2.choreo.integration.models.invokeinfor.InvokeInformation [] invokeInformation = gson.fromJson(invokeInformationJsonArray, com.wso2.choreo.integration.models.invokeinfor.InvokeInformation [].class);
+            for (com.wso2.choreo.integration.models.invokeinfor.InvokeInformation  envInvokeInformation : invokeInformation ) {
                 if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
                     return envInvokeInformation;
                 }
