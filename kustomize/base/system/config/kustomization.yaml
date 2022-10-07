@@ -318,7 +318,3 @@ configMapGenerator:
     behavior: create
     files:
       - lowcode-parser/application.properties
-  - name: console-config
-    behavior: create
-    files:
-      - choreo-console/choreo.config.js
