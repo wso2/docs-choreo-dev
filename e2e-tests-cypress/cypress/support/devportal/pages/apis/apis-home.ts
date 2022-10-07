@@ -62,6 +62,14 @@ export class Apis {
     this.searchAPI(textApiName);
   }
 
+  static confirmAPIUnavailability(textApiName) {
+    cy.get("#outlined-search-bar-api-listing")
+        .focus()
+        .type(`${textApiName}{enter}`);
+    cy.get("[data-testid=apiCard-" + textApiName + "]").should("not.exist");
+    cy.log("Successfully verified the api unavailability");
+  }
+
   private static searchAPI(textApiName) {
     cy.get("#outlined-search-bar-api-listing")
       .focus()

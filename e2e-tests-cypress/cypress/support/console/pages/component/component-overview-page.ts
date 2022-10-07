@@ -19,6 +19,10 @@ export class ComponentOverviewPage {
     cy.get("button>span>p").contains("Components").should("be.visible").click();
   }
 
+  static navigateToOverview() {
+    cy.get("[data-cyid=link-overview]").click();
+  }
+
   static navigateToDevelop() {
     cy.get("[data-cyid=link-develop]").click();
   }
@@ -79,6 +83,4 @@ export class ComponentOverviewPage {
     cy.get("[data-testid=create-version-create]").click();
     cy.get('[data-testid="dialog-close-icon"]').should('not.exist')
   }
-
-
 }

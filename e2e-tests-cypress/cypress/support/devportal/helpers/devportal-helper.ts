@@ -18,6 +18,7 @@ import { ComponentOverviewPage } from "../../console/pages/component/component-o
 import { ProjectOverviewPage } from "../../console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../console/pages/projects/projects-listing-page";
 import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-proxy-temp";
+import { RestAPITemplate } from "../../console/pages/templates/rest-api-temp";
 import { Utils } from "../../console/utils";
 import { generateAppName } from "../utils";
 
@@ -32,7 +33,7 @@ export class DevPortalHelper {
   static OPERATION_USERS = "intensity";
   static appName = generateAppName("-e2etest");
 
-  static createDeployComponent(API_Name) {
+  static createDeployHttpProxyComponent(API_Name) {
     ProjectListingPage.createNewProject(DevPortalHelper.PROJECT_NAME, DevPortalHelper.PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
@@ -41,6 +42,21 @@ export class DevPortalHelper {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.PromoteToProd()
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+  }
+
+  static createDeployRestApiComponent(API_Name, description, projectName = DevPortalHelper.PROJECT_NAME) {
+    ProjectListingPage.createNewProject(projectName, DevPortalHelper.PROJECT_DESCRIPTION);
+    ProjectListingPage.selectProject(projectName);
+    ProjectOverviewPage.addNewComponent();
+    RestAPITemplate.selectHttpAPITemplate();
+    RestAPITemplate.createApiFromScratch(API_Name, description);
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployRestApiToDev();
+    APIDeployment.PromoteRestApiToProd();
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();

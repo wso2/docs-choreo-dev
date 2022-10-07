@@ -32,6 +32,32 @@ export class APIDeployment {
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
+  static DeployRestApiToDev() {
+    cy.get('[data-cyid="btn-deploy-api"]').should("not.be.disabled").click();
+    cy.get('[data-testid="dialog-close-icon"]').should("exist").click();
+    cy.get('[data-cyid="deployment-status"]')
+        .contains("Active")
+        .should("be.visible");
+    cy.get('[id="securityHeaderInput"]').invoke("val").should("not.be.empty");
+    cy.get('[class="MuiPaper-root separator-topH MuiPaper-elevation0"]').should("exist").click();
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+  }
+
+  static PromoteRestApiToProd() {
+    cy.get('[data-cyid*="promote"]').click();
+    cy.get('[data-cyid="deployment-status"]')
+        .should("have.length", 2)
+        .eq(1)
+        .contains("Active")
+        .should("be.visible");
+    cy.get('[id="securityHeaderInput"]')
+        .should("have.length", 2)
+        .eq(1)
+        .invoke("val")
+        .should("not.be.empty");
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
+  }
+
   static PromoteToProd() {
     cy.get('[data-cyid*="promote"]').click();
     cy.get('[data-cyid="btn-next"]').click();

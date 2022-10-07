@@ -19,9 +19,15 @@ module.exports = (on, config) => {
     setAPIName: (val) => {
       return (apiName = val);
     },
+    setChoreoProjectName: (val) => {
+      return (projectName = val);
+    },
 
     getAPIName: () => {
       return apiName;
+    },
+    getChoreoProjectName: () => {
+      return projectName;
     }
   });
   config.env.choreoIDPUsername = process.env.choreoIDPUsername;
