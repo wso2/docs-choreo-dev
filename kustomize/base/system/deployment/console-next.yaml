@@ -75,9 +75,14 @@ spec:
           volumeMounts:
             - name: nginx-vol
               mountPath: /tmp
-            - name: app-config
-              mountPath: /app/choreo.config.js
+            - name: app-vol
+              mountPath: /app
       serviceAccountName: sa-choreo-default
+      volumes:
+        - name: nginx-vol
+          emptyDir: { }
+        - name: app-vol
+          emptyDir: { }
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
