@@ -23,12 +23,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
-import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
 import com.wso2.choreo.integration.common.exceptions.*;
-import com.wso2.choreo.integration.common.utils.HttpClientUtil;
-import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -48,6 +44,7 @@ import java.util.Objects;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
@@ -797,8 +794,8 @@ public abstract class ChoreoComponent {
             }
             JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
             JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
-            com.wso2.choreo.integration.models.invokeinfor.InvokeInformation [] invokeInformation = gson.fromJson(invokeInformationJsonArray, com.wso2.choreo.integration.models.invokeinfor.InvokeInformation [].class);
-            for (com.wso2.choreo.integration.models.invokeinfor.InvokeInformation  envInvokeInformation : invokeInformation ) {
+           InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation [].class);
+            for (InvokeInformation  envInvokeInformation : invokeInformation ) {
                 if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
                     return envInvokeInformation;
                 }
