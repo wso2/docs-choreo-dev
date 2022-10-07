@@ -91,7 +91,6 @@ describe("Visit to developer portal organization public apis to confirm availabi
             ApiOverview.confirmPublicAPIOverview();
             ApiOverview.confirmPublicAPIResourcePage();
         })
-
     });
 });
 
