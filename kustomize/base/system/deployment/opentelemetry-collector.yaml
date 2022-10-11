@@ -24,7 +24,10 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-opentelemetry-collector:latest
+      - envFrom:
+          - secretRef:
+              name: opentelemetry-collector
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-opentelemetry-collector:latest
         name: otel-collector
         resources:
           limits:
@@ -78,7 +81,18 @@ spec:
             mountPath: /app/data-planes.yaml
             subPath: data-planes.yaml
             readOnly: true
+          - mountPath: /mnt/csi/secret-otel
+            name: secret-otel
+            readOnly: true
       volumes:
+        - name: secret-otel
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: opentelemetry-collector
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: config
           configMap:
             name: opentelemetry-collector
