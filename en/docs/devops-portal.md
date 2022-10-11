@@ -10,7 +10,7 @@ You can access the DevOps Portal in one of the following ways:
 
 - Clicking **DevOps Portal** in the top menu of the Choreo Console
 
-   ![Top menu link](assets/img/devops-portal/top-menu-link.png){.cInlineImage-full}
+   ![Top menu link](assets/img/byoc/access-devops-portal.png){.cInlineImage-full}
 
 When you open the DevOps Portal, it displays the deployment insights and the recently created components of the currently selected project as shown below:
 
