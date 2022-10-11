@@ -1,0 +1,5 @@
+configMapGenerator:
+  - name: opentelemetry-agent-config
+    behavior: create
+    files:
+      - opentelemetry-agent/config.yaml

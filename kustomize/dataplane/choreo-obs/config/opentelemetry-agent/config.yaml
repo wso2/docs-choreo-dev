@@ -1,0 +1,41 @@
+extensions:
+  oauth2client:
+    client_id: ${STS_CLIENT_ID}
+    client_secret: ${STS_CLIENT_SECRET}
+    token_url: ${STS_TOKEN_URL}
+    endpoint_params:
+      audience: ${STS_CLIENT_ID}
+  health_check/liveness:
+    endpoint: "0.0.0.0:13133"
+    path: "/liveness"
+  health_check/readiness:
+    endpoint: "0.0.0.0:13134"
+    path: "/readiness"
+    check_collector_pipeline:
+      enabled: true
+      interval: "5m"
+      exporter_failure_threshold: 5
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+exporters:
+  otlp:
+    endpoint: ${OTLP_CP_ENDPOINT}
+    auth:
+      authenticator: oauth2client
+    tls:
+      insecure: false
+
+service:
+  extensions: [choreosts, health_check/liveness, health_check/readiness]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp]
+    metrics:
+      receivers: [otlp]
+      exporters: [otlp]

@@ -1,0 +1,21 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: opentelemetry-agent
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+    matchLabels:
+      choreo.component: opentelemetry-agent
+  ingress: 
+    - namespaceSelector:
+        matchLabels:
+          name: pl
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/24
+      ports:
+        - protocol: TCP
+          port: 443

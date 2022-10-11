@@ -1,0 +1,11 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: default-deny-all-choreo-obs-ns-netpol
+spec:
+  policyTypes:
+    - Ingress
+    - Egress
+  podSelector: {}
+  ingress: []
+  egress: []
