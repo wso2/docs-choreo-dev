@@ -60,6 +60,7 @@ nav:
       - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
       - Construct Statements: tutorials/construct-statements.md
       - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
+      - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
   - Triggers: triggers.md
@@ -70,6 +71,7 @@ nav:
       - Manage Application: developer-portal/manage-application.md
       - Manage Subscription: developer-portal/manage-subscription.md
       - Test API: developer-portal/test-api.md
+  - DevOps Portal: devops-portal.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md

@@ -22,14 +22,14 @@ In this section, let's develop the application that retrieves COVID-19-related s
 
    ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
-   1. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
+3. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
 
        | **Field**       | **Value**                             |
        |-----------------|---------------------------------------|
        | **Name**        | `COVID-19Stats`                       |
        | **Description** | `Get statistics relating to COVID-19` |
 
-3. Click **Create**.
+4. Click **Create**.
 
     This takes you to the **Components** page shown below.
 
