@@ -20,6 +20,7 @@ export default defineConfig({
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       let apiName;
+      let projectName;
       on('task', {
 
         setAPIName: (val) => {
@@ -28,6 +29,14 @@ export default defineConfig({
 
         getAPIName: () => {
           return apiName;
+        },
+
+        setChoreoProjectName: (val) => {
+          return (projectName = val);
+        },
+
+        getChoreoProjectName: () => {
+          return projectName;
         }
       });
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;

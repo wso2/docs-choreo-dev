@@ -30,4 +30,11 @@ export class LoginPage {
       "be.visible"
     );
   }
+
+  static visitToDevportalOrgPublicApis(): void {
+    const loginURL = Cypress.env("devPortalLoginURL") + "/" + handle;
+    cy.visit(loginURL);
+    cy.get('[data-testid="home-appbar-btn"]').should("exist");
+    cy.log("Successfully navigated to public devportal");
+  }
 }
