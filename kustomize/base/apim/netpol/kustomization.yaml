@@ -1,3 +1,4 @@
 resources:
   - namespace.yaml
   - devportal.yaml
+  - private-ga-ingress-netpol.yaml

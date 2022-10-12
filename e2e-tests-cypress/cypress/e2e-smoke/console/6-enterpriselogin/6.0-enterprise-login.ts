@@ -27,7 +27,6 @@ describe("Enterprise Login using auth0Idp", () => {
   const PROJECT_DESCRIPTION = "Covid stats project";
   const PROJECT_NAME = Utils.generateProjectName();
 
-
   before(() => {
     cy.request(Cypress.env("auth0LogoutUrl"), {
       client_id: Cypress.env("auth0ClientID"),
@@ -47,12 +46,16 @@ describe("Enterprise Login using auth0Idp", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION, true);
+    RestAPITemplate.createApiFromScratch(
+      COMPONENT_NAME,
+      COMPONENT_DESCRIPTION,
+      true
+    );
     ComponentDevelopPage.getComponentURL();
   });
 
   it("Verify vscode sso login", () => {
-    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.navigateToOverview();
     LoginPage.navigateToCodespaceEP();
     VSExplorer.verifyVsCodeWorkspace();
   });

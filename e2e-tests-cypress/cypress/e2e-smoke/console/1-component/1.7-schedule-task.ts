@@ -44,7 +44,7 @@ describe("Schedule task", () => {
   });
 
   it("Creating a schedule task", () => {
-    cy.log("Starting API Creation using open API specification");
+    cy.log("Starting schedule task creation");
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     ScheduleTask.selectTask();
