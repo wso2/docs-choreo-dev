@@ -84,6 +84,7 @@ export class ApiOverview {
 
   static confirmPublicAPIResourcePage(): void {
     cy.log("Checking for public API pages");
+    cy.wait(5000);
     cy.get('[data-testid="resources-item-link"]').should("exist").click();
     cy.get('[type="button"]').contains(/swagger \(\/swagger\.json\)/i).should("exist");
     cy.get('[data-testid="get-test-key-btn"]').should("not.exist");
