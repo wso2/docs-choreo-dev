@@ -567,6 +567,7 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
         responseParams.put("environmentId", devEnvIdToDeploy);
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
+        responseParams.put("message","Merge initial PR\\n\\nAdd Choreo related template and config files");
 
         String expectedResponse = ComponentUtils.generateStringFromTemplate(
                 "templates/deploy/deploy_managed_status_success.mustache", responseParams);
