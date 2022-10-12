@@ -63,7 +63,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDevDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "dev");
+        GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "dev","Choreo Files Generated");
     }
 
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatus"})
@@ -87,7 +87,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testPromote"})
     @CitrusTest
     public void testComponentProdDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "prod");
+        GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "prod","Choreo Files Generated");
     }
 
     @Test(dependsOnMethods = {"testComponentProdDeploymentStatus"})

@@ -16,12 +16,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -47,7 +42,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  *
  * tests related to component creation from user managed repos
  */
-public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
+public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private String orgHandle;
     private String orgId;
@@ -572,6 +567,7 @@ public class CreateUserManagedComponent extends TestNGCitrusSpringSupport {
         responseParams.put("environmentId", devEnvIdToDeploy);
         responseParams.put("sha", latestCommitSha);
         responseParams.put("versionId", versionId);
+        responseParams.put("message","Merge initial PR\\n\\nAdd Choreo related template and config files");
 
         String expectedResponse = ComponentUtils.generateStringFromTemplate(
                 "templates/deploy/deploy_managed_status_success.mustache", responseParams);

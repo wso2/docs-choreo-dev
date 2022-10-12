@@ -52,7 +52,7 @@ public class RestApiChoreoComponent extends ChoreoComponent {
     public void invokeGetApplication(String accessToken, String componentType, String environment, int count) throws
             ComponentInvokeInformationCheckException, NoLatestApiVersionFoundException, IOException,
             InterruptedException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeInformationNotFoundException, InvokeAPICheckException {
-        InvokeInformation invokeInformation = getInvokeInformation(accessToken, componentType, environment);
+        com.wso2.choreo.integration.models.invokeinfor.InvokeInformation  invokeInformation = getInvokeInformation(accessToken, componentType, environment);
         String requestURI = invokeInformation.getInvokeUrl();
         if (requestURI == null) {
             throw new InvokeInformationNotFoundException();
