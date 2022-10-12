@@ -39,7 +39,7 @@ describe("API overview comment and rating scenario", () => {
 
   before(() => {
     LoginPage.login();
-    DevPortalHelper.createDeployComponent(API_Name);
+    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
   });
 
   after(() => {

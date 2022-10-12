@@ -159,6 +159,10 @@ export class LoginPage {
     });
   }
 
+  static visitToHomePage() {
+    Utils.setBrowserCookie(false);
+    cy.visit(Cypress.env("loginURL"));
+  }
 
   private static enterUserCredentials(envUsername: string, envPassword: string) {
     Utils.setBrowserCookie(false);

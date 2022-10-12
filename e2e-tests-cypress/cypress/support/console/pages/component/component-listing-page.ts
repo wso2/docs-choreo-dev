@@ -23,6 +23,12 @@ export class ComponentListingPage {
     this.verifyDeletion();
   }
 
+  static visitToAComponent(componentName: string) {
+    cy.get("tr p").contains(componentName).should("be.visible").click();
+    cy.get("[data-cyid=link-overview]").should("be.visible");
+    cy.log("Successfully visited to the component");
+  }
+
   private static verifyDeletion() {
     cy.url().then(url => {
       const projectID = url.split("projects/")[1]

@@ -42,7 +42,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     it("Create and deploy a component", () => {
         const API_Name = Utils.generateComponentName("oas");
         cy.task('setAPIName', API_Name);
-        DevPortalHelper.createDeployComponent(API_Name);
+        DevPortalHelper.createDeployHttpProxyComponent(API_Name);
     });
 
     after(() => {

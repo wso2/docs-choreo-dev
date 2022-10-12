@@ -11,7 +11,7 @@
  * associated services.
  */
 
-
+import { ChoreoHomePage } from "../home/home-page";
 
 export class ProjectListingPage {
   static createNewProject(projectName: string, description: string) {
@@ -20,6 +20,8 @@ export class ProjectListingPage {
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-testid="create-version-create"]').click();
+    cy.reload();
+    ChoreoHomePage.navigateToComponents();
   }
 
   static selectProject(projectName: string = "Default Project") {
