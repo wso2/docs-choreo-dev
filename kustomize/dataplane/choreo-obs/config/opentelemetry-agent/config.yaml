@@ -47,7 +47,7 @@ exporters:
       insecure: false
 
 service:
-  extensions: [choreosts, health_check/liveness, health_check/readiness]
+  extensions: [oauth2client, health_check/liveness, health_check/readiness]
   pipelines:
     traces:
       receivers: [otlp]
