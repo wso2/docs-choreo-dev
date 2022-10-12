@@ -79,9 +79,6 @@ export class ApiOverview {
     cy.get('[data-testid="documents-item-link"]').should("exist");
     cy.get('[data-testid="tryout-item-link"]').should("not.exist");
     cy.get('[type="button"]').contains("Try Out").should("not.exist");
-    this.openRatings();
-    cy.contains(/please sign in to submit user rating/i).should("exist");
-    cy.reload();
     cy.log("Public api view properly rendered");
   }
 

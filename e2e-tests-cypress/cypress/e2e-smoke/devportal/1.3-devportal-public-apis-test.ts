@@ -42,10 +42,6 @@ describe("Create and deploy a component to test developer portal with public api
         ComponentAPILifecycle.selectSetting();
         ComponentAPILifecycle.verifyAPIVisibility('Private');
     });
-
-    after(() => {
-        ConsoleLoginPage.visitToHomePage();
-    });
 });
 
 describe("Visit to developer portal organization public apis", () => {
