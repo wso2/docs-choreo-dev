@@ -81,7 +81,7 @@ export class ApiOverview {
     cy.get('[type="button"]').contains("Try Out").should("not.exist");
     this.openRatings();
     cy.contains(/please sign in to submit user rating/i).should("exist");
-    cy.xpath("//P[contains(text(),'Rating')]//../../div/button").click();
+    cy.reload();
     cy.log("Public api view properly rendered");
   }
 

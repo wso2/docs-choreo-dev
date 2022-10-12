@@ -13,6 +13,7 @@
 
 
 import { APIDeployment } from "../../console/pages/apis/api-deployment";
+import { ComponentDeployPage } from "../../console/pages/component/component-deploy";
 import { ComponentAPILifecycle } from "../../console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../console/pages/component/component-overview-page";
 import { ProjectOverviewPage } from "../../console/pages/projects/project-overview";
@@ -55,10 +56,9 @@ export class DevPortalHelper {
     RestAPITemplate.selectHttpAPITemplate();
     RestAPITemplate.createApiFromScratch(API_Name, description);
     ComponentOverviewPage.navigateToDeploy();
-    APIDeployment.DeployRestApiToDev();
-    APIDeployment.PromoteRestApiToProd();
+    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
     ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   }

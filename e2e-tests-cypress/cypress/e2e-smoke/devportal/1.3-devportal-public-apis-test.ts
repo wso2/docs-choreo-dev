@@ -44,7 +44,7 @@ describe("Create and deploy a component to test developer portal with public api
     });
 
     after(() => {
-        ChoreoHomePage.logout();
+        ConsoleLoginPage.visitToHomePage();
     });
 });
 
@@ -62,7 +62,7 @@ describe("Visit to developer portal organization public apis", () => {
 describe("Visit to console an make the created API visibility to public", () => {
 
     before(() => {
-        ConsoleLoginPage.login();
+        ConsoleLoginPage.visitToHomePage();
     });
 
     it("Update the API visibility to public", () => {
@@ -75,10 +75,6 @@ describe("Visit to console an make the created API visibility to public", () => 
                 ComponentAPILifecycle.updateAPIVisibility('Public');
             });
         });
-    });
-
-    after(() => {
-        ChoreoHomePage.logout();
     });
 });
 
@@ -96,7 +92,7 @@ describe("Visit to developer portal organization public apis to confirm availabi
 
 describe("Delete created API", () => {
     before(() => {
-        ConsoleLoginPage.login();
+        ConsoleLoginPage.visitToHomePage();
     });
 
     it("Delete created component", () => {
