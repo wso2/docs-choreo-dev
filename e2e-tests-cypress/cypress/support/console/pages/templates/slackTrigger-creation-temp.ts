@@ -33,7 +33,6 @@ export class TriggersTemplate {
     cy.get(".MuiAutocomplete-endAdornment").click();
     cy.get("#trigger-channel-select-popup");
     cy.get("li>div>h5").contains(triggerChannel).click();
-    cy.get('[data-cyid="create-webhook-next"]').click();
     cy.get('[data-testid="create-btn"]').click();
     cy.setCookie("fidpId", "choreoe2etest"); // cypress clears the fidp cooke which is set in login()
   }
