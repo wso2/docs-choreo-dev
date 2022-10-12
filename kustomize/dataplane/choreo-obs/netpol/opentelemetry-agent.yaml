@@ -21,6 +21,7 @@ metadata:
 spec:
   policyTypes:
     - Ingress
+    - Egress
   podSelector:
     matchLabels:
       choreo.component: opentelemetry-agent
