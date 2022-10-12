@@ -16,16 +16,13 @@ package com.wso2.choreo.integration.apis;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.JsonArray;
-import com.jayway.jsonpath.internal.filter.ValueNodes;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
 import com.wso2.choreo.integration.common.exceptions.RequestExecutionException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -40,7 +37,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.Assert;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,6 +56,7 @@ public class GraphQL {
     private static final String choreoProjectURL = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT) + Constant.GRAPHQL_ENDPOINT_SUFFIX;
     private static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     private static final String ORG_ID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+    private static final String ORG_UUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
     public static void deployComponent(HttpClient client, TestActionRunner runner, ChoreoComponent component)
             throws Exception {
@@ -182,7 +179,7 @@ public class GraphQL {
     }
 
     public static void componentDeployment(HttpClient client, TestActionRunner runner,
-                                           ChoreoComponent component, String envName) throws Exception {
+                                           ChoreoComponent component, String envName,String message) throws Exception {
         String envId = component.getLatestAppEnvId(envName);
 
         Map<String, String> requestParams = new HashMap<>() {
@@ -209,6 +206,7 @@ public class GraphQL {
                 put("environmentId", envId);
                 put("sha", latestCommitSha);
                 put("versionId", component.getLatestApiVersion().getId());
+                put("message",message);
             }
         };
 

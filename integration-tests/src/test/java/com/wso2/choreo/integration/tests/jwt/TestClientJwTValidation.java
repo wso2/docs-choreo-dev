@@ -13,8 +13,16 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.RequestExecutionException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
-import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.common.utils.GitUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -32,53 +40,38 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Logger;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
-    private final Logger logger = Logger.getLogger("TestClientJwTValidation");
 
-
-    private String githubOrg;
-    private String githubPAT;
     private String orgId;
     private String orgHandle;
     private String projectId;
     private String orgUUID;
-    private String invokeUrl;
-    private String apiKey;
-    private String apiId;
     private String repoName;
-    private String serviceBalSha;
     private String accessToken;
 
     private static ChoreoComponent choreoComponent;
     private CreateComponent response;
     private ChoreoOrganization org;
 
-    @Autowired
-    private HttpClient choreoTestClientForSTS;
-    @Autowired
-    private HttpClient choreoTestClientForGithub;
-    @Autowired
-    private HttpClient choreoProjectsTestClient;
+
     @Autowired
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException {
+    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException, RequestExecutionException, ComponentCreationTimeoutException, ComponentCreationStatusCheckException {
 
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
         org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
         ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
+
 
     }
 
@@ -152,7 +145,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDevDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, choreoComponent, "dev");
+        GraphQL.componentDeployment(choreoTestClient, this, choreoComponent, "dev","update code");
     }
 
 
@@ -170,7 +163,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
                 header(HttpHeaders.ACCEPT, "text/plain").
                 header("API-Key", testConfigs.getApiKey());
 
-        http().client(invokeUrl).
+        http().client(testConfigs.getInvokeUrl()).
                 receive().
                 response(HttpStatus.OK).
                 message().
