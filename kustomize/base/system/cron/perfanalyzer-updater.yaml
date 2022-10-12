@@ -28,54 +28,54 @@ spec:
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
-          - name: perfanalyzer-updater
-            image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
-            securityContext:
-              readOnlyRootFilesystem: true
-              runAsUser: 10500
-              runAsGroup: 10500
-              capabilities:
-                drop:
-                  - all
-                add: [ "NET_RAW" ]
-              allowPrivilegeEscalation: false
-            env:
-              - name: AZURE_ADX_CLIENT_SECRET
-                valueFrom:
-                  secretKeyRef:
-                    key: AZURE_ADX_CLIENT_SECRET
-                    name: secret-perfanalyzer
-              - name: CHOREO_PERF_DB_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: CHOREO_PERF_DB_PASSWORD
-                    name: secret-perfanalyzer
-              - name: CHOREO_APP_DB_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: CHOREO_DB_PASSWORD
-                    name: secret-app-db
-            envFrom:
-              - configMapRef:
-                  name: env-perf-analyzer
-              - configMapRef:
-                  name: cm-perf-analyzer
-            resources:
-              limits:
-                cpu: 1500m
-                memory: 1024Mi
-              requests:
-                cpu: 1000m
-                memory: 512Mi
-            volumeMounts:
-              - name: perfanalyzer-config
-                mountPath: /home/python-ai/perf-analyzer/config/
-              - name: secret-perfanalyzer
-                mountPath: "/mnt/csi/secret-perfanalyzer"
-                readOnly: true
-              - name: secret-app-db
-                mountPath: "/mnt/csi/secret-app-db"
-                readOnly: true
+            - name: perfanalyzer-updater
+              image: choreocontrolplane.azurecr.io/choreoipaas/perfanalyzer-updater:latest
+              securityContext:
+                readOnlyRootFilesystem: true
+                runAsUser: 10500
+                runAsGroup: 10500
+                capabilities:
+                  drop:
+                    - all
+                  add: [ "NET_RAW" ]
+                allowPrivilegeEscalation: false
+              env:
+                - name: AZURE_ADX_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: AZURE_ADX_CLIENT_SECRET
+                      name: secret-perfanalyzer
+                - name: CHOREO_PERF_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: CHOREO_PERF_DB_PASSWORD
+                      name: secret-perfanalyzer
+                - name: CHOREO_APP_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: CHOREO_DB_PASSWORD
+                      name: secret-app-db
+              envFrom:
+                - configMapRef:
+                    name: env-perf-analyzer
+                - configMapRef:
+                    name: cm-perf-analyzer
+              resources:
+                limits:
+                  cpu: 1500m
+                  memory: 1024Mi
+                requests:
+                  cpu: 1000m
+                  memory: 512Mi
+              volumeMounts:
+                - name: perfanalyzer-config
+                  mountPath: /home/python-ai/perf-analyzer/config/
+                - name: secret-perfanalyzer
+                  mountPath: "/mnt/csi/secret-perfanalyzer"
+                  readOnly: true
+                - name: secret-app-db
+                  mountPath: "/mnt/csi/secret-app-db"
+                  readOnly: true
           volumes:
             - configMap:
                 defaultMode: 420

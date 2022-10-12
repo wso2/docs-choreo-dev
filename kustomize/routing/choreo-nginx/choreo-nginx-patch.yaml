@@ -28,6 +28,8 @@ spec:
                 name: redis-config
             - secretRef:
                 name: secret-redis
+            - configMapRef:
+                name: nginx-feature-flags
           volumeMounts:
             - name: redis-subscribe-folder
               mountPath: /mnt/redis

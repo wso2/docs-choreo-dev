@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: connectords
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -27,81 +27,79 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: connectords
-        env:
-        - name: IDP_JWKS_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              key: IDP_JWKS_ENDPOINT
-              name: cm-idp-replica
-        - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              key: CHOREO_APP_SERVICE_GRPC_ADDRESS
-              name: cm-connectords-cp
-        envFrom:
-        - configMapRef:
-            name: env-connectords
-        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 12000
-          runAsGroup: 12000
-          readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-            - all
-        readinessProbe:
-          initialDelaySeconds: 5
-          timeoutSeconds: 15
-          periodSeconds: 10
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: health
-            path: /health
-        livenessProbe:
-          initialDelaySeconds: 10
-          timeoutSeconds: 15
-          periodSeconds: 30
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: health
-            path: /health
-        ports:
-        - containerPort: 9090
-          name: cds-sport
-          protocol: TCP
-        - containerPort: 9091
-          name: health
-          protocol: TCP
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1.5Gi
-          requests:
-            cpu: 300m
-            memory: 512Mi
-        volumeMounts:
-        - mountPath: /home/ballerina/Config.toml
-          name: bal-config-volume
-          subPath: Config.toml
+        - name: connectords
+          env:
+            - name: IDP_JWKS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_JWKS_ENDPOINT
+                  name: cm-idp-replica
+            - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_APP_SERVICE_GRPC_ADDRESS
+                  name: cm-connectords-cp
+          envFrom:
+            - configMapRef:
+                name: env-connectords
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 12000
+            runAsGroup: 12000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /health
+          ports:
+            - containerPort: 9090
+              name: cds-sport
+              protocol: TCP
+            - containerPort: 9091
+              name: health
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1.5Gi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /home/ballerina/Config.toml
+              name: bal-config-volume
+              subPath: Config.toml
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       volumes:
-      - configMap:
-          name: cm-connectords
-        name: bal-config-volume
+        - configMap:
+            name: cm-connectords
+          name: bal-config-volume
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - connectords
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - connectords
               topologyKey: kubernetes.io/hostname

@@ -156,10 +156,13 @@ export class LoginPage {
       Cypress.env("apim_token", token);
       Cypress.env("current_org", current_org);
       GraphQL.deleteProjectsCreatedByTests(id, handle, token);
-      cy.reload()
     });
   }
 
+  static visitToHomePage() {
+    Utils.setBrowserCookie(false);
+    cy.visit(Cypress.env("loginURL"));
+  }
 
   private static enterUserCredentials(envUsername: string, envPassword: string) {
     Utils.setBrowserCookie(false);

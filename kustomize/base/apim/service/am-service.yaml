@@ -27,10 +27,10 @@ spec:
   selector:
     deployment: choreo-am
   ports:
-  # ports that this service should serve on
-  - name: servlet-http
-    protocol: TCP
-    port: 9763
-  - name: servlet-https
-    protocol: TCP
-    port: 9443
+    # ports that this service should serve on
+    - name: servlet-http
+      protocol: TCP
+      port: 9763
+    - name: servlet-https
+      protocol: TCP
+      port: 9443

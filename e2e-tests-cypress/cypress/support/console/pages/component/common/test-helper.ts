@@ -15,6 +15,8 @@ import { Utils } from "../../../utils";
 import { APITest } from "../../apis/api-test";
 import { Environment } from "../../enum/environment";
 import { HTTPMethod } from "../../enum/http-method-enum";
+import { ChoreoHomePage } from "../../home/home-page";
+import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
 import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
@@ -49,22 +51,35 @@ export class TestHelper {
   }
 
   static testOnGraphiQL(env: Environment, code: string) {
-    cy.get('div[class="execute-button-wrap"]>button').should('be.visible')
-    Curl.selectEnvironment(env);
-    cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]').should('exist').then($p => {
-      Utils.paste($p, code, false)
-    }).wait(2000)
-    cy.get('div[class="toolbar"]>button').eq(0).should('be.enabled').click()
+    cy.get('div[class="execute-button-wrap"]>button').should('be.enabled')
+    Curl.selectEnvironment(env)
+
+    cy.wait(5000)
+    cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
+    cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
+      .then($p => {
+        Utils.paste($p, code, false)
+        cy.wait(2000)
+      })
+    cy.get('div[class="toolbar"]>button').eq(0).click()
     cy.get('div[class="execute-button-wrap"]>button').click()
   }
 
-  static getGqlResult() {
-    let result = '';
+  static getGqlResult(expectedResponse: string = "") {
     cy.wait(6000)
-    cy.get('.CodeMirror-sizer>div>div>div').eq(3).invoke('text').then(r => cy.log(r.replace('x','').trim()))
+    cy.get('.CodeMirror-sizer>div>div>div').eq(3).invoke('text').then(r => {
+      const response = r.replace('x', '').trim()
+      expect(response).to.be.contains(expectedResponse)
+    })
+    cy.wait(6000)
+    this.clearGQL()
+  }
 
 
-    cy.log(result)
+  private static clearGQL() {
+    ComponentOverviewPage.navigateToDeploy()
+    cy.wait(6000)
+    ComponentOverviewPage.navigateToTest()
   }
 
 }

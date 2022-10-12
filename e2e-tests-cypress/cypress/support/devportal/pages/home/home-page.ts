@@ -36,6 +36,13 @@ export class DevPortalHomePage {
       });
   }
 
+  static verifyDevportalHomePagePublicView(): void {
+    cy.get('[data-testid="applications-appbar-btn"]').should("not.exist");
+    cy.get('[data-testid="login-button"]').should("exist");
+    cy.get('[data-testid="home-appbar-btn"]').should("exist");
+    cy.log("Successfully navigated to public devportal home page");
+  }
+
   static navigateToApisPage(): void {
     cy.get("[data-testid=apis-appbar-btn]").should("be.visible").click();
   }

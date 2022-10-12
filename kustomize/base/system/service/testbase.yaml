@@ -6,8 +6,8 @@ metadata:
   name: testbase
 spec:
   ports:
-  - name: tb-sport
-    port: 9090
-    targetPort: tb-sport
+    - name: tb-sport
+      port: 9090
+      targetPort: tb-sport
   selector:
     choreo.component: testbase

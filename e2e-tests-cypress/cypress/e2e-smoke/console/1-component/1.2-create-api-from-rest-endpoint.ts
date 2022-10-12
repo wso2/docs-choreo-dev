@@ -50,7 +50,6 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
 
-
   before(() => {
     LoginPage.login();
     ChoreoHomePage.switchOrganization();
@@ -78,7 +77,7 @@ describe("Verify project creation functionality", () => {
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
 
-   it("Verify prod invoke url", () => {
+  it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
     APIDeployment.verifyProdInvokeURL().should("not.eq", "");
   });
@@ -91,7 +90,6 @@ describe("Verify project creation functionality", () => {
     );
   });
 
-
   it("Verify test functionality using Swagger UI in Prod", () => {
     TestHelper.testOnSwagger(Environment.PRODUCTION, OPERATION_USERS).then(
       (res) => {
@@ -102,33 +100,36 @@ describe("Verify project creation functionality", () => {
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.configureSecuritySettings(true, false, ALLOWED_ORIGINS, ALLOWED_HEADERS, ALLOWED_METHODS);
+    ComponentAPILifecycle.configureSecuritySettings(
+      true,
+      false,
+      ALLOWED_ORIGINS,
+      ALLOWED_HEADERS,
+      ALLOWED_METHODS
+    );
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 
   it("Create new version from the created API", () => {
-    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.navigateToOverview();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, "");
     ComponentDevelopPage.getVersion().should(
       "eq",
       `API Version ${API_NEW_VERSION}`
     );
-
   });
 
   it("Add  a new version", () => {
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
-  })
+  });
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
     APIDeployment.verifyDevInvokeURL().should("not.eq", "");
   });
-
- 
 
   it("Verify new prod invoke url", () => {
     APIDeployment.PromoteToProd();
@@ -144,7 +145,6 @@ describe("Verify project creation functionality", () => {
     SwaggerUI.invokeResource(OPERATION_POSTS);
     SwaggerUI.getResponseCode().should("eq", "200");
   });
-
 
   it("Test in prod", () => {
     APITest.testAPI();
@@ -165,7 +165,7 @@ describe("Verify project creation functionality", () => {
   it("Verify api invoke urls", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.verifyAPIname().should("eq", API_NAME);
-    Apis.verifyInvokeUrl()
+    Apis.verifyInvokeUrl();
   });
 
   it("Test in devportal", () => {

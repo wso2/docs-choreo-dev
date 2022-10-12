@@ -5,6 +5,6 @@ metadata:
 spec:
   selector:
     matchLabels:
-        deployment: wso2is
-        choreo.component: identity-server
+      deployment: wso2is
+      choreo.component: identity-server
   minAvailable: 1

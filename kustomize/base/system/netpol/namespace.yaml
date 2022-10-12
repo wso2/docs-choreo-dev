@@ -4,6 +4,6 @@ metadata:
   name: default-deny-all-ingress-network-policy
 spec:
   policyTypes:
-  - Ingress
-  podSelector: {}
-  ingress: []
+    - Ingress
+  podSelector: { }
+  ingress: [ ]

@@ -1,6 +1,6 @@
 resources:
-- devportal-deployment.yaml
-- am-deployment.yaml
-- choreo-connect-global-adapter.yaml
-- choreo-connect-internal-global-adapter.yaml
-- ga-health-check-deployment.yaml
+  - devportal-deployment.yaml
+  - am-deployment.yaml
+  - choreo-connect-global-adapter.yaml
+  - choreo-connect-internal-global-adapter.yaml
+  - ga-health-check-deployment.yaml

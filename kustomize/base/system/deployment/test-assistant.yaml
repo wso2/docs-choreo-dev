@@ -2,10 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-      reloader.stakater.com/auto: "true"
-      checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
-      checkov.io/skip2: CKV_K8S_22=Temporarily suppressing till fixing
-      checkov.io/skip3: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    reloader.stakater.com/auto: "true"
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: test-assistant
   name: test-assistant
@@ -28,112 +28,110 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       initContainers:
-      - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant-init:latest
-        name: test-assistant-init
-        resources:
-          limits:
-            cpu: 300m
-            memory: 512Mi
-          requests:
-            cpu: 200m
-            memory: 256Mi
-        volumeMounts:
-        - name: test-assistant-models
-          mountPath: "/home/python-ai/choreo-ai-test-assistant/models"
-        - name: test-assistant-data
-          mountPath: "/home/python-ai/choreo-ai-test-assistant/data"
-        - name: test-assistant-model-metadata
-          mountPath: "/home/python-ai/choreo-ai-test-assistant/models.properties"
-          subPath: "models.properties"
-        - name: secret-test-assistant
-          mountPath: "/mnt/csi/secret-test-assistant"
-          readOnly: true
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 10500
-          runAsGroup: 10500
-          capabilities:
-            drop:
-            - all
-            add:
-            - NET_RAW
+        - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant-init:latest
+          name: test-assistant-init
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: test-assistant-models
+              mountPath: "/home/python-ai/choreo-ai-test-assistant/models"
+            - name: test-assistant-data
+              mountPath: "/home/python-ai/choreo-ai-test-assistant/data"
+            - name: test-assistant-model-metadata
+              mountPath: "/home/python-ai/choreo-ai-test-assistant/models.properties"
+              subPath: "models.properties"
+            - name: secret-test-assistant
+              mountPath: "/mnt/csi/secret-test-assistant"
+              readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_RAW
       containers:
-      - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
-        name: test-assistant
-        envFrom:
-          - configMapRef:
-              name: env-test-assistant
-        readinessProbe:
-          initialDelaySeconds: 5
-          timeoutSeconds: 15
-          periodSeconds: 10
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: ta-port
-            path: /readiness
-        livenessProbe:
-          initialDelaySeconds: 10
-          timeoutSeconds: 15
-          periodSeconds: 30
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: ta-port
-            path: /liveness
-        resources:
-          limits:
-            cpu: 500m
-            memory: 2300Mi
-          requests:
-            cpu: 400m
-            memory: 2200Mi
-        ports:
-        - containerPort: 5000
-          name: ta-port
-          protocol: TCP
-        volumeMounts:
-        - name: test-assistant-models
-          mountPath: "/home/python-ai/choreo-ai-test-assistant/models/"
-        - name: test-assistant-data
-          mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 10500
-          runAsGroup: 10500
-          capabilities:
-            drop:
-            - all
-            add:
-            - NET_RAW
+        - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
+          name: test-assistant
+          envFrom:
+            - configMapRef:
+                name: env-test-assistant
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: ta-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: ta-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2300Mi
+            requests:
+              cpu: 400m
+              memory: 2200Mi
+          ports:
+            - containerPort: 5000
+              name: ta-port
+              protocol: TCP
+          volumeMounts:
+            - name: test-assistant-models
+              mountPath: "/home/python-ai/choreo-ai-test-assistant/models/"
+            - name: test-assistant-data
+              mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_RAW
       volumes:
-      - name: test-assistant-models
-        emptyDir: {}
-      - name: test-assistant-data
-        emptyDir: {}
-      - name: test-assistant-model-metadata
-        configMap:
-          defaultMode: 420
-          name: cm-test-assistant
-      - name: secret-test-assistant
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: secret-test-assistant
-          nodePublishSecretRef:
-            name: csi-secret-store-azure
+        - name: test-assistant-models
+          emptyDir: { }
+        - name: test-assistant-data
+          emptyDir: { }
+        - name: test-assistant-model-metadata
+          configMap:
+            defaultMode: 420
+            name: cm-test-assistant
+        - name: secret-test-assistant
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-test-assistant
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - test-assistant
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - test-assistant
               topologyKey: kubernetes.io/hostname

@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       choreo.component: choreo-apim-proxy-deployer
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
@@ -71,7 +71,7 @@ spec:
             runAsGroup: 10001
             readOnlyRootFilesystem: true
             capabilities:
-              drop:          
+              drop:
                 - ALL  # Fixes CKV_K8S_37
                 - NET_RAW # Fixes CKV_K8S_28
           volumeMounts:
@@ -85,7 +85,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: choreo-apim-proxy-deployer-config
+            name: cm-choreo-apim-proxy-deployer-config
         - name: secret-choreo-apim-proxy-deployer
           csi:
             driver: secrets-store.csi.k8s.io
@@ -96,13 +96,11 @@ spec:
               name: csi-secret-store-azure
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                - key: antiaffinity
-                  operator: In
-                  values:
-                  - choreo-apim-proxy-deployer
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-apim-proxy-deployer
               topologyKey: kubernetes.io/hostname

@@ -119,3 +119,9 @@ IF NOT EXISTS
 	WHERE name = 'choreo_proxy_deployer_db_user')
 CREATE LOGIN choreo_proxy_deployer_db_user with password = N'xxxxxxxxxxxxx'
 GO
+
+IF NOT EXISTS
+	(SELECT name FROM master.sys.sql_logins
+	WHERE name = 'choreo_ai_anomaly_detector_db_user')
+CREATE LOGIN choreo_ai_anomaly_detector_db_user with password = N'xxxxxxxxxxxxx'
+GO

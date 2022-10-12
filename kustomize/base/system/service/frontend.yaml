@@ -6,8 +6,8 @@ metadata:
   name: frontend
 spec:
   ports:
-  - name: frontend-port
-    port: 8080
-    targetPort: frontend-port
+    - name: frontend-port
+      port: 8080
+      targetPort: frontend-port
   selector:
     choreo.component: frontend

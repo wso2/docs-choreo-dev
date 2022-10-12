@@ -70,4 +70,25 @@ export class ApiOverview {
     cy.wait(1000);
     cy.xpath('//span[@aria-label="3 Stars"]').should("exist");
   }
+
+  static confirmPublicAPIOverview(): void {
+    cy.log("Checking for public API Overview elements");
+    cy.get('[data-testid="credentials-item-link"]').should("not.exist");
+    cy.get('[data-testid="tryout-item-link"]').should("not.exist");
+    cy.get('[data-testid="overview-item-link"]').should("exist");
+    cy.get('[data-testid="documents-item-link"]').should("exist");
+    cy.get('[data-testid="tryout-item-link"]').should("not.exist");
+    cy.get('[type="button"]').contains("Try Out").should("not.exist");
+    cy.log("Public api view properly rendered");
+  }
+
+  static confirmPublicAPIResourcePage(): void {
+    cy.log("Checking for public API pages");
+    cy.wait(5000);
+    cy.get('[data-testid="resources-item-link"]').should("exist").click();
+    cy.get('[type="button"]').contains(/swagger \(\/swagger\.json\)/i).should("exist");
+    cy.get('[data-testid="get-test-key-btn"]').should("not.exist");
+    cy.get('[id="operations-tag-default"]').should("exist");
+    cy.log("Public api resource page properly rendered");
+  }
 }

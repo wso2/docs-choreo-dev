@@ -34,20 +34,18 @@ spec:
     spec:
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: cc.component
-                      operator: In
-                      values:
-                        - choreo-connect-adapter
-                    - key: choreo.component
-                      operator: In
-                      values:
-                        - choreo-connect
-                topologyKey: kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: cc.component
+                    operator: In
+                    values:
+                      - choreo-connect-adapter
+                  - key: choreo.component
+                    operator: In
+                    values:
+                      - choreo-connect
+              topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       securityContext:
         runAsUser: 10500

@@ -6,7 +6,7 @@ configMapGenerator:
   - name: env-workspace-manager-shared # shared workspace-manager configs across environments
     behavior: create
     literals:
-    - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
+      - WORKSPACE_BALLERINA_VERSION=swan-lake-beta3
   - name: cm-choreo-testbase-db
     behavior: create
     literals:
@@ -34,6 +34,7 @@ configMapGenerator:
       - AZURE_ADX_DB=observability
       - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - AZURE_ADX_METRIC_TABLE=metrics
+      - AZURE_ADX_PIXIE_METRIC_TABLE=pixieMetrics
       - AZURE_ADX_TRACE_TABLE=traceSpans
       - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
@@ -110,14 +111,14 @@ configMapGenerator:
     behavior: create
     literals:
       - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
-      - GITHUB_API=https://api.github.com  
+      - GITHUB_API=https://api.github.com
       - GATEWAY_JWKS_ENDPOINT=/oauth2/jwks
       - SERVICE_PORT=9090
       - HEALTH_SERVICE_PROT=9091
       - CHOREO_BALLERINA_VERSION=2201.0.0
       - DP_CLOUD_MANAGER_ENDPOINT=http://dp-cloud-manager:80
       - CP_GRAPHQL_ENDPOINT=http://cp-graphql:9095
-      - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090    
+      - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090
   - name: cm-choreo-app-db
     behavior: create
     literals:
@@ -233,6 +234,8 @@ configMapGenerator:
       - BACKOFF_FACTOR=2.0
       - MAX_WAIT_INTERVAL=20
       - CONNECTION_TIMEOUT=2
+      - ALERT_DB_PORT=1433
+      - ALERT_DB_NAME=choreo-alerts-db
   - name: cm-alert-configuration-service
     behavior: create
     literals:
@@ -312,10 +315,6 @@ configMapGenerator:
       - AZURE_TENANT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
       - AZURE_CLIENT_ID="08eae7d4-cdcb-400d-894e-b27d66419876"
       - RUDDER_HOST="http://dp-rudder:80"
-  - name: choreo-apim-proxy-deployer-config
-    behavior: create
-    files:
-      - choreo-apim-proxy-deployer/Config.toml
   - name: cm-lowcode-parser-cp
     behavior: create
     files:

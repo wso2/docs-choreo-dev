@@ -77,7 +77,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         componentId = restApiComponent.getId();
         apiId = restApiComponent.getLatestApiVersion().getProxyId();
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle());
+        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.getLatestApiVersion()
                 .changeApiLifeCycle(accessToken, org.getOrgUUID(), Constant.apiLIifCycleState.Publish);

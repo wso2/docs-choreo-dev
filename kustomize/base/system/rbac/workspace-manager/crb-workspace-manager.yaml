@@ -7,5 +7,5 @@ roleRef:
   kind: ClusterRole
   name: choreo-workspace-manager
 subjects:
-- kind: ServiceAccount
-  name: sa-choreo-workspace-manager
+  - kind: ServiceAccount
+    name: sa-choreo-workspace-manager

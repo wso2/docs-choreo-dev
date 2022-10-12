@@ -7,9 +7,9 @@ metadata:
   name: dp-rudder
 spec:
   ports:
-  - name: dp-rudder-port
-    port: 80
-    protocol: TCP
-    targetPort: http-port
+    - name: dp-rudder-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
   selector:
     choreo.component: dp-rudder
