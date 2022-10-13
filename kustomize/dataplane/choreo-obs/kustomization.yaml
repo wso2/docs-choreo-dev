@@ -20,6 +20,5 @@ kind: Kustomization
 resources:
   - opentelemetry-agent
   - config
-  - netpol
 
 namespace: choreo-obs
