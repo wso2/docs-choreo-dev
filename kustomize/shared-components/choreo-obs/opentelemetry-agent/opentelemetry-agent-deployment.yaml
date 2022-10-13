@@ -46,7 +46,7 @@ spec:
               name: opentelemetry-agent-env
           - secretRef:
               name: opentelemetry-agent
-        image: otel/opentelemetry-collector-contrib:0.60.0
+        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-opentelemetry-collector:latest
         name: otel-collector
         resources:
           limits:
