@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 import { Utils } from "../../utils";
 
 export class ComponentDevelopPage {
@@ -21,25 +20,22 @@ export class ComponentDevelopPage {
     this.currentTime.getTime() + Cypress.env("recTime")
   );
 
-
-
-
-
-
   static getComponentURL() {
-    cy.get('[data-testid="component-develop-edit-code"]',).invoke("attr", "href").then((href) => {
-      cy.url().then((url) => {
-        Utils.saveComponentURL();
-        const accessURL = `${url.split("/organizations")[0]}${href.replace(/ /g, "").replace(/\n/g, "")}`
-        Cypress.env(`accessURL`, accessURL);
+    cy.get('[data-testid="component-develop-edit-code"]')
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.url().then((url) => {
+          Utils.saveComponentURL();
+          const accessURL = `${url.split("/organizations")[0]}${href
+            .replace(/ /g, "")
+            .replace(/\n/g, "")}`;
+          Cypress.env(`accessURL`, accessURL);
+        });
       });
-    });
-    
-   
   }
 
   static addResources(path: string, ...verbs) {
-    cy.get('[id="backdrop-loader"').should("not.exist")
+    cy.get('[id="backdrop-loader"').should("not.exist");
     cy.get('[data-testid="delete-all-operations-btn"]').click();
     this.addHTTPVerb(verbs);
     cy.get("#operation-target").type(path);
@@ -50,7 +46,9 @@ export class ComponentDevelopPage {
 
   private static addHTTPVerb(verbs: string[]) {
     cy.get("#mui-component-select-verbs").click();
-    verbs.forEach((verb) => { cy.contains(verb.toUpperCase()).click().wait(100); });
+    verbs.forEach((verb) => {
+      cy.contains(verb.toUpperCase()).click().wait(100);
+    });
     cy.get("body").type("{esc}");
   }
 
@@ -61,8 +59,13 @@ export class ComponentDevelopPage {
       cy.get("#labels-filled").click();
       cy.contains(label).click().wait(100);
     });
-    cy.get('div[role="button"]>.MuiChip-label').should("have.length", labels.length)
-    cy.get('div[role="button"]>.MuiChip-label').each((e) => { lblArr.push(e.text()); });
+    cy.get('div[role="button"]>.MuiChip-label').should(
+      "have.length",
+      labels.length
+    );
+    cy.get('div[role="button"]>.MuiChip-label').each((e) => {
+      lblArr.push(e.text());
+    });
     cy.get('[data-testid="save-labels"]').click();
     return cy.wrap(lblArr);
   }
@@ -73,17 +76,21 @@ export class ComponentDevelopPage {
 
   static selectBranch(newBranch: string) {
     let branches = [];
-    cy.get('.diagram-canvas-wrap').should('exist')
+    cy.get(".diagram-canvas-wrap").should("exist");
     cy.get('[aria-label="Without label"]').click();
     cy.get("[data-value]>span").each((q) => {
       branches.push(q.text());
-      if (q.text() === newBranch) { cy.wrap(q).click(); }
+      if (q.text() === newBranch) {
+        cy.wrap(q).click();
+      }
     });
     return cy.wrap(branches);
   }
 
   static getVersion() {
-    return cy.get('[data-cyid="version-picker"]>div').then((v) => v.text().trim());
+    return cy
+      .get('[data-cyid="version-picker"]>div')
+      .then((v) => v.text().trim());
   }
 
   static refreshBranchCommit() {

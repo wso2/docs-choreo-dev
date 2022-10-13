@@ -34,6 +34,7 @@ configMapGenerator:
       - AZURE_ADX_DB=observability
       - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - AZURE_ADX_METRIC_TABLE=metrics
+      - AZURE_ADX_PIXIE_METRIC_TABLE=pixieMetrics
       - AZURE_ADX_TRACE_TABLE=traceSpans
       - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
@@ -318,7 +319,3 @@ configMapGenerator:
     behavior: create
     files:
       - lowcode-parser/application.properties
-  - name: console-config
-    behavior: create
-    files:
-      - choreo-console/choreo.config.js

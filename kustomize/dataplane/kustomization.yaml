@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - apim
   - choreodp-system
+  - choreo-obs
 
 commonLabels:
   app: choreo-dataplane

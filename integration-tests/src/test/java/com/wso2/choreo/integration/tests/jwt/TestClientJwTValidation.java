@@ -46,9 +46,6 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
-
-    private String githubOrg;
-    private String githubPAT;
     private String orgId;
     private String orgHandle;
     private String projectId;
@@ -59,28 +56,22 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private CreateComponent response;
     private ChoreoOrganization org;
 
-    @Autowired
-    private HttpClient choreoTestClientForSTS;
-    @Autowired
-    private HttpClient choreoTestClientForGithub;
-    @Autowired
-    private HttpClient choreoProjectsTestClient;
+
     @Autowired
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException {
+    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException, RequestExecutionException, ComponentCreationTimeoutException, ComponentCreationStatusCheckException {
 
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-        githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
         org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
         ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
+
 
     }
 
@@ -154,7 +145,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDevDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, choreoComponent, "dev");
+        GraphQL.componentDeployment(choreoTestClient, this, choreoComponent, "dev","update code");
     }
 
 

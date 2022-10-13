@@ -12,17 +12,14 @@ import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explo
 import { Utils } from "../../../support/console/utils";
 
 describe("Graphql GQL service test", () => {
-
-
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const commitMessage = "adding new service";
 
-
-  const TEST_QUERY = '{greeting(name:"John")}'
-  const TEST_QUERY_RESPONSE="Hello, John"
-  const TEST_MUTATION='mutation{createUser(name:"John")}'
-  const TEST_MUTATION_RESPONSE='createUser": "User created with name: John'
+  const TEST_QUERY = '{greeting(name:"John")}';
+  const TEST_QUERY_RESPONSE = "Hello, John";
+  const TEST_MUTATION = 'mutation{createUser(name:"John")}';
+  const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
 
   before(() => {
     LoginPage.login();
@@ -32,33 +29,26 @@ describe("Graphql GQL service test", () => {
     ChoreoHomePage.logout();
   });
   it("Creating a project and add GQL sample", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-    );
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
-    GreetingSample.selectSample("GraphQL Service")
+    GreetingSample.selectSample("GraphQL Service");
     ComponentDevelopPage.getComponentURL();
   });
 
-
-
   it("Edit code in VScode", () => {
-    ComponentOverviewPage.navigateToDevelop();
+    ComponentOverviewPage.navigateToOverview();
     LoginPage.navigateToCodespace();
 
     VSExplorer.pasteCode("gqlservice.bal");
     VSExplorer.commitPush(commitMessage);
   });
 
-
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
 
-    ComponentDevelopPage.refreshBranchCommit()
+    ComponentDevelopPage.refreshBranchCommit();
     ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
-
 
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
@@ -71,38 +61,30 @@ describe("Graphql GQL service test", () => {
     ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
   });
 
-
   it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_QUERY)
-    TestHelper.getGqlResult(TEST_QUERY_RESPONSE)
-
+    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_QUERY);
+    TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
-
 
   it("Verify test functionality of GQL query in Prod on swagger", () => {
-    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_QUERY)
-    TestHelper.getGqlResult(TEST_QUERY_RESPONSE)
+    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_QUERY);
+    TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
-
-
 
   it("Verify test functionality of GQL mutation in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_MUTATION)
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE)
-
+    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_MUTATION);
+    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 
-
   it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_MUTATION)
-    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE)
+    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_MUTATION);
+    TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
-
-})
+});

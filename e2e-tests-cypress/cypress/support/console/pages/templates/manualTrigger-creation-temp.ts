@@ -26,3 +26,4 @@ export class TriggersTemplate {
     cy.get('[data-cyid="btn-create-mannual-trigger"]').click();
   }
 }
+

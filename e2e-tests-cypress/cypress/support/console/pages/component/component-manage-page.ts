@@ -222,4 +222,21 @@ export class ComponentAPILifecycle {
   static verifyConsumer(appName: string) {
     return cy.get(`[value=${appName}]`);
   }
+
+  static verifyAPIVisibility(visibility: string) {
+    cy.get('[data-cyid="dropdown-api-visibility-selector"]').should("exist").should("have.text", visibility);
+    cy.log("Successfully verified the API visibility", visibility);
+  }
+
+  static updateAPIVisibility(visibility: string) {
+    cy.get('[data-cyid="dropdown-api-visibility-selector"]').should("be.visible").click();
+    if (visibility == 'Private') {
+      cy.get('[data-cyid="item-PRIVATE"]').should("be.visible").click();
+    } else if (visibility == 'Public') {
+      cy.get('[data-cyid="item-PUBLIC"]').should("be.visible").click();
+    }
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
+    this.verifyAPIVisibility(visibility);
+    cy.log("Successfully updated the API visibility");
+  }
 }
