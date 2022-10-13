@@ -18,22 +18,37 @@ import com.consol.citrus.http.client.HttpClient;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.componentstatus.Status;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 /**
  * Implements Orgs API calls and their response validations.
  */
+@Slf4j
 public class Orgs {
+
+    private static final String CHOREO_EP = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+    private static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+
     public static void addConfiguration(HttpClient client, TestActionRunner runner,
-                                        ChoreoComponent component, String envName) throws Exception {
+                                        ChoreoComponent component, String envName, BalConfig[] balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
         String envIdToDeploy = component.getLatestAppEnvId(envName);
@@ -54,11 +69,12 @@ public class Orgs {
                 put("applyNow", false);
                 put("operation", 0);
                 put("sourceUuid", "");
-                put("configs", "");
+                put("configs", balconfigs);
             }
         };
 
-        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap);
+        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required","isRequired");
+        System.out.println(configurationsRequestBody);
 
         // Update configurations
         runner.$(http()
@@ -74,5 +90,12 @@ public class Orgs {
                 .client(client)
                 .receive()
                 .response(HttpStatus.OK));
+    }
+
+    public static Status createdComponentStatus(String projectId, String componentId, String accessToken, int attemptCount) {
+        String url = CHOREO_EP + "/orgs/" + ORG_HANDLE + "/projects/" + projectId + "/components/" + componentId + "/init/status";
+        Response res = HttpClientUtil.httpGET(url, accessToken, "", attemptCount);
+       return ObjectMapperUtil.mapStringToObject(Status.class, res.getRes(), "");
+
     }
 }

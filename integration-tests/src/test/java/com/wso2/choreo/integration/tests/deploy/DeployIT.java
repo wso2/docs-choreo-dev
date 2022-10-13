@@ -45,7 +45,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void testAddDeploymentConfiguration() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "dev");
+        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "dev",null);
     }
 
     @Test(dependsOnMethods = {"testAddDeploymentConfiguration"})
@@ -75,7 +75,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatus"})
     @CitrusTest
     public void testAddPromoteConfiguration() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "prod");
+        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "prod",null);
     }
 
     @Test(dependsOnMethods = {"testAddPromoteConfiguration"})

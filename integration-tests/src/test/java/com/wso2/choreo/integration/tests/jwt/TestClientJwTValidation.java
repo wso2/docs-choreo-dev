@@ -13,13 +13,21 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
-import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.RequestExecutionException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.common.utils.GitUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +40,11 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Logger;
+
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
-    private final Logger logger = Logger.getLogger("TestClientJwTValidation");
 
 
     private String githubOrg;
@@ -46,13 +53,8 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private String orgHandle;
     private String projectId;
     private String orgUUID;
-    private String invokeUrl;
-    private String apiKey;
-    private String apiId;
     private String repoName;
-    private String serviceBalSha;
     private String accessToken;
-
     private static ChoreoComponent choreoComponent;
     private CreateComponent response;
     private ChoreoOrganization org;
@@ -132,7 +134,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentRetrievalJwt"})
     @CitrusTest
     public void testAddDeploymentConfiguration() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, choreoComponent, "dev");
+        Orgs.addConfiguration(choreoTestClient, this, choreoComponent, "dev",null);
     }
 
 
@@ -170,7 +172,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
                 header(HttpHeaders.ACCEPT, "text/plain").
                 header("API-Key", testConfigs.getApiKey());
 
-        http().client(invokeUrl).
+        http().client(testConfigs.getInvokeUrl()).
                 receive().
                 response(HttpStatus.OK).
                 message().
