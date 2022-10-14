@@ -48,7 +48,7 @@ public class Orgs {
     private static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
     public static void addConfiguration(HttpClient client, TestActionRunner runner,
-                                        ChoreoComponent component, String envName, BalConfig[] balconfigs) throws Exception {
+                                        ChoreoComponent component, String envName, BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
         String envIdToDeploy = component.getLatestAppEnvId(envName);

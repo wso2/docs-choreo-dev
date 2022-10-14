@@ -125,7 +125,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentRetrievalJwt"})
     @CitrusTest
     public void testAddDeploymentConfiguration() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, choreoComponent, "dev",null);
+        Orgs.addConfiguration(choreoTestClient, this, choreoComponent, "dev");
     }
 
 
