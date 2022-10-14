@@ -12,13 +12,30 @@ Designing a REST API is the process of declaring the resources, the appropriate 
 
 Choreo’s low-code editor allows developers to design (and develop) high-quality REST APIs with ease. To design a REST API in Choreo, you must create a REST API component. You can design a REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements. The Choreo roadmap also includes the capability to design a REST API by importing an OpenAPI document, which will be available soon.
 
-![Add resource](assets/img/rest-apis/add-resource.png){.cInlineImage-full}
+Choreo allows you to design your REST API in three possible ways as shown in the image below:
 
-Choreo allows developers to easily specify input and output data formats for each API resource:
+![Create REST API](assets/img/rest-apis/create-a-rest-api.png){.cInlineImage-half}
 
-![Configure request payload](assets/img/rest-apis/configure-request-payload.png){.cInlineImage-full}
+- **Start from scratch**
 
-![Configure response](assets/img/rest-apis/configure-response.png){.cInlineImage-full}
+    You can design a REST API via Choreo’s low-code editor that allows developers to design (and develop) high-quality REST APIs with ease. This method involves designing the REST API from scratch by manually specifying the resources, the HTTP verbs, paths, and other required elements.
+  
+    ![Add resource](assets/img/rest-apis/add-resource.png){.cInlineImage-full}
+
+    Choreo allows developers to easily specify input and output data formats for each API resource:
+
+    ![Configure request payload](assets/img/rest-apis/configure-request-payload.png){.cInlineImage-full}
+
+    ![Configure response](assets/img/rest-apis/configure-response.png){.cInlineImage-full}
+
+- **Connect existing Ballerina repository**
+
+    If you have a REST API written in the [Ballerina Programming Language](https://ballerina.io), you can deploy it in Choreo. To do this, you must save it in a private GitHub repository and connect that repository to Choreo.
+
+- **Bring your Dockerfile**
+
+  If you have an existing REST API written in any programming language, you can deploy it in Choreo. To do this, you must generate a Docker image for the REST API and save the Dockerfile in a private GitHub repository. When you connect this GitHub repository to Choreo, you can build the Dockerfile to pull the REST API implementation from the Docker image.
+
 
 ## Developing a REST API
 
