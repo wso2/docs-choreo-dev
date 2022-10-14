@@ -45,7 +45,7 @@ Let's add a containerized REST API component by following these steps:
 6. Click **Authorize with GitHub** to allow the REST API to access your GitHub account.
 
     !!! Tip "Tips"
-        You can authorize the REST API to access all the repositories in the selected GitHub account or select one or more repositories that you want to allow the REST API to access.****<br/>
+        You can authorize the REST API to access all the repositories in the selected GitHub account or select one or more repositories that you want to allow the REST API to access.<br/>
         For this tutorial, you can select your fork of the [choreo-sample-apps repository](https://github.com/wso2/choreo-sample-apps).
 
     Once you perform the authorization, the **GitHub Account** field in the **Connect Repository** dialog box displays the GitHub account you authorized the REST API to access. 
@@ -121,10 +121,3 @@ If you want to view Kubernetes-level insights to carry out a more detailed diagn
 ![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-full}
 
 For more information about the information, see [DevOps Portal](../devops-portal.md).
-
-
-
-
-
-
-
