@@ -21,6 +21,7 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundExce
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -52,7 +53,7 @@ public class RestApiChoreoComponent extends ChoreoComponent {
     public void invokeGetApplication(String accessToken, String componentType, String environment, int count) throws
             ComponentInvokeInformationCheckException, NoLatestApiVersionFoundException, IOException,
             InterruptedException, APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeInformationNotFoundException, InvokeAPICheckException {
-        com.wso2.choreo.integration.models.invokeinfor.InvokeInformation  invokeInformation = getInvokeInformation(accessToken, componentType, environment);
+      InvokeInformation invokeInformation = getInvokeInformation(accessToken, componentType, environment);
         String requestURI = invokeInformation.getInvokeUrl();
         if (requestURI == null) {
             throw new InvokeInformationNotFoundException();

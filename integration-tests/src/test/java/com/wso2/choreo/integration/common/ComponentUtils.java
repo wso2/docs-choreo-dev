@@ -121,7 +121,7 @@ public class ComponentUtils {
         l.log(Level.INFO, apiId);
         InvokeInformation[] info = GraphQL.getInvokeInformation(component, componentType, accessToken);
         InvokeInformation invokeInformation = null;
-        for (com.wso2.choreo.integration.models.invokeinfor.InvokeInformation in : info) {
+        for (InvokeInformation in : info) {
             if (in.getApiId().equals(apiId)) {
                 invokeInformation = in;
             }

@@ -21,7 +21,6 @@ export class ScheduleTask {
   static createTask(name: string, description: string) {
     cy.get('[data-cyid="btn-task-from-scratch"]').should("be.visible").click();
     cy.get('[name="name"]').clear().type(name);
-    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
     cy.get('[data-cyid="btn-create-"]').click();
     cy.setCookie("fidpId", "choreoe2etest");
     Utils.saveComponentURL();

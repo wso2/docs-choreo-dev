@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +29,11 @@ private static final Logger fileUtilLogger = Logger.getLogger("FileUtil");
         }
 
         return stringBuilder.toString();
+    }
+
+    public static String readFileEncodedContent(String filePath){
+
+        return Base64.getEncoder().encodeToString(readFile(filePath).getBytes());
     }
 
 }

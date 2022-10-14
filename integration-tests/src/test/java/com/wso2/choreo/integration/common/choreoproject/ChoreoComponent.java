@@ -757,7 +757,7 @@ public abstract class ChoreoComponent {
      * @param environment   environment of the deployment
      * @return Invoke information related to requested environment
      */
-    public com.wso2.choreo.integration.models.invokeinfor.InvokeInformation  getInvokeInformation(String accessToken, String componentType, String environment) throws
+    public InvokeInformation  getInvokeInformation(String accessToken, String componentType, String environment) throws
             IOException, NoLatestApiVersionFoundException, InterruptedException, ComponentInvokeInformationCheckException, InvokeInformationNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();

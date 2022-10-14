@@ -22,12 +22,12 @@ import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundExce
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.RequestExecutionException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
-import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.common.utils.GitUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Date;
+
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 
@@ -51,7 +52,6 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private String orgUUID;
     private String repoName;
     private String accessToken;
-
     private static ChoreoComponent choreoComponent;
     private CreateComponent response;
     private ChoreoOrganization org;

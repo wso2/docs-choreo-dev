@@ -35,7 +35,7 @@ describe("Verify webhook creation functionality", () => {
   const COMMIT_MESSAGE = "adding slacktrigger bal file";
   const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
   const TRIGGER_TYPE = "Slack";
-  const TRIGGER_CHANNEL = "SlackEventsAppService";
+  const TRIGGER_CHANNEL = "AppService";
 
 
   before(() => {
@@ -73,7 +73,6 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.verifyLatestCommit(COMMIT_MESSAGE);
   });
 
   it("Deploy the component", () => {
