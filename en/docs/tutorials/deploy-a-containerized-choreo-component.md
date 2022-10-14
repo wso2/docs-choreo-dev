@@ -1,19 +1,23 @@
 # Deploy a Containerized Choreo Component
 
-Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes.
+Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes when you create any of the following components:
 
-!!! info
-    Currently, the following component types are available for these component types:<br/><br/>
-     - REST APIs<br/>
-     - Scheduled tasks<br/>
-     - Manual triggers<br/>
-    The Choreo team is working on providing containerized deployment options for the rest of the component types soon.
+- REST APIs
+- Scheduled tasks
+- Manual triggers
 
 This guide walks you through the steps to deploy a sample containerized REST API component in Choreo.
 
 ## Prerequisites
 
 To deploy a containerized component, you need a GitHub account with a repository that contains a Dockerfile. For this tutorial, you can fork and use the [choreo-sample-apps repository](https://github.com/wso2/choreo-sample-apps).
+
+The **Choreo GitHub App** requires the following permission:
+
+ - Read access to issues and metadata
+ - Read and write access to code, pull requests, and repository hooks
+
+You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
 Let's get started!
 
