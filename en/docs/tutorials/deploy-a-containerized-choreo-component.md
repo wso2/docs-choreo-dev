@@ -17,8 +17,8 @@ To deploy a containerized component, you need a GitHub account with a repository
 
 The **Choreo GitHub App** requires the following permission:
 
- - Read and write access to code and pull requests.
- - Read access to issues and metadata.
+ - Read access to issues and metadata
+ - Read and write access to code, pull requests, and repository hooks
 
 You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
