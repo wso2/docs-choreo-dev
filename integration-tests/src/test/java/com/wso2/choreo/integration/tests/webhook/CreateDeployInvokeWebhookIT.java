@@ -16,7 +16,13 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.RequestExecutionException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.common.utils.GitUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -45,10 +51,8 @@ import java.security.NoSuchAlgorithmException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -70,33 +74,29 @@ import static org.junit.Assert.fail;
  */
 public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
+    private static String componentHandler;
+    private static String invokeUrl;
+    private static String sha;
+    private static ChoreoComponent testComponent;
+    ChoreoOrganization org;
     private String orgHandle;
     private String orgId;
     private String orgUUID;
     private String projectId;
     private String componentId;
-    private static String componentHandler;
-    private static String invokeUrl;
-    private static String sha;
     private String repoName;
-    private static ChoreoComponent testComponent;
     private String namespace;
     private String obsId;
     private String githubOrg;
     private String githubPAT;
-
     @Autowired
     private HttpClient choreoTestClient;
-
     @Autowired
     private HttpClient choreoTestClientForGithub;
-
     @Autowired
     private HttpClient choreoCPTestClient;
-
     @Autowired
     private HttpClient choreoProjectsTestClient;
-    ChoreoOrganization org;
 
     @BeforeClass
     public void beforeClass()
@@ -189,187 +189,36 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     })
     @CitrusTest
     public void testCreatedComponentStatus() {
-
         Status status = Orgs.createdComponentStatus(projectId, componentId, accessToken, 25);
         Assert.assertTrue(status.isSuccess());
-//                // Poll component create status
-//                $(repeatOnError()
-//                        .until("i = 25")
-//                        .index("i")
-//                        .autoSleep(6000)
-//                        .actions(
-//                                http()
-//                                        .client(choreoTestClient)
-//                                        .send()
-//                                        .get("/orgs/"
-//                                                .concat(orgHandle)
-//                                                .concat("/projects/")
-//                                                .concat(projectId)
-//                                                .concat("/components/")
-//                                                .concat(componentId)
-//                                                .concat("/init/status"))
-//                                        .message()
-//                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-//                                http().client(choreoTestClient)
-//                                        .receive()
-//                                        .response(HttpStatus.OK)
-//                                        .message()
-//                                        .body(new ClassPathResource(
-//                                                "templates/createComponent/get_create_status_success.json"))
-//                                        .validate(json()
-//                                                .ignore("$.message"))));
     }
 
     @Test(dependsOnMethods = {"testCreatedComponentStatus"})
     @CitrusTest
     public void testInitialPRGeneration() throws IOException, RequestExecutionException {
         PullRequest[] prs = GraphQL.getComponentPullRequests(componentId, accessToken);
-        System.out.println(prs.length);
         Assert.assertEquals(prs.length, 1);
     }
 
     @Test(dependsOnMethods = {"testInitialPRGeneration"})
     @CitrusTest
     public void testPRMerge() throws IOException, RequestExecutionException {
-//        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
-//                .concat("/pulls/1/merge");
-//        HashMap<String, Object> requestBodyMap = new HashMap<>() {
-//            {
-//                put("commit_title", "Merge initial PR");
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-//        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-//
-//        // Merge initial PR
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .send()
-//                .put(requestURI)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, authHeader)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(requestBody)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .receive()
-//                .response(HttpStatus.OK));
-
         Response response = GitUtil.mergePR(repoName, "1");
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
 
         PullRequest[] pullRequests = GraphQL.getComponentPullRequests(componentId, accessToken);
         Assert.assertEquals(pullRequests.length, 0);
-//        String graphQlQuery = "query{ componentPullRequests(" +
-//                " componentId: \"" + componentId + "\"," +
-//                " ){" +
-//                " url, number" +
-//                " }}";
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//
-//        ObjectMapper pullRequestObjectMapper = new ObjectMapper();
-//        String listPrRequestBody = pullRequestObjectMapper.writeValueAsString(gqlRequestPayload);
-//
-//        $(repeatOnError()
-//                .until("i = 3")
-//                .index("i")
-//                .autoSleep(5000)
-//                .actions(
-//                        http()
-//                                .client(choreoProjectsTestClient)
-//                                .send()
-//                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                                .message()
-//                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                                .header(HttpHeaders.CONTENT_TYPE,
-//                                        MediaType.APPLICATION_JSON_VALUE)
-//                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-//                                .body(listPrRequestBody),
-//                        http()
-//                                .client(choreoProjectsTestClient)
-//                                .receive()
-//                                .response(HttpStatus.OK)
-//                                .message()
-//                                .type(MessageType.JSON)
-//                                .body(new ClassPathResource(
-//                                        "templates/createUserManagedComponent/get_pull_requests_empty.json"))
-//                                .validate(json())));
     }
 
-//    @Test(dependsOnMethods = {
-//            "testPRMerge"
-//    })
-//    @CitrusTest
-//    public void testGetShaOfWebhookBal() {
-//        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
-//                .concat("/contents/webhook.bal");
-//        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .send()
-//                .get(requestURI)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, authHeader)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .receive()
-//                .response(HttpStatus.OK)
-//                .message()
-//                .type(MessageType.JSON)
-//                .validate((message, context) -> {
-//                    JsonObject component = new JsonParser().parse((String) message.getPayload())
-//                            .getAsJsonObject();
-//                    sha = component.get("sha").getAsString();
-//                }));
-//    }
 
     @Test(dependsOnMethods = {
             "testPRMerge"
     })
     @CitrusTest
     public void testCommitFile() throws IOException, RequestExecutionException {
-
         String encodedContent = FileUtil.readFileEncodedContent("templates/webhook/github_webhook.bal");
         Response response = GitUtil.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
-//        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
-//                .concat("/contents/webhook.bal");
-//        HashMap<String, Object> requestBodyMap = new HashMap<>() {
-//            {
-//                put("message", "Add log to onIssueOpend");
-//                put("content", Base64.getEncoder().encodeToString((new ClassPathResource(
-//                        "templates/webhook/github_webhook.bal")).getInputStream()
-//                        .readAllBytes()));
-//                put("sha", sha);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-//        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-//
-//        // Commit the webhook.bal file to the repository
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .send()
-//                .put(requestURI)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, authHeader)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(requestBody)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .receive()
-//                .response(HttpStatus.OK));
     }
 
     @Test(dependsOnMethods = {
@@ -377,336 +226,34 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     })
     @CitrusTest
     public void testComponentRetrieval() throws IOException, RequestExecutionException {
-
         testComponent = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
         testComponent.setOrganization(org);
         Assert.assertNotNull(testComponent);
-//        String graphQlQuery = "query{ component(" +
-//                " projectId: \"" + projectId + "\"," +
-//                " componentHandler: \"" + componentHandler + "\"," +
-//                " ){" +
-//                " id," +
-//                " name," +
-//                " handler," +
-//                " description," +
-//                " displayType," +
-//                " displayName," +
-//                " ownerName," +
-//                " orgId," +
-//                " orgHandler," +
-//                " version," +
-//                " labels," +
-//                " createdAt," +
-//                " updatedAt," +
-//                " projectId," +
-//                " apiId," +
-//                " repository{" +
-//                " nameApp," +
-//                " nameConfig," +
-//                " branch," +
-//                " branchApp," +
-//                " organizationApp," +
-//                " organizationConfig," +
-//                " isUserManage" +
-//                " }," +
-//                " apiVersions{" +
-//                " apiVersion," +
-//                " proxyName," +
-//                " proxyUrl," +
-//                " proxyId," +
-//                " id," +
-//                " state," +
-//                " latest," +
-//                " branch," +
-//                " appEnvVersions{" +
-//                " environmentId," +
-//                " releaseId," +
-//                " release{" +
-//                " id," +
-//                " metadata{" +
-//                " choreoEnv" +
-//                " }," +
-//                " environmentId," +
-//                " environment," +
-//                " gitHash," +
-//                " gitOpsHash," +
-//                " }" +
-//                " }" +
-//                " }" +
-//                " }" +
-//                " }";
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//        $(http()
-//                .client(choreoProjectsTestClient)
-//                .send()
-//                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(requestBody)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoProjectsTestClient)
-//                .receive()
-//                .response(HttpStatus.OK)
-//                .message()
-//                .type(MessageType.JSON)
-//                .validate((message, context) -> {
-//                    JsonObject component = new JsonParser().parse((String) message.getPayload())
-//                            .getAsJsonObject()
-//                            .getAsJsonObject("data")
-//                            .getAsJsonObject("component");
-//                    Gson gson = new Gson();
-//                    testComponent = gson.fromJson(component.toString(),
-//                            RestApiChoreoComponent.class);
-//                }));
     }
 
     @Test(dependsOnMethods = {"testComponentRetrieval"})
     @CitrusTest
     public void testComponentDeployment() throws Exception {
-         BalConfig[] balConfigs = {BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build()};
+        BalConfig[] balConfigs = {BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build()};
         Orgs.addConfiguration(choreoTestClient, this, testComponent, "dev", balConfigs);
         GraphQL.deployComponent(choreoTestClient, this, testComponent);
-
-
-//        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-//        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
-//        String latestVersionId = testComponent.getLatestApiVersion().getId();
-//        String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
-//        String branch = testComponent.getRepository().getBranch();
-//        String name = testComponent.getName();
-//
-//        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
-//                .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
-//                .concat(devEnvIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
-//
-//               List<BalConfig> configs = new ArrayList<>();
-////               configs.add(BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build());
-//        configs.add(new BalConfig("config.webhookSecret", true, "abcd", "string"));
-//        HashMap<String, Object> requestBodyMap = new HashMap<>() {
-//            {
-//                put("moduleName", name);
-//                put("commitHash", latestCommitSha);
-//                put("applyNow", false);
-//                put("operation", 0);
-//                put("sourceUuid", "");
-//                put("configs", configs);
-//            }
-//        };
-//
-//        ObjectMapper configurationsObjectMapper = new ObjectMapper();
-//        String configurationsRequestBody = configurationsObjectMapper.writeValueAsString(requestBodyMap);
-//
-//        // Update configurations
-//        $(http()
-//                .client(choreoTestClient)
-//                .send()
-//                .post(configurationsUpdateRequestURI)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(configurationsRequestBody)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//
-//        $(http()
-//                .client(choreoTestClient)
-//                .receive()
-//                .response(HttpStatus.OK));
-//
-//        String graphQlQuery = "mutation {deployComponent(" +
-//                " deployment: {" +
-//                " componentId: \"" + componentId + "\"," +
-//                " versionId: \"" + latestVersionId + "\"," +
-//                " envId: \"" + devEnvIdToDeploy + "\"," +
-//                " branch: \"" + branch + "\"," +
-//                " sha: \"" + latestCommitSha + "\"," +
-//                " }" +
-//                " ) { message, success }}";
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//
-//        // Deploy component
-//        $(http()
-//                .client(choreoProjectsTestClient)
-//                .send()
-//                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(requestBody)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoProjectsTestClient)
-//                .receive()
-//                .response(HttpStatus.OK)
-//                .message()
-//                .type(MessageType.JSON)
-//                .body(new ClassPathResource("templates/deploy/gql_deploy_component_success.json"))
-//                .validate(json()));
     }
 
     @Test(dependsOnMethods = {"testComponentDeployment"})
     @CitrusTest
     public void testDeploymentStatusByVersion() throws Exception {
-        //  String versionId = testComponent.getLatestApiVersion().getId();
         GraphQL.deploymentStatusByVersion(choreoTestClient, this, testComponent);
-//        String graphQlQuery = "query {" +
-//                "      deploymentStatusByVersion(" +
-//                "        componentId: \"" + componentId + "\"," +
-//                "        versionId: \"" + versionId + "\"" +
-//                "  ) {" +
-//                "    id" +
-//                "    sha" +
-//                "    completed_at" +
-//                "    started_at" +
-//                "    name" +
-//                "    status" +
-//                "    conclusion" +
-//                "  }" +
-//                "}";
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//
-//        // Poll deployment status
-//        $(repeatOnError()
-//                .until("i = 25")
-//                .index("i")
-//                .autoSleep(6000)
-//                .actions(
-//                        http()
-//                                .client(choreoProjectsTestClient)
-//                                .send()
-//                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                                .message()
-//                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                                .body(requestBody)
-//                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-//                        http().client(choreoProjectsTestClient)
-//                                .receive()
-//                                .response(HttpStatus.OK)
-//                                .message()
-//                                .body(new ClassPathResource(
-        //                                       "templates/deploy/deploy_status_by_version_success.json"))
-//                                .validate(json())));
-
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, testComponent, "dev");
-//        String versionId = testComponent.getLatestApiVersion().getId();
-//        String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
-//        Map<String, String> params = new HashMap<>();
-//        params.put("orgHandler", orgHandle);
-//        params.put("orgUuid", orgUUID);
-//        params.put("componentId", componentId);
-//        params.put("versionId", versionId);
-//        params.put("environmentId", devEnvIdToDeploy);
-//
-//        String graphQlQuery = ComponentUtils.generateStringFromTemplate(
-//                "templates/deploy/graphql/componentDeployment.mustache", params);
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//
-//        JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-//        String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
-//
-//        Map<String, String> responseParams = new HashMap<>();
-//        responseParams.put("environmentId", devEnvIdToDeploy);
-//        responseParams.put("sha", latestCommitSha);
-//        responseParams.put("versionId", versionId);
-//
-//        String expectedResponse = ComponentUtils.generateStringFromTemplate(
-//                "templates/deploy/deploy_webhook_status_success.mustache", responseParams);
-//
-//        // Poll deployment status
-//        $(repeatOnError()
-//                .until("i = 25")
-//                .index("i")
-//                .autoSleep(5000)
-//                .actions(
-//                        http()
-//                                .client(choreoTestClient)
-//                                .send()
-//                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                                .message()
-//                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                                .body(requestBody)
-//                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-//                        http().client(choreoTestClient)
-//                                .receive()
-//                                .response(HttpStatus.OK)
-//                                .message()
-//                                .body(expectedResponse)));
+        GraphQL.componentDeployment(choreoTestClient, this, testComponent, "dev", "");
     }
 
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
     @CitrusTest
     public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvokeInformationNotFoundException, InterruptedException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-
-//        String latestVersionId = testComponent.getLatestApiVersion().getId();
-//        String graphQlQuery = "query {" +
-//                " invokeInformation(" +
-//                " orgHandler: \"" + orgHandle + "\"," +
-//                " orgUuid: \"" + orgUUID + "\"," +
-//                " componentId: \"" + componentId + "\"," +
-//                " versionId: \"" + latestVersionId + "\"," +
-//                " componentType: \"webhook\"" +
-//                " ) { apiId, invokeUrl } }";
-//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//            {
-//                put("query", graphQlQuery);
-//            }
-//        };
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-//
-//        $(http()
-//                .client(choreoProjectsTestClient)
-//                .send()
-//                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, accessToken)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(requestBody)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoProjectsTestClient)
-//                .receive()
-//                .response(HttpStatus.OK)
-//                .message()
-//                .type(MessageType.JSON)
-//                .validate((message, context) -> {
-//                    JsonObject invokeInformation = new JsonParser()
-//                            .parse((String) message.getPayload()).getAsJsonObject()
-//                            .getAsJsonObject("data")
-//                            .getAsJsonArray("invokeInformation").get(0).getAsJsonObject();
-//                    invokeUrl = invokeInformation.get("invokeUrl").getAsString();
-//                }));
-
         TestConfigs testConfigs = ComponentUtils.invokeEndpoint(testComponent, Constant.displayType.restAPI.name(), accessToken);
 
         // Read the request as a json make it as a compact json string
@@ -903,10 +450,10 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                         greaterThanOrEqualTo(1)))));
     }
 
-    //    @Test(dependsOnMethods = {
-//            "testObservabilityLogs"
-//    }, alwaysRun = true)
-//    @CitrusTest
+    @Test(dependsOnMethods = {
+            "testObservabilityLogs"
+    }, alwaysRun = true)
+    @CitrusTest
     public void testDeleteWebhookComponent() throws JsonProcessingException {
         String graphqlQuery = "mutation { deleteComponentV2(" +
                 "orgHandler: \"" + orgHandle + "\"," +
@@ -943,8 +490,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 .validate(json()));
     }
 
-    //    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
-//    @CitrusTest
+    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
+    @CitrusTest
     public void testDeleteRepo() {
         String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
         String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);

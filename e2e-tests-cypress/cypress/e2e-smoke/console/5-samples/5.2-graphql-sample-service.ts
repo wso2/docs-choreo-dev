@@ -45,9 +45,6 @@ describe("Graphql GQL service test", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-
-    ComponentDevelopPage.refreshBranchCommit();
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
   });
 
   it("Verify component deployment", () => {

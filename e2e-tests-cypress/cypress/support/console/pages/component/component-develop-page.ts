@@ -70,13 +70,9 @@ export class ComponentDevelopPage {
     return cy.wrap(lblArr);
   }
 
-  static verifyLatestCommit(commitMessage: string) {
-    cy.get(`[title*="${commitMessage}"]`);
-  }
 
   static selectBranch(newBranch: string) {
     let branches = [];
-    cy.get(".diagram-canvas-wrap").should("exist");
     cy.get('[aria-label="Without label"]').click();
     cy.get("[data-value]>span").each((q) => {
       branches.push(q.text());

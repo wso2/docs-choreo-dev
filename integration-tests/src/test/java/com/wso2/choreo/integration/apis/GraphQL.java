@@ -294,4 +294,13 @@ public class GraphQL {
         return ObjectMapperUtil.mapToCollection(InvokeInformation[].class, response.getRes(), "invokeInformation");
     }
 
+    public static void deleteComponent(String orgHandler,String componentId,String projectId) throws IOException {
+        Map<String,String> requestParam = new HashMap<>();
+        requestParam.put("orgHandler",orgHandler);
+        requestParam.put("componentId",componentId);
+        requestParam.put("projectId",projectId);
+        String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/deleteComponent.mustache", requestParam);
+
+    }
+
 }

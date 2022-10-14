@@ -187,7 +187,7 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[data-testid="resource-/${resource}"]>div`).eq(1).click();
-    cy.get(`[data-testid="resource-/${resource}"] [data-testid="security"]`).click();
+    cy.get(`[data-testid="resource-/${resource}"] [data-testid="security"]`).scrollIntoView().click();
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {

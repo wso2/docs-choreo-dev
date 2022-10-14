@@ -68,7 +68,7 @@ describe("Schedule task", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.verifyLatestCommit(commitMessage);
+
   });
 
   it("Verify component deployment", () => {

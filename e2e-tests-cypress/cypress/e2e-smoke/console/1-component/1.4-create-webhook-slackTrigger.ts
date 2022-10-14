@@ -73,7 +73,6 @@ describe("Verify webhook creation functionality", () => {
 
   it("Verify component commits", () => {
     LoginPage.reLoginToChoreo();
-    ComponentDevelopPage.verifyLatestCommit(COMMIT_MESSAGE);
   });
 
   it("Deploy the component", () => {

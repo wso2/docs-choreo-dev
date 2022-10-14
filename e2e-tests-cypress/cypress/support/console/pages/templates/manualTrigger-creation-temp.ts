@@ -22,8 +22,6 @@ export class TriggersTemplate {
       .click();
     cy.get('input[name="name"]').clear().type(manualName);
     cy.get('[data-cyid="btn-create-mannual-trigger"]').click();
-    cy.get('[data-cyid="choreo-managed-repo-radio-btn"]').click();
-    cy.get('[data-cyid="btn-create-mannual-trigger"]').click();
   }
 }
 
