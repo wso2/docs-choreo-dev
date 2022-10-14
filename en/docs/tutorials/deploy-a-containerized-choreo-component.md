@@ -15,6 +15,13 @@ This guide walks you through the steps to deploy a sample containerized REST API
 
 To deploy a containerized component, you need a GitHub account with a repository that contains a Dockerfile. For this tutorial, you can fork and use the [choreo-sample-apps repository](https://github.com/wso2/choreo-sample-apps).
 
+The **Choreo GitHub App** requires the following permission:
+
+ - Read and write access to code and pull requests.
+ - Read access to issues and metadata.
+
+You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
+
 Let's get started!
 
 ## Step 1: Create a component from a Dockerfile
