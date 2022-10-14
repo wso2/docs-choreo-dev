@@ -1,13 +1,10 @@
 # Deploy a Containerized Choreo Component
 
-Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes.
+Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes when you create any of the following components:
 
-!!! info
-    Currently, the following component types are available for these component types:<br/><br/>
-     - REST APIs<br/>
-     - Scheduled tasks<br/>
-     - Manual triggers<br/>
-    The Choreo team is working on providing containerized deployment options for the rest of the component types soon.
+- REST APIs
+- Scheduled tasks
+- Manual triggers
 
 This guide walks you through the steps to deploy a sample containerized REST API component in Choreo.
 
