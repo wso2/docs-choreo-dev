@@ -74,7 +74,6 @@ public class Orgs {
         };
 
         String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required","isRequired");
-        System.out.println(configurationsRequestBody);
 
         // Update configurations
         runner.$(http()
