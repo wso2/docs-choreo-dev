@@ -38,6 +38,15 @@ receivers:
       grpc:
         endpoint: 0.0.0.0:4317
 
+processors:
+  filter:
+    metrics:
+      include:
+        match_type: regexp
+        resource_attributes:
+          - Key: destination.k8s.namespace
+            Value: dp-.*
+
 exporters:
   otlp:
     endpoint: ${OTLP_CP_ENDPOINT}
@@ -49,9 +58,7 @@ exporters:
 service:
   extensions: [oauth2client, health_check/liveness, health_check/readiness]
   pipelines:
-    traces:
-      receivers: [otlp]
-      exporters: [otlp]
     metrics:
       receivers: [otlp]
+      processors: [filter]
       exporters: [otlp]
