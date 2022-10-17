@@ -91,7 +91,7 @@ export class OrganizationComponent {
       if (user) {
 
         const { idpId } = user
-        const deleteUserRequest = `${Cypress.env("appSvcURL")}/v2/orgs/${handle }/users/${idpId}`
+        const deleteUserRequest = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users/${idpId}`
 
         Utils.sendDeleteRequest(deleteUserRequest, headers).then(res => {
           if (res.status === 200) {
@@ -154,8 +154,10 @@ export class OrganizationComponent {
     cy.get('[data-cyid="text-field-role-description"]').type(roleDescription);
     cy.get('[data-cyid="chip-role-tag"]').type(roleTag + "{enter}");
     cy.get('[data-cyid="btn-role-create"]').click({ force: true });
-    cy.get('[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]').click();
-    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]').click();
+
+    cy.get('[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]>span>input').check();
+    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]>span>input').focus().check();
+
     cy.log("Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER");
     cy.get('[data-cyid="btn-create"]').click();
     cy.get('[data-cyid="btn-create"]').should("not.exist");

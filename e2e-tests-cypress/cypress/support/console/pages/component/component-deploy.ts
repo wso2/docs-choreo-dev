@@ -26,7 +26,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.intercept(`${Cypress.env('newAppSvcURL')}/alert-configuration-service/1.0.0/org/*/alert-config`).as('config')
     cy.wait('@config',{timeout:18000})
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").wait(8000).focus().click();
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").focus().click();
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should('be.visible');
   }
 
@@ -56,11 +56,7 @@ export class ComponentDeployPage {
   }
 
   static promoteManualTriggerToProd() {
-    if (Cypress.env("isPrivateOrg")) {
-      cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).eq(1).click();
-    } else {
-      cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).eq(0).click();
-    }
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should("be.enabled").wait(2000).click();
   }
 
   static deployScheduleTask() {
