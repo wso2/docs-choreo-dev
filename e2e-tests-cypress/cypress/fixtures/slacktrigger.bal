@@ -9,7 +9,7 @@ configurable slack:ListenerConfig config = {
 listener http:Listener httpListener = new (8090);
 listener slack:Listener webhookListener = new (config, httpListener);
 
-service slack:SlackEventsAppService on webhookListener {
+service slack:AppService on webhookListener {
 
     remote function onAppMention(slack:GenericEventWrapper payload) returns error? {
         log:printInfo("App Mentioned : ");

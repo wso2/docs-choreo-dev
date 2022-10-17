@@ -234,7 +234,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentRetrieval"})
     @CitrusTest
     public void testComponentDeployment() throws Exception {
-        BalConfig[] balConfigs = {BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build()};
+        BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
         Orgs.addConfiguration(choreoTestClient, this, testComponent, "dev", balConfigs);
         GraphQL.deployComponent(choreoTestClient, this, testComponent);
     }

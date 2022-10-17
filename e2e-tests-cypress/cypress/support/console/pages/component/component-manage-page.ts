@@ -115,7 +115,7 @@ export class ComponentAPILifecycle {
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
 
-    cy.get('[data-testid="marketplace-btn"]').should('be.visible')
+    cy.get('[data-testid="marketplace-btn"]').focus().should('be.visible')
     cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist")
   }
 
@@ -187,7 +187,7 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[data-testid="resource-/${resource}"]>div`).eq(1).click();
-    cy.get(`[data-testid="resource-/${resource}"] [data-testid="security"]`).scrollIntoView().click();
+    cy.get(`[data-testid="resource-/${resource}"]>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>span>div>span>span[data-testid="security"]`).scrollIntoView().click();
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {

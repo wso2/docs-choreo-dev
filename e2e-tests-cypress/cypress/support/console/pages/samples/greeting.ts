@@ -25,9 +25,9 @@ export class GreetingSample {
         cy.wrap($p).click()
       }
     })
-    cy.get('div[class*=" MuiDialog-scrollPaper"]>div>div>div>div>div>div>div>button').click()
-    cy.get("div>div[data-cyid]>div>div>h3").should("have.length.greaterThan", 2)
-    cy.get('div[role="none presentation"]>div>div>div>div>div>div>div>div>div>div>input').should('be.visible').type(`${service}{enter}`)
+    cy.contains('View All Samples').click()
+    cy.get('[data-cyid="greeting_service"]').should("be.visible")
+    cy.get('[role="dialog"]>div>div>div>div>div>div>button').should('be.visible').type(`${service}{enter}`)
 
     cy.get(`${sampleService}`).should("be.visible")
     cy.get(`${sampleService}`).eq(0).realHover().wait(2000)
