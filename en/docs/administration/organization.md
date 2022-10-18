@@ -1,6 +1,6 @@
 # Organization
 
-An Organization is a logical grouping of users and users' resources in Choreo. A first-time user can create an organization and be a member of it when signing in to Choreo. Users or resources in one organization cannot access the other organization's resources unless an admin of another organization invites them and adds them as a member of that organization. A user cannot create more than one organization. 
+An organization in Choreo is a logical grouping of users and users' resources. A first-time user can create an organization and be a member of it when signing in to Choreo. Users or resources in one organization cannot access another organization's resources unless an admin of this other organization invites them and adds them as a member of that organization. A user cannot create more than one organization.
 
 ## Switch Organizations
 
