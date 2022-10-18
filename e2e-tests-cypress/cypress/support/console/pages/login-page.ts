@@ -55,12 +55,22 @@ export class LoginPage {
     });
   }
 
+  private static rejectCookies(){
+    cy.wait(5000)
+    cy.get('body').then(b=>{
+      if (b.find('#onetrust-reject-all-handler').length>0){
+        cy.wrap('#onetrust-reject-all-handler').click()
+      }
+    })
+  
+  }
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
     const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
     Utils.setBrowserCookie(false);
     this.setCookie(componentURL, "commonAuthId", common)
     cy.visit(componentURL);
+    this.rejectCookies()
   }
 
   static navigateToCodespaceEP() {
@@ -84,7 +94,7 @@ export class LoginPage {
     cy.contains("Continue").click();
     cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
     cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
-    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false, });
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false});
     cy.contains("Continue").click();
     cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000, }).should("be.visible");
     this.persistLogoutURL();

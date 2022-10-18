@@ -253,16 +253,10 @@ public class GraphQL {
     }
 
     public static PullRequest[] getComponentPullRequests(String componentId, String accessToken) throws IOException {
-
-        try {
-            TimeUnit.MINUTES.sleep(2);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         Map<String, String> params = new HashMap<>();
         params.put("componentId", componentId);
         String request = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/getComponentPullRequests.mustache", params);
-        Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(request), accessToken, "", 0);
+        Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(request), accessToken, "", 10);
         return ObjectMapperUtil.mapToCollection(PullRequest[].class, response.getRes(), "componentPullRequests");
 
     }
@@ -294,13 +288,13 @@ public class GraphQL {
         return ObjectMapperUtil.mapToCollection(InvokeInformation[].class, response.getRes(), "invokeInformation");
     }
 
-    public static void deleteComponent(String orgHandler,String componentId,String projectId) throws IOException {
+    public static Response deleteComponent(String orgHandler,String componentId,String projectId,String accessToken) throws IOException {
         Map<String,String> requestParam = new HashMap<>();
         requestParam.put("orgHandler",orgHandler);
         requestParam.put("componentId",componentId);
         requestParam.put("projectId",projectId);
         String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/deleteComponent.mustache", requestParam);
-
+       return HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "", 0);
     }
 
 }
