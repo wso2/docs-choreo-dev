@@ -253,12 +253,6 @@ public class GraphQL {
     }
 
     public static PullRequest[] getComponentPullRequests(String componentId, String accessToken) throws IOException {
-
-//        try {
-//            TimeUnit.MINUTES.sleep(2);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
         Map<String, String> params = new HashMap<>();
         params.put("componentId", componentId);
         String request = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/getComponentPullRequests.mustache", params);
