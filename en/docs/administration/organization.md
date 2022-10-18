@@ -10,7 +10,7 @@ If you are a member of more than one organization, you can switch from one organ
 
 ## Inviting Members
 
-The Organization admin can invite members by assigning them a role to the organization. The invited members will receive an email notification. By accepting the invitation, the member adds themself to the organization. They are then able to access the resources of that organization.
+The organization admin can invite members by assigning them roles in the organization. The invited members receive the invitation as an email notification. By accepting the invitation, the members add themself to the organization. They are then able to access the resources of that organization.
 
 ## Roles
 
