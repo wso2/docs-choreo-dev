@@ -1,0 +1,74 @@
+import px
+
+df = px.DataFrame(table='http_events', start_time='-10m') #set to px.plugin.start_time
+
+
+df.source_pod = df.ctx['pod']
+df = df[df.resp_status != 0]
+df.status_code_group = px.itoa(px.floor(df.resp_status / 100.0)) + 'xx'
+df.latencyF = df.latency / 1 # to convert to float64
+df.service = df.ctx['service']
+
+
+df = df.groupby(['source_pod', 'remote_addr', 'status_code_group', 'trace_role', 'service']).agg(
+    throughput=('latency', px.count),
+    total_latency=('latencyF', px.sum),
+    latency_dist=('latency', px.quantiles),
+    time_=('time_', px.max),
+)
+df.p50 = px.pluck_float64(df.latency_dist, 'p50')
+df.p90 = px.pluck_float64(df.latency_dist, 'p90')
+df.p99 = px.pluck_float64(df.latency_dist, 'p99')
+
+# HTTP requests are traced server-side (trace_role==2), unless the server is
+# outside of the cluster in which case the request is traced client-side (trace_role==1).
+df.is_server_tracing = df.trace_role == 2
+df.remote_pod = px.pod_id_to_pod_name(px.ip_to_pod_id(df.remote_addr))
+
+# flip source and the destination depending on from where the request is traced
+df.source = px.select(df.is_server_tracing, df.remote_pod, df.source_pod)
+df.destination_pod = px.select(df.is_server_tracing, df.source_pod, df.remote_pod)
+df.source_pod = df.source
+
+df.source_ip = px.pod_name_to_pod_ip(df.source_pod)
+df.source_pod_namespace = px.pod_name_to_namespace(df.source_pod)
+df.source_pod_name = px.strip_prefix(df.source_pod_namespace + '/', df.source_pod)
+df.source_pod_labels = px.pod_id_to_pod_labels(px.pod_name_to_pod_id(df.source_pod))
+
+# if the request is outbound (is_server_tracing = false) get the IP of the remote server
+df.destination_ip = px.select(df.is_server_tracing, px.pod_name_to_pod_ip(df.destination_pod), df.remote_addr) 
+df.destination_pod_namespace = px.pod_name_to_namespace(df.destination_pod)
+df.destination_pod_name = px.strip_prefix(df.destination_pod_namespace + '/', df.destination_pod)
+df.destination_pod_labels = px.pod_id_to_pod_labels(px.pod_name_to_pod_id(df.destination_pod))
+
+df.protocol = 'http'
+
+px.export(df, px.otel.Data(
+  resource={
+      'k8s.pod.lables': df.destination_pod_labels,
+      'service.name' : df.service,
+      'destination.k8s.namespace': df.destination_pod_namespace,
+      'source.k8s.namespace': df.source_pod_namespace
+  },
+  data=[
+    px.otel.metric.Summary(
+        name='request_latency_nanoseconds',
+        description='The number of messages sent per second',
+        count=df.throughput,
+        sum=df.total_latency,
+        quantile_values={0.5: df.p50, 0.9: df.p90, 0.99: df.p99},
+        attributes={
+            'source.ip': df.source_ip,
+            'source.k8s.namespace': df.source_pod_namespace,
+            'source.k8s.pod.name': df.source_pod_name,
+            'source.k8s.pod.labels': df.source_pod_labels,
+            'destination.ip': df.destination_ip,
+            'destination.k8s.namespace': df.destination_pod_namespace,
+            'destination.k8s.pod.name': df.destination_pod_name,
+            'destination.k8s.pod.labels': df.destination_pod_labels,
+            'http.status_code_group': df.status_code_group,
+            'protocol': df.protocol,
+        }
+    )
+  ]
+))
