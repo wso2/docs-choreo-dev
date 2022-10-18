@@ -4,7 +4,7 @@ An organization in Choreo is a logical grouping of users and users' resources. A
 
 ## Switch Organizations
 
-In the case you are added to another organization, you have the option of switching organizations. You can switch the organization from the header bar in the Choreo console. 
+If you are a member of more than one organization, you can switch from one organization to another. To do this select the required organization from the **Organization** list in the header bar.
 
 ![organizations](../assets/img/administration/organiaztions.png)
 
