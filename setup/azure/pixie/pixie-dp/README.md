@@ -16,7 +16,7 @@
 
 6. Create script and copy the content of `choreo-control-plane/setup/azure/pixie/pixie-dp/http_request_latency.pxl` to the PxL Script section.
 
-7. Give the `adx-exporter` as the script name and choice OpenTelemetry as the plugin.
+7. Give the `adx-exporter` as the script name and choose OpenTelemetry as the plugin.
 
 8. Under the clusters select all available dataplanes and give `10 seconds` as summary window.
 
