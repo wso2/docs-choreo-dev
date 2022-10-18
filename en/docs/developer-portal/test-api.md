@@ -13,7 +13,7 @@ This guide will take you through the steps to test an API in Choreo.
     ![Test Panel](./assets/img/developer-portal/test-api/test-panel.png)
 6. Select the relevant**Subscribed Application** from the dropdown that you subscribed the API to. 
 7. Click **Get Test Key** on the **Access Token** field to generate a test access token. 
-8. Next, expand a resource you want to test by clicking on the resource.
+Next, expand a resource you want to test by clicking on it.
     ![Test Resource](./assets/img/developer-portal/test-api/test-resource.png)
 9. Click **Try it Out** to enable the resource to be tested.  
 10. Fill in values for the required parameters and click **Execute**.
