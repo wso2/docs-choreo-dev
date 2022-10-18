@@ -19,7 +19,8 @@ Choreo roles are defined as follows:
 
 - **API Publisher**: An API Publisher can discover, create, publish, delete, test, and manage an API.
 
-- **API Subscriber**:  An API Subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate, and manage api keys.
+- **API Subscriber**:  An API Subscriber is a developer in a particular organization. An API subscriber can subscribe to an application, manage subscriptions, manage applications, generate API keys, and manage API keys.
+- ```
 
 - **Admin**: An admin is responsible for all administration tasks, including IDP creation, user management, customizing the dev portal, managing projects, enabling analytics, managing domains, etc.
 
