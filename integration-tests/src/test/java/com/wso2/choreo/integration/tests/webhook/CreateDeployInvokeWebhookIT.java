@@ -454,40 +454,42 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
             "testObservabilityLogs"
     }, alwaysRun = true)
     @CitrusTest
-    public void testDeleteWebhookComponent() throws JsonProcessingException {
-        String graphqlQuery = "mutation { deleteComponentV2(" +
-                "orgHandler: \"" + orgHandle + "\"," +
-                "componentId: \"" + componentId + "\"," +
-                "projectId: \"" + projectId + "\"){ status }" +
-                "}";
-
-        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-            {
-                put("query", graphqlQuery);
-            }
-        };
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-
-        // Delete component
-        $(http()
-                .client(choreoProjectsTestClient)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoProjectsTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource(
-                        "templates/createComponent/mutation_delete_component_success.json"))
-                .validate(json()));
+    public void testDeleteWebhookComponent() throws IOException {
+     Response response =   GraphQL.deleteComponent(orgHandle,componentId,projectId,accessToken);
+     Assert.assertEquals(response.getStatusCode(),HttpStatus.OK.value());
+//        String graphqlQuery = "mutation { deleteComponentV2(" +
+//                "orgHandler: \"" + orgHandle + "\"," +
+//                "componentId: \"" + componentId + "\"," +
+//                "projectId: \"" + projectId + "\"){ status }" +
+//                "}";
+//
+//        HashMap<String, String> gqlRequestPayload = new HashMap<>() {
+//            {
+//                put("query", graphqlQuery);
+//            }
+//        };
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+//
+//        // Delete component
+//        $(http()
+//                .client(choreoProjectsTestClient)
+//                .send()
+//                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+//                .message()
+//                .header(HttpHeaders.AUTHORIZATION, accessToken)
+//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//                .body(requestBody)
+//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+//        $(http()
+//                .client(choreoProjectsTestClient)
+//                .receive()
+//                .response(HttpStatus.OK)
+//                .message()
+//                .type(MessageType.JSON)
+//                .body(new ClassPathResource(
+//                        "templates/createComponent/mutation_delete_component_success.json"))
+//                .validate(json()));
     }
 
     @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
