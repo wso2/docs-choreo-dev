@@ -1,7 +1,6 @@
 import px
 
-df = px.DataFrame(table='http_events', start_time='-10m') #set to px.plugin.start_time
-
+df = px.DataFrame(table='http_events', start_time='-10s') #set to px.plugin.start_time
 
 df.source_pod = df.ctx['pod']
 df = df[df.resp_status != 0]
@@ -9,13 +8,13 @@ df.status_code_group = px.itoa(px.floor(df.resp_status / 100.0)) + 'xx'
 df.latencyF = df.latency / 1 # to convert to float64
 df.service = df.ctx['service']
 
-
 df = df.groupby(['source_pod', 'remote_addr', 'status_code_group', 'trace_role', 'service']).agg(
     throughput=('latency', px.count),
     total_latency=('latencyF', px.sum),
     latency_dist=('latency', px.quantiles),
     time_=('time_', px.max),
 )
+
 df.p50 = px.pluck_float64(df.latency_dist, 'p50')
 df.p90 = px.pluck_float64(df.latency_dist, 'p90')
 df.p99 = px.pluck_float64(df.latency_dist, 'p99')
