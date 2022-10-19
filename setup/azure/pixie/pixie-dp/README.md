@@ -32,6 +32,6 @@
 
     ![Script Config UI](script-config.png)
 
-8. Once everything is configured Data exporter view should looks like this.
+8. Once everything is configured Data exporter view should look like this.
 
     ![Data Exporters UI](data-exporters.png)
