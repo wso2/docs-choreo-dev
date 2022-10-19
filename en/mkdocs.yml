@@ -80,7 +80,8 @@ nav:
       - Choreo Insights API: insights/choreo-insights-api.md
       - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
   - Administration:   
-      - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md    
+      - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
+      - Configure Enterprise Login: references/enterprise-login.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
@@ -88,7 +89,6 @@ nav:
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
-     - Enterprise Login: references/enterprise-login.md
      - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
 
