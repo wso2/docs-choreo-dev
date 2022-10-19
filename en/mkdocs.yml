@@ -81,7 +81,7 @@ nav:
       - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
   - Administration:   
       - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md
-      - Configure Enterprise Login: references/enterprise-login.md
+      - Configure Enterprise Login: administration/configure-enterprise-login.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
