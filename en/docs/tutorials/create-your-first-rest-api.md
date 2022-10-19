@@ -467,7 +467,7 @@ Follow this procedure to invoke the REST API via the API Developer Portal:
 
 6. Click **Execute**. You'll see the response from the API.
 
-Now you have successfully published the REST API on the API Developer Portal and invoked it.
+Now you have successfully invoked the REST API.
 
 ## Step 5: Observe
 
