@@ -12,12 +12,26 @@
 
 4. Apply kustomize overlay
 
-5. Go to `px-cloud.{ENV}.choreo.dev/configure-data-export`
+#### Setup Data Retention Script
 
-6. Create script and copy the content of `choreo-control-plane/setup/azure/pixie/pixie-dp/http_request_latency.pxl` to the PxL Script section.
+1. Go to `px-cloud.{ENV}.choreo.dev/admin/plugins`
 
-7. Give the `adx-exporter` as the script name and choose OpenTelemetry as the plugin.
+2. Enable OpenTelemetry Plugin and put `opentelemetry-agent.{ENV}-choreo-obs.svc.cluster.local:4317` as the export URL.
 
-8. Under the clusters select all available dataplanes and give `10 seconds` as summary window.
+3. Make sure "Secure connections with TLS" is off since pixie will be talking to collector running within the data plane and click "Save".
 
-9. Set the export URL to `opentelemetry-agent.{ENV}-choreo-obs.svc.cluster.local:4317` and press Create.
+    ![Plugin Settings for Pixie](plugin-settings.png)
+
+4. Then press "Edit Scripts" and Turn off all plugins under "Presets from OpenTelemetry".
+
+5. Click "Create script" and copy the content of `choreo-control-plane/setup/azure/pixie/pixie-dp/http_request_latency.pxl` to the PxL Script section.
+
+6. Give the `adx-exporter` as the script name and choose OpenTelemetry as the plugin.
+
+7. Change the summary window to `10 seconds` to press create.
+
+    ![Script Config UI](script-config.png)
+
+8. Once everything is configured Data exporter view should looks like this.
+
+    ![Data Exporters UI](data-exporters.png)
