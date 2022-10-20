@@ -14,7 +14,7 @@ export default defineConfig({
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
-  scrollBehavior: false,
+  //scrollBehavior: true,
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;

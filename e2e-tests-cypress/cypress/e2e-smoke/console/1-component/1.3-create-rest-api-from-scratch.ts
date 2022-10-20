@@ -136,7 +136,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root").then(
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root", queryParameters1).then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
@@ -187,7 +187,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "isOdd").then(
+    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "isOdd", queryParameters2).then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);

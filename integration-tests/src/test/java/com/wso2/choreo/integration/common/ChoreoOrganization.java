@@ -21,7 +21,12 @@ import com.wso2.choreo.integration.common.choreoproject.ControlPlaneAPIs;
 import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,16 +35,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Maintain information of the choreo organization used for tests
  */
 public class ChoreoOrganization {
     private final static Logger log = LoggerFactory.getLogger(ChoreoOrganization.class);
     private final static Gson gson = new Gson();
-
+    private static ChoreoOrganization choreoOrganization;
     private final HashMap<String, ChoreoProject> projectMap;
     private String orgHandle;
     private String orgId;
@@ -57,6 +59,17 @@ public class ChoreoOrganization {
         this.orgId = orgId;
         this.orgUUID = orgUUID;
         this.projectMap = new HashMap<>();
+    }
+
+    public static ChoreoOrganization getConfiguredChoreoOrg() {
+
+        if (choreoOrganization == null) {
+            String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+            String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
+            String orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+            return new ChoreoOrganization(orgHandle, orgId, orgUUID);
+        }
+        return choreoOrganization;
     }
 
     /**
@@ -156,7 +169,7 @@ public class ChoreoOrganization {
     }
 
     private String getCreateProjectMutation(String name, String description) {
-        return  "mutation{ createProject(project: {" +
+        return "mutation{ createProject(project: {" +
                 "      name: \"" + name +
                 "\", " +
                 "      description: \"" + description + "\"," +
