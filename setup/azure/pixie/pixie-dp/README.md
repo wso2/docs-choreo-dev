@@ -4,13 +4,19 @@
 
 2. Create `pl` namespace
 
-    kubectl create ns pl
+   ```
+   kubectl create ns pl
+   ```
 
-3. Create `pl-deploy-secrets` secret
+5. Create `pl-deploy-secrets` and `pl-cluster-secrets` secrets
 
-   kubectl create secret generic -n pl pl-deploy-secrets --from-literal=deploy-key="<deploy-key generated from pixie console>"
+   ```
+   kubectl create secret generic -n pl pl-deploy-secrets --from-literal=deploy-key="{deploy-key generated from pixie console}"
 
-4. Apply kustomize overlay
+   kubectl create secret generic -n pl pl-cluster-secrets --from-literal=sentry-dsn=""
+   ```
+
+6. Apply kustomize overlay
 
 #### Setup Data Retention Script
 
@@ -35,3 +41,25 @@
 8. Once everything is configured Data exporter view should look like this.
 
     ![Data Exporters UI](data-exporters.png)
+
+### How to re-deploy pixie agent (in case of an unrecoverable error)
+
+1. Log into pixie admin console `px-cloud.{ENV}.choreo.dev` and create a deploy-key
+
+2. Stop choreo deployment pipeline
+
+3. Delete `pl` namespace
+
+4. Create `pl` namespace
+
+5. Create `pl-deploy-secrets` and `pl-cluster-secrets` secrets
+
+   ```
+   kubectl create secret generic -n pl pl-deploy-secrets --from-literal=deploy-key="{deploy-key generated from pixie console}"
+
+   kubectl create secret generic -n pl pl-cluster-secrets --from-literal=sentry-dsn=""
+   ```
+
+6. Enable and trigger choreo deployment pipeline
+
+7. Continue with "Setup Data Retention Script"
