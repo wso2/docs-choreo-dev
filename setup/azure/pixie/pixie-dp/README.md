@@ -1,6 +1,6 @@
 ### How to setup pixie agent (in data-planes)
 
-1. Log into pixie admin console `px-cloud.{ENV}.choreo.dev` and create a deploy-key
+1. Log into pixie admin console `px-cloud.{preview-dv/st/NA}.choreo.dev` and create a deploy-key
 
 2. Create `pl` namespace
 
@@ -20,9 +20,9 @@
 
 #### Setup Data Retention Script
 
-1. Go to `px-cloud.{ENV}.choreo.dev/admin/plugins`
+1. Go to `px-cloud.{preview-dv/st/NA}.choreo.dev/admin/plugins`
 
-2. Enable OpenTelemetry Plugin and put `opentelemetry-agent.{ENV}-choreo-obs.svc.cluster.local:4317` as the export URL.
+2. Enable OpenTelemetry Plugin and put `opentelemetry-agent.{dev/stage/prod}-choreo-obs.svc.cluster.local:4317` as the export URL.
 
 3. Make sure "Secure connections with TLS" is off since pixie will be talking to collector running within the data plane and click "Save".
 
@@ -44,7 +44,7 @@
 
 ### How to re-deploy pixie agent (in case of an unrecoverable error)
 
-1. Log into pixie admin console `px-cloud.{ENV}.choreo.dev` and create a deploy-key
+1. Log into pixie admin console `px-cloud.{preview-dv/st/NA}.choreo.dev` and create a deploy-key
 
 2. Stop choreo deployment pipeline
 
