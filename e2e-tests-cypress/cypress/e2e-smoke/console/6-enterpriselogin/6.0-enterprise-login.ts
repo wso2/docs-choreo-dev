@@ -24,8 +24,6 @@ import { Utils } from "../../../support/console/utils";
 describe("Enterprise Login using auth0Idp", () => {
   const COMPONENT_NAME = Utils.generateComponentName("rest");
   const COMPONENT_DESCRIPTION = "covid daily stats";
-  const PROJECT_DESCRIPTION = "Covid stats project";
-  const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
     cy.request(Cypress.env("auth0LogoutUrl"), {
@@ -43,7 +41,7 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectListingPage.selectProject();
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
     RestAPITemplate.createApiFromScratch(
