@@ -439,7 +439,7 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 
 2. On the **Lifecycle Management** page, click **Publish**. This displays a message asking whether you want to publish the REST API as a  client connector. For this tutorial, click **No, Thanks**.
 
-3. To view the published API in the API Developer Portal, click **Go to Developer Portal**.
+3. To view the published API in the API Developer Portal, click **Go to Devportal**.
 
 Now the REST API is published and ready to be consumed. Next, let's see how an application developer can generate credentials for the API and invoke it.
 
