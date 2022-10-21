@@ -450,43 +450,20 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                         greaterThanOrEqualTo(1)))));
     }
 
-//    @Test(dependsOnMethods = {
-//            "testObservabilityLogs"
-//    }, alwaysRun = true)
-//    @CitrusTest
-//    public void testDeleteWebhookComponent() throws IOException {
-//     Response response =   GraphQL.deleteComponent(componentId,projectId,accessToken);
-//     Assert.assertEquals(response.getStatusCode(),HttpStatus.OK.value());
-//    }
-//
-//    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
-//    @CitrusTest
-//    public void testDeleteRepo() {
-//        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
-//        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-//
-//        // Delete repository
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .send()
-//                .delete(requestURI)
-//                .message()
-//                .header(HttpHeaders.AUTHORIZATION, authHeader)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-//        $(http()
-//                .client(choreoTestClientForGithub)
-//                .receive()
-//                .response(HttpStatus.NO_CONTENT));
-//    }
-
-    @AfterClass
-    public  void tearDown() throws IOException {
-        Response response = GraphQL.deleteComponent(testComponent.getId(), projectId, accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
-
-        response = GitHub.deleteGitHubRepo(repoName);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
-
+    @Test(dependsOnMethods = {
+            "testObservabilityLogs"
+    }, alwaysRun = true)
+    @CitrusTest
+    public void testDeleteWebhookComponent() throws IOException {
+     Response response =   GraphQL.deleteComponent(componentId,projectId,accessToken);
+     Assert.assertEquals(response.getStatusCode(),HttpStatus.OK.value());
     }
+
+    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
+    @CitrusTest
+    public void testDeleteRepo() {
+        Response   response = GitHub.deleteGitHubRepo(repoName);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
+    }
+
 }

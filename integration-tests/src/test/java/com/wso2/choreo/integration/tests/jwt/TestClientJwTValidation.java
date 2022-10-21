@@ -172,14 +172,20 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     }
 
 
-    @AfterClass
-    public  void tearDown() throws IOException {
-        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    @Test(dependsOnMethods = {
+            "testAPIInvocationJwt"
+    }, alwaysRun = true)
+    @CitrusTest
+    public void testDeleteWebhookComponent() throws IOException {
+        Response response =   GraphQL.deleteComponent(choreoComponent.getId(),projectId,accessToken);
+        Assert.assertEquals(response.getStatusCode(),HttpStatus.OK.value());
+    }
 
-        response = GitHub.deleteGitHubRepo(repoName);
+    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
+    @CitrusTest
+    public void testDeleteRepo() {
+        Response   response = GitHub.deleteGitHubRepo(repoName);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
-
     }
 
 }
