@@ -67,7 +67,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        org = ChoreoOrganization.getConfiguredChoreoOrg();
+        org = TestContext.getTestOrg();
         ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
 

@@ -61,16 +61,7 @@ public class ChoreoOrganization {
         this.projectMap = new HashMap<>();
     }
 
-    public static ChoreoOrganization getConfiguredChoreoOrg() {
 
-        if (choreoOrganization == null) {
-            String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-            String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
-            String orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-            return new ChoreoOrganization(orgHandle, orgId, orgUUID);
-        }
-        return choreoOrganization;
-    }
 
     /**
      * Create a Choreo project in the Choreo organization

@@ -187,7 +187,8 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).click()
-    cy.get(`[id="panel-/${resource}/get-content"]>div>div>div>div>div>div>span>div>span`).click()
+    // cy.get('.choreo-components-manage-sidebar').next().scrollTo('center');
+    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).scrollIntoView().click()
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {
