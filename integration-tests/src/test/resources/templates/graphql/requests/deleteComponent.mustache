@@ -1,7 +1,8 @@
-mutation {
-    deleteComponentV2(
-        "orgHandler":   "{{orgHandle}}"  ,
-        "componentId":   "{{componentId}}"  ,
-        "projectId":   "{{projectId}}"  )
-    { status }
+mutation{ deleteComponentV2(
+orgHandler: "{{orgHandler}}",
+componentId: "{{componentId}}",
+projectId: "{{projectId}}"
+) {
+status, canDelete, message
+}
 }

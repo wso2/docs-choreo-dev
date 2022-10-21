@@ -16,25 +16,36 @@ package com.wso2.choreo.integration.apis;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentCreationTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
@@ -73,7 +84,7 @@ public class Orgs {
             }
         };
 
-        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required","isRequired");
+        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required", "isRequired");
 
         // Update configurations
         runner.$(http()
@@ -91,10 +102,60 @@ public class Orgs {
                 .response(HttpStatus.OK));
     }
 
-    public static Status createdComponentStatus(String projectId, String componentId, String accessToken, int attemptCount) {
+    public static Status createdComponentStatus(String projectId, String componentId, String accessToken) throws UnexpectedResponseException {
         String url = CHOREO_EP + "/orgs/" + ORG_HANDLE + "/projects/" + projectId + "/components/" + componentId + "/init/status";
-        Response res = HttpClientUtil.httpGET(url, accessToken, "", attemptCount);
-       return ObjectMapperUtil.mapStringToObject(Status.class, res.getRes(), "");
+        Response res = null;
 
+        for (int i = 0; i < 25; i++) {
+            res = HttpClientUtil.httpGET(url, accessToken, "");
+            Status status = ObjectMapperUtil.mapStringToObject(Status.class, res.getRes(), "");
+            if (status.isSuccess()) {
+                return status;
+            }
+            SleepUtil.sleep(5);
+        }
+        throw new UnexpectedResponseException(res.getStatusCode(), "Expected Status as " + true + " but found " + false);
+    }
+
+
+    public static void waitForComponentCreationSuccess(String accessToken, String choreoOrgHandle, String projectId,
+                                                       String componentId)            throws ComponentCreationStatusCheckException,
+            ComponentCreationTimeoutException {
+        String choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+        String requestURI = choreoEndpoint.concat("/orgs/" + choreoOrgHandle + "/projects/" + projectId + "/components/" + componentId + "/init/status");
+
+
+        HttpGet request = new HttpGet(requestURI);
+
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
+
+
+        for (int i = 0; i < 15; ++i) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                 CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode == org.apache.http.HttpStatus.SC_OK) {
+                    JsonObject dataJsonObject = new JsonParser().parse(responseBody).getAsJsonObject().
+                            getAsJsonObject("data");
+
+                    String creationStatus =
+                            dataJsonObject.get("status").isJsonNull() ? "" : dataJsonObject.get("status").getAsString();
+                    if (creationStatus.equals("completed")) {
+                        return;
+                    }
+                }
+            } catch (IOException e) {
+                throw new ComponentCreationStatusCheckException(e);
+            }
+
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                throw new ComponentCreationStatusCheckException(e);
+            }
+        }
+
+        throw new ComponentCreationTimeoutException();
     }
 }

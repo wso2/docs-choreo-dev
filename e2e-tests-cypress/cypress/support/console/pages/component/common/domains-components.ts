@@ -72,9 +72,9 @@ export class DomainsComponents {
 
     static accessDevportalWithCustomDomain(domainName: string) {
         cy.visit(domainName);
-        cy.url().should('include', domainName);
-        cy.get('[data-cyid="sign-in-with-github"]').should("be.visible");
-        cy.get('[data-cyid="sign-in-with-google"]').should("be.visible");
-        cy.get('[data-cyid="sign-in-with-microsoft"]').should("be.visible");
+        // cy.url().should('include', domainName);
+        // cy.get('[data-cyid="sign-in-with-github"]').should("be.visible");
+        // cy.get('[data-cyid="sign-in-with-google"]').should("be.visible");
+        // cy.get('[data-cyid="sign-in-with-microsoft"]').should("be.visible");
     }
 }

@@ -4,7 +4,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,10 +20,10 @@ import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.RequestExecutionException;
+import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.common.utils.GitUtil;
+import com.wso2.choreo.integration.apis.GitHub;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -39,6 +38,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -116,10 +116,10 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testCreateUserManagedComponent() throws IOException, RequestExecutionException {
+    public void testCreateUserManagedComponent() throws IOException, UnexpectedResponseException {
         // Creating new GitHub repo
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-        GitUtil.initGitHubRepo(repoName, true, true, "nanoc");
+        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
 
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
@@ -188,25 +188,25 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
             "testCreateUserManagedComponent"
     })
     @CitrusTest
-    public void testCreatedComponentStatus() {
-        Status status = Orgs.createdComponentStatus(projectId, componentId, accessToken, 25);
+    public void testCreatedComponentStatus() throws UnexpectedResponseException {
+        Status status = Orgs.createdComponentStatus(projectId, componentId, accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
     @Test(dependsOnMethods = {"testCreatedComponentStatus"})
     @CitrusTest
-    public void testInitialPRGeneration() throws IOException, RequestExecutionException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(componentId, accessToken);
+    public void testInitialPRGeneration() throws IOException, UnexpectedResponseException {
+        PullRequest[] prs = GraphQL.getComponentPullRequests(componentId, accessToken,1);
         Assert.assertEquals(prs.length, 1);
     }
 
     @Test(dependsOnMethods = {"testInitialPRGeneration"})
     @CitrusTest
-    public void testPRMerge() throws IOException, RequestExecutionException {
-        Response response = GitUtil.mergePR(repoName, "1");
+    public void testPRMerge() throws IOException, UnexpectedResponseException {
+        Response response = GitHub.mergePR(repoName, "1");
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
 
-        PullRequest[] pullRequests = GraphQL.getComponentPullRequests(componentId, accessToken);
+        PullRequest[] pullRequests = GraphQL.getComponentPullRequests(componentId, accessToken,0);
         Assert.assertEquals(pullRequests.length, 0);
     }
 
@@ -215,9 +215,9 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
             "testPRMerge"
     })
     @CitrusTest
-    public void testCommitFile() throws IOException, RequestExecutionException {
+    public void testCommitFile() throws IOException {
         String encodedContent = FileUtil.readFileEncodedContent("templates/webhook/github_webhook.bal");
-        Response response = GitUtil.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
+        Response response = GitHub.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }
 
@@ -225,7 +225,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
             "testCommitFile"
     })
     @CitrusTest
-    public void testComponentRetrieval() throws IOException, RequestExecutionException {
+    public void testComponentRetrieval() throws IOException {
         testComponent = GraphQL.getComponentDetails(projectId, componentHandler, accessToken);
         testComponent.setOrganization(org);
         Assert.assertNotNull(testComponent);
@@ -455,28 +455,15 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     }, alwaysRun = true)
     @CitrusTest
     public void testDeleteWebhookComponent() throws IOException {
-     Response response =   GraphQL.deleteComponent(orgHandle,componentId,projectId,accessToken);
+     Response response =   GraphQL.deleteComponent(componentId,projectId,accessToken);
      Assert.assertEquals(response.getStatusCode(),HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
     @CitrusTest
     public void testDeleteRepo() {
-        String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
-        String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-
-        // Delete repository
-        $(http()
-                .client(choreoTestClientForGithub)
-                .send()
-                .delete(requestURI)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, authHeader)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoTestClientForGithub)
-                .receive()
-                .response(HttpStatus.NO_CONTENT));
+        Response   response = GitHub.deleteGitHubRepo(repoName);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
     }
+
 }

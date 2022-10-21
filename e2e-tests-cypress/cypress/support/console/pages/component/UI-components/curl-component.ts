@@ -18,8 +18,10 @@ export class Curl {
   }
 
   static selectCurlEnvironment(env: Environment) {
-    cy.get('div>.MuiInputBase-formControl').eq(0).click();
-    cy.get("ul>li").contains(env).click();
+
+    cy.get('[data-testid="env"]>div').click();
+    cy.get('ul>li').contains(env).click();
+  
   }
   static selectEnvironment(env: Environment) {
     cy.get('[data-cyid="select-env"]').click()

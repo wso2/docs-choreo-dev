@@ -47,7 +47,7 @@ export class ComponentAPILifecycle {
   }
   static publish(audience: ConnectorAudience) {
     this.publishToMarketplace(audience);
-    return cy.get(ComponentAPILifecycle.devportl_btn).should("be.visible");
+    return cy.get(ComponentAPILifecycle.devportl_btn).focus().should("be.visible");
   }
 
   static publishWithoutConnector() {
@@ -186,8 +186,9 @@ export class ComponentAPILifecycle {
   }
 
   static disableResourceSecurity(resource: string) {
-    cy.get(`[data-testid="resource-/${resource}"]>div`).eq(1).click();
-    cy.get(`[data-testid="resource-/${resource}"]>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>div>span>div>span>span[data-testid="security"]`).click();
+    cy.get(`[id="panel-/${resource}/get-header"]`).click()
+    // cy.get('.choreo-components-manage-sidebar').next().scrollTo('center');
+    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).scrollIntoView().click()
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {
@@ -202,8 +203,8 @@ export class ComponentAPILifecycle {
       }).as("revision");
       cy.wait("@revision", { timeout: 180000 }).then((r) => {
         const deployedRevisions = r.response.body.list as []
-        const latestRevision = deployedRevisions[deployedRevisions.length-1]
-        const {displayName} = latestRevision
+        const latestRevision = deployedRevisions[deployedRevisions.length - 1]
+        const { displayName } = latestRevision
         expect(displayName).equal(revision)
       });
     }

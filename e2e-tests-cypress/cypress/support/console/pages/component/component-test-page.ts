@@ -24,7 +24,7 @@ export class ComponentTestPage {
   }
 
   static selectEnvironment(env: Environment) {
-   cy.get('.MuiFormControl-fullWidth >div').eq(0).click();
+    cy.get('[data-testid="env"]>div').click();
    cy.get('ul>li').contains(env).click();
   }
 }
