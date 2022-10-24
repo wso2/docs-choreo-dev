@@ -1,19 +1,23 @@
 # Deploy a Containerized Choreo Component
 
-Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes.
+Choreo allows you to deploy an application written in a wide range of language frameworks (for example, Java, Go, Nodejs, Python, PHP, etc.) on shared or private data planes when you create any of the following components:
 
-!!! info
-    Currently, the following component types are available for these component types:<br/><br/>
-     - REST APIs<br/>
-     - Scheduled tasks<br/>
-     - Manual triggers<br/>
-    The Choreo team is working on providing containerized deployment options for the rest of the component types soon.
+- REST APIs
+- Scheduled tasks
+- Manual triggers
 
 This guide walks you through the steps to deploy a sample containerized REST API component in Choreo.
 
 ## Prerequisites
 
 To deploy a containerized component, you need a GitHub account with a repository that contains a Dockerfile. For this tutorial, you can fork and use the [choreo-sample-apps repository](https://github.com/wso2/choreo-sample-apps).
+
+The **Choreo GitHub App** requires the following permission:
+
+ - Read access to issues and metadata
+ - Read and write access to code, pull requests, and repository hooks
+
+You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
 Let's get started!
 
@@ -45,7 +49,7 @@ Let's add a containerized REST API component by following these steps:
 6. Click **Authorize with GitHub** to allow the REST API to access your GitHub account.
 
     !!! Tip "Tips"
-        You can authorize the REST API to access all the repositories in the selected GitHub account or select one or more repositories that you want to allow the REST API to access.****<br/>
+        You can authorize the REST API to access all the repositories in the selected GitHub account or select one or more repositories that you want to allow the REST API to access.<br/>
         For this tutorial, you can select your fork of the [choreo-sample-apps repository](https://github.com/wso2/choreo-sample-apps).
 
     Once you perform the authorization, the **GitHub Account** field in the **Connect Repository** dialog box displays the GitHub account you authorized the REST API to access. 
@@ -121,10 +125,3 @@ If you want to view Kubernetes-level insights to carry out a more detailed diagn
 ![Access DevOps Portal](../assets/img/byoc/access-devops-portal.png){.cInlineImage-full}
 
 For more information about the information, see [DevOps Portal](../devops-portal.md).
-
-
-
-
-
-
-
