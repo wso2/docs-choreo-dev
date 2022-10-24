@@ -143,7 +143,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
 Once you update the REST API configuration as described above, you can verify whether it works as expected by following these steps:
 
-1. Click **Run**.
+1. From Options, Click **Run**.
 
     ![Run the REST API](../assets/img/get-started/run-the-rest-api.png){.cInlineImage-half}
 
