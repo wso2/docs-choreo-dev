@@ -55,21 +55,21 @@ Let's get started!
 
 ## Revoke access tokens
 
-In the event of a theft, security violation, or a precaution, an admin can revoke an access token. Choreo provides you with a revoke token endpoint. You can use a utility like a cURL to invoke this endpoint and revoke your access token.  
+In the case of theft, security violation, or precaution, Choreo allows an admin to revoke an access token via the revoke token endpoint. You can use a utility like a cURL to invoke this endpoint and revoke your access token.  
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
+1. Sign in to the Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Developer Portal** on the Choreo Console header. 
 
     ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
 
 2. Click **Applications**.
-3. Click **Production Keys** -> **OAuth 2.0 Tokens** on the left panel.
-4. You will find the **Consumer Key** (client ID), **Consumer Secret** (client secret), **Token Endpoint**, and **Revoke Endpoint** listed here. You can use these values to revoke the access token. 
+3. Click **Production Keys** -> **OAuth 2.0 Tokens** on the left navigation menu.
+    You will find the **Consumer Key** (client ID), **Consumer Secret** (client secret), **Token Endpoint**, and **Revoke Endpoint** listed here. You can use these values to revoke the access token. 
 
-The parameters required to invoke the following API are as follows:
+The parameters required to invoke the revoke token endpoint are as follows:
 
 -   `access_token_to_be_revoked` - The access token to be revoked
 
--   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret. Choreo does not recommend the use of online base64 encoders for this purpose.
+-   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret using the following format. Choreo does not recommend the use of online base64 encoders for this purpose.
 
 - `<consumerKey>:<consumerSecret>` Thereafter, enter the encoded value for this parameter.
 
