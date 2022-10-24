@@ -12,18 +12,23 @@
  */
 import { Utils } from "../../utils";
 
-
-
 export class VSExplorer {
   static sourceControllerBtn = '[aria-label*="Source Control"]';
 
   static terminal = ".xterm-helper-textarea";
 
-
   static waitTillCodespaceLoad() {
     cy.get(".monaco-highlighted-label").contains(".bal").click();
+  }
+
+  static removeDefaultServiceBalFile() {
     cy.get('div[class*=".bal-name-file-icon"]  [title="Delete"]').click();
-    cy.get('[aria-label*="Are you sure you want to delete"] [title="Delete"]').click();
+    cy.get(
+      '[aria-label*="Are you sure you want to delete"] [title="Delete"]'
+    ).click();
+    cy.get('div[class="tab-actions"]').within(($tabActions) => {
+      cy.get('[title="Close (Ctrl+W)"]').click();
+    });
   }
 
   static selectExplorer() {
@@ -35,24 +40,28 @@ export class VSExplorer {
   }
 
   static verifyVsCodeWorkspace() {
-    cy.get('[title*=".bal Diagram"]',{timeout:300000}).should("be.visible");
+    cy.get('[title*=".bal Diagram"]', { timeout: 300000 }).should("be.visible");
   }
 
   static closeTab() {
     this.verifyVsCodeWorkspace();
-    cy.get(".codicon-close").then((b) => {
-      if (b.length > 0) {
-        b.each(function () {
-          // can not use an arrow function as this scope changes.
-          this.click();
-        });
-      }
-    }).wait(2000);
+    cy.get(".codicon-close")
+      .then((b) => {
+        if (b.length > 0) {
+          b.each(function () {
+            // can not use an arrow function as this scope changes.
+            this.click();
+          });
+        }
+      })
+      .wait(2000);
   }
 
   static pushChangesToChoreo(commitMessage: string) {
     cy.get('div[id="wso2.ballerina"] a').eq(1).click({ multiple: true });
-    cy.get('[placeholder="Enter the commit message"]').type(`${commitMessage}{enter}`);
+    cy.get('[placeholder="Enter the commit message"]').type(
+      `${commitMessage}{enter}`
+    );
   }
 
   static clearNotifications() {
@@ -69,51 +78,76 @@ export class VSExplorer {
         cy.wrap(bd).type("{ctrl}`");
       }
     });
-    cy.get(VSExplorer.terminal).click().then($d => Utils.paste($d, command, true)).wait(waitTime);
+    cy.get(VSExplorer.terminal)
+      .click()
+      .then(($d) => Utils.paste($d, command, true))
+      .wait(waitTime);
   }
 
-
   static creteNewBranch(branchName: string) {
-    this.waitTillWorkSpaceLoad()
-    cy.get('[id="wso2.ballerina"]')
+    this.waitTillWorkSpaceLoad();
+    cy.get('[id="wso2.ballerina"]');
     cy.get('[id="status.scm"]').eq(0).click();
-    cy.get(".quick-input-widget")
-    cy.get('[aria-describedby="quickInput_message"]').type(`${branchName}{enter}`).wait(3000);
+    cy.get(".quick-input-widget");
+    cy.get('[aria-describedby="quickInput_message"]')
+      .type(`${branchName}{enter}`)
+      .wait(3000);
   }
   static waitTillWorkSpaceLoad() {
     cy.get("[title*='.bal Diagram']", { timeout: 360000 }).wait(4000);
   }
   static commitPush(commitMessage, isNewUpstreamBranch: boolean = false) {
     this.enterCommandInTerminal("bash /config/workspace/.githooks/pre-commit");
-    this.enterCommandInTerminal("rm /config/workspace/.githooks/pre-commit", 2000);
+    this.enterCommandInTerminal(
+      "rm /config/workspace/.githooks/pre-commit",
+      2000
+    );
     this.enterCommandInTerminal("git add .", 2000);
     this.enterCommandInTerminal(`git commit -m "${commitMessage}"`, 4000);
     if (isNewUpstreamBranch) {
-      this.enterCommandInTerminal("git push --set-upstream origin feature", 4000);
+      this.enterCommandInTerminal(
+        "git push --set-upstream origin feature",
+        4000
+      );
     } else {
       this.enterCommandInTerminal("git push", 4000);
     }
   }
 
-
   static pasteCode(fileName, enter: boolean = false) {
     this.closeTab();
     this.waitTillCodespaceLoad();
+    this.removeDefaultServiceBalFile();
     this.createFile(fileName);
     this.selectExplorer();
     cy.contains(fileName).click();
+
     cy.get('div[class="view-line"]').should("be.visible").click();
     cy.readFile(`cypress/fixtures/${fileName}`).then((code) => {
-      cy.focused().then($destination => {
-        Utils.paste($destination, code, false)
+      cy.focused().then(($destination) => {
+        Utils.paste($destination, code, false);
       });
     });
   }
+
+  static showDiagram() {
+    cy.wait(5000);
+    cy.get('div[class="editor-actions"]').within(() => {
+      cy.get('[title="Show Diagram"]').parent().should("be.visible").click();
+    });
+  }
+
   private static createFile(fileName: string) {
-    cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon').click().wait(2000);
+    cy.get('[aria-label="Diagram Explorer"] .workspace-name-folder-icon')
+      .click()
+      .wait(2000);
     cy.get('[title="New File"]').eq(0).should("be.visible").click().wait(2000);
-    cy.get('[aria-describedby="quickInput_message"]').type(`${fileName}{enter}`).wait(2000);
-    cy.get('[aria-label="Diagram Explorer"] .monaco-icon-name-container').eq(0).click();
+    cy.get('[aria-describedby="quickInput_message"]')
+      .type(`${fileName}{enter}`)
+      .wait(2000);
+    cy.get('[aria-label="Diagram Explorer"] .monaco-icon-name-container')
+      .eq(0)
+      .click();
     cy.contains(fileName).should("be.visible");
   }
 
@@ -131,7 +165,8 @@ export class VSExplorer {
   }
 
   static getActiveWebview() {
-    return cy.get('iframe[class="webview ready"]')
+    return cy
+      .get('iframe[class="webview ready"]')
       .eq(1)
       .its("0.contentDocument")
       .should("exist")
