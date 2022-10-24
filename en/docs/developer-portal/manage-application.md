@@ -69,7 +69,7 @@ The parameters required to invoke the revoke token endpoint are as follows:
 
 -   `access_token_to_be_revoked` - The access token to be revoked
 
--   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret using the following format. Choreo does not recommend the use of online base64 encoders for this purpose.
+-   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret. Choreo does not recommend the use of online base64 encoders for this purpose.
 
 - `<consumerKey>:<consumerSecret>` Thereafter, enter the encoded value for this parameter.
 
