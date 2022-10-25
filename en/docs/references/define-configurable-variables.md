@@ -33,8 +33,6 @@ To understand how to define a configurable variable, let's  create a REST API th
     1. Click the first **+** icon on the page, and in the **Add Constructs** pane that appears, click **Configurable**.
    
         ![Add Configurable](../assets/img/configurables/add-configurable.png){.cInlineImage-threeQuarters}
-   
-        The **Configurable** pane opens, displaying the template for the configurable.
     
     2. The **Configurable** pane displays the configurable template. Let's use this template and define the configurable.
    
