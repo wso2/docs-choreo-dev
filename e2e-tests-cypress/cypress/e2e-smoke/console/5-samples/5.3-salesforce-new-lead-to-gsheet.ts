@@ -71,7 +71,7 @@ describe("Create salesforce new lead to gsheet sample in Choreo", () => {
   });
 
   it("Verify component with configurables promote to prod", () => {
-    ComponentDeployPage.promoteConfigDepoyment();
+    ComponentDeployPage.promoteConfigDeployment();
   });
 
   it("Verify the template by creating a new salesforce lead", () => {
@@ -85,13 +85,34 @@ describe("Create salesforce new lead to gsheet sample in Choreo", () => {
     VSExplorer.creteNewBranch(NEW_BRANCH);
     VSExplorer.pasteCode("salesforce.bal");
     VSExplorer.commitPush(commitMessage,true);
-// Deploy component
-    ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
-// Invoke component
+
+    it("Verify component deployment", () => {
+        ComponentOverviewPage.navigateToDeploy();
+        ComponentDeployPage.deployToDev();
+        ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
+      });
+    
+      it("Verify component promote to prod", () => {
+        ComponentDeployPage.promoteToProd();
+        ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
+      });
+
+  it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Environment.DEVELOPMENT,
+      "createLead",
+      "Lead",
+      "sample-Lead"
+    ).then((res) => {
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+  it("Verify test functionality of root resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Environment.PRODUCTION,
       "createLead",
       "Lead",
       "sample-Lead"

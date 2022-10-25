@@ -238,20 +238,6 @@ export class ComponentDeployPage {
 
   static verifyDeploymentStatus(){
       cy.get('[data-cyid="deployment-status"]').eq(0).contains("Active");
-      }
-
-      static promoteConfigDepoyment(){
-        window.localStorage.setItem("hideSocialShareModel", "true");
-        cy.get('[data-cyid="btn-promote"]', { timeout: 250000, },).scrollIntoView().should("be.visible").click({ force: true });
-        cy.wait(5000);
-        cy.get('[data-cyid="btn-promote"]').click({ force: true });
-        cy.wait(5000);
-        cy.get('input[name="promote-deploy"]').eq(1).click();
-        cy.get('[type="button"]').contains("Next").click();
-        cy.wait(10000);
-        cy.get("[data-cyid='username']").click();
-        cy.get('span[class="MuiButton-label"]').contains("Back").scrollIntoView();
-        cy.get('button[type="submit"]').click();
-        }    
+      }  
 
 }
