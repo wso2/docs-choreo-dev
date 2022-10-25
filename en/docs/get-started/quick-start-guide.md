@@ -29,7 +29,7 @@ Next, let's deploy this API and make it invokable.
 
 Choreo maintains two environments by default: development and production. Let's deploy the API to the development environment.
 
-1. Click **Deploy** in the left pane. 
+1. Click **Deploy** in the left navigation menu. 
 
 2. Go to the **Build Area** card and click **Build and Deploy**.
 
