@@ -15,11 +15,13 @@ First, let's create a new REST API:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. On the **Home** page, scroll to the **Get started with a template** section. 
+    You will view the **Home** page.
 
-3. Go to the **Echo Service** card and click **Get Started**.
+2. In the **Create from a Sample** section, click **Echo Service**. 
+
+Choreo starts creating an API using the template in this sample.
  
-Now you have successfully created an API using a template and you can see the flow diagram of the integration logic implemented for this API.
+Once Choreo completes adding the API, you can see the overview of this API.
 
 Next, let's deploy this API and make it invokable.
  
@@ -72,9 +74,9 @@ Follow this procedure to further develop the API by adding a new resource and si
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click **+** on the low-code diagram to open the resource, and configure it as follows: 
+3. Click **+** below the low-code diagram to add a new resource and configure it as follows: 
   
-    ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
+    ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-half}
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -83,7 +85,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      | **Return Type** | `string | error` |
      
 
-4. Click **+ Add Parameter** to add a query parameter.  Enter the following values to get a name as an input:
+4. Click **+ Add Parameter** to add a query parameter.  Enter the following values to get a name as input:
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -93,7 +95,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
 
- 5. Click **Save**.
+ 5. Click **Save** to save the query parameter, and then click **Save** again to save the resource.
 
  6. In the low-code diagram, click **+** after **Start**.
 
@@ -143,7 +145,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
 Once you update the REST API configuration as described above, you can verify whether it works as expected by following these steps:
 
-1. From Options, Click **Run**.
+1. Click the menu icon for the listener construct and then click **Run**.
 
     ![Run the REST API](../assets/img/get-started/run-the-rest-api.png){.cInlineImage-half}
 
@@ -153,7 +155,7 @@ Once you update the REST API configuration as described above, you can verify wh
     Running executable
     ```
     
-2. To invoke the REST API, click **Try it**.
+2. To invoke the REST API, click the menu icon for the listener construct and then click **Try it**.
    
     ![Try REST API](../assets/img/get-started/try-rest-api.png){.cInlineImage-half}
 
@@ -192,14 +194,18 @@ Follow this procedure to commit and push your changes to GitHub.
 
      ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
+     Select Yes in the message that appears to specify that you need the changes to be staged.
+
 4. On the top toolbar, click **...** and then click **Push**. 
 
     ![Push changes](../assets/img/get-started/push-changes.png){.cInlineImage-full}
 
+    Click **OK** in the message that appears to confirm that you want to push the changes.
+
     This pushes the local changes to your private GitHub repository.
 
 !!! tip
-    If you want to re-deploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
+    If you want to redeploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
 
  Now let's publish the API and invoke it via the API Developer Portal. 
 
@@ -215,7 +221,7 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 
 2. On the **Lifecycle Management** page, click **Publish**.
 
-3. Click **Go to Developer Portal**. 
+3. Click **Go to Devportal**. 
  
     ![Go to API Developer Portal](../assets/img/get-started/go-to-dev-portal.png){.cInlineImage-full}
  
@@ -238,8 +244,8 @@ Follow this procedure to invoke the REST API via the API Developer Portal:
 
 4. Click **Try Out** in the left pane. 
 
-5. Paste the copied access token in the **Access Token** field.
-     ![Get Test Key ](../assets/img/get-started/get-test-key.png){.cInlineImage-full}
+5. Click **Get Test Key** next to the **Access Token** field.
+     ![Get test token ](../assets/img/get-started/get-test-key.png){.cInlineImage-full}
 
 6. Click the `GET` resource you added to expand it.
 
