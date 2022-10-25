@@ -70,9 +70,9 @@ To understand how to define a configurable variable, let's  create a REST API th
    
         You have completed editing the REST API configuration.
 
-4. To view the Pro-Code view of the REST API, click the icon marked in the image below:
+4. To view the code view of the REST API, click the icon marked in the image below:
 
-    ![Open pro-code view](../assets/img/configurables/open-code-view.png){.cInlineImage-full}
+    ![Open code view](../assets/img/configurables/open-code-view.png){.cInlineImage-full}
 
     You will see the configurable you added in the code view as `configurable string email = ?;`.
 
