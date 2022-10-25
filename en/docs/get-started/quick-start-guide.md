@@ -200,6 +200,8 @@ Follow this procedure to commit and push your changes to GitHub.
 
     ![Push changes](../assets/img/get-started/push-changes.png){.cInlineImage-full}
 
+    Click **OK** in the message that appears to confirm that you want to push the changes.
+
     This pushes the local changes to your private GitHub repository.
 
 !!! tip
