@@ -78,7 +78,7 @@ To understand how to define a configurable variable, let's  create a REST API th
 
 6. Open the browser tab in which you are running the Choreo Console and refresh it.
 
-7. Click **Deploy** for your REST API.
+7. Click **Deploy** in the left navigation menu for your REST API.
 
 8. To deploy the REST API, click **Config & Deploy**. 
 
