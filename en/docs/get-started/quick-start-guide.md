@@ -219,7 +219,7 @@ Follow this procedure to publish the API to the API Developer Portal so that ext
 
 2. On the **Lifecycle Management** page, click **Publish**.
 
-3. Click **Go to Developer Portal**. 
+3. Click **Go to Devportal**. 
  
     ![Go to API Developer Portal](../assets/img/get-started/go-to-dev-portal.png){.cInlineImage-full}
  
