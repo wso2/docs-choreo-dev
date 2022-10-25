@@ -27,9 +27,9 @@ Next, let's deploy this API and make it invokable.
 
 Choreo maintains two environments by default: development and production. Let's deploy the API to the development environment.
 
-1. Click **Deploy** in the left pane. 
+1. Click **Deploy** in the left navigation menu. 
 
-2. Go to the **Build Area** card and click **Deploy**.
+2. Go to the **Build Area** card and click **Build and Deploy**.
 
     ![Deploy API](../assets/img/get-started/deploy-rest-api.png){.cInlineImage-full}
 
@@ -63,7 +63,7 @@ Developing an API involves writing the business logic for it. APIs often need to
 
 Follow this procedure to further develop the API by adding a new resource and simple business logic:
 
-1. Click **Develop** in the left pane.
+1. Click **Overview** in the left navigation menu.
 
 2. Click **Edit Code**.
  

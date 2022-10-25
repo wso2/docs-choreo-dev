@@ -72,7 +72,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
     !!! info
         Opening the Web Editor may take a little while if you are a first-time user.
 
-2. Remove the resource that is configured by default for the REST API by clicking its **Delete** icon.
+2. Remove the resource that is configured by default for the REST API by clicking its **Delete** icon from options.
 
     ![Delete resource](../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
 
@@ -383,11 +383,11 @@ Once you have designed, tested, and committed the REST API, you need to deploy i
 
 To deploy the API, follow the steps below:
 
-1. Click the **Deploy** icon. Then in the **Build Area** card, click **Manually Deploy**.
+1. Click the **Deploy** icon. Then in the **Build Area** card, click **Build and Deploy**.
 
     ![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
 
-2. To check the progress of the deployment, click **View Logs**
+2. To check the progress of the deployment, click on the **In Progress** step.
 
     ![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
 
