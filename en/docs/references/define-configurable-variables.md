@@ -26,7 +26,7 @@ To understand how to define a configurable variable, let's  create a REST API th
         !!! Info
             To learn how to create a REST API with more details, try the [Create Your First REST API tutorial](../tutorials/create-your-first-rest-api.md).
 
-    4. Once the **Components** page opens, click **Edit Code** to open the Web Editor.
+    4. Once the **Overview** page opens, click **Edit Code** to open the Web Editor.
 
 2. Now let's define the email address you want to return as a configurable by following these sub-steps:
 
