@@ -78,7 +78,7 @@ To understand how to define a configurable variable, let's  create a REST API th
 
 5. Commit and push the REST API changes you made to GitHub so that they are also available in the Choreo Console. For instructions, see [Create Your First REST API - Step 1.5: Commit the REST API to GitHub](../tutorials/create-your-first-rest-api.md#step-15-commit-the-rest-api-to-github).
 
-6. Open the browser tab in which you are running the Choreo console and refresh it.
+6. Open the browser tab in which you are running the Choreo Console and refresh it.
 
 7. Click **Deploy** for your REST API.
 
