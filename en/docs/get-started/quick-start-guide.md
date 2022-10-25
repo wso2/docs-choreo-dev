@@ -21,7 +21,7 @@ First, let's create a new REST API:
 
 Choreo starts creating an API using the template in this sample.
  
-Once Choreo completes adding the API, you can see overview of this API.
+Once Choreo completes adding the API, you can see the overview of this API.
 
 Next, let's deploy this API and make it invokable.
  
@@ -74,7 +74,7 @@ Follow this procedure to further develop the API by adding a new resource and si
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click **+** below the low-code diagram to add a new resource, and configure it as follows: 
+3. Click **+** below the low-code diagram to add a new resource and configure it as follows: 
   
     ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-half}
 
@@ -85,7 +85,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      | **Return Type** | `string | error` |
      
 
-4. Click **+ Add Parameter** to add a query parameter.  Enter the following values to get a name as an input:
+4. Click **+ Add Parameter** to add a query parameter.  Enter the following values to get a name as input:
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -201,7 +201,7 @@ Follow this procedure to commit and push your changes to GitHub.
     This pushes the local changes to your private GitHub repository.
 
 !!! tip
-    If you want to re-deploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
+    If you want to redeploy new changes, see [Deploy Your REST API](#deploy-your-rest-api). 
 
  Now let's publish the API and invoke it via the API Developer Portal. 
 
