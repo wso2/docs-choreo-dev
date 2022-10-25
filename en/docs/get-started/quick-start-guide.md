@@ -194,6 +194,8 @@ Follow this procedure to commit and push your changes to GitHub.
 
      ![Commit](../assets/img/get-started/commit-message.png){.cInlineImage-full}
 
+     Select Yes in the message that appears to specify that you need the changes to be staged.
+
 4. On the top toolbar, click **...** and then click **Push**. 
 
     ![Push changes](../assets/img/get-started/push-changes.png){.cInlineImage-full}
