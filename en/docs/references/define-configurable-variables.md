@@ -88,7 +88,7 @@ To understand how to define a configurable variable, let's  create a REST API th
 
 10. Click **Deploy**.
 
-     Once Choreo completes the deployment, the **Configurables** field indicates that the Rest API has a configured key.
+     Once Choreo completes the deployment, the **Configurables** field indicates that the REST API has a configured key.
 
       ![Configurables](../assets/img/configurables/configurables.png){.cInlineImage-full}
 
