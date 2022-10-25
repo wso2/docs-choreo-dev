@@ -15,11 +15,13 @@ First, let's create a new REST API:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. On the **Home** page, scroll to the **Get started with a template** section. 
+    You will view the **Home** page.
 
-3. Go to the **Echo Service** card and click **Get Started**.
+2. In the **Create from a Sample** section, click **Echo Service**. 
+
+Choreo starts creating an API using the template in this sample.
  
-Now you have successfully created an API using a template and you can see the flow diagram of the integration logic implemented for this API.
+Once Choreo completes adding the API, you can see overview of this API.
 
 Next, let's deploy this API and make it invokable.
  
@@ -29,7 +31,7 @@ Choreo maintains two environments by default: development and production. Let's 
 
 1. Click **Deploy** in the left pane. 
 
-2. Go to the **Build Area** card and click **Deploy**.
+2. Go to the **Build Area** card and click **Build and Deploy**.
 
     ![Deploy API](../assets/img/get-started/deploy-rest-api.png){.cInlineImage-full}
 
@@ -63,7 +65,7 @@ Developing an API involves writing the business logic for it. APIs often need to
 
 Follow this procedure to further develop the API by adding a new resource and simple business logic:
 
-1. Click **Develop** in the left pane.
+1. Click **Overview** in the left pane.
 
 2. Click **Edit Code**.
  
@@ -72,9 +74,9 @@ Follow this procedure to further develop the API by adding a new resource and si
  
     ![Edit with VS Code Online](../assets/img/get-started/edit-with-vs-code.png){.cInlineImage-full}
 
-3. Click **+** on the low-code diagram to open the resource, and configure it as follows: 
+3. Click **+** below the low-code diagram to add a new resource, and configure it as follows: 
   
-    ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-full}
+    ![Add New Resource](../assets/img/get-started/add-new-resource.png){.cInlineImage-half}
 
      | **Field** | **Value** |
      |-----------------|-----------------------|
@@ -93,7 +95,7 @@ Follow this procedure to further develop the API by adding a new resource and si
      ![Configure Query Parameter](../assets/img/get-started/configure-query-param.png){.cInlineImage-full}
 
 
- 5. Click **Save**.
+ 5. Click **Save** to save the query parameter, and then click **Save** again to save the resource.
 
  6. In the low-code diagram, click **+** after **Start**.
 
@@ -143,7 +145,7 @@ Follow this procedure to further develop the API by adding a new resource and si
 
 Once you update the REST API configuration as described above, you can verify whether it works as expected by following these steps:
 
-1. From Options, Click **Run**.
+1. Click the menu icon for the listener construct and then click **Run**.
 
     ![Run the REST API](../assets/img/get-started/run-the-rest-api.png){.cInlineImage-half}
 
@@ -153,7 +155,7 @@ Once you update the REST API configuration as described above, you can verify wh
     Running executable
     ```
     
-2. To invoke the REST API, click **Try it**.
+2. To invoke the REST API, click the menu icon for the listener construct and then click **Try it**.
    
     ![Try REST API](../assets/img/get-started/try-rest-api.png){.cInlineImage-half}
 
