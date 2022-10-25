@@ -103,7 +103,7 @@ When you add a configurable to your component in the Web Editor, you can enter a
 ```
 configurable <VARIABLE_TYPE> <VARIABLE_NAME> = <DEFAULT_VALUE>
 ```
-e.g., If you want to add a configurable named password of which the value should be in string format and with `secret` as the default value, you can add the configurable statement as follows:
+e.g., If you want to add a configurable named password of which the value should be in string format with `secret` as the default value, you can add the configurable statement as follows:
 
 ```
 configurable string password = "secret";
