@@ -319,3 +319,7 @@ configMapGenerator:
     behavior: create
     files:
       - lowcode-parser/application.properties
+  - name: cm-file-devops-portal-api
+    behavior: create
+    files:
+      - devops-portal-api/Config.toml
