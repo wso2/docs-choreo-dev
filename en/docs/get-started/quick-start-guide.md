@@ -65,7 +65,7 @@ Developing an API involves writing the business logic for it. APIs often need to
 
 Follow this procedure to further develop the API by adding a new resource and simple business logic:
 
-1. Click **Overview** in the left pane.
+1. Click **Overview** in the left navigation menu.
 
 2. Click **Edit Code**.
  
