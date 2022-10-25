@@ -32,10 +32,7 @@ describe("Verify performance forecaster functionality", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(
-      COMPONENT_NAME,
-      COMPONENT_DESCRIPTION
-    );
+    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
     ComponentDevelopPage.getComponentURL();
   });
 
@@ -46,23 +43,43 @@ describe("Verify performance forecaster functionality", () => {
 
     // pull bal modules
     VSExplorer.enterCommandInTerminal(
-      "bal pull ballerinax/worldbank && bal pull ballerinax/covid19", 10000
+      "bal pull ballerinax/worldbank && bal pull ballerinax/covid19",
+      10000
     );
 
     // type code
     VSExplorer.pasteCode("perf-analyzer.bal", true);
-    
+
+    VSExplorer.showDiagram();
+
     // wait till code lenses appear
     cy.wait(5000);
-    VSExplorer.matchCodeLense(1, /^Forecasted latency between \d+\.?\d*  (ms|s) - \d+\.?\d*  (ms|s) \(for concurrency \d+ - \d+\)/);
+    VSExplorer.matchCodeLense(
+      1,
+      /^Forecasted latency between \d+\.?\d*  (ms|s) - \d+\.?\d*  (ms|s) \(for concurrency \d+ - \d+\)/
+    );
     VSExplorer.clickCodeLense(1);
-    VSExplorer.matchCodeLense(2, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/);
-    VSExplorer.matchCodeLense(3, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/);
+    VSExplorer.matchCodeLense(
+      2,
+      /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/
+    );
+    VSExplorer.matchCodeLense(
+      3,
+      /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 1\)/
+    );
 
     VSExplorer.clickPerfGraph(1);
-    VSExplorer.matchCodeLense(1, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);
-    VSExplorer.matchCodeLense(2, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);
-    VSExplorer.matchCodeLense(3, /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/);
-
+    VSExplorer.matchCodeLense(
+      1,
+      /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/
+    );
+    VSExplorer.matchCodeLense(
+      2,
+      /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/
+    );
+    VSExplorer.matchCodeLense(
+      3,
+      /^Forecasted latency \d+\.?\d*  (ms|s) \(for concurrency 25\)/
+    );
   });
 });
