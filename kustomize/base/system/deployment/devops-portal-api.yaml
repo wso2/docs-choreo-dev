@@ -72,7 +72,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-devops-portal-api-config
+            name: cm-file-devops-portal-api
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
