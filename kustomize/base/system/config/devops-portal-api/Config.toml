@@ -1,0 +1,16 @@
+[ballerina.log]
+format = "json"
+level = "{{.LOG_LEVEL | default "INFO"}}"
+
+[ballerina.http.accessLogConfig]
+console = true
+
+[devops.api.config]
+app_service_url = "http://app-service:8080"
+cicd_url = "http://dp-cicd"
+delete_manager_url = "http://delete-manager"
+mizzen_url = "http://dp-mizzen"
+port = 8089
+project_manager_url = "http://dp-project-manager"
+rudder_url = "http://dp-rudder"
+subscription_svc_url = "http://subscriptions:9090"
