@@ -10,7 +10,7 @@ You may want to define a configurable variable in the following scenarios:
 
 - You may need to provide different values for a specific variable.
 
-    For example, eachncomponent user may want to provide a unique email address to receive the response.
+    For example, each component user may want to provide a unique email address to receive the response.
 
 
 To understand how to define a configurable variable, let's  create a REST API that returns a configurable email address to its users  as follows:
