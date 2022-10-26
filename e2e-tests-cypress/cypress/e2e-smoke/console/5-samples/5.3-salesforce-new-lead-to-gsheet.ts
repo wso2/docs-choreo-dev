@@ -85,6 +85,7 @@ describe("Create salesforce new lead to gsheet sample in Choreo", () => {
     VSExplorer.creteNewBranch(NEW_BRANCH);
     VSExplorer.pasteCode("salesforce.bal");
     VSExplorer.commitPush(commitMessage,true);
+});
 
     it("Verify component deployment", () => {
         ComponentOverviewPage.navigateToDeploy();
@@ -130,7 +131,6 @@ describe("Create salesforce new lead to gsheet sample in Choreo", () => {
   it("Verify component with configurables deletion", () => {
     ComponentOverviewPage.goBack();
     ComponentListingPage.deleteComponent("Salesforce New Lead to Google Sheets Row");
-  });
-
 });
 
+});
