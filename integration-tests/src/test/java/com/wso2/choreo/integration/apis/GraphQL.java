@@ -24,6 +24,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
+import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
@@ -252,6 +253,28 @@ public class GraphQL {
         return ObjectMapperUtil.mapStringToObject(CreateComponent.class, response.getRes(), "createComponent");
     }
 
+
+    public static  Response createBYOCcomponent(String componentName,String projectId,String repoName,String accessToken) throws IOException {
+    //    String srcGitHubURL = "https://github.com/" + Configuration.getConfig(ConfigDefinition.GITHUB_ORG) + "/" + repoName;
+
+        String srcGitHubURL="https://github.com/dasunshakhyaorg/byor_test";
+        Map<String, String> responseParams = new HashMap<>() {
+            {
+                put("name", componentName);
+                put("orgId", ORG_ID);
+                put("orgHandler", ORG_HANDLE);
+                put("displayName", componentName);
+                put("projectId", projectId);
+                put("srcGitRepoUrl", srcGitHubURL);
+            }
+        };
+
+        String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/createComponent/createBYOCcomponent.mustache", responseParams);
+
+   return  HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+      //  return ObjectMapperUtil.mapStringToObject(CreateComponent.class, response.getRes(), "createComponent");
+    }
+
     public static PullRequest[] getComponentPullRequests(String componentId, String accessToken, int expectedPRs) throws IOException, UnexpectedResponseException {
         Map<String, String> params = new HashMap<>();
         params.put("componentId", componentId);
@@ -268,6 +291,8 @@ public class GraphQL {
         }
         throw new UnexpectedResponseException(response.getStatusCode(), "Expected PullRequest length" + expectedPRs + "but found " + 0);
     }
+
+
 
 
     public static ChoreoComponent getComponentDetails(String projectId, String componentHandler, String accessToken) throws IOException {

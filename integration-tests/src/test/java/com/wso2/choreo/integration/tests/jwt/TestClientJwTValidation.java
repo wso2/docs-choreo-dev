@@ -77,7 +77,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testCreateUserManagedComponentForJwt() throws IOException, UnexpectedResponseException {
+    public void testCreateUserManagedComponentForJwt() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
         response = GraphQL.createBYORComponent(repoName, componentName, projectId, accessToken);
