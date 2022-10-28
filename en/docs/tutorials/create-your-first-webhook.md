@@ -361,7 +361,7 @@ You will receive a mail similar to the following to the email address you provid
 
 ![Sample email](../assets/img/tutorials/webhook/sample-email.png){.cInlineImage-half}
 
-## Step 5 Promote
+## Step 5:  Promote
 
 To promote the webhook to the Production environment, follow these sub-steps:
 
