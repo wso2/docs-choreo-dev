@@ -290,7 +290,7 @@ Let's deploy your webhook to the development environment to make it invokable:
 
     ![Deploy](../assets/img/tutorials/webhook/deploy.png){.cInlineImage-full}
 
-2. In the **Configure & Deploy** panel, enter the following information:
+2. In the **Configure & Deploy** pane, enter the following information:
 
     1. In the **toEmail** field, enter the email address to which you want the webhook to send the notification emails.
    
