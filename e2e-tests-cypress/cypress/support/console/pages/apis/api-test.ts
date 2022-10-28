@@ -19,10 +19,18 @@ export class APITest {
     cy.get('[id="backdrop-loader"').should("not.exist")
   }
 
-  static selectEnvironment(envName: string) {
-    cy.get("[data-cyid=select-env]").click();
-    cy.get("[data-cyid=item-env-name]").contains(envName).click();
+  static selectDevEnvironment(envName: string) {
+    cy.get("[data-testid=env]").click();
+    cy.get("[data-cyid=undefined-Development]").contains(envName).click({ force: true });
     cy.get('[data-cyid="text-field-endpoint"]>div>input').invoke("attr", "value").
     then((val) => { Cypress.env(`${envName}_test_url`, val); });
   }
+
+  static selectProdEnvironment(envName: string) {
+    cy.get("[data-testid=env]").click();
+    cy.get("[data-cyid=undefined-Production]").contains(envName).click({ force: true });
+    cy.get('[data-cyid="text-field-endpoint"]>div>input').invoke("attr", "value").
+    then((val) => { Cypress.env(`${envName}_test_url`, val); });
+  }
+
 }
