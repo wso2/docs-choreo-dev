@@ -12,6 +12,7 @@
  */
 
 import { Utils } from "../../utils";
+import { Environment } from "../enum/environment";
 
 export class APITest {
   static testAPI() {
@@ -19,18 +20,18 @@ export class APITest {
     cy.get('[id="backdrop-loader"').should("not.exist")
   }
 
-  static selectDevEnvironment(envName: string) {
+  static selectDevEnvironment() {
     cy.get("[data-testid=env]").click();
-    cy.get("[data-cyid=undefined-Development]").contains(envName).click({ force: true });
+    cy.get("[data-cyid=undefined-Development]").click({ force: true });
     cy.get('[data-cyid="text-field-endpoint"]>div>input').invoke("attr", "value").
-    then((val) => { Cypress.env(`${envName}_test_url`, val); });
+    then((val) => { Cypress.env(`${Environment.DEVELOPMENT}_test_url`, val); });
   }
 
-  static selectProdEnvironment(envName: string) {
+  static selectProdEnvironment() {
     cy.get("[data-testid=env]").click();
-    cy.get("[data-cyid=undefined-Production]").contains(envName).click({ force: true });
+    cy.get("[data-cyid=undefined-Production]").click({ force: true });
     cy.get('[data-cyid="text-field-endpoint"]>div>input').invoke("attr", "value").
-    then((val) => { Cypress.env(`${envName}_test_url`, val); });
+    then((val) => { Cypress.env(`${Environment.PRODUCTION}_test_url`, val); });
   }
 
 }
