@@ -139,7 +139,7 @@ describe("Verify project creation functionality", () => {
 
   it("Test in dev", () => {
     APITest.testAPI();
-    APITest.selectEnvironment(Environment.DEVELOPMENT);
+    APITest.selectDevEnvironment();
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
@@ -149,7 +149,7 @@ describe("Verify project creation functionality", () => {
 
   it("Test in prod", () => {
     APITest.testAPI();
-    APITest.selectEnvironment(Environment.PRODUCTION);
+    APITest.selectProdEnvironment();
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(OPERATION_USERS);
     SwaggerUI.getResponseCode().should("eq", "200");
