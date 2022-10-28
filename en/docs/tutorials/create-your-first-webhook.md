@@ -53,9 +53,9 @@ First, let's add a Webhook component as follows:
 
     1. In the **Webhook Name** field, enter a unique webhook name (e.g., `IssueTracking`).
    
-    2. From the **Trigger Channel** list, select **Issue Service** so that the system can trigger your webhook based on a change it observes in GitHub issues (i.e., assigning a label in this scenario).
+    2. From the **Trigger Channel** list, select **IssuesService** so that the system can trigger your webhook based on a change it observes in GitHub issues (i.e., assigning a label in this scenario).
    
-    3. You need to save your Webhook implementation in a GitHub repository from which Choreo can access it. You can use a Choreo-managed GitHub repository or one of your own GitHub repositories. In this tutorial, let's use a Choreo-managed GitHub repository.
+    3. You need to save your Webhook implementation in a GitHub repository from which Choreo can access it. You can use a Choreo-managed GitHub repository or one of your own GitHub repositories. Let's use the Choreo-managed GitHub repository, which is the default selection.
 
     4. Click **Create**.
 
@@ -63,7 +63,7 @@ First, let's add a Webhook component as follows:
       
 ### Step 1.2: Design the webhook
 
-In this step, let's design a webhook that reads the labels of GitHub issues in a specific repository and generates an email notification for GitHub issues with the `bug` label. To do this, follow these steps:
+In this step, let's design the webhook to read the labels of GitHub issues in a specific repository and generate an email notification for GitHub issues with the `bug` label. To do this, follow these steps:
 
 1. To access the Web Editor in which you will design the webhook, click **Edit Code**.
 
@@ -126,9 +126,9 @@ In this step, let's design a webhook that reads the labels of GitHub issues in a
    
      7. Under **Select an Action**, click **Send Email**.
    
-     8. In the **Recipient** field, you can enter the email address to which the webhook should send the email notification.
+        In the **Recipient** field, you can enter the email address to which the webhook should send the email notification.
 
-         However, this email address can be a sensitive information item that your clients may not want to expose in the code of the webhook. To address this, you can define the recipient as a configurable variable as follows:
+        However, this email address can be a sensitive information item that your clients may not want to expose in the code of the webhook. To address this, you can define the recipient as a configurable variable as follows:
 
           1. In **`recipient = ""`**, click **`""`** and then click the **Add Configurable** icon.
        
@@ -139,8 +139,6 @@ In this step, let's design a webhook that reads the labels of GitHub issues in a
           3. Leave the default configurable variable type (i.e., `string`) and the expression (i.e., **`?`**) unchanged, and click **Add**.
           
               When you add this configurable variable with `?` as the expression, the **toEmail** field will be available when you deploy this webhook, allowing you to enter any email address in string format. This way, you do not have to include the actual value for the **toEmail** field in the code.
-
-          4. Click **Add**.
         
      9. Update the values for **`subject`** and **`body`** parameters as follows:
 
