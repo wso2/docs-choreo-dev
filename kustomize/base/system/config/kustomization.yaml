@@ -331,3 +331,7 @@ configMapGenerator:
     behavior: create
     files:
       - admin-api/Config.toml
+  - name: cm-file-apim-proxy-deployer
+    behavior: create
+    files:
+      - apim-proxy-deployer/Config.toml
