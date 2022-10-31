@@ -363,3 +363,7 @@ configMapGenerator:
     behavior: create
     files:
       - organization-management/Config.toml
+  - name: cm-file-quota-limiter
+    behavior: create
+    files:
+      - quota-limiter/Config.toml
