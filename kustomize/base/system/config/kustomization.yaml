@@ -335,3 +335,7 @@ configMapGenerator:
     behavior: create
     files:
       - apim-proxy-deployer/Config.toml
+  - name: cm-file-connectords
+    behavior: create
+    files:
+      - connectords/Config.toml
