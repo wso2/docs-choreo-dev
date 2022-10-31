@@ -97,7 +97,7 @@ spec:
               name: csi-secret-store-azure
         - name: config
           configMap:
-            name: cm-organization-remover
+            name: cm-file-organization-remover
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
