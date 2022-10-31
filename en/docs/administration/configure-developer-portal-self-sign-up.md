@@ -54,12 +54,9 @@ This page walks you through the steps to configure self-sign-up to the Developer
 
     You will see an application named **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL**. 
 
-    ![Applications](../assets/img/administration/self-sign-up/applications.png){.cInlineImage-full}
+    ![Applications](../assets/img/administration/self-sign-up/application.png){.cInlineImage-full}
 
 8. Click on the application to edit it and enter your organization’s Developer Portal URL as the **Access URL** of the application. For example, `https://devportal.choreo.dev/starkindustries`.
-
-     ![Applications](../assets/img/administration/self-sign-up/applications.png){.cInlineImage-full}
-
 9. Click **Update**.
 10. To add user attributes, follow these steps:
 
@@ -88,7 +85,20 @@ This page walks you through the steps to configure self-sign-up to the Developer
 
     3. Click **Update**.
 
-13. To configure self-registration, follow the [Configure self-registration](https://wso2.com//asgardeo/docs/guides/user-accounts/configure-self-registration) steps in the Asgardeo documentation.
+13. To configure self-registration, follow these steps:
 
-Now you have successfully configured self-sign-up to allow users to access your Developer Portal without having to send you a request to register them.
-        
+    1. In the top navigation menu, click **Manage** and then click **Self Registration** in the left navigation menu.
+    2. To enable self-registration, turn on the toggle.
+    3. Select **Account verification**.
+    4. Update the value of the **Account verification link expiry time** depending on your requirement.
+    5. Click **Update**. 
+     
+        ![Configure self-registration](../assets/img/administration/self-sign-up/configure-self-registration.png){.cInlineImage-full}
+
+Once you complete these steps, the Choreo support team will perform the final self-sign-up configuration and you will see a sign up link similar to the following in your Developer Portal:
+
+![Sign-up](../assets/img/administration/self-sign-up/sign-up.png){.cInlineImage-full}
+ 
+Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to your Developer Portal without having to send you a request to register them.
+
+![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-half}        
