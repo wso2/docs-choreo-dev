@@ -343,3 +343,15 @@ configMapGenerator:
     behavior: create
     files:
       - cp-graphql/Config.toml
+  - name: cm-file-sys-obsapi
+    behavior: create
+    files:
+      - obs/sysobsapi/Config.toml
+  - name: cm-file-telemetry
+    behavior: create
+    files:
+      - obs/telemetry/Config.toml
+  - name: cm-file-loggingapi
+    behavior: create
+    files:
+      - obs/loggingapi/Config.toml

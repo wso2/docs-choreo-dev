@@ -104,7 +104,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-sys-obsapi-config
+            name: cm-file-sys-obsapi
         - name: secret-sys-obsapi
           csi:
             driver: secrets-store.csi.k8s.io

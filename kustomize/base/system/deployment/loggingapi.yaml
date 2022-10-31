@@ -101,7 +101,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-loggingapi-config
+            name: cm-file-loggingapi
         - name: secret-loggingapi
           csi:
             driver: secrets-store.csi.k8s.io
