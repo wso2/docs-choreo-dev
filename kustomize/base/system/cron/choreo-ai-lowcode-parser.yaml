@@ -73,7 +73,7 @@ spec:
           volumes:
             - configMap:
                 defaultMode: 420
-                name: cm-lowcode-parser-cp
+                name: cm-file-lowcode-parser
               name: lowcode-parser-config
             - name: secret-lowcode-parser
               csi:
