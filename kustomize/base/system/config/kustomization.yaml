@@ -359,3 +359,7 @@ configMapGenerator:
     behavior: create
     files:
       - org-remover/organization-remover.yaml
+  - name: cm-file-organization-management
+    behavior: create
+    files:
+      - organization-management/Config.toml

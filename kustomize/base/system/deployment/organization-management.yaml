@@ -96,7 +96,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-organization-management-config
+            name: cm-file-organization-management
         - name: secret-organization-management
           csi:
             driver: secrets-store.csi.k8s.io
