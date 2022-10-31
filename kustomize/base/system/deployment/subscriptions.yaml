@@ -111,7 +111,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-subscriptions-config
+            name: cm-file-subscriptions
         - name: secret-subscriptions
           csi:
             driver: secrets-store.csi.k8s.io
