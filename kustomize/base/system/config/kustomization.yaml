@@ -355,3 +355,7 @@ configMapGenerator:
     behavior: create
     files:
       - obs/loggingapi/Config.toml
+  - name: cm-file-organization-remover
+    behavior: create
+    files:
+      - org-remover/organization-remover.yaml
