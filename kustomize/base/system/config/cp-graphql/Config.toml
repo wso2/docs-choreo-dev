@@ -1,0 +1,46 @@
+[choreo.cp.graphql.config]
+graphQLServerPort = 9090
+internalHealthCheckPort = 9091
+externalHealthCheckPort = 9092
+platformerUrl = "http://dp-project-manager:80/api/v1"
+appServiceUrl = "http://app-service:8080"
+rudderServiceUrl = "http://dp-rudder:80/api/v1"
+cicdServiceUrl = "http://dp-cicd:80/api/v1"
+negotiatorUrl = "http://negotiator:9092"
+workspaceManagerUrl = "http://workspace-manager:8080"
+deleteManagerUrl =  "http://delete-manager:8000/api/v1"
+subscriptionServiceUrl = "http://subscriptions:9090"
+apimUrl = "{{.APIM_URL}}"
+apimClientId = "{{.APIM_CLIENT_ID}}"
+apimClientSecret = "{{.APIM_CLIENT_SECRET}}"
+apimScopes = "apim:api_create apim:api_delete apim:api_import_export apim:api_product_import_export apim:api_publish apim:api_view apim:app_import_export apim:client_certificates_add apim:client_certificates_update apim:client_certificates_view apim:document_create apim:document_manage apim:ep_certificates_add apim:ep_certificates_update apim:ep_certificates_view apim:external_services_discover apim:mediation_policy_create apim:mediation_policy_manage apim:mediation_policy_view apim:pub_alert_manage apim:publisher_settings apim:shared_scope_manage apim:subscription_block apim:subscription_view apim:threat_protection_policy_create apim:threat_protection_policy_manage apim:publisher_settings"
+jwt_issuer = "{{.JWT_ISSUER_URL}}"
+jwks_endpoint = "{{.JWKS_ENDPOINT_URL}}"
+jwks_enable = true
+audience_console = "{{.CONSOLE_AUDIENCE}}"
+audience_dev_portal = "choreodevportal"
+audience_site24x7_application = "{{.SITE24x7_AUDIENCE}}"
+hpaEnabledOrgs = "{{.HPA_ENABLED_ORGS}}"
+rateLimiterServiceUrl = "http://quota-limiter:9090"
+maxQueryDepth = {{.MAX_QUERY_DEPTH}}
+enableQuotaLimiter = {{.ENABLE_QUOTA_LIMITER}}
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+
+# Change "INFO" to "DEBUG" if need to enable log level for corresponding module.
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.http"
+level = "{{.LOG_LEVEL_HTTP}}"                  
+
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.grpc"
+level = "{{.LOG_LEVEL_GRPC}}"
+
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.utils"
+level = "{{.LOG_LEVEL_UTILS}}"
+
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.apis"
+level = "{{.LOG_LEVEL_APIS}}"

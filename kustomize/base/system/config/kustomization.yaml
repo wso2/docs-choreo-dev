@@ -339,3 +339,7 @@ configMapGenerator:
     behavior: create
     files:
       - connectords/Config.toml
+  - name: cm-file-cp-graphql
+    behavior: create
+    files:
+      - cp-graphql/Config.toml
