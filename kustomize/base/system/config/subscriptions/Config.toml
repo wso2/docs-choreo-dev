@@ -32,5 +32,5 @@ url = "{{.ASB_URL}}"
 timeout = 60
 
 [ballerina.log]
-level = "{{LOG_LEVEL}}"
+level = "{{.LOG_LEVEL}}"
 format = "json"
