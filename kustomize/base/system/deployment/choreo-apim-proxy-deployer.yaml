@@ -85,7 +85,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-choreo-apim-proxy-deployer-config
+            name: cm-file-apim-proxy-deployer
         - name: secret-choreo-apim-proxy-deployer
           csi:
             driver: secrets-store.csi.k8s.io
