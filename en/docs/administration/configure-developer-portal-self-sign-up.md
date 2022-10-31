@@ -95,7 +95,7 @@ This page walks you through the steps to configure self-sign-up to the Developer
      
         ![Configure self-registration](../assets/img/administration/self-sign-up/configure-self-registration.png){.cInlineImage-full}
 
-Once you complete these steps, the Choreo support team will perform the final self-sign-up configuration and you will see a sign up link similar to the following in your Developer Portal:
+Once you complete these steps, the Choreo support team will perform the final self-sign-up configuration, and you will see a sign-up link similar to the following in your Developer Portal:
 
 ![Sign-up](../assets/img/administration/self-sign-up/sign-up.png){.cInlineImage-full}
  
