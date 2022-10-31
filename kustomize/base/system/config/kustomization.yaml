@@ -367,3 +367,7 @@ configMapGenerator:
     behavior: create
     files:
       - quota-limiter/Config.toml
+  - name: cm-file-subscriptions
+    behavior: create
+    files:
+      - subscriptions/Config.toml
