@@ -1,0 +1,7 @@
+# choreo db configs
+[choreo.choreo_admin_api.configs]
+loginTimeout = 60
+minIdle = 5
+poolSize = 15
+testEnabled = false
+useSSL = true

@@ -94,7 +94,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-choreo-admin-api-config
+            name: cm-file-admin-api
         - name: secret-choreo-admin-api
           csi:
             driver: secrets-store.csi.k8s.io

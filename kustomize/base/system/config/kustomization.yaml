@@ -327,3 +327,7 @@ configMapGenerator:
     behavior: create
     files:
       - apim-service/Config.toml
+  - name: cm-file-admin-api
+    behavior: create
+    files:
+      - admin-api/Config.toml
