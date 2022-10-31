@@ -1,0 +1,9 @@
+# choreo app db configs
+[choreo.choreo_organization_management.configs]
+portOffset = 0
+user = "choreo_app_db_user"
+loginTimeout = 60
+useSsl = false
+poolSize = 15
+minIdle = 5
+testEnabled = false
