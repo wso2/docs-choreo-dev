@@ -323,3 +323,7 @@ configMapGenerator:
     behavior: create
     files:
       - devops-portal-api/Config.toml
+  - name: cm-file-apim-service
+    behavior: create
+    files:
+      - apim-service/Config.toml
