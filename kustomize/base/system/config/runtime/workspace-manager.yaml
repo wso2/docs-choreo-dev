@@ -1,0 +1,134 @@
+kubeConfig:
+  path: ""
+  masterUrl: ""
+redis:
+  host: ${REDIS_HOST}
+  port: 6380
+  disableTls: false
+  password: ${REDIS_PASSWORD}
+server:
+  port: 8080
+upstream:
+  app-service: app-service:8080
+  negotiator: ${UPSTREAM_NEGOTIATOR}
+workspace:
+  namespace: ${WORKSPACE_NAMESPACE}
+  pvcName: pvc-userappstorage
+  apiHostName: ${WORKSPACE_API_HOST_NAME}
+  apiIngressTlsSecret: ${WORKSPACE_API_INGRESS_TLS_SECRET}
+  apiPort: 8080
+  appIngressHostSuffix: ${WORKSPACE_APP_INGRESS_HOST_SUFFIX}
+  appIngressTlsSecret: ${WORKSPACE_APP_INGRESS_TLS_SECRET}
+  cleanInterval: 3600s
+  apiImage: ${WORKSPACE_IMAGE}
+  langServerImage: choreoipaas/lang-server:v0.1.7 # DEPRECATED. Please use kustomize/prod/choreo-system/kustomization.yaml to set lang-server image
+  projectTemplateDir: /template
+  projectBallerinaVersion: ${WORKSPACE_BALLERINA_VERSION}
+  userAppsDir: /apps
+  periscopeHost: ${WORKSPACE_PERISCOPE_HOST} # DEPRECATED
+  azureInsightsKey: ${AZURE_INSIGHTS_KEY}
+  taintKey: dataplane
+  nodeSelector:
+    execution-mode: dataplane
+  ingressAnnotations:
+    ingress.kubernetes.io/ssl-redirect:                  true
+    kubernetes.io/ingress.class:                         ${WORKSPACE_INGRESS_ANNOTATIONS_KUBERNETES_IO_INGRESS_CLASS}
+    nginx.ingress.kubernetes.io/affinity:                cookie
+    nginx.ingress.kubernetes.io/permanent-redirect-code: 301
+    nginx.ingress.kubernetes.io/proxy-body-size:         100m
+    nginx.ingress.kubernetes.io/session-cookie-hash:     sha1
+    nginx.ingress.kubernetes.io/session-cookie-name:     route
+    nginx.ingress.kubernetes.io/ssl-redirect:            true
+    nginx.ingress.kubernetes.io/enable-cors:             true
+    nginx.ingress.kubernetes.io/cors-allow-origin:       ${WORKSPACE_INGRESS_ANNOTATIONS_NGINX_INGRESS_KUBERNETES_IO_CORS_ALLOW_ORIGIN}
+    nginx.ingress.kubernetes.io/proxy-send-timeout:      10800 # 3 hours
+    nginx.ingress.kubernetes.io/proxy-read-timeout:      10800 # 3 hours
+logger:
+  level: ${LOGGER_LEVEL}    # todo: change this to info after the new components get stable in prod.
+  encoding: json
+  development: ${LOGGER_DEVELOPMENT}
+  disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
+  encoderConfig:
+    timeKey: time
+    levelKey: level
+    nameKey: logger
+    callerKey: caller
+    messageKey: message
+    stacktraceKey: stacktrace
+    lineEnding: "\n"
+    levelEncoder: capital
+    timeEncoder: iso8601
+    durationEncoder: string
+    callerEncoder: short
+  outputPaths: stdout
+  errorOutputPaths: stdout # we send errors to stdout in dev so that we can easily grep without redirect
+apim:
+  clientKey: ${APIM_CLIENT_KEY}
+  clientSecret: ${APIM_CLIENT_SECRET}
+  idpUrl: ${APIM_IDP_URL}
+  serviceUrl: ${APIM_SERVICE_URL}
+  gatewaySuffix: ${APIM_GATEWAY_SUFFIX}
+  devGatewaySuffix: ${APIM_DEV_GATEWAY_SUFFIX}
+  createApiForService: ${CREATE_API_FOR_SERVICE}
+codeServer:
+  image: ${CODE_SERVER_IMAGE}
+  initImage: ${CODE_SERVER_INIT_IMAGE}
+  namespacePrefix: prod-cs
+  ingressTlsSecret: "" # Set to cert-manager/prod-choreo-workspace-wildcard-tls by using NginX -wildcard-tls-secret command line arg
+  githubToken: ${CSM_GITHUB_TOKEN}
+  cleanerInterval: 15m
+  codeServerMaxAge: 6h
+  volumeCleanerInterval: 6h
+  volumeMaxAge: 720h
+  mizzenApi:
+    url: http://dp-mizzen:80
+  defaultClusterId: B0FD3ABF-AD58-EC11-94F6-C89665949033
+  defaultIngressHost: workspace.choreo.dev
+  defaultRegion: us-east-2
+  ingressAnnotations:
+    kubernetes.io/ingress.class: prod-choreo-workspace-nginx
+    ingress.kubernetes.io/ssl-redirect: true
+    nginx.org/redirect-to-https: true
+    nginx.org/client-max-body-size: 100m
+    nginx.org/proxy-send-timeout: 10800 # 3 hours
+    nginx.org/proxy-read-timeout: 10800 # 3 hours
+  frontendBaseUrl: https://console.choreo.dev
+  gatewayBaseUrl: https://choreocontrolplane.choreo.dev/93tu
+  storageAccSecret: prod-code-server-volume-storage
+  storageAccSecretNamespace: prod-common-cs
+  codeServerDefaultNetworkPolicy: prod-default-code-server-netpol
+  codeServerDefaultNetworkPolicyNamespace: prod-common-cs
+  maxCodeServersPerCluster: 1500
+  storage:
+    azureFiles:  
+      fileShareList:
+      - location: us-east-2
+        config:
+          storageAccName: choreoprodcodeservervol
+          storageAccKey: ${CSM_VOLUME_STORAGE_ACCOUNT_KEY}
+  iam:
+    apim:
+      tokenEndpoint: https://sts.choreo.dev/oauth2/token
+      clientId: ${CSM_APIM_IDP_VSCODE_CLIENT_ID}
+    balCentral:
+      tokenEndpoint: https://sts.choreo.dev/oauth2/token
+      clientId: ${CSM_APIM_IDP_BALLERINA_CENTRAL_CLIENT_ID}
+  userConnectors: true
+  codeServerEnvs:
+    VSCODE_CHOREO_APIM_TOKEN_ENDPOINT: https://sts.choreo.dev/oauth2/token
+    VSCODE_CHOREO_APIM_CLIENT_ID: ${CSM_APIM_IDP_VSCODE_CLIENT_ID}
+    VSCODE_CHOREO_INSTRUMENTATION_KEY: 8f98bf03-9ba8-47ba-a18d-62449b92ca42
+    CHOREO_WHATFIX_URL: https://cdn.whatfix.com/prod/c9fb1d90-71f0-11ec-a69b-2a8342861064/embed/embed.nocache.js
+    #  This is used for sentry configuration
+    VSCODE_CHOREO_SENTRY_ENV: prod
+    # Low code editor version
+    BALLERINA_LOW_CODE_EDITOR_VERSION: "1.1.7-20220317-0709.0"
+    BALLERINA_LOW_CODE_RESOURCES_VERSION: ${BALLERINA_LOW_CODE_RESOURCES_VERSION}
+    VSCODE_HOTJAR_ID: "2626534"
+  enableCodeServerSSO: "true"
+  db:
+    username: ${CSM_DB_USERNAME}
+    password: ${CSM_DB_PASSWORD} 
+    host: ${CSM_DB_HOST} 
+    port: 1433  
+    name: ${CSM_DB_NAME}

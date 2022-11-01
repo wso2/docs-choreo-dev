@@ -197,7 +197,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-app-service
+            name: cm-file-app-service
         - name: secret-gsuite
           csi:
             driver: secrets-store.csi.k8s.io
