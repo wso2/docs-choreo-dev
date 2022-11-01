@@ -71,7 +71,7 @@ spec:
           volumes:
             - name: config
               configMap:
-                name: cm-step-aggregator-config
+                name: cm-file-step-aggregator
             - name: secret-step-aggregator
               csi:
                 driver: secrets-store.csi.k8s.io
