@@ -380,3 +380,7 @@ configMapGenerator:
     behavior: create
     files:
       - step-usage-publisher/Config.toml
+  - name: cm-file-step-aggregator
+    behavior: create
+    files:
+      - step-aggregator/Config.toml
