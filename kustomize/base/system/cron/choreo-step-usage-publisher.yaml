@@ -75,7 +75,7 @@ spec:
           volumes:
             - name: config
               configMap:
-                name: cm-step-usage-publisher-config
+                name: cm-file-step-usage-publisher
             - name: secret-step-usage-publisher
               csi:
                 driver: secrets-store.csi.k8s.io

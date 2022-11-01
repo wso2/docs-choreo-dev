@@ -376,3 +376,7 @@ configMapGenerator:
     behavior: create
     files:
       - step-enforcer/Config.toml
+  - name: cm-file-step-usage-publisher
+    behavior: create
+    files:
+      - step-usage-publisher/Config.toml
