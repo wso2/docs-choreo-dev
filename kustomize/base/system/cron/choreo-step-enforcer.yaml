@@ -76,7 +76,7 @@ spec:
           volumes:
             - name: config
               configMap:
-                name: cm-step-enforcer-config
+                name: cm-file-step-enforcer
             - name: secret-step-enforcer
               csi:
                 driver: secrets-store.csi.k8s.io
