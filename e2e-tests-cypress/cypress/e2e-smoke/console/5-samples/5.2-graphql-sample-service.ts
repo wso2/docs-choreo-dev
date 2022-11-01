@@ -60,23 +60,23 @@ describe("Graphql GQL service test", () => {
 
   it("Verify test functionality of GQL query in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_QUERY);
+    TestHelper.testDevOnGraphQL(TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
   it("Verify test functionality of GQL query in Prod on swagger", () => {
-    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_QUERY);
+    TestHelper.testProdOnGraphQL(TEST_QUERY);
     TestHelper.getGqlResult(TEST_QUERY_RESPONSE);
   });
 
   it("Verify test functionality of GQL mutation in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnGraphiQL(Environment.DEVELOPMENT, TEST_MUTATION);
+    TestHelper.testDevOnGraphQL(TEST_MUTATION);
     TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 
   it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    TestHelper.testOnGraphiQL(Environment.PRODUCTION, TEST_MUTATION);
+    TestHelper.testProdOnGraphQL(TEST_MUTATION);
     TestHelper.getGqlResult(TEST_MUTATION_RESPONSE);
   });
 

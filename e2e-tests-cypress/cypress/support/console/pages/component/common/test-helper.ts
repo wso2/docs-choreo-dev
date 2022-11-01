@@ -50,9 +50,24 @@ export class TestHelper {
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 
-  static testOnGraphiQL(env: Environment, code: string) {
+  static testDevOnGraphQL(code: string) {
     cy.get('div[class="execute-button-wrap"]>button').should('be.enabled')
-    Curl.selectEnvironment(env)
+    APITest.selectDevEnvironment();
+
+    cy.wait(5000)
+    cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
+    cy.get('section>div>div>div[class="CodeMirror-sizer"]>div>div>div>div>div>pre>span>span[cm-text]')
+      .then($p => {
+        Utils.paste($p, code, false)
+        cy.wait(2000)
+      })
+    cy.get('div[class="toolbar"]>button').eq(0).click()
+    cy.get('div[class="execute-button-wrap"]>button').click()
+  }
+
+  static testProdOnGraphQL(code: string) {
+    cy.get('div[class="execute-button-wrap"]>button').should('be.enabled')
+    APITest.selectProdEnvironment();
 
     cy.wait(5000)
     cy.get('section> div>div>div>div>div[class="CodeMirror-lines"]>div').eq(0).click()
