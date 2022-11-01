@@ -147,7 +147,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-file-negotiator-config
+            name: cm-file-negotiator
         - name: secret-program-db
           csi:
             driver: secrets-store.csi.k8s.io
