@@ -140,14 +140,8 @@ spec:
             - name: secret-redis
               mountPath: "/mnt/csi/secret-redis"
               readOnly: true
-            - name: config
-              mountPath: /home/ballerina/Config.toml
-              subPath: Config.toml
       restartPolicy: Always
       volumes:
-        - name: config
-          configMap:
-            name: cm-file-negotiator-config
         - name: secret-program-db
           csi:
             driver: secrets-store.csi.k8s.io
