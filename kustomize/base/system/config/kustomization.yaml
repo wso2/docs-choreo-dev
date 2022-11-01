@@ -384,7 +384,7 @@ configMapGenerator:
     behavior: create
     files:
       - step-aggregator/Config.toml
-  - name: cm-file-negotiator-config
+  - name: cm-file-negotiator
     behavior: create
     files:
       - negotiator/Config.toml
