@@ -69,5 +69,5 @@ conn_pool_min_idle = 5
 lock_time_out = 10000
 
 [ballerina.log]
-level = "{{.LOG_LEVELs}}"
+level = "{{.LOG_LEVEL}}"
 format = "json"
