@@ -50,6 +50,9 @@ Read and write access to code, pull requests, and repository hooks
 
      2. In your terminal, navigate to the root directory of your GitHub repository and issue the following commands:
 
+        !!! note
+            Before issuing these commands, you need to check whether the `<MODULE_ROOT>/.githooks/pre-commit` file exists. If it does not, contact our Support team.
+
          - `chmod +x <MODULE_ROOT>/.githooks/pre-commit`
          - `git config core.hooksPath <MODULE_ROOT>/.githooks`
 
