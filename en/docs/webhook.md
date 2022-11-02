@@ -99,7 +99,7 @@ Once you implement a webhook, it needs to be built, tested, and eventually put i
 
 ![Manage API Proxies](assets/img/webhooks/webhook-lifecycle-management.png){.cInlineImage-threeQuarter}
 
-### Add Documentation to the API exposing the webhook
+### Add documentation to the API exposing the webhook
 
 A well-designed API needs to be well-documented as well. The usability of the API is a deciding factor of its value. Many API developers find documenting an API a tedious task. Choreo makes documentation an easy task for developers by allowing different sources of documentation. Choreo allows you to add documentation to the REST API by specifying a URL, in Markdown format, importing a file, or by simply including inline documentation. 
 
