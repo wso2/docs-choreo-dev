@@ -66,7 +66,6 @@ Read and write access to code, pull requests, and repository hooks
             .choreo/build/bin/foo.jar
         [main ea3deab] test
         3 files changed, 7 insertions(+), 3 deletions(-)
-
         ```
 
 Now you have successfully connected your existing Ballerina project repository to Choreo. You can go back to the Choreo Console tab to design the component depending on your requirement.
