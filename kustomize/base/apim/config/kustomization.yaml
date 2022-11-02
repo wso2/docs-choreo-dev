@@ -8,7 +8,7 @@ configMapGenerator:
       - adapter/config.toml
       - adapter/log4j2.properties
       - adapter/log_config.toml
-  - name: cm-file-cc-internal-global_adapter
+  - name: cm-file-cc-internal-global-adapter
     behavior: create
     files:
       - internal-global-adapter/ga_config.toml
