@@ -167,7 +167,7 @@ spec:
             name: internal-ga-keystore-vol
         - name: global-adapter-config
           configMap:
-            name: cm-file-cc-internal-global_adapter
+            name: cc-internal-ga-conf
         - name: mgw-common-cert-vol
           configMap:
             name: mgw-common-cert
