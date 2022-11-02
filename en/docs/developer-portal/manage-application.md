@@ -35,7 +35,7 @@ Depending on your use case, you can generate an access token using one of the tw
 
 Token Exchange grant type requires you to pass a subject_token as a parameter in the token invocation call. You can obtain a subject token (id token) by using the `open_id` scope. Follow the steps below to generate an access token from the IdP along with the subject token:
 
-1. Register the IdP in Choreo by following the steps in the section [add an external IdP](../administration/connect-to-an-external-identity-provider/#step-1-add-an-external-idp).
+1. Register the IdP in Choreo by following the steps in the section [add an external IdP](../administration/connect-to-an-external-identity-provider.md/#step-1-add-an-external-idp).
 
 2. Generate a token from the registered IdP with the `openId` scope and retrieve the `id_token` from the token response.  
                 
