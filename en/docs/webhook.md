@@ -18,7 +18,7 @@ Webhooks are a widely used programming element to create event-driven API archit
 Developing a webhook is the process of creating the webhook by identifying the trigger event and implementing the logic to execute the event. You can create and design an event-driven integration using webhooks in Choreo easily. 
 
 Choreo’s low-code editor allows developers to easily design and develop webhooks for platforms such as GitHub, Slack, and Google Calendar, etc. using the integrated pro-code or low-code editor. Creating a webhook in Choreo starts by either creating the Webhook component from scratch or by connecting an existing Ballerina repository. To create a webhook from scratch, you can start by creating a Webhook component and selecting the trigger type(e.g. GitHub).
-Next, you can give the webhook a name, select the trigger channel, and select if to manage the webhook code in a choreo-managed repository or in your own respository.
+Next, you can give the webhook a name, select the trigger channel, and select whether to manage the webhook code in a choreo-managed repository or in your own repository.
 
 ![Create a webhook](assets/img/webhooks/create-webhook.png){.cInlineImage-half}
 
