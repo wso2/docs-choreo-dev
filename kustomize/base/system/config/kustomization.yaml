@@ -389,3 +389,7 @@ configMapGenerator:
     files:
       - opentelemetry-collector/config.yaml
       - opentelemetry-collector/data-planes.yaml
+  - name: cm-file-negotiator
+    behavior: create
+    files:
+      - negotiator/Config.toml
