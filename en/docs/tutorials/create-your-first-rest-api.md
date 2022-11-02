@@ -335,7 +335,7 @@ Let's run the REST API you designed in the Web Editor to check whether it can be
 
 2. Click **Try It**. 
 
-    ![Try it](../assets/img/tutorials/rest-api/try it.png){.cInlineImage-full}
+    ![Try it](../assets/img/tutorials/rest-api/try-it.png){.cInlineImage-full}
 
     As a result, a test view opens on the right of the page.
     
