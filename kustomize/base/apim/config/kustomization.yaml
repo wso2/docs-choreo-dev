@@ -1,15 +1,2 @@
 resources:
   - internal-global-adapter
-
-configMapGenerator:
-  - name: cm-file-mgw-adapter-enforcer
-    behavior: create
-    files:
-      - adapter/config.toml
-      - adapter/log4j2.properties
-      - adapter/log_config.toml
-  - name: cm-file-cc-internal-global_adapter
-    behavior: create
-    files:
-      - internal-global-adapter/ga_config.toml
-      - internal-global-adapter/log_config.toml
