@@ -95,7 +95,7 @@ Choreo exposes HTTP-based webhooks as APIs. Therefore, you can leverage the API 
 
 ### Lifecycle of the API exposing the webhook 
 
-Once you implement a webhook, it needs to be built, tested, and eventually put into production as an API. Choreo executes a CI/CD pipeline that manages the API’s Lifecycle. Choreo by default stores the source code of webhooks in a private Github repository for the user account. Optionally, a user can choose to store the code in a user managed repository. The CI/CD pipeline in Choreo takes an API through the whole process, starting with code checkout, to compile, build, test, and finally to deployment.
+Once you implement a webhook, it needs to be built, tested, and eventually put into production as an API. Choreo executes a CI/CD pipeline that manages the API’s Lifecycle. Choreo by default stores the source code of webhooks in a private Github repository for the user account. Optionally, a user can choose to store the code in a user-managed repository. The CI/CD pipeline in Choreo takes an API through the whole process, starting with code checkout, to compile, build, test, and finally to deployment.
 
 ![Manage API Proxies](assets/img/webhooks/webhook-lifecycle-management.png){.cInlineImage-threeQuarter}
 
