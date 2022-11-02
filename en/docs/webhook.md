@@ -42,7 +42,7 @@ In addition to the low-code mode, Choreo provides a pro code mode of implementin
 
 ![Low-Code Pro-Code View](assets/img/webhooks/low-code-pro-code-webhook.png){.cInlineImage-threeQuarter}
 
-Choreo gives the developers the flexibility to use the pro-code mode only or use it for implementing certain parts of the API and use the low-code mode for the rest, based on their preference. Choreo treats the source code (generated and handwritten) of the API as the single source of truth and therefore has no limitations or restrictions on which mode developers may choose to implement their webhook's functionality.
+Choreo gives the developers the flexibility to use the pro-code mode only or use it for implementing certain parts of the API and use the low-code mode for the rest (based on their preference). Choreo treats the source code (generated and handwritten) of the API as the single source of truth and therefore has no limitations or restrictions on which mode developers may choose to implement their webhook's functionality.
 
 ## Deploy a webhook
 
