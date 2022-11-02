@@ -104,7 +104,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeploymentStatusByVersionBYOC"})
     @CitrusTest
     public void testComponentDevDeploymentStatusBYOC() throws Exception {
-        GraphQL.componentDeployment(choreoComponent, "dev", "update code", accessToken);
+        GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatusBYOC"})

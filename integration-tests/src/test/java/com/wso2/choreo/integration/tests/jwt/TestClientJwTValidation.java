@@ -28,6 +28,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.byoc.ByocComponenet;
 import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
@@ -41,7 +42,6 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
@@ -144,7 +144,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeploymentStatusByVersionJwt"})
     @CitrusTest
     public void testComponentDevDeploymentStatusJwt() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, choreoComponent, "dev", "update code");
+        GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
     }
 
 
@@ -172,13 +172,13 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dependsOnMethods = {
-            "testAPIInvocationJwt"
-    }, alwaysRun = true)
+    @Test(dependsOnMethods = {"testAPIInvocationJwt"}, alwaysRun = true)
     @CitrusTest
     public void testDeleteComponent() throws IOException {
         Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
+        ByocComponenet[] components = GraphQL.getProjectComponents(projectId,accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+        Assert.assertEquals(components.length, 0);
     }
 
     @Test(dependsOnMethods = {"testDeleteComponent"}, alwaysRun = true)

@@ -285,7 +285,7 @@ public class GraphQL {
                                 .body(expectedResponse)));
     }
 
-    public static void componentDeployment(ChoreoComponent component, String envName, String message, String accessToken) throws Exception {
+    public static void componentDeployment(ChoreoComponent component, String envName, String accessToken) throws Exception {
         String envId = component.getLatestAppEnvId(envName);
 
         Map<String, String> requestParams = new HashMap<>();
@@ -325,11 +325,10 @@ public class GraphQL {
         responseParams.put("srcGitRepoUrl", srcGitHubURL);
 
 
-        String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/createComponent/create_user_managed_component.mustache", responseParams);
+        String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/createUserManagedComponent.mustache", responseParams);
 
         Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        CreateComponent p = ObjectMapperUtil.mapStringToObject(CreateComponent.class, response.getRes(), "createByocComponent");
-        return  p;
+        return ObjectMapperUtil.mapStringToObject(CreateComponent.class, response.getRes(), "createComponent");
     }
 
 
@@ -412,6 +411,15 @@ public class GraphQL {
         requestParam.put("projectId", projectId);
         String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/deleteComponent.mustache", requestParam);
         return HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+    }
+
+    public static ByocComponenet[] getProjectComponents(String projectId,String accessToken) throws IOException {
+        Map<String, String> requestParam = new HashMap<>();
+        requestParam.put("orgHandler", ORG_HANDLE);
+        requestParam.put("projectId", projectId);
+        String expectedResponse = ComponentUtils.generateStringFromTemplate("templates/graphql/requests/getProjectComponents.mustache", requestParam);
+        Response response =  HttpClientUtil.httpPOST(choreoProjectURL,  ObjectMapperUtil.mapToGraphQLQuery(expectedResponse),accessToken, "");
+        return ObjectMapperUtil.mapToCollection(ByocComponenet[].class, response.getRes(), "components");
     }
 
 }
