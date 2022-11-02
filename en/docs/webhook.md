@@ -52,7 +52,7 @@ Choreo provides an easy, interactive UI to help you deploy the webhook in Choreo
 
 Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo’s data plane runs on a Kubernetes stack and hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, etc. When you deploy a webhook, Choreo checks out your latest code, builds it, creates a Docker image, and starts it in a Kubernetes cluster managed by Choreo. At this point, Choreo also registers the webhook with the relevant event source (e.g., GitHub, Slack, etc.). When the relevant action occurs in the event source, Choreo is notified through the callback. Choreo then activates the webhook and fires events. Choreo exposes HTTP-based webhooks as an API. Therefore, you can test, manage, and observe this API like any other API on Choreo.
 
-Once you deploy the webhooks to the development environment, it is active in the developer environment. When you are ready to take the code to the Production, you can promote the deployment and enable the functionality to your consumers. 
+Once you deploy the webhooks to the development environment, it is active in the developer environment. When you are ready to take the code to production, you can promote the deployment and enable the functionality to your consumers. 
 
 Choreo allows you to view the deployment logs through the Deploy view. This helps you troubleshoot and view the status of the builds and deployment. 
 
