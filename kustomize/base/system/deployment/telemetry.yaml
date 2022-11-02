@@ -97,7 +97,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-telemetry-config
+            name: cm-file-telemetry
         - name: secret-telemetry
           csi:
             driver: secrets-store.csi.k8s.io

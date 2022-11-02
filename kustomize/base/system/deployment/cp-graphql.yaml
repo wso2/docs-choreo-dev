@@ -95,7 +95,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-cp-graphql-config
+            name: cm-file-cp-graphql
         - name: secret-cp-graphql
           csi:
             driver: secrets-store.csi.k8s.io

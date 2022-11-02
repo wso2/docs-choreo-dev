@@ -1,0 +1,20 @@
+[choreo.step_usage_publisher.db]
+user = "choreo_step_db_user"
+loginTimeout = 10000
+useSsl = false
+poolSize = 5
+minIdle = 5
+
+[choreo.step_usage_publisher.clients]
+stripeConnectionUrl = "https://api.stripe.com"
+subscriptionServiceUrl = "http://subscriptions:9090"
+timeout = 60.0
+retryCount = 30
+interval = 1.0
+maxInterval = 120.0
+backoffFactor = 2.0
+emailServiceUrl = "https://email-service"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+format = "json"

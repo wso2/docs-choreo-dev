@@ -1,0 +1,2 @@
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
