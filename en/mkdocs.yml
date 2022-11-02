@@ -64,7 +64,7 @@ nav:
       - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
-  - Triggers: triggers.md
+  - Webhooks: webhook.md
   - Scheduled Tasks: scheduled-tasks.md
   - GraphQL APIs: graphql-api.md
   - Developer Portal:
