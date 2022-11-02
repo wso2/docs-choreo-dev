@@ -74,7 +74,7 @@ Testing your webhook is an integral part of the spec-driven API development appr
 
 ### Integrated Console
 
-The in-built Swagger console is an interactive UI where you can test your HTTP-based webhook easily. You can test your webhooks in the environments you deploy them by selecting the environment. Choreo, by default, uses OAuth2.0 authentication. Therefore the Swagger console provides you the option to generate your test keys to test the APIs. Once you meet the pre-requisites, you can test the different resources you defined by specifying any parameters, if needed. 
+The in-built Swagger console is an interactive UI where you can test your HTTP-based webhook easily. You can test your webhooks in the environments you deploy them by selecting the environment. Choreo, by default, uses OAuth2.0 authentication. Therefore the Swagger console provides you the option to generate your test keys to test the APIs. Once you meet the pre-requisites, you can test the different resources you defined by specifying any parameters if needed. 
 ![REST API Proxy - OpenAPI Console](assets/img/webhooks/webhook-openapi-test-console.png){.cInlineImage-threeQuarter}
 
 ### cURL
