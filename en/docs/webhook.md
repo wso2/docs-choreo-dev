@@ -5,7 +5,7 @@ Explore how you can create event-driven integrations with Choreo Webhooks.
 
 A webhook is a cause that activates an action. Webhooks in Choreo are no different and are user-defined callbacks. 
 
-Webhooks are used by developers to implement event-driven integrations. Before event-driven solutions,  to identify an event occurrence, systems had to keep polling other systems periodically.  With event-driven solutions, systems can focus on the main business-flow, and proactively be notified when an event of interest occurs in real-time. The following are some examples of scenarios where you can create webhook for the mentioned platforms:
+Webhooks are used by developers to implement event-driven integrations. Before event-driven solutions,  to identify an event occurrence, systems had to keep polling other systems periodically.  With event-driven solutions, systems can focus on the main business-flow, and proactively be notified when an event of interest occurs in real-time. The following are some examples of scenarios where you can create webhooks for the mentioned platforms:
 
 - Sending a chat message in a group chat when an event gets added in a slack channel.
 - Generating an alert when a new issue gets created in a specific Git repository.
