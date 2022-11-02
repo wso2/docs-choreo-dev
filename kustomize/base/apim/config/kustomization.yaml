@@ -7,13 +7,7 @@ configMapGenerator:
     files:
       - adapter/config.toml
       - adapter/log4j2.properties
-      - adapter/log_config.toml  
-  - name: cm-file-mgw-ga-cp-adapter
-    behavior: create
-    files:
-      - adapter/control-plane-adapter/config.toml
-      - adapter/control-plane-adapter/log4j2.properties
-      - adapter/control-plane-adapter/log_config.toml
+      - adapter/log_config.toml
   - name: cm-file-cc-internal-global_adapter
     behavior: create
     files:
