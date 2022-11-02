@@ -20,7 +20,11 @@ import com.github.mustachejava.MustacheFactory;
 import com.wso2.choreo.integration.apis.GraphQL;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
@@ -36,6 +40,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -116,22 +121,14 @@ public class ComponentUtils {
 
     }
 
-    public static TestConfigs invokeEndpoint(ChoreoComponent component, String componentType, String accessToken) throws NoLatestApiVersionFoundException, IOException, InvokeInformationNotFoundException, InterruptedException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-        String apiId = component.getApiVersions().get(0).getProxyId();
-        l.log(Level.INFO, apiId);
+    public static TestConfigs invokeEndpoint(ChoreoComponent component, String componentType, String accessToken) throws NoLatestApiVersionFoundException, IOException, InvokeInformationNotFoundException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
+        TestConfigs wrapper = new TestConfigs();
         InvokeInformation[] info = GraphQL.getInvokeInformation(component, componentType, accessToken);
-        InvokeInformation invokeInformation = null;
+        String apiKey = component.getAPIKeyForInvoke(accessToken, component.getApiId()).replace("\"", "");
         for (InvokeInformation in : info) {
-            if (in.getApiId().equals(apiId)) {
-                invokeInformation = in;
-            }
+           wrapper.addConfig(in.getEnvironmentName(), TestConfigs.builder().invokeUrl(in.getInvokeUrl()).apiKey(apiKey).build());
         }
-        if (invokeInformation == null) {
-            throw new InvokeInformationNotFoundException();
-        }
-        String apiKey = component.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId()).replace("\"", "");
-
-        return TestConfigs.builder().invokeUrl(invokeInformation.getInvokeUrl()).apiKey(apiKey).build();
+        return wrapper;
     }
 
 

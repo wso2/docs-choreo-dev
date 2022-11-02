@@ -13,6 +13,15 @@
 
 package com.wso2.choreo.integration.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 public class GraphqlDTO {
     private String apiName;
     private int orgId;
@@ -26,91 +35,91 @@ public class GraphqlDTO {
     private String repositoryType;
     private String repositoryBranch;
 
-
-    public void setApiName(String apiName) {
-        this.apiName = apiName;
-    }
-
-    public String getApiName() {
-        return apiName;
-    }
-
-    public void setOrgId(int orgId) {
-        this.orgId = orgId;
-    }
-
-    public int getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgHandler(String orgHandler) {
-        this.orgHandler = orgHandler;
-    }
-
-    public String getOrgHandler() {
-        return orgHandler;
-    }
-
-    public void setDisplayType(String displayType) {
-        this.displayType = displayType;
-    }
-
-    public String getDisplayType() {
-        return displayType;
-    }
-
-    public void setDiaplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setApiId(String apiId) {
-        this.apiId = apiId;
-    }
-
-    public String getApiId() {
-        return apiId;
-    }
-
-    public String getSrcGitRepoUrl() {
-        return srcGitRepoUrl;
-    }
-
-    public void setSrcGitRepoUrl(String srcGitRepoUrl) {
-        this.srcGitRepoUrl = srcGitRepoUrl;
-    }
-    public String getRepositorySubPath() {
-        return repositorySubPath;
-    }
-
-    public void setRepositorySubPath(String repositorySubPath) {
-        this.repositorySubPath = repositorySubPath;
-    }
-
-    public String getRepositoryType() {
-        return repositoryType;
-    }
-
-    public void setRepositoryType(String repositoryType) {
-        this.repositoryType = repositoryType;
-    }
-
-    public String getRepositoryBranch() {
-        return repositoryBranch;
-    }
-
-    public void setRepositoryBranch(String repositoryBranch) {
-        this.repositoryBranch = repositoryBranch;
-    }
+//
+//    public void setApiName(String apiName) {
+//        this.apiName = apiName;
+//    }
+//
+//    public String getApiName() {
+//        return apiName;
+//    }
+//
+//    public void setOrgId(int orgId) {
+//        this.orgId = orgId;
+//    }
+//
+//    public int getOrgId() {
+//        return orgId;
+//    }
+//
+//    public void setOrgHandler(String orgHandler) {
+//        this.orgHandler = orgHandler;
+//    }
+//
+//    public String getOrgHandler() {
+//        return orgHandler;
+//    }
+//
+//    public void setDisplayType(String displayType) {
+//        this.displayType = displayType;
+//    }
+//
+//    public String getDisplayType() {
+//        return displayType;
+//    }
+//
+//    public void setDiaplayName(String displayName) {
+//        this.displayName = displayName;
+//    }
+//
+//    public String getDisplayName() {
+//        return displayName;
+//    }
+//
+//    public void setProjectId(String projectId) {
+//        this.projectId = projectId;
+//    }
+//
+//    public String getProjectId() {
+//        return projectId;
+//    }
+//
+//    public void setApiId(String apiId) {
+//        this.apiId = apiId;
+//    }
+//
+//    public String getApiId() {
+//        return apiId;
+//    }
+//
+//    public String getSrcGitRepoUrl() {
+//        return srcGitRepoUrl;
+//    }
+//
+//    public void setSrcGitRepoUrl(String srcGitRepoUrl) {
+//        this.srcGitRepoUrl = srcGitRepoUrl;
+//    }
+//    public String getRepositorySubPath() {
+//        return repositorySubPath;
+//    }
+//
+//    public void setRepositorySubPath(String repositorySubPath) {
+//        this.repositorySubPath = repositorySubPath;
+//    }
+//
+//    public String getRepositoryType() {
+//        return repositoryType;
+//    }
+//
+//    public void setRepositoryType(String repositoryType) {
+//        this.repositoryType = repositoryType;
+//    }
+//
+//    public String getRepositoryBranch() {
+//        return repositoryBranch;
+//    }
+//
+//    public void setRepositoryBranch(String repositoryBranch) {
+//        this.repositoryBranch = repositoryBranch;
+//    }
 }

@@ -811,8 +811,8 @@ public abstract class ChoreoComponent {
      * @param apiId       apiId for the deployed component
      * @return request body containing graphql query
      */
-    public String getAPIKeyForInvoke(String accessToken, String apiId) throws InterruptedException, IOException,
-            APIKeyGenerationCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
+    public String getAPIKeyForInvoke(String accessToken, String apiId) throws  IOException,
+            APIKeyGenerationCheckException, ApiKeyNotFoundException {
         String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.APIS_ENDPOINT)
                 .concat("/")

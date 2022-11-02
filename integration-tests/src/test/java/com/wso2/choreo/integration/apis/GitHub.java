@@ -24,13 +24,6 @@ public class GitHub {
 
 
 
-//    private  static  final  String GH_ORG="dasunshakhyaorg";
-//    private static  final  String gitPat="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";
-//    private static final String AUTH_HEADER = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(gitPat);
-
-
-
-
     public GitHub() {
     }
 

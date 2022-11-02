@@ -118,7 +118,7 @@ public class ControlPlaneAPIs {
             }
 
             try {
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(30);
             } catch (InterruptedException e) {
                 throw new ComponentCreationStatusCheckException(e);
             }
