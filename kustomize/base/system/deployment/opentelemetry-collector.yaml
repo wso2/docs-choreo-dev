@@ -95,7 +95,7 @@ spec:
               name: csi-secret-store-azure
         - name: config
           configMap:
-            name: opentelemetry-collector
+            name: cm-file-opentelemetry-collector
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
