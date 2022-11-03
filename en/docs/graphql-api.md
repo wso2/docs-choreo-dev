@@ -2,8 +2,6 @@
 
 Explore how you can easily design, develop, and manage GraphQL APIs in Choreo to implement your business API strategy.
 
-!!! note "Enable GraphQL components"
-    GraphQL API is currently available in Choreo as a preview feature.
 
 ## What is a GraphQL API?
 
@@ -47,7 +45,7 @@ Choreo comes with the Web Editor which is an IDE designed based on Visual Studio
 ![Implement graphql API](assets/img/graphql/implement-graphql-api.png){.cInlineImage-full}
 
 !!! info
-    The current preview does not support editing the GraphQL API implementation in the low-code mode.
+    Implementing the GraphQL APIs in the low-code mode is currently not supported.
 
 ## Lifecycle
 
@@ -57,7 +55,7 @@ Once you implement a GraphQL API, you can build, test, and eventually put it int
 
 The following diagram illustrates the procedure to deploy an API in Choreo to the default development environment.
 
-![Deploy API](assets/img/rest-apis/deploy-api.png){.cInlineImage-full}
+![Deploy API](assets/img/graphql/deploy-graphql-api.png){.cInlineImage-full}
 
 Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to their runtime(data plane) clusters. The data plane of Choreo runs on a Kubernetes stack under the hood. Therefore, you can benefit from its features such as auto-scaling, auto-healing, secret-management, liveness and readiness checks, etc.
 
