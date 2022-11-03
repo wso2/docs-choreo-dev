@@ -134,7 +134,7 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
             2. To edit the variable name, double-click **`variable`**. Then enter `totalCases` as the variable name.
 
-            3. Click <add-expression> and then click **statusByCountry** displayed in the list of suggestions. Here, you are selecting the **statusByCountry** query parameter you previously added to derive information related to a specific country.
+            3. Click `<add-expression>` and then click **statusByCountry** displayed in the list of suggestions. Here, you are selecting the **statusByCountry** query parameter you previously added to derive information related to a specific country.
 
                 Update the expression further as follows:
 
