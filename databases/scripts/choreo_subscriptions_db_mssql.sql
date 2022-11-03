@@ -104,8 +104,9 @@ BEGIN
         org_id VARCHAR(128) NOT NULL,
         org_handle VARCHAR(255) NOT NULL,
         tier_id VARCHAR(128) NOT NULL,
-        primary_sub_item_id VARCHAR(128) DEFAULT NULL,
-        secondary_sub_item_id VARCHAR(128) DEFAULT NULL,
+        subscription_item_id VARCHAR(128) DEFAULT NULL,
+        infra_cost_subscription_item_id VARCHAR(128) DEFAULT NULL,
+        subscription_type VARCHAR(128) NOT NULL DEFAULT N'choreo-subscription'
         billing_provider VARCHAR(128) DEFAULT NULL,
         billing_date BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
         status VARCHAR(128) NOT NULL,
