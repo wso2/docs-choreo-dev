@@ -106,7 +106,7 @@ BEGIN
         tier_id VARCHAR(128) NOT NULL,
         subscription_item_id VARCHAR(128) DEFAULT NULL,
         infra_cost_subscription_item_id VARCHAR(128) DEFAULT NULL,
-        subscription_type VARCHAR(128) NOT NULL DEFAULT N'choreo-subscription'
+        subscription_type VARCHAR(128) NOT NULL DEFAULT N'choreo-subscription',
         billing_provider VARCHAR(128) DEFAULT NULL,
         billing_date BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
         status VARCHAR(128) NOT NULL,
@@ -148,6 +148,6 @@ GO
 INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
 	 (N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff',N'Free',N'Free tier to tryout choreo with component based pricing',0,1667189541440,0),
 	 (N'352dd60e-8e14-4bb3-9dab-395a16fbfe88',N'Pay As You Go',N'Tier for paid users with component based pricing',1,1667189541440,0),
-     (N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'Choreo Support',N'Choreo support plan with component based pricing',1,1667189541440,0);
+     (N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'Choreo Support',N'Choreo support plan with component based pricing',1,1667189541440,0),
 	 (N'4abe3757-86f6-47de-994f-f02fb0522e99',N'Enterprise',N'Tier for enterprise users with component based pricing',1,1667189541440,1);
 GO
