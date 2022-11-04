@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.models.byoc;
+package com.wso2.choreo.integration.models.imageregistry;
 
 
 

@@ -1,44 +1,45 @@
 mutation {
-createByocComponent(
-component: {
-name: "{{name}}",
-description: "",
-orgId: {{orgId}},
-orgHandler: "{{orgHandler}}",
-projectId: "{{projectId}}",
-labels: "",
-componentType: "byocRestApi",
-port: 8080,
-oasFilePath: "",
-accessibility: "external",
-byocConfig: {
-dockerfilePath: "{{dockerfilePath}}",
-dockerContext:".",
-srcGitRepoUrl:"{{srcGitRepoUrl}}",
-srcGitRepoBranch: "main"
-}
-}
-)
+    createByocComponent(
+                component: {
+                        name: "{{name}}",
+                        displayName: "{{name}}",
+                        description: "",
+                        orgId: {{orgId}},
+                        orgHandler: "{{orgHandler}}",
+                        projectId: "{{projectId}}",
+                        labels: "",
+                        componentType: "byocRestApi",
+                        port: 8080,
+                        oasFilePath: "",
+                        accessibility: "external",
+                        byocConfig: {
+                        dockerfilePath: "{{dockerfilePath}}",
+                        dockerContext:".",
+                        srcGitRepoUrl:"{{srcGitRepoUrl}}",
+                        srcGitRepoBranch: "feature"
+                        }
+                }
+    )
 {
-id,
-createdAt,
-updatedAt,
-name,
-handle,
-organizationId,
-projectId,
-orgHandle,
-type,
-description,
-imageRegistryId,
-imageRegistry {
-id,
-createdAt,
-updatedAt,
-cloudConnectorId,
-imageRepositoryName
-},
-componentType,
-httpBased
-}
+        id,
+        createdAt,
+        updatedAt,
+        name,
+        handle,
+        organizationId,
+        projectId,
+        orgHandle,
+        type,
+        description,
+        imageRegistryId,
+        imageRegistry {
+        id,
+        createdAt,
+        updatedAt,
+        cloudConnectorId,
+        imageRepositoryName
+        },
+        componentType,
+        httpBased
+    }
 }

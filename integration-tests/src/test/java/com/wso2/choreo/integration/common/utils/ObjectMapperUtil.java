@@ -2,11 +2,17 @@ package com.wso2.choreo.integration.common.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.models.pullrequests.PullRequest;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.HashMap;
 
 public class ObjectMapperUtil {
@@ -17,9 +23,9 @@ public class ObjectMapperUtil {
         return componentObjectMapper.writeValueAsString(objectMap);
     }
 
-    public  static String mapToGraphQLQuery(String query) throws JsonProcessingException {
+    public static String mapToGraphQLQuery(String query) throws JsonProcessingException {
         ObjectMapper componentObjectMapper = new ObjectMapper();
-        HashMap<String, String > objectMap = new HashMap<>() {
+        HashMap<String, String> objectMap = new HashMap<>() {
             {
                 put("query", query);
             }
@@ -38,7 +44,7 @@ public class ObjectMapperUtil {
         return GSON.fromJson(jsonString, type);
     }
 
-    public static <T> T[] mapToCollection(Class<T[]> tClass, String jsonString,String val){
+    public static <T> T[] mapToCollection(Class<T[]> tClass, String jsonString, String val) {
         if (jsonString.contains("data") && val != null && !val.equals("")) {
 
             JsonElement je = new JsonParser().parse(jsonString).getAsJsonObject().
@@ -46,6 +52,15 @@ public class ObjectMapperUtil {
             return GSON.fromJson(je, tClass);
         }
         return GSON.fromJson(jsonString, tClass);
+    }
+
+
+    public static String generateGraphQLRequest(String template, GraphqlDTO dto) throws IOException {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile(template);
+        Writer writer = new StringWriter();
+        mustache.execute(writer, dto).flush();
+        return writer.toString();
     }
 
 }

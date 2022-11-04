@@ -28,7 +28,6 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.Response;
-import com.wso2.choreo.integration.models.byoc.ByocComponenet;
 import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
@@ -176,7 +175,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testDeleteComponent() throws IOException {
         Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        ByocComponenet[] components = GraphQL.getProjectComponents(projectId,accessToken);
+        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId,accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
         Assert.assertEquals(components.length, 0);
     }
