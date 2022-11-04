@@ -41,7 +41,7 @@ df.destination_pod_labels = px.pod_id_to_pod_labels(px.pod_name_to_pod_id(df.des
 
 df.protocol = 'http'
 
-df.namespace_flow = df.source_pod_namespace + "###" + df.destination_pod_namespace
+df.namespace_flow = df.source_pod_namespace + "-->" + df.destination_pod_namespace
 
 px.export(df, px.otel.Data(
   resource={
