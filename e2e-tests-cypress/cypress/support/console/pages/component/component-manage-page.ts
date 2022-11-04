@@ -23,7 +23,7 @@ export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
 
   static republishConnector() {
-    cy.get('[data-testid="republish-connector-btn"]').click();
+    cy.get('[data-testid="republish-connector-btn"]').scrollIntoView().click();
     cy.get(".MuiDialog-paper div>button>span").contains("Republish").click();
     cy.intercept({
       method: "POST",
@@ -187,8 +187,7 @@ export class ComponentAPILifecycle {
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).click()
-    // cy.get('.choreo-components-manage-sidebar').next().scrollTo('center');
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).scrollIntoView().click()
+    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).click()
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {

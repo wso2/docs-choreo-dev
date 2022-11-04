@@ -18,10 +18,10 @@ import java.util.logging.Logger;
 @Slf4j
 public class GitHub {
 
-    private static final Logger LOGGER = Logger.getLogger(GitHub.class.getName());
     private static final String GH_URL = Configuration.getConfig(ConfigDefinition.GITHUB_ENDPOINT);
     private static final String GH_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
     private static final String AUTH_HEADER = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.getConfig(ConfigDefinition.GITHUB_PAT));
+
 
 
     public GitHub() {
@@ -78,6 +78,11 @@ public class GitHub {
         String requestURI = GH_URL + "/repos/" + GH_ORG + "/" + repoName;
         return HttpClientUtil.httpDELETE(requestURI, AUTH_HEADER, "");
 
+    }
+
+    public static Response fetchUserReposFromGitHub() {
+        String requestUrl = GH_URL + "/orgs/" + GH_ORG + "/repos";
+        return HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");
     }
 
     public static Response mergeInitialPR(String repoName, String message) throws IOException {

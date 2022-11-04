@@ -5,6 +5,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
+import com.wso2.choreo.integration.apis.GitHub;
 import com.wso2.choreo.integration.apis.GraphQL;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
@@ -23,7 +24,6 @@ import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.apis.GitHub;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -36,7 +36,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -77,10 +76,10 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testCreateUserManagedComponentForJwt() throws IOException, UnexpectedResponseException {
+    public void testCreateUserManagedComponentForJwt() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-        response = GraphQL.createBYORComponent(repoName, componentName, projectId, accessToken);
+        response = GraphQL.createUserManagedComponent(repoName, componentName, projectId, accessToken);
     }
 
     @Test(dependsOnMethods = {"testCreateUserManagedComponentForJwt"})
@@ -115,7 +114,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testMergeNewCodeJwt"})
     @CitrusTest
-    public void testComponentRetrievalJwt() throws IOException, UnexpectedResponseException {
+    public void testComponentRetrievalJwt() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
         choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
@@ -144,7 +143,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeploymentStatusByVersionJwt"})
     @CitrusTest
     public void testComponentDevDeploymentStatusJwt() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, choreoComponent, "dev", "update code");
+        GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
     }
 
 
@@ -155,14 +154,14 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
         String apiInvocationRequestURI = "/getJwt";
 
         http().
-                client(testConfigs.getInvokeUrl()).
+                client(testConfigs.getConfig(Constant.Environment.Development.name()).getInvokeUrl()).
                 send().
                 get(apiInvocationRequestURI).
                 message().
                 header(HttpHeaders.ACCEPT, "text/plain").
-                header("API-Key", testConfigs.getApiKey());
+                header("API-Key", testConfigs.getConfig(Constant.Environment.Development.name()).getApiKey());
 
-        http().client(testConfigs.getInvokeUrl()).
+        http().client(testConfigs.getConfig(Constant.Environment.Development.name()).getInvokeUrl()).
                 receive().
                 response(HttpStatus.OK).
                 message().
@@ -172,19 +171,19 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dependsOnMethods = {
-            "testAPIInvocationJwt"
-    }, alwaysRun = true)
+    @Test(dependsOnMethods = {"testAPIInvocationJwt"}, alwaysRun = true)
     @CitrusTest
-    public void testDeleteWebhookComponent() throws IOException {
-        Response response =   GraphQL.deleteComponent(choreoComponent.getId(),projectId,accessToken);
-        Assert.assertEquals(response.getStatusCode(),HttpStatus.OK.value());
+    public void testDeleteComponent() throws IOException {
+        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
+        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId,accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+        Assert.assertEquals(components.length, 0);
     }
 
-    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
+    @Test(dependsOnMethods = {"testDeleteComponent"}, alwaysRun = true)
     @CitrusTest
     public void testDeleteRepo() {
-        Response   response = GitHub.deleteGitHubRepo(repoName);
+        Response response = GitHub.deleteGitHubRepo(repoName);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
     }
 

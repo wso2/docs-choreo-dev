@@ -1,0 +1,17 @@
+query{
+    components(
+        orgHandler: "{{orgHandler}}",
+        projectId: "{{projectId}}")
+    {
+        projectId,
+        id,
+        description,
+        name,
+        handler,
+        displayName,
+        displayType,
+        version,
+        createdAt,
+        orgHandler
+    }
+}
