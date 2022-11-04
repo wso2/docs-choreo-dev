@@ -62,6 +62,7 @@ nav:
       - Construct Statements: tutorials/construct-statements.md
       - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
       - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
+      - Configure Automatic Deployment: tutorials/configure-automatic-deployment.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
   - Webhooks: webhook.md
