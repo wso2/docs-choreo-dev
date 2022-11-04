@@ -45,7 +45,7 @@ processors:
         match_type: regexp
         resource_attributes:
           - Key: namespace.flow
-            Value: (dp-.*|.*--->dp-.*)
+            Value: (dp-.*|.*-->dp-.*)
 
 exporters:
   otlp:
