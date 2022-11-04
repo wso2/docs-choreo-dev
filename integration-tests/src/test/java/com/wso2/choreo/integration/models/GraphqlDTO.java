@@ -49,4 +49,7 @@ public class GraphqlDTO {
     private String apiVersionId;
     private  String sourceReleaseId;
     private  String targetEnvironmentId;
+    private  String devEnvIdToDeploy;
+    private String branch;
+    private String latestCommitSha;
 }
