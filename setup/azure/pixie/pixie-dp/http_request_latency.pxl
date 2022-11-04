@@ -14,6 +14,7 @@ df = df.groupby(['source_pod', 'remote_addr', 'status_code_group', 'trace_role',
     latency_dist=('latency', px.quantiles),
     time_=('time_', px.max),
 )
+
 df.p50 = px.pluck_float64(df.latency_dist, 'p50')
 df.p90 = px.pluck_float64(df.latency_dist, 'p90')
 df.p99 = px.pluck_float64(df.latency_dist, 'p99')
@@ -48,7 +49,8 @@ px.export(df, px.otel.Data(
       'k8s.pod.lables': df.destination_pod_labels,
       'service.name' : df.service,
       'destination.k8s.namespace': df.destination_pod_namespace,
-      'source.k8s.namespace': df.source_pod_namespace
+      'source.k8s.namespace': df.source_pod_namespace,
+      'namespace.flow': df.namespace_flow,
   },
   data=[
     px.otel.metric.Summary(
@@ -67,7 +69,6 @@ px.export(df, px.otel.Data(
             'destination.k8s.pod.name': df.destination_pod_name,
             'destination.k8s.pod.labels': df.destination_pod_labels,
             'http.status_code_group': df.status_code_group,
-            'namespace.flow': df.namespace_flow,
             'protocol': df.protocol,
         }
     )
