@@ -14,7 +14,7 @@ This tutorial walks you through the steps to enable automatic deployment for a c
 
 ## Step 1: Connect your own GitHub repository for a REST API
 
-Let's first create a REST API connecting a GitHub repository you own to save the implementation.
+First, let's create a REST API and store the source code in your GitHub repository.
 
 For instructions, see [Connect Your Own GitHub Repository to Choreo](connect-your-own-github-repository-to-choreo.md)
 
