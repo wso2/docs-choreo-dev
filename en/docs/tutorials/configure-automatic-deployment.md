@@ -29,7 +29,7 @@ To enable automatic deployment for your REST API, follow the steps given below:
     !!! info
         You need to verify your GitHub account when you enable automatic deployment for the first time.
 
-3. In the message that appears on the bottom-right of the page to configure an alert for build failures, click **Configure Alert**.
+3. In the message that appears on the bottom-right of the page , click **Configure Alert*. The **Alert Configuration** tab of the **Settings** page opens.
 
 4. For the **Component build and deployment failure alert**, enter a valid email address and click the toggle to enable the alert.
 
