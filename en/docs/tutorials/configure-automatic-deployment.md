@@ -21,6 +21,9 @@ To enable automatic deployment for your REST API, follow the steps given below:
 
 1. First, run a manual build. To do this, click **Deploy** in the left pane and then click **Build and Deploy**.
 
+    !!! info
+        Choreo requires you to perform the first deployment of each component manually so that you can provide values for any configurable variables that the implementation may include.
+
 2. Click the **Automatic Deployment** toggle to enable automatic deployment.
 
     !!! info
@@ -95,6 +98,8 @@ To verify whether your REST API implementation gets automatically deployed when 
 
     ![Automatic deployment record](../assets/img/tutorials/deploy-automatically/automatic-deployment-record.png){.cInlineImage-threeQuarters}
 
-    You can click on this record to view the commit that triggered it in GitHub.
+    You can click on this record to open the **Console** panel and view the logs that Choreo generated when it deployed the REST API.
+
+    The commit ID in the record (starting with **#**) is the commit that triggered the automatic deployment. You can click on it to view it in GitHub.
 
 
