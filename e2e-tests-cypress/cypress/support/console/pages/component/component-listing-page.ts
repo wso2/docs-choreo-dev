@@ -15,7 +15,8 @@ import { GraphQL } from "../../apis/graphql";
 
 export class ComponentListingPage {
   static deleteComponent(componentName: string) {
-    cy.get("tr p").contains(componentName).should("be.visible").realHover();
+
+    cy.get(`div[title=${componentName}]`).should("be.visible").realHover();
     cy.get("button>span").contains("Delete").click();
     cy.get('[data-testid="confirm-name"]>div>input').type(componentName);
     cy.get(".MuiDialogActions-spacing button").should("be.enabled").eq(1).click();

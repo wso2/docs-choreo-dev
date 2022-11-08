@@ -230,12 +230,9 @@ export class ComponentAPILifecycle {
 
   static updateAPIVisibility(visibility: string) {
     cy.get('[data-cyid="dropdown-api-visibility-selector"]').should("be.visible").click();
-    if (visibility == 'Private') {
-      cy.get('[data-cyid="item-PRIVATE"]').should("be.visible").click();
-    } else if (visibility == 'Public') {
-      cy.get('[data-cyid="item-PUBLIC"]').should("be.visible").click();
-    }
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
+    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).wait(100).realClick();
+    cy.get('[data-testid="info-banner"]').should('be.visible')
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
