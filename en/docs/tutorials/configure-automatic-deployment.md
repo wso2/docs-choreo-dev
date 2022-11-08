@@ -1,8 +1,11 @@
 # Configure Automatic Deployment
 
-When you develop a Choreo component, you need to commit its source code into a GitHub repository. You can select a repository that Choreo manages or a repository that you own and manage.
+Automatic deployment allows you to trigger a build every time you edit your component implementation and commit changes. 
 
-Choreo-managed repositories are not accessible to external users. Therefore, when multiple developers need to develop components in collaboration, they should connect their own repositories to save the source code. In such organizations, deploying a component manually each time a developer updates the component design can be cumbersome. Therefore, Choreo allows you to configure automatic deployment for your components. When you enable automatic deployment, every commit that changes the component implementation automatically deploys the component to the development environment and triggers a build.
+When multiple developers collaborate to develop a component, each developer may edit the design many times. In such scenarios, it can be cumbersome to deploy the component manually for each edit. Automatic deployment eliminates this need by automatically running the build for each commit that applies a change to the component design.
+
+!!! note
+    Choreo allows you to configure automatic deployment only when you save the component implementation in a GitHub repository that you own and manage because Choreo-managed repositories are not accessible to external users.
 
 This tutorial walks you through the steps to enable automatic deployment for a component. In this tutorial, you will:
 
