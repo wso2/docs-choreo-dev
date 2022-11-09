@@ -89,7 +89,7 @@ To verify whether your REST API implementation gets automatically deployed when 
 
 9. In the **Password** field that appears, enter your personal access token for GitHub and press Enter/Return.
 
-10. Go back to the tab in which you are running the Choreo Console.
+10. Return to the tab in which you are running the Choreo Console.
 
 11. In the left pane, click **Deploy**.
 
