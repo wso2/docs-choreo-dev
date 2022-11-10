@@ -38,16 +38,13 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/job/create_admin_job_image:1661975259
           imagePullPolicy: IfNotPresent
           name: create-admin-job
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - NET_RAW
-                - ALL
-            runAsNonRoot: true
-            runAsUser: 10100
-            seccompProfile:
-              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
           volumeMounts:
             - mountPath: /certs
               name: certs
@@ -56,8 +53,8 @@ spec:
             - sh
             - -c
             - 'set -x; URL="${PL_KRATOS_PUBLIC_HOST}/health/ready"; until [ $(curl -m
-          0.5 -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
-          for ${URL}" sleep 2; done; '
+              0.5 -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
+              for ${URL}" sleep 2; done; '
           env:
             - name: PL_KRATOS_PUBLIC_HOST
               valueFrom:
@@ -67,10 +64,19 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
           imagePullPolicy: IfNotPresent
           name: kratos-wait
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       restartPolicy: Never
       securityContext:
+        fsGroup: 10500
+        runAsGroup: 10500
         runAsNonRoot: true
-        runAsUser: 10100
+        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
       volumes:
@@ -141,23 +147,13 @@ spec:
           image: choreocontrolplane.azurecr.io/oryd/hydra:v1.9.2-sqlite
           imagePullPolicy: IfNotPresent
           name: create-hydra-client-job
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - NET_RAW
-                - ALL
-            runAsNonRoot: true
-            runAsUser: 10100
-            seccompProfile:
-              type: RuntimeDefault
       initContainers:
         - command:
             - sh
             - -c
             - 'set -x; URL="${PL_HYDRA_PUBLIC_HOST}/health/ready"; until [ $(curl -m 0.5
-          -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
-          for ${URL}" sleep 2; done; '
+              -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
+              for ${URL}" sleep 2; done; '
           env:
             - name: PL_HYDRA_PUBLIC_HOST
               valueFrom:
@@ -167,10 +163,19 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
           imagePullPolicy: IfNotPresent
           name: hydra-wait
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       restartPolicy: Never
       securityContext:
+        fsGroup: 10500
+        runAsGroup: 10500
         runAsNonRoot: true
-        runAsUser: 10100
+        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
 ---
@@ -193,53 +198,61 @@ spec:
       name: plugin-db-updater-job
     spec:
       containers:
-        - command:
-            - /plugin_db_updater/load_db
-          env:
-            - name: PL_POSTGRES_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: PL_POSTGRES_USERNAME
-                  name: pl-db-secrets
-            - name: PL_POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: PL_POSTGRES_PASSWORD
-                  name: pl-db-secrets
-            - name: PL_PLUGIN_REPO
-              value: pixie-io/pixie-plugin
-          envFrom:
-            - configMapRef:
-                name: pl-db-config
+      - command:
+        - /plugin_db_updater/load_db
+        env:
+        - name: PL_POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: PL_POSTGRES_USERNAME
+              name: pl-db-secrets
+        - name: PL_POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: PL_POSTGRES_PASSWORD
+              name: pl-db-secrets
+        - name: PL_PLUGIN_REPO
+          value: pixie-io/pixie-plugin
+        envFrom:
+        - configMapRef:
+            name: pl-db-config
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev/cloud/plugin/load_db:1661975259
-          name: updater
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - NET_RAW
-                - ALL
-            runAsNonRoot: true
-            runAsUser: 10100
-            seccompProfile:
-              type: RuntimeDefault
+        name: updater
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
       initContainers:
-        - command:
-            - sh
-            - -c
-            - until pg_isready -h ${PL_POSTGRES_HOSTNAME} -p ${PL_POSTGRES_PORT}; do echo
-              "waiting for postgres"; sleep 2; done;
-          envFrom:
-            - configMapRef:
-                name: pl-db-config
+      - command:
+        - sh
+        - -c
+        - until pg_isready -h ${PL_POSTGRES_HOSTNAME} -p ${PL_POSTGRES_PORT}; do echo
+          "waiting for postgres"; sleep 2; done;
+        envFrom:
+        - configMapRef:
+            name: pl-db-config
           image: choreocontrolplane.azurecr.io/postgres:14-alpine
-          name: postgres-wait
+        name: postgres-wait
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
       restartPolicy: Never
       securityContext:
+        fsGroup: 10500
+        runAsGroup: 10500
+        runAsNonRoot: true
+        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
       volumes:
-        - name: pl-db-secrets
-          secret:
-            secretName: pl-db-secrets
+      - name: pl-db-secrets
+        secret:
+          secretName: pl-db-secrets
 ---
