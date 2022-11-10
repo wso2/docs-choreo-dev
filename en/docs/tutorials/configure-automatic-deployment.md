@@ -69,8 +69,8 @@ To verify whether your REST API implementation gets automatically deployed when 
 
     1. In the message, click **Open Git Log**.
    
-    2. Click **Terminal** to open the in-built terminal and issue the following commands in it.
-   
+    2. Click **Terminal** to open the in-built terminal and issue the following commands (with the placeholders replaced with the email and username you use for GitHub):
+             
         - `git config --global user.email "<YOUR_GITHUB_EMAIL_ADDRESS>"`
         - `git config --global user.name "<YOUR_GITHUB_USERNAME">`
 
