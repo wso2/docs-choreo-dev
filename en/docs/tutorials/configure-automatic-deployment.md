@@ -53,7 +53,7 @@ To verify whether your REST API implementation gets automatically deployed when 
     !!! info
         To edit this value, double-click it.
 
-    ![Edit implementation](../assets/img/tutorials/deploy-automatically/edit-implementation.textClipping){.cInlineImage-full}
+    ![Edit implementation](../assets/img/tutorials/deploy-automatically/edit-implementation.png){.cInlineImage-full}
 
 4. Click **Sync with Choreo Upstream** in the Git status bar.
 
