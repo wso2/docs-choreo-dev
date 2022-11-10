@@ -53,17 +53,17 @@ To verify whether your REST API implementation gets automatically deployed when 
     !!! info
         To edit this value, double-click it.
 
-    ![Edit implementation](../assets/img/tutorials/deploy-automatically/edit-implementation.png){.cInlineImage-full}
+    ![Edit implementation](../assets/img/tutorials/deploy-automatically/edit-implementation.png){.cInlineImage-threeQuarters}
 
 4. Click **Sync with Choreo Upstream** in the Git status bar.
 
-    ![Sync changes to implementation](../assets/img/tutorials/deploy-automatically/sync-changes-to-implementation.png){.cInlineImage-full}
+    ![Sync changes to implementation](../assets/img/tutorials/deploy-automatically/sync-changes-to-implementation.png){.cInlineImage-threeQuarters}
 
     In the message that appears, click **Sync my changes with Choreo**.
 
 5. In the left pane, enter a commit message (e.g., `Implement REST API`) and click the tick.
 
-    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-full}
+    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-threeQuarters}
 
     You will get a message prompting you to configure your `user.name` and `user.email`. To proceed, follow the steps given below:
 
@@ -76,7 +76,7 @@ To verify whether your REST API implementation gets automatically deployed when 
 
 6. To push the changes to your GitHub repository, click **0↓ 1↑** in the Git Status Bar.
 
-    ![Push changes](../assets/img/tutorials/deploy-automatically/push-changes.png){.cInlineImage-full}
+    ![Push changes](../assets/img/tutorials/deploy-automatically/push-changes.png){.cInlineImage-threeQuarters}
 
     !!! info
         This icon only appears after the Web Editor completes the committing process.
