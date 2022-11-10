@@ -12,34 +12,26 @@ package com.wso2.choreo.integration.tests.alert;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.ControlPlane;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.email.RestAPIBasedEmailUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.config.Constant;
-import org.apache.http.HttpHeaders;
+import com.wso2.choreo.integration.models.alert.AlertResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Instant;
 import java.util.UUID;
-
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 /**
  * OOM alert test cases.
  */
 public class OOMAlertIT extends TestNGCitrusSpringSupport {
-    @Autowired
-    private HttpClient choreoCPTestClient;
-    private static String accessToken;
+     private static String accessToken;
     private RestAPIBasedEmailUtils restAPIBasedEmailUtils;
 
     @BeforeClass
@@ -53,43 +45,11 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void testImmediateAlert() throws Exception {
-        long testStartTimestamp = Instant.now().toEpochMilli();
         String appName = UUID.randomUUID().toString();
-        String body = "{\n"
-                + "\t\"orgId\": \"" + Configuration.getConfig(ConfigDefinition.ALERT_ORG_UUID) + "\",\n"
-                + "\t\"envId\": \"" + Constant.ALERT.ENV_ID + "\",\n"
-                + "\t\"publisher\": \"Critical alert detector\",\n"
-                + "\t\"time\": \"" + Instant.now().toString() + "\",\n"
-                + "    \"severity\": \"High\",\n"
-                + "\t\"metaData\": {\n"
-                + "        \"componentName\": \"" + appName + "\",\n"
-                + "        \"envName\": \"" + Constant.ALERT.ENV_ID + "\",\n"
-                + "        \"containerId\": \"" + Constant.ALERT.CONTAINER_ID + "\",\n"
-                + "        \"releaseId\": \"" + Configuration.getConfig(ConfigDefinition.ALERT_RELEASE_ID) + "\",\n"
-                + "        \"alertType\": \"Out Of Memory error\"\n"
-                + "\t},\n"
-                + "\t\"properties\": {\n"
-                + "\t}\n"
-                + "}";
+        AlertResponse resData = ControlPlane.triggerImmediateAlert(appName,accessToken);
 
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .post(Constant.ALERT.NOTIFICATION_SERVICE_RESOURCE)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(body)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/alert/post_alert_suceess.json")));
         boolean isMailReceived = restAPIBasedEmailUtils.reTrySearch(appName);
+        Assert.assertEquals(resData.getMessage(), "Alert published to the Event Hub.");
         Assert.assertTrue(isMailReceived);
     }
 }

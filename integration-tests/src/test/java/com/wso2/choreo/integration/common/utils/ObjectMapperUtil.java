@@ -23,6 +23,11 @@ public class ObjectMapperUtil {
         return componentObjectMapper.writeValueAsString(objectMap);
     }
 
+    public static<T>  String mapObjectToString(T object){
+
+        return  GSON.toJson(object);
+    }
+
     public static String mapToGraphQLQuery(String query) throws JsonProcessingException {
         ObjectMapper componentObjectMapper = new ObjectMapper();
         HashMap<String, String> objectMap = new HashMap<>() {
@@ -55,7 +60,7 @@ public class ObjectMapperUtil {
     }
 
 
-    public static String generateGraphQLRequest(String template, GraphqlDTO dto) throws IOException {
+    public static<T> String generateGraphQLRequest(String template, T dto) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile(template);
         Writer writer = new StringWriter();
