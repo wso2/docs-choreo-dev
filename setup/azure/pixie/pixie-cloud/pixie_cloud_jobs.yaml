@@ -41,8 +41,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-                drop:
-                  - ALL
+              drop:
+                - ALL
           resources:
             requests:
               cpu: 10m
@@ -72,8 +72,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-                drop:
-                  - ALL
+              drop:
+                - ALL
           resources:
             requests:
               cpu: 10m
@@ -160,8 +160,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-                drop:
-                  - ALL
+              drop:
+                - ALL
           resources:
             requests:
               cpu: 10m
@@ -188,8 +188,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-                drop:
-                  - ALL
+              drop:
+                - ALL
           resources:
             requests:
               cpu: 10m
@@ -225,67 +225,68 @@ spec:
       name: plugin-db-updater-job
     spec:
       containers:
-      - command:
-        - /plugin_db_updater/load_db
-        env:
-        - name: PL_POSTGRES_USERNAME
-          valueFrom:
-            secretKeyRef:
-              key: PL_POSTGRES_USERNAME
-              name: pl-db-secrets
-        - name: PL_POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: PL_POSTGRES_PASSWORD
-              name: pl-db-secrets
-        - name: PL_PLUGIN_REPO
-          value: pixie-io/pixie-plugin
-        envFrom:
-        - configMapRef:
-            name: pl-db-config
+        - command:
+            - /plugin_db_updater/load_db
+          env:
+            - name: PL_POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: PL_POSTGRES_USERNAME
+                  name: pl-db-secrets
+            - name: PL_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PL_POSTGRES_PASSWORD
+                  name: pl-db-secrets
+            - name: PL_PLUGIN_REPO
+              value: pixie-io/pixie-plugin
+          envFrom:
+            - configMapRef:
+                name: pl-db-config
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev/cloud/plugin/load_db:1661975259
-        name: updater
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
+          name: updater
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
               drop:
                 - ALL
-        resources:
-          requests:
-            cpu: 10m
-            memory: 50Mi
-          limits:
-            cpu: 50m
-            memory: 100Mi
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       initContainers:
-      - command:
-        - sh
-        - -c
-        - until pg_isready -h ${PL_POSTGRES_HOSTNAME} -p ${PL_POSTGRES_PORT}; do echo
-          "waiting for postgres"; sleep 2; done;
-        envFrom:
-        - configMapRef:
-            name: pl-db-config
+        - command:
+            - sh
+            - -c
+            - until pg_isready -h ${PL_POSTGRES_HOSTNAME} -p ${PL_POSTGRES_PORT}; do echo
+              "waiting for postgres"; sleep 2; done;
+          envFrom:
+            - configMapRef:
+                name: pl-db-config
           image: choreocontrolplane.azurecr.io/postgres:14-alpine
-        name: postgres-wait
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
+          name: postgres-wait
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
               drop:
                 - ALL
-        resources:
-          requests:
-            cpu: 10m
-            memory: 50Mi
-          limits:
-            cpu: 50m
-            memory: 100Mi
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       restartPolicy: Never
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       volumes:
-      - name: pl-db-secrets
-        secret:
-          secretName: pl-db-secrets
+        - name: pl-db-secrets
+          secret:
+            secretName: pl-db-secrets
 ---
+
