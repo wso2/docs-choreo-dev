@@ -40,7 +40,7 @@ To enable automatic deployment for your REST API, follow the steps given below:
 
 Now automatic deployment is enabled for your REST API and a build should be automatically triggered every time you commit a change to the REST API implementation. To verify this, move on to Step 3.
 
-## Step 3: Commit changes and trigger the automatic build
+## Step 3: Commit changes to trigger the automatic build
 
 To verify whether your REST API implementation gets automatically deployed when you push commits, follow the steps given below:
 
@@ -55,7 +55,7 @@ To verify whether your REST API implementation gets automatically deployed when 
 
     ![Edit implementation](../assets/img/tutorials/deploy-automatically/edit-implementation.textClipping){.cInlineImage-full}
 
-4. Click **Sync with Choreo Upstream** in the Git Status Bar.
+4. Click **Sync with Choreo Upstream** in the Git status bar.
 
     ![Sync changes to implementation](../assets/img/tutorials/deploy-automatically/sync-changes-to-implementation.png){.cInlineImage-full}
 
@@ -72,9 +72,9 @@ To verify whether your REST API implementation gets automatically deployed when 
     2. Click **Terminal** to open the in-built terminal and issue the following commands in it.
    
         - `git config --global user.email "<YOUR_GITHUB_EMAIL_ADDRESS>"`
-        - `git config --global user.name "<YOUR_GITHUB_USERNAME"`
+        - `git config --global user.name "<YOUR_GITHUB_USERNAME">`
 
-6. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the Git Status Bar.
+6. To push the changes to your GitHub repository, click **0↓ 1↑** in the Git Status Bar.
 
     ![Push changes](../assets/img/tutorials/deploy-automatically/push-changes.png){.cInlineImage-full}
 
