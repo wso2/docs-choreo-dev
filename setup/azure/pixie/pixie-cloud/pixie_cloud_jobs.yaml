@@ -38,6 +38,11 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/job/create_admin_job_image:1661975259
           imagePullPolicy: IfNotPresent
           name: create-admin-job
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                  - ALL
           resources:
             requests:
               cpu: 10m
@@ -64,6 +69,11 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
           imagePullPolicy: IfNotPresent
           name: kratos-wait
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                  - ALL
           resources:
             requests:
               cpu: 10m
@@ -147,6 +157,18 @@ spec:
           image: choreocontrolplane.azurecr.io/oryd/hydra:v1.9.2-sqlite
           imagePullPolicy: IfNotPresent
           name: create-hydra-client-job
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                  - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       initContainers:
         - command:
             - sh
@@ -163,6 +185,11 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
           imagePullPolicy: IfNotPresent
           name: hydra-wait
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                  - ALL
           resources:
             requests:
               cpu: 10m
@@ -218,6 +245,11 @@ spec:
             name: pl-db-config
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev/cloud/plugin/load_db:1661975259
         name: updater
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+              drop:
+                - ALL
         resources:
           requests:
             cpu: 10m
@@ -236,6 +268,11 @@ spec:
             name: pl-db-config
           image: choreocontrolplane.azurecr.io/postgres:14-alpine
         name: postgres-wait
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+              drop:
+                - ALL
         resources:
           requests:
             cpu: 10m
@@ -245,10 +282,6 @@ spec:
             memory: 100Mi
       restartPolicy: Never
       securityContext:
-        fsGroup: 10500
-        runAsGroup: 10500
-        runAsNonRoot: true
-        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
       volumes:
