@@ -2,8 +2,8 @@ package com.wso2.choreo.integration.tests.byoc;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.GraphQL;
-import com.wso2.choreo.integration.apis.graphql.DeploymentConfigs;
+import com.wso2.choreo.integration.apis.graphql.ComponentCreateionGQL;
+import com.wso2.choreo.integration.apis.graphql.ComponentDeploymentGQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
@@ -62,7 +62,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     public void testCreateByocComponentBYOC() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(projectId).dockerfilePath(DOCKER_FILE_PATH).build();
-        choreoComponent = GraphQL.createBYOCComponent(dto, accessToken);
+        choreoComponent = ComponentCreateionGQL.createBYOCComponent(dto, accessToken);
         Assert.assertEquals(choreoComponent.getName(), componentName);
 
     }
@@ -70,7 +70,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testCreateByocComponentBYOC"})
     @CitrusTest
     public void testComponentRetrievalBYOC() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandle(), accessToken);
+        choreoComponent = ComponentCreateionGQL.getComponentDetails(projectId, choreoComponent.getHandle(), accessToken);
         choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
     }
@@ -78,27 +78,27 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentRetrievalBYOC"})
     @CitrusTest
     public void testInitialPRGenerationBYOC() throws IOException, UnexpectedResponseException {
-       PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
+       PullRequest[] prs = ComponentCreateionGQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
     @Test(dependsOnMethods = {"testInitialPRGenerationBYOC"})
     @CitrusTest
     public void testDeployBYOC() throws Exception {
-        Status status = DeploymentConfigs.deployComponent(choreoComponent, accessToken);
+        Status status = ComponentDeploymentGQL.deployComponent(choreoComponent, accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
     @Test(dependsOnMethods = {"testDeployBYOC"})
     @CitrusTest
     public void testDeploymentStatusByVersionBYOC() throws Exception {
-        DeploymentConfigs.deploymentStatusByVersion(choreoComponent, accessToken);
+        ComponentDeploymentGQL.deploymentStatusByVersion(choreoComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersionBYOC"})
     @CitrusTest
     public void testComponentDevDeploymentStatusBYOC() throws Exception {
-        DeploymentConfigs.componentDeployment(choreoComponent, "dev", accessToken);
+        ComponentDeploymentGQL.componentDeployment(choreoComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatusBYOC"})
@@ -131,7 +131,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAPIInvocationInPRodBYOC"}, alwaysRun = true)
     @CitrusTest
     public void testDeleteComponent() throws IOException {
-        Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
+        Response response = ComponentCreateionGQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }
 }

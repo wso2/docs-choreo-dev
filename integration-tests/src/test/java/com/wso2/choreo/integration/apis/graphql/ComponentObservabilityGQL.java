@@ -8,7 +8,7 @@ import com.wso2.choreo.integration.models.Response;
 
 import java.io.IOException;
 
-public class ObservabilityConfigs extends AbstractConfigs {
+public class ComponentObservabilityGQL extends AbstractConfigs {
 
 
 

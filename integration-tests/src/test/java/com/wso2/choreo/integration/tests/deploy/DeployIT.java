@@ -16,9 +16,9 @@ package com.wso2.choreo.integration.tests.deploy;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.GraphQL;
+import com.wso2.choreo.integration.apis.graphql.ComponentCreateionGQL;
 import com.wso2.choreo.integration.apis.Orgs;
-import com.wso2.choreo.integration.apis.graphql.DeploymentConfigs;
+import com.wso2.choreo.integration.apis.graphql.ComponentDeploymentGQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -52,19 +52,19 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAddDeploymentConfiguration"})
     @CitrusTest
     public void testDeploy() throws Exception {
-        DeploymentConfigs.deployComponent( restApiComponent,accessToken);
+        ComponentDeploymentGQL.deployComponent( restApiComponent,accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploy"})
     @CitrusTest
     public void testDeploymentStatusByVersion() throws Exception {
-        DeploymentConfigs.deploymentStatusByVersion(restApiComponent, accessToken);
+        ComponentDeploymentGQL.deploymentStatusByVersion(restApiComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDevDeploymentStatus() throws Exception {
-        DeploymentConfigs.componentDeployment(restApiComponent, "dev", accessToken);
+        ComponentDeploymentGQL.componentDeployment(restApiComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatus"})
@@ -82,13 +82,13 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAddPromoteConfiguration"})
     @CitrusTest
     public void testPromote() throws Exception {
-        GraphQL.promoteComponent(choreoTestClient, this, restApiComponent);
+        ComponentCreateionGQL.promoteComponent(choreoTestClient, this, restApiComponent);
     }
 
     @Test(dependsOnMethods = {"testPromote"})
     @CitrusTest
     public void testComponentProdDeploymentStatus() throws Exception {
-        DeploymentConfigs.componentDeployment(restApiComponent, "dev", accessToken);
+        ComponentDeploymentGQL.componentDeployment(restApiComponent, "dev", accessToken);
       //  GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "prod","Choreo Files Generated");
     }
 

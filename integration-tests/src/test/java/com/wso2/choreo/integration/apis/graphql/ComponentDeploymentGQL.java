@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @Slf4j
-public class DeploymentConfigs extends AbstractConfigs {
+public class ComponentDeploymentGQL extends AbstractConfigs {
 
 
     public static Commit[] getCommitHistory(String componentId, String accessToken) throws IOException {

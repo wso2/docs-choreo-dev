@@ -11,7 +11,7 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.apis;
+package com.wso2.choreo.integration.apis.graphql;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.http.client.HttpClient;
@@ -28,7 +28,7 @@ import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
-import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
+import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
@@ -47,7 +47,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  * Implements GraphQL API calls and their response validations.
  */
 @Slf4j
-public class GraphQL {
+public class ComponentCreateionGQL {
 
 
     private static final String choreoProjectURL = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT) + Constant.GRAPHQL_ENDPOINT_SUFFIX;
@@ -244,14 +244,14 @@ public class GraphQL {
 //    }
 
 
-    public static CreateComponent createUserManagedComponent(GraphqlDTO graphqlDTO, String repoName, String accessToken) throws IOException {
+    public static ComponentCreationResponse createUserManagedComponent(GraphqlDTO graphqlDTO, String repoName, String accessToken) throws IOException {
         String srcGitHubURL = "https://github.com/" + Configuration.getConfig(ConfigDefinition.GITHUB_ORG) + "/" + repoName;
         graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);
         graphqlDTO.setOrgId(ORG_ID);
         graphqlDTO.setOrgHandler(ORG_HANDLE);
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(CreateComponent.class, response.getRes(), "createComponent");
+        return ObjectMapperUtil.mapStringToObject(ComponentCreationResponse.class, response.getRes(), "createComponent");
     }
 
 
