@@ -11,16 +11,13 @@
 package com.wso2.choreo.integration.tests.alert;
 
 import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.ControlPlane;
+import com.wso2.choreo.integration.apis.controlplane.ControlPlane;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.email.RestAPIBasedEmailUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.alert.AlertResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

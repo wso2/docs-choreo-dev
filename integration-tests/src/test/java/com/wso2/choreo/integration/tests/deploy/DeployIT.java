@@ -18,6 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.GraphQL;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.graphql.DeploymentConfigs;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -51,19 +52,19 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAddDeploymentConfiguration"})
     @CitrusTest
     public void testDeploy() throws Exception {
-        GraphQL.deployComponent(choreoTestClient, this, restApiComponent);
+        DeploymentConfigs.deployComponent( restApiComponent,accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploy"})
     @CitrusTest
     public void testDeploymentStatusByVersion() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoTestClient, this, restApiComponent);
+        DeploymentConfigs.deploymentStatusByVersion(restApiComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDevDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "dev","Choreo Files Generated");
+        DeploymentConfigs.componentDeployment(restApiComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatus"})
@@ -87,7 +88,8 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testPromote"})
     @CitrusTest
     public void testComponentProdDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "prod","Choreo Files Generated");
+        DeploymentConfigs.componentDeployment(restApiComponent, "dev", accessToken);
+      //  GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "prod","Choreo Files Generated");
     }
 
     @Test(dependsOnMethods = {"testComponentProdDeploymentStatus"})

@@ -86,7 +86,10 @@ export class ComponentDevelopPage {
   static getVersion() {
     return cy
       .get('[data-cyid="version-picker"]>div')
-      .then((v) => v.text().trim());
+      .then((v) => {
+        cy.log(v.text())
+        return v.text().trim()
+      });
   }
 
   static refreshBranchCommit() {

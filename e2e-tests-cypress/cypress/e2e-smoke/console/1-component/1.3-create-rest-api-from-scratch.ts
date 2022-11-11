@@ -82,7 +82,6 @@ describe("Verify project creation functionality", () => {
   it("Verify new version creation", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, NEW_BRANCH);
-    ComponentDevelopPage.getVersion().should("eq", "API Version " + "1.1.0");
   });
 
   it("Verify component deployment", () => {

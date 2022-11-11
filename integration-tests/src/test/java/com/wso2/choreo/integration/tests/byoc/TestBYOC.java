@@ -1,9 +1,9 @@
 package com.wso2.choreo.integration.tests.byoc;
 
 import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.GraphQL;
+import com.wso2.choreo.integration.apis.graphql.DeploymentConfigs;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
@@ -28,7 +28,6 @@ import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -46,7 +45,6 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     private String projectId;
     private String accessToken;
     private ChoreoOrganization org;
- 
 
     @BeforeClass
     public void setup() throws IOException, ProjectCreationException, InterruptedException, TokenRetrievalException {
@@ -87,20 +85,20 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testInitialPRGenerationBYOC"})
     @CitrusTest
     public void testDeployBYOC() throws Exception {
-        Status status = GraphQL.deployComponent(choreoComponent, accessToken);
+        Status status = DeploymentConfigs.deployComponent(choreoComponent, accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
     @Test(dependsOnMethods = {"testDeployBYOC"})
     @CitrusTest
     public void testDeploymentStatusByVersionBYOC() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
+        DeploymentConfigs.deploymentStatusByVersion(choreoComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersionBYOC"})
     @CitrusTest
     public void testComponentDevDeploymentStatusBYOC() throws Exception {
-        GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
+        DeploymentConfigs.componentDeployment(choreoComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDevDeploymentStatusBYOC"})

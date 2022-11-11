@@ -19,6 +19,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -62,17 +63,19 @@ public class APICreator {
     }
 
     public String getRequestBodyForAPICreation(String apiName, String apiContext) throws IOException {
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/api-proxy/requestBodyForAPICreation.mustache");
-        Writer writer = new StringWriter();
-        ApiDTO api = new ApiDTO();
-        api.setApiName(apiName);
-        api.setVersion(Constant.DEFAULT_VERSION);
-        api.setContext(apiContext);
-        api.setProductionEndpoint(Constant.DEFAULT_ENDPOINT);
-        api.setSandboxEndpoint(Constant.DEFAULT_ENDPOINT);
-        mustache.execute(writer, api).flush();
-        return writer.toString();
+//        MustacheFactory mf = new DefaultMustacheFactory();
+//        Mustache mustache = mf.compile("templates/api-proxy/requestBodyForAPICreation.mustache");
+//        Writer writer = new StringWriter();
+        ApiDTO api = ApiDTO.builder().apiName(apiName).version(Constant.DEFAULT_VERSION).context(apiContext).productionEndpoint(Constant.DEFAULT_ENDPOINT).sandboxEndpoint(Constant.DEFAULT_ENDPOINT).build();
+//        api.setApiName(apiName);
+//        api.setVersion(Constant.DEFAULT_VERSION);
+//        api.setContext(apiContext);
+//        api.setProductionEndpoint(Constant.DEFAULT_ENDPOINT);
+//        api.setSandboxEndpoint(Constant.DEFAULT_ENDPOINT);
+     //   mustache.execute(writer, api).flush();
+
+
+        return  ObjectMapperUtil.mapObjectToString("templates/api-proxy/requestBodyForAPICreation.mustache",api);
     }
 
     public String createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId) throws IOException {

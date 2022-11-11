@@ -8,7 +8,6 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.models.GraphqlDTO;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -60,7 +59,7 @@ public class ObjectMapperUtil {
     }
 
 
-    public static<T> String generateGraphQLRequest(String template, T dto) throws IOException {
+    public static<T> String mapObjectToString(String template, T dto) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile(template);
         Writer writer = new StringWriter();
