@@ -1,26 +1,44 @@
-mutation{ createComponent(
+mutation {
+createComponent(
 component: {
 name: "{{name}}",
+description: "",
 orgId: {{orgId}},
 orgHandler: "{{orgHandler}}",
-displayName: "{{displayName}}",
-displayType: "restAPI",
 projectId: "{{projectId}}",
 labels: "",
-version: "1.0.0",
-description: "",
-apiId: "",
-ballerinaVersion: "swan-lake-alpha5",
-triggerChannels: "",
-triggerID: null,
-httpBase: true,
-sampleTemplate: "",
+componentType: "byocRestApi",
+port: 8080,
+oasFilePath: "",
 accessibility: "external",
-srcGitRepoUrl: "{{srcGitRepoUrl}}"
-repositorySubPath: "",
-repositoryType: "",
-repositoryBranch: "",
-}){
-id, orgId, projectId, handler
+byocConfig: {
+dockerfilePath: "Dockerfile",
+dockerContext:".",
+srcGitRepoUrl:"{{srcGitRepoUrl}}",
+srcGitRepoBranch: "main"
+}
+}
+)
+{
+id,
+createdAt,
+updatedAt,
+name,
+handle,
+organizationId,
+projectId,
+orgHandle,
+type,
+description,
+imageRegistryId,
+imageRegistry {
+id,
+createdAt,
+updatedAt,
+cloudConnectorId,
+imageRepositoryName
+},
+componentType,
+httpBased
 }
 }

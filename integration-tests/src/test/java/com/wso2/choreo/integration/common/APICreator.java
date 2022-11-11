@@ -18,12 +18,12 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.models.ApiDTO;
-import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.ApiDTO;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -84,7 +84,7 @@ public class APICreator {
         gql.setApiName(apiName.toLowerCase());
         gql.setOrgId(Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)));
         gql.setOrgHandler(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE));
-        gql.setDiaplayName(apiName);
+        gql.setDisplayName(apiName);
         gql.setDisplayType(String.valueOf(Constant.displayType.proxy));
         gql.setProjectId(projectId);
         gql.setApiId(apiId.replaceAll("\"", ""));
@@ -94,29 +94,30 @@ public class APICreator {
         return graphQlQuery;
     }
 
-    public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle,String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
+    public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle, String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
         Writer writer = new StringWriter();
 
-        GraphqlDTO gql = new GraphqlDTO();
-        gql.setApiName(componentName.toLowerCase());
-        gql.setOrgId(Integer.parseInt(orgId));
-        gql.setOrgHandler(orgHandle);
-        gql.setDiaplayName(componentName);
-        gql.setDisplayType(String.valueOf(Constant.displayType.restAPI));
-        gql.setProjectId(projectId);
-        gql.setSrcGitRepoUrl(srcGitRepoUrl);
-        gql.setRepositorySubPath(repoSubpath);
-        gql.setRepositoryType(repoType);
-        gql.setRepositoryBranch(repoBranch);
 
-        mustache.execute(writer, gql).flush();
-        String graphQlQuery = writer.toString();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().
+                apiName(componentName.toLowerCase()).
+                orgId(Integer.parseInt(orgId)).
+                orgHandler(orgHandle).
+                displayName(componentName).
+                displayType(Constant.displayType.restAPI.name()).
+                projectId(projectId).
+                srcGitRepoUrl(srcGitRepoUrl).
+                repositorySubPath(repoSubpath).
+                repositoryType(repoType).
+                repositoryBranch(repoBranch).
+                build();
+        mustache.execute(writer, graphqlDTO).flush();
+        return writer.toString();
 
-        return graphQlQuery;
+
     }
-   
+
     public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache");

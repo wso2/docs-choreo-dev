@@ -6,7 +6,7 @@ export default defineConfig({
   pageLoadTimeout: 300000,
   responseTimeout: 300000,
   viewportHeight: 1000,
-  viewportWidth: 1920,
+  viewportWidth: 1600,
   chromeWebSecurity: false,
   video: true,
   screenshotsFolder: 'cypress/screenshots/e2e-smoke',
@@ -14,7 +14,6 @@ export default defineConfig({
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
-  scrollBehavior: false,
   e2e: {
     setupNodeEvents(on, config) {
       let apiName;

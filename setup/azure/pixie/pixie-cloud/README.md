@@ -68,12 +68,14 @@
 
 5. Apply kustomize overlay
 
-6. Setup default admin account
+6. Run `kubectl -n plc apply -f pixie_cloud_jobs.yaml`
+
+7. Setup default admin account
 
     Open the url printed in the logs of create-admin-job pod and
     set a password for the default "admin@default.com" user
 
-7. From the UI invite other users as necessary using admin console. Follow the steps shown in the following diagram.
+8. From the UI invite other users as necessary using admin console. Follow the steps shown in the following diagram.
 
   ![Invite User](images/invite-user.jpeg)
 

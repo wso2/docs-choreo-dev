@@ -1,0 +1,56 @@
+extensions:
+  choreosts:
+    issuer_url: {{.STS_ISSUER_URL}}
+    data_planes_config_path: data-planes.yaml
+  health_check/liveness:
+    endpoint: "0.0.0.0:13133"
+    path: "/liveness"
+  health_check/readiness:
+    endpoint: "0.0.0.0:13134"
+    path: "/readiness"
+    check_collector_pipeline:
+      enabled: true
+      interval: "5m"
+      exporter_failure_threshold: 5
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+        include_metadata: true
+        auth:
+          authenticator: choreosts
+
+exporters:
+  logging:
+    loglevel: info 
+    sampling_initial: 5
+    sampling_thereafter: 200
+  eventhubexporter:
+    topic: {{.EVENTHUB_EXPORTER_TOPIC}}
+    encoding: adx_json
+    brokers:
+      - {{.EVENTHUB_EXPORTER_BROCKERS}}
+    protocol_version: 2.0.0
+    auth:
+      sasl:
+        username: ConnectionString
+        password: ${EVENT_HUB_CONNECTION_STRING}
+        mechanism: PLAIN
+        insecure: false
+
+processors:
+  attributes:
+    actions:
+      - key: dataplaneId
+        from_context: auth.subject
+        action: insert
+
+service:
+  extensions: [choreosts, health_check/liveness, health_check/readiness]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [attributes]
+      exporters: [logging, eventhubexporter]

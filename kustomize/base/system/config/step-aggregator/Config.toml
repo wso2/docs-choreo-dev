@@ -1,0 +1,73 @@
+# Jobs =================================================
+[step_aggregator.jobs]
+worker_id = "worker1"
+date_to_aggregate_org_total = ""
+
+[step_aggregator.jobs.api_proxy]
+skip = false
+batch_size_in_seconds = {{.API_PROXY_BATCH_SIZE}}
+from_timestamp = "2021-09-16T00:00:00.000Z"
+to_timestamp = ""
+to_timestamp_offset_in_seconds = 300
+
+[step_aggregator.jobs.bal_app]
+skip = false
+batch_size_in_seconds = {{.BAL_APP_BATCH_SIZE}}
+from_timestamp = "2021-09-16T00:00:00.000Z"
+to_timestamp = ""
+to_timestamp_offset_in_seconds = 300
+app_service_pagination_count = 50
+
+[step_aggregator.jobs.cpu_usage]
+skip = false
+batch_size_in_seconds = {{.CPU_USAGE_BATCH_SIZE}}
+from_timestamp = "{{.CPU_USAGE_TIMESTAMP}}"
+to_timestamp = ""
+to_timestamp_offset_in_seconds = 300
+cpu_usage_pagination_count = 50
+
+# ADX ==================================================
+[step_aggregator.adx]
+tenant_id = "da76d684-740f-4d94-8717-9d5fb21dd1f9"
+token_host = "https://login.microsoftonline.com"
+
+# Obs Api ==============================================
+[choreo.step_aggregator.obs_api]
+url = "http://obsapi:9096"
+timeout = 10.0
+retry_count = 3
+interval = 10.0
+max_interval = 20.0
+backoff_factor = 3.0
+
+# Apim =================================================
+[step_aggregator.apim]
+enable_ssl = false
+verify_hostname = false
+cert_path = "/home/ballerina/security/public.crt"
+
+# Rudder Service
+[choreo.step_aggregator.rudder_service]
+url = "http://dp-rudder:80"
+
+# Negotiator Service
+[choreo.step_aggregator.negotiator_service]
+url = "{{.NEGOTIATOR_SERVICE_URL}}"
+timeout = 10.0
+retry_count = 3
+interval = 10.0
+max_interval = 20.0
+backoff_factor = 3.0
+
+# DB ===================================================
+[step_aggregator.db]
+username = "choreo_step_db_user"
+login_timeout = 30
+use_ssl = true
+conn_pool_max_open = 5
+conn_pool_min_idle = 5
+lock_time_out = 10000
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+format = "json"

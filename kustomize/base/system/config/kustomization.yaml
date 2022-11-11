@@ -287,6 +287,7 @@ configMapGenerator:
       - DEV_PORTAL_SERVICE_NAME=devportal-external
       - DEV_PORTAL_SERVICE_PORT=80
       - DEV_PORTAL_SERVICE_PATH=/
+      - RUDDER_URL="http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
   - name: cm-console-next
     behavior: create
     literals:
@@ -387,3 +388,24 @@ configMapGenerator:
     behavior: create
     files:
       - runtime/workspace-manager.yaml
+  - name: cm-file-step-enforcer
+    behavior: create
+    files:
+      - step-enforcer/Config.toml
+  - name: cm-file-step-usage-publisher
+    behavior: create
+    files:
+      - step-usage-publisher/Config.toml
+  - name: cm-file-step-aggregator
+    behavior: create
+    files:
+      - step-aggregator/Config.toml
+  - name: cm-file-opentelemetry-collector
+    behavior: create
+    files:
+      - opentelemetry-collector/config.yaml
+      - opentelemetry-collector/data-planes.yaml
+  - name: cm-file-negotiator
+    behavior: create
+    files:
+      - negotiator/Config.toml

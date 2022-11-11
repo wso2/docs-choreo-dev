@@ -203,9 +203,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').click();
     cy.contains("Deploy").should("be.visible").click();
     const configField = "[type='text']";
-    cy.get("[data-cyid='username']", {
-      timeout: 10000,
-    }).type(sfUsername);
+    cy.get("[data-cyid='username']").type(sfUsername);
     cy.get("[data-cyid='password']").type(sfPassword);
     cy.get("[data-cyid='clientId']").eq(0).type(salesforceOAuthConfig);
     cy.get("[data-cyid='clientSecret']").eq(0).type(sfclientId);

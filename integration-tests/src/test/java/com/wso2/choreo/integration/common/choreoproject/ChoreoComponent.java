@@ -44,6 +44,7 @@ import java.util.Objects;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.wso2.choreo.integration.models.imageregistry.ImageRegistry;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
@@ -62,7 +63,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * Abstract class to represent Choreo component
  */
-public abstract class ChoreoComponent {
+public class ChoreoComponent {
 
     private final String choreoEndpoint;
     private final String choreoCpProjectsEndpoint;
@@ -85,6 +86,16 @@ public abstract class ChoreoComponent {
     private String version;
     private ChoreoProject project;
     private ChoreoOrganization organization;
+
+
+    private  String handle;
+    private  String organizationId;
+    private  String orgHandle;
+    private  String type;
+    private  String imageRegistryId;
+    private  String componentType;
+    private  boolean httpBased;
+    private ImageRegistry imageRegistry;
     private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
     private final static Gson gson = new Gson();
 
@@ -811,8 +822,8 @@ public abstract class ChoreoComponent {
      * @param apiId       apiId for the deployed component
      * @return request body containing graphql query
      */
-    public String getAPIKeyForInvoke(String accessToken, String apiId) throws InterruptedException, IOException,
-            APIKeyGenerationCheckException, ApiKeyNotFoundException, NoLatestApiVersionFoundException {
+    public String getAPIKeyForInvoke(String accessToken, String apiId) throws  IOException,
+            APIKeyGenerationCheckException, ApiKeyNotFoundException {
         String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.APIS_ENDPOINT)
                 .concat("/")
@@ -1303,5 +1314,69 @@ public abstract class ChoreoComponent {
 
     public void setOrganization(ChoreoOrganization organization) {
         this.organization = organization;
+    }
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public void setHandle(String handle) {
+        this.handle = handle;
+    }
+
+    public String getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public String getOrgHandle() {
+        return orgHandle;
+    }
+
+    public void setOrgHandle(String orgHandle) {
+        this.orgHandle = orgHandle;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getImageRegistryId() {
+        return imageRegistryId;
+    }
+
+    public void setImageRegistryId(String imageRegistryId) {
+        this.imageRegistryId = imageRegistryId;
+    }
+
+    public String getComponentType() {
+        return componentType;
+    }
+
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
+    }
+
+    public boolean isHttpBased() {
+        return httpBased;
+    }
+
+    public void setHttpBased(boolean httpBased) {
+        this.httpBased = httpBased;
+    }
+
+    public ImageRegistry getImageRegistry() {
+        return imageRegistry;
+    }
+
+    public void setImageRegistry(ImageRegistry imageRegistry) {
+        this.imageRegistry = imageRegistry;
     }
 }

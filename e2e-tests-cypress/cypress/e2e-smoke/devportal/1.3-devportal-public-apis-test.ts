@@ -55,7 +55,7 @@ describe("Visit to developer portal organization public apis", () => {
     });
 });
 
-describe("Visit to console an make the created API visibility to public", () => {
+describe("Visit to console and make the created API visibility to public", () => {
 
     before(() => {
         ConsoleLoginPage.visitToHomePage();

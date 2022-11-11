@@ -53,6 +53,7 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -254,7 +255,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
     @CitrusTest
     public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvokeInformationNotFoundException, InterruptedException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-        TestConfigs testConfigs = ComponentUtils.invokeEndpoint(testComponent, Constant.displayType.restAPI.name(), accessToken);
+       TestConfigs testConfigs = ComponentUtils.invokeEndpoint(testComponent, Constant.displayType.restAPI.name(), accessToken);
 
         // Read the request as a json make it as a compact json string
         // Make the hex digest of the body, to be sent with the mock request
@@ -277,7 +278,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 .autoSleep(6000)
                 .actions(
                         http()
-                                .client(testConfigs.getInvokeUrl())
+                                .client(testConfigs.getConfig(Constant.Environment.Development.name()).getInvokeUrl())
                                 .send()
                                 .post(apiInvocationRequestURI)
                                 .message()

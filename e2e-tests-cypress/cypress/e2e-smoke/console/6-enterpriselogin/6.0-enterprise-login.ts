@@ -42,7 +42,6 @@ describe("Enterprise Login using auth0Idp", () => {
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.selectProject();
-    ProjectOverviewPage.addNewComponent();
     RestAPITemplate.selectHttpAPITemplate();
     RestAPITemplate.createApiFromScratch(
       COMPONENT_NAME,
