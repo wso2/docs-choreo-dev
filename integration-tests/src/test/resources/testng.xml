@@ -12,7 +12,7 @@
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
-            <class name="com.wso2.choreo.integration.tests.createComponent.ComponentCreationResponseIT"/>
+            <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>
             <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
             <class name="com.wso2.choreo.integration.tests.deploy.DeployIT"/>
             <class name="com.wso2.choreo.integration.tests.addConfigurations.AddConfigurationsIT"/>
@@ -20,9 +20,9 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedComponentCreationResponse"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyComponentRootCreationResponse"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyComponentSubCreationResponse"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedCreateComponent"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyCreateComponentRoot"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyCreateComponentSub"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
