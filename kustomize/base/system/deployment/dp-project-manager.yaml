@@ -44,6 +44,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-dp-project-manager
+            - configMapRef:
+                name: cm-dp-project-manager
           env:
             - name: MONGODB_PASSWORD
               valueFrom:

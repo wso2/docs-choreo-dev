@@ -152,5 +152,4 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                         .receive()
                         .response(HttpStatus.valueOf(HttpStatusCodes.STATUS_CODE_NO_CONTENT)));
         }
-
 }
