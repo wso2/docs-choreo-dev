@@ -16,7 +16,7 @@ package com.wso2.choreo.integration.tests.deploy;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.graphql.ComponentCreateionGQL;
+import com.wso2.choreo.integration.apis.graphql.ComponentCreationGQL;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.ComponentDeploymentGQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -82,14 +82,13 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAddPromoteConfiguration"})
     @CitrusTest
     public void testPromote() throws Exception {
-        ComponentCreateionGQL.promoteComponent(choreoTestClient, this, restApiComponent);
+        ComponentCreationGQL.promoteComponent(choreoTestClient, this, restApiComponent);
     }
 
     @Test(dependsOnMethods = {"testPromote"})
     @CitrusTest
     public void testComponentProdDeploymentStatus() throws Exception {
         ComponentDeploymentGQL.componentDeployment(restApiComponent, "dev", accessToken);
-      //  GraphQL.componentDeployment(choreoTestClient, this, restApiComponent, "prod","Choreo Files Generated");
     }
 
     @Test(dependsOnMethods = {"testComponentProdDeploymentStatus"})

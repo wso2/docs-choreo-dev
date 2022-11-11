@@ -17,7 +17,7 @@ package com.wso2.choreo.integration.common;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.wso2.choreo.integration.apis.graphql.ComponentCreateionGQL;
+import com.wso2.choreo.integration.apis.graphql.ComponentCreationGQL;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
@@ -121,7 +121,7 @@ public class ComponentUtils {
 
     public static TestConfigs invokeEndpoint(ChoreoComponent component, String componentType, String accessToken) throws NoLatestApiVersionFoundException, IOException, InvokeInformationNotFoundException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
         TestConfigs wrapper = new TestConfigs();
-        InvokeInformation[] info = ComponentCreateionGQL.getInvokeInformation(component, componentType, accessToken);
+        InvokeInformation[] info = ComponentCreationGQL.getInvokeInformation(component, componentType, accessToken);
         String apiKey = component.getAPIKeyForInvoke(accessToken, component.getApiId()).replace("\"", "");
         for (InvokeInformation in : info) {
            wrapper.addConfig(in.getEnvironmentName(), TestConfigs.builder().invokeUrl(in.getInvokeUrl()).apiKey(apiKey).build());
