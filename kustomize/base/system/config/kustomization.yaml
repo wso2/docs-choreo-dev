@@ -260,6 +260,10 @@ configMapGenerator:
     literals:
       - TABLE_LIST=InsightsMetrics,KubePVInventory,Operation,Perf
       - AZURE_DL_CONTAINER_NAME=loganalytics1
+  - name: cm-dp-project-manager
+    behavior: create
+    literals:
+      - RUDDER_URL=http://dp-rudder:80
   - name: cm-dp-rudder
     behavior: create
     literals:
