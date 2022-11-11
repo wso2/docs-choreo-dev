@@ -57,7 +57,7 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
 
         @Test
         @CitrusTest
-        public void testUpdateThemeConfig() throws IOException, InterruptedException {
+        public void testUpdateThemeConfig() {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
                                 .concat(orgUuid)
                                 .concat("/themes/default");

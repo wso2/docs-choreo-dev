@@ -23,6 +23,7 @@ import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
@@ -42,21 +43,16 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     private static final String DOCKER_FILE_PATH = "byoc-test/Dockerfile";
     private static ChoreoComponent choreoComponent;
     TestConfigs testConfigs;
-    private String orgHandle;
     private String projectId;
-    private String repoName;
     private String accessToken;
     private ChoreoOrganization org;
-    @Autowired
-    private HttpClient choreoTestClient;
+ 
 
     @BeforeClass
     public void setup() throws IOException, ProjectCreationException, InterruptedException, TokenRetrievalException {
-
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-             org = TestContext.getTestOrg();
-          ChoreoProject project = org.createProject(accessToken);
+        org = TestContext.getTestOrg();
+        ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
 
 
@@ -67,7 +63,9 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testCreateByocComponentBYOC() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        choreoComponent = GraphQL.createBYOCComponent(componentName, projectId, DOCKER_FILE_PATH, accessToken);
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(projectId).dockerfilePath(DOCKER_FILE_PATH).build();
+        choreoComponent = GraphQL.createBYOCComponent(dto, accessToken);
+        Assert.assertEquals(choreoComponent.getName(), componentName);
 
     }
 
@@ -82,7 +80,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testComponentRetrievalBYOC"})
     @CitrusTest
     public void testInitialPRGenerationBYOC() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
+       PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
@@ -96,7 +94,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testDeployBYOC"})
     @CitrusTest
     public void testDeploymentStatusByVersionBYOC() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoComponent,accessToken);
+        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersionBYOC"})
@@ -124,7 +122,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testAPIInvocationInDevBYOC"})
     @CitrusTest
-    public void testAPIInvocationInPRodBYOC()  {
+    public void testAPIInvocationInPRodBYOC() {
         TestHelper.Movie[] movies = TestHelper.getMovies(testConfigs, Constant.Environment.Production);
         Assert.assertEquals(movies.length, 5);
         Assert.assertEquals(movies[0].id, 1);

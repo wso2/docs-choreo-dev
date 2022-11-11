@@ -27,8 +27,9 @@ import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
-import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
+import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private String projectId;
     private String repoName;
     private String accessToken;
-    private CreateComponent response;
+    private ComponentCreationResponse response;
     private ChoreoOrganization org;
 
 
@@ -61,7 +62,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException, UnexpectedResponseException, ComponentCreationTimeoutException, ComponentCreationStatusCheckException {
+    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException{
 
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -79,7 +80,8 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     public void testCreateUserManagedComponentForJwt() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-        response = GraphQL.createUserManagedComponent(repoName, componentName, projectId, accessToken);
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("0").projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
+        response = GraphQL.createUserManagedComponent(dto, repoName, accessToken);
     }
 
     @Test(dependsOnMethods = {"testCreateUserManagedComponentForJwt"})
@@ -175,7 +177,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testDeleteComponent() throws IOException {
         Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
-        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId,accessToken);
+        ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
         Assert.assertEquals(components.length, 0);
     }

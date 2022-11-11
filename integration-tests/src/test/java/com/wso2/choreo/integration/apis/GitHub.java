@@ -53,6 +53,14 @@ public class GitHub {
         return HttpClientUtil.httpPUT(requestURI, ObjectMapperUtil.mapToString(requestBodyMap), AUTH_HEADER, "");
     }
 
+
+    public static  void  getSha(String repoName,String path){
+        String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
+        Response response = HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");
+        JsonObject jsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
+        String serviceBalSha = jsonObject.get("sha").getAsString();
+    }
+
     /**
      * Merge new code.
      *
