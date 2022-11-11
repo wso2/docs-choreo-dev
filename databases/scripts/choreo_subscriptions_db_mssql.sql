@@ -16,7 +16,7 @@ GO
 
 
 -- TODO: Remove the DEFAULT constraint in the "is_internal" column when the addTier method is modified
-
+-- (Deprecated)
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='tier' and xtype='U')
 BEGIN
     CREATE TABLE tier (
@@ -31,6 +31,7 @@ BEGIN
 END
 GO
 
+-- (Deprecated)
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='subscription' and xtype='U')
 BEGIN
     CREATE TABLE subscription (
@@ -53,6 +54,7 @@ BEGIN
 END
 GO
 
+-- (Deprecated)
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='quota' and xtype='U')
 BEGIN
     CREATE TABLE quota (
@@ -67,6 +69,7 @@ BEGIN
 END
 GO
 
+-- (Deprecated)
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='attribute' and xtype='U')
 BEGIN
     CREATE TABLE attribute (
@@ -80,20 +83,59 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='tierV2' and xtype='U')
+BEGIN
+    CREATE TABLE tierV2 (
+        id VARCHAR(128) NOT NULL,
+        name VARCHAR(256) NOT NULL,
+        description VARCHAR(1024) NOT NULL,
+        is_paid BIT NOT NULL,
+        created_at BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
+        is_internal BIT NOT NULL DEFAULT 1,
+        PRIMARY KEY (ID)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='subscriptionV2' and xtype='U')
+BEGIN
+    CREATE TABLE subscriptionV2 (
+        id VARCHAR(128) NOT NULL,
+        org_id VARCHAR(128) NOT NULL,
+        org_handle VARCHAR(255) NOT NULL,
+        tier_id VARCHAR(128) NOT NULL,
+        subscription_item_id VARCHAR(128) DEFAULT NULL,
+        infra_cost_subscription_item_id VARCHAR(128) DEFAULT NULL,
+        subscription_type VARCHAR(128) NOT NULL DEFAULT N'choreo-subscription',
+        billing_provider VARCHAR(128) DEFAULT NULL,
+        billing_date BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
+        status VARCHAR(128) NOT NULL,
+        is_paid BIT NOT NULL DEFAULT 0,
+        created_at BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
+        PRIMARY KEY (org_id, tier_id),
+        UNIQUE (id),
+        CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id)
+    );
+END
+GO
+
 -- Initial data for subscriptions
 -- Relevant issue: https://github.com/wso2-enterprise/choreo/issues/7627
 
+-- (Deprecated)
 INSERT INTO [attribute] (id,name,description,created_at) VALUES
 	 (N'01ebea30-6199-152a-b9c8-53a5e8c83008',N'running_app_quota',N'Number of running applications quota',1627639797657),
 	 (N'01ebea3b-2dba-182a-9aad-b68df13c86d0',N'component_quota',N'Number of components can be created',1627639797657);
 GO
 
+-- (Deprecated)
 INSERT INTO tier (id,name,description,is_paid,created_at,is_internal) VALUES
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'Free',N'Free tier to tryout choreo',0,1627639797657,0),
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'Pay As You Go',N'Tier for paid users',1,1627639797657,0),
 	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'Enterprise',N'Tier for enterprise users',1,1627639797657,1);
 GO
 
+-- (Deprecated)
 INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'running_app_quota',5),
 	 (N'01ebea3a-7735-10be-b3c0-ba95f991e877',N'component_quota',10),
@@ -101,4 +143,11 @@ INSERT INTO quota (tier_id,attribute_name,threshold) VALUES
 	 (N'01ebea43-be76-1d7a-b410-2d1b873c57af',N'component_quota',1000000000),
 	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'running_app_quota',1000000000),
 	 (N'01ec1f84-ce3d-122e-ac9b-f10c95fd72da',N'component_quota',1000000000);
+GO
+
+INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
+	 (N'8de71e7a-adc2-4de4-a1b4-5b79d450f3ff',N'Free',N'Free tier to tryout choreo with component based pricing',0,1667189541440,0),
+	 (N'352dd60e-8e14-4bb3-9dab-395a16fbfe88',N'Pay As You Go',N'Tier for paid users with component based pricing',1,1667189541440,0),
+     (N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'Choreo Support',N'Choreo support plan with component based pricing',1,1667189541440,0),
+	 (N'4abe3757-86f6-47de-994f-f02fb0522e99',N'Enterprise',N'Tier for enterprise users with component based pricing',1,1667189541440,1);
 GO
