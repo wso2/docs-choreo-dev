@@ -21,9 +21,9 @@ workspace:
   appIngressTlsSecret: ${WORKSPACE_APP_INGRESS_TLS_SECRET}
   cleanInterval: 3600s
   apiImage: ${WORKSPACE_IMAGE}
-  langServerImage: choreoipaas/lang-server:v0.1.7 # DEPRECATED. Please use kustomize/prod/choreo-system/kustomization.yaml to set lang-server image
+  langServerImage: {{.WORKSPACE_LANGSERVER_IMAGE}} # DEPRECATED. Please use kustomize/<env>/choreo-system/kustomization.yaml to set lang-server image
   projectTemplateDir: /template
-  projectBallerinaVersion: ${WORKSPACE_BALLERINA_VERSION}
+  projectBallerinaVersion: {{.WORKSPACE_BALLERINA_VERSION | default "${WORKSPACE_BALLERINA_VERSION}"}}
   userAppsDir: /apps
   periscopeHost: ${WORKSPACE_PERISCOPE_HOST} # DEPRECATED
   azureInsightsKey: ${AZURE_INSIGHTS_KEY}
@@ -44,7 +44,7 @@ workspace:
     nginx.ingress.kubernetes.io/proxy-send-timeout:      10800 # 3 hours
     nginx.ingress.kubernetes.io/proxy-read-timeout:      10800 # 3 hours
 logger:
-  level: ${LOGGER_LEVEL}    # todo: change this to info after the new components get stable in prod.
+  level: ${LOGGER_LEVEL}
   encoding: json
   development: ${LOGGER_DEVELOPMENT}
   disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
@@ -73,8 +73,8 @@ apim:
 codeServer:
   image: ${CODE_SERVER_IMAGE}
   initImage: ${CODE_SERVER_INIT_IMAGE}
-  namespacePrefix: prod-cs
-  ingressTlsSecret: "" # Set to cert-manager/prod-choreo-workspace-wildcard-tls by using NginX -wildcard-tls-secret command line arg
+  namespacePrefix: {{.CODESERVER_NAMESPACE_PREFIX}}
+  ingressTlsSecret: "" # Set to cert-manager/<env>-choreo-workspace-wildcard-tls by using NginX -wildcard-tls-secret command line arg
   githubToken: ${CSM_GITHUB_TOKEN}
   cleanerInterval: 15m
   codeServerMaxAge: 6h
@@ -82,49 +82,50 @@ codeServer:
   volumeMaxAge: 720h
   mizzenApi:
     url: http://dp-mizzen:80
-  defaultClusterId: B0FD3ABF-AD58-EC11-94F6-C89665949033
-  defaultIngressHost: workspace.choreo.dev
+  defaultClusterId: {{.CODESERVER_CLUSTER_ID}}
+  defaultIngressHost: {{.CODESERVER_INGRESS_HOST}}
   defaultRegion: us-east-2
   ingressAnnotations:
-    kubernetes.io/ingress.class: prod-choreo-workspace-nginx
+    kubernetes.io/ingress.class: {{.INGRESS_ANNOTATION_CLASS}}
     ingress.kubernetes.io/ssl-redirect: true
     nginx.org/redirect-to-https: true
     nginx.org/client-max-body-size: 100m
     nginx.org/proxy-send-timeout: 10800 # 3 hours
     nginx.org/proxy-read-timeout: 10800 # 3 hours
-  frontendBaseUrl: https://console.choreo.dev
-  gatewayBaseUrl: https://choreocontrolplane.choreo.dev/93tu
-  storageAccSecret: prod-code-server-volume-storage
-  storageAccSecretNamespace: prod-common-cs
-  codeServerDefaultNetworkPolicy: prod-default-code-server-netpol
-  codeServerDefaultNetworkPolicyNamespace: prod-common-cs
-  maxCodeServersPerCluster: 1500
+  frontendBaseUrl: {{.CODESERVER_FRONTEND_URL}}
+  gatewayBaseUrl: {{.CODESERVER_GATEWAY_URL}}
+  storageAccSecret: {{.CODESERVER_STORAGE_ACC_SECRET}}
+  storageAccSecretNamespace: {{.CODESERVER_STORAGE_ACC_SECRET_NAMESPACE}}
+  codeServerDefaultNetworkPolicy: {{.CODESERVER_NETWORK_POLICY}}
+  codeServerDefaultNetworkPolicyNamespace: {{.CODESERVER_NETWORK_POLICY_NAMESPACE}}
+  maxCodeServersPerCluster: {{.CODESERVER_MAX_CLUSTER}}
   storage:
     azureFiles:  
       fileShareList:
       - location: us-east-2
         config:
-          storageAccName: choreoprodcodeservervol
+          storageAccName: {{.CODESERVER_STORAGE_ACC_NAME}}
           storageAccKey: ${CSM_VOLUME_STORAGE_ACCOUNT_KEY}
   iam:
     apim:
-      tokenEndpoint: https://sts.choreo.dev/oauth2/token
+      tokenEndpoint: {{.CODESERVER_TOCKEN_ENDPOINT}}
       clientId: ${CSM_APIM_IDP_VSCODE_CLIENT_ID}
     balCentral:
-      tokenEndpoint: https://sts.choreo.dev/oauth2/token
+      tokenEndpoint: {{.CODESERVER_TOCKEN_ENDPOINT}}
       clientId: ${CSM_APIM_IDP_BALLERINA_CENTRAL_CLIENT_ID}
   userConnectors: true
   codeServerEnvs:
-    VSCODE_CHOREO_APIM_TOKEN_ENDPOINT: https://sts.choreo.dev/oauth2/token
+    VSCODE_CHOREO_APIM_TOKEN_ENDPOINT: {{.CODESERVER_TOCKEN_ENDPOINT}}
     VSCODE_CHOREO_APIM_CLIENT_ID: ${CSM_APIM_IDP_VSCODE_CLIENT_ID}
-    VSCODE_CHOREO_INSTRUMENTATION_KEY: 8f98bf03-9ba8-47ba-a18d-62449b92ca42
-    CHOREO_WHATFIX_URL: https://cdn.whatfix.com/prod/c9fb1d90-71f0-11ec-a69b-2a8342861064/embed/embed.nocache.js
+    VSCODE_CHOREO_INSTRUMENTATION_KEY: {{.CODESERVER_VSCODE_INSTRUMENTATION_KEY}}
+    {{.BALLERINA_ENV_CENTRAL}}: "true"
+    CHOREO_WHATFIX_URL: {{.CODESERVER_WHATFIX_URL}}
     #  This is used for sentry configuration
-    VSCODE_CHOREO_SENTRY_ENV: prod
+    VSCODE_CHOREO_SENTRY_ENV: {{.CODESERVER_SENTRY_ENV}}
     # Low code editor version
-    BALLERINA_LOW_CODE_EDITOR_VERSION: "1.1.7-20220317-0709.0"
+    BALLERINA_LOW_CODE_EDITOR_VERSION: "{{.CODESERVER_LOWCODE_EDITOR_VERSION}}"
     BALLERINA_LOW_CODE_RESOURCES_VERSION: ${BALLERINA_LOW_CODE_RESOURCES_VERSION}
-    VSCODE_HOTJAR_ID: "2626534"
+    VSCODE_HOTJAR_ID: "{{.CODESERVER_VSCODE_HOTJAR}}"
   enableCodeServerSSO: "true"
   db:
     username: ${CSM_DB_USERNAME}
