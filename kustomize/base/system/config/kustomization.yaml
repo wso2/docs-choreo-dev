@@ -372,7 +372,7 @@ configMapGenerator:
     behavior: create
     files:
       - subscriptions/Config.toml
- - name: cm-file-api-server
+  - name: cm-file-api-server
     behavior: create
     files:
       - runtime/api-server.yaml
