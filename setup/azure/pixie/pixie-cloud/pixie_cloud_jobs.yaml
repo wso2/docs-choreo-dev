@@ -250,6 +250,10 @@ spec:
             capabilities:
               drop:
                 - ALL
+            runAsNonRoot: true
+            runAsUser: 10100
+            seccompProfile:
+              type: RuntimeDefault
           resources:
             requests:
               cpu: 10m
@@ -289,4 +293,3 @@ spec:
           secret:
             secretName: pl-db-secrets
 ---
-
