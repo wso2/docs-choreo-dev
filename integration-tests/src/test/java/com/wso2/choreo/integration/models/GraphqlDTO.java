@@ -52,4 +52,6 @@ public class GraphqlDTO {
     private  String devEnvIdToDeploy;
     private String branch;
     private String latestCommitSha;
+    private String triggerChannels;
+    private String triggerID;
 }

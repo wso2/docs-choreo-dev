@@ -31,7 +31,7 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStatusByVersion;
-import com.wso2.choreo.integration.models.createcomponentresponse.CreateComponent;
+import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.deploymentstatus.ComponentDeploymentStatus;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
@@ -100,10 +100,9 @@ public class GraphQL {
         JsonArray commitHistory = component.getCommitHistory(accessToken);
         String latestCommitSha = component.getLatestCommitHash(commitHistory);
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).latestVersionId(component.getLatestApiVersion().getId()).
-                devEnvIdToDeploy(component.getLatestAppEnvId("dev")).latestVersionId(latestCommitSha).build();
+                devEnvIdToDeploy(component.getLatestAppEnvId("dev")).sha(latestCommitSha).branch("main").build();
         String generatedQuery = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/deployComponent.mustache", dto);
-        String request = ObjectMapperUtil.mapToGraphQLQuery(generatedQuery);
-        Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(request), accessToken, "");
+        Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "deployComponent");
 
     }
@@ -181,7 +180,7 @@ public class GraphQL {
             log.info(response.getRes());
             if (status.length > 0) {
                 if (status[0].getStatus().equals("completed") && status[0].getConclusion().equals("success")) {
-                    return status[0];
+                    return  status[0];
                 }
             }
             SleepUtil.sleep(30);
@@ -227,6 +226,8 @@ public class GraphQL {
 
     public static void componentDeployment(ChoreoComponent component, String envName, String accessToken) throws Exception {
         String envId = component.getLatestAppEnvId(envName);
+        JsonArray commitHistory = component.getCommitHistory(accessToken);
+        String latestCommitSha = component.getLatestCommitHash(commitHistory);
         GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).orgUuid(ORG_UUID).componentId(component.getId()).versionId(component.getLatestApiVersion().getId()).environmentId(envId).build();
         String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/componentDeployment.mustache", dto);
         Response response = null;
@@ -245,20 +246,24 @@ public class GraphQL {
                 deployments.getDeploymentStatusV2() + " and deploymentStatus is " + deployments.getDeploymentStatus());
     }
 
-    public static CreateComponent createUserManagedComponent(String repoName, String componentName, String projectId, String accessToken) throws IOException {
+
+    public static ComponentCreationResponse createUserManagedComponent(GraphqlDTO graphqlDTO, String repoName, String accessToken) throws IOException {
         String srcGitHubURL = "https://github.com/" + Configuration.getConfig(ConfigDefinition.GITHUB_ORG) + "/" + repoName;
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).orgId(ORG_ID).orgHandler(ORG_HANDLE).displayName(componentName).projectId(projectId).srcGitRepoUrl(srcGitHubURL).build();
-        String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/createUserManagedComponent.mustache", dto);
+        graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(CreateComponent.class, response.getRes(), "createComponent");
+        return ObjectMapperUtil.mapStringToObject(ComponentCreationResponse.class, response.getRes(), "createComponent");
     }
 
 
-    public static ChoreoComponent createBYOCComponent(String componentName, String projectId, String dockerfilePath, String accessToken) throws IOException {
+    public static ChoreoComponent createBYOCComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
         String srcGitHubURL = "https://github.com/choreo-test-apps/byor-greetings-app2";
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).orgId(ORG_ID).orgHandler(ORG_HANDLE).displayName(componentName).projectId(projectId)
-                .srcGitRepoUrl(srcGitHubURL).dockerfilePath(dockerfilePath).build();
-        String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/createBYOCcomponent.mustache", dto);
+        graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/createBYOCcomponent.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createByocComponent");
     }
@@ -273,9 +278,9 @@ public class GraphQL {
             if (pullRequests.length == expectedPRs) {
                 return pullRequests;
             }
-            SleepUtil.sleep(5);
+            SleepUtil.sleep(15);
         }
-        throw new UnexpectedResponseException(response.getStatusCode(), "Expected PullRequest length" + expectedPRs + "but found " + 0);
+        throw new UnexpectedResponseException(response.getStatusCode(), "Expected PullRequest length " + expectedPRs + " but found " + 0);
     }
 
 
@@ -312,6 +317,13 @@ public class GraphQL {
         String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/graphql/requests/getProjectComponents.mustache", dto);
         Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapToCollection(ChoreoComponent[].class, response.getRes(), "components");
+    }
+
+    public static void fetchObservabilityIds(String accessToken) throws IOException {
+        GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).build();
+        String expectedResponse = ObjectMapperUtil.generateGraphQLRequest("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache", dto);
+        Response response = HttpClientUtil.httpPOST(choreoProjectURL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+
     }
 
 }
