@@ -11,16 +11,13 @@
 package com.wso2.choreo.integration.tests.alert;
 
 import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.ControlPlane;
+import com.wso2.choreo.integration.apis.AlertNotifier;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.email.RestAPIBasedEmailUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.alert.AlertResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -46,7 +43,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testImmediateAlert() throws Exception {
         String appName = UUID.randomUUID().toString();
-        AlertResponse resData = ControlPlane.triggerImmediateAlert(appName,accessToken);
+        AlertResponse resData = AlertNotifier.triggerImmediateAlert(appName,accessToken);
 
         boolean isMailReceived = restAPIBasedEmailUtils.reTrySearch(appName);
         Assert.assertEquals(resData.getMessage(), "Alert published to the Event Hub.");

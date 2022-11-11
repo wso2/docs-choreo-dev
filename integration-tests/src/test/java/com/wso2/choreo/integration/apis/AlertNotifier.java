@@ -17,7 +17,7 @@ import java.time.Instant;
 
 
 
-public class ControlPlane {
+public class AlertNotifier {
     private static final String CP_ENDPOINT = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT) + "/" + Constant.ALERT.NOTIFICATION_SERVICE_RESOURCE;
 
 
