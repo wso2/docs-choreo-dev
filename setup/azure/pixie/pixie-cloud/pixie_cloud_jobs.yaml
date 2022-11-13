@@ -42,12 +42,14 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - NET_RAW
                 - ALL
-            runAsNonRoot: true
-            runAsUser: 10100
-            seccompProfile:
-              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
           volumeMounts:
             - mountPath: /certs
               name: certs
@@ -56,8 +58,8 @@ spec:
             - sh
             - -c
             - 'set -x; URL="${PL_KRATOS_PUBLIC_HOST}/health/ready"; until [ $(curl -m
-          0.5 -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
-          for ${URL}" sleep 2; done; '
+              0.5 -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
+              for ${URL}" sleep 2; done; '
           env:
             - name: PL_KRATOS_PUBLIC_HOST
               valueFrom:
@@ -67,10 +69,24 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
           imagePullPolicy: IfNotPresent
           name: kratos-wait
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       restartPolicy: Never
       securityContext:
+        fsGroup: 10500
+        runAsGroup: 10500
         runAsNonRoot: true
-        runAsUser: 10100
+        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
       volumes:
@@ -145,19 +161,21 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - NET_RAW
                 - ALL
-            runAsNonRoot: true
-            runAsUser: 10100
-            seccompProfile:
-              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       initContainers:
         - command:
             - sh
             - -c
             - 'set -x; URL="${PL_HYDRA_PUBLIC_HOST}/health/ready"; until [ $(curl -m 0.5
-          -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
-          for ${URL}" sleep 2; done; '
+              -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
+              for ${URL}" sleep 2; done; '
           env:
             - name: PL_HYDRA_PUBLIC_HOST
               valueFrom:
@@ -167,10 +185,24 @@ spec:
           image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
           imagePullPolicy: IfNotPresent
           name: hydra-wait
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       restartPolicy: Never
       securityContext:
+        fsGroup: 10500
+        runAsGroup: 10500
         runAsNonRoot: true
-        runAsUser: 10100
+        runAsUser: 10500
         seccompProfile:
           type: RuntimeDefault
 ---
@@ -217,12 +249,18 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - NET_RAW
                 - ALL
             runAsNonRoot: true
             runAsUser: 10100
             seccompProfile:
               type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       initContainers:
         - command:
             - sh
@@ -234,6 +272,18 @@ spec:
                 name: pl-db-config
           image: choreocontrolplane.azurecr.io/postgres:14-alpine
           name: postgres-wait
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
       restartPolicy: Never
       securityContext:
         seccompProfile:
