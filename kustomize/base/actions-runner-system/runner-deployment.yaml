@@ -6,6 +6,7 @@ spec:
   replicas: 0
   template:
     spec:
+      dockerdWithinRunnerContainer: true
       organization: choreo-userapps-gitops-dev
       image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
       resources:
