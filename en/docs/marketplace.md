@@ -71,3 +71,7 @@ When you design your components in the low-code view, you can search and add the
 If the connector is not available by default, you need to visit the vendor portal, make a payment/provide your Freemium account details if required, and access the required authorization tokens beforehand.
 
 e.g., If you need to use the Azure SQL DB connector, you need to create an Azure account and obtain an authorization token.
+
+## Update a connector 
+
+If you want to introduce a change to your component and update the connector you published for it, you need to explicitly republish the connector. To learn more on how to update a connector, see [Use a Connector in Your Component](references/use-a-connector-in-your-component.md).
