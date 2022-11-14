@@ -3,41 +3,41 @@
       "type": "light",
       "background": {
         "primary": {
-          "light": "#f7f8fb",
+          "light": "#0d43e5",
           "dark": "#9A97EB"
         },
         "secondary": {
-          "light": "#ffffff",
+          "light": "#3b1010",
           "dark": "#542C3A"
         }
       },
       "text": {
         "primary": {
-          "light": "#000000",
+          "light": "#411313",
           "dark": "#493AA5"
         },
         "secondary": {
-          "light": "#000000",
+          "light": "#86d424",
           "dark": "#f50057"
         }
       },
       "button": {
         "primary": {
-          "light": "#303f9f",
+          "light": "#9c2d95",
           "dark": "#303f9f"
         },
         "secondary": {
-          "light": "#303f9f",
+          "light": "#a5b856",
           "dark": "#303f9f"
         }
       }
     },
     "typography": {
       "headings": {
-        "fontFamily": "Lato"
+        "fontFamily": "Verdana"
       },
       "body": {
-        "fontFamily": "Lato"
+        "fontFamily": "Arial"
       },
       "p": {
         "fontFamily": "Gilmer"
@@ -45,19 +45,19 @@
     },
     "assets": {
       "logoUrl": {
-        "header": "https://devportal.preview-dv.choreo.dev/themes/default/images/logo-black.svg",
+        "header": "https://wso2.cachefly.net/wso2/sites/all/2020-theme/images/wso2-logo.svg",
         "footer": "https://devportal.preview-dv.choreo.dev/themes/default/images/wso2-logo.svg",
         "favicon": "https://devportal.preview-dv.choreo.dev/themes/default/images/favicon.ico"
       }
     },
     "homePage": {
       "banner": "https://devportal.choreo.dev/themes/default/images/banner.svg",
-      "title": "Continue working with APIs",
-      "subtitle": "Use our APIs to automate, innovate, and connect to millions of customers."
+      "title": "Welcome to dev portal",
+      "subtitle": "Hello there, Use our unlimited APIs to automate, innovate, and connect to millions of customers."
     },
     "footerLinks": {
       "terms": "https://wso2.com/choreo/terms-of-use/",
       "privacyPolicy": "https://wso2.com/choreo/privacy-policy/",
-      "support": "https://wso2-choreo.slack.com/join/shared_invite/zt-qm86tg1f-R2kXf~26GB6X6Ux0GcuYbQ#/shared-invite/email"
+      "support": "https://discord.com/channels/955510916064092180/955513399037546536"
     }
   }
