@@ -7,7 +7,7 @@ A connector is a component you or another party have developed and exposed as an
 ## Use a connector in your component design
 When you design your components in the low-code view, you can search and add the connectors displayed in the Marketplace as follows:
 
-1. Open the component you are designing in the web editor and add a connector.
+1. Open the component you are designing in the Web Editor and add a connector.
     
     ![Add connector](../assets/img/marketplace/add-connector.png){.cInlineImage-small}
 
@@ -41,7 +41,7 @@ Public connectors are immutable. Therefore, we cannot modify and republish the a
 1. Create a new GitHub branch for the new connector patch version in your GitHub repository. If you are using a Choreo-managed repo, follow the steps below:
     1.  Sign in to the Choreo Console at https://console.choreo.dev. 
     2. Navigate to your component and click **Overview** from the left pane. 
-    3. Click the **Edit Code** button and navigate to the web editor to create a new branch through the terminal using the following commands: 
+    3. Click the **Edit Code** button and navigate to the Web Editor to create a new branch through the terminal using the following commands: 
         ```
             git checkout -b <branch-name>
             git push origin <branch-name>
