@@ -1,8 +1,12 @@
 # Manage Connectors 
 
-A connector is a component you or another party have developed and exposed as an API in Choreo, which you published as a connector in the [Marketplace](../marketplace.md). A connector lets you share your APIs privately or publicly, promoting the reuse of APIs. Developers can use them when they design their components in the low-code view. Choreo allows you to create new connectors and maintain them easily.
+A connector in Choreo is a component you or another party have:
 
-A connector is a component you or another party have developed and exposed as an API in Choreo, which you published as a connector in the [Marketplace](../marketplace.md). A connector lets you share your APIs privately or publicly, promoting the reuse of APIs. Developers can use them when they design their components in the low-code view.
+1. Designed and developed in Choreo.
+2. Exposed as an API in Choreo. 
+3. Published as a connector in the Choreo [Marketplace](../marketplace.md)
+
+A connector lets you share your APIs privately or publicly, promoting the reuse of APIs. Developers can use them when they design their components in the low-code view. A connector lets you share your APIs privately or publicly, promoting the reuse of APIs. Developers can use them when they design their components in the low-code view. Choreo allows you to create new connectors and maintain them easily.
 
 ## Use a connector in your component design
 When you design your components in the low-code view, you can search and add the connectors displayed in the Marketplace as follows:
