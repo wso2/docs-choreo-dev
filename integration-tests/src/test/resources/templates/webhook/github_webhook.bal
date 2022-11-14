@@ -2,7 +2,7 @@ import ballerinax/trigger.github;
 import ballerina/http;
 import ballerina/log;
 
-configurable slack:ListenerConfig config = {
+configurable github:ListenerConfig config = {
     verificationToken: "pkKgDNr5vGND364IsHzwGM7O"
 };
 

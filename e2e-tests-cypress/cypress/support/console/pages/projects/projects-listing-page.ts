@@ -11,12 +11,13 @@
  * associated services.
  */
 
-import { ChoreoHomePage } from "../home/home-page";
+
 
 export class ProjectListingPage {
+  
   static createNewProject(projectName: string, description: string) {
-    cy.get('[data-testid="project-picker"]').click();
-    cy.get('[aria-labelledby="project-picker"]>button').focus().click().wait(3000);
+    cy.get('[data-testid="project-picker"]').contains('project-picker').click();
+    cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-testid="create-version-create"]').click();

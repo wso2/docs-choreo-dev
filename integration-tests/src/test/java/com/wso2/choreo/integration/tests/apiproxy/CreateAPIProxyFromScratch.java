@@ -18,7 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wso2.choreo.integration.apis.apim.Apim;
+import com.wso2.choreo.integration.apis.apim.ApiManager;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
@@ -84,7 +84,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void testAPINameValidationForAPIProxyCreation() throws IOException, InterruptedException, ApiCreationException {
 
-        Response response = Apim.validateAPIName(firstAPIName, accessToken);
+        Response response = ApiManager.validateAPIName(firstAPIName, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND.value());
 
         //  Create an API by providing a unique API Name.
@@ -122,7 +122,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAPINameValidationForAPIProxyCreation"})
     @CitrusTest
     public void testExistingAPI() throws IOException {
-        Response response = Apim.validateAPIName(firstAPIName, accessToken);
+        Response response = ApiManager.validateAPIName(firstAPIName, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }
 

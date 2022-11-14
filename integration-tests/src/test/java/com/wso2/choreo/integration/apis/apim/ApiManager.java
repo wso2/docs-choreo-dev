@@ -1,6 +1,6 @@
 package com.wso2.choreo.integration.apis.apim;
 
-import com.wso2.choreo.integration.apis.AbstractConfigs;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.Response;
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @Slf4j
-public class Apim extends AbstractConfigs {
+public class ApiManager extends ControlPlaneAPI {
 
     private static  final String APIM_ENDPOINT = STS_ENDPOINT + Constant.API_VALIDATE_ENDPOINT;
     public static Response validateAPIName(String apiName, String accessToken) throws IOException {
