@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.apis;
+package com.wso2.choreo.integration.apis.github;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

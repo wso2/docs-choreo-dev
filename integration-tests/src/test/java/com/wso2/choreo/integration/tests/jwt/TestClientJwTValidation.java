@@ -5,8 +5,8 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
-import com.wso2.choreo.integration.apis.GitHub;
-import com.wso2.choreo.integration.apis.GraphQL;
+import com.wso2.choreo.integration.apis.github.GitHub;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -132,13 +132,14 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"testAddDeploymentConfigurationJwt"})
     @CitrusTest
     public void testDeployJwt() throws Exception {
-        GraphQL.deployComponent(choreoTestClient, this, choreoComponent);
+        GraphQL.deployComponent( choreoComponent,accessToken);
     }
 
     @Test(dependsOnMethods = {"testDeployJwt"})
     @CitrusTest
     public void testDeploymentStatusByVersionJwt() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoTestClient, this, choreoComponent);
+        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
+        //GraphQL.deploymentStatusByVersion(choreoTestClient, this, choreoComponent);
     }
 
 

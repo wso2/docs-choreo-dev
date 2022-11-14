@@ -7,7 +7,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.GraphQL;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -23,7 +23,7 @@ import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.apis.GitHub;
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -172,19 +172,20 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     public void testComponentDeployment() throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
         Orgs.addConfiguration(choreoTestClient, this, testComponent, "dev", balConfigs);
-        GraphQL.deployComponent(choreoTestClient, this, testComponent);
+        GraphQL.deployComponent(testComponent,accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDeployment"})
     @CitrusTest
     public void testDeploymentStatusByVersion() throws Exception {
-        GraphQL.deploymentStatusByVersion(choreoTestClient, this, testComponent);
+        GraphQL.deploymentStatusByVersion(testComponent, accessToken);
+
     }
 
     @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
     @CitrusTest
     public void testComponentDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(choreoTestClient, this, testComponent, "dev", "");
+        GraphQL.componentDeployment(testComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})

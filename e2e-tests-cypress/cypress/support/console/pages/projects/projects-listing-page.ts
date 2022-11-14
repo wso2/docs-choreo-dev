@@ -11,9 +11,10 @@
  * associated services.
  */
 
-import { ChoreoHomePage } from "../home/home-page";
+
 
 export class ProjectListingPage {
+  
   static createNewProject(projectName: string, description: string) {
     cy.get('[data-testid="project-picker"]>div').click();
     cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);

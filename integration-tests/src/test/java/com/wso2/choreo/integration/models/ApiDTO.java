@@ -13,50 +13,19 @@
 
 package com.wso2.choreo.integration.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class ApiDTO {
     private String apiName;
     private String version;
     private String context;
     private String productionEndpoint;
     private String sandboxEndpoint;
-
-    public void setApiName(String apiName) {
-        this.apiName = apiName;
-    }
-
-    public String getApiName() {
-        return apiName;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
-    }
-
-    public String getContext() {
-        return context;
-    }
-
-    public void setProductionEndpoint(String productionEndpoint) {
-        this.productionEndpoint = productionEndpoint;
-    }
-
-    public String getProductionEndpoint() {
-        return productionEndpoint;
-    }
-
-    public void setSandboxEndpoint(String sandboxEndpoint) {
-        this.sandboxEndpoint = sandboxEndpoint;
-    }
-
-    public String getSandboxEndpoint() {
-        return sandboxEndpoint;
-    }
 }

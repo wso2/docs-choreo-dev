@@ -12,7 +12,9 @@ package com.wso2.choreo.integration.tests.alert;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.AlertNotifier;
+
+import com.wso2.choreo.integration.apis.alert.AlertNotifier;
+
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.email.RestAPIBasedEmailUtils;
 import com.wso2.choreo.integration.config.ConfigDefinition;

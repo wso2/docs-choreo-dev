@@ -1,4 +1,4 @@
-package com.wso2.choreo.integration.apis;
+package com.wso2.choreo.integration.apis.alert;
 
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;

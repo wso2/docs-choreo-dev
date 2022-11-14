@@ -18,6 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wso2.choreo.integration.apis.apim.ApiManager;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
@@ -28,11 +29,13 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -80,28 +83,11 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void testAPINameValidationForAPIProxyCreation() throws IOException, InterruptedException, ApiCreationException {
-        String requestURL = Constant.API_VALIDATE_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID)
-                .concat("=").concat(orgUuid)
-                .concat("&query=name:").concat(firstAPIName);
-        // Test API Name validation.
-        $(http()
-                .client(choreoTestClientForSTS)
-                .send()
-                .post(requestURL)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
-        // Publisher API should return a 404 if the API name is unique.
-        $(http()
-                .client(choreoTestClientForSTS)
-                .receive()
-                .response(HttpStatus.NOT_FOUND)
-                .message()
-                .type(MessageType.JSON));
+        Response response = ApiManager.validateAPIName(firstAPIName, accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND.value());
 
-        // Create an API by providing a unique API Name.
+        //  Create an API by providing a unique API Name.
         APICreator testAPI = new APICreator();
         String apiId = testAPI.createAPI(accessToken, firstAPIName, firstContext);
 
@@ -130,26 +116,17 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
                 .message()
                 .type(MessageType.JSON));
 
-        // Test API Name validation for an existing API Name.
-        $(http()
-                .client(choreoTestClientForSTS)
-                .send()
-                .post(requestURL)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
-        // Publisher API should return a 200 if the API name already exists.
-        $(http()
-                .client(choreoTestClientForSTS)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
     }
 
     @Test(dependsOnMethods = {"testAPINameValidationForAPIProxyCreation"})
+    @CitrusTest
+    public void testExistingAPI() throws IOException {
+        Response response = ApiManager.validateAPIName(firstAPIName, accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = {"testExistingAPI"})
     @CitrusTest
     public void testAPIBasePathValidationForAPIProxyCreation() throws IOException {
         // Create a unique API Name.
