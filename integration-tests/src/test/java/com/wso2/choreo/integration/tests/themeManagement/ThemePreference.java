@@ -17,6 +17,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.api.client.http.HttpStatusCodes;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
@@ -127,5 +128,28 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                         .body(new ClassPathResource(
                                 "templates/themeManagement/post_update_theme_success.json")));
 
+        }
+
+
+        @Test(dependsOnMethods = {"testChangeLive"})
+        @CitrusTest
+        public void testResetTheme() throws IOException, InterruptedException {
+                String requestURL = Constant.THEME_ENDPOINT_SUFFIX
+                        .concat(orgUuid)
+                        .concat("/themes/default");
+
+                $(http()
+                        .client(choreoTestClientForTheme)
+                        .send()
+                        .delete(requestURL)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                );
+
+                $(http()
+                        .client(choreoTestClientForTheme)
+                        .receive()
+                        .response(HttpStatus.valueOf(HttpStatusCodes.STATUS_CODE_NO_CONTENT)));
         }
 }
