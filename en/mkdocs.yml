@@ -91,6 +91,7 @@ nav:
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
+     - Use a Connector in Your Component: references/manage-connectors.md
      - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
      - Define Configurable Variables: references/define-configurable-variables.md
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
