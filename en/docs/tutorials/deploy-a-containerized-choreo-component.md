@@ -65,13 +65,13 @@ Let's add a containerized REST API component by following these steps:
 
 9. In the **Build Configuration** dialog, enter the following information:
 
-    | **Field**            | **Description**                                                                | **Value** |
-    |----------------------|--------------------------------------------------------------------------------|-----------|
-    | **Select Branch**    | The branch of the GitHub repository that has the required Dockerfile.| **main** |
-    | **Dockerfile**       | The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field for a mono-repo is `service-one/Dockerfile`.  | `nodejs/rest-api/Dockerfile` |
-    | **Docker Context**   | The Docker build context. To include the repository root, leave the default `**.**` value. | `nodejs/rest-api/` |
-    | **Port**             | The port at which your service is running. | `8080` |
-    | **OpenAPI Filepath** | The path to an OpenAPI specification (in yaml/json) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification. | `nodejs/rest-api/openapi.yaml` |
+    | **Field**                     | **Description**                                                                | **Value** |
+    |-------------------------------|--------------------------------------------------------------------------------|-----------|
+    | **Select Branch**             | The branch of the GitHub repository that has the required Dockerfile.| **main** |
+    | **Dockerfile Path**           | The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field for a mono-repo is `service-one/Dockerfile`.  | `nodejs/rest-api/Dockerfile` |
+    | **Docker Build Context Path** | The Docker build context. To include the repository root, leave the default `**.**` value. | `nodejs/rest-api/` |
+    | **Port**                      | The port at which your service is running. | `8080` |
+    | **OpenAPI Filepath**          | The path to an OpenAPI specification (in yaml/json) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification. | `nodejs/rest-api/openapi.yaml` |
 
      Click **Create**.
 
