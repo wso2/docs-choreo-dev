@@ -51,8 +51,6 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
         org = TestContext.getTestOrg();
         ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
-
-
     }
 
 

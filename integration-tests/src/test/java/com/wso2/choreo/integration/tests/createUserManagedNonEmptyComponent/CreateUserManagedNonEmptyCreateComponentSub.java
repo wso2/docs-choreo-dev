@@ -17,12 +17,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -559,9 +554,15 @@ public class CreateUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSpr
                                         .body(expectedResponse)));
         }
 
+        @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
+        @CitrusTest
+        public void testComponentPromotionToProd() throws ComponentDeploymentFailureException, NoLatestApiVersionFoundException, ReleaseIdNotFoundException, NoLatestAppEnvIdFoundException, IOException, ComponentDeploymentStatusCheckException, InterruptedException, ComponentDeploymentException, ComponentDeploymentTimeoutException {
+                testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+        }
+
         @Test(dependsOnMethods = { "testComponentDeploymentStatus" })
         @CitrusTest
-        public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException {
+        public void testAPIInvocationInDev() throws NoLatestApiVersionFoundException, IOException {
 
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String graphQlQuery = "query {" +
@@ -656,7 +657,7 @@ public class CreateUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSpr
                                                                 .type(MessageType.PLAINTEXT)));
         }
 
-        @Test(dependsOnMethods = { "testAPIInvocation" })
+        @Test(dependsOnMethods = { "testAPIInvocationInDev" }, alwaysRun = true)
         @CitrusTest
         public void testDeleteRestApiComponent() throws JsonProcessingException {
                 String graphqlQuery = "mutation { deleteComponentV2(" +

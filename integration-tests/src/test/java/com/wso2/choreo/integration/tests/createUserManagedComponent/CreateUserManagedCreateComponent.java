@@ -595,7 +595,13 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
 
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
     @CitrusTest
-    public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException {
+    public void testComponentPromotionToProd() throws ComponentDeploymentFailureException, NoLatestApiVersionFoundException, ReleaseIdNotFoundException, NoLatestAppEnvIdFoundException, IOException, ComponentDeploymentStatusCheckException, InterruptedException, ComponentDeploymentException, ComponentDeploymentTimeoutException {
+        testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+    }
+
+    @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
+    @CitrusTest
+    public void testAPIInvocationInDev() throws NoLatestApiVersionFoundException, IOException {
 
         String latestVersionId = testComponent.getLatestApiVersion().getId();
         String graphQlQuery = "query {" +
@@ -693,7 +699,7 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
      *
      * @throws JsonProcessingException
      */
-    @Test(dependsOnMethods = {"testAPIInvocation"})
+    @Test(dependsOnMethods = {"testAPIInvocationInDev"})
     @CitrusTest
     public void testComponentRetrievalOnRepoDeletion() throws JsonProcessingException {
         String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
@@ -742,7 +748,7 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
                         .ignore("$.metadata.additionalData")));
     }
 
-    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"})
+    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"}, alwaysRun = true)
     @CitrusTest
     public void testDeleteRestApiComponent() throws JsonProcessingException {
         String graphqlQuery = "mutation { deleteComponentV2(" +
