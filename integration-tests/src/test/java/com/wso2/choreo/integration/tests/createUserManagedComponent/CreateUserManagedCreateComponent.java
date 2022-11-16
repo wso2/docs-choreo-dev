@@ -595,7 +595,7 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
 
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
     @CitrusTest
-    public void testComponentPromotionToProd() throws ComponentDeploymentFailureException, NoLatestApiVersionFoundException, ReleaseIdNotFoundException, NoLatestAppEnvIdFoundException, IOException, ComponentDeploymentStatusCheckException, InterruptedException, ComponentDeploymentException, ComponentDeploymentTimeoutException {
+    public void testComponentPromotionToProd() throws Exception {
         testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
     }
 
