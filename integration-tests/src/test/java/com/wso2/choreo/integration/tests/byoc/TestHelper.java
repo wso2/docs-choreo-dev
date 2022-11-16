@@ -7,9 +7,11 @@ import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
 
 public class TestHelper {
-    public static Movie[] getMovies(TestConfigs configs, Constant.Environment environment) {
-        String apiInvocationRequestURI = configs.getConfig(environment.name()).getInvokeUrl() + "/movies";
-        Response response = HttpClientUtil.httpGET(apiInvocationRequestURI, "", configs.getConfig(Constant.Environment.Development.name()).getApiKey());
+
+    public static Movie[] getMovies(String invokeURL, String apiKey) {
+        String apiInvocationRequestURI = invokeURL+ "/movies";
+        System.out.println(apiInvocationRequestURI);
+        Response response = HttpClientUtil.httpGET(apiInvocationRequestURI, "", apiKey);
         return ObjectMapperUtil.mapToCollection(Movie[].class, response.getRes(), "");
     }
 

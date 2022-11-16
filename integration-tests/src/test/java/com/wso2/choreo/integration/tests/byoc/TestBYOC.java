@@ -2,23 +2,15 @@ package com.wso2.choreo.integration.tests.byoc;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+
+import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
-import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
-import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
-import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.config.Constant;
@@ -44,9 +36,12 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     private String projectId;
     private String accessToken;
     private ChoreoOrganization org;
+    private String devInvokeURL;
+    private String prodInvokeURL;
+    String apiKey;
 
     @BeforeClass
-    public void setup() throws IOException, ProjectCreationException, InterruptedException, TokenRetrievalException {
+    public void setup_TestBYOC() throws IOException, ProjectCreationException, InterruptedException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         org = TestContext.getTestOrg();
         ChoreoProject project = org.createProject(accessToken);
@@ -56,7 +51,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     @Test()
     @CitrusTest
-    public void testCreateByocComponentBYOC() throws IOException {
+    public void createByocComponent_TestBYOC() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).projectId(projectId).dockerfilePath(DOCKER_FILE_PATH).build();
         choreoComponent = GraphQL.createBYOCComponent(dto, accessToken);
@@ -64,70 +59,83 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     }
 
-    @Test(dependsOnMethods = {"testCreateByocComponentBYOC"})
+    @Test(dependsOnMethods = {"createByocComponent_TestBYOC"})
     @CitrusTest
-    public void testComponentRetrievalBYOC() throws IOException {
+    public void componentRetrieval_TestBYOC() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandle(), accessToken);
         choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"testComponentRetrievalBYOC"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
     @CitrusTest
-    public void testInitialPRGenerationBYOC() throws IOException, UnexpectedResponseException {
-       PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
+    public void initialPRGeneration_TestBYOC() throws IOException, UnexpectedResponseException {
+        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
-    @Test(dependsOnMethods = {"testInitialPRGenerationBYOC"})
+    @Test(dependsOnMethods = {"initialPRGeneration_TestBYOC"})
     @CitrusTest
-    public void testDeployBYOC() throws Exception {
+    public void deploy_TestBYOC() throws Exception {
         Status status = GraphQL.deployComponent(choreoComponent, accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
-    @Test(dependsOnMethods = {"testDeployBYOC"})
+    @Test(dependsOnMethods = {"deploy_TestBYOC"})
     @CitrusTest
-    public void testDeploymentStatusByVersionBYOC() throws Exception {
+    public void deploymentStatusByVersion_TestBYOC() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
     }
 
-    @Test(dependsOnMethods = {"testDeploymentStatusByVersionBYOC"})
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestBYOC"})
     @CitrusTest
-    public void testComponentDevDeploymentStatusBYOC() throws Exception {
-        GraphQL.componentDeployment(choreoComponent, "dev", accessToken);
+    public void componentDevDeploymentStatus_TestBYOC() throws Exception {
+        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
     }
 
-    @Test(dependsOnMethods = {"testComponentDevDeploymentStatusBYOC"})
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_TestBYOC"})
     @CitrusTest
-    public void testComponentPromotionToProd() throws ComponentDeploymentFailureException, NoLatestApiVersionFoundException, ReleaseIdNotFoundException, NoLatestAppEnvIdFoundException, IOException, ComponentDeploymentStatusCheckException, InterruptedException, ComponentDeploymentException, ComponentDeploymentTimeoutException {
-        choreoComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+    public void addPromoteConfiguration_TestBYOC() throws Exception {
+        Orgs.addConfiguration(choreoComponent, "prod", accessToken);
     }
 
-    @Test(dependsOnMethods = {"testComponentPromotionToProd"})
+    @Test(dependsOnMethods = {"addPromoteConfiguration_TestBYOC"})
     @CitrusTest
-    public void testAPIInvocationInDevBYOC() throws InvokeInformationNotFoundException, NoLatestApiVersionFoundException, IOException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-        testConfigs = ComponentUtils.invokeEndpoint(choreoComponent, Constant.displayType.restAPI.name(), accessToken);
-        TestHelper.Movie[] movies = TestHelper.getMovies(testConfigs, Constant.Environment.Development);
+    public void promote_TestBYOC() throws Exception {
+        GraphQL.promoteComponent(choreoComponent, accessToken);
+    }
+
+    @Test(dependsOnMethods = {"promote_TestBYOC"})
+    @CitrusTest
+    public void componentProdDeploymentStatus_TestBYOC() throws Exception {
+        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
+    }
+
+
+    @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestBYOC"})
+    @CitrusTest
+    public void invokeAPIInDev_TestBYOC() throws Exception {
+        apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
+        TestHelper.Movie[] movies = TestHelper.getMovies(devInvokeURL, apiKey);
         Assert.assertEquals(movies.length, 5);
         Assert.assertEquals(movies[0].id, 1);
         Assert.assertEquals(movies[0].ratings, 9.2);
         Assert.assertEquals(movies[0].name, "The Shawshank Redemption");
     }
 
-    @Test(dependsOnMethods = {"testAPIInvocationInDevBYOC"})
+    @Test(dependsOnMethods = {"invokeAPIInDev_TestBYOC"})
     @CitrusTest
-    public void testAPIInvocationInPRodBYOC() {
-        TestHelper.Movie[] movies = TestHelper.getMovies(testConfigs, Constant.Environment.Production);
+    public void invokeAPIProd_TestBYOC() {
+        TestHelper.Movie[] movies = TestHelper.getMovies(prodInvokeURL, apiKey);
         Assert.assertEquals(movies.length, 5);
         Assert.assertEquals(movies[0].id, 1);
         Assert.assertEquals(movies[0].ratings, 9.2);
         Assert.assertEquals(movies[0].name, "The Shawshank Redemption");
     }
 
-    @Test(dependsOnMethods = {"testAPIInvocationInPRodBYOC"}, alwaysRun = true)
+    @Test(dependsOnMethods = {"invokeAPIProd_TestBYOC"}, alwaysRun = true)
     @CitrusTest
-    public void testDeleteComponent() throws IOException {
+    public void deleteComponent_TestBYOC() throws IOException {
         Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }

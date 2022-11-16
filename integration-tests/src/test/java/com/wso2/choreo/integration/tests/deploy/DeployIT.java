@@ -16,8 +16,8 @@ package com.wso2.choreo.integration.tests.deploy;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -37,62 +37,62 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void beforeClass() throws Exception {
+    public void setup_DeployIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         restApiComponent = ComponentUtils.createRestAPI(accessToken);
     }
 
     @Test
     @CitrusTest
-    public void testAddDeploymentConfiguration() throws Exception {
+    public void addDeploymentConfiguration_DeployIT() throws Exception {
         Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "dev");
     }
 
-    @Test(dependsOnMethods = {"testAddDeploymentConfiguration"})
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_DeployIT"})
     @CitrusTest
-    public void testDeploy() throws Exception {
-        GraphQL.deployComponent( restApiComponent,accessToken);
+    public void deploy_DeployIT() throws Exception {
+        GraphQL.deployComponent(restApiComponent,accessToken);
     }
 
-    @Test(dependsOnMethods = {"testDeploy"})
+    @Test(dependsOnMethods = {"deploy_DeployIT"})
     @CitrusTest
-    public void testDeploymentStatusByVersion() throws Exception {
-        GraphQL.deploymentStatusByVersion(restApiComponent, accessToken);
+    public void deploymentStatusByVersion_DeployIT() throws Exception {
+        GraphQL.deploymentStatusByVersion(restApiComponent,accessToken);
     }
 
-    @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_DeployIT"})
     @CitrusTest
-    public void testComponentDevDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(restApiComponent, "dev", accessToken);
+    public void componentDevDeploymentStatus_DeployIT() throws Exception {
+        GraphQL.componentDeployment( restApiComponent, "dev",accessToken);
     }
 
-    @Test(dependsOnMethods = {"testComponentDevDeploymentStatus"})
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_DeployIT"})
     @CitrusTest
-    public void testApiDevInvocation() throws Exception {
+    public void apiDevInvocation_DeployIT() throws Exception {
         ComponentUtils.invokeApiEndpoint(accessToken, restApiComponent, Environment.Development);
     }
 
-    @Test(dependsOnMethods = {"testComponentDevDeploymentStatus"})
+    @Test(dependsOnMethods = {"apiDevInvocation_DeployIT"})
     @CitrusTest
-    public void testAddPromoteConfiguration() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "prod");
+    public void addPromoteConfiguration_DeployIT() throws Exception {
+        Orgs.addConfiguration(restApiComponent, "prod", accessToken);
     }
 
-    @Test(dependsOnMethods = {"testAddPromoteConfiguration"})
+    @Test(dependsOnMethods = {"addPromoteConfiguration_DeployIT"})
     @CitrusTest
-    public void testPromote() throws Exception {
-        GraphQL.promoteComponent(choreoTestClient, this, restApiComponent);
+    public void promote_DeployIT() throws Exception {
+        GraphQL.promoteComponent( restApiComponent,accessToken);
     }
 
-    @Test(dependsOnMethods = {"testPromote"})
+    @Test(dependsOnMethods = {"promote_DeployIT"})
     @CitrusTest
-    public void testComponentProdDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(restApiComponent, "dev", accessToken);
+    public void componentProdDeploymentStatus_DeployIT() throws Exception {
+        GraphQL.componentDeployment( restApiComponent, "prod",accessToken);
     }
 
-    @Test(dependsOnMethods = {"testComponentProdDeploymentStatus"})
+    @Test(dependsOnMethods = {"componentProdDeploymentStatus_DeployIT"})
     @CitrusTest
-    public void testApiProdInvocation() throws Exception {
+    public void apiProdInvocation_DeployIT() throws Exception {
         ComponentUtils.invokeApiEndpoint(accessToken, restApiComponent, Environment.Production);
     }
 }

@@ -20,16 +20,16 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.CreateUserManagedCreateComponent"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyCreateComponentRoot"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.CreateUserManagedNonEmptyCreateComponentSub"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.TestUserManagedComponent"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>
+            <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>
             <class name="com.wso2.choreo.integration.tests.observability.ObservabilityAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.LoggingAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.observability.SysObsAPITestCase"/>
             <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
             <class name="com.wso2.choreo.integration.tests.jwt.TestClientJwTValidation"/>
-            <class name="com.wso2.choreo.integration.tests.byoc.TestBYOC"></class>
+            <class name="com.wso2.choreo.integration.tests.byoc.TestBYOC"/>
         </classes>
     </test>
 </suite>

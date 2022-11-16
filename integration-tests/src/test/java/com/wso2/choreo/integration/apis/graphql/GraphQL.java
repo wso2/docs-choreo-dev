@@ -58,46 +58,16 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 public class GraphQL extends ControlPlaneAPI {
 
 
-    public static void promoteComponent(HttpClient client, TestActionRunner runner, ChoreoComponent component)
+    public static void promoteComponent(ChoreoComponent component, String accessToken)
             throws Exception {
-        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-
-
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).apiVersionId(component.getLatestApiVersion().getId()).
                 sourceReleaseId(component.getReleaseIdForEnvironment("dev")).targetEnvironmentId(component.getLatestAppEnvId("prod")).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/promote.mustache", dto);
-        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(generatedQuery);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
 
-        // Promote component
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/graphql/responses/promoteSuccess.json"))
-                .validate(json()));
+
     }
 
-
-    public static ComponentCreationResponse createUserManagedComponent(GraphqlDTO graphqlDTO, String repoName, String accessToken) throws IOException {
-        String srcGitHubURL = "https://github.com/" + Configuration.getConfig(ConfigDefinition.GITHUB_ORG) + "/" + repoName;
-        graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);
-        graphqlDTO.setOrgId(ORG_ID);
-        graphqlDTO.setOrgHandler(ORG_HANDLE);
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
-        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(ComponentCreationResponse.class, response.getRes(), "createComponent");
-    }
 
 
     public static ChoreoComponent createBYOCComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
@@ -108,6 +78,22 @@ public class GraphQL extends ControlPlaneAPI {
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createBYOCcomponent.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createByocComponent");
+    }
+
+    public static ComponentCreationResponse createUserManagedComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createUserManagedComponent.mustache", graphqlDTO);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        return ObjectMapperUtil.mapStringToObject(ComponentCreationResponse.class, response.getRes(), "createComponent");
+    }
+
+    public static ComponentCreationResponse createChoreoManagedComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createChoreoManagedComponent.mustache", graphqlDTO);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        return ObjectMapperUtil.mapStringToObject(ComponentCreationResponse.class, response.getRes(), "createComponent");
     }
 
     public static PullRequest[] getComponentPullRequests(String componentId, String accessToken, int expectedPRs) throws IOException, UnexpectedResponseException {
@@ -168,9 +154,6 @@ public class GraphQL extends ControlPlaneAPI {
 
     }
 
-
-
-
     public static Commit[] getCommitHistory(String componentId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/deploy/graphql/commitHistory.mustache", dto);
@@ -205,8 +188,8 @@ public class GraphQL extends ControlPlaneAPI {
 
             log.info(response.getRes());
             if (status.length > 0) {
-                ComponentStatusByVersion csbv =  status[0];
-                if (csbv.getConclusion()!= null && csbv.getConclusion().equals("failure")) {
+                ComponentStatusByVersion csbv = status[0];
+                if (csbv.getConclusion() != null && csbv.getConclusion().equals("failure")) {
                     throw new UnexpectedResponseException(response.getStatusCode(), "Component was not deployed successfully");
                 }
                 if (csbv.getStatus().equals("completed") && csbv.getConclusion().equals("success")) {
@@ -218,42 +201,32 @@ public class GraphQL extends ControlPlaneAPI {
         throw new UnexpectedResponseException(response.getStatusCode(), "Component was not deployed successfully");
     }
 
-    public static void componentDeployment(ChoreoComponent component, String envName, String accessToken) throws Exception {
-
+    public static ComponentDeploymentStatus componentDeployment(ChoreoComponent component, String envName, String accessToken) throws Exception {
         String envId = component.getLatestAppEnvId(envName);
-
-        GraphqlDTO dto = GraphqlDTO.builder().
-                orgHandler(ORG_HANDLE).
-                orgUuid(ORG_UUID).
-                componentId(component.getId()).
-                versionId(component.getLatestApiVersion().getId()).
-                environmentId(envId).build();
-
+        GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).orgUuid(ORG_UUID).componentId(component.getId()).versionId(component.getLatestApiVersion().getId()).environmentId(envId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/componentDeployment.mustache", dto);
-
         Response response = null;
         ComponentDeploymentStatus deployments = null;
         for (int i = 0; i < 10; i++) {
             response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
             deployments = ObjectMapperUtil.mapStringToObject(ComponentDeploymentStatus.class, response.getRes(), "componentDeployment");
             log.info(response.getRes());
-            if (deployments.getDeploymentStatus().equals("ERROR")) {
+            if (deployments.getDeploymentStatusV2().equals("ERROR") || deployments.getDeploymentStatus().equals("ERROR")) {
                 throw new UnexpectedResponseException(response.getStatusCode(), "deploymentStatusV2 is " +
                         deployments.getDeploymentStatusV2() + " and deploymentStatus is " + deployments.getDeploymentStatus());
             }
+
             if (deployments.getDeploymentStatusV2().equals("ACTIVE") && deployments.getDeploymentStatus().equals("ACTIVE")) {
                 component.setApiId(deployments.getApiId());
-                return;
+                break;
             }
             SleepUtil.sleep(60);
         }
-        throw new UnexpectedResponseException(response.getStatusCode(), "deploymentStatusV2 is " +
-                deployments.getDeploymentStatusV2() + " and deploymentStatus is " + deployments.getDeploymentStatus());
+        return deployments;
     }
 
 
-
-    public static  void  getObservabilityEnvironments(String accessToken) throws IOException {
+    public static void getObservabilityEnvironments(String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().componentHandler(ORG_UUID).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
