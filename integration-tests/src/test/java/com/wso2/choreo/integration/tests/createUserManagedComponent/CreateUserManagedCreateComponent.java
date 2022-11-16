@@ -16,7 +16,12 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -27,7 +32,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -595,7 +599,13 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
 
     @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
     @CitrusTest
-    public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException {
+    public void testComponentPromotionToProd() throws Exception {
+        testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+    }
+
+    @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
+    @CitrusTest
+    public void testAPIInvocationInDev() throws NoLatestApiVersionFoundException, IOException {
 
         String latestVersionId = testComponent.getLatestApiVersion().getId();
         String graphQlQuery = "query {" +
@@ -693,7 +703,7 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
      *
      * @throws JsonProcessingException
      */
-    @Test(dependsOnMethods = {"testAPIInvocation"})
+    @Test(dependsOnMethods = {"testAPIInvocationInDev"})
     @CitrusTest
     public void testComponentRetrievalOnRepoDeletion() throws JsonProcessingException {
         String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName);
@@ -742,7 +752,7 @@ public class CreateUserManagedCreateComponent extends TestNGCitrusSpringSupport 
                         .ignore("$.metadata.additionalData")));
     }
 
-    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"})
+    @Test(dependsOnMethods = {"testComponentRetrievalOnRepoDeletion"}, alwaysRun = true)
     @CitrusTest
     public void testDeleteRestApiComponent() throws JsonProcessingException {
         String graphqlQuery = "mutation { deleteComponentV2(" +
