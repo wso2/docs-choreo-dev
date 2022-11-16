@@ -33,7 +33,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -375,8 +374,8 @@ public class CreateUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSpr
         @Test(dependsOnMethods = { "testComponentRetrieval" })
         @CitrusTest
         public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
-                        NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
-                        NoLatestAppEnvIdFoundException {
+                NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
+                NoLatestAppEnvIdFoundException {
                 JsonArray commitHistory = testComponent.getCommitHistorySub(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
@@ -559,9 +558,15 @@ public class CreateUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSpr
                                         .body(expectedResponse)));
         }
 
+        @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
+        @CitrusTest
+        public void testComponentPromotionToProd() throws Exception {
+                testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+        }
+
         @Test(dependsOnMethods = { "testComponentDeploymentStatus" })
         @CitrusTest
-        public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException {
+        public void testAPIInvocationInDev() throws NoLatestApiVersionFoundException, IOException {
 
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String graphQlQuery = "query {" +
@@ -656,7 +661,7 @@ public class CreateUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSpr
                                                                 .type(MessageType.PLAINTEXT)));
         }
 
-        @Test(dependsOnMethods = { "testAPIInvocation" })
+        @Test(dependsOnMethods = { "testAPIInvocationInDev" }, alwaysRun = true)
         @CitrusTest
         public void testDeleteRestApiComponent() throws JsonProcessingException {
                 String graphqlQuery = "mutation { deleteComponentV2(" +
