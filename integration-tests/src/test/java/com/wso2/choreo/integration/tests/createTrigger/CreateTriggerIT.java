@@ -64,7 +64,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoProjectsTestClient;
 
     @BeforeClass
-    public void beforeClass()
+    public void setup_CreateTriggerIT()
             throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
@@ -77,7 +77,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testTriggerComponent() throws JsonProcessingException {
+    public void triggerComponent_CreateTriggerIT() throws JsonProcessingException {
         String graphQlQuery = "mutation{ createComponent(" +
                 "      component: {" +
                 "        name: \"" + componentName + "\"," +
@@ -140,7 +140,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = { "testTriggerComponent" })
     @CitrusTest
-    public void testTriggerCreatedComponentStatus() throws InterruptedException {
+    public void triggerCreatedComponentStatus_CreateTriggerIT() throws InterruptedException {
         $(repeatOnError()
                 .until("i = 20")
                 .index("i")
@@ -171,7 +171,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testTriggerCreatedComponentStatus"})
     @CitrusTest
-    public void testTriggerRetrieve() throws  IOException, InterruptedException, ComponentRetrieveException {
+    public void triggerRetrieve_CreateTriggerIT() throws  IOException, InterruptedException, ComponentRetrieveException {
         String graphQlQuery = "query{" +
                 "      component(" +
                 "        projectId: \"" + projectId + "\"" +
@@ -259,7 +259,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = { "testTriggerRetrieve" })
     @CitrusTest
-    public void testTriggerDeploy() throws IOException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException,
+    public void triggerDeploy_CreateTriggerIT() throws IOException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException,
             GetCommitHistoryException, InterruptedException, NoLatestCommitHashFoundException {
         JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);

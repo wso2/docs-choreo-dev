@@ -58,14 +58,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void beforeClass()
-            throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
-            ComponentCreationStatusCheckException, ComponentDeploymentException,
-            ComponentDeploymentStatusCheckException,
-            ComponentCreationException, ComponentRetrieveException, ApiLifecycleChangeException,
-            ComponentCreationTimeoutException, ComponentDeploymentTimeoutException, NoLatestApiVersionFoundException,
-            ComponentDeploymentFailureException, TokenRetrievalException, GetDeploymentsStatusCheckException {
+    public void setup_ConnectorBuilderIT()
+            throws Exception, ApiLifecycleChangeException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -85,7 +79,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testPublishConnector() {
+    public void publishConnector_ConnectorBuilderIT() {
         $(http()
                 .client(choreoTestClient)
                 .send()
@@ -112,9 +106,9 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .body(new ClassPathResource("templates/connectorbuilder/publish_success_ok.json")));
     }
 
-    @Test(dependsOnMethods = {"testPublishConnector"})
+    @Test(dependsOnMethods = {"publishConnector_ConnectorBuilderIT"})
     @CitrusTest
-    public void testRepublishConnector() {
+    public void republishConnector_ConnectorBuilderIT() {
         $(http()
                 .client(choreoTestClient)
                 .send()
@@ -141,9 +135,9 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
     }
 
-    @Test(dependsOnMethods = {"testPublishConnector"})
+    @Test(dependsOnMethods = {"republishConnector_ConnectorBuilderIT"})
     @CitrusTest
-    public void testGetConnectorStatus() throws InterruptedException {
+    public void getConnectorStatus_ConnectorBuilderIT() throws InterruptedException {
         $(repeatOnError()
                 .until("i = 15")
                 .index("i")
@@ -175,9 +169,9 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dependsOnMethods = {"testGetConnectorStatus"})
+    @Test(dependsOnMethods = {"getConnectorStatus_ConnectorBuilderIT"})
     @CitrusTest
-    public void testGetConnector() {
+    public void getConnector_ConnectorBuilderIT() {
         $(http()
                 .client(choreoTestClient)
                 .send()

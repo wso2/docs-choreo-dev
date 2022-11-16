@@ -45,8 +45,8 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
 
 
   @BeforeClass
-  public void beforeClassCCIT()
-          throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+  public void setup_CreateComponentIT()
+          throws Exception {
     accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -58,7 +58,7 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
 
   @Test
   @CitrusTest
-  public void testCreateRESTComponentCCIT() throws IOException {
+  public void createRESTComponent_CreateComponentIT() throws IOException {
     String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
     GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID(null).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
     response = GraphQL.createChoreoManagedComponent(dto, accessToken);
@@ -66,16 +66,16 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
     Assert.assertNotNull(response.getId());
   }
 
-  @Test(dependsOnMethods = {"testCreateRESTComponentCCIT"})
+  @Test(dependsOnMethods = {"createRESTComponent_CreateComponentIT"})
   @CitrusTest
-  public void testCreatedComponentStatusCCIT() throws  UnexpectedResponseException {
+  public void createdComponentStatus_CreateComponentIT() throws  UnexpectedResponseException {
     Status status = Orgs.createdComponentStatus(projectId, response.getId(), accessToken);
     Assert.assertTrue(status.isSuccess());
   }
 
-  @Test(dependsOnMethods = {"testCreatedComponentStatusCCIT"})
+  @Test(dependsOnMethods = {"createdComponentStatus_CreateComponentIT"})
   @CitrusTest
-  public void testDeleteRestApiComponentCCIT() throws IOException {
+  public void deleteRestApiComponent_CreateComponentIT() throws IOException {
     Response response1 = GraphQL.deleteComponent(response.getId(), projectId, accessToken);
     ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
     Assert.assertEquals(response1.getStatusCode(), HttpStatus.OK.value());

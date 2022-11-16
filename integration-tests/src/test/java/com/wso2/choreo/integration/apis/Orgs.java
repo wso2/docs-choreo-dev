@@ -59,7 +59,7 @@ public class Orgs {
     private static final String CHOREO_EP = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
     private static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
-    public static void addConfiguration(ChoreoComponent component, String envName, String accessToken, BalConfig... balconfigs) throws Exception {
+    public static Response addConfiguration(ChoreoComponent component, String envName, String accessToken, BalConfig... balconfigs) throws Exception {
         String componentId = component.getId();
         String envIdToDeploy = component.getLatestAppEnvId(envName);
         String latestVersionId = component.getLatestApiVersion().getId();
@@ -76,7 +76,7 @@ public class Orgs {
 
         String configurationsRequestBody = ObjectMapperUtil.mapObjectToString(promoteConfigurations).replace("required", "isRequired");
 
-        Response res = HttpClientUtil.httpPOST(configurationsUpdateRequestURI, configurationsRequestBody, accessToken, "");
+       return HttpClientUtil.httpPOST(configurationsUpdateRequestURI, configurationsRequestBody, accessToken, "");
 
     }
 

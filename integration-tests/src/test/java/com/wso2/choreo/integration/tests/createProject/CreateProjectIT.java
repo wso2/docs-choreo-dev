@@ -55,7 +55,7 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
   private HttpClient choreoProjectsTestClient;
 
   @BeforeClass
-  public void beforeClass()
+  public void setup_CreateProjectIT()
       throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
     accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
@@ -64,7 +64,7 @@ public class CreateProjectIT extends TestNGCitrusSpringSupport {
 
   @Test
   @CitrusTest
-  public void testCreateProject() throws JsonProcessingException {
+  public void createProject_CreateProjectIT() throws JsonProcessingException {
     String graphQlQuery = "mutation{ createProject(project: {" +
         "      name: \"" + Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())) +
         "\", " +

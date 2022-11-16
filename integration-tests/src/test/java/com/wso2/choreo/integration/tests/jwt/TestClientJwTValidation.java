@@ -57,7 +57,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void setup() throws TokenRetrievalException, IOException, ProjectCreationException, InterruptedException {
+    public void setup_TestClientJwTValidation() throws Exception {
 
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -72,7 +72,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testCreateUserManagedComponentForJwt() throws IOException {
+    public void createUserManagedComponentFor_TestClientJwTValidation() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
@@ -80,75 +80,75 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(response.getId());
     }
 
-    @Test(dependsOnMethods = {"testCreateUserManagedComponentForJwt"})
+    @Test(dependsOnMethods = {"createUserManagedComponentFor_TestClientJwTValidation"})
     @CitrusTest
-    public void testCreatedComponentStatusJwt() throws UnexpectedResponseException {
+    public void createdComponentStatus_TestClientJwTValidation() throws UnexpectedResponseException {
         Status status = Orgs.createdComponentStatus(projectId, response.getId(), accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
 
-    @Test(dependsOnMethods = {"testCreatedComponentStatusJwt"})
+    @Test(dependsOnMethods = {"createdComponentStatus_TestClientJwTValidation"})
     @CitrusTest
-    public void testInitialPRGenerationJwt() throws IOException, UnexpectedResponseException {
+    public void initialPRGeneration_TestClientJwTValidation() throws IOException, UnexpectedResponseException {
         PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 1);
         Assert.assertEquals(prs.length, 1);
     }
 
-    @Test(dependsOnMethods = {"testInitialPRGenerationJwt"})
+    @Test(dependsOnMethods = {"initialPRGeneration_TestClientJwTValidation"})
     @CitrusTest
-    public void testPRMergeJwt() throws IOException, UnexpectedResponseException {
+    public void mergePR_TestClientJwTValidation() throws IOException, UnexpectedResponseException {
         GitHub.mergePR(repoName, "1");
         PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
 
-    @Test(dependsOnMethods = {"testPRMergeJwt"})
+    @Test(dependsOnMethods = {"mergePR_TestClientJwTValidation"})
     @CitrusTest
-    public void testMergeNewCodeJwt() throws IOException {
+    public void mergeNewCode_TestClientJwTValidation() throws IOException {
         String encodedContent = FileUtil.readFile("src/test/resources/templates/encodedbal/service.bal");
         GitHub.mergeNewCode(repoName, "service.bal", "update code", encodedContent);
     }
 
-    @Test(dependsOnMethods = {"testMergeNewCodeJwt"})
+    @Test(dependsOnMethods = {"mergeNewCode_TestClientJwTValidation"})
     @CitrusTest
-    public void testComponentRetrievalJwt() throws IOException {
+    public void componentRetrieval_TestClientJwTValidation() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
         choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"testComponentRetrievalJwt"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestClientJwTValidation"})
     @CitrusTest
-    public void testAddDeploymentConfigurationJwt() throws Exception {
+    public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
         Orgs.addConfiguration(choreoTestClient, this, choreoComponent, "dev");
     }
 
 
-    @Test(dependsOnMethods = {"testAddDeploymentConfigurationJwt"})
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestClientJwTValidation"})
     @CitrusTest
-    public void testDeployJwt() throws Exception {
+    public void deploy_TestClientJwTValidation() throws Exception {
         GraphQL.deployComponent(choreoComponent, accessToken);
     }
 
-    @Test(dependsOnMethods = {"testDeployJwt"})
+    @Test(dependsOnMethods = {"deploy_TestClientJwTValidation"})
     @CitrusTest
-    public void testDeploymentStatusByVersionJwt() throws Exception {
+    public void deploymentStatusByVersion_TestClientJwTValidation() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
     }
 
 
-    @Test(dependsOnMethods = {"testDeploymentStatusByVersionJwt"})
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_TestClientJwTValidation"})
     @CitrusTest
-    public void testComponentDevDeploymentStatusJwt() throws Exception {
+    public void componentDevDeploymentStatus_TestClientJwTValidation() throws Exception {
         devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
     }
 
 
-    @Test(dependsOnMethods = {"testComponentDevDeploymentStatusJwt"})
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_TestClientJwTValidation"})
     @CitrusTest
-    public void testAPIInvocationJwt() throws Exception {
+    public void invokeAPI_TestClientJwTValidation() throws Exception {
         String apiKey = ComponentUtils.getApiKey(choreoComponent,  accessToken);
         String apiInvocationRequestURI = "/getJwt";
 
@@ -170,18 +170,18 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dependsOnMethods = {"testAPIInvocationJwt"}, alwaysRun = true)
+    @Test(dependsOnMethods = {"invokeAPI_TestClientJwTValidation"}, alwaysRun = true)
     @CitrusTest
-    public void testDeleteComponent() throws IOException {
+    public void deleteComponent_TestClientJwTValidation() throws IOException {
         Response response = GraphQL.deleteComponent(choreoComponent.getId(), projectId, accessToken);
         ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
         Assert.assertEquals(components.length, 0);
     }
 
-    @Test(dependsOnMethods = {"testDeleteComponent"}, alwaysRun = true)
+    @Test(dependsOnMethods = {"deleteComponent_TestClientJwTValidation"}, alwaysRun = true)
     @CitrusTest
-    public void testDeleteRepo() {
+    public void deleteRepo_TestClientJwTValidation() {
         Response response = GitHub.deleteGitHubRepo(repoName);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
     }

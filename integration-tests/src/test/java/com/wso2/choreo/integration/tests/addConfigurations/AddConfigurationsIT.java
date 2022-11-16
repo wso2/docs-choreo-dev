@@ -20,7 +20,10 @@ import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -29,11 +32,14 @@ import org.testng.annotations.Test;
  */
 public class AddConfigurationsIT extends TestNGCitrusSpringSupport {
     private ChoreoComponent component;
+    private String accessToken;
     @Autowired
     private HttpClient choreoTestClient;
 
     @BeforeClass
-    public void beforeClass() throws Exception {
+    public void setup_AddConfigurationsIT() throws Exception {
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+
         component = ComponentUtils.getReusableComponent(TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(),
                 AddConfigurationsIT.class.getSimpleName());
     }
@@ -41,7 +47,8 @@ public class AddConfigurationsIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testAddConfigurations() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, component, "dev");
+    public void addConfigurations_AddConfigurationsIT() throws Exception {
+        Response response = Orgs.addConfiguration(component, "dev", accessToken);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }
 }

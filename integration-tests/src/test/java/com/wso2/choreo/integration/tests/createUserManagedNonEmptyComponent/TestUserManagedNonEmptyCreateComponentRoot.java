@@ -47,7 +47,7 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
  *
  * tests related to component creation from user managed non empty repo root.
  */
-public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpringSupport {
+public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpringSupport {
         private static String accessToken;
         private String orgHandle;
         private String orgId;
@@ -80,7 +80,7 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
         private HttpClient choreoTestClientForSTS;
 
         @BeforeClass
-        public void beforeClass()
+        public void setup_TestUserManagedNonEmptyCreateComponentRoot()
                 throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
@@ -95,7 +95,7 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
 
         @Test
         @CitrusTest
-        public void testCreateUserManagedComponent() throws JsonProcessingException, IOException {
+        public void createUserManagedComponent_TestUserManagedNonEmptyCreateComponentRoot() throws  IOException {
 
                 // Creating component
                 String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
@@ -142,9 +142,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                         }));
         }
 
-        @Test(dependsOnMethods = { "testCreateUserManagedComponent" })
+        @Test(dependsOnMethods = { "createUserManagedComponent_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testCreatedComponentStatus() {
+        public void createdComponentStatus_TestUserManagedNonEmptyCreateComponentRoot() {
                 // Poll component create status
                 $(repeatOnError()
                         .until("i = 50")
@@ -174,9 +174,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                                                 .ignore("$.message"))));
         }
 
-        @Test(dependsOnMethods = { "testCreatedComponentStatus" })
+        @Test(dependsOnMethods = { "createdComponentStatus_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testInitialPRGeneration() throws JsonProcessingException {
+        public void generateInitialPR_TestUserManagedNonEmptyCreateComponentRoot() throws JsonProcessingException {
                 String graphQlQuery = "query{ componentPullRequests(" +
                         "        componentId: \"" + componentId + "\"," +
                         "      ){" +
@@ -218,9 +218,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                         }));
         }
 
-        @Test(dependsOnMethods = { "testInitialPRGeneration" })
+        @Test(dependsOnMethods = { "generateInitialPR_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testPRMerge() throws JsonProcessingException {
+        public void mergePR_TestUserManagedNonEmptyCreateComponentRoot() throws JsonProcessingException {
                 String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                         .concat("/pulls/" + prNumber + "/merge");
                 HashMap<String, Object> requestBodyMap = new HashMap<>() {
@@ -286,9 +286,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                                         .validate(json())));
         }
 
-        @Test(dependsOnMethods = { "testPRMerge" })
+        @Test(dependsOnMethods = { "mergePR_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testBranchDelete() throws JsonProcessingException {
+        public void deleteBranch_TestUserManagedNonEmptyCreateComponentRoot() throws JsonProcessingException {
                 String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
                         .concat("/pulls/" + prNumber);
                 String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
@@ -333,9 +333,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                         .response(HttpStatus.NO_CONTENT));
         }
 
-        @Test(dependsOnMethods = { "testBranchDelete" })
+        @Test(dependsOnMethods = { "deleteBranch_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testComponentRetrieval() throws JsonProcessingException, IOException {
+        public void componentRetrieval_TestUserManagedNonEmptyCreateComponentRoot() throws IOException {
                 APICreator testAPI = new APICreator();
                 String graphQlQuery = testAPI.getComponentDetailsQuery(projectId, componentHandler);
                 HashMap<String, String> gqlRequestPayload = new HashMap<>() {
@@ -371,11 +371,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                         }));
         }
 
-        @Test(dependsOnMethods = { "testComponentRetrieval" })
+        @Test(dependsOnMethods = { "componentRetrieval_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testComponentDeployment() throws GetCommitHistoryException, IOException, InterruptedException,
-                NoLatestCommitHashFoundException, NoLatestApiVersionFoundException,
-                NoLatestAppEnvIdFoundException {
+        public void componentDeployment_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
                 JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
                 String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
@@ -453,9 +451,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                         .validate(json()));
         }
 
-        @Test(dependsOnMethods = { "testComponentDeployment" })
+        @Test(dependsOnMethods = { "componentDeployment_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testDeploymentStatusByVersion() throws Exception {
+        public void deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
                 String versionId = testComponent.getLatestApiVersion().getId();
 
                 String graphQlQuery = "query {" +
@@ -503,9 +501,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
 
         }
 
-        @Test(dependsOnMethods = { "testDeploymentStatusByVersion" })
+        @Test(dependsOnMethods = { "deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testComponentDeploymentStatus() throws Exception {
+        public void componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
                 String versionId = testComponent.getLatestApiVersion().getId();
                 String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
                 Map<String, String> params = new HashMap<>();
@@ -558,15 +556,15 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                                         .body(expectedResponse)));
         }
 
-        @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
+        @Test(dependsOnMethods = {"componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
-        public void testComponentPromotionToProd() throws Exception {
+        public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
                 testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
         }
 
-        @Test(dependsOnMethods = { "testComponentDeploymentStatus" })
+        @Test(dependsOnMethods = { "componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
-        public void testAPIInvocationInDev() throws NoLatestApiVersionFoundException, IOException {
+        public void invokeAPIDev_TestUserManagedNonEmptyCreateComponentRoot() throws NoLatestApiVersionFoundException, IOException {
 
                 String latestVersionId = testComponent.getLatestApiVersion().getId();
                 String graphQlQuery = "query {" +
@@ -661,9 +659,9 @@ public class CreateUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSp
                                         .type(MessageType.PLAINTEXT)));
         }
 
-        @Test(dependsOnMethods = { "testAPIInvocationInDev" }, alwaysRun = true)
+        @Test(dependsOnMethods = { "invokeAPIDev_TestUserManagedNonEmptyCreateComponentRoot" }, alwaysRun = true)
         @CitrusTest
-        public void testDeleteRestApiComponent() throws JsonProcessingException {
+        public void deleteRestApiComponent_TestUserManagedNonEmptyCreateComponentRoot() throws JsonProcessingException {
                 String graphqlQuery = "mutation { deleteComponentV2(" +
                         "orgHandler: \"" + orgHandle + "\"," +
                         "componentId: \"" + componentId + "\"," +
