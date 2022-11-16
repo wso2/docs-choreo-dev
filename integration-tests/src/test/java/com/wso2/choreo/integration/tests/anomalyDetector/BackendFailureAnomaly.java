@@ -59,7 +59,7 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
   private final static Logger log = LoggerFactory.getLogger(BackendFailureAnomaly.class);
 
   @BeforeClass
-  public void beforeClass() throws InterruptedException, IOException, TokenRetrievalException, RedeployException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
+  public void beforeClass() throws  Exception {
       String orgUuid = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID);
       String passthorughVersionId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID);
       orgHandler = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE);

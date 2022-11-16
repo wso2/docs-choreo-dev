@@ -1,44 +1,38 @@
 package com.wso2.choreo.integration.tests.createComponent;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
-
 import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.http.client.HttpClient;
+
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.TokenHandler;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.util.Date;
-import java.util.HashMap;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.consol.citrus.message.MessageType;
-
-import org.springframework.core.io.ClassPathResource;
-import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
-import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 /**
  * $(http()
- * 
+ * <p>
  * component creation related tests
  */
 public class CreateComponentIT extends TestNGCitrusSpringSupport {
@@ -47,17 +41,12 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
   private String orgHandle;
   private String orgId;
   private String projectId;
-  private String componentId;
+  ComponentCreationResponse response;
 
-  @Autowired
-  private HttpClient choreoTestClient;
-
-  @Autowired
-  private HttpClient choreoProjectsTestClient;
 
   @BeforeClass
-  public void beforeClass()
-      throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+  public void beforeClassCCIT()
+          throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
     accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
@@ -69,127 +58,27 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
 
   @Test
   @CitrusTest
-  public void testCreateRESTComponent() throws JsonProcessingException {
+  public void testCreateRESTComponentCCIT() throws IOException {
     String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-    String graphQlQuery = "mutation{ createComponent(" +
-        "      component: {" +
-        "        name: \"" + componentName + "\"," +
-        "        orgId: " + orgId + "," +
-        "        orgHandler: \"" + orgHandle + "\"," +
-        "        displayName: \"" + componentName + "\"," +
-        "        displayType: \"" + Constant.displayType.restAPI + "\"," +
-        "        projectId: \"" + projectId + "\"," +
-        "        labels: \"\"," +
-        "        version: \"1.0.0\"," +
-        "        description: \"\"," +
-        "        apiId: \"\"," +
-        "        ballerinaVersion: \"swan-lake-alpha5\"," +
-        "        triggerChannels: \"\"," +
-        "        triggerID: null," +
-        "        httpBase: true," +
-        "        sampleTemplate: \"\"" +
-        "      }){" +
-        "        id, orgId, projectId, handler" +
-        "      }}";
-    HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-      {
-        put("query", graphQlQuery);
-      }
-    };
-    ObjectMapper objectMapper = new ObjectMapper();
-    String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-    $(http()
-        .client(choreoProjectsTestClient)
-        .send()
-        .post("/graphql")
-        .message()
-        .header(HttpHeaders.AUTHORIZATION, accessToken)
-        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        .body(requestBody)
-        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-    $(http()
-        .client(choreoProjectsTestClient)
-        .receive()
-        .response(HttpStatus.OK)
-        .message()
-        .type(MessageType.JSON)
-        .body(new ClassPathResource("templates/createComponent/mutation_create_component_success.json"))
-        .validate(json()
-            .ignore("$.data.createComponent.id")
-            .ignore("$.data.createComponent.handler")
-            .ignore("$.data.createComponent.projectId"))
-        .validate((message, context) -> {
-          JsonObject component = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
-              .getAsJsonObject("data")
-              .getAsJsonObject("createComponent");
-          componentId = component.get("id").getAsString();
-        }));
+    GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID(null).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
+    response = GraphQL.createChoreoManagedComponent(dto, accessToken);
+    Assert.assertEquals(response.getProjectId(), projectId);
+    Assert.assertNotNull(response.getId());
   }
 
-  @Test(dependsOnMethods = { "testCreateRESTComponent" })
+  @Test(dependsOnMethods = {"testCreateRESTComponentCCIT"})
   @CitrusTest
-  public void testCreatedComponentStatus() throws InterruptedException {
-    $(repeatOnError()
-        .until("i = 15")
-        .index("i")
-        .autoSleep(5000)
-        .actions(
-            http()
-                .client(choreoTestClient)
-                .send()
-                .get("/orgs/"
-                    .concat(orgHandle)
-                    .concat("/projects/")
-                    .concat(projectId)
-                    .concat("/components/")
-                    .concat(componentId)
-                    .concat("/init/status"))
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
-            http().client(choreoTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .body(new ClassPathResource(
-                    "templates/createComponent/get_create_status_success.json"))
-                .validate(json()
-                    .ignore("$.message"))));
+  public void testCreatedComponentStatusCCIT() throws  UnexpectedResponseException {
+    Status status = Orgs.createdComponentStatus(projectId, response.getId(), accessToken);
+    Assert.assertTrue(status.isSuccess());
   }
 
-  @Test(dependsOnMethods = {"testCreatedComponentStatus"})
+  @Test(dependsOnMethods = {"testCreatedComponentStatusCCIT"})
   @CitrusTest
-  public void testDeleteRestApiComponent() throws JsonProcessingException  {
-    String graphqlQuery = "mutation { deleteComponentV2(" + 
-      "orgHandler: \""+ orgHandle + "\"," +
-      "componentId: \""+ componentId  + "\"," +
-      "projectId: \""+ projectId + "\"){ status }" +
-      "}";
-
-    HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-      {
-        put("query", graphqlQuery);
-      }
-    };
-    ObjectMapper objectMapper = new ObjectMapper();
-    String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-
-    $(http()
-            .client(choreoProjectsTestClient)
-            .send()
-            .post("/graphql")
-            .message()
-            .header(HttpHeaders.AUTHORIZATION, accessToken)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .body(requestBody)
-            .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-    $(http()
-            .client(choreoProjectsTestClient)
-            .receive()
-            .response(HttpStatus.OK)
-            .message()
-            .type(MessageType.JSON)
-            .body(new ClassPathResource("templates/createComponent/mutation_delete_component_success.json"))
-            .validate(json()));
+  public void testDeleteRestApiComponentCCIT() throws IOException {
+    Response response1 = GraphQL.deleteComponent(response.getId(), projectId, accessToken);
+    ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
+    Assert.assertEquals(response1.getStatusCode(), HttpStatus.OK.value());
+    Assert.assertEquals(components.length, 0);
   }
 }

@@ -26,7 +26,10 @@ public class GitHub {
 
     public GitHub() {
     }
+    public static  String getGitHubRepoUrl(String repoName){
 
+        return  "https://github.com/" + Configuration.getConfig(ConfigDefinition.GITHUB_ORG) + "/" + repoName;
+    }
     public static Response initGitHubRepo(String repoName, boolean autoInit, boolean isPrivate, String gitignoreTemplate) throws IOException {
         String requestURI = GH_URL + "/orgs/" + GH_ORG + "/repos";
         log.info(requestURI);

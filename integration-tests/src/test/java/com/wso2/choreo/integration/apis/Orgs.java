@@ -32,6 +32,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.orgs.PromoteConfigurations;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -57,6 +58,27 @@ public class Orgs {
 
     private static final String CHOREO_EP = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
     private static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+
+    public static void addConfiguration(ChoreoComponent component, String envName, String accessToken, BalConfig... balconfigs) throws Exception {
+        String componentId = component.getId();
+        String envIdToDeploy = component.getLatestAppEnvId(envName);
+        String latestVersionId = component.getLatestApiVersion().getId();
+        JsonArray commitHistory = component.getCommitHistory(accessToken);
+        String latestCommitSha = component.getLatestCommitHash(commitHistory);
+        String orgHandle = component.getOrgHandler();
+        String projectId = component.getProjectId();
+
+        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
+                .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
+                .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
+        PromoteConfigurations promoteConfigurations = PromoteConfigurations.builder().configs(balconfigs).sourceUuid("").
+                commitHash(latestCommitSha).moduleName(component.getName()).operation(0).applyNow(false).build();
+
+        String configurationsRequestBody = ObjectMapperUtil.mapObjectToString(promoteConfigurations).replace("required", "isRequired");
+
+        Response res = HttpClientUtil.httpPOST(configurationsUpdateRequestURI, configurationsRequestBody, accessToken, "");
+
+    }
 
     public static void addConfiguration(HttpClient client, TestActionRunner runner,
                                         ChoreoComponent component, String envName, BalConfig... balconfigs) throws Exception {

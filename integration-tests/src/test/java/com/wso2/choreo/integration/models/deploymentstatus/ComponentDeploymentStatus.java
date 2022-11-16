@@ -8,4 +8,5 @@ public class ComponentDeploymentStatus {
     private String deploymentStatus;
     private String deploymentStatusV2;
     private String apiId;
+    private String invokeUrl;
 }

@@ -7,23 +7,21 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
+
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.github.GitHub;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
-import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.apis.github.GitHub;
+
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -32,7 +30,7 @@ import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
+
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -47,8 +45,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -78,22 +74,22 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     ChoreoOrganization org;
     private String orgUUID;
     private String projectId;
-        private String repoName;
+    private String repoName;
     private String namespace;
     private String obsId;
+    private String devInvokeURL;
 
     private ComponentCreationResponse response;
+
     @Autowired
     private HttpClient choreoTestClient;
-    @Autowired
-    private HttpClient choreoTestClientForGithub;
     @Autowired
     private HttpClient choreoCPTestClient;
     @Autowired
     private HttpClient choreoProjectsTestClient;
 
     @BeforeClass
-    public void beforeClass()
+    public void beforeClassWHIT()
             throws IOException, InterruptedException, ProjectCreationException,
             TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -108,7 +104,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testCreateUserManagedComponent() throws IOException {
+    public void testCreateUserManagedComponentWHIT() throws IOException {
 
         // Creating new GitHub repo
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
@@ -118,31 +114,33 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
 
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(componentName).displayName(componentName).
-                projectId(projectId).triggerChannels("IssuesService").triggerID("35").
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(componentName).
+                srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).
+                displayName(componentName).projectId(projectId).
+                triggerChannels("IssuesService").triggerID("35").
                 displayType(Constant.displayType.webhook.name()).build();
-        response = GraphQL.createUserManagedComponent(graphqlDTO, repoName, accessToken);
+        response = GraphQL.createUserManagedComponent(graphqlDTO, accessToken);
         Assert.assertEquals(response.getProjectId(), projectId);
 
     }
 
-    @Test(dependsOnMethods = {"testCreateUserManagedComponent"})
+    @Test(dependsOnMethods = {"testCreateUserManagedComponentWHIT"})
     @CitrusTest
-    public void testCreatedComponentStatus() throws UnexpectedResponseException {
+    public void testCreatedComponentStatusWHIT() throws UnexpectedResponseException {
         Status status = Orgs.createdComponentStatus(projectId, response.getId(), accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
-    @Test(dependsOnMethods = {"testCreatedComponentStatus"})
+    @Test(dependsOnMethods = {"testCreatedComponentStatusWHIT"})
     @CitrusTest
-    public void testInitialPRGeneration() throws IOException, UnexpectedResponseException {
+    public void testInitialPRGenerationWHIT() throws IOException, UnexpectedResponseException {
         PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 1);
         Assert.assertEquals(prs.length, 1);
     }
 
-    @Test(dependsOnMethods = {"testInitialPRGeneration"})
+    @Test(dependsOnMethods = {"testInitialPRGenerationWHIT"})
     @CitrusTest
-    public void testPRMerge() throws IOException, UnexpectedResponseException {
+    public void testPRMergeWHIT() throws IOException, UnexpectedResponseException {
         Response ghres = GitHub.mergePR(repoName, "1");
         Assert.assertEquals(ghres.getStatusCode(), HttpStatus.OK.value());
 
@@ -151,47 +149,46 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dependsOnMethods = {"testPRMerge"})
+    @Test(dependsOnMethods = {"testPRMergeWHIT"})
     @CitrusTest
-    public void testCommitFile() throws IOException {
+    public void testCommitFileWHIT() throws IOException {
         String encodedContent = FileUtil.readFileEncodedContent("templates/webhook/github_webhook.bal");
         Response response = GitHub.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"testCommitFile"})
+    @Test(dependsOnMethods = {"testCommitFileWHIT"})
     @CitrusTest
-    public void testComponentRetrieval() throws IOException {
+    public void testComponentRetrievalWHIT() throws IOException {
         testComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
         testComponent.setOrganization(org);
         Assert.assertNotNull(testComponent);
     }
 
-    @Test(dependsOnMethods = {"testComponentRetrieval"})
+    @Test(dependsOnMethods = {"testComponentRetrievalWHIT"})
     @CitrusTest
-    public void testComponentDeployment() throws Exception {
+    public void testComponentDeploymentWHIT() throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
         Orgs.addConfiguration(choreoTestClient, this, testComponent, "dev", balConfigs);
-        GraphQL.deployComponent(testComponent,accessToken);
+        GraphQL.deployComponent( testComponent,accessToken);
     }
 
-    @Test(dependsOnMethods = {"testComponentDeployment"})
+    @Test(dependsOnMethods = {"testComponentDeploymentWHIT"})
     @CitrusTest
-    public void testDeploymentStatusByVersion() throws Exception {
-        GraphQL.deploymentStatusByVersion(testComponent, accessToken);
-
+    public void testDeploymentStatusByVersionWHIT() throws Exception {
+        GraphQL.deploymentStatusByVersion(testComponent,accessToken);
     }
 
-    @Test(dependsOnMethods = {"testDeploymentStatusByVersion"})
+    @Test(dependsOnMethods = {"testDeploymentStatusByVersionWHIT"})
     @CitrusTest
-    public void testComponentDeploymentStatus() throws Exception {
-        GraphQL.componentDeployment(testComponent, "dev", accessToken);
+    public void testComponentDeploymentStatusWHIT() throws Exception {
+        devInvokeURL =   GraphQL.componentDeployment(testComponent, "dev", accessToken).getInvokeUrl();
     }
 
-    @Test(dependsOnMethods = {"testComponentDeploymentStatus"})
+    @Test(dependsOnMethods = {"testComponentDeploymentStatusWHIT"})
     @CitrusTest
-    public void testAPIInvocation() throws NoLatestApiVersionFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvokeInformationNotFoundException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-        TestConfigs testConfigs = ComponentUtils.invokeEndpoint(testComponent, Constant.displayType.restAPI.name(), accessToken);
+    public void testAPIInvocationWHIT() throws Exception {
+        String apiKey = ComponentUtils.getApiKey(testComponent, accessToken);
 
         // Read the request as a json make it as a compact json string
         // Make the hex digest of the body, to be sent with the mock request
@@ -214,7 +211,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 .autoSleep(6000)
                 .actions(
                         http()
-                                .client(testConfigs.getConfig(Constant.Environment.Development.name()).getInvokeUrl())
+                                .client(devInvokeURL)
                                 .send()
                                 .post(apiInvocationRequestURI)
                                 .message()
@@ -226,16 +223,16 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                 .body(new ClassPathResource(
                                         "templates/webhook/request.json")),
                         http()
-                                .client(testConfigs.getConfig(Constant.Environment.Development.name()).getInvokeUrl())
+                                .client(devInvokeURL)
                                 .receive()
                                 .response(HttpStatus.OK)
                                 .message()
                                 .type(MessageType.PLAINTEXT)));
     }
 
-    @Test(dependsOnMethods = {"testAPIInvocation"})
+    @Test(dependsOnMethods = {"testAPIInvocationWHIT"})
     @CitrusTest
-    public void testFetchObservabilityId() throws NoLatestApiVersionFoundException, IOException {
+    public void testFetchObservabilityIdWHIT() throws Exception {
 
         String releaseId = testComponent.getLatestApiVersion().getAppEnvVersions().get(0).getReleaseId();
         String environmentsGraphQlQuery = "query {" +
@@ -342,9 +339,9 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                 })));
     }
 
-    @Test(dependsOnMethods = {"testFetchObservabilityId"})
+    @Test(dependsOnMethods = {"testFetchObservabilityIdWHIT"})
     @CitrusTest
-    public void testObservabilityLogs() throws NoLatestApiVersionFoundException {
+    public void testObservabilityLogsWHIT() throws Exception {
 
         String releaseId = testComponent.getLatestApiVersion().getAppEnvVersions().get(0).getReleaseId();
         OffsetDateTime currentDateTimeAtUTC = OffsetDateTime.now(ZoneOffset.UTC)
@@ -383,16 +380,16 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                         greaterThanOrEqualTo(1)))));
     }
 
-    @Test(dependsOnMethods = {"testObservabilityLogs"}, alwaysRun = true)
+    @Test(dependsOnMethods = {"testObservabilityLogsWHIT"}, alwaysRun = true)
     @CitrusTest
-    public void testDeleteWebhookComponent() throws IOException {
+    public void testDeleteWebhookComponentWHIT() throws Exception {
         Response res = GraphQL.deleteComponent(response.getId(), projectId, accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"testDeleteWebhookComponent"}, alwaysRun = true)
+    @Test(dependsOnMethods = {"testDeleteWebhookComponentWHIT"}, alwaysRun = true)
     @CitrusTest
-    public void testDeleteRepo() {
+    public void testDeleteRepoWHIT() {
         Response response = GitHub.deleteGitHubRepo(repoName);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
     }
