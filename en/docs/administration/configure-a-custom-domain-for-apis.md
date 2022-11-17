@@ -37,9 +37,6 @@ To configure a custom domain for your APIs, follow the steps given below:
 
 5. You can add the TLS certificates you created for the custom domain. Alternatively, you can click the **Let's Encrypt** option to let Choreo generate and manage the certificates for you. For this scenario, let's click the **Let's Encrypt** option.
 
-    !!! info
-        However, we recommend you use **Let's Encrypt** only for testing purposes.
-
 6. Click **Add** to save the custom domain.
 
     The **Settings** page displays the custom domain in the **Domains**/**Gateway** sub-tab.
