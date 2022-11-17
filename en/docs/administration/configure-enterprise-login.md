@@ -21,6 +21,9 @@ To create an organization in Choreo, follow the steps below:
         ![Create an organization in Choreo](../assets/img/references/enterprise-login/create-choreo-organization.png){.cInlineImage-small}
  
     - **If you are a returning user**: expand the drop-down for your profile and click **Settings**. Under **Organizations**, you can view the organization you created at sign-up. 
+
+!!! info
+    If you need to delete an organization that you have already created, contact our Support team.
  
 ## Step 2: Configure enterprise login for your Choreo organization
 
