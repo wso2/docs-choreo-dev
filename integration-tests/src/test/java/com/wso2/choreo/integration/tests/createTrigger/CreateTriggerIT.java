@@ -138,7 +138,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = { "testTriggerComponent" })
+    @Test(dependsOnMethods = { "triggerComponent_CreateTriggerIT" })
     @CitrusTest
     public void triggerCreatedComponentStatus_CreateTriggerIT() throws InterruptedException {
         $(repeatOnError()
@@ -169,7 +169,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                                         .ignore("$.message"))));
     }
 
-    @Test(dependsOnMethods = {"testTriggerCreatedComponentStatus"})
+    @Test(dependsOnMethods = {"triggerCreatedComponentStatus_CreateTriggerIT"})
     @CitrusTest
     public void triggerRetrieve_CreateTriggerIT() throws  IOException, InterruptedException, ComponentRetrieveException {
         String graphQlQuery = "query{" +
@@ -257,7 +257,7 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = { "testTriggerRetrieve" })
+    @Test(dependsOnMethods = { "triggerRetrieve_CreateTriggerIT" })
     @CitrusTest
     public void triggerDeploy_CreateTriggerIT() throws IOException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException,
             GetCommitHistoryException, InterruptedException, NoLatestCommitHashFoundException {
