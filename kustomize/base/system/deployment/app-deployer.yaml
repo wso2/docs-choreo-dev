@@ -116,7 +116,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-app-deployer
+            name: cm-file-app-deployer
         - name: secret-apps-k8s-service-account
           csi:
             driver: secrets-store.csi.k8s.io

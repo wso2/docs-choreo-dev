@@ -84,7 +84,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-api-server
+            name: cm-file-api-server
         - name: secret-idp
           csi:
             driver: secrets-store.csi.k8s.io

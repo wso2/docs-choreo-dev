@@ -378,6 +378,22 @@ configMapGenerator:
     behavior: create
     files:
       - subscriptions/Config.toml
+  - name: cm-file-api-server
+    behavior: create
+    files:
+      - runtime/api-server.yaml
+  - name: cm-file-app-service
+    behavior: create
+    files:
+      - runtime/app-service.yaml
+  - name: cm-file-app-deployer
+    behavior: create
+    files:
+      - runtime/app-deployer.yaml
+  - name: cm-file-workspace-manager
+    behavior: create
+    files:
+      - runtime/workspace-manager.yaml
   - name: cm-file-step-enforcer
     behavior: create
     files:
