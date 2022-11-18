@@ -105,9 +105,10 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                         .response(HttpStatus.OK));
         }
 
+
         @Test(dependsOnMethods = {"changeLive_ThemePreference"})
         @CitrusTest
-        public void configCDNTheme_ThemePreference()  {
+        public void verifyDevPortal_ThemePreference()  {
                 String requestURL = orgHandle.concat("/default.json");
 
                 $(http()
@@ -127,11 +128,9 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                         .type(MessageType.JSON)
                         .body(new ClassPathResource(
                                 "templates/themeManagement/post_update_theme_success.json")));
-
         }
 
-
-        @Test(dependsOnMethods = {"configCDNTheme_ThemePreference"})
+        @Test(dependsOnMethods = {"verifyDevPortal_ThemePreference"})
         @CitrusTest
         public void resetTheme_ThemePreference() {
                 String requestURL = Constant.THEME_ENDPOINT_SUFFIX
@@ -152,4 +151,27 @@ public class ThemePreference extends TestNGCitrusSpringSupport {
                         .receive()
                         .response(HttpStatus.valueOf(HttpStatusCodes.STATUS_CODE_NO_CONTENT)));
         }
+
+
+        @Test(dependsOnMethods = {"resetTheme_ThemePreference"})
+        @CitrusTest
+        public void verifyNoThemeInDevPortal_ThemePreference()  {
+                String requestURL = orgHandle.concat("/default.json");
+
+                $(http()
+                        .client(choreoTestClientForCDNTheme)
+                        .send()
+                        .get(requestURL)
+                        .message()
+                        .header(HttpHeaders.CACHE_CONTROL, "no-cache")
+                        .header(HttpHeaders.PRAGMA, "no-cache")
+                        .header(HttpHeaders.EXPIRES, "0")
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                $(http()
+                        .client(choreoTestClientForCDNTheme)
+                        .receive()
+                        .response(HttpStatus.NOT_FOUND)
+                );
+        }
+
 }
