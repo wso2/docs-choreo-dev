@@ -8,7 +8,7 @@ A component may have more than one execution path serving requests. The Performa
 
 ## Advantages of using the Performance Analyzer
 
-Making accurate performance estimations before releasing an application you've developed is important due to the following reasons:
+Making accurate performance estimations before releasing an application you have developed is important due to the following reasons:
 
 - You can identify the performance-critical path of a component at development time. 
 - The forecasts you obtain for individual connector actions help identify any bottlenecks in each execution path.
@@ -20,7 +20,7 @@ Making accurate performance estimations before releasing an application you've d
 
 ## Use the Performance Analyzer
 
-You can use the Choreo Performance Analyzer on the web editor in low-code mode. 
+You can use the Choreo Performance Analyzer on the Web Editor in low-code mode. 
 
 ### Analyze the performance-critical path in real-time
 
@@ -28,7 +28,7 @@ To view the real-time analysis of the performance-critical path of your componen
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev). 
 2. Navigate to your component and click **Overview** from the left pane. 
-3. Click the **Edit Code** button and navigate to the Web Editor.
+3. Click the **Edit Code** to access the Web Editor.
 
 #### Overall performance of the performance-critical path
 
