@@ -50,7 +50,7 @@ If you want to change the automatically selected time interval (i.e., one hour) 
 
 For more information on how to use the **Observe** tab for root cause analysis, see [Root Cause Analysis](../observability/root-cause-analysis.md).
 
-### Application Error alert
+### Application error alert
 
 This alert is triggered when you use the **“log:printError()”** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via an email so that you can troubleshoot them. The following is a sample of such a notification email. 
 
@@ -73,3 +73,64 @@ In addition, you can observe the following:
 - The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes. This time range is selected via the drop-down field marked **5** in the image. You can update this time range as explained under [Select a custom time range](#select-a-custom-time-range).
 
 - The status and the latency of the request (marked **4** in the image).
+
+### Anomaly alert 
+
+This alert is triggered when the current latency shows a significantly sudden upward shift compared to the average latency computed in the last 5 minutes of a resource function. Latency spikes and upward latency shifts are considered high latency. 
+
+Anomaly alerting is disabled by default. An organization administrator needs to enable it. 
+
+Choreo alerts a user of this anomaly via email. This email includes the component name, the organization the component belongs to, the environment it occurred, version, and anomaly detection information. The email has a link that takes a user to the components' latency graph in the observability view pane. A user can view the latency graph by clicking on the link **Check in Portal** in the email and and thereby [perform an RCA](https://wso2.com/choreo/docs/observability/root-cause-analysis/) for the anomaly. 
+
+The anomaly detector issues two types of alerts. The anomaly detector issues an immediate alert at the time the anomaly is detected, and an aggregated alert that is issued by aggregating all anomalies detected in a 15-minute window following the immediate alert.
+
+#### Immediate alert
+
+The anomaly detector issues an  immediate alert at the time an anomaly is detected. If any anomalies are detected in the next 15 minutes, it is aggregated and issued as an aggregated alert at the end of the 15 minutes. The email format of the immediate alert is as follows:
+
+```
+<p style="font-size: 16px; margin: 0; line-height: 24px; font-family: 'Gilmer', Arial, Verdana, Helvetica, sans-serif; color: #585a5e; text-align: left; margin-bottom: 15px;">
+    You are receiving this email because the Choreo AI engine has detected a latency anomaly in your
+    component.
+</p>
+
+<div style="padding: 20px; background-color: #d9d9d98c">
+    <p style=" font-size: 16px; margin: 0; line-height: 24px; font-family: 'Gilmer', Arial, Verdana, Helvetica, sans-serif; color: #585a5e; text-align: left; margin-bottom: 15px;">
+        <b>Component Name: </b> {{componentName}} <br/>
+        <b>Organization: </b> {{orgName}} <br/>
+        <b>Environment: </b> {{envName}} <br/>
+        <b>Version: </b> {{componentVersion}} <br/>
+        <b>Detection Type: </b> Level-shift <br/>
+        <b>Detection Time: </b> {{time}}
+    </p>
+    <div style="text-align: center; margin: 25px 0px;">
+        <a href="{{obsUrl}}" target="_blank" style="display: inline-block; border-radius: 12px; background-color: #5567d5; border: none; color: #FFFFFF; text-align: center; font-size: 16px; padding: 10px 24px; transition: all 0.5s; cursor: pointer; margin: 5px; font-weight: 700; text-decoration: none;">
+            Check in Portal
+        </a>
+    </div>
+</div>
+```
+
+#### Aggregated alert
+An aggregated alert is an alert that is issued by aggregating all anomalies detected in a 15-minute window after the immediate alert. The email format of the aggregated alert is as follows:
+
+```
+<div style="padding: 20px; margin: 20px; background-color: #d9d9d98c">
+    <p style="font-size: 16px; margin: 0; line-height: 24px; font-family: 'Gilmer', Arial, Verdana, Helvetica, sans-serif; color: #585a5e; text-align: left; margin-bottom: 15px;">
+        The Choreo AI engine has detected latency anomalies in the following component
+    </p>
+    <p style=" font-size: 16px; margin: 0; line-height: 24px; font-family: 'Gilmer', Arial, Verdana, Helvetica, sans-serif; color: #585a5e; text-align: left; margin-bottom: 15px;">
+        <b>Component Name: </b> {{componentName}} <br/>
+        <b>Organization: </b> {{orgName}} <br/>
+        <b>Environment: </b> {{envName}} <br/>
+        <b>Version: </b> {{componentVersion}} <br/>
+        <b>Last Detection: </b> {{time}} <br/>
+        <b>Detection Count: </b> {{count}}
+    </p>
+    <div style="text-align: center; margin: 25px 0px;">
+        <a href="{{obsUrl}}" target="_blank" style="display: inline-block; border-radius: 12px; background-color: #5567d5; border: none; color: #FFFFFF; text-align: center; font-size: 16px; padding: 10px 24px; transition: all 0.5s; cursor: pointer; margin: 5px; font-weight: 700; text-decoration: none;">
+            Check in Portal
+        </a>
+    </div>
+</div>
+```
