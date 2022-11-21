@@ -173,7 +173,7 @@ public class ChoreoOrganization {
     }
 
     private String getProjectsQuery() {
-        return "query{projects(orgId: " + orgId + "," +
+        return "query{projects(orgId: " + orgId +
                 "    ){ \n" +
                 "     id, orgId, name, version, createdDate, handler,\n" +
                 "    } }";

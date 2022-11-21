@@ -40,8 +40,8 @@ public class DataCleaner  {
         for (ChoreoProject project: projects) {
             String name = project.getName();
 
-            if (name.contains(Constant.TEST_OLD_PROJECT_NAME_PREFIX) ||
-                name.contains(Constant.TEST_PROJECT_NAME_PREFIX)) {
+            if (name.startsWith(Constant.TEST_OLD_PROJECT_NAME_PREFIX) ||
+                name.startsWith(Constant.TEST_PROJECT_NAME_PREFIX)) {
 
                 ++numberOfTestProjects;
                 if (shouldProjectBeDeleted(project.getName())) {

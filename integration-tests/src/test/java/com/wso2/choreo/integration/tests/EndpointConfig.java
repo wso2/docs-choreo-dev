@@ -32,7 +32,6 @@ public class EndpointConfig {
         com.wso2.choreo.integration.config.Configuration.loadConfigs();
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
-        TestContext.setAnomalyDetectionUserTokenHandler();
     }
 
     @Bean
