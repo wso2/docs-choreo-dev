@@ -8,8 +8,7 @@ To understand how to configure a custom domain for your APIs, follow the steps i
 
 To configure a custom domain for your APIs, you must first register a custom domain with a domain registrar service as follows:
 
-
-1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google/ GitHub/ Microsoft account.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google/ GitHub/ Microsoft account.
 
 2. If you are a new user, create an organization. Enter a unique organization name. For example, `Stark Industries Ltd`.
 
