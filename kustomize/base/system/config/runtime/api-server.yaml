@@ -32,7 +32,7 @@ idp:
     maxAge: 86400
     secure: ${IDP_COOKIES_SECURE}
     httpOnly: true
-  systemUserIdpIds: {{.SYSTEM_USER_IDP_ID | default "[]"}}
+  systemUserIdpIds: {{.SYSTEM_USER_IDP_ID}}
 auth:
   enable: true
 middleware:
