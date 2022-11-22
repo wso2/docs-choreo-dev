@@ -18,12 +18,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -35,8 +30,14 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import java.io.IOException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
 /**
- * Handles retrieving a OAuth token to test API calls
+ * Handles retrieving a OAuth token to test API calls.
  */
 public class TokenHandler {
 
@@ -46,8 +47,6 @@ public class TokenHandler {
         private final String testChoreoOrgHandle;
         private final String testUserEmail;
         private final String testUserPassword;
-        private String stsClientId;
-        private String stsClientSecret;
         private String cpAppClientId;
         private String cpAppClientSecret;
 
@@ -67,16 +66,6 @@ public class TokenHandler {
             return this;
         }
 
-        public Builder stsClientId(String stsClientId) {
-            this.stsClientId = stsClientId;
-            return this;
-        }
-
-        public Builder stsClientSecret(String stsClientSecret) {
-            this.stsClientSecret = stsClientSecret;
-            return this;
-        }
-
         public Builder cpAppClientId(String cpAppClientId) {
             this.cpAppClientId = cpAppClientId;
             return this;
@@ -92,18 +81,18 @@ public class TokenHandler {
         }
     }
 
-    private final String asgardeoClientId;
-    private final String asgardeoClientSecret;
-    private final String testChoreoOrgHandle;
-    private final String testUserEmail;
-    private final String testUserPassword;
-    private final String stsClientId;
-    private final String stsClientSecret;
-    private final String cpAppClientId;
-    private final String cpAppClientSecret;
+    private String asgardeoClientId;
+    private String asgardeoClientSecret;
+    private String testChoreoOrgHandle;
+    private String testUserEmail;
+    private String testUserPassword;
+    private String cpAppClientId;
+    private String cpAppClientSecret;
 
     private String stsAccessToken = "";
     private long tokenExpiryTime = 0;
+
+    private boolean isManualMode = false;
 
     private TokenHandler(Builder builder) {
         asgardeoClientId = builder.asgardeoClientId;
@@ -111,24 +100,15 @@ public class TokenHandler {
         testChoreoOrgHandle = builder.testChoreoOrgHandle;
         testUserEmail = builder.testUserEmail;
         testUserPassword = builder.testUserPassword;
-        stsClientId = builder.stsClientId;
-        stsClientSecret = builder.stsClientSecret;
         cpAppClientId = builder.cpAppClientId;
         cpAppClientSecret = builder.cpAppClientSecret;
     }
 
-    /**
-     * Retrieve oauth token to be used when invoking choreo APIs
-     *
-     * @return oauth token
-     * @throws IOException             if an IO error occurs when sending or receiving request
-     * @throws InterruptedException    if sending request is interrupted
-     * @throws TokenRetrievalException if token retrieval fails
-     */
-    public String getTestToken() throws InterruptedException, TokenRetrievalException, IOException {
-        String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-        return getStsToken(stsClientId, stsClientSecret, userToken);
+    public TokenHandler(String accessToken) {
+        stsAccessToken = accessToken;
+        isManualMode =  true;
     }
+
 
     /**
      * Retrieve oauth token to be used when invoking Control Plane exposed choreo APIs
@@ -138,12 +118,14 @@ public class TokenHandler {
      * @throws TokenRetrievalException if token retrieval fails
      */
     public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException {
-        if (!isTokenValid()) {
-            synchronized (TokenHandler.class) {
-                if (!isTokenValid()) {
-                    String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-                    stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken);
-                    readTokenExpiryTime();
+        if (!isManualMode) {
+            if (!isTokenValid()) {
+                synchronized (TokenHandler.class) {
+                    if (!isTokenValid()) {
+                        String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
+                        stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken);
+                        readTokenExpiryTime();
+                    }
                 }
             }
         }
@@ -190,31 +172,6 @@ public class TokenHandler {
             throw new TokenRetrievalException("Error while getting Asgardio token", e);
         }
     }
-
-    /**
-     * @param clientId     client id
-     * @param clientSecret client secret
-     * @return sts access token
-     */
-    public String getEncodedCredentials(String clientId, String clientSecret) {
-        return Constant.BASIC_PREFIX.concat(encodeCredentials(clientId, clientSecret));
-    }
-
-    public String getUserTokenPayload() {
-        return "grant_type=" + Constant.OAUTH_PASSWORD_GRANT_TYPE + "&" +
-                "username=" + testUserEmail + "&" +
-                "password=" + testUserPassword;
-    }
-
-    public String getStsTokenPayload(String userToken) {
-        return "grant_type=" + Constant.OAUTH_TOKEN_EXCHANGE_GRANT_TYPE + "&" +
-                "subject_token=" + userToken + "&" +
-                "subject_token_type=" + Constant.SUBJECT_TOKEN_TYPE + "&" +
-                "requested_token_type=" + Constant.REQUESTED_TOKEN_TYPE + "&" +
-                "orgHandle" + testChoreoOrgHandle + "&" +
-                "scope" + Constant.OAUTH_SCOPES;
-    }
-
 
     /**
      * @param stsClientId     client id for STS SP
