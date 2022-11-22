@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 export class RestAPITemplate {
   static selectHttpAPITemplate() {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
