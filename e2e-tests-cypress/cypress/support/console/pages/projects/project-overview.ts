@@ -23,4 +23,11 @@ export class ProjectOverviewPage {
     cy.contains('Time to create your first component', { timeout: 120000 }).should('be.visible')
     cy.get('.MuiContainer-root button').click(); // Need to add a id for the Create button
   }
+
+  //Only used for Enterprise login TC
+  static addNewComponentEL() {
+    cy.get('.MuiContainer-root button').click({ multiple: true }); // Need to add a id for the Create button
+  }
+
 }
+

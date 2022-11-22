@@ -42,13 +42,13 @@ describe("Enterprise Login using auth0Idp", () => {
 
   it("Verify REST API component creation", () => {
     ProjectListingPage.selectProject();
-    RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(
-      COMPONENT_NAME,
-      COMPONENT_DESCRIPTION,
-      true
-    );
-    ComponentDevelopPage.getComponentURL();
+    ProjectOverviewPage.addNewComponentEL();
+     RestAPITemplate.selectHttpAPITemplate();
+     RestAPITemplate.createApiFromScratch(
+        COMPONENT_NAME,
+        COMPONENT_DESCRIPTION,
+      );
+      ComponentDevelopPage.getComponentURL();
   });
 
   it("Verify vscode sso login", () => {
