@@ -41,6 +41,8 @@ configYamlConfigurations:
   observe-enabled: true
   observe-provider: "choreo"
   observe-reporter-host: ${CONFIG_YAML_OBSERVE_REPORTER_HOST}
+  prometheus-metrics-reporter-config:
+    enabled-cluster-ids: {{.PROMETHEUS_METRICS_REPORTER_ENABLED_CLUSTER_IDS}}
   observe-reporter-port: 443
 feedback:
   enabled: false
