@@ -114,7 +114,7 @@ emailService:
   calendlyLink: https://calendly.com/wso2-choreo/session
 appQuota:
   enabled: {{.APP_QUOTA_ENABLED}}
-  excludedOrgs: {{.APP_QUOTA_EXCLUTED_ORGS | default "[]"}}
+  excludedOrgs: {{.APP_QUOTA_EXCLUTED_ORGS"}}
 defaultGroups:
   admin:
     name: Admin
