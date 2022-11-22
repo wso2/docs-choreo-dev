@@ -13,6 +13,7 @@ Configure the  Workspace cluster to run GH self-hosted runner on top of it
     ```bash
     export GITHUB_TOKEN="xxxxxxxxxxxxxxxxx" # provided by DigiOps team
     export ENV="xxxxxxxxxxxxxxxxx" #dev, stage or prod
+    export LOG_LEVEL="xxxxxx" #"debug", "info", "warn", "error"
     ```
 
 
