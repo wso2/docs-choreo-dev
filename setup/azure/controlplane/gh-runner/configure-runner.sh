@@ -13,4 +13,5 @@ helm upgrade --install actions-runner-controller actions-runner-controller/actio
     --set=githubWebhookServer.nodeSelector.execution-mode=ghrunner \
     --set=githubWebhookServer.tolerations[0].operator=Exists,githubWebhookServer.tolerations[0].effect=NoSchedule,githubWebhookServer.tolerations[0].key=ghrunner \
     --set=replicaCount=2 --set=githubWebhookServer.replicaCount=2 \
-    --set=podDisruptionBudget.enabled=true --set=podDisruptionBudget.minAvailable=50% --set=githubWebhookServer.podDisruptionBudget.enabled=true --set=githubWebhookServer.podDisruptionBudget.minAvailable=50%
+    --set=podDisruptionBudget.enabled=true --set=podDisruptionBudget.minAvailable=50% --set=githubWebhookServer.podDisruptionBudget.enabled=true --set=githubWebhookServer.podDisruptionBudget.minAvailable=50% \
+    --set=logLevel="${LOG_LEVEL}" --set=githubWebhookServer.logLevel="${LOG_LEVEL}"
