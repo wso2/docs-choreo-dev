@@ -1,4 +1,4 @@
-# Map data
+# Map Data
 
 The data mapping feature of Choreo allows you to convert and transform one data format to another, change the structure of the data, or perform both.
 You can configure a data mapping for a component when you develop it in the Web Editor.
