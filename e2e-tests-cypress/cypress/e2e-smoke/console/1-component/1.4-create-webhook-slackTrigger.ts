@@ -56,8 +56,10 @@ describe("Verify webhook creation functionality", () => {
     TriggersTemplate.createTrigger(TRIGGER_TYPE, WEBHOOK_NAME, TRIGGER_CHANNEL);
     ComponentDevelopPage.getComponentURL();
   });
+  
   it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace();
+    ComponentOverviewPage.navigateToOverview();
+    LoginPage.navigateToCodespace();    
     VSExplorer.pasteCode("slacktrigger.bal");
     VSExplorer.selectSourceControl();
 
@@ -81,8 +83,6 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
 
-
-
   it("Component promotion to prod", () => {
     ComponentDeployPage.promoteWebHookToProd(CONFIG);
     ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
@@ -98,7 +98,6 @@ describe("Verify webhook creation functionality", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopDevContainer();
   });
-
 
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();

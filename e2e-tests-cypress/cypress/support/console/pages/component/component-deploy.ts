@@ -139,7 +139,7 @@ export class ComponentDeployPage {
   }
 
   static verifyProdInvokeURL() {
-    return Utils.getInvokeUrl(1)
+    return Utils.getInvokeUrl(0)
   }
 
   static stopAllDeployment() {
