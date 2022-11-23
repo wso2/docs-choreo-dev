@@ -75,12 +75,4 @@ export class DomainsComponents {
     cy.contains("td", domainName).should("be.visible");
     cy.log("Created the custom domain successfully");
   }
-
-  static accessDevportalWithCustomDomain(domainName: string) {
-    cy.visit(domainName);
-    // cy.url().should('include', domainName);
-    // cy.get('[data-cyid="sign-in-with-github"]').should("be.visible");
-    // cy.get('[data-cyid="sign-in-with-google"]').should("be.visible");
-    // cy.get('[data-cyid="sign-in-with-microsoft"]').should("be.visible");
-  }
 }
