@@ -119,15 +119,7 @@ public class ComponentUtils {
 
     }
 
-    public static TestConfigs invokeEndpoint(ChoreoComponent component, String componentType, String accessToken) throws NoLatestApiVersionFoundException, IOException, InvokeInformationNotFoundException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-        TestConfigs wrapper = new TestConfigs();
-        InvokeInformation[] info = GraphQL.getInvokeInformation(component, componentType, accessToken);
-        String apiKey = component.getAPIKeyForInvoke(accessToken, component.getApiId()).replace("\"", "");
-        for (InvokeInformation in : info) {
-           wrapper.addConfig(in.getEnvironmentName(), TestConfigs.builder().invokeUrl(in.getInvokeUrl()).apiKey(apiKey).build());
-        }
-        return wrapper;
-    }
+
     public static String getApiKey(ChoreoComponent component, String accessToken) throws IOException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
 
         return component.getAPIKeyForInvoke(accessToken, component.getApiId()).replace("\"", "");

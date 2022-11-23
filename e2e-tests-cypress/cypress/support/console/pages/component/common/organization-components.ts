@@ -19,7 +19,7 @@ export class OrganizationComponent {
   static invitationEmail = Cypress.env("invitationUserEmail");
 
   static navigateToMembers() {
-    cy.get('[data-testid="/user-settings/organization/members"]').click();
+    cy.get('[data-cyid="members"]').click();
   }
 
   static navigateToGroups() {

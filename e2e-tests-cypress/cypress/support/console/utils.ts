@@ -72,6 +72,7 @@ export class Utils {
       this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
+                
         const rawMailContent = res.body;
         const decodedMail = atob(rawMailContent);
 

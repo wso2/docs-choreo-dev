@@ -192,7 +192,6 @@ export class ComponentAPILifecycle {
 
   static applyConfiguration(env: Environment, revision: string = "") {
     cy.get('[data-cyid="btn-save-settings"]').click();
-    cy.get(`[aria-label="environment"]`).contains(env).click();
     cy.get("button").contains("Apply").click().wait(2000);
 
     if (env === Environment.DEVELOPMENT) {
@@ -210,7 +209,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
     cy.get("#panel1a-header").should("be.visible")
     cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    cy.wait(6000)
+    cy.wait(2000)
 
   }
 

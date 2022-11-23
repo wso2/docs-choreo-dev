@@ -2,6 +2,7 @@ package com.wso2.choreo.integration.apis.github;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -16,11 +17,9 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 @Slf4j
-public class GitHub {
+public class GitHub extends ControlPlaneAPI {
 
-    private static final String GH_URL = Configuration.getConfig(ConfigDefinition.GITHUB_ENDPOINT);
-    private static final String GH_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-    private static final String AUTH_HEADER = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.getConfig(ConfigDefinition.GITHUB_PAT));
+
 
 
 
