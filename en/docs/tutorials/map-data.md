@@ -147,14 +147,14 @@ If any error occurs when you map parameters, you can fix them in the Statement E
 
 The connection appears in blue to indicate that there are no errors.
 
-#### Aggregate multiple input fields to one output field
+#### Aggregate multiple input fields into one output field
 
 You can derive one output parameter by combining two or more input parameters. In this example, the value for the `fullName` output parameter is a combination the values for the `firstName` and `lastName` input parameters.  You can map them as shown below:
 
 ![Aggregate multiple input parameter](../assets/img/tutorials/data-mapper/aggregate-multiple-input-fields.gif){.cInlineImage-threeQuarters}
    
 !!! info
-    By default, the Web Editor combines the two input parameters with a plus (**+**) operator. If you want to use a different operator or method to integrate two fields, click on the code icon edit the expression via the Statement Editor.<br/><br/>![Change operator](../assets/img/tutorials/data-mapper/change-operator.gif){.cInlineImage-threeQuarters}
+    By default, the Web Editor combines the two input parameters with a plus (**+**) operator. If you want to use a different operator or method to integrate two fields, click on the code icon to edit the expression via the Statement Editor.<br/><br/>![Change operator](../assets/img/tutorials/data-mapper/change-operator.gif){.cInlineImage-threeQuarters}
 
 #### Map the arrays
 
@@ -166,7 +166,7 @@ In the example in this tutorial, you need to map the `course` array under **cour
 
     ![Map arrays](../assets/img/tutorials/data-mapper/map-arrays.gif){.cInlineImage-threeQuarters}
 
-    The mapping appears in red because the types of the two record you selected are incompatible. Let's move on to the next step to fix it.
+    The mapping appears in red because the types of the two records you selected are incompatible. Let's move on to the next step to fix it.
 
 2. To convert the mapping to a query, click the icon for code action and then click **Convert to Query** as shown below:
 
