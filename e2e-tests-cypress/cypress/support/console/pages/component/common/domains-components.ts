@@ -14,67 +14,73 @@
 import { Utils } from "../../../utils";
 
 export class DomainsComponents {
-    static keyName = Utils.generateKeyName("key");
+  static keyName = Utils.generateKeyName("key");
 
-    static navigateToDomainsSettings() {
-        cy.get('[data-cy="/domains"]').click();
-    }
+  static navigateToDomainsSettings() {
+    cy.get('[data-cy="/domains"]').click();
+  }
 
-    static navigateToDevPortalCustomDomain() {
-        cy.get('[data-cy="/domains/devportal"]').click();
-    }
+  static navigateToDevPortalCustomDomain() {
+    cy.get('[data-cy="/domains/devportal"]').click();
+  }
 
-    static deleteDevportalDomainIfExists(domainName: string) {
-        cy.get('[data-cyid="devportal-custom-domain-search-field"]').trigger("mouseover");
-        cy.get('[data-cyid="search-app"]').clear().type(domainName);
-        cy.wait(2000);
-        cy.get("td").then(($domain) => {
-            if (!$domain.text().includes("No records to display")) {
-                cy.contains("td", "Managed by Choreo").should("be.visible");
-                this.deleteSelectedDomain(domainName);
-            }
-        });
-    }
-
-    private static deleteSelectedDomain(domainName: string) {
-        cy.get('[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]').dblclick();
-        cy.contains('Delete').click({ force: true });
-        cy.log("Deleting the created Domain");
-        cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
-        cy.contains("td", domainName).should("not.exist");
-        cy.log("Domain deleted successfully");
-    }
-
-    static deleteCreatedCustomDomain(domainName: string) {
-        cy.get('[data-cyid="devportal-custom-domain-search-field"]').trigger("mouseover");
-        cy.get('[data-cyid="search-app"]').clear().type(domainName);
-        cy.contains("td", domainName).should("be.visible");
+  static deleteDevportalDomainIfExists(domainName: string) {
+    cy.get('[data-cyid="devportal-custom-domain-search-field"]').trigger(
+      "mouseover"
+    );
+    cy.get('[data-cyid="search-app"]').clear().type(domainName);
+    cy.wait(2000);
+    cy.get("td").then(($domain) => {
+      if (!$domain.text().includes("No records to display")) {
+        cy.contains("td", "Managed by Choreo").should("be.visible");
         this.deleteSelectedDomain(domainName);
-    }
+      }
+    });
+  }
 
-    static createDevportalDomain(domainName: string) {
-        cy.get('[data-cyid="btn-add-domain"]').click();
-        cy.contains("Create Custom Domain").should("be.visible");
-        cy.log("Creating a dev portal custom domain");
-        cy.get('[data-cyid="text-field-domain-name"]').type(domainName);
-        cy.get('[data-cyid="btn-verify-domain"]').click({ force: true });
-        cy.get('[data-cyid="btn-verify-domain"]').should("not.exist");
-        cy.get('[data-cyid="btn-next"]').should("exist");
-        cy.log("Verified the CNAME mapping availability");
-        cy.get('[data-cyid="btn-next"]').click({ force: true });
-        cy.contains("Select TLS Certificate Provider").should("be.visible");
-        cy.get('[data-cyid="lets-encrypt-certificate-tile"]').click();
-        cy.get('[data-cyid="btn-add"]').click({ force: true });
-        cy.get('[data-cyid="btn-add"]').should("not.exist");
-        cy.contains("td", domainName).should("be.visible");
-        cy.log("Created the custom domain successfully");
-    }
+  private static deleteSelectedDomain(domainName: string) {
+    cy.get(
+      '[class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"]'
+    ).dblclick();
+    cy.contains("Delete").click({ force: true });
+    cy.log("Deleting the created Domain");
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
+    cy.get('[data-cyid="search-app"]').should("be.visible");
+    cy.contains("td", domainName).should("not.exist");
+    cy.log("Domain deleted successfully");
+  }
 
-    static accessDevportalWithCustomDomain(domainName: string) {
-        cy.visit(domainName);
-        // cy.url().should('include', domainName);
-        // cy.get('[data-cyid="sign-in-with-github"]').should("be.visible");
-        // cy.get('[data-cyid="sign-in-with-google"]').should("be.visible");
-        // cy.get('[data-cyid="sign-in-with-microsoft"]').should("be.visible");
-    }
+  static deleteCreatedCustomDomain(domainName: string) {
+    cy.get('[data-cyid="devportal-custom-domain-search-field"]').trigger(
+      "mouseover"
+    );
+    cy.get('[data-cyid="search-app"]').clear().type(domainName);
+    cy.contains("td", domainName).should("be.visible");
+    this.deleteSelectedDomain(domainName);
+  }
+
+  static createDevportalDomain(domainName: string) {
+    cy.get('[data-cyid="btn-add-domain"]').click();
+    cy.contains("Create Custom Domain").should("be.visible");
+    cy.log("Creating a dev portal custom domain");
+    cy.get('[data-cyid="text-field-domain-name"]').type(domainName);
+    cy.get('[data-cyid="btn-verify-domain"]').click({ force: true });
+    cy.get('[data-cyid="btn-verify-domain"]').should("not.exist");
+    cy.get('[data-cyid="btn-next"]').should("exist");
+    cy.log("Verified the CNAME mapping availability");
+    cy.get('[data-cyid="btn-next"]').click({ force: true });
+    cy.contains("Select TLS Certificate Provider").should("be.visible");
+    cy.get('[data-cyid="lets-encrypt-certificate-tile"]').click();
+    cy.get('[data-cyid="btn-add"]').should("be.visible").click({ force: true });
+    cy.contains("td", domainName).should("be.visible");
+    cy.log("Created the custom domain successfully");
+  }
+
+  static accessDevportalWithCustomDomain(domainName: string) {
+    cy.visit(domainName);
+    // cy.url().should('include', domainName);
+    // cy.get('[data-cyid="sign-in-with-github"]').should("be.visible");
+    // cy.get('[data-cyid="sign-in-with-google"]').should("be.visible");
+    // cy.get('[data-cyid="sign-in-with-microsoft"]').should("be.visible");
+  }
 }

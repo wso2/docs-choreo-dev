@@ -34,141 +34,105 @@ import { ComponentListingPage } from "../../support/console/pages/component/comp
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 
 describe("Create and deploy a component to test developer portal with custom domain", () => {
+  before(() => {
+    ConsoleLoginPage.login();
+  });
 
-    before(() => {
-        ConsoleLoginPage.login();
-    });
+  it("Create and deploy a component", () => {
+    const API_Name = Utils.generateComponentName("oas");
+    cy.task("setAPIName", API_Name);
+    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
+  });
 
-    it("Create and deploy a component", () => {
-        const API_Name = Utils.generateComponentName("oas");
-        cy.task('setAPIName', API_Name);
-        DevPortalHelper.createDeployHttpProxyComponent(API_Name);
-    });
+  it("Add a developer portal custom domain", () => {
+    ChoreoHomePage.navigateToSettings();
+    DomainsComponents.navigateToDomainsSettings();
+    DomainsComponents.navigateToDevPortalCustomDomain();
+    DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
+    DomainsComponents.createDevportalDomain(CUSTOM_DOMAIN);
+  });
 
-    after(() => {
-        ChoreoHomePage.logout();
-    });
-});
-
-describe("Add developer portal custom domain", () => {
-
-    before(() => {
-        ConsoleLoginPage.login();
-        ChoreoHomePage.navigateToSettings();
-        DomainsComponents.navigateToDomainsSettings();
-        DomainsComponents.navigateToDevPortalCustomDomain();
-        DomainsComponents.deleteDevportalDomainIfExists(CUSTOM_DOMAIN);
-    });
-
-    after(() => {
-        ChoreoHomePage.logout();
-    });
-
-    it("Add a developer portal custom domain", () => {
-        DomainsComponents.createDevportalDomain(CUSTOM_DOMAIN);
-    });
-});
-
-describe("Visit developer portal with custom domain", () => {
-    it("Access developer portal with custom domain", () => {
-        DomainsComponents.accessDevportalWithCustomDomain(CUSTOM_DOMAIN);
-    });
+  after(() => {
+    ChoreoHomePage.logout();
+  });
 });
 
 describe("Login and test developer portal with custom domain", () => {
-    const OPERATION_USERS = "intensity";
-    const appName = generateAppName("-e2etest");
+  const OPERATION_USERS = "intensity";
+  const appName = generateAppName("-e2etest");
 
-    before(() => {
-        DevportalLoginPage.loginToDevportal(CUSTOM_DOMAIN);
+  before(() => {
+    DevportalLoginPage.loginToDevportal(CUSTOM_DOMAIN);
+  });
+
+  after(() => {
+    DevPortalHomePage.logout();
+  });
+
+  it("Test in devportal", () => {
+    cy.task("getAPIName").then((an) => {
+      let API_Name = an as string;
+      DevPortalHomePage.navigateToApisPage();
+      Apis.searchApiAndSelect(API_Name);
+      DevPortalHomePage.navigateToPerApiView(API_Name);
+      Apis.verifyAPIname().should("eq", API_Name);
     });
+  });
 
-    after(() => {
-        DevPortalHomePage.logout();
+  it("Add and delete comment for the API", () => {
+    ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
+    ApiOverview.deleteComment();
+  });
+
+  it("Add and modify ratings of the API", () => {
+    ApiOverview.openRatings();
+    ApiOverview.addRatings();
+    ApiOverview.validateRating();
+  });
+
+  it("Generate credentials and tryout the API", () => {
+    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.generateCredentials();
+    TryOut.navigateToTryOutMenu();
+    TryOut.GenerateAccessToken();
+    TryOut.SelectResource("GET", OPERATION_USERS);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.GetResponse();
+  });
+
+  it("Verify the downloaded SDK file", () => {
+    cy.task("getAPIName").then((API_Name) => {
+      const sdkFile = API_Name + "_1.0.0_android.zip";
+      APISdk.downloadSDK(sdkFile);
     });
+  });
 
-    it("Test in devportal", () => {
-        cy.task('getAPIName').then(an => {
-            let API_Name = an as string
-            DevPortalHomePage.navigateToApisPage();
-            Apis.searchApiAndSelect(API_Name);
-            DevPortalHomePage.navigateToPerApiView(API_Name);
-            Apis.verifyAPIname().should("eq", API_Name);
-        })
-
+  it("Create a consumer application and tryout an API", () => {
+    cy.task("getAPIName").then((an) => {
+      let API_Name = an as string;
+      DevPortalHomePage.navigateToAppsPage();
+      AppsList.createAnApplication(appName);
+      ProductionKeys.generateTestToken();
+      Subscriptions.addSubscriptionToApplication(API_Name);
+      Subscriptions.validateResubscribingApi(API_Name);
     });
+  });
 
-    it("Add and delete comment for the API", () => {
-        ApiOverview.addCommentToApi("Test comment from Cypress Test Runner");
-        ApiOverview.deleteComment();
-    });
-
-    it("Add and modify ratings of the API", () => {
-        ApiOverview.openRatings();
-        ApiOverview.addRatings();
-        ApiOverview.validateRating();
-    });
-
-    it("Generate credentials and tryout the API", () => {
-        ApiCredentials.navigateCredentialsTab();
-        ApiCredentials.generateCredentials();
-        TryOut.navigateToTryOutMenu();
-        TryOut.GenerateAccessToken();
-        TryOut.SelectResource("GET", OPERATION_USERS);
-        TryOut.TryoutAPI();
-        TryOut.ExecuteResourceFunction();
-        TryOut.GetResponse();
-    });
-
-    it("Verify the downloaded SDK file", () => {
-        cy.task('getAPIName').then(API_Name => {
-            const sdkFile = API_Name + "_1.0.0_android.zip";
-            APISdk.downloadSDK(sdkFile);
-        })
-
-    });
-
-    it("Create a consumer application and tryout an API", () => {
-        cy.task('getAPIName').then(an => {
-            let API_Name = an as string
-            DevPortalHomePage.navigateToAppsPage();
-            AppsList.createAnApplication(appName);
-            ProductionKeys.generateTestToken();
-            Subscriptions.addSubscriptionToApplication(API_Name);
-            Subscriptions.validateResubscribingApi(API_Name);
-        })
-
-    });
-
-    it("Delete a consumer application", () => {
-        TryOut.DeleteApplication(appName);
-    });
+  it("Delete a consumer application", () => {
+    TryOut.DeleteApplication(appName);
+  });
 });
 
 describe("Delete added custom domain", () => {
-    before(() => {
-        ConsoleLoginPage.login();
-        ChoreoHomePage.navigateToSettings();
-        DomainsComponents.navigateToDomainsSettings();
-        DomainsComponents.navigateToDevPortalCustomDomain();
-    });
+  before(() => {
+    ConsoleLoginPage.login();
+    ChoreoHomePage.navigateToSettings();
+    DomainsComponents.navigateToDomainsSettings();
+    DomainsComponents.navigateToDevPortalCustomDomain();
+  });
 
-    after(() => {
-
-        cy.task('getAPIName').then(an => {
-            let API_Name = an as string
-            ChoreoHomePage.logout();
-            ChoreoHomePage.navigateToComponents()
-            ComponentListingPage.deleteComponent(API_Name)
-        })
-    });
-
-    it("Delete added custom domain", () => {
-        DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
-    });
+  it("Delete added custom domain", () => {
+    DomainsComponents.deleteCreatedCustomDomain(CUSTOM_DOMAIN);
+  });
 });
-
-
-
-
-
