@@ -16,7 +16,7 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { OrganizationComponent } from "../../../support/console/pages/component/common/organization-components";
 
 /// <reference types="cypress" />
-let timestamp = Math.floor(+new Date() / 1000).toString();
+let timestamp = Math.floor((+new Date() - 100000) / 1000).toString();
 const INVITATION_EMAIL = Cypress.env("invitationUserEmail");
 
 describe("Invite members", () => {
@@ -67,7 +67,7 @@ describe("Delete members", () => {
 
   it("Delete a member", () => {
     ChoreoHomePage.navigateToSettings();
-    OrganizationComponent.selectPendingInvitation();
+    OrganizationComponent.navigateToMembers();
     OrganizationComponent.verifyEmailIsDisplayed(INVITATION_EMAIL);
     OrganizationComponent.deleteMember(INVITATION_EMAIL);
   });

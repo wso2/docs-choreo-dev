@@ -54,10 +54,9 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
  * Implements Orgs API calls and their response validations.
  */
 @Slf4j
-public class Orgs {
+public class Orgs extends ControlPlaneAPI{
 
-    private static final String CHOREO_EP = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
-    private static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+
 
     public static Response addConfiguration(ChoreoComponent component, String envName, String accessToken, BalConfig... balconfigs) throws Exception {
         String componentId = component.getId();

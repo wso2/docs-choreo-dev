@@ -22,7 +22,7 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.config.Constant.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -33,8 +33,6 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     private String accessToken;
     private ChoreoComponent restApiComponent;
 
-    @Autowired
-    private HttpClient choreoTestClient;
 
     @BeforeClass
     public void setup_DeployIT() throws Exception {
@@ -45,7 +43,7 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void addDeploymentConfiguration_DeployIT() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "dev");
+        Orgs.addConfiguration( restApiComponent, "dev",accessToken);
     }
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_DeployIT"})

@@ -43,7 +43,7 @@ import static com.wso2.choreo.integration.config.Constant.MAX_API_REVISIONS_LIMI
 /**
  * Create revision to exceed API revision limit reached with deployments
  */
-public class CreateMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSupport {
+public class TestMaxAPIRevisionsUsingDeployments extends TestNGCitrusSpringSupport {
 
     private String accessToken;
     private ChoreoComponent component;
