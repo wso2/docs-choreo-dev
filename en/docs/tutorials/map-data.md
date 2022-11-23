@@ -1,24 +1,23 @@
 # Map data
 
-Choreo components often need to convert input data to produce an output to present the same data in a different format, structure, or both. Such a conversion is called a data-mapping.
+The data mapping feature of Choreo allows you to convert and transform one data format to another, change the structure of the data, or perform both.
+You can configure a data mapping for a component when you develop it in the Web Editor.
 
-Choreo allows you to map data with ease in the Web Editor.
-
-This guide walks you through a simple use case where you will input student data in a specific structure and present it in another.
+This guide walks you through a simple use case where you will input student data in a specific structure and convert and transform the student data to a different format.
 
 Let's Start!
 
 ### Step 1: Add a REST API
 
-First, let's add a new REST API for which you can define a data mapping. To do this, follow the steps given below:
+First, let's add a new REST API. To do this, follow the steps given below:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. On the **Home** page, scroll to the **Get started with a template** section. On the **Echo Service** template, click **Get Started**.
+2. On the **Home** page, scroll to the **Create from a sample** section. On the **Echo Service** template, click **Get Started**.
 
     The REST API created via the template opens on a separate page.</br></br>3. Click **Edit Code**.
 
-3. To clean up the implementation, remove the default resource of the REST API by clicking its **Delete** icon.
+3. Let's start fresh by cleaning up the default implementation to implement our data mapping. To clean up, remove the default resource of the REST API by clicking its Delete icon.
 
     ![Delete resource](../assets/img/tutorials/data-mapper/delete-resource.png){.cInlineImage-half}
 
@@ -118,7 +117,7 @@ To do this, follow the steps given below:
 
 In this step, you will map parameters in the input JSON with parameters in the output JSON. You will learn how to do basic mappings, troubleshoot mapping errors, and map arrays.
 
-#### Basic Mapping
+#### Basic mapping
 
 To map the person ID with the student ID, select **id** under **personDetails**, and then select **id** under **studentDetails** as shown below:
 
@@ -132,7 +131,7 @@ If any error occurs when you map parameters, you can fix them in the Statement E
 
     ![Match parameters with different data types](../assets/img/tutorials/data-mapper/match-parameters-with-different-data-types.gif){.cInlineImage-threeQuarters}
 
-    The connection appears in red to indicate an error in the data mapping.
+    The connection appears in red to indicate an error in the data mapping (because the data type of the `age` parameter is different in the two records).
 
 2. Click on the connection, move the cursor over the warning icon to view the error, and then click **Fix by editing expression**.
 
@@ -167,7 +166,7 @@ In the example in this tutorial, you need to map the `course` array under **cour
 
     ![Map arrays](../assets/img/tutorials/data-mapper/map-arrays.gif){.cInlineImage-threeQuarters}
 
-    The mapping appears in red because the types of the two record you selected are incompatible.
+    The mapping appears in red because the types of the two record you selected are incompatible. Let's move on to the next step to fix it.
 
 2. To convert the mapping to a query, click the icon for code action and then click **Convert to Query** as shown below:
 
