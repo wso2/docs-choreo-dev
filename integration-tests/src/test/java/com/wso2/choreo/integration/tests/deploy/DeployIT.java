@@ -15,6 +15,7 @@ package com.wso2.choreo.integration.tests.deploy;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.client.HttpsEndpointComponent;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
@@ -23,6 +24,10 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.config.Constant.Environment;
 
+import com.wso2.choreo.integration.models.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -33,6 +38,8 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     private String accessToken;
     private ChoreoComponent restApiComponent;
 
+    @Autowired
+    private HttpClient choreoTestClient;
 
     @BeforeClass
     public void setup_DeployIT() throws Exception {
@@ -43,25 +50,25 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void addDeploymentConfiguration_DeployIT() throws Exception {
-        Orgs.addConfiguration( restApiComponent, "dev",accessToken);
+        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "dev");
     }
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_DeployIT"})
     @CitrusTest
     public void deploy_DeployIT() throws Exception {
-        GraphQL.deployComponent(restApiComponent,accessToken);
+        GraphQL.deployComponent(restApiComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"deploy_DeployIT"})
     @CitrusTest
     public void deploymentStatusByVersion_DeployIT() throws Exception {
-        GraphQL.deploymentStatusByVersion(restApiComponent,accessToken);
+        GraphQL.deploymentStatusByVersion(restApiComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"deploymentStatusByVersion_DeployIT"})
     @CitrusTest
     public void componentDevDeploymentStatus_DeployIT() throws Exception {
-        GraphQL.componentDeployment( restApiComponent, "dev",accessToken);
+        GraphQL.componentDeployment(restApiComponent, "dev", accessToken);
     }
 
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_DeployIT"})
@@ -73,19 +80,19 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"apiDevInvocation_DeployIT"})
     @CitrusTest
     public void addPromoteConfiguration_DeployIT() throws Exception {
-        Orgs.addConfiguration(restApiComponent, "prod", accessToken);
+        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "prod");
     }
 
     @Test(dependsOnMethods = {"addPromoteConfiguration_DeployIT"})
     @CitrusTest
     public void promote_DeployIT() throws Exception {
-        GraphQL.promoteComponent( restApiComponent,accessToken);
+        GraphQL.promoteComponent(restApiComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"promote_DeployIT"})
     @CitrusTest
     public void componentProdDeploymentStatus_DeployIT() throws Exception {
-        GraphQL.componentDeployment( restApiComponent, "prod",accessToken);
+        GraphQL.componentDeployment(restApiComponent, "prod", accessToken);
     }
 
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_DeployIT"})
