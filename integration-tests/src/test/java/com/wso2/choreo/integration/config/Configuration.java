@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class Configuration {
     }
 
     private static void readTestConfigs(List<Map<String, String>> yamlConfigCollection) {
-        for (ConfigDefinition config : ConfigDefinition.values()) {
+        for (ConfigDefinition config : getConfigDefinitions()) {
             final String configName = config.name();
 
             String envValue = System.getenv(configName);
@@ -120,5 +121,26 @@ public class Configuration {
         }
 
         return Optional.empty();
+    }
+
+    private static List<ConfigDefinition> getConfigDefinitions() {
+        String token = System.getProperty("Token");
+
+        if (!StringUtils.isEmpty(token)) {
+            String[] configsToIgnore = { "TEST_USER_EMAIL", "TEST_USER_PASSWORD", "STS_CLIENT_ID", "STS_CLIENT_SECRET",
+                    "ASGARDEO_CLIENT_ID", "ASGARDEO_CLIENT_SECRET", "CP_APP_CLIENT_ID", "CP_APP_CLIENT_SECRET"};
+
+            List<ConfigDefinition> configSubset = new ArrayList<>();
+
+            for (ConfigDefinition config : ConfigDefinition.values()) {
+                if (Arrays.stream(configsToIgnore).noneMatch(config.name()::equals)) {
+                    configSubset.add(config);
+                }
+            }
+
+            return configSubset;
+        }
+
+        return List.of(ConfigDefinition.values());
     }
 }

@@ -15,6 +15,8 @@ package com.wso2.choreo.integration.common;
 
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.Constant;
+import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.BeforeSuite;
 
 /**
@@ -28,14 +30,11 @@ public class TestContext {
 
     private static TokenHandler testUserTokenHandler;
 
-    private static TokenHandler anomalyDetectionUserTokenHandler;
-
     @BeforeSuite
     public void setup() throws Exception {
         Configuration.loadConfigs();
         setTestOrg();
         setTestUserTokenHandler();
-        setAnomalyDetectionUserTokenHandler();
         DataCleaner.removeOldTestData(testOrg);
     }
 
@@ -57,35 +56,20 @@ public class TestContext {
 
     public static synchronized void setTestUserTokenHandler() {
         if (testUserTokenHandler == null) {
-            testUserTokenHandler = new TokenHandler.Builder(
-                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
-                    Configuration.getConfig(ConfigDefinition.TEST_USER_EMAIL),
-                    Configuration.getConfig(ConfigDefinition.TEST_USER_PASSWORD))
-                    .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
-                    .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
-                    .stsClientId(Configuration.getConfig(ConfigDefinition.STS_CLIENT_ID))
-                    .stsClientSecret(Configuration.getConfig(ConfigDefinition.STS_CLIENT_SECRET))
-                    .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
-                    .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
-        }
-    }
+            String token = System.getProperty("Token");
 
-    public static TokenHandler getAnomalyDetectionUserTokenHandler() {
-        return anomalyDetectionUserTokenHandler;
-    }
-
-    public static synchronized void setAnomalyDetectionUserTokenHandler() {
-        if (anomalyDetectionUserTokenHandler == null) {
-            anomalyDetectionUserTokenHandler = new TokenHandler.Builder(
-                    Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE),
-                    Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_USER_EMAIL),
-                    Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_USER_PASSWORD))
-                    .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
-                    .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
-                    .stsClientId(Configuration.getConfig(ConfigDefinition.STS_CLIENT_ID))
-                    .stsClientSecret(Configuration.getConfig(ConfigDefinition.STS_CLIENT_SECRET))
-                    .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
-                    .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+            if (!StringUtils.isEmpty(token)) {
+                testUserTokenHandler = new TokenHandler(token);
+            } else {
+                testUserTokenHandler = new TokenHandler.Builder(
+                        Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                        Configuration.getConfig(ConfigDefinition.TEST_USER_EMAIL),
+                        Configuration.getConfig(ConfigDefinition.TEST_USER_PASSWORD))
+                        .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+                        .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+                        .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+                        .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+            }
         }
     }
 }

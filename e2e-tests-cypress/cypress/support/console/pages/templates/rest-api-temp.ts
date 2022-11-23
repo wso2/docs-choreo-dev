@@ -11,7 +11,6 @@
  * associated services.
  */
 
-
 export class RestAPITemplate {
   static selectHttpAPITemplate() {
     cy.get('[data-testid="project-template-list-httpApi"]').click();
@@ -20,7 +19,6 @@ export class RestAPITemplate {
   static createApiFromScratch(
     componentName: string,
     description: string,
-    isEPLogin: boolean = false,
     accessModes: string = "external"
   ) {
     cy.get('[data-cyid="btn-api-from-scratch"]').click();
