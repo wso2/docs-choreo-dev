@@ -265,6 +265,7 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_URL=http://dp-rudder:80
+      - SUBSCRIPTION_SERVICE_URL=http://subscriptions:9090
   - name: cm-dp-rudder
     behavior: create
     literals:
