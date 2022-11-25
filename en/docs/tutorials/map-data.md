@@ -15,9 +15,11 @@ First, let's add a new REST API. To do this, follow the steps given below:
 
 2. On the **Home** page, scroll to the **Create from a sample** section. On the **Echo Service** template, click **Get Started**.
 
-    The REST API created via the template opens on a separate page.</br></br>3. Click **Edit Code**.
+    The REST API created via the template opens on a separate page.</br></br>
+    
+3. Click **Edit Code**.
 
-3. Let's start fresh by cleaning up the default implementation to implement our data mapping. To clean up, remove the default resource of the REST API by clicking its Delete icon.
+4. Let's start fresh by cleaning up the default implementation to implement our data mapping. To clean up, remove the default resource of the REST API by clicking its Delete icon.
 
     ![Delete resource](../assets/img/tutorials/data-mapper/delete-resource.png){.cInlineImage-half}
 
