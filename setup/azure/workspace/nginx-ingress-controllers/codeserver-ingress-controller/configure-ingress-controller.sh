@@ -11,8 +11,8 @@ kubectl label namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" purp
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" linkerd.io/inject=enabled
 #kubectl annotate namespace "${WORKSPACE_INGRESS_NAMESPACE}" config.linkerd.io/skip-inbound-ports=443
 
-helm repo add nginx-stable https://helm.nginx.com/stable
-helm repo update
+helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
+helm pull oci://choreocontrolplane.azurecr.io/helm/nginx-ingress --version v0.14.0
 
 echo "--- Installing Workspace Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
@@ -43,10 +43,10 @@ echo "--- Creating Zone-Sync ConfigMap..."
 
 kubectl create configmap zone-sync-configmap --from-file=$zone_sync_path -n "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress"
 
-helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-stable/nginx-ingress \
-  --version 0.11.3 \
+helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-ingress-0.14.0.tgz \
+  --version 0.14.0 \
   --namespace "${WORKSPACE_INGRESS_NAMESPACE}-nginx-plus-ingress" \
-  --set controller.image.repository="choreocontrolplane.azurecr.io/nginx-plus-ingress-openid-connect" \
+  --set controller.image.repository="choreocontrolplane.azurecr.io/nginx-ic/nginx-plus-ingress" \
   --set controller.replicaCount=2 \
   --set controller.image.tag="2" \
   --set controller.nginxplus=true \

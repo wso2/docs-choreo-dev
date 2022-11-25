@@ -101,7 +101,7 @@ spec:
       serviceAccount: buoyant-cloud-agent
       containers:
         - name: buoyant-cloud-agent
-          image: ghcr.io/buoyantio/linkerd-buoyant:v0.7.0
+          image: choreocontrolplane.azurecr.io/buoyantio/linkerd-buoyant:v0.7.0
           args:
             - "-grpc-addr=api.buoyant.cloud:443"
             - "-log-level=info"
@@ -492,7 +492,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: buoyant-cloud-metrics
-          image: grafana/agent:v0.21.2
+          image: choreocontrolplane.azurecr.io/grafana/agent:v0.21.2
           args:
             - -config.file=/buoyant-cloud-metrics/agent.yml
             - -config.expand-env
