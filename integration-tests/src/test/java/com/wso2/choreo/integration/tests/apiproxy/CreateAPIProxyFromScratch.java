@@ -18,6 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.apim.ApiManager;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
@@ -70,7 +71,7 @@ public class CreateAPIProxyFromScratch extends TestNGCitrusSpringSupport {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        ChoreoOrganization testOrg = new ChoreoOrganization(orgHandle, orgId, orgUuid);
+        ChoreoOrganization testOrg = ControlPlaneAPI.getOrg();
         ChoreoProject testProject = testOrg.createProject(accessToken);
         projectHandler = testProject.getHandler();
         projectId = testProject.getId();

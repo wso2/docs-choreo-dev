@@ -22,6 +22,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -86,7 +87,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
-        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
+        ChoreoOrganization org = ControlPlaneAPI.getOrg();
         ChoreoProject project = org.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent =

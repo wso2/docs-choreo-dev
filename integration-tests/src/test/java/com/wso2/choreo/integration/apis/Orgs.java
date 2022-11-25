@@ -74,7 +74,7 @@ public class Orgs extends ControlPlaneAPI{
                 commitHash(latestCommitSha).moduleName(component.getName()).operation(0).applyNow(false).build();
 
         String configurationsRequestBody = ObjectMapperUtil.mapObjectToString(promoteConfigurations).replace("required", "isRequired");
-
+log.info(configurationsRequestBody);
        return HttpClientUtil.httpPOST(configurationsUpdateRequestURI, configurationsRequestBody, accessToken, "");
 
     }

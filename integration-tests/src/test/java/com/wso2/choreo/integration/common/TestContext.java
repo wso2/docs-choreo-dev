@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -44,9 +45,7 @@ public class TestContext {
 
     public static synchronized void setTestOrg() {
         if (testOrg == null) {
-            testOrg = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
-                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID),
-                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+            testOrg = ControlPlaneAPI.getOrg();
         }
     }
 

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
@@ -97,7 +98,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
-        org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
+        org = ControlPlaneAPI.getOrg();
         ChoreoProject project = org.createProject(accessToken);
         projectId = project.getId();
     }

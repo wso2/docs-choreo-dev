@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
@@ -89,7 +90,7 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
                 githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
                 githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
-                ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
+                ChoreoOrganization org = ControlPlaneAPI.getOrg();
                 ChoreoProject project = org.createProject(accessToken);
                 projectId = project.getId();
         }
