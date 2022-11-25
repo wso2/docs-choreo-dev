@@ -127,8 +127,9 @@ export class ComponentObservePage {
         for (const v of newD) {
           const arr = v.split(",");
           if (prevY !== undefined && prevY !== arr[1]) {
-            finalX = arr[0];
-            finalY = arr[1];
+            //Added margins to the coordinates manually
+            finalX = arr[0]+95;
+            finalY = arr[1]-30;
             break;
           }
           prevY = arr[1];
