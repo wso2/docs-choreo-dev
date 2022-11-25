@@ -111,10 +111,13 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
+
   it("Disable security of a resource belonging to the API deployed in Dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
+    ComponentAPILifecycle.selectRevision(Environment.DEVELOPMENT)
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT, "Revision 3");
@@ -136,6 +139,15 @@ describe("Choreo APIM publisher scenarios", () => {
         })
     );
   });
+
+  it("Apply configs to prod", () => {
+    ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
+    ComponentAPILifecycle.selectRevision(Environment.PRODUCTION)
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.disableResourceSecurity("intensity");
+    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+  });
+
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
