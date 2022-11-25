@@ -4,8 +4,8 @@
 echo "--- Creating namespace actions-runner-system..."
 kubectl create namespace "${ENV}-actions-runner-system" --dry-run=client -o yaml | kubectl apply -f -
 
-helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
-helm repo update
+helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
+helm pull oci://choreocontrolplane.azurecr.io/helm/actions-runner-controller --version 0.20.2
 
 helm upgrade --install actions-runner-controller actions-runner-controller-0.20.2.tgz \
      --version 0.20.2 \
