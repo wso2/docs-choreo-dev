@@ -185,6 +185,23 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-edit-settings"]').click();
   }
 
+
+  static selectEnvironment(env:Environment){
+    cy.get('[data-cyid="environment-selector"]').click()
+    cy.get(`[data-value="${env}"]`).click()
+    cy.get('[data-cyid="environment-selector"]>div>div').invoke('text').then(text=>{
+      expect(text).equal(env)
+    })
+
+  }
+
+
+  static selectRevision(env:Environment){
+    cy.get('[data-cyid="selected-revision"]').click()
+    cy.get('[data-testid="revision-history-header"]').should('be.visible')
+    cy.get('[data-cyid*="revision-list-item"]').contains(env).click()
+  }
+
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).click()
     cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).click()

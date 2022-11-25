@@ -200,6 +200,12 @@ describe("Verify project creation functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
+
+    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
+    ComponentAPILifecycle.selectRevision(Environment.DEVELOPMENT)
+
+
+
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(
@@ -213,7 +219,10 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Apply configs to prod", () => {
+    ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
+    ComponentAPILifecycle.selectRevision(Environment.PRODUCTION)
     ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
   });
 
