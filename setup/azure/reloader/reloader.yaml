@@ -102,7 +102,7 @@ spec:
     spec:
       containers:
       - env:
-        image: "stakater/reloader:v0.0.58"
+        image: "choreocontrolplane.azurecr.io/stakater/reloader:v0.0.58"
         imagePullPolicy: IfNotPresent
         name: reloader-reloader
         resources:
