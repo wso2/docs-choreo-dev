@@ -46,13 +46,13 @@ The performance analyzer tool displays the estimated latency for each API invoca
 
 ### Analyze the performance of all execution paths
 
-By default, Performance Analyzer tool does not highlight the performance-critical path in the low-code diagram. Click on  **Reveal performance-critical path** on the top banner to highlight it in green. This opens a panel on the right side of the editor. In this panel, you can perform an in-depth performance analysis of the component. 
+By default, Performance Analyzer tool does not highlight the performance-critical path in the low-code diagram. Click on  **Reveal performance-critical path** on the top banner to highlight it in green. This opens a pane on the right side of the editor. In this pane, you can perform an in-depth performance analysis of the component. 
 
 ![In-depth performance analysis](../assets/img/references/performance-analysis/in-depth-analysis.png){.cInlineImage-full}
 
 #### Execution paths
 
-You can view all execution paths in the component in a tabular format listed on top of the **Performance Forecast** panel. The table shows the entries in ascending order of the time it takes to process a single request in each path.
+You can view all execution paths in the component in a tabular format listed on top of the **Performance Forecast** pane. The table shows the entries in ascending order of the time it takes to process a single request in each path.
 
 ![Execution paths](../assets/img/references/performance-analysis/execution-paths.png){.cInlineImage-half}
 
@@ -62,7 +62,7 @@ You can select any execution path from the table. When you select an execution p
 
 #### Performance forecast graphs
 
-The performance forecast graphs, throughput, and latency, for the selected execution path, are found below the execution path table in the **Performance Forecast** panel.
+The performance forecast graphs, throughput, and latency, for the selected execution path, are found below the execution path table in the **Performance Forecast** pane.
 
 ![Performance graphs](../assets/img/references/performance-analysis/performance-graphs.png){.cInlineImage-half}
 
