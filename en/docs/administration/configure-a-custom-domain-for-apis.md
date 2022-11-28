@@ -2,7 +2,7 @@
 
 A custom domain for your site is essential for effective branding, discoverability, and credibility. Choreo allows you to configure a custom domain for the APIs you deploy in it.
 
-To understand how to configure a custom domain for your APIs, follow the steps in the following sections:
+To understand how to configure a custom domain for your APIs, see the following sections:
 
 ## Prerequisite
 
