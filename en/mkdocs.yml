@@ -63,6 +63,7 @@ nav:
       - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
       - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
       - Configure Automatic Deployment: tutorials/configure-automatic-deployment.md
+      - Map Data: tutorials/map-data.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
   - Webhooks: webhook.md
@@ -85,6 +86,7 @@ nav:
       - Connect to an External Identity Provider: administration/connect-to-an-external-identity-provider.md  
       - Configure a Custom Domain for Developer Portal: administration/customize-developer-portal-domain.md
       - Configure Enterprise Login: administration/configure-enterprise-login.md
+      - Configure Developer Portal Self-Sign-Up: administration/configure-developer-portal-self-sign-up.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
@@ -92,6 +94,7 @@ nav:
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
+     - Manage Connectors: references/manage-connectors.md
      - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
      - Define Configurable Variables: references/define-configurable-variables.md
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
