@@ -57,12 +57,15 @@ nav:
   - Tutorials: 
       - Create Your First REST API: tutorials/create-your-first-rest-api.md
       - Expose an Existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md
+      - Create Your First Webhook: tutorials/create-your-first-webhook.md
       - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
       - Construct Statements: tutorials/construct-statements.md
       - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
+      - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
+      - Map Data: tutorials/map-data.md
   - REST APIs: rest-api.md
   - API Proxies: api-proxies.md
-  - Triggers: triggers.md
+  - Webhooks: webhook.md
   - Scheduled Tasks: scheduled-tasks.md
   - GraphQL APIs: graphql-api.md
   - Developer Portal:
@@ -70,6 +73,7 @@ nav:
       - Manage Application: developer-portal/manage-application.md
       - Manage Subscription: developer-portal/manage-subscription.md
       - Test API: developer-portal/test-api.md
+  - DevOps Portal: devops-portal.md
   - Marketplace: marketplace.md
   - Business Insights: 
       - View API Insights: insights/view-api-insights.md
@@ -77,8 +81,11 @@ nav:
       - Configure Alerts: insights/configure-alerts.md
       - Choreo Insights API: insights/choreo-insights-api.md
       - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
-  - Administration:   
-      - Connect to an External Identity Provider: manage/connect-to-an-external-identity-provider.md    
+  - Administration:
+      - Connect to an External Identity Provider: administration/connect-to-an-external-identity-provider.md  
+      - Configure a Custom Domain for Developer Portal: administration/customize-developer-portal-domain.md
+      - Configure Enterprise Login: administration/configure-enterprise-login.md
+      - Configure Developer Portal Self-Sign-Up: administration/configure-developer-portal-self-sign-up.md
   - Observability:
      - Observability Overview: observability/observability-overview.md
 #    - View Logs: observability/view-logs.md
@@ -86,8 +93,9 @@ nav:
   - References:
      - Performance Analysis: references/performance-analysis.md
      - Alerts: references/alerting.md
-     - Enterprise Login: references/enterprise-login.md
+     - Manage Connectors: references/manage-connectors.md
      - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
+     - Define Configurable Variables: references/define-configurable-variables.md
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
 
 # - Choreo DevOps: devops/overview.md
