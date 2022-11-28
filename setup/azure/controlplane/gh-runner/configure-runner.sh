@@ -8,7 +8,7 @@ helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAM
 helm pull oci://choreocontrolplane.azurecr.io/helm/actions-runner-controller --version 0.20.2
 
 helm upgrade --install actions-runner-controller actions-runner-controller-0.20.2.tgz \
-     --version 0.20.2 \
+    --version 0.20.2 \
     --namespace "${ENV}-actions-runner-system" \
     --set=authSecret.create=true \
     --set=authSecret.github_token="${GITHUB_TOKEN}" \
