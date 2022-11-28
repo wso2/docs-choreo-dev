@@ -32,7 +32,7 @@ To view the real-time analysis of the performance-critical path of your componen
 
 #### Overall performance of the performance-critical path
 
-On the low-code editor, you will see a bar with the summarized overall performance estimates for each resource function. By default, this banner displays the forecasted latency and throughput for a selected range of user count for the performance-critical path. The upper bound of the user count range is set based on the availability of historical data. Since the Performance Analyzer tool derives these metrics in real-time,  any changes to the component will update the metrics in real time. 
+On the low-code editor, you will see a bar with the summarized overall performance estimates for each resource function. By default, this banner displays the forecasted latency and throughput for a selected range of user count for the performance-critical path. The upper bound of the user count range is set based on the availability of historical data. Since the Performance Analyzer tool derives these metrics in real-time,  any changes to the component will update the metrics in real-time. 
 
 ![Real-time performance analysis of the critical path](../assets/img/references/performance-analysis/real-time-performance-analysis.png){.cInlineImage-threeQuarter}
 
@@ -40,7 +40,7 @@ By default, the Performance Analyzer tool does not highlight the performance-cri
 
 #### Latency estimates for individual API invocations in the performance-critical path
 
-The performance analyzer tool displays the estimated latency for each API invocation in the performance-critical path as a banner next to the API invocation in the low-code diagram, as shown below. The Performance Analyzer tool derives these estimates based on the user count range that you have selected.
+The performance analyzer tool displays the estimated latency for each API invocation in the performance-critical path as a banner next to the API invocation in the low-code diagram, as shown below. The Performance Analyzer tool derives these estimates based on the user count range that is indicated on the low-code editor, as a bar with the summarized overall performance estimates for each resource function.
 
 ![Latency estimates for API Invocations in the performce-critical path](../assets/img/references/performance-analysis/latency-estimates-api-invocation.png){.cInlineImage-threeQuarter}
 
@@ -52,7 +52,7 @@ By default, Performance Analyzer tool does not highlight the performance-critica
 
 #### Execution paths
 
-You can view all execution paths in the component in a tabular format listed on top of the **Performance Forecast** pane. The table shows the entries in ascending order of the time it takes to process a single request in each path.
+You can view all execution paths in the component in a tabular format listed on top of the **Performance Forecast** pane. The table shows the entries in descending order of the time it takes to process a single request in each path.
 
 ![Execution paths](../assets/img/references/performance-analysis/execution-paths.png){.cInlineImage-half}
 
@@ -62,11 +62,11 @@ You can select any execution path from the table. When you select an execution p
 
 #### Performance forecast graphs
 
-The performance forecast graphs, throughput, and latency, for the selected execution path, are found below the execution path table in the **Performance Forecast** pane.
+The performance forecast graphs for the selected execution path are below the execution path table in the **Performance Forecast** pane. These performance forecast graphs: the latency graph and the throughput graph, changes according to the number of users accessing the component simultaneously.
 
 ![Performance graphs](../assets/img/references/performance-analysis/performance-graphs.png){.cInlineImage-half}
 
-The throughput and latency graphs are based on the number of users accessing the component simultaneously. By analyzing these graphs carefully, you can gain a fair understanding of how well your component will scale with the increasing load.
+By analyzing these graphs carefully, you can gain a fair understanding of how well your component will scale with the increasing load.
 
 ## Assumptions
 
