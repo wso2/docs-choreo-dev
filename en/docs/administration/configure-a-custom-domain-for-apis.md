@@ -18,7 +18,7 @@ To configure a custom domain for your APIs, you must first register a custom dom
 
     To register the custom domain, you need to create a DNS record of the `CNAME` type via the domain registrar service, associating it with the Choreo gateway access domain (i.e., `customdns.e1-us-east-azure.choreoapis.dev`).
 
-4. Optionally, create TLS certificates and keys to enable TLS for the custom domain. For testing purposes, you can also use the `let's encrypt` option. This option allows Choreo to create and manage the certificates on your behalf.
+4. Optionally, create TLS certificates and keys to enable TLS for the custom domain. You can also use the `let's encrypt` option. This option allows Choreo to create and manage the certificates on your behalf.
 
 ## Configure a custom domain for your APIs
 
