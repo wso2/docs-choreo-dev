@@ -67,6 +67,11 @@ spec:
                 configMapKeyRef:
                   name: common-env-variables
                   key: BALLERINA_LOW_CODE_RESOURCES_VERSION
+            - name: REACT_APP_SAMPLE_BALLERINA_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-variables
+                  key: SAMPLE_BALLERINA_VERSION
           envFrom:
             - configMapRef:
                 name: env-console-next

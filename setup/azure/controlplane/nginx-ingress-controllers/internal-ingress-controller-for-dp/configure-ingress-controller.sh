@@ -16,11 +16,14 @@ kubectl annotate namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" config.
 
 kubectl apply -f ../../../netpol/"${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress-ns.yaml"
 
+helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
+helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
+
 echo "--- Installing Control Plane Internal Nginx Ingress using Helm 3..."
 # shellcheck disable=SC2140
-helm upgrade --install "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" ingress-nginx/ingress-nginx \
+helm upgrade --install "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
   --namespace "${INTERNAL_INGRESS_NAMESPACE}-nginx-ingress" \
-  --version 3.8.0 \
+  --version 4.2.1 \
   --set controller.replicaCount=2 \
   --set controller.minAvailable=1 \
   --set controller.autoscaling.enabled=true \

@@ -13,12 +13,13 @@ kubectl annotate namespace "${APIM_NAMESPACE}-nginx-ingress" config.linkerd.io/s
 
 kubectl apply -f ./netpol/"${APIM_NAMESPACE}-nginx-ingress-ns.yaml"
 
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
+helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
+helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
-helm upgrade --install "${APIM_NAMESPACE}" ingress-nginx/ingress-nginx \
+
+helm upgrade --install "${APIM_NAMESPACE}" ingress-nginx-4.2.1.tgz \
   --namespace "${APIM_NAMESPACE}-nginx-ingress" \
-  --version 3.8.0 \
+  --version 4.2.1 \
   --set controller.replicaCount=2 \
   --set controller.minAvailable=1 \
   --set controller.autoscaling.enabled=true \

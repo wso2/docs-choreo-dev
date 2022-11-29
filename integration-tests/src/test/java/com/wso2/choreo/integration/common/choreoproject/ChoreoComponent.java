@@ -669,6 +669,7 @@ public class ChoreoComponent {
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("orgUUID", organization.getOrgUUID());
+        queryParams.put("projectId", projectId);
         mustache.execute(writer, queryParams).flush();
         String graphQlQuery = writer.toString();
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {

@@ -17,13 +17,13 @@ kubectl create configmap "lua-log4j-migitaion-script-config-map" --from-file=../
 kubectl annotate namespace "${IDP_NAMESPACE}-nginx-ingress" linkerd.io/inject=enabled
 kubectl annotate namespace "${IDP_NAMESPACE}-nginx-ingress" config.linkerd.io/skip-inbound-ports=443
 
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
+helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
+helm pull oci://choreocontrolplane.azurecr.io/helm/ingress-nginx --version 4.2.1
 
 echo "--- Installing IDP Nginx Ingress using Helm 3..."
-helm upgrade --install "${IDP_NAMESPACE}-nginx-ingress" ingress-nginx/ingress-nginx \
+helm upgrade --install "${IDP_NAMESPACE}-nginx-ingress" ingress-nginx-4.2.1.tgz \
   --namespace "${IDP_NAMESPACE}-nginx-ingress" \
-  --version 3.8.0 \
+  --version 4.2.1 \
   --set controller.replicaCount=2 \
   --set controller.minAvailable=1 \
   --set controller.autoscaling.enabled=true \
