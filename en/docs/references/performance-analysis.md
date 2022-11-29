@@ -40,7 +40,7 @@ By default, the Performance Analyzer tool does not highlight the performance-cri
 
 #### Latency estimates for individual API invocations in the performance-critical path
 
-The OPerformance Analyzer tool displays the estimated latency for each API invocation in the performance-critical path as a banner next to the API invocation in the low-code diagram, as shown below. The Performance Analyzer tool derives these estimates based on the user count range that is indicated on the low-code editor, as a bar with the summarized overall performance estimates for each resource function.
+The Performance Analyzer tool displays the estimated latency for each API invocation in the performance-critical path as a banner next to the API invocation in the low-code diagram, as shown below. The Performance Analyzer tool derives these estimates based on the user count range that is indicated on the low-code editor, as a bar with the summarized overall performance estimates for each resource function.
 
 ![Latency estimates for API Invocations in the performce-critical path](../assets/img/references/performance-analysis/latency-estimates-api-invocation.png){.cInlineImage-threeQuarter}
 
