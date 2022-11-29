@@ -196,15 +196,11 @@ export class ComponentAPILifecycle {
   }
 
 
-  static selectRevision(env:Environment){
-    cy.get('[data-cyid="selected-revision"]').click()
-    cy.get('[data-testid="revision-history-header"]').should('be.visible')
-    cy.get('[data-cyid*="revision-list-item"]').contains(env).click()
-  }
+ 
 
   static disableResourceSecurity(resource: string) {
-    cy.get(`[id="panel-/${resource}/get-header"]`).click()
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).click()
+    cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click()
+    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).scrollIntoView().click()
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {

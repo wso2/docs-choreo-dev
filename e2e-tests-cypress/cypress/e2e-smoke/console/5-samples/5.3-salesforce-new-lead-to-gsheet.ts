@@ -90,12 +90,10 @@ describe("Create salesforce new lead to gsheet sample in Choreo", () => {
     it("Verify component deployment", () => {
         ComponentOverviewPage.navigateToDeploy();
         ComponentDeployPage.deployToDev();
-        ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
       });
     
       it("Verify component promote to prod", () => {
         ComponentDeployPage.promoteToProd();
-        ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
       });
 
   it("Verify test functionality of root resource in dev on swagger", () => {

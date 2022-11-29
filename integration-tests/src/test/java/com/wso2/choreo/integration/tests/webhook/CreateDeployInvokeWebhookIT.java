@@ -94,8 +94,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
             throws IOException, InterruptedException, ProjectCreationException,
             TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
         org = ControlPlaneAPI.getOrg();
@@ -170,7 +168,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhookIT() throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
-        Orgs.addConfiguration(choreoTestClient, this, testComponent, "dev", balConfigs);
+        Orgs.addConfiguration(testComponent,"dev",accessToken,balConfigs);
         GraphQL.deployComponent( testComponent,accessToken);
     }
 

@@ -15,9 +15,6 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
-import { ComponentTemplate } from "../../../support/console/pages/enum/component-template";
-import { Environment } from "../../../support/console/pages/enum/environment";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
@@ -80,12 +77,12 @@ describe("Verify webhook creation functionality", () => {
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeploy(CONFIG);
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
+   
   });
 
   it("Component promotion to prod", () => {
     ComponentDeployPage.promoteWebHookToProd(CONFIG);
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
+ 
   });
 
   it("Verify manage functionality", () => {
