@@ -52,7 +52,7 @@ For more information on how to use the **Observe** tab for root cause analysis, 
 
 ### Application error alert
 
-This alert is triggered when you use the **“log:printError()”** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via email so that you can troubleshoot them. The following is a sample of such a notification email. 
+This alert is triggered when you use the **`log:printError()`** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via email so that you can troubleshoot them. The following is a sample of such a notification email. 
 
 ![Application Error email](../assets/img/alerting/application-error-email.png){.cInlineImage-full}
 
