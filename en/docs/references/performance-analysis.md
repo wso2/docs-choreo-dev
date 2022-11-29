@@ -62,7 +62,7 @@ You can select any execution path from the table. When you select an execution p
 
 #### Performance forecast graphs
 
-The performance forecast graphs for the selected execution path are below the execution path table in the **Performance Forecast** pane. These performance forecast graphs: the latency graph and the throughput graph, changes according to the number of users accessing the component simultaneously.
+The performance forecast graphs: the latency graph and the throughput graph for the selected path of execution are below the **Execution Paths** table in the **Performance Forecast** pane. These performance forecast graphs forecast how the latency and throughput may vary based on the number of users simultaneously accessing the component.
 
 ![Performance graphs](../assets/img/references/performance-analysis/performance-graphs.png){.cInlineImage-half}
 
