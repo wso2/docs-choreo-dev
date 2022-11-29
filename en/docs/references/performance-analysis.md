@@ -28,11 +28,11 @@ To view the real-time analysis of the performance-critical path of your componen
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev). 
 2. Navigate to your component and click **Overview** from the left pane. 
-3. Click the **Edit Code** to access the Web Editor.
+3. Click **Edit Code** to access the Web Editor.
 
 #### Overall performance of the performance-critical path
 
-On the low-code editor, you will see a bar with the summarized overall performance estimates for each resource function. By default, this banner displays the forecasted latency and throughput for a selected range of user count for the performance-critical path. The upper bound of the user count range is set based on the availability of historical data. Since the Performance Analyzer tool derives these metrics in real-time,  any changes to the component will update the metrics in real-time. 
+On the low-code editor, you will see a bar with the summarized overall performance estimates for each resource function. By default, this banner displays the forecasted latency and throughput when the indicated user count range executes the performance-critical path. The upper bound of the user count range is set based on the availability of historical data. Since the Performance Analyzer tool derives these metrics in real-time,  any changes to the component will update the metrics in real-time. 
 
 ![Real-time performance analysis of the critical path](../assets/img/references/performance-analysis/real-time-performance-analysis.png){.cInlineImage-threeQuarter}
 
@@ -40,19 +40,19 @@ By default, the Performance Analyzer tool does not highlight the performance-cri
 
 #### Latency estimates for individual API invocations in the performance-critical path
 
-The performance analyzer tool displays the estimated latency for each API invocation in the performance-critical path as a banner next to the API invocation in the low-code diagram, as shown below. The Performance Analyzer tool derives these estimates based on the user count range that is indicated on the low-code editor, as a bar with the summarized overall performance estimates for each resource function.
+The OPerformance Analyzer tool displays the estimated latency for each API invocation in the performance-critical path as a banner next to the API invocation in the low-code diagram, as shown below. The Performance Analyzer tool derives these estimates based on the user count range that is indicated on the low-code editor, as a bar with the summarized overall performance estimates for each resource function.
 
 ![Latency estimates for API Invocations in the performce-critical path](../assets/img/references/performance-analysis/latency-estimates-api-invocation.png){.cInlineImage-threeQuarter}
 
 ### Analyze the performance of all execution paths
 
-By default, Performance Analyzer tool does not highlight the performance-critical path in the low-code diagram. Click on  **Reveal performance-critical path** on the top banner to highlight it in green. This opens a pane on the right side of the editor. In this pane, you can perform an in-depth performance analysis of the component. 
+By default, the Performance Analyzer tool does not highlight the performance-critical path in the low-code diagram. Click **Reveal performance-critical path** on the top banner to highlight it in green. A opens a pane opens on the right side of the editor. You can perform an in-depth performance analysis of the component in this pane. 
 
 ![In-depth performance analysis](../assets/img/references/performance-analysis/in-depth-analysis.png){.cInlineImage-full}
 
 #### Execution paths
 
-You can view all execution paths in the component in a tabular format listed on top of the **Performance Forecast** pane. The table shows the entries in descending order of the time it takes to process a single request in each path.
+You can view all execution paths in the component in a tabular format listed on top of the **Performance Forecast** pane. The table shows the entries in descending order based on the time it takes to process a single request in each path.
 
 ![Execution paths](../assets/img/references/performance-analysis/execution-paths.png){.cInlineImage-half}
 
