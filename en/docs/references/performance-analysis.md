@@ -46,7 +46,7 @@ The Performance Analyzer tool displays the estimated latency for each API invoca
 
 ### Analyze the performance of all execution paths
 
-By default, the Performance Analyzer tool does not highlight the performance-critical path in the low-code diagram. Click **Reveal performance-critical path** on the top banner to highlight it in green. A opens a pane opens on the right side of the editor. You can perform an in-depth performance analysis of the component in this pane. 
+By default, the Performance Analyzer tool does not highlight the performance-critical path in the low-code diagram. Click **Reveal performance-critical path** on the top banner to highlight it in green. A opens on the right-hand side of the editor. You can perform an in-depth performance analysis of the component in this pane. 
 
 ![In-depth performance analysis](../assets/img/references/performance-analysis/in-depth-analysis.png){.cInlineImage-full}
 
