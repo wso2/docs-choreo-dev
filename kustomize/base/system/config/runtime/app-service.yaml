@@ -427,3 +427,5 @@ balCentral:
 subscriptions:
   enable: ${IS_SUBSCRIPTIONS_ENABLED}
   freeStepQuota: ${FREE_STEP_QUOTA}
+groupRoleMappingConfig:
+  permission: choreo:role_manage
