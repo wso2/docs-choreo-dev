@@ -1,14 +1,14 @@
 # Manage Applications
 
-An application in Choreo is a logical representation of a physical application such as a mobile app, web app, device, etc. To consume an API in Choreo, you need to create an application that maps to your physical application and then subscribes to the required API over a usage policy plan which gives you a usage quota. A single application can have multiple subscriptions to APIs. Using the consumer key and consumer secret, you can generate an access token that you can use to invoke all the APIs subscribed to the same application.
+An application in Choreo is a logical representation of a physical application such as a mobile app, web app, device, etc. To consume an API in Choreo, you need to create an application that maps to your physical application and then subscribes to the required API over a usage policy plan that gives you a usage quota. A single application can have multiple subscriptions to APIs. Using the consumer key and consumer secret, you can generate an access token that you can use to invoke all the APIs subscribed to the same application.
 
 This section will walk you through the steps to create an application in Choreo.
 
 Let's get started!
 
-## Create an application
+## Step 1: Create an application
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo Console header. 
 
     ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
     
@@ -16,7 +16,7 @@ Let's get started!
 3. Enter the application name and select the usage policy. You can optionally also add the application description. Click **Create**.
 4. You are redirected to the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
 
-## Generate keys
+## Step 2: Generate keys
 
 Choreo provides an OAuth 2.0 bearer token-based authentication for API access. An API access token/key is a string that is used to authenticate the API access and is passed as an HTTP header of an API request. 
 
@@ -83,7 +83,9 @@ replace the `<application_consumer_key>` with the **Consumer Key** you copied at
 
 ### Access token for testing
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
+You can generate an access token for testing using the Choreo UI by following the steps below:
+
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo Console header. 
 2. Click **Applications**.
 3. Click **Production Keys** and click **OAuth 2.0 Tokens** on the left pane.
 4. Expand the **Advanced Configurations** section and review the options. 
