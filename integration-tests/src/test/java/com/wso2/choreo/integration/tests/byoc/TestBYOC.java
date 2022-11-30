@@ -32,7 +32,6 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     private static final String DOCKER_FILE_PATH = "byoc-test/Dockerfile";
     private static ChoreoComponent choreoComponent;
-    TestConfigs testConfigs;
     private String projectId;
     private String accessToken;
     private ChoreoOrganization org;
@@ -44,7 +43,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     public void setup_TestBYOC() throws IOException, ProjectCreationException, InterruptedException, TokenRetrievalException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         org = TestContext.getTestOrg();
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
@@ -63,7 +62,6 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentRetrieval_TestBYOC() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandle(), accessToken);
-        choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
     }
 

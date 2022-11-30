@@ -44,22 +44,5 @@ export class APIDeployment {
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
-  static verifyDevInvokeURL() {
-    // return Utils.getInvokeUrl(0);
-  }
-
-  static verifyStgeInvokeURL() {
-    if (Cypress.env("isPrivateOrg")) {
-      cy.wait(5000);
-      // return Utils.getInvokeUrl(1);
-    }
-    return cy.wrap("skip");
-  }
-
-  static verifyProdInvokeURL() {
-    if (Cypress.env("isPrivateOrg")) {
-      // return Utils.getInvokeUrl(2);
-    }
-    // return Utils.getInvokeUrl(1);
-  }
+  
 }

@@ -18,6 +18,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -56,31 +57,19 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
-        return new Object[][] {{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
+        return new Object[][]{{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
     }
 
     @BeforeClass
     public void beforeClass()
-            throws IOException, InterruptedException, ProjectCreationException, GetCommitHistoryException,
-            NoLatestCommitHashFoundException, AddConfigurationsException, NoLatestAppEnvIdFoundException,
-            GetDeploymentsStatusCheckException, ComponentCreationStatusCheckException, ComponentDeploymentException,
-            ComponentDeploymentStatusCheckException, ComponentCreationException, ComponentRetrieveException,
-            ApiLifecycleChangeException, ComponentCreationTimeoutException, ComponentDeploymentTimeoutException,
-            NoLatestApiVersionFoundException, ComponentDeploymentFailureException, TokenRetrievalException,
-            ComponentInvokeInformationCheckException, InvokeInformationNotFoundException,
-            APIKeyGenerationCheckException, ApiKeyNotFoundException, InvokeAPICheckException,
-            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            ObservabilityDataNotFoundException, EnvironmentDetailsCheckException, NamespaceNotFoundException,
-            ObservabilityDataCheckException, ObservabilityLogsNotFoundException, URISyntaxException,
-            ObservabilityLogsCheckException, ObservabilitySystemMetricsCheckException,
-            ObservabilitySystemMetricsNotFoundException {
+            throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        String orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
 
-        ChoreoOrganization org = ControlPlaneAPI.getOrg();
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
         restApiComponent = (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         restApiComponent.setProject(project);

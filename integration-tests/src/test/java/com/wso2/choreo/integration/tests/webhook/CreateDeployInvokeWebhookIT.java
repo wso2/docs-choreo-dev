@@ -72,7 +72,7 @@ import static org.junit.Assert.fail;
 public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static ChoreoComponent testComponent;
-    ChoreoOrganization org;
+
     private String orgUUID;
     private String projectId;
     private String repoName;
@@ -90,14 +90,10 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoProjectsTestClient;
 
     @BeforeClass
-    public void setup_CreateDeployInvokeWebhookIT()
-            throws IOException, InterruptedException, ProjectCreationException,
-            TokenRetrievalException {
+    public void setup_CreateDeployInvokeWebhookIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-
-        org = ControlPlaneAPI.getOrg();
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project  = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
@@ -160,7 +156,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentRetrieval_CreateDeployInvokeWebhookIT() throws IOException {
         testComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
-        testComponent.setOrganization(org);
         Assert.assertNotNull(testComponent);
     }
 
@@ -168,20 +163,20 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhookIT() throws Exception {
         BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
-        Orgs.addConfiguration(testComponent,"dev",accessToken,balConfigs);
-        GraphQL.deployComponent( testComponent,accessToken);
+        Orgs.addConfiguration(testComponent, "dev", accessToken, balConfigs);
+        GraphQL.deployComponent(testComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void deploymentStatusByVersion_CreateDeployInvokeWebhookIT() throws Exception {
-        GraphQL.deploymentStatusByVersion(testComponent,accessToken);
+        GraphQL.deploymentStatusByVersion(testComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"deploymentStatusByVersion_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void componentDeploymentStatus_CreateDeployInvokeWebhookIT() throws Exception {
-        devInvokeURL =   GraphQL.componentDeployment(testComponent, "dev", accessToken).getInvokeUrl();
+        devInvokeURL = GraphQL.componentDeployment(testComponent, "dev", accessToken).getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_CreateDeployInvokeWebhookIT"})

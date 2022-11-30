@@ -60,8 +60,6 @@ public class ChoreoOrganization {
         this.projectMap = new HashMap<>();
     }
 
-
-
     /**
      * Create a Choreo project in the Choreo organization
      *
@@ -71,20 +69,7 @@ public class ChoreoOrganization {
      * @throws InterruptedException     if sending request is interrupted
      * @throws ProjectCreationException if project creation fails
      */
-    public ChoreoProject createProject(String accessToken) throws
-            IOException, InterruptedException, ProjectCreationException {
-        String gqlQuery = getCreateProjectMutation(
-                Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())),
-                Constant.TEST_PROJECT_DESCRIPTION);
 
-        try {
-            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
-            JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
-            return gson.fromJson(projectJson.toString(), ChoreoProject.class);
-        } catch (GraphQLException e) {
-            throw new ProjectCreationException(e);
-        }
-    }
 
     Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
         loadProjects(accessToken);

@@ -1,0 +1,14 @@
+mutation{
+    createProject(
+            project: {
+                name: "{{name}}",
+                description: "{{description}}",
+                orgId: {{orgId}},
+                orgHandler: "{{orgHandler}}",
+                version: "1.0.0",
+            }
+    )
+        {
+        id, orgId, name, version, createdDate, handler,
+        }
+}

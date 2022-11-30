@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -66,13 +67,11 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_CreateTriggerIT()
-            throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+            throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
-        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        ChoreoOrganization org = ControlPlaneAPI.getOrg();
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 

@@ -51,9 +51,7 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
     accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
-    String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-    ChoreoOrganization org = ControlPlaneAPI.getOrg();
-    ChoreoProject project = org.createProject(accessToken);
+    ChoreoProject project = GraphQL.createProject(accessToken);
     projectId = project.getId();
   }
 

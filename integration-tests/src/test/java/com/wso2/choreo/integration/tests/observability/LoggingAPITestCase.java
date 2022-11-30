@@ -102,8 +102,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
      @BeforeClass
     public void setup_LoggingAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        org = ControlPlaneAPI.getOrg();
-        project = org.createProject(accessToken);
+        project = GraphQL.createProject(accessToken);
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         projectId = project.getId();
     }
@@ -154,7 +153,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_LoggingAPITestCase"})
     @CitrusTest
     public void addDeploymentConfiguration_LoggingAPITestCase() throws Exception {
-        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+     Response res =    Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+        Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
 
@@ -180,7 +180,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
     public void addPromoteConfiguration_LoggingAPITestCase() throws Exception {
-        Orgs.addConfiguration(choreoComponent, "prod", accessToken);
+       Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
+       Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"addPromoteConfiguration_LoggingAPITestCase"})

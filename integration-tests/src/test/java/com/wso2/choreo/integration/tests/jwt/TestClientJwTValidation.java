@@ -62,8 +62,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        org = TestContext.getTestOrg();
-        ChoreoProject project = org.createProject(accessToken);
+         ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
 
 
@@ -115,7 +114,6 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentRetrieval_TestClientJwTValidation() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
-        choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
     }
 

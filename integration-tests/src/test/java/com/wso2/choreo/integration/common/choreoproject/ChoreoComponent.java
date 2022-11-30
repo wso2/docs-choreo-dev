@@ -24,6 +24,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -85,7 +86,7 @@ public class ChoreoComponent {
     private String updatedAt;
     private String version;
     private ChoreoProject project;
-    private ChoreoOrganization organization;
+    private ChoreoOrganization organization = TestContext.getTestOrg();
 
 
     private  String handle;

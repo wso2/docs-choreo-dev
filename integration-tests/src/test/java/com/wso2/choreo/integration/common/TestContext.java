@@ -45,7 +45,9 @@ public class TestContext {
 
     public static synchronized void setTestOrg() {
         if (testOrg == null) {
-            testOrg = ControlPlaneAPI.getOrg();
+            testOrg = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
+                   Integer.parseInt( Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
+                    Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         }
     }
 
