@@ -162,7 +162,7 @@ spec:
           readinessProbe:
             httpGet:
               scheme: HTTPS
-              path: /healthz
+              path: /readyz
               port: 9745
             initialDelaySeconds: 8
             periodSeconds: 5
