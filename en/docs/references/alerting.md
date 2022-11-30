@@ -82,4 +82,6 @@ This alert is triggered when average latency exhibits a considerable upward shif
 
 Choreo alerts a user of this anomaly via email. This email includes details to identify the component and the resource function, anomaly time stamp, etc. The email has a link that takes a user to the components' latency graph in the observability view pane. A user can view the latency graph by clicking on the link **Check in Portal** in the email and thereby [perform an RCA](https://wso2.com/choreo/docs/observability/root-cause-analysis/) for the anomaly. 
 
-The anomaly detector issues two types of alerts. The anomaly detector issues an immediate alert at the time the anomaly is detected and an aggregated alert that is issued by aggregating all anomalies detected in a 15-minute window following the immediate alert.
+The anomaly detector issues two types of alerts:
+The immediate alert as as soon as the anomaly is detected
+The aggregated alert in which it aggregates all the anomalies detected in the last 15 minutes. The anomaly detecter sends this following the immediate alert.
