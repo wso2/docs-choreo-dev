@@ -18,9 +18,9 @@ Let's get started!
 
 ## Step 2: Generate keys
 
-Choreo provides an OAuth 2.0 bearer token-based authentication for API access. An API access token/key is a string that is used to authenticate the API access and is passed as an HTTP header of an API request. 
+Choreo provides an OAuth 2.0 bearer token-based authentication for API access. An API access token/key is a string that is passed as an HTTP header of an API request to authenticate the API access.
 
-Once you create an application in Choreo, you can generate the credentials for the application. You will receive a consumer key and consumer secret when you generate credentials. The consumer key becomes the application's unique identifier, similar to a user's username, and is used to authenticate the application or user. You can use the consumer key and consumer secret to generate an API access token by invoking the token endpoint. You can also revoke the access token by invoking the revoke endpoint. For testing purposes, you can generate a test token via the UI. However, we strongly recommend not to use the test token in your production environment.
+Once you create an application in Choreo, you can then generate the credentials for it. When you generate the credentials for the first time, Choreo gives you a consumer key and the consumer secret for the application. The consumer key becomes the unique identifier of the application, similar to a user's user name, and is used to authenticate the application or user. You can use this consumer key and consumer secret to generate an API access token by invoking the token endpoint. You can also revoke the access token by invoking the revoke endpoint. For testing purposes, you can generate a test token via the UI. However, we strongly recommend that you do not use the test token in your production environment.
 
 This section will walk you through the steps to generate an API access token in Choreo. 
 
