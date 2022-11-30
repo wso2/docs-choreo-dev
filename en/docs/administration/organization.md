@@ -8,7 +8,7 @@ If you are a member of more than one organization, you can switch from one organ
 
 ![organizations](../assets/img/administration/organiaztions.png)
 
-## Inviting Members
+## Inviting members
 
 The organization admin can invite members by assigning them roles in the organization. The invited members receive the invitation as an email notification. By accepting the invitation, the members add themself to the organization. They are then able to access the resources of that organization.
 
@@ -33,6 +33,6 @@ Choreo roles are defined as follows:
 - **External API Subscriber**: External API Subscribers are API consumers who have access only to the API Developer Portal. They join an organization with the sole purpose of consuming APIs. 
 
 
-## Theme Preference
+## Theme preference
 
 An Admin can customize the developer portal via **Theme Preference**. You can customize the logos,  the color palette, the typography, and the footer links. 
