@@ -442,6 +442,8 @@ public class ChoreoComponent {
                 if (status.equals("ACTIVE")) {
                     log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " tries taken to succeed");
                     return;
+                } else if (status.equals("ERROR")) {
+                    throw new ComponentDeploymentStatusCheckException("deploymentStatusV2 is ERROR");
                 }
 
                 // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
