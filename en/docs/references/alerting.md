@@ -76,7 +76,7 @@ In addition, you can observe the following:
 
 ### Anomaly alert 
 
-This alert is triggered when average latency exhibits a considerable upward shift compared to what is observed during the last five minutes for a resource function. Latency spikes and upward latency shifts are considered high latency. 
+This alert is triggered when average latency exhibits a considerable upward shift compared to what the system observed during the last five minutes for a resource function. Latency spikes and upward latency shifts are considered high latency.
 
 **Anomaly alerting is disabled by default**. An organization administrator needs to enable it. 
 
