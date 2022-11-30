@@ -11,7 +11,7 @@ This guide will take you through the steps to test an API in Choreo.
 2. Click **APIs**.
 3. Select an API you want to test and click **Try Out** on the card. In this case, skip step 4. Alternatively, you can click on the API and follow step 4. 
 4. In the left pane, click **Try Out**.
-5. Select the required environment from the **Environment** dropdown.
+5. Select the required environment from the **Environment** list.
 
     ![Test Panel](../assets/img/developer-portal/test-api/test-panel.png){.cInlineImage-half}
 
