@@ -1,6 +1,6 @@
 # Alerts
 
-Alerts are notifications sent by the Choreo Alert Manager when the components that run in the production environment are not functioning as expected. Whenever a critical error (e.g., out-of-memory error) occurs, the component logs an error and the Alert Manager, notifies the members of your organization with admin rights via an email. This email contains a link to the [**Observability**](../observability/observability-overview.md) tab of the component where the metrics and logs applicable to the time interval in which the error occurred are highlighted. The Alert Publisher collects and sends alerts to Alert Manager every five minutes, which then decides when to send these alerts to the users.
+Alerts are notifications sent by the Choreo Alert Manager when the components that run in the production environment are not functioning as expected. Whenever a critical error (e.g., out-of-memory error) occurs, the component logs an error, and the Alert Manager notifies the members of your organization with admin rights via an email. This email contains a link to the [**Observability**](../observability/observability-overview.md) tab of the component where the metrics and logs applicable to the time interval in which the error occurred are highlighted. The Alert Publisher collects and sends alerts to Alert Manager every five minutes, which then decides when to send these alerts to the users.
 
 
 ## Types of alert email notifications
@@ -50,9 +50,9 @@ If you want to change the automatically selected time interval (i.e., one hour) 
 
 For more information on how to use the **Observe** tab for root cause analysis, see [Root Cause Analysis](../observability/root-cause-analysis.md).
 
-### Application Error alert
+### Application error alert
 
-This alert is triggered when you use the **“log:printError()”** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via an email so that you can troubleshoot them. The following is a sample of such a notification email. 
+This alert is triggered when you use the **`log:printError()`** function in your component and the component logs an error via that. Such errors indicate that your component is unable to function as designed, and therefore you are notified via email so that you can troubleshoot them. The following is a sample of such a notification email. 
 
 ![Application Error email](../assets/img/alerting/application-error-email.png){.cInlineImage-full}
 
@@ -64,7 +64,7 @@ Once you click **Check in Portal** in the notification email, you are redirected
 
 ![Application Error Troubleshooting](../assets/img/alerting/application-error-troubleshooting.png){.cInlineImage-full}
 
-This opens the **Throughput and Latency** view in which the request that caused the error log is automatically selected (see **1**  in the image above). The graphs in this tab display the throughput and the latency for this request. The color of the graph indicates whether the request was successfully processed or whether it resulted in an error. 
+This opens the **Throughput and Latency** view in which the request that caused the error log is automatically selected (see **1**  in the image above). The graphs in this tab display the throughput and latency for this request. The color of the graph indicates whether the request was successfully processed or whether it resulted in an error. 
 
 In addition, you can observe the following:
 
@@ -73,3 +73,15 @@ In addition, you can observe the following:
 - The time range for which the error log applies (marked **3** in the image). However, you can scroll to view more logs that occurred during the time range selected for debugging purposes. This time range is selected via the drop-down field marked **5** in the image. You can update this time range as explained under [Select a custom time range](#select-a-custom-time-range).
 
 - The status and the latency of the request (marked **4** in the image).
+
+### Anomaly alert 
+
+This alert is triggered when average latency exhibits a considerable upward shift compared to what the system observed during the last five minutes for a resource function. Latency spikes and upward latency shifts are considered high latency.
+
+**Anomaly alerting is disabled by default**. An organization administrator needs to enable it. 
+
+Choreo alerts a user of this anomaly via email. This email includes details to identify the component and the resource function, anomaly time stamp, etc. The email has a link that takes a user to the components' latency graph in the observability view pane. A user can view the latency graph by clicking on the link **Check in Portal** in the email and thereby [perform an RCA](https://wso2.com/choreo/docs/observability/root-cause-analysis/) for the anomaly. 
+
+The anomaly detector issues two types of alerts:
+The immediate alert as as soon as the anomaly is detected
+The aggregated alert in which it aggregates all the anomalies detected in the last 15 minutes. The anomaly detecter sends this following the immediate alert.
