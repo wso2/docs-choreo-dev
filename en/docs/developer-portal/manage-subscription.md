@@ -14,7 +14,7 @@ Let's get started!
 3. Select and click on the application you want to subscribe to from the list. 
 4. Click **Subscriptions** from the left panel. 
 5. Click **+ Add APIs**. 
-6. Select the usage plan and click **Add** to subscribe an API.  You can subscribe multiple APIs. You can change the usage plan after subscription as well. 
+6. Select the usage plan and click **Add** to subscribe to the API. You can subscribe to multiple APIs. You can change the usage plan after subscribing as well.
    ![Add APIs](../assets/img/developer-portal/manage-subscriptions/add-apis.png){.cInlineImage-small}
 
 You can now invoke the API using the application keys. 
