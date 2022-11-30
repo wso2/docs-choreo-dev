@@ -41,10 +41,9 @@ import java.util.Optional;
 public class ChoreoOrganization {
     private final static Logger log = LoggerFactory.getLogger(ChoreoOrganization.class);
     private final static Gson gson = new Gson();
-    private static ChoreoOrganization choreoOrganization;
     private final HashMap<String, ChoreoProject> projectMap;
     private String orgHandle;
-    private String orgId;
+    private int orgId;
     private String orgUUID;
 
     /**
@@ -54,14 +53,12 @@ public class ChoreoOrganization {
      * @param orgId     Choreo organization id
      * @param orgUUID   Choreo organization UUID
      */
-    public ChoreoOrganization(String orgHandle, String orgId, String orgUUID) {
+    public ChoreoOrganization(String orgHandle, int orgId, String orgUUID) {
         this.orgHandle = orgHandle;
         this.orgId = orgId;
         this.orgUUID = orgUUID;
         this.projectMap = new HashMap<>();
     }
-
-
 
     /**
      * Create a Choreo project in the Choreo organization
@@ -72,20 +69,7 @@ public class ChoreoOrganization {
      * @throws InterruptedException     if sending request is interrupted
      * @throws ProjectCreationException if project creation fails
      */
-    public ChoreoProject createProject(String accessToken) throws
-            IOException, InterruptedException, ProjectCreationException {
-        String gqlQuery = getCreateProjectMutation(
-                Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())),
-                Constant.TEST_PROJECT_DESCRIPTION);
 
-        try {
-            JsonObject body = ControlPlaneAPIs.callGraphQL(accessToken, gqlQuery);
-            JsonObject projectJson = body.getAsJsonObject("data").getAsJsonObject("createProject");
-            return gson.fromJson(projectJson.toString(), ChoreoProject.class);
-        } catch (GraphQLException e) {
-            throw new ProjectCreationException(e);
-        }
-    }
 
     Optional<ChoreoProject> getProjectByName(String accessToken, String name) throws ProjectRetrievalException {
         loadProjects(accessToken);
@@ -187,11 +171,11 @@ public class ChoreoOrganization {
         this.orgHandle = orgHandle;
     }
 
-    public String getOrgId() {
+    public int getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(String orgId) {
+    public void setOrgId(int orgId) {
         this.orgId = orgId;
     }
 

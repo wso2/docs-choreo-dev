@@ -3,6 +3,7 @@ package com.wso2.choreo.integration.tests.createComponent;
 import com.consol.citrus.annotations.CitrusTest;
 
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
@@ -50,9 +51,7 @@ public class CreateComponentIT extends TestNGCitrusSpringSupport {
     accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
-    String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-    ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
-    ChoreoProject project = org.createProject(accessToken);
+    ChoreoProject project = GraphQL.createProject(accessToken);
     projectId = project.getId();
   }
 

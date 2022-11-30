@@ -34,7 +34,7 @@ export class OrganizationComponent {
   }
 
   static navigateToRoles() {
-    cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
+    cy.get('[data-cy="/organization/roles"]').click();
   }
 
   static verifyEmailIsNotDisplayed(email: string) {

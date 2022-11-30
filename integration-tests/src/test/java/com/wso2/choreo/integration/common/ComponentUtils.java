@@ -80,7 +80,7 @@ public class ComponentUtils {
     public static ChoreoComponent createRestAPI(String accessToken) throws Exception {
         ChoreoOrganization org = TestContext.getTestOrg();
 
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoComponent restAPI = project.createRestAPI(accessToken, componentName, org);
 

@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
@@ -133,16 +135,14 @@ public class TestUserManagedComponent extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClientForSTS;
 
     @BeforeClass
-    public void setup_TestUserManagedComponent()
-            throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+    public void setup_TestUserManagedComponent()            throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
         githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
-        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUUID);
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 

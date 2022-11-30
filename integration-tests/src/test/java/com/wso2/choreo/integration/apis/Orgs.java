@@ -67,14 +67,12 @@ public class Orgs extends ControlPlaneAPI{
         String orgHandle = component.getOrgHandler();
         String projectId = component.getProjectId();
 
-        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
+        String configurationsUpdateRequestURI =CHOREO_EP+ "/orgs/".concat(orgHandle).concat("/projects/")
                 .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
                 .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
         PromoteConfigurations promoteConfigurations = PromoteConfigurations.builder().configs(balconfigs).sourceUuid("").
                 commitHash(latestCommitSha).moduleName(component.getName()).operation(0).applyNow(false).build();
-
         String configurationsRequestBody = ObjectMapperUtil.mapObjectToString(promoteConfigurations).replace("required", "isRequired");
-
        return HttpClientUtil.httpPOST(configurationsUpdateRequestURI, configurationsRequestBody, accessToken, "");
 
     }
@@ -90,7 +88,7 @@ public class Orgs extends ControlPlaneAPI{
         String orgHandle = component.getOrgHandler();
         String projectId = component.getProjectId();
 
-        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
+        String configurationsUpdateRequestURI =CHOREO_EP +"/orgs/".concat(orgHandle).concat("/projects/")
                 .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
                 .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
 

@@ -54,4 +54,5 @@ public class GraphqlDTO {
     private String latestCommitSha;
     private String triggerChannels;
     private String triggerID;
+    private  String description;
 }

@@ -176,9 +176,6 @@ export class ComponentDeployPage {
     cy.get(".ConfigForm button").contains("Promote").click();
   }
 
-  static verifyDevInvokeURL() {
-    return Utils.getInvokeUrl(0);
-  }
 
   static verifyInternalAPIdevWarning() {
     cy.get('[data-testid="warning-banner"]', { timeout: 150000 })
@@ -198,10 +195,6 @@ export class ComponentDeployPage {
       .get('[data-testid="env.invoke.url.internal.endpoint.warning"]>p')
       .eq(1)
       .invoke("text");
-  }
-
-  static verifyProdInvokeURL() {
-    return Utils.getInvokeUrl(0);
   }
 
   static stopAllDeployment() {
@@ -273,11 +266,6 @@ export class ComponentDeployPage {
       .wait(2000)
       .eq(promoButtonIndex)
       .click(); // promote button
-    cy.get('[id="securityHeaderInput"]', { timeout: 360000 })
-      .should("have.length", invokeUrlCount)
-      .eq(invokeUrlIndex)
-      .invoke("val")
-      .should("not.be.empty"); // the number of `Invoke URLs`
     cy.get('[data-cyid="deployment-status"]', { timeout: 360000 })
       .eq(invokeUrlIndex)
       .contains("Active", { timeout: 360000 });

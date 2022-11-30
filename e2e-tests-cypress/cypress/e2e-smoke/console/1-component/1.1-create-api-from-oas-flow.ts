@@ -64,13 +64,13 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
+   
   });
 
 
   it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
+
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -117,7 +117,6 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
-    ComponentAPILifecycle.selectRevision(Environment.DEVELOPMENT)
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
     ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT, "Revision 3");
@@ -142,7 +141,6 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Apply configs to prod", () => {
     ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
-    ComponentAPILifecycle.selectRevision(Environment.PRODUCTION)
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
     ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);

@@ -14,7 +14,7 @@ authInfo:
   CP_APP_CLIENT_ID: W5HKbT7_3hHFU6rY9iRbFDzH41ga
   #CP_APP_CLIENT_SECRET:
 common:
-  CHOREO_ENDPOINT: https://appv2.preview-dv.choreo.dev
+  CHOREO_ENDPOINT: https://app.preview-dv.choreo.dev
   CHOREO_CP_PROJECTS_ENDPOINT: https://apis.preview-dv.choreo.dev/projects/1.0.0
   CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.preview-dv.choreo.dev
   GITHUB_ENDPOINT: https://api.github.com

@@ -11,7 +11,6 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
 
 export class APIDeployment {
   static navigateToDeployment() {
@@ -28,7 +27,6 @@ export class APIDeployment {
     cy.get('[data-cyid="deployment-status"]')
       .contains("Active")
       .should("be.visible");
-    cy.get('[id="securityHeaderInput"]').invoke("val").should("not.be.empty");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
@@ -43,30 +41,8 @@ export class APIDeployment {
       .eq(1)
       .contains("Active")
       .should("be.visible");
-    cy.get('[id="securityHeaderInput"]')
-      .should("have.length", 2)
-      .eq(1)
-      .invoke("val")
-      .should("not.be.empty");
     cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
-  static verifyDevInvokeURL() {
-    return Utils.getInvokeUrl(0);
-  }
-
-  static verifyStgeInvokeURL() {
-    if (Cypress.env("isPrivateOrg")) {
-      cy.wait(5000);
-      return Utils.getInvokeUrl(1);
-    }
-    return cy.wrap("skip");
-  }
-
-  static verifyProdInvokeURL() {
-    if (Cypress.env("isPrivateOrg")) {
-      return Utils.getInvokeUrl(2);
-    }
-    return Utils.getInvokeUrl(1);
-  }
+  
 }

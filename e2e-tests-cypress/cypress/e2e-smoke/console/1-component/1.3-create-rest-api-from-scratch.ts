@@ -59,12 +59,12 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
+
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
+   
   });
 
   it("Edit code in VScode", () => {
@@ -86,12 +86,12 @@ describe("Verify project creation functionality", () => {
 
   it("Verify component deployment", () => {
     ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
+   
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
+
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -202,11 +202,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectResources();
 
     ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
-    ComponentAPILifecycle.selectRevision(Environment.DEVELOPMENT)
-
-
-
-    ComponentAPILifecycle.editResource();
+   ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(
       Environment.DEVELOPMENT,
@@ -220,7 +216,6 @@ describe("Verify project creation functionality", () => {
 
   it("Apply configs to prod", () => {
     ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
-    ComponentAPILifecycle.selectRevision(Environment.PRODUCTION)
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);

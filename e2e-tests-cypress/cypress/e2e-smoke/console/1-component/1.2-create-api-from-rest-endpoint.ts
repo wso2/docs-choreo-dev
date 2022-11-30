@@ -74,12 +74,12 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
+  
   });
 
   it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
+   
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -129,12 +129,12 @@ describe("Verify project creation functionality", () => {
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-    APIDeployment.verifyDevInvokeURL().should("not.eq", "");
+   
   });
 
   it("Verify new prod invoke url", () => {
     APIDeployment.PromoteToProd();
-    APIDeployment.verifyProdInvokeURL().should("not.eq", "");
+   
   });
 
   it("Test in dev", () => {
