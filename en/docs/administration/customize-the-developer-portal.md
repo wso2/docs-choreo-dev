@@ -5,7 +5,8 @@ You can share APIs internally and externally through the Choreo Developer Portal
 To configure the Developer Portal theme, follow the steps given below:
 
 !!! Note
-    To change the Developer Portal theme for an organization, you need to be an admin user of that organization.
+    - To change the Developer Portal theme for an organization, you need to be an admin user of that organization.
+    - If you want to remove any theme change you make, you need to reset to the default theme. Choreo does not support undoing a specific change and reverting to the previous theme.
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google, GitHub, or Microsoft account.
 
