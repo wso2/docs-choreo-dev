@@ -374,18 +374,18 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                                         greaterThanOrEqualTo(1)))));
     }
 
-//    @Test(dependsOnMethods = {"observabilityLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true)
-//    @CitrusTest
-//    public void deleteWebhookComponent_CreateDeployInvokeWebhookIT() throws Exception {
-//        Response res = GraphQL.deleteComponent(response.getId(), projectId, accessToken);
-//        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-//    }
-//
-//    @Test(dependsOnMethods = {""}, alwaysRun = true)
-//    @CitrusTest
-//    public void deleteRepo_CreateDeployInvokeWebhookIT() {
-//        Response response = GitHub.deleteGitHubRepo(repoName);
-//        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
-//    }
+    @Test(dependsOnMethods = {"observabilityLogs_CreateDeployInvokeWebhookIT"}, alwaysRun = true)
+    @CitrusTest
+    public void deleteWebhookComponent_CreateDeployInvokeWebhookIT() throws Exception {
+        Response res = GraphQL.deleteComponent(response.getId(), projectId, accessToken);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = {""}, alwaysRun = true)
+    @CitrusTest
+    public void deleteRepo_CreateDeployInvokeWebhookIT() {
+        Response response = GitHub.deleteGitHubRepo(repoName);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
+    }
 
 }
