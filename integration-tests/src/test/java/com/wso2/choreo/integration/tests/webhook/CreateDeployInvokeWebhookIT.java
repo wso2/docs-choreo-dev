@@ -148,6 +148,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void commitFile_CreateDeployInvokeWebhookIT() throws IOException {
         String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/webhook/github_webhook.bal");
+        System.out.println(encodedContent);
         Response response = GitHub.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }
@@ -162,7 +163,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhookIT() throws Exception {
-        BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("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").build();
+        BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
         Orgs.addConfiguration(testComponent, "dev", accessToken, balConfigs);
         GraphQL.deployComponent(testComponent, accessToken);
     }
@@ -381,7 +382,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {""}, alwaysRun = true)
+    @Test(dependsOnMethods = {"deleteWebhookComponent_CreateDeployInvokeWebhookIT"}, alwaysRun = true)
     @CitrusTest
     public void deleteRepo_CreateDeployInvokeWebhookIT() {
         Response response = GitHub.deleteGitHubRepo(repoName);
