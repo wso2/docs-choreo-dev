@@ -1707,6 +1707,34 @@ CREATE TABLE [dbo].[user_migration_info](
     ) ON [PRIMARY]
     GO
 
+CREATE TABLE [dbo].[global_configuration](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [uuid] [nvarchar](50) NOT NULL,
+    [name] [nvarchar](255) NOT NULL,
+    [description] [nvarchar](255) NULL,
+    [config_type] [nvarchar](50) NOT NULL CHECK (config_type IN('Pre-defined', 'User-defined')),
+    [config_type_metadata] [nvarchar](255) NOT NULL,
+    [org_uuid] [nvarchar](50) NOT NULL,
+    [project_uuid] [nvarchar](50) NOT NULL,
+    [environment_uuid] [nvarchar](50) NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT [global_configuration$uuid_unique] UNIQUE (uuid)
+)
+
+CREATE TABLE [dbo].[global_configuration_data](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [config_key] [nvarchar](255)  NOT NULL,
+    [value_type] [nvarchar](50) NOT NULL,
+    [config_uuid] [nvarchar](50) NOT NULL,
+    [value_ref] [nvarchar](255) NOT NULL,
+    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
+)
+
 /****** Object:  Trigger [dbo].[permission_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
     GO
