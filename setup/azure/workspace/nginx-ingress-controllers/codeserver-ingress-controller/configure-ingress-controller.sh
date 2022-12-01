@@ -71,10 +71,10 @@ helm upgrade --install "${WORKSPACE_INGRESS_NAMESPACE}" nginx-ingress-0.14.0.tgz
   --set controller.volumes[1].configMap.name="zone-sync-configmap" \
   --set controller.config.entries.main-snippets="load_module modules/ngx_http_js_module.so;" \
   --set controller.config.name="nginx-config" \
-  --set controller.resources.requests."memory"=500Mi \
+  --set controller.resources.requests."memory"=1.5Gi \
   --set controller.resources.requests."cpu"=500m \
   --set controller.resources.limits."cpu"=1000m \
-  --set controller.resources.limits."memory"=1Gi \
+  --set controller.resources.limits."memory"=2Gi \
   --set controller.ingressClass="${WORKSPACE_INGRESS_NAMESPACE}-nginx" \
   --set controller.enableSnippets=true \
   --set controller.wildcardTLS.secret="cert-manager/${WORKSPACE_INGRESS_NAMESPACE}-wildcard-tls" \

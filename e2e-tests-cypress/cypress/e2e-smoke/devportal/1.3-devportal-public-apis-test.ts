@@ -84,20 +84,6 @@ describe("Visit to developer portal organization public apis to confirm availabi
             ApiOverview.confirmPublicAPIResourcePage();
         })
     });
-});
-
-describe("Delete created API", () => {
-    before(() => {
-        ConsoleLoginPage.visitToHomePage();
-    });
-
-    it("Delete created component", () => {
-        cy.task('getAPIName').then(an => {
-            let API_Name = an as string;
-            ChoreoHomePage.navigateToComponents();
-            ComponentListingPage.deleteComponent(API_Name);
-        })
-    });
 
     after(() => {
         ChoreoHomePage.logout();
