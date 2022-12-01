@@ -1718,7 +1718,7 @@ CREATE TABLE [dbo].[global_configuration](
     [project_uuid] [nvarchar](50) NOT NULL,
     [environment_uuid] [nvarchar](50) NOT NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT [global_configuration$uuid_unique] UNIQUE (uuid)
 )
@@ -1730,7 +1730,7 @@ CREATE TABLE [dbo].[global_configuration_data](
     [config_uuid] [nvarchar](50) NOT NULL,
     [value_ref] [nvarchar](255) NOT NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
 )
