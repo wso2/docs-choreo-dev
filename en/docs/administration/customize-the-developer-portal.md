@@ -7,7 +7,7 @@ To configure the Developer Portal theme, follow the steps given below:
 !!! Note
     To change the Developer Portal theme for an organization, you need to be an admin user of that organization.
 
-1. Sign in to the Choreo Console at <a>https://console.choreo.dev/</a> using a Google, GitHub, or Microsoft account.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google, GitHub, or Microsoft account.
 
 2. If you are a new user, create an organization. Enter a unique organization name. For example, "Stark Industries".
 
