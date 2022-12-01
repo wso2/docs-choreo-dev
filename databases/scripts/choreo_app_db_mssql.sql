@@ -1717,8 +1717,8 @@ CREATE TABLE [dbo].[global_configuration](
     [org_uuid] [nvarchar](50) NOT NULL,
     [project_uuid] [nvarchar](50) NOT NULL,
     [environment_uuid] [nvarchar](50) NOT NULL,
-    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT [global_configuration$uuid_unique] UNIQUE (uuid)
 )
@@ -1729,11 +1729,51 @@ CREATE TABLE [dbo].[global_configuration_data](
     [value_type] [nvarchar](50) NOT NULL,
     [config_uuid] [nvarchar](50) NOT NULL,
     [value_ref] [nvarchar](255) NOT NULL,
-    [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT [global_configuration_data$config_uuid_fk] FOREIGN KEY (config_uuid) REFERENCES dbo.global_configuration(uuid)
 )
+
+/****** Object:  Trigger [dbo].[global_configuration_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[global_configuration_UpdateTimeTrigger] ON [dbo].[global_configuration]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [global_configuration] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[global_configuration] ENABLE TRIGGER [global_configuration_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[global_configuration_data_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[global_configuration_data_UpdateTimeTrigger] ON [dbo].[global_configuration_data]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [global_configuration_data] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[global_configuration_data] ENABLE TRIGGER [global_configuration_data_UpdateTimeTrigger]
+    GO
 
 /****** Object:  Trigger [dbo].[permission_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
