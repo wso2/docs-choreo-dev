@@ -147,7 +147,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"mergePR_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void commitFile_CreateDeployInvokeWebhookIT() throws IOException {
-        String encodedContent = FileUtil.readFileEncodedContent("templates/webhook/github_webhook.bal");
+        String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/webhook/github_webhook.bal");
+        System.out.println(encodedContent);
         Response response = GitHub.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
     }

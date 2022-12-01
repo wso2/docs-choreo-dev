@@ -17,7 +17,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
@@ -25,7 +24,7 @@ import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -35,6 +34,7 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -56,7 +56,6 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -81,11 +80,10 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     private static RestApiChoreoComponent restApiComponent;
     ChoreoProject project;
     String repoName;
-    String orgHandle;
     String projectId;
     String devInvokeURL;
     String prodInvokeURL;
-
+    Environment[] en;
     ChoreoComponent choreoComponent;
 
     @Autowired
@@ -96,10 +94,10 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
-        return new Object[][]{{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
+        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Development}};
     }
 
-     @BeforeClass
+    @BeforeClass
     public void setup_LoggingAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         project = GraphQL.createProject(accessToken);
@@ -153,8 +151,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_LoggingAPITestCase"})
     @CitrusTest
     public void addDeploymentConfiguration_LoggingAPITestCase() throws Exception {
-     Response res =    Orgs.addConfiguration(choreoComponent, "dev", accessToken);
-        Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
+        Response res = Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
 
@@ -180,8 +178,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
     public void addPromoteConfiguration_LoggingAPITestCase() throws Exception {
-       Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
-       Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
+        Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
     @Test(dependsOnMethods = {"addPromoteConfiguration_LoggingAPITestCase"})
@@ -200,17 +198,20 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
     public void waitForObservabilityLogs() throws Exception {
-        restApiComponent.waitForObservabilityLogs(accessToken, Constant.DEV_ENVIRONMENT);
-        restApiComponent.waitForObservabilityLogs(accessToken, Constant.PROD_ENVIRONMENT);
+        en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
+        Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
+        Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
+        choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
+        choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
     }
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs"})
     @CitrusTest
-    public void testGroupedLogs_LoggingAPITestCase(String env) throws Exception {
-        String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
-        String namespace = choreoComponent.getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation =
-                choreoComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testGroupedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
+        Environment environment = choreoComponent.getEnvironment(en, env);
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
                 .concat(observabilityIdInformation.getObsId())
@@ -249,13 +250,11 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"testGroupedLogs_LoggingAPITestCase"})
     @CitrusTest
-    public void testLiveLogs_LoggingAPITestCase(String env) throws EnvironmentDetailsCheckException, IOException,
-            NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            InterruptedException, ReleaseIdNotFoundException {
-        String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
-        String namespace = choreoComponent.getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation =
-                choreoComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void testLiveLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
+        Environment environment = choreoComponent.getEnvironment(en, env);
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
                 .concat(observabilityIdInformation.getObsId())
@@ -294,14 +293,11 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"testLiveLogs_LoggingAPITestCase"})
     @CitrusTest
-    public void downloadZippedLogs_LoggingAPITestCase(String env) throws IOException, URISyntaxException,
-            ObservabilityLogsDownloadStatusCheckException, ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
-            NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            InterruptedException {
-        String releaseId = choreoComponent.getReleaseIdForEnvironment(env);
-        String namespace = choreoComponent.getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation =
-                choreoComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public void downloadZippedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
+        Environment environment = choreoComponent.getEnvironment(en, env);
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         String requestPath = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT).concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
                 .concat(observabilityIdInformation.getObsId())

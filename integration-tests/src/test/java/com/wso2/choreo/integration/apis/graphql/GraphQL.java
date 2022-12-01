@@ -17,6 +17,7 @@ package com.wso2.choreo.integration.apis.graphql;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
@@ -34,11 +35,11 @@ import com.wso2.choreo.integration.models.componentstatusbyversion.ComponentStat
 import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.deploymentstatus.ComponentDeploymentStatus;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -61,7 +62,7 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
-        Response response =  HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
     }
 
@@ -107,6 +108,14 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
 
+    public static Environment[] getNamespaceForEnvironment(String projectId, String accessToken) throws IOException {
+        GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache", dto);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        log.info(response.getRes());
+        return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
+    }
+
     public static ChoreoComponent getComponentDetails(String projectId, String componentHandler, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().componentHandler(componentHandler).projectId(projectId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentInformation.mustache", dto);
@@ -114,11 +123,14 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(RestApiChoreoComponent.class, response.getRes(), "component");
     }
 
-    public static Environment[] getEnvironments(ChoreoComponent component, String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().orgUuid(component.getOrganization().getOrgUUID()).projectId(component.getProjectId()).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getEnvironments.mustache", dto);
+    public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
+        GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
+        log.info(response.getRes());
+        return Arrays.
+                stream(ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
+                        response.getRes(), "observerbilityIds")).filter(ob -> ob.getReleaseId().equals(releaseId)).findFirst().get();
     }
 
 
@@ -133,13 +145,6 @@ public class GraphQL extends ControlPlaneAPI {
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getProjectComponents.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         return ObjectMapperUtil.mapToCollection(ChoreoComponent[].class, response.getRes(), "components");
-    }
-
-    public static void fetchObservabilityIds(String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache", dto);
-        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-
     }
 
     public static Commit[] getCommitHistory(String componentId, String accessToken) throws IOException {
@@ -213,14 +218,5 @@ public class GraphQL extends ControlPlaneAPI {
         return deployments;
     }
 
-
-    public static void getObservabilityEnvironments(String accessToken) throws IOException {
-        GraphqlDTO dto = GraphqlDTO.builder().componentHandler(ORG_UUID).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache", dto);
-        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        System.out.println(response.getRes());
-        //    return ObjectMapperUtil.mapStringToObject(RestApiChoreoComponent.class, response.getRes(), "component");
-
-    }
 
 }

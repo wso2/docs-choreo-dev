@@ -18,6 +18,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,6 +27,9 @@ import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -38,15 +42,15 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.imageregistry.ImageRegistry;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
@@ -89,13 +93,13 @@ public class ChoreoComponent {
     private ChoreoOrganization organization = TestContext.getTestOrg();
 
 
-    private  String handle;
-    private  String organizationId;
-    private  String orgHandle;
-    private  String type;
-    private  String imageRegistryId;
-    private  String componentType;
-    private  boolean httpBased;
+    private String handle;
+    private String organizationId;
+    private String orgHandle;
+    private String type;
+    private String imageRegistryId;
+    private String componentType;
+    private boolean httpBased;
     private ImageRegistry imageRegistry;
     private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
     private final static Gson gson = new Gson();
@@ -105,9 +109,6 @@ public class ChoreoComponent {
         choreoCpProjectsEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_PROJECTS_ENDPOINT);
         configCPGatewayEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT);
     }
-
-
-
 
 
     /**
@@ -669,7 +670,7 @@ public class ChoreoComponent {
         Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
-        queryParams.put("orgUUID", organization.getOrgUUID());
+        queryParams.put("orgUuid", organization.getOrgUUID());
         queryParams.put("projectId", projectId);
         mustache.execute(writer, queryParams).flush();
         String graphQlQuery = writer.toString();
@@ -727,40 +728,6 @@ public class ChoreoComponent {
         return objectMapper.writeValueAsString(gqlRequestPayload);
     }
 
-    /**
-     * Get Component observability ids
-     *
-     * @param accessToken OAuth token to invoke the Chorea backend
-     * @param releaseId   release id for your component
-     * @return request body containing graphql query
-     */
-    public ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String accessToken, String releaseId) throws IOException, ObservabilityIdCheckException, InterruptedException, ObservabilityIdNotFoundException {
-        String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-        String requestBody = getComponentObservabilityIdsQuery(releaseId);
-        HttpPost request = new HttpPost(requestURI);
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-        StringEntity requestEntity = new StringEntity(
-                requestBody,
-                ContentType.APPLICATION_JSON);
-        request.setEntity(requestEntity);
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-             CloseableHttpResponse response = httpClient.execute(request)) {
-            int statusCode = response.getStatusLine().getStatusCode();
-            String responseBody = EntityUtils.toString(response.getEntity());
-            if (statusCode != HttpStatus.SC_OK) {
-                throw new ObservabilityIdCheckException(statusCode, responseBody);
-            }
-            JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
-            JsonArray obsIdJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("observerbilityIds");
-            ObservabilityIdInformation[] obsIds = gson.fromJson(obsIdJsonArray, ObservabilityIdInformation[].class);
-            for (ObservabilityIdInformation obsId : obsIds) {
-                if (obsId.getReleaseId().equals(releaseId)) {
-                    return obsId;
-                }
-            }
-            throw new ObservabilityIdNotFoundException();
-        }
-    }
 
     /**
      * Get Component invoke information
@@ -770,7 +737,7 @@ public class ChoreoComponent {
      * @param environment   environment of the deployment
      * @return Invoke information related to requested environment
      */
-    public InvokeInformation  getInvokeInformation(String accessToken, String componentType, String environment) throws
+    public InvokeInformation getInvokeInformation(String accessToken, String componentType, String environment) throws
             IOException, NoLatestApiVersionFoundException, InterruptedException, ComponentInvokeInformationCheckException, InvokeInformationNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
@@ -807,8 +774,8 @@ public class ChoreoComponent {
             }
             JsonObject bodyJsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
             JsonArray invokeInformationJsonArray = bodyJsonObject.getAsJsonObject("data").getAsJsonArray("invokeInformation");
-           InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation [].class);
-            for (InvokeInformation  envInvokeInformation : invokeInformation ) {
+            InvokeInformation[] invokeInformation = gson.fromJson(invokeInformationJsonArray, InvokeInformation[].class);
+            for (InvokeInformation envInvokeInformation : invokeInformation) {
                 if (Objects.equals(envInvokeInformation.getEnvironmentName(), environment)) {
                     return envInvokeInformation;
                 }
@@ -824,7 +791,7 @@ public class ChoreoComponent {
      * @param apiId       apiId for the deployed component
      * @return request body containing graphql query
      */
-    public String getAPIKeyForInvoke(String accessToken, String apiId) throws  IOException,
+    public String getAPIKeyForInvoke(String accessToken, String apiId) throws IOException,
             APIKeyGenerationCheckException, ApiKeyNotFoundException {
         String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
                 .concat(Constant.APIS_ENDPOINT)
@@ -870,7 +837,7 @@ public class ChoreoComponent {
     public JsonObject fetchAST(String accessToken, String env) throws IOException, ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException, ObservabilityASTCheckException {
         String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = getReleaseIdForEnvironment(env);
-        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForAst.mustache");
         Writer writer = new StringWriter();
@@ -900,7 +867,7 @@ public class ChoreoComponent {
             ObservabilityDataNotFoundException, ObservabilityDataCheckException {
         String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_OBS_ENDPOINT_SUFFIX);
         String releaseId = getReleaseIdForEnvironment(env);
-        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
         Writer writer = new StringWriter();
@@ -955,7 +922,7 @@ public class ChoreoComponent {
         JsonObject ast = fetchAST(accessToken, env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" + ast.get("packageVersion").getAsString();
         String releaseId = getReleaseIdForEnvironment(env);
-        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForTraceList.mustache");
         Writer writer = new StringWriter();
@@ -1000,13 +967,18 @@ public class ChoreoComponent {
         }
     }
 
-    public void waitForObservabilityLogs(String accessToken, String env) throws IOException, InterruptedException,
-            ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, URISyntaxException,
-            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            EnvironmentDetailsCheckException, NamespaceNotFoundException {
-        String releaseId = getReleaseIdForEnvironment(env);
-        String namespace = getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+
+    public Environment getEnvironment(Environment[] environments, Constant.Environment env) {
+        return Arrays.stream(environments).filter(e -> e.getName().equals(env.name())).findFirst().get();
+    }
+
+    public void waitForObservabilityLogs(Environment environment, String accessToken) throws IOException,
+             ObservabilityLogsNotFoundException, URISyntaxException,
+            ReleaseIdNotFoundException {
+
+        String releaseId = getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
         String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
@@ -1023,42 +995,28 @@ public class ChoreoComponent {
         HttpGet request = new HttpGet(builder.build());
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
-        int attempts = 0;
-        while (attempts < 50) {
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
-                    throw new ObservabilityLogsCheckException(statusCode, responseBody);
-                }
-                int count = new JsonParser()
-                        .parse(responseBody)
-                        .getAsJsonObject()
-                        .getAsJsonArray("rows")
-                        .size();
-                if (count > 0) {
-                    break;
-                }
-                log.debug("Observability logs has not appeared, trying again. Attempt : " + attempts);
-                Thread.sleep(6000);
-                attempts++;
-                if (attempts == 50) {
-                    log.warn("Exceeding maximum number of attempts for checking observability logs.");
-                    throw new ObservabilityLogsNotFoundException();
-                }
+
+        for (int i = 0; i < 50; i++) {
+            Response res = HttpClientUtil.httpGET(builder.build().toString(), accessToken, "");
+            ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
+
+            if (obslogs.getRows().length > 0) {
+                return;
             }
+            log.debug("Observability logs has not appeared, trying again. Attempt : " + i);
+            SleepUtil.sleep(60);
         }
+        log.warn("Exceeding maximum number of attempts for checking observability logs.");
+        throw new ObservabilityLogsNotFoundException();
     }
 
     public void waitForObservabilitySystemMetrics(String accessToken, String env) throws IOException,
             InterruptedException, URISyntaxException, ObservabilitySystemMetricsCheckException,
             ObservabilitySystemMetricsNotFoundException, ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
-            NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException {
+            NamespaceNotFoundException {
         String releaseId = getReleaseIdForEnvironment(env);
         String namespace = getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation =
-                getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
         String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX)
