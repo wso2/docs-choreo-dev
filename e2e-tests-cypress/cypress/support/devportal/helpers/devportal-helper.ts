@@ -57,7 +57,6 @@ export class DevPortalHelper {
     RestAPITemplate.createApiFromScratch(API_Name, description);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
