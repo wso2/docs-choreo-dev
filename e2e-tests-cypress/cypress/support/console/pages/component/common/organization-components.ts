@@ -76,7 +76,7 @@ export class OrganizationComponent {
     cy.log("Invitation sent successfully");
   }
 
-  static addMappings(groupName: string, ...roles) {
+  static addMappings(groupName: string, roles: string[]) {
     cy.wait(300);
     cy.get('[data-cyid="add-mappings"]').click();
     cy.get('[data-cyid="text-field-add-group-name"]').should("be.visible").type(groupName);
@@ -165,20 +165,6 @@ export class OrganizationComponent {
     })
   }
 
-  private static updateRoles(oldRole: string, roles: string[]) {
-    cy.get('ul>li>div>span').each(e => {
-      if (e.text() === oldRole) {
-        cy.wrap(e).scrollIntoView().click()
-      }
-    })
-    roles.forEach(v => {
-      cy.get('ul>li>div>span').each(e => {
-        if (e.text() === v) {
-          cy.wrap(e).scrollIntoView().click()
-        }
-      })
-    })
-  }
 
   static createRole(
     roleName: string,
@@ -253,7 +239,7 @@ export class OrganizationComponent {
   }
 
   static deleteCreatedMapping(groupName: string) {
-    cy.wait(3000);
+    cy.wait(2000);
     cy.contains("td", groupName).should("be.visible");
     this.deleteSelectedMapping(groupName);
   }
@@ -267,20 +253,20 @@ export class OrganizationComponent {
     cy.log("Group role mapping deleted successfully"!);
   }
 
-  static updateMappings(groupName: string, oldRole: string, ...roles) {
+  static updateMappings(groupName: string, oldRoles: string[], newRoles: string[]) {
+    const roles = oldRoles.concat(newRoles);
     cy.get('[data-cyid="search-app"]').clear().type(groupName);
     cy.contains("td", groupName).should("be.visible");
-    this.updateSelectedMapping(groupName, oldRole, roles);
-   
+    this.updateSelectedMapping(groupName, roles);
   }
 
-  private static updateSelectedMapping(groupName: string, oldRole: string, ...roles) {
+  private static updateSelectedMapping(groupName: string, roles: string[]) {
     cy.contains("td", groupName).trigger("mouseover");
     cy.get('[data-cyid="btn-edit-mapping"]').click();
     cy.get('[data-cyid="text-field-update-group-name"]').should("be.visible");
     cy.get('[data-cyid="select-roles"]').should('be.visible').click();
     cy.wait(3000);
-    this.updateRoles(oldRole, roles);
+    this.addRoles(roles);
     cy.get("body").type("{esc}");
     cy.get('[data-cyid="btn-update-mapping"]').click({ force: true });
     cy.get('[data-cyid="btn-update-mapping"]').should("not.exist");

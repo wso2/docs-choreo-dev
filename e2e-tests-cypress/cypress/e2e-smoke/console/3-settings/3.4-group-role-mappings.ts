@@ -17,6 +17,8 @@ import { OrganizationComponent } from "../../../support/console/pages/component/
 
 /// <reference types="cypress" />
 const groupName = "Engineer";
+const oldRoles = ["API Publisher", "Developer"];
+const newRoles = ["API Subscriber", "Admin"];
 
 describe("Test group role mappings", () => {
   before(() => {
@@ -30,12 +32,12 @@ describe("Test group role mappings", () => {
   });
 
   it("Add a group role mapping", () => {
-    OrganizationComponent.addMappings(groupName, "API Publisher");
+    OrganizationComponent.addMappings(groupName, oldRoles);
     OrganizationComponent.verifyGroupNameIsDisplayed(groupName);
   });
 
   it("Update a group role mapping", () => {
-    OrganizationComponent.updateMappings(groupName, "API Subscriber");
+    OrganizationComponent.updateMappings(groupName, oldRoles, newRoles);
   });
 
   it("Delete a group role mapping", () => {
