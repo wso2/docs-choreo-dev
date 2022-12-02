@@ -9,8 +9,10 @@
     timestamp: datetime,
     orgId: string,
     projectId: string,
-    componentID: string,
-    versionID: string,
+    componentId: string,
+    versionId: string,
+    environmentId: string,
+    isProf: bool
     status: string,
     count: int
 );
@@ -18,10 +20,12 @@
 .create table deployments ingestion json mapping "deploymentMapping"
     '['
     '    { "column" : "timestamp", "Properties":{"Path":"$.deploymentTime"}},'
-    '    { "column" : "orgId", "Properties":{"Path":"$.organizationID"}},'
-    '    { "column" : "projectId", "Properties":{"Path":"$.projectID"}},'
-    '    { "column" : "componentID", "Properties":{"Path":"$.componentID"}},'
-    '    { "column" : "versionID", "Properties":{"Path":"$.versionID"}},'
+    '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
+    '    { "column" : "projectId", "Properties":{"Path":"$.projectId"}},'
+    '    { "column" : "componentId", "Properties":{"Path":"$.componentId"}},'
+    '    { "column" : "versionId", "Properties":{"Path":"$.versionId"}},'
+    '    { "column" : "environmentId", "Properties":{"Path":"$.environmentId"}},'
+    '    { "column" : "isProd", "Properties":{"Path":"$.isProd"}},'
     '    { "column" : "status", "Properties":{"Path":"$.status"}},'
     '    { "column" : "count", "Properties":{"Path":"$.deploymentCount"}}'
     ']';
