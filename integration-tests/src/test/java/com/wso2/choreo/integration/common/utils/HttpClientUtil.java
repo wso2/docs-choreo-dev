@@ -2,6 +2,7 @@ package com.wso2.choreo.integration.common.utils;
 
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -17,7 +18,7 @@ import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-
+@Slf4j
 public class HttpClientUtil {
 
     private static final Logger LOGGER = Logger.getLogger(HttpClientUtil.class.getName());

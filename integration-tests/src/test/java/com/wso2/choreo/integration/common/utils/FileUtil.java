@@ -13,10 +13,10 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+
 @Slf4j
 public class FileUtil {
-private static final Logger fileUtilLogger = Logger.getLogger("FileUtil");
-
     public static String readFile(String filePath) {
         Path file = Paths.get(filePath);
         StringBuilder stringBuilder = new StringBuilder();
@@ -28,14 +28,19 @@ private static final Logger fileUtilLogger = Logger.getLogger("FileUtil");
                 stringBuilder.append(line).append("\n");
             }
         } catch (IOException x) {
-            log.error(x.getMessage());
+           log.error(x.getMessage());
         }
         return stringBuilder.toString();
     }
 
     public static String readFileEncodedContent(String filePath){
-
         return Base64.getEncoder().encodeToString(readFile(filePath).getBytes());
     }
 
+
+
+    public  static  void main(String[] args){
+        String s =readFile("src/test/resources/templates/webhook/github_webhook.bal");
+        System.out.println(s);
+    }
 }

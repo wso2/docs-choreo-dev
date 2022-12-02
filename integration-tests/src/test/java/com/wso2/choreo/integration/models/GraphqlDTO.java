@@ -55,4 +55,5 @@ public class GraphqlDTO {
     private String triggerChannels;
     private String triggerID;
     private  String description;
+    private  String releaseId;
 }

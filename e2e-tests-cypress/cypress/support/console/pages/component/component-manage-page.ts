@@ -188,7 +188,7 @@ export class ComponentAPILifecycle {
 
 
   static selectEnvironment(env:Environment){
-    cy.get('[data-cyid="environment-selector"]').click()
+    cy.get('[data-cyid="environment-selector"]').should('be.visible').click()
     cy.get(`[data-value="${env}"]`).click()
     cy.get('[data-cyid="environment-selector"]>div>div').invoke('text').then(text=>{
       expect(text).equal(env)

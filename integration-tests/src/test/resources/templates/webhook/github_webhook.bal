@@ -3,9 +3,8 @@ import ballerina/http;
 import ballerina/log;
 
 configurable github:ListenerConfig config = ?;
-
-listener http:Listener httpListener = new(8090);
-listener github:Listener webhookListener =  new(config,httpListener);
+listener http:Listener httpListener = new (8090);
+listener github:Listener webhookListener = new (config, httpListener);
 
 service github:IssuesService on webhookListener {
 
