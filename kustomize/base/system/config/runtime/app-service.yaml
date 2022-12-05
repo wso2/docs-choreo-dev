@@ -429,3 +429,5 @@ subscriptions:
   freeStepQuota: ${FREE_STEP_QUOTA}
 permissions:
   roleManage: choreo:role_manage
+configurableWebhook:
+  enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
