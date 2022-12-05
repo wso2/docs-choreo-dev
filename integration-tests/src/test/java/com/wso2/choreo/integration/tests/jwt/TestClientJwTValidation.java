@@ -130,7 +130,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"deploymentStatusByVersion_TestClientJwTValidation"})
     @CitrusTest
     public void componentDevDeploymentStatus_TestClientJwTValidation() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
+        devInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken).getInvokeUrl();
     }
 
 

@@ -102,7 +102,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceIT"})
     @CitrusTest
     public void addDeploymentConfiguration_GraphQLServiceIT() throws Exception {
-        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+        Orgs.addConfiguration(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken);
     }
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_GraphQLServiceIT"})
@@ -121,13 +121,13 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"deploymentStatusByVersion_GraphQLServiceIT"})
     @CitrusTest
     public void componentDevDeploymentStatus_GraphQLServiceIT() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
+        devInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken).getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_GraphQLServiceIT"})
     @CitrusTest
     public void addPromoteConfiguration_GraphQLServiceIT() throws Exception {
-        Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
+        Response res = Orgs.addConfiguration(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
@@ -140,7 +140,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"promote_GraphQLServiceIT"})
     @CitrusTest
     public void componentProdDeploymentStatus_GraphQLServiceIT() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
+        prodInvokeURL = GraphQL.componentDeployment(choreoComponent,  Constant.PROD_ENVIRONMENT, accessToken).getInvokeUrl();
     }
 
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_GraphQLServiceIT"})
