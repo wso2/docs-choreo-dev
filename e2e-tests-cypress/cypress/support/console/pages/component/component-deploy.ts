@@ -266,11 +266,7 @@ export class ComponentDeployPage {
       .wait(2000)
       .eq(promoButtonIndex)
       .click(); // promote button
-    cy.get('[id="securityHeaderInput"]', { timeout: 360000 })
-      .should("have.length", invokeUrlCount)
-      .eq(invokeUrlIndex)
-      .invoke("val")
-      .should("not.be.empty"); // the number of `Invoke URLs`
+    cy.wait(36000)
     cy.get('[data-cyid="deployment-status"]', { timeout: 360000 })
       .eq(invokeUrlIndex)
       .contains("Active", { timeout: 360000 });
