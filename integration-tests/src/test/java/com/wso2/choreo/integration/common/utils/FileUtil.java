@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 @Slf4j
 public class FileUtil {
-    public static String readFile(String filePath) {
+    private static String readFile(String filePath) {
         Path file = Paths.get(filePath);
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream in = Files.newInputStream(file);
@@ -38,9 +38,4 @@ public class FileUtil {
     }
 
 
-
-    public  static  void main(String[] args){
-        String s =readFile("src/test/resources/templates/webhook/github_webhook.bal");
-        System.out.println(s);
-    }
 }

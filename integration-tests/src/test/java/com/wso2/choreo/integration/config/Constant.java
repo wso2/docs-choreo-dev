@@ -76,7 +76,8 @@ public final class Constant {
     public enum displayType {
         restAPI,
         proxy,
-        webhook
+        webhook,
+        graphql
     }
     public enum apiLIifCycleState {
         Publish
