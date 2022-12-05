@@ -5,20 +5,16 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -34,15 +30,13 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     private static ChoreoComponent choreoComponent;
     private String projectId;
     private String accessToken;
-    private ChoreoOrganization org;
     private String devInvokeURL;
     private String prodInvokeURL;
     String apiKey;
 
     @BeforeClass
-    public void setup_TestBYOC() throws IOException, ProjectCreationException, InterruptedException, TokenRetrievalException {
+    public void setup_TestBYOC() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        org = TestContext.getTestOrg();
         ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }

@@ -10,7 +10,6 @@ public class TestHelper {
 
     public static Movie[] getMovies(String invokeURL, String apiKey) {
         String apiInvocationRequestURI = invokeURL+ "/movies";
-        System.out.println(apiInvocationRequestURI);
         Response response = HttpClientUtil.httpGET(apiInvocationRequestURI, "", apiKey);
         return ObjectMapperUtil.mapToCollection(Movie[].class, response.getRes(), "");
     }
