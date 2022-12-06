@@ -263,7 +263,6 @@ export class ComponentAPILifecycle {
     cy.get(`[data-cyid="item-${accessMode}"]`).wait(100).realClick();
     cy.get('[data-testid="warning-banner"]').should('be.visible')
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
-    this.verifyAPIAccessMode(accessMode);
-    cy.log("Successfully converted to an external API.");
+    cy.contains("Successfully converted to an external API.").should("be.visible");
   }
 }

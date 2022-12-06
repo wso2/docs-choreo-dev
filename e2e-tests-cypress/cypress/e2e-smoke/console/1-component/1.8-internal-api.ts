@@ -26,7 +26,7 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
 import { Utils } from "../../../support/console/utils";
 
-describe("Verify project creation functionality", () => {
+describe("Verify internal API creation functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
   const PROJECT_NAME = Utils.generateProjectName();
 
@@ -37,7 +37,6 @@ describe("Verify project creation functionality", () => {
   const PARAM_TYPE = "query";
   const PARAM_VALUE = "World";
   const PARAM_DATA_TYPE = "string";
-  const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters = [{ key: PARAM_NAME, value: PARAM_VALUE }];
   const ACCESS_MODE_INTERNAL = "internal";
   const ACCESS_MODE_EXTERNAL = "external";
@@ -119,7 +118,7 @@ describe("Verify project creation functionality", () => {
 
   it("Verify resource access without the token in dev", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
+    TestHelper.testOnCurlDiscardPrevious(
       Environment.DEVELOPMENT,
       HTTPMethod.GET,
       RESOURCE_NAME,
@@ -138,7 +137,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurl(
+    TestHelper.testOnCurlDiscardPrevious(
       Environment.PRODUCTION,
       HTTPMethod.GET,
       RESOURCE_NAME,
@@ -194,23 +193,24 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.verifyDeploymentStatus();
   });
 
-  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API by receiving a 200 response
+  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API 
+  // by receiving a 200 response
   it("Verify resource access without the token in dev", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
+    TestHelper.testOnCurlDiscardPrevious(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
     then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
+        expect(res.status).equal(200);
       });
     });
 
   });
 
   it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
+    TestHelper.testOnCurlDiscardPrevious(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
     then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
+        expect(res.status).equal(200);
       });
     });
   });
@@ -255,30 +255,29 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.verifyDeploymentStatus();
   });
 
-  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API by receiving a 200 response
+  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API 
+  // by receiving a 200 response
   it("Verify resource access without the token in dev", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
+    TestHelper.testOnCurlDiscardPrevious(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
     then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
+        expect(res.status).equal(200);
       });
     });
-
   });
 
   it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
+    TestHelper.testOnCurlDiscardPrevious(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
     then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
+        expect(res.status).equal(200);
       });
     });
   });
 
   // Navigate back to the Internal API and change the Access Mode to external and test the invocation via curl,
   // Internal API should now be publicly accessible by receiving a 200 response
-
   it("Verify change access to Internal API to external ", () => {
     ChoreoHomePage.navigateToHome();
     ChoreoHomePage.navigateToComponents();
@@ -288,20 +287,14 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.updateAPIAccessMode(ACCESS_MODE_EXTERNAL);
   });
 
-  it("Verify resource access  to external API in dev", () => {
+  it("Verify resource access to external API in dev", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
+    TestHelper.testOnCurlDiscardPrevious(
       Environment.DEVELOPMENT,
       HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
-      cy.get("#filled-disabled")
-        .eq(0)
-        .invoke("attr", "value")
-        .then((invokeUrl) => {
-          DEV_INVOKE_URL = invokeUrl;
-        });
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });
@@ -309,18 +302,12 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access to external API in prod", () => {
-    TestHelper.testOnCurl(
+    TestHelper.testOnCurlDiscardPrevious(
       Environment.PRODUCTION,
       HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
-      cy.get("#filled-disabled")
-        .eq(0)
-        .invoke("attr", "value")
-        .then((invokeUrl) => {
-          PROD_INVOKE_URL = invokeUrl;
-        });
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });

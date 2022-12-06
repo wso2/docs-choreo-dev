@@ -55,19 +55,27 @@ export class ComponentDevelopPage {
   private static checkHTTPVerb(verbs: string[]) {
     cy.get("#mui-component-select-verbs").click();
     verbs.forEach((verb) => {
-      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `).check();
+      cy.get(
+        `[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `
+      ).check();
     });
     cy.get("body").type("{esc}");
   }
 
-  static addParameterToProxyResource(path: string, verb: string, type: string, name: string, dataType: string) {
+  static addParameterToProxyResource(
+    path: string,
+    verb: string,
+    type: string,
+    name: string,
+    dataType: string
+  ) {
     cy.get(`[id="panel-/${path}/${verb.toLowerCase()}-header"`).click();
-    cy.get('[id="param-in"]').first().click();
+    cy.get("#mui-component-select-in").eq(0).click();
     cy.get(`[data-value="${type}"]`).click();
     cy.get("#parameter-name").focus().type(name);
-    cy.get('[id="data-type"]').first().click();
+    cy.get("#mui-component-select-type").eq(0).click();
     cy.get(`[data-value="${dataType}"]`).click();
-    cy.get('[data-testid="checkbox-required"]>span>input').check();
+    // cy.get('[data-testid="checkbox-required"]>span>input').check();
     cy.contains("Add").click();
   }
 
@@ -83,8 +91,6 @@ export class ComponentDevelopPage {
     });
     cy.get("body").type("{esc}");
   }
-
-
 
   static addLabels(labels: string[]) {
     const lblArr = [];
@@ -104,7 +110,6 @@ export class ComponentDevelopPage {
     return cy.wrap(lblArr);
   }
 
-
   static selectBranch(newBranch: string) {
     let branches = [];
     cy.get('[aria-label="Without label"]').click();
@@ -118,12 +123,10 @@ export class ComponentDevelopPage {
   }
 
   static getVersion() {
-    return cy
-      .get('[data-cyid="version-picker"]>div')
-      .then((v) => {
-        cy.log(v.text())
-        return v.text().trim()
-      });
+    return cy.get('[data-cyid="version-picker"]>div').then((v) => {
+      cy.log(v.text());
+      return v.text().trim();
+    });
   }
 
   static refreshBranchCommit() {

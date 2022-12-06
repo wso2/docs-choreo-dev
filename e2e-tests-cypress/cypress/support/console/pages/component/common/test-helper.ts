@@ -50,6 +50,18 @@ export class TestHelper {
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 
+  static testOnCurlDiscardPrevious(env: Environment, httpMethod: HTTPMethod, pathParm: string, queryParameters1 = []) {
+    ComponentTestPage.selectCurl();
+    Curl.selectCurlEnvironment(env);
+    Curl.selectMethod(httpMethod);
+    Curl.enterPathParameter(pathParm);
+    Curl.addQueryParameter(queryParameters1);
+    cy.get("textarea").invoke("text").then(curl => {
+      Cypress.env(`int_curl_${env}`, curl)
+    })
+    return Curl.getRequestComponentsDiscardPrevious(`${env}${pathParm}`);
+  }
+
   static testDevOnGraphQL(code: string) {
     cy.get('div[class="execute-button-wrap"]>button').should('be.enabled')
     APITest.selectDevEnvironment();
