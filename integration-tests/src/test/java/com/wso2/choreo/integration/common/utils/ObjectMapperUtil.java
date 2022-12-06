@@ -8,6 +8,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -66,6 +67,7 @@ public class ObjectMapperUtil {
         mustache.execute(writer, dto).flush();
         return writer.toString();
     }
+
 
 }
 

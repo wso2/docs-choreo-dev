@@ -1,6 +1,6 @@
 [ballerina.log]
-format = "json"
 level = "{{.LOG_LEVEL | default "INFO"}}"
+format = "json"
 
 [ballerina.http.accessLogConfig]
 console = true
@@ -8,6 +8,7 @@ console = true
 [devops.api.config]
 app_service_url = "http://app-service:8080"
 cicd_url = "http://dp-cicd"
+cloud_manager_url = "http://dp-cloud-manager"
 delete_manager_url = "http://delete-manager"
 mizzen_url = "http://dp-mizzen"
 port = 8089

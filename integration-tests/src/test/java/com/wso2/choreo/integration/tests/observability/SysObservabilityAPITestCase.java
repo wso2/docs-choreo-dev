@@ -17,12 +17,11 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.*;
@@ -38,7 +37,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +46,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static org.hamcrest.Matchers.*;
 
-public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
+public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
     private static RestApiChoreoComponent restApiComponent;
 
@@ -95,7 +93,7 @@ public class SysObsAPITestCase extends TestNGCitrusSpringSupport {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         String namespace = restApiComponent.getNamespaceForEnvironment(accessToken, env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
 
         String requestPath = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX
                 .concat(observabilityIdInformation.getObsId())

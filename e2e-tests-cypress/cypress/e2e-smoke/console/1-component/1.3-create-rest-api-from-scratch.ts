@@ -206,7 +206,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(
       Environment.DEVELOPMENT,
-      "Revision 3"
+      "Revision 5"
     );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",

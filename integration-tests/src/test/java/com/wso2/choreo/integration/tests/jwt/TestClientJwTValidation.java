@@ -5,22 +5,15 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
-
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.Response;
@@ -45,12 +38,10 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
 
     private static ChoreoComponent choreoComponent;
-    private String orgHandle;
     private String projectId;
     private String repoName;
     private String accessToken;
     private ComponentCreationResponse response;
-    private ChoreoOrganization org;
 
     private String devInvokeURL;
     @Autowired
@@ -61,8 +52,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-         ChoreoProject project = GraphQL.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
 
 
@@ -106,7 +96,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"mergePR_TestClientJwTValidation"})
     @CitrusTest
     public void mergeNewCode_TestClientJwTValidation() throws IOException {
-        String encodedContent = FileUtil.readFile("src/test/resources/templates/encodedbal/service.bal");
+        String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/service.bal");
         GitHub.mergeNewCode(repoName, "service.bal", "update code", encodedContent);
     }
 
@@ -120,7 +110,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_TestClientJwTValidation"})
     @CitrusTest
     public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
-        Orgs.addConfiguration( choreoComponent, "dev",accessToken);
+        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
     }
 
 
@@ -140,14 +130,14 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"deploymentStatusByVersion_TestClientJwTValidation"})
     @CitrusTest
     public void componentDevDeploymentStatus_TestClientJwTValidation() throws Exception {
-        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
+        devInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken).getInvokeUrl();
     }
 
 
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_TestClientJwTValidation"})
     @CitrusTest
     public void invokeAPI_TestClientJwTValidation() throws Exception {
-        String apiKey = ComponentUtils.getApiKey(choreoComponent,  accessToken);
+        String apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
         String apiInvocationRequestURI = "/getJwt";
 
         http().

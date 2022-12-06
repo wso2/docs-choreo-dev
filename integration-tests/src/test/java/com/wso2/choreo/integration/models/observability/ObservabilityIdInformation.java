@@ -11,34 +11,22 @@
  * associated services.
  */
 
-package com.wso2.choreo.integration.common.choreoproject;
+package com.wso2.choreo.integration.models.observability;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ObservabilityIdInformation {
     private String obsId;
     private String verzion;
     private String releaseId;
 
-    public String getObsId() {
-        return obsId;
-    }
 
-    public void setObsId(String obsId) {
-        this.obsId = obsId;
-    }
-
-    public String getVerzion() {
-        return verzion;
-    }
-
-    public void setVerzion(String verzion) {
-        this.verzion = verzion;
-    }
-
-    public String getReleaseId() {
-        return releaseId;
-    }
-
-    public void setReleaseId(String releaseId) {
-        this.releaseId = releaseId;
-    }
 }

@@ -175,6 +175,7 @@ export class ComponentAPILifecycle {
 
   static selectSetting() {
     cy.get('[data-testid="Settings"]').click();
+    cy.wait(2000);
   }
 
   static selectResources() {
@@ -187,7 +188,7 @@ export class ComponentAPILifecycle {
 
 
   static selectEnvironment(env:Environment){
-    cy.get('[data-cyid="environment-selector"]').click()
+    cy.get('[data-cyid="environment-selector"]').should('be.visible').click()
     cy.get(`[data-value="${env}"]`).click()
     cy.get('[data-cyid="environment-selector"]>div>div').invoke('text').then(text=>{
       expect(text).equal(env)
@@ -244,7 +245,7 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]').should("be.visible").click();
+    cy.get('[data-cyid="dropdown-api-visibility-selector"]>div[role="button"]').should('be.visible').click();
     cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).wait(100).realClick();
     cy.get('[data-testid="info-banner"]').should('be.visible')
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();

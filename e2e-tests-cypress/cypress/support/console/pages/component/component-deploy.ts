@@ -266,6 +266,10 @@ export class ComponentDeployPage {
       .wait(2000)
       .eq(promoButtonIndex)
       .click(); // promote button
+      cy.wait(36000);
+    cy.get('[data-cyid="test-nav-btn"]', { timeout: 360000 })
+        .eq(invokeUrlIndex)
+        .should("be.visible");
     cy.get('[data-cyid="deployment-status"]', { timeout: 360000 })
       .eq(invokeUrlIndex)
       .contains("Active", { timeout: 360000 });

@@ -22,12 +22,11 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.choreoproject.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.*;
@@ -110,7 +109,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ObservabilityIdCheckException, InterruptedException, ReleaseIdNotFoundException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForAst.mustache");
@@ -156,7 +155,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensity.mustache");
@@ -197,7 +196,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("templates/observability/graphql/queryForMetricDensityHistogram.mustache");
@@ -241,7 +240,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
         JsonObject ast = envSyntaxTrees.get(env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
                 ast.get("packageVersion").getAsString();
@@ -289,7 +288,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
         JsonObject ast = envSyntaxTrees.get(env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
                 ast.get("packageVersion").getAsString();
@@ -342,7 +341,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
             ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
-                restApiComponent.getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
         JsonObject ast = envSyntaxTrees.get(env);
         String moduleId = ast.get("packageOrg").getAsString() + "/" + ast.get("packageName").getAsString() + ":" +
                 ast.get("packageVersion").getAsString();
