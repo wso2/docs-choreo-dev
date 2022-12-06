@@ -44,6 +44,38 @@ export class ComponentDevelopPage {
     cy.contains("Successfully updated the definition.").should("be.visible");
   }
 
+  static addResourcesToProxy(path: string, ...verbs) {
+    cy.get('[id="backdrop-loader"').should("not.exist");
+    cy.get('[data-testid="delete-all-operations-btn"]').click();
+    this.checkHTTPVerb(verbs);
+    cy.get("#operation-target").type(path);
+    cy.get('[data-testid="add-btn"]').click();
+  }
+
+  private static checkHTTPVerb(verbs: string[]) {
+    cy.get("#mui-component-select-verbs").click();
+    verbs.forEach((verb) => {
+      cy.get(`[data-testid="checkbox-${verb.toUpperCase()}"]>span>input `).check();
+    });
+    cy.get("body").type("{esc}");
+  }
+
+  static addParameterToProxyResource(path: string, verb: string, type: string, name: string, dataType: string) {
+    cy.get(`[id="panel-/${path}/${verb.toLowerCase()}-header"`).click();
+    cy.get('[id="param-in"]').first().click();
+    cy.get(`[data-value="${type}"]`).click();
+    cy.get("#parameter-name").focus().type(name);
+    cy.get('[id="data-type"]').first().click();
+    cy.get(`[data-value="${dataType}"]`).click();
+    cy.get('[data-testid="checkbox-required"]>span>input').check();
+    cy.contains("Add").click();
+  }
+
+  static saveResource() {
+    cy.get("button").contains("Save").click({ force: true });
+    cy.contains("API updated successfully").should("be.visible");
+  }
+
   private static addHTTPVerb(verbs: string[]) {
     cy.get("#mui-component-select-verbs").click();
     verbs.forEach((verb) => {
@@ -51,6 +83,8 @@ export class ComponentDevelopPage {
     });
     cy.get("body").type("{esc}");
   }
+
+
 
   static addLabels(labels: string[]) {
     const lblArr = [];
