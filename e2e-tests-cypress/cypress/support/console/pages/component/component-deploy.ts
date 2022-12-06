@@ -338,4 +338,18 @@ export class ComponentDeployPage {
   static verifyDeploymentStatus() {
     cy.get('[data-cyid="deployment-status"]').eq(0).contains("Active");
   }
+
+  static configureAndDeployProxyApiToDev() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cy.wait(4000);
+    cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
+    cy.contains("Configure & Deploy").should("be.visible");
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+  }
+
+  static promoteProxyApiToProd() {
+    cy.get('[data-cyid="btn-promote"]').should("be.enabled").click();
+    cy.contains("Configure & Deploy").should("be.visible");
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+  }
 }

@@ -27,7 +27,7 @@ export class RestAPIProxyTemplate {
     }
 
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
-    cy.get("button>span").contains("Create").click();
+    cy.get("button>span").contains("Create").realClick();
     cy.get('[data-testid="delete-all-operations-btn"]');
     Utils.saveComponentURL();
   }

@@ -196,8 +196,11 @@ export class ComponentAPILifecycle {
 
   }
 
-
- 
+  static selectRevision(env:Environment){
+    cy.get('[data-cyid="selected-revision"]').click()
+    cy.get('[data-testid="revision-history-header"]').should('be.visible')
+    cy.get('[data-cyid*="revision-list-item"]').contains(env).click()
+  }
 
   static disableResourceSecurity(resource: string) {
     cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click()
@@ -248,5 +251,18 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
+  }
+
+  static verifyAPIAccessMode(accessMode: string) {
+    cy.get('[data-cyid="dropdown-api-access-mode-selector"]').should("exist").should("have.text", accessMode);
+    cy.log("Successfully verified the API Access Mode", accessMode);
+  }
+
+  static updateAPIAccessMode(accessMode: string) {
+    cy.get('[data-cyid="dropdown-api-access-mode-selector"]').should("be.visible").click();
+    cy.get(`[data-cyid="item-${accessMode}"]`).wait(100).realClick();
+    cy.get('[data-testid="warning-banner"]').should('be.visible')
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
+    cy.contains("Successfully converted to an external API.").should("be.visible");
   }
 }

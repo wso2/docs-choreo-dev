@@ -21,8 +21,8 @@ export class Curl {
 
     cy.get('[data-testid="env"]>div').click();
     cy.get('ul>li').contains(env).click();
-  
   }
+
   static selectEnvironment(env: Environment) {
     cy.get('[data-cyid="select-env"]').click()
     cy.get('[data-cyid="item-env-name"]').contains(env).click()
@@ -45,6 +45,20 @@ export class Curl {
         return cy.wrap(curl);
       });
 
+  }
+
+  static getRequestComponentsDiscardPrevious(env: string) {
+    return cy.get("textarea").invoke("text")
+      .then((c) => {
+        const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
+        const arrayURL = modifiedURL.split(" ");
+        const url = arrayURL[1];
+        const apiKey = arrayURL[4];
+        const method = arrayURL[6];
+        const curl = { method, url, headers: { "api-key": apiKey } };
+        Cypress.env(`${env}`, curl);
+        return cy.wrap(curl);
+      });
   }
 
   static enterPathParameter(pathParameter: string) {

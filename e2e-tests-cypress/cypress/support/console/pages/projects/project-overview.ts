@@ -24,6 +24,10 @@ export class ProjectOverviewPage {
     cy.get('.MuiContainer-root button').click(); // Need to add a id for the Create button
   }
 
+  static addComponent() {
+    cy.get('[data-cyid="create-component"]').click();
+  }
+
   //Only used for Enterprise login TC
   static addNewComponentEL() {
     cy.get('.MuiContainer-root button').click({ multiple: true }); // Need to add a id for the Create button

@@ -149,8 +149,6 @@ export class Utils {
     });
   }
 
-
-
   static setBrowserCookie(isEPLogin: boolean = false) {
     const dateString = new Date().toISOString();
     const cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`
