@@ -1,0 +1,11 @@
+query {
+    environments(orgUuid: "{{orgUuid}}", type: "external",    projectId: "{{projectId}}" ){
+          name,
+          id,
+          choreoEnv,
+          vhost,
+          apiEnvName,
+          isMigrating,
+          apimEnvId,
+    }
+}

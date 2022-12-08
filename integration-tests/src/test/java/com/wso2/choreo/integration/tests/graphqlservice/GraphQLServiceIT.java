@@ -13,9 +13,8 @@ import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
@@ -30,8 +29,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     private String accessToken;
     private String projectId;
     private String repoName;
-    private ComponentCreationResponse response;
-    private static ChoreoComponent choreoComponent;
+    private ChoreoComponent choreoComponent;
 
     private String apiKey;
     private String devInvokeURL;
@@ -55,15 +53,15 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.graphql.name()).build();
-        response = GraphQL.createUserManagedComponent(dto, accessToken);
-        Assert.assertNotNull(response.getId());
+        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        Assert.assertNotNull(choreoComponent.getId());
     }
 
 
     @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceIT"})
     @CitrusTest
     public void createdComponentStatus_GraphQLServiceIT() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, response.getId(), accessToken);
+        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
@@ -71,7 +69,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createdComponentStatus_GraphQLServiceIT"})
     @CitrusTest
     public void initialPRGeneration_GraphQLServiceIT() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 1);
+        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
         Assert.assertEquals(prs.length, 1);
     }
 
@@ -79,7 +77,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void mergePR_GraphQLServiceIT() throws IOException, UnexpectedResponseException {
         GitHub.mergePR(repoName, "1");
-        PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 0);
+        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
@@ -95,7 +93,7 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"mergeNewCode_GraphQLServiceIT"})
     @CitrusTest
     public void componentRetrieval_GraphQLServiceIT() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
+        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
         Assert.assertNotNull(choreoComponent);
     }
 

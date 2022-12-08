@@ -5,7 +5,7 @@ import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.alert.Alert;
 import com.wso2.choreo.integration.models.alert.AlertResponse;
 import com.wso2.choreo.integration.models.alert.MetaData;

@@ -30,7 +30,8 @@ import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.requestheader.HeaderValues;
+import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.orgs.PromoteConfigurations;
 import lombok.extern.slf4j.Slf4j;
@@ -126,7 +127,7 @@ public class Orgs extends ControlPlaneAPI{
         Response res = null;
 
         for (int i = 0; i < 25; i++) {
-            res = HttpClientUtil.httpGET(url, accessToken, "");
+            res = HttpClientUtil.httpGET(url,accessToken,"");
             Status status = ObjectMapperUtil.mapStringToObject(Status.class, res.getRes(), "");
             if (status.isSuccess()) {
                 return status;

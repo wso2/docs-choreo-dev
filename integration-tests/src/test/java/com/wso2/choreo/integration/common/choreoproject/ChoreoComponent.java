@@ -45,7 +45,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.imageregistry.ImageRegistry;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
@@ -669,7 +669,7 @@ public class ChoreoComponent {
     public String getNamespaceForEnvironment(String accessToken, String environment) throws IOException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("orgUuid", organization.getOrgUUID());

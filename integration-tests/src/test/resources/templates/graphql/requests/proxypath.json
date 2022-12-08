@@ -1,0 +1,12 @@
+{"/popopo": {
+  "get": {
+    "x-auth-type": "Application & Application User",
+    "responses": {
+      "200": {
+        "description": "ok"
+      }
+    },
+    "parameters": [],
+    "operationId": "getPopopo"
+  }
+}}

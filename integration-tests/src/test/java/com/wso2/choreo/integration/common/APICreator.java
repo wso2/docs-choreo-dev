@@ -16,79 +16,91 @@ package com.wso2.choreo.integration.common;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.common.exceptions.ApiCreationException;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import org.springframework.http.HttpHeaders;
+import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
+import com.wso2.choreo.integration.models.requestheader.HeaderValues;
+import com.wso2.choreo.integration.models.response.ProxyResponse;
+import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class APICreator {
-    private static final java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
+@Slf4j
+public class APICreator extends ControlPlaneAPI {
 
-    public String createAPI(String accessToken, String apiName, String apiContext) throws IOException,
-            InterruptedException, ApiCreationException {
-        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT).
-                concat(Constant.APIS_ENDPOINT).concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
-                .concat(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
-        String requestBody = getRequestBodyForAPICreation(apiName, apiContext);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestURI))
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON)
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        int statusCode = response.statusCode();
-        if (statusCode != HttpStatus.CREATED.value()) {
-            throw new ApiCreationException(statusCode, response.body());
-        }
-        JsonObject responseBody = new JsonParser().parse(response.body()).getAsJsonObject();
-        String apiId = responseBody.get(Constant.ID).toString();
-        return apiId;
+    private static final String APIM_ENDPOINT = STS_ENDPOINT + Constant.API_VALIDATE_ENDPOINT;
+
+    public static Response validateAPIName(String apiName, String accessToken) throws IOException {
+        String requestURL = APIM_ENDPOINT.concat("?").concat(Constant.ORGANIZATION_ID)
+                .concat("=").concat(ORG_UUID)
+                .concat("&query=name:").concat(apiName);
+        log.info(requestURL);
+        return HttpClientUtil.httpPOST(requestURL, "", accessToken, "");
+
     }
 
-    public String getRequestBodyForAPICreation(String apiName, String apiContext) throws IOException {
+    public static ProxyResponse<ProxyAPI> createAPI(String apiName, String apiContext, String accessToken) throws IOException {
+
+        String requestURI = STS_ENDPOINT.concat(Constant.APIS_ENDPOINT).concat("?").concat(Constant.ORGANIZATION_ID).concat("=") + ORG_UUID;
+        String requestBody = getRequestBodyForAPICreation(apiName, apiContext);
+        Response res = HttpClientUtil.httpPOST(requestURI, requestBody, accessToken, "");
+        if (res.getStatusCode() != HttpStatus.CREATED.value()) {
+            return ProxyResponse.<ProxyAPI>builder().entity(new ProxyAPI()).response(res).build();
+        }
+        return ProxyResponse.<ProxyAPI>builder().entity(ObjectMapperUtil.mapStringToObject(ProxyAPI.class, res.getRes(), "")).response(res).build();
+    }
+
+    public static String getRequestBodyForAPICreation(String apiName, String apiContext) throws IOException {
+        String scopePrefix = "urn:" + ORG_HANDLE + ":" + apiName.toLowerCase() + ":";
         ApiDTO api = ApiDTO.builder().
                 apiName(apiName).
                 version(Constant.DEFAULT_VERSION).
                 context(apiContext).
+                scopePrefix(scopePrefix).
                 productionEndpoint(Constant.DEFAULT_ENDPOINT).
                 sandboxEndpoint(Constant.DEFAULT_ENDPOINT).build();
         return ObjectMapperUtil.mapObjectToString("templates/api-proxy/requestBodyForAPICreation.mustache", api);
     }
 
-    public String createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId) throws IOException {
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/api-proxy/graphqlQueryForComponentCreation.mustache");
-        Writer writer = new StringWriter();
+    public static Response updateAPI(ProxyAPI proxyAPI, String accessToken) throws IOException {
+        String requestURI = STS_ENDPOINT.concat(Constant.APIS_ENDPOINT) + "/" + proxyAPI.getId() + "/swagger?organizationId=" + ORG_UUID;
+        HeaderValues headerValues = new HeaderValues().
+                setValues(org.springframework.http.HttpHeaders.AUTHORIZATION, accessToken);
+        ApiDTO apiDTO = ApiDTO.builder().apiName(proxyAPI.getName()).
+                description(proxyAPI.getDescription()).
+                productionEndpoint(Constant.DEFAULT_ENDPOINT).
+                sandboxEndpoint(Constant.DEFAULT_ENDPOINT).
+                basePath(proxyAPI.getContext() + "/1.0.0").build();
 
-        GraphqlDTO gql = new GraphqlDTO();
-        gql.setApiName(apiName.toLowerCase());
-        gql.setOrgId(Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)));
-        gql.setOrgHandler(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE));
-        gql.setDisplayName(apiName);
-        gql.setDisplayType(String.valueOf(Constant.displayType.proxy));
-        gql.setProjectId(projectId);
-        gql.setApiId(apiId.replaceAll("\"", ""));
-        mustache.execute(writer, gql).flush();
-        String graphQlQuery = writer.toString();
 
-        return graphQlQuery;
+        String i = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/proxyapiupdaterequest.mustache", apiDTO);
+
+
+        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+        multipartEntityBuilder.addTextBody("apiDefinition", i);
+        multipartEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        HttpEntity entity = multipartEntityBuilder.build();
+
+        return HttpClientUtil.httpPUT(requestURI, entity, headerValues);
+    }
+
+    public static String generateContext(String firstAPIName) {
+        return ORG_UUID.concat("/").concat(ORG_HANDLE).concat("/").concat(firstAPIName.toLowerCase());
     }
 
     public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle, String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
@@ -124,8 +136,21 @@ public class APICreator {
         queryParams.put("projectId", projectId);
         queryParams.put("componentHandler", componentHandler);
         mustache.execute(writer, queryParams).flush();
-        String graphQlQuery = writer.toString();
 
-        return graphQlQuery;
+        return writer.toString();
     }
+
+    public static ProxyResponse<Status> initiateDeployment(String componentId, String versionId, String envId, String accessToken) throws IOException {
+        String url = CHOREO_EP + "/proxy/deployer/v1/components/" + componentId + "/versions/" + versionId + "/initiate-deployment?environmentId=" + envId + "&accessMode=external";
+        Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
+        Status status = ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
+        return ProxyResponse.<Status>builder().response(response).entity(status).build();
+    }
+
+    public static ProxyAPIBuild getAPIBuilds(String componentId, String versionId,  String accessToken){
+        String url =CHOREO_EP+"/proxy/deployer/v1/components/"+componentId+"/versions/"+versionId+"/builds";
+        Response res = HttpClientUtil.httpGET(url,accessToken,"");
+        return  ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class,res.getRes(),"");
+    }
+
 }

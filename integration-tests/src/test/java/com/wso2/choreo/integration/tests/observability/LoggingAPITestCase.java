@@ -31,9 +31,8 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
-import com.wso2.choreo.integration.models.createcomponentresponse.ComponentCreationResponse;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -77,19 +76,17 @@ import static org.hamcrest.Matchers.hasItems;
 
 public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static RestApiChoreoComponent restApiComponent;
     ChoreoProject project;
     String repoName;
     String projectId;
     String devInvokeURL;
     String prodInvokeURL;
     Environment[] en;
-    ChoreoComponent choreoComponent;
 
     @Autowired
     private HttpClient choreoCPTestClient;
 
-    ComponentCreationResponse response;
+    ChoreoComponent choreoComponent;
     ChoreoOrganization org;
 
     @DataProvider(name = "env-provider")
@@ -112,14 +109,14 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
-        response = GraphQL.createUserManagedComponent(dto, accessToken);
-        Assert.assertNotNull(response.getId());
+        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        Assert.assertNotNull(choreoComponent.getId());
     }
 
     @Test(dependsOnMethods = {"createUserManagedComponent_LoggingAPITestCase"})
     @CitrusTest
     public void createdComponentStatus_LoggingAPITestCase() throws UnexpectedResponseException {
-        Status status = Orgs.createdComponentStatus(projectId, response.getId(), accessToken);
+        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
@@ -127,7 +124,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createdComponentStatus_LoggingAPITestCase"})
     @CitrusTest
     public void initialPRGeneration_LoggingAPITestCase() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 1);
+        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
         Assert.assertEquals(prs.length, 1);
     }
 
@@ -135,7 +132,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void mergePR_LoggingAPITestCase() throws IOException, UnexpectedResponseException {
         GitHub.mergePR(repoName, "1");
-        PullRequest[] prs = GraphQL.getComponentPullRequests(response.getId(), accessToken, 0);
+        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
@@ -143,7 +140,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"mergePR_LoggingAPITestCase"})
     @CitrusTest
     public void componentRetrieval_LoggingAPITestCase() throws IOException {
-        choreoComponent = GraphQL.getComponentDetails(projectId, response.getHandler(), accessToken);
+        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
         choreoComponent.setOrganization(org);
         Assert.assertNotNull(choreoComponent);
     }
