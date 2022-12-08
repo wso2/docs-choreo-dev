@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
@@ -28,6 +29,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -562,6 +564,9 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         @Test(dependsOnMethods = {"componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub"})
         @CitrusTest
         public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                Commit[] commitHistory = GraphQL.getCommitHistoryBranch(testComponent.getId(), repoBranch, accessToken);
+                Orgs.addConfiguration(choreoTestClient, this, testComponent, commitHistory, Constant.PROD_ENVIRONMENT);
+
                 testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
         }
 

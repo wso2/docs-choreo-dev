@@ -15,19 +15,16 @@ package com.wso2.choreo.integration.tests.deploy;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.http.client.HttpsEndpointComponent;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.config.Constant.Environment;
-
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -50,7 +47,8 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void addDeploymentConfiguration_DeployIT() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "dev");
+        Commit[] commitHistory = GraphQL.getCommitHistory(restApiComponent.getId(), accessToken);
+        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, commitHistory, Constant.DEV_ENVIRONMENT);
     }
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_DeployIT"})
@@ -80,7 +78,8 @@ public class DeployIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"apiDevInvocation_DeployIT"})
     @CitrusTest
     public void addPromoteConfiguration_DeployIT() throws Exception {
-        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, "prod");
+        Commit[] commitHistory = GraphQL.getCommitHistory(restApiComponent.getId(), accessToken);
+        Orgs.addConfiguration(choreoTestClient, this, restApiComponent, commitHistory, Constant.PROD_ENVIRONMENT);
     }
 
     @Test(dependsOnMethods = {"addPromoteConfiguration_DeployIT"})

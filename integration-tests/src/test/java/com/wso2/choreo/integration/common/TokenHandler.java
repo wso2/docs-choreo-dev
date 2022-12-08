@@ -234,7 +234,7 @@ public class TokenHandler {
         if (!stsAccessToken.isEmpty()) {
             long currentTime = Instant.now().getEpochSecond();
 
-            return tokenExpiryTime - currentTime > 30;
+            return tokenExpiryTime - currentTime > 600;
         }
 
         return false;

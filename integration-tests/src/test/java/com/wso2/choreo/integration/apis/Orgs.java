@@ -31,6 +31,7 @@ import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.orgs.PromoteConfigurations;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 /**
@@ -78,17 +80,17 @@ public class Orgs extends ControlPlaneAPI{
     }
 
     public static void addConfiguration(HttpClient client, TestActionRunner runner,
-                                        ChoreoComponent component, String envName, BalConfig... balconfigs) throws Exception {
+                                        ChoreoComponent component, Commit[] commitHistory, String envName,
+                                        BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
         String envIdToDeploy = component.getLatestAppEnvId(envName);
         String latestVersionId = component.getLatestApiVersion().getId();
-        JsonArray commitHistory = component.getCommitHistory(accessToken);
         String latestCommitSha = component.getLatestCommitHash(commitHistory);
         String orgHandle = component.getOrgHandler();
         String projectId = component.getProjectId();
 
-        String configurationsUpdateRequestURI =CHOREO_EP +"/orgs/".concat(orgHandle).concat("/projects/")
+        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
                 .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
                 .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
 
@@ -106,19 +108,24 @@ public class Orgs extends ControlPlaneAPI{
         String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required", "isRequired");
 
         // Update configurations
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(configurationsUpdateRequestURI)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
-                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                .body(configurationsRequestBody));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK));
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(configurationsUpdateRequestURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(configurationsRequestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)));
     }
 
     public static Status createdComponentStatus(String projectId, String componentId, String accessToken) throws UnexpectedResponseException {

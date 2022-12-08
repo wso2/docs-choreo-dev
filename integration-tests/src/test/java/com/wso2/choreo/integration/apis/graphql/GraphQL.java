@@ -149,7 +149,15 @@ public class GraphQL extends ControlPlaneAPI {
 
     public static Commit[] getCommitHistory(String componentId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
-        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/deploy/graphql/commitHistory.mustache", dto);
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/commitHistory.mustache", dto);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        log.info(response.getRes());
+        return ObjectMapperUtil.mapToCollection(Commit[].class, response.getRes(), "commitHistory");
+    }
+
+    public static Commit[] getCommitHistoryBranch(String componentId, String branch, String accessToken) throws IOException {
+        GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branch).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
         log.info(response.getRes());
         return ObjectMapperUtil.mapToCollection(Commit[].class, response.getRes(), "commitHistory");
