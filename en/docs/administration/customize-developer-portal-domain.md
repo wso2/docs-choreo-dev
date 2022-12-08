@@ -21,7 +21,7 @@ Follow the steps below to configure the custom domain for the Developer Portal:
 2. Click the **Domains** tab and then click on the **Developer Portal** tab. 
 3. Click **Add Custom Domain**. 
 4. Enter your domain name and click **Verify**. Once Choreo verifies the custom domain successfully, click **Next**.
-5. Add the TLS certificates you created for the custom domain and click **Add**. Alternatively, you can click **Let's Encrypt** option to let Choreo generate and manage the certificates for you. However, we recommend you use **Let's Encrypt** for testing only. 
+5. Add the TLS certificates you created for the custom domain and click **Add**. Alternatively, you can click the **Let's Encrypt** option to let Choreo generate and manage the certificates for you. However, we recommend you use **Let's Encrypt** for testing only. 
 
 That's it! You have successfully configured a custom domain for your organization's Choreo Developer Portal. 
 

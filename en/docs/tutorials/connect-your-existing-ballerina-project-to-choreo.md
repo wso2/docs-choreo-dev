@@ -25,8 +25,8 @@ Let's get started!
     !!!info
 
          - The **Choreo GitHub App** requires the following permission:
-            - Read and write access to code and pull requests.
-            - Read access to issues and metadata.
+         - Read access to issues and metadata
+Read and write access to code, pull requests, and repository hooks
          - You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
 
 7. Select the appropriate **GitHub account**, **GitHub repository**, and **Branch** depending on the existing Ballerina project repository you want to connect to Choreo.
@@ -40,6 +40,36 @@ Let's get started!
 9. Click **View Pull Request**.
 10. Review and click **Merge pull request**, and then click **Confirm Merge**. 
    When you merge the pull request, it adds the necessary metadata files to connect your Ballerina project repository to Choreo so that you can proceed to create the component.
+
+11. To configure the pre-commit hook that Choreo uses to extract configurables defined in the Ballerina code, follow the steps given below:
+
+    !!! info
+        When you develop a Choreo component via the Web Editor, Choreo configures this pre-commit hook automatically. However, when you develop a component locally, you need to configure this pre-commit hook manually.
+
+     1. Carry out a GitHub pull locally to update your clone with the latest changes.
+
+     2. In your terminal, navigate to the root directory of your GitHub repository and issue the following commands:
+
+        !!! note
+            Before issuing these commands, you need to check whether the `<MODULE_ROOT>/.githooks/pre-commit` file exists. If it does not, contact our Support team.
+
+         - `chmod +x <MODULE_ROOT>/.githooks/pre-commit`
+         - `git config core.hooksPath <MODULE_ROOT>/.githooks`
+
+        !!! info
+            If the Ballerina module resides at the repository root, exclude `<MODULE_ROOT>/` from the commands. If the Ballerina module resides in a subdirectory, replace `<MODULE_ROOT>/` with the name of that subdirectory.<br/><br/>For example, if the Ballerina module resides in the root directory, the commands can be as follows:<br/><br/> `chmod +x .githooks/pre-commit`<br/> `git config core.hooksPath .githooks`<br/><br/>If the Ballerina module resides in a subdirectory named `foo`, the commands should be as follows:<br/><br/> `chmod +x foo/.githooks/pre-commit`<br/>`git config core.hooksPath foo/.githooks`
+
+     Once you have completed this configuration, your commits to update the component implementation will trigger the pre-hook and generate logs similar to the following extract.
+
+      ```
+      Compiling source
+        johnsmith/foo:0.1.0
+
+      Generating executable
+        .choreo/build/bin/foo.jar
+      [main ea3deab] test
+      3 files changed, 7 insertions(+), 3 deletions(-)
+      ```
 
 Now you have successfully connected your existing Ballerina project repository to Choreo. You can go back to the Choreo Console tab to design the component depending on your requirement.
 
