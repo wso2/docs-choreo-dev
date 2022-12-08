@@ -92,6 +92,9 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
     By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
 
+    !!! note
+        As a security best practice, we highly recommend you **avoid including any sensitive data in the URL** (for example, username, password, access tokens, client secret, etc.), as **Choreo captures it in server logs**.
+
     The specified return type allows the REST API to return the output in either JSON or error format.
 
     Click **Save**.
