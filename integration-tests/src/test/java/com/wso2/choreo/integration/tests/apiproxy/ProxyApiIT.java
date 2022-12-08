@@ -14,7 +14,6 @@
 package com.wso2.choreo.integration.tests.apiproxy;
 
 import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.model.testcase.core.WaitModel;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
@@ -23,6 +22,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -51,11 +51,12 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
     Environment prodEnv;
     ChoreoComponent choreoComponent;
     ProxyAPIBuild proxyAPIBuild;
-
+    String devInvokeBaseURL;
+    String prodInvokeBaseURL;
+    String apiKey;
 
     @BeforeClass
     public void setup_ProxyApiIT() throws IOException, TokenRetrievalException {
-
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoProject testProject = GraphQL.createProject(accessToken);
         projectId = testProject.getId();
@@ -90,7 +91,6 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void componentRetrieval_ProxyApiIT() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
-
         Assert.assertNotNull(choreoComponent);
     }
 
@@ -148,5 +148,38 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), proxyAPI.getId(), buildId, devEnv.getId(), accessToken);
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
+    }
+
+
+    @Test(dependsOnMethods = {"deployProxyAPI_ProxyApiIT"})
+    @CitrusTest
+    public void promoteProxyAPI_ProxyApiIT() throws NoLatestApiVersionFoundException, IOException {
+        String revisionId = proxyAPIBuild.getBuilds()[0].getRevisionId();
+        String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
+        APICreator.promoteProxyAPI(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), prodEnv.getId(), revisionId, buildId, proxyAPI.getId(), accessToken);
+    }
+
+    @Test(dependsOnMethods = {"promoteProxyAPI_ProxyApiIT"})
+    @CitrusTest
+    public void componentDevDeploymentStatus_ProxyApiIT() throws Exception {
+        devInvokeBaseURL = GraphQL.getProxyAPIDeploymentDetails(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), devEnv.getId(), accessToken).getInvokeUrl();
+        prodInvokeBaseURL = GraphQL.getProxyAPIDeploymentDetails(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), prodEnv.getId(), accessToken).getInvokeUrl();
+    }
+
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_ProxyApiIT"})
+    @CitrusTest
+    public void testDevDeployment_ProxyApiIT() throws IOException {
+        apiKey = APICreator.getAPIKey(proxyAPI.getId(), accessToken).getApikey();
+        String devURL = devInvokeBaseURL + "/users";
+        Response dev = HttpClientUtil.httpGET(devURL, "", apiKey);
+        Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_ProxyApiIT"})
+    @CitrusTest
+    public void testProdDeployment_ProxyApiIT() throws IOException {
+        String devURL = prodInvokeBaseURL + "/users";
+        Response dev = HttpClientUtil.httpGET(devURL, "", apiKey);
+        Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value());
     }
 }

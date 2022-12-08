@@ -15,7 +15,7 @@ import java.util.Map;
 public class TestConfigs {
 
 
-    private String apiKey;
+    private String apikey;
     private String invokeUrl;
 
     private Map<String, TestConfigs> configsMap = new HashMap<>();

@@ -48,13 +48,10 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_TestClientJwTValidation() throws Exception {
-
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
-
-
     }
 
 
