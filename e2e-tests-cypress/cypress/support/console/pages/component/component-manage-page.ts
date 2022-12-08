@@ -17,8 +17,6 @@ import { ConnectorAudience } from "../enum/marketplace-connector-audience";
 import { Environment } from "../enum/environment";
 import { Utils } from "../../utils";
 
-
-
 export class ComponentAPILifecycle {
   static devportl_btn = '[data-testid="go-to-dev-portal-btn"]';
 
@@ -39,15 +37,24 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="Lifecycle"]').click();
   }
   static verifyDevRevision() {
-    return cy.get('.MuiBox-root >div>div>span[class*="MuiChip-label"]').eq(0).invoke("text");
+    return cy
+      .get('.MuiBox-root >div>div>span[class*="MuiChip-label"]')
+      .eq(0)
+      .invoke("text");
   }
 
   static verifyProdRevision() {
-    return cy.get('.MuiBox-root >div>div>span[class*="MuiChip-label"]').eq(1).invoke("text");
+    return cy
+      .get('.MuiBox-root >div>div>span[class*="MuiChip-label"]')
+      .eq(1)
+      .invoke("text");
   }
   static publish(audience: ConnectorAudience) {
     this.publishToMarketplace(audience);
-    return cy.get(ComponentAPILifecycle.devportl_btn).focus().should("be.visible");
+    return cy
+      .get(ComponentAPILifecycle.devportl_btn)
+      .focus()
+      .should("be.visible");
   }
 
   static publishWithoutConnector() {
@@ -77,8 +84,10 @@ export class ComponentAPILifecycle {
   }
 
   static goToDeveloperPortalWithoutLogin(idpUser: string) {
-    cy.get("[data-cyid=go-to-dev-portal-btn]").parent().invoke("attr", "href").
-      then((href) => cy.visit(href + "&fidp=" + idpUser));
+    cy.get("[data-cyid=go-to-dev-portal-btn]")
+      .parent()
+      .invoke("attr", "href")
+      .then((href) => cy.visit(href + "&fidp=" + idpUser));
   }
 
   static selectUsagePlans(...plans) {
@@ -92,13 +101,19 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="checkbox-Unlimited"]');
   }
 
-  static addDocument(documentName: string, documentSummary: string, documentType: DocumentType, documentSourceType: DocumentSourceType,
+  static addDocument(
+    documentName: string,
+    documentSummary: string,
+    documentType: DocumentType,
+    documentSourceType: DocumentSourceType,
     documentSource: string
   ) {
     cy.get('[data-testid="Documents"]').click();
     cy.get('[data-testid="add-new-doc"]').click();
     cy.get('[data-testid="document-name"]>div>input').type(documentName);
-    cy.get('[data-testid="document-summary"]>div>textarea').type(documentSummary);
+    cy.get('[data-testid="document-summary"]>div>textarea').type(
+      documentSummary
+    );
     cy.get('[data-testid="document-type-selector"]').click();
     cy.get(`dta-value=${documentType}`).click();
     cy.get('[data-testid="document-source-selector"]').click();
@@ -108,27 +123,32 @@ export class ComponentAPILifecycle {
   }
 
   static publishToMarketplace(connectorAudience: ConnectorAudience) {
-    cy.get('[data-testid="change-state-info"]').should('be.visible')
+    cy.get('[data-testid="change-state-info"]').should("be.visible");
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
+    cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
 
-    cy.get('[data-testid="marketplace-btn"]').focus().should('be.visible')
-    cy.get('[data-testid="connector-publish-wizard-title"]').should("not.exist")
+    cy.get('[data-testid="marketplace-btn"]').focus().should("be.visible");
+    cy.get('[data-testid="connector-publish-wizard-title"]').should(
+      "not.exist"
+    );
   }
-
-
 
   static publishToDevportal() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('[aria-labelledby="confirmation-dialog"]').should('be.visible');
+    cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
     cy.contains("No, Thanks").should("be.enabled").click();
   }
 
-  static configureSecuritySettings(isCORSenable: boolean, isAllOriginsAllowed: boolean, allowedOrigins: string[], allowedHeaders: string[],
-    allowedMethods: string[]) {
+  static configureSecuritySettings(
+    isCORSenable: boolean,
+    isAllOriginsAllowed: boolean,
+    allowedOrigins: string[],
+    allowedHeaders: string[],
+    allowedMethods: string[]
+  ) {
     cy.get('[data-testid="Settings"]').click();
     cy.get('[data-testid="switch-cors-config"]');
     if (isCORSenable) {
@@ -140,16 +160,24 @@ export class ComponentAPILifecycle {
       this.addAllowedOrigins(allowedOrigins);
       this.addAllowedAccessControlHeaders(allowedHeaders);
       this.addAllowedAccessMethods(allowedMethods);
-      cy.get('[role="button"]>span').contains("Save").click();
+      cy.get('[data-cyid="btn-save-settings"]')
+        .should("exist")
+        .click({ force: true });
       cy.get("button").contains("Apply").click();
       cy.contains("Delete").should("be.visible");
-      cy.wait(6000)
+      cy.wait(6000);
     }
   }
 
   private static addAllowedOrigins(origins: string[]) {
     if (origins.length > 0) {
-      origins.forEach((ori) => cy.get('[data-testid="cors-config-origins-input"]>div>div>input').type(`${ori}`).wait(1000).type("{enter}"));
+      origins.forEach((ori) =>
+        cy
+          .get('[data-testid="cors-config-origins-input"]>div>div>input')
+          .type(`${ori}`)
+          .wait(1000)
+          .type("{enter}")
+      );
     }
   }
 
@@ -157,18 +185,23 @@ export class ComponentAPILifecycle {
     if (headers.length > 0) {
       headers.forEach((meth) => {
         cy.get('[data-testid="cors-config-header-input"]>div>div').click();
-        cy.get('[data-testid="cors-config-header-input"]>div>div>input').type(`${meth}`).wait(1000).type("{enter}")
+        cy.get('[data-testid="cors-config-header-input"]>div>div>input')
+          .type(`${meth}`)
+          .wait(1000)
+          .type("{enter}");
       });
     }
   }
 
   private static addAllowedAccessMethods(methods: string[]) {
     if (methods.length > 0) {
-
       methods.forEach((meth) => {
-        cy.get('[data-testid="cors-config-methods-input"]>div>div>div.MuiAutocomplete-endAdornment>button').eq(1).click();
+        cy.get(
+          '[data-testid="cors-config-methods-input"]>div>div>div.MuiAutocomplete-endAdornment>button'
+        )
+          .eq(1)
+          .click();
         cy.contains(meth.toUpperCase()).click();
-
       });
     }
   }
@@ -186,25 +219,27 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-edit-settings"]').click();
   }
 
-
-  static selectEnvironment(env:Environment){
-    cy.get('[data-cyid="environment-selector"]').should('be.visible').click()
-    cy.get(`[data-value="${env}"]`).click()
-    cy.get('[data-cyid="environment-selector"]>div>div').invoke('text').then(text=>{
-      expect(text).equal(env)
-    })
-
+  static selectEnvironment(env: Environment) {
+    cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
+    cy.get(`[data-value="${env}"]`).click();
+    cy.get('[data-cyid="environment-selector"]>div>div')
+      .invoke("text")
+      .then((text) => {
+        expect(text).equal(env);
+      });
   }
 
-  static selectRevision(env:Environment){
-    cy.get('[data-cyid="selected-revision"]').click()
-    cy.get('[data-testid="revision-history-header"]').should('be.visible')
-    cy.get('[data-cyid*="revision-list-item"]').contains(env).click()
+  static selectRevision(env: Environment) {
+    cy.get('[data-cyid="selected-revision"]').click();
+    cy.get('[data-testid="revision-history-header"]').should("be.visible");
+    cy.get('[data-cyid*="revision-list-item"]').contains(env).click();
   }
 
   static disableResourceSecurity(resource: string) {
-    cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click()
-    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`).scrollIntoView().click()
+    cy.get(`[id="panel-/${resource}/get-header"]`).scrollIntoView().click();
+    cy.get(`[id="panel-/${resource}/get-content"] [data-testid="security"]`)
+      .scrollIntoView()
+      .click();
   }
 
   static applyConfiguration(env: Environment, revision: string = "") {
@@ -214,22 +249,22 @@ export class ComponentAPILifecycle {
     if (env === Environment.DEVELOPMENT) {
       cy.intercept({
         method: "GET",
-        url: `${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
+        url: `${Cypress.env(
+          "apimSvcURL"
+        )}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
       }).as("revision");
       cy.wait("@revision", { timeout: 180000 }).then((r) => {
-        const deployedRevisions = r.response.body.list as []
-        const latestRevision = deployedRevisions[deployedRevisions.length - 1]
-        const { displayName } = latestRevision
-        expect(displayName).equal(revision)
+        const deployedRevisions = r.response.body.list as [];
+        const latestRevision = deployedRevisions[deployedRevisions.length - 1];
+        const { displayName } = latestRevision;
+        expect(displayName).equal(revision);
       });
     }
-    cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    cy.get("#panel1a-header").should("be.visible")
-    cy.get('[data-cyid="btn-delete-settings"]').should('be.visible');
-    cy.wait(2000)
-
+    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+    cy.get("#panel1a-header").should("be.visible");
+    cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
+    cy.wait(2000);
   }
-
 
   static selectConsumers() {
     cy.get('[data-cyid="Consumers"]').click();
@@ -240,29 +275,41 @@ export class ComponentAPILifecycle {
   }
 
   static verifyAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]').should("exist").should("have.text", visibility);
+    cy.get('[data-cyid="dropdown-api-visibility-selector"]')
+      .should("exist")
+      .should("have.text", visibility);
     cy.log("Successfully verified the API visibility", visibility);
   }
 
   static updateAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]>div[role="button"]').should('be.visible').click();
-    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).wait(100).realClick();
-    cy.get('[data-testid="info-banner"]').should('be.visible')
+    cy.get('[data-cyid="dropdown-api-visibility-selector"]>div[role="button"]')
+      .should("be.visible")
+      .click();
+    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`)
+      .wait(100)
+      .realClick();
+    cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);
     cy.log("Successfully updated the API visibility");
   }
 
   static verifyAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]').should("exist").should("have.text", accessMode);
+    cy.get('[data-cyid="dropdown-api-access-mode-selector"]')
+      .should("exist")
+      .should("have.text", accessMode);
     cy.log("Successfully verified the API Access Mode", accessMode);
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]').should("be.visible").click();
+    cy.get('[data-cyid="dropdown-api-access-mode-selector"]')
+      .should("be.visible")
+      .click();
     cy.get(`[data-cyid="item-${accessMode}"]`).wait(100).realClick();
-    cy.get('[data-testid="warning-banner"]').should('be.visible')
+    cy.get('[data-testid="warning-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
-    cy.contains("Successfully converted to an external API.").should("be.visible");
+    cy.contains("Successfully converted to an external API.").should(
+      "be.visible"
+    );
   }
 }
