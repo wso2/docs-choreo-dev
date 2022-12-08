@@ -104,9 +104,9 @@ public class APICreator extends ControlPlaneAPI {
     }
 
     public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle, String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
-        Writer writer = new StringWriter();
+//        MustacheFactory mf = new DefaultMustacheFactory();
+//        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
+//        Writer writer = new StringWriter();
 
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().
@@ -121,23 +121,17 @@ public class APICreator extends ControlPlaneAPI {
                 repositoryType(repoType).
                 repositoryBranch(repoBranch).
                 build();
-        mustache.execute(writer, graphqlDTO).flush();
-        return writer.toString();
-
+//        mustache.execute(writer, graphqlDTO).flush();
+//        return writer.toString();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache", graphqlDTO);
+        return ObjectMapperUtil.mapToGraphQLQuery(expectedResponse);
 
     }
 
     public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache");
-        Writer writer = new StringWriter();
-
-        Map<String, String> queryParams = new HashMap<String, String>();
-        queryParams.put("projectId", projectId);
-        queryParams.put("componentHandler", componentHandler);
-        mustache.execute(writer, queryParams).flush();
-
-        return writer.toString();
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache", graphqlDTO);
+        return ObjectMapperUtil.mapToGraphQLQuery(expectedResponse);
     }
 
     public static ProxyResponse<Status> initiateDeployment(String componentId, String versionId, String envId, String accessToken) throws IOException {
@@ -147,10 +141,10 @@ public class APICreator extends ControlPlaneAPI {
         return ProxyResponse.<Status>builder().response(response).entity(status).build();
     }
 
-    public static ProxyAPIBuild getAPIBuilds(String componentId, String versionId,  String accessToken){
-        String url =CHOREO_EP+"/proxy/deployer/v1/components/"+componentId+"/versions/"+versionId+"/builds";
-        Response res = HttpClientUtil.httpGET(url,accessToken,"");
-        return  ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class,res.getRes(),"");
+    public static ProxyAPIBuild getAPIBuilds(String componentId, String versionId, String accessToken) {
+        String url = CHOREO_EP + "/proxy/deployer/v1/components/" + componentId + "/versions/" + versionId + "/builds";
+        Response res = HttpClientUtil.httpGET(url, accessToken, "");
+        return ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class, res.getRes(), "");
     }
 
 }
