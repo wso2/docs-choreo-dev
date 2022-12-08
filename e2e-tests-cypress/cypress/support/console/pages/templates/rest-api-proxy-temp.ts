@@ -27,7 +27,7 @@ export class RestAPIProxyTemplate {
     }
 
     cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
-    cy.get("button>span").contains("Create").realClick();
+    cy.get('[data-cyid="create-api-proxy-submit"]').click();
     cy.get('[data-testid="delete-all-operations-btn"]');
     Utils.saveComponentURL();
   }
@@ -68,7 +68,7 @@ export class RestAPIProxyTemplate {
     if (endpoint) {
       cy.get('[data-testid="api-endpoint"]>div>input').clear().type(endpoint);
     }
-    cy.get("button>span").contains("Create").click();
+    cy.get('[data-cyid="create-api-proxy-submit"]').click();
     this.interceptValidate(); // workaround
 
     let resourceIdentifier = "resource-/intensity";

@@ -124,7 +124,6 @@ export class ComponentDevelopPage {
 
   static getVersion() {
     return cy.get('[data-cyid="version-picker"]>div').then((v) => {
-      cy.log(v.text());
       return v.text().trim();
     });
   }
