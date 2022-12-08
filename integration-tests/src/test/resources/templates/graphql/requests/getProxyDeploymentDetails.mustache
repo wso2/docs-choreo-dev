@@ -1,0 +1,33 @@
+
+query {
+  proxyDeployment(
+  orgHandler: "{{orgHandler}}"
+  orgUuid: "{{orgUuid}}"
+  componentId: "{{componentId}}"
+  versionId: "{{versionId}}"
+  environmentId: "{{environmentId}}"
+  ) {
+  apiId,
+  environment {
+  choreoEnv,
+  name,
+  id
+},
+        lifecycleStatus,
+        version,
+        invokeUrl,
+        endpoint,
+        apiRevision {
+        id,
+        displayName,
+        createdTime
+        },
+        build {
+        id
+        baseRevisionId
+        deployedRevisionId
+        },
+        deployedTime,
+        successDeployedTime
+}
+}
