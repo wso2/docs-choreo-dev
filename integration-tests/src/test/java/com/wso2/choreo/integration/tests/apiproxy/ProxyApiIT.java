@@ -14,12 +14,14 @@
 package com.wso2.choreo.integration.tests.apiproxy;
 
 import com.consol.citrus.annotations.CitrusTest;
+import com.consol.citrus.model.testcase.core.WaitModel;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.componentstatus.Status;
@@ -57,7 +59,6 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoProject testProject = GraphQL.createProject(accessToken);
         projectId = testProject.getId();
-        // Create a unique API Name and a Context.
         firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         firstContext = APICreator.generateContext(firstAPIName);
     }
@@ -86,6 +87,14 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"testCreateComponentForProxyAPI_ProxyApiIT"})
+    @CitrusTest
+    public void componentRetrieval_ProxyApiIT() throws IOException {
+        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
+
+        Assert.assertNotNull(choreoComponent);
+    }
+
+    @Test(dependsOnMethods = {"componentRetrieval_ProxyApiIT"})
     @CitrusTest
     public void testExistingAPI_ProxyApiIT() throws IOException {
         Response response = APICreator.validateAPIName(firstAPIName, accessToken);
@@ -119,8 +128,8 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"getDeploymentEnvironment_ProxyApiIT"})
     @CitrusTest
-    public void initiateProxyDeployment_ProxyApiIT() throws IOException {
-        ProxyResponse<Status> statusProxyResponse = APICreator.initiateDeployment(choreoComponent.getId(), proxyAPI.getId(), devEnv.getId(), accessToken);
+    public void initiateProxyDeployment_ProxyApiIT() throws IOException, NoLatestApiVersionFoundException {
+        ProxyResponse<Status> statusProxyResponse = APICreator.initiateDeployment(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), devEnv.getId(), accessToken);
         Assert.assertEquals(statusProxyResponse.getResponse().getStatusCode(), HttpStatus.OK.value());
         Assert.assertTrue(statusProxyResponse.getEntity().isSuccess());
 
@@ -128,7 +137,16 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"initiateProxyDeployment_ProxyApiIT"})
     @CitrusTest
-    public void getProxyAPIBuilds_ProxyApiIT() {
-        proxyAPIBuild = APICreator.getAPIBuilds(choreoComponent.getId(), devEnv.getId(), accessToken);
+    public void getProxyAPIBuilds_ProxyApiIT() throws NoLatestApiVersionFoundException {
+        proxyAPIBuild = APICreator.getAPIBuilds(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), accessToken);
+    }
+
+
+    @Test(dependsOnMethods = {"getProxyAPIBuilds_ProxyApiIT"})
+    @CitrusTest
+    public void deployProxyAPI_ProxyApiIT() throws IOException {
+        String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
+        ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), proxyAPI.getId(), buildId, devEnv.getId(), accessToken);
+        Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
     }
 }

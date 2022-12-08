@@ -109,11 +109,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 APICreator testAPI = new APICreator();
                 String componentRequestBody = testAPI.createUserManagedNonEmptyComponentCreationQuery(
                         componentName, orgId, orgHandle, projectId, srcGitHubURL, repoSubpath, repoType, repoBranch);
-//                HashMap<String, String> gqlRequestPayload = new HashMap<>() {{
-//                    put(Constant.QUERY, graphQlQuery);
-//                }};
-//                ObjectMapper componentObjectMapper = new ObjectMapper();
-//                String componentRequestBody = componentObjectMapper.writeValueAsString(gqlRequestPayload);
                 $(http()
                                 .client(choreoProjectsTestClient)
                                 .send()
@@ -341,13 +336,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         public void componentRetrieval_TestUserManagedNonEmptyCreateComponentSub() throws JsonProcessingException, IOException {
                 APICreator testAPI = new APICreator();
                 String requestBody = testAPI.getComponentDetailsQuery(projectId, componentHandler);
-//                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-//                        {
-//                                put("query", graphQlQuery);
-//                        }
-//                };
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
                 $(http()
                                 .client(choreoProjectsTestClient)
                                 .send()

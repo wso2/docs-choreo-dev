@@ -13,9 +13,7 @@
 
 package com.wso2.choreo.integration.common;
 
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
+
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
@@ -35,10 +33,7 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Slf4j
 public class APICreator extends ControlPlaneAPI {
@@ -104,11 +99,6 @@ public class APICreator extends ControlPlaneAPI {
     }
 
     public String createUserManagedNonEmptyComponentCreationQuery(String componentName, String orgId, String orgHandle, String projectId, String srcGitRepoUrl, String repoSubpath, String repoType, String repoBranch) throws IOException {
-//        MustacheFactory mf = new DefaultMustacheFactory();
-//        Mustache mustache = mf.compile("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache");
-//        Writer writer = new StringWriter();
-
-
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().
                 apiName(componentName.toLowerCase()).
                 orgId(Integer.parseInt(orgId)).
@@ -121,8 +111,6 @@ public class APICreator extends ControlPlaneAPI {
                 repositoryType(repoType).
                 repositoryBranch(repoBranch).
                 build();
-//        mustache.execute(writer, graphqlDTO).flush();
-//        return writer.toString();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/createUserManagedComponent/graphqlQueryForComponentCreation.mustache", graphqlDTO);
         return ObjectMapperUtil.mapToGraphQLQuery(expectedResponse);
 
@@ -145,6 +133,15 @@ public class APICreator extends ControlPlaneAPI {
         String url = CHOREO_EP + "/proxy/deployer/v1/components/" + componentId + "/versions/" + versionId + "/builds";
         Response res = HttpClientUtil.httpGET(url, accessToken, "");
         return ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class, res.getRes(), "");
+    }
+
+
+    public static ProxyResponse<Status> deployProxyAPI(String componentId, String versionId, String buildId, String envId, String accessToken) throws IOException {
+        String url = CHOREO_EP + "/proxy/deployer/v1/components/" + componentId + "/versions/" + versionId + "/deploy-service?buildId=" + buildId + "&environmentId=" + envId;
+        Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
+        Status status = ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
+        return ProxyResponse.<Status>builder().response(response).entity(status).build();
+
     }
 
 }
