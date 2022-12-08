@@ -1,7 +1,8 @@
 package com.wso2.choreo.integration.common.utils;
 
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.requestheader.HeaderValues;
+import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,7 +18,9 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Logger;
+
 @Slf4j
 public class HttpClientUtil {
 
@@ -64,11 +67,23 @@ public class HttpClientUtil {
         return sendRequest(request);
     }
 
+    public static Response httpPUT(String url, HttpEntity payload, HeaderValues headerValues)  {
+        HttpPut request = new HttpPut(url);
+        setHeader(request, headerValues);
+        request.setEntity(payload);
+        return sendRequest(request);
+    }
+
     public static Response httpDELETE(String url, String accessToken, String apiKey) {
         HttpDelete request = new HttpDelete(url);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
         return sendRequest(request);
+    }
+
+    private static void setHeader(HttpUriRequest request, HeaderValues headerValues) {
+        Map<String, String> values = headerValues.getHeaderValues();
+        values.keySet().forEach(k -> request.setHeader(k, values.get(k)));
     }
 }

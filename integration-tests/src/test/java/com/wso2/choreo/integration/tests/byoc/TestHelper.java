@@ -2,9 +2,7 @@ package com.wso2.choreo.integration.tests.byoc;
 
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.Response;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
+import com.wso2.choreo.integration.models.response.Response;
 
 public class TestHelper {
 

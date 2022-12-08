@@ -28,4 +28,7 @@ public class ApiDTO {
     private String context;
     private String productionEndpoint;
     private String sandboxEndpoint;
+    private String scopePrefix;
+    private  String basePath;
+    private String description;
 }

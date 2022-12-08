@@ -19,8 +19,6 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
-import com.wso2.choreo.integration.common.exceptions.ProjectCreationException;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -44,7 +42,6 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 
 /**
  * $(http()
- *
  * tests related to component creation from user managed non empty repo root.
  */
 public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpringSupport {
@@ -59,14 +56,13 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         private static String prNumber;
         private static String apiKey;
         private static String apiId;
-        private String repoName = "byor-greetings-app1";
-        private String repoType = "UserManagedNonEmpty";
-        private String repoBranch = "dev";
+        private final String repoName = "byor-greetings-app1";
         private String prBranch;
         private String githubOrg;
         private String githubPAT;
         private static ChoreoComponent testComponent;
-
+        private String repoType = "UserManagedNonEmpty";
+        private String repoBranch = "dev";
         @Autowired
         private HttpClient choreoTestClient;
 
@@ -81,13 +77,16 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
 
         @BeforeClass
         public void setup_TestUserManagedNonEmptyCreateComponentRoot()
-                throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+                throws Exception {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
                 githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
                 githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
+
+
+                accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
                 ChoreoProject project = GraphQL.createProject(accessToken);
                 projectId = project.getId();
         }
@@ -102,14 +101,9 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                         .concat(repoName);
                 APICreator testAPI = new APICreator();
                 String repoSubpath = "";
-                String graphQlQuery = testAPI.createUserManagedNonEmptyComponentCreationQuery(
+                String componentRequestBody = testAPI.createUserManagedNonEmptyComponentCreationQuery(
                         componentName, orgId, orgHandle, projectId, srcGitHubURL, repoSubpath, repoType, repoBranch);
-                HashMap<String, String> gqlRequestPayload = new HashMap<>() {{
-                        put(Constant.QUERY, graphQlQuery);
-                }};
 
-                ObjectMapper componentObjectMapper = new ObjectMapper();
-                String componentRequestBody = componentObjectMapper.writeValueAsString(gqlRequestPayload);
                 $(http()
                         .client(choreoProjectsTestClient)
                         .send()
@@ -336,14 +330,8 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @CitrusTest
         public void componentRetrieval_TestUserManagedNonEmptyCreateComponentRoot() throws IOException {
                 APICreator testAPI = new APICreator();
-                String graphQlQuery = testAPI.getComponentDetailsQuery(projectId, componentHandler);
-                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-                        {
-                                put(Constant.QUERY, graphQlQuery);
-                        }
-                };
-                ObjectMapper objectMapper = new ObjectMapper();
-                String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+                String requestBody = testAPI.getComponentDetailsQuery(projectId, componentHandler);
+
                 $(http()
                         .client(choreoProjectsTestClient)
                         .send()
