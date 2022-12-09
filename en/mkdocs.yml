@@ -102,7 +102,6 @@ nav:
       - Configure Enterprise Login: administer/configure-enterprise-login.md
   - References:
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
-
 # - Choreo DevOps: devops/overview.md
 # Extensions
 markdown_extensions:

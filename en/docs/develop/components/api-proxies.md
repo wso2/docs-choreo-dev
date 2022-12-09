@@ -1,6 +1,6 @@
 # REST API Proxy
 
-Learn how you can expose an existing API through a REST API Proxy in Choreo and go on to manage it leveraging the full API Management capabilities of Choreo.
+Learn how you can expose an existing API through a REST API Proxy in Choreo and proceed to manage it leveraging the full API Management capabilities of Choreo.
 
 ## What is a REST API Proxy?
 

@@ -1,5 +1,6 @@
 # Manage Applications
 
+<<<<<<< HEAD
 An application in Choreo is a logical representation of a physical application such as a mobile app, web app, device, etc. To consume an API in Choreo, you need to create an application that maps to your physical application and then subscribes to the required API over a usage policy plan which gives you a usage quota. A single application can have multiple subscriptions to APIs. Using the consumer key and consumer secret, you can generate an access token that you can use to invoke all the APIs subscribed to the same application.
 
 This section will walk you through the steps to create an application in Choreo.
@@ -216,3 +217,6 @@ The parameters required to invoke the revoke token endpoint are as follows:
         * Connection #0 to host sts.choreo.dev left intact
         {"error_description":"Error occurred while revoking authorization grant for applications","error":"server_error"}* Closing connection 0
     ```
+=======
+This document will include information on how a user can create and manage an application in order to consume an API.
+>>>>>>> c322d3a17981f910bfb92ae4fba66946ffd682d0

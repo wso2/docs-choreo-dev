@@ -1,8 +1,13 @@
 # Webhook
+<<<<<<< HEAD:en/docs/develop/components/webhook.md
+Explore how you can create event-driven integrations with Choreo Webhooks.
 
+## What is a webhook?
+=======
 Explore how you can create event-driven integrations with Choreo triggers.
 
 ## What is a Webhook?
+>>>>>>> c322d3a17981f910bfb92ae4fba66946ffd682d0:en/docs/develop/components/triggers.md
 
 A webhook is a cause that activates an action. Webhooks in Choreo are no different and are user-defined callbacks. 
 
