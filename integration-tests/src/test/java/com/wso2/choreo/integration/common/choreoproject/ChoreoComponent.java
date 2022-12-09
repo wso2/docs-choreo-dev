@@ -23,6 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
@@ -1067,22 +1068,9 @@ public class ChoreoComponent {
         ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
-        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/logsV2");
-        URIBuilder builder = new URIBuilder(requestURI);
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .setParameter("releaseId", releaseId)
-                .setParameter("namespace", namespace)
-                .setParameter("sort", "desc")
-                .setParameter("limit", "95");
-        HttpGet request = new HttpGet(builder.build());
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
-
+        String url = ObservabilityService.getObsUrl(releaseId,namespace,observabilityIdInformation.getObsId());
         for (int i = 0; i < 50; i++) {
-            Response res = HttpClientUtil.httpGET(builder.build().toString(), accessToken, "");
+            Response res = HttpClientUtil.httpGET(url, accessToken, "");
             ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
 
             if (obslogs.getRows().length > 0) {
