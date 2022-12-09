@@ -245,21 +245,6 @@ export class ComponentAPILifecycle {
   static applyConfiguration(env: Environment, revision: string = "") {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
-
-    // if (env === Environment.DEVELOPMENT) {
-    //   cy.intercept({
-    //     method: "GET",
-    //     url: `${Cypress.env(
-    //       "apimSvcURL"
-    //     )}/api/am/publisher/v2/apis/*/revisions?organizationId=*`,
-    //   }).as("revision");
-    //   cy.wait("@revision", { timeout: 180000 }).then((r) => {
-    //     const deployedRevisions = r.response.body.list as [];
-    //     const latestRevision = deployedRevisions[deployedRevisions.length - 1];
-    //     const { displayName } = latestRevision;
-    //     expect(displayName).equal(revision);
-    //   });
-    // }
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
     cy.get("#panel1a-header").should("be.visible");
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
