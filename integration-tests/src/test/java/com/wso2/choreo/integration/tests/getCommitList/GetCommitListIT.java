@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -84,6 +85,22 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .body(requestBody)
         .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+    String testConfig = System.getProperty("TestConfig");
+    if (StringUtils.isEmpty(testConfig)) {
+        testConfig = "dev-env-config.yaml";
+    }
+    ClassPathResource resource;
+    switch(testConfig) {
+      case "staging-env-config.yaml":
+        resource = new ClassPathResource("templates/getCommitList/query_get_commit_list_success_stage.json");
+        break;
+      case "prod-env-config.yaml":
+        resource = new ClassPathResource("templates/getCommitList/query_get_commit_list_success_prod.json");
+        break;
+      default:
+        resource = new ClassPathResource("templates/getCommitList/query_get_commit_list_success_dev.json");
+    }
     $(http()
         .client(choreoProjectsTestClient)
         .receive()
@@ -91,11 +108,10 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
         .message()
         .name("createComponent")
         .type(MessageType.JSON)
-        .body(new ClassPathResource("templates/getCommitList/query_get_commit_list_success.json"))
+        .body(resource)
         .validate(json()
             .ignore("$.data.commitHistory[0].author.date")
             .ignore("$.data.commitHistory[0].author.avatarUrl")
             .ignore("$.data.commitHistory[0].sha")));
   }
-
 }
