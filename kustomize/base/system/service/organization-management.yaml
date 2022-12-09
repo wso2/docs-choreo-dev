@@ -12,6 +12,9 @@ spec:
     - name: health-public
       port: 9092
       targetPort: health-public
+    - name: grpc
+      port: 8080
+      targetPort: grpc
 
   selector:
     choreo.component: organization-management

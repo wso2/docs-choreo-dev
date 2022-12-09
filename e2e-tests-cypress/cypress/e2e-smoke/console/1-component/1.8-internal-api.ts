@@ -88,6 +88,33 @@ describe("Verify internal API creation functionality", () => {
     ComponentDeployPage.verifyDeploymentStatus();
   });
 
+  it("Verify resource access without the token in dev", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnCurlDiscardPrevious(
+      Environment.DEVELOPMENT,
+      HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(404);
+      });
+    });
+  });
+
+  it("Verify resource access without the token in prod", () => {
+    TestHelper.testOnCurlDiscardPrevious(
+      Environment.PRODUCTION,
+      HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(404);
+      });
+    });
+  });
+
   it("Apply disable security config in dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
@@ -116,7 +143,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
   });
 
-  it("Verify resource access without the token in dev", () => {
+  it("Verify resource access without the security in dev", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Environment.DEVELOPMENT,
@@ -136,7 +163,7 @@ describe("Verify internal API creation functionality", () => {
     });
   });
 
-  it("Verify resource access without the token in prod", () => {
+  it("Verify resource access without the security in prod", () => {
     TestHelper.testOnCurlDiscardPrevious(
       Environment.PRODUCTION,
       HTTPMethod.GET,
