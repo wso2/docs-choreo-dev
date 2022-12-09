@@ -139,13 +139,6 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
-  });
-
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();

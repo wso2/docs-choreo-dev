@@ -21,7 +21,6 @@ export class APIDeployment {
   static DeployToDev() {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("not.be.disabled").click();
     cy.get('[data-cyid="btn-next"]')
-      .contains("Deploy")
       .should("be.visible")
       .click();
     cy.get('[data-cyid="deployment-status"]')
