@@ -1,6 +1,8 @@
 package com.wso2.choreo.integration.tests.graphqlservice;
 
 import com.consol.citrus.annotations.CitrusTest;
+import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
@@ -13,16 +15,32 @@ import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
+import org.hamcrest.core.StringRegularExpression;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.everyItem;
 
 public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
@@ -34,9 +52,18 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     private String apiKey;
     private String devInvokeURL;
     private String prodInvokeURL;
-
+    private    Environment[] en;
     private  static final  String   QUERY="query{greeting(name:\""+"John"+"\")}";
     private static final String MUTATION="mutation{createUser(name:\""+"John"+"\")}";
+    @Autowired
+    private HttpClient choreoCPTestClient;
+
+
+    @DataProvider(name = "env-provider")
+    public Object[][] environment() {
+        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Development}};
+    }
+
 
     @BeforeClass
     public void setup_GraphQLServiceIT() throws Exception {
@@ -174,5 +201,100 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
+    @Test(dependsOnMethods = {"invokeMutationInProd_TestBYOC"})
+    @CitrusTest
+    public void waitForObservabilityLogs_TestBYOC() throws Exception {
+        en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
+        Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
+        Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
+        choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
+        choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
+    }
+
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_TestBYOC"})
+    @CitrusTest
+    public void testGroupedLogs_TestBYOC(Constant.Environment env) throws Exception {
+        Environment environment = choreoComponent.getEnvironment(en, env);
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
+
+        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
+                .concat(observabilityIdInformation.getObsId())
+                .concat("/groupedlogsV2");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        $(http()
+                .client(choreoCPTestClient)
+                .send()
+                .get(requestPath)
+                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
+                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                .queryParam("releaseId", releaseId)
+                .queryParam("namespace", namespace)
+                .queryParam("limit", "5")
+                .queryParam("bin", "10")
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath()
+                        .expression("$.keySet()", hasItems("columns", "rows"))
+                        .expression("$.columns.size()", greaterThan(1))
+                        .expression("$.columns[*].name", hasItems("TimeGenerated", "Logs"))
+                        .expression("$.columns[*].type", hasItems("datetime", "dynamic"))
+                        .expression("$.rows.size()", greaterThan(1))
+                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
+                )
+        );
+    }
+
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_TestBYOC"})
+    @CitrusTest
+    public void testLiveLogs_TestBYOC(Constant.Environment env) throws Exception {
+        Environment environment = choreoComponent.getEnvironment(en, env);
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
+
+        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
+                .concat(observabilityIdInformation.getObsId())
+                .concat("/logsV2");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        $(http()
+                .client(choreoCPTestClient)
+                .send()
+                .get(requestPath)
+                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
+                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
+                .queryParam("releaseId", releaseId)
+                .queryParam("namespace", namespace)
+                .queryParam("sort", "desc")
+                .queryParam("limit", "95")
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+        $(http()
+                .client(choreoCPTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .validate(jsonPath()
+                        .expression("$.keySet()", hasItems("columns", "rows"))
+                        .expression("$.columns.size()", greaterThanOrEqualTo(1))
+                        .expression("$.columns[*].name", hasItems("TimeGenerated", "LogLevel", "LogEntry", "LogContext"))
+                        .expression("$.columns[*].type", hasItems("datetime", "string", "dynamic", "dynamic"))
+                        .expression("$.rows.size()", greaterThanOrEqualTo(1))
+                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
+                )
+        );
+    }
 
 }

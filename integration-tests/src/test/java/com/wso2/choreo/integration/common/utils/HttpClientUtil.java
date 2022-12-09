@@ -27,6 +27,7 @@ public class HttpClientUtil {
     private static final Logger LOGGER = Logger.getLogger(HttpClientUtil.class.getName());
 
     private static Response sendRequest(HttpUriRequest request) {
+
         String responseBody = null;
         int statusCode = 0;
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build(); CloseableHttpResponse response = httpClient.execute(request)) {
