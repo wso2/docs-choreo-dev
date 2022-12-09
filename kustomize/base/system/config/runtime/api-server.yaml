@@ -50,6 +50,7 @@ upstream:
   dp-project-manager: dp-project-manager:80
   dp-cicd: dp-cicd:80
   dp-rudder: dp-rudder:80
+  organization-management: organization-management:8080
 redis:
   host: ${REDIS_HOST}
   port: 6380
