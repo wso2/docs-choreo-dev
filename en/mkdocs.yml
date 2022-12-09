@@ -54,46 +54,53 @@ nav:
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
       - Quick Start Guide: get-started/quick-start-guide.md
-  - Tutorials: 
-      - Create Your First REST API: tutorials/create-your-first-rest-api.md
-      - Expose an Existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md
-      - Create Your First Webhook: tutorials/create-your-first-webhook.md
-      - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
-      - Construct Statements: tutorials/construct-statements.md
-      - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
-      - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
-  - REST APIs: rest-api.md
-  - API Proxies: api-proxies.md
-  - Webhooks: webhook.md
-  - Scheduled Tasks: scheduled-tasks.md
-  - GraphQL APIs: graphql-api.md
-  - Developer Portal:
-      - Overview: developer-portal/developer-portal.md
-      - Manage Application: developer-portal/manage-application.md
-      - Manage Subscription: developer-portal/manage-subscription.md
-      - Test API: developer-portal/test-api.md
-  - DevOps Portal: devops-portal.md
+      - Tutorials: 
+          - Create Your First REST API: get-started/tutorials/create-your-first-rest-api.md
+          - Expose an Existing API via a REST API Proxy: get-started/tutorials/create-your-first-rest-api-proxy.md
+          - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
+          - Connect Your Own GitHub Repository to Choreo: get-started/tutorials/connect-your-own-github-repository-to-choreo.md
+          - Connect Your Existing Ballerina Project to Choreo: get-started/tutorials/connect-your-existing-ballerina-project-to-choreo.md
+          - Deploy a Containerized Choreo Component: get-started/tutorials/deploy-a-containerized-choreo-component.md
+  - Develop:
+      - Overview: WIP.md
+      - Components:
+          - REST APIs: develop/components/rest-api.md
+          - API Proxies: develop/components/api-proxies.md
+          - Webhooks: develop/components/webhook.md
+          - Scheduled Tasks: develop/components/scheduled-tasks.md
+          - GraphQL APIs: develop/components/graphql-api.md
+      - Run and Test:
+          - Performance Analysis: develop/run-and-test/performance-analysis.md
+      - Explore Code Editor:
+          - Construct Statements: develop/explore-code-editor/construct-statements.md    
+          - Define Configurable Variables: develop/explore-code-editor/define-configurable-variables.md
+          - Handle Non-Ballerina Files in Choreo: develop/explore-code-editor/handle-non-ballerina-files-in-choreo.md
+      - Advanced Topics:
+          - Manage Connectors: develop/advanced-topics/manage-connectors.md
+  - Consume:
+      - Overview: consume/developer-portal.md
+      - Manage Application: consume/manage-application.md
+      - Manage Subscription: consume/manage-subscription.md
+      - Test API: consume/test-api.md
   - Marketplace: marketplace.md
-  - Business Insights: 
-      - View API Insights: insights/view-api-insights.md
-      - Generate Custom Reports: insights/generate-custom-reports.md
-      - Configure Alerts: insights/configure-alerts.md
-      - Choreo Insights API: insights/choreo-insights-api.md
-      - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
-  - Administration:
-      - Connect to an External Identity Provider: administration/connect-to-an-external-identity-provider.md  
-      - Configure a Custom Domain for Developer Portal: administration/customize-developer-portal-domain.md
-      - Configure Enterprise Login: administration/configure-enterprise-login.md
-  - Observability:
-     - Observability Overview: observability/observability-overview.md
-#    - View Logs: observability/view-logs.md
-     - Root Cause Analysis: observability/root-cause-analysis.md
+  - Observe and Analyze:
+      - Observe:
+         - Observability Overview: observe-and-analyze/observe/observability-overview.md
+#        - View Logs: observability/view-logs.md
+         - Root Cause Analysis: observe-and-analyze/observe/root-cause-analysis.md
+      - Analyze: 
+          - View API Insights: observe-and-analyze/analyze/view-api-insights.md
+          - Generate Custom Reports: observe-and-analyze/analyze/generate-custom-reports.md
+          - Configure Alerts: observe-and-analyze/analyze/configure-alerts.md
+          - Choreo Insights API: observe-and-analyze/analyze/choreo-insights-api.md
+          - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md
+  - Alerts: alerts.md
+  - DevOps: devops/devops-portal.md
+  - Administer:
+      - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
+      - Configure a Custom Domain for Developer Portal: administer/customize-developer-portal-domain.md
+      - Configure Enterprise Login: administer/configure-enterprise-login.md
   - References:
-     - Performance Analysis: references/performance-analysis.md
-     - Alerts: references/alerting.md
-     - Manage Connectors: references/manage-connectors.md
-     - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
-     - Define Configurable Variables: references/define-configurable-variables.md
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
 
 # - Choreo DevOps: devops/overview.md
