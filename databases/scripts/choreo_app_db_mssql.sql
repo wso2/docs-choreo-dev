@@ -1689,6 +1689,73 @@ CREATE TABLE [dbo].[org_custom_theme]
     CONSTRAINT theme_org_id_fk FOREIGN KEY (organization_id) REFERENCES organization(id) ON DELETE CASCADE
 )
 
+CREATE TABLE [dbo].[org_self_signup_config]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [is_enabled] [bit] NOT NULL DEFAULT 1,
+    [is_auto_approval_enabled] [bit] NOT NULL DEFAULT 1,
+    [is_custom_impl] [bit] NOT NULL DEFAULT 0,
+    [custom_endpoint] [nvarchar](255) NOT NULL,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_org_self_signup_config UNIQUE(organization_uuid)
+)
+
+CREATE TABLE [dbo].[org_self_signup_approval_request]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [user_idp_id] [nvarchar](255) NOT NULL,
+    [email] [nvarchar](255) NOT NULL,
+    [status] [nvarchar](255) NOT NULL CHECK (status IN('pending', 'approved', 'rejected')) DEFAULT 'pending',
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_org_self_signup_approval_request UNIQUE(organization_uuid, user_idp_id)
+)
+
+/****** Object:  Trigger [dbo].[org_self_signup_config_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[org_self_signup_config_UpdateTimeTrigger] ON [dbo].[org_self_signup_config]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [org_self_signup_config] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[org_self_signup_config] ENABLE TRIGGER [org_self_signup_config_UpdateTimeTrigger]
+    GO
+
+/****** Object:  Trigger [dbo].[org_self_signup_approval_request_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[org_self_signup_approval_request_UpdateTimeTrigger] ON [dbo].[org_self_signup_approval_request]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [org_self_signup_approval_request] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[org_self_signup_approval_request] ENABLE TRIGGER [org_self_signup_approval_request_UpdateTimeTrigger]
+    GO
+
 /****** Object:  Table [dbo].[user_migration_info]    Script Date: 12/07/2021 5:40:00 PM ******/
 SET ANSI_NULLS ON
     GO
