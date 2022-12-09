@@ -981,11 +981,10 @@ The data filter.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>getAPIUsageByGeoLocation</strong></td>
-<td valign="top"><a href="#apiusagebygeolocation">APIUsageByGeoLocation</a></td>
+<td valign="top">[<a href="#usagebygeolocation">UsageByGeoLocation</a>]</td>
 <td>
 
-NOTE: The data required for this operation is not yet collected in the database. Therefore, this operation returns
-empty results.
+NOTE: Currently, this operation returns data only for on-premise environments.
 
 Returns API usage by country within the specified time range for the given combination of tenant ID, environment ID,
 and organization ID. Optionally, you can configure the <code>geoLocationFilter</code> parameter to further filter the results.
@@ -1711,41 +1710,6 @@ A list containing the API usage values across APIs by each backend. Returns an e
 <td>
 
 The granularity value for which data is retrieved.
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### APIUsageByGeoLocation
-
-Represents a single API usage across different countries.
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>apiId</strong></td>
-<td valign="top"><a href="#id">ID</a></td>
-<td>
-
-The ID of the API.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>usageByGeoLocation</strong></td>
-<td valign="top">[<a href="#usagebygeolocation">UsageByGeoLocation</a>]</td>
-<td>
-
-A list containing usages of API in different countries. Returns an empty array if no data is available.
 
 </td>
 </tr>
@@ -4116,11 +4080,11 @@ Filters the API usage by geolocation results.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>apiId</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>apiIds</strong></td>
+<td valign="top">[<a href="#string">String</a>]</td>
 <td>
 
-The results are filtered by the API ID specified here.
+The results are filtered for the list of APIs you specify here.
 
 </td>
 </tr>
