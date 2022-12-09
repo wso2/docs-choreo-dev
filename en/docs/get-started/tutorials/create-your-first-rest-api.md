@@ -18,7 +18,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
 2. Expand the drop-down menu for projects and click **+ Create New**.
 
-    ![Create project](../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
+    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
 3. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
 
@@ -31,7 +31,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 
     This takes you to the **Components** page shown below.
 
-    ![Create component](../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
+    ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
 
 ### Step 1.2: Add a REST API component
 
@@ -69,11 +69,11 @@ In this tutorial, let's design the REST API by updating the low-code diagram as 
 
 2. Remove the resource that is configured by default for the REST API by clicking its **Delete** icon.
 
-    ![Delete resource](../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
+    ![Delete resource](../../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
 
 3. Add a new resource by clicking the **+** icon under the existing construct.
 
-    ![Add resource](../assets/img/tutorials/rest-api/add-resource.png){.cInlineImage-half}
+    ![Add resource](../../assets/img/tutorials/rest-api/add-resource.png){.cInlineImage-half}
 
     Then click **Resource**.
 
@@ -195,7 +195,7 @@ Now you have completed designing the `Statistics` REST API.
 
 The low-code diagram looks as follows:
 
-![Add service construct](../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-half}
+![Add service construct](../../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-half}
 
 The code view looks as follows:
 
@@ -250,7 +250,7 @@ Let's run the REST API you designed in the Web Editor to check whether it can be
 
     A response is displayed as follows in the **Response body** field under **Responses**.
 
-    ![Try-out response](../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
+    ![Try-out response](../../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
 
 The REST API you created works as expected. Therefore, now you can commit it.
 
@@ -264,7 +264,7 @@ The REST API you designed is currently available only in the Web Editor. To use 
 
 2. In the left panel, enter a commit message (e.g., `Implement REST API`) and click the tick.
 
-    ![Commit message](../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-full}
+    ![Commit message](../../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-full}
 
     Select **Yes** in the message that appears to specify that you need the changes to be staged.
 
@@ -273,7 +273,7 @@ The REST API you designed is currently available only in the Web Editor. To use 
     !!! info
         This icon appears only after the committing process is completed.
 
-    ![Push changes](../assets/img/tutorials/rest-api/push-changes.png){.cInlineImage-full}
+    ![Push changes](../../assets/img/tutorials/rest-api/push-changes.png){.cInlineImage-full}
 
 Once the changes are successfully pushed to the GitHub repository, the Web Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
 
@@ -285,15 +285,15 @@ To deploy the API, follow the steps below:
 
 1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
 
-    ![Deploy API](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
+    ![Deploy API](../../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
 
 2. To check the progress of the deployment, click **View Logs**
 
-    ![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
+    ![Deployment progress](../../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
 
 Once the API is deployed, the **Development** card indicates that the API is active as shown below.
 
-![Deployed API](../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-full}
+![Deployed API](../../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-full}
 
 Now you can test your deployed REST API to check again whether it is working as expected.
 
@@ -313,7 +313,7 @@ In this tutorial, let's test via the OpenAPI Console:
 
     The following is displayed as the response body under **Responses**.
 
-    ![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
+    ![Response for the Deployed API](../../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
 
 Congratulations! You have now successfully created and tested a REST API in Choreo!
 

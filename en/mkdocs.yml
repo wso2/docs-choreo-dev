@@ -62,7 +62,6 @@ nav:
           - Connect Your Existing Ballerina Project to Choreo: get-started/tutorials/connect-your-existing-ballerina-project-to-choreo.md
           - Deploy a Containerized Choreo Component: get-started/tutorials/deploy-a-containerized-choreo-component.md
   - Develop:
-      - Overview: WIP.md
       - Components:
           - REST APIs: develop/components/rest-api.md
           - API Proxies: develop/components/api-proxies.md
