@@ -170,40 +170,40 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_GraphQLServiceIT"})
     @CitrusTest
-    public void invokeQueryInDev_TestBYOC() throws Exception {
+    public void invokeQueryInDev_GraphQLServiceIT() throws Exception {
         apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
        Response res =  GqlServiceTestHelper.sendRequest(devInvokeURL,QUERY,apiKey);
        Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"invokeQueryInDev_TestBYOC"})
+    @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceIT"})
     @CitrusTest
-    public void invokeQueryInProd_TestBYOC() throws Exception {
+    public void invokeQueryInProd_GraphQLServiceIT() throws Exception {
         apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
         Response res =  GqlServiceTestHelper.sendRequest(prodInvokeURL,QUERY,apiKey);
         Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
 
-    @Test(dependsOnMethods = {"invokeQueryInProd_TestBYOC"})
+    @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceIT"})
     @CitrusTest
-    public void invokeMutationInDev_TestBYOC() throws Exception {
+    public void invokeMutationInDev_GraphQLServiceIT() throws Exception {
         apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
         Response res =  GqlServiceTestHelper.sendRequest(devInvokeURL,MUTATION,apiKey);
         Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"invokeMutationInDev_TestBYOC"})
+    @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceIT"})
     @CitrusTest
-    public void invokeMutationInProd_TestBYOC() throws Exception {
+    public void invokeMutationInProd_GraphQLServiceIT() throws Exception {
         apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
         Response res =  GqlServiceTestHelper.sendRequest(prodInvokeURL,MUTATION,apiKey);
         Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"invokeMutationInProd_TestBYOC"})
+    @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceIT"})
     @CitrusTest
-    public void waitForObservabilityLogs_TestBYOC() throws Exception {
+    public void waitForObservabilityLogs_GraphQLServiceIT() throws Exception {
         en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
         Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
@@ -211,9 +211,9 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_TestBYOC"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceIT"})
     @CitrusTest
-    public void testGroupedLogs_TestBYOC(Constant.Environment env) throws Exception {
+    public void testGroupedLogs_GraphQLServiceIT(Constant.Environment env) throws Exception {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
@@ -254,9 +254,9 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_TestBYOC"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceIT"})
     @CitrusTest
-    public void testLiveLogs_TestBYOC(Constant.Environment env) throws Exception {
+    public void testLiveLogs_GraphQLServiceIT(Constant.Environment env) throws Exception {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
