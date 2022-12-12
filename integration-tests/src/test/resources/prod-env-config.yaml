@@ -30,6 +30,8 @@ alerts:
   #ALERT_MAIL_IMAP_PASS:
   ALERT_ORG_UUID: cde82885-2dee-492a-be36-60e13f7aab81
   ALERT_RELEASE_ID: 156f5be1-9d3e-44e9-8dc2-50f37e6c21da
+getCommitList:
+  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_prod.json
 anomalyDetection:
   #ANOMALY_DETECTION_MAIL_IMAP_PASS:
   ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID: MhBgF6FPCW_7lCYRmyuR6uJmekwa
