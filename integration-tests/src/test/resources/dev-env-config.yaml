@@ -23,6 +23,7 @@ common:
   GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
   #GMAIL_API_CS:
   #GMAIL_API_REFRESH_TOKEN:
+  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_dev.json
 insights:
   INSIGHTS_ENDPOINT: https://analytics-event-auth.dv.choreo.dev
   INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
@@ -30,8 +31,6 @@ alerts:
   #ALERT_MAIL_IMAP_PASS:
   ALERT_ORG_UUID: b545f89e-b328-4ff3-8a47-0ae964674957
   ALERT_RELEASE_ID: de821f3e-9418-449f-99d9-687831b5b3f7
-getCommitList:
-  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_dev.json
 anomalyDetection:
   #ANOMALY_DETECTION_MAIL_IMAP_PASS:
   ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID: rE1ZT7OeAldjucbJSPQhdpBS19ga

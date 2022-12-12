@@ -36,9 +36,6 @@ public class ConfigYaml {
     @JsonProperty("alerts")
     Map<String, String> alerts;
 
-    @JsonProperty("getCommitList")
-    Map<String, String> getCommitList;
-
     @JsonProperty("anomalyDetection")
     Map<String, String> anomalyDetection;
 
