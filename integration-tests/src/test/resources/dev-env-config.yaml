@@ -23,6 +23,7 @@ common:
   GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
   #GMAIL_API_CS:
   #GMAIL_API_REFRESH_TOKEN:
+  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_dev.json
 insights:
   INSIGHTS_ENDPOINT: https://analytics-event-auth.dv.choreo.dev
   INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155

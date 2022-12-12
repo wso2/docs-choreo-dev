@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -84,6 +86,8 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .body(requestBody)
         .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+    String resourcePath  = Configuration.getConfig(ConfigDefinition.COMMIT_LIST_EXAMPLE_RESPONSE);
     $(http()
         .client(choreoProjectsTestClient)
         .receive()
@@ -91,11 +95,10 @@ public class GetCommitListIT extends TestNGCitrusSpringSupport {
         .message()
         .name("createComponent")
         .type(MessageType.JSON)
-        .body(new ClassPathResource("templates/getCommitList/query_get_commit_list_success.json"))
+        .body(new ClassPathResource(resourcePath))
         .validate(json()
             .ignore("$.data.commitHistory[0].author.date")
             .ignore("$.data.commitHistory[0].author.avatarUrl")
             .ignore("$.data.commitHistory[0].sha")));
   }
-
 }
