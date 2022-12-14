@@ -175,16 +175,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
     }
 
-//    @Test(dependsOnMethods = {"componentDeploymentStatus_CreateDeployInvokeWebhookIT"})
-//    @CitrusTest
-//    public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-//        Commit[] commitHistory = GraphQL.getCommitHistoryBranch(choreoComponent.getId(), repoBranch, accessToken);
-//        Orgs.addConfiguration(choreoTestClient, this, choreoComponent, commitHistory, Constant.PROD_ENVIRONMENT);
-//        choreoComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
-//    }
-
-
-
     @Test(dependsOnMethods = {"componentDeploymentStatus_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void invokeAPI_CreateDeployInvokeWebhookIT() throws Exception {
