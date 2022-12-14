@@ -43,3 +43,4 @@ resources:
   - choreo-apim-proxy-deployer.yaml
   - choreo-admin-api.yaml
   - opentelemetry-collector.yaml
+  - cio-event-collector-service
