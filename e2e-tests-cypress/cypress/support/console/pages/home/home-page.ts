@@ -12,6 +12,7 @@
  */
 
 
+import { Utils } from "../../utils";
 import { LoginPage } from "../login-page";
 
 export class ChoreoHomePage {

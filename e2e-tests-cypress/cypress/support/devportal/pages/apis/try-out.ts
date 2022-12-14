@@ -107,8 +107,6 @@ export class TryOut {
 
   static GenerateAccessToken() {
     cy.log("Generating an access token");
-    // cy.get('[data-testid="application-selector"]').click();
-    // cy.get("body #menu- div ul li").eq(0).click();
     cy.get('[data-testid="get-test-key-btn"]').should("be.enabled").click();
     cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
     cy.log("Successfully generated an access token");

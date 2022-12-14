@@ -33,6 +33,7 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   after(() => {
+    LoginPage.reLoginToChoreo();
     ChoreoHomePage.logout();
   });
 
@@ -41,7 +42,7 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.selectProject();
+    ChoreoHomePage.navigateToComponents();
     ProjectOverviewPage.addNewComponentEL();
      RestAPITemplate.selectHttpAPITemplate();
      RestAPITemplate.createApiFromScratch(

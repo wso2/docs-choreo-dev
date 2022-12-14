@@ -71,6 +71,7 @@ export class LoginPage {
     this.setCookie(componentURL, "commonAuthId", common)
     cy.visit(componentURL);
     this.rejectCookies()
+    cy.get('[data-testid="header-user-profile-menu"]').should('be.visible')
   }
 
   static navigateToCodespaceEP() {
