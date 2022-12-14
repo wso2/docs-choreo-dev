@@ -17,7 +17,7 @@ export class ApiCredentials {
     cy.get('[data-testid="credentials-item-link"]').click();
     cy.url().should("include", "/credentials");
     cy.log("Successfully navigated to credentials tab");
-    cy.wait(5000);
+    cy.wait(3000);
   }
 
   static generateCredentials() {
@@ -25,7 +25,7 @@ export class ApiCredentials {
     cy.get(".MuiSelect-root").click({ force: true });
     cy.get('.MuiList-root > [tabindex="0"]').click();
     cy.get('[data-testid="generate-creds-btn"]').click();
-    cy.wait(6000);
+    cy.wait(3000);
     cy.get('[data-testid="generate-access-token-btn"]').should("exist");
     cy.log("Successfully generated credentials");
   }

@@ -2,6 +2,7 @@ package com.wso2.choreo.integration.apis.observability;
 
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.ObsRequestParam;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URISyntaxException;
@@ -16,20 +17,17 @@ public class ObservabilityService extends ControlPlaneAPI {
 
     }
 
+    public static String getObsUrl(ObsRequestParam obsRequestParam, String obsId, Constant.logType logType) throws URISyntaxException {
 
-    public static String getObsUrl(String releaseId, String namespace, String obsId) throws URISyntaxException {
-
-        String requestURI = CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
-                .concat(obsId)
-                .concat("/logsV2");
+        String requestURI = CHOREO_CP_GW_ENDPOINT.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX).concat(obsId).concat("/").concat(logType.name());
         URIBuilder builder = new URIBuilder(requestURI);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
                 .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .setParameter("releaseId", releaseId)
-                .setParameter("namespace", namespace)
-                .setParameter("sort", "desc")
-                .setParameter("limit", "95");
+                .setParameter("releaseId", obsRequestParam.getReleaseId())
+                .setParameter("namespace", obsRequestParam.getNamespace())
+                .setParameter("sort", obsRequestParam.getSort())
+                .setParameter("limit", obsRequestParam.getLimit());
 
         return builder.build().toString();
     }

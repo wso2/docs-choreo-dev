@@ -119,7 +119,7 @@ export class Apis {
       } else {
         let k = this.futureTime - Date.now();
         if (k >= 0) {
-          cy.wait(80000);
+          cy.wait(10000);
           this.verifyAPI(url, header, versionCount);
         }
       }

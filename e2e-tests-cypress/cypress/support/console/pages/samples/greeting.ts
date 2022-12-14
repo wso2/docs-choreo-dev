@@ -25,9 +25,9 @@ export class GreetingSample {
         cy.wrap($p).click()
       }
     })
-    cy.contains('View All Samples').click()
+    cy.contains('View All Samples').focus().click()
     cy.get('[data-cyid="greeting_service"]').should("be.visible")
-    cy.get('[role="dialog"]>div>div>div>div>div>div>button').should('be.visible').type(`${service}{enter}`)
+    cy.get('[placeholder="Search by Samples"]').should('be.visible').type(`${service}{enter}`)
 
     cy.get(`${sampleService}`).should("be.visible")
     cy.get(`${sampleService}`).eq(0).realHover().wait(2000)

@@ -26,7 +26,7 @@ import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explo
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { Environment } from "../../../support/console/pages/enum/environment";
 
-describe("Create salesforce new lead to gsheet sample in Choreo", () => {
+describe.skip("Create salesforce new lead to gsheet sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const COMPONENT_NAME = Utils.generateComponentName("rest-SF");
@@ -67,7 +67,6 @@ describe("Create salesforce new lead to gsheet sample in Choreo", () => {
       Cypress.env("gsrefreshUrl"),
       Cypress.env("gsspreadsheetId")
       );
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
   it("Verify component with configurables promote to prod", () => {
