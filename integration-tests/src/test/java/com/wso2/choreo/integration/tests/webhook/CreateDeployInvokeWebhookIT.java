@@ -23,6 +23,7 @@ import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
@@ -73,6 +74,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private String namespace;
     private String obsId;
     private String devInvokeURL;
+    private String repoBranch = "dev";
 
     private ChoreoComponent choreoComponent;
 
@@ -172,6 +174,16 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     public void componentDeploymentStatus_CreateDeployInvokeWebhookIT() throws Exception {
         devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
     }
+
+//    @Test(dependsOnMethods = {"componentDeploymentStatus_CreateDeployInvokeWebhookIT"})
+//    @CitrusTest
+//    public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
+//        Commit[] commitHistory = GraphQL.getCommitHistoryBranch(choreoComponent.getId(), repoBranch, accessToken);
+//        Orgs.addConfiguration(choreoTestClient, this, choreoComponent, commitHistory, Constant.PROD_ENVIRONMENT);
+//        choreoComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+//    }
+
+
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_CreateDeployInvokeWebhookIT"})
     @CitrusTest
@@ -337,19 +349,17 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         OffsetDateTime oneHourAgoDateTimeAtUTC = currentDateTimeAtUTC.minusHours(1);
         OffsetDateTime oneHourAfterDateTimeAtUTC = currentDateTimeAtUTC.plusHours(1);
 
-        String requestURI = "observability/logging/0.1.0/applications/" + obsId +
-                "/logsV2?" +
+        String requestURI = "observability/logging/0.1.0/applications/loggingAPI/logsV2?" +
                 "startTime=" + oneHourAgoDateTimeAtUTC + "&endTime=" +
                 oneHourAfterDateTimeAtUTC +
                 "&releaseId=" + releaseId +
                 "&namespace=" + namespace +
-                "&searchPhrase=ChoreoIntegrationTest" +
-                "&sort=desc&limit=95";
+                "&limit=63&sort=desc";
 
         $(repeatOnError()
-                .until("i = 25")
+                .until("i = 3")
                 .index("i")
-                .autoSleep(6000)
+                .autoSleep(8000)
                 .actions(
                         http()
                                 .client(choreoCPTestClient)
@@ -383,3 +393,4 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     }
 
 }
+
