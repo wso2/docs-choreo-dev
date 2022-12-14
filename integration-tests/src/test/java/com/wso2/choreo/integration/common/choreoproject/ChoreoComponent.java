@@ -75,6 +75,7 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.concurrent.TimeUnit;
 
+import com.wso2.choreo.integration.config.ObsRequestParam;
 import com.wso2.choreo.integration.models.response.Response;
 import com.wso2.choreo.integration.models.commithistory.Commit;
 
@@ -1097,7 +1098,8 @@ public class ChoreoComponent {
         ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
-        String url = ObservabilityService.getObsUrl(releaseId,namespace,observabilityIdInformation.getObsId());
+        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("desc").limit("95").build();
+        String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.logsV2);
         for (int i = 0; i < 50; i++) {
             Response res = HttpClientUtil.httpGET(url, accessToken, "");
             ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");

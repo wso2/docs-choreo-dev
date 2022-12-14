@@ -96,6 +96,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_LoggingAPITestCase() throws Exception {
+     
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         project = GraphQL.createProject(accessToken);
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
@@ -156,7 +157,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"addDeploymentConfiguration_LoggingAPITestCase"})
     @CitrusTest
     public void deploy_LoggingAPITestCase() throws Exception {
-        GraphQL.deployComponent(choreoComponent, accessToken);
+      //  GraphQL.deployComponent(choreoComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"deploy_LoggingAPITestCase"})
@@ -195,11 +196,15 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
     public void waitForObservabilityLogs() throws Exception {
+
         en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
         Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
         choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
         choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
+
+        String devReleaseId =  choreoComponent.getReleaseIdForEnvironment(devEnv.getChoreoEnv());
+        String prodReleaseId =  choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
     }
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs"})
