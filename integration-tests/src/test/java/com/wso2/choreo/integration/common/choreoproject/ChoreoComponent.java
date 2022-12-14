@@ -634,6 +634,35 @@ public class ChoreoComponent {
     }
 
     /**
+     * Get details about the revisions of an api
+     *
+     * @param accessToken
+     * @param apiId
+     * @param orgUUID
+     * @return
+     * @throws Exception
+     */
+    public JsonArray getRevisions(String accessToken, String apiId, String orgUUID)
+            throws Exception {
+        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
+                .concat("/api/am/publisher/v2/apis/")
+                .concat(apiId).concat("/revisions?organizationId=")
+                .concat(orgUUID);
+        HttpGet request = new HttpGet(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JsonObject responseJSON = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray revisions = (JsonArray) responseJSON.get("list");
+            if (revisions != null) {
+                return revisions;
+            }
+            throw new ApiKeyNotFoundException();
+        }
+    }
+
+    /**
      * Get the latest commit hash from list of commit hashes
      *
      * @param commitHistory The list of commit hashes

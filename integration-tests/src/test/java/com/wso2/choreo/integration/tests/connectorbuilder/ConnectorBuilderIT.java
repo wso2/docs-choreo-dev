@@ -4,6 +4,8 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
@@ -34,9 +36,9 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
 
     private static String componentId;
     private static String accessToken;
-    private static String apiId;
     private String orgHandle;
     private String orgUuid;
+    private static String revisionId;
 
     @Autowired
     private HttpClient choreoTestClient;
@@ -54,11 +56,13 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
         RestApiChoreoComponent restApiComponent =
                 (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         componentId = restApiComponent.getId();
-        apiId = restApiComponent.getLatestApiVersion().getProxyId();
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.getLatestApiVersion()
                 .changeApiLifeCycle(accessToken, org.getOrgUUID(), Constant.apiLIifCycleState.Publish);
+        JsonArray revisions = restApiComponent.getRevisions(accessToken, restApiComponent.getLatestApiVersion().getProxyId(),orgUuid);
+        JsonObject revision =(JsonObject) revisions.get(0);
+        revisionId = revision.get("id").getAsString();
     }
 
     @Test
@@ -74,7 +78,7 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header("x-correlation-id", Constant.X_CORRELATION_UUID)
                 .body("{" +
-                        "    \"apiId\": \"" + apiId + "\"," +
+                        "    \"apiId\": \"" + revisionId + "\"," +
                         "    \"organizationId\": \"" + orgUuid + "\"," +
                         "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
                         "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
@@ -91,35 +95,6 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"publishConnector_ConnectorBuilderIT"})
-    @CitrusTest
-    public void republishConnector_ConnectorBuilderIT() {
-        $(http()
-                .client(choreoTestClient)
-                .send()
-                .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
-                        .concat("/").concat(componentId).concat("/republish"))
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
-                .body("{" +
-                        "    \"apiId\": \"" + apiId + "\"," +
-                        "    \"organizationId\": \"" + orgUuid + "\"," +
-                        "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
-                        "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
-                        "}")
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        $(http()
-                .client(choreoTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
-    }
-
-    @Test(dependsOnMethods = {"republishConnector_ConnectorBuilderIT"})
     @CitrusTest
     public void getConnectorStatus_ConnectorBuilderIT() throws InterruptedException {
         $(repeatOnError()
@@ -179,5 +154,34 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
                         .ignore("$.createdDate")
                 )
         );
+    }
+
+    @Test(dependsOnMethods = {"getConnector_ConnectorBuilderIT"})
+    @CitrusTest
+    public void republishConnector_ConnectorBuilderIT() {
+        $(http()
+                .client(choreoTestClient)
+                .send()
+                .post(Constant.USER_CONNECTORS_ENDPOINT_SUFFIX.concat("/").concat(orgHandle)
+                        .concat("/").concat(componentId).concat("/republish"))
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header("x-correlation-id", Constant.X_CORRELATION_UUID)
+                .body("{" +
+                        "    \"apiId\": \"" + revisionId + "\"," +
+                        "    \"organizationId\": \"" + orgUuid + "\"," +
+                        "    \"connectorVersion\": \"" + Constant.TEST_CONNECTOR_VERSION + "\"," +
+                        "    \"visibility\": \"" + Constant.TEST_CONNECTOR_VISIBILITY + "\"" +
+                        "}")
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+        $(http()
+                .client(choreoTestClient)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(new ClassPathResource("templates/connectorbuilder/republish_success_ok.json")));
     }
 }
