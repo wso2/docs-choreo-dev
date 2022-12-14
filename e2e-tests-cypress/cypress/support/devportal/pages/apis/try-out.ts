@@ -61,6 +61,10 @@ export class TryOut {
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
+  static InputQueryParamater(paramName: string, paramValue: any) {
+    cy.get(`tr[data-param-name="${paramName}"]>td[class="parameters-col_description"]>input`).clear().type(paramValue);
+  }
+
   static ExecuteResourceFunction() {
     cy.get(".execute-wrapper").click();
     cy.log("Execution is successful");
@@ -94,6 +98,15 @@ export class TryOut {
       ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
     ).should("have.text", "200");
     cy.log("API Tryout is successful!");
+  }
+
+  static ValidateResponse(statusCode: string) {
+    cy.get(".curl-command").should("exist");
+    cy.get(".request-url").should("exist");
+    cy.log("Response is successfully returned");
+    cy.get(
+      ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
+    ).should('contain', statusCode);
   }
 
   static DeleteApplication(appName: string) {
