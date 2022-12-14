@@ -27,6 +27,7 @@ import { RestAPITemplate } from "../../../support/console/pages/templates/rest-a
 import { Utils } from "../../../support/console/utils";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
+import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 
 describe("Verify internal API creation functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -198,8 +199,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    cy.get('[data-testid="apis-appbar-btn"').click();
-    cy.get(`[data-testid="apiCard-${REST_API_NAME}"`).click();
+    DevPortalHomePage.navigateToApisPage();
+    DevPortalHomePage.navigateSelectAPI(REST_API_NAME);
     ApiCredentials.navigateCredentialsTab();
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
@@ -375,8 +376,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    cy.get('[data-testid="apis-appbar-btn"').click();
-    cy.get(`[data-testid="apiCard-${REST_API_NAME}"`).click();
+    DevPortalHomePage.navigateToApisPage();
+    DevPortalHomePage.navigateSelectAPI(REST_API_NAME);
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
     TryOut.SelectResource(HTTPMethod.GET, 'greeting');
