@@ -380,6 +380,5 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         Response response = GitHub.deleteGitHubRepo(repoName);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
     }
-
 }
 
