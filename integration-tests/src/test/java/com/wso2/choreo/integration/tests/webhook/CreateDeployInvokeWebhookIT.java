@@ -74,7 +74,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private String namespace;
     private String obsId;
     private String devInvokeURL;
-    private String repoBranch = "dev";
 
     private ChoreoComponent choreoComponent;
 
@@ -347,7 +346,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
                 "&limit=63&sort=desc";
 
         $(repeatOnError()
-                .until("i = 3")
+                .until("i = 5")
                 .index("i")
                 .autoSleep(8000)
                 .actions(
