@@ -42,7 +42,9 @@ The **Home** page will appear as it did in the preview.
 
 To reset the Developer Portal theme to the default theme, follow the steps given below:
 
-1. Access Choreo Console and in the left pane, click **Settings**.
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google, GitHub, or Microsoft account.
+
+2. In the left pane, click **Settings**.
 
 2. In the **Organization** tab, click **Devportal Theme**, and then click **Reset to Default**.
 
