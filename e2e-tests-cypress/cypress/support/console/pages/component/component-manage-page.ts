@@ -64,7 +64,7 @@ export class ComponentAPILifecycle {
 
   static demoteToCreated() {
     cy.get('[data-testid="Demote to Created-lc-btn"]').click();
-    cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.visible");
+    cy.get(ComponentAPILifecycle.devportl_btn).should("not.be.enabled");
   }
 
   static deprecate() {
@@ -247,7 +247,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
     cy.get("#panel1a-header").should("be.visible");
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
-    cy.wait(2000);
+    cy.wait(4000);
   }
 
   static selectConsumers() {
@@ -266,12 +266,10 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIVisibility(visibility: string) {
-    cy.get('[data-cyid="tab-security-settings"]').should('be.visible')
-    cy.wait(5000)
-    cy.get('[data-cyid="dropdown-api-visibility-selector"]')
-      .click()
-    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).focus()
-      .click();
+    cy.get('[data-cyid="tab-security-settings"]').should("be.visible");
+    cy.wait(5000);
+    cy.get('[data-cyid="dropdown-api-visibility-selector"]').click();
+    cy.get(`[data-cyid="item-${visibility.toUpperCase()}"]`).focus().click();
     cy.get('[data-testid="info-banner"]').should("be.visible");
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
     this.verifyAPIVisibility(visibility);

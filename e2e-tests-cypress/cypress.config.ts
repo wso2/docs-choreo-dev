@@ -1,4 +1,4 @@
-import { defineConfig } from 'cypress'
+import { defineConfig } from "cypress";
 
 export default defineConfig({
   projectId: "$CYPRESS_PROJECT_ID",
@@ -9,8 +9,8 @@ export default defineConfig({
   viewportWidth: 1600,
   chromeWebSecurity: false,
   video: true,
-  screenshotsFolder: 'cypress/screenshots/e2e-smoke',
-  videosFolder: 'cypress/videos/e2e-smoke',
+  screenshotsFolder: "cypress/screenshots/e2e-smoke",
+  videosFolder: "cypress/videos/e2e-smoke",
   videoUploadOnPasses: false,
   videoCompression: false,
   watchForFileChanges: false,
@@ -18,8 +18,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       let apiName;
       let projectName;
-      on('task', {
-
+      on("task", {
         setAPIName: (val) => {
           return (apiName = val);
         },
@@ -34,16 +33,16 @@ export default defineConfig({
 
         getChoreoProjectName: () => {
           return projectName;
-        }
+        },
       });
       config.env.choreoIDPUsername = process.env.choreoIDPUsername;
       config.env.choreoIDPPassword = process.env.choreoIDPPassword;
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
+      config.env.enablePerspectiveView = process.env.enablePerspectiveView;
       return config;
-
     },
-    specPattern: 'cypress/e2e-smoke//./**/*.ts',
+    specPattern: "cypress/e2e-smoke//./**/*.ts",
   },
-})
+});

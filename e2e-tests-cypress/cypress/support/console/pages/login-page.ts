@@ -15,12 +15,11 @@ import { GraphQL } from "../apis/graphql";
 import { Utils } from "../utils";
 
 export class LoginPage {
-
-
-
-
   static acceptInviteAsInvitedUser(timestamp: string) {
-    this.enterUserCredentials("choreoIDPInvitedUsername", "choreoIDPInvitedPassword");
+    this.enterUserCredentials(
+      "choreoIDPInvitedUsername",
+      "choreoIDPInvitedPassword"
+    );
     cy.intercept({
       method: "POST",
       url: `${Cypress.env("apimSvcURL")}/oauth2/token`,
@@ -57,7 +56,7 @@ export class LoginPage {
   }
 
   private static enablePreviewFeatures() {
-    if (Cypress.env("enablePerspectiveView") != null) {
+    if (Utils.isPerspectiveViewEnabled()) {
       window.localStorage.setItem(
         "features",
         JSON.stringify({ "User Perspective": true })
@@ -75,12 +74,15 @@ export class LoginPage {
   }
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
-    const common = Cypress.env(`commonAuthId`) != null ? Cypress.env(`commonAuthId`) : "authtoken";
+    const common =
+      Cypress.env(`commonAuthId`) != null
+        ? Cypress.env(`commonAuthId`)
+        : "authtoken";
     Utils.setBrowserCookie(false);
-    this.setCookie(componentURL, "commonAuthId", common)
+    this.setCookie(componentURL, "commonAuthId", common);
     cy.visit(componentURL);
-    this.rejectCookies()
-    cy.get('[data-testid="header-user-profile-menu"]').should('be.visible')
+    this.rejectCookies();
+    cy.get('[data-testid="header-user-profile-menu"]').should("be.visible");
   }
 
   static navigateToCodespaceEP() {
@@ -220,7 +222,4 @@ export class LoginPage {
       });
     });
   }
-
-
 }
-

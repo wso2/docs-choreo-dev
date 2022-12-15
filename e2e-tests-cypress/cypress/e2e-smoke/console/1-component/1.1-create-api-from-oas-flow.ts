@@ -13,7 +13,6 @@
 
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { APIDeployment } from "../../../support/console/pages/apis/api-deployment";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
@@ -33,16 +32,13 @@ import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-pa
 import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const API_NAME = Utils.generateComponentName("oas");
-  const API_BASE_PATH = Utils.generateBasePath();
-  const Filepath = "apis/generation_oas.yaml";
+  const API_NAME = "1.1-create-api-from-oas-flow";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
- 
 
   before(() => {
     LoginPage.login();
@@ -54,23 +50,17 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    RestAPIProxyTemplate.createOpenApi(Filepath);
-    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
+    ComponentListingPage.visitToAComponent(API_NAME);
   });
 
   it("Verify component deployment and endpoint configurations", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-   
   });
-
 
   it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
-
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -81,7 +71,6 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  
   it("Verify test functionality using Swagger UI in Prod", () => {
     TestHelper.testOnSwagger(Environment.PRODUCTION, "intensity").then(
       (res) => {
@@ -91,35 +80,37 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using generated curl in Dev", () => {
-    TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, "intensity").then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.status).equal(200);
-        });
-      }
-    );
+    TestHelper.testOnCurl(
+      Environment.DEVELOPMENT,
+      HTTPMethod.GET,
+      "intensity"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+      });
+    });
   });
-
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "intensity").then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.status).equal(200);
-        });
-      }
-    );
+    TestHelper.testOnCurl(
+      Environment.PRODUCTION,
+      HTTPMethod.GET,
+      "intensity"
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.status).equal(200);
+      });
+    });
   });
-
 
   it("Disable security of a resource belonging to the API deployed in Dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
+    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT, "Revision 3");
+    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
       Environment.DEVELOPMENT
@@ -138,7 +129,6 @@ describe("Choreo APIM publisher scenarios", () => {
         })
     );
   });
-
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
@@ -165,7 +155,19 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");
   });
 
-  it("Verify suspending Prod deployed component", () => {
+  it("Reset and undeploy component", () => {
+    ComponentAPILifecycle.selectSetting();
+    ComponentAPILifecycle.selectResources();
+    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.disableResourceSecurity("intensity");
+    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.verifyDevRevision().should(
+      "eq",
+      Environment.DEVELOPMENT
+    );
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

@@ -72,7 +72,6 @@ export class Utils {
       this.sendGetRequest(Utils.MAIL_READER_SVC_URL + timestamp, {
         Authorization: `Bearer ${accessToken}`,
       }).then((res) => {
-                
         const rawMailContent = res.body;
         const decodedMail = atob(rawMailContent);
 
@@ -151,21 +150,31 @@ export class Utils {
 
   static setBrowserCookie(isEPLogin: boolean = false) {
     const dateString = new Date().toISOString();
-    const cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`
-    document.cookie=cookie
-    cy.setCookie("OptanonAlertBoxClosed", dateString)
+    const cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`;
+    document.cookie = cookie;
+    cy.setCookie("OptanonAlertBoxClosed", dateString);
   }
 
-
   static paste(obj, code, enter) {
-    const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
-      clipboardData: { getData: (type = 'text') => code, },
-    });
+    const pasteEvent = Object.assign(
+      new Event("paste", { bubbles: true, cancelable: true }),
+      {
+        clipboardData: { getData: (type = "text") => code },
+      }
+    );
     obj[0].dispatchEvent(pasteEvent);
     if (enter) {
       cy.wait(3000);
-      cy.wrap(obj).type('{enter}');
+      cy.wrap(obj).type("{enter}");
     }
   }
 
+  static isPerspectiveViewEnabled() {
+    const enablePerspectiveView = Cypress.env("enablePerspectiveView");
+    if (enablePerspectiveView != null) {
+      return enablePerspectiveView == "true";
+    }
+
+    return false;
+  }
 }
