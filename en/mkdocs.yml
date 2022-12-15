@@ -85,6 +85,7 @@ nav:
   - Administration:
       - Connect to an External Identity Provider: administration/connect-to-an-external-identity-provider.md  
       - Configure a Custom Domain for Developer Portal: administration/customize-developer-portal-domain.md
+      - Customize the Developer Portal: administration/customize-the-developer-portal.md
       - Configure Enterprise Login: administration/configure-enterprise-login.md
       - Configure Developer Portal Self-Sign-Up: administration/configure-developer-portal-self-sign-up.md
   - Observability:
