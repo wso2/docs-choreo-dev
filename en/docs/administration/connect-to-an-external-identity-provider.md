@@ -129,7 +129,7 @@ Follow this procedure:
 
     ![User keys](../assets/img/references/external-identity-provider/user-keys.png){.cInlineImage-half}
    
-8. As mentioned in **Step 1** in the UI, obtain an access token from the external IdP that you selected.
+8. As mentioned in **Step 1** in the UI, obtain an access token from the external IdP that you selected. For instructions to obtain an access token for OKTA, see [Okta Developer Documentation - Implement OAuth for Okta - Get an Access Token and Make a Request](https://developer.okta.com/docs/guides/implement-oauth-for-okta/main/#define-allowed-scopes).
 
 9. Paste the access token in the **<Your_IdP_name>** Token field. Here, you see the field name displayed as **Okta Token**.
 
