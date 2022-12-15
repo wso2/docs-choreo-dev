@@ -20,7 +20,7 @@ To customize the Developer Portal theme, follow the steps given below:
 
     ![Access Devportal theme](../assets/img/administration/devportal-theme/access-devportal-theme.png)
 
-    Once you access the theme, you can customize the **Home** page, color theme, font, header and footer, logos, etc., by expanding the **General**, **Home Page**, **Color Palette**, **Typography**, and **Footer Links** sections.
+    Once you access the theme, you can customize the **Home** page, color theme, font, header and footer, logos, etc., by expanding the relevant sections.
 
 5. Make a change to the theme. For example, let's change the title on the **Home** page and the color theme. 
 
