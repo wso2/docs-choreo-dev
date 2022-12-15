@@ -22,7 +22,7 @@ export class VSExplorer {
   }
 
   static removeDefaultServiceBalFile() {
-    cy.get('div[class*=".bal-name-file-icon"]').realClick().type('{del}');
+    cy.get('div[class*=".bal-name-file-icon"]').realClick();
     cy.get('div[class*=".bal-name-file-icon"] [title="Delete"]').realClick();
     cy.get(
       '[aria-label*="Are you sure you want to delete"] [title="Delete"]'

@@ -48,8 +48,7 @@ export class ComponentOverviewPage {
   }
 
   static navigateToDevPortal() {
-    cy.get(".choreo-header>div>div>a")
-      .eq(0)
+    cy.get("[data-cyid='developer-portal-link']")
       .invoke("attr", "href")
       .then((href) => cy.visit(href));
     return cy.get("header>div>div>p").invoke("text");

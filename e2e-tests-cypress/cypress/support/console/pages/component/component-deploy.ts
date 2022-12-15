@@ -126,10 +126,7 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
-    cy.get('[data-testid="securityHeaderInput"]', { timeout: 360000 }).should(
-      "have.length",
-      1
-    );
+
   }
 
   static addConfiguration(value: string) {

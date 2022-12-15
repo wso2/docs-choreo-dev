@@ -52,7 +52,7 @@ export class GraphQL {
       cy.log(`Total projects found : ${projects.length}`);
       cy.log(`E2E projects found : ${e2eProjects.length}`);
 
-      e2eProjects.forEach((project) => {
+      projects.forEach((project) => {
         if (this.isProjectOld(project.name)) {
           this.deleteComponentsInProject(project.id, orgHandle, token);
           this.deleteProject(orgId, project.id, token);
