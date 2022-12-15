@@ -37,6 +37,7 @@ export class LoginPage {
 
   static login() {
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
+    this.enablePreviewFeatures();
     this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
@@ -55,14 +56,22 @@ export class LoginPage {
     });
   }
 
-  private static rejectCookies(){
-    cy.wait(5000)
-    cy.get('body').then(b=>{
-      if (b.find('#onetrust-reject-all-handler').length>0){
-        cy.wrap('#onetrust-reject-all-handler').click()
+  private static enablePreviewFeatures() {
+    if (Cypress.env("enablePerspectiveView") != null) {
+      window.localStorage.setItem(
+        "features",
+        JSON.stringify({ "User Perspective": true })
+      );
+    }
+  }
+
+  private static rejectCookies() {
+    cy.wait(5000);
+    cy.get("body").then((b) => {
+      if (b.find("#onetrust-reject-all-handler").length > 0) {
+        cy.wrap("#onetrust-reject-all-handler").click();
       }
-    })
-  
+    });
   }
   static reLoginToChoreo() {
     const componentURL = Cypress.env(`componentURL`);
@@ -76,33 +85,42 @@ export class LoginPage {
 
   static navigateToCodespaceEP() {
     const csurl = Cypress.env(`accessURL`);
-    Utils.setBrowserCookie(true)
+    Utils.setBrowserCookie(true);
     cy.visit(csurl);
   }
 
   static navigateToCodespace() {
     const csurl = Cypress.env(`accessURL`);
-    Utils.setBrowserCookie(false)
+    Utils.setBrowserCookie(false);
     cy.visit(csurl);
   }
 
   static enterpriseLogin() {
-    Utils.setBrowserCookie(true)
+    Utils.setBrowserCookie(true);
     cy.visit(Cypress.env("enterpriseLoginUrl"));
-    cy.get('button[id="enterprise-sign-in"]').should("be.visible", { timeout: 180000 });
+    cy.get('button[id="enterprise-sign-in"]').should("be.visible", {
+      timeout: 180000,
+    });
     cy.get('button[id="enterprise-sign-in"]').click();
     cy.get("#outlined-basic").type(Cypress.env("enterpriseIDPUsername"));
     cy.contains("Continue").click();
     cy.get('input[id="username"]').should("be.visible", { timeout: 180000 });
     cy.get("#username").type(Cypress.env("enterpriseIDPUsername"));
-    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), { log: false});
+    cy.get("#password").type(Cypress.env("enterpriseIDPPassword"), {
+      log: false,
+    });
     cy.contains("Continue").click();
-    cy.get('[data-testid="header-user-profile-menu"]', { timeout: 180000, }).should("be.visible");
+    cy.get('[data-testid="header-user-profile-menu"]', {
+      timeout: 180000,
+    }).should("be.visible");
     this.persistLogoutURL();
   }
 
   private static persistLogoutURL() {
-    cy.window().its("sessionStorage").invoke("getItem", "sign_out_url").then((url) => Cypress.env("sign_out_url", url));
+    cy.window()
+      .its("sessionStorage")
+      .invoke("getItem", "sign_out_url")
+      .then((url) => Cypress.env("sign_out_url", url));
   }
 
   private static persistCookies(url: string) {
@@ -157,7 +175,7 @@ export class LoginPage {
     cy.intercept({
       method: "GET",
       url: `${Cypress.env("appSvcURL")}/orgs/*`,
-      times: 1
+      times: 1,
     }).as("orgs");
     cy.wait("@orgs", { timeout: 150000 }).then((intercept) => {
       const header = intercept.request.headers["authorization"] as string;
@@ -175,7 +193,10 @@ export class LoginPage {
     cy.visit(Cypress.env("loginURL"));
   }
 
-  private static enterUserCredentials(envUsername: string, envPassword: string) {
+  private static enterUserCredentials(
+    envUsername: string,
+    envPassword: string
+  ) {
     Utils.setBrowserCookie(false);
     cy.visit(Cypress.env("loginURL"));
     cy.get('button[type="submit"]').should("be.visible", { timeout: 180000 });
@@ -184,7 +205,11 @@ export class LoginPage {
     cy.get('button[type="submit"]').click();
   }
 
-  private static setCookie(url: string, cookieKey: string, cookieValue: string) {
+  private static setCookie(
+    url: string,
+    cookieKey: string,
+    cookieValue: string
+  ) {
     cy.intercept(url).then(() => {
       cy.setCookie(cookieKey, cookieValue, {
         path: "/",
