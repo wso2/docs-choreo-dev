@@ -5,12 +5,13 @@ You can follow the steps below to test your REST API using the integrated OpenAP
 # Test your REST API
 
 !!! note
-    If you are on the deployment tab, click **Test**. in the **Development** card and continue from step 4 onwards. 
+    If you are on the **Deployment** tab, click **Test** in the **Development** card and continue from step 4 onwards. 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
-2. Select and click on the API component you want to test from the components list. 
 
-3. To open the test view, click the **Test** icon in the left panel.
+2. In the component list, find the API component that you want to test and click it. 
+
+3. To open the test view, click the **Test** on the left navigation menu.
 
 4. Click **Try it out**.
 
