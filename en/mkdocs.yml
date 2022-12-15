@@ -76,6 +76,13 @@ nav:
           - Handle Non-Ballerina Files in Choreo: develop/explore-code-editor/handle-non-ballerina-files-in-choreo.md
       - Advanced Topics:
           - Manage Connectors: develop/advanced-topics/manage-connectors.md
+  - Deploy: deploy/depoy-your-component.md
+  - Test: 
+      - OpenAPI Console: test/open-api-console.md
+      - cURL: test/curl.md
+  - Manage:
+      - API Management: manage/api-management.md
+      - Lifecycle: manage/lifecycle.md
   - Consume:
       - Overview: consume/developer-portal.md
       - Manage Application: consume/manage-application.md
@@ -98,7 +105,7 @@ nav:
   - Administer:
       - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
       - Configure a Custom Domain for Developer Portal: administer/customize-developer-portal-domain.md
-      - Configure Enterprise Login: administer/configure-enterprise-login.md
+      - Configure Enterprise Login: administer/configure-enterprise-login.md 
   - References:
      - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
 # - Choreo DevOps: devops/overview.md
