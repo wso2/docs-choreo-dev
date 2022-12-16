@@ -70,8 +70,8 @@ This tutorial walks you through the steps to connect your own GitHub repository 
 
 11. To configure the pre-commit hook that Choreo uses to extract configurables defined in the Ballerina code, follow the steps given below:
 
-     !!! info
-         When you develop a Choreo component via the Web Editor, Choreo configures this pre-commit hook automatically. However, if you prefer to develop the component locally, you need to configure this pre-commit hook manually.
+      !!! info
+          When you develop a Choreo component via the Web Editor, Choreo configures this pre-commit hook automatically. However, if you prefer to develop the component locally, you need to configure this pre-commit hook manually.
 
      1. Carry out a GitHub pull locally to update your clone with the latest changes.
 
