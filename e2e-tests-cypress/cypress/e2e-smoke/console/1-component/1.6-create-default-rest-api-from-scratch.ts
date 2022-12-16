@@ -33,7 +33,7 @@ describe("Verify REST API component creation functionality", () => {
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
-  const COMPONENT_NAME = "1.6-create-default-Rest-API";
+  const COMPONENT_NAME = "create-default-Rest-API-1.6";
 
   before(() => {
     LoginPage.login();
