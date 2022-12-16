@@ -40,7 +40,7 @@ describe("Verify manual trigger creation functionality", () => {
     ComponentDeployPage.deployManualTriggerToDev();
   });
 
-  it("Verify component promotion to prd", () => {
+  it("Verify component promotion to prod", () => {
     ComponentDeployPage.promoteManualTriggerToProd();
   });
 });
