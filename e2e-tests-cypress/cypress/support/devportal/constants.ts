@@ -17,3 +17,4 @@ export const LONG_TIME_OUT = 60000;
 
 export const DAY = 86400000;
 
+export const REUSABLE_PROJECT_NAME = "e2e-test-project";

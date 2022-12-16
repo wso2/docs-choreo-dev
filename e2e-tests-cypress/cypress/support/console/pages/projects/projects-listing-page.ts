@@ -11,20 +11,33 @@
  * associated services.
  */
 
-
+import { Utils } from "../../utils";
 
 export class ProjectListingPage {
-  
   static createNewProject(projectName: string, description: string) {
     cy.get('[data-testid="project-picker"]>div').click();
     cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-testid="create-version-create"]').click();
+    cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
 
   static selectProject(projectName: string = "Default Project") {
-    cy.get('[data-testid="project-picker"]').click();
-    cy.get(`li>div`).contains(projectName).click();
+    if (Utils.isPerspectiveViewEnabled()) {
+      cy.get(
+        ".jss200 > .MuiButtonBase-root > .MuiIconButton-label > img"
+      ).click();
+      cy.get('[class="MuiFormControl-root MuiTextField-root"]')
+        .should("be.visible")
+        .click();
+      cy.get('[class="MuiFormControl-root MuiTextField-root"]').type(
+        projectName
+      );
+      cy.contains(projectName).click();
+    } else {
+      cy.get('[data-testid="project-picker"]').click();
+      cy.get(`li>div`).contains(projectName).click();
+    }
   }
 }
