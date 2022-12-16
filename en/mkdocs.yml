@@ -38,7 +38,7 @@ theme:
     accent: indigo
   logo: images/logo.svg
   favicon: images/favicon.png
-  slack: images/help-slack-icon.svg
+  discord: images/discord-help-icon.svg
   choreo_logo: images/choreo-logo-icon.svg
   highlightjs: true
   feature:
