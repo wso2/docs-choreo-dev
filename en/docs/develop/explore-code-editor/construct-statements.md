@@ -1,6 +1,6 @@
 # Construct Statements
 
-The Statement Editor in the Choreo Web Editor allows you to construct Ballerina statements depending on the use case you want to build. It is an intuitive visual editor that is easy to use even without an in-depth knowledge of the [Ballerina Programming Language](https://ballerina.io/).
+The Choreo Web Editor allows you to construct Ballerina statements depending on the use case you want to build. It is an intuitive visual editor that is easy to use even without an in-depth knowledge of the [Ballerina Programming Language](https://ballerina.io/).
 
 It provides the following:
 
@@ -12,7 +12,7 @@ It provides the following:
 
 - Documentation for functions and methods to easily configure parameters
 
-This guide walks you through the steps to build the following statement using the Statement Editor.
+This guide walks you through the steps to build the following statement using the editing capabilities in the Choreo Web Editor.
 
 ```
 string maxValue = "Max : " + int0:max(30, -89).toString();
@@ -20,8 +20,8 @@ string maxValue = "Max : " + int0:max(30, -89).toString();
 
 The above is a variable statement named `maxValue` that derives the maximum value in a list of two integers and passes the value in string format (for example, as `"Max : 30"` ).
 
-!!! info "Access the Statement Editor"
-    If you have not already accessed the Choreo Web Editor where you can use the Statement Editor, follow these steps:</br></br>
+!!! info "Access the Choreo Web Editor"
+    If you have not already accessed the Choreo Web Editor, follow these steps:</br></br>
      1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).</br></br> 
      2. On the **Home** page, scroll to the **Get started with a template** section. On the **Echo Service** template, click **Get Started**.</br></br>
         The REST API created via the template opens on a separate page.</br></br>
@@ -33,6 +33,9 @@ To build the statement, follow these steps:
     If you want to make changes to the content you have added to the statement that you are creating, you can undo and redo your actions via the relevant icons on the top right of the toolbar. You can also remove content via the icon for deleting.
 
 1. On the low-code diagram, click **+**. Then click **Variable** in the **Add Constructs** pane that opens.
+
+    !!! info
+        From here onwards, let's use the term Statement Editor to refer to this collection of panes that help you to add and edit statements.
 
     ![Add variable statement](../../assets/img/statement-editor/add-variable-statement.png){.cInlineImage-full}
 
@@ -89,8 +92,8 @@ To build the statement, follow these steps:
 
      ![Select function](../../assets/img/statement-editor/select-function.gif){.cInlineImage-half}
 
-     !!! note
-         When a function or a method call requires a particular parameter to work, the Statement Editor selects the appropriate parameter by default and does not allow you to clear it.
+      !!! note
+          When a function or a method call requires a particular parameter to work, the Statement Editor selects the appropriate parameter by default and does not allow you to clear it.
 
 8. Change the **n** and **ns** parameter values to integers. To make each parameter value editable, you can double-click the corresponding **`<add_expression>`** on the variable statement. Let's change them as follows:
 

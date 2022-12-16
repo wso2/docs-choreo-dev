@@ -21,6 +21,6 @@ You can follow the steps below to test your REST API using the integrated OpenAP
 
     You can view the response body under **Responses**.
 
-    ![Response for the Deployed API](../../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
+    ![Response for the Deployed API](../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
 
 Congratulations! You have now successfully created and tested a REST API in Choreo!

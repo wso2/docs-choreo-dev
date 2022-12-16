@@ -87,7 +87,7 @@ Choreo provides API management capabilities by default for REST APIs (and other 
 
 ![Manage API lifecycle](../../assets/img/rest-apis/api-lifecycle-manage.png){.cInlineImage-full}
 
-The inbuilt Choreo Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](../../consume/developer-portal.md).
+The inbuilt Choreo Developer Portal makes it easy for consumers to consume published APIs. Application developers can discover and invoke published APIs via the Choreo Developer Portal. To learn more about the Choreo Developer portal, see [Developer Portal](../../consume/developer-portal.md)).
 
 
 ## Observability
