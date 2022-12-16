@@ -416,3 +416,8 @@ configMapGenerator:
     behavior: create
     files:
       - negotiator/Config.toml
+  - name: cm-cio-internal-metric-collector
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
+      - CIO_PROXY_URL="http://cio-event-collector-service:8080"
