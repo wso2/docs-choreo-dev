@@ -159,7 +159,6 @@ describe("Verify REST API component creation functionality", () => {
   });
 
   it("Verify suspending Prod deployed component", () => {
-    ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
