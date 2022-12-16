@@ -245,7 +245,7 @@ Follow this procedure to invoke the REST API via the API Developer Portal:
 4. Click **Try Out** in the left pane. 
 
 5. Paste the copied access token in the **Access Token** field.
-     ![Add access token ](../assets/img/get-started/add-access-key.png){.cInlineImage-full}
+     ![Add access token ](../assets/img/get-started/add-access-token.png){.cInlineImage-full}
 
 6. Click the `GET` resource you added to expand it.
 

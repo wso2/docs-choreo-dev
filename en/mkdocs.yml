@@ -54,54 +54,67 @@ nav:
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
       - Quick Start Guide: get-started/quick-start-guide.md
-  - Tutorials: 
-      - Create Your First REST API: tutorials/create-your-first-rest-api.md
-      - Expose an Existing API via a REST API Proxy: tutorials/create-your-first-rest-api-proxy.md
-      - Create Your First Webhook: tutorials/create-your-first-webhook.md
-      - Connect Your Own GitHub Repository to Choreo: tutorials/connect-your-own-github-repository-to-choreo.md
-      - Construct Statements: tutorials/construct-statements.md
-      - Connect Your Existing Ballerina Project to Choreo: tutorials/connect-your-existing-ballerina-project-to-choreo.md
-      - Deploy a Containerized Choreo Component: tutorials/deploy-a-containerized-choreo-component.md
-      - Configure Automatic Deployment: tutorials/configure-automatic-deployment.md
-      - Map Data: tutorials/map-data.md
-  - REST APIs: rest-api.md
-  - API Proxies: api-proxies.md
-  - Webhooks: webhook.md
-  - Scheduled Tasks: scheduled-tasks.md
-  - GraphQL APIs: graphql-api.md
-  - Developer Portal:
-      - Overview: developer-portal/developer-portal.md
-      - Manage Application: developer-portal/manage-application.md
-      - Manage Subscription: developer-portal/manage-subscription.md
-      - Test API: developer-portal/test-api.md
-  - DevOps Portal: devops-portal.md
+      - Tutorials: 
+          - Create Your First REST API: get-started/tutorials/create-your-first-rest-api.md
+          - Expose an Existing API via a REST API Proxy: get-started/tutorials/create-your-first-rest-api-proxy.md
+          - Create Your First Webhook: get-started/tutorials/create-your-first-webhook.md
+  - Develop:
+      - Components:
+          - REST APIs: develop/components/rest-api.md
+          - API Proxies: develop/components/api-proxies.md
+          - Webhooks: develop/components/webhook.md
+          - Scheduled Tasks: develop/components/scheduled-tasks.md
+          - GraphQL APIs: develop/components/graphql-api.md
+      - Manage Respository: 
+          - Connect Your Existing Ballerina Project: develop/manage-repository/connect-your-existing-ballerina-project-to-choreo.md  
+          - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
+      - Run and Test:
+          - Forecast Performance Metrics: develop/run-and-test/forecast-performance-metrics.md
+      - Explore Code Editor:
+          - Construct Statements: develop/explore-code-editor/construct-statements.md    
+          - Define Configurable Variables: develop/explore-code-editor/define-configurable-variables.md
+          - Handle Non-Ballerina Files in Choreo: develop/explore-code-editor/handle-non-ballerina-files-in-choreo.md
+          - Map Data: develop/explore-code-editor/map-data.md
+      - Advanced Topics:
+          - Manage Connectors: develop/advanced-topics/manage-connectors.md
+  - Deploy: 
+      - Deploy Your Choreo Component: deploy/deploy-your-component.md
+      - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
+      - Configure Automatic Deployment: deploy/configure-automatic-deployment.md
+  - Test: 
+      - OpenAPI Console: test/open-api-console.md
+      - cURL: test/curl.md
+  - Manage:
+      - API Management: manage/api-management.md
+      - Lifecycle: manage/lifecycle.md
+  - Consume:
+      - Developer Portal Overview: consume/developer-portal.md
+      - Manage Application: consume/manage-application.md
+      - Manage Subscription: consume/manage-subscription.md
+      - Test APIs: consume/test-api.md
   - Marketplace: marketplace.md
-  - Business Insights: 
-      - View API Insights: insights/view-api-insights.md
-      - Generate Custom Reports: insights/generate-custom-reports.md
-      - Configure Alerts: insights/configure-alerts.md
-      - Choreo Insights API: insights/choreo-insights-api.md
-      - Programmatic Access to Choreo Insights API: insights/programmatic-access-choreo-insights-api.md
-  - Administration:
-      - Connect to an External Identity Provider: administration/connect-to-an-external-identity-provider.md  
-      - Configure a Custom Domain for Developer Portal: administration/customize-developer-portal-domain.md
-      - Configure a Custom Domain for APIs: administration/configure-a-custom-domain-for-apis.md
-      - Customize the Developer Portal: administration/customize-the-developer-portal.md
-      - Configure Enterprise Login: administration/configure-enterprise-login.md
-      - Configure Developer Portal Self-Sign-Up: administration/configure-developer-portal-self-sign-up.md
-  - Observability:
-     - Observability Overview: observability/observability-overview.md
-#    - View Logs: observability/view-logs.md
-     - Root Cause Analysis: observability/root-cause-analysis.md
+  - Observe and Analyze:
+      - Observe:
+         - Observability Overview: observe-and-analyze/observe/observability-overview.md
+         - Root Cause Analysis: observe-and-analyze/observe/root-cause-analysis.md
+      - Analyze: 
+          - View API Insights: observe-and-analyze/analyze/view-api-insights.md
+          - Generate Custom Reports: observe-and-analyze/analyze/generate-custom-reports.md
+          - Configure Alerts: observe-and-analyze/analyze/configure-alerts.md
+          - Choreo Insights API: observe-and-analyze/analyze/choreo-insights-api.md
+          - Programmatic Access to Choreo Insights API: observe-and-analyze/analyze/programmatic-access-choreo-insights-api.md
+  - Alerts: alerts.md
+  - DevOps: devops/devops-portal.md
+  - Administer:
+      - Connect to an External Identity Provider: administer/connect-to-an-external-identity-provider.md  
+      - Configure a Custom Domain for APIs: administer/configure-a-custom-domain-for-apis.md
+      - Configure Enterprise Login: administer/configure-enterprise-login.md
+      - Developer Portal:
+          - Configure a Custom Domain for Developer Portal: administer/customize-developer-portal-domain.md
+          - Customize the Developer Portal: administer/customize-the-developer-portal.md
+          - Configure Developer Portal Self-Sign-Up: administer/configure-developer-portal-self-sign-up.md
   - References:
-     - Performance Analysis: references/performance-analysis.md
-     - Alerts: references/alerting.md
-     - Manage Connectors: references/manage-connectors.md
-     - Handle Non-Ballerina Files in Choreo: references/handle-non-ballerina-files-in-choreo.md
-     - Define Configurable Variables: references/define-configurable-variables.md
-     - Connect with Protected Third Party Applications: references/connect-with-protected-third-party-applications.md
-
-# - Choreo DevOps: devops/overview.md
+     - Connect with Protected Third Party Applications: reference/connect-with-protected-third-party-applications.md
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
@@ -140,7 +153,42 @@ plugins:
   - markdownextradata: {}
   - redirects:
       redirect_maps:
-          'manage/developer-portal.md': 'https://wso2.com/choreo/docs/developer-portal/developer-portal/' 
+          'tutorials/create-your-first-rest-api.md': 'https://wso2.com/choreo/docs/get-started/tutorials/create-your-first-rest-api/'
+          'tutorials/connect-your-own-github-repository-to-choreo.md': 'https://wso2.com/choreo/docs/manage-repository/connect-your-own-github-repository-to-choreo/'
+          'tutorials/construct-statements.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/construct-statements/'
+          'tutorials/connect-your-existing-ballerina-project-to-choreo.md': 'https://wso2.com/choreo/docs/manage-repository/connect-your-existing-ballerina-project-to-choreo/'
+          'tutorials/deploy-a-containerized-choreo-component.md': 'https://wso2.com/choreo/docs/deploy/deploy-a-containerized-choreo-component/'
+          'tutorials/configure-automatic-deployment.md': 'https://wso2.com/choreo/docs/deploy/configure-automatic-deployment/'
+          'tutorials/map-data.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/map-data/'
+          'rest-api.md': 'https://wso2.com/choreo/docs/develop/components/rest-api/'
+          'api-proxies.md': 'https://wso2.com/choreo/docs/develop/components/api-proxies/'
+          'webhook.md': 'https://wso2.com/choreo/docs/develop/components/webhook/'
+          'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-tasks/'
+          'graphql-api.md': 'https://wso2.com/choreo/docs/develop/components/graphql-api/'
+          'developer-portal/developer-portal.md': 'https://wso2.com/choreo/docs/consume/developer-portal/'
+          'developer-portal/manage-application.md': 'https://wso2.com/choreo/docs/consume/manage-application/'
+          'developer-portal/manage-subscription.md': 'https://wso2.com/choreo/docs/consume/manage-subscription/'
+          'developer-portal/test-api.md': 'https://wso2.com/choreo/docs/consume/test-api/'
+          'devops-portal.md': 'https://wso2.com/choreo/docs/devops/devops-portal/'
+          'insights/view-api-insights.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/view-api-insights/'
+          'insights/generate-custom-reports.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/generate-custom-reports/'
+          'insights/configure-alerts.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/configure-alerts/'
+          'insights/choreo-insights-api.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/choreo-insights-api/'
+          'insights/programmatic-access-choreo-insights-api.md': 'https://wso2.com/choreo/docs/observe-and-analyze/analyze/programmatic-access-choreo-insights-api/'
+          'administration/connect-to-an-external-identity-provider.md': 'https://wso2.com/choreo/docs/administration/connect-to-an-external-identity-provider/'
+          'administration/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administration/customize-developer-portal-domain/'
+          'administration/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administration/configure-a-custom-domain-for-apis/'
+          'administration/customize-the-developer-portal.md': 'https://wso2.com/choreo/docs/administration/customize-the-developer-portal/'
+          'administration/configure-enterprise-login.md': 'https://wso2.com/choreo/docs/administration/configure-enterprise-login/'
+          'administration/configure-developer-portal-self-sign-up.md': 'https://wso2.com/choreo/docs/administration/configure-developer-portal-self-sign-up/'
+          'observability/observability-overview.md': 'https://wso2.com/choreo/docs/observe-and-analyze/observe/observability-overview/'
+          'observability/root-cause-analysis.md': 'https://wso2.com/choreo/docs/observe-and-analyze/observe/root-cause-analysis/'
+          'references/performance-analysis.md': 'https://wso2.com/choreo/docs/develop/run-and-test/forecast-performance-metrics/'
+          'references/alerting.md': 'https://wso2.com/choreo/docs/alerts/'
+          'references/manage-connectors.md': 'https://wso2.com/choreo/docs/develop/advanced-topics/manage-connectors/'
+          'references/handle-non-ballerina-files-in-choreo.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/handle-non-ballerina-files-in-choreo/'
+          'references/define-configurable-variables.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/define-configurable-variables/'
+          'references/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs/references/connect-with-protected-third-party-applications/'
 extra_css:
   - assets/lib/highlightjs/default.min.css
   - assets/css/theme.css
