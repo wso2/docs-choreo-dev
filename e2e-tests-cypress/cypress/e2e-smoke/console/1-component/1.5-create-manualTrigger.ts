@@ -12,20 +12,15 @@
  */
 
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { TriggersTemplate } from "../../../support/console/pages/templates/manualTrigger-creation-temp";
-import { Utils } from "../../../support/console/utils";
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = Utils.generateComponentName("ManualTrigger");
-
-  const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "Manual Trigger";
+  const MANUAL_NAME = "create-manualTrigger-1.5";
 
   before(() => {
     LoginPage.login();
@@ -36,14 +31,8 @@ describe("Verify manual trigger creation functionality", () => {
   });
 
   it("Verify manual trigger component creation", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-    );
-    ProjectOverviewPage.addNewComponent();
-    TriggersTemplate.selectManualTriggerTemplate();
-    TriggersTemplate.createManualTriggerFromTemplate(MANUAL_NAME);
-    ComponentDevelopPage.getComponentURL();
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
+    ComponentListingPage.visitToAComponent(MANUAL_NAME);
   });
 
   it("Verify component deployment", () => {
@@ -51,8 +40,7 @@ describe("Verify manual trigger creation functionality", () => {
     ComponentDeployPage.deployManualTriggerToDev();
   });
 
-   it("Verify component promotion to prd", () => {
+  it("Verify component promotion to prd", () => {
     ComponentDeployPage.promoteManualTriggerToProd();
   });
-
 });
