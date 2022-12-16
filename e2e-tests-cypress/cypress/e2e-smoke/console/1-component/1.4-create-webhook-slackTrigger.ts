@@ -39,10 +39,6 @@ describe("Verify webhook creation functionality", () => {
     ComponentDevelopPage.getComponentURL();
   });
 
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
-  });
-
   it("Deploy the component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeploy(CONFIG);
