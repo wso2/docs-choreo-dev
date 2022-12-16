@@ -74,4 +74,4 @@ e.g., If you need to use the Azure SQL DB connector, you need to create an Azure
 
 ## Update a connector 
 
-If you want to introduce a change to your component and update the connector you published for it, you need to explicitly republish the connector. To learn more on how to update a connector, see [Use a Connector in Your Component](references/manage-connectors.md).
+If you want to introduce a change to your component and update the connector you published for it, you need to explicitly republish the connector. To learn more on how to update a connector, see [Use a Connector in Your Component](/develop/advanced-topics/manage-connectors.md).
