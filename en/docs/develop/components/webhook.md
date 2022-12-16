@@ -1,8 +1,7 @@
 # Webhook
+Explore how you can create event-driven integrations with Choreo Webhooks.
 
-Explore how you can create event-driven integrations with Choreo triggers.
-
-## What is a Webhook?
+## What is a webhook?
 
 A webhook is a cause that activates an action. Webhooks in Choreo are no different and are user-defined callbacks. 
 

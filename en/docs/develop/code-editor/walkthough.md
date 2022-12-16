@@ -1,1 +1,0 @@
-This document will introduce the web based code-editor and it's main functions.  This document will also  discuss the option of adding the plugin to the IDE. 

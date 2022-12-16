@@ -24,7 +24,7 @@ To understand how to define a configurable variable, let's  create a REST API th
     3. In the **Create REST API** dialog, click **Start From Scratch**. Next, enter a unique name for the REST API and click **Create**.
    
         !!! Info
-            To learn how to create a REST API with more details, try the [Create Your First REST API tutorial](../../get-started/tutorials/create-your-first-rest-api.md).
+            To learn how to create a REST API with more details, try the ![Create Your First REST API tutorial](https://wso2.com/choreo/docs/get-started/tutorials/create-your-first-rest-api/).
 
     4. Once the **Overview** page opens, click **Edit Code** to open the Web Editor.
 
@@ -74,7 +74,7 @@ To understand how to define a configurable variable, let's  create a REST API th
 
     You will see the configurable you added in the code view as `configurable string email = ?;`.
 
-5. Commit and push the REST API changes you made to GitHub so that they are also available in the Choreo Console. For instructions, see [Create Your First REST API - Step 1.5: Commit the REST API to GitHub](../../get-started/tutorials/create-your-first-rest-api.md#step-15-commit-the-rest-api-to-github).
+5. Commit and push the REST API changes you made to GitHub so that they are also available in the Choreo Console. For instructions, see [Create Your First REST API - Step 1.5: Commit the REST API to GitHub](https://wso2.com/choreo/docs/get-started/tutorials/create-your-first-rest-api/#step-15-commit-the-rest-api-to-github).
 
 6. Open the browser tab in which you are running the Choreo Console and refresh it.
 
