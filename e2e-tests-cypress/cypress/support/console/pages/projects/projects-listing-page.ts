@@ -15,8 +15,12 @@ import { Utils } from "../../utils";
 
 export class ProjectListingPage {
   static createNewProject(projectName: string, description: string) {
-    cy.get('[data-testid="project-picker"]>div').click();
-    cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);
+    if (Utils.isPerspectiveViewEnabled()) {
+      cy.get('[data-cyid="create-project-card"]').click().wait(3000);
+    } else {
+      cy.get('[data-testid="project-picker"]>div').click();
+      cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);
+    }
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-testid="create-version-create"]').click();
