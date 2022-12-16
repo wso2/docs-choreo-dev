@@ -68,8 +68,9 @@ export class RestAPIProxyTemplate {
     if (endpoint) {
       cy.get('[data-testid="api-endpoint"]>div>input').clear().type(endpoint);
     }
-    cy.get('[data-cyid="create-api-proxy-submit"]').click();
-    this.interceptValidate(); // workaround
+    cy.get('[data-cyid="create-api-proxy-submit"]')
+      .should("be.enabled")
+      .click();
 
     let resourceIdentifier = "resource-/intensity";
     if (validateResourceName) {

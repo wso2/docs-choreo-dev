@@ -32,11 +32,14 @@ import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-pa
 import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
+import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 
 describe("Choreo APIM publisher scenarios", () => {
-  const API_NAME = "1.1-create-api-from-oas-flow";
+  const PROJECT_DESCRIPTION = "sample oas flow scenario";
+  const PROJECT_NAME = Utils.generateProjectName();
+  const API_NAME = Utils.generateComponentName("oas");
+  const API_BASE_PATH = Utils.generateBasePath();
+  const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
 
@@ -50,8 +53,10 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
-    ComponentListingPage.visitToAComponent(API_NAME);
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.createHttpProxyAPI();
+    RestAPIProxyTemplate.createOpenApi(Filepath);
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
   });
 
   it("Verify component deployment and endpoint configurations", () => {
@@ -156,18 +161,6 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Reset and undeploy component", () => {
-    ComponentAPILifecycle.selectSetting();
-    ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
-    ComponentAPILifecycle.verifyDevRevision().should(
-      "eq",
-      Environment.DEVELOPMENT
-    );
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

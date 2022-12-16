@@ -99,7 +99,10 @@ export class Apis {
           Cypress.env(`${Environment.PRODUCTION}_test_url`)
         );
       } else {
-        expect(urls).have.lengthOf(1);
+        expect(urls).have.lengthOf(2);
+        expect(urls).contains(
+          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+        );
         expect(urls).contains(
           Cypress.env(`${Environment.PRODUCTION}_test_url`)
         );

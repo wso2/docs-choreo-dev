@@ -11,15 +11,19 @@
  * associated services.
  */
 
-import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
-import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
+import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
+import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
+import { Utils } from "../../../support/console/utils";
 
 describe("Create proxy api using existing url", () => {
-  const API_NAME = "1.0-create-proxy-api-oas";
+  const PROJECT_DESCRIPTION = "sample oas flow scenario";
+  const PROJECT_NAME = Utils.generateProjectName();
+  const API_Name = Utils.generateComponentName("oas");
+  const API_BASE_PATH = Utils.generateBasePath();
+  const URL = "https://petstore.swagger.io/v2/swagger.json";
 
   before(() => {
     LoginPage.login();
@@ -31,9 +35,15 @@ describe("Create proxy api using existing url", () => {
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
-    ComponentListingPage.visitToAComponent(API_NAME);
-    ComponentOverviewPage.navigateToDevelop();
-    ComponentOverviewPage.verifyResource("pet");
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.createHttpProxyAPI();
+    RestAPIProxyTemplate.createOpenApi("", URL);
+    RestAPIProxyTemplate.enterAPIdetails(
+      API_Name,
+      API_BASE_PATH,
+      `${URL}/v2`,
+      "1.0.0",
+      "pet"
+    );
   });
 });
