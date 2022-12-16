@@ -153,6 +153,10 @@ describe("Verify REST API component creation functionality", () => {
     ComponentAPILifecycle.republishConnector();
   });
 
+  it("Verify demoting connector to Created state ", () => {
+    ComponentAPILifecycle.demoteToCreated();
+  });
+
   it("Verify settings configuration", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
