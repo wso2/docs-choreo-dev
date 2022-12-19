@@ -61,6 +61,10 @@ export class TryOut {
     cy.get(".opblock-section-header").contains("Cancel").should("exist");
   }
 
+  static InputQueryParamater(paramName: string, paramValue: any) {
+    cy.get(`tr[data-param-name="${paramName}"]>td[class="parameters-col_description"]>input`).clear().type(paramValue);
+  }
+
   static ExecuteResourceFunction() {
     cy.get(".execute-wrapper").click();
     cy.log("Execution is successful");
@@ -96,6 +100,15 @@ export class TryOut {
     cy.log("API Tryout is successful!");
   }
 
+  static ValidateResponse(statusCode: string) {
+    cy.get(".curl-command").should("exist");
+    cy.get(".request-url").should("exist");
+    cy.log("Response is successfully returned");
+    cy.get(
+      ":nth-child(1) > .responses-table > tbody > .response > .response-col_status"
+    ).should('contain', statusCode);
+  }
+
   static DeleteApplication(appName: string) {
     cy.get('[data-testid="applications-appbar-btn"]').click();
     cy.get('[data-testid="search-btn"]').trigger("mouseover");
@@ -107,8 +120,6 @@ export class TryOut {
 
   static GenerateAccessToken() {
     cy.log("Generating an access token");
-    // cy.get('[data-testid="application-selector"]').click();
-    // cy.get("body #menu- div ul li").eq(0).click();
     cy.get('[data-testid="get-test-key-btn"]').should("be.enabled").click();
     cy.get("[data-testid=accessTokenInput]").should("not.be.empty");
     cy.log("Successfully generated an access token");

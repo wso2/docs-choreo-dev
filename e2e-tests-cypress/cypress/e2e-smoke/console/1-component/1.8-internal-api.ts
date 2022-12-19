@@ -25,6 +25,9 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
 import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
 import { Utils } from "../../../support/console/utils";
+import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
+import { TryOut } from "../../../support/devportal/pages/apis/try-out";
+import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 
 describe("Verify internal API creation functionality", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
@@ -58,6 +61,8 @@ describe("Verify internal API creation functionality", () => {
   let DEV_INVOKE_URL = "";
   let PROD_INVOKE_URL = "";
 
+  const idpUser = "choreoe2etest";
+
   before(() => {
     LoginPage.login();
     ChoreoHomePage.switchOrganization();
@@ -75,6 +80,7 @@ describe("Verify internal API creation functionality", () => {
       REST_API_DESCRIPTION,
       ACCESS_MODE_INTERNAL
     );
+    ComponentDevelopPage.getComponentURL();
   });
 
   it("Verify REST API component deployment", () => {
@@ -86,6 +92,12 @@ describe("Verify internal API creation functionality", () => {
   it("Verify REST API component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
     ComponentDeployPage.verifyDeploymentStatus();
+  });
+
+  it("Publish the API", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector();
   });
 
   it("Verify resource access without the token in dev", () => {
@@ -114,6 +126,7 @@ describe("Verify internal API creation functionality", () => {
       });
     });
   });
+
 
   it("Apply disable security config in dev", () => {
     ComponentOverviewPage.navigateToManage();
@@ -182,8 +195,26 @@ describe("Verify internal API creation functionality", () => {
     });
   });
 
+  it("Verify API invocation response in devportal for internal API", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    DevPortalHomePage.navigateToApisPage();
+    DevPortalHomePage.navigateSelectAPI(REST_API_NAME);
+    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.generateCredentials();
+    TryOut.navigateToTryOutMenu();
+    TryOut.generateTestKeyAndVerify();
+    TryOut.SelectResource(HTTPMethod.GET, 'greeting');
+    TryOut.TryoutAPI();
+    TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);
+    TryOut.ExecuteResourceFunction();
+    TryOut.ValidateResponse("404");
+  });
+
   // Proxy API with dev endpoint
   it("Verify Proxy API creation using existing dev endpoint", () => {
+    LoginPage.reLoginToChoreo();
     ChoreoHomePage.navigateToHome();
     ChoreoHomePage.navigateToComponents();
     ProjectOverviewPage.addComponent();
@@ -341,8 +372,27 @@ describe("Verify internal API creation functionality", () => {
     });
   });
 
+  it("Verify API invocation in devportal for external API", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
+    DevPortalHomePage.navigateToApisPage();
+    DevPortalHomePage.navigateSelectAPI(REST_API_NAME);
+    TryOut.navigateToTryOutMenu();
+    TryOut.generateTestKeyAndVerify();
+    TryOut.SelectResource(HTTPMethod.GET, 'greeting');
+    TryOut.TryoutAPI();
+    TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);
+    TryOut.ExecuteResourceFunction();
+    TryOut.ValidateResponse("200");
+  });
+
   // Suspend prod/dev deployed Internal REST API
   it("Verify suspending Internal REST API component", () => {
+    LoginPage.reLoginToChoreo();
+    ChoreoHomePage.navigateToHome();
+    ChoreoHomePage.navigateToComponents();
+    ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

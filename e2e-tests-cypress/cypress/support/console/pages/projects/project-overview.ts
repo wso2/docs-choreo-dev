@@ -11,17 +11,49 @@
  * associated services.
  */
 
-
+import { Utils } from "../../utils";
+import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
+import { RestAPITemplate } from "../templates/rest-api-temp";
+import { TriggersTemplate } from "../templates/slackTrigger-creation-temp";
 
 export class ProjectOverviewPage {
-
   static selectComponent(fileID) {
-    cy.get('td>div>p').contains(fileID).click();
+    cy.get("td>div>p").contains(fileID).click();
   }
 
   static addNewComponent() {
-    cy.contains('Time to create your first component', { timeout: 120000 }).should('be.visible')
-    cy.get('.MuiContainer-root button').click(); // Need to add a id for the Create button
+    cy.contains("Time to create your first component", {
+      timeout: 120000,
+    }).should("be.visible");
+    cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
+  }
+
+  static createHttpProxyAPI() {
+    if (Utils.isPerspectiveViewEnabled()) {
+      this.waitForTemplateCardsToLoad();
+      cy.get('[data-testid="project-template-list-httpProxyApi"]')
+        .should("be.visible")
+        .click();
+    } else {
+      ProjectOverviewPage.addNewComponent();
+      RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    }
+  }
+
+  private static waitForTemplateCardsToLoad() {
+    cy.get('[data-cyid="scheduleTask"]')
+      .get('[data-testid="project-template-list-scheduleTask"]')
+      .should("be.enabled")
+      .get('[data-cyid="manualTrigger"]')
+      .get('[data-testid="project-template-list-manualTrigger"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpProxyApi"]')
+      .get('[data-testid="project-template-list-httpProxyApi"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpApi"]')
+      .get('[data-testid="project-template-list-httpApi"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpApi"]');
   }
 
   static addComponent() {
@@ -30,8 +62,6 @@ export class ProjectOverviewPage {
 
   //Only used for Enterprise login TC
   static addNewComponentEL() {
-    cy.get('.MuiContainer-root button').click({ multiple: true }); // Need to add a id for the Create button
+    cy.get(".MuiContainer-root button").click({ multiple: true }); // Need to add a id for the Create button
   }
-
 }
-

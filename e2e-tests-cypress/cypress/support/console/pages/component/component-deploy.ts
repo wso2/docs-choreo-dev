@@ -126,9 +126,12 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     cy.contains("Deploy").should("be.visible").click();
     this.addConfiguration(configValue);
-    cy.get('[data-testid="securityHeaderInput"]', { timeout: 360000 }).should(
-      "have.length",
-      1
+    cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
+      "be.visible"
+    );
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
+      "Active",
+      { timeout: 360000 }
     );
   }
 
@@ -154,16 +157,13 @@ export class ComponentDeployPage {
 
   static promoteWebHookToProd(configValue: string) {
     this.promote({
-      settingButtonCount: 1,
-      invokeUrlCount: 1,
+      settingButtonCount: 2,
+      invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
-    cy.get(".MuiCardContent-root >.MuiBox-root>div>div>button")
-      .should("have.length", 3)
-      .contains("Next")
-      .should("be.visible")
-      .click();
     this.addConfiguration(configValue);
+    cy.get('[data-cyid="deployment-status"]').should("have.length", 2);
+    cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 
   static promoteWebHookToSTG(config: string) {

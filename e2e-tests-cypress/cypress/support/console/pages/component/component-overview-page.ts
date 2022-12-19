@@ -43,16 +43,24 @@ export class ComponentOverviewPage {
     cy.contains("Devops").should("be.visible").click();
   }
 
-  static navigateToDevelop(){
-    cy.get('[data-cyid="link-develop"]').click()
+  static navigateToDevelop() {
+    cy.get('[data-cyid="link-develop"]').click();
   }
 
   static navigateToDevPortal() {
-    cy.get(".choreo-header>div>div>a")
-      .eq(0)
+    cy.get("[data-cyid='developer-portal-link']")
       .invoke("attr", "href")
       .then((href) => cy.visit(href));
     return cy.get("header>div>div>p").invoke("text");
+  }
+
+  static verifyResource(validateResourceName: string = "") {
+    let resourceIdentifier = "resource-/intensity";
+    if (validateResourceName) {
+      resourceIdentifier = "resource-/" + validateResourceName;
+    }
+
+    cy.get(`[data-testid="${resourceIdentifier}"]`);
   }
 
   static getComponentName() {

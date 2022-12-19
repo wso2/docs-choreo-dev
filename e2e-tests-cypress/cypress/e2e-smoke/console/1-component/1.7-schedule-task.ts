@@ -14,6 +14,7 @@
 import { LONG_TIME } from "../../../support/console/constants";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Environment } from "../../../support/console/pages/enum/environment";
@@ -22,16 +23,12 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ScheduleTask } from "../../../support/console/pages/templates/schedule-task-template";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
-import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
 import { Utils } from "../../../support/console/utils";
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
-describe("Schedule task", () => {
+describe("Create Schedule Trigger", () => {
 
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const API_Name = Utils.generateComponentName("sch");
-  const commitMessage = "adding task method";
+  const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
 
@@ -43,32 +40,10 @@ describe("Schedule task", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Creating a schedule task", () => {
-    cy.log("Starting schedule task creation");
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    ScheduleTask.selectTask();
-    ScheduleTask.createTask(API_Name, PROJECT_DESCRIPTION);
-    ComponentDevelopPage.getComponentURL();
-  });
-
-  it("Verify code edit in vscode", () => {
-    LoginPage.navigateToCodespace();
-    VSExplorer.pasteCode("scheduletask.bal");
-    VSExplorer.selectSourceControl();
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
-    );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
-  });
-
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
-
+  it("Selecting a schedule task", () => {
+    cy.log("Starting schedule task selection");
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
+    ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
   });
 
   it("Verify component deployment", () => {

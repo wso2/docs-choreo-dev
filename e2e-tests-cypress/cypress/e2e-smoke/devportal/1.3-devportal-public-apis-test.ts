@@ -16,7 +16,7 @@ import { DevPortalHomePage } from "../../support/devportal/pages/home/home-page"
 import { Apis } from "../../support/devportal/pages/apis/apis-home";
 import { ApiOverview } from "../../support/devportal/pages/apis/api-overview";
 import { Utils } from "../../support/console/utils";
-import { LoginPage as ConsoleLoginPage } from "../../support/console/pages/login-page";
+import { LoginPage as ConsoleLoginPage, LoginPage } from "../../support/console/pages/login-page";
 import { LoginPage as DevportalLoginPage } from "../../support/devportal/pages/login/login-page";
 import { ChoreoHomePage } from "../../support/console/pages/home/home-page";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
@@ -86,6 +86,7 @@ describe("Visit to developer portal organization public apis to confirm availabi
     });
 
     after(() => {
+      
         ChoreoHomePage.logout();
     });
 });

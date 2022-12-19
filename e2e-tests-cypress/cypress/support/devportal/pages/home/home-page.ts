@@ -47,6 +47,10 @@ export class DevPortalHomePage {
     cy.get("[data-testid=apis-appbar-btn]").should("be.visible").realClick();
   }
 
+  static navigateSelectAPI(apiName: string): void {
+    cy.get(`[data-testid="apiCard-${apiName}"`).click();
+  }
+
   static navigateToPerApiView(apiName: string): void {
     cy.wait(60000);
     cy.reload();

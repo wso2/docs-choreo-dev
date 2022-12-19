@@ -64,8 +64,8 @@ export class Apis {
 
   static confirmAPIUnavailability(textApiName) {
     cy.get("#outlined-search-bar-api-listing")
-        .focus()
-        .type(`${textApiName}{enter}`);
+      .focus()
+      .type(`${textApiName}{enter}`);
     cy.get("[data-testid=apiCard-" + textApiName + "]").should("not.exist");
     cy.log("Successfully verified the api unavailability");
   }
@@ -74,9 +74,7 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing")
       .focus()
       .type(`${textApiName}{enter}`);
-    cy.get("[data-testid=apiCard-" + textApiName + "]")
-      .last()
-      .click();
+    cy.get(`[data-testid="apiCard-${textApiName}"`).last().click();
   }
 
   private static getInvokeUrl() {
@@ -101,7 +99,10 @@ export class Apis {
           Cypress.env(`${Environment.PRODUCTION}_test_url`)
         );
       } else {
-        expect(urls).have.lengthOf(1);
+        expect(urls).have.lengthOf(2);
+        expect(urls).contains(
+          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+        );
         expect(urls).contains(
           Cypress.env(`${Environment.PRODUCTION}_test_url`)
         );

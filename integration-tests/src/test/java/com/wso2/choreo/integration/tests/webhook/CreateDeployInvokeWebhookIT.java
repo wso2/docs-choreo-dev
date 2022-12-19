@@ -74,11 +74,8 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     private String namespace;
     private String obsId;
     private String devInvokeURL;
-
     private ChoreoComponent choreoComponent;
 
-    @Autowired
-    private HttpClient choreoTestClient;
     @Autowired
     private HttpClient choreoCPTestClient;
     @Autowired
