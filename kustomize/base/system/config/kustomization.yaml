@@ -421,7 +421,3 @@ configMapGenerator:
     literals:
       - RUDDER_URL="http://dp-rudder:80"
       - CIO_PROXY_URL="http://cio-event-collector-service:8080"
-  - name: cm-cio-query-api
-    behavior: create
-    literals:
-      - CIO_ADX_DB="http://dp-rudder:80"
