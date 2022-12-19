@@ -50,7 +50,7 @@ export class ComponentDeployPage {
   static promoteToProd() {
     window.localStorage.setItem("hideSocialShareModel", "true");
 
-    if (Cypress.env("isPrivateOrg") || Cypress.env("enablePerspectiveView")) {
+    if (Cypress.env("isPrivateOrg")) {
       this.promote({
         settingButtonCount: 2,
         promoButtonIndex: 1,
