@@ -6,13 +6,13 @@ metadata:
     checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
     choreo.component: cio-event-collector-service
-  name: cio-event-collector-servic
+  name: cio-event-collector-service
 spec:
   replicas: 1
   selector:
     matchLabels:
       choreo.component: cio-event-collector-service
-  strategy: { }
+  strategy: {}
   template:
     metadata:
       labels:
@@ -39,27 +39,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-cio-event-collector-service
-          env:
-            - name: CIO_DB_JDBC_CONNECTION_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: env-cio-event-collector-service
-                  key: CIO_DB_JDBC_CONNECTION_STRING
-            - name: CIO_DB_JDBC_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: env-cio-event-collector-service
-                  key: CIO_DB_JDBC_USERNAME
-            - name: DEPLOYMENT_EVENTHUB_CONNECTION_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: secret-cio-event-collector-service
-                  key: DEPLOYMENT_EVENTHUB_CONNECTION_STRING
-            - name: CIO_DB_JDBC_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-cio-event-collector-service
-                  key: CIO_DB_JDBC_PASSWORD
+            - secretRef:
+                 name: secret-cio-event-collector-service
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -70,7 +51,7 @@ spec:
                 - ALL
           ports:
             - containerPort: 8080
-              name: collector-service-port
+              name: service-port
               protocol: TCP
             - containerPort: 8086
               name: health-port
@@ -94,10 +75,14 @@ spec:
               path: /liveness
               port: health-port
           volumeMounts:
+            - name: temp
+              mountPath: /tmp
             - name: secret-cio-event-collector-service
               mountPath: "/mnt/csi/secret-cio-event-collector-service"
               readOnly: true
       volumes:
+        - name: temp
+          emptyDir: {}
         - name: secret-cio-event-collector-service
           csi:
             driver: secrets-store.csi.k8s.io

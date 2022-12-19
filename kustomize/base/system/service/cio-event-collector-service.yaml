@@ -6,8 +6,8 @@ metadata:
   name: cio-event-collector-service
 spec:
   ports:
-    - name: cio-event-collector-service-port
+    - name: service-port
       port: 8080
-      targetPort: cio-event-collector-service-port
+      targetPort: service-port
   selector:
     choreo.component: cio-event-collector-service
