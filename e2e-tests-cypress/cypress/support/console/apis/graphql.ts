@@ -213,8 +213,6 @@ export class GraphQL {
                                 {id, orgId, projectId, handler    }
                       }`
       }
-
-      cy.log(query)
       this.callGraphQL(query).then(res => {
         Cypress.env("component", res.body.data.createComponent)
         expect(res.status).to.be.eq(200)

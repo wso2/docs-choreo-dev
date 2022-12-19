@@ -12,6 +12,7 @@
  */
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Environment } from "../../../support/console/pages/enum/environment";
@@ -23,17 +24,16 @@ import { ProjectOverviewPage } from "../../../support/console/pages/projects/pro
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
 import { Utils } from "../../../support/console/utils";
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
-describe("Verify project creation functionality", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("rest");
-  const COMPONENT_DESCRIPTION = "covid daily stats";
-  const PROJECT_DESCRIPTION = "Covid stats project";
-  const PROJECT_NAME = Utils.generateProjectName();
+describe("Verify REST API component creation functionality", () => {
+  
   const RESOURCE_NAME = "greeting";
   const PARAM_NAME = "name";
   const PARAM_VALUE = "World";
   const MATCHING_STRING = "Hello, " + PARAM_VALUE;
   const queryParameters1 = [{ key: PARAM_NAME, value: PARAM_VALUE }];
+  const COMPONENT_NAME = "create-default-Rest-API-1.6";
 
   before(() => {
     LoginPage.login();
@@ -44,10 +44,8 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
   });
 
   it("Verify component deployment", () => {
@@ -161,7 +159,9 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify suspending Prod deployed component", () => {
+    ComponentAPILifecycle.demoteToCreated();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });
 });
+
