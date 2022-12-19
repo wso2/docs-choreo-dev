@@ -60,8 +60,7 @@ describe("Verify project creation functionality", () => {
 
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.designNewRestApi(
       API_NAME,
       API_VERSION,
@@ -74,12 +73,10 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment to dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-  
   });
 
   it("Verify prod invoke url", () => {
     APIDeployment.PromoteToProd();
-   
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
@@ -122,19 +119,17 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Add  a new version", () => {
-    ComponentOverviewPage.navigateToDevelop()
+    ComponentOverviewPage.navigateToDevelop();
     APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
   });
 
   it("Deploy new version to Dev", () => {
     ComponentOverviewPage.navigateToDeploy();
     APIDeployment.DeployToDev();
-   
   });
 
   it("Verify new prod invoke url", () => {
     APIDeployment.PromoteToProd();
-   
   });
 
   it("Test in dev", () => {

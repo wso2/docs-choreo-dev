@@ -27,36 +27,6 @@ spec:
         fsGroup: 500
         seccompProfile:
           type: RuntimeDefault
-      initContainers:
-        - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant-init:latest
-          name: test-assistant-init
-          resources:
-            limits:
-              cpu: 300m
-              memory: 512Mi
-            requests:
-              cpu: 200m
-              memory: 256Mi
-          volumeMounts:
-            - name: test-assistant-models
-              mountPath: "/home/python-ai/choreo-ai-test-assistant/models"
-            - name: test-assistant-data
-              mountPath: "/home/python-ai/choreo-ai-test-assistant/data"
-            - name: test-assistant-model-metadata
-              mountPath: "/home/python-ai/choreo-ai-test-assistant/models.properties"
-              subPath: "models.properties"
-            - name: secret-test-assistant
-              mountPath: "/mnt/csi/secret-test-assistant"
-              readOnly: true
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsUser: 10500
-            runAsGroup: 10500
-            capabilities:
-              drop:
-                - all
-              add:
-                - NET_RAW
       containers:
         - image: choreocontrolplane.azurecr.io/choreoipaas/test-assistant:latest
           name: test-assistant
@@ -92,11 +62,6 @@ spec:
             - containerPort: 5000
               name: ta-port
               protocol: TCP
-          volumeMounts:
-            - name: test-assistant-models
-              mountPath: "/home/python-ai/choreo-ai-test-assistant/models/"
-            - name: test-assistant-data
-              mountPath: "/home/python-ai/choreo-ai-test-assistant/data/"
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10500
@@ -107,10 +72,6 @@ spec:
               add:
                 - NET_RAW
       volumes:
-        - name: test-assistant-models
-          emptyDir: { }
-        - name: test-assistant-data
-          emptyDir: { }
         - name: test-assistant-model-metadata
           configMap:
             defaultMode: 420
