@@ -28,6 +28,34 @@ export class ProjectOverviewPage {
     cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
   }
 
+  static createHttpProxyAPI() {
+    if (Utils.isPerspectiveViewEnabled()) {
+      this.waitForTemplateCardsToLoad();
+      cy.get('[data-testid="project-template-list-httpProxyApi"]')
+        .should("be.visible")
+        .click();
+    } else {
+      ProjectOverviewPage.addNewComponent();
+      RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    }
+  }
+
+  private static waitForTemplateCardsToLoad() {
+    cy.get('[data-cyid="scheduleTask"]')
+      .get('[data-testid="project-template-list-scheduleTask"]')
+      .should("be.enabled")
+      .get('[data-cyid="manualTrigger"]')
+      .get('[data-testid="project-template-list-manualTrigger"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpProxyApi"]')
+      .get('[data-testid="project-template-list-httpProxyApi"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpApi"]')
+      .get('[data-testid="project-template-list-httpApi"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpApi"]');
+  }
+
   static addComponent() {
     cy.get('[data-cyid="create-component"]').click();
   }
