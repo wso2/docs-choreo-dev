@@ -16,9 +16,6 @@ import java.util.HashMap;
 public class GitHub extends ControlPlaneAPI {
 
 
-
-
-
     public GitHub() {
     }
     public static  String getGitHubRepoUrl(String repoName){
@@ -41,7 +38,7 @@ public class GitHub extends ControlPlaneAPI {
         return HttpClientUtil.httpPOST(requestURI, ObjectMapperUtil.mapToString(requestBodyMap), AUTH_HEADER, "");
     }
 
-    public static Response mergePR(String repoName, String prNumber) throws IOException, UnexpectedResponseException {
+    public static Response mergePR(String repoName, String prNumber) throws IOException {
         String requestURI = GH_URL + "/repos/".concat(GH_ORG).concat("/").concat(repoName).concat("/pulls/" + prNumber + "/merge");
         HashMap<String, Object> requestBodyMap = new HashMap<>() {
             {

@@ -23,7 +23,7 @@ export class GraphQL {
     orgHandle: string,
     token: string
   ) {
-    this.getProjects(orgId, token).then((response) => {
+    this.getProjects(orgId).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
     });
   }
@@ -33,7 +33,7 @@ export class GraphQL {
     orgHandle: string,
     token: string
   ) {
-    this.getProjects(orgId, token).then((response) => {
+    this.getProjects(orgId).then((response) => {
       if (response.status !== SUCCESS_STATUS_CODE) {
         cy.log(`getProjects failed, status returned: ${response.status}`);
         return;
@@ -81,7 +81,6 @@ export class GraphQL {
 
 
   static getComponents(projectId: string, orgHandle: string, token: string) {
-
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
@@ -184,18 +183,18 @@ export class GraphQL {
     const { id, uuid, handle } = Cypress.env("current_org");
     this.getProjects(id).then(res => {
       const prj = res.body.data.projects as []
-      const { id } = prj.find(p => p["name"] === projectName)
-      cy.log(`Project Id :: ${id}`)
+      const pj = prj.find(p => p["name"] === projectName)
+      cy.log(`Project Id :: ${pj.id}`)
       const query = {
         query: `mutation{
                   createComponent(
                              component: {
                                   name: "${compName}",
-                                  orgId: ${Cypress.env("orgId")},
+                                  orgId: ${id},
                                   orgHandler: "${Cypress.env("choreoOrgHandle")}",
                                   displayName: "${compName}",
                                   displayType: "${displayType}",
-                                  projectId: "${id}",
+                                  projectId: "${pj["id"]}",
                                   labels: "",
                                   version: "1.0.0",
                                   description: "",
@@ -214,6 +213,8 @@ export class GraphQL {
                                 {id, orgId, projectId, handler    }
                       }`
       }
+
+      cy.log(query)
       this.callGraphQL(query).then(res => {
         Cypress.env("component", res.body.data.createComponent)
         expect(res.status).to.be.eq(200)

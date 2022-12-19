@@ -1,5 +1,8 @@
 
+import { CurlData } from "../../../../interfaces/curl-data";
 import { Environment } from "../../enum/environment";
+
+
 
 export class Curl {
   static selectMethod(httpMethod: string) {
@@ -30,8 +33,17 @@ export class Curl {
 
   static getRequestComponents(env: string) {
     const curlData = Cypress.env(`${env}`);
-
-    if (curlData) { return cy.wrap(curlData); }
+    let curl: CurlData = {
+      method: "",
+      url: "",
+      headers: {"api-key":""}
+    }
+    if (curlData) {
+      curl.headers = curlData["headers"]
+      curl.method = curlData["method"]
+      curl.url = curlData["url"]
+      return cy.wrap(curl)
+    }
 
     return cy.get("textarea").invoke("text")
       .then((c) => {
@@ -40,7 +52,10 @@ export class Curl {
         const url = arrayURL[1];
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
-        const curl = { method, url, headers: { "api-key": apiKey } };
+      
+        curl.headers["api-key"] = apiKey
+        curl.url = url
+        curl.method = method
         Cypress.env(`${env}`, curl);
         return cy.wrap(curl);
       });

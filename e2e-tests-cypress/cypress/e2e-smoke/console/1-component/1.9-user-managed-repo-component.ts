@@ -14,7 +14,7 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { Utils } from "../../../support/console/utils";
 import { GitHub } from "../../../support/github/github";
 
-describe.skip("Verify BYOR functionality", () => {
+describe("Verify BYOR functionality", () => {
     const PROJECT_DESCRIPTION = "Internal API Test";
     const PROJECT_NAME = Utils.generateProjectName();
     const REST_API_NAME = Utils.generateComponentName("byor");
