@@ -12,7 +12,6 @@
  */
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
@@ -22,23 +21,17 @@ import { ConnectorAudience } from "../../../support/console/pages/enum/marketpla
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { Utils } from "../../../support/console/utils";
+import { ComponentListingPage } from '../../../support/console/pages/component/component-listing-page';
+import { REUSABLE_PROJECT_NAME } from '../../../support/devportal/constants';
 
 describe("Verify project creation functionality", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("rest");
-  const COMPONENT_DESCRIPTION = "covid daily stats";
-  const PROJECT_DESCRIPTION = "Covid stats project";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
   const NEW_BRANCH = "feature";
   const API_NEW_VERSION = "1.1";
+  const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
 
   before(() => {
     LoginPage.login();
@@ -49,11 +42,8 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
-    ComponentDevelopPage.getComponentURL();
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
   });
 
   it("Verify component deployment", () => {
@@ -65,14 +55,6 @@ describe("Verify project creation functionality", () => {
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
    
-  });
-
-  it("Edit code in VScode", () => {
-    ComponentOverviewPage.navigateToOverview();
-    LoginPage.navigateToCodespace();
-    VSExplorer.creteNewBranch(NEW_BRANCH);
-    VSExplorer.pasteCode("Numbers.bal");
-    VSExplorer.commitPush(commitMessage, true);
   });
 
   it("Verify component commits", () => {
