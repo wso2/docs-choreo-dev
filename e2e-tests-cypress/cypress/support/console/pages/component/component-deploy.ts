@@ -50,7 +50,7 @@ export class ComponentDeployPage {
   static promoteToProd() {
     window.localStorage.setItem("hideSocialShareModel", "true");
 
-    if (Cypress.env("isPrivateOrg")) {
+    if (Cypress.env("isPrivateOrg") || Cypress.env("enablePerspectiveView")) {
       this.promote({
         settingButtonCount: 2,
         promoButtonIndex: 1,
@@ -64,6 +64,18 @@ export class ComponentDeployPage {
         invokeUrlIndex: 1,
       });
     }
+  }
+
+  static promoteToProdApiPerspectiveView() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
+    .should("be.enabled")
+    .wait(2000)
+    .click(); 
+    cy.wait(6000);
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
+      "not.be.disabled"
+    );
   }
 
   static deployManualTriggerToDev() {

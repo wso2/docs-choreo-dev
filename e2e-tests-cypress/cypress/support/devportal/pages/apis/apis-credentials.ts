@@ -29,4 +29,13 @@ export class ApiCredentials {
     cy.get('[data-testid="generate-access-token-btn"]').should("exist");
     cy.log("Successfully generated credentials");
   }
+
+  static removeCredentials() {
+    cy.log("Removing credentials");
+    cy.get('[data-testid="remove-creds-btn"]').click();
+    cy.get('[data-testid="remove-creds-confirmation-ok"]').click();
+    cy.wait(3000);
+    cy.get('[data-testid="generate-access-token-btn"]').should("not.exist");
+    cy.log("Successfully removed credentials");
+  }
 }
