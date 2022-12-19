@@ -11,16 +11,22 @@
  * associated services.
  */
 
+import { GraphQL } from "../../apis/graphql";
+import { Region } from "../enum/regions";
+
 
 
 export class ProjectListingPage {
-  
-  static createNewProject(projectName: string, description: string) {
+
+  static createNewProject(projectName: string, description: string, dataPlane: Region = Region.US) {
     cy.get('[data-testid="project-picker"]>div').click();
     cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
+    cy.get('[aria-label="Without label"]').click()
+    cy.get(`[data-value="${dataPlane}"]`).click()
     cy.get('[data-testid="create-version-create"]').click();
+    cy.get('[data-cyid="create-component"]').should('be.visible')
   }
 
   static selectProject(projectName: string = "Default Project") {

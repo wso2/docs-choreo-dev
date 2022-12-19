@@ -8,7 +8,6 @@ import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -16,11 +15,11 @@ import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
-import com.wso2.choreo.integration.models.response.Response;
-import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
+import com.wso2.choreo.integration.models.response.Response;
 import org.hamcrest.core.StringRegularExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -41,9 +40,8 @@ import java.util.Date;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.everyItem;
 
-public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
+public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
 
     private String accessToken;
     private String projectId;
@@ -53,9 +51,9 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     private String apiKey;
     private String devInvokeURL;
     private String prodInvokeURL;
-    private    Environment[] en;
-    private  static final  String   QUERY="query{greeting(name:\""+"John"+"\")}";
-    private static final String MUTATION="mutation{createUser(name:\""+"John"+"\")}";
+    private Environment[] en;
+    private static final String QUERY = "query{greeting(name:\"" + "John" + "\")}";
+    private static final String MUTATION = "mutation{createUser(name:\"" + "John" + "\")}";
     @Autowired
     private HttpClient choreoCPTestClient;
 
@@ -67,18 +65,22 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
 
     @BeforeClass
-    public void setup_GraphQLServiceIT() throws Exception {
-      
+    public void setup_GraphQLServiceEUdpIT() throws Exception {
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        projectId = project.getId();
-
+        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test
     @CitrusTest
-    public void createUserManagedComponentFor_GraphQLServiceIT() throws IOException {
+    public void creteProject_GraphQLServiceEUdpIT() throws IOException {
+        ChoreoProject project = GraphQL.createProject(Constant.region.EU, accessToken);
+        projectId = project.getId();
+        Assert.assertEquals(project.getRegion(), Constant.region.EU.name());
+    }
+
+    @Test(dependsOnMethods = {"creteProject_GraphQLServiceEUdpIT"})
+    @CitrusTest
+    public void createUserManagedComponentFor_GraphQLServiceEUdpIT() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.graphql.name()).build();
@@ -87,122 +89,122 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     }
 
 
-    @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"createUserManagedComponentFor_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void createdComponentStatus_GraphQLServiceIT() throws UnexpectedResponseException {
+    public void createdComponentStatus_GraphQLServiceEUdpIT() throws UnexpectedResponseException {
         Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
 
-    @Test(dependsOnMethods = {"createdComponentStatus_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"createdComponentStatus_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void initialPRGeneration_GraphQLServiceIT() throws IOException, UnexpectedResponseException {
+    public void initialPRGeneration_GraphQLServiceEUdpIT() throws IOException, UnexpectedResponseException {
         PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
         Assert.assertEquals(prs.length, 1);
     }
 
-    @Test(dependsOnMethods = {"initialPRGeneration_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"initialPRGeneration_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void mergePR_GraphQLServiceIT() throws IOException, UnexpectedResponseException {
+    public void mergePR_GraphQLServiceEUdpIT() throws IOException, UnexpectedResponseException {
         GitHub.mergePR(repoName, "1");
         PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
         Assert.assertEquals(prs.length, 0);
     }
 
 
-    @Test(dependsOnMethods = {"mergePR_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"mergePR_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void mergeNewCode_GraphQLServiceIT() throws IOException {
+    public void mergeNewCode_GraphQLServiceEUdpIT() throws IOException {
         String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/gql.bal");
         Response res = GitHub.mergeNewCode(repoName, "sample.bal", "update code", encodedContent);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"mergeNewCode_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"mergeNewCode_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void componentRetrieval_GraphQLServiceIT() throws IOException {
+    public void componentRetrieval_GraphQLServiceEUdpIT() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
         Assert.assertNotNull(choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void addDeploymentConfiguration_GraphQLServiceIT() throws Exception {
+    public void addDeploymentConfiguration_GraphQLServiceEUdpIT() throws Exception {
         Orgs.addConfiguration(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken);
     }
 
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void deploy_GraphQLServiceIT() throws Exception {
+    public void deploy_GraphQLServiceEUdpIT() throws Exception {
         GraphQL.deployComponent(choreoComponent, accessToken);
     }
 
-    @Test(dependsOnMethods = {"deploy_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"deploy_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void deploymentStatusByVersion_GraphQLServiceIT() throws Exception {
+    public void deploymentStatusByVersion_GraphQLServiceEUdpIT() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
     }
 
 
-    @Test(dependsOnMethods = {"deploymentStatusByVersion_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void componentDevDeploymentStatus_GraphQLServiceIT() throws Exception {
+    public void componentDevDeploymentStatus_GraphQLServiceEUdpIT() throws Exception {
         devInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken).getInvokeUrl();
     }
 
-    @Test(dependsOnMethods = {"componentDevDeploymentStatus_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void addPromoteConfiguration_GraphQLServiceIT() throws Exception {
+    public void addPromoteConfiguration_GraphQLServiceEUdpIT() throws Exception {
         Response res = Orgs.addConfiguration(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"addPromoteConfiguration_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"addPromoteConfiguration_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void promote_GraphQLServiceIT() throws Exception {
+    public void promote_GraphQLServiceEUdpIT() throws Exception {
         GraphQL.promoteComponent(choreoComponent, accessToken);
     }
 
-    @Test(dependsOnMethods = {"promote_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"promote_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void componentProdDeploymentStatus_GraphQLServiceIT() throws Exception {
-        prodInvokeURL = GraphQL.componentDeployment(choreoComponent,  Constant.PROD_ENVIRONMENT, accessToken).getInvokeUrl();
+    public void componentProdDeploymentStatus_GraphQLServiceEUdpIT() throws Exception {
+        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken).getInvokeUrl();
     }
 
-    @Test(dependsOnMethods = {"componentProdDeploymentStatus_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"componentProdDeploymentStatus_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void invokeQueryInDev_GraphQLServiceIT() throws Exception {
+    public void invokeQueryInDev_GraphQLServiceEUdpIT() throws Exception {
         apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
-       Response res =  GqlServiceTestHelper.sendRequest(devInvokeURL,QUERY,apiKey);
-       Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
+        Response res = GqlServiceTestHelper.sendRequest(devInvokeURL, QUERY, apiKey);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"invokeQueryInDev_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void invokeQueryInProd_GraphQLServiceIT() throws Exception {
-        Response res =  GqlServiceTestHelper.sendRequest(prodInvokeURL,QUERY,apiKey);
-        Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
+    public void invokeQueryInProd_GraphQLServiceEUdpIT() throws Exception {
+        Response res = GqlServiceTestHelper.sendRequest(prodInvokeURL, QUERY, apiKey);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
 
-    @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"invokeQueryInProd_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void invokeMutationInDev_GraphQLServiceIT() throws Exception {
-        Response res =  GqlServiceTestHelper.sendRequest(devInvokeURL,MUTATION,apiKey);
-        Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
+    public void invokeMutationInDev_GraphQLServiceEUdpIT() throws Exception {
+        Response res = GqlServiceTestHelper.sendRequest(devInvokeURL, MUTATION, apiKey);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"invokeMutationInDev_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void invokeMutationInProd_GraphQLServiceIT() throws Exception {
-        Response res =  GqlServiceTestHelper.sendRequest(prodInvokeURL,MUTATION,apiKey);
-        Assert.assertEquals(res.getStatusCode(),HttpStatus.OK.value());
+    public void invokeMutationInProd_GraphQLServiceEUdpIT() throws Exception {
+        Response res = GqlServiceTestHelper.sendRequest(prodInvokeURL, MUTATION, apiKey);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
-    @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"invokeMutationInProd_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void waitForObservabilityLogs_GraphQLServiceIT() throws Exception {
+    public void waitForObservabilityLogs_GraphQLServiceEUdpIT() throws Exception {
         en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
         Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
@@ -210,9 +212,9 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceIT"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void testGroupedLogs_GraphQLServiceIT(Constant.Environment env) throws Exception {
+    public void testGroupedLogs_GraphQLServiceEUdpIT(Constant.Environment env) throws Exception {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
@@ -253,9 +255,9 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
         );
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceIT"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void testLiveLogs_GraphQLServiceIT(Constant.Environment env) throws Exception {
+    public void testLiveLogs_GraphQLServiceEUdpIT(Constant.Environment env) throws Exception {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();

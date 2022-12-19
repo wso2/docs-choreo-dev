@@ -14,6 +14,7 @@
 import { GraphQL } from "../../apis/graphql";
 
 export class ComponentListingPage {
+  
   static deleteComponent(componentName: string) {
 
     cy.get(`div[title=${componentName}]`).should("be.visible").realHover();

@@ -99,6 +99,16 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
     }
 
+
+    public static ChoreoProject createProject(Constant.region region,String accessToken) throws IOException {
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region.name()).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        log.info(response.getRes());
+        return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
+    }
+
     public static ChoreoComponent createBYOCComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
         String srcGitHubURL = "https://github.com/choreo-test-apps/byor-greetings-app2";
         graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);

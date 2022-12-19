@@ -125,6 +125,34 @@ export class Utils {
     });
   }
 
+
+
+  static sendPutRequest(url: string, headers, body) {
+    const request = {
+      method: "PUT",
+      url,
+      headers,
+      body,
+      failOnStatusCode: false,
+    };
+    return cy.request(request).then((res) => {
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   static sendGetRequest(url: string, headers: any = {}) {
     const request = {
       method: "GET",

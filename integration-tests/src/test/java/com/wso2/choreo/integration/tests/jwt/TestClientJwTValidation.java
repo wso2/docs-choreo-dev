@@ -8,6 +8,7 @@ import com.consol.citrus.validation.json.JsonMessageValidationContext;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -133,7 +134,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentDevDeploymentStatus_TestClientJwTValidation"})
     @CitrusTest
     public void invokeAPI_TestClientJwTValidation() throws Exception {
-        String apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
+        String apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
         String apiInvocationRequestURI = "/getJwt";
 
         http().

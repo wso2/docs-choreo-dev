@@ -78,42 +78,7 @@ export class GraphQL {
     return false;
   }
 
-  private static createDefaultProject(
-    orgId: number,
-    orgHandle: string,
-    token: string
-  ) {
-    const query = {
-      query: `mutation {
-            createProjectComponent(
-              project: {
-                name: "Dummy e2e Project",
-                orgId: ${orgId},
-                orgHandler: "${orgHandle}",
-                description: "",
-                version: "1.0.0"
-              },
-              component: {
-                name: "dummye2e",
-                orgId: ${orgId},
-                orgHandler: "${orgHandle}",
-                displayName: "DummyE2E",
-                displayType: "restAPI",
-                projectId: "",
-                labels: "",
-                version: "1.0.0",
-                description: "",
-                apiId: "",
-                ballerinaVersion: "swan-lake-alpha5"
-              }
-            ) {id, projectId, apiId, handler }}`,
-    };
 
-    this.callGraphQL(token, query).then((response) => {
-      expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      cy.log("Successfully created Default e2e Project");
-    });
-  }
 
   static getComponents(projectId: string, orgHandle: string, token: string) {
 
@@ -122,7 +87,7 @@ export class GraphQL {
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
     };
 
-    return this.callGraphQL(token, query);
+    return this.callGraphQL(query);
   }
 
   private static deleteComponentsInProject(
@@ -158,7 +123,7 @@ export class GraphQL {
         componentId: "${componentId}"){status, canDelete, message}}`,
     };
 
-    this.callGraphQL(token, query).then((response) => {
+    this.callGraphQL(query).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Component  ${componentId}`);
       } else {
@@ -179,7 +144,7 @@ export class GraphQL {
         orgId: ${orgId}, projectId: "${projectId}"){ status, details }}`,
     };
 
-    this.callGraphQL(token, query).then((response) => {
+    this.callGraphQL(query).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Project  ${projectId}`);
       } else {
@@ -190,18 +155,18 @@ export class GraphQL {
     });
   }
 
-  static getProjects(orgId: number, token: string) {
+  static getProjects(orgId: number) {
     const query = {
       query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
     };
 
-    return this.callGraphQL(token, query);
+    return this.callGraphQL(query);
   }
 
-   static callGraphQL(token: string, query: any) {
+  static callGraphQL(query: any) {
     const appSvcURL = Cypress.env("newAppSvcURL");
     const header = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cypress.env("apim_token")}`,
       "content-type": "application/json",
     };
 
@@ -212,6 +177,73 @@ export class GraphQL {
       headers: header,
       failOnStatusCode: false,
     });
+  }
+
+
+  static createComponent(projectName, compName, displayType, triggerChannels, triggerID, srcGitRepoUrl) {
+    const { id, uuid, handle } = Cypress.env("current_org");
+    this.getProjects(id).then(res => {
+      const prj = res.body.data.projects as []
+      const { id } = prj.find(p => p["name"] === projectName)
+      cy.log(`Project Id :: ${id}`)
+      const query = {
+        query: `mutation{
+                  createComponent(
+                             component: {
+                                  name: "${compName}",
+                                  orgId: ${Cypress.env("orgId")},
+                                  orgHandler: "${Cypress.env("choreoOrgHandle")}",
+                                  displayName: "${compName}",
+                                  displayType: "${displayType}",
+                                  projectId: "${id}",
+                                  labels: "",
+                                  version: "1.0.0",
+                                  description: "",
+                                  apiId: "",
+                                  ballerinaVersion: "swan-lake-alpha5",
+                                  triggerChannels: "${triggerChannels}",
+                                  triggerID: ${triggerID},
+                                  httpBase: true,
+                                  sampleTemplate: "",
+                                  accessibility: "external",
+                                  srcGitRepoUrl: "${srcGitRepoUrl}"
+                                  repositorySubPath: "",
+                                  repositoryType: "",
+                                  repositoryBranch: "",
+                                } )
+                                {id, orgId, projectId, handler    }
+                      }`
+      }
+      this.callGraphQL(query).then(res => {
+        Cypress.env("component", res.body.data.createComponent)
+        expect(res.status).to.be.eq(200)
+      })
+    })
+    cy.reload()
+    cy.get('tbody>tr p').should('be.visible')
+  }
+
+  static getPullRequests(expectedRequestCount: number = 0) {
+
+    const { id } = Cypress.env("component")
+    const query = {
+      query: ` query{
+        componentPullRequests(componentId: "${id}")
+        { url, number }
+                   }`
+    }
+
+    for (let i = 0; i < 4; i++) {
+      this.callGraphQL(query).then(res => {
+        const prs = res.body.data.componentPullRequests as []
+        cy.log(`PRS ${prs.length}`);
+        if (prs.length == expectedRequestCount) {
+          Cypress.env("q", true)
+          return;
+        }
+        cy.wait(20000)
+      })
+    }
   }
 
   private static changeComponentLifeCycle(
@@ -260,11 +292,7 @@ export class GraphQL {
  release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
     };
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    this.callGraphQL(token, query).then((res) => {
+    this.callGraphQL(query).then((res) => {
       if (res.status === SUCCESS_STATUS_CODE) {
         const apiVersion: [] = res.body.data.component.apiVersions;
         apiVersion.forEach((e) => {

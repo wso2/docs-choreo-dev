@@ -12,6 +12,7 @@ import com.wso2.choreo.integration.common.exceptions.GraphQLException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,8 @@ import java.util.Optional;
 /**
  * Class to represent Choreo project
  */
+
+@Data
 public class ChoreoProject {
 
     private final static Logger log = LoggerFactory.getLogger(ChoreoProject.class);
@@ -40,6 +43,7 @@ public class ChoreoProject {
     private String name;
     private String description;
     private String createdDate;
+    private String region;
 
     /**
      * Create a Choreo component
@@ -272,78 +276,6 @@ public class ChoreoProject {
         } catch (GraphQLException e) {
             log.error("Error while deleting component", e);
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
-    }
-
-    public String getLabels() {
-        return labels;
-    }
-
-    public void setLabels(String labels) {
-        this.labels = labels;
-    }
-
-    public String getHandler() {
-        return handler;
-    }
-
-    public void setHandler(String handler) {
-        this.handler = handler;
-    }
-
-    public String getExtendedHandler() {
-        return extendedHandler;
-    }
-
-    public void setExtendedHandler(String extendedHandler) {
-        this.extendedHandler = extendedHandler;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
     }
 
     public HashMap<String, ChoreoComponent> getComponentMap() {

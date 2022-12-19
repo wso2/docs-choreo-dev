@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
@@ -174,7 +175,7 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentDeploymentStatus_CreateDeployInvokeWebhookIT"})
     @CitrusTest
     public void invokeAPI_CreateDeployInvokeWebhookIT() throws Exception {
-        String apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
+        String apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
 
         // Read the request as a json make it as a compact json string
         // Make the hex digest of the body, to be sent with the mock request
