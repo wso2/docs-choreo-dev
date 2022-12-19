@@ -57,10 +57,6 @@ describe("Verify project creation functionality", () => {
    
   });
 
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
-  });
-
   it("Verify new version creation", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentOverviewPage.createNewVersion(API_NEW_VERSION, NEW_BRANCH);
