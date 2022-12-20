@@ -134,8 +134,13 @@ export class ComponentAPILifecycle {
   static publishToMarketplace(connectorAudience: ConnectorAudience) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
     cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
-    cy.contains("No, Thanks").should("be.enabled").click();
+    cy.contains("Yes, Please").should("be.enabled").click();
+    cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
+    cy.get('[data-testid="marketplace-btn"]').focus().should("be.visible");
+    cy.get('[data-testid="connector-publish-wizard-title"]').should(
+        "not.exist"
+    );
   }
 
   static publishToDevportal() {
