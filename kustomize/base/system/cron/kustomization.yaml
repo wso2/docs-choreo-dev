@@ -9,3 +9,4 @@ resources:
   - logs-archiver.yaml
   - choreo-ai-lowcode-parser.yaml
   - choreo-userapps-image-deleter.yaml
+  - cio-internal-metric-collector.yaml
