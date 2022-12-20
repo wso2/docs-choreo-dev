@@ -62,7 +62,7 @@ spec:
    - namespaceSelector:
        matchLabels:
          kubernetes.io/metadata.name: kubecost
-         
+
  ingress:
  - from:
    - namespaceSelector:
@@ -124,8 +124,8 @@ metadata:
 spec:
  egress:   
   - to:     
-    - ipBlock:         
-        cidr: 172.0.0.0/8
+    - ipBlock:
+        cidr: 10.0.0.0/8
     ports:     
     - protocol: TCP       
       port: 443
@@ -133,29 +133,4 @@ spec:
  policyTypes:
   - Egress
 
----
-
-# [7] Allow ingress cost-analyzer access
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: ingress-network-policy
-  namespace: kubecost
-spec:
-  policyTypes:
-   - Ingress
-   - Egress
-  podSelector:
-    matchLabels:
-      app: cost-analyzer
-  ingress:
-    - from:
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: controlplane-internal-nginx-ingress
-      ports:
-        - port: 9090
-  egress:
-    - to:
-      - ipBlock:
-          cidr: 169.254.169.254/32
+---        
