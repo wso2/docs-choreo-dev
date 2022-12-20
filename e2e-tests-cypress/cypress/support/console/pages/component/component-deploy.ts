@@ -66,6 +66,18 @@ export class ComponentDeployPage {
     }
   }
 
+  static promoteToProdApiPerspectiveView() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
+    .should("be.enabled")
+    .wait(2000)
+    .click(); 
+    cy.wait(6000);
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
+      "not.be.disabled"
+    );
+  }
+
   static deployManualTriggerToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 360000 })
