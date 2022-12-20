@@ -44,3 +44,4 @@ resources:
   - choreo-admin-api.yaml
   - opentelemetry-collector.yaml
   - cio-event-collector-service.yaml
+  - cio-query-api-service.yaml
