@@ -13,11 +13,11 @@
     versionId: string,
     environmentId: string,
     commitId: string,
-    isProd: bool
+    isProd: bool,
     duration: decimal
 );
 
-.create table deployments ingestion json mapping "leadTimeMapping"
+.create table leadTime ingestion json mapping "leadTimeMapping"
     '['
     '    { "column" : "timestamp", "Properties":{"Path":"$.deploymentTime"}},'
     '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
