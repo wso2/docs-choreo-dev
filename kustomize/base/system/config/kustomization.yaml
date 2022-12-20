@@ -103,6 +103,7 @@ configMapGenerator:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
+      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
   - name: cm-connectords-cp
     behavior: create
     literals:
