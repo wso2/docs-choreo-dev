@@ -33,6 +33,9 @@ import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
+import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
+import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -140,7 +143,9 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+        "be.visible"
+    );
   });
 
   it("Create a consumer application and tryout an API", () => {
@@ -160,7 +165,30 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.verifyConsumer(appName).should("be.visible");
   });
 
+  it("Verify insight values for dev", () => {
+    ChoreoHomePage.navigateToHome();
+    ChoreoHomePage.navigateToInsights();
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(3);
+    });
+    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+    InsightsPage.getAverageErrorRate().should("eq", "0");
+  });
+
+  it("Verify insight values for prod", () => {
+    InsightsPage.selectTimePeriod();
+    InsightsPage.selectEnvironment(Environment.PRODUCTION);
+    InsightsPage.getTotalTraffic().should((value) => {
+      expect(Number(value)).gte(2);
+    });
+    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
+    InsightsPage.getAverageErrorRate().should("eq", "0");
+  });
+
   it("Reset and undeploy component", () => {
+    ComponentListingPage.visitComponentWithoutName();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

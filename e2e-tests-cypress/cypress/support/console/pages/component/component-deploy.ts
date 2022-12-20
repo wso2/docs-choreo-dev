@@ -270,9 +270,6 @@ export class ComponentDeployPage {
     invokeUrlCount,
     invokeUrlIndex = 0,
   }: PromoteConfigs) {
-    cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 })
-      .should("have.length", settingButtonCount)
-      .wait(2000); // the number of `API Settings` buttons
     cy.get('[data-cyid*="promote"]', { timeout: 360000 })
       .should("be.enabled")
       .wait(2000)
