@@ -17,9 +17,7 @@ import { ComponentOverviewPage } from "../../../support/console/pages/component/
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
@@ -29,8 +27,6 @@ import { REUSABLE_PROJECT_NAME } from '../../../support/devportal/constants';
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
-  const NEW_BRANCH = "feature";
-  const API_NEW_VERSION = "1.1";
   const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
 
   before(() => {
@@ -49,27 +45,10 @@ describe("Verify project creation functionality", () => {
   it("Verify component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-   
-  });
-
-  it("Verify new version creation", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentOverviewPage.createNewVersion(API_NEW_VERSION, NEW_BRANCH);
-  });
-
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDev();
-   
-  });
-
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
@@ -202,7 +181,6 @@ describe("Verify project creation functionality", () => {
   it("Verify resource access without the token in dev", () => {
     Curl.getRequestComponents(`${Environment.DEVELOPMENT}root`).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.body).equal(4);
         expect(res.status).equal(200);
       })
     );
@@ -220,7 +198,6 @@ describe("Verify project creation functionality", () => {
   it("Verify resource access without the token in prod", () => {
     Curl.getRequestComponents(`${Environment.PRODUCTION}root`).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.body).equal(4);
         expect(res.status).equal(200);
       })
     );
@@ -238,9 +215,7 @@ describe("Verify project creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publishRestApiWithoutConnector();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
@@ -250,25 +225,9 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.stopAllDeployment();
   });
 
-  it("Verify insight values for dev", () => {
-    ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToInsights();
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(6);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it("Verify insight values for prod", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(6);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+  it("Verify application suspension", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.demoteToCreated();
   });
 });

@@ -27,7 +27,13 @@ export class ComponentListingPage {
     this.verifyDeletion();
   }
 
+  static visitComponentWithoutName() {
+    const componentURL = Cypress.env(`componentURL`);
+    cy.visit(componentURL);
+  }
+
   static visitToAComponent(componentName: string) {
+    cy.get('[data-testid="main-left-nav-item-Components"]').should("be.visible").click();
     cy.get("tr p").contains(componentName).should("be.visible").click();
     cy.get("[data-cyid=link-overview]").should("be.visible");
     Utils.saveComponentURL();
