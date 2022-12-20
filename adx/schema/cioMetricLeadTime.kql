@@ -13,7 +13,7 @@
     versionId: string,
     environmentId: string,
     commitId: string,
-    isProd: bool
+    isProd: bool,
     duration: decimal
 );
 
