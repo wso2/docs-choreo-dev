@@ -18,7 +18,7 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 /// <reference types="cypress" />
 
 describe("Add roles and permissions", () => {
-   const roleName = "E2EtestRole";
+  const roleName = "E2EtestRole";
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
 
@@ -41,6 +41,7 @@ describe("Add roles and permissions", () => {
   });
 
   it("Delete created role", () => {
+    OrganizationComponent.navigateToRoleMapping();
     OrganizationComponent.navigateToRoles();
     OrganizationComponent.deleteCreatedRole(roleName);
   });
