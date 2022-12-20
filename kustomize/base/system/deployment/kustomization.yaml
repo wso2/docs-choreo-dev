@@ -43,6 +43,7 @@ resources:
   - choreo-apim-proxy-deployer.yaml
   - opentelemetry-collector.yaml
   - choreo-admin-api.yaml
+  - cio-event-collector-service.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

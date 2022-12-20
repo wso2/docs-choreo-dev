@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: cio-event-collector-service
+  name: cio-event-collector-service
+spec:
+  ports:
+    - name: service-port
+      port: 8080
+      targetPort: service-port
+  selector:
+    choreo.component: cio-event-collector-service
