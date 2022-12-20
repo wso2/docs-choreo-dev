@@ -4,6 +4,7 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
+import { DisplayType } from "../../../support/console/pages/enum/component-display-types";
 import { Environment } from "../../../support/console/pages/enum/environment";
 import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
@@ -13,6 +14,7 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
 import { GitHub } from "../../../support/github/github";
+import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify BYOR functionality", () => {
     const PROJECT_DESCRIPTION = "Internal API Test";
@@ -39,14 +41,17 @@ describe("Verify BYOR functionality", () => {
 
 
     it("Verify REST API component creation", () => {
+        let componentData: ComponentData = {
+            componentName: REST_API_NAME,
+            displayType: DisplayType.restAPI,
+            projectName: PROJECT_NAME,
+            triggerChannels: "",
+            triggerId: null,
+            srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME)
+        }
         ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Region.EU);
-        GraphQL.createComponent(PROJECT_NAME, REST_API_NAME, "restAPI", "", "null", GitHub.getGitHubRepoUrl(REPO_NAME))
+        GraphQL.createComponentWithRepo(componentData, REPO_NAME)
     });
-
-    it("Initial PR merge", () => {
-        GraphQL.getPullRequests(1)
-        GitHub.mergePR(REPO_NAME, "1")
-    })
 
     it("Deploy component", () => {
         ComponentListingPage.visitToAComponent(REST_API_NAME)

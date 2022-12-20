@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { GitHub } from "../../github/github";
+import { ComponentData } from "../../interfaces/component-data";
 import { ONE_HOUR } from "../constants";
 import { Utils } from "../utils";
 
@@ -179,33 +181,33 @@ export class GraphQL {
   }
 
 
-  static createComponent(projectName, compName, displayType, triggerChannels, triggerID, srcGitRepoUrl) {
-    const { id, uuid, handle } = Cypress.env("current_org");
+  static createComponentWithRepo(componentData: ComponentData, repoName: string) {
+    const { id } = Cypress.env("current_org");
     this.getProjects(id).then(res => {
-      const prj = res.body.data.projects as []
-      const pj = prj.find(p => p["name"] === projectName)
-      cy.log(`Project Id :: ${pj.id}`)
+      const projects = res.body.data.projects as []
+      const project = projects.find(p => p["name"] === componentData.projectName)
+      cy.log(`Project Id :: ${project["id"]}`)
       const query = {
         query: `mutation{
                   createComponent(
                              component: {
-                                  name: "${compName}",
+                                  name: "${componentData.componentName}",
                                   orgId: ${id},
                                   orgHandler: "${Cypress.env("choreoOrgHandle")}",
-                                  displayName: "${compName}",
-                                  displayType: "${displayType}",
-                                  projectId: "${pj["id"]}",
+                                  displayName: "${componentData.componentName}",
+                                  displayType: "${componentData.displayType}",
+                                  projectId: "${project["id"]}",
                                   labels: "",
                                   version: "1.0.0",
                                   description: "",
                                   apiId: "",
                                   ballerinaVersion: "swan-lake-alpha5",
-                                  triggerChannels: "${triggerChannels}",
-                                  triggerID: ${triggerID},
+                                  triggerChannels: "${componentData.triggerChannels}",
+                                  triggerID: ${componentData.triggerId},
                                   httpBase: true,
                                   sampleTemplate: "",
                                   accessibility: "external",
-                                  srcGitRepoUrl: "${srcGitRepoUrl}"
+                                  srcGitRepoUrl: "${componentData.srcGitRepoUrl}"
                                   repositorySubPath: "",
                                   repositoryType: "",
                                   repositoryBranch: "",
@@ -214,7 +216,9 @@ export class GraphQL {
                       }`
       }
       this.callGraphQL(query).then(res => {
-        Cypress.env("component", res.body.data.createComponent)
+        const { id } = res.body.data.createComponent;
+
+        this.getPullRequests(id, repoName)
         expect(res.status).to.be.eq(200)
       })
     })
@@ -222,27 +226,24 @@ export class GraphQL {
     cy.get('tbody>tr p').should('be.visible')
   }
 
-  static getPullRequests(expectedRequestCount: number = 0) {
-
-    const { id } = Cypress.env("component")
+  private static getPullRequests(componentId: string, repoName: string) {
     const query = {
-      query: ` query{
-        componentPullRequests(componentId: "${id}")
-        { url, number }
-                   }`
+      query: `query{
+                 componentPullRequests(componentId: "${componentId}")
+                 { url, number }
+                 }`
     }
+    cy.wait(60000)
+    this.callGraphQL(query).then(res => {
+      const prs = res.body.data.componentPullRequests as []
+      if (prs.length > 0) {
+        cy.log("fsafaja;lsaf;afaslfjsafsaf;ksaffsafsaf;lf;lafjsa;fsafja")
+        GitHub.mergePR(repoName, 1).then(resp => expect(resp.status).to.be.eq(200))
+      }else{
+        cy.log("00000000000000000000000000000000000000000000000000000000000000000000000")
+      }
 
-    for (let i = 0; i < 4; i++) {
-      this.callGraphQL(query).then(res => {
-        const prs = res.body.data.componentPullRequests as []
-        cy.log(`PRS ${prs.length}`);
-        if (prs.length == expectedRequestCount) {
-          Cypress.env("q", true)
-          return;
-        }
-        cy.wait(20000)
-      })
-    }
+    })
   }
 
   private static changeComponentLifeCycle(

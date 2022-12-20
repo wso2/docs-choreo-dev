@@ -15,7 +15,7 @@ export class GitHub {
             "gitignore_template": gitignoreTemplate
         }
 
-        Utils.sendPostRequest(requestURI, headers, payload).then(res => cy.log(res.body))
+        return Utils.sendPostRequest(requestURI, headers, payload)
     }
 
     public static getGitHubRepoUrl(repoName) {
@@ -28,6 +28,6 @@ export class GitHub {
         const headers = {
             Authorization: `token ${Cypress.env("gitPat")}`,
         };
-        Utils.sendPutRequest(requestURI, headers, putRequest).then(res => cy.log(res.status.toString()))
+        return Utils.sendPutRequest(requestURI, headers, putRequest)
     }
 }
