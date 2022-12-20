@@ -211,7 +211,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectResources() {
-    cy.get('[data-cyid="tab-resource-settings"]').click();
+    cy.get('[data-cyid="tab-resource-settings"]').click({force: true});
   }
 
   static editResource() {
@@ -231,7 +231,7 @@ export class ComponentAPILifecycle {
   static selectRevision(env: Environment) {
     cy.get('[data-cyid="selected-revision"]').click();
     cy.get('[data-testid="revision-history-header"]').should("be.visible");
-    cy.get('[data-cyid*="revision-list-item"]').contains(env).click();
+    cy.get('[data-cyid*="revision-list-item"]').contains(env).click({force: true});
   }
 
   static disableResourceSecurity(resource: string) {
@@ -284,13 +284,13 @@ export class ComponentAPILifecycle {
   }
 
   static updateAPIAccessMode(accessMode: string) {
-    cy.get('[data-cyid="dropdown-api-access-mode-selector"]')
+    cy.get('[data-cyid="dropdown-api-access-mode-selector"]>div')
       .should("be.visible")
-      .click();
-    cy.get(`[data-cyid="item-${accessMode}"]`).wait(100).realClick();
+      .click({ force: true });
+    cy.get(`[data-cyid="item-${accessMode}"]`).wait(100).click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).realClick();
-    cy.contains("Successfully converted to an external API.").should(
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).click();
+    cy.contains(`Successfully converted to an ${accessMode} API.`).should(
       "be.visible"
     );
   }

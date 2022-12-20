@@ -25,19 +25,16 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const FREEMIUM = "Cost/Freemium";
   const PAID = "Cost/Paid";
 
-  before(()=>{
-    LoginPage.login()
+  before(() => {
+    LoginPage.login();
     ChoreoHomePage.switchOrganization();
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
-  beforeEach(() => {
-    ChoreoHomePage.navigateToMarketPlace();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
   });
 
   it("Verify Choreo filter functionality", () => {
+    ChoreoHomePage.navigateToMarketPlace();
     Marketplace.filterByChoreo();
     Marketplace.clearSelectedFilters();
   });
@@ -89,7 +86,4 @@ describe("Verify the functionality in Choreo Marketplace", () => {
     Marketplace.getTriggerName().should("eq", TRIGGER);
     Marketplace.getTriggerTags().should("have.length", 3);
   });
-
-
-
 });

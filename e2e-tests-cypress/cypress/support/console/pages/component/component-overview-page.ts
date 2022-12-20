@@ -28,7 +28,7 @@ export class ComponentOverviewPage {
   }
 
   static navigateToTest() {
-    cy.contains("Test").should("be.visible").click();
+    cy.contains("Test").should("be.visible").click({force: true});
   }
 
   static navigateToManage() {
