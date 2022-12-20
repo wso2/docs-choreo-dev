@@ -237,10 +237,8 @@ export class GraphQL {
     this.callGraphQL(query).then(res => {
       const prs = res.body.data.componentPullRequests as []
       if (prs.length > 0) {
-        cy.log("fsafaja;lsaf;afaslfjsafsaf;ksaffsafsaf;lf;lafjsa;fsafja")
+     
         GitHub.mergePR(repoName, 1).then(resp => expect(resp.status).to.be.eq(200))
-      }else{
-        cy.log("00000000000000000000000000000000000000000000000000000000000000000000000")
       }
 
     })
