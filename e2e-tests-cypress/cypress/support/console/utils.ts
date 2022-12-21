@@ -172,7 +172,7 @@ export class Utils {
   static isPerspectiveViewEnabled() {
     const enablePerspectiveView = Cypress.env("enablePerspectiveView");
     if (enablePerspectiveView != null) {
-      return enablePerspectiveView == "true";
+      return enablePerspectiveView == true || enablePerspectiveView == "true";
     }
 
     return false;
