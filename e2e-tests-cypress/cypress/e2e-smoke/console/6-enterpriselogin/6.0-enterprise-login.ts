@@ -11,19 +11,16 @@ entered into with WSO2 governing the purchase of this software and any
 associated services.
 */
 
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
-import { Utils } from "../../../support/console/utils";
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
 describe("Enterprise Login using auth0Idp", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("rest");
-  const COMPONENT_DESCRIPTION = "covid daily stats";
+  const COMPONENT_NAME = "create-default-Rest-API-6.0";
 
   before(() => {
     cy.request(Cypress.env("auth0LogoutUrl"), {
@@ -42,20 +39,10 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   it("Verify REST API component creation", () => {
-    ChoreoHomePage.navigateToComponents();
-    ProjectOverviewPage.addNewComponentEL();
-     RestAPITemplate.selectHttpAPITemplate();
-     RestAPITemplate.createApiFromScratch(
-        COMPONENT_NAME,
-        COMPONENT_DESCRIPTION,
-      );
-      ComponentDevelopPage.getComponentURL();
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
   });
-
-  it("Verify vscode sso login", () => {
-    ComponentOverviewPage.navigateToOverview();
-    LoginPage.navigateToCodespaceEP();
-    VSExplorer.verifyVsCodeWorkspace();
+      
   });
 
   it("Verify devportal sso login", () => {
@@ -65,4 +52,3 @@ describe("Enterprise Login using auth0Idp", () => {
       "API Developer Portal"
     );
   });
-});
