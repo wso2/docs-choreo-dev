@@ -30,7 +30,7 @@ export class ProjectListingPage {
   static selectProject(projectName: string = "Default Project") {
     if (Utils.isPerspectiveViewEnabled()) {
       cy.get(
-        ".jss200 > .MuiButtonBase-root > .MuiIconButton-label > img"
+        '[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"]'
       ).click();
       cy.get('[class="MuiFormControl-root MuiTextField-root"]')
         .should("be.visible")
