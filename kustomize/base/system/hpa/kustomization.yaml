@@ -13,7 +13,6 @@ resources:
   - negotiator.yaml
   - loggingapi.yaml
   - connectords.yaml
-  - apim-service.yaml
   - perfanalyzer-estimator.yaml
   - test-assistant.yaml
   - analytics-subscription.yaml
