@@ -97,3 +97,64 @@ Bring your own identity to Choreo by configuring a federated enterprise IdP on A
     ![Asgardeo applications](../assets/img/references/enterprise-login/sign-in-method.png){.cInlineImage-half}
 
 You are all set! Your users in the enterprise IdP can now log into the Choreo Console using their user credentials.
+
+
+## Role-based access control for Enterprise login
+
+Choreo allows you to configure your users residing in an external IDP (Identity Provider) to login into Choreo with appropriate permissions seamlessly based on their role.
+
+Follow the steps below to configure role-based access control to an enterprise login in Choreo:
+
+### Prerequisites
+
+1. Configure [Enterprise Login for your organization](https://wso2.com/choreo/docs/administration/configure-enterprise-login/)
+2. Make sure your Enterprise IDP includes the groups/roles attributes in the tokens it sends to Asgardeo in the respective protocol.
+3. Make sure you have admin privileges in Choreo.
+
+### Step1: Configure Asgardeo
+
+1. [Configure your IDP as an External IDP in Asgardeo](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/). Depending on your IDP, you may select OpenID Connect or SAML as the protocol between Asgardeo and your IDP.
+
+    !!! note
+        If you are using OpenID Connect, configure the requested scopes accordingly for Asgardeo to get the relevant group/role details from the external IDP.
+
+        ![scopes](../assets/img/administration/configure-enterprise-login/configure-requested-scopes.png){.cInlineImage-half}
+
+2. Configure the application as follows:
+    1. Go to the Asgardeo Console. Click **Develop** -> **Applications** -> **WSO2_LOGIN_FOR_CHOREO_CONSOLE** and then select **Sign-in Method**. 
+    2. Depending on the protocol you selected above, configure your log in to use the above IDP. 
+        - For OpenID Connect, follow: [https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-oidc-idp-login/#enable-the-oidc-idp-for-login](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-oidc-idp-login/#enable-the-oidc-idp-for-login)
+        - For SAML, follow:[https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login] (https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login)
+            
+    3. Go to **User Attributes**  and add groups attribute to the user attribute list and mark it mandatory.
+
+           ![Add groups](../assets/img/administration/configure-enterprise-login/add-groups.png){.cInlineImage-half}
+
+3. Configure the attribute/scope settings.
+    1. Go to Asgardeo Console. Click **Manage** -> **Scopes** -> **Open ID**.
+    2. Click **New Attribute** and add the group attribute to the list.
+
+         ![Add attribute](../assets/img/administration/configure-enterprise-login/new-attribute.png){.cInlineImage-half}
+
+### Step 2: Map Asgardeo groups to Choreo Roles in the Choreo Console 
+
+!!! note
+    1. This configuration can be done only by the **organization Admin**.
+    2. Choreo Organization Admin should add the group role mapping entry for the Admin role to enable the external enterprise organization Admin to access this page.
+
+ 1. Log into the Choreo console.
+ 2. From the left navigation menu, click **Settings**.
+ 3. Click **Organization** -> **Role Mapping** 
+ 4. To add a new group role mapping, click **Add Mapping**. 
+
+     ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.cInlineImage-half}
+
+ 5. Enter the exact `Groups` name configured at the Enterprise IdP and map the list of Choreo roles by selecting the checkbox(s) from the list.
+ 6. Click **Save**. 
+ 
+!!! note
+    1. You can assign one or more roles to each group.
+    2. You can only update the role name. The group name is not editable.
+    3. A change in the group role mapping occurs, will take effect from the next login session onwards. 
+    4. If there are no mappings, all the enterprise users will be applied with the default developer role.
+
