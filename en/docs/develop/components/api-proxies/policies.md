@@ -6,31 +6,31 @@ Choreo includes a default set of policies covering most of the common use cases.
 
 In Choreo, once you attach a mediation policy to a proxy, the deployment, internally, is a two-step process.
 
-1. Deployment initiation: Generating the interceptor application 
+1. Deployment initiation 
    If the component to which you attached the mediation policy is new, the system creates and commits a new repository with the mediation service code based on the attached policies. This new service is referred to as the interceptor application. 
 
 2. Deploying the API
-    Once the deployment initiation is complete, you can provide any configurations required and proceed to deploy. In this step, Choreo builds the generated interceptor application and pushes the docker image to the Docker registry. Finally, Choreo deploys the interceptor application with the mediation service and the API Proxy.
+    Once the deployment initiation is complete, you can provide any configurations required and proceed to deploy. In this step, Choreo builds the generated interceptor application and pushes the Docker image to the Docker registry. Finally, Choreo deploys the interceptor application with the mediation service and the API Proxy.
 
- Depending on the flow the mediation policy is attached, the API invocation will undergo the respective behavioral modification as follows: 
+ Depending on the flow to which the mediation policy is attached, the API invocation will undergo the respective behavioral modification as follows: 
  
  ![Request/Response flow](../../../assets/img/api-proxies/policies/request-response-flow.png)
 
- - In the request path, the requests which pass through the gateway reach the relevant component, and Choreo executes any attached policies to the resource's request path before sending it to the backend. 
+ - In the request path, the requests that pass through the gateway reach the relevant component, and Choreo executes any attached policies to the resource's request path before sending it to the backend. 
 
-- In the response path, the response messages from the backend are first received by the interceptor component, and Choreo executes any mediation policies attached to the `Response` flow or the fault flow. Then the response is forwarded to the client.
+- In the response path, the response messages from the backend are first received by the interceptor component, and Choreo executes any mediation policies attached to the `Response` flow or the `Error` flow. Then the response is forwarded to the client.
 
-- In the event an error occurrs during the execution of policies or due to an internal error, the fault flow is executed and an error response is sent to the client.
+- In the event an error occurrs during the execution of policies or due to an internal error, the `Error` flow is executed and an error response is sent to the client.
 
 ## Attach a policy
 
-You can attach a policy to the `Request`, `Response`, or `Fault` flow of the  REST API Proxy as follows:
+You can attach a policy to the `Request`, `Response`, or `Error` flow of the  REST API Proxy as follows:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-2. From the component list, select and click on the REST API Proxy component you want to attach the policy(s) to.
+2. From the component list, select and click on the REST API Proxy component to which you want to attach the policy(s).
 3. In the left navigation menu, click **Develop**  and then click **Policies**.
-4. From the list of resources, expand the resource you want to attach the policy(s) to. 
-5. Click on **Attach Policy** of the respective flow you want to attach the policy to the ` Request`, `Response`, or `Error` flow.
+4. From the list of resources, expand the resource to which you want to attach the policy(s). 
+5. Click Attach Policy for the relevant flow (i.e., `Request`, `Response`, or `Error`) to which you want to attach the policy.
 
    ![Attach policy](../../../assets/img/api-proxies/policies/attach-policy.png)
 
@@ -44,18 +44,18 @@ You can attach a policy to the `Request`, `Response`, or `Fault` flow of the  RE
 
 You can use policies that enable users to enter custom parameters and values. For example, Add Header policy requires the user to enter a header name and value when deploying the REST API Proxy. These parameters can be static values or environment-specific values. 
 
-Follow the steps below to add environment-specific values and policy parameters:
+To add environment-specific values and policy parameters, follow the steps given below::
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-2. From the component list, select and click on the REST API Proxy component you want to attach policies to.
+2. From the component list, select and click on the REST API Proxy component to which you want to attach policies.
 3. In the left navigation menu, click **Develop**  and then click **Policies**.
-4. From the list of resources, expand the resource you want to attach the policies to.
-5. Click on **Attach Policy** of the respective flow you want to attach the policy to (`Request`, `Response`, or `Error` flow).
+4. From the list of resources, expand the resource to which you want to attach the policy(s).
+5. Click Attach Policy for the relevant flow (i.e., `Request`, `Response`, or `Error`) to which you want to attach the policy.
 6. Add a policy that enables you to accept custom parameters and values from users. For example, the **Add Header** policy. 
 
        ![Add header](../../../assets/img/api-proxies/policies/add-header.png){.cInlineImage-full}
 
-8. The UI will prompt to provide values for the required policy parameters. Providing the value in “${name}” format makes the value a ballerina configurable.
+8. Enter values for the required policy parameters when prompted. If you want to make a parameter a configurable, enter the value in `${<variableName>}` format.For example, `${name}`.
 
        ![Configurable values](../../../assets/img/api-proxies/policies/configurable-values.png)
 
@@ -76,6 +76,6 @@ This is the stage where the interceptor application is generated based on the me
 
 #### Build
 
-The build stage builds the interceptor application as a docker image and deploys it in the respective environment. For logs related to the build, you can refer build logs of both Ballerina and Docker. 
+The build stage builds the interceptor application as a Docker image and deploys it in the respective environment. For logs related to the build, you can refer build logs of both Ballerina and Docker. 
 
 Any errors that occur in this stage are not due to user error. If an error occurs, you need to retry the deployment.
