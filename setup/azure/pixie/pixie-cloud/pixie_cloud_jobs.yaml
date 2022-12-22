@@ -35,7 +35,7 @@ spec:
                 name: pl-domain-config
             - configMapRef:
                 name: pl-ory-service-config
-          image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/job/create_admin_job_image:1667424853
+          image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/job/create_admin_job_image:1661975259
           imagePullPolicy: IfNotPresent
           name: create-admin-job
           securityContext:
