@@ -8,7 +8,7 @@ Choreo is a low-code cloud-native platform for building integration solutions. I
 4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..."
-    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../../develop/components/api-proxies.md) 
+    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../../develop/components/api-proxies/api-proxy.md) 
 
 
 Let's begin...
@@ -60,7 +60,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
 
 ## Step 3: Deploy the REST API Proxy
 
-Deploying the REST API proxy makes it invokable. Choreo maintains two environments by default: development and production. [Learn more](../../api-proxies/#choreo-environments). 
+Deploying the REST API proxy makes it invokable. Choreo maintains two environments by default: development and production. [Learn more](../../develop/components/api-proxies/api-proxy#choreo-environments). 
 
 1. Return to the Choreo Console. From the left navigation, click **Deploy**. 
 
@@ -114,7 +114,7 @@ First, let's review the security settings and add a rate limit to the API.
 
 4. Scroll down to the end of the page and click **Edit**.
 
-5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, you are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../api-proxies/#settings)
+5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, you are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../../develop/components/api-proxies/api-proxy#settings)
     ![Rate Limiting Level](../../assets/img/tutorials/rate-limiting-level.png){.cInlineImage-full}
     ![Rate Limiting Per Resource](../../assets/img/tutorials/rate-limiting-per-resource.png){.cInlineImage-full}
 
