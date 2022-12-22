@@ -20,6 +20,8 @@ In Choreo, once you attach a mediation policy to a proxy, the deployment, intern
 
 - In the response path, the response messages from the backend are first received by the interceptor component, and Choreo executes any mediation policies attached to the `Response` flow or the fault flow. Then the response is forwarded to the client.
 
+- In the event an error occurrs during the execution of policies or due to an internal error, the fault flow is executed and an error response is sent to the client.
+
 ## Attach a policy
 
 You can attach a policy to the `Request`, `Response`, or `Fault` flow of the  REST API Proxy as follows:
