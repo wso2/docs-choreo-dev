@@ -36,6 +36,7 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -45,7 +46,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
-
+  const permissions = ["employee.read", "employee.write"];
   before(() => {
     LoginPage.login();
     ChoreoHomePage.switchOrganization();
@@ -142,6 +143,9 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+    // ComponentAPILifecycle.selectPermissions();
+    // ComponentAPILifecycle.navigatePermissionManagementWindow();
+    // ComponentAPILifecycle.managePermissions(permissions, API_NAME);
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
         "be.visible"
@@ -156,6 +160,10 @@ describe("Choreo APIM publisher scenarios", () => {
     ProductionKeys.generateTestToken();
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
+   
+    // Validate the API call without the scope
+    // Edit App and assign the scope
+    // Validate API call with scope
   });
 
   it("Verify consumers", () => {
@@ -167,6 +175,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToHome();
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
@@ -185,6 +194,14 @@ describe("Choreo APIM publisher scenarios", () => {
     });
     InsightsPage.getTotalErrorRequestCount().should("eq", "0");
     InsightsPage.getAverageErrorRate().should("eq", "0");
+  });
+
+  it("Verfy delete permissions", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectPermissions();
+    permissions.forEach((permission) => {
+      ComponentAPILifecycle.deletePermission(permission);
+    });
   });
 
   it("Reset and undeploy component", () => {

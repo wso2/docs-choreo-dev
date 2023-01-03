@@ -21,9 +21,15 @@ export class ChoreoHomePage {
 
   static navigateToHome() {
     const handle = Cypress.env("current_org")["handle"];
-    cy.get(
-      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
-    ).click();
+    if(Utils.isPerspectiveViewEnabled()) {
+      cy.get(
+        `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home?profile=default"]`
+      ).click();
+    } else {
+      cy.get(
+        `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
+      ).click();
+    }
   }
 
   static navigateToComponents() {
