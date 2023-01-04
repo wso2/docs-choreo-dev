@@ -54,8 +54,8 @@ spec:
                 - name: AZURE_LA_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
-                      key: AZURE_ACTIVEDIRECTORY_CLIENT_SECRET
-                      name: secret-loggingapi
+                      key: AZURE_LA_CLIENT_SECRET
+                      name: secret-logs-archiver
                 - name: AZURE_DL_CLIENT_ID
                   valueFrom:
                     configMapKeyRef:
@@ -87,19 +87,19 @@ spec:
                   cpu: 100m
                   memory: 256Mi
               volumeMounts:
-                - mountPath: /mnt/csi/secret-loggingapi
-                  name: secret-loggingapi
+                - mountPath: /mnt/csi/secret-logs-archiver
+                  name: secret-logs-archiver
                   readOnly: true
                 - mountPath: /mnt/csi/secret-datalake
                   name: secret-datalake
                   readOnly: true
           volumes:
-            - name: secret-loggingapi
+            - name: secret-logs-archiver
               csi:
                 driver: secrets-store.csi.k8s.io
                 readOnly: true
                 volumeAttributes:
-                  secretProviderClass: secret-loggingapi
+                  secretProviderClass: secret-logs-archiver
                 nodePublishSecretRef:
                   name: csi-secret-store-azure
             - name: secret-datalake
