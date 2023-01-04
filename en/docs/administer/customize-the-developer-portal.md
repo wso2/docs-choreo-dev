@@ -15,7 +15,7 @@ To customize the Developer Portal theme, follow the steps given below:
 
 3. In the **API Management** tab, click **Devportal Theme**.
 
-    ![Access Devportal theme](../assets/img/administration/devportal-theme/access-devportal-theme.png){.cInlineImage-half}
+    ![Access Devportal theme](../assets/img/administration/devportal-theme/access-devportal-theme.png){.cInlineImage-threeQuarters}
 
     Once you access the theme, you can customize the **Home** page, color theme, font, header and footer, logos, etc., by expanding the relevant sections.
 
