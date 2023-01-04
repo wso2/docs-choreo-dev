@@ -69,9 +69,11 @@ export class ComponentDeployPage {
   static promoteToProdApiPerspectiveView() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-    .should("be.enabled")
-    .wait(2000)
-    .click(); 
+      .should("be.enabled")
+      .wait(2000);
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
+      .should("be.enabled")
+      .click();
     cy.wait(6000);
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
       "not.be.disabled"
@@ -188,7 +190,6 @@ export class ComponentDeployPage {
     cy.get(".ConfigForm button").contains("Promote").click();
   }
 
-
   static verifyInternalAPIdevWarning() {
     cy.get('[data-testid="warning-banner"]', { timeout: 150000 })
       .eq(0)
@@ -275,8 +276,8 @@ export class ComponentDeployPage {
       .wait(2000)
       .eq(promoButtonIndex)
       .click(); // promote button
-      cy.wait(6000);
-     cy.get('[data-cyid*="promote"]', { timeout: 360000 }).should(
+    cy.wait(6000);
+    cy.get('[data-cyid*="promote"]', { timeout: 360000 }).should(
       "not.be.disabled"
     );
   }
@@ -348,11 +349,24 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
     cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('[data-cyid="deployment-status"]')
+      .contains("Active")
+      .should("be.visible");
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 
   static promoteProxyApiToProd() {
     cy.get('[data-cyid="btn-promote"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
     cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('[data-cyid="proxy-env-card-header"]>div>span')
+      .contains("Production")
+      .should("be.visible");
+    cy.get('[data-cyid="deployment-status"]')
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active")
+      .should("be.visible");
+    cy.get('[data-cyid*="promote"]').should("not.be.disabled");
   }
 }
