@@ -18,7 +18,13 @@ export class RestAPIProxyTemplate {
   }
 
   static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint) {
-    cy.get('[data-cyid="btn-design-rest-api"]').click();
+    if (Utils.isPerspectiveViewEnabled()) {
+      cy.get('[data-cyid="design-rest-api-proxy"]')
+        .should("be.visible")
+        .click();
+    } else {
+      cy.get('[data-cyid="btn-design-rest-api"]').should("be.visible").click();
+    }
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
 
