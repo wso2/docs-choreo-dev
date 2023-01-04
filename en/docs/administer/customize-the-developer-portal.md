@@ -31,7 +31,7 @@ To customize the Developer Portal theme, follow the steps given below:
    
     4. Click **Save** to save your changes as a draft theme.
     
-    5. To apply the changes to the Developer Portal, click **Go Live**. To confirm that you want to go live with the changes, click **Enable** in the message that appears.
+    5. To apply the changes to the Developer Portal, toggle the **Go Live** switch. To confirm that you want to go live with the changes, click **Enable** in the message that appears.
     
     6. If you want to make further changes to the Developer Portal theme after going live with the previous changes, follow the steps given below:
     
