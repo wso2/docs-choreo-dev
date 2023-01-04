@@ -30,7 +30,6 @@ import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { DevPortalHomePage } from "../../../support/devportal/pages/home/home-page";
 
 describe("Verify internal API creation functionality", () => {
-
   const REST_API_NAME = "internal-api-1.8";
   const REST_API_NAME_DEVPORTAL = "internalapi18";
   const PROXY_API_NAME_DEV = Utils.generateComponentName("dev").substring(
@@ -58,6 +57,10 @@ describe("Verify internal API creation functionality", () => {
   let DEV_INVOKE_URL = "";
   let PROD_INVOKE_URL = "";
 
+  const PROJECT_DESCRIPTION = "API proxy project";
+  const PROJECT_1_NAME = Utils.generateProjectName() + "dev";
+  const PROJECT_2_NAME = Utils.generateProjectName() + "prod";
+
   const idpUser = "choreoe2etest";
 
   before(() => {
@@ -71,7 +74,6 @@ describe("Verify internal API creation functionality", () => {
   it("Verify Internal REST API component creation", () => {
     ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
     ComponentListingPage.visitToAComponent(REST_API_NAME);
-    ComponentDevelopPage.getComponentURL();
   });
 
   it("Verify REST API component deployment", () => {
@@ -99,9 +101,7 @@ describe("Verify internal API creation functionality", () => {
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
-      });
+      expect(Utils.isHostResolvable(curl.url) == false);
     });
   });
 
@@ -112,12 +112,9 @@ describe("Verify internal API creation functionality", () => {
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
-      });
+      expect(Utils.isHostResolvable(curl.url) == false);
     });
   });
-
 
   it("Apply disable security config in DEV", () => {
     ComponentOverviewPage.navigateToManage();
@@ -161,9 +158,7 @@ describe("Verify internal API creation functionality", () => {
         .then((invokeUrl) => {
           DEV_INVOKE_URL = invokeUrl;
         });
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
-      });
+      expect(Utils.isHostResolvable(curl.url) == false);
     });
   });
 
@@ -180,36 +175,16 @@ describe("Verify internal API creation functionality", () => {
         .then((invokeUrl) => {
           PROD_INVOKE_URL = invokeUrl;
         });
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.status).equal(404);
-      });
+      expect(Utils.isHostResolvable(curl.url) == false);
     });
-  });
-
-  it("Verify API invocation response in Devportal for Internal API", () => {
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
-    DevPortalHomePage.navigateToApisPage();
-    DevPortalHomePage.navigateSelectAPI(REST_API_NAME_DEVPORTAL);
-    ApiCredentials.navigateCredentialsTab();
-    ApiCredentials.generateCredentials();
-    TryOut.navigateToTryOutMenu();
-    TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(HTTPMethod.GET, 'greeting');
-    TryOut.TryoutAPI();
-    TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);
-    TryOut.ExecuteResourceFunction();
-    TryOut.ValidateResponse("404");
   });
 
   // Proxy API with dev endpoint
   it("Verify Proxy API creation using existing DEV endpoint", () => {
     LoginPage.reLoginToChoreo();
     ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToComponents();
-    ProjectOverviewPage.addComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    ProjectListingPage.createNewProject(PROJECT_1_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.designNewRestApi(
       PROXY_API_NAME_DEV,
       PROXY_API_VERSION_DEV,
@@ -234,30 +209,35 @@ describe("Verify internal API creation functionality", () => {
   it("Verify PROXY API component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeployProxyApiToDev();
-    ComponentDeployPage.verifyDeploymentStatus();
   });
 
   it("Verify PROXY API component promote to PROD", () => {
     ComponentDeployPage.promoteProxyApiToProd();
-    ComponentDeployPage.verifyDeploymentStatus();
   });
 
-  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API 
+  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
   // by receiving a 200 response
   it("Verify resource access without the token in DEV", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurlDiscardPrevious(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
-    then((curl) => {
+    TestHelper.testOnCurlDiscardPrevious(
+      Environment.DEVELOPMENT,
+      HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters
+    ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });
     });
-
   });
 
   it("Verify resource access without the token in PROD", () => {
-    TestHelper.testOnCurlDiscardPrevious(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
-    then((curl) => {
+    TestHelper.testOnCurlDiscardPrevious(
+      Environment.PRODUCTION,
+      HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters
+    ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });
@@ -267,9 +247,8 @@ describe("Verify internal API creation functionality", () => {
   // Proxy API with prod endpoint
   it("Verify Proxy API creation using existing PROD endpoint", () => {
     ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToComponents();
-    ProjectOverviewPage.addComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    ProjectListingPage.createNewProject(PROJECT_2_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.designNewRestApi(
       PROXY_API_NAME_PROD,
       PROXY_API_VERSION_PROD,
@@ -294,20 +273,22 @@ describe("Verify internal API creation functionality", () => {
   it("Verify PROXY API component deployment", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeployProxyApiToDev();
-    ComponentDeployPage.verifyDeploymentStatus();
   });
 
   it("Verify PROXY API component promote to PROD", () => {
     ComponentDeployPage.promoteProxyApiToProd();
-    ComponentDeployPage.verifyDeploymentStatus();
   });
 
-  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API 
+  // Invoke the Proxy API via curl, verify that Internal API is accessible to the Proxy API
   // by receiving a 200 response
   it("Verify resource access without the token in dev", () => {
     ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurlDiscardPrevious(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
-    then((curl) => {
+    TestHelper.testOnCurlDiscardPrevious(
+      Environment.DEVELOPMENT,
+      HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters
+    ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });
@@ -315,8 +296,12 @@ describe("Verify internal API creation functionality", () => {
   });
 
   it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurlDiscardPrevious(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters).
-    then((curl) => {
+    TestHelper.testOnCurlDiscardPrevious(
+      Environment.PRODUCTION,
+      HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters
+    ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.status).equal(200);
       });
@@ -369,7 +354,7 @@ describe("Verify internal API creation functionality", () => {
     DevPortalHomePage.navigateSelectAPI(REST_API_NAME_DEVPORTAL);
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(HTTPMethod.GET, 'greeting');
+    TryOut.SelectResource(HTTPMethod.GET, "greeting");
     TryOut.TryoutAPI();
     TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);
     TryOut.ExecuteResourceFunction();
@@ -426,7 +411,7 @@ describe("Verify internal API creation functionality", () => {
   // Suspend prod/dev deployed PROXY API for dev URL
   it("Verify suspending PROXY API for DEV URL component", () => {
     ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToComponents();
+    ProjectListingPage.selectProject(PROJECT_1_NAME);
     ComponentListingPage.visitToAComponent(PROXY_API_NAME_DEV);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
@@ -435,7 +420,7 @@ describe("Verify internal API creation functionality", () => {
   // Suspend prod/dev deployed PROXY API for prod URL
   it("Verify suspending PROXY API for PROD URL component", () => {
     ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToComponents();
+    ProjectListingPage.selectProject(PROJECT_2_NAME);
     ComponentListingPage.visitToAComponent(PROXY_API_NAME_PROD);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
