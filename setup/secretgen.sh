@@ -83,7 +83,7 @@ done
 [[ -z "${namespace}" ]] && { namespace="default"; }
 [[ -z "${outdir}" ]] && { outdir="out"; }
 
-echo "Creating sealed secrets for namespace: "${namespace}
+echo "Creating sealed secrets for namespace: ${namespace}"
 
 [[ -z "${propfile}" ]] &&
 {
