@@ -34,8 +34,8 @@ To configure enterprise login for your Choreo organization, follow the steps bel
 3. When you add a Choreo organization, Choreo reserves the organization name for your user account. Therefore, you need to create an organization of the same name on the Choreo IdP (i.e., Asgardeo).
    
     To create your organization on the Choreo IdP, follow these steps:
-    c
-    1. Sign up to Asgardeo <a>https://asgardeo.io/signup?utm_source=console</a> with the same credentials you used to create your Choreo account.
+    
+    1. Sign up to [Asgardeo](https://asgardeo.io/signup?utm_source=console) with the same credentials you used to create your Choreo account.
     
     2. Paste the value copied in step 2 as the organization name in Asgardeo and click **Create**. 
 
@@ -101,13 +101,13 @@ You are all set! Your users in the enterprise IdP can now log into the Choreo Co
 
 ## Role-based access control for Enterprise login
 
-Choreo allows you to configure your users residing in an external IDP (Identity Provider) to login into Choreo with appropriate permissions seamlessly based on their role.
+Choreo allows you to configure your users residing in an external IDP (Identity Provider) to log in to Choreo with appropriate permissions seamlessly based on their role.
 
 Follow the steps below to configure role-based access control to an enterprise login in Choreo:
 
 ### Prerequisites
 
-1. Configure [Enterprise Login for your organization](https://wso2.com/choreo/docs/administration/configure-enterprise-login/)
+1. Configure [Enterprise Login for your organization](https://wso2.com/choreo/docs/administration/configure-enterprise-login/).
 2. Make sure your Enterprise IDP includes the groups/roles attributes in the tokens it sends to Asgardeo in the respective protocol.
 3. Make sure you have admin privileges in Choreo.
 
@@ -117,21 +117,20 @@ Follow the steps below to configure role-based access control to an enterprise l
 
     !!! note
         If you are using OpenID Connect, configure the requested scopes accordingly for Asgardeo to get the relevant group/role details from the external IDP.
-
         ![scopes](../assets/img/administration/configure-enterprise-login/configure-requested-scopes.png){.cInlineImage-half}
 
 2. Configure the application as follows:
     1. Go to the Asgardeo Console. Click **Develop** -> **Applications** -> **WSO2_LOGIN_FOR_CHOREO_CONSOLE** and then select **Sign-in Method**. 
-    2. Depending on the protocol you selected above, configure your log in to use the above IDP. 
+    2. Depending on the protocol you selected above, configure your login to use the above IDP. 
         - For OpenID Connect, follow: [https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-oidc-idp-login/#enable-the-oidc-idp-for-login](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-oidc-idp-login/#enable-the-oidc-idp-for-login)
         - For SAML, follow:[https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login] (https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login)
             
-    3. Go to **User Attributes**  and add groups attribute to the user attribute list and mark it mandatory.
+    3. Go to **User Attributes**  and add the groups attribute to the user attribute list and mark it mandatory.
 
-           ![Add groups](../assets/img/administration/configure-enterprise-login/add-groups.png){.cInlineImage-half}
+        ![Add groups](../assets/img/administration/configure-enterprise-login/add-groups.png){.cInlineImage-half}
 
 3. Configure the attribute/scope settings.
-    1. Go to Asgardeo Console. Click **Manage** -> **Scopes** -> **Open ID**.
+    1. Go to the Asgardeo Console. Click **Manage** -> **Scopes** -> **Open ID**.
     2. Click **New Attribute** and add the group attribute to the list.
 
          ![Add attribute](../assets/img/administration/configure-enterprise-login/new-attribute.png){.cInlineImage-half}
@@ -140,14 +139,15 @@ Follow the steps below to configure role-based access control to an enterprise l
 
 !!! note
     1. This configuration can be done only by the **organization Admin**.
-    2. Choreo Organization Admin should add the group role mapping entry for the Admin role to enable the external enterprise organization Admin to access this page.
+    2. The Choreo organization admin should add the group role mapping entry for the Admin role to enable the external enterprise organization Admin to access this page.
 
- 1. Log into the Choreo console.
- 2. From the left navigation menu, click **Settings**.
- 3. Click **Organization** -> **Role Mapping** 
- 4. To add a new group role mapping, click **Add Mapping**. 
+1. Log in to the Choreo console.
+2. From the left navigation menu, click **Settings**.
+3. Click **Organization** -> **Role Mapping** 
+4. To add a new group role mapping, click **Add Mapping**. 
 
-     ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.cInlineImage-half}
+     ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.
+     cInlineImage-half}
 
  5. Enter the exact `Groups` name configured at the Enterprise IdP and map the list of Choreo roles by selecting the checkbox(s) from the list.
  6. Click **Save**. 
@@ -155,6 +155,6 @@ Follow the steps below to configure role-based access control to an enterprise l
 !!! note
     1. You can assign one or more roles to each group.
     2. You can only update the role name. The group name is not editable.
-    3. A change in the group role mapping occurs, will take effect from the next login session onwards. 
+    3. If a change in the group role mapping occurs, it will take effect from the next login session onwards. 
     4. If there are no mappings, all the enterprise users will be applied with the default developer role.
 
