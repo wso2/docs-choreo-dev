@@ -30,7 +30,7 @@ The free tier allows you to create up to five free components. These five compon
 
 Choreo allocates up to a maximum of 2x vCPUs and 4 GB RAM infrastructure resources to your component workloads.
 
-You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go model if you want to create over five components.
+You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go plan if you want to create over five components.
 
 **Pay As You Go**
 
