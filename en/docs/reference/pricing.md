@@ -106,7 +106,7 @@ Choreo supports the following API management features for all the plans:
 
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
-| Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with only 7 days of data retention) | Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights | Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights |
+| Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with 6 months of data retention) | Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with 6 months of data retention) | Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with 6 months of data retention) |
 
 
 #### Monitoring and observability
@@ -115,7 +115,9 @@ Choreo supports monitoring and observability features for each plan as follows:
 
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
-| In-built monitoring dashboard<br/><br/>Logs<br/>(7 days of data retention)<br/><br/>Traces<br/>(7 days of data retention)<br/><br/>Alerting<br/>(7 days of data retention) | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties |
+| In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/><br/>Alerting | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties |
+
+The maximum time interval for which users on each plan can view logs, traces and alerts is 30 days.
 
 #### Security
 
@@ -133,7 +135,7 @@ Choreo supports cloud-code editing for the three plans as explained below:
 
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
-| 10 hours on the Choreo Web Editor. | 10 hours are allowed on the Choreo Web Editor per component free of charge.<br/><br/>If you need more code editing time, contact our Sales team to request a fully managed Cloud Coding Cluster. | If you have chosen the Enterprise plan, you may have a Cloud Coding Cluster already deployed on your infrastructure.<br/><br/>If you do not already have a Cloud Coding Cluster and you need one, contact our Sales team. |
+| 10 hours on the Choreo Web Editor. | 10 hours on the Choreo Web Editor per component free of charge..<br/><br/>If you need more code editing time, contact our sales team to request a fully managed Cloud Coding Cluster. | If you have chosen the Enterprise plan, you may have a Cloud Coding Cluster already deployed on your infrastructure.<br/><br/>If you do not already have a Cloud Coding Cluster and you need one, contact our Sales team. |
 
 ### Support
 
@@ -142,6 +144,8 @@ Community support is available for all three plans. In addition, paid support is
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
 | Community support | Community support and paid plans | Community support and paid plans|
+
+For information about support plans, see the [Billing Portal](https://subscriptions.wso2.com/).
 
 
 
