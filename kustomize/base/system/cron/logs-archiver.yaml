@@ -36,11 +36,6 @@ spec:
                   drop:
                     - all
               env:
-                - name: AZURE_LA_CLIENT_ID
-                  valueFrom:
-                    configMapKeyRef:
-                      key: AZURE_ACTIVEDIRECTORY_CLIENT_ID
-                      name: env-loggingapi
                 - name: AZURE_LA_TENANT_ID
                   valueFrom:
                     configMapKeyRef:
@@ -79,6 +74,8 @@ spec:
               envFrom:
                 - configMapRef:
                     name: cm-logsarchiver
+                - configMapRef:
+                    name: env-logs-archiver
               resources:
                 limits:
                   cpu: 300m
