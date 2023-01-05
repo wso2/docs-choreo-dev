@@ -19,8 +19,6 @@ The pricing for your Choreo deployment is mainly determined based on the followi
     If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the cloud platform vendor.
 
     If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
-    
-    Currently, users on Pay As You Go and Enterprise plans can get their infrastructure costs from the cloud platform vendor.
 
 ## Plans
 
