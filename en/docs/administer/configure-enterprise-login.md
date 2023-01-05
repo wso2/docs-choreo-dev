@@ -108,8 +108,8 @@ Follow the steps below to configure role-based access control to an enterprise l
 ### Prerequisites
 
 1. Configure [Enterprise Login for your organization](https://wso2.com/choreo/docs/administration/configure-enterprise-login/).
-2. Make sure your Enterprise IDP includes the groups/roles attributes in the tokens it sends to Asgardeo in the respective protocol.
-3. Make sure you have admin privileges in Choreo.
+2. Be sure your Enterprise IDP includes the groups/roles attributes in the tokens it sends to Asgardeo in the respective protocol.
+3. Be sure you have admin privileges in Choreo.
 
 ### Step1: Configure Asgardeo
 
@@ -117,6 +117,7 @@ Follow the steps below to configure role-based access control to an enterprise l
 
     !!! note
         If you are using OpenID Connect, configure the requested scopes accordingly for Asgardeo to get the relevant group/role details from the external IDP.
+        
         ![scopes](../assets/img/administration/configure-enterprise-login/configure-requested-scopes.png){.cInlineImage-half}
 
 2. Configure the application as follows:
@@ -131,7 +132,7 @@ Follow the steps below to configure role-based access control to an enterprise l
 
 3. Configure the attribute/scope settings.
     1. Go to the Asgardeo Console. Click **Manage** -> **Scopes** -> **Open ID**.
-    2. Click **New Attribute** and add the group attribute to the list.
+    2. Click **New Attribute** and add the **Groups** attribute to the list.
 
          ![Add attribute](../assets/img/administration/configure-enterprise-login/new-attribute.png){.cInlineImage-half}
 
