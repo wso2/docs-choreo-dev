@@ -44,7 +44,7 @@ If the number of components you need to create exceeds 25 or if your annual spen
 
 **Enterprise** 
 
-This plan allows you to pay an annual subscription of $50,000 or more (as agreed) and create up to 50 components (i.e., any combination of component types). If you need to create over 50 components, you can renegotiate with Choreo to pay an agreed amount per additional component or revise the annual subscription.
+This plan allows you to pay an annual subscription of $50,000 or more (as agreed) and create up to 50 components (i.e., any combination of component types). If you need to create over 50 components, contact the Choreo sales team.
 
 The following table summarizes the cost of each plan:
 
@@ -134,7 +134,7 @@ Choreo supports cloud-code editing for the three plans as explained below:
 
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
-| 10 hours on the Choreo Web Editor. | 10 hours on the Choreo Web Editor per component free of charge..<br/><br/>If you need more code editing time, contact our sales team to request a fully managed Cloud Coding Cluster. | If you have chosen the Enterprise plan, you may have a Cloud Coding Cluster already deployed on your infrastructure.<br/><br/>If you do not already have a Cloud Coding Cluster and you need one, contact our Sales team. |
+| 10 hours on the Choreo Web Editor. | 10 hours on the Choreo Web Editor per component free of charge..<br/><br/>If you need more code editing time, contact our sales team to request a fully managed Cloud Coding Cluster. | If you have chosen the Enterprise plan, you may have a Cloud Coding Cluster already deployed on your infrastructure.<br/><br/>If you do not already have a cloud coding cluster and you need one, contact our Sales team. |
 
 ### Support
 
