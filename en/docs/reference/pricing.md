@@ -33,7 +33,11 @@ Choreo allocates up to a maximum of 2x vCPUs and 4 GB RAM infrastructure resourc
 
 **Pay As You Go**
 
-This plan requires you to pay $150 per component (except for the first five components) and pay for any additional infrastructure costs incurred (i.e., if the infrastructure cost is over $100). It does not require you to pay an annual fee. You can deploy up to 25 components (i.e., any combination of component types). 
+This plan requires you to pay the following:
+- $150 per component (except for the first five components) on a monthly basis
+- Any additional infrastructure costs incurred (i.e., if the infrastructure cost is over $100). 
+
+This plan does not require you to pay an annual fee. You can deploy up to 25 components (i.e., any combination of component types). 
 
 If the number of components you need to deploy exceeds 25 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
 
@@ -47,7 +51,6 @@ The following table summarizes the cost of each plan:
  |----------------------|----------------|-------------------|----------------|
  | Subscription    | Free subscription  | Based on the number of components| Minimum $50k² for the annual commitment. The annual commitment includes 50x components (any combination of component types). |
  | Infrastructure  | Up to $100 worth of infrastructure services free of charge. | Up to $100 worth of infrastructure services free of charge.<br/><br/> | Pass through or pay directly to Azure. |
- | Monthly Credits | $100               | N/A | N/A|
 
 The following table summarizes the usage of each plan:
 
