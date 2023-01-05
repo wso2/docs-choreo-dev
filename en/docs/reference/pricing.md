@@ -4,7 +4,21 @@
 
 Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. 
 
-The pricing for your Choreo deployment is mainly determined based on the number of components. You can deploy up to five free components ((i.e., any combination of component types), and pay for each additional component.
+The pricing for your Choreo deployment is mainly determined based on the following: 
+
+- **The number of components** 
+
+    You can deploy up to five free components ((i.e., any combination of component types), and pay for each additional component.
+
+- **Infrastructure cost**
+
+    The infrastructure cost consists of the charges to Choreo by the cloud platform for vCPU, RAM, storage, ingress, egress, and network. Choreo provides $100 worth of infrastructure free of charge to each organization.
+
+    If the infrastructure cost of an organization on the Free plan exceeds $100, Choreo will limit some of the services it provides to it (e.g., some components might be deactivated).
+
+    If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
+
+    If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team or directly to the cloud platform vendor.
 
 
 ## Plans
