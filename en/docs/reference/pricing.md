@@ -85,11 +85,12 @@ Choreo supports the following developer and operational features for all the pla
 
 #### Integration and automation
 
-Choreo supports the following integration and automation features for all the plans:
+Choreo supports the following integration and automation components for all the plans:
 
 - Triggers
 - Scheduled jobs
-- 500+ out-of-the-box connectors for integration and automation
+
+In addition, Choreo supports 500+ out-of-the-box connectors for integration and automation for all the plans.
 
 #### AI-assisted development
 
