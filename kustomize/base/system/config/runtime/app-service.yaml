@@ -238,6 +238,7 @@ defaultRoles:
         - apim:api_settings
         - environments:view_dev
         - environments:view_prod
+        - apim:environment_manage
     - name: Project Manager
       handle: project-manager
       description: Users who are involved in project management
