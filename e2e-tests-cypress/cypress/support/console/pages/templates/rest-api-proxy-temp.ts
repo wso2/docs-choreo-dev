@@ -39,8 +39,11 @@ export class RestAPIProxyTemplate {
   }
 
   static createOpenApi(filepath: string = "", url: string = "") {
-    cy.get('[data-cyid="btn-import-open-api"]').click();
-
+    if (Utils.isPerspectiveViewEnabled()) {
+      cy.get('[data-cyid="import-oas-api-proxy"]').should("be.visible").click();
+    } else {
+      cy.get('[data-cyid="btn-import-open-api"]').click();
+    }
     if (filepath) {
       cy.get('[data-testid="open-api-file"]').click();
       cy.get('input[type="file"]').attachFile(filepath);
