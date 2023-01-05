@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. You can choose the appropriate payment plan based on your usage.
+Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. 
 
 The pricing for your Choreo deployment is mainly determined based on the following:
 
 - **The number of components**
 
-    You can have up to five free components ((i.e., any combination of component types), and pay for each additional component.
+    You can deploy up to five free components ((i.e., any combination of component types), and pay for each additional component.
 
 - **Infrastructure cost**
 
@@ -27,23 +27,25 @@ Choreo currently supports the following payment plans:
 
 **Free**
 
-You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go model if you want to deploy over 5 components.
+The free tier allows you to create up to five free components. These five components can be any combination of component types.
 
 Choreo allocates up to a maximum of 2x vCPUs and 4 GB RAM infrastructure resources to your component workloads.
+
+You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go model if you want to create over five components.
 
 **Pay As You Go**
 
 This plan requires you to pay the following:
-- $150 per component (except for the first five components) on a monthly basis
+- $150 per component (except for the first five components) on a monthly basis.
 - Any additional infrastructure costs incurred (i.e., if the infrastructure cost is over $100). 
 
-This plan does not require you to pay an annual fee. You can deploy up to 25 components (i.e., any combination of component types). 
+This plan does not require you to pay an annual fee. You can create up to 25 components (i.e., any combination of component types). 
 
-If the number of components you need to deploy exceeds 25 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
+If the number of components you need to create exceeds 25 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
 
 **Enterprise** 
 
-This plan allows you to pay an annual subscription of $50,000 or more (as agreed) and deploy up to 50 components (i.e., any combination of component types). If you need to deploy over 50 components, you can renegotiate with Choreo to pay an agreed amount per additional component or revise the annual subscription.
+This plan allows you to pay an annual subscription of $50,000 or more (as agreed) and create up to 50 components (i.e., any combination of component types). If you need to create over 50 components, you can renegotiate with Choreo to pay an agreed amount per additional component or revise the annual subscription.
 
 The following table summarizes the cost of each plan:
 
@@ -76,9 +78,9 @@ Choreo supports the following developer and operational features for all the pla
 
 - Deployments to cloud platforms are supported for the three plans as follows:
 
-   | **Free** | **Pay As You Go** | **Enterprise** |
-   |----------|-------------------|----------------|
-   | Azure    | Azure<br/>AWS<br/>GCP<br/>VMWare<br/>OpenShift<br/>Tanzu<br/>Any Kubernetes cluster |Azure<br/>AWS<br/>GCP<br/>VMWare<br/>OpenShift<br/>Tanzu<br/>Any Kubernetes cluster |
+    | **Free** | **Pay As You Go** | **Enterprise** |
+    |----------|-------------------|----------------|
+    | Azure    | Azure<br/>AWS<br/>GCP<br/>VMWare<br/>OpenShift<br/>Tanzu<br/>Any Kubernetes cluster       |Azure<br/>AWS<br/>GCP<br/>VMWare<br/>OpenShift<br/>Tanzu<br/>Any Kubernetes cluster |
 
 
 #### Integration and automation
@@ -120,7 +122,7 @@ Choreo supports monitoring and observability features for each plan as follows:
 Choreo supports the following security features for all the plans:
 
 - SSO for API Developer Portal
-- Enterprise Login
+- Enterprise login
 - Container manifest scanning
 - Container static scanning
 - Run-time container security
