@@ -147,8 +147,7 @@ Follow the steps below to configure role-based access control to an enterprise l
 3. Click **Organization** -> **Role Mapping** 
 4. To add a new group role mapping, click **Add Mapping**. 
 
-     ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.
-     cInlineImage-half}
+    ![Add mapping](../assets/img/administration/configure-enterprise-login/add-mapping.png){.cInlineImage-half}
 
  5. Enter the exact `Groups` name configured at the Enterprise IdP and map the list of Choreo roles by selecting the checkbox(s) from the list.
  6. Click **Save**. 
