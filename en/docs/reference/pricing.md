@@ -33,15 +33,17 @@ Choreo allocates up to a maximum of 2x vCPUs and 4 GB RAM infrastructure resourc
 
 You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go plan if you want to create over five components.
 
+
 **Pay As You Go**
 
 This plan requires you to pay the following:
 - $150 per component (except for the first five components) on a monthly basis.
 - Any additional infrastructure costs incurred (i.e., if the infrastructure cost is over $100). 
 
-This plan does not require you to pay an annual fee. You can create up to 25 components (i.e., any combination of component types). 
+This plan does not require you to pay an annual fee. You can create up to 30 components (i.e., any combination of component types). 
 
 If the number of components you need to create exceeds 25 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
+
 
 **Enterprise** 
 
