@@ -342,22 +342,13 @@ export class ComponentAPILifecycle {
   static verifyApplyAllPermissionsToResources(permissions: string[]) {
     cy.get('[data-testid="autocomplete-textfield"]>div').find('.MuiChip-root')
     .should('have.length', permissions.length * 3);
-    // Verify each chip has different permission names
-    // .each(($el, index, $list) => {
-    //   if ($el.ge === 'something') {
-    //     // wrap this element so we can
-    //     // use cypress commands on it
-    //     cy.wrap($el).click()
-    //   }
-    // });
-    // Validate the count of resources each permission is applied to
   }
 
   static deleteAllPermissionsFromReources() {
     cy.get('[data-testid="scope-delete-all-btn"]').click();
     // This can be enabled after fixing the bug in the autocomplete
-    // https://github.com/wso2-enterprise/choreo/issues/17521
-    // Bug -  The Delete All button does not remove permissions from the auto complete
+    // https://github.com/wso2-enterprise/choreo/issues/17547
+
     // this.verifyDeleteAllPermissionsFromReources();
   }
 

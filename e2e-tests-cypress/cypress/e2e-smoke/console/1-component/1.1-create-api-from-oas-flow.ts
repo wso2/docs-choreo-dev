@@ -220,7 +220,7 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
-  it("Verfy delete permissions", () => {
+  it("Verify delete permissions", () => {
     ComponentListingPage.visitToAComponent(API_NAME);
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectPermissions();
