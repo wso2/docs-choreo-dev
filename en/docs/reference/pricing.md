@@ -129,13 +129,6 @@ Choreo supports the following security features for all the plans:
 - Container static scanning
 - Run-time container security
 
-#### Cloud-code editing
-
-Choreo supports cloud-code editing for the three plans as explained below:
-
-| Free           |  Pay As You Go  | Enterprise |
-|----------------|-----------------|------------|
-| 10 hours on the Choreo Web Editor. | 10 hours on the Choreo Web Editor per component free of charge..<br/><br/>If you need more code editing time, contact our sales team to request a fully managed Cloud Coding Cluster. | If you have chosen the Enterprise plan, you may have a Cloud Coding Cluster already deployed on your infrastructure.<br/><br/>If you do not already have a cloud coding cluster and you need one, contact our Sales team. |
 
 ### Support
 
