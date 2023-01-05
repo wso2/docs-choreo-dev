@@ -118,7 +118,7 @@ Choreo supports monitoring and observability features for each plan as follows:
 
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
-| In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/><br/>Alerting | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties |
+| In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/><br/>Alerting | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to third parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to third parties |
 
 The maximum time interval for which users on each plan can view logs, traces and alerts is 30 days.
 
