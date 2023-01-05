@@ -74,6 +74,9 @@ spec:
             - mountPath: /home/wso2/security/truststore/global-adapter.pem
               name: mgw-adapter-truststore-vol
               subPath: global-adapter.pem
+            - mountPath: /home/wso2/security/truststore/rate-limiter.pem
+              name: secret-cc-rate-limiter
+              subPath: RATE_LIMITER_KEYSTORE_CERT
             - mountPath: /home/wso2/conf
               name: adapter-config
             - name: secret-mgw
@@ -84,6 +87,9 @@ spec:
               readOnly: true
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
+              readOnly: true
+            - name: secret-cc-rate-limiter
+              mountPath: /mnt/csi/secret-cc-rate-limiter
               readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-adapter:latest
           imagePullPolicy: Always
@@ -189,6 +195,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
