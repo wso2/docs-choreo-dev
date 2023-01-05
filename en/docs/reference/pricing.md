@@ -16,9 +16,9 @@ The pricing for your Choreo deployment is mainly determined based on the followi
 
     If the infrastructure cost of an organization on the Free plan exceeds $100, Choreo will limit some of the services it provides to it (e.g., some components might be deactivated).
 
-    If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
+    If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the cloud platform vendor.
 
-    If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team or directly to the cloud platform vendor.
+    If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
 
 
 ## Plans
@@ -33,15 +33,17 @@ Choreo allocates up to a maximum of 2x vCPUs and 4 GB RAM infrastructure resourc
 
 You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go plan if you want to create over five components.
 
+
 **Pay As You Go**
 
 This plan requires you to pay the following:
 - $150 per component (except for the first five components) on a monthly basis.
 - Any additional infrastructure costs incurred (i.e., if the infrastructure cost is over $100). 
 
-This plan does not require you to pay an annual fee. You can create up to 25 components (i.e., any combination of component types). 
+This plan does not require you to pay an annual fee. You can create up to 30 components (i.e., any combination of component types). 
 
 If the number of components you need to create exceeds 25 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
+
 
 **Enterprise** 
 
@@ -51,7 +53,7 @@ The following table summarizes the cost of each plan:
 
  |                      | **Free**       | **Pay As You Go** | **Enterprise** |
  |----------------------|----------------|-------------------|----------------|
- | Subscription    | Free subscription  | Based on the number of components| Minimum $50k² for the annual commitment. The annual commitment includes 50x components (any combination of component types). |
+ | Subscription    | Free subscription  | Based on the number of components| Minimum $50,000 for the annual commitment. The annual commitment includes 50x components (any combination of component types). |
  | Infrastructure  | Up to $100 worth of infrastructure services free of charge. | Up to $100 worth of infrastructure services free of charge.<br/><br/> | Pass through or pay directly to Azure. |
 
 The following table summarizes the usage of each plan:
@@ -59,7 +61,7 @@ The following table summarizes the usage of each plan:
  |                      | **Free**       | **Pay As You Go** | **Enterprise** |
  |----------------------|----------------|-------------------|----------------|
  | **No of Projects**   | 1              | Unlimited         | Unlimited      |
- | **No of Components** | A maximum of 5 | A maximum of 25 (recommended)  | Unlimited      |
+ | **No of Components** | A maximum of 5 | A maximum of 30 (recommended)  | Unlimited      |
  | **No of Developers** | Unlimited      | Unlimited         | Unlimited      |
 
 ### Features
@@ -116,7 +118,7 @@ Choreo supports monitoring and observability features for each plan as follows:
 
 | Free           |  Pay As You Go  | Enterprise |
 |----------------|-----------------|------------|
-| In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/><br/>Alerting | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to 3rd Parties |
+| In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/><br/>Alerting | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to third parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to third parties |
 
 The maximum time interval for which users on each plan can view logs, traces and alerts is 30 days.
 
