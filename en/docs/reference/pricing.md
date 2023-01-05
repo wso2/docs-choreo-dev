@@ -61,7 +61,7 @@ The following table summarizes the usage of each plan:
  |                      | **Free**       | **Pay As You Go** | **Enterprise** |
  |----------------------|----------------|-------------------|----------------|
  | **No of Projects**   | 1              | Unlimited         | Unlimited      |
- | **No of Components** | A maximum of 5 | A maximum of 25 (recommended)  | Unlimited      |
+ | **No of Components** | A maximum of 5 | A maximum of 30 (recommended)  | Unlimited      |
  | **No of Developers** | Unlimited      | Unlimited         | Unlimited      |
 
 ### Features
