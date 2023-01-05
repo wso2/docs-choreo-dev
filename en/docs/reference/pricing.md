@@ -53,7 +53,7 @@ The following table summarizes the cost of each plan:
 
  |                      | **Free**       | **Pay As You Go** | **Enterprise** |
  |----------------------|----------------|-------------------|----------------|
- | Subscription    | Free subscription  | Based on the number of components| Minimum $50k² for the annual commitment. The annual commitment includes 50x components (any combination of component types). |
+ | Subscription    | Free subscription  | Based on the number of components| Minimum $50,000 for the annual commitment. The annual commitment includes 50x components (any combination of component types). |
  | Infrastructure  | Up to $100 worth of infrastructure services free of charge. | Up to $100 worth of infrastructure services free of charge.<br/><br/> | Pass through or pay directly to Azure. |
 
 The following table summarizes the usage of each plan:
