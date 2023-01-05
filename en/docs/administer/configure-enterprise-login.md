@@ -124,7 +124,7 @@ Follow the steps below to configure role-based access control to an enterprise l
     1. Go to the Asgardeo Console. Click **Develop** -> **Applications** -> **WSO2_LOGIN_FOR_CHOREO_CONSOLE** and then select **Sign-in Method**. 
     2. Depending on the protocol you selected above, configure your login to use the above IDP. 
         - For OpenID Connect, follow: [https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-oidc-idp-login/#enable-the-oidc-idp-for-login](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-oidc-idp-login/#enable-the-oidc-idp-for-login)
-        - For SAML, follow:[https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login] (https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login)
+        - For SAML, follow: [https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login](https://wso2.com/asgardeo/docs/guides/authentication/enterprise-login/add-saml-idp-login/#enable-the-saml-idp-for-login)
             
     3. Go to **User Attributes**  and add the groups attribute to the user attribute list and mark it mandatory.
 
