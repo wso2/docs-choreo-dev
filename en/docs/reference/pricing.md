@@ -16,9 +16,9 @@ The pricing for your Choreo deployment is mainly determined based on the followi
 
     If the infrastructure cost of an organization on the Free plan exceeds $100, Choreo will limit some of the services it provides to it (e.g., some components might be deactivated).
 
-    If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
+    If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the cloud platform vendor.
 
-    If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team or directly to the cloud platform vendor.
+    If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
 
 
 ## Plans
