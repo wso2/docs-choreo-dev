@@ -36,6 +36,8 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+import { TryOut } from "../../../support/devportal/pages/apis/try-out";
+import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
 
 describe("Choreo APIM publisher scenarios", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -45,6 +47,8 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
+  const permissions = ["employee.read", "employee.write"];
+  const OPERATION = "intensity";
 
   before(() => {
     LoginPage.login();
@@ -58,7 +62,7 @@ describe("Choreo APIM publisher scenarios", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.createOpenApi(Filepath);
+    RestAPIProxyTemplate.importOpenApi(Filepath);
     RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
   });
 
@@ -142,20 +146,48 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
+    ComponentAPILifecycle.selectPermissions();
+    ComponentAPILifecycle.navigatePermissionManagementWindow();
+    ComponentAPILifecycle.managePermissions(permissions, API_NAME);
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-        "be.visible"
+      "be.visible"
     );
   });
 
   it("Create a consumer application and tryout an API", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
+    // Validate the API call without the scope
+    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.generateCredentials();
+    TryOut.navigateToTryOutMenu();
+    TryOut.generateTestKeyAndVerify();
+    TryOut.SelectResource(HTTPMethod.GET, OPERATION);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.ValidateResponse("200");
+    // Create app
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
     ProductionKeys.generateTestToken();
     Subscriptions.addSubscriptionToApplication(API_NAME);
     Subscriptions.validateResubscribingApi(API_NAME);
+    // Edit App and assign the scope
+    cy.get('[data-testid="applications-appbar-btn"]')
+      .should("be.visible")
+      .click();
+    AppsList.editAnApplication(appName, "employee.read");
+    // Validate API call with scope
+    DevPortalHomePage.navigateToApisPage();
+    DevPortalHomePage.navigateSelectAPI(API_NAME);
+    TryOut.navigateToTryOutMenu();
+    TryOut.SelectApplication(appName);
+    TryOut.generateTestKeyAndVerify();
+    TryOut.SelectResource(HTTPMethod.GET, OPERATION);
+    TryOut.TryoutAPI();
+    TryOut.ExecuteResourceFunction();
+    TryOut.ValidateResponse("200");
   });
 
   it("Verify consumers", () => {
@@ -167,6 +199,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify insight values for dev", () => {
     ChoreoHomePage.navigateToHome();
+    ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
@@ -187,8 +220,16 @@ describe("Choreo APIM publisher scenarios", () => {
     InsightsPage.getAverageErrorRate().should("eq", "0");
   });
 
+  it("Verify delete permissions", () => {
+    ComponentListingPage.visitToAComponent(API_NAME);
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.selectPermissions();
+    permissions.forEach((permission) => {
+      ComponentAPILifecycle.deletePermission(permission);
+    });
+  });
+
   it("Reset and undeploy component", () => {
-    ComponentListingPage.visitComponentWithoutName();
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
   });

@@ -57,6 +57,22 @@ export class RestAPIProxyTemplate {
     cy.get('[id="next"]').click();
   }
 
+  static importOpenApi(filepath: string = "", url: string = "") {
+    cy.get('[data-cyid="import-oas-api-proxy"]').click();
+
+    if (filepath) {
+      cy.get('[data-testid="open-api-file"]').click();
+      cy.get('input[type="file"]').attachFile(filepath);
+    }
+
+    if (url) {
+      cy.get('[data-testid="open-api-url"]').click();
+      cy.get('[data-testid="swagger-file-url"]>div>input').type(url);
+    }
+
+    cy.get('[id="next"]').click();
+  }
+
   static enterAPIdetails(
     apiName: string,
     apiBasePath: string,
