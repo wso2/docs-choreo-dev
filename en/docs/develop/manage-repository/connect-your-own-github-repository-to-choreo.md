@@ -7,7 +7,7 @@ Choreo allows you to either proceed with a Choreo-managed repository or connect 
 - Scheduled Task
 - Webhook
 
-The Choreo-managed repository is in a Choreo-owned GitHub organization that is not accessible to external users. Therefore, it is not ideal for scenarios where multiple developers need to develop a component in collaboration. To overcome this limitation, Choreo provides the capability to connect your own GitHub repository to maintain the source code of a Choreo component you create. This enables multiple developers to work on a particular Choreo component by collaborating via pull requests on a shared repository. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as PR checks, code analysis, styling preferences, etc.
+ Choreo provides the capability to connect your own GitHub repository to maintain the source code of a Choreo component you create either as a Ballerina project or a Docker container. This enables multiple developers to work on a particular Choreo component by collaborating via pull requests on a shared repository. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as PR checks, code analysis, styling preferences, etc.
 
 This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will,
 
@@ -18,8 +18,9 @@ This tutorial walks you through the steps to connect your own GitHub repository 
 ## Step 1: Create a project to add the REST API component
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-2. Expand the **Default Project** drop-down list and click **+ Create New**.
+2. Click the **+ Create Project** card from the landing page.
    ![Create project](../../assets/img/tutorials/connect-own-repo/create-new-project.png){.cInlineImage-full}
+
 3. Enter a unique name and description for your project. In this tutorial, let's use the following values:
 
       | **Field**       | **Value**                    |
@@ -31,10 +32,10 @@ This tutorial walks you through the steps to connect your own GitHub repository 
 
 ## Step 2: Add a REST API component and connect it to your own GitHub repository
 
-1. On the **Components** page, click **+Create**.
+1. On the **Components** page, click **+Create** on the the **REST API** card.
    ![Create component](../../assets/img/tutorials/connect-own-repo/create-component.png){.cInlineImage-full}
-2. Click the **REST API** card.
-3. Click **Create an API from scratch** and enter a unique name and a description for the API. In this tutorial, let's enter the following values:
+
+3. Enter a unique name and a description for the API. In this tutorial, let's enter the following values:
 
       | **Field**       | **Value**                   |
       |-----------------|-----------------------------|
@@ -42,36 +43,15 @@ This tutorial walks you through the steps to connect your own GitHub repository 
       | **Description** | Retrieve COVID-19 Statistics|
       
 4. Click **Next**.
-5. Select **Connect your own GitHub repository**.
-6. To authorize Choreo to access your GitHub account, click **Continue**, enter your GitHub credentials, and select one or more repositories to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    ![Authorize GitHub app](../../assets/img/tutorials/connect-own-repo/authorize-github-app.png){.cInlineImage-half}
-
-    !!!info
-
-         - The **Choreo GitHub App** requires the following permission:
-            - Read and write access to code and pull requests.
-            - Read access to issues and metadata.
-         - You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is only used to send pull requests to a user repository. Choreo will not directly push any changes to a repository.
-
-7. Select a GitHub account and a GitHub repository that includes a **Choreo GitHub App** installation.
-
-    !!! tip 
-        Choreo does not allow you to connect GitHub repositories that include existing Ballerina projects.
+5. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
+6. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
+7. Select a GitHub account, a GitHub repository that includes a Ballerina project or a dockerfile, the relevant branch and the build preset: Ballerina or Dockerfile. 
 
     !!! info
         If a selected repository is already integrated with Choreo to create a component, you cannot reuse it to create another Choreo component.
 
-8. Click **Create** to proceed with component initialization. This displays a pull request similar to the following:
-   ![View pull request](../../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
-
-9. Click **View Pull Request**.
-10. Review and click **Merge pull request**, and then click **Confirm Merge**. When you merge the pull request, it adds the necessary metadata files to connect your GitHub repository to Choreo so that you can proceed to create the component.
-
-11. To configure the pre-commit hook that Choreo uses to extract configurables defined in the Ballerina code, follow the steps given below:
-
-      !!! info
-          When you develop a Choreo component via the Web Editor, Choreo configures this pre-commit hook automatically. However, if you prefer to develop the component locally, you need to configure this pre-commit hook manually.
+8. Enter a valid path for the component and click **Create**.
+9. To configure the pre-commit hook that Choreo uses to extract configurables defined in the Ballerina code, follow the steps given below:
 
      1. Carry out a GitHub pull locally to update your clone with the latest changes.
 
@@ -97,7 +77,6 @@ This tutorial walks you through the steps to connect your own GitHub repository 
        [main ea3deab] test
        3 files changed, 7 insertions(+), 3 deletions(-)
       ```
-12. Navigate to the **Choreo Console** tab to develop the component depending on your requirement.
 
 ## Step 3: Design the REST API
 

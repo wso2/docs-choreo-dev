@@ -15,9 +15,7 @@ In this section, let's develop the application that retrieves COVID-19 related s
 ### Step 1.1: Create a project and add a REST API component
 
 1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-rest-api-product-link', properties: { utm_source: 'choreo_docs' }});">https://console.choreo.dev/</a>.
-
-2. Expand the drop-down menu for projects and click **+ Create New**.
-
+2. Click the **+ Create Project** card from the landing page.
     ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
 3. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
@@ -27,23 +25,16 @@ In this section, let's develop the application that retrieves COVID-19 related s
     | **Name**        | `COVID-19Stats`                       |
     | **Description** | `Get statistics relating to COVID-19` |
 
-4. Click **Create**.
-
-    This takes you to the **Components** page shown below.
-
-    ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
+4. Click **Create**. This takes you to the **Components** page.
 
 ### Step 1.2: Add a REST API component
 
 Let's create a new REST API component as follows:
 
-1. On the **Components** page, click **Create**.
+1. On the **Components** page, click **+Create** on the the **REST API** card.
+   ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
 
-2. Click the **REST API** card.
-
-3. Click **Create an API from scratch**.
-
-4. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
+2. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
 
     | **Field**       | **Value**             |
     |-----------------|-----------------------|
@@ -51,10 +42,13 @@ Let's create a new REST API component as follows:
     | **Description** | `COVID-19 Statistics` |
 
 5. Click **Next**.
+6. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
+7. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
+8. Select a GitHub account, a GitHub repository that includes a Ballerina project or a dockerfile, the relevant branch and the build preset: Ballerina or Dockerfile. 
 
-6. In the **REST API** dialog box that opens, you can specify whether you want the REST API configuration to be saved in a Choreo-managed repository or in a repository managed by you. For this tutorial, let's select **Choreo-managed repository** and click **Create**.
-
-    The `Statistics` REST API opens on a separate page.
+    !!! info
+        If a selected repository is already integrated with Choreo to create a component, you cannot reuse it to create another Choreo component.
+9. Enter a valid path for the component and click **Create**.
 
 ### Step 1.3: Design the REST API
 

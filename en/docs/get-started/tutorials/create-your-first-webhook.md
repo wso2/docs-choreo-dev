@@ -20,7 +20,7 @@ First, let's add a Webhook component as follows:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Expand the **Project** list and click **+ Create New**.
+2. Click the **+ Create Project** card from the landing page.
 
     ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
 
@@ -31,25 +31,22 @@ First, let's add a Webhook component as follows:
     | **Name**        | `IssueTracking`       |
     | **Description** | `Track GitHub issues` |
 
-4. Click **Create**.
+4. Click **Create**.This takes you to the **Components** page.
 
-    The **Components** page opens as shown in the below image.
+5. On the **Components** page, click **+Create** on the the **Webhook** card.
+   ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
 
-    ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
+6. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
+7. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
+8. Select a GitHub account, a GitHub repository that includes a Ballerina project or a dockerfile, the relevant branch and the build preset as **Ballerina**. 
 
-5. On the Components page, click **+ Create**.
+    !!! info
+        If a selected repository is already integrated with Choreo to create a component, you cannot reuse it to create another Choreo component.
 
-6. Click **Webhook**.
+9. Enter a valid path for the component and click **Next**.
 
-    ![Add Webhook component](../../assets/img/tutorials/webhook/add-webhook-component.png){.cInlineImage-full}
-
-7. Click **Start from scratch**.
-
-8. Select **GitHub** as the event source.
-
-    ![Select GitHub event source](../../assets/img/tutorials/webhook/select-github-event-source.png){.cInlineImage-half}
-
-9. In the **Webhook** dialog, enter information as follows:
+10. In the **Create a Webhook** pane, click on the Webhook type you want to create, for example**GitHub**. 
+11. Click Then click **Create**.
 
     1. In the **Webhook Name** field, enter a unique webhook name (e.g., `IssueTracking`).
    
