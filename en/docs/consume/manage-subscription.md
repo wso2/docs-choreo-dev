@@ -1,23 +1,32 @@
-# Subscribe to an API
+# Test an API
+ 
+Before using your API in production, you can test it using the integrated console in Choreo. Once you deploy your API in the required environment, an API consumer can use the application credentials, generate an OAuth 2.0 token, and invoke the API to test its functionality by providing values for the required parameters. 
 
-Subscribing an API to an application allows Choreo to authenticate the APIs requests with the application keys. You have to subscribe to a **published** API to an application to invoke it using the application credentials.
+This guide will take you through the steps to test an API in Choreo. 
 
-Alternatively, you can generate credentials for an API without an explicit subscription to an application. However, this will not let you control advanced configuration such as access token expiry time, revoke token expiry time, ID token expiry time, and enabling access to the API without a secret. Generating keys in the API is recommended for testing or short-term usage but not for long-term production usage. 
-
-This guide takes you through the steps to subscribe to APIs in Choreo. 
-
-Let's get started!
-
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click on the Developer Portal link on the Choreo console header. 
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click **Developer Portal**  on the Choreo Console header. 
 
     ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
 
-2. Click **Applications**. 
-3. Select and click on the application you want to subscribe to from the list. 
-4. Click **Subscriptions** from the left panel. 
-5. Click **+ Add APIs**. 
-6. Select the usage plan and click **Add** to subscribe to an API.  You can subscribe to multiple APIs. You can change the usage plan after subscription as well. 
+2. Click **APIs**.
 
-   ![Add APIs](../assets/img/developer-portal/manage-subscriptions/add-apis.png){.cInlineImage-half}
+3. Select an API you want to test and click **Try Out** on the card. In this case, skip step 4. Alternatively, you can click on the API and follow step 4. 
+4. In the left pane, click **Try Out**.
+5. Select the required environment from the **Environment** list.
 
-You can now invoke the API using the application keys. 
+    ![Test Panel](../assets/img/developer-portal/test-api/test-panel.png){.cInlineImage-half}
+
+6. From the **Subscribed Application** list, select the application you used to subsribe the API to. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
+
+7. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](../manage-application/#generate-keys).
+
+8. Next, expand a resource you want to test by clicking on it.
+
+    ![Test Resource](../assets/img/developer-portal/test-api/test-resource.png){.cInlineImage-half}
+
+9. Click **Try it Out** to enable the resource to be tested.  
+10. Fill in values for the required parameters and click **Execute**.
+
+    ![Test Resource](../assets/img/developer-portal/test-api/test-enabled-resource.png){.cInlineImage-half}
+
+11. Once Choreo executes the request, you can view the response in the Choreo Console.  
