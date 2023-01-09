@@ -6,7 +6,7 @@ kubectl create namespace csi-secret-store-driver --dry-run=client -o yaml | kube
 
 echo "--- Installing secret-store-csi-driver..."
 helm registry login choreocontrolplane.azurecr.io --username "${HELM_ACR_USERNAME}" --password "${HELM_ACR_PASSWORD}"
-helm pull oci://choreocontrolplane.azurecr.io/helm/csi-secrets-store-provider-azure --version v1.2.0
+helm pull oci://choreocontrolplane.azurecr.io/helm/csi-secrets-store-provider-azure --version 1.2.0
 
 helm upgrade --install csi-secrets-store-provider-azure csi-secrets-store-provider-azure-1.2.0.tgz \
 --namespace csi-secret-store-driver \

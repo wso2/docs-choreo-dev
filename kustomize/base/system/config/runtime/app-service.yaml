@@ -77,7 +77,7 @@ ballerinaCentral:
       autocommit: 'true'
       time_zone: "'+00:00'"
 userMigration:
-  enable: true
+  enable: false
 azureAppInsights:
   instrumentationKey: ${AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY}
 scim:

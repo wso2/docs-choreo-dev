@@ -33,6 +33,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-test-assistant
+            - secretRef:
+                name: secret-test-assistant
+          volumeMounts:
+            - name: secret-test-assistant
+              mountPath: "/mnt/csi/secret-test-assistant"
+              readOnly: true
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15

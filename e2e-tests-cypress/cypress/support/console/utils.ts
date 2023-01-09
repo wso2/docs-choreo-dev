@@ -111,6 +111,36 @@ export class Utils {
     });
   }
 
+  static isHostResolvable(url: string) {
+    const urlWithoutProtocol = url.replace("https://", "");
+    const slashIndex = urlWithoutProtocol.indexOf("/");
+    const domain = urlWithoutProtocol.substring(0, slashIndex);
+    const resource = urlWithoutProtocol.substring(
+      slashIndex,
+      urlWithoutProtocol.length
+    );
+
+    var options = {
+      host: domain,
+      port: 443,
+      path: resource,
+    };
+
+    const http = require("http");
+
+    http
+      .get(options, function (res) {
+        if (res.statusCode == 200) {
+          return true;
+        }
+      })
+      .on("error", function (e) {
+        return false;
+      });
+
+    return false;
+  }
+
   static sendPostRequest(url: string, headers, body) {
     const request = {
       method: "POST",
@@ -172,7 +202,7 @@ export class Utils {
   static isPerspectiveViewEnabled() {
     const enablePerspectiveView = Cypress.env("enablePerspectiveView");
     if (enablePerspectiveView != null) {
-      return enablePerspectiveView == "true";
+      return enablePerspectiveView == true || enablePerspectiveView == "true";
     }
 
     return false;
