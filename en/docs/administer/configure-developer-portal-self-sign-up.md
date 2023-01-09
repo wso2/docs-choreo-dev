@@ -106,22 +106,22 @@ Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign u
 
 ![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-half} 
 
-## Approve user accounts
+## Approve/reject new users
 
-To check the users who try to access your Developer Portal via self-sign-up, you can follow either of the following approaches:
+To manage the users who try to access your Developer Portal via self-sign-up, you can follow either of the following approaches:
 
-- Enable auto-approval so that every user who signs up is allowed to access your Developer Portal by default.
-- Manually check each sign-up and approval or reject it as required.
+- **Enable auto-approval**: This involves automating the user approval process. Every user who signs up is allowed to access your Developer Portal by default.
+- **Manually approve/reject**: This allows you to view all the user registrations in a list and approve/reject each registrationas required.
 
 ### Enable auto-approval
 
-To enable auto-approval, follow the steps given below:
+To enable auto-approval and automatically approve each new user account registered to your Developer Portal, follow the steps given below:
 
 1. Click **Settings** in the left navigation menu of the Choreo Console.
 
 2. Click **Self Signups**. 
 
-3. Toggle the **Auto-approval** switch.  This enables your account to automatically approve user accounts that create accounts to access your Developer Portal.
+3. Toggle the **Auto-approval** switch.
 
     ![Auto-approval](../assets/img/administration/self-sign-up/auto-approval.png){.cInlineImage-threeQuarters}
 
@@ -129,22 +129,12 @@ Once you enable auto-approval, the users can sign in to your Developer Portal an
 
 ### Manually approve/reject user accounts
 
-If you have not enabled auto-approval, you need to follow the procedure given below to manually approve/reject the sign-up:
-
-1. Once the user creates an account, Choreo sends an email to ask the user to confirm the account. This email is similar to the one in the image below.
-
-    ![Confirm the account](../assets/img/administration/self-sign-up/confirm-account.png){.cInlineImage-half}
-
-2. The user needs to click **Confirm Account**.
-
-3. Click **Settings** in the left navigation menu of the Choreo Console, and then click **Self Signups**. You will see the user account listed for approval as shown below:
+If you have not enabled auto-approval, you can manually approve/reject the new user registrations. Once the user creates an account, Choreo sends an email to ask the user to confirm the account. After the user confirms, you will see the user account listed for approval as shown below:
 
     ![Pending approval](../assets/img/administration/self-sign-up/approval-pending.png){.cInlineImage-threeQuarters}
 
-4. If you want to approve the user account, click **Approve**. If not, click **Reject**.
+If you want to approve the user account, click **Approve**. If not, click **Reject**.
 
-    If you approve, the user will receive an email confirming that the user account is approved. This email is similar to the one in the image below.
+- If you approve, the user will receive an email confirming that the user account is approved. 
 
-    ![User account approved](../assets/img/administration/self-sign-up/user-account-approved.png){.cInlineImage-half}
-
-    If you reject the user account, Choreo sends an email to inform the user that the user account is rejected. Once you reject a user account, that user cannot sign up to your Developer Portal via that account again.
+- If you reject the user account, Choreo sends an email to inform the user that the user account is rejected. Once you reject a user account, that user cannot sign up to your Developer Portal via that account again.
