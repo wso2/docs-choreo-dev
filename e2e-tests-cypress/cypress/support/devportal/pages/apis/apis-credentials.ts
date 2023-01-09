@@ -22,8 +22,6 @@ export class ApiCredentials {
 
   static generateCredentials() {
     cy.log("Generating credentials");
-    cy.get(".MuiSelect-root").click({ force: true });
-    cy.get('.MuiList-root > [tabindex="0"]').click();
     cy.get('[data-testid="generate-creds-btn"]').click();
     cy.wait(3000);
     cy.get('[data-testid="generate-access-token-btn"]').should("exist");
