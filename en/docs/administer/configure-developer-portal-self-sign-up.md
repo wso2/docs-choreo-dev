@@ -106,7 +106,7 @@ Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign u
 
 ![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-half} 
 
-## Approve/reject new users
+## Approve or reject new users
 
 To manage the users who try to access your Developer Portal via self-sign-up, you can follow either of the following approaches:
 
