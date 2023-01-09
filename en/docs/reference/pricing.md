@@ -42,7 +42,7 @@ This plan requires you to pay the following:
 
 This plan does not require you to pay an annual fee. You can create up to 30 components (i.e., any combination of component types). 
 
-If the number of components you need to create exceeds 25 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
+If the number of components you need to create exceeds 30 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
 
 
 **Enterprise** 
