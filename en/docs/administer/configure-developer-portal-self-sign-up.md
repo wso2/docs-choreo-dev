@@ -110,8 +110,8 @@ Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign u
 
 To manage the users who try to access your Developer Portal via self-sign-up, you can follow either of the following approaches:
 
-- **Enable auto-approval**: This involves automating the user approval process. Every user who signs up is allowed to access your Developer Portal by default.
-- **Manually approve/reject**: This allows you to view all the user registrations in a list and approve/reject each registrationas required.
+- **Enable auto-approval**: This involves automating the user approval process.  When you enable auto-approval, you allow each user who signs up to access your Developer Portal by default.
+- **Manually approve/reject**: This allows you to view all the user registrations in a list and approve/reject each registration as required.
 
 ### Enable auto-approval
 
@@ -125,7 +125,7 @@ To enable auto-approval and automatically approve each new user account register
 
 Once you enable auto-approval, the users can sign in to your Developer Portal and view your APIs and applications soon after they create an account.
 
-### Manually approve/reject user accounts
+### Manually approve orreject user accounts
 
 If you have not enabled auto-approval, you can manually approve/reject the new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve/reject user accounts that were confirmed by users, follow the steps given below:
 
