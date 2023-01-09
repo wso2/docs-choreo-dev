@@ -58,8 +58,7 @@ describe("Verify internal API creation functionality", () => {
   let PROD_INVOKE_URL = "";
 
   const PROJECT_DESCRIPTION = "API proxy project";
-  const PROJECT_1_NAME = Utils.generateProjectName() + "dev";
-  const PROJECT_2_NAME = Utils.generateProjectName() + "prod";
+  const PROJECT_1_NAME = Utils.generateProjectName();
 
   const idpUser = "choreoe2etest";
 
@@ -247,7 +246,8 @@ describe("Verify internal API creation functionality", () => {
   // Proxy API with prod endpoint
   it("Verify Proxy API creation using existing PROD endpoint", () => {
     ChoreoHomePage.navigateToHome();
-    ProjectListingPage.createNewProject(PROJECT_2_NAME, PROJECT_DESCRIPTION);
+    ProjectListingPage.selectProject(PROJECT_1_NAME);
+    ProjectOverviewPage.addComponent();
     ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.designNewRestApi(
       PROXY_API_NAME_PROD,
@@ -312,7 +312,7 @@ describe("Verify internal API creation functionality", () => {
   // Internal API should now be publicly accessible by receiving a 200 response
   it("Verify change access to Internal API to External ", () => {
     ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToComponents();
+    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
     ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
@@ -352,6 +352,8 @@ describe("Verify internal API creation functionality", () => {
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     DevPortalHomePage.navigateToApisPage();
     DevPortalHomePage.navigateSelectAPI(REST_API_NAME_DEVPORTAL);
+    ApiCredentials.navigateCredentialsTab();
+    ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
     TryOut.SelectResource(HTTPMethod.GET, "greeting");
@@ -420,7 +422,7 @@ describe("Verify internal API creation functionality", () => {
   // Suspend prod/dev deployed PROXY API for prod URL
   it("Verify suspending PROXY API for PROD URL component", () => {
     ChoreoHomePage.navigateToHome();
-    ProjectListingPage.selectProject(PROJECT_2_NAME);
+    ProjectListingPage.selectProject(PROJECT_1_NAME);
     ComponentListingPage.visitToAComponent(PROXY_API_NAME_PROD);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopAllDeployment();
