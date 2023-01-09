@@ -125,7 +125,7 @@ To enable auto-approval and automatically approve each new user account register
 
 Once you enable auto-approval, the users can sign in to your Developer Portal and view your APIs and applications soon after they create an account.
 
-### Manually approve orreject user accounts
+### Manually approve or reject user accounts
 
 If you have not enabled auto-approval, you can manually approve/reject the new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve/reject user accounts that were confirmed by users, follow the steps given below:
 
