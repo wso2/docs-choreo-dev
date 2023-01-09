@@ -123,8 +123,6 @@ To enable auto-approval and automatically approve each new user account register
 
 3. Toggle the **Auto-approval** switch.
 
-    ![Auto-approval](../assets/img/administration/self-sign-up/auto-approval.png){.cInlineImage-threeQuarters}
-
 Once you enable auto-approval, the users can sign in to your Developer Portal and view your APIs and applications soon after they create an account.
 
 ### Manually approve/reject user accounts
