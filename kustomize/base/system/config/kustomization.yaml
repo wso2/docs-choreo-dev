@@ -425,3 +425,15 @@ configMapGenerator:
     behavior: create
     literals:
       - CIO_ADX_DB="cio-metrics"
+  - name: cm-file-cio-event-collector
+    behavior: create
+    files:
+      - cio-dashboard/event-collector-service/Config.toml
+  - name: cm-file-cio-internal-metric-collector
+    behavior: create
+    files:
+      - cio-dashboard/internal-metric-collector/Config.toml
+  - name: cm-file-cio-query-api
+    behavior: create
+    files:
+      - cio-dashboard/query-api/Config.toml

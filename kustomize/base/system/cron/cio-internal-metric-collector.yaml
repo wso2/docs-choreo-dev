@@ -45,4 +45,12 @@ spec:
                 requests:
                   cpu: 150m
                   memory: 128Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
           serviceAccountName: sa-choreo-default
+          volumes:
+            - name: config
+              configMap:
+                name: cm-file-cio-internal-metric-collector

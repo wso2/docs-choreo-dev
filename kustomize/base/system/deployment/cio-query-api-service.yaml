@@ -80,6 +80,9 @@ spec:
             - name: secret-cio-query-api
               mountPath: "/mnt/csi/secret-cio-query-api"
               readOnly: true
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       volumes:
         - name: secret-cio-query-api
           csi:
@@ -89,6 +92,9 @@ spec:
               secretProviderClass: secret-cio-query-api
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: config
+          configMap:
+            name: cm-file-cio-query-api
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
