@@ -12,7 +12,7 @@ The following diagram shows the Observability dashboard:
 ![Dashboard overview](../../assets/img/observability/overview-overall.png){.cInlineImage-full}
 
 !!! note
-    The observability dashboard for non-Ballerina components do not display the low-code diagram. Therefore, the functionality within the low-code diagram is limited only to Ballerina components. 
+    The observability dashboard for non-Ballerina components doed not display the low-code diagram. Therefore, the functionality within the low-code diagram is available only to Ballerina components. 
 
 The Observability dashboard allows you to:
 
