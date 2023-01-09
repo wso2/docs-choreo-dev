@@ -80,6 +80,9 @@ spec:
             - name: secret-cio-event-collector-service
               mountPath: "/mnt/csi/secret-cio-event-collector-service"
               readOnly: true
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       volumes:
         - name: temp
           emptyDir: {}
@@ -91,6 +94,9 @@ spec:
               secretProviderClass: secret-cio-event-collector-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
+        - name: config
+          configMap:
+            name: cm-file-cio-event-collector
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
       affinity:
