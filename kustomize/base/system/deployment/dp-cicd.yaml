@@ -65,7 +65,7 @@ spec:
                 secretKeyRef:
                   key: LOG-ANALYTICS-KEY
                   name: secret-dp-cicd
-            - name: LOG_ANALYTICS_KEY
+            - name: CHOREO_PRIVATE_ACR_SECRET
               valueFrom:
                 secretKeyRef:
                   key: CHOREO_PRIVATE_ACR_SECRET
