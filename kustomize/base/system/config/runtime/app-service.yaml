@@ -431,3 +431,11 @@ permissions:
   roleManage: choreo:role_manage
 configurableWebhook:
   enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
+pardotNewUserRegistration:
+  enable: {{.PARDOT_USER_REGISTRATION_ENABLED}}
+pardotallUserList:
+  clientKey: ${PARDOT_USER_LIST_REGISTRATION_APP_KEY}
+  clientSecret: ${PARDOT_USER_LIST_REGISTRATION_APP_SECRET}
+  tokenURL: {{.PARDOT_USER_REGISTRATION_TOKEN_URL}}
+  pardotEndpoint: {{.PARDOT_USER_REGISTRATION_ENDPOINT}}
+  pardotSvcURL: {{.PARDOT_USER_REGISTRATION_SVC_URL}}
