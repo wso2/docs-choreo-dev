@@ -94,8 +94,15 @@ export class Apis {
         expect(urls).contains(
           Cypress.env(`${Enums.Environment.DEVELOPMENT}_test_url`)
         );
+<<<<<<< HEAD
         expect(urls).contains(Cypress.env(`${Enums.Environment.STAGING}_test_url`));
         expect(urls).contains(
+=======
+        expect(urls).contains(
+          Cypress.env(`${Enums.Environment.STAGING}_test_url`)
+        );
+        expect(urls).contains(
+>>>>>>> 535cf798a... Fix syntax error
           Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`)
         );
       } else {
