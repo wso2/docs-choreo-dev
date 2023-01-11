@@ -27,5 +27,16 @@ export class AppsList {
         cy.log('Application created successfully!');
     }
 
+    static editAnApplication(appName: string, permissionName: string) {
+        cy.get(`[data-testid="application-list-${appName}"]`).click();
+        cy.get('[data-testid="appliation-edit-btn"]').click();
+        cy.get('[data-testid="autocomplete-textfield"]').click();
+        cy.get('li[data-option-index="0"]').contains(permissionName).then((option) => {
+            option[0].click();
+        });
+        cy.get('[data-testid="create-button"]').click();
+        // App name visible
+    }
+
 }
 

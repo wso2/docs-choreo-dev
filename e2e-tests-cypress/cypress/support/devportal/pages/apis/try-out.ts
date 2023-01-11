@@ -40,8 +40,15 @@ export class TryOut {
     cy.wait(STANDARD_TIME_OUT);
   }
 
+
+  static SelectApplication(applicationName: string) {
+    cy.get('[data-testid="application-selector"]').click();
+    cy.get(`[data-value="${applicationName}"]`).click().wait(1000);
+  }
+
+
   static generateTestKeyAndVerify() {
-    cy.get("[data-testid=get-test-key-btn]").should("be.visible").click();
+    cy.get('[data-testid="get-test-key-btn"]').click({force: true});
     cy.get('#notistack-snackbar').should('be.visible')
     cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
   }

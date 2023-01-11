@@ -3,7 +3,6 @@ resources:
   - alert-configuration-service.yaml
   - analytics-subscription.yaml
   - api-server.yaml
-  - apim-service.yaml
   - app-deployer.yaml
   - app-service.yaml
   - connector-builder.yaml
@@ -44,3 +43,4 @@ resources:
   - choreo-admin-api.yaml
   - opentelemetry-collector.yaml
   - cio-event-collector-service.yaml
+  - cio-query-api-service.yaml

@@ -3,7 +3,6 @@ resources:
   - alert-configuration-service.yaml
   - analytics-subscription.yaml
   - api-server.yaml
-  - apim-service.yaml
   - app-deployer.yaml
   - app-service.yaml
   - connector-builder.yaml
@@ -44,6 +43,7 @@ resources:
   - opentelemetry-collector.yaml
   - choreo-admin-api.yaml
   - cio-event-collector-service.yaml
+  - cio-query-api-service.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
