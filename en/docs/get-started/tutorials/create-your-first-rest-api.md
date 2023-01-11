@@ -8,15 +8,16 @@ Choreo’s low-code editor allows developers to easily design (and then implemen
 - Deploy the REST API you created to make it available for use.
 - Test the REST API after deploying it to check whether it works as expected.
 
-## Step 1: Develop
+## Step 1: Create
 
-In this section, let's develop the application that retrieves COVID-19 related statistics.
+In this section, let's create the API that retrieves COVID-19-related statistics.
 
 ### Step 1.1: Create a project and add a REST API component
 
 1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-rest-api-product-link', properties: { utm_source: 'choreo_docs' }});">https://console.choreo.dev/</a>.
 2. Click the **+ Create Project** card from the landing page.
-    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
+
+    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
 
 3. Enter a unique name and a description for the project. For this tutorial, let's enter the following values:
 
@@ -32,7 +33,8 @@ In this section, let's develop the application that retrieves COVID-19 related s
 Let's create a new REST API component as follows:
 
 1. On the **Components** page, click **+Create** on the the **REST API** card.
-   ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
+
+    ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-small}
 
 2. Enter a unique name and a description for the API. For this tutorial, let's enter the following values:
 
@@ -42,234 +44,21 @@ Let's create a new REST API component as follows:
     | **Description** | `COVID-19 Statistics` |
 
 5. Click **Next**.
-6. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
-7. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
-8. Select a GitHub account, a GitHub repository that includes a Ballerina project or a dockerfile, the relevant branch and the build preset: Ballerina or Dockerfile. 
+6. Provide authorization for Choreo to connect to your GitHub account by clicking  **Authorize with GitHub**. 
+7. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
+8. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset: Ballerina or Dockerfile. 
+9. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
 
-    !!! info
-        If a selected repository is already integrated with Choreo to create a component, you cannot reuse it to create another Choreo component.
-9. Enter a valid path for the component and click **Create**.
+    !!! note
+        You can create a component by connecting an empty repository. But you can only deploy it after you implement it. 
 
-### Step 1.3: Design the REST API
+10. Next, click **Create**.
+
+### Step 1.2: Design the REST API
 
 Designing the REST API involves specifying how the REST API should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the REST API or by editing its code.
 
-In this tutorial, let's design the REST API by updating the low-code diagram as follows:
-
-1. To open the REST API component in the Web Editor, click **Edit Code**.
-
-    !!! info
-        Opening the Web Editor may take a little while if you are a first-time user.
-
-2. Remove the resource that is configured by default for the REST API by clicking its **Delete** icon.
-
-    ![Delete resource](../../assets/img/tutorials/rest-api/delete-resource.png){.cInlineImage-half}
-
-3. Add a new resource by clicking the **+** icon under the existing construct.
-
-    ![Add resource](../../assets/img/tutorials/rest-api/add-resource.png){.cInlineImage-half}
-
-    Then click **Resource**.
-
-    As a result, a panel named **Configure Resource** appears on the right of the page. In this panel, enter information as follows:
-
-    | **Field**       | **Value**                |
-    |-----------------|--------------------------|
-    | **HTTP Method** | `GET`                    |
-    | **Path**        | `stats/[string country]` |
-    | **Return Type** | `json|error`            |
-
-    Here, you are configuring a GET resource to fetch statistics related to COVID-19.
-
-    By adding `string country` within square brackets in the path, you are introducing `country` as a path parameter for which the value should be in the string format.
-
-    The specified return type allows the REST API to return the output in either JSON or error format.
-
-    Click **Save**.
-
-    The low-code diagram of this resource opens.
-
-4. To connect to the COVID-19 API and retrieve data, follow the sub-steps below:
-
-    1. Click **Connector** to add a connector. Then search for the **COVID-19 by ballerinax** connector, and click on it once it appears in the search results.
-
-    2. In the **Connector** panel, enter `covid19Client` as the **Connection Name** and click **Continue to Invoke API**.
-
-    3. In the **Covid19 API Connection** window, click **Continue to Invoke API**.
-
-    4. In the **Operation** drop-down list, select **getStatusByCountry** and enter details as follows in the other fields:
-
-        | **Field**                  | **Value**         |
-        |----------------------------|-------------------|
-        | **Country**                | `country`         |
-        | **Response Variable Name** | `statusByCountry` |
-
-    5. Click **Save**.
-
-5. Now let’s extract the total case count from the response and store it in a variable. Follow this procedure:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Variable** and enter details as follows:
-
-        | **Field**         | **Value**                     |
-        |-------------------|-------------------------------|
-        | **Variable Type** | `int`                         |
-        | **VariableName**  | `totalCases`                  |
-        | Expression        | `<int>statusByCountry.cases`  |
-
-    3. Click **Save**.
-
-6. To retrieve the population data, connect to the World Bank API as follows:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Connector** to add a connector. Then search for the **World Bank by ballerinax** connector, and click on it once it appears in the search results.
-
-    3. In the **Connector** panel that appears on the right of the page, click **Continue to Invoke API**.
-
-    4. In the **Operation** drop-down list, select **getPopulationByCountry** and enter details as follows in the other fields:
-
-        | **Field**                  | **Value**            |
-        |----------------------------|----------------------|
-        | **Country Code**           | `country`            |
-        | **Response Variable Name** | `populationByCountry`|
-
-    5. Click **Save**.
-
-7. Now let’s extract the population value from the response, calculate the population in millions, and store it in a variable. To do this, follow this procedure:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Variable** and enter details as follows:
-
-        | **Field**         | **Value**                                         |
-        |-------------------|---------------------------------------------------|
-        | **Variable Type** | `int`                                             |
-        | **Variable Name** | `populationMillions`                              |
-        | Expression        | `(populationByCountry[0]?.value ?: 0) / 1000000`  |
-
-    3. Click **Save**.
-
-8. Now let’s calculate the total COVID-19 case count per million in the population based on the COVID-19 statistics and the population data you have retrieved. Follow this procedure:
-
-    1. Click the last **+** icon in the low-code diagram.
-
-    2. Click **Variable** and enter details as follows:
-
-        | **Field**         | **Value**                                    |
-        |-------------------|----------------------------------------------|
-        | **Variable Type** | `decimal`                                    |
-        | **Variable Name** | `totalCasesPerMillion`                       |
-        | Expression*       | `<decimal>(totalCases / populationMillions)` |
-
-    3. Click **Save**.
-
-9. To build the JSON payload with data of the total cases per million in the population, add a variable.
-
-    Click the last **+** icon in the low-code diagram and click **Variable**. Then enter information as follows:
-
-    | **Field**         | **Value**                     |
-    |-------------------|-------------------------------|
-    | **Variable Type** | `json`                        |
-    | **Variable Name** | `payload`                     |
-    | Expression        | `{country : country, totalCasesPerMillion : totalCasesPerMillion}` |
-
-    Click **Save**.
-
-10. To respond with the JSON payload, add a `Return` statement as follows:
-
-    1. Click the last **+** icon in the low-code diagram and click **Return**.
-
-    2. In the **Return Expression** field, enter `payload`.
-
-    3. Click **Save**.
-
-Now you have completed designing the `Statistics` REST API.
-
-The low-code diagram looks as follows:
-
-![Add service construct](../../assets/img/tutorials/rest-api/low-code-diagram.png){.cInlineImage-half}
-
-The code view looks as follows:
-
-```ballerina
-import ballerinax/worldbank;
-import ballerinax/covid19;
-import ballerina/http;
-
-# A service representing a network-accessible API
-# bound to port `9090`.
-service / on new http:Listener(9090) {
-
-    resource function get stats/[string country]() returns json|error {
-
-        covid19:Client covid19Endpoint = check new ({});
-        covid19:CovidCountry statusByCountry = check covid19Endpoint->getStatusByCountry(country);
-        int totalCases = <int>statusByCountry.cases;
-        worldbank:Client worldbankEndpoint = check new ({});
-        worldbank:IndicatorInformation[] populationByCountry = check worldbankEndpoint->getPopulationByCountry(country);
-        int populationMillions = (populationByCountry[0]?.value ?: 0) / 1000000;
-        decimal totalCasesPerMillion = <decimal>(totalCases / populationMillions);
-        json payload = {country: country, totalCasesPerMillion: totalCasesPerMillion};
-        return payload;
-    }
-}
-```
-Now you can run the REST API and test it to see whether it works as expected.
-
-
-### Step 1.4: Run and test the REST API
-
-Let's run the REST API you designed in the Web Editor to check whether it can be started successfully without errors.
-
-1. Click **Run** (above the low-code diagram).
-
-    Once the REST API is successfully started, the following appears in the terminal log.
-
-     ```
-     Running executable
-     ```
-    Now you can try out the REST API.
-
-2. Click **Try it**. As a result, a test view opens on the right of the page.
-
-3. In the test view, expand the **GET** resource.
-
-4. Click **Try it out**.
-
-5. In the **country** field, enter `USA`.
-
-6. Click **Execute**.
-
-    A response is displayed as follows in the **Response body** field under **Responses**.
-
-    ![Try-out response](../../assets/img/tutorials/rest-api/try-out-response.png){.cInlineImage-half}
-
-The REST API you created works as expected. Therefore, now you can commit it.
-
-### Step 1.5: Commit the REST API to GitHub
-
-The REST API you designed is currently available only in the Web Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the REST API configuration into a private repository in GitHub that is maintained by Choreo as follows:
-
-1. Click **Sync with Choreo Upstream** in the bottom panel of the page (highlighted in red).
-
-    In the message that appears, click **Sync my changes with Choreo**.
-
-2. In the left panel, enter a commit message (e.g., `Implement REST API`) and click the tick.
-
-    ![Commit message](../../assets/img/tutorials/rest-api/commit-message.png){.cInlineImage-full}
-
-    Select **Yes** in the message that appears to specify that you need the changes to be staged.
-
-3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the bottom panel.
-
-    !!! info
-        This icon appears only after the committing process is completed.
-
-    ![Push changes](../../assets/img/tutorials/rest-api/push-changes.png){.cInlineImage-full}
-
-Once the changes are successfully pushed to the GitHub repository, the Web Editor indicates by displaying the text **In sync with Choreo upstream** for the `service.bal` file.
+You can implement your REST API in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the REST API in Ballerina. [Learn more](https://wso2.com/vscode-extentions/ballerina/).
 
 ## Step 2: Deploy
 
@@ -277,17 +66,20 @@ Once you have designed, tested, and committed the REST API, you need to deploy i
 
 To deploy the API, follow the steps below:
 
-1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
+1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy Manually**.
+   
+    !!! note
+        If you selected automatic deployment, you have to deploy the component manually the first time. Subsequent deployments will occur automatically.
 
-    ![Deploy API](../../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
+    ![Deploy API](../../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-small}
 
-2. To check the progress of the deployment, click **View Logs**
+2. To check the progress of the deployment, observe the **Console** pane.
 
-    ![Deployment progress](../../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
+    ![Deployment progress](../../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-threeQuarter}
 
 Once the API is deployed, the **Development** card indicates that the API is active as shown below.
 
-![Deployed API](../../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-full}
+![Deployed API](../../assets/img/tutorials/rest-api/deployed-api.png){.cInlineImage-threeQuarter}
 
 Now you can test your deployed REST API to check again whether it is working as expected.
 
@@ -305,9 +97,9 @@ In this tutorial, let's test via the OpenAPI Console:
 
 4. Click **Execute**.
 
-    The following is displayed as the response body under **Responses**.
+    Choreo displays the following response body under **Responses**.
 
-    ![Response for the Deployed API](../../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-full}
+    ![Response for the Deployed API](../../assets/img/tutorials/rest-api/deployed-api-response.png){.cInlineImage-half}
 
 Congratulations! You have now successfully created and tested a REST API in Choreo!
 

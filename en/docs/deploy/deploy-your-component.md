@@ -4,7 +4,17 @@ Deploying your component on Choreo makes it invocable. Once you have designed, t
 
 To deploy a component, follow the steps below:
 
-1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy**.
+1. Click the **Deploy** icon. 
+
+2. Click the **Automatic Deployment** toggle if you wish to enable automatic deployment.
+
+    !!! info
+        You need to verify your GitHub account when you enable automatic deployment for the first time.
+
+3. Then in the **Build Area** card, click **Deploy Manually**.
+    
+    !!! info
+        Choreo requires you to perform the first deployment of each component manually so that you can provide values for any configurable variables that the implementation may include.
 
     ![Deploy component](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
 
