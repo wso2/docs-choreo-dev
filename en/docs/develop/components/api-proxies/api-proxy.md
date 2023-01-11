@@ -43,6 +43,8 @@ Once you deploy the REST API to the development environment, it is then exposed 
 
 You may set up a separate sandbox environment to test the API proxy before pushing it to production. To deploy the API proxy to both the sandbox environment and the development environment, enter the test environment URL as the sandbox endpoint and the API backend URL as the endpoint.
 
+![Sandbox URL](../../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-threeQuarter}
+
 ## Choreo environments
 
 Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
