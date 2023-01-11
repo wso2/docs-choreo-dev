@@ -1,10 +1,17 @@
 package com.wso2.choreo.integration.apis.observability;
 
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.config.ObsRequestParam;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
+import com.wso2.choreo.integration.models.response.Response;
 import org.apache.http.client.utils.URIBuilder;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -30,6 +37,16 @@ public class ObservabilityService extends ControlPlaneAPI {
                 .setParameter("limit", obsRequestParam.getLimit());
 
         return builder.build().toString();
+    }
+
+
+    public static void getGroupLogs(String releaseId, String namespace, String accessToken) throws IOException, URISyntaxException {
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
+        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).bin("10").limit("5").build();
+        String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.groupedlogsV2);
+        Response res = HttpClientUtil.httpGET(url, accessToken, "");
+        System.out.println(res.getRes());
+     //   ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
     }
 
 

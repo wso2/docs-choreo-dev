@@ -1,0 +1,8 @@
+[package]
+org = "test"
+name = "jwt"
+version = "0.1.0"
+distribution = "2201.2.2"
+
+[build-options]
+observabilityIncluded = true

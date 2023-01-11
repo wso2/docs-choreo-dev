@@ -24,7 +24,7 @@ import { Utils } from "../../../support/console/utils";
 import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
 import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
-import { Environment } from "../../../support/console/pages/enum/environment";
+import { Environment } from "../../../support/console/enums";
 
 describe.skip("Create salesforce new lead to gsheet sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";

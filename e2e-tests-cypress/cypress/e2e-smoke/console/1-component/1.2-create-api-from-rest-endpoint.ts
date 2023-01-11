@@ -17,7 +17,7 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
-import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
+import { Enums } from "../../../support/console/enums";
 import { APITest } from "../../../support/console/pages/apis/api-test";
 import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
@@ -26,11 +26,9 @@ import { APIDevelop } from "../../../support/console/pages/apis/api-develop";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { Utils } from "../../../support/console/utils";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { ApiCredentials } from "../../../support/devportal/pages/apis/apis-credentials";
-import { Environment } from "../../../support/console/pages/enum/environment";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
@@ -45,7 +43,7 @@ describe("Verify project creation functionality", () => {
   const OPERATION_POSTS = "posts";
   const ALLOWED_ORIGINS = ["https://127.0.0.1"];
   const ALLOWED_HEADERS = ["tenantId"];
-  const ALLOWED_METHODS = [HTTPMethod.TRACE, HTTPMethod.HEAD];
+  const ALLOWED_METHODS = [Enums.HTTPMethod.TRACE, Enums.HTTPMethod.HEAD];
   const PROJECT_DESCRIPTION = "sample stats project";
   const PROJECT_NAME = Utils.generateProjectName();
   const idpUser = "choreoe2etest";
@@ -67,7 +65,7 @@ describe("Verify project creation functionality", () => {
       API_BASE_PATH,
       API_ENDPOINT
     );
-    APIDevelop.addResources(OPERATION_USERS, HTTPMethod.GET);
+    APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });
 
   it("Verify component deployment to dev", () => {
@@ -80,7 +78,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    TestHelper.testOnSwagger(Environment.DEVELOPMENT, OPERATION_USERS).then(
+    TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, OPERATION_USERS).then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
       }
@@ -88,7 +86,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
-    TestHelper.testOnSwagger(Environment.PRODUCTION, OPERATION_USERS).then(
+    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, OPERATION_USERS).then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
       }
@@ -120,7 +118,7 @@ describe("Verify project creation functionality", () => {
 
   it("Add  a new version", () => {
     ComponentOverviewPage.navigateToDevelop();
-    APIDevelop.addResources(OPERATION_POSTS, HTTPMethod.GET);
+    APIDevelop.addResources(OPERATION_POSTS, Enums.HTTPMethod.GET);
   });
 
   it("Deploy new version to Dev", () => {

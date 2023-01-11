@@ -118,11 +118,6 @@ public class ComponentUtils {
     }
 
 
-    public static String getApiKey(ChoreoComponent component, String accessToken) throws IOException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-
-        return component.getAPIKeyForInvoke(accessToken, component.getApiId()).replace("\"", "");
-    }
-
     public static String generateStringFromTemplate(String templateRelativePath, Map<String, String> params)
             throws IOException {
         MustacheFactory mf = new DefaultMustacheFactory();

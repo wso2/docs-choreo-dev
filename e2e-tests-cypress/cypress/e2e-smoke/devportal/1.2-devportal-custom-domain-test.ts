@@ -28,8 +28,6 @@ import { Subscriptions } from "../../support/devportal/pages/applications/subscr
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
-import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
-import { ComponentListingPage } from "../../support/console/pages/component/component-listing-page";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 

@@ -16,8 +16,7 @@ import { ComponentDevelopPage } from "../../../support/console/pages/component/c
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Environment } from "../../../support/console/pages/enum/environment";
-import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
+import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
@@ -95,8 +94,8 @@ describe("Verify internal API creation functionality", () => {
   it("Verify resource access without the token in DEV", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -106,8 +105,8 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify resource access without the token in PROD", () => {
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.PRODUCTION,
-      HTTPMethod.GET,
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -119,35 +118,35 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentAPILifecycle.selectRevision(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
     ComponentAPILifecycle.applyConfiguration(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "Revision 5"
     );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
-      Environment.DEVELOPMENT
+      Enums.Environment.DEVELOPMENT
     );
   });
 
   it("Apply disable security config in PROD", () => {
-    ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION);
-    ComponentAPILifecycle.selectRevision(Environment.PRODUCTION);
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.PRODUCTION);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+    ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
   });
 
   it("Verify resource access without the security in DEV", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -163,8 +162,8 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify resource access without the security in PROD", () => {
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.PRODUCTION,
-      HTTPMethod.GET,
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -194,10 +193,10 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to Proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(RESOURCE_NAME, HTTPMethod.GET);
+    ComponentDevelopPage.addResourcesToProxy(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
-      HTTPMethod.GET,
+      Enums.HTTPMethod.GET,
       PARAM_TYPE,
       PARAM_NAME,
       PARAM_DATA_TYPE
@@ -219,8 +218,8 @@ describe("Verify internal API creation functionality", () => {
   it("Verify resource access without the token in DEV", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums. HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -232,8 +231,8 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify resource access without the token in PROD", () => {
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.PRODUCTION,
-      HTTPMethod.GET,
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -259,10 +258,10 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify Add resource to proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(RESOURCE_NAME, HTTPMethod.GET);
+    ComponentDevelopPage.addResourcesToProxy(RESOURCE_NAME, Enums.HTTPMethod.GET);
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
-      HTTPMethod.GET,
+      Enums.HTTPMethod.GET,
       PARAM_TYPE,
       PARAM_NAME,
       PARAM_DATA_TYPE
@@ -284,8 +283,8 @@ describe("Verify internal API creation functionality", () => {
   it("Verify resource access without the token in dev", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -297,8 +296,8 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify resource access without the token in prod", () => {
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.PRODUCTION,
-      HTTPMethod.GET,
+      Enums.Environment.PRODUCTION,
+      Enums. HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -322,8 +321,8 @@ describe("Verify internal API creation functionality", () => {
   it("Verify resource access to external API in DEV", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums. HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -335,8 +334,8 @@ describe("Verify internal API creation functionality", () => {
 
   it("Verify resource access to external API in PROD", () => {
     TestHelper.testOnCurlDiscardPrevious(
-      Environment.PRODUCTION,
-      HTTPMethod.GET,
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -356,7 +355,7 @@ describe("Verify internal API creation functionality", () => {
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(HTTPMethod.GET, "greeting");
+    TryOut.SelectResource(Enums.HTTPMethod.GET, "greeting");
     TryOut.TryoutAPI();
     TryOut.InputQueryParamater(PARAM_NAME, PARAM_VALUE);
     TryOut.ExecuteResourceFunction();
@@ -373,28 +372,28 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT);
-    ComponentAPILifecycle.selectRevision(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
     ComponentAPILifecycle.applyConfiguration(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "Revision 5"
     );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
-      Environment.DEVELOPMENT
+      Enums.Environment.DEVELOPMENT
     );
   });
 
   it("Verify reset security in PROD deployed REST API component", () => {
-    ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION);
-    ComponentAPILifecycle.selectRevision(Environment.PRODUCTION);
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
+    ComponentAPILifecycle.selectRevision(Enums.Environment.PRODUCTION);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.selectResources();
     ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+    ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
   });
 
   it("Verify reset access mode to Internal in REST API component", () => {

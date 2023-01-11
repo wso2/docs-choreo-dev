@@ -17,7 +17,7 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
 import { SwaggerUI } from "../../../support/console/pages/component/UI-components/swagger-UI-component";
-import { Environment } from "../../../support/console/pages/enum/environment";
+import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
@@ -61,7 +61,7 @@ describe("Create Greeting sample in Choreo", () => {
 
   it("Verify test functionality of sample resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
-    ComponentTestPage.selectEnvironment(Environment.DEVELOPMENT);
+    ComponentTestPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentTestPage.getTestKey();
     SwaggerUI.SelectResource("");
     SwaggerUI.TryoutAPI();

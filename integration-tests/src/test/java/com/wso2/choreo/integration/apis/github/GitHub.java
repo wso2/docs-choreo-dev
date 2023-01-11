@@ -6,6 +6,7 @@ import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.models.github.Content;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,9 +15,6 @@ import java.util.HashMap;
 
 @Slf4j
 public class GitHub extends ControlPlaneAPI {
-
-
-
 
 
     public GitHub() {
@@ -41,7 +39,7 @@ public class GitHub extends ControlPlaneAPI {
         return HttpClientUtil.httpPOST(requestURI, ObjectMapperUtil.mapToString(requestBodyMap), AUTH_HEADER, "");
     }
 
-    public static Response mergePR(String repoName, String prNumber) throws IOException, UnexpectedResponseException {
+    public static Response mergePR(String repoName, String prNumber) throws IOException {
         String requestURI = GH_URL + "/repos/".concat(GH_ORG).concat("/").concat(repoName).concat("/pulls/" + prNumber + "/merge");
         HashMap<String, Object> requestBodyMap = new HashMap<>() {
             {
@@ -78,6 +76,13 @@ public class GitHub extends ControlPlaneAPI {
                 "    \"content\":" + "\"" + content + "\"" + ",\n" +
                 "    \"sha\":" + "\"" + serviceBalSha + "\"" + "\n}";
         return HttpClientUtil.httpPUT(requestUrl, request, AUTH_HEADER, "");
+    }
+
+    public static void createNewFile(String repoName,String path,String content) throws IOException {
+        String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
+        Content content1 = Content.builder().message("Create initial "+path).content(content).build();
+        String payload = ObjectMapperUtil.mapObjectToString(content1);
+        Response response = HttpClientUtil.httpPUT(requestUrl,payload,AUTH_HEADER,"");
     }
 
     public static Response deleteGitHubRepo(String repoName) {
