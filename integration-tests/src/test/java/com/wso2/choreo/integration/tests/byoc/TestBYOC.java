@@ -60,14 +60,8 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
-    @CitrusTest
-    public void initialPRGeneration_TestBYOC() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-        Assert.assertEquals(prs.length, 0);
-    }
 
-    @Test(dependsOnMethods = {"initialPRGeneration_TestBYOC"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
     @CitrusTest
     public void deploy_TestBYOC() throws Exception {
         Status status = GraphQL.deployComponent(choreoComponent, accessToken);

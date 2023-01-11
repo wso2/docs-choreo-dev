@@ -57,4 +57,5 @@ public class GraphqlDTO {
     private String description;
     private String releaseId;
     private String region;
+    private String shaDate;
 }

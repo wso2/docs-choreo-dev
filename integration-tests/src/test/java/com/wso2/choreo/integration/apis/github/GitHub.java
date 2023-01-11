@@ -7,11 +7,16 @@ import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.github.Content;
+import com.wso2.choreo.integration.models.github.Repo;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class GitHub extends ControlPlaneAPI {
@@ -19,10 +24,12 @@ public class GitHub extends ControlPlaneAPI {
 
     public GitHub() {
     }
-    public static  String getGitHubRepoUrl(String repoName){
 
-        return  "https://github.com/" + GH_ORG + "/" + repoName;
+    public static String getGitHubRepoUrl(String repoName) {
+
+        return "https://github.com/" + GH_ORG + "/" + repoName;
     }
+
     public static Response initGitHubRepo(String repoName, boolean autoInit, boolean isPrivate, String gitignoreTemplate) throws IOException {
         String requestURI = GH_URL + "/orgs/" + GH_ORG + "/repos";
         log.info(requestURI);
@@ -50,7 +57,7 @@ public class GitHub extends ControlPlaneAPI {
     }
 
 
-    public static  void  getSha(String repoName,String path){
+    public static void getSha(String repoName, String path) {
         String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
         Response response = HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");
         JsonObject jsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
@@ -78,11 +85,11 @@ public class GitHub extends ControlPlaneAPI {
         return HttpClientUtil.httpPUT(requestUrl, request, AUTH_HEADER, "");
     }
 
-    public static void createNewFile(String repoName,String path,String content) throws IOException {
+    public static void createNewFile(String repoName, String path, String content) throws IOException {
         String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
-        Content content1 = Content.builder().message("Create initial "+path).content(content).build();
+        Content content1 = Content.builder().message("Create initial " + path).content(content).build();
         String payload = ObjectMapperUtil.mapObjectToString(content1);
-        Response response = HttpClientUtil.httpPUT(requestUrl,payload,AUTH_HEADER,"");
+        Response response = HttpClientUtil.httpPUT(requestUrl, payload, AUTH_HEADER, "");
     }
 
     public static Response deleteGitHubRepo(String repoName) {
@@ -97,7 +104,6 @@ public class GitHub extends ControlPlaneAPI {
     }
 
 
-
     public static Response mergeInitialPR(String repoName, String message) throws IOException {
         String requestURI = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/pulls/1/merge";
         HashMap<String, Object> requestBodyMap = new HashMap<>() {
@@ -108,6 +114,30 @@ public class GitHub extends ControlPlaneAPI {
         String request = ObjectMapperUtil.mapToString(requestBodyMap);
         return HttpClientUtil.httpPUT(requestURI, request, AUTH_HEADER, "");
     }
+
+
+    public static void deleteTestProjects() {
+            String requestURL = GH_URL + "/orgs/" + GH_ORG + "/repos?per_page=100";
+            Response response = HttpClientUtil.httpGET(requestURL, AUTH_HEADER, "");
+            Set<Repo> repos = Arrays.stream(ObjectMapperUtil.mapToCollection(Repo[].class, response.getRes(), "")).
+                    filter(r -> r.getName().startsWith("test-repo") || r.getName().startsWith("automationtestcomponent")).collect(Collectors.toSet());
+
+            repos.forEach(rep -> {
+                Date date = new Date();
+                long currentTime = date.getTime();
+                String timeStamp = rep.getName().replace("test-repo-", "").replace("automationtestcomponent","").replace("repo","");
+                long createdTime = Long.parseLong(timeStamp);
+                long timeDiff = currentTime-createdTime;
+                log.info(Long.toString(timeDiff));
+                if(timeDiff>7200000){
+                    log.info(rep.getName());
+                    deleteGitHubRepo(rep.getName());
+                }
+
+            });
+        }
+
+
 
 
 }
