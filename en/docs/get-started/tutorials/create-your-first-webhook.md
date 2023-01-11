@@ -53,10 +53,8 @@ First, let's add a Webhook component as follows:
     1. In the **Webhook Name** field, enter a unique webhook name (e.g., `IssueTracking`).
    
     2. From the **Trigger Channel** list, select **IssuesService** so that the system can trigger your webhook based on a change it observes in GitHub issues (i.e., assigning a label in this scenario).
-   
-    3. You need to save your webhook implementation in a GitHub repository from which Choreo can access it. You can use a Choreo-managed GitHub repository or one of your own GitHub repositories. Let's use the Choreo-managed GitHub repository, which is the default selection.
 
-    4. Click **Create**.
+    3. Click **Create**.
 
          The webhook opens on a separate page.
       

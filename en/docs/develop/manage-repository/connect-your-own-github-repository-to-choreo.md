@@ -1,6 +1,6 @@
 # Connect Your GitHub Repository to Choreo
 
-Choreo allows you to connect your own GitHub repository to maintain the source code of a component when you create any Choreo components.You can create a Choreo component either as a Ballerina project or a in any language as a Docker container. By connecting your GitHub repository, you enable collaborative development for Choreo components. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as PR checks, code analysis, styling preferences, etc.
+Choreo allows you to connect your own GitHub repository to maintain the source code of a component when you create any Choreo components.You can create a Choreo component either as a Ballerina project or a in any language as a Docker container. By connecting your GitHub repository, you enable collaborative development for Choreo components. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as pull requet checks, code analysis, styling preferences, etc.
 
 This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will,
 
@@ -31,7 +31,7 @@ Let's begin by creating a project as follows:
 
 Let's connect your GitHub repository and use the REST API implementation in it to create a REST API component in Choreo: 
 
-1. On the **Components** page, click **+Create** on the the **REST API** card.
+1. On the **Components** page, click **+Create** on the **REST API** card.
 
     ![Create component](../../assets/img/tutorials/connect-own-repo/create-component.png){.cInlineImage-small}
 
@@ -49,21 +49,21 @@ Let's connect your GitHub repository and use the REST API implementation in it t
 7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repo or a sub-folder and proceed to create the component. 
 
     !!! info
-        You can create a component by connecting an empty repository. But you can only deploy it after you implement it. 
+        You can create a component by connecting an empty GitHub repository. But you can only deploy it after you implement it. 
 
-8. click **Create**.
+8. Click **Create**.
 
 You have now successfully created your component by connecting your own GitHub repository.
 
 Developers can collaborate via any of the following approaches:
 
-- Use the same upstream repository to create a shared component in the same organization, develop, push changes to the respective tracking branch, and eventually send a PR to the relevant branch.
-- Create their forks from the shared upstream repository, connect to individual components, commit, and send PRs to the upstream repository.
+- Use the same upstream repository to create a shared component in the same organization, develop, push changes to the respective tracking branch, and eventually send a pull request to the relevant branch.
+- Create their forks from the shared upstream repository, connect to individual components, commit, and send pull requests to the upstream repository.
 
-Once you collaborate and complete developing the REST API component, you can deploy and test it. For step-by-step instructions, see [steps 2 and 3 in the Create Your First REST API tutorial](https://wso2.com/choreo/docs/get-started/tutorials/create-your-first-rest-api/#step-2-deploy).
+Once you collaborate and complete developing the REST API component, you can deploy and test it. For detailed instructions, see [steps 2 and 3 in the Create Your First REST API tutorial](https://wso2.com/choreo/docs/get-started/tutorials/create-your-first-rest-api/#step-2-deploy).
 
 ## Migrate Choreo-managed repositories to your own GitHub repositories
 
 If you previously created components on Choreo without connecting your GitHub repository,  your code resides in a Choreo-managed repository. **Choreo will remove all Choreo-managed repositories and the relevant components created using them by the 31st of January, 2023**. Choreo will send the source code to the users via mail. Users can then use this source code, store it in their GitHub repositories and create new components. 
 
-**If you published any connectors for these components, Choreo will continue to keep them published**. Once you create a new version of the component, you can then publish a new version of the connector. However, any applications using the original version of the connector will have to use the new connector version to use the new REST API. To do this,  a user needs to change the  ServiceUrl (REST API URL) and the auth credentials (generated from the Choreo Developer portal) used by the client application to consume the connector.
+**If you have published any connectors for these components, Choreo will continue to keep them published**. Once you create a new version of the component, you can then publish a new version of the connector. However, any applications using the original version of the connector will have to use the new connector version to use the new REST API. To do this,  a user needs to change the  ServiceUrl (REST API URL) and the auth credentials (generated from the Choreo Developer portal) used by the client application to consume the connector.

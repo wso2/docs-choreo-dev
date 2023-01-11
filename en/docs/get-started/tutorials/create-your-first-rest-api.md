@@ -32,7 +32,7 @@ In this section, let's create the API that retrieves COVID-19-related statistics
 
 Let's create a new REST API component as follows:
 
-1. On the **Components** page, click **+Create** on the the **REST API** card.
+1. On the **Components** page, click **Create** on the the **REST API** card.
 
     ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-small}
 
