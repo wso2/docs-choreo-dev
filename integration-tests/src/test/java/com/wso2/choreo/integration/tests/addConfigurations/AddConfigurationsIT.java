@@ -39,7 +39,7 @@ public class AddConfigurationsIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_AddConfigurationsIT() throws Exception {
-
+GitHub.deleteTestProjects();
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
         component = ComponentUtils.getReusableComponent(TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(),
