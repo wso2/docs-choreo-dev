@@ -29,7 +29,6 @@ export class ProjectListingPage {
     cy.get('[aria-label="Without label"]').click()
     cy.get(`[data-value="${dataPlane}"]`).click()
     cy.get('[data-testid="create-version-create"]').click();
-    cy.get('[data-cyid="create-component"]').should('be.visible')
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
 

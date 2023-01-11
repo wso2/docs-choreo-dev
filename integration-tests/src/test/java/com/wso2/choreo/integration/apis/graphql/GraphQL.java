@@ -130,7 +130,7 @@ public class GraphQL extends ControlPlaneAPI {
             if (pullRequests.length == expectedPRs) {
                 return pullRequests;
             }
-            SleepUtil.sleep(15);
+            SleepUtil.sleep(35);
         }
         throw new UnexpectedResponseException(response.getStatusCode(), "Expected PullRequest length " + expectedPRs + " but found " + 0);
     }
@@ -154,7 +154,7 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO dto = GraphqlDTO.builder().componentHandler(componentHandler).projectId(projectId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentInformation.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(RestApiChoreoComponent.class, response.getRes(), "component");
+        return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "component");
     }
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {

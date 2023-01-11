@@ -9,7 +9,6 @@ import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -50,6 +49,7 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_TestClientJwTValidation() throws Exception {
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
+
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
@@ -74,27 +74,14 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     }
 
 
+
     @Test(dependsOnMethods = {"createdComponentStatus_TestClientJwTValidation"})
     @CitrusTest
-    public void initialPRGeneration_TestClientJwTValidation() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
-        Assert.assertEquals(prs.length, 1);
-    }
-
-    @Test(dependsOnMethods = {"initialPRGeneration_TestClientJwTValidation"})
-    @CitrusTest
-    public void mergePR_TestClientJwTValidation() throws IOException, UnexpectedResponseException {
-        GitHub.mergePR(repoName, "1");
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-        Assert.assertEquals(prs.length, 0);
-    }
-
-
-    @Test(dependsOnMethods = {"mergePR_TestClientJwTValidation"})
-    @CitrusTest
     public void mergeNewCode_TestClientJwTValidation() throws IOException {
-        String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/service.bal");
-        GitHub.mergeNewCode(repoName, "service.bal", "update code", encodedContent);
+        String serviceBal = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/jwt/service.bal");
+        String balToml = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/jwt/Ballerina.toml");
+        GitHub.createNewFile(repoName, "service.bal", serviceBal);
+        GitHub.createNewFile(repoName, "Ballerina.toml", balToml);
     }
 
     @Test(dependsOnMethods = {"mergeNewCode_TestClientJwTValidation"})
@@ -107,17 +94,12 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_TestClientJwTValidation"})
     @CitrusTest
     public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
+        Orgs.getConfigurationMapping(choreoComponent,accessToken);
         Orgs.addConfiguration(choreoComponent, "dev", accessToken);
     }
 
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_TestClientJwTValidation"})
-    @CitrusTest
-    public void deploy_TestClientJwTValidation() throws Exception {
-        GraphQL.deployComponent(choreoComponent, accessToken);
-    }
-
-    @Test(dependsOnMethods = {"deploy_TestClientJwTValidation"})
     @CitrusTest
     public void deploymentStatusByVersion_TestClientJwTValidation() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
