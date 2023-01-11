@@ -14,8 +14,6 @@ export class GitHub {
             "private": isPrivate,
             "gitignore_template": gitignoreTemplate
         }
-        cy.log(headers)
-
         return Utils.sendPostRequest(requestURI, headers, payload)
     }
 
