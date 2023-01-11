@@ -1,4 +1,4 @@
-import { DisplayType } from "../console/pages/enum/component-display-types"
+import { DisplayType } from "../console/enums"
 
 export interface ComponentData {
     projectName: string

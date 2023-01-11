@@ -4,11 +4,8 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { DisplayType } from "../../../support/console/pages/enum/component-display-types";
-import { Environment } from "../../../support/console/pages/enum/environment";
-import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
-import { Region } from "../../../support/console/pages/enum/regions";
+import { Enums } from "../../../support/console/enums";
+
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -30,6 +27,8 @@ describe("Verify BYOR functionality", () => {
 
     before(() => {
         GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc")
+        GitHub.createNewFile(REPO_NAME, "Ballerina.toml", "cypress/fixtures/Ballerina.toml")
+        GitHub.createNewFile(REPO_NAME, "gql.bal", "cypress/fixtures/service.bal")
         LoginPage.login();
         ChoreoHomePage.switchOrganization();
 
@@ -43,13 +42,13 @@ describe("Verify BYOR functionality", () => {
     it("Verify REST API component creation", () => {
         let componentData: ComponentData = {
             componentName: REST_API_NAME,
-            displayType: DisplayType.restAPI,
+            displayType: Enums.DisplayType.restAPI,
             projectName: PROJECT_NAME,
             triggerChannels: "",
             triggerId: null,
             srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME)
         }
-        ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Region.EU);
+        ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.EU);
         GraphQL.createComponentWithRepo(componentData, REPO_NAME)
     });
 
@@ -65,7 +64,7 @@ describe("Verify BYOR functionality", () => {
 
     it("Verify test functionality of root resource in dev on swagger", () => {
         ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnSwagger(Environment.DEVELOPMENT, RESOURCE_NAME, PARAM_NAME, PARAM_VALUE).
+        TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, RESOURCE_NAME, PARAM_NAME, PARAM_VALUE).
             then((res) => {
                 expect(res.response).to.be.eq(MATCHING_STRING);
                 expect(res.statusCode).to.be.eq("200");
@@ -73,7 +72,7 @@ describe("Verify BYOR functionality", () => {
     });
 
     it("Verify test functionality of root resource in dev on curl", () => {
-        TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+        TestHelper.testOnCurl(Enums.Environment.DEVELOPMENT, Enums.HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
             then((curl) => {
                 Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
                     expect(res.body).equal(MATCHING_STRING);
@@ -86,7 +85,7 @@ describe("Verify BYOR functionality", () => {
     it("Verify test functionality of root resource in prod on swagger", () => {
 
         ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnSwagger(Environment.PRODUCTION, RESOURCE_NAME, PARAM_NAME, PARAM_VALUE).
+        TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, RESOURCE_NAME, PARAM_NAME, PARAM_VALUE).
             then((res) => {
                 expect(res.response).to.be.eq(MATCHING_STRING);
                 expect(res.statusCode).to.be.eq("200");
@@ -95,7 +94,7 @@ describe("Verify BYOR functionality", () => {
 
     it("Verify test functionality of root resource in prod on curl", () => {
 
-        TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+        TestHelper.testOnCurl(Enums.Environment.PRODUCTION, Enums.HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
             then((curl) => {
                 Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
                     expect(res.body).equal(MATCHING_STRING);
@@ -108,26 +107,26 @@ describe("Verify BYOR functionality", () => {
         ComponentOverviewPage.navigateToManage();
         ComponentAPILifecycle.selectSetting();
         ComponentAPILifecycle.selectResources();
-        ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
+        ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT)
         ComponentAPILifecycle.editResource();
         ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-        ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT, "Revision 3");
+        ComponentAPILifecycle.applyConfiguration(Enums.Environment.DEVELOPMENT, "Revision 3");
         ComponentAPILifecycle.verifyDevRevision().should(
             "eq",
-            Environment.DEVELOPMENT
+            Enums.Environment.DEVELOPMENT
         );
     });
 
     it("Apply configs to prod", () => {
-        ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
+        ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION)
         ComponentAPILifecycle.editResource();
         ComponentAPILifecycle.disableResourceSecurity(RESOURCE_NAME);
-        ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+        ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
     });
 
     it("Verify resource access without the token in dev", () => {
         ComponentOverviewPage.navigateToTest();
-        TestHelper.testOnCurl(Environment.DEVELOPMENT, HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
+        TestHelper.testOnCurl(Enums.Environment.DEVELOPMENT, Enums.HTTPMethod.GET, RESOURCE_NAME, queryParameters1).
             then((curl) => {
                 Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
                     expect(res.body).equal(MATCHING_STRING);
@@ -138,7 +137,7 @@ describe("Verify BYOR functionality", () => {
     });
 
     it("Verify resource access without the token in prod", () => {
-        TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, RESOURCE_NAME).
+        TestHelper.testOnCurl(Enums.Environment.PRODUCTION, Enums.HTTPMethod.GET, RESOURCE_NAME).
             then((curl) => {
                 Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
                     expect(res.body).equal(MATCHING_STRING);
@@ -150,7 +149,7 @@ describe("Verify BYOR functionality", () => {
     it("Verify manage functionality and Publish Connector", () => {
         ComponentOverviewPage.navigateToManage();
         ComponentAPILifecycle.manageLifecycle();
-        ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+        ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
             "be.visible"
         );
     });

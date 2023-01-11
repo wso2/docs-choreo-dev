@@ -12,12 +12,12 @@
  */
 
 import { GraphQL } from "../../apis/graphql";
-import { Region } from "../enum/regions";
+import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 
 export class ProjectListingPage {
   
-  static createNewProject(projectName: string, description: string,dataPlane: Region = Region.US) {
+  static createNewProject(projectName: string, description: string, dataPlane: Enums.Region = Enums.Region.US) {
     if (Utils.isPerspectiveViewEnabled()) {
       cy.get('[data-cyid="create-project-card"]').click().wait(3000);
     } else {

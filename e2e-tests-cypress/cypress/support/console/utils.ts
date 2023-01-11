@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-
+const fs = require('fs')
+import { readFileSync } from 'fs'
 export class Utils {
   static oldProjectNamePrefix = "e2eproject";
   static projectNamePrefix = "automationtestproject";
@@ -169,19 +170,6 @@ export class Utils {
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   static sendGetRequest(url: string, headers: any = {}) {
     const request = {
       method: "GET",
@@ -235,4 +223,6 @@ export class Utils {
 
     return false;
   }
+
+  
 }

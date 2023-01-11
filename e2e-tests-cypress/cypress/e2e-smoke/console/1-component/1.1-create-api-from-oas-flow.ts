@@ -18,11 +18,10 @@ import { ComponentAPILifecycle } from "../../../support/console/pages/component/
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { APITest } from "../../../support/console/pages/apis/api-test";
 import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
-import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
+import { Enums } from "../../../support/console/enums";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { Utils } from "../../../support/console/utils";
-import { Environment } from "../../../support/console/pages/enum/environment";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { AppsList } from "../../../support/devportal/pages/applications/apps-list";
@@ -33,7 +32,6 @@ import { generateAppName } from "../../../support/devportal/utils";
 import { Apis } from "../../../support/devportal/pages/apis/apis-home";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/rest-api-proxy-temp";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
 import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { TryOut } from "../../../support/devportal/pages/apis/try-out";
@@ -76,7 +74,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    TestHelper.testOnSwagger(Environment.DEVELOPMENT, "intensity").then(
+    TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
       }
@@ -84,7 +82,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
-    TestHelper.testOnSwagger(Environment.PRODUCTION, "intensity").then(
+    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, "intensity").then(
       (res) => {
         expect(res.statusCode).to.be.equal("200");
       }
@@ -93,8 +91,8 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       "intensity"
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
@@ -105,8 +103,8 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
-      Environment.PRODUCTION,
-      HTTPMethod.GET,
+      Enums.Environment.PRODUCTION,
+      Enums. HTTPMethod.GET,
       "intensity"
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
@@ -119,22 +117,22 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
-    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("intensity");
-    ComponentAPILifecycle.applyConfiguration(Environment.DEVELOPMENT);
+    ComponentAPILifecycle.applyConfiguration(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
-      Environment.DEVELOPMENT
+      Enums.Environment.DEVELOPMENT
     );
 
     // Verify that deployment has been updated by invoking the API without a token
     APITest.testAPI();
     ComponentTestPage.selectCurl();
-    Curl.selectCurlEnvironment(Environment.DEVELOPMENT);
-    Curl.selectMethod(HTTPMethod.GET);
+    Curl.selectCurlEnvironment(Enums.Environment.DEVELOPMENT);
+    Curl.selectMethod(Enums.HTTPMethod.GET);
     Curl.enterPathParameter("intensity");
-    Curl.getRequestComponents(`${Environment.DEVELOPMENT}intensity`).then(
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}intensity`).then(
       (curl) =>
         Utils.sendGetRequest(curl.url).then((res) => {
           expect(res.status).equal(200);
@@ -150,7 +148,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ComponentAPILifecycle.navigatePermissionManagementWindow();
     ComponentAPILifecycle.managePermissions(permissions, API_NAME);
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
+    ComponentAPILifecycle.publish(Enums.ConnectorAudience.PRIVATE).should(
       "be.visible"
     );
   });
@@ -163,7 +161,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ApiCredentials.generateCredentials();
     TryOut.navigateToTryOutMenu();
     TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(HTTPMethod.GET, OPERATION);
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
@@ -184,7 +182,7 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.generateTestKeyAndVerify();
-    TryOut.SelectResource(HTTPMethod.GET, OPERATION);
+    TryOut.SelectResource(Enums.HTTPMethod.GET, OPERATION);
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
@@ -202,7 +200,7 @@ describe("Choreo APIM publisher scenarios", () => {
     ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
+    InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
     InsightsPage.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(3);
     });
@@ -212,7 +210,7 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify insight values for prod", () => {
     InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
+    InsightsPage.selectEnvironment(Enums.Environment.PRODUCTION);
     InsightsPage.getTotalTraffic().should((value) => {
       expect(Number(value)).gte(2);
     });

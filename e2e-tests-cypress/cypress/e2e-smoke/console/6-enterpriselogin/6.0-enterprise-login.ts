@@ -15,7 +15,6 @@ import { ComponentListingPage } from "../../../support/console/pages/component/c
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 

@@ -14,6 +14,7 @@ export class GitHub {
             "private": isPrivate,
             "gitignore_template": gitignoreTemplate
         }
+        cy.log(headers)
 
         return Utils.sendPostRequest(requestURI, headers, payload)
     }
@@ -29,5 +30,19 @@ export class GitHub {
             Authorization: `token ${Cypress.env("gitPat")}`,
         };
         return Utils.sendPutRequest(requestURI, headers, putRequest)
+    }
+
+
+    static createNewFile(repoName: string, path: string, filePath: string) {
+        cy.readFile(filePath, 'base64').then(content => {
+            const headers = {
+                Authorization: `token ${Cypress.env("gitPat")}`,
+            };
+            const requestUrl = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/contents/${path}`
+            const payload = { message: `Create file ${path}`, content }
+            Utils.sendPutRequest(requestUrl, headers, payload)
+        })
+
+
     }
 }

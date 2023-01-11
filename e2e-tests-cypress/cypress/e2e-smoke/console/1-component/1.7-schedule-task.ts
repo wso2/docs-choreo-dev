@@ -13,17 +13,14 @@
 
 import { LONG_TIME } from "../../../support/console/constants";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Environment } from "../../../support/console/pages/enum/environment";
+import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { ScheduleTask } from "../../../support/console/pages/templates/schedule-task-template";
-import { Utils } from "../../../support/console/utils";
+
 import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 
 describe("Create Schedule Trigger", () => {
@@ -60,12 +57,12 @@ describe("Create Schedule Trigger", () => {
     ComponentObservePage.gotoLogs(LONG_TIME);
   });
   it("Verify dev env logs", () => {
-    ComponentObservePage.selectEnv(Environment.DEVELOPMENT);
+    ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 
   it("Verify dev env logs", () => {
-    ComponentObservePage.selectEnv(Environment.PRODUCTION);
+    ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 
