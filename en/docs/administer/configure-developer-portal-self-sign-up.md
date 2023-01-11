@@ -113,7 +113,7 @@ To manage the users who try to access your Developer Portal via self-sign-up, yo
 - **Enable auto-approval**: This involves automating the user approval process.  When you enable auto-approval, you allow each user who signs up to access your Developer Portal by default.
 - **Manually approve/reject**: This allows you to view all the user registrations in a list and approve/reject each registration as required.
 
-### Enable auto-approval
+### Enable auto-approval for new user registrations
 
 To enable auto-approval and automatically approve each new user account registered to your Developer Portal, follow the steps given below:
 
