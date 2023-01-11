@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { Environment } from "../../../console/pages/enum/environment";
+import { Environment } from "../../../console/enums";
 import { Utils } from "../../../console/utils";
 import { STANDARD_TIME_OUT } from "../../constants";
 
