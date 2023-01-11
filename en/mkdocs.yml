@@ -74,7 +74,6 @@ nav:
   - Deploy: 
       - Deploy Your Choreo Component: deploy/deploy-your-component.md
       - Deploy a Containerized Component: deploy/deploy-a-containerized-choreo-component.md
-      - Configure Automatic Deployment: deploy/configure-automatic-deployment.md
   - Test: 
       - OpenAPI Console: test/open-api-console.md
       - cURL: test/curl.md

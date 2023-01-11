@@ -69,7 +69,7 @@ To deploy the API, follow the steps below:
 1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy Manually**.
    
     !!! note
-        If you selected automatic deployment, you have to deploy the component manually the first time. Subsequent deployments will occur automatically.
+         Automatic deployment is enabled by default. However, you have to deploy the component manually the first time. Subsequent deployments will occur automatically.
 
     ![Deploy API](../../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-small}
 

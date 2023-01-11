@@ -6,10 +6,7 @@ To deploy a component, follow the steps below:
 
 1. Click the **Deploy** icon. 
 
-2. Click the **Automatic Deployment** toggle if you wish to enable automatic deployment.
-
-    !!! info
-        You need to verify your GitHub account when you enable automatic deployment for the first time.
+2. **Automatic Deployment** is enabled by default. You can disable it via the toggle.
 
 3. Then in the **Build Area** card, click **Deploy Manually**.
     
