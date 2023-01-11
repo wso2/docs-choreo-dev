@@ -115,6 +115,7 @@ nav:
           - Configure a Custom Domain for Developer Portal: administer/customize-developer-portal-domain.md
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Developer Portal Self-Sign-Up: administer/configure-developer-portal-self-sign-up.md
+      - Organization: administer/organization.md
   - References:
      - Connect with Protected Third Party Applications: reference/connect-with-protected-third-party-applications.md
 # Extensions
