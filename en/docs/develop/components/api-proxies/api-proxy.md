@@ -41,6 +41,8 @@ Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its
 
 Once you deploy the REST API to the development environment, it is then exposed by an API Gateway with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
 
+You may set up a separate environment to test the API proxy before pushing it to production. To deploy the API proxy to both the test environment and the development environment, you can enter the URL to the test environment as the sandbox endpoint while entering the API backend URL as the endpoint.
+
 ## Choreo environments
 
 Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
