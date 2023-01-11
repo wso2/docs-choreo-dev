@@ -17,6 +17,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -38,6 +39,7 @@ public class AddConfigurationsIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_AddConfigurationsIT() throws Exception {
+
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
         component = ComponentUtils.getReusableComponent(TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(),
