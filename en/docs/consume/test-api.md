@@ -30,3 +30,4 @@ This guide will take you through the steps to test an API in Choreo.
     ![Test Resource](../assets/img/developer-portal/test-api/test-enabled-resource.png){.cInlineImage-half}
 
 11. Once Choreo executes the request, you can view the response in the Choreo Console.  
+
