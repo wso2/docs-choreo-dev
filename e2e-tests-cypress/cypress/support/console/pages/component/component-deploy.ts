@@ -49,21 +49,16 @@ export class ComponentDeployPage {
 
   static promoteToProd() {
     window.localStorage.setItem("hideSocialShareModel", "true");
-
-    if (Cypress.env("isPrivateOrg")) {
-      this.promote({
-        settingButtonCount: 2,
-        promoButtonIndex: 1,
-        invokeUrlCount: 2,
-        invokeUrlIndex: 1,
-      });
-    } else {
-      this.promote({
-        settingButtonCount: 1,
-        invokeUrlCount: 2,
-        invokeUrlIndex: 1,
-      });
-    }
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
+      .should("be.enabled")
+      .wait(2000);
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
+      .should("be.enabled")
+      .click();
+    cy.wait(6000);
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
+      "not.be.disabled"
+    );
   }
 
   static promoteToProdApiPerspectiveView() {
