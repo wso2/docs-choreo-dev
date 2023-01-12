@@ -4,9 +4,9 @@ Choreo’s low-code editor allows developers to easily design (and then implemen
 
 In this tutorial, you will address this requirement by doing the following:
 
-- Design a webhook that addresses the described requirement and test it in the Web Editor (i.e., the editing tool of Choreo), and commit the changes so that they are also available in the Choreo Console.
+- Create a webhook component by connecting to your GitHub repository that includes the implementation of the webhook that addresses the described requirement.
 - Deploy the webhook you created to the development environment.
-- Integrate GitHub with Choreo by connecting the webhook that you created to the required GitHub repository.
+- Modify the webhook implementation to connect the webhook implementation to GitHub, enabling it to act in response to selected GitHub-related events.
 - Test the webhook.
 - Promote the webhook to the production environment.
 
@@ -20,9 +20,9 @@ First, let's add a Webhook component as follows:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Expand the **Project** list and click **+ Create New**.
+2. On the **Home** page, click **+ Create** Project.
 
-    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-full}
+    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
 
 3. Enter a unique project name and a description. For this tutorial, let's enter the following values:
 
@@ -31,151 +31,40 @@ First, let's add a Webhook component as follows:
     | **Name**        | `IssueTracking`       |
     | **Description** | `Track GitHub issues` |
 
-4. Click **Create**.
+4. Click **Create**.This takes you to the **Components** page.
 
-    The **Components** page opens as shown in the below image.
+5. On the **Components** page, click **Create** on the **Webhook** card.
 
-    ![Create component](../../assets/img/tutorials/rest-api/create-component.png){.cInlineImage-full}
+    ![Create component](../../assets/img/tutorials/webhook/create-webhook.png){.cInlineImage-small}
 
-5. On the Components page, click **+ Create**.
+6. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
+7. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
+8. Select a GitHub account, a repository that includes a Ballerina project or a Dockerfile, the relevant branch, and **Ballerina** as the build preset.  
+9. Enter a valid path relative to the root of your repository that points to the implementation of the webhook. If you have not designed and implemented your webhook yet, you can connect an empty GitHub repository or a sub-folder and proceed to create the component. 
 
-6. Click **Webhook**.
+    !!! note
+        If you connect an empty GitHub repository to create the component, you cannot deploy the component. Be sure to implement your webhook before proceeding to the deployment stage. 
 
-    ![Add Webhook component](../../assets/img/tutorials/webhook/add-webhook-component.png){.cInlineImage-full}
+10. Click **Next**.
 
-7. Click **Start from scratch**.
-
-8. Select **GitHub** as the event source.
-
-    ![Select GitHub event source](../../assets/img/tutorials/webhook/select-github-event-source.png){.cInlineImage-half}
-
-9. In the **Webhook** dialog, enter information as follows:
+10. In the **Create a Webhook** pane, click on the Webhook type you want to create, for example **GitHub**. 
+11. Click **Create**.
 
     1. In the **Webhook Name** field, enter a unique webhook name (e.g., `IssueTracking`).
    
     2. From the **Trigger Channel** list, select **IssuesService** so that the system can trigger your webhook based on a change it observes in GitHub issues (i.e., assigning a label in this scenario).
-   
-    3. You need to save your Webhook implementation in a GitHub repository from which Choreo can access it. You can use a Choreo-managed GitHub repository or one of your own GitHub repositories. Let's use the Choreo-managed GitHub repository, which is the default selection.
 
-    4. Click **Create**.
+    3. Click **Create**.
 
          The webhook opens on a separate page.
       
 ### Step 1.2: Design the webhook
 
-In this step, let's design the webhook to read the labels of GitHub issues in a specific repository and generate an email notification for GitHub issues with the `bug` label. To do this, follow these steps:
+Designing a webhook involves specifying how the webhook should function by adding and configuring the required connectors and statements. You can do this by editing the low-code diagram of the Webhookor by editing its code.
 
-1. To access the Web Editor in which you will design the webhook, click **Edit Code**.
+You can implement your webhook in Ballerina or any other language and containerize it. You can use the [Ballerina VS code extension](https://ballerina.io/downloads/) to develop the webhook in Ballerina. [Learn more](https://wso2.com/vscode-extentions/ballerina/).
 
-    The Web Editor opens in a separate browser tab. 
-
-    !!! info
-        Opening the Web Editor may take a little while if you are a first-time user.
-
-
-2. In the Web Editor, scroll down to the **onLabeled** resource under the GITHUB section. This resource is the default resource that is triggered by labels of GitHub issues. Let's first add a variable that reads the issue labels:
-
-    1. Click the **+** icon after **Start**.
-   
-    2. In the **Add Constructs** pane, click **Variable**.
-   
-    3. In the **Variable** pane, update the statement template as follows:
-   
-        !!! Tip
-            When you open the **Add Constructs** pane and select a statement type, you are accessing the Statement Editor that assists you to construct statements.<br/><br/> To edit each value, you can double-click the default value and enter the new value.<br/><br/> Alternatively, you can select values that the Statement Editor suggests, use expression templates and libraries etc., via the Statement Editor. For more information on constructing statements via the Statement Editor, see [Construct Statements](../../develop/explore-code-editor/construct-statements.md).
-
-         | **Default Value**      | **NewValue**   |
-         |------------------------|-----------------|
-         | **`var`**              | `github:Label?` |
-         | **`variable`**         | `label`         |
-         | **`<add-expression>`** | `payload.label` |
-
-         Here, you are adding a variable named `label` of which the value type is a GitHub label. `payload.label` value expression extracts the GitHub label as the value of the variable.
-   
-    4. Click **Save**.
-   
-4. Once the component extracts the GitHub label of an issue, it needs to check whether the value of the `label` parameter is `bug`. To do this, add an If statement as follows:
-
-    1. Click **+** after the `label` variable statement.
-   
-    2. In the **Add Constructs** pane, click **If**.
-
-    3. In the **If** pane, double-click **`<add-expression>`** and enter the following as the expression.
-      
-        ```
-         label is github:Label && label.name == "bug"
-        ```
-      
-        This condition checks whether the GitHub label derived as the value of the `label` variable is equal to `bug`.
-
-    4. Click **Save**.
-
-5. To send an email when a GitHub issue meets the condition you defined in the previous step, let's add the Choreo SendEmail connector as follows:
-
-     1. Click **+** after the If statement (i.e., the **+** on the `then` flow).
-   
-     2. In the **Add Constructs** pane, click **Connector**. 
-   
-     3. In the **Connectors** pane, find the **Choreo SendEmail** connector, click it, and click **Save** to add it.
-   
-     4. Click the **+** after the **sendEmailEp** connector you added.
-   
-     5. In the **Add Constructs** pane, click **Action**.
-   
-     6. To connect the action you are defining to the Choreo SendEmail connector, click **sendEmailEp**.
-   
-     7. Under **Select an Action**, click **Send Email**.
-   
-        In the **Recipient** field, you can enter the email address to which the webhook should send the email notification.
-
-        However, this email address can be a sensitive information item that your clients may not want to expose in the code of the webhook. To address this, you can define the recipient as a configurable variable as follows:
-
-          1. In **`recipient = ""`**, click **`""`** and then click the **Add Configurable** icon.
-       
-             ![Configurables icon](../../assets/img/tutorials/webhook/configurables-icon.png)
-           
-          2. In the **Add Configurable** pane, double-click **conf** and replace it with `toEmail` Here, you are specifying `toEmail` as the configurable name.
-        
-          3. Leave the default configurable variable type (i.e., `string`) and the expression (i.e., **`?`**) unchanged, and click **Add**.
-          
-              When you add this configurable variable with `?` as the expression, the **toEmail** field will be available when you deploy this webhook, allowing you to enter any email address in string format. This way, you do not have to include the actual value for the **toEmail** field in the code.
-        
-     9. Update the values for **`subject`** and **`body`** parameters as follows:
-
-         | **Parameter**  | **Value**                                                           |
-         |----------------|---------------------------------------------------------------------|
-         | **`subject`**  | `"Bug reported: " + payload.issue.title`                            |
-         | **`body`**     | `"A bug has been reported. Please check " + payload.issue.html_url` |
-
-          According to the above, the subject must start with the  `Bug reported:` text. The next part of the subject is the GitHub issue number and the subject extracted from the payload. The body of the email must start with the `A bug has been reported. Please check` text and have the HTML URL to the GitHub issue after it. The webhook derives this URL from the payload.
-        
-          The updated statement now looks as follows:
-
-          ![Updated action statement](../../assets/img/tutorials/webhook/updated-action-statement.png){.cInlineImage-half}
-
-     10. Click **Save**.
-       
-7. To monitor whether the webhook generates emails as configured, let's add a log statement that prints a log for each email sent by the webhook:
-
-    1. Click **+** after the **sendEmailResponse** variable statement (i.e., the last **+** icon within the If loop).
-       
-    2. In the **Add Constructs** pane, click **Function Call**. 
-       
-    3. In the **Libraries** tab of the **Function Call** pane, search for the `log` module and click it once it appears in the search results.
-   
-    4. Under **Functions**, click **log:printInfo**.
-   
-    5. On the updated log statement, double-click **`<add-param>`** and replace it with the following value.
-
-        ```
-        "Email sent " + sendEmailResponse
-        ```
-              
-        This will log `Email sent` and the value of the **sendEmailResponse** variable statement for each GitHub issue with the `bug` label.
-
-    6. Click **Save**.
-
-Now you have completed designing the webhook. To view its source code, click **</>** on the top panel. The source code is displayed as follows:
+For example, you can use the following source code to design a webhook to read the labels of GitHub issues in a specific repository and generate an email notification for GitHub issues with the `bug` label. You can add this code in the .bal file in your repository.
 
 ```
 import ballerina/log;
@@ -225,68 +114,13 @@ service github:IssuesService on webhookListener {
 }
 ```
 
-### Step 1.3: Run and compile the webhook
-
-Let's run and compile the webhook you created to check whether it is executable or whether it requires further changes:
-
-1. Click the menu icon for the webhook listener and then click **Run**.
-
-    ![Run webhook](../../assets/img/tutorials/webhook/run-webhook.png){.cInlineImage-full}
-
-    The **Configurable Editor** panel opens on the right of the page.
-
-2. In the **toEmail** field, enter your email address.
-
-3. In the **Config** field, enter any value.
-
-
-If the webhook is successfully run and compiled, the Web Editor logs the following in the terminal:
-
-```
-Running executable
-```
-
-Now you can make this webhook available in the Choreo Console.
-
-### Step 1.4: Commit the webhook to GitHub
-
-The webhook you designed is currently available only in the Web Editor. To use it, you need to save it in the Choreo Console. You can do this by committing the webhook implementation to a GitHub repository. Choreo will use this GitHub repository to update the Choreo Console with the changes you make to the webhook in the Web Editor.
-
-In [Step 1.1: Create a project and add a webhook component](#step-11-create-a-project-and-add-a-webhook-component), you selected to save the webhook implementation in a Choreo-managed repository.
-
-To commit your changes to this Choreo-managed repository, follow these steps:
-
-1. Click **Sync with Choreo Upstream** (highlighted in red) in the Git Status Bar.
-
-    ![Sync with Choreo upstream](../../assets/img/tutorials/webhook/sync-with-choreo-upstream.png){.cInlineImage-full}
-
-    In the message that appears, click **Sync my changes with Choreo**.
-
-2. In the left panel, enter a commit message (e.g., Implement webhook) and click the tick.
-
-    ![Commit changes](../../assets/img/tutorials/webhook/commit-changes.png){.cInlineImage-full}
-
-    Click **Yes** in the message that appears. Doing so will stage all the changes.
-
-3. To push the changes to the private GitHub repository maintained by Choreo, click **0↓ 1↑** in the Git Status Bar.
-
-    !!! info
-        This icon only appears after the Web Editor completes the committing process.
-
-     ![Push changes](../../assets/img/tutorials/webhook/push-changes.png){.cInlineImage-full}
-
-     Click **OK** in the message that appears.
-
-    Once the Web Editor successfully pushed the changes to the GitHub repository, the Git Status bar indicates by displaying the **In sync with Choreo upstream** text.
-
-
 ## Step 2: Deploy
 
 Let's deploy your webhook to the development environment to make it invokable:
 
 1. In the Choreo Console, click **Deploy** for your Webhook component, and click **Config & Deploy**.
 
-    ![Deploy](../../assets/img/tutorials/webhook/deploy.png){.cInlineImage-full}
+    ![Deploy](../../assets/img/tutorials/webhook/deploy.png){.cInlineImage-threeQuarter}
 
 2. In the **Configure & Deploy** pane, enter the following information:
 
@@ -303,7 +137,7 @@ Let's deploy your webhook to the development environment to make it invokable:
 
 Once Choreo completes the deployment, the **Deploy** page displays the **Active** deployment status for the webhook as shown in the image below:
 
-![Deployed webhook](../../assets/img/tutorials/webhook/deployed-webhook.png){.cInlineImage-full}
+![Deployed webhook](../../assets/img/tutorials/webhook/deployed-webhook.png){.cInlineImage-threeQuarter}
 
 !!! notes
     - The **Invoke URL** shows the URL via which GitHub can invoke the webhook.<br/><br/>
@@ -323,7 +157,7 @@ To allow the webhook to read the labels of the required GitHub repository, you n
 
 1. On the **Deploy** page, copy the invoke URL by clicking the copy icon within the **Invoke URL** field.
 
-    ![Copy invoke URL](../../assets/img/tutorials/webhook/copy-invoke-url.png){.cInlineImage-full}
+    ![Copy invoke URL](../../assets/img/tutorials/webhook/copy-invoke-url.png){.cInlineImage-threeQuarter}
 
 2. Access your GitHub account and open the repository for which you want to generate notification emails.
 
@@ -384,7 +218,7 @@ To promote the webhook to the Production environment, follow these sub-steps:
 
     Once the system completes the promoting process, the **Production** card displays the deployment status as **Active**.
 
-   ![Promoted webhookL](../../assets/img/tutorials/webhook/promoted-webhook.png){.cInlineImage-full}
+    ![Promoted webhookL](../../assets/img/tutorials/webhook/promoted-webhook.png){.cInlineImage-threeQuarter}
 
 
 
