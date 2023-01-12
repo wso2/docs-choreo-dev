@@ -2,8 +2,8 @@
 
 ############### Install Certmanager ####################
 echo "--- Installing Cert Manager..."
-bash ../../cert-manager/install-cert-manager.sh
+bash cert-manager/install-cert-manager.sh
 
 ############### Apply PDBs #############################
 echo "--- Enable PDB for Cert Manager"
-kubectl apply -f ../../cert-manager/pdb.yaml
+kubectl apply -f cert-manager/pdb.yaml
