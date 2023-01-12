@@ -30,7 +30,7 @@ export class ComponentDeployPage {
     ).as("config");
     cy.wait("@config", { timeout: 18000 });
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").focus().click();
-    cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
+    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
       "be.visible"
     );
     cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
@@ -55,7 +55,14 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
-    cy.wait(6000);
+    cy.get('[data-testid="btn-stop"]', { timeout: 360000 })
+      .should("have.length", 2)
+      .eq(1)
+      .should("be.visible");
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 })
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active", { timeout: 360000 });
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
       "not.be.disabled"
     );
