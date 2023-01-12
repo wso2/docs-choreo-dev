@@ -6,7 +6,7 @@ To deploy a component, follow the steps below:
 
 1. Click the **Deploy** icon. 
 
-2. **Automatic Deployment** is enabled by default. You can disable it via the toggle.
+2. **Automatic Deployment** is enabled by default. If you want do not want Choreo to automatically deploy the component after each commit that edits its implementation, you can disable automatic deployment,
 
 3. Then in the **Build Area** card, click **Deploy Manually**.
     
