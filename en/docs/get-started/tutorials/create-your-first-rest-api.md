@@ -48,7 +48,7 @@ Let's create a new REST API component as follows:
 4. Provide authorization for Choreo to connect to your GitHub account by clicking  **Authorize with GitHub**. 
 5. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
 6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset (i.e., **Ballerina** or **Dockerfile**).
-7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
+7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty GitHub repository or a sub-folder and proceed to create the component. 
 
     !!! note
         You can create a component by connecting an empty GitHub repository. But you can only deploy it after you implement it. 

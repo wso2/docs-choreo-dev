@@ -33,17 +33,17 @@ First, let's add a Webhook component as follows:
 
 4. Click **Create**.This takes you to the **Components** page.
 
-5. On the **Components** page, click **Create** on the the **Webhook** card.
+5. On the **Components** page, click **Create** on the **Webhook** card.
 
     ![Create component](../../assets/img/tutorials/webhook/create-webhook.png){.cInlineImage-small}
 
 6. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
 7. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
-8. Select a GitHub account, a repository that includes a Ballerina project or a dockerfile, the relevant branch and the build preset as **Ballerina**. 
-9. Enter a valid path relative to the root of your repository that points to the implementation of the webhook. If you have not designed and implemented your webhook yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
+8. Select a GitHub account, a repository that includes a Ballerina project or a Dockerfile, the relevant branch, and **Ballerina** as the build preset.  
+9. Enter a valid path relative to the root of your repository that points to the implementation of the webhook. If you have not designed and implemented your webhook yet, you can connect an empty GitHub repository or a sub-folder and proceed to create the component. 
 
     !!! note
-        If you connect an empty repository to create the component, you cannot deploy the component. Be sure to implement your webhook before proceeding to the deployment stage. 
+        If you connect an empty GitHub repository to create the component, you cannot deploy the component. Be sure to implement your webhook before proceeding to the deployment stage. 
 
 10. Click **Next**.
 
