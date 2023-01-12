@@ -1,6 +1,6 @@
 # Observability Overview
 
-Observability in Choreo provides the capability to visualize and monitor the performance of services deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data,  diagnostic data, and logs. Hence, you can use Choreo Observability to detect and troubleshoot anomalies in your services efficiently.
+Observability in Choreo provides the capability to visualize and monitor the performance of services deployed on Choreo. Choreo has in-built support for viewing the overall status, latencies, throughput data,  diagnostic data, and logs. Hence, you can use Choreo Observability to detect and troubleshoot anomalies in your services efficiently. 
 
 ## Dashboard
 Choreo Observability dashboard gives you more than one way to monitor your services. This section introduces the dashboards.
@@ -11,13 +11,17 @@ The following diagram shows the Observability dashboard:
 
 ![Dashboard overview](../../assets/img/observability/overview-overall.png){.cInlineImage-full}
 
+!!! note
+    The observability dashboard for non-Ballerina components doed not display the low-code diagram. Therefore, the functionality within the low-code diagram is available only to Ballerina components. 
+
 The Observability dashboard allows you to:
 
 - Observe the throughput and latencies of requests served over a given period.
 - View the logs generated over a given period.
-- Observe the flame graph (Diagnostics view) generated over a given period.
-- View the low-code diagram.
-- Trace requests.
+- Compare metrics side-by-side for better diagnosis.
+- Observe the flame graph (Diagnostics view) generated over a given period (not available for non-Ballerina components).
+- View the low-code diagram (not available for non-Ballerina components).
+- Trace requests (not available for non-Ballerina components).
 
 !!! info
     By default, automatic refreshing is turned off for the Observability view. You can configure the Observability view to be automatically refreshed at a specified time interval via this field.
@@ -29,11 +33,14 @@ The Observability dashboard allows you to:
 
 ### Throughput and latency graphs
 
-The throughput graph shows the throughput of requests per hour for a selected timestamp.
+The throughput graph shows the throughput of requests per hour for a selected timestamp.   
 
 ![Throughput and latency graph](../../assets/img/observability/throughput-and-latency.png){.cInlineImage-full}
 
-By default, Choreo renders this graph for the data generated within the past 24 hours. You can change the default time window by selecting the time range and zone from the options bar. To expand the graph, click and drag the cursor over the period you want to drill down.
+!!! note
+    The low-code diagram is not available for non-ballerina components. 
+    
+By default, Choreo renders this graph for the data generated within the past 24 hours. You can change the default time window by selecting the time range and zone from the options bar. To expand the graph, click and drag the cursor over the period you want to drill down. 
 
 You can view the Choreo service logs in the **Logs** view below the graph. Clicking on either graph updates the **Logs** view to contain the corresponding log entries generated at that time. You can use these logs to identify the reasons for any latency and throughput anomalies you detect using the graph.
 

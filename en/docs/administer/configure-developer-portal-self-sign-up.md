@@ -60,12 +60,15 @@ This page walks you through the steps to configure self-sign-up to the Developer
 9. Click **Update**.
 10. To add user attributes, follow these steps:
 
-    1. Click the **User Attributes** tab and click **+ Add User Attribute**.
-    2. Select **Email**, **First Name**, and **Last Name** as the attributes to share with the application.
-    3. Click **Save**.
-    4. Select **Email** as a mandatory attribute and click **Update**.
+    1. Click the **User Attributes** tab.
+    2. Select user attributes as follows:
 
-        ![User attributes](../assets/img/administration/self-sign-up/user-attributes.png){.cInlineImage-full}
+        ![User attributes](../assets/img/administration/self-sign-up/user-attributes.png){.cInlineImage-half}
+
+        1. To add the email as a mandatory user attribute, expand **Email** and select the **Mandatory** checkbox for it.
+        2. To add the first name and the last name as optional, expand **Profile** and select the **Requested** checkbox for the **First Name** and the **Last Name** fields.
+
+    3. Click **Update**.
 
 11. To add the user attributes as OpenID Connect scopes, follow these steps:
 
@@ -101,4 +104,37 @@ Once you complete these steps, the Choreo support team will perform the final se
  
 Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to your Developer Portal without having to send you a request to register them.
 
-![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-half}        
+![Create an account](../assets/img/administration/self-sign-up/create-an-account.png){.cInlineImage-half} 
+
+## Approve or reject new users
+
+To manage the users who try to access your Developer Portal via self-sign-up, you can follow either of the following approaches:
+
+- **Enable auto-approval**: This involves automating the user approval process.  When you enable auto-approval, you allow each user who signs up to access your Developer Portal by default.
+- **Manually approve/reject**: This allows you to view all the user registrations in a list and approve/reject each registration as required.
+
+### Enable auto-approval for new user registrations
+
+To enable auto-approval and automatically approve each new user account registered to your Developer Portal, follow the steps given below:
+
+1. Click **Settings** in the left navigation menu of the Choreo Console.
+
+2. Click **Self Signups**. 
+
+3. Toggle the **Auto-approval** switch.
+
+Once you enable auto-approval, the users can sign in to your Developer Portal and view your APIs and applications soon after they create an account.
+
+### Manually approve or reject user accounts
+
+If you have not enabled auto-approval, you can manually approve/reject the new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve/reject user accounts that were confirmed by users, follow the steps given below:
+
+1. Click **Settings** in the left navigation menu of the Choreo Console.
+
+2. Click **Self Signups**. You will see the user accounts listed for approval.
+
+3. If you want to approve a user account, click **Approve** for it. If not, click **Reject**.
+
+    If you approve, the user will receive an email confirming that the user account is approved. 
+
+    If you reject the user account, Choreo sends an email to inform the user that the user account is rejected. Once you reject a user account, that user cannot sign up to your Developer Portal via that account again.
