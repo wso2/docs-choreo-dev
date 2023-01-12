@@ -2,4 +2,4 @@
 
 ############## Install Reloader
 echo "--- Add OMS Agent Config"
-kubectl apply -f ../../oms/container-azm-ms-agentconfig.yaml
+kubectl apply -f oms/container-azm-ms-agentconfig.yaml
