@@ -11,10 +11,16 @@
  * associated services.
  */
 
+import { GraphQL } from "../../apis/graphql";
+import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 
 export class ProjectListingPage {
-  static createNewProject(projectName: string, description: string) {
+  static createNewProject(
+    projectName: string,
+    description: string,
+    dataPlane: Enums.Region = Enums.Region.US
+  ) {
     if (Utils.isPerspectiveViewEnabled()) {
       cy.get('[data-cyid="create-project-card"]').click().wait(3000);
     } else {
@@ -23,6 +29,8 @@ export class ProjectListingPage {
     }
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
+    cy.get('[data-cyid="select-region"]').click();
+    cy.get(`[data-value="${dataPlane}"]`).click();
     cy.get('[data-testid="create-version-create"]').click();
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }

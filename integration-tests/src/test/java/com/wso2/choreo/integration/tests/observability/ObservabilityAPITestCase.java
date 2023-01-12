@@ -105,8 +105,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityAST(String env) throws IOException, ObservabilityIdNotFoundException,
-            ObservabilityIdCheckException, InterruptedException, ReleaseIdNotFoundException {
+    public void testObservabilityAST(String env) throws IOException,
+             ReleaseIdNotFoundException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
                 GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
@@ -151,8 +151,8 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityMetricDensity(String env) throws IOException, ReleaseIdNotFoundException,
-            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+    public void testObservabilityMetricDensity(String env) throws IOException, ReleaseIdNotFoundException
+             {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
                 GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
@@ -192,8 +192,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityMetricDensityHistogram(String env) throws IOException, ReleaseIdNotFoundException,
-            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+    public void testObservabilityMetricDensityHistogram(String env) throws IOException, ReleaseIdNotFoundException{
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
                 GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
@@ -236,8 +235,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testObservabilityAST"}, dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityStats(String env) throws IOException, ReleaseIdNotFoundException,
-            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+    public void testObservabilityStats(String env) throws IOException, ReleaseIdNotFoundException{
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
                 GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
@@ -284,8 +282,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testObservabilityAST"}, dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityTraceList(String env) throws IOException, ReleaseIdNotFoundException,
-            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+    public void testObservabilityTraceList(String env) throws IOException, ReleaseIdNotFoundException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
                 GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
@@ -337,8 +334,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"testObservabilityTraceList"}, dataProvider = "env-provider")
     @CitrusTest
-    public void testObservabilityTraceInformation(String env) throws IOException, ReleaseIdNotFoundException,
-            ObservabilityIdNotFoundException, ObservabilityIdCheckException, InterruptedException {
+    public void testObservabilityTraceInformation(String env) throws IOException, ReleaseIdNotFoundException, InterruptedException {
         String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
         ObservabilityIdInformation observabilityIdInformation =
                 GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);

@@ -73,6 +73,17 @@ public final class Constant {
     public static final int INDEX_OF_REVISION_TO_DELETE = 0;
     public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
+
+
+
+    public enum region{
+
+        EU,
+        US
+    }
+
+
+
     public enum  logType{
         groupedlogsV2,
         logsV2

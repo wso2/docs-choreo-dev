@@ -11,6 +11,8 @@
  * associated services.
  */
 
+import { GitHub } from "../../github/github";
+import { ComponentData } from "../../interfaces/component-data";
 import { ONE_HOUR } from "../constants";
 import { Utils } from "../utils";
 
@@ -23,7 +25,7 @@ export class GraphQL {
     orgHandle: string,
     token: string
   ) {
-    this.getProjects(orgId, token).then((response) => {
+    this.getProjects(orgId).then((response) => {
       expect(response.status).to.eq(SUCCESS_STATUS_CODE);
     });
   }
@@ -33,7 +35,7 @@ export class GraphQL {
     orgHandle: string,
     token: string
   ) {
-    this.getProjects(orgId, token).then((response) => {
+    this.getProjects(orgId).then((response) => {
       if (response.status !== SUCCESS_STATUS_CODE) {
         cy.log(`getProjects failed, status returned: ${response.status}`);
         return;
@@ -78,51 +80,15 @@ export class GraphQL {
     return false;
   }
 
-  private static createDefaultProject(
-    orgId: number,
-    orgHandle: string,
-    token: string
-  ) {
-    const query = {
-      query: `mutation {
-            createProjectComponent(
-              project: {
-                name: "Dummy e2e Project",
-                orgId: ${orgId},
-                orgHandler: "${orgHandle}",
-                description: "",
-                version: "1.0.0"
-              },
-              component: {
-                name: "dummye2e",
-                orgId: ${orgId},
-                orgHandler: "${orgHandle}",
-                displayName: "DummyE2E",
-                displayType: "restAPI",
-                projectId: "",
-                labels: "",
-                version: "1.0.0",
-                description: "",
-                apiId: "",
-                ballerinaVersion: "swan-lake-alpha5"
-              }
-            ) {id, projectId, apiId, handler }}`,
-    };
 
-    this.callGraphQL(token, query).then((response) => {
-      expect(response.status).to.eq(SUCCESS_STATUS_CODE);
-      cy.log("Successfully created Default e2e Project");
-    });
-  }
 
   static getComponents(projectId: string, orgHandle: string, token: string) {
-
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
         projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
     };
 
-    return this.callGraphQL(token, query);
+    return this.callGraphQL(query);
   }
 
   private static deleteComponentsInProject(
@@ -158,7 +124,7 @@ export class GraphQL {
         componentId: "${componentId}"){status, canDelete, message}}`,
     };
 
-    this.callGraphQL(token, query).then((response) => {
+    this.callGraphQL(query).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Component  ${componentId}`);
       } else {
@@ -179,7 +145,7 @@ export class GraphQL {
         orgId: ${orgId}, projectId: "${projectId}"){ status, details }}`,
     };
 
-    this.callGraphQL(token, query).then((response) => {
+    this.callGraphQL(query).then((response) => {
       if (response.status === SUCCESS_STATUS_CODE) {
         cy.log(`Successfully deleted Project  ${projectId}`);
       } else {
@@ -190,18 +156,18 @@ export class GraphQL {
     });
   }
 
-  static getProjects(orgId: number, token: string) {
+  static getProjects(orgId: number) {
     const query = {
       query: `query{projects(orgId: ${orgId}){ id, orgId, name, version, createdDate,handler }}`,
     };
 
-    return this.callGraphQL(token, query);
+    return this.callGraphQL(query);
   }
 
-   static callGraphQL(token: string, query: any) {
+  static callGraphQL(query: any) {
     const appSvcURL = Cypress.env("newAppSvcURL");
     const header = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cypress.env("apim_token")}`,
       "content-type": "application/json",
     };
 
@@ -212,6 +178,70 @@ export class GraphQL {
       headers: header,
       failOnStatusCode: false,
     });
+  }
+
+
+  static createComponentWithRepo(componentData: ComponentData, repoName: string) {
+    const { id } = Cypress.env("current_org");
+    this.getProjects(id).then(res => {
+      const projects = res.body.data.projects as []
+      const project = projects.find(p => p["name"] === componentData.projectName)
+      cy.log(`Project Id :: ${project["id"]}`)
+      const query = {
+        query: `mutation{
+                  createComponent(
+                             component: {
+                                  name: "${componentData.componentName}",
+                                  orgId: ${id},
+                                  orgHandler: "${Cypress.env("choreoOrgHandle")}",
+                                  displayName: "${componentData.componentName}",
+                                  displayType: "${componentData.displayType}",
+                                  projectId: "${project["id"]}",
+                                  labels: "",
+                                  version: "1.0.0",
+                                  description: "",
+                                  apiId: "",
+                                  ballerinaVersion: "swan-lake-alpha5",
+                                  triggerChannels: "${componentData.triggerChannels}",
+                                  triggerID: ${componentData.triggerId},
+                                  httpBase: true,
+                                  sampleTemplate: "",
+                                  accessibility: "external",
+                                  srcGitRepoUrl: "${componentData.srcGitRepoUrl}"
+                                  repositorySubPath: "",
+                                  repositoryType: "",
+                                  repositoryBranch: "",
+                                } )
+                                {id, orgId, projectId, handler    }
+                      }`
+      }
+      this.callGraphQL(query).then(res => {
+        const { id } = res.body.data.createComponent;
+
+        this.getPullRequests(id, repoName)
+        expect(res.status).to.be.eq(200)
+      })
+    })
+    cy.reload()
+    cy.get('tbody>tr p').should('be.visible')
+  }
+
+  private static getPullRequests(componentId: string, repoName: string) {
+    const query = {
+      query: `query{
+                 componentPullRequests(componentId: "${componentId}")
+                 { url, number }
+                 }`
+    }
+    cy.wait(60000)
+    this.callGraphQL(query).then(res => {
+      const prs = res.body.data.componentPullRequests as []
+      if (prs.length > 0) {
+     
+        GitHub.mergePR(repoName, 1).then(resp => expect(resp.status).to.be.eq(200))
+      }
+
+    })
   }
 
   private static changeComponentLifeCycle(
@@ -260,11 +290,7 @@ export class GraphQL {
  release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
     };
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    this.callGraphQL(token, query).then((res) => {
+    this.callGraphQL(query).then((res) => {
       if (res.status === SUCCESS_STATUS_CODE) {
         const apiVersion: [] = res.body.data.component.apiVersions;
         apiVersion.forEach((e) => {

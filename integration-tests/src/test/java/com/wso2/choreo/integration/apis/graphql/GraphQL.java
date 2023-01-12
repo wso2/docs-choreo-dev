@@ -99,6 +99,16 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
     }
 
+
+    public static ChoreoProject createProject(Constant.region region,String accessToken) throws IOException {
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
+                .description(Constant.TEST_PROJECT_DESCRIPTION).region(region.name()).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
+        log.info(response.getRes());
+        return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
+    }
+
     public static ChoreoComponent createBYOCComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
         String srcGitHubURL = "https://github.com/choreo-test-apps/byor-greetings-app2";
         graphqlDTO.setSrcGitRepoUrl(srcGitHubURL);
@@ -120,7 +130,7 @@ public class GraphQL extends ControlPlaneAPI {
             if (pullRequests.length == expectedPRs) {
                 return pullRequests;
             }
-            SleepUtil.sleep(15);
+            SleepUtil.sleep(35);
         }
         throw new UnexpectedResponseException(response.getStatusCode(), "Expected PullRequest length " + expectedPRs + " but found " + 0);
     }
@@ -144,7 +154,7 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO dto = GraphqlDTO.builder().componentHandler(componentHandler).projectId(projectId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentInformation.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        return ObjectMapperUtil.mapStringToObject(RestApiChoreoComponent.class, response.getRes(), "component");
+        return ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "component");
     }
 
     public static ObservabilityIdInformation getComponentObservabilityIdForReleaseId(String releaseId, String accessToken) throws IOException {
@@ -194,7 +204,7 @@ public class GraphQL extends ControlPlaneAPI {
 
 
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).latestVersionId(component.getLatestApiVersion().getId()).
-                devEnvIdToDeploy(component.getLatestAppEnvId("dev")).sha(latestCommit.getSha()).branch("main").build();
+                devEnvIdToDeploy(component.getLatestAppEnvId("dev")).sha(latestCommit.getSha()).branch("main").shaDate(latestCommit.getAuthor().getDate()).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/deployComponent.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "deployComponent");

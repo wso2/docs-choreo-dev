@@ -15,16 +15,17 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Slf4j
 public class HttpClientUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(HttpClientUtil.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class.getName());
 
     private static Response sendRequest(HttpUriRequest request) {
 
@@ -35,9 +36,10 @@ public class HttpClientUtil {
             statusCode = response.getStatusLine().getStatusCode();
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity);
+                LOGGER.debug(responseBody);
             }
         } catch (IOException e) {
-            LOGGER.warning(e.getLocalizedMessage());
+            LOGGER.error(e.getLocalizedMessage());
         }
         return Response.builder().res(responseBody).statusCode(statusCode).build();
     }

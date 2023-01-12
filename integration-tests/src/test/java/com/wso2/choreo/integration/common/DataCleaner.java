@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
@@ -57,7 +58,7 @@ public class DataCleaner  {
                 }
             }
         }
-
+        GitHub.deleteTestProjects();
         log.info("Total number of test projects: " + numberOfTestProjects);
         log.info("Total number of test projects deleted: " + numberOfTestProjectsDeleted);
     }

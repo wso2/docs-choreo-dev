@@ -96,8 +96,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_LoggingAPITestCase() throws Exception {
-     
-        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+       accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         project = GraphQL.createProject(accessToken);
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         projectId = project.getId();
@@ -157,7 +156,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"addDeploymentConfiguration_LoggingAPITestCase"})
     @CitrusTest
     public void deploy_LoggingAPITestCase() throws Exception {
-      //  GraphQL.deployComponent(choreoComponent, accessToken);
+       GraphQL.deployComponent(choreoComponent, accessToken);
     }
 
     @Test(dependsOnMethods = {"deploy_LoggingAPITestCase"})

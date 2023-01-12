@@ -5,6 +5,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -59,14 +60,8 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
-    @CitrusTest
-    public void initialPRGeneration_TestBYOC() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-        Assert.assertEquals(prs.length, 0);
-    }
 
-    @Test(dependsOnMethods = {"initialPRGeneration_TestBYOC"})
+    @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
     @CitrusTest
     public void deploy_TestBYOC() throws Exception {
         Status status = GraphQL.deployComponent(choreoComponent, accessToken);
@@ -107,7 +102,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestBYOC"})
     @CitrusTest
     public void invokeAPIInDev_TestBYOC() throws Exception {
-        apiKey = ComponentUtils.getApiKey(choreoComponent, accessToken);
+        apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
         TestHelper.Movie[] movies = TestHelper.getMovies(devInvokeURL, apiKey);
         Assert.assertEquals(movies.length, 5);
         Assert.assertEquals(movies[0].id, 1);

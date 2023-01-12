@@ -15,8 +15,7 @@ import { ComponentDeployPage } from "../../../support/console/pages/component/co
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { Environment } from "../../../support/console/pages/enum/environment";
-import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
+import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
@@ -54,7 +53,7 @@ describe("Verify project creation functionality", () => {
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "root",
       "number",
       "2"
@@ -67,7 +66,7 @@ describe("Verify project creation functionality", () => {
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.PRODUCTION,
+      Enums.Environment.PRODUCTION,
       "root",
       "number",
       "2"
@@ -79,8 +78,8 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       "root",
       queryParameters1
     ).then((curl) => {
@@ -92,7 +91,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root", queryParameters1).then(
+    TestHelper.testOnCurl(Enums.Environment.PRODUCTION, Enums.HTTPMethod.GET, "root", queryParameters1).then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(4);
@@ -105,7 +104,7 @@ describe("Verify project creation functionality", () => {
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "isOdd",
       "number",
       "5"
@@ -118,7 +117,7 @@ describe("Verify project creation functionality", () => {
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.PRODUCTION,
+      Enums.Environment.PRODUCTION,
       "isOdd",
       "number",
       "5"
@@ -130,8 +129,8 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       "isOdd",
       queryParameters2
     ).then((curl) => {
@@ -143,7 +142,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "isOdd", queryParameters2).then(
+    TestHelper.testOnCurl(Enums.Environment.PRODUCTION, Enums.HTTPMethod.GET, "isOdd", queryParameters2).then(
       (curl) => {
         Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
           expect(res.body).equal(true);
@@ -158,28 +157,28 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
 
-    ComponentAPILifecycle.selectEnvironment(Environment.DEVELOPMENT)
-   ComponentAPILifecycle.editResource();
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT)
+    ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "Revision 5"
     );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
-      Environment.DEVELOPMENT
+      Enums.Environment.DEVELOPMENT
     );
   });
 
   it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Environment.PRODUCTION)
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION)
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
-    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+    ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
   });
 
   it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents(`${Environment.DEVELOPMENT}root`).then((curl) =>
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}root`).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.status).equal(200);
       })
@@ -187,7 +186,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource not access without the token in dev", () => {
-    Curl.getRequestComponents(`${Environment.DEVELOPMENT}isOdd`).then((curl) =>
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}isOdd`).then((curl) =>
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(true);
         expect(res.status).equal(200);
@@ -196,7 +195,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(`${Environment.PRODUCTION}root`).then((curl) =>
+    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}root`).then((curl) =>
       Utils.sendGetRequest(curl.url).then((res) => {
         expect(res.status).equal(200);
       })
@@ -204,7 +203,7 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify resource not access without the token in prod", () => {
-    Curl.getRequestComponents(`${Environment.PRODUCTION}isOdd`).then((curl) =>
+    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}isOdd`).then((curl) =>
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(true);
         expect(res.status).equal(200);
