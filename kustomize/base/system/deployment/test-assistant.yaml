@@ -82,10 +82,6 @@ spec:
               add:
                 - NET_RAW
       volumes:
-        - name: test-assistant-model-metadata
-          configMap:
-            defaultMode: 420
-            name: cm-test-assistant
         - name: temp-data-dir
           emptyDir: {}
         - name: secret-test-assistant
