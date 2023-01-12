@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ################ Install CSI Secret Store Driver ########
-bash ../../secret-store-csi-driver/configure-csi-secret-store.sh
+bash secret-store-csi-driver/configure-csi-secret-store.sh
 
 ################ Install CSI Secret Store Class Secret ########
 SYSTEM_CSI_KEY_VAULT_CLIENT_SECRET=$(az ad app credential reset --id "${SYSTEM_CSI_KEY_VAULT_CLIENT_ID}" --append --credential-description "${CLUSTER_NAME}" --years 2 | grep password | cut -d ":" -f2 | cut -d '"' -f 2)
