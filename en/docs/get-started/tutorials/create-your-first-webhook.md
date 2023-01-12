@@ -4,9 +4,9 @@ Choreo’s low-code editor allows developers to easily design (and then implemen
 
 In this tutorial, you will address this requirement by doing the following:
 
-- Create a webhook component by connecting to your GitHub repo that includes the implementation of the webhook which addresses the described requirement 
+- Create a webhook component by connecting to your GitHub repository that includes the implementation of the webhook that addresses the described requirement.
 - Deploy the webhook you created to the development environment.
-- Modify the webhook implementation to connect to GitHub to act on GitHub related events.
+- Modify the webhook implementation to connect the webhook implementation to GitHub, enabling it to act in response to selected GitHub-related events..
 - Test the webhook.
 - Promote the webhook to the production environment.
 
@@ -20,7 +20,7 @@ First, let's add a Webhook component as follows:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Click the **+ Create Project** card from the landing page.
+2. On the **Home** page, click **+ Create** Project.
 
     ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
 

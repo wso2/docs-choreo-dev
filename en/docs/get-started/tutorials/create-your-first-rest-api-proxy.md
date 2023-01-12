@@ -23,7 +23,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. Click the **+ Create Project** card from the landing page.
+2. On the **Home**** page, click the **+ Create Project**.
    
     ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
 
@@ -34,7 +34,7 @@ In this tutorial, you will be importing an OpenAPI specification and creating a 
     !!! tip
         Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
 
-4. On the **Components** page, click **Create** on the the **REST API Proxy** card.
+4. On the **Components** page, click **Create** under the **REST API Proxy** card.
    
 5. Click **Import your OpenAPI**.
 

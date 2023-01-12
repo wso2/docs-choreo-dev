@@ -15,7 +15,8 @@ In this section, let's create the API that retrieves COVID-19-related statistics
 ### Step 1.1: Create a project and add a REST API component
 
 1. Sign in to the Choreo Console at <a  href="https://console.choreo.dev?utm_source=choreo_docs" onclick="appInsights.trackEvent({name: 'choreo-docs-rest-api-product-link', properties: { utm_source: 'choreo_docs' }});">https://console.choreo.dev/</a>.
-2. Click the **+ Create Project** card from the landing page.
+
+2. On the **Home**** page, click the **+ Create Project**.
 
     ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
 
@@ -43,16 +44,16 @@ Let's create a new REST API component as follows:
     | **Name**        | `Statistics`          |
     | **Description** | `COVID-19 Statistics` |
 
-5. Click **Next**.
-6. Provide authorization for Choreo to connect to your GitHub account by clicking  **Authorize with GitHub**. 
-7. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
-8. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset: Ballerina or Dockerfile. 
-9. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
+3. Click **Next**.
+4. Provide authorization for Choreo to connect to your GitHub account by clicking  **Authorize with GitHub**. 
+5. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
+6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset (i.e., **Ballerina** or **Dockerfile**).
+7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
 
     !!! note
-        You can create a component by connecting an empty repository. But you can only deploy it after you implement it. 
+        You can create a component by connecting an empty GitHub repository. But you can only deploy it after you implement it. 
 
-10. Next, click **Create**.
+8. Next, click **Create**.
 
 ### Step 1.2: Design the REST API
 

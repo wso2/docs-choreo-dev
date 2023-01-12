@@ -1,10 +1,8 @@
 # Connect Your GitHub Repository to Choreo
 
-Choreo allows you to connect your own GitHub repository to maintain the source code of a component when you create any Choreo components.You can create a Choreo component either as a Ballerina project or a in any language as a Docker container. By connecting your GitHub repository, you enable collaborative development for Choreo components. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as pull requet checks, code analysis, styling preferences, etc.
+Choreo allows you to connect your own GitHub repository to maintain the source code of a component when you create any Choreo components. You can create a Choreo component using a Ballerina project or a service written in any language in a Docker container. By connecting your GitHub repository, you enable collaborative development for Choreo components. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as checking pull requets, code analysis, styling preferences, etc.
 
-This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will,
-
-- Connect your GitHub repository and use the REST API implementation in your GitHub repository to create a REST API in Choreo.
+This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will connect your GitHub repository and use the REST API implementation in your GitHub repository to create a REST API in Choreo.
     
     !!! info
         You can create a component by connecting an empty repository. But you can only deploy it after you implement it. 
@@ -45,11 +43,11 @@ Let's connect your GitHub repository and use the REST API implementation in it t
 3. Click **Next**.
 4. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
 5. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
-6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset: Ballerina or Dockerfile. 
-7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repo or a sub-folder and proceed to create the component. 
+6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset (i.e., **Ballerina** or **Dockerfile**). 
+7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
 
     !!! info
-        You can create a component by connecting an empty GitHub repository. But you can only deploy it after you implement it. 
+        You can create a component by connecting an empty GitHub repository. However, you can only deploy it after you implement it. 
 
 8. Click **Create**.
 
