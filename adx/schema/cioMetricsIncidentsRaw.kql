@@ -15,9 +15,9 @@
     commitId: string,
     releaseId: string,
     incidentId: string,
-    status: string
+    status: string,
     isProd: bool,
-    duration: int
+    duration: int,
     updatedTime: datetime
 );
 
