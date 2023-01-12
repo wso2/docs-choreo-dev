@@ -39,7 +39,7 @@ spec:
             - name: secret-test-assistant
               mountPath: "/mnt/csi/secret-test-assistant"
               readOnly: true
-            - mountPath: /mnt
+            - mountPath: "/temp-data-dir"
               name: temp-data-dir
           readinessProbe:
             initialDelaySeconds: 5
