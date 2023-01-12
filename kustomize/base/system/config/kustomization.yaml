@@ -3,6 +3,7 @@ configMapGenerator:
     behavior: create
     files:
       - test-assistant/models.properties
+      - test-assistant/application.properties
   - name: env-workspace-manager-shared # shared workspace-manager configs across environments
     behavior: create
     literals:
