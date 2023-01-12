@@ -33,6 +33,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-test-assistant
+            - configMapRef:
+                name: cm-test-assistant
             - secretRef:
                 name: secret-test-assistant
           volumeMounts:
@@ -80,10 +82,6 @@ spec:
               add:
                 - NET_RAW
       volumes:
-        - name: test-assistant-model-metadata
-          configMap:
-            defaultMode: 420
-            name: cm-test-assistant
         - name: temp-data-dir
           emptyDir: {}
         - name: secret-test-assistant
