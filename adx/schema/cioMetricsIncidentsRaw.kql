@@ -5,7 +5,7 @@
 // herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
 // You may not alter or remove any copyright or other notice from copies of this content.
 
-.create table incidents (
+.create table incidentsRaw (
     timestamp: datetime,
     orgId: string,
     projectId: string,
@@ -21,7 +21,7 @@
     updatedTime: datetime
 );
 
-.create table incidents ingestion json mapping "incidentMapping"
+.create table incidentsRaw ingestion json mapping "incidentRawMapping"
     '['
     '    { "column" : "timestamp", "Properties":{"Path":"$.createdTime"}},'
     '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
