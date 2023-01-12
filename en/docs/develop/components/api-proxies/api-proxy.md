@@ -21,7 +21,7 @@ Choreo allows you to easily expose your existing APIs via a REST API proxy and c
 
 You can front your existing API with a REST API Proxy easily using Choreo. To design a new REST API Proxy, you need to create a REST API Proxy component and specify the API name, the base path, and the endpoint to create the basic API definition. Once Choreo creates the API definition, you can then define the resources by specifying the URI pattern, the HTTP methods, and optionally, any parameters:
 
-![Add Resource](../../assets/img/api-proxies/add-resources-api-proxies.png){.cInlineImage-threeQuarter}
+![Add Resource](../../../assets/img/api-proxies/add-resources-api-proxies.png){.cInlineImage-threeQuarter}
 
 
 ### Designing a new REST API Proxy by importing an OpenAPI specification
@@ -35,17 +35,19 @@ Once you create an API proxy in Choreo, you can access the API definition of tha
 
 The following diagram illustrates the process of deploying an API in Choreo to the default development environment. 
 
-![Deploy API ](../../assets/img/api-proxies/deploy-api-proxies.png){.cInlineImage-threeQuarter}
+![Deploy API ](../../../assets/img/api-proxies/deploy-api-proxies.png){.cInlineImage-threeQuarter}
 
 Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo's data plane runs on a Kubernetes stack, hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on.
 
 Once you deploy the REST API to the development environment, it is then exposed by an API Gateway with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
 
+You may set up a separate environment to test the API proxy before pushing it to production. To deploy the API proxy to both the test environment and the development environment, enter the test environment URL as the sandbox endpoint and the API backend URL as the endpoint.
+
 ## Choreo environments
 
 Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
 
-![Deploy View](../../assets/img/rest-apis/deploy-promote.png){.cInlineImage-threeQuarter}
+![Deploy View](../../../assets/img/rest-apis/deploy-promote.png){.cInlineImage-threeQuarter}
 
 Once you have promoted the API to production, Choreo then shows a second URL that developers can use in production applications to invoke the API.
 
@@ -61,19 +63,19 @@ Once you deploy your API, it is ready to be tested. Testing your REST API Proxy 
 
 The in-built OpenAPI console is an interactive UI where you can test your API Proxy easily. You can test your APIs in the environments you deploy them in by selecting the environment. Choreo by default uses OAuth2.0 authentication. Therefore the OpenAPI console provides you the option to generate your test keys to test the APIs. Once you meet the pre-requisites, you can test the different resources you defined by specifying any parameters if needed. 
 
-![REST API Proxy - OpenAPI Console](../../assets/img/api-proxies/test-api-proxies-openapi-console.png){.cInlineImage-threeQuarter}
+![REST API Proxy - OpenAPI Console](../../../assets/img/api-proxies/test-api-proxies-openapi-console.png){.cInlineImage-threeQuarter}
 
 ### cURL
 
 Choreo provides you with a cURL command based on the resource, method, and environment you want to test your REST API Proxy. You need to select the environment, the methods, specify the base path of the resource, and any parameters. Once you provide the information to Choreo, it will generate a cURL command with an API key in place for you to test. 
 
-![REST API Proxy - cURL](../../assets/img/api-proxies/test-api-proxies-curl.png){.cInlineImage-threeQuarter}
+![REST API Proxy - cURL](../../../assets/img/api-proxies/test-api-proxies-curl.png){.cInlineImage-threeQuarter}
 
 ### Postman
 
 Choreo also allows you to integrate Postman. To integrate Postman, you need to create a postman account, generate an API Key from Postman, and include them in the Choreo UI. Once you integrate Postman successfully, you can import Postman workspaces, or create new workspaces and continue to test it on Choreo.
 
-![REST API Proxy - Postman](../../assets/img/api-proxies/test-api-proxies-postman.png){.cInlineImage-threeQuarter}
+![REST API Proxy - Postman](../../../assets/img/api-proxies/test-api-proxies-postman.png){.cInlineImage-threeQuarter}
 
 ## Manage the REST API Proxy
 
@@ -83,7 +85,7 @@ API Management is automatically turned on in REST API Proxies (and other APIs) o
 
 Once you implement a REST API Proxy, it needs to be built, tested, and eventually put into production. Choreo executes a CI/CD pipeline that manages the API’s Lifecycle. Choreo stores the source code of APIs in a private Github repository for the user account. It also provides the capability for developers to hook in their own Github repositories containing the source code of their APIs(coming soon). The CI/CD pipeline in Choreo takes an API through the whole process, starting with code checkout, to compile, build, test, and finally to deployment.
 
-![Manage API Proxies](../../assets/img/api-proxies/manage-api-proxies.png){.cInlineImage-threeQuarter}
+![Manage API Proxies](../../../assets/img/api-proxies/manage-api-proxies.png){.cInlineImage-threeQuarter}
 
 ### Add documentation to the REST API Proxy
 
@@ -94,7 +96,7 @@ A well-designed API or API Proxy needs to be well-documented as well. The usabil
 
 The usage plan determines the number of requests allowed for the API per minute. Therefore, this is also the rate limit that applies to an API.
 
-![Usage Plans](../../assets/img/api-proxies/api-proxies-usage-plans.png){.cInlineImage-threeQuarter}
+![Usage Plans](../../../assets/img/api-proxies/api-proxies-usage-plans.png){.cInlineImage-threeQuarter}
 
 
 ### Settings
@@ -105,15 +107,15 @@ A well-managed API needs to have security policies and access-control policies i
 
 In addition to providing different usage plans, Choreo also allows you to set different rate-limiting policies against the API or each resource. While the API level rate-limiting will impact the whole API, resource-level rate-limiting gives you the flexibility to change the rate-limiting policy per operation based on the anticipated or analyzed usage.
 
-![Rate Limiting](../../assets/img/api-proxies/rate-limiting.png){.cInlineImage-threeQuarter}
+![Rate Limiting](../../../assets/img/api-proxies/rate-limiting.png){.cInlineImage-threeQuarter}
 
 Choreo uses OAuth2.0 authentication.
 
-![Security](../../assets/img/api-proxies/security-settings.png){.cInlineImage-threeQuarter}
+![Security](../../../assets/img/api-proxies/security-settings.png){.cInlineImage-threeQuarter}
 
 
 ### Consumers
 
 Consuming the published APIs is made easy with the inbuilt Choreo Developer Portal. Application developers can discover and invoke published APIs using the Choreo Developer Portal.
 
-To learn more about the Choreo Developer Portal, see [Developer Portal](../../consume/developer-portal.md).
+To learn more about the Choreo Developer Portal, see [Developer Portal](../../../consume/developer-portal.md).

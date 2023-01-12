@@ -61,7 +61,9 @@ nav:
   - Create:
       - Components:
           - REST APIs: develop/components/rest-api.md
-          - API Proxies: develop/components/api-proxies.md
+          - API Proxies: 
+              - API Proxy: develop/components/api-proxies/api-proxy.md
+              - Policies: develop/components/api-proxies/policies.md
           - Webhooks: develop/components/webhook.md
           - Scheduled Tasks: develop/components/scheduled-tasks.md
           - GraphQL APIs: develop/components/graphql-api.md
@@ -106,6 +108,7 @@ nav:
           - Configure a Custom Domain for Developer Portal: administer/customize-developer-portal-domain.md
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Developer Portal Self-Sign-Up: administer/configure-developer-portal-self-sign-up.md
+      - Organization: administer/organization.md
   - References:
      - Connect with Protected Third Party Applications: reference/connect-with-protected-third-party-applications.md
 # Extensions
@@ -154,7 +157,7 @@ plugins:
           'tutorials/configure-automatic-deployment.md': 'https://wso2.com/choreo/docs/deploy/configure-automatic-deployment/'
           'tutorials/map-data.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/map-data/'
           'rest-api.md': 'https://wso2.com/choreo/docs/develop/components/rest-api/'
-          'api-proxies.md': 'https://wso2.com/choreo/docs/develop/components/api-proxies/'
+          'api-proxies.md': 'https://wso2.com/choreo/docs/develop/components/api-proxies/api-proxy/'
           'webhook.md': 'https://wso2.com/choreo/docs/develop/components/webhook/'
           'scheduled-tasks.md': 'https://wso2.com/choreo/docs/develop/components/scheduled-tasks/'
           'graphql-api.md': 'https://wso2.com/choreo/docs/develop/components/graphql-api/'

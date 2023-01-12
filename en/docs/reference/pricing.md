@@ -2,229 +2,147 @@
 
 ## Introduction
 
-Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. You can use Choreo by paying only for your usage: nothing more, nothing less. Choreo has payment plans for all types of users. You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go model if you use more than 5,000 [steps](#what-is-a-step) per month. If you plan to use Choreo extensively, you can also opt for an Enterprise plan and enjoy special discount rates.
+Choreo is a Digital Platform as a Service that helps you develop integration solutions faster by reducing the coding effort with a low-code development platform. 
+
+The pricing for your Choreo deployment is mainly determined based on the following: 
+
+- **The number of components** 
+
+    You can deploy up to five free components ((i.e., any combination of component types), and pay for each additional component.
+
+- **Infrastructure cost**
+
+    The infrastructure cost consists of the charges to Choreo by the cloud platform for vCPU, RAM, storage, ingress, egress, and network. Choreo provides $100 worth of infrastructure free of charge to each organization.
+
+    If the infrastructure cost of an organization on the Free plan exceeds $100, Choreo will limit some of the services it provides to it (e.g., some components might be deactivated).
+
+    If the infrastructure cost of an organization on the Pay As You Go plan exceeds $100, it can pay the additional infrastructure charges to the cloud platform vendor.
+
+    If the infrastructure cost of an organization on the Enterprise plan exceeds $100, it can pay the additional infrastructure charges to the Choreo Sales Team.
+
 
 ## Plans
 
-|               | Free                   |  Pay As You Go    | Enterprise     |
-|---------------|------------------------|-------------------|----------------|
-| Cost Per Step | 5,000 steps per month *|$5 per 1,000 steps <br/> <ul><li>First 5,000 steps per month are free</li></ul>| Contact us for discounted pricing including: <br/><ul><li> Volume Discounts</li><li> Committed-use Discounts</li><li> Support Channels and Support SLA</li></ul>|
+Choreo currently supports the following payment plans:
 
- \* Limited to a maximum of 3 components
+**Free**
 
+The free tier allows you to create up to five free components. These five components can be any combination of component types.
 
+Choreo allocates up to a maximum of 2x vCPUs and 4 GB RAM infrastructure resources to your component workloads.
 
-## Choreo pricing FAQ
+You can enjoy the free tier with limitations and then move on to the Pay-As-You-Go plan if you want to create over five components.
 
-### How does Choreo pricing work?
 
-Choreo pricing is based on the number of [steps](#what-is-a-step) in your integration solution. Choreo offers three payment plans: Free, Pay As You Go, and Enterprise.
+**Pay As You Go**
 
-#### Free 
-The Choreo free tier allows you to execute 5,000 [steps](#what-is-a-step) per month, limited to a maximum of 3 components. If you exceed the free tier, your application cannot make any additional requests to Choreo. 
+This plan requires you to pay the following:
+- $150 per component (except for the first five components) on a monthly basis.
+- Any additional infrastructure costs incurred (i.e., if the infrastructure cost is over $100). 
 
-#### Pay As You Go (PAYG) 
-Pay As You Go is a flexible usage-based payment plan. While the first 5,000 steps are free per month, Choreo charges you $0.005 for each additional step based on your usage per month. For example, for 1,000 steps Choreo charges you $5. 
+This plan does not require you to pay an annual fee. You can create up to 30 components (i.e., any combination of component types). 
 
-Let’s assume you have used a total of 12,500 [steps](#what-is-a-step) for a particular month, your monthly usage for that month under the PAYG plan will be:
+If the number of components you need to create exceeds 30 or if your annual spend exceeds $50,000, we recommend that you change your pricing plan to Enterprise.
 
-    Chargeable steps usage: 12,500 - 5,000 = 7,500
-    The total charge for the usage: 7,500 * $0.005 ($5 for every 1,000 steps) = $37.50
 
-#### Enterprise 
-The Enterprise plan is suitable for large-scale usage of Choreo. You can access volume discounts and committed-use discounts with this plan. [Contact sales](https://wso2.com/contact/?ref=choreo) to get a discounted rate.
+**Enterprise** 
 
-### What is a step?
-A step (1 step) is a maximum of 500ms compute time on a container having 350MB of memory and 0.5 vCPU. Any additional compute time is counted as an additional step.  
-An incoming event or message to Choreo or an outgoing API call from Choreo is a minimum of 1 step.
+This plan allows you to pay an annual subscription of $50,000 or more (as agreed) and create up to 50 components (i.e., any combination of component types). If you need to create over 50 components, contact the Choreo sales team.
 
+The following table summarizes the cost of each plan:
 
-## Pricing examples
+ |                      | **Free**       | **Pay As You Go** | **Enterprise** |
+ |----------------------|----------------|-------------------|----------------|
+ | Subscription    | Free subscription  | Based on the number of components| Minimum $50,000 for the annual commitment. The annual commitment includes 50x components (any combination of component types). |
+ | Infrastructure  | Up to $100 worth of infrastructure services free of charge. | Up to $100 worth of infrastructure services free of charge.<br/><br/> | Pass through or pay directly to Azure. |
 
-### Example 1: REST API 
+The following table summarizes the usage of each plan:
 
-An organization has a flight booking system on Choreo. This system involves several APIs and databases. The scenario and the APIs being used in the system are described below.
+ |                      | **Free**       | **Pay As You Go** | **Enterprise** |
+ |----------------------|----------------|-------------------|----------------|
+ | **No of Projects**   | 1              | Unlimited         | Unlimited      |
+ | **No of Components** | A maximum of 5 | A maximum of 30 (recommended)  | Unlimited      |
+ | **No of Developers** | Unlimited      | Unlimited         | Unlimited      |
 
-#### Scenario
+### Features
 
-To make a booking through the web application, a client first searches for available flights and then proceeds to make the booking. The client application (web application) upon receiving the request makes a call to the [Search API](#searchAPI) to search for available flights. When the client receives the search results the client proceeds to make a reservation using the [Reservations API](#reservationsAPI).
+This section summarizes the features supported for each plan:
 
-The following two diagrams illustrate the interactions in the system while searching and reserving a flight.
-<br/>
+#### Developer and operational
 
-#### Glossary
-- <a class="pricing" id="searchAPI"> Search API</a>: An external-facing API in Choreo that searches for the availability of flights and seats for the specified destinations.
-- <a class="pricing" id="bookingsAPI">Bookings API</a>: An internal API in Choreo that updates the Bookings database when a booking for a certain flight is made.
-- <a class="pricing" id="reservationsAPI">Reservations API</a>: An external-facing API in Choreo that is used by client applications (web apps, mobile apps) to make flight bookings.
-- <a class="pricing" id="twillioAPI">Twilio API</a>: A third-party API that is used by the Reservations API in Choreo to send SMS notifications to customers when a booking has been made, canceled, or updated.
-- <a class="pricing" id="executionTime">Execution time</a>: The execution time taken for a process is the time taken between sending a request and receiving a response.
-<br/>
-<br/>
+Choreo supports the following developer and operational features for all the plans:
 
-#### Searching for a flight
+- Managing the source code via a GitHub repository
 
-![Search for a flight](../assets/img/references/rest-api-example1.png)
+- Continuous integrations (CI)
 
-Let’s see how steps are calculated for the search process: 
+- Continuous delivery (CD)
 
-- As illustrated above, the client initiates a search for available flights through the web application. 
-- The web application then makes **1 API call to the [Search API](#searchAPI)** in Choreo. This is counted as **1 step**.
-- The search API in Choreo then makes **1 call to the Flights Database** to retrieve the information according to the search criteria entered by the client. This is counted as **1 step**. 
+- Deployments to cloud platforms are supported for the three plans as follows:
 
-- **Assuming the entire [execution time](#executionTime) for the search process takes less than 500ms** (starting from the web application making a call to Choreo, and Choreo making a call to the database), the search process thereby results in a **total of 2 steps**.
+    | **Free** | **Pay As You Go** | **Enterprise** |
+    |----------|-------------------|----------------|
+    | Azure    | Azure<br/>AWS<br/>GCP<br/>VMWare<br/>OpenShift<br/>Tanzu<br/>Any Kubernetes cluster       |Azure<br/>AWS<br/>GCP<br/>VMWare<br/>OpenShift<br/>Tanzu<br/>Any Kubernetes cluster |
 
-<br/>
 
-#### Reserving a flight
+#### Integration and automation
 
-![Reserving a flight](../assets/img/references/rest-api-example2.png)
+Choreo supports the following integration and automation components for all the plans:
 
-Let’s see how steps are calculated for the reservation process:
+- Triggers
+- Scheduled jobs
 
-- As illustrated above, the client initiates the reservation process through the web application.
-- The web application proceeds to make **1 API call to the [Reservations API](#reservationsAPI)**. This is counted as 1 step.
-- The Reservation API then makes **1 API call to the [Bookings API](#bookingsAPI)**. This is counted as **1 step**. 
-- The bookings API makes **1 API call to the Booking Database** to update it with the booking details. This is counted as **1 step**.
-- Upon receiving the booking confirmation, the Reservation API makes **1 call to the [Twilio API](#twillioAPI)** to send an SMS confirmation to the customer. This is counted as **1 step**.
+In addition, Choreo supports 500+ out-of-the-box connectors for integration and automation for all the plans.
 
-- **Assuming the entire execution time for the reservation process takes 1200ms (1.2s)** , in addition to the above steps,  the total number of extra computation units consumed can be calculated as follows using ***floor((t)/500)) where t is the execution time***: 
+#### AI-assisted development
 
-          floor(1200/500) = 2 units = 2 steps
+Choreo supports the following AI-assisted development features for all the plans:
 
-Therefore the total number of steps for the reservation process is: 
+- Performance predictions
+- Intelligent data mapping
+- Smart code assistance
+- Anomaly detection
 
-           4 steps + 2 steps = 6 steps
+#### API management
 
-We can calculate the **total number of steps for searching and reserving a flight** as follows:
+Choreo supports the following API management features for all the plans:
 
-- **Search process**: Single execution of a search would cost a total of **2 steps**. 
-- **Reservation process**: Single execution of reservation process would cost a total of **6 steps**. 
-- **Total**: A single execution of the search and reservation process of a flight would cost an organization a total of **8 steps in total**.
+| Free           |  Pay As You Go  | Enterprise |
+|----------------|-----------------|------------|
+| Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with 6 months of data retention) | Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with 6 months of data retention) | Creating new APIs<br/><br/>Securing APIs<br/><br/>Testing APIs<br/><br/>API Developer Portal<br/><br/>API Analytics and Insights<br/>(with 6 months of data retention) |
 
-!!! note
-    The above cost calculation is dependent on the above architecture and design of the APIs.
-<br/>
 
-### Example 2: REST API Proxy
-An organization exposes a flight tracking API as a managed API on Choreo. This system involves several APIs and databases. The scenario and the APIs in the system are described below:
+#### Monitoring and observability
 
-#### Scenario
+Choreo supports monitoring and observability features for each plan as follows:
 
-To search for real-time flight data, a client enters a search criteria, and searches through the web application. Upon receiving the request, the client application (web application) makes a call to the [Flights Status API](#flightStatusAPI), a managed API on Choreo, to search for flight data. Choreo then invokes the backend API, the [Real-Time Flight API](#realtimeFlightAPI). The backend API then invokes a database to get the information and passes it to the client.
+| Free           |  Pay As You Go  | Enterprise |
+|----------------|-----------------|------------|
+| In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/><br/>Alerting | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to third parties | In-built monitoring dashboard<br/><br/>Logs<br/><br/>Traces<br/><br/>Alerting<br/><br/>Extending to third parties |
 
-#### Glossary
+The maximum time interval for which users on each plan can view logs, traces and alerts is 30 days.
 
-- <a class="pricing" id="flighStatusAPI">Flight Status API</a>: An external-facing, managed API on Choreo. This API exposes the Real-Time Flight API on Choreo as a managed API.
+#### Security
 
-- <a class="pricing" id="realtimeFlightAPI">Real-TIme Flight API</a>: An unmanaged, external-facing API hosted outside of Choreo.
+Choreo supports the following security features for all the plans:
 
-- <a class="pricing" id="flightsDatabase">Flights Database</a>: A database that stores flight information.
+- SSO for API Developer Portal
+- Enterprise login
+- Container manifest scanning
+- Container static scanning
+- Run-time container security
 
 
-#### Get flight status
+### Support
 
-![Get flight status](../assets/img/references/api-proxy-example1.png)
+Community support is available for all three plans. In addition, paid support is available for Pay As You Go and Enterprise plans.
 
-Let’s see how the steps are calculated for the process to obtain the flight status:
+| Free           |  Pay As You Go  | Enterprise |
+|----------------|-----------------|------------|
+| Community support | Community support and paid plans | Community support and paid plans|
 
-- As illustrated above, the client initiates a search request for flight data through the web application. 
-- The web application then makes **1 API call to the [Flight Status API](#flightStatusAPI)** in Choreo. This is counted as **1 step**.
-- The Flight Status API in Choreo then makes **1 call to the [Real-Time Flight API](#realtimeFlightAPI)** with the search criteria entered by the client. This is counted as **1 step**. 
-- The Real-Time Flight API then invokes the database to retrieve the information.
+For information about support plans, see the [Billing Portal](https://subscriptions.wso2.com/).
 
-- **Assuming the entire execution time for the process to obtain the flight status takes less than 500ms** (starting from the web application making a call to Choreo, and Choreo making a call to the backend API),this process thereby results in a **total of 2 steps**.
 
-<br/>
 
-### Example 3: Webhook
-An airport has its flight information display system (FIDS) in Choreo.  This system involves APIs and webhooks.
 
-#### Scenario
-This scenario describes a hypothetical maintenance process carried out by airline maintenance. The airline uses Choreo to generate alerts by using webhooks when the aircraft maintenance status is updated. 
-The Aircraft Maintenance team carries out maintenance for each flight before take-off. A supervisor updates the maintenance status of the aircraft on a [Aircraft Maintenance Sheet](#AircraftMaintenanceSheet), which is a Google sheet. Upon updating the sheet, the [Aircraft Status Notifier](#aircraftNotifWebhook) webhook on Choreo gets triggered and updates the [Flight Scheduling Database](#flightSchedulingDatabase) that confirms if the aircraft is ready for take off,  whether it will be delayed due to maintenance, or whether it is not suitable for take off.
-
-#### Glossary
-
-- <a class="pricing" id="aircraftNotifWebhook">Aircraft Status Notifier</a>:A webhook in Choreo that listens to any events that trigger when the Aircraft maintenance sheet is updated.
-- <a class="pricing" id="AircraftMaintenanceSheet">Aircraft Maintenance Sheet</a>: A Google sheet that maintains the list of aircraft, their information, the maintenance schedule, and the maintenance status.
-- <a class="pricing" id="flightSchedulingDatabase">Flight Scheduling Database</a>:The database that includes details about  flights, the aircraft assigned to the flight route, and their maintenance state.
-
-<br/>
-
-#### Update maintenance status 
-
-![Update maintenance status](../assets/img/references/webhook-example1.png)
-
-Let’s see how the steps are calculated for the update maintenance process:
-
-- As illustrated above, the webhook registers with the Google sheet at the time the Webhook component is created on Choreo.
-- The supervisor initiates the update process by updating or adding the relevant information on the [Aircraft Maintenance Sheet](#AircraftMaintenanceSheet).
-- The Google Sheet triggers **1 event to the Webhook Listener,[Aircraft Status Notifier](#aircraftNotifWebhook)** on Choreo. This is counted as **1 step**.
-- The Webhook Listener,[Aircraft Status Notifier](#aircraftNotifWebhook) on Choreo then makes **1 database call to the [Flight Scheduling Database](#flightSchedulingDatabase)** to update the flight maintenance status. This is counted as 1 step. 
-
-
-- **Assuming the entire execution time for the update process takes less than 500ms**, the update process thereby results in a **total of 2 steps**.
-
-!!! note
-    The above cost calculation is dependent on the above architecture and design of the Webhooks.
-<br/>
-
-### Example 4: Scheduled Job 
-An airline revises its ticket prices based on the price of jet fuel. This typically happens once a day. The airline uses a scheduled task on Choreo to run this job and to update the jet fuel price once a day.
-
-#### Scenario 
- 
-Airlines compute ticket prices typically once per day. The ticket prices depend on a number of factors. The price of oil is one such major factor that affects the pricing.  
-
-The [scheduler](#scheduler) on Choreo runs once per day and fetches the oil prices for the day from the [Oil Price API](#oilPriceAPI). It then computes the jet fuel price applying the price calculation formula. The scheduler then updates the daily jet fuel price in the [Air Fare Database](#airFareDatabase).
-
-Having the jet fuel price, the scheduler is now able to calculate the airfare for each route. The Scheduler retrieves the airline routes from the [Airline Routes API](#airlineRoutesAPI). Upon receiving the airline routes, it iterates over each route, computes the airfare, and updates the AirFare database.
-
-#### Glossary 
-
-- <a class="pricing" id="scheduler">Scheduler</a>: A scheduled task created on Choreo that runs every day.
-- <a class="pricing" id="oilPriceAPI">Oil Price API</a>: An external-facing API that returns the crude oil price for the day.
-- <a class="pricing" id="airFareDatabase">Air Fare Database</a>: The database that stores the jet fuel price which is used to compute the airfare for each route.
-- <a class="pricing" id="airlineRoutesAPI">Airline Routes API</a>: An external-facing API that provides details about the airline routes and a list of airline routes.
-- <a class="pricing" id="airlineRoutesDatabase">Airline Routes Database</a>: The database that stores the airline routes information.
-
-<br/>
-
-#### Update jet fuel price daily
-
-![ Update jet fuel prices daily](../assets/img/references/scheduled-task-example1.png)
-
-Let’s see how we can calculate the steps for the update maintenance process:
-
-- The scheduled task ([scheduler](#scheduler)) on Choreo runs once per day.
-- The scheduler makes **1 API call to the [Oil Price API](#oilPriceAPI)** to  retrieve the daily oil price.  This is counted as **1 step**. 
-- Upon receiving the daily oil price, the Scheduler then applies the formula to calculate the jet fuel price and calculates the daily jet fuel price.
-- The Scheduler on Choreo then makes **1 database call to the [Air Fare Database](#airFareDatabase)** to update the daily jet fuel price. This is counted as **1 step**. 
-
-
-- **Assuming the entire execution time for the update process takes 1200 ms**, the total number of steps can be calculated as follows:
-  
-        Number of API calls/database calls/events = 2 steps
-        Number of computation units = round((1200-500)/500) = 2 units = 2 steps
-        Total number of steps = 2 steps + 2 steps = 4 steps
-
-<br/>
-
-#### Update airfare daily  
-
-![ Update airfare daily](../assets/img/references/scheduled-task-example2.png)
-
-Let’s see how we can calculate the steps for the update process: 
-
-- The scheduled task ([scheduler](#scheduler))on Choreo runs once per day.
-- The Scheduler makes **1 API call to the [Airline Routes API](#airlineRoutesAPI)** to  retrieve the airline routes.  This is counted as **1 step**. 
-For ease of explanation, let’s *assume the above API call returns 5 airline routes*. 
-- Upon receiving the airline routes, the Scheduler then loops through the 5 airline routes and computes the airfare.  
-- The Scheduler on Choreo then makes **1 database call to the [Air Fare Database](#airFareDatabase)** to update the airfare for the airline routes. This is counted as **5 steps** because the database call was made for all airline routes received from the above API call.
-
-
-- **Assuming the entire execution time for the update process takes 750ms**, the total number of steps can be calculated as follows:
-  
-           Number of API calls/database calls/events = 6 steps
-           Number of computation units = round((750-500)/500) = 1 units = 1 step
-           Total number of steps = 6 steps + 1 steps = 7 steps    

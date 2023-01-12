@@ -1,26 +1,30 @@
 # Manage Applications
 
-An application in Choreo is a logical representation of a physical application such as a mobile app, web app, device, etc. To consume an API in Choreo, you need to create an application that maps to your physical application and then subscribes to the required API over a usage policy plan which gives you a usage quota. A single application can have multiple subscriptions to APIs. Using the consumer key and consumer secret, you can generate an access token that you can use to invoke all the APIs subscribed to the same application.
+An application in Choreo is a logical representation of a physical application such as a mobile app, web app, device, etc. To consume an API in Choreo, you need to create an application that maps to your physical application and then subscribes to the required API over a usage policy plan that gives you a usage quota. A single application can have multiple subscriptions to APIs. Using the consumer key and consumer secret, you can generate an access token that you can use to invoke all the APIs subscribed to the same application.
 
 This section will walk you through the steps to create an application in Choreo.
 
 Let's get started!
 
-## Create an application
+## Step 1: Create an application
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
+Follow the steps below to create an application on Choreo:
+
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo Console header. 
 
     ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
     
-2. Click **Applications** and click **+Create**.
-3. Enter the application name and select the usage policy. You can optionally also add the application description. Click **Create**.
-4. You are redirected to the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
+2. Click **Applications** and then, click **+Create**.
+3. Enter the application name and select the usage policy. Optionally, add the application description. 
+4. Click **Create**.
 
-## Generate keys
+You are redirected to the application overview page. You can view the throttling tier, the token type, workflow status, and the application owner of the API. 
 
-Choreo provides an OAuth 2.0 bearer token-based authentication for API access. An API access token/key is a string that is used to authenticate the API access and is passed as an HTTP header of an API request. 
+## Step 2: Generate keys
 
-Once you create an application in Choreo, you can generate the credentials for the application. You will receive a consumer key and consumer secret when you generate credentials. The consumer key becomes the application's unique identifier, similar to a user's username, and is used to authenticate the application or user. You can use the consumer key and consumer secret to generate an API access token by invoking the token endpoint. You can also revoke the access token by invoking the revoke endpoint. For testing purposes, you can generate a test token via the UI. However, we strongly recommend not to use the test token in your production environment.
+Choreo provides an OAuth 2.0 bearer token-based authentication for API access. An API access token/key is a string that is passed as an HTTP header of an API request to authenticate the API access.
+
+Once you create an application in Choreo, you can then generate the credentials for it. When you generate the credentials for the first time, Choreo gives you a consumer key and the consumer secret for the application. The consumer key becomes the unique identifier of the application, similar to a user's user name, and is used to authenticate the application or user. You can use this consumer key and consumer secret to generate an API access token by invoking the token endpoint. You can also revoke the access token by invoking the revoke endpoint. For testing purposes, you can generate a test token via the UI. However, we strongly recommend that you do not use the test token in your production environment.
 
 This section will walk you through the steps to generate an API access token in Choreo. 
 
@@ -43,16 +47,16 @@ Token Exchange grant type requires you to pass a subject_token as a parameter in
         {"access_token":"<access__token>","refresh_token":"<refresh_token>","scope":"openid","id_token":"<id_token>","token_type":"Bearer","expires_in":3600}
     ```
 
-3. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
+3. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo Console header. 
 4. Click **Applications**.
-5. Click **Production Keys** and **OAuth 2.0 Tokens** on the left pane.
+5. In the left pane, click **OAuth 2.0 Tokens**.
 6. Expand the **Advanced Configurations** section and review the options. 
 
     ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
 
     - **Grant Types:** The grant types used to generate the access token. Keep Token Exchange and Refresh Token grant type selected.
     - **Public Client:** Identify the application as a public client to allow authentication without a client secret. You can use this for applications running on a browser or mobile device. 
-    - **Application access token expiry time:** The access token expiry time (seconds).
+    - **Application acces   s token expiry time:** The access token expiry time (seconds).
     - **Refresh token expiry time:** The refresh token expiry time (seconds).
     - **ID token expiry time:** ID token expiry time (seconds).
 
@@ -83,9 +87,11 @@ replace the `<application_consumer_key>` with the **Consumer Key** you copied at
 
 ### Access token for testing
 
-1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo console header. 
+You can generate an access token for testing using the Choreo UI by following the steps below:
+
+1. Sign in to Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev). Alternatively, click the Developer Portal link on the Choreo Console header. 
 2. Click **Applications**.
-3. Click **Production Keys** and click **OAuth 2.0 Tokens** on the left pane.
+3. In the left pane, click **OAuth 2.0 Tokens**.
 4. Expand the **Advanced Configurations** section and review the options. 
 
     ![Advanced Configurations](../assets/img/developer-portal/manage-applications/advanced-configurations.png){.cInlineImage-half}
@@ -96,13 +102,14 @@ replace the `<application_consumer_key>` with the **Consumer Key** you copied at
     - **Refresh token expiry time:** The refresh token expiry time (seconds).
     - **ID token expiry time:** ID token expiry time (seconds).
 
-5. Click **Generate Credentials** to generate the credentials for the application for the first time. 
-6. Once you generate the keys, you can find the application's consumer key and consumer secret. 
+5. Click **Generate Credentials** to generate the credentials for the application for the first time. Once you generate the keys, you can find the application's consumer key and consumer secret. 
 
     ![Credentials](../assets/img/developer-portal/manage-applications/credentials.png){.cInlineImage-half}
 
-7. You can use the UI to generate a test token using the consumer key and consumer secret for the application, only for test purposes. We strongly recommend **NOT** using this token in your production environment. 
-8. Click **:// CURL** to copy the cURL command template for generating the access token. You can generate an API access token by adding the consumer key and consumer secret to the URL and invoking the token endpoint.
+    !!! info
+        You can use the UI to generate a test token using the consumer key and consumer secret for the application, only for test purposes. We strongly recommend **NOT** using this token in your production environment.
+
+6. Click **:// CURL** to copy the cURL command template for generating the access token. You can generate an API access token by adding the consumer key and consumer secret to the URL and invoking the token endpoint.
   
     ![cURL command](../assets/img/developer-portal/manage-applications/curl-command.png){.cInlineImage-half}
 
@@ -168,14 +175,14 @@ In the case of theft, security violation, or precaution, Choreo allows an admin 
     ![Developer Portal](../assets/img/developer-portal/manage-applications/developer-portal.png){.cInlineImage-half}
 
 2. Click **Applications**.
-3. Click **Production Keys** -> **OAuth 2.0 Tokens** on the left navigation menu.
+3. In the left pane, click **OAuth 2.0 Tokens**.
     You will find the **Consumer Key** (client ID), **Consumer Secret** (client secret), **Token Endpoint**, and **Revoke Endpoint** listed here. You can use these values to revoke the access token. 
 
 The parameters required to invoke the revoke token endpoint are as follows:
 
 -   `access_token_to_be_revoked` - The access token to be revoked
 
--   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret. Choreo does not recommend the use of online base64 encoders for this purpose.
+-   `<base64 encoded (consumerKey:consumerSecret)>` - Use a base64 encoder to encode your consumer key and consumer secret. Choreo does not recommend the use of online base64 encoders for this purpose.
 
 - `<consumerKey>:<consumerSecret>` Thereafter, enter the encoded value for this parameter.
 
