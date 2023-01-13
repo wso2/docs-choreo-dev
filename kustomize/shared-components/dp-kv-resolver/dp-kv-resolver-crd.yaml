@@ -71,6 +71,8 @@ spec:
                   type: string
                 lastSuccessfulBase64:
                   type: string
+                retryCount:
+                  type: integer
               type: object
           type: object
       served: true
