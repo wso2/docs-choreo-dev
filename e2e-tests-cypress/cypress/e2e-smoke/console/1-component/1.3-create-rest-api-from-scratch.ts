@@ -21,27 +21,48 @@ import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
 import { ComponentListingPage } from '../../../support/console/pages/component/component-listing-page';
-import { REUSABLE_PROJECT_NAME } from '../../../support/devportal/constants';
+import { GitHub } from "../../../support/github/github";
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify project creation functionality", () => {
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
   const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
+  const REPO_NAME = Utils.generateComponentName("repo");
+  const PROJECT_DESCRIPTION = "Covid stats project";
+  const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
+    GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc")
+    GitHub.createNewFile(REPO_NAME, "Ballerina.toml", "cypress/fixtures/Ballerina.toml")
+    GitHub.createNewFile(REPO_NAME, "gql.bal", "cypress/fixtures/numbers.bal")
+    GitHub.createNewFile(REPO_NAME, "Cloud.toml", "cypress/fixtures/Cloud.toml")
     LoginPage.login();
     ChoreoHomePage.switchOrganization();
+
   });
+
   after(() => {
     ChoreoHomePage.logout();
   });
 
+
   it("Verify REST API component creation", () => {
-    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
+    let componentData: ComponentData = {
+      componentName: COMPONENT_NAME,
+      displayType: Enums.DisplayType.restAPI,
+      projectName: PROJECT_NAME,
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME)
+    }
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
   });
 
   it("Verify component deployment", () => {
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME)
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
   });

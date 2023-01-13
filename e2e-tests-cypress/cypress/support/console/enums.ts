@@ -17,7 +17,9 @@ export namespace Enums {
         restAPI = "restAPI",
         proxy = "proxy",
         webhook = "webhook",
-        graphql = "graphql"
+        graphql = "graphql",
+        manualTrigger ="manualTrigger",
+        scheduledTask ="scheduledTask"
     }
 
     export enum ComponentTemplate {

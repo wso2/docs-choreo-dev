@@ -21,12 +21,9 @@ export class ProjectListingPage {
     description: string,
     dataPlane: Enums.Region = Enums.Region.US
   ) {
-    if (Utils.isPerspectiveViewEnabled()) {
+  
       cy.get('[data-cyid="create-project-card"]').click().wait(3000);
-    } else {
-      cy.get('[data-testid="project-picker"]>div').click();
-      cy.get('[data-cyid="btn-create-new"]').focus().click().wait(3000);
-    }
+  
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();

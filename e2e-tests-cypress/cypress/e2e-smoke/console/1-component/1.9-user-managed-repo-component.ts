@@ -29,6 +29,7 @@ describe("Verify BYOR functionality", () => {
         GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc")
         GitHub.createNewFile(REPO_NAME, "Ballerina.toml", "cypress/fixtures/Ballerina.toml")
         GitHub.createNewFile(REPO_NAME, "gql.bal", "cypress/fixtures/service.bal")
+        GitHub.createNewFile(REPO_NAME, "Cloud.toml", "cypress/fixtures/Cloud.toml")
         LoginPage.login();
         ChoreoHomePage.switchOrganization();
 
