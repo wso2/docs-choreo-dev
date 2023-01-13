@@ -1,8 +1,8 @@
 configMapGenerator:
   - name: cm-test-assistant
     behavior: create
-    files:
-      - test-assistant/models.properties
+    literals:
+      - TEMP_DATA_DIR=/temp-data-dir/
   - name: env-workspace-manager-shared # shared workspace-manager configs across environments
     behavior: create
     literals:
