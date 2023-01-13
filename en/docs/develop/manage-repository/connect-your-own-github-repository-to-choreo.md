@@ -4,8 +4,8 @@ Choreo allows you to connect your own GitHub repository to maintain the source c
 
 This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will connect your GitHub repository and use the REST API implementation in your GitHub repository to create a REST API in Choreo.
     
-    !!! info
-        You can create a component by connecting an empty repository. However, you can only deploy it after you implement it. 
+!!! info
+    You can create a component by connecting an empty repository. However, you can only deploy it after you implement it. 
 
 ## Prerequisites: Create a project
 
