@@ -32,7 +32,7 @@ configMapGenerator:
       - LIMIT_RESPONSE_HEADERS_ENABLED="false"
       # Redis
       - REDIS_SOCKET_TYPE="tcp"
-      - REDIS_URL="" # should configure with each environments Redis instance in overlay
+      - REDIS_URL="" # should be configured in the overlay
       - REDIS_PIPELINE_WINDOW="0.2ms"
       - REDIS_PIPELINE_LIMIT="0"
       - REDIS_TLS="true"
