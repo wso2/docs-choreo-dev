@@ -6,6 +6,7 @@ import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
@@ -56,6 +57,8 @@ public class ConnectorBuilderIT extends TestNGCitrusSpringSupport {
         RestApiChoreoComponent restApiComponent =
                 (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
         componentId = restApiComponent.getId();
+        Orgs.getConfigurationMapping(restApiComponent,accessToken);
+        Orgs.addConfiguration(restApiComponent, "dev", accessToken);
         restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
         restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
         restApiComponent.getLatestApiVersion()
