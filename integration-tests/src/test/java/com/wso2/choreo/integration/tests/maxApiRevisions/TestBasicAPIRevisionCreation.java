@@ -10,63 +10,52 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
+import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
+import com.wso2.choreo.integration.models.proxyapi.DeploymentStatus;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
 
-public class APIRevisions extends TestNGCitrusSpringSupport {
+public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static String projectId;
-    private static String firstAPIName;
-    private static String firstContext;
     private ProxyAPI proxyAPI;
     private String apiId;
-    private String releaseId;
-    private String componentId;
     private String versionId;
     private String newRevisionId;
     private String oldRevisionId;
     private String orgUuid;
-    private String orgHandle;
     Environment[] environments;
     Environment devEnv;
     ChoreoComponent choreoComponent;
     ProxyAPIBuild proxyAPIBuild;
-    private String deploymentName;
-    private String deploymentVHost;
-    private Boolean deploymentDisplayOnDevportal;
 
     @Autowired
     private HttpClient choreoTestClientForSTS;
@@ -75,13 +64,12 @@ public class APIRevisions extends TestNGCitrusSpringSupport {
     public void setup_APIRevisions() throws IOException, TokenRetrievalException, NoLatestApiVersionFoundException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
 
         ChoreoProject testProject = GraphQL.createProject(accessToken);
-        projectId = testProject.getId();
+        String projectId = testProject.getId();
 
-        firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
-        firstContext = APICreator.generateContext(firstAPIName);
+        String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        String firstContext = APICreator.generateContext(firstAPIName);
         proxyAPI = APICreator.createAPI(firstAPIName, firstContext, accessToken).getEntity();
         Assert.assertNotNull(proxyAPI.getId());
         this.apiId = proxyAPI.getId();
@@ -197,102 +185,130 @@ public class APIRevisions extends TestNGCitrusSpringSupport {
 
                     JsonObject deployedRevisionObject  = list.get(0).getAsJsonObject();
                     JsonArray deploymentInfoArray = deployedRevisionObject.get("deploymentInfo").getAsJsonArray();
+                    JsonObject apiInfo = deployedRevisionObject.get("apiInfo").getAsJsonObject();
+                    versionId = apiInfo.get("id").getAsString();
                     if (deploymentInfoArray.size() != 0) {
                         JsonObject deploymentInfo = deploymentInfoArray.get(0).getAsJsonObject();
-                        this.oldRevisionId = deploymentInfo.get("revisionUuid").getAsString();
-                        this.deploymentName = deploymentInfo.get("name").getAsString();
-                        this.deploymentVHost = deploymentInfo.get("vhost").getAsString();
-                        this.deploymentDisplayOnDevportal = deploymentInfo.get("displayOnDevportal").getAsBoolean();
-//                        this.releaseId = deploymentInfo.get("releaseId").getAsString();
-
+                        oldRevisionId = deploymentInfo.get("revisionUuid").getAsString();
                     }}));
     }
 
     @Test(dependsOnMethods = {"verifyCreateNewRevision"})
-    @CitrusTest(name = "Deploy new revision and verify")
+    @CitrusTest(name = "Deploy new revision")
     public void deployNewRevision() throws Exception {
-        String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
-                .concat("/").concat("deploy-revision")
-                .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid)
-                .concat("&").concat("revisionId").concat("=").concat(this.newRevisionId);
-
-        String deploymentName = this.deploymentName;
-        String deploymentVHost = this.deploymentVHost;
-        Boolean deploymentDisplayOnDevportal = true;
-        List<HashMap<String, Object>> requestBodyMapList = new ArrayList<>();
-        HashMap<String, Object> requestBodyMap = new HashMap<>() {
-            {
-                put("name", deploymentName);
-                put("vhost", deploymentVHost);
-                put("displayOnDevportal", deploymentDisplayOnDevportal);
+        String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
+        DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
+                newRevisionId, buildId, apiId, accessToken);
+        Assert.assertEquals(res.getMessage(), "Settings deployment started");
+        for (int i = 0; i < 10; i++) {
+            DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
+                    res.getRequestId(), accessToken);
+            if (Objects.equals(statusResponse.getStatus(), "completed")) {
+                break;
             }
-        };
-        requestBodyMapList.add(requestBodyMap);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(requestBodyMapList);
-
-        $(http()
-                .client(choreoTestClientForSTS)
-                .send()
-                .post(path)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                .body(requestBody));
-
-        $(http()
-                .client(choreoTestClientForSTS)
-                .receive()
-                .response(HttpStatus.CREATED)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource(
-                        "templates/maxApiRevisions/deploy_revision_success.json"))
-                .validate(json()));
+            SleepUtil.sleep(10);
+        }
     }
 
     @Test(dependsOnMethods = {"deployNewRevision"})
-    @CitrusTest(name = "Re deploy old revision and verify")
-    public void deployOldRevision() throws Exception {
-        String path = Constant.APIS_ENDPOINT.concat("/").concat(this.apiId)
-                .concat("/").concat("deploy-revision")
-                .concat("?").concat(Constant.ORGANIZATION_ID).concat("=").concat(this.orgUuid)
-                .concat("&").concat("revisionId").concat("=").concat(this.oldRevisionId);
+    @CitrusTest(name = "Verify deploy new revision")
+    public void verifyDeployNewRevision() throws Exception {
+        Map<String, Object> responseParams = new HashMap<>();
+        responseParams.put("REVISION_COUNT", 3);
 
-        String deploymentName = this.deploymentName;
-        String deploymentVHost = this.deploymentVHost;
-        Boolean deploymentDisplayOnDevportal = this.deploymentDisplayOnDevportal;
-        List<HashMap<String, Object>> requestBodyMapList = new ArrayList<>();
-        HashMap<String, Object> requestBodyMap = new HashMap<>() {
-            {
-                put("name", deploymentName);
-                put("vhost", deploymentVHost);
-                put("displayOnDevportal", deploymentDisplayOnDevportal);
-            }
-        };
-        requestBodyMapList.add(requestBodyMap);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(requestBodyMapList);
+        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+                "templates/maxApiRevisions/get_revisions_success.mustache",
+                responseParams);
+
+        String path = Constant.APIS_ENDPOINT.concat("/").concat(proxyAPI.getId())
+                .concat("/").concat("revisions")
+                .concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
+                .concat(this.orgUuid);
 
         $(http()
                 .client(choreoTestClientForSTS)
                 .send()
-                .post(path)
+                .get(path)
                 .message()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                .body(requestBody));
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
 
         $(http()
                 .client(choreoTestClientForSTS)
                 .receive()
-                .response(HttpStatus.CREATED)
+                .response(HttpStatus.OK)
                 .message()
                 .type(MessageType.JSON)
-                .body(new ClassPathResource(
-                        "templates/maxApiRevisions/redeploy_revision_success.json"))
-                .validate(json()));
+                .body(expectedResponse)
+                .validate(json()
+                        .ignore("$.list"))
+                .extract((message, context) -> {
+                    JsonObject component = new JsonParser().parse((String) message.getPayload())
+                            .getAsJsonObject();
+                    JsonArray list = component.get("list").getAsJsonArray();
+
+                    JsonObject newDeployedRevisionObject  = list.get(2).getAsJsonObject();
+                    JsonArray newDeploymentInfoArray = newDeployedRevisionObject.get("deploymentInfo").getAsJsonArray();
+                    Assert.assertTrue(newDeploymentInfoArray.size() > 0);
+                }));
+    }
+
+    @Test(dependsOnMethods = {"verifyDeployNewRevision"})
+    @CitrusTest(name = "Re deploy old revision")
+    public void deployOldRevision() throws Exception {
+        String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
+        DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
+                oldRevisionId, buildId, apiId, accessToken);
+        Assert.assertEquals(res.getMessage(), "Settings deployment started");
+        for (int i = 0; i < 10; i++) {
+            DeploymentStatus statusResponse =  APICreator.checkDeploymentStatus(choreoComponent.getId(), versionId,
+                    res.getRequestId(), accessToken);
+            if (Objects.equals(statusResponse.getStatus(), "completed")) {
+                break;
+            }
+            SleepUtil.sleep(10);
+        }
+    }
+
+    @Test(dependsOnMethods = {"deployOldRevision"})
+    @CitrusTest(name = "Verify redeploy old revision")
+    public void verifyRedeployOldRevision() throws Exception {
+        Map<String, Object> responseParams = new HashMap<>();
+        responseParams.put("REVISION_COUNT", 4);
+
+        String expectedResponse = ComponentUtils.generateStringPayloadFromTemplate(
+                "templates/maxApiRevisions/get_revisions_success.mustache",
+                responseParams);
+
+        String path = Constant.APIS_ENDPOINT.concat("/").concat(proxyAPI.getId())
+                .concat("/").concat("revisions")
+                .concat("?").concat(Constant.ORGANIZATION_ID).concat("=")
+                .concat(this.orgUuid);
+
+        $(http()
+                .client(choreoTestClientForSTS)
+                .send()
+                .get(path)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+        $(http()
+                .client(choreoTestClientForSTS)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .type(MessageType.JSON)
+                .body(expectedResponse)
+                .validate(json()
+                        .ignore("$.list"))
+                .extract((message, context) -> {
+                    JsonObject component = new JsonParser().parse((String) message.getPayload())
+                            .getAsJsonObject();
+                    JsonArray list = component.get("list").getAsJsonArray();
+                    JsonObject oldDeployedRevisionObject  = list.get(3).getAsJsonObject();
+                    JsonArray oldDeploymentInfoArray = oldDeployedRevisionObject.get("deploymentInfo").getAsJsonArray();
+                    Assert.assertTrue(oldDeploymentInfoArray.size() > 0);
+                }));
     }
 }

@@ -11,7 +11,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -58,6 +61,20 @@ public class HttpClientUtil {
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
         request.setEntity(new StringEntity(payload));
+        return sendRequest(request);
+    }
+
+    public static Response httpPOSTFormData(String url, Map<String, String>  payload, String accessToken, String apiKey) {
+        HttpPost request = new HttpPost(url);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        request.setHeader("API-Key", apiKey);
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        if(!payload.isEmpty()){
+            for (String key: payload.keySet()){
+                entityBuilder.addPart(key, new StringBody(payload.get(key), ContentType.MULTIPART_FORM_DATA));
+            }
+        }
+        request.setEntity(entityBuilder.build());
         return sendRequest(request);
     }
 
