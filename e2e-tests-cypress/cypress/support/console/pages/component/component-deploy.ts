@@ -106,7 +106,7 @@ export class ComponentDeployPage {
   static promoteManualTriggerToProd() {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
-      .wait(2000)
+      .wait(5000)
       .click();
   }
 

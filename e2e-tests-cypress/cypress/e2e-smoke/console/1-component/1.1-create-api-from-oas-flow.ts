@@ -178,6 +178,7 @@ describe("Choreo APIM publisher scenarios", () => {
     AppsList.editAnApplication(appName, "employee.read");
     // Validate API call with scope
     DevPortalHomePage.navigateToApisPage();
+    Apis.searchApiAndSelect(API_NAME, 1);
     DevPortalHomePage.navigateSelectAPI(API_NAME);
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);

@@ -1,9 +1,9 @@
-import { DisplayType } from "../console/enums"
+import { Enums } from "../console/enums"
 
 export interface ComponentData {
     projectName: string
     componentName: string
-    displayType: DisplayType
+    displayType: Enums.DisplayType
     triggerChannels: string
     triggerId: string
     srcGitRepoUrl: string
