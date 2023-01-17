@@ -10,11 +10,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -37,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,16 +59,13 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         private String componentId;
         private static String componentHandler;
         private static String invokeUrl;
-        private static String prNumber;
         private static String apiKey;
         private static String apiId;
-        private String repoName = "byor-greetings-app2";
-        private String repoSubpath = "hello_service";
-        private String repoType = "UserManagedNonEmpty";
-        private String repoBranch = "feature";
-        private String prBranch;
+        private static final String repoName = "byor-greetings-app2";
+        private static final String repoSubpath = "hello_service";
+        private static final String repoType = "UserManagedNonEmpty";
+        private static final String repoBranch = "feature";
         private String githubOrg;
-        private String githubPAT;
         private static ChoreoComponent testComponent;
 
         @Autowired
@@ -92,7 +88,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
                 githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-                githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
                 ChoreoProject project = GraphQL.createProject(accessToken);
                 projectId = project.getId();
         }
@@ -495,4 +490,28 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                                                                 .type(MessageType.PLAINTEXT)));
         }
 
+        @Test(dependsOnMethods = {"invokeAPIDev_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                Commit[] commitHistory = GraphQL.getCommitHistoryBranch(testComponent.getId(), repoBranch, accessToken);
+                Orgs.addConfiguration(choreoTestClient, this, testComponent, commitHistory, Constant.PROD_ENVIRONMENT);
+        }
+
+        @Test(dependsOnMethods = {"addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void promote_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                GraphQL.promoteComponent(testComponent, accessToken);
+        }
+
+        @Test(dependsOnMethods = {"promote_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                GraphQL.componentDeployment(testComponent, "prod", accessToken);
+        }
+
+        @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void invokeAPIProd_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                ComponentUtils.invokeApiEndpoint(accessToken, testComponent, Constant.Environment.Production);
+        }
 }
