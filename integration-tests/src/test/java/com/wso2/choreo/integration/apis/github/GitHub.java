@@ -128,9 +128,7 @@ public class GitHub extends ControlPlaneAPI {
                 String timeStamp = rep.getName().replace("test-repo-", "").replace("automationtestcomponent","").replace("repo","");
                 long createdTime = Long.parseLong(timeStamp);
                 long timeDiff = currentTime-createdTime;
-                log.info(Long.toString(timeDiff));
                 if(timeDiff>7200000){
-                    log.info(rep.getName());
                     deleteGitHubRepo(rep.getName());
                 }
 

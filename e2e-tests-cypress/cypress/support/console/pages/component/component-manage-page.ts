@@ -59,11 +59,11 @@ export class ComponentAPILifecycle {
 
   static publishRestApiWithoutConnector() {
     cy.get('[data-testid="Publish-lc-btn"]').click();
-    cy.get('body').then((body) => {
+    cy.get("body").then((body) => {
       if (body.find('[aria-labelledby="confirmation-dialog"]').length > 0) {
         cy.contains("No, Thanks").should("be.enabled").click();
       }
-    })
+    });
   }
 
   static publishWithoutConnector() {
@@ -137,9 +137,11 @@ export class ComponentAPILifecycle {
     cy.contains("Yes, Please").should("be.enabled").click();
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
     cy.get('[data-testid="publish-btn"]').click();
-    cy.get('[data-testid="marketplace-btn"]').focus().should("be.visible");
+    cy.get('[data-testid="published-connector-info"]').contains(
+      "You have already published a connector for this API."
+    );
     cy.get('[data-testid="connector-publish-wizard-title"]').should(
-        "not.exist"
+      "not.exist"
     );
   }
 
@@ -218,7 +220,7 @@ export class ComponentAPILifecycle {
   }
 
   static selectResources() {
-    cy.get('[data-cyid="tab-resource-settings"]').click({force: true});
+    cy.get('[data-cyid="tab-resource-settings"]').click({ force: true });
   }
 
   static editResource() {
@@ -238,7 +240,9 @@ export class ComponentAPILifecycle {
   static selectRevision(env: Environment) {
     cy.get('[data-cyid="selected-revision"]').click();
     cy.get('[data-testid="revision-history-header"]').should("be.visible");
-    cy.get('[data-cyid*="revision-list-item"]').contains(env).click({force: true});
+    cy.get('[data-cyid*="revision-list-item"]')
+      .contains(env)
+      .click({ force: true });
   }
 
   static disableResourceSecurity(resource: string) {
@@ -302,15 +306,15 @@ export class ComponentAPILifecycle {
     );
   }
 
-  static managePermissions(permissions: string[] ,componentName: string) {
-    permissions.forEach(permission => {
+  static managePermissions(permissions: string[], componentName: string) {
+    permissions.forEach((permission) => {
       this.addPermission(permission);
     });
     this.applyAllPermissionsToResources(permissions);
     this.saveAndDeployPermissions(componentName);
     this.deleteAllPermissionsFromReources();
     this.saveAndDeployPermissions(componentName);
-    this.selectPermission('employee.read');
+    this.selectPermission("employee.read");
     this.saveAndDeployPermissions(componentName);
   }
 
@@ -319,29 +323,37 @@ export class ComponentAPILifecycle {
   }
 
   static navigatePermissionManagementWindow() {
-    cy.get('h5').contains("You don't have any permissions (scopes) defined as yet");
+    cy.get("h5").contains(
+      "You don't have any permissions (scopes) defined as yet"
+    );
     cy.get('[data-testid="scope-add-icon-button"]').click();
   }
 
   static addPermission(permissionName: string) {
-    cy.get('[data-testid="scope-add-new-btn"]').should('be.disabled');
+    cy.get('[data-testid="scope-add-new-btn"]').should("be.disabled");
     cy.get('[data-testid="scope-text-input"]').type(permissionName);
-    cy.get('[data-testid="scope-add-new-btn"]').should('be.enabled').click().wait(1000);
-    cy.contains('Permission(Scope) created successfully');
-    cy.get('[data-testid="scope-select-all-btn"]').should('be.visible');
-    cy.get(`[data-testid="scope-item-${permissionName}"]`).should('be.visible');
+    cy.get('[data-testid="scope-add-new-btn"]')
+      .should("be.enabled")
+      .click()
+      .wait(1000);
+    cy.contains("Permission(Scope) created successfully");
+    cy.get('[data-testid="scope-select-all-btn"]').should("be.visible");
+    cy.get(`[data-testid="scope-item-${permissionName}"]`).should("be.visible");
   }
 
   static applyAllPermissionsToResources(permissions: string[]) {
-    cy.get('[data-testid="scope-apply-to-all-btn"]').should('be.disabled');
-    cy.get('[data-testid="scope-select-all-btn"]').should('be.enabled').click();
-    cy.get('[data-testid="scope-apply-to-all-btn"]').should('be.enabled').click();
+    cy.get('[data-testid="scope-apply-to-all-btn"]').should("be.disabled");
+    cy.get('[data-testid="scope-select-all-btn"]').should("be.enabled").click();
+    cy.get('[data-testid="scope-apply-to-all-btn"]')
+      .should("be.enabled")
+      .click();
     this.verifyApplyAllPermissionsToResources(permissions);
   }
 
   static verifyApplyAllPermissionsToResources(permissions: string[]) {
-    cy.get('[data-testid="autocomplete-textfield"]>div').find('.MuiChip-root')
-    .should('have.length', permissions.length * 3);
+    cy.get('[data-testid="autocomplete-textfield"]>div')
+      .find(".MuiChip-root")
+      .should("have.length", permissions.length * 3);
   }
 
   static deleteAllPermissionsFromReources() {
@@ -353,16 +365,19 @@ export class ComponentAPILifecycle {
   }
 
   static verifyDeleteAllPermissionsFromReources() {
-    cy.get('[data-testid="autocomplete-textfield"]>div').find('.MuiChip-root')
-    .should('have.length', 0);
+    cy.get('[data-testid="autocomplete-textfield"]>div')
+      .find(".MuiChip-root")
+      .should("have.length", 0);
   }
 
   static selectPermission(permissionName: string) {
     cy.get(`[data-testid="scope-item-checkbox-${permissionName}"]`).click();
-    cy.get('[data-testid="scope-apply-to-all-btn"]').should('be.enabled').click();
+    cy.get('[data-testid="scope-apply-to-all-btn"]')
+      .should("be.enabled")
+      .click();
     // This can be enabled after fixing the bug in the autocomplete
     // https://github.com/wso2-enterprise/choreo/issues/17521
-    
+
     // cy.get('[data-testid="autocomplete-textfield"]').click();
     // cy.get('li[data-option-index="0"]').contains(permissionName).then((option) => {
     //   option[0].click();
@@ -371,16 +386,17 @@ export class ComponentAPILifecycle {
 
   static deletePermission(permissionName: string) {
     cy.get(`[data-testid="scope-delete-btn-${permissionName}"]`).click();
-    cy.get('[data-testid="scope-delete-description"]')
-    .contains(`Are you sure you want to Delete the permission (scope) "${permissionName}"?`);
+    cy.get('[data-testid="scope-delete-description"]').contains(
+      `Are you sure you want to Delete the permission (scope) "${permissionName}"?`
+    );
     // Verify scope being used by how many resources
     cy.get('[data-testid="scope-delete-delete-button"]').click();
-    cy.contains('Permission(Scope) deleted successfully');
+    cy.contains("Permission(Scope) deleted successfully");
   }
 
   static saveAndDeployPermissions(componentName: string) {
     cy.get('[data-testid="scope-save-and-deploy-btn"]').click();
-    cy.contains('Permissions(Scopes) assigned successfully').wait(1000);
+    cy.contains("Permissions(Scopes) assigned successfully").wait(1000);
     cy.contains(`Deployed the component ${componentName}`).wait(10000);
   }
 }

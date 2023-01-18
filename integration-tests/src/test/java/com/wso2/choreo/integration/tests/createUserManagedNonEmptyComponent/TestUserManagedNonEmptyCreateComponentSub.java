@@ -10,11 +10,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -37,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,16 +59,13 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         private String componentId;
         private static String componentHandler;
         private static String invokeUrl;
-        private static String prNumber;
         private static String apiKey;
         private static String apiId;
-        private String repoName = "byor-greetings-app2";
-        private String repoSubpath = "hello_service";
-        private String repoType = "UserManagedNonEmpty";
-        private String repoBranch = "feature";
-        private String prBranch;
+        private static final String repoName = "byor-greetings-app2";
+        private static final String repoSubpath = "hello_service";
+        private static final String repoType = "UserManagedNonEmpty";
+        private static final String repoBranch = "feature";
         private String githubOrg;
-        private String githubPAT;
         private static ChoreoComponent testComponent;
 
         @Autowired
@@ -92,7 +88,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
                 orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
                 githubOrg = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
-                githubPAT = Configuration.getConfig(ConfigDefinition.GITHUB_PAT);
                 ChoreoProject project = GraphQL.createProject(accessToken);
                 projectId = project.getId();
         }
@@ -173,165 +168,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
         }
 
         @Test(dependsOnMethods = { "createdComponentStatus_TestUserManagedNonEmptyCreateComponentSub" })
-        @CitrusTest
-        public void initialPRGeneration_TestUserManagedNonEmptyCreateComponentSub() throws JsonProcessingException {
-                String graphQlQuery = "query{ componentPullRequests(" +
-                                "        componentId: \"" + componentId + "\"," +
-                                "      ){" +
-                                "        url, number" +
-                                "      }}";
-                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-                        {
-                                put("query", graphQlQuery);
-                        }
-                };
-                ObjectMapper objectMapper = new ObjectMapper();
-                String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
-
-                // Check if initial PR has been generated
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/createUserManagedComponent/get_pull_requests.json"))
-                                .validate((message, context) -> {
-                                        JsonObject prInformation = new JsonParser().parse((String) message.getPayload())
-                                                        .getAsJsonObject()
-                                                        .getAsJsonObject("data")
-                                                        .getAsJsonArray("componentPullRequests").get(0)
-                                                        .getAsJsonObject();
-                                        prNumber = prInformation.get("number").getAsString();
-                                }));
-        }
-
-        @Test(dependsOnMethods = { "initialPRGeneration_TestUserManagedNonEmptyCreateComponentSub" })
-        @CitrusTest
-        public void mergePR_TestUserManagedNonEmptyCreateComponentSub() throws JsonProcessingException {
-                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
-                        .concat("/pulls/" + prNumber + "/merge");
-                HashMap<String, Object> requestBodyMap = new HashMap<>() {
-                        {
-                                put("commit_title", "Merge initial PR");
-                        }
-                };
-                ObjectMapper objectMapper = new ObjectMapper();
-                String requestBody = objectMapper.writeValueAsString(requestBodyMap);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-
-                // Merge initial PR
-                $(http()
-                        .client(choreoTestClientForGithub)
-                        .send()
-                        .put(requestURI)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, authHeader)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .body(requestBody)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                        .client(choreoTestClientForGithub)
-                        .receive()
-                        .response(HttpStatus.OK));
-
-                String graphQlQuery = "query{ componentPullRequests(" +
-                        "        componentId: \"" + componentId + "\"," +
-                        "      ){" +
-                        "        url, number" +
-                        "      }}";
-                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-                        {
-                                put("query", graphQlQuery);
-                        }
-                };
-
-                ObjectMapper pullRequestObjectMapper = new ObjectMapper();
-                String listPrRequestBody = pullRequestObjectMapper.writeValueAsString(gqlRequestPayload);
-
-                $(repeatOnError()
-                        .until("i = 3")
-                        .index("i")
-                        .autoSleep(5000)
-                        .actions(
-                                http()
-                                        .client(choreoProjectsTestClient)
-                                        .send()
-                                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                        .message()
-                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                        .header(HttpHeaders.CONTENT_TYPE,
-                                                MediaType.APPLICATION_JSON_VALUE)
-                                        .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                        .body(listPrRequestBody),
-                                http().client(choreoProjectsTestClient)
-                                        .receive()
-                                        .response(HttpStatus.OK)
-                                        .message()
-                                        .type(MessageType.JSON)
-                                        .body(new ClassPathResource(
-                                                "templates/createUserManagedComponent/get_pull_requests_empty.json"))
-                                        .validate(json())));
-        }
-
-        @Test(dependsOnMethods = { "mergePR_TestUserManagedNonEmptyCreateComponentSub" })
-        @CitrusTest
-        public void deleteBranch_TestUserManagedNonEmptyCreateComponentSub() throws JsonProcessingException {
-                String requestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
-                        .concat("/pulls/" + prNumber);
-                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
-
-                // get merged PR branch
-                $(http()
-                        .client(choreoTestClientForGithub)
-                        .send()
-                        .get(requestURI)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, authHeader)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                        .client(choreoTestClientForGithub)
-                        .receive()
-                        .response(HttpStatus.OK)
-                        .message()
-                        .type(MessageType.JSON)
-                        .validate((message, context) -> {
-                                JsonObject prBranchInformation = new JsonParser()
-                                        .parse((String) message.getPayload()).getAsJsonObject()
-                                        .getAsJsonObject("head");
-                                prBranch = prBranchInformation.get("ref").getAsString();
-                        }));
-
-                // delete merged PR branch
-                String deleteRequestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
-                        .concat("/git/refs/heads/" + prBranch);
-
-                $(http()
-                        .client(choreoTestClientForGithub)
-                        .send()
-                        .delete(deleteRequestURI)
-                        .message()
-                        .header(HttpHeaders.AUTHORIZATION, authHeader)
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                        .client(choreoTestClientForGithub)
-                        .receive()
-                        .response(HttpStatus.NO_CONTENT));
-        }
-
-        @Test(dependsOnMethods = { "deleteBranch_TestUserManagedNonEmptyCreateComponentSub" })
         @CitrusTest
         public void componentRetrieval_TestUserManagedNonEmptyCreateComponentSub() throws JsonProcessingException, IOException {
                 APICreator testAPI = new APICreator();
@@ -523,7 +359,6 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                 responseParams.put("environmentId", devEnvIdToDeploy);
                 responseParams.put("sha", latestCommitSha);
                 responseParams.put("versionId", versionId);
-                responseParams.put("message","Merge initial PR\\n\\nAdd Choreo related template and config files");
 
                 String expectedResponse = ComponentUtils.generateStringFromTemplate(
                         "templates/deploy/deploy_managed_status_success.mustache", responseParams);
@@ -655,41 +490,28 @@ public class TestUserManagedNonEmptyCreateComponentSub extends TestNGCitrusSprin
                                                                 .type(MessageType.PLAINTEXT)));
         }
 
-        @Test(dependsOnMethods = { "invokeAPIDev_TestUserManagedNonEmptyCreateComponentSub" }, alwaysRun = true)
+        @Test(dependsOnMethods = {"invokeAPIDev_TestUserManagedNonEmptyCreateComponentSub"})
         @CitrusTest
-        public void deleteRestApiComponent_TestUserManagedNonEmptyCreateComponentSub() throws JsonProcessingException {
-                String graphqlQuery = "mutation { deleteComponentV2(" +
-                                "orgHandler: \"" + orgHandle + "\"," +
-                                "componentId: \"" + componentId + "\"," +
-                                "projectId: \"" + projectId + "\"){ status }" +
-                                "}";
+        public void addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                Commit[] commitHistory = GraphQL.getCommitHistoryBranch(testComponent.getId(), repoBranch, accessToken);
+                Orgs.addConfiguration(choreoTestClient, this, testComponent, commitHistory, Constant.PROD_ENVIRONMENT);
+        }
 
-                HashMap<String, String> gqlRequestPayload = new HashMap<>() {
-                        {
-                                put("query", graphqlQuery);
-                        }
-                };
-                ObjectMapper objectMapper = new ObjectMapper();
-                String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
+        @Test(dependsOnMethods = {"addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void promote_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                GraphQL.promoteComponent(testComponent, accessToken);
+        }
 
-                // Delete component
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .send()
-                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .body(requestBody)
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-                $(http()
-                                .client(choreoProjectsTestClient)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(new ClassPathResource(
-                                                "templates/createComponent/mutation_delete_component_success.json"))
-                                .validate(json()));
+        @Test(dependsOnMethods = {"promote_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                GraphQL.componentDeployment(testComponent, "prod", accessToken);
+        }
+
+        @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentSub"})
+        @CitrusTest
+        public void invokeAPIProd_TestUserManagedNonEmptyCreateComponentSub() throws Exception {
+                ComponentUtils.invokeApiEndpoint(accessToken, testComponent, Constant.Environment.Production);
         }
 }

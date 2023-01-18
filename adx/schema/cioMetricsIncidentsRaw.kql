@@ -1,0 +1,41 @@
+// Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+
+// This software is the property of WSO2 Inc. and its suppliers, if any.
+// Dissemination of any information or reproduction of any material contained
+// herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+// You may not alter or remove any copyright or other notice from copies of this content.
+
+.create table incidentsRaw (
+    timestamp: datetime,
+    orgId: string,
+    projectId: string,
+    componentId: string,
+    versionId: string,
+    environmentId: string,
+    commitId: string,
+    releaseId: string,
+    incidentId: string,
+    status: string,
+    isProd: bool,
+    duration: int,
+    properties: string,
+    updatedTime: datetime
+);
+
+.create table incidentsRaw ingestion json mapping "incidentRawMapping"
+    '['
+    '    { "column" : "timestamp", "Properties":{"Path":"$.createdTime"}},'
+    '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
+    '    { "column" : "projectId", "Properties":{"Path":"$.projectId"}},'
+    '    { "column" : "componentId", "Properties":{"Path":"$.componentId"}},'
+    '    { "column" : "versionId", "Properties":{"Path":"$.versionId"}},'
+    '    { "column" : "environmentId", "Properties":{"Path":"$.environmentId"}},'
+    '    { "column" : "commitId", "Properties":{"Path":"$.commitId"}},'
+    '    { "column" : "releaseId", "Properties":{"Path":"$.releaseId"}},'
+    '    { "column" : "incidentId", "Properties":{"Path":"$.incidentId"}},'
+    '    { "column" : "status", "Properties":{"Path":"$.status"}},'
+    '    { "column" : "isProd", "Properties":{"Path":"$.isProd"}},'
+    '    { "column" : "duration", "Properties":{"Path":"$.duration"}},'
+    '    { "column" : "properties", "Properties":{"Path":"$.properties"}},'
+    '    { "column" : "updatedTime", "Properties":{"Path":"$.updatedTime"}}'
+    ']';

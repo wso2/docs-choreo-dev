@@ -3,4 +3,4 @@
 ############## Install Reloader
 echo "--- Installing Reloader..."
 kubectl create ns reloader
-kubectl apply -n reloader -f ../../reloader/reloader.yaml
+kubectl apply -n reloader -f reloader/reloader.yaml

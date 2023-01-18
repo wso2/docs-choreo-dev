@@ -215,6 +215,7 @@ export class GraphQL {
                                 {id, orgId, projectId, handler    }
                       }`
       }
+      cy.log(JSON.stringify(query))
       this.callGraphQL(query).then(res => {
         const { id } = res.body.data.createComponent;
 
