@@ -27,7 +27,7 @@ public final class Constant {
             "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscription_manage " +
             "apim:subscription_view apim:tier_manage choreo:component_manage choreo:deployment_manage " +
             "choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage choreo:role_manage " +
-            "choreo:user_manage environments:view_dev environments:view_prod";
+            "choreo:user_manage environments:view_dev environments:view_prod apim:environment_manage";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
