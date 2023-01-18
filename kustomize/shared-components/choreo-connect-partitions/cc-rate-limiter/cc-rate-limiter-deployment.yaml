@@ -64,11 +64,14 @@ spec:
               readOnly: true
               subPath: RATE_LIMITER_KEYSTORE_KEY
             - mountPath: /home/wso2/security/keystore/rate-limiter.pem
-              name: secret-cc-rate-limiter
+              name: secret-cc-rate-limiter-cert
               readOnly: true
               subPath: RATE_LIMITER_KEYSTORE_CERT
             - name: secret-cc-rate-limiter
               mountPath: /mnt/csi/secret-cc-rate-limiter
+              readOnly: true
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /mnt/csi/secret-cc-rate-limiter-cert
               readOnly: true
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-rate-limiter:latest
           imagePullPolicy: Always
@@ -79,6 +82,12 @@ spec:
               drop:
                 - ALL
               add: [ "NET_RAW" ]
+          env:
+            - name: REDIS_AUTH
+              valueFrom:
+                secretKeyRef:
+                  key: RATE_LIMITER_REDIS_AUTH_KEY
+                  name: secret-cc-rate-limiter
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
@@ -129,6 +138,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-cc-rate-limiter
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
