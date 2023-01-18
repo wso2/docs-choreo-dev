@@ -61,7 +61,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
     private HttpClient choreoTestClientForSTS;
 
     @BeforeClass
-    public void setup_APIRevisions() throws IOException, TokenRetrievalException, NoLatestApiVersionFoundException {
+    public void setup_TestBasicAPIRevisionCreation() throws IOException, TokenRetrievalException, NoLatestApiVersionFoundException {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
@@ -100,7 +100,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest(name = "Create new revision")
-    public void createNewRevision() throws Exception {
+    public void createNewRevision_TestBasicAPIRevisionCreation() throws Exception {
 
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("API_ID", proxyAPI.getId());
@@ -146,9 +146,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = {"createNewRevision"})
+    @Test(dependsOnMethods = {"createNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest(name = "Verify if the new revision is listed")
-    public void verifyCreateNewRevision() throws Exception {
+    public void verifyCreateNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 2);
 
@@ -193,9 +193,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                     }}));
     }
 
-    @Test(dependsOnMethods = {"verifyCreateNewRevision"})
+    @Test(dependsOnMethods = {"verifyCreateNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest(name = "Deploy new revision")
-    public void deployNewRevision() throws Exception {
+    public void deployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
                 newRevisionId, buildId, apiId, accessToken);
@@ -210,9 +210,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         }
     }
 
-    @Test(dependsOnMethods = {"deployNewRevision"})
+    @Test(dependsOnMethods = {"deployNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest(name = "Verify deploy new revision")
-    public void verifyDeployNewRevision() throws Exception {
+    public void verifyDeployNewRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 3);
 
@@ -253,9 +253,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = {"verifyDeployNewRevision"})
+    @Test(dependsOnMethods = {"verifyDeployNewRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest(name = "Re deploy old revision")
-    public void deployOldRevision() throws Exception {
+    public void deployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         DeploySettings res = APICreator.deployRevision(choreoComponent.getId(), versionId, devEnv.getId(), orgUuid,
                 oldRevisionId, buildId, apiId, accessToken);
@@ -270,9 +270,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         }
     }
 
-    @Test(dependsOnMethods = {"deployOldRevision"})
+    @Test(dependsOnMethods = {"deployOldRevision_TestBasicAPIRevisionCreation"})
     @CitrusTest(name = "Verify redeploy old revision")
-    public void verifyRedeployOldRevision() throws Exception {
+    public void verifyRedeployOldRevision_TestBasicAPIRevisionCreation() throws Exception {
         Map<String, Object> responseParams = new HashMap<>();
         responseParams.put("REVISION_COUNT", 4);
 

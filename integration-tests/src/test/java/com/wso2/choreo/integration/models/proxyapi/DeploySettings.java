@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class DeploySettings {
+
     private String message;
     private String requestId;
     private String status;
