@@ -4,7 +4,6 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -488,4 +487,28 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                                         .type(MessageType.PLAINTEXT)));
         }
 
+        @Test(dependsOnMethods = {"invokeAPIDev_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
+                Commit[] commitHistory = GraphQL.getCommitHistory(testComponent.getId(), accessToken);
+                Orgs.addConfiguration(choreoTestClient, this, testComponent, commitHistory, Constant.PROD_ENVIRONMENT);
+        }
+
+        @Test(dependsOnMethods = {"addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void promote_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
+                GraphQL.promoteComponent(testComponent, accessToken);
+        }
+
+        @Test(dependsOnMethods = {"promote_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
+                GraphQL.componentDeployment(testComponent, "prod", accessToken);
+        }
+
+        @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void invokeAPIProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
+                ComponentUtils.invokeApiEndpoint(accessToken, testComponent, Constant.Environment.Production);
+        }
 }

@@ -10,6 +10,7 @@
             <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiEUDpIT"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestMaxAPIRevisionsUsingDeployments"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
@@ -21,7 +22,6 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertAPIIT"/>
-            <class name="com.wso2.choreo.integration.tests.createUserManagedComponent.TestUserManagedComponent"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentRoot"/>
             <class name="com.wso2.choreo.integration.tests.createUserManagedNonEmptyComponent.TestUserManagedNonEmptyCreateComponentSub"/>
             <class name="com.wso2.choreo.integration.tests.webhook.CreateDeployInvokeWebhookIT"/>

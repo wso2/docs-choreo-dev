@@ -59,11 +59,13 @@ describe("Verify project creation functionality", () => {
   it("Verify Rest API creation from existing endpoint", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.designNewRestApi(
+    RestAPIProxyTemplate.skipSource();
+    RestAPIProxyTemplate.enterAPIdetails(
       API_NAME,
-      API_VERSION,
       API_BASE_PATH,
-      API_ENDPOINT
+      API_ENDPOINT,
+      API_VERSION,
+      "*"
     );
     APIDevelop.addResources(OPERATION_USERS, Enums.HTTPMethod.GET);
   });
@@ -78,19 +80,21 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    TestHelper.testOnSwagger(Enums.Environment.DEVELOPMENT, OPERATION_USERS).then(
-      (res) => {
-        expect(res.statusCode).to.be.equal("200");
-      }
-    );
+    TestHelper.testOnSwagger(
+      Enums.Environment.DEVELOPMENT,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
-    TestHelper.testOnSwagger(Enums.Environment.PRODUCTION, OPERATION_USERS).then(
-      (res) => {
-        expect(res.statusCode).to.be.equal("200");
-      }
-    );
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      OPERATION_USERS
+    ).then((res) => {
+      expect(res.statusCode).to.be.equal("200");
+    });
   });
 
   it("Verify manage functionality", () => {

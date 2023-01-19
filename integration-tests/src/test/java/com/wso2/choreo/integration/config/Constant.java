@@ -27,7 +27,7 @@ public final class Constant {
             "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscription_manage " +
             "apim:subscription_view apim:tier_manage choreo:component_manage choreo:deployment_manage " +
             "choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage choreo:role_manage " +
-            "choreo:user_manage environments:view_dev environments:view_prod";
+            "choreo:user_manage environments:view_dev environments:view_prod apim:environment_manage";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
@@ -51,6 +51,8 @@ public final class Constant {
     public static final String DEFAULT_VERSION = "1.0.0";
     public static final String DEFAULT_ENDPOINT = "http://run.mocky.io/v2/5185415ba171ea3a00704eed";
     public static final String APPLICATION_JSON = "application/json";
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+
     public static final String ID = "id";
     public static final String API_VALIDATE_ENDPOINT = "/api/am/publisher/v2/apis/validate";
     public static final String APIS_ENDPOINT = "/api/am/publisher/v2/apis";

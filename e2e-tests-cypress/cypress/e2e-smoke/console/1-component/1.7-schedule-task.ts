@@ -28,7 +28,6 @@ import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Create Schedule Trigger", () => {
-
   const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
@@ -48,7 +47,7 @@ describe("Create Schedule Trigger", () => {
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
       componentName: SCHEDULE_NAME,
-      displayType: Enums.DisplayType.restAPI,
+      displayType: Enums.DisplayType.scheduledTask,
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
@@ -57,7 +56,6 @@ describe("Create Schedule Trigger", () => {
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.EU);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)
   });
-
 
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
