@@ -398,7 +398,7 @@ To start the front-end application and send requests to the `readingList` REST A
 
 4. Click Login, and sign in with the credentials of a user that you have created in Asgardeo.
 
-5. To allow your application to access your Choreo account, select the **User Account** checkbox andclick **Allow**.
+5. To allow your application to access your Choreo account, select the **User Account** checkbox and click **Allow**.
 
     The application opens as follows.
 
