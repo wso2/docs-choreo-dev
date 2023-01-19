@@ -18,13 +18,8 @@ export class RestAPIProxyTemplate {
   }
 
   static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint) {
-    if (Utils.isPerspectiveViewEnabled()) {
-      cy.get('[data-cyid="design-rest-api-proxy"]')
-        .should("be.visible")
-        .click();
-    } else {
-      cy.get('[data-cyid="btn-design-rest-api"]').should("be.visible").click();
-    }
+    cy.get('[data-cyid="design-rest-api-proxy"]').should("be.visible").click();
+
     cy.get('[data-testid="api-name"] input').clear().type(apiName);
     cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
 
@@ -38,39 +33,21 @@ export class RestAPIProxyTemplate {
     Utils.saveComponentURL();
   }
 
-  static createOpenApi(filepath: string = "", url: string = "") {
-    if (Utils.isPerspectiveViewEnabled()) {
-      cy.get('[data-cyid="import-oas-api-proxy"]').should("be.visible").click();
-    } else {
-      cy.get('[data-cyid="btn-import-open-api"]').click();
-    }
-    if (filepath) {
-      cy.get('[data-testid="open-api-file"]').click();
-      cy.get('input[type="file"]').attachFile(filepath);
-    }
-
-    if (url) {
-      cy.get('[data-testid="open-api-url"]').click();
-      cy.get('[data-testid="swagger-file-url"]>div>input').type(url);
-    }
-
-    cy.get('[id="next"]').click();
+  static skipSource() {
+    cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
   }
 
-  static importOpenApi(filepath: string = "", url: string = "") {
-    cy.get('[data-cyid="import-oas-api-proxy"]').click();
-
+  static createOpenApi(filepath: string = "", url: string = "") {
     if (filepath) {
-      cy.get('[data-testid="open-api-file"]').click();
+      cy.get('[data-cyid="btn-upload"]').click();
       cy.get('input[type="file"]').attachFile(filepath);
     }
 
     if (url) {
-      cy.get('[data-testid="open-api-url"]').click();
-      cy.get('[data-testid="swagger-file-url"]>div>input').type(url);
+      cy.get('[data-cyid="txt-oas-url"]').should("be.visible").type(url);
     }
 
-    cy.get('[id="next"]').click();
+    cy.get('[data-cyid="btn-next"]').should("be.visible").click();
   }
 
   static enterAPIdetails(
@@ -80,22 +57,18 @@ export class RestAPIProxyTemplate {
     version: string = "",
     validateResourceName: string = ""
   ) {
-    cy.get('[data-testid="api-name"]>div>input').clear().type(apiName);
+    cy.get('[data-cyid="api-name"]').clear().type(apiName);
 
     if (version) {
-      cy.get('[data-testid="api-version"]>div>input').clear().type(version);
+      cy.get('[data-cyid="api-version"]').clear().type(version);
     }
 
-    cy.get('[data-testid="api-basepath"]>div>input').clear().type(apiBasePath);
-    cy.get('[data-testid="api-endpoint"]').within(() => {
-      cy.get("p").contains("Mui-error").should("not.exist");
-    });
+    cy.get('[data-cyid="api-basepath"]').clear().type(apiBasePath);
+
     if (endpoint) {
-      cy.get('[data-testid="api-endpoint"]>div>input').clear().type(endpoint);
+      cy.get('[data-cyid="api-endpoint"]').clear().type(endpoint);
     }
-    cy.get('[data-cyid="create-api-proxy-submit"]')
-      .should("be.enabled")
-      .click();
+    cy.get('[data-cyid="btn-create"]').should("be.enabled").click();
 
     let resourceIdentifier = "resource-/intensity";
     if (validateResourceName) {

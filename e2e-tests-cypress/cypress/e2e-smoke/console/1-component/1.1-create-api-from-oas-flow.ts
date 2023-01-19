@@ -60,7 +60,7 @@ describe("Choreo APIM publisher scenarios", () => {
     cy.log("Starting API Creation using open API specification");
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.importOpenApi(Filepath);
+    RestAPIProxyTemplate.createOpenApi(Filepath);
     RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
   });
 
@@ -104,7 +104,7 @@ describe("Choreo APIM publisher scenarios", () => {
   it("Verify test functionality using generated curl in Prod", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
-      Enums. HTTPMethod.GET,
+      Enums.HTTPMethod.GET,
       "intensity"
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
