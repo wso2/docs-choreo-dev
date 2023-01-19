@@ -22,15 +22,11 @@ export class ChoreoHomePage {
   static navigateToHome() {
     const handle = Cypress.env("current_org")["handle"];
 
-    if (Utils.isPerspectiveViewEnabled()) {
+ 
       cy.get(
         `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home?profile=default"]`
       ).click();
-    } else {
-      cy.get(
-        `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
-      ).click();
-    }
+     
   }
 
   static navigateToComponents() {
@@ -46,7 +42,7 @@ export class ChoreoHomePage {
       ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
     }
 
-    cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
+     cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
   }
 
   static navigateToInsights() {

@@ -34,13 +34,7 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
-    GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc")
-    GitHub.createNewFile(REPO_NAME, "Ballerina.toml", "cypress/fixtures/Ballerina.toml")
-    GitHub.createNewFile(REPO_NAME, "gql.bal", "cypress/fixtures/numbers.bal")
-    GitHub.createNewFile(REPO_NAME, "Cloud.toml", "cypress/fixtures/Cloud.toml")
-    LoginPage.login();
-    ChoreoHomePage.switchOrganization();
-
+     LoginPage.login();
   });
 
   after(() => {
@@ -55,7 +49,7 @@ describe("Verify project creation functionality", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME)
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/rest-api"
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)

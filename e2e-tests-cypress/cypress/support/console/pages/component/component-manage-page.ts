@@ -11,10 +11,7 @@
  * associated services.
  */
 
-import { DocumentType } from "../enum/document-type";
-import { DocumentSourceType } from "../enum/document-source";
-import { ConnectorAudience } from "../enum/marketplace-connector-audience";
-import { Environment } from "../enum/environment";
+import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 
 export class ComponentAPILifecycle {
@@ -49,7 +46,7 @@ export class ComponentAPILifecycle {
       .eq(1)
       .invoke("text");
   }
-  static publish(audience: ConnectorAudience) {
+  static publish(audience: Enums.ConnectorAudience) {
     this.publishToMarketplace(audience);
     return cy
       .get(ComponentAPILifecycle.devportl_btn)
@@ -114,7 +111,7 @@ export class ComponentAPILifecycle {
     documentName: string,
     documentSummary: string,
     documentType: DocumentType,
-    documentSourceType: DocumentSourceType,
+    documentSourceType: Enums.DocumentSourceType,
     documentSource: string
   ) {
     cy.get('[data-testid="Documents"]').click();
@@ -131,7 +128,7 @@ export class ComponentAPILifecycle {
     cy.contains("Save").click();
   }
 
-  static publishToMarketplace(connectorAudience: ConnectorAudience) {
+  static publishToMarketplace(connectorAudience: Enums.ConnectorAudience) {
     cy.get('[data-testid="Publish-lc-btn"]').click();
     cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
     cy.contains("Yes, Please").should("be.enabled").click();
@@ -227,7 +224,7 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="btn-edit-settings"]').click();
   }
 
-  static selectEnvironment(env: Environment) {
+  static selectEnvironment(env: Enums.Environment) {
     cy.get('[data-cyid="environment-selector"]').should("be.visible").click();
     cy.get(`[data-value="${env}"]`).click();
     cy.get('[data-cyid="environment-selector"]>div>div')
@@ -237,7 +234,7 @@ export class ComponentAPILifecycle {
       });
   }
 
-  static selectRevision(env: Environment) {
+  static selectRevision(env: Enums.Environment) {
     cy.get('[data-cyid="selected-revision"]').click();
     cy.get('[data-testid="revision-history-header"]').should("be.visible");
     cy.get('[data-cyid*="revision-list-item"]')
@@ -252,7 +249,7 @@ export class ComponentAPILifecycle {
       .click();
   }
 
-  static applyConfiguration(env: Environment, revision: string = "") {
+  static applyConfiguration(env: Enums.Environment, revision: string = "") {
     cy.get('[data-cyid="btn-save-settings"]').click();
     cy.get("button").contains("Apply").click().wait(2000);
     cy.get('[data-cyid="btn-delete-settings"]').should("be.visible");
@@ -314,7 +311,7 @@ export class ComponentAPILifecycle {
     this.saveAndDeployPermissions(componentName);
     this.deleteAllPermissionsFromReources();
     this.saveAndDeployPermissions(componentName);
-    this.selectPermission("employee.read");
+    this.selectPermission(permissions[0]);
     this.saveAndDeployPermissions(componentName);
   }
 

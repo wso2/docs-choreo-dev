@@ -36,24 +36,8 @@ describe("Create Schedule Trigger", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
 
   before(() => {
-    GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc");
-    GitHub.createNewFile(
-      REPO_NAME,
-      "Ballerina.toml",
-      "cypress/fixtures/Ballerina.toml"
-    );
-    GitHub.createNewFile(
-      REPO_NAME,
-      "scheduletask.bal",
-      "cypress/fixtures/scheduletask.bal"
-    );
-    GitHub.createNewFile(
-      REPO_NAME,
-      "Cloud.toml",
-      "cypress/fixtures/Cloud.toml"
-    );
+  
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
 
   after(() => {
@@ -67,14 +51,10 @@ describe("Create Schedule Trigger", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME),
-    };
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION,
-      Enums.Region.EU
-    );
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger"
+    }
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.EU);
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
   });
 
   it("Verify component deployment", () => {

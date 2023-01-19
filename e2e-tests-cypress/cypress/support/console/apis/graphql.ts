@@ -209,13 +209,13 @@ export class GraphQL {
                                   accessibility: "external",
                                   srcGitRepoUrl: "${componentData.srcGitRepoUrl}"
                                   repositorySubPath: "",
-                                  repositoryType: "",
-                                  repositoryBranch: "",
+                                  repositoryType: "UserManagedNonEmpty",
+                                  repositoryBranch: "main",
+                                  initializeAsBallerinaProject: false,
                                 } )
                                 {id, orgId, projectId, handler    }
                       }`
       }
-      cy.log(JSON.stringify(query))
       this.callGraphQL(query).then(res => {
         const { id } = res.body.data.createComponent;
 
