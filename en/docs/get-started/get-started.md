@@ -132,7 +132,7 @@ Let's test the `readingList` REST API via Choreo's Open API Console by following
     | **Parameter** | **Value**       |
     |---------------|-----------------|
     | **author**    | `Bram Stoker`   |
-    | **status**    | `To Read`       |
+    | **status**    | `to_read`       |
     | **title**     | `Dracula`       |
 
     The request body should look as follows:
@@ -257,15 +257,17 @@ To configure the front-end application by defining the ports it needs to run on,
 
 6. In the **Protocol** tab, make the following changes:
 
-    1. Under **Access Token**, select **JWT** as the token type.
+    1. In the **Authorized redirect URLs** field, enter `http://localhost:5173/`. Next click the **Add** icon.
    
-    2. Scroll down to the **ID Token** section and enter the following value in the **Audience** field.
+    2. Under **Access Token**, select **JWT** as the token type.
+   
+    3. Scroll down to the **ID Token** section and enter the following value in the **Audience** field.
 
         `https://sts.choreo.dev/oauth2/token`
 
          Click **Add URL** to save this value.
    
-    3. Click **Update**.
+    4. Click **Update**.
 
 7. Click **Quick Start**, and then click the **React** icon (because you will be using a pre-configured sample react front-end application).
 
@@ -396,11 +398,23 @@ To start the front-end application and send requests to the `readingList` REST A
 
 4. Click Login, and sign in with the credentials of a user that you have created in Asgardeo.
 
-5. To allow your application to access your Choreo account, click **Allow**.
+5. To allow your application to access your Choreo account, select the **User Account** checkbox andclick **Allow**.
 
-    The user's username is displayed.
+    The application opens as follows.
 
-6. Add a new reading item as follows:
+    ![Front-end application](../assets/img/get-started/front-end-application.png){.cInlineImage-half}
+
+6. Add three new reading items with different statuses.
+
+    For example, the details can be as follows:
+
+     | **Title**                 | **Author**        | **Status** |
+     |---------------------------|-------------------|------------|
+     | `The Museum of Innocence` | `Orhan Pamuk`     | `reading`  |
+     | `The Remains of the Day`  | `Kazuo Ishiguro`  | `to_read`  |
+     | `David Copperfield`       | `Charles Dickens` | `read`     |
+
+    To add each record, follow the steps given below:
 
     1. Click **+ Add New**.
 
@@ -408,11 +422,13 @@ To start the front-end application and send requests to the `readingList` REST A
 
     3. Click **Save**.
 
-7. Log out of the front-end application.
+    Three tabs will appear for each status. To delete a reading list item, you can click **Delete** for it.
 
-8. Log in to the front-end application again with the credentials of a different user that you created in Asgardeo.
+8. Log out of the front-end application.
 
-    You will not see the reading list item that you previously entered.
+9. Log in to the front-end application again with the credentials of a different user that you created in Asgardeo.
+
+    You will not see the reading list items that you previously entered.
 
 ## Step 3: Create and publish a new version of the REST API
 
