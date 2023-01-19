@@ -10,6 +10,7 @@
             <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiIT"/>
             <class name="com.wso2.choreo.integration.tests.apiproxy.ProxyApiEUDpIT"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestMaxAPIRevisionsUsingDeployments"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
             <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
             <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>

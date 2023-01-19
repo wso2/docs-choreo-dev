@@ -21,6 +21,8 @@ import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.ApiDTO;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.proxyapi.DeploySettings;
+import com.wso2.choreo.integration.models.proxyapi.DeploymentStatus;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.requestheader.HeaderValues;
 import com.wso2.choreo.integration.models.response.ProxyResponse;
@@ -34,6 +36,8 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -137,4 +141,34 @@ public class APICreator extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(TestConfigs.class, res.getRes(), "");
     }
 
+    public static DeploySettings deployRevision(String componentId, String versionId, String envId, String orgId,
+                                                String revisionId, String buildId, String apiId, String accessToken)
+                                                throws IOException {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy-settings?environmentId=" + envId +
+                "&revisionId=" + revisionId + "&buildId=" + buildId + "&description=" + "" + "&apiId=" + apiId +
+                "&accessMode=external" + "&isDevEnv=" + true;
+        Map<String, String> payload = new HashMap<>();
+        payload.put("openApi",getSwagger(apiId, orgId, accessToken));
+        payload.put("api",getApi(apiId, orgId, accessToken));
+        Response response = HttpClientUtil.httpPOSTFormData(url, payload, accessToken, "");
+        return ObjectMapperUtil.mapStringToObject(DeploySettings.class, response.getRes(), "");
+    }
+
+    public static DeploymentStatus checkDeploymentStatus(String componentId, String versionId, String requestId, String accessToken) {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deployment-status" + "?requestId=" + requestId;
+        Response response = HttpClientUtil.httpGET(url,  accessToken, "");
+        return ObjectMapperUtil.mapStringToObject(DeploymentStatus.class, response.getRes(), "");
+    }
+
+    public static String getSwagger(String apiId, String organizationId, String accessToken) {
+        String url = APIS_ENDPOINT + "/" + apiId + "/swagger" + "?organizationId=" + organizationId;
+        Response res = HttpClientUtil.httpGET(url,  accessToken, "");
+        return res.getRes();
+    }
+
+    public static String getApi(String apiId, String organizationId, String accessToken) {
+        String url = APIS_ENDPOINT + "/" + apiId + "?organizationId=" + organizationId;;
+        Response res = HttpClientUtil.httpGET(url, accessToken, "");
+        return res.getRes();
+    }
 }
