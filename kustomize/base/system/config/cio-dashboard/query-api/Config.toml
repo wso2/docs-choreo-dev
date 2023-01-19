@@ -5,3 +5,6 @@ level = "{{.LOG_LEVEL}}"
 [[ballerina.log.modules]]
 name = "choreo/query_api"
 level = "{{.LOG_LEVEL_QUERY_API}}"
+
+[ballerina.http.traceLogAdvancedConfig]
+console = {{.HTTP_TRACE_LOG_CONSOLE | default false}}
