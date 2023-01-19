@@ -25,16 +25,13 @@ import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify manual trigger creation functionality", () => {
-  const MANUAL_NAME = "create-manualTrigger-1.5";
+  const MANUAL_NAME = "create-manualTrigger";
   const REPO_NAME = Utils.generateComponentName("repo");
   const PROJECT_NAME = Utils.generateProjectName();
   const PROJECT_DESCRIPTION = "Manual Trigger";
 
   before(() => {
-    GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc")
-    GitHub.createNewFile(REPO_NAME, "Ballerina.toml", "cypress/fixtures/Ballerina.toml")
-    GitHub.createNewFile(REPO_NAME, "gql.bal", "cypress/fixtures/manualtrigger.bal")
-    GitHub.createNewFile(REPO_NAME, "Cloud.toml", "cypress/fixtures/Cloud.toml")
+   
     LoginPage.login();
 
   });
@@ -47,7 +44,8 @@ describe("Verify manual trigger creation functionality", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME)
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/manual-trigger",
+      repositoryType:"UserManagedNonEmpty"
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)

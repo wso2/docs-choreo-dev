@@ -33,10 +33,6 @@ describe("Verify webhook creation functionality", () => {
   const PROJECT_DESCRIPTION = "Slack Webhook";
 
   before(() => {
-    GitHub.initGitHubRepo(REPO_NAME, true, true, "nanoc")
-    GitHub.createNewFile(REPO_NAME, "Ballerina.toml", "cypress/fixtures/Ballerina.toml")
-    GitHub.createNewFile(REPO_NAME, "gql.bal", "cypress/fixtures/slacktrigger.bal")
-    GitHub.createNewFile(REPO_NAME, "Cloud.toml", "cypress/fixtures/Cloud.toml")
     LoginPage.login();
 
   });
@@ -53,7 +49,7 @@ describe("Verify webhook creation functionality", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "IssuesService",
       triggerId: "35",
-      srcGitRepoUrl: GitHub.getGitHubRepoUrl(REPO_NAME)
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/slack-web-hook"
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)

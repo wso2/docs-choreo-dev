@@ -45,7 +45,7 @@ describe("Choreo APIM publisher scenarios", () => {
   const Filepath = "apis/generation_oas.yaml";
   const idpUser = "choreoe2etest";
   const appName = generateAppName("-e2etest");
-  const permissions = ["employee.read", "employee.write"];
+  const permissions = [`emp-read-${Date.now()}`, `emp-write-${Date.now()}`];
   const OPERATION = "intensity";
 
   before(() => {
@@ -153,7 +153,7 @@ describe("Choreo APIM publisher scenarios", () => {
     );
   });
 
-  it("Create a consumer application and tryout an API", () => {
+  it('Tryout published api',()=>{
     ComponentAPILifecycle.goToDeveloperPortalWithoutLogin(idpUser);
     Apis.searchApiAndSelect(API_NAME, 1);
     // Validate the API call without the scope
@@ -165,6 +165,9 @@ describe("Choreo APIM publisher scenarios", () => {
     TryOut.TryoutAPI();
     TryOut.ExecuteResourceFunction();
     TryOut.ValidateResponse("200");
+  })
+
+  it("Create application",()=>{
     // Create app
     DevPortalHomePage.navigateToAppsPage();
     AppsList.createAnApplication(appName);
@@ -175,11 +178,15 @@ describe("Choreo APIM publisher scenarios", () => {
     cy.get('[data-testid="applications-appbar-btn"]')
       .should("be.visible")
       .click();
-    AppsList.editAnApplication(appName, "employee.read");
+  })
+
+  it("Add permissions and tryout", () => {
+  
+    AppsList.editAnApplication(appName, permissions[0]);
     // Validate API call with scope
     DevPortalHomePage.navigateToApisPage();
     Apis.searchApiAndSelect(API_NAME, 1);
-    DevPortalHomePage.navigateSelectAPI(API_NAME);
+    // DevPortalHomePage.navigateSelectAPI(API_NAME);
     TryOut.navigateToTryOutMenu();
     TryOut.SelectApplication(appName);
     TryOut.generateTestKeyAndVerify();
@@ -197,7 +204,7 @@ describe("Choreo APIM publisher scenarios", () => {
   });
 
   it("Verify insight values for dev", () => {
-    ChoreoHomePage.navigateToHome();
+  ProjectOverviewPage.navigateToComponents()
     ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();

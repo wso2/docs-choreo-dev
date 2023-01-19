@@ -29,15 +29,15 @@ export class ProjectOverviewPage {
   }
 
   static createHttpProxyAPI() {
-    if (Utils.isPerspectiveViewEnabled()) {
-      this.waitForTemplateCardsToLoad();
-      cy.get('[data-testid="project-template-list-httpProxyApi"]')
-        .should("be.visible")
-        .click();
-    } else {
-      ProjectOverviewPage.addNewComponent();
-      RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
-    }
+    this.waitForTemplateCardsToLoad();
+    cy.get('[data-testid="project-template-list-httpProxyApi"]')
+      .should("be.visible")
+      .click();
+
+  }
+
+  static navigateToComponents() {
+    cy.contains('← Components').click()
   }
 
   private static waitForTemplateCardsToLoad() {

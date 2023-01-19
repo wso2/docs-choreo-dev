@@ -21,9 +21,7 @@ export class ProjectListingPage {
     description: string,
     dataPlane: Enums.Region = Enums.Region.US
   ) {
-  
-      cy.get('[data-cyid="create-project-card"]').click().wait(3000);
-  
+    cy.get('[data-cyid="create-project-card"]').click().wait(3000);
     cy.get('[name="Name"]').clear().type(projectName);
     cy.get('[name="Description"]').clear().type(description);
     cy.get('[data-cyid="select-region"]').click();
@@ -33,20 +31,17 @@ export class ProjectListingPage {
   }
 
   static selectProject(projectName: string = "Default Project") {
-    if (Utils.isPerspectiveViewEnabled()) {
-      cy.get(
-        '[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"]'
-      ).click();
-      cy.get('[class="MuiFormControl-root MuiTextField-root"]')
-        .should("be.visible")
-        .click();
-      cy.get('[class="MuiFormControl-root MuiTextField-root"]').type(
-        projectName
-      );
-      cy.contains(projectName).click();
-    } else {
-      cy.get('[data-testid="project-picker"]').click();
-      cy.get(`li>div`).contains(projectName).click();
-    }
+
+    cy.get(
+      '[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"]'
+    ).click();
+    cy.get('[class="MuiFormControl-root MuiTextField-root"]')
+      .should("be.visible")
+      .click();
+    cy.get('[class="MuiFormControl-root MuiTextField-root"]').type(
+      projectName
+    );
+    cy.contains(projectName).click();
+
   }
 }

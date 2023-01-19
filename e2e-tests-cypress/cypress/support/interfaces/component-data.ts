@@ -7,4 +7,5 @@ export interface ComponentData {
     triggerChannels: string
     triggerId: string
     srcGitRepoUrl: string
+    repositoryType?:string
 }
