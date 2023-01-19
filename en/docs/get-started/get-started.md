@@ -257,7 +257,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
 6. In the **Protocol** tab, make the following changes:
 
-    1. In the **Authorized redirect URLs** field, enter `http://localhost:5173/`. Next click the **Add** icon.
+    1. In the **Authorized redirect URLs** field, enter `http://localhost:5173/`. Next, click the **Add** icon.
    
     2. Under **Access Token**, select **JWT** as the token type.
    
@@ -311,7 +311,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
             3. In the left navigation menu, click **Production Keys**.
 
-            4. Copy the value in the **Consumer Key**field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
+            4. Copy the value in the **Consumer Key** field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
 
         - `VITE_ORG_HANDLE`
 
