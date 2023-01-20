@@ -28,8 +28,20 @@ import { Subscriptions } from "../../support/devportal/pages/applications/subscr
 import { generateAppName } from "../../support/devportal/utils";
 import { APISdk } from "../../support/devportal/pages/apis/api-sdk";
 import { DevPortalHelper } from "../../support/devportal/helpers/devportal-helper";
+import { ProjectOverviewPage } from "../../support/console/pages/projects/project-overview";
+import { RestAPIProxyTemplate } from "../../support/console/pages/templates/rest-api-proxy-temp";
+import { ComponentOverviewPage } from "../../support/console/pages/component/component-overview-page";
+import { APIDeployment } from "../../support/console/pages/apis/api-deployment";
+import { ProjectListingPage } from "../../support/console/pages/projects/projects-listing-page";
+import { ComponentAPILifecycle } from "../../support/console/pages/component/component-manage-page";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
+const API_BASE_PATH = Utils.generateBasePath();
+const Filepath = "apis/generation_oas.yaml";
+const API_NAME = Utils.generateComponentName("oas")
+const PROJECT_DESCRIPTION = "sample oas flow scenario";
+const PROJECT_NAME = Utils.generateProjectName();
+
 
 describe("Create and deploy a component to test developer portal with custom domain", () => {
   before(() => {
@@ -37,9 +49,17 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Create and deploy a component", () => {
-    const API_Name = Utils.generateComponentName("oas");
-    cy.task("setAPIName", API_Name);
-    DevPortalHelper.createDeployHttpProxyComponent(API_Name);
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.createHttpProxyAPI();
+    RestAPIProxyTemplate.createOpenApi(Filepath);
+    RestAPIProxyTemplate.enterAPIdetails(API_NAME, API_BASE_PATH, "", "", "");
+    cy.task('setAPIName', API_NAME);
+    ComponentOverviewPage.navigateToDeploy();
+    APIDeployment.DeployToDev();
+    APIDeployment.PromoteToProd()
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
   });
 
   it("Add a developer portal custom domain", () => {
@@ -68,8 +88,8 @@ describe("Login and test developer portal with custom domain", () => {
   });
 
   it("Test in devportal", () => {
-    cy.task("getAPIName").then((an) => {
-      let API_Name = an as string;
+    cy.task("getAPIName").then((apiName) => {
+      let API_Name = apiName as string;
       DevPortalHomePage.navigateToApisPage();
       Apis.searchApiAndSelect(API_Name);
       DevPortalHomePage.navigateToPerApiView(API_Name);
