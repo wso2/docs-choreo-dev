@@ -1,6 +1,6 @@
 # Get Started with Choreo
 
-Choreo is a full lifecycle cloud-native developer platform that enables your developers to create, deploy and run new digital components like APIs, microservices, and automations in serverless mode on any Kubernetes cluster.
+Choreo is a full lifecycle cloud-native developer platform that enables your developers to create, deploy, and run new digital components like APIs, microservices, and automations in serverless mode on any Kubernetes cluster.
 
 This guide walks you through the following:
 
@@ -8,7 +8,7 @@ This guide walks you through the following:
 - How an external application consumes the published REST API.
 - How to release new versions of the REST API with added functionality.
 
-Let's consider a use case where a developer named Jane designs an application for reading lists. A Choreo developer named John develops a REST API for this application to consume. The two developers will develop two versions of the solution in two iterations. The second version of the application will add data persistence as a new feature.
+Let's consider a use case where a developer named Sam designs an application that allows you to maintain reading lists. A user can create a private reading list by adding books. The user can also view and delete them when required. A Choreo developer named John develops a REST API for this application to consume. The two developers will create two versions of the solution in two iterations. The second version of the application will add data persistence as a new feature.
 
 The following diagram summarizes the use case:
 
@@ -32,11 +32,9 @@ Before you try out this guide, complete the following:
 
         ![Create an organization in Choreo](../assets/img/references/enterprise-login/create-choreo-organization.png){.cInlineImage-small}
 
-    4. Access and read the Privacy Policy and Terms of Use via the provided links, and select the **I agree with the Privacy Policy and Terms of Use** checkbox if you agree with them.
+    4. Read and accept the privacy policy and terms of use before you proceed.
 
     5. Click **Create** to add the new organization.
-
-    6. When the **Welcome to Choreo!** message appears, click either **Decline** or **Confirm** as you prefer depending on whether you want Choreo to send you emails with product updates, resources, and event invites.
 
     You will be viewing the Home page of the Choreo Console.
 
@@ -47,9 +45,8 @@ Before you try out this guide, complete the following:
     
     1. On the Home page of the Choreo Console, click **+ Create Project**.
 
-    2. Enter a unique name and a description for the project.
+    2. Enter a unique name and a description for the project, and click **Create**.
 
-    3. Click **Create**.
 
 ## Step 1: Create and publish a REST API
 
@@ -61,7 +58,7 @@ Let's create your first REST API.
 
 1. On the Home page, click on the required project.
 
-2. If your project already has components, click **Create** and then click **Create** again in the REST API card. If not, click **Create** in the  REST API card.
+2. Click **Create** in the  REST API card.
 
 3. Enter a unique name and a description for the API. For example, you can enter the name and the description given below:
 
@@ -74,7 +71,7 @@ Let's create your first REST API.
 
 5. Click **Next**.
 
-6. Click **Authorize with GitHub**.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**.
 
 7. Enter your GitHub credentials, and select the private repository you created by forking  [https://github.com/Asitha/choreo-reading-list-application-example](https://github.com/Asitha/choreo-reading-list-application-example) to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -93,14 +90,15 @@ Let's create your first REST API.
     | **Branch**            | `**version-1**`                               |
     | **Path**              | `**reading-list-service**`                    |
 
-9. Click **Create** to proceed with component initialization. This displays a pull request similar to the following:
+9. Click **Create** to initialize your REST API from the implementation in your GitHub repository. This displays a pull request similar to the following:
 
      ![View pull request](../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
 
 10. Click **View Pull Request**.
 
-11. Review and click **Merge pull request**, and then click **Confirm Merge**. When you merge the pull request, it adds the necessary metadata files to connect your GitHub repository to Choreo so that you can proceed to create the component.
+11. Review and click **Merge pull request**, and then click **Confirm Merge**. 
 
+     When you merge the pull request, it adds the necessary metadata files to connect your GitHub repository to Choreo so that you can proceed to create the component.
 
 ###  Step 1.2: Deploy the REST API
 
@@ -108,12 +106,10 @@ To deploy the REST API, follow the steps given below:
 
 1. Navigate back to the Choreo Console. You will be viewing the page for the `readingList` REST API.
 
-2. In the left pane, click the **Deploy** icon.
-
-3. Click **Deploy Manually**.
+2. In the left pane, click **Deploy**,  and then click **Deploy Manually**.
 
     !!! info
-        Automatic deployment is enabled for the component by default. You are required to carry out only the first deployment manually. To learn more about automatic deployment, see [Configure Automatic Deployment](../tutorials/configure-automatic-deployment).
+        Automatic deployment is enabled for the component by default. You are required to carry out only the first deployment manually.
 
    This deploys the API to the development environment to make it invokable.
 
@@ -121,11 +117,9 @@ To deploy the REST API, follow the steps given below:
 
 Let's test the `readingList` REST API via Choreo's Open API Console by following the steps given below:
 
-1. Click Test in the left pane.
+1. Click **Test** in the left pane.
 
-2. Expand the **POST** method.
-
-3. Click **Try it out**.
+2. Expand the **POST** method and click **Try it out**.
 
 4. Update the request body so that the parameters have the values given below:
 
@@ -154,13 +148,13 @@ Similarly, you can expand and try out the **GET** and **DELETE** methods.
 
 ### Step 1.4: Publish the REST API
 
-In the previous step, you tested the `readingList` REST API and found that it works as expected. Therefore, let's publish it and make it available for subscriptions.
+In the previous step, you tested the `readingList` REST API and found that it works as expected. Therefore, let's publish it and make it available for applications to consume.
 
 #### Step 1.4.1: Update the CORS configuration
 
 The application developer in this scenario calls the API from a different domain (i.e., Vercel). By default, web browsers block these calls for security reasons. To enable the application to call the API, follow the steps given below:
 
-1. In the left pane, click the **Manage** icon.
+1. In the left pane, click **Manage**.
 
 2. Click **Settings**.
 
@@ -180,7 +174,7 @@ To publish the REST API, follow the steps given below:
 
 1. In the **Manage** tab, click **Lifecycle**.
 
-2. Click **Publish** to publish the REST API to the Developer Portal.
+2. Click **Publish** to publish the REST API to the Developer Portal where applications can subscribe to it.
 
 3. To access the Developer Portal, click **Go to DevPortal**.
 
@@ -190,13 +184,13 @@ To publish the REST API, follow the steps given below:
 
 You have published the readingList REST API to the Developer Portal where application developers can find it and subscribe their applications to it.
 
-In the previous steps, you played the role of a REST API developer and developed a REST API. In this step, you will play the role of a consumer of this REST API.
+In the previous steps, you played the role of a REST API developer and developed a REST API. In this step, you will play the role of the application developer who will use this REST API.
 
 To consume the  `readingList` REST API, let's create an application, subscribe it to the REST API, and send a request to it.
 
 ### Step 2.1: Create an application
 
-First, let's create an application by following the steps given below:
+First, let's create the application that will be consuming the `readingList` REST API by following the steps given below:
 
 1. In the top menu of the Developer Portal, click **Applications**.
 
@@ -206,9 +200,9 @@ First, let's create an application by following the steps given below:
 
     Your Application will open on a separate page.
 
-### Step 2.2: Subscribe to your application to the API
+### Step 2.2: Subscribe to the API
 
-To subscribe your application to the API, follow the steps given below:
+To consume the REST API, the `readingListApp` application needs to subscribe to it. To subscribe your application to the API, follow the steps given below:
 
 1. In the left navigation menu, click **Subscriptions**.
 
@@ -224,15 +218,11 @@ To generate a security token that your application can use to invoke the REST AP
 
 1. In the left navigation menu, click **OAuth 2.0 Tokens**.
 
-2. Click **Generate Credentials**.
+2. Click **Generate Credentials** and then click **Generate Test Token**.
 
-3. Click **Generate Test Token**.
+3. Expand **Advanced Configurations** and select the **Public Client** checkbox.
 
-4. Copy the test token that appears by clicking the icon for copying and save it for later use.
-
-5. Expand **Advanced Configurations** and select the **Public Client** checkbox.
-
-6. Click **Update**.
+4. Click **Update**.
 
 ### Step 2.4: Deploy a Web application and invoke the REST API
 
@@ -253,9 +243,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
 4. Click **Register**.
 
-5. Click **Protocol**.
-
-6. In the **Protocol** tab, make the following changes:
+5. Click **Protocol** to open the **Protocol** tab, and make the following changes:
 
     1. In the **Authorized redirect URLs** field, enter `http://localhost:5173/`. Next, click the **Add** icon.
    
@@ -311,7 +299,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
             3. In the left navigation menu, click **Production Keys**.
 
-            4. Copy the value in the **Consumer Key** field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
+            4. Copy the value in the **Consumer Key**field and paste it as the value of the `VITE_CHOREO_CLIENT_ID` parameter.
 
         - `VITE_ORG_HANDLE`
 
