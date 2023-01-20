@@ -37,7 +37,7 @@ describe("Verify manual trigger creation functionality", () => {
   });
 
 
-  it("Verify REST API component creation", () => {
+  it("Verify Manual Trigger component creation", () => {
     let componentData: ComponentData = {
       componentName: MANUAL_NAME,
       displayType: Enums.DisplayType.manualTrigger,
