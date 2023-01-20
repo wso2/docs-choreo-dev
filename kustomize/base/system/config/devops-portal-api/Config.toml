@@ -17,4 +17,4 @@ rudder_url = "http://dp-rudder"
 subscription_svc_url = "http://subscriptions:9090"
 helmhub_url = "http://dp-helmhub"
 apim_url = "{{.APIM_URL}}"
-feature_flag_create_dynamic_env = "{{.FEATURE_FLAG_CREATE_DYNAMIC_ENV}}"
+feature_flag_create_dynamic_env = {{.FEATURE_FLAG_CREATE_DYNAMIC_ENV}}
