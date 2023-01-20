@@ -76,7 +76,7 @@ describe("Create Schedule Trigger", () => {
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 
-  it("Verify dev env logs", () => {
+  it("Verify prod env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
