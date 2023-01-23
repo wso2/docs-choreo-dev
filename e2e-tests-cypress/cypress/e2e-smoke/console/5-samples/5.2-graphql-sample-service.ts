@@ -37,6 +37,7 @@ describe("Graphql GQL service test", () => {
 
 
   it("Verify GraphQL sample creation", () => {
+    const subPath = Cypress.env("branch").replace("-ci", "")
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.graphql,
@@ -44,9 +45,10 @@ describe("Graphql GQL service test", () => {
       sampleTemplate: "choreo/graphql_service:3.1.0",
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql-service-sample",
+      srcGitRepoUrl: `https://github.com/choreo-test-apps/graphql-service-sample/tree/main/${subPath}`,
       initializeAsBallerinaProject: true,
-      repositoryType: Enums.RepoType.UserManagedEmpty
+      repositoryType: Enums.RepoType.UserManagedEmpty,
+      repositorySubPath: subPath
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)

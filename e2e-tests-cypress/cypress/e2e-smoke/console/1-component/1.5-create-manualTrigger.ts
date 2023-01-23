@@ -46,7 +46,9 @@ describe("Verify manual trigger creation functionality", () => {
       triggerId: null,
       srcGitRepoUrl: "https://github.com/choreo-test-apps/manual-trigger",
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      initializeAsBallerinaProject: false
+      initializeAsBallerinaProject: false,
+      repositorySubPath: "",
+      sampleTemplate: ""
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)
