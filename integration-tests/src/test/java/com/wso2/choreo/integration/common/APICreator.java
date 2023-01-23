@@ -101,6 +101,15 @@ public class APICreator extends ControlPlaneAPI {
 
     }
 
+    public String createNewComponentVersionQuery(String orgHandler, String orgUuid, String componentId, String componentType, String apiId, String branch)
+            throws IOException {
+        GraphqlDTO graphqlDTO = GraphqlDTO.builder().orgHandler(orgHandler).orgUuid(orgUuid).
+                componentId(componentId).componentType(componentType).apiId(apiId).branch(branch).build();
+
+        String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/byor/graphqlQueryForNewVersionCreation.mustache", graphqlDTO);
+        return ObjectMapperUtil.mapToGraphQLQuery(expectedResponse);
+    }
+
     public String getComponentDetailsQuery(String projectId, String componentHandler) throws IOException {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/createUserManagedComponent/graphqlQueryForComponentDetails.mustache", graphqlDTO);
@@ -134,6 +143,8 @@ public class APICreator extends ControlPlaneAPI {
         Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
     }
+
+
 
     public static TestConfigs getAPIKey(String apiId, String accessToken) throws IOException {
         String url = APIS_ENDPOINT + "/" + apiId + "/generate-key?organizationId=" + ORG_UUID;
