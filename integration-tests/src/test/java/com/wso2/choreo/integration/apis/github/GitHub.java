@@ -98,6 +98,32 @@ public class GitHub extends ControlPlaneAPI {
 
     }
 
+    public static Response createNewBranch(String orgName, String repoName, String branchName, String newBranchName)
+            throws IOException {
+        System.out.println("create new branch");
+        String requestURI = GH_URL + "/repos/" + orgName + "/" +repoName+"/git/refs";
+        System.out.println(requestURI);
+        // getting the sha of the required branch
+        String shaRequestURI = GH_URL + "/repos/" + orgName + "/" +repoName+"/git/refs/heads/"+branchName;
+        System.out.println(shaRequestURI);
+        Response response = HttpClientUtil.httpGET(shaRequestURI, AUTH_HEADER, "");
+        JsonObject responseJsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
+        System.out.println(responseJsonObject);
+        JsonObject shaJsonObject = responseJsonObject.get("object").getAsJsonObject();
+        String sha = shaJsonObject.get("sha").getAsString();
+
+        HashMap<String, Object> requestBodyMap = new HashMap<>() {
+            {
+                put("ref", "refs/heads/"+newBranchName);
+                put("sha", sha);
+            }
+        };
+
+        System.out.println(requestBodyMap);
+
+        return HttpClientUtil.httpPOST(requestURI, ObjectMapperUtil.mapToString(requestBodyMap), AUTH_HEADER, "");
+    }
+
     public static Response fetchUserReposFromGitHub() {
         String requestUrl = GH_URL + "/orgs/" + GH_ORG + "/repos";
         return HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");

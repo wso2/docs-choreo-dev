@@ -49,7 +49,6 @@ import com.wso2.choreo.integration.common.exceptions.ObservabilityDataCheckExcep
 import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsCheckException;
 import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsNotFoundException;
@@ -219,7 +218,7 @@ public class ChoreoComponent {
     public JsonArray getCommitHistorySub(String accessToken)
             throws IOException, GetCommitHistoryException {
         String requestURI = choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-        String branchName = "feature";
+        String branchName = "feature-v2";
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", "query {" +
                     "      commitHistory(componentId: \"" + id + "\", branch: \"" + branchName + "\") {" +
@@ -405,6 +404,51 @@ public class ChoreoComponent {
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
              CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new ComponentDeploymentException(statusCode, responseBody);
+            }
+            String promoteResult = new JsonParser().parse(responseBody)
+                    .getAsJsonObject()
+                    .getAsJsonObject("data")
+                    .getAsJsonPrimitive("promote")
+                    .getAsString();
+            if (!"success".equals(promoteResult)) {
+                throw new ComponentDeploymentFailureException();
+            }
+        }
+        waitForComponentDeploymentSuccess(accessToken, orgHandler, orgId, latestVersionId, targetEnvId);
+    }
+
+    public void promoteNewVersion(String accessToken, String sourceReleaseId, String targetEnvId)
+            throws NoLatestApiVersionFoundException, IOException, ComponentDeploymentException,
+            ComponentDeploymentFailureException, ComponentDeploymentStatusCheckException, InterruptedException,
+            ComponentDeploymentTimeoutException {
+        String latestVersionId = getLatestApiVersion().getId();
+
+        Map<String, String> requestParams = new HashMap<>() {
+            {
+                put("componentId", getId());
+                put("apiVersionId", latestVersionId);
+                put("sourceReleaseId", sourceReleaseId);
+                put("targetEnvironmentId", targetEnvId);
+            }
+        };
+        String graphQuery = MessageUtils.generateStringFromTemplate(
+                "templates/graphql/requests/promote.mustache",
+                requestParams);
+        String requestBody = MessageUtils.generateGQLPayload(graphQuery);
+
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity());
             if (statusCode != HttpStatus.SC_OK) {
@@ -707,6 +751,23 @@ public class ChoreoComponent {
     }
 
     /**
+     * Get the app environment ID for a given API version
+     *
+     * @param apiVersion ApiVersion which require the app env id
+     * @param environment The environment name
+     * @return The app environment ID of the latest API version
+     */
+    public String getAppEnvIdForVersion(ApiVersion apiVersion, String environment)
+            throws NoLatestAppEnvIdFoundException {
+        for (AppEnvVersion appEnvVersion : apiVersion.getAppEnvVersions()) {
+            if (Objects.equals(appEnvVersion.getRelease().getMetadata().getChoreoEnv(), environment)) {
+                return appEnvVersion.getEnvironmentId();
+            }
+        }
+        throw new NoLatestAppEnvIdFoundException();
+    }
+
+    /**
      * Get the latest API version of a Choreo component
      *
      * @return The latest API version
@@ -951,6 +1012,17 @@ public class ChoreoComponent {
                 return appEnvVersion.getReleaseId();
             }
         }
+        throw new ReleaseIdNotFoundException();
+    }
+
+    public String getReleaseIdForEnvironmentV2(String env) throws ReleaseIdNotFoundException {
+        AppEnvVersion[] appEnvVersions = getApiVersions().get(1).getAppEnvVersions().toArray(new AppEnvVersion[0]);
+        for (AppEnvVersion appEnvVersion : appEnvVersions) {
+            if (appEnvVersion.getEnvironment().equals(env)) {
+                return appEnvVersion.getReleaseId();
+            }
+        }
+
         throw new ReleaseIdNotFoundException();
     }
 
@@ -1446,4 +1518,5 @@ public class ChoreoComponent {
     public void setImageRegistry(ImageRegistry imageRegistry) {
         this.imageRegistry = imageRegistry;
     }
+
 }
