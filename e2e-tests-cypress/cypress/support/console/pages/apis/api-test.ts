@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Utils } from "../../utils";
+
 import { Enums } from "../../enums";
 
 export class APITest {

@@ -13,7 +13,9 @@
 
 import { GitHub } from "../../github/github";
 import { ComponentData } from "../../interfaces/component-data";
+import { PR } from "../../interfaces/pr";
 import { ONE_HOUR } from "../constants";
+import { ChoreoHomePage } from "../pages/home/home-page";
 import { Utils } from "../utils";
 
 export const SUCCESS_STATUS_CODE = 200;
@@ -181,7 +183,7 @@ export class GraphQL {
   }
 
 
-  static createComponentWithRepo(componentData: ComponentData, repoName: string) {
+  static createComponentWithRepo(componentData: ComponentData, repoName?: string) {
     const { id } = Cypress.env("current_org");
     this.getProjects(id).then(res => {
       const projects = res.body.data.projects as []
@@ -205,13 +207,13 @@ export class GraphQL {
                                   triggerChannels: "${componentData.triggerChannels}",
                                   triggerID: ${componentData.triggerId},
                                   httpBase: true,
-                                  sampleTemplate: "",
+                                  sampleTemplate: "${componentData.sampleTemplate}",
                                   accessibility: "external",
                                   srcGitRepoUrl: "${componentData.srcGitRepoUrl}"
                                   repositorySubPath: "",
-                                  repositoryType: "UserManagedNonEmpty",
+                                  repositoryType: "${componentData.repositoryType}",
                                   repositoryBranch: "main",
-                                  initializeAsBallerinaProject: false,
+                                  initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject},
                                 } )
                                 {id, orgId, projectId, handler    }
                       }`
@@ -223,7 +225,8 @@ export class GraphQL {
         expect(res.status).to.be.eq(200)
       })
     })
-    cy.reload()
+    ChoreoHomePage.navigateToMarketPlace()
+    ChoreoHomePage.navigateToProjects()
     cy.get('tbody>tr p').should('be.visible')
   }
 
@@ -234,12 +237,16 @@ export class GraphQL {
                  { url, number }
                  }`
     }
-    cy.wait(60000)
+    // cy.wait(60000)
     this.callGraphQL(query).then(res => {
-      const prs = res.body.data.componentPullRequests as []
+      const prs:PR[] = res.body.data.componentPullRequests as []
       if (prs.length > 0) {
-     
-        GitHub.mergePR(repoName, 1).then(resp => expect(resp.status).to.be.eq(200))
+        cy.log(JSON.stringify(res.body.data.componentPullRequests))
+        const {number} =  prs[0]
+        GitHub.mergePR(repoName, number).then(resp => expect(resp.status).to.be.eq(200))
+        return
+      }else{
+        this.getPullRequests(componentId,repoName);
       }
 
     })

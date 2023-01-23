@@ -83,9 +83,7 @@ export class ComponentOverviewPage {
 
   private static createNewVersionApiProxy(version: string) {
     cy.contains("Create new version", { timeout: 180000 });
-    cy.get('[data-cyid="text-field-new-version"]>div>input')
-      .clear()
-      .type(version);
+    cy.get('[data-cyid="text-field-new-version"]').within(e=>{cy.get("input").clear().type(version)})
     cy.get("[data-testid=create-version-create]").click();
     cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
   }

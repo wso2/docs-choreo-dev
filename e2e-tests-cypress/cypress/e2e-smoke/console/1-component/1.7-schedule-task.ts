@@ -51,7 +51,9 @@ describe("Create Schedule Trigger", () => {
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger"
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.EU);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)

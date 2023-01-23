@@ -24,38 +24,50 @@ import { ProjectOverviewPage } from "../../../support/console/pages/projects/pro
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { GreetingSample } from "../../../support/console/pages/samples/greeting";
 import { Utils } from "../../../support/console/utils";
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentData } from "../../../support/interfaces/component-data";
+import { GitHub } from "../../../support/github/github";
 
 describe("Create Greeting sample in Choreo", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
-;
+  const COMPONENT_NAME = "greeting-service";
+  const REPO_NAME = "hello-world-sample";
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
+    GitHub.deleteRepoContent(REPO_NAME)
   });
   after(() => {
     ChoreoHomePage.logout();
   });
-  it("Creating a project and add Greeting sample", () => {
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-    );
-    ProjectOverviewPage.addNewComponent();
-    GreetingSample.selectSample("Greeting Service")
-    ComponentDevelopPage.getComponentURL();
+
+  it("Verify Hello World sample creation", () => {
+    let componentData: ComponentData = {
+      componentName: COMPONENT_NAME,
+      displayType: Enums.DisplayType.restAPI,
+      projectName: PROJECT_NAME,
+      sampleTemplate: "choreo/greeting_service:3.1.0",
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/hello-world-sample",
+      initializeAsBallerinaProject: true,
+      repositoryType: Enums.RepoType.UserManagedEmpty
+    }
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
   });
 
 
   it("Verify component deployment", () => {
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME)
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-   
+
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-   
+
   });
 
 
@@ -67,8 +79,7 @@ describe("Create Greeting sample in Choreo", () => {
     SwaggerUI.TryoutAPI();
     SwaggerUI.enterValue("name", "dasun");
     SwaggerUI.ExecuteResourceFunction();
-
-     SwaggerUI.getResponseCode().should("eq", "200");
+    SwaggerUI.getResponseCode().should("eq", "200");
   });
 
   it("Verify suspending Dev deployed component", () => {
@@ -80,9 +91,9 @@ describe("Create Greeting sample in Choreo", () => {
   it("Verify suspending Prod deployed component", () => {
     ComponentDeployPage.stopProdContainer();
   });
-  it("Verify component deletion",()=>{
+  it("Verify component deletion", () => {
     ComponentOverviewPage.goBack();
-    ComponentListingPage.deleteComponent("Greetings")
+    ComponentListingPage.deleteComponent(COMPONENT_NAME)
   })
 
 });

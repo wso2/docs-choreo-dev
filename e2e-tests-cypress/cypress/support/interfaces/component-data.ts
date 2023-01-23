@@ -7,5 +7,9 @@ export interface ComponentData {
     triggerChannels: string
     triggerId: string
     srcGitRepoUrl: string
-    repositoryType?:string
+    repositoryType:string,
+    sampleTemplate?:string,
+    repositorySubPath?:""
+    initializeAsBallerinaProject: boolean
+    
 }

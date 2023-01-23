@@ -1,6 +1,9 @@
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { Enums } from "../../../support/console/enums";
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
 import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
@@ -9,44 +12,49 @@ import { ProjectListingPage } from "../../../support/console/pages/projects/proj
 import { GreetingSample } from "../../../support/console/pages/samples/greeting";
 import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { Utils } from "../../../support/console/utils";
+import { GitHub } from "../../../support/github/github";
+import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Graphql GQL service test", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const commitMessage = "adding new service";
-
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = "Hello, John";
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
+  const COMPONENT_NAME = "graphql-service";
+  const REPO_NAME = "graphql-service-sample";
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
+    GitHub.deleteRepoContent(REPO_NAME)
   });
   after(() => {
-    ChoreoHomePage.logout();
-  });
-  it("Creating a project and add GQL sample", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    GreetingSample.selectSample("GraphQL Service");
-    ComponentDevelopPage.getComponentURL();
+      ChoreoHomePage.logout();
   });
 
-  it("Edit code in VScode", () => {
-    ComponentOverviewPage.navigateToOverview();
-    LoginPage.navigateToCodespace();
 
-    VSExplorer.pasteCode("gqlservice.bal");
-    VSExplorer.commitPush(commitMessage);
+
+  it("Verify GraphQL sample creation", () => {
+    let componentData: ComponentData = {
+      componentName: COMPONENT_NAME,
+      displayType: Enums.DisplayType.graphql,
+      projectName: PROJECT_NAME,
+      sampleTemplate: "choreo/graphql_service:3.1.0",
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/graphql-service-sample",
+      initializeAsBallerinaProject: true,
+      repositoryType: Enums.RepoType.UserManagedEmpty
+    }
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
   });
 
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
-  });
 
   it("Verify component deployment", () => {
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME)
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
    

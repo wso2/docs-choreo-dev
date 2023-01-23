@@ -205,7 +205,6 @@ describe("Choreo APIM publisher scenarios", () => {
 
   it("Verify insight values for dev", () => {
   ProjectOverviewPage.navigateToComponents()
-    ProjectListingPage.selectProject(PROJECT_NAME);
     ChoreoHomePage.navigateToInsights();
     InsightsPage.selectTimePeriod();
     InsightsPage.selectEnvironment(Enums.Environment.DEVELOPMENT);
