@@ -6,7 +6,7 @@ In this tutorial, you will address this requirement by doing the following:
 
 - Create a webhook component by connecting to your GitHub repository that includes the implementation of the webhook that addresses the described requirement.
 - Deploy the webhook you created to the development environment.
-- Modify the webhook implementation to connect the webhook implementation to GitHub, enabling it to act in response to selected GitHub-related events..
+- Modify the webhook implementation to connect the webhook implementation to GitHub, enabling it to act in response to selected GitHub-related events.
 - Test the webhook.
 - Promote the webhook to the production environment.
 
