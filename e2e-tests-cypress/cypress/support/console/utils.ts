@@ -182,12 +182,14 @@ export class Utils {
     });
   }
 
-  static sendDeleteRequest(url: string, headers: any = {}) {
+  static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
     const request = {
       method: "DELETE",
       url,
+      body,
       headers,
-      failOnStatusCode: false,
+      failOnStatusCode: false
+      
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
@@ -224,5 +226,5 @@ export class Utils {
     return false;
   }
 
-  
+
 }

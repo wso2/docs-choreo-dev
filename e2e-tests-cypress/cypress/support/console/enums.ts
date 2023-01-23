@@ -71,4 +71,9 @@ export namespace Enums {
         EU = "EU",
         US = "US"
     }
+
+    export enum RepoType{
+        UserManagedEmpty ="UserManagedEmpty",
+        UserManagedNonEmpty ="UserManagedNonEmpty"
+    }
 }

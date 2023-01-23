@@ -50,6 +50,7 @@ export class TryOut {
   static generateTestKeyAndVerify() {
     cy.get('[data-testid="get-test-key-btn"]').click({force: true});
     cy.get('#notistack-snackbar').should('be.visible')
+    cy.contains("Successfully created the access token").should('be.visible')
     cy.get("#accessTokenInput").invoke("val").should("not.be.empty");
   }
 

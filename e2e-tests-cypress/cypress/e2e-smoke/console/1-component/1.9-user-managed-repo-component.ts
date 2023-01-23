@@ -42,7 +42,9 @@ describe("Verify BYOR functionality", () => {
             projectName: PROJECT_NAME,
             triggerChannels: "",
             triggerId: null,
-            srcGitRepoUrl: "https://github.com/choreo-test-apps/greeting-rest-api"
+            srcGitRepoUrl: "https://github.com/choreo-test-apps/greeting-rest-api",
+            initializeAsBallerinaProject: false,
+            repositoryType: Enums.RepoType.UserManagedNonEmpty
         }
         ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.EU);
         GraphQL.createComponentWithRepo(componentData, REPO_NAME)

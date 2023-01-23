@@ -23,12 +23,6 @@ interface PromoteConfigs {
 export class ComponentDeployPage {
   static deployToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.intercept(
-      `${Cypress.env(
-        "newAppSvcURL"
-      )}/alert-configuration-service/1.0.0/org/*/alert-config`
-    ).as("config");
-    cy.wait("@config", { timeout: 18000 });
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").focus().click();
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
       "be.visible"
