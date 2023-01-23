@@ -44,7 +44,7 @@ describe("Create Schedule Trigger", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Verify REST API component creation", () => {
+  it("Verify Schedule Trigger component creation", () => {
     let componentData: ComponentData = {
       componentName: SCHEDULE_NAME,
       displayType: Enums.DisplayType.scheduledTask,
@@ -78,7 +78,7 @@ describe("Create Schedule Trigger", () => {
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 
-  it("Verify dev env logs", () => {
+  it("Verify prod env logs", () => {
     ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });

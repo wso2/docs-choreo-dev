@@ -42,7 +42,7 @@ describe("Verify webhook creation functionality", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Verify REST API component creation", () => {
+  it("Verify Webhook component creation", () => {
     let componentData: ComponentData = {
       componentName: WEBHOOK_NAME,
       displayType: Enums.DisplayType.webhook,
