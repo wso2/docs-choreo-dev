@@ -51,7 +51,9 @@ describe("Verify project creation functionality", () => {
       triggerId: null,
       srcGitRepoUrl: "https://github.com/choreo-test-apps/rest-api",
       initializeAsBallerinaProject:false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath:"",
+      sampleTemplate:""
     }
     ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
     GraphQL.createComponentWithRepo(componentData, REPO_NAME)

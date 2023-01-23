@@ -210,7 +210,7 @@ export class GraphQL {
                                   sampleTemplate: "${componentData.sampleTemplate}",
                                   accessibility: "external",
                                   srcGitRepoUrl: "${componentData.srcGitRepoUrl}"
-                                  repositorySubPath: "",
+                                  repositorySubPath: "${componentData.repositorySubPath}",
                                   repositoryType: "${componentData.repositoryType}",
                                   repositoryBranch: "main",
                                   initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject},
@@ -218,10 +218,12 @@ export class GraphQL {
                                 {id, orgId, projectId, handler    }
                       }`
       }
+      cy.log(JSON.stringify(query))
       this.callGraphQL(query).then(res => {
         const { id } = res.body.data.createComponent;
-
-        this.getPullRequests(id, repoName)
+        if (componentData.initializeAsBallerinaProject) {
+          this.getPullRequests(id, repoName)
+        }
         expect(res.status).to.be.eq(200)
       })
     })
@@ -237,16 +239,15 @@ export class GraphQL {
                  { url, number }
                  }`
     }
-    // cy.wait(60000)
+    cy.wait(10000)
     this.callGraphQL(query).then(res => {
-      const prs:PR[] = res.body.data.componentPullRequests as []
+      const prs: PR[] = res.body.data.componentPullRequests as []
       if (prs.length > 0) {
-        cy.log(JSON.stringify(res.body.data.componentPullRequests))
-        const {number} =  prs[0]
+        const { number } = prs[0]
         GitHub.mergePR(repoName, number).then(resp => expect(resp.status).to.be.eq(200))
         return
-      }else{
-        this.getPullRequests(componentId,repoName);
+      } else {
+        this.getPullRequests(componentId, repoName);
       }
 
     })
