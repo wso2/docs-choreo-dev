@@ -96,8 +96,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
 
         // Creating new GitHub repo
         repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
-//        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
 
@@ -118,32 +116,6 @@ public class CreateDeployInvokeWebhookIT extends TestNGCitrusSpringSupport {
         Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
         Assert.assertTrue(status.isSuccess());
     }
-
-//    @Test(dependsOnMethods = {"createdComponentStatus_CreateDeployInvokeWebhookIT"})
-//    @CitrusTest
-//    public void initialPRGeneration_CreateDeployInvokeWebhookIT() throws IOException, UnexpectedResponseException {
-//        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
-//        Assert.assertEquals(prs.length, 1);
-//    }
-//
-//    @Test(dependsOnMethods = {"initialPRGeneration_CreateDeployInvokeWebhookIT"})
-//    @CitrusTest
-//    public void mergePR_CreateDeployInvokeWebhookIT() throws IOException, UnexpectedResponseException {
-//        Response ghres = GitHub.mergePR(repoName, "1");
-//        Assert.assertEquals(ghres.getStatusCode(), HttpStatus.OK.value());
-//
-//        PullRequest[] pullRequests = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-//        Assert.assertEquals(pullRequests.length, 0);
-//    }
-//
-//
-//    @Test(dependsOnMethods = {"mergePR_CreateDeployInvokeWebhookIT"})
-//    @CitrusTest
-//    public void commitFile_CreateDeployInvokeWebhookIT() throws IOException {
-//        String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/webhook/github_webhook.bal");
-//        Response response = GitHub.mergeNewCode(repoName, "webhook.bal", "Add log to onIssueOpend", encodedContent);
-//        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
-//    }
 
     @Test(dependsOnMethods = {"createdComponentStatus_CreateDeployInvokeWebhookIT"})
     @CitrusTest
