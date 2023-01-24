@@ -140,17 +140,7 @@ export class ComponentDeployPage {
 
   static addConfiguration(value: string) {
     cy.contains("Configure & Deploy").should("be.visible").click();
-    cy.get(".ConfigForm").then((frm) => {
-      const drpDown = frm.find(".ConfigForm .MuiIconButton-label").length;
-      const input = frm.find(".ConfigForm div input").length;
-      if (drpDown < 2) {
-        cy.get(".ConfigForm .MuiIconButton-label").eq(0).click();
-        if (input == 0) {
-          cy.get(".ConfigForm .MuiIconButton-label").eq(1).click();
-        }
-      }
-      cy.get(".ConfigForm div input").type(value);
-    });
+    cy.get(".ConfigForm div input").type(value);
     cy.get('button[type="submit"]').click();
   }
 
@@ -165,7 +155,14 @@ export class ComponentDeployPage {
       invokeUrlIndex: 0,
     });
     this.addConfiguration(configValue);
-    cy.get('[data-cyid="deployment-status"]').should("have.length", 2);
+    cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
+      "have.length",
+      2
+    );
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 })
+      .should("have.length", 2)
+      .eq(1)
+      .contains("Active", { timeout: 360000 });
     cy.get('[data-cyid*="test-nav-btn"]').should("be.visible");
   }
 

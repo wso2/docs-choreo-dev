@@ -14,7 +14,6 @@
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { Enums } from "../../../support/console/enums";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
@@ -22,7 +21,6 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
-import { GitHub } from "../../../support/github/github";
 import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify webhook creation functionality", () => {
@@ -34,9 +32,7 @@ describe("Verify webhook creation functionality", () => {
 
   before(() => {
     LoginPage.login();
-
   });
-
 
   after(() => {
     ChoreoHomePage.logout();
@@ -47,18 +43,21 @@ describe("Verify webhook creation functionality", () => {
       componentName: WEBHOOK_NAME,
       displayType: Enums.DisplayType.webhook,
       projectName: PROJECT_NAME,
-      triggerChannels: "IssuesService",
-      triggerId: "35",
+      triggerChannels: "AppService",
+      triggerId: "126",
       srcGitRepoUrl: "https://github.com/choreo-test-apps/slack-web-hook",
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
-      sampleTemplate: ""
-    }
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
-
 
   it("Deploy the component", () => {
     ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
@@ -73,7 +72,7 @@ describe("Verify webhook creation functionality", () => {
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    cy.get('[data-testid="feature-disable-info"]').should('be.visible');
+    cy.get('[data-testid="feature-disable-info"]').should("be.visible");
   });
 
   it("Verify suspending Dev deployed component", () => {
@@ -86,4 +85,3 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.stopProdContainer();
   });
 });
-
