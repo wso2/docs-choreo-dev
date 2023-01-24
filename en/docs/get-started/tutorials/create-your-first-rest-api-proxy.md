@@ -128,7 +128,7 @@ First, let's review the security settings and add a rate limit to the API.
 1. Click **Manage** on the left navigation and click **Settings**.
 
 2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** and make the necessary changes. Once the changes are confirmed, you can save them by clicking **Save**.
-    ![Security Settings](../../assets/img/tutorials/security-settings.png){.cInlineImage-full}
+    ![Security Settings](../../assets/img/tutorials/proxy/security-settings.png){.cInlineImage-full}
 
 3. Next, let's add a rate-limiting policy to the API. Click **Resources**.
 
@@ -136,10 +136,10 @@ First, let's review the security settings and add a rate limit to the API.
 
 5. Select **API Level** as the rate-limiting level and then select the required rate-limiting level. Here, you are adding a rate-limiting policy for the entire API.  
 
-    ![Rate Limiting Level](../../assets/img/tutorials/rate-limiting-level.png){.cInlineImage-full}
+    ![Rate Limiting Level](../../assets/img/tutorials/proxy/rate-limiting-level.png){.cInlineImage-full}
 
     !!! info
-        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/rate-limiting-per-resource.png){.cInlineImage-full}<br/><br/>[Learn more](../../develop/components/api-proxies/api-proxy#settings).
+        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/proxy/rate-limiting-per-resource.png){.cInlineImage-full}<br/><br/>[Learn more](../../develop/components/api-proxies/api-proxy#settings).
 
 8. Click **Save**.
 
@@ -177,7 +177,7 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 
 1. On the **Lifecycle Management** page, click **Go to DevPortal**.
 
-    ![Go to Developer Portal](../../assets/img/tutorials/go-to-devportal.png){.cInlineImage-full}
+    ![Go to Developer Portal](../../assets/img/tutorials/proxy/go-to-devportal.png){.cInlineImage-full}
 
 2. Once you open the API Developer Portal, click **Credentials** in the left navigation menu.
 
