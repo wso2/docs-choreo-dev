@@ -22,11 +22,9 @@ export class ChoreoHomePage {
   static navigateToHome() {
     const handle = Cypress.env("current_org")["handle"];
 
-
     cy.get(
-      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home?profile=default"]`
+      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
     ).click();
-
   }
 
   static navigateToComponents() {
@@ -42,7 +40,7 @@ export class ChoreoHomePage {
   }
 
   static navigateToProjects() {
-    cy.get('[data-testid="main-left-nav-item-Project"]').click()
+    cy.get('[data-testid="main-left-nav-item-Project"]').click();
   }
 
   static navigateToInsights() {

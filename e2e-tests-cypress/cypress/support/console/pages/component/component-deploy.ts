@@ -24,6 +24,7 @@ export class ComponentDeployPage {
   static deployToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").focus().click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
       "be.visible"
     );
@@ -49,6 +50,8 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 })
       .should("have.length", 2)
       .eq(1)
@@ -62,38 +65,25 @@ export class ComponentDeployPage {
     );
   }
 
-  static promoteToProdApiPerspectiveView() {
-    window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .wait(2000);
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .click();
-    cy.wait(6000);
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
-      "not.be.disabled"
-    );
-  }
-
   static deployManualTriggerToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
     cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
-      "have.length",1
+      "have.length",
+      1
     );
   }
 
- 
   static promoteManualTriggerToProd() {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
 
       .click();
     cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
-      "have.length", 2
+      "have.length",
+      2
     );
   }
 
