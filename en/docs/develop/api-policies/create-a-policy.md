@@ -1,8 +1,8 @@
 # Create a Policy
 
-You can use policies to enforce some business logic on the Request, Response, or Fault flow of an API invocation. Using policies, you can make API invocations undergo slight behavioral modifications before reaching the backend. Similarly, you can modify the API response a client receives. In Choreo, you can add an API Policy only to an API Proxy. 
+You can use policies to enforce some business logic on the Request, Response, or Fault flow of an API invocation. Using policies, you can make API invocations undergo slight behavioral modifications before reaching the backend. Similarly, you can modify the API response that a client receives. In Choreo, you can add an API Policy only to an API Proxy. 
 
-A policy can be implemented as a Ballerina project and attached to an API Proxy. Follow the steps below to create a policy. 
+A policy can be implemented as a Ballerina project and attached to an API Proxy. To create a policy, Follow the steps given below: 
 
 ## Prerequisites
 
@@ -19,36 +19,41 @@ export BALLERINA_CENTRAL_ACCESS_TOKEN=<access-token>
 
 ##  Step 1: Initializing a Ballerina project
 
-A mediation policy is a Ballerina project. You can use the template provided by Choreo to initialize a mediation policy project with all the required configurations as follows:
+A mediation policy is a Ballerina project. You can use the template provided by Choreo to initialize a mediation policy project with all the required configurations.
 
--  Create a Ballerina project for the mediation policy using the **mediation.template** as the project template.  
+Let's create a Ballerina project for the mediation policy using the **mediation.template** as the project template by issuing the following command:  
    
-    **Format:**
+**Format:**
+
     ```
-    bal new -t choreo/mediation.template:1.0.0 <policy-name> 
+       bal new -t choreo/mediation.template:1.0.0 <policy-name> 
     ```
     
-    **Example:**
+**Example:**
+
     ```
-    bal new -t choreo/mediation.template:1.0.0 validateHeader 
+       bal new -t choreo/mediation.template:1.0.0 validateHeader 
     ```
  The Ballerina project you generated above has the following content: 
 
 ![Ballerina project](../../assets/img/develop/api-policy/ballerina-project.png){.cInlineImage-small}
 
-You can modify the Ballerina.toml and the Package.md files of the generated project as needed. For example, the **org**, the **package**, the package **version**, API documentation content, **keywords**, etc.
+You can modify the Ballerina.toml and the Package.md files of the generated project as required. For example, you can update the **org**, the **package**, the package **version**, API documentation content, **keywords**, etc.
 
 ![Ballerina toml](../../assets/img/develop/api-policy/ballerina-toml.png){.cInlineImage-small}
 
 ## Step 2: Implement the policy
 
-Let's implement a policy to validate an incoming header in the request and the response. In the request path, if the request header is not present or if the validation fails, let's log an error and return a 403 Bad Request response to the client whereas in the response path, let's only log a message.
+Let's implement a policy to validate an incoming header in the request and the response as follows:
 
-Follow the steps below to implement the policy:
+- **Request path**: If the request header is not present or if the validation fails, let's log an error and return a 403 Bad Request response to the client.
+- **Response path**: Let's log a message to indicate whether the request is valid or not.
 
-- Open the policy.bal file in the Ballerina project and fill in/modify the generated policy stubs(request, response, or fault) to suit your requirements. 
+To implement the policy, open the the Policy.bal file in the Ballerina project and fill in/modify the generated policy stubs(i.e., request, response, or fault). The following are sample implementations for the Request and Response stub:
 
 ### Request Flow
+
+The following is a sample implementation for the request flow:
  
 ```
 @mediation:RequestFlow
@@ -78,6 +83,8 @@ function generateResponse(string message, int statusCode) returns http:Response 
 
 ### Response Flow
 
+The following is a sample implementation for the response flow:
+
 ```
 @mediation:ResponseFlow
 public function validateResponseHeader(mediation:Context ctx, http:Request req, http:Response res, string headerName, string headerValue) returns http:Response|false|error|() { 
@@ -97,30 +104,30 @@ public function validateResponseHeader(mediation:Context ctx, http:Request req, 
 
 ```
 
-In this policy, you are not making any changes to the fault flow stub. Therefore, you can remove the fail flow stub from the policy.bal file.
+In this policy, you are not be making any changes to the `Fault` flow stub. Therefore, you can remove the ``Fault` flow stub from the policy.bal file.
 
 !!! note
-    The annotations **@mediation:RequestFlow** **@mediation:ResponseFlow** and **@mediation:FaultFlow** are bound with the keywords in the Ballerina.toml. Therefore, the changes you make to the policy stubs should reflect in the Ballerina.toml file. For example, if the policy is applicable only on the request and response paths, the annotation **@mediation:FaultFlow** can be removed from the policy. Then, you **MUST** remove the keyword, **choreo-apim-mediation-fault-flow** from the generated Ballerina.toml file. If failed to do so, the Ballerina compiler will show an error at compile time.
+    The  **@mediation:RequestFlow** **@mediation:ResponseFlow** and **@mediation:FaultFlow** annotations are bound with the keywords in the Ballerina.toml. Therefore, the changes you make to the policy stubs should reflect in the Ballerina.toml file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** remove the **choreo-apim-mediation-fault-flow** keyword from the generated Ballerina.toml file. If you omit doing so, the Ballerina compiler will show an error at compile time.
 
 !!! tip 
     - Organize the source within the default module of the package. Do not add any additional modules.
-    - A policy implementation can contain any combination of flows. A generated project contains stubs for all three flows: request, response, and fault. You can remove any stubs which you do not require. For example, when you create a policy that re-writes the resource paths, you can remove the response and fault stubs. 
-    - The HTTP request/response objects and the context record that gets passed as parameters to the policy functions are passed as references. Therefore, the changes you make to these values are persisted and are passed through all other policies. The request and the response accumulate all the transformations done on them through the attached policies.
-    - The following return type of the policy functions(flows) is unmodifiable:
-        - **http:Response** - Return an HTTP response when you terminate the mediation flow prematurely. For example,  in the in-flow sequence, the mediation sequence would terminate before calling the backend. The mediation policy then sends an HTTP response to the client.
-        - **false** - Return false if you want to terminate the mediation sequence with a pre-defined response(on the Choreo side).
-        - **error** - Return an error if you want to terminate the mediation flow and transfer control to the fault flow. The fault flow would then construct an error response and send it to the client.
-        - **()** - Return () to signal the successful completion of the policy. On completion of the policy, the proxy executes the next policy in the sequence.
+    - A policy implementation can contain any combination of flows. A generated project contains stubs for all three flows: `Request`, `Response`, and `Fault`. You can remove any stub which you do not require. For example, when you create a policy that re-writes the resource paths, you can remove the `Response` and `fault` stubs. 
+    - The HTTP request/response objects and the context record that gets passed as parameters to the policy functions are passed as references. Therefore, the changes you make to these values are persisted and are passed through all other policies. The request and the response accumulate all the transformations done to them via the attached policies.
+    - The following return types of the policy functions(flows) is unmodifiable:
+        - **http:Response** - Returns an HTTP response when you terminate the mediation flow prematurely. For example,  in the in-flow sequence, the mediation sequence terminates before calling the backend. The mediation policy then sends an HTTP response to the client.
+        - **false** - Returns `false` if you want to terminate the mediation sequence with a pre-defined response(on the Choreo side).
+        - **error** - Returns an error if you want to terminate the mediation flow and transfer control to the fault flow. The fault flow would then construct an error response and send it to the client.
+        - **()** - Returns () to signal the successful completion of the policy. Once the proxy has completed executing the policy, it starts to execute the next policy in the sequence.
 
 ## Step 3: Publish the policy
 
-You can publish mediation policies to Ballerina Central. When you deploy the API after attaching policies, Choreo pulls these packages from Ballerina Central and bundles them into the interceptor application under the hood. You can find more details on building and deploying an interceptor application [here](https://wso2.com/choreo/docs/develop/components/api-proxies/policies/). To use policies in your APIs, follow the steps below to publish them as public packages:
+You can publish mediation policies to Ballerina Central. When you deploy the API after attaching policies, Choreo pulls these packages from Ballerina Central and bundles them into the interceptor application under the hood. "For more details on building and deploying an interceptor application, see [Policies](https://wso2.com/choreo/docs/develop/components/api-proxies/policies/). To use policies in your APIs, publish them as public packages following the steps given below:
 
-1. Package the policy before publishing it to Ballerina Central by issuing the following command;
+1. Package the policy before publishing it to Ballerina Central by issuing the following command:
     ``` 
         bal pack 
     ```
-2. Publish the package to Ballerina Central by issuing the following command;
+2. Publish the package to Ballerina Central by issuing the following command:
 
     ``` 
         bal push 
@@ -134,7 +141,7 @@ Once you publish the package, it will be listed in the policy list in the Choreo
 
 Writing unit tests to test policy functions is similar to writing unit tests for a regular [Ballerina function](https://ballerina.io/learn/test-ballerina-code/test-a-simple-function/). 
 
-Let’s write a unit test for the validateRequestHeader function.
+Let’s write a unit test for the `validateRequestHeader` function.
 
 ```
 import ballerina/http;
@@ -167,7 +174,7 @@ function createContext(string httpMethod, string resPath) returns mediation:Cont
 
 ```
 
-As the policy function is modifying the same request/response/context instance that you pass to it, to verify the changes, you have to verify the request/response/context instance after calling the policy function.
+The policy function modifies the same request/response/context instance that you pass to it. Check the request/response/context instance after calling the policy function to verify these changes.
 
 ## Glossary
 
@@ -175,7 +182,7 @@ Following are some of the commonly used terms when discussing policies in Choreo
 
 ### mediation:Context
 
-The mediation context is used to pass parameters between policies. It is created per request and can be accessed in any of the flows. For example, if a correlation ID needs to be set to the request, it can be set in the context of the request flow and can be accessed in the response or fault flow. The context has the following functions:
+The mediation context is used to pass parameters between policies. It is created per request and you can access it in any of the flows. For example, if a correlation ID needs to be set to the request, you can set it in the context of the request flow and access it in the response or fault flow. The context has the following functions:
 
 ```
 # Retrieves the value for the specified key.   
@@ -251,9 +258,9 @@ public function queryParams() returns map<string[]> & readonly;
 
 ### Keywords
 
-The following key words are used in the Ballerina.toml file for mediation policies to work:
+The Ballerina.toml file needs to include the following keywords for the mediation policies to work:
 
-- **choreo-apim-mediation-policy**: Mandatory keyword which identifies this package is a mediation policy type.
+- **choreo-apim-mediation-policy**: This keyword is a mandatory keyword that is required to identify that the package is a mediation policy type.
 - **choreo-apim-mediation-request-flow**: Specifies whether the policy applies to the request flow.
 - **choreo-apim-mediation-response-flow**: Specifies whether the policy applies to the response flow.
 - **choreo-apim-mediation-fault-flow**: Specifies whether the policy is applicable for the fault flow.
@@ -263,6 +270,7 @@ The following key words are used in the Ballerina.toml file for mediation polici
 The Package.md file contains information about the policy. Choreo uses this information to render the policy configuring UI. This file is written in Markdown format and should be structured as follows.
 
 **Format:**
+
 ```
 # <policy-name>
 
@@ -275,6 +283,7 @@ The Package.md file contains information about the policy. Choreo uses this info
 ```
 
 **Example:**
+
 ```
 # ValidateHeader
 
@@ -288,4 +297,4 @@ This policy validates the request and response headers with the configured value
 
 ### Policy versioning
 
-Choreo or mediation dependencies bump their major version when switching to a major update in the language. For example, from update 1 to update 2. There can be significant incompatibilities in these major versions. Therefore, we recommended versioning the policy package in a manner that the major version gets bumped when upgrading the Choreo/mediation dependency version to a major version.  
+Choreo or mediation dependencies bump their major version when switching to a major update in the language (For example, from update 1 to update 2). There can be significant incompatibilities in these major versions. Therefore, we recommended versioning the policy package in a manner that the major version gets bumped when upgrading the Choreo/mediation dependency version to a major version.  
