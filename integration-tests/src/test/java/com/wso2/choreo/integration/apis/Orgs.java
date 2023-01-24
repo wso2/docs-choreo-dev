@@ -118,6 +118,54 @@ public class Orgs extends ControlPlaneAPI {
 
     }
 
+    public static void addConfigurationForNewVersion(HttpClient client, TestActionRunner runner,
+            ChoreoComponent component, String latestCommitSha, String envIdToDeploy,
+            BalConfig... balconfigs) throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        String componentId = component.getId();
+        String latestVersionId = component.getLatestApiVersion().getId();
+
+        String orgHandle = component.getOrgHandler();
+        String projectId = component.getProjectId();
+
+        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
+                .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
+                .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
+
+        Map<String, Object> requestBodyMap = new HashMap<>() {
+            {
+                put("moduleName", component.getName());
+                put("commitHash", latestCommitSha);
+                put("applyNow", false);
+                put("operation", 0);
+                put("sourceUuid", "");
+                put("configs", balconfigs);
+            }
+        };
+
+        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required", "isRequired");
+
+        // Update configurations
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(configurationsUpdateRequestURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(configurationsRequestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)));
+    }
+
     public static void addConfiguration(HttpClient client, TestActionRunner runner,
                                         ChoreoComponent component, Commit[] commitHistory, String envName,
                                         BalConfig... balconfigs) throws Exception {
@@ -136,6 +184,55 @@ public class Orgs extends ControlPlaneAPI {
         Map<String, Object> requestBodyMap = new HashMap<>() {
             {
                 put("moduleName", component.getName());
+                put("commitHash", latestCommitSha);
+                put("applyNow", false);
+                put("operation", 0);
+                put("sourceUuid", "");
+                put("configs", balconfigs);
+            }
+        };
+
+        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required", "isRequired");
+
+        // Update configurations
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(configurationsUpdateRequestURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(configurationsRequestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)));
+    }
+
+    public static void addConfigurationForNewVersion(HttpClient client, TestActionRunner runner,
+            ChoreoComponent componentV2, Commit[] commitHistory, String envName, ChoreoComponent componentV1,
+            BalConfig... balconfigs) throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        String componentId = componentV2.getId();
+        String envIdToDeploy = componentV1.getAppEnvIdForVersion(componentV1.getApiVersions().get(0),envName);
+        String latestVersionId = componentV2.getLatestApiVersion().getId();
+        String latestCommitSha = componentV1.getLatestCommitHash(commitHistory);
+        String orgHandle = componentV2.getOrgHandler();
+        String projectId = componentV2.getProjectId();
+
+        String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
+                .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
+                .concat(envIdToDeploy).concat("/").concat(latestVersionId).concat("/configurations");
+
+        Map<String, Object> requestBodyMap = new HashMap<>() {
+            {
+                put("moduleName", componentV2.getName());
                 put("commitHash", latestCommitSha);
                 put("applyNow", false);
                 put("operation", 0);

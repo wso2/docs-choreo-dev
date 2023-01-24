@@ -4,16 +4,19 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
@@ -60,8 +63,11 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         private String githubOrg;
         private String githubPAT;
         private static ChoreoComponent testComponent;
+        private static ChoreoComponent testComponentV2;
         private String repoType = "UserManagedNonEmpty";
         private String repoBranch = "dev";
+        private String repoBranchV2 = "dev-v2";
+        private ApiVersion apiVersion;
         @Autowired
         private HttpClient choreoTestClient;
 
@@ -195,18 +201,83 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                                 Gson gson = new Gson();
                                 testComponent = gson.fromJson(component.toString(),
                                         RestApiChoreoComponent.class);
+                                apiVersion = testComponent.getApiVersions().stream().filter(v -> v.isLatest()).findFirst().get();
                         }));
         }
 
-        @Test(dependsOnMethods = { "componentRetrieval_TestUserManagedNonEmptyCreateComponentRoot" })
+        @Test(dependsOnMethods = {"componentRetrieval_TestUserManagedNonEmptyCreateComponentRoot"})
+        @CitrusTest
+        public void createNewVersion_TestUserManagedNonEmptyCreateComponentRoot() throws IOException {
+                // Creating new branch
+                GitHub.createNewBranch(githubOrg,repoName,repoBranch,repoBranchV2);
+
+                APICreator testAPI = new APICreator();
+
+                String newVersionCreatorQuery = testAPI.createNewComponentVersionQuery(orgHandle, orgUUID, componentId,
+                        "restAPI",apiVersion.getId(),repoBranchV2);
+
+                $(http()
+                        .client(choreoProjectsTestClient)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(newVersionCreatorQuery)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+
+                $(http()
+                        .client(choreoProjectsTestClient)
+                        .receive()
+                        .response(HttpStatus.OK));
+        }
+
+        @Test(dependsOnMethods = { "createNewVersion_TestUserManagedNonEmptyCreateComponentRoot" })
+        @CitrusTest
+        public void createdComponentVersionStatus_TestUserManagedNonEmptyCreateComponentRoot() {
+                // Poll component create status
+                $(repeatOnError()
+                        .until("i = 50")
+                        .index("i")
+                        .autoSleep(5000)
+                        .actions(
+                                http()
+                                        .client(choreoTestClient)
+                                        .send()
+                                        .get("/orgs/"
+                                                .concat(orgHandle)
+                                                .concat("/projects/")
+                                                .concat(projectId)
+                                                .concat("/components/")
+                                                .concat(componentId)
+                                                .concat("/init/status"))
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                                http().client(choreoTestClient)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .body(new ClassPathResource(
+                                                "templates/createComponent/get_create_status_success.json"))
+                                        .validate(json()
+                                                .ignore("$.message"))));
+        }
+
+        @Test(dependsOnMethods = { "createdComponentVersionStatus_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
         public void componentDeployment_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-                String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
-                String latestVersionId = testComponent.getLatestApiVersion().getId();
+                // Retrieve the latest component.
+                testComponentV2 = GraphQL.getComponentDetails(projectId,componentHandler, accessToken);
+
+                JsonArray commitHistory = testComponentV2.getCommitHistory(accessToken);
+                String latestCommitSha = testComponentV2.getLatestCommitHash(commitHistory);
+                String latestVersionId = testComponentV2.getLatestApiVersion().getId();
+
                 String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
-                String branch = testComponent.getRepository().getBranch(); // todokeshi check if branch correct
-                String name = testComponent.getName();
+
+                String branch = testComponentV2.getRepository().getBranch(); // todokeshi check if branch correct
+                String name = testComponentV2.getName();
 
                 String configurationsUpdateRequestURI = "/orgs/".concat(orgHandle).concat("/projects/")
                         .concat(projectId).concat("/components/").concat(componentId).concat("/envs/")
@@ -281,7 +352,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @Test(dependsOnMethods = { "componentDeployment_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
         public void deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                String versionId = testComponent.getLatestApiVersion().getId();
+                String versionId = testComponentV2.getLatestApiVersion().getId();
 
                 String graphQlQuery = "query {" +
                         "      deploymentStatusByVersion(" +
@@ -331,7 +402,7 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @Test(dependsOnMethods = { "deploymentStatusByVersion_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
         public void componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                String versionId = testComponent.getLatestApiVersion().getId();
+                String versionId = testComponentV2.getLatestApiVersion().getId();
                 String devEnvIdToDeploy = testComponent.getLatestAppEnvId("dev");
                 Map<String, String> params = new HashMap<>();
                 params.put("orgHandler", orgHandle);
@@ -350,8 +421,8 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
                 ObjectMapper objectMapper = new ObjectMapper();
                 String requestBody = objectMapper.writeValueAsString(gqlRequestPayload);
 
-                JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
-                String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);
+                JsonArray commitHistory = testComponentV2.getCommitHistory(accessToken);
+                String latestCommitSha = testComponentV2.getLatestCommitHash(commitHistory);
 
                 Map<String, String> responseParams = new HashMap<>();
                 responseParams.put("environmentId", devEnvIdToDeploy);
@@ -385,16 +456,21 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @Test(dependsOnMethods = {"componentDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
+                // Retrieve the latest component.
+                testComponentV2 = GraphQL.getComponentDetails(projectId,componentHandler, accessToken);
+
                 Commit[] commitHistory = GraphQL.getCommitHistoryBranch(testComponent.getId(), repoBranch, accessToken);
-                Orgs.addConfiguration(choreoTestClient, this, testComponent, commitHistory, Constant.PROD_ENVIRONMENT);
-                testComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
+                Orgs.addConfigurationForNewVersion(choreoTestClient, this, testComponentV2, commitHistory, Constant.PROD_ENVIRONMENT, testComponent);
+                testComponentV2.promoteNewVersion(accessToken,
+                        testComponentV2.getReleaseIdForEnvironmentV2(Constant.DEV_ENVIRONMENT),
+                        testComponent.getAppEnvIdForVersion(testComponent.getApiVersions().get(0),Constant.PROD_ENVIRONMENT));
         }
 
         @Test(dependsOnMethods = { "componentPromotionToProd_TestUserManagedNonEmptyCreateComponentRoot" })
         @CitrusTest
         public void invokeAPIDev_TestUserManagedNonEmptyCreateComponentRoot() throws NoLatestApiVersionFoundException, IOException {
 
-                String latestVersionId = testComponent.getLatestApiVersion().getId();
+                String latestVersionId = testComponentV2.getLatestApiVersion().getId();
                 String graphQlQuery = "query {" +
                         "      invokeInformation(" +
                         "        orgHandler: \"" + orgHandle + "\"," +
@@ -490,25 +566,51 @@ public class TestUserManagedNonEmptyCreateComponentRoot extends TestNGCitrusSpri
         @Test(dependsOnMethods = {"invokeAPIDev_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                Commit[] commitHistory = GraphQL.getCommitHistory(testComponent.getId(), accessToken);
-                Orgs.addConfiguration(choreoTestClient, this, testComponent, commitHistory, Constant.PROD_ENVIRONMENT);
+                //Retrieve latest component.
+                testComponentV2 = GraphQL.getComponentDetails(projectId,componentHandler, accessToken);
+
+                Commit[] commitHistory = GraphQL.getCommitHistory(testComponentV2.getId(), accessToken);
+                Orgs.addConfiguration(choreoTestClient, this, testComponentV2, commitHistory, Constant.PROD_ENVIRONMENT);
         }
 
         @Test(dependsOnMethods = {"addPromoteConfiguration_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void promote_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                GraphQL.promoteComponent(testComponent, accessToken);
+                GraphQL.promoteComponent(testComponentV2, accessToken);
         }
 
         @Test(dependsOnMethods = {"promote_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                GraphQL.componentDeployment(testComponent, "prod", accessToken);
+                GraphQL.componentDeployment(testComponentV2, "prod", accessToken);
         }
 
         @Test(dependsOnMethods = {"componentProdDeploymentStatus_TestUserManagedNonEmptyCreateComponentRoot"})
         @CitrusTest
         public void invokeAPIProd_TestUserManagedNonEmptyCreateComponentRoot() throws Exception {
-                ComponentUtils.invokeApiEndpoint(accessToken, testComponent, Constant.Environment.Production);
+                ComponentUtils.invokeApiEndpoint(accessToken, testComponentV2, Constant.Environment.Production);
+        }
+
+        @Test(dependsOnMethods = { "invokeAPIProd_TestUserManagedNonEmptyCreateComponentRoot" })
+        @CitrusTest
+        public void deleteBranchV2_TestUserManagedNonEmptyCreateComponentRoot() throws JsonProcessingException {
+                String authHeader = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(githubPAT);
+
+                // delete merged PR branch
+                String deleteRequestURI = "/repos/".concat(githubOrg).concat("/").concat(repoName)
+                        .concat("/git/refs/heads/" + repoBranchV2);
+
+                $(http()
+                        .client(choreoTestClientForGithub)
+                        .send()
+                        .delete(deleteRequestURI)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, authHeader)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)));
+                $(http()
+                        .client(choreoTestClientForGithub)
+                        .receive()
+                        .response(HttpStatus.NO_CONTENT));
         }
 }
