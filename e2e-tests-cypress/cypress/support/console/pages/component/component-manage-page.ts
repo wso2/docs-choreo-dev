@@ -132,8 +132,9 @@ export class ComponentAPILifecycle {
     cy.get('[data-testid="Publish-lc-btn"]').click();
     cy.get('[aria-labelledby="confirmation-dialog"]').should("be.visible");
     cy.contains("Yes, Please").should("be.enabled").click();
+    cy.get('[data-testid="publish-btn"]').should("be.enabled");
     cy.get(`[data-testid="radio-audience-${connectorAudience}"]`).click();
-    cy.get('[data-testid="publish-btn"]').click();
+    cy.get('[data-testid="publish-btn"]').should("be.enabled").click();
     cy.get('[data-testid="published-connector-info"]').contains(
       "You have already published a connector for this API."
     );
