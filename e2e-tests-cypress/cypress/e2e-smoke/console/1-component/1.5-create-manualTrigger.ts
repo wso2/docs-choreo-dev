@@ -31,16 +31,14 @@ describe("Verify manual trigger creation functionality", () => {
   const PROJECT_DESCRIPTION = "Manual Trigger";
 
   before(() => {
-   
     LoginPage.login();
-
   });
-
 
   it("Verify Manual Trigger component creation", () => {
     let componentData: ComponentData = {
       componentName: MANUAL_NAME,
       displayType: Enums.DisplayType.manualTrigger,
+      accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
@@ -48,10 +46,14 @@ describe("Verify manual trigger creation functionality", () => {
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       initializeAsBallerinaProject: false,
       repositorySubPath: "",
-      sampleTemplate: ""
-    }
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
   after(() => {
     ChoreoHomePage.logout();

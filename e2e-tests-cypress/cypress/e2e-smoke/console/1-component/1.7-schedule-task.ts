@@ -36,7 +36,6 @@ describe("Create Schedule Trigger", () => {
   const PROJECT_DESCRIPTION = "Internal API Test";
 
   before(() => {
-  
     LoginPage.login();
   });
 
@@ -48,6 +47,7 @@ describe("Create Schedule Trigger", () => {
     let componentData: ComponentData = {
       componentName: SCHEDULE_NAME,
       displayType: Enums.DisplayType.scheduledTask,
+      accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
@@ -55,10 +55,14 @@ describe("Create Schedule Trigger", () => {
       initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: "",
-      sampleTemplate: ""
-    }
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.EU);
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.EU
+    );
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
   it("Verify component deployment", () => {

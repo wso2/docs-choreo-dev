@@ -12,68 +12,69 @@
  */
 
 export namespace Enums {
+  export enum DisplayType {
+    restAPI = "restAPI",
+    proxy = "proxy",
+    webhook = "webhook",
+    graphql = "graphql",
+    manualTrigger = "manualTrigger",
+    scheduledTask = "scheduledTask",
+  }
 
-    export enum DisplayType {
-        restAPI = "restAPI",
-        proxy = "proxy",
-        webhook = "webhook",
-        graphql = "graphql",
-        manualTrigger ="manualTrigger",
-        scheduledTask ="scheduledTask"
-    }
+  export enum Accessibility {
+    EXTERNAL = "external",
+    INTERNAL = "internal",
+  }
 
-    export enum ComponentTemplate {
-        REST = "REST",
-        WEBHOOK = "WEBHOOK",
-        MANUAL = "MANUAL",
-    }
+  export enum ComponentTemplate {
+    REST = "REST",
+    WEBHOOK = "WEBHOOK",
+    MANUAL = "MANUAL",
+  }
 
+  export enum DocumentSourceType {
+    INLINE = "INLINE",
+    MARKDOWN = "MARKDOWN",
+    URL = "URL",
+    FILE = "FILE",
+  }
 
-    export enum DocumentSourceType {
-        INLINE = 'INLINE',
-        MARKDOWN = 'MARKDOWN',
-        URL = 'URL',
-        FILE = 'FILE',
-    }
+  export enum DocumentType {
+    SAMPLE = "SAMPLES",
+    HOWTO = "HOWTO",
+    PUBLIC_FORUM = "PUBLIC_FORUM",
+    SUPPORT_FORUM = "SUPPORT_FORUM",
+    OTHER = "OTHER",
+  }
 
+  export enum Environment {
+    DEVELOPMENT = "Development",
+    PRODUCTION = "Production",
+    STAGING = "Staging",
+  }
 
-    export enum DocumentType {
-        SAMPLE = 'SAMPLES',
-        HOWTO = 'HOWTO',
-        PUBLIC_FORUM = 'PUBLIC_FORUM',
-        SUPPORT_FORUM = 'SUPPORT_FORUM',
-        OTHER = 'OTHER',
-    }
+  export enum HTTPMethod {
+    GET = "GET",
+    POST = "POST",
+    DELETE = "DELETE",
+    PUT = "PUT",
+    HEAD = "HEAD",
+    CONNECT = "CONNECT",
+    TRACE = "TRACE",
+  }
 
-    export enum Environment {
-        DEVELOPMENT = "Development",
-        PRODUCTION = "Production",
-        STAGING = "Staging",
-    }
+  export enum ConnectorAudience {
+    PUBLIC = "public",
+    PRIVATE = "private",
+  }
 
+  export enum Region {
+    EU = "EU",
+    US = "US",
+  }
 
-    export enum HTTPMethod {
-        GET = 'GET',
-        POST = 'POST',
-        DELETE = 'DELETE',
-        PUT = 'PUT',
-        HEAD = 'HEAD',
-        CONNECT = 'CONNECT',
-        TRACE = 'TRACE',
-    }
-
-    export enum ConnectorAudience {
-        PUBLIC = 'public',
-        PRIVATE = 'private',
-    }
-
-    export enum Region {
-        EU = "EU",
-        US = "US"
-    }
-
-    export enum RepoType{
-        UserManagedEmpty ="UserManagedEmpty",
-        UserManagedNonEmpty ="UserManagedNonEmpty"
-    }
+  export enum RepoType {
+    UserManagedEmpty = "UserManagedEmpty",
+    UserManagedNonEmpty = "UserManagedNonEmpty",
+  }
 }

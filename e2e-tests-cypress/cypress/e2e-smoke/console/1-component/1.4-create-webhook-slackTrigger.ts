@@ -42,6 +42,7 @@ describe("Verify webhook creation functionality", () => {
     let componentData: ComponentData = {
       componentName: WEBHOOK_NAME,
       displayType: Enums.DisplayType.webhook,
+      accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       triggerChannels: "AppService",
       triggerId: "126",

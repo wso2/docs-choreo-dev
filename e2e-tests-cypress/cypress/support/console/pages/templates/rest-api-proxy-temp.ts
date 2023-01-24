@@ -17,22 +17,6 @@ export class RestAPIProxyTemplate {
     cy.get('[data-testid="project-template-list-httpProxyApi"]').click();
   }
 
-  static designNewRestApi(apiName, apiVersion, apiBasePath, endpoint) {
-    cy.get('[data-cyid="design-rest-api-proxy"]').should("be.visible").click();
-
-    cy.get('[data-testid="api-name"] input').clear().type(apiName);
-    cy.get('[data-testid="api-version"] input').clear().type(apiVersion);
-
-    if (apiBasePath) {
-      cy.get('[data-testid="api-basepath"] input').clear().type(apiBasePath);
-    }
-
-    cy.get('[data-testid="api-endpoint"] input').clear().type(endpoint);
-    cy.get('[data-cyid="create-api-proxy-submit"]').click();
-    cy.get('[data-testid="delete-all-operations-btn"]');
-    Utils.saveComponentURL();
-  }
-
   static skipSource() {
     cy.get('[data-cyid="btn-skip-src"]').should("be.visible").click();
   }

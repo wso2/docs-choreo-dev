@@ -82,8 +82,6 @@ export class GraphQL {
     return false;
   }
 
-
-
   static getComponents(projectId: string, orgHandle: string, token: string) {
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
@@ -182,20 +180,26 @@ export class GraphQL {
     });
   }
 
-
-  static createComponentWithRepo(componentData: ComponentData, repoName?: string) {
+  static createComponentWithRepo(
+    componentData: ComponentData,
+    repoName?: string
+  ) {
     const { id } = Cypress.env("current_org");
-    this.getProjects(id).then(res => {
-      const projects = res.body.data.projects as []
-      const project = projects.find(p => p["name"] === componentData.projectName)
-      cy.log(`Project Id :: ${project["id"]}`)
+    this.getProjects(id).then((res) => {
+      const projects = res.body.data.projects as [];
+      const project = projects.find(
+        (p) => p["name"] === componentData.projectName
+      );
+      cy.log(`Project Id :: ${project["id"]}`);
       const query = {
         query: `mutation{
                   createComponent(
                              component: {
                                   name: "${componentData.componentName}",
                                   orgId: ${id},
-                                  orgHandler: "${Cypress.env("choreoOrgHandle")}",
+                                  orgHandler: "${Cypress.env(
+                                    "choreoOrgHandle"
+                                  )}",
                                   displayName: "${componentData.componentName}",
                                   displayType: "${componentData.displayType}",
                                   projectId: "${project["id"]}",
@@ -204,32 +208,46 @@ export class GraphQL {
                                   description: "",
                                   apiId: "",
                                   ballerinaVersion: "swan-lake-alpha5",
-                                  triggerChannels: "${componentData.triggerChannels}",
+                                  triggerChannels: "${
+                                    componentData.triggerChannels
+                                  }",
                                   triggerID: ${componentData.triggerId},
                                   httpBase: true,
-                                  sampleTemplate: "${componentData.sampleTemplate}",
-                                  accessibility: "external",
-                                  srcGitRepoUrl: "${componentData.srcGitRepoUrl}"
-                                  repositorySubPath: "${componentData.repositorySubPath}",
-                                  repositoryType: "${componentData.repositoryType}",
+                                  sampleTemplate: "${
+                                    componentData.sampleTemplate
+                                  }",
+                                  accessibility: "${
+                                    componentData.accessibility
+                                  }",
+                                  srcGitRepoUrl: "${
+                                    componentData.srcGitRepoUrl
+                                  }"
+                                  repositorySubPath: "${
+                                    componentData.repositorySubPath
+                                  }",
+                                  repositoryType: "${
+                                    componentData.repositoryType
+                                  }",
                                   repositoryBranch: "main",
-                                  initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject},
+                                  initializeAsBallerinaProject: ${
+                                    componentData.initializeAsBallerinaProject
+                                  },
                                 } )
                                 {id, orgId, projectId, handler    }
-                      }`
-      }
-      cy.log(JSON.stringify(query))
-      this.callGraphQL(query).then(res => {
+                      }`,
+      };
+      cy.log(JSON.stringify(query));
+      this.callGraphQL(query).then((res) => {
         const { id } = res.body.data.createComponent;
         if (componentData.initializeAsBallerinaProject) {
-          this.getPullRequests(id, repoName)
+          this.getPullRequests(id, repoName);
         }
-        expect(res.status).to.be.eq(200)
-      })
-    })
-    ChoreoHomePage.navigateToMarketPlace()
-    ChoreoHomePage.navigateToProjects()
-    cy.get('tbody>tr p').should('be.visible')
+        expect(res.status).to.be.eq(200);
+      });
+    });
+    ChoreoHomePage.navigateToMarketPlace();
+    ChoreoHomePage.navigateToProjects();
+    cy.get("tbody>tr p").should("be.visible");
   }
 
   private static getPullRequests(componentId: string, repoName: string) {
@@ -237,21 +255,22 @@ export class GraphQL {
       query: `query{
                  componentPullRequests(componentId: "${componentId}")
                  { url, number }
-                 }`
-    }
-    cy.wait(10000)
-    this.callGraphQL(query).then(res => {
-      const prs: PR[] = res.body.data.componentPullRequests as []
-      cy.log(JSON.stringify(prs))
+                 }`,
+    };
+    cy.wait(10000);
+    this.callGraphQL(query).then((res) => {
+      const prs: PR[] = res.body.data.componentPullRequests as [];
+      cy.log(JSON.stringify(prs));
       if (prs.length > 0) {
-        const { number } = prs[0]
-        GitHub.mergePR(repoName, number).then(resp => expect(resp.status).to.be.eq(200))
-        return
+        const { number } = prs[0];
+        GitHub.mergePR(repoName, number).then((resp) =>
+          expect(resp.status).to.be.eq(200)
+        );
+        return;
       } else {
         this.getPullRequests(componentId, repoName);
       }
-
-    })
+    });
   }
 
   private static changeComponentLifeCycle(
@@ -262,41 +281,41 @@ export class GraphQL {
     cy.log(`changeComponentLifeCycle ==> Project Id ${projectId}`);
     const query = {
       query: `query{    component(      projectId: "${projectId}"      componentHandler: "${componentHandler}"    )
-{      id,     
- name,      
- handler,      
- description,      
- displayType,      
- displayName,      
- ownerName,      
- orgId,      
- orgHandler,      
- version,      
- labels,      
- createdAt,      
- updatedAt,      
- projectId,      
- apiId,      
- repository{        
- nameApp,        
- nameConfig,        
- branch,        
- branchApp,        
- organizationApp,        
- organizationConfig,        
- isUserManage      },      
- apiVersions{       
- apiVersion,        
- proxyName,        
- proxyUrl,        
- proxyId,        
- id,        
- state,        
- latest,       
- branch,        
- appEnvVersions{         
- environmentId,          
- releaseId,          
+{      id,
+ name,
+ handler,
+ description,
+ displayType,
+ displayName,
+ ownerName,
+ orgId,
+ orgHandler,
+ version,
+ labels,
+ createdAt,
+ updatedAt,
+ projectId,
+ apiId,
+ repository{
+ nameApp,
+ nameConfig,
+ branch,
+ branchApp,
+ organizationApp,
+ organizationConfig,
+ isUserManage      },
+ apiVersions{
+ apiVersion,
+ proxyName,
+ proxyUrl,
+ proxyId,
+ id,
+ state,
+ latest,
+ branch,
+ appEnvVersions{
+ environmentId,
+ releaseId,
  release{ id, metadata{choreoEnv},environmentId,environment,gitHash,gitOpsHash,}}}}}`,
     };
 
@@ -386,6 +405,4 @@ export class GraphQL {
       }
     });
   }
-
-
 }
