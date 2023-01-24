@@ -20,7 +20,7 @@ import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 import { Utils } from "../../../support/console/utils";
-import { ComponentListingPage } from '../../../support/console/pages/component/component-listing-page';
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { GitHub } from "../../../support/github/github";
 import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
@@ -34,33 +34,37 @@ describe("Verify project creation functionality", () => {
   const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
-     LoginPage.login();
+    LoginPage.login();
   });
 
   after(() => {
     ChoreoHomePage.logout();
   });
 
-
   it("Verify REST API component creation", () => {
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.restAPI,
+      accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: "https://github.com/choreo-test-apps/rest-api",
-      initializeAsBallerinaProject:false,
+      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath:"",
-      sampleTemplate:""
-    }
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
+      repositorySubPath: "",
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
   it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME)
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
   });
@@ -110,14 +114,17 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Enums.Environment.PRODUCTION, Enums.HTTPMethod.GET, "root", queryParameters1).then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(4);
-          expect(res.status).equal(200);
-        });
-      }
-    );
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "root",
+      queryParameters1
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(4);
+        expect(res.status).equal(200);
+      });
+    });
   });
 
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
@@ -161,14 +168,17 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in prod", () => {
-    TestHelper.testOnCurl(Enums.Environment.PRODUCTION, Enums.HTTPMethod.GET, "isOdd", queryParameters2).then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        });
-      }
-    );
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "isOdd",
+      queryParameters2
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(true);
+        expect(res.status).equal(200);
+      });
+    });
   });
 
   it("Apply configs to dev", () => {
@@ -176,7 +186,7 @@ describe("Verify project creation functionality", () => {
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
 
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT)
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(
@@ -190,43 +200,47 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Apply configs to prod", () => {
-    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION)
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
   });
 
   it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}root`).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}root`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify resource not access without the token in dev", () => {
-    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}isOdd`).then((curl) =>
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(true);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}isOdd`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.body).equal(true);
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}root`).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}root`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify resource not access without the token in prod", () => {
-    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}isOdd`).then((curl) =>
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(true);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}isOdd`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.body).equal(true);
+          expect(res.status).equal(200);
+        })
     );
   });
 

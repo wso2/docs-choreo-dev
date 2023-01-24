@@ -28,19 +28,18 @@ describe("Graphql GQL service test", () => {
 
   before(() => {
     LoginPage.login();
-    GitHub.deleteRepoContent(REPO_NAME)
+    GitHub.deleteRepoContent(REPO_NAME);
   });
   after(() => {
-      ChoreoHomePage.logout();
+    ChoreoHomePage.logout();
   });
 
-
-
   it("Verify GraphQL sample creation", () => {
-    const subPath = Cypress.env("branch").replace("-ci", "")
+    const subPath = Cypress.env("branch").replace("-ci", "");
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.graphql,
+      accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       sampleTemplate: "choreo/graphql_service:3.1.0",
       triggerChannels: "",
@@ -48,23 +47,24 @@ describe("Graphql GQL service test", () => {
       srcGitRepoUrl: `https://github.com/choreo-test-apps/graphql-service-sample/tree/main/${subPath}`,
       initializeAsBallerinaProject: true,
       repositoryType: Enums.RepoType.UserManagedEmpty,
-      repositorySubPath: subPath
-    }
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION, Enums.Region.US);
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME)
+      repositorySubPath: subPath,
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
-
   it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME)
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-   
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-   
   });
 
   it("Verify test functionality of GQL query in dev on swagger", () => {

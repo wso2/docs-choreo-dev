@@ -183,17 +183,21 @@ describe("Verify internal API creation functionality", () => {
     ChoreoHomePage.navigateToHome();
     ProjectListingPage.createNewProject(PROJECT_1_NAME, PROJECT_DESCRIPTION);
     ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.designNewRestApi(
+    RestAPIProxyTemplate.skipSource();
+    RestAPIProxyTemplate.enterAPIdetails(
       PROXY_API_NAME_DEV,
-      PROXY_API_VERSION_DEV,
       PROXY_API_BASEPATH_DEV,
-      DEV_INVOKE_URL
+      DEV_INVOKE_URL,
+      PROXY_API_VERSION_DEV
     );
   });
 
   it("Verify Add resource to Proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(RESOURCE_NAME, Enums.HTTPMethod.GET);
+    ComponentDevelopPage.addResourcesToProxy(
+      RESOURCE_NAME,
+      Enums.HTTPMethod.GET
+    );
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -219,7 +223,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.DEVELOPMENT,
-      Enums. HTTPMethod.GET,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -248,17 +252,21 @@ describe("Verify internal API creation functionality", () => {
     ProjectListingPage.selectProject(PROJECT_1_NAME);
     ProjectOverviewPage.addComponent();
     ProjectOverviewPage.createHttpProxyAPI();
-    RestAPIProxyTemplate.designNewRestApi(
+    RestAPIProxyTemplate.skipSource();
+    RestAPIProxyTemplate.enterAPIdetails(
       PROXY_API_NAME_PROD,
-      PROXY_API_VERSION_PROD,
       PROXY_API_BASEPATH_PROD,
-      PROD_INVOKE_URL
+      PROD_INVOKE_URL,
+      PROXY_API_VERSION_PROD
     );
   });
 
   it("Verify Add resource to proxy API", () => {
     ComponentOverviewPage.navigateToDevelop();
-    ComponentDevelopPage.addResourcesToProxy(RESOURCE_NAME, Enums.HTTPMethod.GET);
+    ComponentDevelopPage.addResourcesToProxy(
+      RESOURCE_NAME,
+      Enums.HTTPMethod.GET
+    );
     ComponentDevelopPage.addParameterToProxyResource(
       RESOURCE_NAME,
       Enums.HTTPMethod.GET,
@@ -297,7 +305,7 @@ describe("Verify internal API creation functionality", () => {
   it("Verify resource access without the token in prod", () => {
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.PRODUCTION,
-      Enums. HTTPMethod.GET,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
@@ -322,7 +330,7 @@ describe("Verify internal API creation functionality", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurlDiscardPrevious(
       Enums.Environment.DEVELOPMENT,
-      Enums. HTTPMethod.GET,
+      Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters
     ).then((curl) => {
