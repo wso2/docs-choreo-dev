@@ -12,6 +12,9 @@ import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
 import com.wso2.choreo.integration.common.exceptions.UnexpectedResponseException;
 import com.wso2.choreo.integration.common.utils.FileUtil;
 import com.wso2.choreo.integration.config.Constant;
@@ -67,8 +70,8 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_GraphQLServiceIT() throws Exception {
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
         ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
@@ -77,8 +80,13 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponentFor_GraphQLServiceIT() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.graphql.name()).build();
+        GraphqlDTO dto = GraphqlDTO.builder().
+                name(componentName).
+                triggerID("null").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/graphql").
+                projectId(projectId).
+                displayType(Constant.displayType.graphql.name()).
+                build();
         choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
@@ -94,29 +102,13 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"createdComponentStatus_GraphQLServiceIT"})
     @CitrusTest
-    public void initialPRGeneration_GraphQLServiceIT() throws IOException, UnexpectedResponseException {
-
-    }
-
-
-
-    @Test(dependsOnMethods = {"initialPRGeneration_GraphQLServiceIT"})
-    @CitrusTest
-    public void mergeNewCode_GraphQLServiceIT() throws IOException {
-        String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/gql.bal");
-        String balToml = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/jwt/Ballerina.toml");
-        GitHub.createNewFile(repoName, "Ballerina.toml", balToml);
-        GitHub.createNewFile(repoName, "sample.bal", encodedContent);
-    }
-
-    @Test(dependsOnMethods = {"mergeNewCode_GraphQLServiceIT"})
-    @CitrusTest
-    public void componentRetrieval_GraphQLServiceIT() throws IOException {
+    public void componentRetrieval_GraphQLServiceEUdpIT() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
         Assert.assertNotNull(choreoComponent);
     }
 
-    @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceIT"})
+
+    @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceEUdpIT"})
     @CitrusTest
     public void addDeploymentConfiguration_GraphQLServiceIT() throws Exception {
         Orgs.getConfigurationMapping(choreoComponent, accessToken);
@@ -125,11 +117,11 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_GraphQLServiceIT"})
     @CitrusTest
-    public void deploy_GraphQLServiceIT() throws Exception {
-
+    public void componentDeploy_GraphQLServiceIT() throws Exception {
+        GraphQL.deployComponent(choreoComponent, accessToken);
     }
 
-    @Test(dependsOnMethods = {"deploy_GraphQLServiceIT"})
+    @Test(dependsOnMethods = {"componentDeploy_GraphQLServiceIT"})
     @CitrusTest
     public void deploymentStatusByVersion_GraphQLServiceIT() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);

@@ -7,6 +7,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.observability.ObservabilityService;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -66,24 +67,26 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_GraphQLServiceEUdpIT() throws Exception {
-        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
+
+
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
+
+
+        ChoreoProject project = GraphQL.createProject(Constant.region.EU, accessToken);
+        projectId = project.getId();
     }
 
     @Test
     @CitrusTest
-    public void creteProject_GraphQLServiceEUdpIT() throws IOException {
-        ChoreoProject project = GraphQL.createProject(Constant.region.EU, accessToken);
-        projectId = project.getId();
-        Assert.assertEquals(project.getRegion(), Constant.region.EU.name());
-    }
-
-    @Test(dependsOnMethods = {"creteProject_GraphQLServiceEUdpIT"})
-    @CitrusTest
     public void createUserManagedComponentFor_GraphQLServiceEUdpIT() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.graphql.name()).build();
+
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/graphql").
+                projectId(projectId).
+                displayType(Constant.displayType.graphql.name()).
+                build();
         choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
@@ -99,48 +102,26 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"createdComponentStatus_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void initialPRGeneration_GraphQLServiceEUdpIT() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
-        Assert.assertEquals(prs.length, 1);
-    }
-
-    @Test(dependsOnMethods = {"initialPRGeneration_GraphQLServiceEUdpIT"})
-    @CitrusTest
-    public void mergePR_GraphQLServiceEUdpIT() throws IOException, UnexpectedResponseException {
-        GitHub.mergePR(repoName, "1");
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-        Assert.assertEquals(prs.length, 0);
-    }
-
-
-    @Test(dependsOnMethods = {"mergePR_GraphQLServiceEUdpIT"})
-    @CitrusTest
-    public void mergeNewCode_GraphQLServiceEUdpIT() throws IOException {
-        String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/gql.bal");
-        Response res = GitHub.mergeNewCode(repoName, "sample.bal", "update code", encodedContent);
-        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
-    }
-
-    @Test(dependsOnMethods = {"mergeNewCode_GraphQLServiceEUdpIT"})
-    @CitrusTest
     public void componentRetrieval_GraphQLServiceEUdpIT() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
         Assert.assertNotNull(choreoComponent);
     }
 
+
     @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceEUdpIT"})
     @CitrusTest
     public void addDeploymentConfiguration_GraphQLServiceEUdpIT() throws Exception {
+        Orgs.getConfigurationMapping(choreoComponent, accessToken);
         Orgs.addConfiguration(choreoComponent, Constant.DEV_ENVIRONMENT, accessToken);
     }
 
     @Test(dependsOnMethods = {"addDeploymentConfiguration_GraphQLServiceEUdpIT"})
     @CitrusTest
-    public void deploy_GraphQLServiceEUdpIT() throws Exception {
+    public void componentDeploy_GraphQLServiceEUdpIT() throws Exception {
         GraphQL.deployComponent(choreoComponent, accessToken);
     }
 
-    @Test(dependsOnMethods = {"deploy_GraphQLServiceEUdpIT"})
+    @Test(dependsOnMethods = {"componentRetrieval_GraphQLServiceEUdpIT"})
     @CitrusTest
     public void deploymentStatusByVersion_GraphQLServiceEUdpIT() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
@@ -157,6 +138,7 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void addPromoteConfiguration_GraphQLServiceEUdpIT() throws Exception {
         Response res = Orgs.addConfiguration(choreoComponent, Constant.PROD_ENVIRONMENT, accessToken);
+        Orgs.getConfigurationMapping(choreoComponent, accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
 
@@ -218,41 +200,7 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
-
-        String requestPath = Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/groupedlogsV2");
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        $(http()
-                .client(choreoCPTestClient)
-                .send()
-                .get(requestPath)
-                .queryParam("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .queryParam("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .queryParam("releaseId", releaseId)
-                .queryParam("namespace", namespace)
-                .queryParam("limit", "5")
-                .queryParam("bin", "10")
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-        $(http()
-                .client(choreoCPTestClient)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate(jsonPath()
-                        .expression("$.keySet()", hasItems("columns", "rows"))
-                        .expression("$.columns.size()", greaterThan(1))
-                        .expression("$.columns[*].name", hasItems("TimeGenerated", "Logs"))
-                        .expression("$.columns[*].type", hasItems("datetime", "dynamic"))
-                        .expression("$.rows.size()", greaterThan(1))
-                        .expression("$.rows[*][0]", everyItem(StringRegularExpression.matchesRegex("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$")))
-                )
-        );
+        ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
     }
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})
@@ -297,5 +245,4 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
                 )
         );
     }
-
 }
