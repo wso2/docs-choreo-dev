@@ -98,14 +98,9 @@ public class GraphQLServiceIT extends TestNGCitrusSpringSupport {
 
     }
 
+
+
     @Test(dependsOnMethods = {"initialPRGeneration_GraphQLServiceIT"})
-    @CitrusTest
-    public void mergePR_GraphQLServiceIT() throws IOException, UnexpectedResponseException {
-
-    }
-
-
-    @Test(dependsOnMethods = {"mergePR_GraphQLServiceIT"})
     @CitrusTest
     public void mergeNewCode_GraphQLServiceIT() throws IOException {
         String encodedContent = FileUtil.readFileEncodedContent("src/test/resources/templates/encodedbal/gql.bal");

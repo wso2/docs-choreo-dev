@@ -81,27 +81,20 @@ export class ComponentDeployPage {
     cy.get('[data-cyid="btn-deploy-api"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
-      "be.visible"
+    cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
+      "have.length",1
     );
   }
 
-  static promoteManualTriggerToStg() {
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
-      .should("be.enabled")
-      .wait(2000)
-      .eq(0)
-      .click();
-    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
-      "not.be.disabled"
-    );
-  }
-
+ 
   static promoteManualTriggerToProd() {
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
-      .wait(5000)
+
       .click();
+    cy.get('[data-testid="btn-view-in-devops"]', { timeout: 360000 }).should(
+      "have.length", 2
+    );
   }
 
   static deployScheduleTask() {
