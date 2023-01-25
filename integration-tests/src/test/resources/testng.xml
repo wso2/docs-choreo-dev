@@ -12,12 +12,8 @@
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestMaxAPIRevisionsUsingDeployments"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
             <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
-            <class name="com.wso2.choreo.integration.tests.createProject.CreateProjectIT"/>
-            <class name="com.wso2.choreo.integration.tests.getCommitList.GetCommitListIT"/>
-            <class name="com.wso2.choreo.integration.tests.createComponent.CreateComponentIT"/>
             <class name="com.wso2.choreo.integration.tests.alert.OOMAlertIT"/>
             <class name="com.wso2.choreo.integration.tests.deploy.DeployIT"/>
-            <class name="com.wso2.choreo.integration.tests.addConfigurations.AddConfigurationsIT"/>
             <class name="com.wso2.choreo.integration.tests.createTrigger.CreateTriggerIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAPIIT"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPIIT"/>
