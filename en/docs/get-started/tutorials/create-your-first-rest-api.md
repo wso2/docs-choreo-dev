@@ -48,10 +48,17 @@ Let's create a new REST API component as follows:
 4. Provide authorization for Choreo to connect to your GitHub account by clicking  **Authorize with GitHub**. 
 5. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
 6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset (i.e., **Ballerina** or **Dockerfile**).
-7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty GitHub repository or a sub-folder and proceed to create the component. 
+7. Enter the following values based on the preset you selected above:
+    - **Ballerina** preset
+        - **Path**: Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
 
-    !!! note
-        You can create a component by connecting an empty GitHub repository. But you can only deploy it after you implement it. 
+            !!! info
+                You can create a component by connecting an empty GitHub repository for the **Ballerina** preset. However, you can only deploy it after developing and pushing a Ballerina implementation for the relevant component type.
+
+    - **Dockerfile** preset:
+        - **Dockerfile path**: Enter a valid path relative to the root of your repository that points to the Dockerfile. The path must include `- Dockerfile`. Choreo validates the **Dockerfile path** and checks if the given file name contains the word `Dockerfile` ignoring cases.
+        - **Docker context path**: Enter a valid path relative to the root of your repository that points to the Docker project.
+        - **OpenAPI file path (Optional)**: Enter a valid path relative to the root of your repository that points to the OpenAPI schema. Choreo validates the input to check if the given file name has one of the following extensions: *.yaml, *.yml, or *.json.
 
 8. Next, click **Create**.
 
