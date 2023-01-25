@@ -1716,6 +1716,37 @@ CREATE TABLE [dbo].[org_self_signup_approval_request]
     CONSTRAINT unique_org_self_signup_approval_request UNIQUE(organization_uuid, user_idp_id)
 )
 
+CREATE TABLE [dbo].[org_enterprise_login_config]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [organization_uuid] [nvarchar](255) NOT NULL,
+    [is_eidp_enabled] [bit] NOT NULL DEFAULT 0,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_org_enterprise_login_config UNIQUE(organization_uuid)
+)
+
+/****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
+SET ANSI_NULLS ON
+    GO
+SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE TRIGGER [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ON [dbo].[org_enterprise_login_config]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [org_enterprise_login_config] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[org_enterprise_login_config] ENABLE TRIGGER [org_enterprise_login_config_UpdateTimeTrigger]
+    GO
+
 /****** Object:  Trigger [dbo].[org_self_signup_config_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
     GO
