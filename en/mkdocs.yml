@@ -71,6 +71,10 @@ nav:
           - Connect Your Own GitHub Repository: develop/manage-repository/connect-your-own-github-repository-to-choreo.md
       - Run and Test:
           - Forecast Performance Metrics: develop/run-and-test/forecast-performance-metrics.md
+      - API Policies:
+          - Policies: develop/api-policies/policies.md
+          - Create Policy: develop/api-policies/create-a-policy.md
+          - Attach Policy: develop/api-policies/attach-policies.md   
       - Advanced Topics:
           - Manage Connectors: develop/advanced-topics/manage-connectors.md
   - Deploy: 
@@ -185,6 +189,7 @@ plugins:
           'references/handle-non-ballerina-files-in-choreo.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/handle-non-ballerina-files-in-choreo/'
           'references/define-configurable-variables.md': 'https://wso2.com/choreo/docs/develop/explore-code-editor/define-configurable-variables/'
           'references/connect-with-protected-third-party-applications.md': 'https://wso2.com/choreo/docs/references/connect-with-protected-third-party-applications/'
+          'develop/components/api-proxies/policies.md': 'https://wso2.com/choreo/docs/develop/api-policies/policies/'
 extra_css:
   - assets/lib/highlightjs/default.min.css
   - assets/css/theme.css
