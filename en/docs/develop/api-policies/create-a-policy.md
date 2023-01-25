@@ -106,23 +106,23 @@ public function validateResponseHeader(mediation:Context ctx, http:Request req, 
 
 ### Fault flow
 
-In this policy, you are not be making any changes to the `Fault` flow stub. Therefore, you can remove the `Fault` flow stub from the `Policy.bal` file.
+Let's not make any changes to the `Fault` flow in this example. Therefore, you can remove the `Fault` flow stub from the `Policy.bal` file.
 
 !!! note 
     The  **@mediation:RequestFlow** **@mediation:ResponseFlow** and **@mediation:FaultFlow** annotations are bound with the keywords in the `Ballerina.toml`. Therefore, the changes you make to the policy stubs should reflect in the `Ballerina.toml` file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** remove the **choreo-apim-mediation-fault-flow** keyword from the generated `Ballerina.toml` file. If you omit doing so, the Ballerina compiler will show an error at compile time.
 
-### Best Practices 
+### Best practices 
 
 The following are some best practices and additional information you can refer to when implementing your policy:
 
-    - Organize the source within the default module of the package. Do not add any additional modules.
-    - A policy implementation can contain any combination of flows. A generated project contains stubs for all three flows: `Request`, `Response`, and `Fault`. You can remove any stub which you do not require. For example, when you create a policy that re-writes the resource paths, you can remove the `Response` and `fault` stubs. 
-    - The HTTP request/response objects and the context record that gets passed as parameters to the policy functions are passed as references. Therefore, the changes you make to these values are persisted and are passed through all other policies. The request and the response accumulate all the transformations done to them via the attached policies.
-    - The following return types of the policy functions(flows) is unmodifiable:
-        - **http:Response** - Returns an HTTP response when you terminate the mediation flow prematurely. For example,  in the in-flow sequence, the mediation sequence terminates before calling the backend. The mediation policy then sends an HTTP response to the client.
-        - **false** - Returns `false` if you want to terminate the mediation sequence with a pre-defined response(on the Choreo side).
-        - **error** - Returns an error if you want to terminate the mediation flow and transfer control to the fault flow. The fault flow would then construct an error response and send it to the client.
-        - **()** - Returns () to signal the successful completion of the policy. Once the proxy has completed executing the policy, it starts to execute the next policy in the sequence.
+- Organize the source within the default module of the package. Do not add any additional modules.
+- A policy implementation can contain any combination of flows. A generated project contains stubs for all three flows: `Request`, `Response`, and `Fault`. You can remove any stub that you do not require. For example, when you create a policy that re-writes the resource paths, you can remove the `Response` and `fault` stubs. 
+- The HTTP request/response objects and the context record that gets passed as parameters to the policy functions are passed as references. Therefore, the changes you make to these values are persisted and are passed through all other policies. The request and the response accumulate all the transformations done to them via the attached policies.
+- The following return types of the policy functions(flows) is unmodifiable:
+    - **http:Response** - Returns an HTTP response when you terminate the mediation flow prematurely. For example,  in the in-flow sequence, the mediation sequence terminates before calling the backend. The mediation policy then sends an HTTP response to the client.
+    - **false** - Returns `false` if you want to terminate the mediation sequence with a pre-defined response(on the Choreo side).
+    - **error** - Returns an error if you want to terminate the mediation flow and transfer control to the fault flow. The fault flow would then construct an error response and send it to the client.
+    - **()** - Returns () to signal the successful completion of the policy. Once the proxy has completed executing the policy, it starts to execute the next policy in the sequence.
 
 ## Step 3: Publish the policy
 

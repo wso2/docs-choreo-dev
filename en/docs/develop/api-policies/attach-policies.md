@@ -1,4 +1,4 @@
-# Attach a policy
+# Attach a Policy
 
 You can attach a policy to the `Request`, `Response`, or `Error` flow of the  REST API Proxy as follows:
 
