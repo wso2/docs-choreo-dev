@@ -2,7 +2,7 @@
 
 You can use policies to enforce some business logic on the Request, Response, or Fault flow of an API invocation. Using policies, you can make API invocations undergo slight behavioral modifications before reaching the backend. Similarly, you can modify the API response that a client receives. In Choreo, you can add an API Policy only to an API Proxy. 
 
-A policy can be implemented as a Ballerina project and attached to an API Proxy. To create a policy, Follow the steps given below: 
+A policy can be implemented as a Ballerina project and attached to an API Proxy. To create a policy, follow the steps given below: 
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Let's create a Ballerina project for the mediation policy using the **mediation.
 
 ![Ballerina project](../../assets/img/develop/api-policy/ballerina-project.png){.cInlineImage-small}
 
-You can modify the Ballerina.toml and the Package.md files of the generated project as required. For example, you can update the **org**, the **package**, the package **version**, API documentation content, **keywords**, etc.
+You can modify the `Ballerina.toml` and the `Package.md` files of the generated project as required. For example, you can update the **org**, the **package**, the package **version**, API documentation content, **keywords**, etc.
 
 ![Ballerina toml](../../assets/img/develop/api-policy/ballerina-toml.png){.cInlineImage-small}
 
@@ -49,7 +49,7 @@ Let's implement a policy to validate an incoming header in the request and the r
 - **Request path**: If the request header is not present or if the validation fails, let's log an error and return a 403 Bad Request response to the client.
 - **Response path**: Let's log a message to indicate whether the request is valid or not.
 
-To implement the policy, open the the Policy.bal file in the Ballerina project and fill in/modify the generated policy stubs(i.e., request, response, or fault). The following are sample implementations for the Request and Response stub:
+To implement the policy, open the the `Policy.bal` file in the Ballerina project and fill in/modify the generated policy stubs(i.e., request, response, or fault). The following are sample implementations for the **Request** and **Response** stubs:
 
 ### Request Flow
 
@@ -104,12 +104,17 @@ public function validateResponseHeader(mediation:Context ctx, http:Request req, 
 
 ```
 
-In this policy, you are not be making any changes to the `Fault` flow stub. Therefore, you can remove the ``Fault` flow stub from the policy.bal file.
+### Fault flow
 
-!!! note
-    The  **@mediation:RequestFlow** **@mediation:ResponseFlow** and **@mediation:FaultFlow** annotations are bound with the keywords in the Ballerina.toml. Therefore, the changes you make to the policy stubs should reflect in the Ballerina.toml file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** remove the **choreo-apim-mediation-fault-flow** keyword from the generated Ballerina.toml file. If you omit doing so, the Ballerina compiler will show an error at compile time.
+In this policy, you are not be making any changes to the `Fault` flow stub. Therefore, you can remove the `Fault` flow stub from the `Policy.bal` file.
 
-!!! tip 
+!!! note 
+    The  **@mediation:RequestFlow** **@mediation:ResponseFlow** and **@mediation:FaultFlow** annotations are bound with the keywords in the `Ballerina.toml`. Therefore, the changes you make to the policy stubs should reflect in the `Ballerina.toml` file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** remove the **choreo-apim-mediation-fault-flow** keyword from the generated `Ballerina.toml` file. If you omit doing so, the Ballerina compiler will show an error at compile time.
+
+### Best Practices 
+
+The following are some best practices and additional information you can refer to when implementing your policy:
+
     - Organize the source within the default module of the package. Do not add any additional modules.
     - A policy implementation can contain any combination of flows. A generated project contains stubs for all three flows: `Request`, `Response`, and `Fault`. You can remove any stub which you do not require. For example, when you create a policy that re-writes the resource paths, you can remove the `Response` and `fault` stubs. 
     - The HTTP request/response objects and the context record that gets passed as parameters to the policy functions are passed as references. Therefore, the changes you make to these values are persisted and are passed through all other policies. The request and the response accumulate all the transformations done to them via the attached policies.
@@ -258,7 +263,7 @@ public function queryParams() returns map<string[]> & readonly;
 
 ### Keywords
 
-The Ballerina.toml file needs to include the following keywords for the mediation policies to work:
+The `Ballerina.toml` file needs to include the following keywords for the mediation policies to work:
 
 - **choreo-apim-mediation-policy**: This keyword is a mandatory keyword that is required to identify that the package is a mediation policy type.
 - **choreo-apim-mediation-request-flow**: Specifies whether the policy applies to the request flow.
@@ -267,7 +272,7 @@ The Ballerina.toml file needs to include the following keywords for the mediatio
 
 ### Policy name and description
 
-The Package.md file contains information about the policy. Choreo uses this information to render the policy configuring UI. This file is written in Markdown format and should be structured as follows.
+The `Package.md` file contains information about the policy. Choreo uses this information to render the policy configuring UI. This file is written in Markdown format and should be structured as follows.
 
 **Format:**
 
