@@ -129,9 +129,9 @@ export class ComponentDeployPage {
   }
 
   static addConfiguration(value: string) {
-    cy.contains("Configure & Deploy").should("be.visible").click();
+    cy.get(".ConfigForm").should("be.visible");
     cy.get(".ConfigForm div input").type(value);
-    cy.get('button[type="submit"]').click();
+    cy.get('.ConfigForm button[type="submit"]').click();
   }
 
   static isDeploymentSuccessful() {
@@ -144,6 +144,7 @@ export class ComponentDeployPage {
       invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
     this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
       "have.length",
