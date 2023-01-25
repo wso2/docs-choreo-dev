@@ -1,0 +1,16 @@
+[choreo.moesif.msService.config]
+host="mssql"
+db="testDB"
+dbPort=1433
+serverPort=8080
+internalHealthCheckPort=9091
+externalHealthCheckPort=9092
+mssqlClientUserName="{{.MSSQL_USERNAME}}"
+mssqlClientPwdSecret="{{.MSSQL_PASSWORD_SECRET}}"
+mssqlPwdSecretPath=""
+
+[[ballerina.auth.users]]
+scopes=["admin"]
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
