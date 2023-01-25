@@ -323,7 +323,8 @@ export class ComponentDeployPage {
     cy.wait(4000);
     cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled");
+    cy.get('[data-cyid="btn-next"]').should("exist").click();
     cy.get('[data-cyid="deployment-status"]')
       .contains("Active")
       .should("be.visible");
@@ -333,7 +334,8 @@ export class ComponentDeployPage {
   static promoteProxyApiToProd() {
     cy.get('[data-cyid="btn-promote"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled");
+    cy.get('[data-cyid="btn-next"]').should("exist").click();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");
