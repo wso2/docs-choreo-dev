@@ -45,8 +45,7 @@ export class DevPortalHelper {
 
   static createDeployHttpProxyComponent(API_Name) {
     ProjectListingPage.createNewProject(DevPortalHelper.PROJECT_NAME, DevPortalHelper.PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
     RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "");
     ComponentOverviewPage.navigateToDeploy();
