@@ -43,7 +43,7 @@ Let's connect your GitHub repository and use the REST API implementation in it t
 6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset (i.e., **Ballerina** or **Dockerfile**). 
 7. Enter the following values based on the preset you selected above:
     - **Ballerina** preset
-        - **Path**: Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
+        - **Path**: Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty GitHub repository or a sub-folder and proceed to create the component. 
 
             !!! info
                 You can create a component by connecting an empty GitHub repository for the **Ballerina** preset. However, you can only deploy it after developing and pushing a Ballerina implementation for the relevant component type.
