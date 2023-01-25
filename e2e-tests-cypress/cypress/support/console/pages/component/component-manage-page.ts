@@ -296,9 +296,13 @@ export class ComponentAPILifecycle {
     cy.get('[data-cyid="dropdown-api-access-mode-selector"]>div')
       .should("be.visible")
       .click({ force: true });
-    cy.get(`[data-cyid="item-${accessMode}"]`).wait(100).click({ force: true });
+    cy.get(`[data-cyid="item-${accessMode}"]`)
+      .should("exist")
+      .click({ force: true });
     cy.get('[data-testid="warning-banner"]').should("be.visible");
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').wait(100).click();
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
+      .should("exist")
+      .click();
     cy.contains(`Successfully converted to an ${accessMode} API.`).should(
       "be.visible"
     );
