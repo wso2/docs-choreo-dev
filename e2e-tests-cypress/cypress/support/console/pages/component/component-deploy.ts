@@ -129,9 +129,9 @@ export class ComponentDeployPage {
   }
 
   static addConfiguration(value: string) {
-    cy.contains("Configure & Deploy").should("be.visible").click();
+    cy.get(".ConfigForm").should("be.visible");
     cy.get(".ConfigForm div input").type(value);
-    cy.get('button[type="submit"]').click();
+    cy.get('.ConfigForm button[type="submit"]').click();
   }
 
   static isDeploymentSuccessful() {
@@ -144,6 +144,7 @@ export class ComponentDeployPage {
       invokeUrlCount: 0,
       invokeUrlIndex: 0,
     });
+    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
     this.addConfiguration(configValue);
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 }).should(
       "have.length",
@@ -322,7 +323,8 @@ export class ComponentDeployPage {
     cy.wait(4000);
     cy.get('[data-cyid="btn-deploy-proxy"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled");
+    cy.get('[data-cyid="btn-next"]').should("exist").click();
     cy.get('[data-cyid="deployment-status"]')
       .contains("Active")
       .should("be.visible");
@@ -332,7 +334,8 @@ export class ComponentDeployPage {
   static promoteProxyApiToProd() {
     cy.get('[data-cyid="btn-promote"]').should("be.enabled").click();
     cy.contains("Configure & Deploy").should("be.visible");
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-next"]').should("be.enabled");
+    cy.get('[data-cyid="btn-next"]').should("exist").click();
     cy.get('[data-cyid="proxy-env-card-header"]>div>span')
       .contains("Production")
       .should("be.visible");

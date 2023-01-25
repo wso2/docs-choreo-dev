@@ -31,7 +31,7 @@ export class ApiOverview {
   static deleteComment(): void {
     cy.log("Deleting the comment");
     cy.get("table > tbody > tr:first").within(() => {
-      cy.get('[data-testid="btn-delete-comment"]').click({ force: true });
+      cy.get('[data-testid="btn-delete-comment"]').should('be.visible').click({ force: true });
     });
     cy.get('[class="MuiPopover-root"]')
       .get("button")
