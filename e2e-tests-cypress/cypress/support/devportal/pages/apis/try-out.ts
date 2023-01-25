@@ -122,7 +122,7 @@ export class TryOut {
     cy.get('[data-testid="search-btn"]').trigger("mouseover");
     cy.get('[data-testid="search-app"] [placeholder="Search"]').type(appName)
     cy.contains(appName).trigger("mouseover");
-    cy.get('[data-testid="delete-btn"]').trigger("mouseover").click();
+    cy.get(`[data-testid="delete-btn-${appName}"]`).trigger("mouseover").click();
     cy.get('[data-testid="delete-dialog-ok-button"]').click();
   }
 
