@@ -71,8 +71,13 @@ export class LoginPage {
       }
     });
   }
-  static reLoginToChoreo() {
-    const componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
+  static reLoginToChoreo(isEPLogin: boolean = false) {
+    let componentURL;
+    if (isEPLogin) {
+      componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
+    } else {
+      componentURL = Cypress.env('componentURL');
+    }
     const common =
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)
