@@ -15,6 +15,8 @@ public abstract class ControlPlaneAPI {
 
     protected static final String STS_ENDPOINT = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT);
     protected static final String CHOREO_EP = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
+
+    protected static final String BAL_REGISTRY_URL = Configuration.getConfig(ConfigDefinition.BAL_REGISTRY_URL);
     protected static final String GH_URL = Configuration.getConfig(ConfigDefinition.GITHUB_ENDPOINT);
     protected static final String CHOREO_CP_GW_ENDPOINT = Configuration.getConfig(ConfigDefinition.CHOREO_CP_GW_ENDPOINT);
     protected static final String ORG_UUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
