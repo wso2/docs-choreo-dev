@@ -72,7 +72,8 @@ export class LoginPage {
     });
   }
   static reLoginToChoreo() {
-    const componentURL = Cypress.env(`componentURL`);
+    //const componentURL = Cypress.env(`componentURL`);
+    const componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
     const common =
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)
