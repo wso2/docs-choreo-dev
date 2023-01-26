@@ -446,3 +446,4 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_URL="http://dp-rudder:80"
+      
