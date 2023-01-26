@@ -6,13 +6,13 @@ Choreo provides a secure and user-friendly method to achieve this requirement. T
 
 ## Become a member of the Choreo System organization
 
-1. Sign in to [https://devportal.choreo.dev](https://devportal.choreo.dev) using your credentials.
+1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem) and proceed to sign in using your credentials.
 
-2. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem](https://devportal.choreo.dev/choreosystem).
+2. Click on **Applications**.
    
 3. To get access to the `Choreo System` organization, click **Request Access**.
 
-![Request-Access](../../assets/img/insights/request-access.png){.cInlineImage-full}
+    ![Request-Access](../../assets/img/insights/request-access.png){.cInlineImage-full}
 
 Once you request access, you are automatically added as a member of the `Choreo System` organization.
 
