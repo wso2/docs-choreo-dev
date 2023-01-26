@@ -5,3 +5,8 @@ level = "{{.LOG_LEVEL}}"
 [[ballerina.log.modules]]
 name = "choreo/loggingapi"
 level = "{{.LOG_LEVEL_LOGGINGAPI}}"
+
+[choreo.loggingapi]
+[choreo.loggingapi.laWorkspaceIds]
+US = "{{.US_LA_WORKSPACE_ID}}"
+EU = "{{.EU_LA_WORKSPACE_ID}}"
