@@ -40,7 +40,7 @@ export default defineConfig({
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
-      config.env.gitPat = process.env.gitPAT
+      config.env.gitPAT = process.env.gitPAT
       config.env.enablePerspectiveView = process.env.enablePerspectiveView;
       return config;
     },

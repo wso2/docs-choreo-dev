@@ -3,7 +3,7 @@ import { Utils } from "../console/utils";
 export class GitHub {
 
     static headers = {
-        Authorization: `token ${Cypress.env("gitPat")}`,
+        Authorization: `token ${Cypress.env("gitPAT")}`,
     };
     static initGitHubRepo(name: string, autoInit: boolean, isPrivate: boolean, gitignoreTemplate: string) {
         const requestURI = `${Cypress.env("ghUrl")}/orgs/${Cypress.env("ghOrg")}/repos`
@@ -21,6 +21,7 @@ export class GitHub {
     }
 
     static mergePR(repoName, prNumber) {
+        
         const requestURI = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/pulls/${prNumber}/merge`
         const putRequest = { "commit_title": "Merge initial PR" }
         return Utils.sendPutRequest(requestURI, this.headers, putRequest)
