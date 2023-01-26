@@ -83,8 +83,8 @@ spec:
             - name: config
               mountPath: /home/ballerina/Config.toml
               subPath: Config.toml
-            - name: secret-cp-graphql
-              mountPath: "/mnt/csi/secret-cp-graphql"
+            - name: secret-moesif-service
+              mountPath: "/mnt/csi/secret-moesif-service"
               readOnly: true
             - name: secret-idp
               mountPath: "/mnt/csi/secret-idp"
@@ -93,13 +93,13 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-file-cp-graphql
-        - name: secret-cp-graphql
+            name: cm-file-moesif-service
+        - name: secret-moesif-service
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-cp-graphql
+              secretProviderClass: secret-moesif-service
             nodePublishSecretRef:
               name: csi-secret-store-azure
         - name: secret-idp
@@ -119,5 +119,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - cp-graphql
+                      - moesif-service
               topologyKey: kubernetes.io/hostname
