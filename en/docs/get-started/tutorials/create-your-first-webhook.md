@@ -31,7 +31,7 @@ First, let's add a Webhook component as follows:
     | **Name**        | `IssueTracking`       |
     | **Description** | `Track GitHub issues` |
 
-4. Click **Create**.This takes you to the **Components** page.
+4. Click **Create**. This takes you to the **Components** page.
 
 5. On the **Components** page, click **Create** on the **Webhook** card.
 

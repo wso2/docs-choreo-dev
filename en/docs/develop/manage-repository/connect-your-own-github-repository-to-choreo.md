@@ -3,9 +3,6 @@
 Choreo allows you to connect your own GitHub repository to maintain the source code of a component when you create any Choreo components. You can create a Choreo component using a Ballerina project or a service written in any language in a Docker container. By connecting your GitHub repository, you enable collaborative development for Choreo components. Furthermore, this lets developers keep the source repository within their control and adhere to enterprise-specific best practices and development guidelines such as checking pull requests, code analysis, styling preferences, etc.
 
 This tutorial walks you through the steps to connect your own GitHub repository when creating a component. In this tutorial, you will connect your GitHub repository and use the REST API implementation in your GitHub repository to create a REST API in Choreo.
-    
-!!! info
-    You can create a component by connecting an empty repository. However, you can only deploy it after you implement it. 
 
 ## Prerequisites: Create a project
 
@@ -44,10 +41,17 @@ Let's connect your GitHub repository and use the REST API implementation in it t
 4. Provide authorization with your GitHub account by clicking  **Authorize with GitHub**. 
 5. If you have not already authorized Choreo apps, click **Authorize Choreo Apps** when prompted.
 6. Select a GitHub account, a repository that includes the implementation, the relevant branch, and the build preset (i.e., **Ballerina** or **Dockerfile**). 
-7. Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty repository or a sub-folder and proceed to create the component. 
+7. Enter the following values based on the preset you selected above:
+    - **Ballerina** preset
+        - **Path**: Enter a valid path relative to the root of your repository that points to the implementation of the REST API. If you have not designed and implemented your REST API yet, you can connect an empty GitHub repository or a sub-folder and proceed to create the component. 
 
-    !!! info
-        You can create a component by connecting an empty GitHub repository. However, you can only deploy it after you implement it. 
+            !!! info
+                You can create a component by connecting an empty GitHub repository for the **Ballerina** preset. However, you can only deploy it after developing and pushing a Ballerina implementation for the relevant component type.
+
+    - **Dockerfile** preset:
+        - **Dockerfile path**: Enter a valid path relative to the root of your repository that points to the Dockerfile. The path must include `- Dockerfile`. Choreo validates the **Dockerfile path** and checks if the given file name contains the word `Dockerfile` ignoring cases.
+        - **Docker context path**: Enter a valid path relative to the root of your repository that points to the Docker project.
+        - **OpenAPI file path (Optional)**: Enter a valid path relative to the root of your repository that points to the OpenAPI schema. Choreo validates the input to check if the given file name has one of the following extensions: *.yaml, *.yml, or *.json.
 
 8. Click **Create**.
 
