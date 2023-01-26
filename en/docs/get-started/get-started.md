@@ -39,9 +39,6 @@ Before you try out this guide, complete the following:
     You will be viewing the **Home** page of the Choreo Console.
 
 3. Create a new project as follows:
-
-    !!! info
-        If you do not create a new project, you can create the REST API for the default project.
     
     1. On the **Home** page of the Choreo Console, click **+ Create Project**.
 
