@@ -2,7 +2,7 @@
 
 This tutorial introduces REST API proxies. 
 
-An API proxy fronts an API backend and intercepts the requests to the REST API. You can apply security, rate limiting, etc., to the REST API Proxy.
+An API Proxy exposes an existing API on Choreo and intercepts the requests to the REST API. It API Proxy acts as a managed API to which you can apply security, rate-limiting, etc.
 
 In this tutorial, you will learn how to do the following:
 
@@ -22,7 +22,7 @@ Let's begin!
 You can create a REST API proxy in one of the following methods: 
 
 
-In this tutorial, you will be providing a URL to a sample OpenAPI definition of a sample 
+In this tutorial, you will be providing a URL to an OpenAPI definition of a sample API. 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
@@ -72,7 +72,7 @@ Let's develop the REST API proxy by adding an operation. To do this, follow the 
 
 ## Step 3: Deploy the REST API Proxy
 
-Deploying the REST API proxy makes it invokable. By default, Choreo maintains two environments for development and production. [Learn more](../../develop/components/api-proxies/api-proxy#choreo-environments). 
+Deploying the REST API proxy makes it invokable. By default, Choreo maintains two environments for development and production. [Learn more](../../develop/components/api-proxies/api-proxy#choreo-environments). For this tutorial, let's deploy the proxy to the development environment.
 
 1. In the left navigation menu, click **Deploy**. 
 
@@ -191,6 +191,9 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 5. Close the **Get cURL to Generate Access Token** card. Then click **Update**.
 
     A message appears to confirm that the keys are successfully updated.
+
+    !!! info
+        Here, you are generating an access token solely for testing purposes. When you deploy the API proxy to the production environment, you need to use the token endpoint with a suitable grant type.
  
 6. Issue the cURL command you copied to generate an access token.
 
