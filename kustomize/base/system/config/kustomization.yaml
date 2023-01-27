@@ -439,3 +439,11 @@ configMapGenerator:
     behavior: create
     files:
       - cio-dashboard/query-api/Config.toml
+  - name: cm-file-cio-incident-configurator
+    behavior: create
+    files:
+      - cio-dashboard/incident-configurator/Config.toml
+  - name: cm-cio-incident-configurator
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
