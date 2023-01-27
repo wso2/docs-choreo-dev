@@ -54,10 +54,10 @@ Let's add the integration by following the steps given below:
 
 12. Enter information related to the `MI Hello World` project as follows:
 
-     | **Field**             | **Value**                                    |
-     |-----------------------|----------------------------------------------|
-     | **Path**              | ipaas/wso2-synapse/simple-proxy              |
-     | **OpenAPI File Path** | ipaas/wso2-synapse/simple-proxy/openapi.yaml |
+     | **Field**             | **Value**                                      |
+     |-----------------------|------------------------------------------------|
+     | **Path**              | `ipaas/wso2-synapse/simple-proxy`              |
+     | **OpenAPI File Path** | `ipaas/wso2-synapse/simple-proxy/openapi.yaml` |
  
 13. Click **Create**.
 
@@ -78,11 +78,11 @@ Let's deploy the micro integrator REST API you created to the developer environm
 
     ![Deployment progress](../../assets/img/tutorials/integration-rest-api/deploying_mi_rest_api.png){.cInlineImage-threeQuarter}
 
-    Once the API is deployed, the **Development** card indicates that the API is active as shown below.
+     Once Choreo has deployed the micro integrator REST API, the **Development** card displays the status as **Active**.
 
     ![Deployed API](../../assets/img/tutorials/integration-rest-api/deployed_mi_rest_api.png){.cInlineImage-threeQuarter}
 
-    Once Choreo has deployed the micro integrator REST API, you can proceed to the next step to test it.
+    You can proceed to the next step to test it.
 
 ## Step 3: Test
 
