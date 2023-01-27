@@ -225,7 +225,7 @@ At present, any user can invoke the `readingList` REST API via the `readingListA
 In this step, let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
 
 
-#### Step 2.3.1: Create a single-page application in Asgardeo
+#### Step 2.3.1: Configure Asgardeo to integrate with your application
 
 To generate the configurations required for end users to log in to the front-end application (for example, the access token, redirect URLs, etc.), let's create an application in Asgardeo by following the steps given below:
 
