@@ -102,7 +102,7 @@ Let's create your first REST API.
 
 For the REST API to be invokable, you need to deploy it. To deploy the REST API., follow the steps given below:
 
-1. Navigate to the Choreo Console. You will be viewing overview of the `readingList` REST API.
+1. Navigate to the Choreo Console. You will be viewing an overview of the `readingList` REST API.
 
 2. In the left pane, click **Deploy**, and then click **Configure & Deploy**.
 
@@ -233,7 +233,7 @@ To generate a security token that your application can use to invoke the REST AP
 
 At present, any user can invoke the `readingList` REST API via the `readingListApp` application (i.e., using its token) and update the same reading list. To allow multiple users to use the application and maintain unique reading lists, you need a front-end application that allows each user to log in with a unique user ID.
 
-In this step, let's deploy pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
+In this step, let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
 
 
 #### Step 2.4.1: Create a single-page application in Asgardeo
@@ -269,7 +269,7 @@ To generate the configurations required for end users to log in to the front-end
     !!! info   
         Under this option, you will see some instructions to configure the application. Some of these steps are already completed for the pre-configured front-end application you will be using.
         
-Next, you need to pass configurations displayed in this page to your front-end application. To do so, proceed to [Step 2.4.2 - Configure the front-end application](#step-242-configure-the-front-end-application).
+Next, you need to pass the configurations displayed on this page to your front-end application. To do so, proceed to [Step 2.4.2 - Configure the front-end application](#step-242-configure-the-front-end-application).
 
 ### Step 2.4.2: Configure the front-end application
 
@@ -322,7 +322,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
             1. In the Choreo Developer Portal, open the **readingListApp** application.
 
-            2. Copy the value in the **Token Endpoint**field and paste it as the value of the `VITE_STS_TOKEN_ENDPOINT` parameter.
+            2. Copy the value in the **Token Endpoint** field and paste it as the value of the `VITE_STS_TOKEN_ENDPOINT` parameter.
 
 Now you have configured your front-end application. Next, you need to configure Asgardeo as the identity provider for your application.
 
