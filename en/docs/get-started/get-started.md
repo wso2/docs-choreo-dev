@@ -86,6 +86,7 @@ Let's create your first REST API.
     | **GitHub Repository** | `**choreo-examples**` |
     | **Branch**            | `**version-1**`                               |
     | **Path**              | `**reading-list-service**`                    |
+    | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project and Choreo needs to run a Ballerina build to build it.|
 
 9. Click **Create** to initialize your REST API from the implementation in your GitHub repository. This displays a pull request similar to the following:
 
