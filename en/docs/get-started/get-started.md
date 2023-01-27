@@ -120,7 +120,7 @@ For the REST API to be invokable, you need to deploy it. To deploy the REST API.
 
 Let's test the `readingList` REST API via Choreo's Open API Console by following the steps given below:
 
-1. Click **Test** in the left pane, and be sure that you are in the OpenAPI Console view. If not, click **OpenAPI Console** in the left pane.
+1. Click **Test** in the left pane, and be sure that you are in the **OpenAPI Console** view. If not, click **OpenAPI Console** in the left pane.
 
 2. Expand the **POST** method and click **Try it out**.
 
