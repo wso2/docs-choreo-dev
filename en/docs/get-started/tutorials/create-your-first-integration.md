@@ -13,7 +13,7 @@ Consider a scenario where a developer has created an integration in [WSO2 Integr
 For this tutorial, let's use a basic sample application for the purpose of exposing a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
-    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
+    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
 
 ## Step 1: Create
 
@@ -44,7 +44,7 @@ Let's add the integration by following the steps given below:
      | **Field**             | **Value**                        |
      |-----------------------|-------------------------------------------------------------------------------------------------------------|
      | **GitHub Account**    | Select your GitHub account.                                                                                 |
-     | **GitHub Repository** | Select your fork of the [Hello World Project repository](https://github.com/chameerar/hello-world-project). |
+     | **GitHub Repository** | Select your fork of the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy). |
      | **Branch**            | `main`                                                                                                      |
 
 12. Under **Build Preset**, click **Micro Integrator**.
