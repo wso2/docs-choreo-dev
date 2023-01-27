@@ -220,7 +220,7 @@ Now your application has subscribed to the `readingList` REST API.
 
 ### Step 2.3: Deploy a Web application and invoke the REST API
 
-At present, any user can invoke the `readingList` REST API via the `readingListApp` application (i.e., using its token) and update the same reading list. To allow multiple users to use the application and maintain unique reading lists, you need a front-end application that allows each user to log in with a unique user ID.
+At present, any user can invoke the `readingList` REST API via the `readingListApp` application (i.e., using its token) and update the reading list. However, if a user sends a request to retrieve the reading list, the response will also show entries by other users. To allow multiple users to use the application and maintain personal reading lists, you need a front-end application that allows each user to log in with a unique user ID.
 
 In this step, let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
 
