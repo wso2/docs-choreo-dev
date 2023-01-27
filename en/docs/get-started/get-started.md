@@ -104,12 +104,17 @@ For the REST API to be invokable, you need to deploy it. To deploy the REST API.
 
 1. Navigate to the Choreo Console. You will be viewing overview of the `readingList` REST API.
 
-2. In the left pane, click **Deploy**,  and then click **Deploy Manually**.
+2. In the left pane, click **Deploy**, and then click **Configure & Deploy**.
 
     !!! info
         Automatic deployment is enabled for the REST API by default. You are required to carry out only the first deployment manually.<br/><br/> When automatic deployment is enabled, your REST API is automatically deployed every time you push a commit to the GitHub repository in which its implementation resides. You can disable automatic deployment if required.
+        
+3. In the **Configure & Deploy** pane, click **Deploy** without entering a sandbox endpoint. 
 
-   This deploys the API to the development environment.
+    !!! info
+        In this example, you are testing the REST API only in the Choreo Console and not in a sandbox environment. Therefore, you do not need to enter a sandbox endpoint.
+
+    This deploys the API to the development environment.
 
 ### Step 1.3: Test the REST API
 
