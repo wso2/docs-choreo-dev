@@ -77,7 +77,6 @@ export class LoginPage {
       componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
     } else {
       componentURL = Cypress.env('componentURL');
-
     }
     const common =
       Cypress.env(`commonAuthId`) != null
