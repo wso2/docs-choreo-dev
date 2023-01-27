@@ -369,7 +369,7 @@ To define a user for the readingListApp application, follow the steps given belo
 
 #### Step 2.4.4: Try out the web application
 
-To start the front-end application and send requests to the `readingList` REST API via it, follow the steps given below:
+To run the front-end application and send requests to the `readingList` REST API via it, follow the steps given below:
 
 !!! info
     To render the front-end application as a web application, you will be using the [Node Package Manager](https://www.npmjs.com) software.
