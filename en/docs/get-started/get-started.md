@@ -100,7 +100,7 @@ Let's create your first REST API.
 
 ###  Step 1.2: Deploy the REST API
 
-For the REST API to be invokable, you need to deploy it. To deploy the REST API., follow the steps given below:
+For the REST API to be invokable, you need to deploy it. To deploy the REST API, follow the steps given below:
 
 1. Navigate to the Choreo Console. You will be viewing an overview of the `readingList` REST API.
 
