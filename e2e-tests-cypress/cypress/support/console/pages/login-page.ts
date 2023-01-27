@@ -36,7 +36,7 @@ export class LoginPage {
 
   static login() {
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
-       this.persistOrgs();
+    this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);
@@ -71,8 +71,14 @@ export class LoginPage {
       }
     });
   }
-  static reLoginToChoreo() {
-    const componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
+  static reLoginToChoreo(isEPLogin: boolean = false) {
+    let componentURL;
+    if (isEPLogin) {
+      componentURL = `${Cypress.env('baseUrl')}/organizations/${Cypress.env('choreoOrgHandle')}/home?profile=default`
+    } else {
+      componentURL = Cypress.env('componentURL');
+
+    }
     const common =
       Cypress.env(`commonAuthId`) != null
         ? Cypress.env(`commonAuthId`)

@@ -29,7 +29,7 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   after(() => {
-    LoginPage.reLoginToChoreo();
+    LoginPage.reLoginToChoreo(true);
     ChoreoHomePage.logout();
   });
 
