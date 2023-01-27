@@ -201,7 +201,7 @@ Let's create the application to consume the `readingList` REST API by following 
 
 2. Click **Create**.
 
-3. Enter `readingListApp` as the name of the application and click **Create**.
+3. Enter a name for the application (for example, `readingListApp` and click **Create**.
 
     Your Application will open on a separate page.
 
