@@ -1,21 +1,19 @@
 # Create Your First Integration
 
-An integration is a component with logic to integrate APIs, microservices, applications, and data in different languages and formats.
+An integration component integrates APIs, microservices, applications, and data in different languages and formats.
 
 Consider a scenario where a developer has created an integration in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to use it for API-led integration by exposing it in Choreo. In this tutorial, you will learn how to do the following actions to address this requirement:
 
-
-- Expose an integration created in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) as a Choreo component by connecting the GitHub repository in which it resides to Choreo.
+- Expose an integration created in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) as an API in Choreo by connecting the GitHub repository in which it resides to Choreo.
 - Deploy the Integration component to the development environment.
 - Test the Integration component.
 - Observe statistics for the Integration component.
 - Publish the Integration component and try it out in the production environment.
 
-For this tutorial, let's use a basic sample application that returns `Hello` as the response when you invoke it.
-
+For this tutorial, let's use a basic sample application for the purpose of exposing a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
-    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [Hello World Project repository](https://github.com/chameerar/hello-world-project).
+    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
 
 ## Step 1: Create
 
@@ -29,7 +27,7 @@ Let's add the integration by following the steps given below:
 
 4. On the **Integration** card, click **Create**.
 
-5. On the REST API card, click **Connect an MI Repo** to start creating a micro integrator REST API.
+5. On the **REST API** card, click **Connect an MI Repo** to start creating a micro integrator REST API.
 
 6. Enter a name and a description for the micro integrator REST API. For example, you can enter `MI Hello World` as the name and `MI Hello World REST API` as the description.
 
@@ -98,19 +96,7 @@ To observe statistics for your micro integrator REST API, click **Observe** in t
 
 For more information about observing components, see [Observability Overview](../../observe-and-analyze/observe/observability-overview.md).
 
-## Step 5: Manage
-
-For a micro integrator REST API, you can perform the following API management actions:
-
-- Manage the lifecycle: You can publish your API to the Developer Portal to make it available for subscriptions by other applications, or deploy it as a prototype so that application developers can try it out and provide feedback for improvement. Once you publish an API, you can deprecate it or block it from being used if required.
-
-- Validate subscriptions: You can configure subscription validation to mandate subscriptions.
-
-- Add documents: This involves attaching files with information about the API for users.
-
-- Select/switch usage plans: You can select a usage plan for your API out of Bronze Silver, Gold, and Unlimited based on the level of traffic that you expect the API to receive. You can change the usage plan when required.
-
-- Edit properties: You can enter/update the names and email addresses of the business owner and the technical owner of the API.
+## Step 5: Publish
 
 Let's publish the micro integrator REST API to make it available for subscriptions in the Developer Portal.
 
@@ -124,11 +110,6 @@ Let's publish the micro integrator REST API to make it available for subscriptio
 
 Congratulations! You have successfully exposed an integration designed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) as a REST API in Choreo and published it!
 
-
-
-
-
-
-
-
+!!! info "What's next"
+    For a micro integrator REST API, you can also perform API management actions. For more information about these API Management actions, see [API Management](../../manage/api-management.md).
 
