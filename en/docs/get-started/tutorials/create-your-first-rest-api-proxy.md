@@ -45,7 +45,7 @@ In this tutorial, you will be providing a URL to an OpenAPI definition of a samp
 
 The API proxy opens on a separate page.
 
-## Step 2: Developing the REST API Proxy
+## Step 2: Develop the REST API Proxy
 
 Let's develop the REST API proxy by adding an operation. To do this, follow the steps given below:
 
