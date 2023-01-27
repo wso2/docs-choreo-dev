@@ -41,11 +41,11 @@ Let's add the integration by following the steps given below:
 
 10. Enter information related to the GitHub repository you want to connect as follows:
 
-     | **Field**             | **Value**                                                                                      |
-     |------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-     | **GitHub Account**    | Select your GitHub account.                                                                    |
+     | **Field**             | **Value**                                                                                             |
+     |-----------------------|-------------------------------------------------------------------------------------------------------|
+     | **GitHub Account**    | Select your GitHub account.                                                                           |
      | **GitHub Repository** | Select your fork of the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples). |
-     | **Branch**            | `main`                                                                                         |
+     | **Branch**            | `main`                                                                                                |
 
 11. Under **Build Preset**, click **Micro Integrator**.
 
@@ -54,10 +54,10 @@ Let's add the integration by following the steps given below:
 
 12. Enter information related to the `MI Hello World` project as follows:
 
-    | **Field**             | **Value**                        |
-             |-----------------------|-------------------------------------------------------------------------------------------------------------|
-    | **Path**    | ipaas/wso2-synapse/simple-proxy                                                                                 |
-    | **OpenAPI File Path** | ipaas/wso2-synapse/simple-proxy/openapi.yaml |
+     | **Field**             | **Value**                                    |
+     |-----------------------|----------------------------------------------|
+     | **Path**              | ipaas/wso2-synapse/simple-proxy              |
+     | **OpenAPI File Path** | ipaas/wso2-synapse/simple-proxy/openapi.yaml |
  
 13. Click **Create**.
 
@@ -70,19 +70,19 @@ Let's deploy the micro integrator REST API you created to the developer environm
 1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy Manually**.
 
    !!! note
-   Automatic deployment is enabled by default. However, you have to deploy the component manually the first time. Subsequent deployments will occur automatically.
+       Automatic deployment is enabled by default. However, you have to deploy the micro integrator REST API manually the first time. Subsequent deployments will occur automatically.
 
    ![Deploy API](../../assets/img/tutorials/integration-rest-api/deploy_mi_rest_api.png){.cInlineImage-small}
 
 2. To check the progress of the deployment, observe the **Console** pane.
 
-   ![Deployment progress](../../assets/img/tutorials/integration-rest-api/deploying_mi_rest_api.png){.cInlineImage-threeQuarter}
+    ![Deployment progress](../../assets/img/tutorials/integration-rest-api/deploying_mi_rest_api.png){.cInlineImage-threeQuarter}
 
-Once the API is deployed, the **Development** card indicates that the API is active as shown below.
+    Once the API is deployed, the **Development** card indicates that the API is active as shown below.
 
-![Deployed API](../../assets/img/tutorials/integration-rest-api/deployed_mi_rest_api.png){.cInlineImage-threeQuarter}
+    ![Deployed API](../../assets/img/tutorials/integration-rest-api/deployed_mi_rest_api.png){.cInlineImage-threeQuarter}
 
-Once Choreo has deployed the micro integrator REST API, you can proceed to the next step to test it.
+    Once Choreo has deployed the micro integrator REST API, you can proceed to the next step to test it.
 
 ## Step 3: Test
 
