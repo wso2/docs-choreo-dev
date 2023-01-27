@@ -437,7 +437,7 @@ Currently, the updates to the `readinglist` REST API are saved only as long as t
 
 ### Step 3.1: Create a new version of the REST API
 
-Let's create a new version of the `readingList` REST API that can connect to a MySQL database on a cloud platform to persist data, and then redeploy it. , To do this, follow the steps given below:
+Let's create a new version of the `readingList` REST API that can connect to a MySQL database on a cloud platform to persist data, and then redeploy it. To do this, follow the steps given below:
 
 1. In the Choreo Console, open the `readingList` REST API (if it is not already open) and click the **Deploy** icon to open the **Deploy** tab.
 
