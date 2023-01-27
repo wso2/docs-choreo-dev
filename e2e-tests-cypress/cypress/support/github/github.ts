@@ -62,7 +62,7 @@ export class GitHub {
         cy.readFile(filePath, 'base64').then(content => {
             const requestUrl = `${Cypress.env("ghUrl")}/repos/${Cypress.env("ghOrg")}/${repoName}/contents/${repoPath}`
             Utils.sendGetRequest(requestUrl, this.headers).then(res => {
-                const { sha } = res.body.content
+                const { sha } = res.body
                 const payload = {
                     message: `updateed ${repoPath}`,
                     content,
@@ -77,18 +77,5 @@ export class GitHub {
     }
 
 
-
-    // public static Response mergeNewCode(String repoName, String path, String commitMessage, String content) throws IOException {
-
-    //     String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
-    //     Response response = HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");
-    //     JsonObject jsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
-    //     String serviceBalSha = jsonObject.get("sha").getAsString();
-    //     String request = "{\n" +
-    //     "    \"message\":" + "\"" + commitMessage + "\"" + " ,\n" +
-    //     "    \"content\":" + "\"" + content + "\"" + ",\n" +
-    //     "    \"sha\":" + "\"" + serviceBalSha + "\"" + "\n}";
-    // return HttpClientUtil.httpPUT(requestUrl, request, AUTH_HEADER, "");
-    //
 
 }

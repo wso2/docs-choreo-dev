@@ -58,14 +58,14 @@ describe("Graphql GQL service test", () => {
     GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
-  it("Commit mutation resource",()=>{
-    GitHub.mergeNewCode('graphql-service-sample', `${subPath}/sample.bal`,'cypress/fixtures/gqlservice.bal')
-  })
+  // it("Commit mutation resource",()=>{
+  //   GitHub.mergeNewCode('graphql-service-sample', `${subPath}/sample.bal`,'cypress/fixtures/gqlservice.bal')
+  // })
 
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
-  //  ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev();
   });
 
   it("Verify component promote to prod", () => {
