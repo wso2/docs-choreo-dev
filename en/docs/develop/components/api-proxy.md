@@ -37,13 +37,13 @@ The following diagram illustrates the process of deploying an API in Choreo to t
 
 ![Deploy API ](../../../assets/img/api-proxies/deploy-api-proxies.png){.cInlineImage-threeQuarter}
 
-Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo's data plane runs on a Kubernetes stack, hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on.
+Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo's data plane runs on a Kubernetes stack, hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on. This CI/CD pipeline needs to be manually managed by you via the Choreo console. 
 
-Once you deploy the REST API to the development environment, it is then exposed by an API Gateway with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
+Once you deploy the REST API to the development environment, it is then exposed through Choreo with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
 
 You may set up a separate sandbox environment to test the API proxy before pushing it to production. To deploy the API proxy to both the sandbox environment and the development environment, enter the test environment URL as the sandbox endpoint and the API backend URL as the endpoint.
 
-![Sandbox URL](../../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-threeQuarter}
+![Sandbox URL](../../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-small}
 
 ## Choreo environments
 
@@ -85,7 +85,9 @@ API Management is automatically turned on in REST API Proxies (and other APIs) o
 
 ### Lifecycle of a REST API Proxy
 
-Once you implement a REST API Proxy, it needs to be built, tested, and eventually put into production. Choreo executes a CI/CD pipeline that manages the API’s Lifecycle. Choreo stores the source code of APIs in a private Github repository for the user account. It also provides the capability for developers to hook in their own Github repositories containing the source code of their APIs(coming soon). The CI/CD pipeline in Choreo takes an API through the whole process, starting with code checkout, to compile, build, test, and finally to deployment.
+Once you implement a REST API Proxy, it needs to be tested, deployed, and eventually put into production. Once you deploy the REST API Proxy, you can apply any of the six API lifecycles states (i.e., created, pre-released, published, blocked, deprecated, and retired) while adhering to their respective lifecycle flows.
+
+When you publish an API, you can also publish a connector for that API to make it available on the Choreo Marketplace.
 
 ![Manage API Proxies](../../../assets/img/api-proxies/manage-api-proxies.png){.cInlineImage-threeQuarter}
 
