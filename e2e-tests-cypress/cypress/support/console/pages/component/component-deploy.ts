@@ -39,14 +39,16 @@ export class ComponentDeployPage {
     );
   }
 
-  static promoteToStg() {
-    this.promote({
-      settingButtonCount: 1,
-      invokeUrlCount: 2,
-      invokeUrlIndex: 1,
-    });
-  }
+static waitTillAutoBuildComplete(){
+  window.localStorage.setItem("hideSocialShareModel", "true");
+  cy.wait(600);
+  cy.get('[data-testid="btn-stop"]').should("be.visible");
 
+  cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
+    "Active",
+    { timeout: 360000 }
+  );
+}
   static promoteToProd() {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })

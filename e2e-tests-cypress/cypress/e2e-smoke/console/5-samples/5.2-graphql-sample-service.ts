@@ -25,6 +25,7 @@ describe("Graphql GQL service test", () => {
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
   const COMPONENT_NAME = "graphql-service";
   const REPO_NAME = "graphql-service-sample";
+  const subPath = Cypress.env("branch").replace("-ci", "");
 
   before(() => {
     LoginPage.login();
@@ -35,7 +36,7 @@ describe("Graphql GQL service test", () => {
   });
 
   it("Verify GraphQL sample creation", () => {
-    const subPath = Cypress.env("branch").replace("-ci", "");
+
     let componentData: ComponentData = {
       componentName: COMPONENT_NAME,
       displayType: Enums.DisplayType.graphql,
@@ -56,6 +57,8 @@ describe("Graphql GQL service test", () => {
     );
     GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
+
+
 
   it("Verify component deployment", () => {
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
