@@ -8,17 +8,17 @@ You can attach a policy to the `Request`, `Response`, or `Error` flow of the  RE
 4. From the list of resources, expand the resource to which you want to attach the policy(s). 
 5. Click **Attach Policy** for the relevant flow (i.e., `Request`, `Response`, or `Error`) to which you want to attach the policy.
 
-    ![Attach policy](../../assets/img/api-proxies/policies/attach-policy.png){.cInlineImage-threeQuarter}
+    ![Attach policy](../../assets/img/api-proxies/policies/attach-policy.png){.cInlineImage-small}
 
 6. From the **Policy List** panel on the right-hand side, select the policy you want to apply and click **Add**.
 
-    ![Select policy](../../assets/img/api-proxies/policies/select-policy.png){.cInlineImage-small}
+    ![Select policy](../../assets/img/api-proxies/policies/select-policy.png){.cInlineImage-xsmall}
 
 7. Click **Save**.
 
 ## Configuring the policy to accept environment-specific parameters
 
-You can use policies that enable users to enter custom parameters and values. For example, Add Header policy requires the user to enter a header name and value when deploying the REST API Proxy. These parameters can be static values or environment-specific values. 
+You can use policies that enable users to enter custom parameters and values. For example, the `Add Header` policy requires the user to enter a header name and value when deploying the REST API Proxy. These parameters can be static values or environment-specific values. 
 
 To add environment-specific values and policy parameters, follow the steps given below::
 
@@ -29,7 +29,7 @@ To add environment-specific values and policy parameters, follow the steps given
 5. Click **Attach Policy** for the relevant flow (i.e., `Request`, `Response`, or `Error`) to which you want to attach the policy.
 6. Add a policy that enables you to accept custom parameters and values from users. For example, the **Add Header** policy. 
 
-       ![Add header](../../assets/img/api-proxies/policies/add-header.png){.cInlineImage-full}
+       ![Add header](../../assets/img/api-proxies/policies/add-header.png){.cInlineImage-threeQuarter}
 
 8. Enter values for the required policy parameters when prompted. If you want to make a parameter a configurable variable, enter the value in `${<variableName>}` format. For example, `${name}`.
 

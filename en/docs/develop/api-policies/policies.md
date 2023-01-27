@@ -25,7 +25,7 @@ In Choreo, once you attach a mediation policy to a proxy, the deployment, intern
 
 ## Monitoring and troubleshooting the deployment
 
-You can check logs at each stage of the deployment in the console that opens on the right of the page. To open this console, click on a build from the **Build and Deployment History** in the **Build Area**.
+You can check logs at certain stages of the deployment in the console that opens on the right of the page. To open this console, click on a build from the **Build and Deployment History** in the **Build Area**.
 
 #### Code Generation
 

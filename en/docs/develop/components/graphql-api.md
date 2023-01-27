@@ -38,14 +38,9 @@ GraphQL APIs consume fewer resources (such as internet bandwidth, system memory,
 
 To create a GraphQL you need to add a GraphQL component.
 
-![Add GraphQL component](../../assets/img/graphql/add-graphql-component.png){.cInlineImage-full}
-
-Choreo comes with the Web Editor which is an IDE designed based on Visual Studio Code for developers to implement API functionality. At present, developers can design GraphQL APIs in the Web Editor by writing code, and test the functionality via cURL commands before committing the design to a private/Choreo-managed GitHub repository. Once you commit the design, the GraphQL API is available in the Choreo Console, where you can deploy, test, and observe it.
+The Choreo Visual Studio Code Extension makes it easier for developers to implement API functionality. At present, developers can design GraphQL APIs in the VS Code editor by writing code, and test the functionality via cURL commands before committing the design to a GitHub repository and publish it to Choreo. Alternatively, once you commit the design to Github, you can create a GraphQL API is by connecting the GitHub repository and procees to deploy, test, and observe it.
 
 ![Implement graphql API](../../assets/img/graphql/implement-graphql-api.png){.cInlineImage-full}
-
-!!! info
-    Implementing the GraphQL APIs in the low-code mode is currently not supported.
 
 ## Lifecycle
 
@@ -55,7 +50,7 @@ Once you implement a GraphQL API, you can build, test, and eventually put it int
 
 The following diagram illustrates the procedure to deploy an API in Choreo to the default development environment.
 
-![Deploy API](../../assets/img/graphql/deploy-graphql-api.png){.cInlineImage-full}
+![Deploy API](../../assets/img/graphql/deploy-graphql-api.png){.cInlineImage-threeQuarter}
 
 Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to their runtime(data plane) clusters. The data plane of Choreo runs on a Kubernetes stack under the hood. Therefore, you can benefit from its features such as auto-scaling, auto-healing, secret-management, liveness and readiness checks, etc.
 
@@ -65,7 +60,7 @@ Once you deploy a GraphQL API to the development environment, it gets exposed th
 
 Choreo provides a development environment by default and a production environment in two separate Kubernetes clusters. Once you deploy an API to the development environment and verify its functionality, you can promote the API to the production environment.
 
-![Choreo environments](../../assets/img/graphql/choreo-environments.png){.cInlineImage-full}
+![Choreo environments](../../assets/img/graphql/choreo-environments.png){.cInlineImage-threeQuarter}
 
 Once you promote an API to production, Choreo provides a second URL that you can use in a production application to invoke the API.
 
