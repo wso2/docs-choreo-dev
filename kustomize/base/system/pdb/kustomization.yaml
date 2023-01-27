@@ -44,3 +44,4 @@ resources:
   - opentelemetry-collector.yaml
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
+  - cio-incident-configurator.yaml
