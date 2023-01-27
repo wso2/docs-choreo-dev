@@ -10,7 +10,7 @@ Consider a scenario where a developer has created an integration in [WSO2 Integr
 - Observe statistics for the Integration component.
 - Publish the Integration component and try it out in the production environment.
 
-For this tutorial, let's use a basic sample application for the purpose of exposing a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
+For this tutorial, let's use a basic sample application to expose a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
     To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
@@ -50,7 +50,7 @@ Let's add the integration by following the steps given below:
 11. Under **Build Preset**, click **Micro Integrator**.
 
      !!! info
-         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project etc.).
+         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project etc.,).
 
 12. Enter information related to the `MI Hello World` project as follows:
 
