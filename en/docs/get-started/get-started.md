@@ -236,9 +236,9 @@ At present, any user can invoke the `readingList` REST API via the `readingListA
 In this step, let's deploy pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
 
 
-#### Step 2.4.1: Set up the front-end application
+#### Step 2.4.1: Create a single-page application in Asgardeo
 
-To configure the front-end application by defining the ports it needs to run on, adding the endpoint to the `readingList API`, etc., follow the steps given below:
+To generate the configurations required for end users to log in to the front-end application (for example, the access token, redirect URLs, etc.), let's create an application in Asgardeo by following the steps given below:
 
 1. Access Asgardeo at [https://console.asgardeo.io/](https://console.asgardeo.io/) and log in with the same credentials with which you logged in to Choreo.
 
@@ -268,10 +268,16 @@ To configure the front-end application by defining the ports it needs to run on,
 
     !!! info   
         Under this option, you will see some instructions to configure the application. Some of these steps are already completed for the pre-configured front-end application you will be using.
+        
+Next, you need to pass configurations displayed in this page to your front-end application. To do so, proceed to [Step 2.4.2 - Configure the front-end application](#step-242-configure-the-front-end-application).
 
-8. Clone `version-1` branch in your fork of [https://github.com/wso2/choreo-examples/tree/version-1](https://github.com/wso2/choreo-examples/tree/version-1).
+### Step 2.4.2: Configure the front-end application
 
-9. Open the cloned repository using an IDE (for example Visual Studio Code), and make the following changes.
+To configure the front-end application by defining the ports it needs to run on, adding the endpoint to the `readingList API`, etc., follow the steps given below:
+
+1. Clone `version-1` branch in your fork of [https://github.com/wso2/choreo-examples/tree/version-1](https://github.com/wso2/choreo-examples/tree/version-1).
+
+2. Open the cloned repository using an IDE (for example Visual Studio Code), and make the following changes.
 
     1. Navigate to the `choreo-reading-list-application-example/reading-list-front-end/.env.example` file and rename it to `.env`.
 
@@ -320,7 +326,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
 Now you have configured your front-end application. Next, you need to configure Asgardeo as the identity provider for your application.
 
-#### Step 2.4.2: Configure Asgardeo as an identity provider for Choreo
+#### Step 2.4.3: Configure Asgardeo as an identity provider for Choreo
 
 Let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider by following the steps given below:
 
@@ -350,7 +356,7 @@ Let's deploy a pre-designed front-end application. This application is designed 
     
 Now you have successfully configured Asgardeo as the identity provider for the front-end application.
 
-#### Step 2.4.3: Create a user in Asgardeo
+#### Step 2.4.4: Create a user in Asgardeo
 
 To define a user for the readingListApp application, follow the steps given below:
 
@@ -373,7 +379,7 @@ To define a user for the readingListApp application, follow the steps given belo
 !!! tip 
     You can create more users to test your front-end application.
 
-#### Step 2.4.4: Invoke the REST API
+#### Step 2.4.5: Invoke the REST API
 To run the front-end application and send requests to the `readingList` REST API via it, follow the steps given below:
 
 !!! info
@@ -431,7 +437,7 @@ Currently, the updates to the `readinglist` REST API are saved only as long as t
 
 ### Step 3.1: Create a new version of the REST API
 
-To create a new version of the `readingList` REST API with data persistence, connect it to a MySQL database on a cloud platform and redeploy it by following the steps given below:
+Let's create a new version of the `readingList` REST API that can connect to a MySQL database on a cloud platform to persist data, and then redeploy it. , To do this, follow the steps given below:
 
 1. In the Choreo Console, open the `readingList` REST API (if it is not already open) and click the **Deploy** icon to open the **Deploy** tab.
 
@@ -441,12 +447,12 @@ To create a new version of the `readingList` REST API with data persistence, con
 
 3. Select **version-2** as the associated GitHub branch and enter `2.0.0` as the version name. Next click **Create**.
 
+    !!! info
+        The `version-2` GitHub branch has another version of the REST API implementation with the required configurations to connect to the sample MySQL.
+
 4. Click **Config & Deploy**.
 
-    !!! info
-        Now you need to click **Config & Deploy** instead of **Deploy Manually** because you need to configure the parameters required to connect to the MySQL database.
-
-6. For this scenario, you can connect to the pre-configured MySQL database on AWS. To do this, enter the following information in the **Configure & Deploy** pane:
+5. For this scenario, you can connect to the pre-configured MySQL database on AWS. To do this, enter the following information in the **Configure & Deploy** pane:
 
     !!! info
         When you are connecting to an external database for a real-life use case, you are required to provision your database on a cloud platform. To allow Choreo to connect to the external database, it is important to add the relevant IPs to the allow list.<br/><br/>For detailed instructions, see [Access Your RDBMS Data Using Choreo](https://wso2.com/choreo/resources/access-your-rdbms-data-using-choreo/).
@@ -470,3 +476,6 @@ To publish the new version of the REST API you created, repeat [Step 6.2: Publis
 ### Step 3.3: Consume the new REST API version
 
 You can try out the new version via the front-end application. For more information about accessing and using the front-end application, see [Step 2.4.4: Consume the REST API via the front-end application](#step-244-consume-the-rest-api-via-the-front-end-application).
+
+!!! info
+    You do not need to subscribe the `readingListApp` application on the Developer Portal to the new REST API version because Choreo automatically creates this subscription.
