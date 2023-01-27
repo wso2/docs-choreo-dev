@@ -36,7 +36,7 @@ export class LoginPage {
 
   static login() {
     this.enterUserCredentials("choreoIDPUsername", "choreoIDPPassword");
-       this.persistOrgs();
+    this.persistOrgs();
     this.persistLogoutURL();
     this.persistApimToken();
     this.persistCookies(`${Cypress.env("idpURL")}/commonauth`);

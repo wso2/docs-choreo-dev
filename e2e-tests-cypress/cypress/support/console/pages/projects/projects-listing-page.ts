@@ -11,9 +11,9 @@
  * associated services.
  */
 
-import { GraphQL } from "../../apis/graphql";
+
 import { Enums } from "../../enums";
-import { Utils } from "../../utils";
+
 
 export class ProjectListingPage {
   static createNewProject(
@@ -30,18 +30,14 @@ export class ProjectListingPage {
     cy.get('[data-testid="create-version-create"]').should("not.exist");
   }
 
+
+
   static selectProject(projectName: string = "Default Project") {
 
-    cy.get(
-      '[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"]'
-    ).click();
-    cy.get('[class="MuiFormControl-root MuiTextField-root"]')
-      .should("be.visible")
-      .click();
-    cy.get('[class="MuiFormControl-root MuiTextField-root"]').type(
-      projectName
-    );
-    cy.contains(projectName).click();
-
+    cy.get('[data-cyid="search-icon"]').eq(1).click()
+    cy.get('[data-cyid="search-field"]').within(()=>{
+      cy.get('input').type(projectName)
+    })
+     cy.contains(projectName).click();
   }
 }

@@ -19,19 +19,19 @@ export default defineConfig({
       let apiName;
       let projectName;
       on("task", {
-        setAPIName: (val) => {
+        'setAPIName'(val) {
           return (apiName = val);
         },
 
-        getAPIName: () => {
+        'getAPIName'() {
           return apiName;
         },
 
-        setChoreoProjectName: (val) => {
+        'setChoreoProjectName'(val) {
           return (projectName = val);
         },
 
-        getChoreoProjectName: () => {
+        'getChoreoProjectName'() {
           return projectName;
         },
       });
