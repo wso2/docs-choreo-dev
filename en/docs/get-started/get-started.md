@@ -88,7 +88,7 @@ Let's create your first REST API.
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project and Choreo needs to run a Ballerina build to build it.|
     | **Path**              | `**reading-list-service**`                    |
 
-9. Click **Create** to initialize your REST API from the implementation in your GitHub repository. This displays a pull request similar to the following:
+9. Click **Create** to initialize a REST API with the implementation from your GitHub repository. Your GitHub account opens on a web page displaying a pull request similar to the following:
 
      ![View pull request](../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
 
@@ -120,7 +120,7 @@ For the REST API to be invokable, you need to deploy it. To deploy the REST API.
 
 Let's test the `readingList` REST API via Choreo's Open API Console by following the steps given below:
 
-1. Click **Test** in the left pane.
+1. Click **Test** in the left pane, and be sure that you are in the OpenAPI Console view. If not, click **OpenAPI Console** in the left pane.
 
 2. Expand the **POST** method and click **Try it out**.
 
@@ -217,26 +217,15 @@ To consume the REST API, the `readingListApp` application needs to subscribe to 
 
 Now your application has subscribed to the `readingList` REST API.
 
-### Step 2.3: Generate a token for your application
 
-To generate a security token that your application can use to invoke the REST API, follow the steps given below:
-
-1. In the left navigation menu, click **OAuth 2.0 Tokens**.
-
-2. Click **Generate Credentials** and then click **Generate Test Token**.
-
-3. Expand **Advanced Configurations** and select the **Public Client** checkbox.
-
-4. Click **Update**.
-
-### Step 2.4: Deploy a Web application and invoke the REST API
+### Step 2.3: Deploy a Web application and invoke the REST API
 
 At present, any user can invoke the `readingList` REST API via the `readingListApp` application (i.e., using its token) and update the same reading list. To allow multiple users to use the application and maintain unique reading lists, you need a front-end application that allows each user to log in with a unique user ID.
 
 In this step, let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider.
 
 
-#### Step 2.4.1: Create a single-page application in Asgardeo
+#### Step 2.3.1: Create a single-page application in Asgardeo
 
 To generate the configurations required for end users to log in to the front-end application (for example, the access token, redirect URLs, etc.), let's create an application in Asgardeo by following the steps given below:
 
@@ -271,7 +260,7 @@ To generate the configurations required for end users to log in to the front-end
         
 Next, you need to pass the configurations displayed on this page to your front-end application. To do so, proceed to [Step 2.4.2 - Configure the front-end application](#step-242-configure-the-front-end-application).
 
-### Step 2.4.2: Configure the front-end application
+### Step 2.3.2: Configure the front-end application
 
 To configure the front-end application by defining the ports it needs to run on, adding the endpoint to the `readingList API`, etc., follow the steps given below:
 
@@ -326,7 +315,7 @@ To configure the front-end application by defining the ports it needs to run on,
 
 Now you have configured your front-end application. Next, you need to configure Asgardeo as the identity provider for your application.
 
-#### Step 2.4.3: Configure Asgardeo as an identity provider for Choreo
+#### Step 2.3.3: Configure Asgardeo as an identity provider for Choreo
 
 Let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider by following the steps given below:
 
@@ -356,7 +345,7 @@ Let's deploy a pre-designed front-end application. This application is designed 
     
 Now you have successfully configured Asgardeo as the identity provider for the front-end application.
 
-#### Step 2.4.4: Create a user in Asgardeo
+#### Step 2.3.4: Create a user in Asgardeo
 
 To define a user for the readingListApp application, follow the steps given below:
 
@@ -379,7 +368,7 @@ To define a user for the readingListApp application, follow the steps given belo
 !!! tip 
     You can create more users to test your front-end application.
 
-#### Step 2.4.5: Invoke the REST API
+#### Step 2.3.5: Invoke the REST API
 To run the front-end application and send requests to the `readingList` REST API via it, follow the steps given below:
 
 !!! info
