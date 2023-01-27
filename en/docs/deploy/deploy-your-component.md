@@ -13,7 +13,7 @@ To deploy a component, follow the steps below:
     !!! info
         Choreo requires you to perform the first deployment of each component manually so that you can provide values for any configurable variables that the implementation may include.
 
-    ![Deploy component](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-full}
+    ![Deploy component](../assets/img/tutorials/rest-api/deploy-api.png){.cInlineImage-small}
 
 2. You can view the progress of the deployment from the console.
 

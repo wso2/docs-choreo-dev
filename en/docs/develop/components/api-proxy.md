@@ -4,7 +4,7 @@ Learn how you can expose an existing API through a REST API Proxy in Choreo and 
 
 ## What is a REST API Proxy?
 
-A REST API Proxy is an API proxy that complies with the Representational State Transfer(REST) standards. The REST API proxy fronts the API and is the contact point for applications that want to consume the API. Although APIs decouples the backend and the application, an API alone cannot ensure security for the backend and the application by applying policies such as security, rate-limiting, etc. This is where a REST API Proxy comes into play. A REST API Proxy helps you manage the API by applying necessary security policies, access-control policies, and even collecting analytics. Fronting your unmanaged API by a REST API proxy gives your application the flexibility to make changes to the backend API without affecting the applications that consume them. 
+A REST API Proxy complies with the Representational State Transfer(REST) standards that fronts the API and is the contact point for applications that want to consume the backend API. Although APIs decouples the backend and the application, an API alone cannot ensure security for the backend and the application by applying policies such as security, rate-limiting, etc. This is where a REST API Proxy comes into play. A REST API Proxy helps you manage the API by applying necessary security policies, access-control policies, and even collecting analytics. Fronting your unmanaged API by a REST API proxy gives your application the flexibility to make changes to the backend API without affecting the applications that consume them. 
 
 A REST API Proxy exposes an endpoint that applications use to consume the API.
 
@@ -75,7 +75,7 @@ You may set up a separate sandbox environment to test the API proxy before pushi
 
 Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
 
-![Deploy View](../../assets/img/rest-apis/deploy-promote.png){.cInlineImage-threeQuarter}
+![Deploy View](../../assets/img/api-proxies/deploy.png){.cInlineImage-threeQuarter}
 
 Once you have promoted the API to production, Choreo then shows a second URL that developers can use in production applications to invoke the API.
 

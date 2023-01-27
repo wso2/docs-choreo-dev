@@ -46,7 +46,9 @@ Let's add a containerized REST API component by following these steps:
 
 6. Click **Authorize with GitHub** to allow the REST API to access your GitHub account.
 
+    If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted. 
     Once you perform the authorization, the **GitHub Account** field in the **Connect Repository** dialog box displays the GitHub account you authorized the REST API to access. 
+
 
 8. Select the following values to connect the repository.
 
@@ -57,7 +59,7 @@ Let's add a containerized REST API component by following these steps:
     | **Branch** |The branch of the repository |`main` |
     | **Build Preset** | Determines the implementation of the component: Ballerina or any other language as a Docker container|`Dockerfile`|
     | **Dockerfile path**|The path to your Dockerfile. This path is defined relative to the repository root.<br/>e.g., If the Dockerfile is at the repository root, the value for this field for a monorepo is `service-one/Dockerfile`.  | `nodejs/rest-api/Dockerfile` |
-    | **Docker build Context Path** |The Docker build context path. To include the repository root, leave the default `**.**` value. | `nodejs/rest-api/` |
+    | **Docker build Context Path** |The Docker build context path. To include the repository root, leave the default `**.**` value. | `nodejs/rest-api` |
     | **Port** | The port at which your service is running. | `8080` |
     | **OpenAPI Filepath** | The path to an OpenAPI specification (in YAML/JSON) relative to the repository root. If you do not specify a path, the system auto-generates a default `allow-all` specification. | `nodejs/rest-api/openapi.yaml` |
 
@@ -69,7 +71,7 @@ Let's add a containerized REST API component by following these steps:
 
     The REST API deploy section opens on a separate page.
 
-    - If you click the **Overview** icon, you will see the default OpenAPI specification instead of the specification you specified in the **OpenAPI Filepath** field. This is because you need to build and deploy the REST API to execute the required commands in the Dockerfile that will generate it.<br/><br/>
+    - You need to build and deploy the REST API to execute the required commands in the Dockerfile to generate the specification.<br/><br/>
         
     - To select a specific version of the REST API you want to deploy, click the first card in the **Build Area** section, select the required commit in the **Configure & Deploy** pane, and click **Select**. <br/><br/>
           ![Select commit](../assets/img/byoc/select-commits.png){.cInlineImage-threeQuarter}<br/><br/>
@@ -83,11 +85,11 @@ You have successfully added a Dockerfile-based REST API component from a Dockerf
 
 ## Step 2: Build and deploy 
 
-To implement the REST API, you need to build and deploy it. When you trigger the build you execute the commands in the selected Dockerfile to apply the required configurations to the REST API.
+To invoke the REST API, you need to build and deploy it. When you trigger the build you execute the commands in the selected Dockerfile to apply the required configurations to the REST API.
 
 To build and deploy the REST API, follow these steps:
 
-1. On the **Deploy** page, click **Build and Deploy**.
+1. On the **Deploy** page, click **Build and Deploy** or if there are configurable variables in the implementation, then click **Configure & Deploy** , input the necessary values, and click **Deploy**.
 
     !!! note
         Deploying the REST API component may take a while. You can track the progress by observing the logs.
