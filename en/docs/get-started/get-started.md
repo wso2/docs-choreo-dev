@@ -349,9 +349,9 @@ Now you have successfully configured Asgardeo as the identity provider for the f
 
 To define a user for the readingListApp application, follow the steps given below:
 
-1. Navigate back to the Asgardeo Console.
+1. Navigate to the Asgardeo Console.
 
-2. On the Home page, click **View users** to open the **Users** page.
+2. On the **Home** page, click **View users** to open the **Users** page.
 
 3. Click **Add User**.
 
