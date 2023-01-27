@@ -367,8 +367,7 @@ To define a user for the readingListApp application, follow the steps given belo
 !!! tip 
     You can create more users to test your front-end application.
 
-#### Step 2.4.4: Try out the web application
-
+#### Step 2.4.4: Invoke the REST API
 To run the front-end application and send requests to the `readingList` REST API via it, follow the steps given below:
 
 !!! info
@@ -418,11 +417,7 @@ To run the front-end application and send requests to the `readingList` REST API
 
     Three tabs will appear for each status. To delete a reading list item, you can click **Delete** for it.
 
-8. Log out of the front-end application.
-
-9. Log in to the front-end application again with the credentials of a different user that you created in Asgardeo.
-
-    You will not see the reading list items that you previously entered.
+To verify whether the reading list is personalized for each user, you can log in as a different user. The reading list items you entered above will not appear for the other user.
 
 ## Step 3: Create and publish a new version of the REST API
 
