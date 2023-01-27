@@ -27,9 +27,16 @@ export class ComponentOverviewPage {
     cy.get("[data-testid=deploy-link]").click();
   }
 
-  static navigateToTest() {
-    cy.contains("Test").should("be.visible").click({force: true});
+  static navigateToTest(navigateViaLink:boolean=false) {
+    if(navigateViaLink){
+      cy.get('[data-cyid="test-nav-btn"]').eq(0).click()
+    }else{
+      cy.contains("Test").should("be.visible").click({ force: true });
+    }
+   
   }
+
+  
 
   static navigateToManage() {
     cy.contains("Manage").should("be.visible").click({ force: true });
