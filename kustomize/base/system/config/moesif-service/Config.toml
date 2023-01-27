@@ -9,8 +9,5 @@ mssqlClientUserName="{{.MSSQL_USERNAME}}"
 mssqlClientPwdSecret="{{.MSSQL_PASSWORD_SECRET}}"
 mssqlPwdSecretPath=""
 
-[[ballerina.auth.users]]
-scopes=["admin"]
-
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
