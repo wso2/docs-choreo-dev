@@ -25,8 +25,6 @@ Let's add the integration by following the steps given below:
 
 3. If your project has one or more components, click **+ Create**. If not, proceed to the next step.
 
-    ![Ipaas Components](../../assets/img/tutorials/integration-rest-api/integration_rest_api.png){.cInlineImage-small}
-
 4. On the **Integration as an API** card, click **Create** to start creating a micro integrator REST API.
 
 5. Enter a name and a description for the micro integrator REST API. For example, you can enter `MI Hello World` as the name and `MI Hello World REST API` as the description.
@@ -49,8 +47,8 @@ Let's add the integration by following the steps given below:
 
 11. Under **Build Preset**, click **Micro Integrator**.
 
-     !!! info
-         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
+    !!! info
+        The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
 
 12. Enter information related to the `MI Hello World` project as follows:
 
@@ -67,22 +65,14 @@ The micro integrator REST API opens on a separate page.
 
 Let's deploy the micro integrator REST API you created to the developer environment by following the steps given below:
 
-1. Click the **Deploy** icon. Then in the **Build Area** card, click **Deploy Manually**.
+1. In the left navigation menu, click **Deploy**.
 
-   !!! note
-       Automatic deployment is enabled by default. However, you have to deploy the micro integrator REST API manually the first time. Subsequent deployments will occur automatically.
+2. Click **Deploy Manually**.
 
-   ![Deploy API](../../assets/img/tutorials/integration-rest-api/deploy_mi_rest_api.png){.cInlineImage-small}
+    !!! info
+        Automatic deployment is enabled for the component by default. You are required to carry out only the first deployment manually.
 
-2. To check the progress of the deployment, observe the **Console** pane.
-
-    ![Deployment progress](../../assets/img/tutorials/integration-rest-api/deploying_mi_rest_api.png){.cInlineImage-threeQuarter}
-
-     Once Choreo has deployed the micro integrator REST API, the **Development** card displays the status as **Active**.
-
-    ![Deployed API](../../assets/img/tutorials/integration-rest-api/deployed_mi_rest_api.png){.cInlineImage-threeQuarter}
-
-    You can proceed to the next step to test it.
+Once Choreo has deployed the micro integrator REST API, you can proceed to the next step to test it.
 
 ## Step 3: Test
 
@@ -96,11 +86,9 @@ In this tutorial, let's test via the OpenAPI Console:
 
 3. Select **/HelloWorld** resource and click **Try it out**.
 
-4. Click **Execute**.
+4. Click **Execute**. Choreo displays the following response in **Response body**.
 
-   Choreo displays the following response body under **Responses**.
-
-   ![Response for the Deployed API](../../assets/img/tutorials/integration-rest-api/response_mi_rest_api.png){.cInlineImage-half}
+    `{"Hello":"Integration"}`
 
 The above response indicates that your micro integrator REST API is working as expected.
 
