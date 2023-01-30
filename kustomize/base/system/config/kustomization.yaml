@@ -447,3 +447,8 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_URL="http://dp-rudder:80"
+  - name: cm-file-choreo-org-stat-data-pipeline
+    behavior: create
+    files:
+      - choreo-org-stat-data-pipeline/Config.toml
+
