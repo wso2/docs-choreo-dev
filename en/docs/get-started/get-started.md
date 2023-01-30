@@ -260,7 +260,7 @@ To generate the configurations required for end users to log in to the front-end
         
 Next, you need to pass the configurations displayed on this page to your front-end application. To do so, proceed to [Step 2.4.2 - Configure the front-end application](#step-242-configure-the-front-end-application).
 
-### Step 2.3.2: Configure the front-end application
+#### Step 2.3.2: Configure the front-end application
 
 To configure the front-end application by defining the ports it needs to run on, adding the endpoint to the `readingList API`, etc., follow the steps given below:
 
@@ -350,9 +350,6 @@ Now you have successfully configured Asgardeo as the identity provider for the f
 To sign in to the `readingListApp` application and create private reading lists, the end users require user IDs. The end users can self-register these user IDs in Asgardeo or request an Asgardeo user with administration privileges to add them. For more information, see [Asgardeo Documentation - Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user).
 
 For this use case, you will play the role of an Asgardeo user with administration privileges who registers the user IDs.
-
-!!! info
-    To use the readingListApp application, the users only require the basic privileges granted to them by default by Asgardeo.
 
 To define a user for the readingListApp application, follow the steps given below:
 
