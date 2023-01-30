@@ -194,7 +194,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
-    public void waitForObservabilityLogs() throws Exception {
+    public void waitForObservabilityLogs_LoggingAPITestCase() throws Exception {
 
         en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
@@ -206,7 +206,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         String prodReleaseId =  choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_LoggingAPITestCase"})
     @CitrusTest
     public void testGroupedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
         Environment environment = choreoComponent.getEnvironment(en, env);
@@ -341,7 +341,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         Assert.assertEquals(components.length, 0);
     }
 
-    
+
 
     private static Map<String, String> readZipEntries(ZipInputStream zis) throws IOException {
         Map<String, String> entries = new HashMap<>();

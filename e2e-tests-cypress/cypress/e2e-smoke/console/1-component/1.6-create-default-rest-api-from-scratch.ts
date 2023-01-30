@@ -92,7 +92,7 @@ describe("Verify BYOR functionality", () => {
   });
 
   it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest(true);
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
       RESOURCE_NAME,
@@ -143,7 +143,7 @@ describe("Verify BYOR functionality", () => {
   });
 
   it("Verify resource access without the token in dev", () => {
-    ComponentOverviewPage.navigateToTest(true);
+    ComponentOverviewPage.navigateToTest();
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
