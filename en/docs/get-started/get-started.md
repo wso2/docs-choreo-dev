@@ -347,7 +347,9 @@ Now you have successfully configured Asgardeo as the identity provider for the f
 
 #### Step 2.3.4: Create a user in Asgardeo
 
-To sign in to the `readingListApp` application and create private reading lists, the end users require user IDs. The end users can self-register these user IDs in Asgardeo or request an Asgardeo user with admin privileges to add them. For more information, see [Asgardeo Documentation - Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user).
+To sign in to the `readingListApp` application and create private reading lists, the end users require user IDs. The end users can self-register these user IDs in Asgardeo or request an Asgardeo user with administration privileges to add them. For more information, see [Asgardeo Documentation - Manage users](https://wso2.com/asgardeo/docs/guides/users/manage-customers/#onboard-a-user).
+
+For this use case, you will play the role of an Asgardeo user with administration privileges who registers the user IDs.
 
 !!! info
     To use the readingListApp application, the users only require the basic privileges granted to them by default by Asgardeo.
