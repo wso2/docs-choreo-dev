@@ -10,7 +10,7 @@ Consider a scenario where a developer has created an integration in [WSO2 Integr
 - Observe statistics for the Integration component.
 - Publish the Integration component and try it out in the production environment.
 
-For this tutorial, let's use a basic sample application for the purpose of exposing a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
+For this tutorial, let's use a basic sample application to expose a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
     To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
@@ -25,34 +25,39 @@ Let's add the integration by following the steps given below:
 
 3. If your project has one or more components, click **+ Create**. If not, proceed to the next step.
 
-4. On the **Integration** card, click **Create**.
+4. On the **Integration as an API** card, click **Create** to start creating a micro integrator REST API.
 
-5. On the **REST API** card, click **Connect an MI Repo** to start creating a micro integrator REST API.
+5. Enter a name and a description for the micro integrator REST API. For example, you can enter `MI Hello World` as the name and `MI Hello World REST API` as the description.
 
-6. Enter a name and a description for the micro integrator REST API. For example, you can enter `MI Hello World` as the name and `MI Hello World REST API` as the description.
+6. To the micro integrator REST API as a publicly accessible API, leave the selection in the **Access Mode** list unchanged.
 
-7. To the micro integrator REST API as a publicly accessible API, leave the selection in the **Access Mode** list unchanged.
+7. Click **Next**.
 
-8. Click **Next**.
+8. Authorize Choreo to connect to your GitHub account by clicking **Authorize with GitHub**.
 
-9. Authorize Choreo to connect to your GitHub account by clicking **Authorize with GitHub**.
+9. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
 
-10. If you have not already authorized Choreo applications, click **Authorize Choreo Apps** when prompted.
+10. Enter information related to the GitHub repository you want to connect as follows:
 
-11. Enter information related to the GitHub repository you want to connect as follows:
+     | **Field**             | **Value**                                                                                             |
+     |-----------------------|-------------------------------------------------------------------------------------------------------|
+     | **GitHub Account**    | Select your GitHub account.                                                                           |
+     | **GitHub Repository** | Select your fork of the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples). |
+     | **Branch**            | `main`                                                                                                |
 
-     | **Field**             | **Value**                        |
-     |-----------------------|-------------------------------------------------------------------------------------------------------------|
-     | **GitHub Account**    | Select your GitHub account.                                                                                 |
-     | **GitHub Repository** | Select your fork of the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy). |
-     | **Branch**            | `main`                                                                                                      |
-
-12. Under **Build Preset**, click **Micro Integrator**.
+11. Under **Build Preset**, click **Micro Integrator**.
 
      !!! info
-         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project etc.).
+         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
 
-14. Click **Create**.
+12. Enter information related to the `MI Hello World` project as follows:
+
+     | **Field**             | **Value**                                      |
+     |-----------------------|------------------------------------------------|
+     | **Path**              | `ipaas/wso2-synapse/simple-proxy`              |
+     | **OpenAPI File Path** | `ipaas/wso2-synapse/simple-proxy/openapi.yaml` |
+ 
+13. Click **Create**.
 
 The micro integrator REST API opens on a separate page.
 
@@ -71,20 +76,17 @@ Once Choreo has deployed the micro integrator REST API, you can proceed to the n
 
 ## Step 3: Test
 
-Choreo assists you to generate a cURL command to invoke the micro integrator REST API you created. To generate this cURL command and issue it, follow these steps:
+Once you have deployed the Integration REST API you can test it via the OpenAPI Console, or a cURL command.
 
-1. In the left navigation menu, click **Test**.
+In this tutorial, let's test via the OpenAPI Console:
 
-2. In the **Method** list, select **Get**.
+1. To open the test view, click **Test** in the **Development** card. Alternatively, you can click the **Test** icon in the left panel.
 
-3. Enter `/HelloWorld` as the path.
+2. Click **OpenAPI Console**.
 
-4. To copy the cURL command, click the icon for copying
+3. Select **/HelloWorld** resource and click **Try it out**.
 
-    !!! note
-        Always use the icon to copy the cURL command instead of copying it manually because the displayed cURL command is only for display purposes and does not include the API token.
-
-5. Issue the cURL command that you copied. You will get the following response.
+4. Click **Execute**. Choreo displays the following response in **Response body**.
 
     `{"Hello":"Integration"}`
 
