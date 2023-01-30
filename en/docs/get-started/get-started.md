@@ -319,6 +319,9 @@ Now you have configured your front-end application. Next, you need to configure 
 
 Let's deploy a pre-designed front-end application. This application is designed to personalize the readingList based on the user ID that it obtains from its identity provider. To enable the application to obtain the user ID, let's configure Asgardeo as the identity provider by following the steps given below:
 
+!!! info
+    To configure an identity provider for Choreo, you need administration privileges in Choreo.
+
 1. In the Choreo Console, open the **Home** page.
 
 2. In the left navigation menu, click **Settings**.
