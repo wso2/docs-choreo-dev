@@ -30,29 +30,6 @@ Choreo allows you to create a REST API Proxy by importing an Open API Specificat
 
 Once you create an API proxy in Choreo, you can access the API definition of that API. Choreo also exposes the endpoints for the API where it maintains two gateway environments, production, and sandbox.
 
-
-## Deploying a REST API Proxy
-
-The following diagram illustrates the process of deploying an API in Choreo to the default development environment. 
-
-![Deploy API ](../../../assets/img/api-proxies/deploy-api-proxies.png){.cInlineImage-threeQuarter}
-
-Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo's data plane runs on a Kubernetes stack, hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on. This CI/CD pipeline needs to be manually managed by you via the Choreo console. 
-
-Once you deploy the REST API to the development environment, it is then exposed through Choreo with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
-
-You may set up a separate sandbox environment to test the API proxy before pushing it to production. To deploy the API proxy to both the sandbox environment and the development environment, enter the test environment URL as the sandbox endpoint and the API backend URL as the endpoint.
-
-![Sandbox URL](../../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-small}
-
-## Choreo environments
-
-Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
-
-![Deploy View](../../../assets/img/rest-apis/deploy-promote.png){.cInlineImage-threeQuarter}
-
-Once you have promoted the API to production, Choreo then shows a second URL that developers can use in production applications to invoke the API.
-
 ## Test the REST API Proxy
 
 Once you deploy your API, it is ready to be tested. Testing your REST API Proxy is an integral part of the spec-driven API development approach. Testing your API Proxy in Choreo can be done in 3 ways:
@@ -79,13 +56,36 @@ Choreo also allows you to integrate Postman. To integrate Postman, you need to c
 
 ![REST API Proxy - Postman](../../../assets/img/api-proxies/test-api-proxies-postman.png){.cInlineImage-threeQuarter}
 
+
+## Deploying a REST API Proxy
+
+The following diagram illustrates the process of deploying an API in Choreo to the default development environment. 
+
+![Deploy API ](../../../assets/img/api-proxies/deploy-api-proxies.png){.cInlineImage-threeQuarter}
+
+Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to its runtime(data plane) clusters. Under the hood, Choreo's data plane runs on a Kubernetes stack, hence benefits from all its features such as auto-scaling, auto-healing, secret management, liveness, readiness checks, and so on. You are required to manually manage this CI/CD pipeline via the Choreo Console. 
+
+Once you deploy the REST API to the development environment, it is then exposed through Choreo with API security turned on. Developers get a testable URL for their API which they can use to verify the functionality of the API they implemented.
+
+You may set up a separate sandbox environment to test the API proxy before pushing it to production. To deploy the API proxy to both the sandbox environment and the development environment, enter the test environment URL as the sandbox endpoint and the API backend URL as the endpoint.
+
+![Sandbox URL](../../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-small}
+
+## Choreo environments
+
+Choreo by default provides a development environment and a production environment in two separate Kubernetes clusters. Once you have deployed the API to the development environment and its functionality has been verified, developers can then promote their APIs to the production environment:
+
+![Deploy View](../../../assets/img/rest-apis/deploy-promote.png){.cInlineImage-threeQuarter}
+
+Once you have promoted the API to production, Choreo then shows a second URL that developers can use in production applications to invoke the API.
+
 ## Manage the REST API Proxy
 
 API Management is automatically turned on in REST API Proxies (and other APIs) on Choreo. Converting an unmanaged API to a managed API is a key advantage of exposing REST API Proxies. Developers can use its capabilities to manage the exposure of APIs to their consumers. Developers can configure the API’s security settings, set rate limits, associate usage plans, provide other documentation, and perform other related functions to govern the API. 
 
 ### Lifecycle of a REST API Proxy
 
-Once you implement a REST API Proxy, it needs to be tested, deployed, and eventually put into production. Once you deploy the REST API Proxy, you can apply any of the six API lifecycles states (i.e., created, pre-released, published, blocked, deprecated, and retired) while adhering to their respective lifecycle flows.
+Once you implement a REST API Proxy, it needs to be tested, deployed, and eventually put into production. Once you deploy the REST API Proxy, you can apply any of the six API lifecycles states (i.e., Created, Pre-released, Published, Blocked, Deprecated, and Retired) while adhering to their respective lifecycle flows.
 
 When you publish an API, you can also publish a connector for that API to make it available on the Choreo Marketplace.
 
@@ -94,7 +94,6 @@ When you publish an API, you can also publish a connector for that API to make i
 ### Add documentation to the REST API Proxy
 
 A well-designed API or API Proxy needs to be well-documented as well. The usability of the API/API Proxy is a deciding factor of its value. Many API developers find documenting an API a tedious task. Choreo makes documentation an easy task for developers by allowing different sources of documentation. Choreo allows you to add documentation to the REST API by specifying a URL, in Markdown format, importing a file, or by simply including inline documentation. 
-
 
 ### Usage Plans
 

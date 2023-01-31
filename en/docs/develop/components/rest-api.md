@@ -40,11 +40,11 @@ Choreo allows you to design your REST API in three possible ways as shown in the
 
 Choreo supports spec-driven API development. Once you have carefully designed and defined your API, you can start implementing the functionality of your API. Choreo allows you to link a GitHub project when creating the REST API. You can implement your API as a [Ballerina](https://ballerina.io/) project or as in any language as a Docker container and store in the GitHub repo. Alternatively, if you are selecting the Ballerina preset when creating the REST API, you can link an empty GitHub repository, and then proceed to implement it before deploying the REST API. 
 
-WSO2 provides a [Ballerina extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) which you can use to eaasily develop your REST API as a Ballerina project.
+WSO2 provides a [Ballerina extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) in which you can use to easily develop your REST API as a Ballerina project.
 
 ## Lifecycle of a REST API
 
-Once you implement a REST API, it needs to be built, tested, and eventually put into production. You can apply any of the six API lifecycles states (i.e., created, pre-released, published, blocked, deprecated, and retired) while adhering to their respective lifecycle flows.
+Once you implement a REST API, you should build it, test it, and eventually push it to the production environment. You can apply any of the six API lifecycles states (i.e., Created, Pre-released, Published, Blocked, Deprecated, and Retired) while adhering to their respective lifecycle flows.
 
 When you publish an API, you can also publish a connector for that API to make it available on the Choreo Marketplace.
 
@@ -57,7 +57,7 @@ The following diagram illustrates the procedure to deploy an API in Choreo to th
 
 Choreo runs a professional, enterprise-grade CI/CD process to deploy APIs to their runtime(data plane) clusters. The data plane of Choreo runs on a Kubernetes stack under the hood. Therefore, you can benefit from its features such as auto-scaling, auto-healing, secret-management, liveness and readiness checks, etc.
 
-Choreo provides the capability for developers to connect their own GitHub repositories containing the source code of their APIs. The CI/CD pipeline in Choreo takes an API through the complete process, starting from code checkout to compile, build, test, and finally deploy.
+Choreo allows developers to connect their own GitHub repositories containing the source code of their APIs. The CI/CD pipeline in Choreo takes an API through the complete process, starting from code checkout to compiling, building, testing, and finally deploying.
 
 Once you deploy a REST API to the development environment, it gets exposed through an API Gateway with API security enabled. At this time, Choreo provides a test URL for the API, which you can use to verify the functionality of the API.
 
