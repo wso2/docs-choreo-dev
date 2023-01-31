@@ -2,7 +2,7 @@
 
 Consider a scenario where a developer has created an integration using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) and wants to use it as an event-triggered integration by deploying it in Choreo. In this tutorial, you will learn how to do the following actions to address this requirement:
 
-- Create an event-triggered integration in Choreo by connecting the GitHub repository which has a integration developed in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
+- Create an event-triggered integration in Choreo by connecting the GitHub repository which has an integration developed in [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 - Deploy the integration component to the development environment in Choreo.
 - Test the integration component.
 
@@ -14,17 +14,12 @@ For this tutorial, let's use a basic sample application which listens to a [Rabb
 In this tutorial, we will be using the [simple-rabbitmq-listener](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-rabbitmq-listener) project in the **choreo-sample** repo. 
 
 ## Step 0: Get Ready for the Tutorial
-To complete this tutorial you need to complete the following steps.
 
-1. You need to start a RabbitMQ server on the cloud. once it's started grab the `username`, `hostname`, `password` and `vhost` from the RabbitMQ instance. 
+To complete this tutorial, you need to start a RabbitMQ server on the cloud. once it's started grab the `username`, `hostname`, `password` and `vhost` from the RabbitMQ instance. Later, these values will be assigned to environment variables. 
 
 !!! tip RabbitMQ Server
     To try this tutorial, you can use [CloudAMQP](https://www.cloudamqp.com/) to configure and start a RabbitMQ server with a few steps.
 
-2. Then in your fork go to `/ipaas/wso2-synapse/simple-rabbitmq-listener/sales-rabbitmq-inboundConfigs/src/main/synapse-config/inbound-endpoints/SalesOrderInbooundEP.xml` file.
-
-3. Update parameters (`username`, `hostname`, `password` and `vhost`) in this file with the credentials you obtained from your RabbitMQ server. 
-4. Commit Changes.
 
 ## Step 1: Create the integration component
 
@@ -62,24 +57,38 @@ Let's create the integration component by following the steps given below:
 
 11. Enter information as follows.
 
-    !!! info
-         When Choreo builds the component this is the path it looking for the project in the repository.
-
      | **Field**             | **Value**                                      |
      |-----------------------|------------------------------------------------|
-     | **Path**              | `ipaas/wso2-synapse/simple-rabbitmq-listener`              |
+     | **Path**              | `ipaas/wso2-synapse/simple-rabbitmq-listener`  |
+
+
+    !!! info
+        When Choreo builds the component this is the path it looking for the project in the repository.
  
-12. Click **Create**.
+1.  Click **Create**.
 
 After the creation process is completed, the new component opens on a separate page.
 
 ## Step 2: Deploy
-
-Let's deploy the component you created to the developer environment by following the steps given below:
+Before deploying the component you need to assign RabbitMQ credentials to environment variables by following the steps given below:
 
 1. Go to **Deploy** In the left navigation menu.
+2. Open the `DevOps Portal` by Clicking **Configure via the DevOps Portal** in **Development** card.
+3. In DevOps Portal, Add the following environment variables and save.  
+   
+    | **Key**    |
+    |------------|
+    | HOSTNAME   | 
+    | USERNAME   |
+    | PASSWORD   | 
+    | VHOST      | 
 
-2. Click **Deploy Manually**.
+    !!! info
+        For more about how to manage Environment variables please refer to the [Configurations and secrets](../../devops/devops-portal.md) documentation.
+
+Let's deploy the component you created to the developer environment by following the step given below:
+
+1. In the Choreo Console **Deploy** view Click **Deploy Manually**.
 
     !!! info
         Automatic deployment is enabled for the component by default. You are required to carry out only the first deployment manually.
@@ -90,7 +99,7 @@ After Choreo deploys the component, proceed to the next step to test it.
 
 Test the component by publishing messages to a designated topic in your RabbitMQ server.
  
-1. Publish following message to the **SalesOrderQueue** topic in RabbitMQ server.
+1. Publish the following message to the **SalesOrderQueue** topic in the RabbitMQ server.
 
 ```
 <Orders>
