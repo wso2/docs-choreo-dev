@@ -29,19 +29,21 @@ spec:
         - name: moesif-service
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-moesif-service:latest # align  with info given in azure ci pipeline.
           env:
-            - name: APIM_REST_API_CONSUMER_SECRET
+            - name: CHOREO-MOESIF-KEY-MANAGEMENT-DB-MSSQL-PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-cp-graphql
-                  key: APIM_REST_API_CONSUMER_SECRET
-            - name: IDP_BACKEND_API_CLIENT_SECRET
+                  name: secret-moesif-service
+                  key: CHOREO-MOESIF-KEY-MANAGEMENT-DB-MSSQL-PASSWORD
+            - name: MOESIF-AUTH-PWD
               valueFrom:
                 secretKeyRef:
-                  name: secret-idp
-                  key: IDP_BACKEND_API_CLIENT_SECRET
+                  name: secret-moesif-service
+                  key: MOESIF-AUTH-PWD
           ports:
-            - containerPort: 8080
-              name: http-port
+            - containerPort: 8080      # To be used for internal service
+              name: internal-http-port
+            - containerPort: 8080      # To be used for external service
+              name: external-http-port
             - containerPort: 9091      # To be used for readiness/liveness probes (internal)
               name: health
             - containerPort: 9092      # To be used for public health check (external)
@@ -86,9 +88,6 @@ spec:
             - name: secret-moesif-service
               mountPath: "/mnt/csi/secret-moesif-service"
               readOnly: true
-            - name: secret-idp
-              mountPath: "/mnt/csi/secret-idp"
-              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
@@ -100,14 +99,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-moesif-service
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: secret-idp
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-idp
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
