@@ -53,7 +53,7 @@ nav:
   - Home: index.md
   - Get Started:
       - What is Choreo?: get-started/what-is-choreo.md
-      - Quick Start Guide: get-started/quick-start-guide
+      - Quick Start Guide: get-started/quick-start-guide.md
       - Tutorials: 
           - Create Your First REST API: get-started/tutorials/create-your-first-rest-api.md
           - Expose an Existing API via a REST API Proxy: get-started/tutorials/create-your-first-rest-api-proxy.md
