@@ -27,8 +27,8 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing", {
       timeout: STANDARD_TIME_OUT,
     }).type(apiName + "{enter}");
-    cy.get('[data-testid="apiCard-' + apiName + '"]')
-      .first()
+   
+    cy.get(`[data-testid="apiCard-${apiName}"]`)
       .should("be.visible")
       .click();
     cy.log("Successfully navigated to Overview");

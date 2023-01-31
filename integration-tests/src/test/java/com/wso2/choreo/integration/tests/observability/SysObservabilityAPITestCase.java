@@ -17,10 +17,17 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.wso2.choreo.integration.apis.Orgs;
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.componentstatus.Status;
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
@@ -28,10 +35,12 @@ import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -41,6 +50,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
@@ -48,52 +58,141 @@ import static org.hamcrest.Matchers.*;
 
 public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     private static String accessToken;
-    private static RestApiChoreoComponent restApiComponent;
+    ChoreoProject project;
+    String repoName;
+    String projectId;
+    String devInvokeURL;
+    String prodInvokeURL;
+    Environment[] en;
+    String apiKey;
+    ChoreoComponent choreoComponent;
+    ChoreoOrganization org;
 
     @Autowired
     private HttpClient choreoCPTestClient;
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
-        return new Object[][]{{Constant.DEV_ENVIRONMENT}, {Constant.PROD_ENVIRONMENT}};
+        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Production}};
     }
+
 
     @BeforeClass
-    public void beforeClass()
-            throws Exception {
+    public void setup_SysObservabilityAPITestCase() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-
-        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
-        ChoreoProject project = GraphQL.createProject(accessToken);
-        RestApiChoreoComponentBuilder restApiComponentBuilder = new RestApiChoreoComponentBuilder(project, org);
-        restApiComponent = (RestApiChoreoComponent) project.createChoreoComponent(accessToken, restApiComponentBuilder);
-        restApiComponent.setProject(project);
-        restApiComponent.setOrganization(org);
-
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.DEV_ENVIRONMENT);
-        restApiComponent.deploy(accessToken, org.getOrgHandle(), org.getOrgUUID());
-        restApiComponent.invokeGetApplication(accessToken, "restAPI", "Development", 4);
-
-        restApiComponent.addConfigurations(accessToken, org.getOrgHandle(), Constant.PROD_ENVIRONMENT);
-        restApiComponent.promote(accessToken, Constant.DEV_ENVIRONMENT, Constant.PROD_ENVIRONMENT);
-        restApiComponent.invokeGetApplication(accessToken, "restAPI", "Production", 4);
-
-        restApiComponent.waitForObservabilitySystemMetrics(accessToken, Constant.DEV_ENVIRONMENT);
-        restApiComponent.waitForObservabilitySystemMetrics(accessToken, Constant.PROD_ENVIRONMENT);
+        project = GraphQL.createProject(accessToken);
+        repoName = Constant.TEST_REPO_NAME_PREFIX.concat(String.valueOf(new Date().getTime()));
+        projectId = project.getId();
     }
 
-    @Test(dataProvider = "env-provider")
+
+    @Test
     @CitrusTest
-    public void testSystemMetrics(String env) throws ReleaseIdNotFoundException, EnvironmentDetailsCheckException,
-            IOException, NamespaceNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            InterruptedException {
-        String releaseId = restApiComponent.getReleaseIdForEnvironment(env);
-        String namespace = restApiComponent.getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation =
-                GraphQL.getComponentObservabilityIdForReleaseId(releaseId,accessToken);
+    public void createUserManagedComponent_SysObservabilityAPITestCase() throws IOException {
+        String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
+        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
+                triggerID("null").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
+                projectId(projectId).
+                displayType(Constant.displayType.restAPI.name()).build();
+        choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
+        Assert.assertNotNull(choreoComponent.getId());
+    }
+
+    @Test(dependsOnMethods = {"createUserManagedComponent_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void createdComponentStatus_SysObservabilityAPITestCase() throws UnexpectedResponseException {
+        Status status = Orgs.createdComponentStatus(projectId, choreoComponent.getId(), accessToken);
+        Assert.assertTrue(status.isSuccess());
+    }
+
+
+    @Test(dependsOnMethods = {"createdComponentStatus_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void componentRetrieval_SysObservabilityAPITestCase() throws IOException {
+        choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
+        choreoComponent.setOrganization(org);
+        Assert.assertNotNull(choreoComponent);
+    }
+
+    @Test(dependsOnMethods = {"componentRetrieval_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void addDeploymentConfiguration_SysObservabilityAPITestCase() throws Exception {
+        Orgs.getConfigurationMapping(choreoComponent, accessToken);
+        Response res = Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+    }
+
+
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void deploy_SysObservabilityAPITestCase() throws Exception {
+        GraphQL.deployComponent(choreoComponent, accessToken);
+    }
+
+    @Test(dependsOnMethods = {"deploy_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void deploymentStatusByVersion_SysObservabilityAPITestCase() throws Exception {
+        GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
+    }
+
+
+    @Test(dependsOnMethods = {"deploymentStatusByVersion_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void componentDevDeploymentStatus_SysObservabilityAPITestCase() throws Exception {
+        devInvokeURL = GraphQL.componentDeployment(choreoComponent, "dev", accessToken).getInvokeUrl();
+    }
+
+    @Test(dependsOnMethods = {"componentDevDeploymentStatus_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void addPromoteConfiguration_SysObservabilityAPITestCase() throws Exception {
+        Response res = Orgs.addConfiguration(choreoComponent, "prod", accessToken);
+        Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
+    }
+
+    @Test(dependsOnMethods = {"addPromoteConfiguration_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void promote_SysObservabilityAPITestCase() throws Exception {
+        GraphQL.promoteComponent(choreoComponent, accessToken);
+    }
+
+    @Test(dependsOnMethods = {"promote_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void componentProdDeploymentStatus_SysObservabilityAPITestCase() throws Exception {
+        prodInvokeURL = GraphQL.componentDeployment(choreoComponent, "prod", accessToken).getInvokeUrl();
+    }
+
+
+    @Test(dependsOnMethods = {"componentProdDeploymentStatus_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void invokeEP_SysObservabilityAPITestCase() throws IOException {
+        apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
+        TestHelper.invokeEP(devInvokeURL,apiKey);
+        TestHelper.invokeEP(prodInvokeURL,apiKey);
+    }
+
+    @Test(dependsOnMethods = {"invokeEP_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void waitForObservabilityLogs_SysObservabilityAPITestCase() throws Exception {
+
+        en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
+        Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
+        Environment prodEnv = choreoComponent.getEnvironment(en, Constant.Environment.Production);
+        choreoComponent.waitForObservabilityLogs(devEnv, accessToken);
+        choreoComponent.waitForObservabilityLogs(prodEnv, accessToken);
+
+        String devReleaseId =  choreoComponent.getReleaseIdForEnvironment(devEnv.getChoreoEnv());
+        String prodReleaseId =  choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
+    }
+
+    @Test(dataProvider = "env-provider",dependsOnMethods = {"waitForObservabilityLogs_SysObservabilityAPITestCase"})
+    @CitrusTest
+    public void testSystemMetrics_SysObservabilityAPITestCase(Constant.Environment env) throws Exception {
+        Environment environment = choreoComponent.getEnvironment(en, env);
+        String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         String requestPath = Constant.OBSERVABILITY_SYS_OBS_ENDPOINT_SUFFIX
                 .concat(observabilityIdInformation.getObsId())

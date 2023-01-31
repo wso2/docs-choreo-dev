@@ -65,7 +65,7 @@ describe("Verify BYOR functionality", () => {
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
+    ComponentOverviewPage.navigateToTest(true);
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
       RESOURCE_NAME,

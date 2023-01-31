@@ -45,6 +45,7 @@ resources:
   - choreo-admin-api.yaml
   - cio-event-collector-service.yaml
   - cio-query-api-service.yaml
+  - cio-incident-configurator.yaml
 
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

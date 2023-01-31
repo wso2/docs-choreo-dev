@@ -13,6 +13,7 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.wso2.choreo.integration.apis.balregistry.BallerinaRegistry;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -32,6 +33,9 @@ public class DataCleaner  {
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+
+        BallerinaRegistry.deleteOldConnectors(tokenHandler.getTestTokenForCPAPIs());
+
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());

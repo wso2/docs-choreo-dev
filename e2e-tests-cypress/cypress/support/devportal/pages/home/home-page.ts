@@ -44,6 +44,7 @@ export class DevPortalHomePage {
   }
 
   static navigateToApisPage(): void {
+    cy.wait(5000)
     cy.get("[data-testid=apis-appbar-btn]").click();
   }
 

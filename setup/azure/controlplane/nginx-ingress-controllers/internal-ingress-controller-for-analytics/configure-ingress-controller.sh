@@ -39,8 +39,11 @@ helm upgrade --install "${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-
   --set controller.resources.limits."cpu"=1000m \
   --set controller.resources.limits."memory"=1Gi \
   --set controller.ingressClass="${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx-ingress" \
+  --set controller.ingressClassResource.controllerValue="k8s.io/${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx" \
+  --set controller.ingressClassResource.enabled="true" \
+  --set controller.ingressClassResource.name="${INTERNAL_CHOREO_CONTROLPLANE_INGRESS_NAMESPACE}-nginx" \
   --set controller.image.repository="choreocontrolplane.azurecr.io/kubernetes-ingress-controller/nginx-ingress-controller" \
-  --set controller.image.tag="v0.41.2" \
+  --set controller.image.tag="v1.3.0" \
   --set controller.image.digest=null \
   --set-string controller.config.server-tokens=false \
   --set controller.admissionWebhooks.enabled=false \

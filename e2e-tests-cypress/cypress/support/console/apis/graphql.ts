@@ -22,6 +22,7 @@ export const SUCCESS_STATUS_CODE = 200;
 export const CREATED_STATUS_CODE = 201;
 export const NO_CONTENT_STATUS_CODE = 204;
 export class GraphQL {
+  static count = 0
   static createDefaultProjectIfNotExists(
     orgId: number,
     orgHandle: string,
@@ -85,7 +86,17 @@ export class GraphQL {
   static getComponents(projectId: string, orgHandle: string, token: string) {
     const query = {
       query: `query{ components(orgHandler: "${orgHandle}", projectId: "${projectId}"){
-        projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler } }`,
+        projectId, id, description, name, handler, displayName, displayType, version, createdAt, orgHandler,apiVersions { 
+            apiVersion,
+            proxyName,
+            proxyUrl,
+            proxyId,
+            id,
+            state,
+            latest,
+            branch,
+            accessibility
+          } } }`,
     };
 
     return this.callGraphQL(query);
@@ -236,7 +247,7 @@ export class GraphQL {
                                 {id, orgId, projectId, handler    }
                       }`,
       };
-      cy.log(JSON.stringify(query));
+
       this.callGraphQL(query).then((res) => {
         const { id } = res.body.data.createComponent;
         if (componentData.initializeAsBallerinaProject) {
@@ -268,7 +279,11 @@ export class GraphQL {
         );
         return;
       } else {
-        this.getPullRequests(componentId, repoName);
+        if(this.count<10){
+          this.getPullRequests(componentId, repoName);
+          this.count++;
+        }
+       
       }
     });
   }
