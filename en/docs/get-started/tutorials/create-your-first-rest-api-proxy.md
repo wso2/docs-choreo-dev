@@ -8,7 +8,7 @@ Choreo is a low-code cloud-native platform for building integration solutions. I
 4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..."
-    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../../develop/components/api-proxies/api-proxy.md) 
+    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../../develop/components/api-proxy.md) 
 
 
 Let's begin...

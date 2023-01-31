@@ -48,7 +48,7 @@ Let's add the integration by following the steps given below:
 11. Under **Build Preset**, click **Micro Integrator**.
 
      !!! info
-         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio]((https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
+         The build preset specifies the type of build that Choreo needs to run for the component (for example, Choreo needs to run a micro integrator build for components developed via the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), a Ballerina build for a component added via a Ballerina project, etc.,).
 
 12. Enter information related to the `MI Hello World` project as follows:
 
