@@ -1,13 +1,11 @@
 [choreo.moesif.msService.config]
-host="mssql"
-db="testDB"
 dbPort=1433
-serverPort=8080
+serverPortInternal=8080
+serverPortExternal=8081
 internalHealthCheckPort=9091
 externalHealthCheckPort=9092
-mssqlClientUserName="{{.MSSQL_USERNAME}}"
-mssqlClientPwdSecret="{{.MSSQL_PASSWORD_SECRET}}"
-mssqlPwdSecretPath=""
+authPwdSecretPath="/mnt/csi/secret-moesif-service/MOESIF-AUTH-PWD"
+mssqlPwdSecretPath="/mnt/csi/secret-moesif-service/CHOREO-MOESIF-KEY-MANAGEMENT-DB-MSSQL-PASSWORD"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
