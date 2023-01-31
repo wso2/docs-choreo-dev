@@ -39,12 +39,9 @@ cat << EOS >> ssl.conf
 default_bits       = 4096
 distinguished_name = req_distinguished_name
 req_extensions     = req_ext
-
 [ req_distinguished_name ]
-
 [ req_ext ]
 subjectAltName = @alt_names
-
 [alt_names]
 DNS.1   = *.${namespace}
 DNS.2   = *.${namespace}.svc.cluster.local
@@ -52,6 +49,7 @@ DNS.3   = *.pl-nats
 DNS.4   = pl-nats
 DNS.5   = *.local
 DNS.6   = localhost
+DNS.7   = kratos
 EOS
 
 openssl genrsa -out ca.key 4096

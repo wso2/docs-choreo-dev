@@ -66,16 +66,26 @@
 
 4. Make sure the TLS secret `{dev/stage/prod}-choreo-px-cloud-wildcard-tls` is present on the plc namespace
 
-5. Apply kustomize overlay
+5. Create the default login secret.
 
-6. Run `kubectl -n plc apply -f pixie_cloud_jobs.yaml`
+    ```sh
+    kubectl create secret generic -n plc pl-kratos-secrets --from-literal=ADMIN_PWD="{password used to log into  pixie console}"
+    ```
 
-7. Setup default admin account
+6. Apply kustomize overlay
 
-    Open the url printed in the logs of create-admin-job pod and
-    set a password for the default "admin@default.com" user
+7. Run `kubectl -n plc apply -f pixie_cloud_jobs.yaml`
 
-8. From the UI invite other users as necessary using admin console. Follow the steps shown in the following diagram.
+8. Open pixie console `https://px-cloud{preview-dv./st./}.choreo.dev` and login as default user.
+
+    ```txt
+    username - admin@default.com
+    password - {ADMIN_PWD}
+    ```
+
+9. Change deafult password to a secure password.
+
+10. From the UI invite other users as necessary using admin console. Follow the steps shown in the following diagram.
 
   ![Invite User](images/invite-user.jpeg)
 
@@ -87,15 +97,25 @@
 
 3. Run `create_cloud_secrets.sh`
 
-4. Make sure `{dev/stage/prod}-choreo-px-cloud-wildcard-tls` tls secret is created
+4. Create the default login secret.
 
-5. Enable and trigger choreo deployment pipeline
+    ```sh
+    kubectl create secret generic -n plc pl-kratos-secrets --from-literal=ADMIN_PWD="{password used to log into  pixie console}"
+    ```
 
-6. Setup default admin account
+5. Make sure `{dev/stage/prod}-choreo-px-cloud-wildcard-tls` tls secret is created
 
-   Open the url printed in the logs of create-admin-job pod and
-   set a password for the default "admin@default.com" user
+6. Enable and trigger choreo deployment pipeline
 
-7. From the UI invite other users as necessary using admin console. Follow the steps shown in the following diagram.
+7. Open pixie console `https://px-cloud{preview-dv./st./}.choreo.dev` and login as default user.
+
+    ```txt
+    username - admin@default.com
+    password - {ADMIN_PWD}
+    ```
+
+8. Change deafult password to a secure password.
+
+9. From the UI invite other users as necessary using admin console. Follow the steps shown in the following diagram.
 
   ![Invite User](images/invite-user.jpeg)
