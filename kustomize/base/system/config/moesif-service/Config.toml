@@ -1,4 +1,4 @@
-[choreo.moesif.msService.config]
+[choreo.moesif.microService.config]
 dbPort=1433
 serverPortInternal=8080
 serverPortExternal=8081
