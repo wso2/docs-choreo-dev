@@ -6,9 +6,12 @@ metadata:
   name: moesif-service
 spec:
   ports:
-    - name: service-port
+    - name: internal-http-port
       port: 8080
-      targetPort: service-port
+      targetPort: internal-http-port
+    - name: external-http-port
+      port: 8081
+      targetPort: external-http-port
     - name: healthz
       port: 9092
       targetPort: healthz
