@@ -5,7 +5,7 @@ metadata:
   labels:
     choreo.component: userapps-image-deleter
 spec:
-  schedule: 30 3 * * 1
+  schedule: 30 3 * * 3
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   jobTemplate:

@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cio-incident-configurator
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: cio-incident-configurator

@@ -20,6 +20,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.Orgs;
 import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -82,6 +83,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     String devInvokeURL;
     String prodInvokeURL;
     Environment[] en;
+    String apiKey;
 
     @Autowired
     private HttpClient choreoCPTestClient;
@@ -108,7 +110,11 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     public void createUserManagedComponent_LoggingAPITestCase() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         GitHub.initGitHubRepo(repoName, true, true, "nanoc");
-        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).triggerID("null").srcGitRepoUrl(GitHub.getGitHubRepoUrl(repoName)).projectId(projectId).displayType(Constant.displayType.restAPI.name()).build();
+        GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
+                triggerID("null").
+                srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
+                projectId(projectId).
+                displayType(Constant.displayType.restAPI.name()).build();
         choreoComponent = GraphQL.createUserManagedComponent(dto, accessToken);
         Assert.assertNotNull(choreoComponent.getId());
     }
@@ -123,22 +129,6 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"createdComponentStatus_LoggingAPITestCase"})
     @CitrusTest
-    public void initialPRGeneration_LoggingAPITestCase() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 1);
-        Assert.assertEquals(prs.length, 1);
-    }
-
-    @Test(dependsOnMethods = {"initialPRGeneration_LoggingAPITestCase"})
-    @CitrusTest
-    public void mergePR_LoggingAPITestCase() throws IOException, UnexpectedResponseException {
-        GitHub.mergePR(repoName, "1");
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-        Assert.assertEquals(prs.length, 0);
-    }
-
-
-    @Test(dependsOnMethods = {"mergePR_LoggingAPITestCase"})
-    @CitrusTest
     public void componentRetrieval_LoggingAPITestCase() throws IOException {
         choreoComponent = GraphQL.getComponentDetails(projectId, choreoComponent.getHandler(), accessToken);
         choreoComponent.setOrganization(org);
@@ -148,6 +138,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"componentRetrieval_LoggingAPITestCase"})
     @CitrusTest
     public void addDeploymentConfiguration_LoggingAPITestCase() throws Exception {
+        Orgs.getConfigurationMapping(choreoComponent, accessToken);
         Response res = Orgs.addConfiguration(choreoComponent, "dev", accessToken);
         Assert.assertEquals(res.getStatusCode(), HttpStatus.OK.value());
     }
@@ -194,7 +185,16 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
     @CitrusTest
-    public void waitForObservabilityLogs() throws Exception {
+    public void invokeEP_LoggingAPITestCase() throws IOException {
+        apiKey = APICreator.getAPIKey(choreoComponent.getApiId(), accessToken).getApikey();
+        TestHelper.invokeEP(devInvokeURL,apiKey);
+        TestHelper.invokeEP(prodInvokeURL,apiKey);
+    }
+
+
+    @Test(dependsOnMethods = {"componentProdDeploymentStatus_LoggingAPITestCase"})
+    @CitrusTest
+    public void waitForObservabilityLogs_LoggingAPITestCase() throws Exception {
 
         en = GraphQL.getNamespaceForEnvironment(projectId, accessToken);
         Environment devEnv = choreoComponent.getEnvironment(en, Constant.Environment.Development);
@@ -206,7 +206,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         String prodReleaseId =  choreoComponent.getReleaseIdForEnvironment(prodEnv.getChoreoEnv());
     }
 
-    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs"})
+    @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_LoggingAPITestCase"})
     @CitrusTest
     public void testGroupedLogs_LoggingAPITestCase(Constant.Environment env) throws Exception {
         Environment environment = choreoComponent.getEnvironment(en, env);
@@ -340,6 +340,8 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
         Assert.assertEquals(components.length, 0);
     }
+
+
 
     private static Map<String, String> readZipEntries(ZipInputStream zis) throws IOException {
         Map<String, String> entries = new HashMap<>();

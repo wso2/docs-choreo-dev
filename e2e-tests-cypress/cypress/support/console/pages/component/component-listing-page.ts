@@ -47,7 +47,7 @@ export class ComponentListingPage {
 
   private static verifyDeletion() {
     cy.url().then((url) => {
-      const projectID = url.split("projects/")[1];
+      const projectID = url.split("projects/")[1].split("?")[0];
       const { handle } = Cypress.env("userData");
       const token = Cypress.env("apim_token");
       GraphQL.getComponents(projectID, handle, token).then((res) => {

@@ -29,7 +29,7 @@ describe("Enterprise Login using auth0Idp", () => {
   });
 
   after(() => {
-    LoginPage.reLoginToChoreo();
+    LoginPage.reLoginToChoreo(true);
     ChoreoHomePage.logout();
   });
 
@@ -37,17 +37,11 @@ describe("Enterprise Login using auth0Idp", () => {
     LoginPage.enterpriseLogin();
   });
 
-  it("Verify REST API component creation", () => {
-    ProjectListingPage.selectProject(REUSABLE_PROJECT_NAME);
-    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
-  });
-      
-  });
 
   it("Verify devportal sso login", () => {
-    LoginPage.reLoginToChoreo();
     ComponentOverviewPage.navigateToDevPortal().should(
       "eq",
       "API Developer Portal"
     );
   });
+})

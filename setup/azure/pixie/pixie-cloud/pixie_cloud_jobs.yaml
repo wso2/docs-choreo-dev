@@ -1,99 +1,3 @@
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  labels:
-    app: pl-cloud
-  name: create-admin-job
-spec:
-  template:
-    metadata:
-      labels:
-        app: pl-cloud
-    spec:
-      containers:
-        - env:
-            - name: PL_JWT_SIGNING_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: jwt-signing-key
-                  name: cloud-auth-secrets
-            - name: PL_PROFILE_SERVICE
-              valueFrom:
-                configMapKeyRef:
-                  key: PL_PROFILE_SERVICE
-                  name: pl-service-config
-            - name: PL_AUTH_SERVICE
-              valueFrom:
-                configMapKeyRef:
-                  key: PL_AUTH_SERVICE
-                  name: pl-service-config
-          envFrom:
-            - configMapRef:
-                name: pl-tls-config
-            - configMapRef:
-                name: pl-domain-config
-            - configMapRef:
-                name: pl-ory-service-config
-          image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/job/create_admin_job_image:1661975259
-          imagePullPolicy: IfNotPresent
-          name: create-admin-job
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-          resources:
-            requests:
-              cpu: 10m
-              memory: 50Mi
-            limits:
-              cpu: 50m
-              memory: 100Mi
-          volumeMounts:
-            - mountPath: /certs
-              name: certs
-      initContainers:
-        - command:
-            - sh
-            - -c
-            - 'set -x; URL="${PL_KRATOS_PUBLIC_HOST}/health/ready"; until [ $(curl -m
-              0.5 -s -o /dev/null -w "%{http_code}" -k ${URL}) -eq 200 ]; do echo "waiting
-              for ${URL}" sleep 2; done; '
-          env:
-            - name: PL_KRATOS_PUBLIC_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: PL_KRATOS_PUBLIC_HOST
-                  name: pl-ory-service-config
-          image: choreocontrolplane.azurecr.io/pixie-oss/pixie-dev-public/curl:1.0
-          imagePullPolicy: IfNotPresent
-          name: kratos-wait
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-          resources:
-            requests:
-              cpu: 10m
-              memory: 50Mi
-            limits:
-              cpu: 50m
-              memory: 100Mi
-      restartPolicy: Never
-      securityContext:
-        fsGroup: 10500
-        runAsGroup: 10500
-        runAsNonRoot: true
-        runAsUser: 10500
-        seccompProfile:
-          type: RuntimeDefault
-      volumes:
-        - name: certs
-          secret:
-            secretName: service-tls-certs
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -145,7 +49,7 @@ spec:
                 name: pl-domain-config
             - configMapRef:
                 name: pl-tls-config
-          image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/plugin/load_db:1670351615
+          image: choreocontrolplane.azurecr.io/pixie-oss/pixie-prod/cloud/plugin/load_db:1672961079
           name: updater
           securityContext:
             allowPrivilegeEscalation: false

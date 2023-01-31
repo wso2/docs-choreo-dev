@@ -19,19 +19,19 @@ export default defineConfig({
       let apiName;
       let projectName;
       on("task", {
-        setAPIName: (val) => {
+        'setAPIName'(val) {
           return (apiName = val);
         },
 
-        getAPIName: () => {
+        'getAPIName'() {
           return apiName;
         },
 
-        setChoreoProjectName: (val) => {
+        'setChoreoProjectName'(val) {
           return (projectName = val);
         },
 
-        getChoreoProjectName: () => {
+        'getChoreoProjectName'() {
           return projectName;
         },
       });
@@ -40,7 +40,7 @@ export default defineConfig({
       config.env.choreoOrgHandle = process.env.choreoOrgHandle;
       config.env.userName = process.env.userName;
       config.env.userEmail = process.env.userEmail;
-      config.env.gitPat = process.env.gitPAT
+      config.env.gitPAT = process.env.gitPAT
       config.env.enablePerspectiveView = process.env.enablePerspectiveView;
       return config;
     },
