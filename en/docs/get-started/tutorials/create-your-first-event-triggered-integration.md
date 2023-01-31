@@ -102,12 +102,14 @@ Test the component by publishing messages to a designated topic in your RabbitMQ
 1. Publish the following message to the **SalesOrderQueue** topic in the RabbitMQ server.
 
 ```
-<Orders>
-   <Order>
-       <Id>2</Id>
-       <Price>120.0</Price>
-   </Order>
-</Orders>
+{
+  "Orders": {
+    "Order": {
+      "Id": 1,
+      "Price": 150
+    }
+  }
+}
 ```
 
 2. To view logs, use the `Observe` view by clicking the **Observe** icon in the left panel.
