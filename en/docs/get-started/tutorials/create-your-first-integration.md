@@ -114,4 +114,3 @@ Congratulations! You have successfully exposed an integration designed in the [W
 
 !!! info "What's next"
     For a micro integrator REST API, you can also perform API management actions. For more information about these API Management actions, see [API Management](../../manage/api-management.md).
-
