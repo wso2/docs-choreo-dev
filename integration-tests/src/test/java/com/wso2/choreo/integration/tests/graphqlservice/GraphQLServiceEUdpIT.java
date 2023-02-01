@@ -19,6 +19,7 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import com.wso2.choreo.integration.models.pullrequests.PullRequest;
 import com.wso2.choreo.integration.models.response.Response;
 import org.hamcrest.core.StringRegularExpression;
@@ -200,7 +201,8 @@ public class GraphQLServiceEUdpIT extends TestNGCitrusSpringSupport {
         Environment environment = choreoComponent.getEnvironment(en, env);
         String releaseId = choreoComponent.getReleaseIdForEnvironment(environment.getChoreoEnv());
         String namespace = environment.getNamespace();
-        ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
+        ObservabilityLogs observabilityLogs = ObservabilityService.getGroupLogs(releaseId, namespace, accessToken);
+ Assert.assertTrue(observabilityLogs.getRows().length > 0);
     }
 
     @Test(dataProvider = "env-provider", dependsOnMethods = {"waitForObservabilityLogs_GraphQLServiceEUdpIT"})

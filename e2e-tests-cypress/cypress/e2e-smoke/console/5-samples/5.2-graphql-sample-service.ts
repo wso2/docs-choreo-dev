@@ -61,6 +61,7 @@ describe("Graphql GQL service test", () => {
 
 
   it("Verify component deployment", () => {
+  //  GitHub.mergeNewCode(REPO_NAME, `${subPath}/sample.bal`,"cypress/fixtures/gqlservice.bal")
     ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
