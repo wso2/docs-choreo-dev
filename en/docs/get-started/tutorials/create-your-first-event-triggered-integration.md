@@ -15,10 +15,7 @@ In this tutorial, we will be using the [simple-rabbitmq-listener](https://github
 
 ## Step 0: Get Ready for the Tutorial
 
-To complete this tutorial, you need to start a RabbitMQ server on the cloud. once it's started grab the `username`, `hostname`, `password` and `vhost` from the RabbitMQ instance. Later, these values will be assigned to environment variables. 
-
-!!! tip RabbitMQ Server
-    To try this tutorial, you can use [CloudAMQP](https://www.cloudamqp.com/) to configure and start a RabbitMQ server with a few steps.
+To complete this tutorial, you need to start a RabbitMQ server either on a server or locally. Once it's started, obtain the `username`, `hostname`, `password` and `vhost` from the RabbitMQ instance, which you will later assign as environment variables. 
 
 
 ## Step 1: Create the integration component
@@ -67,7 +64,6 @@ Let's create the integration component by following the steps given below:
  
 1.  Click **Create**.
 
-After the creation process is completed, the new component opens on a separate page.
 
 ## Step 2: Deploy
 Before deploying the component you need to assign RabbitMQ credentials to environment variables by following the steps given below:
