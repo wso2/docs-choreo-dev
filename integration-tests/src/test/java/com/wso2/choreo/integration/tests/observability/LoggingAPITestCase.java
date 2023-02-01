@@ -93,7 +93,7 @@ public class LoggingAPITestCase extends TestNGCitrusSpringSupport {
 
     @DataProvider(name = "env-provider")
     public Object[][] environment() {
-        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Development}};
+        return new Object[][]{{Constant.Environment.Development}, {Constant.Environment.Production}};
     }
 
     @BeforeClass

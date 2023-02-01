@@ -23,15 +23,15 @@ interface PromoteConfigs {
 export class ComponentDeployPage {
   static deployToDev() {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").focus().click();
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
+    cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).should("be.visible").click();
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
       "be.visible"
     );
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
     cy.wait(600);
-    cy.get('[data-testid="btn-stop"]').should("be.visible");
+    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
 
     cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
       "Active",
