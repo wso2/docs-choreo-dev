@@ -80,7 +80,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: dev-choreo-system-nginx-ingress
+              kubernetes.io/metadata.name: wallarm-ingress
   egress:
     - to: # all except VM metadata endpoint
         - ipBlock:
