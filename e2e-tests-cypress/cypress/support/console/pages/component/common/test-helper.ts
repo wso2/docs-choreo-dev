@@ -13,8 +13,7 @@
 
 import { Utils } from "../../../utils";
 import { APITest } from "../../apis/api-test";
-import { Environment } from "../../enum/environment";
-import { HTTPMethod } from "../../enum/http-method-enum";
+import { Enums } from "../../../enums";
 import { ChoreoHomePage } from "../../home/home-page";
 import { ComponentOverviewPage } from "../component-overview-page";
 import { ComponentTestPage } from "../component-test-page";
@@ -22,8 +21,9 @@ import { Curl } from "../UI-components/curl-component";
 import { SwaggerUI } from "../UI-components/swagger-UI-component";
 
 export class TestHelper {
-  static testOnSwagger(env: Environment, resourcePath: string, key: string = "", value: string = "") {
+  static testOnSwagger(env: Enums.Environment, resourcePath: string, key: string = "", value: string = "") {
     APITest.testAPI();
+    cy.get('[data-cyid="OpenAPI Console"]').click()
     ComponentTestPage.selectEnvironment(env);
     ComponentTestPage.getTestKey();
     SwaggerUI.invokeResource(resourcePath, key, value);
@@ -38,7 +38,7 @@ export class TestHelper {
     });
   }
 
-  static testOnCurl(env: Environment, httpMethod: HTTPMethod, pathParm: string, queryParameters1 = []) {
+  static testOnCurl(env: Enums.Environment, httpMethod: Enums.HTTPMethod, pathParm: string, queryParameters1 = []) {
     ComponentTestPage.selectCurl();
     Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
@@ -50,7 +50,7 @@ export class TestHelper {
     return Curl.getRequestComponents(`${env}${pathParm}`);
   }
 
-  static testOnCurlDiscardPrevious(env: Environment, httpMethod: HTTPMethod, pathParm: string, queryParameters1 = []) {
+  static testOnCurlDiscardPrevious(env: Enums.Environment, httpMethod: Enums.HTTPMethod, pathParm: string, queryParameters1 = []) {
     ComponentTestPage.selectCurl();
     Curl.selectCurlEnvironment(env);
     Curl.selectMethod(httpMethod);
