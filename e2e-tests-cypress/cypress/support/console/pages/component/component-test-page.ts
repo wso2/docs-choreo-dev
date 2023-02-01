@@ -20,7 +20,7 @@ export class ComponentTestPage {
   }
 
   static getTestKey() {
-    cy.contains('Get Test Key').should('be.visible').click();
+    cy.contains('Get Test Key').should('be.visible').click({ force: true });
   }
 
   static selectEnvironment(env: Environment) {
