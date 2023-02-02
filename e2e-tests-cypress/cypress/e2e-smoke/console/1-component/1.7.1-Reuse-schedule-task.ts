@@ -20,19 +20,14 @@ import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-
-import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 import { Utils } from "../../../support/console/utils";
-import { GitHub } from "../../../support/github/github";
-import { GraphQL } from "../../../support/console/apis/graphql";
 import { ComponentData } from "../../../support/interfaces/component-data";
+import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 
 describe("Create Schedule Trigger", () => {
   const SCHEDULE_NAME = "create-ReuseScheduleTrigger-1.7.1";
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
-  const REPO_NAME = Utils.generateComponentName("repo");
-  const PROJECT_NAME = "Default Project"
 
   before(() => {
     LoginPage.login();
@@ -43,22 +38,8 @@ describe("Create Schedule Trigger", () => {
   });
 
   it("Verify Schedule Trigger component creation", () => {
-    let componentData: ComponentData = {
-      componentName: SCHEDULE_NAME,
-      displayType: Enums.DisplayType.scheduledTask,
-      accessibility: Enums.Accessibility.EXTERNAL,
-      projectName: PROJECT_NAME,
-      triggerChannels: "",
-      triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger",
-      initializeAsBallerinaProject: false,
-      repositoryType: Enums.RepoType.UserManagedNonEmpty,
-      repositorySubPath: "",
-      sampleTemplate: "",
-    };
-    ChoreoHomePage.navigateToHome();
     ProjectListingPage.selectProject();
-    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    ProjectOverviewPage.searchReuseComponent("create-ReuseScheduleTrigger-1.7.1");
   });
 
   it("Verify component deployment", () => {
