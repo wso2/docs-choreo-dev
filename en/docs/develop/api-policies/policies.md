@@ -14,7 +14,7 @@ In Choreo, once you attach a mediation policy to a proxy, the deployment, intern
 
  Depending on the flow to which the mediation policy is attached, the API invocation will undergo the respective behavioral modification as follows: 
  
- ![Request/Response flow](../../../assets/img/api-proxies/policies/request-response-flow.png)
+ ![Request/Response flow](../../assets/img/api-proxies/policies/request-response-flow.png)
 
  - In the request path, the requests that pass through the gateway reach the relevant component, and Choreo executes any attached policies to the resource's request path before sending it to the backend. 
 
