@@ -1,70 +1,96 @@
 # Create Your First REST API Proxy
 
-Choreo is a low-code cloud-native platform for building integration solutions. In this tutorial, you will do the following to explore REST API Proxies in Choreo:
+This tutorial introduces REST API proxies. 
+
+An API Proxy exposes an existing API on Choreo and intercepts the requests to the REST API. It API Proxy acts as a managed API to which you can apply security, rate-limiting, etc.
+
+In this tutorial, you will learn how to do the following:
 
 1. Expose an existing API by creating a REST API proxy
 2. Deploy the REST API proxy
 3. Test the REST API proxy to verify its functionality
-4. Manage your REST API proxy by adding rate limiting and security policies and leveraging the platform's API management capabilities.
+4. Manage your REST API proxy by adding rate limiting and security policies, thereby leveraging the platform's API management capabilities.
 
 !!!tip "Before you begin..."
-    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../../develop/components/api-proxies/api-proxy.md) 
+    Familiarize yourself with REST API Proxies in Choreo. [REST API Proxies](../../develop/components/api-proxy.md) 
 
 
-Let's begin...
+Let's begin!
+
 ## Step 1: Create a REST API Proxy
 
 You can create a REST API proxy in one of the following methods: 
 
-- Design a new REST API proxy using an existing endpoint. 
-- Importing an OpenAPI specification of the existing API.
 
-In this tutorial, you will be importing an OpenAPI specification and creating a REST API proxy:
+In this tutorial, you will be providing a URL to an OpenAPI definition of a sample API. 
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
 
-2. On the **Home**** page, click the **+ Create Project**.
-   
-    ![Create project](../../assets/img/tutorials/rest-api/create-project.png){.cInlineImage-small}
+2. Click **+ Create Project**. Enter a unique name and a description for the project, and click **Create**.
 
-3. Enter a unique name and description for your project and click **Create**. 
+3. On the **REST API Proxy** card, click **Create**.
 
-    You can now start adding components to your project. Let's add a REST API proxy component.
+4. Click **Try with Sample URL** to create an API proxy for a sample API.
 
-    !!! tip
-        Once you create a project successfully, you are taken to the components landing page. You can also select the components icon from the left menu and open the **Components** landing page. 
+5. Enter API proxy details as follows:
 
-4. On the **Components** page, click **Create** under the **REST API Proxy** card.
-   
-5. Click **Import your OpenAPI**.
+    |  **Field**    | **Value**                                   |
+    |---------------|---------------------------------------------|
+    | **Name**      | `HR API`                                    |
+    | **Base Path** | `<DEFAULT_VALUE>/ abc-hr`                   |
+    | **Version**   | `1.0.0`                                     |
+    | **Target**    | `https://samples.choreoapps.dev/company/hr` |
 
-6. Select the **Input Type** and provide the OpenAPI URL as follows:
- 
-    | **Field** | **Value** |
-    |-----------------|-----------------------|
-    | **Input Type** | OpenAPI URL |
-    | **OpenAPI URL** | `https://petstore3.swagger.io/api/v3/openapi.json` |
+7. Click **Create**. 
 
-7. Click **Next**.
+The API proxy opens on a separate page.
 
-8. Review the information (API Name, API Version, API Base Path, Endpoint) that Choreo extracted from the OpenAPI. You can make any changes to the fields if you require. Click **Create** to create your REST API Proxy.
+## Step 2: Develop the REST API Proxy
 
-## Step 2: Deploy the REST API Proxy
+Let's develop the REST API proxy by adding an operation. To do this, follow the steps given below:
 
-Deploying the REST API proxy makes it invokable. Choreo maintains two environments by default: development and production. [Learn more](../../develop/components/api-proxies/api-proxy#choreo-environments). 
+1. In the left navigation, click **Develop**.
 
-1. Return to the Choreo Console. From the left navigation, click **Deploy**. 
+2. In the **Resources** tab, add a new resource to fetch the department ID as follows:
 
-2. Let's deploy the REST API proxy to the development environment. Click **Config & Deploy** in the **Build Area** column.
+    1. Select **GET** as the HTTP verb.
 
-3. Once you have deployed it to the development environment, you can test it. When you are ready to take it to production, you can come back to this view and promote it by clicking on the **Promote** button on the **Development** column.
+    2. Enter `/department/{departmentId}` as the URI pattern.
 
-    ![Promote REST API proxy](../../assets/img/tutorials/promote-rest-api-proxy.png){.cInlineImage-threeQuarter}
+    3. To add the new resource, click **+**.
 
+    4. Once the resource is added, expand it, and then enter a name and a description for it as given below:
+
+        | **Field**        | **Description**                      |
+        |------------------|--------------------------------------|
+        | **Operation ID** | `findDepartment`                     |
+        | **Description**  | `Find a department by Department ID` |
+
+    5. Click **Save**.
+
+3. Click **API Definition**. You will see the new operation you added in the OpenAPI definition.
+
+## Step 3: Deploy the REST API Proxy
+
+Deploying the REST API proxy makes it invokable. By default, Choreo maintains two environments for development and production. [Learn more](../../develop/components/api-proxies/api-proxy#choreo-environments). For this tutorial, let's deploy the proxy to the development environment.
+
+1. In the left navigation menu, click **Deploy**. 
+
+2. Click **Configure & Deploy**. The **Configure & Deploy** pane opens.
+
+3. In the **Endpoint** field, enter `https://samples.choreoapps.dev/company/hr`. 
+
+    The above URL is the endpoint of the sample API.
+
+4. If you have a sandbox environment to test the API proxy, you can give the URL to that environment in the **Sandbox Endpoint** field.
+
+5. Click **Save & Deploy**.
+
+Once you have deployed it to the development environment, you can test it. When you are ready to take it to production, you can return to this view and promote it by clicking **Promote** on the **Development** card.
 
 ## Step 4: Test your REST API Proxy
 
-In Choreo, you can test your REST API proxy before publishing it for consumers to use. Choreo provides you with three modes to test your REST API proxy: 
+In Choreo, you can test your REST API proxy before publishing it for consumers to use it. Choreo provides you with three modes to test your REST API proxy: 
 
 - OpenAPI Console 
 - cURL
@@ -72,23 +98,24 @@ In Choreo, you can test your REST API proxy before publishing it for consumers t
 
 In this tutorial, let's use the inbuilt OpenAPI Console. 
 
-1. Click **Test** from the left navigation.
+1. In the left navigation menu, click **Test**.
 
-2. Select `Development` as the environment from the **Environment** dropdown. 
+2. In the **Environment** list, select **Development**.
 
 3. Choreo uses OAuth 2.0 Therefore, you will notice the security header. Click **Get Test Key** to generate a new test key for testing purposes.
 
-4. Let's invoke. Expand the **GET** resource **/pet/{petID}**.
+4. Let's invoke. Expand the **GET** resource with the **/department/{departmentId}** path and click **Try it Out**.
 
-    ![Test Resource](../../assets/img/tutorials/test-resource.png){.cInlineImage-threeQuarter}
+5. Enter `1` in the **departmentId** field and click **Execute**.
 
-5. Click **Try it Out**.
+    You will see the following response:
 
-6. Enter `1` as the **petid**.
-
-7. Click **Execute** and observe the response. 
-    
-    ![Test Response](../../assets/img/tutorials/test-response.png){.cInlineImage-threeQuarter}
+    ```json
+     {
+      "id": "1",
+      "name": "Finance"
+     }
+    ```
 
 ## Step 5: Manage your REST API Proxy
 
@@ -100,44 +127,45 @@ First, let's review the security settings and add a rate limit to the API.
 
 1. Click **Manage** on the left navigation and click **Settings**.
 
-2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** at the bottom of the page and make the necessary changes. Once the changes are confirmed, you can save them by clicking on **Save**.
-    ![Security Settings](../../assets/img/tutorials/security-settings.png){.cInlineImage-threeQuarter}
+2. Click **Security**. Review the security settings. If you wish to change the security settings, click **Edit** and make the necessary changes. Once the changes are confirmed, you can save them by clicking **Save**.
+    ![Security Settings](../../assets/img/tutorials/proxy/security-settings.png){.cInlineImage-full}
 
 3. Next, let's add a rate-limiting policy to the API. Click **Resources**.
 
-4. Scroll down to the end of the page and click **Edit**.
+4. Click **Edit**.
 
-5. Scroll back up and select the **Rate Limiting Level** to be **API Level**. Here, you are adding a rate-limiting policy to the entire API. You can also choose to apply rate limits per resource. [Learn more](../../develop/components/api-proxies/api-proxy#settings)
-    ![Rate Limiting Level](../../assets/img/tutorials/rate-limiting-level.png){.cInlineImage-full}
-    ![Rate Limiting Per Resource](../../assets/img/tutorials/rate-limiting-per-resource.png){.cInlineImage-full}
+5. Select **API Level** as the rate-limiting level and then select the required rate-limiting level. Here, you are adding a rate-limiting policy for the entire API.  
 
-6. Next, from the list, select an appropriate rate limiting level.
+    ![Rate Limiting Level](../../assets/img/tutorials/proxy/rate-limiting-level.png){.cInlineImage-full}
 
-7. Click **Save**.
+    !!! info
+        You can also apply rate limits per resource as shown in the image below.<br/><br/>![Rate Limiting Per Resource](../../assets/img/tutorials/proxy/rate-limiting-per-resource.png){.cInlineImage-full}<br/><br/>[Learn more](../../develop/components/api-proxies/api-proxy#settings).
+
+8. Click **Save**.
 
 ### Step 5.2: Apply usage plans on the REST API Proxy
 
 Apply usage plans on the REST API proxy to allow API developers to select the suitable usage plan when subscribing to the REST API proxy.
 
-1. Click **Usage Plans** from the left menu. 
+1. In the left pane, click **Usage Plans**. 
 
-2. Select **Bronze**, **Gold**, and **Unlimited**. 
+2. Select the **Bronze**, **Gold**, and **Unlimited** checkboxes. 
 
 3. Click **Save**.
 
 ### Step 5.3: Publish the REST API Proxy 
 
-Publishing the REST API proxy makes it available for consumers to discover and subscribe to. 
+Publishing the REST API proxy makes it available for consumers to discover and subscribe. 
 
-1. Click **Lifecycle** from the left menu. 
+1. In the left pane, click **Lifecycle**. 
 
 2. Click **Publish**.
 
-    A pop-up named **Publish a connector** appears. Let's publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available on the Marketplace. Click **Yes, Please**.
+    A message appears where you can specify whether you want to publish a connector for this REST API proxy. Creating a connector for this REST API proxy makes it available in the Marketplace. Click **Yes, Please**.
 
-3. Click **Publish**.
+3. Click **Publish Connector**.
 
-    As a result, the status of the API changes to **Published**.
+    This changes the status of the API to **Published**.
 
     To understand how a user can generate credentials for the API and then invoke it, proceed to the next step.
 
@@ -149,27 +177,31 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 
 1. On the **Lifecycle Management** page, click **Go to DevPortal**.
 
-    ![Go to Developer Portal](../../assets/img/tutorials/go-to-devportal.png){.cInlineImage-threeQuarter}
+    ![Go to Developer Portal](../../assets/img/tutorials/proxy/go-to-devportal.png){.cInlineImage-full}
 
-2. Once you sign in to the API Developer Portal, click **Credentials** in the navigator.
+2. Once you open the API Developer Portal, click **Credentials** in the left navigation menu.
 
-3. Click **Generate Credentials**. As a result, Choreo populates the **Consumer Key** and **Consumer Secret** fields with the newly generated tokens.
+3. Click **Generate Credentials**. Choreo populates the **Consumer Key** and **Consumer Secret** fields with newly generated tokens.
 
 4. Click **://Curl**. Then copy the cURL command that is displayed.
 
     !!!info
-        Click the button to copy the cURL command. **Do not manually copy it**. The displayed cURL command is only a template, and it does not include the generated credentials.
+        Click the icon for copying to copy the cURL command. **Do not manually copy it**. The displayed cURL command is only a template, and it does not include the generated credentials.
 
-5. Close the **Get cURL to Generate Access Token** card. Then click **Update**. 
+5. Close the **Get cURL to Generate Access Token** card. Then click **Update**.
+
     A message appears to confirm that the keys are successfully updated.
  
-6. Replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the API Developer Portal to generate an access token.
+6. Issue the cURL command you copied to generate an access token.
 
-Now, let's try out the REST API proxy you created by invoking a resource. 
+    !!! info "Before issuing the cURL command:"
+        Replace `consumer-key` and `consumer-secret` with the consumer key and the consumer secret you generated in the API Developer Portal.
+
+    Now, let's try out the REST API proxy you created by invoking a resource.
 
 #### Step 5.4.2; Invoke the REST API Proxy
 
-1. Click **Try out**.
+1. In the left navigation menu, click **Try out**.
 
 2. Enter the following values:
 
@@ -178,12 +210,10 @@ Now, let's try out the REST API proxy you created by invoking a resource.
     | **Environment** | `Development` |
     | **Access Token**| the generated access token in step 6. Alternatively, click **Get Test Key** to generate a test access token. |
 
-3. Expand the **GET** resource **/pet/{petid}**
+3. Expand the **GET** resource with the **/department/{departmentId}** path and click **Try it out**.
 
-4. Click **Try it out**.
+4. Enter the **departmentId** value as `1`.
 
-5. Enter the **petid** value as `1`.
-
-6. Click **Execute** and observe the response. 
+5. Click **Execute** and observe the response. 
 
 Congratulations! You have successfully created your first REST API Proxy, deployed, developer tested, managed, and invoked it. 
