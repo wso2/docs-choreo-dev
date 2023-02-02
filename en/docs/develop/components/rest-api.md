@@ -40,7 +40,7 @@ Choreo allows you to design your REST API in three possible ways as shown in the
 
 Choreo supports spec-driven API development. Once you have carefully designed and defined your API, you can start implementing the functionality of your API. Choreo allows you to link a GitHub project when creating the REST API. You can implement your API as a [Ballerina](https://ballerina.io/) project or as in any language as a Docker container and store in the GitHub repo. Alternatively, if you are selecting the Ballerina preset when creating the REST API, you can link an empty GitHub repository, and then proceed to implement it before deploying the REST API. 
 
-WSO2 provides a [Ballerina extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) in which you can use to easily develop your REST API as a Ballerina project.
+WSO2 provides a [Ballerina extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina) which you can use to easily develop your REST API as a Ballerina project.
 
 ## Lifecycle of a REST API
 
