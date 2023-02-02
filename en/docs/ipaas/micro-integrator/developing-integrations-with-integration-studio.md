@@ -82,3 +82,26 @@ the [Configurations and secrets](/devops/devops-portal/#configurations-and-secre
 To know about supported wso2 synapse parameters from environment variable, please refer to the
 Integrator [documentation](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters)
 .
+
+## Using Connectors in an Integration project
+
+WSO2 Micro Integrator (MI) Connectors are pre-built connectors that provide integration between WSO2 MI and various
+other systems. They allow you to easily connect to different systems, such as databases, message brokers, or REST APIs,
+and perform actions such as sending messages, executing queries, or retrieving data. The connectors are designed to be
+simple to use and can be easily integrated into your WSO2 MI integration flows. They can be used to implement a wide
+range of integration scenarios, including data integration, service-oriented architecture (SOA) integration, and
+event-driven architecture (EDA) integration.
+
+WSO2 Integration Studio is a development environment that can be used to develop integration flows using the WSO2 MI
+Connectors. With Integration Studio, you can design and implement integration flows that connect various systems and
+perform various actions, such as sending messages, executing queries, or retrieving data. The integration flows can be
+built using the pre-built connectors provided by WSO2 MI, or custom connectors that you develop using the Connector
+Development Toolkit. Integration Studio provides a graphical user interface that makes it easy to build and test
+integration flows, and it also provides a set of tools for managing and deploying the integration flows to a WSO2 MI
+runtime environment.
+
+Please refer to
+the [Adding Connectors](https://apim.docs.wso2.com/en/latest/integrate/develop/creating-artifacts/adding-connectors/)
+documentation on adding a connector to your Integration project. Also refer to the [Connectors
+Overview](https://apim.docs.wso2.com/en/latest/reference/connectors/connectors-overview/) document for know more about
+connectors.
