@@ -15,9 +15,6 @@ import { ComponentData } from "../../../interfaces/component-data";
 import { GraphQL } from "../../apis/graphql";
 import { Enums } from "../../enums";
 import { Utils } from "../../utils";
-import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
-import { RestAPITemplate } from "../templates/rest-api-temp";
-import { TriggersTemplate } from "../templates/slackTrigger-creation-temp";
 
 export class ProjectOverviewPage {
   static selectComponent(fileID) {
@@ -36,7 +33,7 @@ export class ProjectOverviewPage {
     const REPO_NAME = Utils.generateComponentName("repo");
 
     cy.get('tbody').then(bdy => {
-          if(bdy.find(`title="${reuseComponentName}"`).length>0) {
+      if(bdy.find(`[title="${reuseComponentName}"]`).length>0) {
     cy.log("Reuse component exists")
           }else{
   

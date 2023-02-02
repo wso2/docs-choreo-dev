@@ -20,8 +20,6 @@ import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { Utils } from "../../../support/console/utils";
-import { ComponentData } from "../../../support/interfaces/component-data";
 import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 
 describe("Create Schedule Trigger", () => {
