@@ -35,7 +35,7 @@ Now you can test your deployed component to check if it is working as expected.
 
 When a component with Ballerina as the build preset does not contain a file with the `.bal` in its GitHub path, the **Build Area** card displays the message shown in the image below.
 
-![Empty GitHub repository](../assets/img/deploy/empty-github-repository.png)
+![Empty GitHub repository](../assets/img/deploy/empty-github-repository.png){.cInlineImage-full}
 
 You cannot deploy the component until you add a `.bal` file with valid Ballerina code in the GitHub directory to which you provided the path when creating the component. However, to successfully deploy the component, you also need to do the following:
 
@@ -60,7 +60,7 @@ When deploying a component with configurable variables, you need to click **Conf
 
 If you want to edit the values you entered for the configurable variables after deploying the component, you can click **Configurables** on the **Development** card and make the required changes in the **Configure & Deploy** pane.
 
-![Empty GitHub repository](../assets/img/deploy/empty-github-repository.png)
+![Edit configurables](../assets/img/deploy/edit-configurables.png){.cInlineImage-full}
 
 To learn how to define configurable variables see [Ballerina Documentation -  Configurable Variables](https://ballerina.io/learn/by-example/configurable-variables/).
 
@@ -84,9 +84,9 @@ To deploy a component to both the sandbox environment and the development enviro
 
 Once you publish a component with a sandbox endpoint, its users can access the sandbox endpoint from the [Developer Portal](../administer/customize-the-developer-portal.md) when viewing the component overview and trying it out.
 
-![Sandbox endpoint in overview](../assets/img/deploy/sandbox-endpoint-in-overview.png)
+![Sandbox endpoint in overview](../assets/img/deploy/sandbox-endpoint-in-overview.png){.cInlineImage-full}
 
-![Sandbox endpoint in try out view](../assets/img/deploy/sandbox-endpoint-in-try-out-view.png)
+![Sandbox endpoint in try out view](../assets/img/deploy/sandbox-endpoint-in-try-out-view.png){.cInlineImage-full}
 
 
 
