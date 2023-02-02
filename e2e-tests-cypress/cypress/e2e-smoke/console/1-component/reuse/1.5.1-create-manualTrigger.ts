@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -11,11 +11,9 @@
  * associated services.
  */
 
-import { LONG_TIME } from "../../../../support/console/constants";
 import { Enums } from "../../../../support/console/enums";
 import { ComponentDeployPage } from "../../../../support/console/pages/component/component-deploy";
 import { ComponentListingPage } from "../../../../support/console/pages/component/component-listing-page";
-import { ComponentObservePage } from "../../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../../support/console/pages/component/component-overview-page";
 import { ChoreoHomePage } from "../../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../../support/console/pages/login-page";
@@ -24,12 +22,9 @@ import { ProjectListingPage } from "../../../../support/console/pages/projects/p
 import { ComponentData } from "../../../../support/interfaces/component-data";
 
 
-
-describe("Create Schedule Trigger", () => {
-  const SCHEDULE_NAME = "create-ReuseScheduleTrigger-1.7.1";
+describe("Verify manual trigger creation functionality", () => {
+  const MANUAL_NAME = "create-manualTrigger-1.5.1";
   const PROJECT_NAME = "Default Project"
-  const EXPECTED_RESULT =
-    '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
 
   before(() => {
     LoginPage.login();
@@ -39,18 +34,18 @@ describe("Create Schedule Trigger", () => {
     ChoreoHomePage.logout();
   });
 
-  it("Verify Schedule Trigger component creation", () => {
+  it("Verify Manual Trigger component creation", () => {
 
     let componentData: ComponentData = {
-      componentName: SCHEDULE_NAME,
-      displayType: Enums.DisplayType.scheduledTask,
+      componentName: MANUAL_NAME,
+      displayType: Enums.DisplayType.manualTrigger,
       accessibility: Enums.Accessibility.EXTERNAL,
       projectName: PROJECT_NAME,
       triggerChannels: "",
       triggerId: null,
-      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger",
-      initializeAsBallerinaProject: false,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/manual-trigger",
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      initializeAsBallerinaProject: false,
       repositorySubPath: "",
       sampleTemplate: "",
     };
@@ -60,31 +55,12 @@ describe("Create Schedule Trigger", () => {
   });
 
   it("Verify component deployment", () => {
-    ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
+    ComponentListingPage.visitToAComponent(MANUAL_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployScheduleTask();
+    ComponentDeployPage.deployManualTriggerToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteScheduleTask();
-  });
-
-  it("Verify task execution in observability ", () => {
-    ComponentOverviewPage.navigateToObserve();
-    ComponentObservePage.gotoLogs(LONG_TIME);
-  });
-  it("Verify dev env logs", () => {
-    ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
-    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
-  });
-
-  it("Verify prod env logs", () => {
-    ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
-    ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
-  });
-
-  it("Verify application suspension", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.stopAllDeployment();
+  it("Verify component promotion to prod", () => {
+    ComponentDeployPage.promoteManualTriggerToProd();
   });
 });

@@ -13,7 +13,6 @@
 
 import { ComponentData } from "../../../interfaces/component-data";
 import { GraphQL } from "../../apis/graphql";
-import { Enums } from "../../enums";
 import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
@@ -26,36 +25,19 @@ export class ProjectOverviewPage {
   }
 
 
-  static searchReuseComponent(reuseComponentName) {
+  static searchReuseComponent(componentData: ComponentData) {
     
-    const PROJECT_NAME = "Default Project";
-    const SCHEDULE_NAME = "create-ReuseScheduleTrigger-1.7.1";
     const REPO_NAME = Utils.generateComponentName("repo");
 
     cy.get('tbody').then(bdy => {
-      if(bdy.find(`[title="${reuseComponentName}"]`).length>0) {
+      if(bdy.find(`[title="${componentData.componentName}"]`).length>0) {
     cy.log("Reuse component exists")
           }else{
-  
-        let componentData: ComponentData = {
-        componentName: SCHEDULE_NAME,
-        displayType: Enums.DisplayType.scheduledTask,
-        accessibility: Enums.Accessibility.EXTERNAL,
-        projectName: PROJECT_NAME,
-        triggerChannels: "",
-        triggerId: null,
-        srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger",
-        initializeAsBallerinaProject: false,
-        repositoryType: Enums.RepoType.UserManagedNonEmpty,
-        repositorySubPath: "",
-        sampleTemplate: "",
-  };
   
    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   }
   })}
   
-
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
     cy.get('[data-testid="project-template-list-httpProxyApi"]')
