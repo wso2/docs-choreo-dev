@@ -8,7 +8,7 @@ The overview of the **Manage** page gives you a bird's eye view of how you curre
 
 # Lifecycle
 
-Choreo allows you to manage the lifecycle of the API through the Choreo Console. A state represents the stage of an API in the process from creation to retirement. You can apply any of the six API lifecycles states (i.e., created, pre-released, published, blocked, deprecated, and retired) while adhering to their respective lifecycle flows.
+Choreo allows you to manage the lifecycle of the API through the Choreo Console. A state represents the stage of an API in the process from creation to retirement. You can apply any of the six API lifecycle states (i.e.,Created, Pre-released, Published, Blocked, Deprecated, and Retired) while adhering to their respective lifecycle flows.
 
 When you publish an API, you can also publish a connector for that API to make it available on the Choreo Marketplace.
 
