@@ -191,9 +191,6 @@ Now your REST API proxy is ready to be consumed. An application developer can di
 5. Close the **Get cURL to Generate Access Token** card. Then click **Update**.
 
     A message appears to confirm that the keys are successfully updated.
-
-    !!! info
-        Here, you are generating an access token solely for testing purposes. When you deploy the API proxy to the production environment, you need to use the token endpoint with a suitable grant type.
  
 6. Issue the cURL command you copied to generate an access token.
 
