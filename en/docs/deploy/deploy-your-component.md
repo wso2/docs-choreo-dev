@@ -78,6 +78,9 @@ An automatic deployment can fail due to one or more of the following reasons:
 
 A sandbox environment is a test environment where you can test a component before pushing it to production.
 
+!!! info
+    Choreo currently allows you to deploy only REST APIs, REST API Proxies, and GraphQL APIs to sandbox environments.
+
 To deploy a component to both the sandbox environment and the development environment, enter the sandbox environment URL as the sandbox endpoint and the API backend URL as the endpoint.
 
 ![Sandbox URL](../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-small}
@@ -87,7 +90,3 @@ Once you publish a component with a sandbox endpoint, its users can access the s
 ![Sandbox endpoint in overview](../assets/img/deploy/sandbox-endpoint-in-overview.png){.cInlineImage-full}
 
 ![Sandbox endpoint in try out view](../assets/img/deploy/sandbox-endpoint-in-try-out-view.png){.cInlineImage-full}
-
-
-
-
