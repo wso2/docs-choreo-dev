@@ -383,8 +383,8 @@ public class GraphQL extends ControlPlaneAPI {
      * @param graphqlDTO  DTO
      * @throws IOException If error occurred in object mapping
      */
-    public static void deployIntegrationComponent(TestActionRunner runner, HttpClient client, String accessToken,
-                                                  GraphqlDTO graphqlDTO) throws IOException {
+    public static void deployComponent(TestActionRunner runner, HttpClient client, String accessToken,
+                                       GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deployComponent.mustache", graphqlDTO);
@@ -491,128 +491,6 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     /**
-     * Get invoke URL and API Id
-     *
-     * @param runner      Test action runner
-     * @param client      HTTP client
-     * @param accessToken Access token
-     * @param graphqlDTO  dto
-     * @return Map with invoke URL with invokeUrl as the key and API Id with apiId as the key
-     * @throws IOException If error occurred in object mapping
-     */
-    public static Map<String, String> getInvokeUrlApiId(TestActionRunner runner, HttpClient client, String accessToken,
-                                                        GraphqlDTO graphqlDTO)
-            throws IOException {
-
-        final Map<String, String> resultMap = new HashMap<>();
-        String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/deploy/graphql/queryForInvokeInformation.mustache", graphqlDTO);
-        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    JsonObject invokeInformation = new JsonParser()
-                            .parse((String) message.getPayload()).getAsJsonObject()
-                            .getAsJsonObject("data")
-                            .getAsJsonArray("invokeInformation").get(0).getAsJsonObject();
-                    resultMap.put(Constant.INVOKE_URL, invokeInformation.get("invokeUrl").getAsString());
-                    resultMap.put(Constant.API_ID, invokeInformation.get("apiId").getAsString());
-                }));
-        return resultMap;
-    }
-
-    /**
-     * Get API Key with validation
-     *
-     * @param runner      Test action runner
-     * @param client      HTTP client
-     * @param accessToken Access token
-     * @param apiId       API Id
-     * @param orgUuid     Organization UUID
-     * @return API Key
-     */
-    public static String getApiKey(TestActionRunner runner, HttpClient client, String accessToken, String apiId,
-                                   String orgUuid) {
-
-        String[] apiKeyArray = new String[1];
-        String requestURI = Constant.APIS_ENDPOINT.concat("/").concat(apiId)
-                .concat(Constant.GENERATE_KEY_ENDPOINT_SUFFIX).concat("?")
-                .concat(Constant.ORGANIZATION_ID)
-                .concat("=").concat(orgUuid);
-
-        // Generate API key for invocation
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(requestURI)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    apiKeyArray[0] = new JsonParser().parse((String) message.getPayload()).getAsJsonObject()
-                            .get("apikey").getAsString();
-                }));
-        return apiKeyArray[0];
-    }
-
-    /**
-     * Invoke API with validation
-     *
-     * @param runner           Test action runner
-     * @param apiKey           API Key
-     * @param invokeUrl        Invoke URL
-     * @param apiRequestUrl    API Request URL
-     * @param expectedResponse Expected response
-     */
-    public static void invokeApi(TestActionRunner runner, String apiKey, String invokeUrl, String apiRequestUrl,
-                                 String expectedResponse) {
-
-        // Test API Invocation
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(5000)
-                .actions(
-                        http()
-                                .client(invokeUrl)
-                                .send()
-                                .get(apiRequestUrl)
-                                .message()
-                                .header(HttpHeaders.ACCEPT, "application/json")
-                                .header("API-Key", apiKey),
-                        http()
-                                .client(invokeUrl)
-                                .receive()
-                                .response(HttpStatus.OK)
-                                .message()
-                                .type(MessageType.JSON)
-                                .body(expectedResponse)));
-    }
-
-    /**
      * Promote component with validation
      *
      * @param runner      Test action runner
@@ -681,38 +559,5 @@ public class GraphQL extends ControlPlaneAPI {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/deploy/stop_deployment_success.json"))
                 .validate(json()));
-    }
-
-    /**
-     * Delete component with validations
-     * @param runner Test Action Runner
-     * @param client HTTP client
-     * @param accessToken Access Token
-     * @param graphqlDTO DTO
-     * @throws IOException If error occurred in object mapping
-     */
-    public static void deleteComponent(TestActionRunner runner, HttpClient client, String accessToken,
-                                      GraphqlDTO graphqlDTO) throws IOException {
-
-        String queryString = ObjectMapperUtil.mapObjectToString(
-                "templates/graphql/requests/deleteComponent.mustache", graphqlDTO);
-        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
-
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(String.valueOf(MediaType.APPLICATION_JSON)));
-
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .type(MessageType.JSON));
     }
 }

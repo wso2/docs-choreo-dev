@@ -5,11 +5,11 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test
     @CitrusTest
-    public void createComponent_TestCreateIntegrationRestComponentFromRoot() throws IOException {
+    public void createComponent_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
         // Creating component
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
@@ -85,7 +84,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = {"createComponent_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
-    public void componentRetrieval_TestCreateIntegrationRestComponentFromRoot() throws IOException {
+    public void componentRetrieval_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().projectId(projectId).componentHandler(componentHandler).build();
         testComponent = GraphQL.retrieveIntegrationComponent(this, choreoProjectsTestClient, accessToken,
@@ -109,7 +108,7 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
                 .devEnvIdToDeploy(devEnvIdToDeploy).branch(branch).sha(latestCommitSha).shaDate("").build();
 
         // Deploy component
-        GraphQL.deployIntegrationComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
+        GraphQL.deployComponent(this, choreoProjectsTestClient, accessToken, graphqlDTO);
     }
 
     @Test(dependsOnMethods = {"componentDeployment_TestCreateIntegrationRestComponentFromRoot"})
@@ -144,21 +143,15 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
 
     @Test(dependsOnMethods = {"componentDeploymentStatus_TestCreateIntegrationRestComponentFromRoot"})
     @CitrusTest
-    public void invokeAPIDev_TestCreateIntegrationRestComponentFromRoot() throws NoLatestApiVersionFoundException, IOException {
+    public void invokeAPIDev_TestCreateIntegrationRestComponentFromRoot() throws Exception {
 
-        String latestVersionId = testComponent.getLatestApiVersion().getId();
-
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle).orgUuid(orgUUID)
-                .versionId(latestVersionId).componentType(MI_REST_API).build();
-
-        //Get Invoke URL and API ID
-        Map<String, String> invokeUrlApiId = GraphQL.getInvokeUrlApiId(this, choreoTestClient, accessToken, graphqlDTO);
-        String invokeUrlDev = invokeUrlApiId.get(Constant.INVOKE_URL);
-        String apiId = invokeUrlApiId.get(Constant.API_ID);
-
-        String apiKey = GraphQL.getApiKey(this, choreoTestClientForSTS, accessToken, apiId, orgUUID);
-
-        GraphQL.invokeApi(this, apiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI, REST_API_EXPECTED_RESPONSE);
+        final InvokeInformation invokeInformation = testComponent.getInvokeInformation(accessToken, MI_REST_API,
+                Constant.Environment.Development.name());
+        final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
+                .replace("\"", "");
+        String invokeUrlDev = invokeInformation.getInvokeUrl();
+        ComponentUtils.invokeApi(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
+                REST_API_EXPECTED_RESPONSE);
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestCreateIntegrationRestComponentFromRoot"})
@@ -187,7 +180,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         final String prodApiKey = testComponent.getAPIKeyForInvoke(accessToken, invokeInformation.getApiId())
                 .replace("\"", "");
         final String invokeUrlProd = invokeInformation.getInvokeUrl();
-        GraphQL.invokeApi(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI, REST_API_EXPECTED_RESPONSE);
+        ComponentUtils.invokeApi(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
+                REST_API_EXPECTED_RESPONSE);
     }
 
     @Test(dependsOnMethods = {"invokeAPIProd_TestCreateIntegrationRestComponentFromRoot"})
@@ -209,14 +203,5 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
                 .componentType(MI_REST_API).releaseId(prodReleaseId).build();
         GraphQL.stopDeployment(this, choreoTestClient, accessToken, graphqlDTO);
-    }
-
-    @Test(dependsOnMethods = {"undeployComponentProd_TestCreateIntegrationRestComponentFromRoot"})
-    @CitrusTest
-    public void deleteComponent_TestCreateIntegrationRestComponentFromRoot() throws Exception {
-
-        GraphqlDTO graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(orgHandle)
-                .projectId(projectId).build();
-        GraphQL.deleteComponent(this, choreoTestClient, accessToken, graphqlDTO);
     }
 }
