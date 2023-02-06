@@ -16,18 +16,23 @@ This guide will take you through the steps to test an API in Choreo.
 
     ![Test Panel](../assets/img/developer-portal/test-api/test-panel.png){.cInlineImage-half}
 
-6. From the **Subscribed Application** list, select the application you used to subsribe the API to. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
+6. Select the required endpoint from the **Endpoint** list.
 
-7. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](../manage-application/#generate-keys).
+    !!! info
+        If you specified a [sandbox endpoint](../deploy/deploy-your-component.md/#enter-sandbox-endpoint) for the API  when you deployed it, you can select one of the following endpoints:<br/><br/>- If you want to try out the API in the actual development/production environment, select the endpoint with the **Development** or **Production** label (depending on the environment you selected).<br/><br/>- If you want to try out the API in the sandbox environment, select the endpoint with the **Sandbox** label.<br/><br/>![Sandbox endpoint in try out view](../assets/img/deploy/sandbox-endpoint-in-try-out-view.png){.cInlineImage-full}
 
-8. Next, expand a resource you want to test by clicking on it.
+7. From the **Subscribed Application** list, select the application you used to subsribe the API to. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
+
+8. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](../manage-application/#generate-keys).
+
+9. Next, expand a resource you want to test by clicking on it.
 
     ![Test Resource](../assets/img/developer-portal/test-api/test-resource.png){.cInlineImage-half}
 
-9. Click **Try it Out** to enable the resource to be tested.  
-10. Fill in values for the required parameters and click **Execute**.
+10. Click **Try it Out** to enable the resource to be tested.  
+11. Fill in values for the required parameters and click **Execute**.
 
     ![Test Resource](../assets/img/developer-portal/test-api/test-enabled-resource.png){.cInlineImage-half}
 
-11. Once Choreo executes the request, you can view the response in the Choreo Console.  
+12. Once Choreo executes the request, you can view the response in the Choreo Console.  
 
