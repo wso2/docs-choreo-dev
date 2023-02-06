@@ -40,6 +40,10 @@ public final class Constant {
     public static final String DEV_ENVIRONMENT = "dev";
     public static final String PROD_ENVIRONMENT = "prod";
 
+    public static final String INVOKE_URL = "invokeUrl";
+
+    public static final String API_ID = "apiId";
+
     public static final String USER_CONNECTORS_ENDPOINT_SUFFIX = "/user-connectors";
     public static final String GITHUB_URL = "https://github.com/";
 
