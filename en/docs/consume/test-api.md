@@ -21,7 +21,7 @@ This guide will take you through the steps to test an API in Choreo.
     !!! info
         If you specified a [sandbox endpoint](../deploy/deploy-your-component.md#enter-sandbox-endpoint) for the API  when you deployed it, you can select one of the following endpoints:<br/><br/>- If you want to try out the API in the actual development/production environment, select the endpoint with the **Development** or **Production** label (depending on the environment you selected).<br/><br/>- If you want to try out the API in the sandbox environment, select the endpoint with the **Sandbox** label.<br/><br/>![Sandbox endpoint in try out view](../assets/img/deploy/sandbox-endpoint-in-try-out-view.png){.cInlineImage-full}
 
-7. From the **Subscribed Application** list, select the application you used to subsribe the API to. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
+7. From the **Subscribed Application** list, select the application you used to subscribe to the API. To learn how to subscribe to an application, see [Manage Subscriptions](../manage-subscription/). 
 
 8. Click **Get Test Key** on the **Access Token** field to generate a test access token. To learn more about access tokens and generating tokens for production usage, see [Manage Applications](../manage-application/#generate-keys).
 
