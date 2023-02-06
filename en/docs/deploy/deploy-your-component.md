@@ -6,22 +6,27 @@ To deploy a component, follow the steps below:
 
 1. Open your component in the Choreo Console, and in the left pane, click **Deploy**.
 
-2. To select a specific commit you want to deploy, click the first card in the **Build Area** card, select the required commit in the **Configure & Deploy** pane, and click **Select**.
+2. If your component has multiple versions, select the required version from the list of versions. 
 
-3. On the **Build Area** card, click either **Configure & Deploy**, **Deploy Manually**, or **Build and Deploy** as relevant.
+    !!! info
+        If you want to create a new version from a different branch of the GitHub repository where the component implementation resides, click **Create New** in the list of component versions, select the required GitHub repository branch, enter a name for the component version, and click **Create**.
+
+4. If you want to deploy a specific commit to the component implementation, click the first card in the **Build Area** card, select the required commit in the **Configure & Deploy** pane, and click **Select**.
+
+5. On the **Build Area** card, click either **Configure & Deploy**, **Deploy Manually**, or **Build and Deploy** as relevant.
 
     !!! info
         Choreo requires you to perform the first deployment of each component manually so that you can provide values for any configurable variables that the implementation may include. Therefore, if you are deploying your component for the first time, you need to click **Deploy Manually** by default unless one or more of the following is true:<br/><br/>- The component is a REST API, REST API proxy, or GraphQL API, you can specify a sandbox endpoint to test the component in a sandbox environment if required. In such a scenario, you need to click **Configure & Deploy**.<br/><br/>- If you have included any [configurable variables]((https://ballerina.io/learn/by-example/configurable-variables/)) in the component implementation, you need to enter values for those variables. In such a scenario, you need to click **Configure & Deploy**.<br/><br/>- If you are deploying the component implementation from a Dockerfile, you would have selected **Docker** as the build preset when creating the component. In such a scenario, you need to click **Build and Deploy**. For more information, see [Deploy a Containerized Component](deploy-a-containerized-choreo-component.md).
 
-4. Enter values in the **Configure & Deploy** pane if required. This is required in the following scenarios:
+6. Enter values in the **Configure & Deploy** pane if required, as in the following examples:
 
     - If your component implementation includes [configurable variables](#configure-variables), enter values for them.
     - If your component is a REST API, REST API proxy, or GraphQL API, you can optionally provide a [sandbox endpoint](#enter-sandbox-endpoint) for testing purposes.
-    - If your component is a scheduled trigger, you need to enter the time interval at which the trigger should be activated.
+    - If your component is a scheduled trigger, you need to enter the time interval at which Choreo needs to activate the trigger.
 
-6. If you do not want Choreo to automatically deploy the component after each commit that edits its implementation, toggle the **Auto Deploy on Commit** switch to disable automatic deployment,
+7. If you do not want Choreo to automatically deploy the component after each commit that edits its implementation, toggle the **Auto Deploy on Commit** switch to disable automatic deployment,
 
-7. Observe the progress of the deployment from the console.
+8. Observe the progress of the deployment from the console.
 
     ![Deployment progress](../assets/img/tutorials/rest-api/deployment-progress.png){.cInlineImage-full}
 
@@ -33,14 +38,16 @@ Now you can test your deployed component to check if it is working as expected.
 
 ## Update an empty GitHub repository
 
-When a component with Ballerina as the build preset does not contain a file with the `.bal` in its GitHub path, the **Build Area** card displays the message shown in the image below.
+When the GitHub path you have provided for a component with Ballerina as the build preset does not contain a `*.bal` file, but contains the `*.md`, `gitkeep`, `.gitignore`, or `LICENCE` file, Choreo considers the GitHub repository to be empty.
+
+In such a scenario, the **Build Area** card displays the message shown in the image below.
 
 ![Empty GitHub repository](../assets/img/deploy/empty-github-repository.png){.cInlineImage-full}
 
-You cannot deploy the component until you add a `.bal` file with valid Ballerina code in the GitHub directory to which you provided the path when creating the component. However, to successfully deploy the component, you also need to do the following:
+You cannot deploy the component until you add a `*.bal` file with valid Ballerina code in the GitHub directory to which you provided the path when creating the component. However, to successfully deploy the component, you also need to do the following:
 
-- Be sure that the implementation in the `.bal` file matches the component type. For example, if the component is a REST API, the `.bal` file should contain an implementation for a REST API.
-- Include other dependencies for the Ballerina code. For more information, see [Ballerina Documentation- Organize Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)
+- Be sure that the implementation in the `.bal` file matches the component type. For example, if the component is a REST API, the `*.bal` file should contain an implementation for a REST API.
+- Include other dependencies for the Ballerina code. For more information, see [Ballerina Documentation- Organiza Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)
 
 ## Configure variables
 
@@ -62,7 +69,7 @@ If you want to edit the values you entered for the configurable variables after 
 
 ![Edit configurables](../assets/img/deploy/edit-configurables.png){.cInlineImage-full}
 
-To learn how to define configurable variables see [Ballerina Documentation -  Configurable Variables](https://ballerina.io/learn/by-example/configurable-variables/).
+To learn how to define configurable variables, see [Ballerina Documentation -  Configurable Variables](https://ballerina.io/learn/by-example/configurable-variables/).
 
 ## Deploy automatically
 
@@ -72,21 +79,22 @@ An automatic deployment can fail due to one or more of the following reasons:
 
 - If the code of the component implementation is invalid after the last change.
 - If you added new configurable variables to the component implementation.
-- If you deleted/changed one or more package dependencies (for more information, see [Ballerina Documentation- Organize Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)).
+- If you deleted/changed one or more package dependencies (for more information, see [Ballerina Documentation- Organiza Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)).
 
 ## Enter sandbox endpoint
 
 A sandbox environment is a test environment where you can test a component before pushing it to production.
 
-!!! info
-    Choreo currently allows you to deploy only REST APIs, REST API Proxies, and GraphQL APIs to sandbox environments.
-
 To deploy a component to both the sandbox environment and the development environment, enter the sandbox environment URL as the sandbox endpoint and the API backend URL as the endpoint.
 
-![Sandbox URL](../../assets/img/rest-apis/sandbox-url.png){.cInlineImage-small}
+![Sandbox endpoint](../assets/img/deploy/sandbox-endpoint.png){.cInlineImage-full }
 
 Once you publish a component with a sandbox endpoint, its users can access the sandbox endpoint from the [Developer Portal](../administer/customize-the-developer-portal.md) when viewing the component overview and trying it out.
 
 ![Sandbox endpoint in overview](../assets/img/deploy/sandbox-endpoint-in-overview.png){.cInlineImage-full}
 
 ![Sandbox endpoint in try out view](../assets/img/deploy/sandbox-endpoint-in-try-out-view.png){.cInlineImage-full}
+
+
+
+
