@@ -6,7 +6,7 @@ To deploy a component, follow the steps below:
 
 1. Open your component in the Choreo Console, and in the left pane, click **Deploy**.
 
-2. To select a specific version of the component you want to deploy, click the first card in the **Build Area** card, select the required commit in the **Configure & Deploy** pane, and click **Select**.
+2. To select a specific commit you want to deploy, click the first card in the **Build Area** card, select the required commit in the **Configure & Deploy** pane, and click **Select**.
 
 3. On the **Build Area** card, click either **Configure & Deploy**, **Deploy Manually**, or **Build and Deploy** as relevant.
 
