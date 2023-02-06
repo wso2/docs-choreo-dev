@@ -11,10 +11,9 @@
  * associated services.
  */
 
+import { ComponentData } from "../../../interfaces/component-data";
+import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
-import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
-import { RestAPITemplate } from "../templates/rest-api-temp";
-import { TriggersTemplate } from "../templates/slackTrigger-creation-temp";
 
 export class ProjectOverviewPage {
   static selectComponent(fileID) {
@@ -25,12 +24,26 @@ export class ProjectOverviewPage {
     cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
   }
 
+
+  static searchReuseComponent(componentData: ComponentData) {
+    
+    const REPO_NAME = Utils.generateComponentName("repo");
+
+    cy.get('tbody').then(bdy => {
+      if(bdy.find(`[title="${componentData.componentName}"]`).length>0) {
+    cy.log("Reuse component exists")
+          }else{
+  
+   GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+  }
+  })}
+  
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
     cy.get('[data-testid="project-template-list-httpProxyApi"]')
       .should("be.visible")
       .click();
-
+  
   }
 
   static navigateToComponents() {
