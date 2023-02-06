@@ -258,13 +258,12 @@ static waitTillAutoBuildComplete(){
     settingButtonCount,
     promoButtonIndex = 0,
   }: PromoteConfigs) {
-    cy.get('[data-cyid*="btn-promote"]', { timeout: 360000 })
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .wait(2000)
-      .eq(promoButtonIndex)
       .click(); // promote button
     cy.wait(6000);
-    cy.get('[data-cyid*="btn-promote"]', { timeout: 360000 }).should(
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
       "not.be.disabled"
     );
   }

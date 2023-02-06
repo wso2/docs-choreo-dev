@@ -30,8 +30,8 @@ export class APITest {
   static selectProdEnvironment() {
     cy.get("[data-testid=env]").click();
     cy.get("[data-cyid=undefined-Production]").click({ force: true });
-    cy.get('#filled-disabled').invoke("attr", "value").
-    then((val) => { Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`, val); });
+    cy.get('[data-cyid="text-field-endpoint"]').within(() => cy.get('input').invoke("attr", "value").
+      then((val) => { Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`, val); }));
   }
 
 }
