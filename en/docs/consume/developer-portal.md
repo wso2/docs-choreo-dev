@@ -42,7 +42,7 @@ Developers need to select a business plan for each API subscription. The busines
 ![Business Plans](../assets/img/api-management/business-plans.png){.cInlineImage-full}
 
 ## Test APIs
-Before using an API for development, the API consumer may want to test its capabilities. Choreo provides in-built capabilities to test the APIs using the in-built OpenAPI console. The in-built OpenAPI console is an interactive UI where you can easily test your API Proxy in the environments you deploy them in by selecting the required environment. Choreo, by default, uses OAuth 2.0 authentication. Therefore, the OpenAPI console gives you the option to generate your test keys to test the APIs. Once you meet the prerequisites, you can test the different resources you defined by specifying parameters if needed. 
+Before using an API for development, the API consumer may want to test its capabilities. Choreo provides in-built capabilities to test the APIs using the in-built OpenAPI console. The in-built OpenAPI console is an interactive UI where you can easily test your API Proxy in the environments you deploy them in by selecting the required environment and endpoint. Choreo, by default, uses OAuth 2.0 authentication. Therefore, the OpenAPI console gives you the option to generate your test keys to test the APIs. Once you meet the prerequisites, you can test the different resources you defined by specifying parameters if needed. 
 
 ![Invoke API](../assets/img/api-management/invoke-api.png){.cInlineImage-full}
 
