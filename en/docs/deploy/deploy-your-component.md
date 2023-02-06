@@ -40,7 +40,7 @@ When a component with Ballerina as the build preset does not contain a file with
 You cannot deploy the component until you add a `.bal` file with valid Ballerina code in the GitHub directory to which you provided the path when creating the component. However, to successfully deploy the component, you also need to do the following:
 
 - Be sure that the implementation in the `.bal` file matches the component type. For example, if the component is a REST API, the `.bal` file should contain an implementation for a REST API.
-- Include other dependencies for the Ballerina code. For more information, see [Ballerina Documentation- Organiza Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)
+- Include other dependencies for the Ballerina code. For more information, see [Ballerina Documentation- Organize Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)
 
 ## Configure variables
 
@@ -72,7 +72,7 @@ An automatic deployment can fail due to one or more of the following reasons:
 
 - If the code of the component implementation is invalid after the last change.
 - If you added new configurable variables to the component implementation.
-- If you deleted/changed one or more package dependencies (for more information, see [Ballerina Documentation- Organiza Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)).
+- If you deleted/changed one or more package dependencies (for more information, see [Ballerina Documentation- Organize Ballerina Code](https://ballerina.io/learn/organize-ballerina-code/)).
 
 ## Enter sandbox endpoint
 
