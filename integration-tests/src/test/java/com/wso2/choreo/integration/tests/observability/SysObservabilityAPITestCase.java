@@ -90,7 +90,7 @@ public class SysObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponent_SysObservabilityAPITestCase() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
+
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").

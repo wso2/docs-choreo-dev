@@ -1,6 +1,6 @@
 
 import { CurlData } from "../../../../interfaces/curl-data";
-import { Environment } from "../../enum/environment";
+import { Enums } from "../../../enums";
 
 
 
@@ -20,13 +20,13 @@ export class Curl {
     }
   }
 
-  static selectCurlEnvironment(env: Environment) {
+  static selectCurlEnvironment(env: Enums.Environment) {
 
     cy.get('[data-testid="env"]>div').click();
     cy.get('ul>li').contains(env).click();
   }
 
-  static selectEnvironment(env: Environment) {
+  static selectEnvironment(env: Enums.Environment) {
     cy.get('[data-cyid="select-env"]').click()
     cy.get('[data-cyid="item-env-name"]').contains(env).click()
   }
