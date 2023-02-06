@@ -26,24 +26,34 @@ export class ProjectOverviewPage {
 
 
   static searchReuseComponent(componentData: ComponentData) {
-    
-    const REPO_NAME = Utils.generateComponentName("repo");
 
-    cy.get('tbody').then(bdy => {
-      if(bdy.find(`[title="${componentData.componentName}"]`).length>0) {
-    cy.log("Reuse component exists")
-          }else{
-  
-   GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+    const REPO_NAME = Utils.generateComponentName("repo");
+    cy.wait(5000)
+    cy.get('body').then(bdy => {
+      if (bdy.find('tbody').length > 0) {
+        let isFound: boolean = false;
+        const kk = bdy.find('p')
+        for (let i = 0; i < kk.length; i++) {
+          if (kk[i].innerText === componentData.componentName) {
+            isFound = true;
+            break;
+          }
+        }
+        if(!isFound){
+          GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+        }
+      }else{
+        GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+      }
+    })
   }
-  })}
-  
+
   static createHttpProxyAPI() {
     this.waitForTemplateCardsToLoad();
     cy.get('[data-testid="project-template-list-httpProxyApi"]')
       .should("be.visible")
       .click();
-  
+
   }
 
   static navigateToComponents() {

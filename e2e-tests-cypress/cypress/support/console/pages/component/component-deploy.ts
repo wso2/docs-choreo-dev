@@ -21,10 +21,12 @@ interface PromoteConfigs {
 }
 
 export class ComponentDeployPage {
-  static deployToDev() {
+  static deployToDev(isExternalAPI:boolean=true) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
-    cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).should("be.visible").click();
+    if (isExternalAPI){
+      cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).should("be.visible").click();
+    }
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
       "be.visible"
     );
@@ -49,7 +51,7 @@ static waitTillAutoBuildComplete(){
     { timeout: 360000 }
   );
 }
-  static promoteToProd() {
+  static promoteToProd(isExternalAPI:boolean=true) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
@@ -57,8 +59,11 @@ static waitTillAutoBuildComplete(){
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
+      if(isExternalAPI){
+        cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
+      }
+   
+
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 })
       .should("have.length", 2)
       .eq(1)

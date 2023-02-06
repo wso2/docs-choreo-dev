@@ -20,10 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Class to represent Choreo project
@@ -65,6 +62,7 @@ public class ChoreoProject {
 
 
     private String getComponentsQuery() {
+
         return "query{" +
                 "      components(" +
                 "        orgHandler: \"" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE) + "\"," +
