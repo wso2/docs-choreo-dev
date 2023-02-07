@@ -98,7 +98,7 @@ Follow these steps to create a volume mount:
 
     ![Container mount information](../assets/img/devops-portal/container-mount-information.png){.cInlineImage-full}
 
-    This creates the storage and displays details of it in the **Volume Mounts** pane.
+    This creates the volume and displays details of it in the **Volume Mounts** pane.
 
     ![Volume mounts](../assets/img/devops-portal/volume-mounts.png){.cInlineImage-full}
 
