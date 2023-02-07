@@ -48,6 +48,11 @@ spec:
                 secretKeyRef:
                   key: DB_PASSWORD
                   name: secret-dp-cloud-manager
+            - name: TOKEN_SIGNING_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: TOKEN_SIGNING_KEY
+                  name: secret-dp-cloud-manager
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
