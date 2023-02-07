@@ -73,6 +73,41 @@ You can also add new configurations and/or secrets.
 
 ![Create a configuration mount](../assets/img/devops-portal/create-a-configuration-mount.png){.cInlineImage-full}
 
+### Storages
+
+Choreo provides Kubernetes storage support for components to persist state or share volumes between containers.  
+Choreo allocates a default storage volume for each component. Choreo also allows you to create and manage additional volume if the component is in an organization where you have set up private data plane support.
+
+#### Create a volume mount for a component
+
+Follow these steps to create a volume mount:
+
+1. Sign in to the Choreo DevOps Portal at https://devops.choreo.dev/, select a project, and click a component to create a volume.
+
+    !!! Tip
+        Ensure the project is in an organization where you have set up the private data plane capability.
+
+2. Click the **Storage** tab and then click **Let’s Get Started**. This opens the **Create Volume Mounts** pane, where you can specify volume information depending on your requirement.
+3. Enter a **Volume Name**, add the required labels, and select an appropriate **Volume Type**.
+
+    !!! Tip
+        You must specify values for the additional volume information depending on the **Volume Type** you select. For example, if the **Volume Type** is **NFS Server**, you must specify the **Server IP Address** and **Path**.
+
+4. Click **Continue** and proceed to add container mount information.
+5. For the selected container, specify a **Mount Path** and click **Finish**.
+
+    ![Container mount information](../assets/img/devops-portal/container-mount-information.png){.cInlineImage-full}
+
+    This creates the storage and displays details of it in the **Volume Mounts** pane.
+
+    ![Volume mounts](../assets/img/devops-portal/volume-mounts.png){.cInlineImage-full}
+
+You can perform the following actions in the **Volume Mounts** pane:
+
+- Create new volumes and volume mounts.
+- Delete volumes and volume mounts.
+- Search for volumes you have created.
+
 ### Health Checks
 
 This tab allows you to define health checks for a selected container. 
