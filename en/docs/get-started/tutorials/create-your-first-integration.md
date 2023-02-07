@@ -13,7 +13,7 @@ Consider a scenario where a developer has created an integration in [WSO2 Integr
 For this tutorial, let's use a basic sample application to expose a proxy service developed in the [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
 
 !!! tip "Before you begin!"
-    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/wso2-synapse/simple-proxy).
+    To try this tutorial, you can use a sample integration designed via [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).<br/><br/>To do this, fork the [choreo-examples GitHub repository](https://github.com/wso2/choreo-examples/tree/main/ipaas/micro-integrator/simple-proxy).
 
 ## Step 1: Create
 
@@ -54,8 +54,8 @@ Let's add the integration by following the steps given below:
 
      | **Field**             | **Value**                                      |
      |-----------------------|------------------------------------------------|
-     | **Path**              | `ipaas/wso2-synapse/simple-proxy`              |
-     | **OpenAPI File Path** | `ipaas/wso2-synapse/simple-proxy/openapi.yaml` |
+     | **Path**              | `ipaas/micro-integrator/simple-proxy`              |
+     | **OpenAPI File Path** | `ipaas/micro-integrator/simple-proxy/openapi.yaml` |
  
 13. Click **Create**.
 
