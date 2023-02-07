@@ -429,7 +429,7 @@ Currently, the updates to the `readinglist` REST API are saved only as long as t
 
 To persist your updates to the reading list, provision a MySQL database on a cloud-based platform. For example, see [AWS Documentation - Provision a database](https://aws.amazon.com/getting-started/hands-on/inventory-system-for-gaming-app-with-amazon-aurora-serverless/3/).
 
-To allow Choreo to interact with the database, allow-list the following client IPs:
+To allow Choreo to interact with the database, add the following IPs to the allow-list of the provisioned database:
     
     - 20.22.170.144/28
     - 20.22.170.176/28
