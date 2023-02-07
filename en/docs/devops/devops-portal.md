@@ -104,8 +104,8 @@ Follow these steps to create a volume mount:
 
 You can perform the following actions in the **Volume Mounts** pane:
 
-- Create new volumes and volume mounts.
-- Delete volumes and volume mounts.
+- Create new volumes and mounts.
+- Delete existing volumes and mounts.
 - Search for volumes you have created.
 
 ### Health Checks
