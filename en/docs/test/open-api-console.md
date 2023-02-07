@@ -17,8 +17,10 @@ You can follow the steps below to test your REST API using the integrated OpenAP
 
 4. Select the required endpoint from the **API Endpoint** list.
 
+    If you want to test the API in your sandbox environment before trying it in the development environment, select the sandbox endpoint. If not, select the API endpoint
+
     !!! info
-        If you specified a [sandbox endpoint](../deploy/deploy-your-component.md#enter-sandbox-endpoint) for the API  when you deployed it, you can select one of the following endpoints:<br/><br/>- If you want to try out the API in the actual development environment, select the API endpoint.<br/><br/>- If you want to try out the API in the sandbox environment, select the sandbox endpoint.
+        You can provide a sandbox endpoint for testing purposes when you deploy your REST API. For more information, see [Deploy Your Component](../deploy/deploy-your-component.md).
 
 5. Expand the resource that you want to test.
 
