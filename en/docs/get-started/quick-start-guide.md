@@ -88,15 +88,9 @@ Let's create your first REST API.
     | **Build Preset**      | Click **Ballerina** because you are creating the REST API from a [Ballerina](https://ballerina.io/) project and Choreo needs to run a Ballerina build to build it.|
     | **Path**              | `**reading-list-service**`                    |
 
-9. Click **Create** to initialize a REST API with the implementation from your GitHub repository. Your GitHub account opens on a web page displaying a pull request similar to the following:
+9. Click **Create** to initialize a REST API with the implementation from your GitHub repository.
 
-     ![View pull request](../assets/img/tutorials/connect-own-repo/view-pull-request.png){.cInlineImage-full}
-
-10. Click **View Pull Request**.
-
-11. Review and click **Merge pull request**, and then click **Confirm Merge**. 
-
-     When you merge the pull request, it adds the necessary metadata files to connect your GitHub repository to Choreo so that you can proceed to create the component.
+The REST API opens on a separate page where you can see its overview.
 
 ###  Step 1.2: Deploy the REST API
 
