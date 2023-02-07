@@ -76,7 +76,7 @@ You can also add new configurations and/or secrets.
 ### Storages
 
 Choreo provides Kubernetes storage support for components to persist state or share volumes between containers.  
-Choreo allocates a default storage volume for each component. Choreo also allows you to create and manage additional volume if the component is in an organization where you have set up private data plane support.
+Choreo allocates a default storage volume for each component. Choreo also allows you to create and manage additional volume for components in an organization where you have set up private data plane support.
 
 #### Create a volume mount for a component
 
