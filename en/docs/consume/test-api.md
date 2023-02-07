@@ -23,7 +23,7 @@ This guide will take you through the steps to test an API in Choreo.
     If you want to test the API in your sandbox environment before invoking it in the development/production environment, select the endpoint with the **Sandbox** label.
 
     !!! info
-        An endpoint with the **Sandbox** label will be vailable if you specified a [sandbox endpoint](../deploy/deploy-your-component.md#enter-sandbox-endpoint) for the API  when you deployed it.
+        You can provide a sandbox endpoint for testing purposes when you deploy your REST API. For more information, see [Deploy Your Component](../deploy/deploy-your-component.md).
         
     To try out the API in the development/production environment, select the endpoint with the **Development** or **Production** label as relevant.
 
