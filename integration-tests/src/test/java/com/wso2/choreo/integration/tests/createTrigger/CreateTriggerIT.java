@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -64,20 +66,18 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
     private HttpClient choreoProjectsTestClient;
 
     @BeforeClass
-    public void beforeClass()
-            throws IOException, InterruptedException, ProjectCreationException, TokenRetrievalException {
+    public void setup_CreateTriggerIT()
+            throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgId = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID);
-        String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        ChoreoOrganization org = new ChoreoOrganization(orgHandle, orgId, orgUuid);
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
 
     @Test
     @CitrusTest
-    public void testTriggerComponent() throws JsonProcessingException {
+    public void triggerComponent_CreateTriggerIT() throws JsonProcessingException {
         String graphQlQuery = "mutation{ createComponent(" +
                 "      component: {" +
                 "        name: \"" + componentName + "\"," +
@@ -138,9 +138,9 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = { "testTriggerComponent" })
+    @Test(dependsOnMethods = { "triggerComponent_CreateTriggerIT" })
     @CitrusTest
-    public void testTriggerCreatedComponentStatus() throws InterruptedException {
+    public void triggerCreatedComponentStatus_CreateTriggerIT() throws InterruptedException {
         $(repeatOnError()
                 .until("i = 20")
                 .index("i")
@@ -169,9 +169,9 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                                         .ignore("$.message"))));
     }
 
-    @Test(dependsOnMethods = {"testTriggerCreatedComponentStatus"})
+    @Test(dependsOnMethods = {"triggerCreatedComponentStatus_CreateTriggerIT"})
     @CitrusTest
-    public void testTriggerRetrieve() throws  IOException, InterruptedException, ComponentRetrieveException {
+    public void triggerRetrieve_CreateTriggerIT() throws  IOException, InterruptedException, ComponentRetrieveException {
         String graphQlQuery = "query{" +
                 "      component(" +
                 "        projectId: \"" + projectId + "\"" +
@@ -257,9 +257,9 @@ public class CreateTriggerIT extends TestNGCitrusSpringSupport {
                 }));
     }
 
-    @Test(dependsOnMethods = { "testTriggerRetrieve" })
+    @Test(dependsOnMethods = { "triggerRetrieve_CreateTriggerIT" })
     @CitrusTest
-    public void testTriggerDeploy() throws IOException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException,
+    public void triggerDeploy_CreateTriggerIT() throws IOException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException,
             GetCommitHistoryException, InterruptedException, NoLatestCommitHashFoundException {
         JsonArray commitHistory = testComponent.getCommitHistory(accessToken);
         String latestCommitSha = testComponent.getLatestCommitHash(commitHistory);

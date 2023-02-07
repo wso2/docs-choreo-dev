@@ -32,7 +32,6 @@ public class EndpointConfig {
         com.wso2.choreo.integration.config.Configuration.loadConfigs();
         TestContext.setTestOrg();
         TestContext.setTestUserTokenHandler();
-        TestContext.setAnomalyDetectionUserTokenHandler();
     }
 
     @Bean
@@ -109,7 +108,8 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(Constant.CDN_THEME_ENDPOINT)
+                .requestUrl(com.wso2.choreo.integration.config.Configuration.getConfig(
+                        ConfigDefinition.CDN_THEME_ENDPOINT))
                 .build();
     }
 

@@ -10,7 +10,7 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-import { Environment } from "../../../console/pages/enum/environment";
+import { Enums } from "../../../console/enums";
 import { Utils } from "../../../console/utils";
 import { STANDARD_TIME_OUT } from "../../constants";
 
@@ -27,8 +27,8 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing", {
       timeout: STANDARD_TIME_OUT,
     }).type(apiName + "{enter}");
-    cy.get('[data-testid="apiCard-' + apiName + '"]')
-      .first()
+   
+    cy.get(`[data-testid="apiCard-${apiName}"]`)
       .should("be.visible")
       .click();
     cy.log("Successfully navigated to Overview");
@@ -64,8 +64,8 @@ export class Apis {
 
   static confirmAPIUnavailability(textApiName) {
     cy.get("#outlined-search-bar-api-listing")
-        .focus()
-        .type(`${textApiName}{enter}`);
+      .focus()
+      .type(`${textApiName}{enter}`);
     cy.get("[data-testid=apiCard-" + textApiName + "]").should("not.exist");
     cy.log("Successfully verified the api unavailability");
   }
@@ -74,9 +74,7 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing")
       .focus()
       .type(`${textApiName}{enter}`);
-    cy.get("[data-testid=apiCard-" + textApiName + "]")
-      .last()
-      .click();
+    cy.get(`[data-testid="apiCard-${textApiName}"`).click();
   }
 
   private static getInvokeUrl() {
@@ -94,19 +92,19 @@ export class Apis {
       if (Cypress.env("isPrivateOrg")) {
         expect(urls).have.lengthOf(3);
         expect(urls).contains(
-          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+          Cypress.env(`${Enums.Environment.DEVELOPMENT}_test_url`)
         );
-        expect(urls).contains(Cypress.env(`${Environment.STAGING}_test_url`));
+        expect(urls).contains(Cypress.env(`${Enums.Environment.STAGING}_test_url`));
         expect(urls).contains(
-          Cypress.env(`${Environment.PRODUCTION}_test_url`)
+          Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`)
         );
       } else {
         expect(urls).have.lengthOf(2);
         expect(urls).contains(
-          Cypress.env(`${Environment.DEVELOPMENT}_test_url`)
+          Cypress.env(`${Enums.Environment.DEVELOPMENT}_test_url`)
         );
         expect(urls).contains(
-          Cypress.env(`${Environment.PRODUCTION}_test_url`)
+          Cypress.env(`${Enums.Environment.PRODUCTION}_test_url`)
         );
       }
     });
@@ -122,7 +120,7 @@ export class Apis {
       } else {
         let k = this.futureTime - Date.now();
         if (k >= 0) {
-          cy.wait(80000);
+          cy.wait(10000);
           this.verifyAPI(url, header, versionCount);
         }
       }

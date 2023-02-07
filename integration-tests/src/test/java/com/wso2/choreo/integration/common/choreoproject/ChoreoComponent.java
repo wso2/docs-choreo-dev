@@ -18,16 +18,50 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.Gson;
-import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.apis.observability.ObservabilityService;
+import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.MessageUtils;
-import com.wso2.choreo.integration.common.exceptions.*;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckException;
+import com.wso2.choreo.integration.common.exceptions.AddConfigurationsException;
+import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentFailureException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.ComponentDeploymentTimeoutException;
+import com.wso2.choreo.integration.common.exceptions.ComponentInvokeInformationCheckException;
+import com.wso2.choreo.integration.common.exceptions.EnvironmentDetailsCheckException;
+import com.wso2.choreo.integration.common.exceptions.GetCommitHistoryException;
+import com.wso2.choreo.integration.common.exceptions.GetDeploymentsStatusCheckException;
+import com.wso2.choreo.integration.common.exceptions.GraphQLException;
+import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NamespaceNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestAppEnvIdFoundException;
+import com.wso2.choreo.integration.common.exceptions.NoLatestCommitHashFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityASTCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityDataCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityDataNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityIdCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityIdNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilityLogsNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsCheckException;
+import com.wso2.choreo.integration.common.exceptions.ObservabilitySystemMetricsNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.RedeployException;
+import com.wso2.choreo.integration.common.exceptions.ReleaseIdNotFoundException;
+import com.wso2.choreo.integration.common.exceptions.UndeployException;
+import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -37,28 +71,39 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Map;
+
 import java.util.concurrent.TimeUnit;
 
+import com.wso2.choreo.integration.config.ObsRequestParam;
+import com.wso2.choreo.integration.models.response.Response;
+import com.wso2.choreo.integration.models.commithistory.Commit;
+
+import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.imageregistry.ImageRegistry;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
+import com.wso2.choreo.integration.models.observability.ObservabilityLogs;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.utils.URIBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 
 /**
  * Abstract class to represent Choreo component
@@ -85,19 +130,19 @@ public class ChoreoComponent {
     private String updatedAt;
     private String version;
     private ChoreoProject project;
-    private ChoreoOrganization organization;
+    private ChoreoOrganization organization = TestContext.getTestOrg();
 
 
-    private  String handle;
-    private  String organizationId;
-    private  String orgHandle;
-    private  String type;
-    private  String imageRegistryId;
-    private  String componentType;
-    private  boolean httpBased;
+    private String handle;
+    private String organizationId;
+    private String orgHandle;
+    private String type;
+    private String imageRegistryId;
+    private String componentType;
+    private boolean httpBased;
     private ImageRegistry imageRegistry;
-    private final static Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
-    private final static Gson gson = new Gson();
+    private static final Logger log = LoggerFactory.getLogger(ChoreoComponent.class);
+    private static final Gson gson = new Gson();
 
     public ChoreoComponent() {
         choreoEndpoint = Configuration.getConfig(ConfigDefinition.CHOREO_ENDPOINT);
@@ -173,7 +218,7 @@ public class ChoreoComponent {
     public JsonArray getCommitHistorySub(String accessToken)
             throws IOException, GetCommitHistoryException {
         String requestURI = choreoCpProjectsEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
-        String branchName = "feature";
+        String branchName = "feature-v2";
         HashMap<String, String> requestBodyMap = new HashMap<>() {{
             put("query", "query {" +
                     "      commitHistory(componentId: \"" + id + "\", branch: \"" + branchName + "\") {" +
@@ -376,6 +421,51 @@ public class ChoreoComponent {
         waitForComponentDeploymentSuccess(accessToken, orgHandler, orgId, latestVersionId, targetEnvId);
     }
 
+    public void promoteNewVersion(String accessToken, String sourceReleaseId, String targetEnvId)
+            throws NoLatestApiVersionFoundException, IOException, ComponentDeploymentException,
+            ComponentDeploymentFailureException, ComponentDeploymentStatusCheckException, InterruptedException,
+            ComponentDeploymentTimeoutException {
+        String latestVersionId = getLatestApiVersion().getId();
+
+        Map<String, String> requestParams = new HashMap<>() {
+            {
+                put("componentId", getId());
+                put("apiVersionId", latestVersionId);
+                put("sourceReleaseId", sourceReleaseId);
+                put("targetEnvironmentId", targetEnvId);
+            }
+        };
+        String graphQuery = MessageUtils.generateStringFromTemplate(
+                "templates/graphql/requests/promote.mustache",
+                requestParams);
+        String requestBody = MessageUtils.generateGQLPayload(graphQuery);
+
+        HttpPost request = new HttpPost(choreoCpProjectsEndpoint.concat("/graphql"));
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        StringEntity requestEntity = new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
+        request.setEntity(requestEntity);
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+                CloseableHttpResponse response = httpClient.execute(request)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseBody = EntityUtils.toString(response.getEntity());
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new ComponentDeploymentException(statusCode, responseBody);
+            }
+            String promoteResult = new JsonParser().parse(responseBody)
+                    .getAsJsonObject()
+                    .getAsJsonObject("data")
+                    .getAsJsonPrimitive("promote")
+                    .getAsString();
+            if (!"success".equals(promoteResult)) {
+                throw new ComponentDeploymentFailureException();
+            }
+        }
+        waitForComponentDeploymentSuccess(accessToken, orgHandler, orgId, latestVersionId, targetEnvId);
+    }
+
     /**
      * Wait until the Choreo component deployment is successful
      *
@@ -441,6 +531,8 @@ public class ChoreoComponent {
                 if (status.equals("ACTIVE")) {
                     log.debug("waitForComponentDeploymentSuccess()... " + numberOfTries + " tries taken to succeed");
                     return;
+                } else if (status.equals("ERROR")) {
+                    throw new ComponentDeploymentStatusCheckException("deploymentStatusV2 is ERROR");
                 }
 
                 // If still waiting after 10 attempts, increase the wait time between calls by 2 seconds
@@ -586,6 +678,35 @@ public class ChoreoComponent {
     }
 
     /**
+     * Get details about the revisions of an api
+     *
+     * @param accessToken
+     * @param apiId
+     * @param orgUUID
+     * @return
+     * @throws Exception
+     */
+    public JsonArray getRevisions(String accessToken, String apiId, String orgUUID)
+            throws Exception {
+        String requestURI = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
+                .concat("/api/am/publisher/v2/apis/")
+                .concat(apiId).concat("/revisions?organizationId=")
+                .concat(orgUUID);
+        HttpGet request = new HttpGet(requestURI);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+             CloseableHttpResponse response = httpClient.execute(request)) {
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JsonObject responseJSON = new JsonParser().parse(responseBody).getAsJsonObject();
+            JsonArray revisions = (JsonArray) responseJSON.get("list");
+            if (revisions != null) {
+                return revisions;
+            }
+            throw new ApiKeyNotFoundException();
+        }
+    }
+
+    /**
      * Get the latest commit hash from list of commit hashes
      *
      * @param commitHistory The list of commit hashes
@@ -603,6 +724,15 @@ public class ChoreoComponent {
         throw new NoLatestCommitHashFoundException();
     }
 
+    public String getLatestCommitHash(Commit[] commitHistory) throws NoLatestCommitHashFoundException {
+        for (Commit commit : commitHistory) {
+            if (commit.isLatest()) {
+                return commit.getSha();
+            }
+        }
+        throw new NoLatestCommitHashFoundException();
+    }
+
     /**
      * Get the app environment ID of the latest API version
      *
@@ -615,6 +745,23 @@ public class ChoreoComponent {
         for (AppEnvVersion latestAppEnvVersion : latestApiVersion.getAppEnvVersions()) {
             if (Objects.equals(latestAppEnvVersion.getRelease().getMetadata().getChoreoEnv(), environment)) {
                 return latestAppEnvVersion.getEnvironmentId();
+            }
+        }
+        throw new NoLatestAppEnvIdFoundException();
+    }
+
+    /**
+     * Get the app environment ID for a given API version
+     *
+     * @param apiVersion ApiVersion which require the app env id
+     * @param environment The environment name
+     * @return The app environment ID of the latest API version
+     */
+    public String getAppEnvIdForVersion(ApiVersion apiVersion, String environment)
+            throws NoLatestAppEnvIdFoundException {
+        for (AppEnvVersion appEnvVersion : apiVersion.getAppEnvVersions()) {
+            if (Objects.equals(appEnvVersion.getRelease().getMetadata().getChoreoEnv(), environment)) {
+                return appEnvVersion.getEnvironmentId();
             }
         }
         throw new NoLatestAppEnvIdFoundException();
@@ -665,10 +812,11 @@ public class ChoreoComponent {
     public String getNamespaceForEnvironment(String accessToken, String environment) throws IOException, EnvironmentDetailsCheckException, NamespaceNotFoundException {
         String requestURI = choreoEndpoint.concat(Constant.GRAPHQL_ENDPOINT_SUFFIX);
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentEnvironmentInformation.mustache");
+        Mustache mustache = mf.compile("templates/observability/graphql/queryForComponentObservabilityEnvironmentInformation.mustache");
         Writer writer = new StringWriter();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("orgUUID", organization.getOrgUUID());
+        queryParams.put("projectId", projectId);
         mustache.execute(writer, queryParams).flush();
         String graphQlQuery = writer.toString();
         HashMap<String, String> gqlRequestPayload = new HashMap<>() {
@@ -855,6 +1003,8 @@ public class ChoreoComponent {
         }
     }
 
+
+
     public String getReleaseIdForEnvironment(String env) throws ReleaseIdNotFoundException {
         AppEnvVersion[] appEnvVersions = getApiVersions().get(0).getAppEnvVersions().toArray(new AppEnvVersion[0]);
         for (AppEnvVersion appEnvVersion : appEnvVersions) {
@@ -862,6 +1012,17 @@ public class ChoreoComponent {
                 return appEnvVersion.getReleaseId();
             }
         }
+        throw new ReleaseIdNotFoundException();
+    }
+
+    public String getReleaseIdForEnvironmentV2(String env) throws ReleaseIdNotFoundException {
+        AppEnvVersion[] appEnvVersions = getApiVersions().get(1).getAppEnvVersions().toArray(new AppEnvVersion[0]);
+        for (AppEnvVersion appEnvVersion : appEnvVersions) {
+            if (appEnvVersion.getEnvironment().equals(env)) {
+                return appEnvVersion.getReleaseId();
+            }
+        }
+
         throw new ReleaseIdNotFoundException();
     }
 
@@ -998,55 +1159,33 @@ public class ChoreoComponent {
         }
     }
 
-    public void waitForObservabilityLogs(String accessToken, String env) throws IOException, InterruptedException,
-            ObservabilityLogsCheckException, ObservabilityLogsNotFoundException, URISyntaxException,
-            ReleaseIdNotFoundException, ObservabilityIdNotFoundException, ObservabilityIdCheckException,
-            EnvironmentDetailsCheckException, NamespaceNotFoundException {
-        String releaseId = getReleaseIdForEnvironment(env);
-        String namespace = getNamespaceForEnvironment(accessToken, env);
-        ObservabilityIdInformation observabilityIdInformation = getComponentObservabilityIdForReleaseId(accessToken, releaseId);
+    public Environment getEnvironment(Environment[] environments, Constant.Environment env) {
+        return Arrays.stream(environments).filter(e -> e.getName().equals(env.name())).findFirst().get();
+    }
+
+    public void waitForObservabilityLogs(Environment environment, String accessToken) throws IOException,
+            ObservabilityLogsNotFoundException, URISyntaxException,
+            ReleaseIdNotFoundException {
+
+        String releaseId = getReleaseIdForEnvironment(environment.getChoreoEnv());
+        String namespace = environment.getNamespace();
+        ObservabilityIdInformation observabilityIdInformation = GraphQL.getComponentObservabilityIdForReleaseId(releaseId, accessToken);
 
         log.info("Waiting till observability data appear");
-        String requestURI = configCPGatewayEndpoint.concat(Constant.OBSERVABILITY_LOGS_ENDPOINT_SUFFIX)
-                .concat(observabilityIdInformation.getObsId())
-                .concat("/logsV2");
-        URIBuilder builder = new URIBuilder(requestURI);
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        builder.setParameter("startTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).minusSeconds(60 * 60 * 24)))
-                .setParameter("endTime", fmt.format(OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS)))
-                .setParameter("releaseId", releaseId)
-                .setParameter("namespace", namespace)
-                .setParameter("sort", "desc")
-                .setParameter("limit", "95");
-        HttpGet request = new HttpGet(builder.build());
-        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        ObsRequestParam orp = ObsRequestParam.builder().namespace(namespace).releaseId(releaseId).sort("desc").limit("95").build();
+        String url = ObservabilityService.getObsUrl(orp,observabilityIdInformation.getObsId(),Constant.logType.logsV2);
+        for (int i = 0; i < 50; i++) {
+            Response res = HttpClientUtil.httpGET(url, accessToken, "");
+            ObservabilityLogs obslogs = ObjectMapperUtil.mapStringToObject(ObservabilityLogs.class, res.getRes(), "");
 
-        int attempts = 0;
-        while (attempts < 50) {
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-                 CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
-                if (statusCode != org.apache.http.HttpStatus.SC_OK) {
-                    throw new ObservabilityLogsCheckException(statusCode, responseBody);
-                }
-                int count = new JsonParser()
-                        .parse(responseBody)
-                        .getAsJsonObject()
-                        .getAsJsonArray("rows")
-                        .size();
-                if (count > 0) {
-                    break;
-                }
-                log.debug("Observability logs has not appeared, trying again. Attempt : " + attempts);
-                Thread.sleep(6000);
-                attempts++;
-                if (attempts == 50) {
-                    log.warn("Exceeding maximum number of attempts for checking observability logs.");
-                    throw new ObservabilityLogsNotFoundException();
-                }
+            if (obslogs.getRows().length > 0) {
+                return;
             }
+            log.debug("Observability logs has not appeared, trying again. Attempt : " + i);
+            SleepUtil.sleep(60);
         }
+        log.warn("Exceeding maximum number of attempts for checking observability logs.");
+        throw new ObservabilityLogsNotFoundException();
     }
 
     public void waitForObservabilitySystemMetrics(String accessToken, String env) throws IOException,
@@ -1379,4 +1518,5 @@ public class ChoreoComponent {
     public void setImageRegistry(ImageRegistry imageRegistry) {
         this.imageRegistry = imageRegistry;
     }
+
 }

@@ -27,9 +27,16 @@ export class ComponentOverviewPage {
     cy.get("[data-testid=deploy-link]").click();
   }
 
-  static navigateToTest() {
-    cy.contains("Test").should("be.visible").click();
+  static navigateToTest(navigateViaLink:boolean=false) {
+    if(navigateViaLink){
+      cy.get('[data-cyid="test-nav-btn"]').eq(0).click()
+    }else{
+      cy.contains("Test").should("be.visible").click({ force: true });
+    }
+   
   }
+
+  
 
   static navigateToManage() {
     cy.contains("Manage").should("be.visible").click({ force: true });
@@ -43,16 +50,24 @@ export class ComponentOverviewPage {
     cy.contains("Devops").should("be.visible").click();
   }
 
-  static navigateToDevelop(){
-    cy.get('[data-cyid="link-develop"]').click()
+  static navigateToDevelop() {
+    cy.get('[data-cyid="link-develop"]').click();
   }
 
   static navigateToDevPortal() {
-    cy.get(".choreo-header>div>div>a")
-      .eq(0)
+    cy.get("[data-cyid='developer-portal-link']")
       .invoke("attr", "href")
       .then((href) => cy.visit(href));
     return cy.get("header>div>div>p").invoke("text");
+  }
+
+  static verifyResource(validateResourceName: string = "") {
+    let resourceIdentifier = "resource-/intensity";
+    if (validateResourceName) {
+      resourceIdentifier = "resource-/" + validateResourceName;
+    }
+
+    cy.get(`[data-testid="${resourceIdentifier}"]`);
   }
 
   static getComponentName() {
@@ -75,9 +90,7 @@ export class ComponentOverviewPage {
 
   private static createNewVersionApiProxy(version: string) {
     cy.contains("Create new version", { timeout: 180000 });
-    cy.get('[data-cyid="text-field-new-version"]>div>input')
-      .clear()
-      .type(version);
+    cy.get('[data-cyid="text-field-new-version"]').within(e=>{cy.get("input").clear().type(version)})
     cy.get("[data-testid=create-version-create]").click();
     cy.get('[data-testid="dialog-close-icon"]').should("not.exist");
   }

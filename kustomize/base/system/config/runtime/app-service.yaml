@@ -1,0 +1,447 @@
+db:
+  username: ${DB_USERNAME}
+  password: ${CHOREO_DB_PASSWORD}
+  protocol: tcp
+  host: ${DB_HOST}
+  port: ${DB_PORT}
+  name: choreo_app_db
+  driver: ${DB_DRIVER}
+  loc: UTC
+  allowNativePasswords: true
+  checkConnLiveness: true
+  tlsConfig: true
+  parseTime: true
+  additionalParams:
+    autocommit: 'true'
+    time_zone: "'+00:00'"
+redis:
+  host: ${REDIS_HOST}
+  port: 6380
+  disableTls: false
+  password: ${REDIS_PASSWORD}
+server:
+  port: 8080
+upstream:
+  workspace-manager: workspace-manager:8080
+  negotiator: ${UPSTREAM_NEGOTIATOR}
+  app-deployer: app-deployer:8080
+  subscriptions: subscriptions:9090
+  dp-rudder: dp-rudder:80
+  dp-secret-manager: dp-secret-manager:80
+  dp-cicd: http://dp-cicd:80
+  dp-project-manager: dp-project-manager:80
+  centralOrgRegistry:
+    url: ${CENTRAL_ORG_REGISTRY_URL}
+    enabled: ${CENTRAL_ORG_REGISTRY_ENABLE}
+    tls:
+      cert: ${CENTRAL_ORG_REGISTRY_CERT}
+      key: ${CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY}
+configYamlConfigurations:
+  log-format: "json"
+  observe-enabled: true
+  observe-provider: "choreo"
+  observe-reporter-host: ${CONFIG_YAML_OBSERVE_REPORTER_HOST}
+  prometheus-metrics-reporter-config:
+    enabled-cluster-ids: {{.PROMETHEUS_METRICS_REPORTER_ENABLED_CLUSTER_IDS}}
+  observe-reporter-port: 443
+feedback:
+  enabled: false
+  github:
+    token: ${GITHUB_BOT_ACCESS_TOKEN}
+    owner: ${FEEDBACK_GITHUB_OWNER}
+    repository: ${FEEDBACK_GITHUB_REPOSITORY}
+  azureBlob:
+    accountName: choreousercontent
+    accountKey: ${USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY}
+    containerName: ${FEEDBACK_AZURE_BLOB_CONTAINER_NAME}
+invitation:
+  decoderKey: ${BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY}
+  redirectUrl: ${INVITATION_REDIRECT_URL}
+  enforceOnExistingUsers: ${INVITATION_ENFORCE_ON_EXISTING_USERS}
+  enabled: false
+ballerinaCentral:
+  enableSync: ${BALLERINA_CENTRAL_ENABLE_SYNC}
+  db:
+    username: ${BALLERINA_CENTRAL_DB_USERNAME}
+    password: ${CHOREO_DB_PASSWORD}
+    protocol: tcp
+    host: ${BALLERINA_CENTRAL_DB_HOST}
+    port: 3306
+    name: ${BALLERINA_CENTRAL_DB_NAME}
+    loc: UTC
+    allowNativePasswords: true
+    checkConnLiveness: true
+    tlsConfig: true
+    parseTime: true
+    additionalParams:
+      autocommit: 'true'
+      time_zone: "'+00:00'"
+userMigration:
+  enable: false
+azureAppInsights:
+  instrumentationKey: ${AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY}
+scim:
+  idpHost: ${SCIM_IDP_HOST}
+  scimUsersEndpoint: /wso2/scim/Users
+  idpTokenEndpoint: /oauth2/token
+  backendApiClientId: ${SCIM_BACKEND_API_CLIENT_ID}
+  backendApiClientSecret: ${IDP_BACKEND_API_CLIENT_SECRET}
+scim2:
+  isScimV2Enabled: true
+  idpHost: ${SCIM2_IDP_HOST}
+  scimUsersEndpoint: /scim2/Users
+  idpUsername: ${SCIM_BACKEND_API_USERNAME}
+  idpPassword: ${SCIM_BACKEND_API_USER_PASSWORD}
+userSupport:
+  isEnabled: false
+  host: ${USER_SUPPORT_HOST}
+  userEndpoint: /api/now/table/csm_consumer_user
+  roleUpdateEndpoint: /api/now/table/sys_user_has_role
+  consumerEndpoint: /api/now/consumer
+  tokenEndpoint: /oauth_token.do
+  clientId: ${SERVICE_NOW_CLIENT_ID}
+  clientSecret: ${SERVICE_NOW_CLIENT_SECRET}
+  username: ${SERVICE_NOW_USERNAME}
+  password: ${SERVICE_NOW_PASSWORD}
+  consumerRoleId: a3c20ae3c303120095ccd02422d3ae8f
+  customerRoleId: 3a64fc24d7700200e5982cf65e610357
+emailService:
+  host: email-service
+  path: service/sendEmail
+  invitationHost: ${EMAIL_SERVICE_INVITATION_HOST}
+  invitationHostDevPortal: ${EMAIL_SERVICE_INVITATION_DEVPORTAL_HOST}
+  invitationPath: accept-invitation
+  demoEmailList: 
+    - choreo-request-a-demo@wso2.com
+  calendlyLink: https://calendly.com/wso2-choreo/session
+appQuota:
+  enabled: {{.APP_QUOTA_ENABLED}}
+  excludedOrgs: {{.APP_QUOTA_EXCLUTED_ORGS}}
+defaultGroups:
+  admin:
+    name: Admin
+    handle: admin
+    description: Admin group
+    tag: admin
+  developer:
+    name: Developer
+    handle: developer
+    description: Developer group
+    tag: developer
+defaultRoles:
+  admin:
+    name: Admin
+    handle: admin
+    description: Users who have full access to the Choreo (user management, application development, billing and subscription, etc.)
+    tags:
+      - admin
+    permissions:
+      - all
+  roles:
+    - name: Developer
+      handle: developer
+      description: Users who develop, deploy, and manage cloud-native applications at scale.
+      tags:
+        - developer
+      permissions:
+        - apim:api_manage
+        - apim:tier_manage
+        - apim:subscription_manage
+        - apim:subscribe
+        - apim:sub_manage
+        - apim:app_manage
+        - apim:document_manage
+        - apim:app_import_export
+        - apim:api_key
+        - apim:publisher_settings
+        - environments:view_prod
+        - environments:view_dev
+        - choreo:component_manage
+        - choreo:dev_env_manage
+    - name: API Subscriber
+      handle: api-subscriber
+      description: Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
+      tags:
+        - subscriber
+        - apim
+      permissions:
+        - apim:subscribe
+        - apim:sub_manage
+        - apim:app_manage
+        - apim:app_import_export
+        - apim:api_key
+        - environments:view_prod
+        - environments:view_dev
+    - name: External API Subscriber
+      handle: external-api-subscriber
+      description: External Users or Application Developers who search the Developer Portal to discover APIs and use them. They read the documentation and forums, rates/comments on the APIs, subscribes to APIs, obtain access tokens, and invokes the APIs
+      tags:
+        - external
+        - apim
+        - subscriber
+      permissions:
+        - apim:subscribe
+        - apim:sub_manage
+        - apim:app_manage
+        - apim:app_import_export
+        - apim:api_key
+        - environments:view_prod
+    - name: API Publisher
+      handle: api-publisher
+      description: Users who understand the technical aspects of the API (interfaces, documentation, versions, etc.) and create and publish APIs into the Developer Portal.
+      tags:
+        - apim
+        - developer
+      permissions:
+        - apim:tier_manage
+        - apim:api_manage
+        - apim:subscription_manage
+        - apim:publisher_settings
+        - apim:api_publish
+        - apim:document_manage
+        - apim:api_settings
+        - apim:subscription_view
+        - apim:dcr:app_manage
+        - environments:view_dev
+        - environments:view_prod
+    - name: Billing Admin
+      handle: billing-admin
+      description: Users who manage billing and subscription related stuffs.
+      tags:
+        - billing
+      permissions:
+        - billing:tier_view
+        - billing:org_manage
+        - billing:invoice_view
+        - billing:subscription_manage
+        - billing:payment_method_manage
+    - name: Env Manager
+      handle: env-manager
+      description: Users who have access to devportal environments
+      tags:
+        - environments
+      permissions:
+        - environments:view_prod
+        - environments:view_dev
+    - name: Choreo DevOps
+      handle: choreo-devops
+      description: Users who are involved in deployment management
+      tags:
+        - deployments
+      permissions:
+        - apim:tier_manage
+        - apim:api_manage
+        - apim:subscription_manage
+        - choreo:deployment_manage
+        - choreo:dev_env_manage
+        - choreo:prod_env_manage
+        - apim:api_settings
+        - environments:view_dev
+        - environments:view_prod
+        - apim:environment_manage
+    - name: Project Manager
+      handle: project-manager
+      description: Users who are involved in project management
+      tags:
+        - projects
+      permissions:
+        - apim:api_manage
+        - apim:tier_manage
+        - choreo:project_manage
+        - choreo:component_manage
+        - choreo:dev_env_manage
+        - apim:api_publish
+        - apim:document_manage
+        - apim:api_settings
+        - apim:subscription_view
+        - environments:view_dev
+        - environments:view_prod
+roleBasedUserMgt:
+  enabled: ${ROLE_BASED_USER_MGT_ENABLED}
+onPremKeySubscription:
+  trialDurationDays: 14
+termsOfService:
+  version: 1.0
+  serviceNames:
+    - choreo
+    - ballerina-central
+memberInvitation:
+  invitationLinkDurationDays: 7
+controlPlaneOrganization:
+  uuid: ${CONTROL_PLANE_ORG_UUID}
+azureKeyVault:
+  clientId: ${AZURE_KEY_VAULT_CLIENT_ID}
+  clientSecret: ${AZURE_KEY_VAULT_CLIENT_SECRET}
+  tenantID: da76d684-740f-4d94-8717-9d5fb21dd1f9
+  vaultUrl: ${AZURE_KEY_VAULT_VAULT_URL}
+logger:
+  level: ${LOGGER_LEVEL}
+  encoding: console
+  development: ${LOGGER_DEVELOPMENT}
+  disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
+  encoderConfig:
+    timeKey: time
+    levelKey: level
+    nameKey: logger
+    callerKey: caller
+    messageKey: message
+    stacktraceKey: stacktrace
+    lineEnding: "\n"
+    levelEncoder: capitalColor
+    timeEncoder: iso8601
+    durationEncoder: string
+    callerEncoder: short
+  outputPaths: stdout
+  errorOutputPaths: stdout
+environmentSpecs:
+  defaultEnvs:
+    - k8sNamespace: ${ENVIRONMENT_SPECS_DEFAULT_ENVS_K8S_NAMESPACE}
+      name: choreo-prod
+connectors:
+  configs:
+    -
+      name: GitHub
+      oauth2:
+        apiBaseUrl: https://api.github.com
+        clientId: ${CONNECTORS_CONFIGS_GITHUB_OAUTH2_CLIENT_ID}
+        clientSecret: ${GH_CONNECTOR_CLIENT_SECRET}
+        redirectUrl: ${CONNECTORS_CONFIGS_GITHUB_OAUTH2_REDIRECT_URL}
+        authEp:
+          url: https://github.com/login/oauth/authorize
+          params:
+            - key: scope
+              value: repo read:org read:user user:email
+        tokenEp:
+          url: https://github.com/login/oauth/access_token
+    -
+      name: Google Sheets
+      oauth2:
+        apiBaseUrl: https://sheets.googleapis.com
+        clientId: ${CONNECTORS_CONFIGS_GOOGLE_SHEETS_OAUTH2_CLIENT_ID}
+        clientSecret: ${GSUITE_CLIENT_SECRET}
+        redirectUrl: ${CONNECTORS_CONFIGS_GOOGLE_SHEETS_OAUTH2_REDIRECT_URL}
+        authEp:
+          url: https://accounts.google.com/o/oauth2/v2/auth
+          params:
+            -
+              key: response_type
+              value: code
+            -
+              key: access_type
+              value: offline
+            -
+              key: prompt
+              value: consent
+            -
+              key: scope
+              value: https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.readonly openid email
+        tokenEp:
+          url: https://oauth2.googleapis.com/token
+        revokeEp:
+          url: https://oauth2.googleapis.com/revoke
+    -
+      name: Google Calendar
+      oauth2:
+        apiBaseUrl: https://www.googleapis.com/calendar/v3
+        clientId: ${CONNECTORS_CONFIGS_GOOGLE_CALENDAR_OAUTH2_CLIENT_ID}
+        clientSecret: ${GSUITE_CLIENT_SECRET}
+        redirectUrl: ${CONNECTORS_CONFIGS_GOOGLE_CALENDAR_OAUTH2_REDIRECT_URL}
+        authEp:
+          url: https://accounts.google.com/o/oauth2/v2/auth
+          params:
+            -
+              key: response_type
+              value: code
+            -
+              key: access_type
+              value: offline
+            -
+              key: prompt
+              value: consent
+            -
+              key: scope
+              value: https://www.googleapis.com/auth/calendar openid email
+        tokenEp:
+          url: https://oauth2.googleapis.com/token
+        revokeEp:
+          url: https://oauth2.googleapis.com/revoke
+    -
+      name: Gmail
+      oauth2:
+        apiBaseUrl: https://gmail.googleapis.com
+        clientId: ${CONNECTORS_CONFIGS_GMAIL_OAUTH2_CLIENT_ID}
+        clientSecret: ${GSUITE_CLIENT_SECRET}
+        redirectUrl: ${CONNECTORS_CONFIGS_GMAIL_OAUTH2_REDIRECT_URL}
+        authEp:
+          url: https://accounts.google.com/o/oauth2/v2/auth
+          params:
+            -
+              key: response_type
+              value: code
+            -
+              key: access_type
+              value: offline
+            -
+              key: prompt
+              value: consent
+            -
+              key: scope
+              value: https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.compose openid email
+        tokenEp:
+          url: https://oauth2.googleapis.com/token
+        revokeEp:
+          url: https://oauth2.googleapis.com/revoke
+serviceBus:
+  connectionString: ${ASB_CONNECTION_STRING}
+organizations:
+  createDefaultEnvsForOrg: true
+  organizationLimit: 5
+  limit: 5
+  enableRandomHandleGeneration: false
+organizationCleanUp:
+  enabled: true
+  executor: choreo-runtime
+  subscriber:
+    subscriptionName: choreo-runtime
+    topic: ${ORG_REMOVER_REQUEST_TOPIC}
+  publisher:
+    topic: ${ORG_REMOVER_RESULT_TOPIC}
+anonymousCleanup:
+  taskInterval: 0
+  expiryDays: 7
+apim:
+  clientKey: ${APIM_CLIENT_KEY}
+  clientSecret: ${APIM_CLIENT_SECRET}
+  idpUrl: ${APIM_IDP_URL}
+  serviceUrl: ${APIM_SERVICE_URL}
+  gatewaySuffix: ${APIM_GATEWAY_SUFFIX}
+  createApiForService: ${CREATE_API_FOR_SERVICE}
+asgardeo:
+  orgManagementApiUrl: ${ASGARDEO_ORG_MANAGEMENT_API_URL}
+asgardeoOrgManagement:
+  enable: ${IS_ASGARDEO_ORG_MANAGEMENT_ENABLED}
+  perOrgKeyManagerEnabled: ${IS_ASGARDEO_PER_ORG_KEY_MANAGER_ENABLED}
+marketingConsent:
+  clientKey: ${MARKETING_CONSENT_APP_CLIENT_KEY}
+  clientSecret: ${MARKETING_CONSENT_APP_CLIENT_SECRET}
+  tokenURL: ${APIM_TOKEN_EP}
+  pardotEndpoint: ${PARDOT_EP}
+  pardotSvcURL: ${PARDOT_SVC_URL}
+  emailConsentSvcURL: ${EMAIL_CONSENT_SVC_URL}
+balCentral:
+  ballerinaCentralUserIdpId: ${BAL_CENTRAL_USER_IDP_ID}
+subscriptions:
+  enable: ${IS_SUBSCRIPTIONS_ENABLED}
+  freeStepQuota: ${FREE_STEP_QUOTA}
+permissions:
+  roleManage: choreo:role_manage
+configurableWebhook:
+  enabled: ${CONFIGURABLE_WEBHOOK_ENABLED}
+pardotNewUserRegistration:
+  enable: {{.PARDOT_USER_REGISTRATION_ENABLED}}
+pardotallUserList:
+  clientKey: ${PARDOT_USER_LIST_REGISTRATION_APP_KEY}
+  clientSecret: ${PARDOT_USER_LIST_REGISTRATION_APP_SECRET}
+  tokenURL: {{.PARDOT_USER_REGISTRATION_TOKEN_URL}}
+  pardotEndpoint: {{.PARDOT_USER_REGISTRATION_ENDPOINT}}
+  pardotSvcURL: {{.PARDOT_USER_REGISTRATION_SVC_URL}}

@@ -49,6 +49,8 @@ spec:
               name: health-internal
             - containerPort: 9092      # To be used for public health check (external)
               name: health-public
+            - containerPort: 8080
+              name: grpc
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15

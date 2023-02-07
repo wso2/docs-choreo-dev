@@ -124,6 +124,16 @@ spec:
                 secretKeyRef:
                   name: secret-runtime
                   key: APIM_CLIENT_SECRET
+            - name: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+            - name: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
           envFrom:
             - configMapRef:
                 name: env-app-service
@@ -197,7 +207,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-app-service
+            name: cm-file-app-service
         - name: secret-gsuite
           csi:
             driver: secrets-store.csi.k8s.io

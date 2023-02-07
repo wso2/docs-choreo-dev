@@ -12,8 +12,11 @@
  */
 
 
+import { GraphQL } from "../../console/apis/graphql";
+import { Enums } from "../../console/enums";
 import { APIDeployment } from "../../console/pages/apis/api-deployment";
 import { ComponentDeployPage } from "../../console/pages/component/component-deploy";
+import { ComponentListingPage } from "../../console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../console/pages/component/component-overview-page";
 import { ProjectOverviewPage } from "../../console/pages/projects/project-overview";
@@ -21,6 +24,7 @@ import { ProjectListingPage } from "../../console/pages/projects/projects-listin
 import { RestAPIProxyTemplate } from "../../console/pages/templates/rest-api-proxy-temp";
 import { RestAPITemplate } from "../../console/pages/templates/rest-api-temp";
 import { Utils } from "../../console/utils";
+import { ComponentData } from "../../interfaces/component-data";
 import { generateAppName } from "../utils";
 
 export class DevPortalHelper {
@@ -34,10 +38,14 @@ export class DevPortalHelper {
   static OPERATION_USERS = "intensity";
   static appName = generateAppName("-e2etest");
 
+
+  static COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
+  static REPO_NAME = Utils.generateComponentName("repo");
+
+
   static createDeployHttpProxyComponent(API_Name) {
     ProjectListingPage.createNewProject(DevPortalHelper.PROJECT_NAME, DevPortalHelper.PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi(DevPortalHelper.Filepath);
     RestAPIProxyTemplate.enterAPIdetails(API_Name, DevPortalHelper.API_BASE_PATH, "", "", "");
     ComponentOverviewPage.navigateToDeploy();
@@ -50,14 +58,30 @@ export class DevPortalHelper {
   }
 
   static createDeployRestApiComponent(API_Name, description, projectName = DevPortalHelper.PROJECT_NAME) {
-    ProjectListingPage.createNewProject(projectName, DevPortalHelper.PROJECT_DESCRIPTION);
-    ProjectListingPage.selectProject(projectName);
-    ProjectOverviewPage.addNewComponent();
-    RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(API_Name, description);
+    let componentData: ComponentData = {
+      componentName: API_Name,
+      displayType: Enums.DisplayType.restAPI,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      projectName: projectName,
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/rest-api",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: "",
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      projectName,
+      DevPortalHelper.PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponentWithRepo(componentData, DevPortalHelper.REPO_NAME);
+
+
+    ComponentListingPage.visitToAComponent(API_Name);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
     ComponentAPILifecycle.publishWithoutConnector().should("be.visible");

@@ -18,21 +18,21 @@ export class GreetingSample {
   static selectSample(service: string, isEPLogin: boolean = false) {
     const sampleService =`[data-cyid=${service.toLowerCase().replace(" ", "_")}]`
     Utils.setBrowserCookie(isEPLogin)
-    cy.contains("Get started with a template").should("be.visible")
+    cy.get('[data-cyid="view-all-samples-btn"]').should("be.visible")
     cy.get("button>span>p").each($p => {
       cy.log($p.text())
       if ($p.text().trim() === 'View all') {
         cy.wrap($p).click()
       }
     })
-    cy.contains('View All Samples').click()
+    cy.contains('View All Samples').focus().click()
     cy.get('[data-cyid="greeting_service"]').should("be.visible")
-    cy.get('[role="dialog"]>div>div>div>div>div>div>button').should('be.visible').type(`${service}{enter}`)
+    cy.get('[placeholder="Search by Samples"]').should('be.visible').type(`${service}{enter}`)
 
     cy.get(`${sampleService}`).should("be.visible")
     cy.get(`${sampleService}`).eq(0).realHover().wait(2000)
     Utils.setBrowserCookie(isEPLogin)
-    cy.get(`${sampleService}`).eq(0).realClick()
+    cy.get(`${sampleService}`).eq(0).contains("Try it").realClick()
 
 
     Utils.setBrowserCookie(isEPLogin)

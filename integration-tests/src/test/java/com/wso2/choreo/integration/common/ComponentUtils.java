@@ -14,6 +14,8 @@
 package com.wso2.choreo.integration.common;
 
 
+import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.message.MessageType;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -24,10 +26,8 @@ import com.wso2.choreo.integration.common.exceptions.APIKeyGenerationCheckExcept
 import com.wso2.choreo.integration.common.exceptions.ApiKeyNotFoundException;
 import com.wso2.choreo.integration.common.exceptions.InvokeAPICheckException;
 import com.wso2.choreo.integration.common.exceptions.InvokeInformationNotFoundException;
-import com.wso2.choreo.integration.common.exceptions.NoLatestApiVersionFoundException;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.invokeinfor.InvokeInformation;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -44,6 +44,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class ComponentUtils {
 
@@ -80,7 +82,7 @@ public class ComponentUtils {
     public static ChoreoComponent createRestAPI(String accessToken) throws Exception {
         ChoreoOrganization org = TestContext.getTestOrg();
 
-        ChoreoProject project = org.createProject(accessToken);
+        ChoreoProject project = GraphQL.createProject(accessToken);
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
         ChoreoComponent restAPI = project.createRestAPI(accessToken, componentName, org);
 
@@ -119,16 +121,6 @@ public class ComponentUtils {
 
     }
 
-    public static TestConfigs invokeEndpoint(ChoreoComponent component, String componentType, String accessToken) throws NoLatestApiVersionFoundException, IOException, InvokeInformationNotFoundException, ApiKeyNotFoundException, APIKeyGenerationCheckException {
-        TestConfigs wrapper = new TestConfigs();
-        InvokeInformation[] info = GraphQL.getInvokeInformation(component, componentType, accessToken);
-        String apiKey = component.getAPIKeyForInvoke(accessToken, component.getApiId()).replace("\"", "");
-        for (InvokeInformation in : info) {
-           wrapper.addConfig(in.getEnvironmentName(), TestConfigs.builder().invokeUrl(in.getInvokeUrl()).apiKey(apiKey).build());
-        }
-        return wrapper;
-    }
-
 
     public static String generateStringFromTemplate(String templateRelativePath, Map<String, String> params)
             throws IOException {
@@ -146,5 +138,39 @@ public class ComponentUtils {
         Writer writer = new StringWriter();
         mustache.execute(writer, params).flush();
         return writer.toString();
+    }
+
+    /**
+     * Invoke API with validation
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param apiRequestUrl    API Request URL
+     * @param expectedResponse Expected response
+     */
+    public static void invokeApi(TestActionRunner runner, String apiKey, String invokeUrl, String apiRequestUrl,
+                                 String expectedResponse) {
+
+        // Test API Invocation
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(invokeUrl)
+                                .send()
+                                .get(apiRequestUrl)
+                                .message()
+                                .header(HttpHeaders.ACCEPT, "application/json")
+                                .header("API-Key", apiKey),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(expectedResponse)));
     }
 }

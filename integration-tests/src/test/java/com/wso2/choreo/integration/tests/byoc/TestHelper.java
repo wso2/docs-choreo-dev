@@ -2,14 +2,13 @@ package com.wso2.choreo.integration.tests.byoc;
 
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.Response;
-import com.wso2.choreo.integration.models.testconfigs.TestConfigs;
+import com.wso2.choreo.integration.models.response.Response;
 
 public class TestHelper {
-    public static Movie[] getMovies(TestConfigs configs, Constant.Environment environment) {
-        String apiInvocationRequestURI = configs.getConfig(environment.name()).getInvokeUrl() + "/movies";
-        Response response = HttpClientUtil.httpGET(apiInvocationRequestURI, "", configs.getConfig(Constant.Environment.Development.name()).getApiKey());
+
+    public static Movie[] getMovies(String invokeURL, String apiKey) {
+        String apiInvocationRequestURI = invokeURL+ "/movies";
+        Response response = HttpClientUtil.httpGET(apiInvocationRequestURI, "", apiKey);
         return ObjectMapperUtil.mapToCollection(Movie[].class, response.getRes(), "");
     }
 

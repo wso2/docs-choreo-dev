@@ -108,7 +108,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: cm-workspace-manager
+            name: cm-file-workspace-manager
         - name: secret-redis
           csi:
             driver: secrets-store.csi.k8s.io

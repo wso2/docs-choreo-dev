@@ -14,6 +14,7 @@
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
 import { Marketplace } from "../../../support/console/pages/marketplace/marketplace-page";
+import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
 
 describe("Verify the functionality in Choreo Marketplace", () => {
   const MAIN_CATEGORY1 = "Business Intelligence";
@@ -25,19 +26,17 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   const FREEMIUM = "Cost/Freemium";
   const PAID = "Cost/Paid";
 
-  before(()=>{
-    LoginPage.login()
+  before(() => {
+    LoginPage.login();
     ChoreoHomePage.switchOrganization();
-  })
-  after(()=>{
-    ChoreoHomePage.logout()
-  })
-  
-  beforeEach(() => {
-    ChoreoHomePage.navigateToMarketPlace();
+  });
+  after(() => {
+    ChoreoHomePage.logout();
   });
 
   it("Verify Choreo filter functionality", () => {
+    ProjectListingPage.selectProject();
+    ChoreoHomePage.navigateToMarketPlace();
     Marketplace.filterByChoreo();
     Marketplace.clearSelectedFilters();
   });
@@ -89,7 +88,4 @@ describe("Verify the functionality in Choreo Marketplace", () => {
     Marketplace.getTriggerName().should("eq", TRIGGER);
     Marketplace.getTriggerTags().should("have.length", 3);
   });
-
-
-
 });

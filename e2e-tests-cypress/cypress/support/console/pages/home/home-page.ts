@@ -11,15 +11,20 @@
  * associated services.
  */
 
-
+import { REUSABLE_PROJECT_NAME } from "../../../devportal/constants";
+import { Utils } from "../../utils";
 import { LoginPage } from "../login-page";
+import { ProjectListingPage } from "../projects/projects-listing-page";
 
 export class ChoreoHomePage {
   static username = '[data-testid="header-user-profile-menu"]';
 
   static navigateToHome() {
     const handle = Cypress.env("current_org")["handle"];
-    cy.get(`div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`).click();
+
+    cy.get(
+      `div[class*="choreo-header"]>div>a[href="/organizations/${handle}/home"]`
+    ).click();
   }
 
   static navigateToComponents() {
@@ -34,13 +39,17 @@ export class ChoreoHomePage {
     cy.get('[data-testid="main-left-nav-item-Marketplace"]').click();
   }
 
+  static navigateToProjects() {
+    cy.get('[data-testid="main-left-nav-item-Project"]').click();
+  }
+
   static navigateToInsights() {
     cy.get('[data-testid="main-left-nav-item-Insights"]').click();
   }
 
   static isOrgHandleVisible(orgHandle: string) {
     cy.get('[id="org-picker"]').click();
-    cy.get('[data-value="' + orgHandle + '"]')
+    cy.get('[data-value="' + orgHandle + '"]');
   }
 
   static getLoggedUserEmail() {
@@ -53,9 +62,12 @@ export class ChoreoHomePage {
   }
 
   static navigateToSettings() {
-    cy.get("#backdrop-loader").should('not.exist')
-    cy.get('[data-testid="header-user-profile-menu"]').click()
-    cy.get('[data-testid="header-user-profile-item-settings"]').should('be.visible').click()
+    cy.get("#backdrop-loader").should("not.exist");
+    cy.get('[data-testid="header-user-profile-menu"]').click();
+    cy.get('[data-testid="header-user-profile-item-settings"]')
+      .should("be.visible")
+      .contains("Settings")
+      .click();
   }
 
   static switchOrganization() {

@@ -11,16 +11,77 @@
  * associated services.
  */
 
-
+import { ComponentData } from "../../../interfaces/component-data";
+import { GraphQL } from "../../apis/graphql";
+import { Utils } from "../../utils";
 
 export class ProjectOverviewPage {
-
   static selectComponent(fileID) {
-    cy.get('td>div>p').contains(fileID).click();
+    cy.get("td>div>p").contains(fileID).click();
   }
 
   static addNewComponent() {
-    cy.contains('Time to create your first component', { timeout: 120000 }).should('be.visible')
-    cy.get('.MuiContainer-root button').click(); // Need to add a id for the Create button
+    cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
+  }
+
+
+  static searchReuseComponent(componentData: ComponentData) {
+
+    const REPO_NAME = Utils.generateComponentName("repo");
+    cy.wait(5000)
+    cy.get('body').then(bdy => {
+      if (bdy.find('tbody').length > 0) {
+        let isFound: boolean = false;
+        const kk = bdy.find('p')
+        for (let i = 0; i < kk.length; i++) {
+          if (kk[i].innerText === componentData.componentName) {
+            isFound = true;
+            break;
+          }
+        }
+        if(!isFound){
+          GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+        }
+      }else{
+        GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+      }
+    })
+  }
+
+  static createHttpProxyAPI() {
+    this.waitForTemplateCardsToLoad();
+    cy.get('[data-testid="project-template-list-httpProxyApi"]')
+      .should("be.visible")
+      .click();
+
+  }
+
+  static navigateToComponents() {
+    cy.contains('← Components').click()
+  }
+
+  private static waitForTemplateCardsToLoad() {
+    cy.get('[data-cyid="scheduleTask"]')
+      .get('[data-testid="project-template-list-scheduleTask"]')
+      .should("be.enabled")
+      .get('[data-cyid="manualTrigger"]')
+      .get('[data-testid="project-template-list-manualTrigger"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpProxyApi"]')
+      .get('[data-testid="project-template-list-httpProxyApi"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpApi"]')
+      .get('[data-testid="project-template-list-httpApi"]')
+      .should("be.enabled")
+      .get('[data-cyid="httpApi"]');
+  }
+
+  static addComponent() {
+    cy.get('[data-cyid="create-component"]').click();
+  }
+
+  //Only used for Enterprise login TC
+  static addNewComponentEL() {
+    cy.get(".MuiContainer-root button").click({ multiple: true }); // Need to add a id for the Create button
   }
 }

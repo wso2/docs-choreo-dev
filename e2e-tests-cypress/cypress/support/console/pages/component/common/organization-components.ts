@@ -19,7 +19,7 @@ export class OrganizationComponent {
   static invitationEmail = Cypress.env("invitationUserEmail");
 
   static navigateToMembers() {
-    cy.get('[data-testid="/user-settings/organization/members"]').click();
+    cy.get('[data-cyid="members"]').click();
   }
 
   static navigateToGroups() {
@@ -34,16 +34,27 @@ export class OrganizationComponent {
   }
 
   static navigateToRoles() {
-    cy.get('[data-cyid="nav-link-roles"]').click({ force: true });
+    cy.get('[data-cy="/organization/roles"]').click();
+  }
+
+  static navigateToRoleMapping() {
+    cy.get('[data-cyid="nav-link-role-mappings"]').click({ force: true });
   }
 
   static verifyEmailIsNotDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should('not.exist')
-
+    cy.get(`td[value="${email}"]`).should("not.exist");
   }
 
   static verifyEmailIsDisplayed(email: string) {
-    cy.get(`td[value="${email}"]`).should('exist')
+    cy.get(`td[value="${email}"]`).should("exist");
+  }
+
+  static verifyGroupNameIsDisplayed(groupName: string) {
+    cy.get(`td[value="${groupName}"]`).should("exist");
+  }
+
+  static verifyGroupNameIsNotDisplayed(groupName: string) {
+    cy.get(`td[value="${groupName}"]`).should("not.exist");
   }
 
   static inviteMembers(email: string, ...roles) {
@@ -64,52 +75,71 @@ export class OrganizationComponent {
     cy.log("Invitation sent successfully");
   }
 
+  static addMappings(groupName: string, roles: string[]) {
+    cy.wait(300);
+    cy.get('[data-cyid="add-mappings"]').click();
+    cy.get('[data-cyid="text-field-add-group-name"]')
+      .should("be.visible")
+      .type(groupName);
+    cy.get('[data-cyid="text-field-add-group-name"]').should("be.visible");
+    cy.get('[data-cyid="select-roles"]').should("be.visible").click();
+    cy.wait(3000);
+    this.addRoles(roles);
+    cy.get("body").type("{esc}");
+    cy.get('[data-cyid="btn-add-mapping"]').click({ force: true });
+    cy.get('[data-cyid="btn-add-mapping"]').should("not.exist");
+    cy.log("Group role mapping added successfully");
+  }
+
   static deleteMember(email: string) {
     cy.contains("td", email).trigger("mouseover");
-    cy.get('tr>td>div>button').click();
-    cy.get('[data-cyid="btn-confirmation-dialog-blue"]').contains("Delete").click();
+    cy.get("tr>td>div>button").click();
+    cy.get('[data-cyid="btn-confirmation-dialog-blue"]')
+      .contains("Delete")
+      .click();
     cy.contains("td", email).should("not.exist");
     cy.log("Member deleted successfully");
   }
 
   static deleteInvitation(email: string) {
     const { handle } = Cypress.env("userData");
-    const token = Cypress.env("apim_token")
+    const token = Cypress.env("apim_token");
 
     const headers = {
-      authorization: `Bearer ${token}`
-    }
-    const deletePendingInvitation = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/invitations?email=${email}`
-    const getUsers = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users`
+      authorization: `Bearer ${token}`,
+    };
+    const deletePendingInvitation = `${Cypress.env(
+      "appSvcURL"
+    )}/v2/orgs/${handle}/invitations?email=${email}`;
+    const getUsers = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users`;
 
-
-    Utils.sendGetRequest(getUsers, headers).then(res => {
-      const list = res.body.list as []
-      const user = list.find(u => u["email"] === email)
-      cy.log(JSON.stringify(user))
+    Utils.sendGetRequest(getUsers, headers).then((res) => {
+      const list = res.body.list as [];
+      const user = list.find((u) => u["email"] === email);
+      cy.log(JSON.stringify(user));
 
       if (user) {
+        const { idpId } = user;
+        const deleteUserRequest = `${Cypress.env(
+          "appSvcURL"
+        )}/v2/orgs/${handle}/users/${idpId}`;
 
-        const { idpId } = user
-        const deleteUserRequest = `${Cypress.env("appSvcURL")}/v2/orgs/${handle}/users/${idpId}`
-
-        Utils.sendDeleteRequest(deleteUserRequest, headers).then(res => {
+        Utils.sendDeleteRequest(deleteUserRequest, headers).then((res) => {
           if (res.status === 200) {
-            cy.log("Deleted Invited User")
+            cy.log("Deleted Invited User");
           } else {
-            cy.log("User Has Not Invited Or Error")
+            cy.log("User Has Not Invited Or Error");
           }
-        })
+        });
       }
-      Utils.sendDeleteRequest(deletePendingInvitation, headers).then(res => {
+      Utils.sendDeleteRequest(deletePendingInvitation, headers).then((res) => {
         if (res.status === 200) {
-          cy.log("Deleted Invited User")
+          cy.log("Deleted Invited User");
         } else {
-          cy.log("User Has Not Invited Or Error")
+          cy.log("User Has Not Invited Or Error");
         }
-      })
-    })
-
+      });
+    });
   }
 
   static selectPendingInvitation() {
@@ -130,16 +160,13 @@ export class OrganizationComponent {
   }
 
   private static addRoles(roles: string[]) {
-
-
-    roles.forEach(v => {
-      cy.get('ul>li>div>span').each(e => {
+    roles.forEach((v) => {
+      cy.get("ul>li>div>span").each((e) => {
         if (e.text() === v) {
-          cy.wrap(e).scrollIntoView().click()
+          cy.wrap(e).scrollIntoView().click();
         }
-      })
-    })
-
+      });
+    });
   }
 
   static createRole(
@@ -155,8 +182,12 @@ export class OrganizationComponent {
     cy.get('[data-cyid="chip-role-tag"]').type(roleTag + "{enter}");
     cy.get('[data-cyid="btn-role-create"]').click({ force: true });
 
-    cy.get('[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]>span>input').check();
-    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]>span>input').focus().check();
+    cy.get(
+      '[data-cyid="checkbox-role-permission-APIM-PUBLISHER"]>span>input'
+    ).check();
+    cy.get('[data-cyid="checkbox-role-permission-APIM-SUBSCRIBER"]>span>input')
+      .focus()
+      .check();
 
     cy.log("Created Roles APIM-PUBLISHER and APIM-SUBSCRIBER");
     cy.get('[data-cyid="btn-create"]').click();
@@ -197,6 +228,9 @@ export class OrganizationComponent {
   static deleteRoleIfExists(roleName: string) {
     cy.get('[data-cyid="search-app"]').clear().type(roleName);
     cy.wait(2000);
+    cy.get('[data-testid="table-roles"]')
+      .contains("progressbar")
+      .should("not.exist");
     cy.get("td").then(($role) => {
       if (!$role.text().includes("No records to display")) {
         cy.contains("td", roleName).should("be.visible");
@@ -212,5 +246,44 @@ export class OrganizationComponent {
     cy.get('[data-cyid="btn-confirmation-dialog-blue"]').click();
     cy.contains("td", roleName).should("not.exist");
     cy.log("Role deleted successfully"!);
+  }
+
+  static deleteCreatedMapping(groupName: string) {
+    cy.wait(2000);
+    cy.contains("td", groupName).should("be.visible");
+    this.deleteSelectedMapping(groupName);
+  }
+
+  private static deleteSelectedMapping(groupName: string) {
+    cy.contains("td", groupName).trigger("mouseover");
+    cy.get('[data-cyid="btn-delete-mapping"]').click();
+    cy.log("Deleting the created Mapping");
+    cy.get('[data-cyid="btn-confirmation-dialog-red"]').click();
+    cy.contains("td", groupName).should("not.exist");
+    cy.log("Group role mapping deleted successfully"!);
+  }
+
+  static updateMappings(
+    groupName: string,
+    oldRoles: string[],
+    newRoles: string[]
+  ) {
+    const roles = oldRoles.concat(newRoles);
+    cy.get('[data-cyid="search-app"]').clear().type(groupName);
+    cy.contains("td", groupName).should("be.visible");
+    this.updateSelectedMapping(groupName, roles);
+  }
+
+  private static updateSelectedMapping(groupName: string, roles: string[]) {
+    cy.contains("td", groupName).trigger("mouseover");
+    cy.get('[data-cyid="btn-edit-mapping"]').click();
+    cy.get('[data-cyid="text-field-update-group-name"]').should("be.visible");
+    cy.get('[data-cyid="select-roles"]').should("be.visible").click();
+    cy.wait(3000);
+    this.addRoles(roles);
+    cy.get("body").type("{esc}");
+    cy.get('[data-cyid="btn-update-mapping"]').click({ force: true });
+    cy.get('[data-cyid="btn-update-mapping"]').should("not.exist");
+    cy.log("Group role mapping updated successfully");
   }
 }

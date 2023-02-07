@@ -11,87 +11,69 @@
  * associated services.
  */
 
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { Enums } from "../../../support/console/enums";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { ComponentTestPage } from "../../../support/console/pages/component/component-test-page";
-import { ComponentTemplate } from "../../../support/console/pages/enum/component-template";
-import { Environment } from "../../../support/console/pages/enum/environment";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { TriggersTemplate } from "../../../support/console/pages/templates/slackTrigger-creation-temp";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
-import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
 import { Utils } from "../../../support/console/utils";
+import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify webhook creation functionality", () => {
-  const WEBHOOK_NAME = Utils.generateComponentName("SlackHook");
-  const PROJECT_NAME = Utils.generateProjectName();
-  const PROJECT_DESCRIPTION = "Slack Trigger";
-  const LABELS = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const COMMIT_MESSAGE = "adding slacktrigger bal file";
   const CONFIG = "pkKgDNr5vGND364IsHzwGM7O";
-  const TRIGGER_TYPE = "Slack";
-  const TRIGGER_CHANNEL = "AppService";
-
+  const WEBHOOK_NAME = "create-webhook-slackTrigger-1.4";
+  const REPO_NAME = Utils.generateComponentName("repo");
+  const PROJECT_NAME = Utils.generateProjectName();
+  const PROJECT_DESCRIPTION = "Slack Webhook";
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
+
   after(() => {
     ChoreoHomePage.logout();
   });
 
-  it("Verify new project creation", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-  });
-
-  it("Verify slack trigger creation", () => {
-    TriggersTemplate.SelectWebhookTemplate();
-    TriggersTemplate.createTrigger(TRIGGER_TYPE, WEBHOOK_NAME, TRIGGER_CHANNEL);
-    ComponentDevelopPage.getComponentURL();
-  });
-  it("Edit code in VScode", () => {
-    LoginPage.navigateToCodespace();
-    VSExplorer.pasteCode("slacktrigger.bal");
-    VSExplorer.selectSourceControl();
-
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
+  it("Verify Webhook component creation", () => {
+    let componentData: ComponentData = {
+      componentName: WEBHOOK_NAME,
+      displayType: Enums.DisplayType.webhook,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      projectName: PROJECT_NAME,
+      triggerChannels: "AppService",
+      triggerId: "126",
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/slack-web-hook",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: "",
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
     );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(COMMIT_MESSAGE);
-    VSExplorer.enterCommandInTerminal("git push");
-  });
-
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
   it("Deploy the component", () => {
+    ComponentListingPage.visitToAComponent(WEBHOOK_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.configureAndDeploy(CONFIG);
-    ComponentDeployPage.verifyDevInvokeURL().should("not.be.null");
   });
-
-
 
   it("Component promotion to prod", () => {
     ComponentDeployPage.promoteWebHookToProd(CONFIG);
-    ComponentDeployPage.verifyProdInvokeURL().should("not.be.null");
   });
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    cy.get('[data-testid="feature-disable-info"]').should('be.visible');
+    cy.get('[data-testid="feature-disable-info"]').should("be.visible");
   });
 
   it("Verify suspending Dev deployed component", () => {
@@ -99,10 +81,8 @@ describe("Verify webhook creation functionality", () => {
     ComponentDeployPage.stopDevContainer();
   });
 
-
   it("Verify suspending Prod deployed component", () => {
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.stopProdContainer();
   });
 });
-

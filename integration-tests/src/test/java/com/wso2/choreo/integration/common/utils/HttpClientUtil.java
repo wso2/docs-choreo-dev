@@ -1,7 +1,9 @@
 package com.wso2.choreo.integration.common.utils;
 
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.Response;
+import com.wso2.choreo.integration.models.requestheader.HeaderValues;
+import com.wso2.choreo.integration.models.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -9,20 +11,27 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
-import java.util.logging.Logger;
+import java.util.Map;
 
+@Slf4j
 public class HttpClientUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(HttpClientUtil.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class.getName());
 
     private static Response sendRequest(HttpUriRequest request) {
+
         String responseBody = null;
         int statusCode = 0;
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build(); CloseableHttpResponse response = httpClient.execute(request)) {
@@ -30,9 +39,10 @@ public class HttpClientUtil {
             statusCode = response.getStatusLine().getStatusCode();
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity);
+                LOGGER.debug(responseBody);
             }
         } catch (IOException e) {
-            LOGGER.warning(e.getLocalizedMessage());
+            LOGGER.error(e.getLocalizedMessage());
         }
         return Response.builder().res(responseBody).statusCode(statusCode).build();
     }
@@ -54,6 +64,20 @@ public class HttpClientUtil {
         return sendRequest(request);
     }
 
+    public static Response httpPOSTFormData(String url, Map<String, String>  payload, String accessToken, String apiKey) {
+        HttpPost request = new HttpPost(url);
+        request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
+        request.setHeader("API-Key", apiKey);
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        if(!payload.isEmpty()){
+            for (String key: payload.keySet()){
+                entityBuilder.addPart(key, new StringBody(payload.get(key), ContentType.MULTIPART_FORM_DATA));
+            }
+        }
+        request.setEntity(entityBuilder.build());
+        return sendRequest(request);
+    }
+
     public static Response httpPUT(String url, String payload, String accessToken, String apiKey) throws IOException {
         HttpPut request = new HttpPut(url);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
@@ -63,11 +87,23 @@ public class HttpClientUtil {
         return sendRequest(request);
     }
 
+    public static Response httpPUT(String url, HttpEntity payload, HeaderValues headerValues)  {
+        HttpPut request = new HttpPut(url);
+        setHeader(request, headerValues);
+        request.setEntity(payload);
+        return sendRequest(request);
+    }
+
     public static Response httpDELETE(String url, String accessToken, String apiKey) {
         HttpDelete request = new HttpDelete(url);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
         request.setHeader("API-Key", apiKey);
         return sendRequest(request);
+    }
+
+    private static void setHeader(HttpUriRequest request, HeaderValues headerValues) {
+        Map<String, String> values = headerValues.getHeaderValues();
+        values.keySet().forEach(k -> request.setHeader(k, values.get(k)));
     }
 }

@@ -23,8 +23,11 @@ public final class Constant {
     public static final String OAUTH_TOKEN_EXCHANGE_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange";
     public static final String SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
     public static final String REQUESTED_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
-    public static final String OAUTH_SCOPES = "apim:api_manage apim:subscription_manage apim:tier_manage apim:admin " +
-            "apim:publisher_settings environments:view_prod environments:view_dev";
+    public static final String OAUTH_SCOPES = "apim:admin apim:api_manage apim:api_publish apim:api_settings " +
+            "apim:dcr:app_manage apim:document_manage apim:publisher_settings apim:subscription_manage " +
+            "apim:subscription_view apim:tier_manage choreo:component_manage choreo:deployment_manage " +
+            "choreo:dev_env_manage choreo:prod_env_manage choreo:project_manage choreo:role_manage " +
+            "choreo:user_manage environments:view_dev environments:view_prod apim:environment_manage";
 
     public static final String GRAPHQL_ENDPOINT_SUFFIX = "/graphql";
     public static final String TEST_PROJECT_NAME_PREFIX = "automationtestproject";
@@ -37,6 +40,10 @@ public final class Constant {
     public static final String DEV_ENVIRONMENT = "dev";
     public static final String PROD_ENVIRONMENT = "prod";
 
+    public static final String INVOKE_URL = "invokeUrl";
+
+    public static final String API_ID = "apiId";
+
     public static final String USER_CONNECTORS_ENDPOINT_SUFFIX = "/user-connectors";
     public static final String GITHUB_URL = "https://github.com/";
 
@@ -48,6 +55,8 @@ public final class Constant {
     public static final String DEFAULT_VERSION = "1.0.0";
     public static final String DEFAULT_ENDPOINT = "http://run.mocky.io/v2/5185415ba171ea3a00704eed";
     public static final String APPLICATION_JSON = "application/json";
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+
     public static final String ID = "id";
     public static final String API_VALIDATE_ENDPOINT = "/api/am/publisher/v2/apis/validate";
     public static final String APIS_ENDPOINT = "/api/am/publisher/v2/apis";
@@ -55,7 +64,7 @@ public final class Constant {
     public static final String ORGANIZATION_ID = "organizationId";
     public static final String QUERY = "query";
     public static long COMPONENT_CREATE_TIMEOUT = 30000;
-    public static long COMPONENT_DEPLOY_TIMEOUT_SECONDS = 120;
+    public static long COMPONENT_DEPLOY_TIMEOUT_SECONDS = 180;
 
     public static final String INSIGHTS_API_RESOURCE = "/insights/1.0.0/query-api";
     public static final String INSIGHTS_AUTH_API_RESOURCE = "/auth/v1/token";
@@ -70,10 +79,26 @@ public final class Constant {
     public static final int INDEX_OF_REVISION_TO_DELETE = 0;
     public static final int INDEX_OF_DEPLOYED_REVISION = MAX_API_REVISIONS_LIMIT_SETTINGS_PAGE - 1;
 
+
+
+
+    public enum region{
+
+        EU,
+        US
+    }
+
+
+
+    public enum  logType{
+        groupedlogsV2,
+        logsV2
+    }
     public enum displayType {
         restAPI,
         proxy,
-        webhook
+        webhook,
+        graphql
     }
     public enum apiLIifCycleState {
         Publish
@@ -107,5 +132,5 @@ public final class Constant {
 
     // Theme management constants
     public static final String THEME_ENDPOINT_SUFFIX = "/org-mgt/1.0.0/orgs/";
-    public static final String CDN_THEME_ENDPOINT = "https://choreodevdevportalcdn19.blob.core.windows.net/";
 }
+

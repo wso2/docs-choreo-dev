@@ -19,7 +19,6 @@ import { RestAPIProxyTemplate } from "../../../support/console/pages/templates/r
 import { Utils } from "../../../support/console/utils";
 
 describe("Create proxy api using existing url", () => {
-  const FILE_ID = "oasurl";
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
   const PROJECT_NAME = Utils.generateProjectName();
   const API_Name = Utils.generateComponentName("oas");
@@ -36,12 +35,8 @@ describe("Create proxy api using existing url", () => {
 
   it("Creating and publishing an API from open API specification", () => {
     cy.log("Starting API Creation using open API specification");
-    ProjectListingPage.createNewProject(
-      PROJECT_NAME,
-      PROJECT_DESCRIPTION
-    );
-    ProjectOverviewPage.addNewComponent();
-    RestAPIProxyTemplate.SelectHttpProxyAPITemplate();
+    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
+    ProjectOverviewPage.createHttpProxyAPI();
     RestAPIProxyTemplate.createOpenApi("", URL);
     RestAPIProxyTemplate.enterAPIdetails(
       API_Name,

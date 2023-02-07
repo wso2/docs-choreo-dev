@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 ################ Install emberstack reflector ########
-bash ../../reflector/install-reflector.sh
+bash reflector/install-reflector.sh

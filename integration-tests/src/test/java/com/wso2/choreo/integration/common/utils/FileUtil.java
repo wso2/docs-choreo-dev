@@ -1,5 +1,7 @@
 package com.wso2.choreo.integration.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,10 +13,11 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileUtil {
-private static final Logger fileUtilLogger = Logger.getLogger("FileUtil");
 
-    public static String readFile(String filePath) {
+
+@Slf4j
+public class FileUtil {
+    private static String readFile(String filePath) {
         Path file = Paths.get(filePath);
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream in = Files.newInputStream(file);
@@ -22,18 +25,17 @@ private static final Logger fileUtilLogger = Logger.getLogger("FileUtil");
                      new BufferedReader(new InputStreamReader(in))) {
             String line = null;
             while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
+                stringBuilder.append(line).append("\n");
             }
         } catch (IOException x) {
-            fileUtilLogger.log(Level.WARNING,x.getLocalizedMessage());
+           log.error(x.getMessage());
         }
-
         return stringBuilder.toString();
     }
 
     public static String readFileEncodedContent(String filePath){
-
         return Base64.getEncoder().encodeToString(readFile(filePath).getBytes());
     }
+
 
 }

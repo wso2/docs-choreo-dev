@@ -10,7 +10,8 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
  */
-
+const fs = require('fs')
+import { readFileSync } from 'fs'
 export class Utils {
   static oldProjectNamePrefix = "e2eproject";
   static projectNamePrefix = "automationtestproject";
@@ -111,9 +112,54 @@ export class Utils {
     });
   }
 
+  static isHostResolvable(url: string) {
+    const urlWithoutProtocol = url.replace("https://", "");
+    const slashIndex = urlWithoutProtocol.indexOf("/");
+    const domain = urlWithoutProtocol.substring(0, slashIndex);
+    const resource = urlWithoutProtocol.substring(
+      slashIndex,
+      urlWithoutProtocol.length
+    );
+
+    var options = {
+      host: domain,
+      port: 443,
+      path: resource,
+    };
+
+    const http = require("http");
+
+    http
+      .get(options, function (res) {
+        if (res.statusCode == 200) {
+          return true;
+        }
+      })
+      .on("error", function (e) {
+        return false;
+      });
+
+    return false;
+  }
+
   static sendPostRequest(url: string, headers, body) {
     const request = {
       method: "POST",
+      url,
+      headers,
+      body,
+      failOnStatusCode: false,
+    };
+    return cy.request(request).then((res) => {
+      return cy.wrap({ body: res.body, status: res.status }, { log: false });
+    });
+  }
+
+
+
+  static sendPutRequest(url: string, headers, body) {
+    const request = {
+      method: "PUT",
       url,
       headers,
       body,
@@ -136,40 +182,49 @@ export class Utils {
     });
   }
 
-  static sendDeleteRequest(url: string, headers: any = {}) {
+  static sendDeleteRequest(url: string, headers: any = {}, body?: any) {
     const request = {
       method: "DELETE",
       url,
+      body,
       headers,
-      failOnStatusCode: false,
+      failOnStatusCode: false
+      
     };
     return cy.request(request).then((res) => {
       return cy.wrap({ body: res.body, status: res.status }, { log: false });
     });
   }
 
-  static getInvokeUrl(urlLocation: number) {
-    return cy.get('[data-cyid="text-field-invoke-url"] input').should('be.visible').eq(urlLocation).invoke("attr", "value");
-  }
-
-
   static setBrowserCookie(isEPLogin: boolean = false) {
     const dateString = new Date().toISOString();
-    const cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`
-    document.cookie=cookie
-    cy.setCookie("OptanonAlertBoxClosed", dateString)
+    const cookie = `OptanonAlertBoxClosed=${dateString};SameSite=Lax;Secure`;
+    document.cookie = cookie;
+    cy.setCookie("OptanonAlertBoxClosed", dateString);
   }
 
-
   static paste(obj, code, enter) {
-    const pasteEvent = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
-      clipboardData: { getData: (type = 'text') => code, },
-    });
+    const pasteEvent = Object.assign(
+      new Event("paste", { bubbles: true, cancelable: true }),
+      {
+        clipboardData: { getData: (type = "text") => code },
+      }
+    );
     obj[0].dispatchEvent(pasteEvent);
     if (enter) {
       cy.wait(3000);
-      cy.wrap(obj).type('{enter}');
+      cy.wrap(obj).type("{enter}");
     }
   }
+
+  static isPerspectiveViewEnabled() {
+    const enablePerspectiveView = Cypress.env("enablePerspectiveView");
+    if (enablePerspectiveView != null) {
+      return enablePerspectiveView == true || enablePerspectiveView == "true";
+    }
+
+    return false;
+  }
+
 
 }

@@ -44,7 +44,12 @@ export class DevPortalHomePage {
   }
 
   static navigateToApisPage(): void {
-    cy.get("[data-testid=apis-appbar-btn]").should("be.visible").click();
+    cy.wait(5000)
+    cy.get("[data-testid=apis-appbar-btn]").click();
+  }
+
+  static navigateSelectAPI(apiName: string): void {
+    cy.get(`[data-testid="apiCard-${apiName}"`).click();
   }
 
   static navigateToPerApiView(apiName: string): void {

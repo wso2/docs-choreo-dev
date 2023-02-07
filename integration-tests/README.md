@@ -2,44 +2,39 @@
 
 ## 1. Setup
 
-1. Setup following configurations as environment variables
-   - CHOREO_ENDPOINT
-   - STS_ENDPOINT
-   - TEST_CHOREO_ORG_ID
-   - TEST_CHOREO_ORG_HANDLE
-   - TEST_CHOREO_ORG_UUID
-   - STS_CLIENT_ID
-   - STS_CLIENT_SECRET
+You can execute integration tests against your own Choreo account in Dev using the following method,
+
+1. Login to Choreo Console and check the response of the `/validate-user` call in the browser network tab and setup the following environment variables,
+      
+   - TEST_CHOREO_ORG_ID=<Your Org ID>
+   - TEST_CHOREO_ORG_UUID=<Your Org UUID>
+   - TEST_CHOREO_ORG_HANDLE=<Your Orh handle>
+    
+2. Setup following configurations as environment variables(Please talk to your EM or any QA team member to get these values for the respective env)
    - ALERT_MAIL_IMAP_PASS
-   - TEST_USER_EMAIL
-   - TEST_USER_PASSWORD
-   - ASGARDEO_ENDPOINT
-   - ASGARDEO_CLIENT_ID
-   - ASGARDEO_CLIENT_SECRET
+   - GITHUB_PAT
+   - GMAIL_API_CS
+   - GMAIL_API_REFRESH_TOKEN
+   - ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET
+   - ANOMALY_DETECTION_MAIL_IMAP_PASS
+   - ANOMALY_DETECTION_TEST_USER_PASSWORD
 
-(Optional) Setup the following configurations as environment variables if you need to run the anomaly detection test
 
-- ANOMALY_DETECTION_ORG_ID
-- ANOMALY_DETECTION_ORG_UUID
-- ANOMALY_DETECTION_PROJECT_ID
-- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_ID
-- ANOMALY_DETECTION_PASSTHROUGH_CLIENT_SECRET
-- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID
-- ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_NAME
-- ANOMALY_DETECTION_PASSTHROUGH_INVOKE_URL
-- ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID
-- ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID
-- ANOMALY_DETECTION_MAIL_IMAP_PASS
-- ANOMALY_DETECTION_TEST_USER_EMAIL
-- ANOMALY_DETECTION_TEST_USER_PASSWORD
-- ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE
+## 2. Run all tests
 
-Please talk to your EM or any QA team member to get these dev test user credentials.
+1. Login to Choreo Console and check the response of the STS `/token` call in the browser network tab and copy the value of the access_token
+2. Navigate to the `integration-tests` directory
+3. run `mvn clean verify -DToken=<Your access_token>` to execute the tests
+4. Note the access token is only valid for 1 hour, so you will need to get a new access token to run the tests after the expiry takes place
 
-## 2. Run
+## 3. Run a specific test in InteliJ
 
-1. Navigate to the `integration-tests` directory
-2. run `mvn clean verify`
+1. Repeat the previous steps 1 to get you access_token.
+2. Right-click on the test you want to run and select the `Modify Run Configuration...` option.
+3. Go to `JVM Settings > VM Options` and enter the following before clicking on OK,
+     `-ea -DToken=<Your access_token>`
+4. Now you can run the individual test through InteliJ
+            
 
 ## 3. Directory Structure
 

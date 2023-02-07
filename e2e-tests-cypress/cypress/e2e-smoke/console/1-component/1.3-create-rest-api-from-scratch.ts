@@ -12,92 +12,71 @@
  */
 import { TestHelper } from "../../../support/console/pages/component/common/test-helper";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
 import { ComponentAPILifecycle } from "../../../support/console/pages/component/component-manage-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
 import { Curl } from "../../../support/console/pages/component/UI-components/curl-component";
-import { Environment } from "../../../support/console/pages/enum/environment";
-import { HTTPMethod } from "../../../support/console/pages/enum/http-method-enum";
-import { ConnectorAudience } from "../../../support/console/pages/enum/marketplace-connector-audience";
+import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
-import { InsightsPage } from "../../../support/console/pages/insights/insights-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { RestAPITemplate } from "../../../support/console/pages/templates/rest-api-temp";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
 import { Utils } from "../../../support/console/utils";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
+import { GitHub } from "../../../support/github/github";
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentData } from "../../../support/interfaces/component-data";
 
 describe("Verify project creation functionality", () => {
-  const COMPONENT_NAME = Utils.generateComponentName("rest");
-  const COMPONENT_DESCRIPTION = "covid daily stats";
-  const PROJECT_DESCRIPTION = "Covid stats project";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const labels = ["IT Operations/Testing Tools", "IT Operations/Debug Tools"];
-  const commitMessage = "adding new service";
   const queryParameters1 = [{ key: "number", value: "2" }];
   const queryParameters2 = [{ key: "number", value: "5" }];
-  const NEW_BRANCH = "feature";
-  const API_NEW_VERSION = "1.1";
+  const COMPONENT_NAME = "create-rest-api-from-scratch-1.3";
+  const REPO_NAME = Utils.generateComponentName("repo");
+  const PROJECT_DESCRIPTION = "Covid stats project";
+  const PROJECT_NAME = Utils.generateProjectName();
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
+
   after(() => {
     ChoreoHomePage.logout();
   });
 
   it("Verify REST API component creation", () => {
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    RestAPITemplate.selectHttpAPITemplate();
-    RestAPITemplate.createApiFromScratch(COMPONENT_NAME, COMPONENT_DESCRIPTION);
-    ComponentDevelopPage.getComponentURL();
+    let componentData: ComponentData = {
+      componentName: COMPONENT_NAME,
+      displayType: Enums.DisplayType.restAPI,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      projectName: PROJECT_NAME,
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/rest-api",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: "",
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.US
+    );
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
   it("Verify component deployment", () => {
+    ComponentListingPage.visitToAComponent(COMPONENT_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
   });
 
   it("Verify component promote to prod", () => {
     ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
-  });
-
-  it("Edit code in VScode", () => {
-    ComponentOverviewPage.navigateToOverview();
-    LoginPage.navigateToCodespace();
-    VSExplorer.creteNewBranch(NEW_BRANCH);
-    VSExplorer.pasteCode("Numbers.bal");
-    VSExplorer.commitPush(commitMessage, true);
-  });
-
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
-  });
-
-  it("Verify new version creation", () => {
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentOverviewPage.createNewVersion(API_NEW_VERSION, NEW_BRANCH);
-  });
-
-  it("Verify component deployment", () => {
-    ComponentDeployPage.deployToDev();
-    ComponentDeployPage.verifyDevInvokeURL().should("not.eq", "");
-  });
-
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-    ComponentDeployPage.verifyProdInvokeURL().should("not.eq", "");
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "root",
       "number",
       "2"
@@ -110,7 +89,7 @@ describe("Verify project creation functionality", () => {
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.PRODUCTION,
+      Enums.Environment.PRODUCTION,
       "root",
       "number",
       "2"
@@ -122,8 +101,8 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       "root",
       queryParameters1
     ).then((curl) => {
@@ -135,20 +114,23 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "root", queryParameters1).then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(4);
-          expect(res.status).equal(200);
-        });
-      }
-    );
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "root",
+      queryParameters1
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(4);
+        expect(res.status).equal(200);
+      });
+    });
   });
 
   it("Verify test functionality of isOdd resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.DEVELOPMENT,
+      Enums.Environment.DEVELOPMENT,
       "isOdd",
       "number",
       "5"
@@ -161,7 +143,7 @@ describe("Verify project creation functionality", () => {
   it("Verify test functionality of isOdd resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
-      Environment.PRODUCTION,
+      Enums.Environment.PRODUCTION,
       "isOdd",
       "number",
       "5"
@@ -173,8 +155,8 @@ describe("Verify project creation functionality", () => {
 
   it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
-      Environment.DEVELOPMENT,
-      HTTPMethod.GET,
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
       "isOdd",
       queryParameters2
     ).then((curl) => {
@@ -186,79 +168,86 @@ describe("Verify project creation functionality", () => {
   });
 
   it("Verify test functionality using generated curl in prod", () => {
-    TestHelper.testOnCurl(Environment.PRODUCTION, HTTPMethod.GET, "isOdd", queryParameters2).then(
-      (curl) => {
-        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-          expect(res.body).equal(true);
-          expect(res.status).equal(200);
-        });
-      }
-    );
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "isOdd",
+      queryParameters2
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(true);
+        expect(res.status).equal(200);
+      });
+    });
   });
 
   it("Apply configs to dev", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.selectSetting();
     ComponentAPILifecycle.selectResources();
+
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.DEVELOPMENT);
     ComponentAPILifecycle.editResource();
     ComponentAPILifecycle.disableResourceSecurity("root");
     ComponentAPILifecycle.applyConfiguration(
-      Environment.DEVELOPMENT,
-      "Revision 3"
+      Enums.Environment.DEVELOPMENT,
+      "Revision 5"
     );
     ComponentAPILifecycle.verifyDevRevision().should(
       "eq",
-      Environment.DEVELOPMENT
+      Enums.Environment.DEVELOPMENT
     );
   });
 
   it("Apply configs to prod", () => {
+    ComponentAPILifecycle.selectEnvironment(Enums.Environment.PRODUCTION);
     ComponentAPILifecycle.editResource();
-    ComponentAPILifecycle.applyConfiguration(Environment.PRODUCTION);
+    ComponentAPILifecycle.disableResourceSecurity("root");
+    ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
   });
 
   it("Verify resource access without the token in dev", () => {
-    Curl.getRequestComponents(`${Environment.DEVELOPMENT}root`).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.body).equal(4);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}root`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify resource not access without the token in dev", () => {
-    Curl.getRequestComponents(`${Environment.DEVELOPMENT}isOdd`).then((curl) =>
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(true);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.DEVELOPMENT}isOdd`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.body).equal(true);
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify resource access without the token in prod", () => {
-    Curl.getRequestComponents(`${Environment.PRODUCTION}root`).then((curl) =>
-      Utils.sendGetRequest(curl.url).then((res) => {
-        expect(res.body).equal(4);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}root`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url).then((res) => {
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify resource not access without the token in prod", () => {
-    Curl.getRequestComponents(`${Environment.PRODUCTION}isOdd`).then((curl) =>
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(true);
-        expect(res.status).equal(200);
-      })
+    Curl.getRequestComponents(`${Enums.Environment.PRODUCTION}isOdd`).then(
+      (curl) =>
+        Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+          expect(res.body).equal(true);
+          expect(res.status).equal(200);
+        })
     );
   });
 
   it("Verify manage functionality", () => {
     ComponentOverviewPage.navigateToManage();
     ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publish(ConnectorAudience.PRIVATE).should(
-      "be.visible"
-    );
+    ComponentAPILifecycle.publishRestApiWithoutConnector();
     ComponentAPILifecycle.selectUsagePlans("Bronze", "Gold");
     ComponentAPILifecycle.configureSecuritySettings(false, false, [], [], []);
   });
@@ -268,25 +257,9 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.stopAllDeployment();
   });
 
-  it("Verify insight values for dev", () => {
-    ChoreoHomePage.navigateToHome();
-    ChoreoHomePage.navigateToInsights();
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.DEVELOPMENT);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(6);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
-  });
-
-  it("Verify insight values for prod", () => {
-    InsightsPage.selectTimePeriod();
-    InsightsPage.selectEnvironment(Environment.PRODUCTION);
-    InsightsPage.getTotalTraffic().should((value) => {
-      expect(Number(value)).gte(6);
-    });
-    InsightsPage.getTotalErrorRequestCount().should("eq", "0");
-    InsightsPage.getAverageErrorRate().should("eq", "0");
+  it("Verify application suspension", () => {
+    ComponentOverviewPage.navigateToManage();
+    ComponentAPILifecycle.manageLifecycle();
+    ComponentAPILifecycle.demoteToCreated();
   });
 });

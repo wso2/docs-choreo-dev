@@ -13,6 +13,8 @@
 
 package com.wso2.choreo.integration.common;
 
+import com.wso2.choreo.integration.apis.balregistry.BallerinaRegistry;
+import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.Constant;
@@ -31,6 +33,9 @@ public class DataCleaner  {
 
     public static void removeOldTestData(ChoreoOrganization org) throws Exception {
         TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+
+        BallerinaRegistry.deleteOldConnectors(tokenHandler.getTestTokenForCPAPIs());
+
         List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
 
         log.info("Total number of projects: " + projects.size());
@@ -40,8 +45,8 @@ public class DataCleaner  {
         for (ChoreoProject project: projects) {
             String name = project.getName();
 
-            if (name.contains(Constant.TEST_OLD_PROJECT_NAME_PREFIX) ||
-                name.contains(Constant.TEST_PROJECT_NAME_PREFIX)) {
+            if (name.startsWith(Constant.TEST_OLD_PROJECT_NAME_PREFIX) ||
+                name.startsWith(Constant.TEST_PROJECT_NAME_PREFIX)) {
 
                 ++numberOfTestProjects;
                 if (shouldProjectBeDeleted(project.getName())) {
@@ -57,7 +62,7 @@ public class DataCleaner  {
                 }
             }
         }
-
+        GitHub.deleteTestProjects();
         log.info("Total number of test projects: " + numberOfTestProjects);
         log.info("Total number of test projects deleted: " + numberOfTestProjectsDeleted);
     }

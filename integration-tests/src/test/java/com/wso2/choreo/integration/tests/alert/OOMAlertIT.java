@@ -34,7 +34,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
     private RestAPIBasedEmailUtils restAPIBasedEmailUtils;
 
     @BeforeClass
-    public void beforeClass() throws Exception {
+    public void setup_OOMAlertIT() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         restAPIBasedEmailUtils = new RestAPIBasedEmailUtils(Configuration.getConfig(ConfigDefinition.GMAIL_API_CK),
                 Configuration.getConfig(ConfigDefinition.GMAIL_API_CS),
@@ -43,7 +43,7 @@ public class OOMAlertIT extends TestNGCitrusSpringSupport {
 
     @Test
     @CitrusTest
-    public void testImmediateAlert() throws Exception {
+    public void immediateAlert_OOMAlertIT() throws Exception {
         String appName = UUID.randomUUID().toString();
         AlertResponse resData = AlertNotifier.triggerImmediateAlert(appName,accessToken);
 

@@ -17,12 +17,14 @@ common:
   CHOREO_ENDPOINT: https://app.st.choreo.dev
   CHOREO_CP_PROJECTS_ENDPOINT: https://apis.st.choreo.dev/projects/1.0.0
   CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.st.choreo.dev/v90f
+  BAL_REGISTRY_URL: https://api.staging-central.ballerina.io/2.0/registry
   GITHUB_ENDPOINT: https://api.github.com
   GITHUB_ORG: choreo-test-apps
   #GITHUB_PAT:
   GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
   #GMAIL_API_CS:
   #GMAIL_API_REFRESH_TOKEN:
+  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_stage.json
 insights:
   INSIGHTS_ENDPOINT: https://analytics-event-auth.st.choreo.dev
   INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
@@ -47,3 +49,5 @@ anomalyDetection:
   #ANOMALY_DETECTION_TEST_USER_PASSWORD:
 themeManagement:
   THEME_ENDPOINT: https://apis.st.choreo.dev
+  CDN_THEME_ENDPOINT: https://choreostgdevportalcdn96.blob.core.windows.net/
+

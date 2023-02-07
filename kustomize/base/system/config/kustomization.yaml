@@ -1,8 +1,8 @@
 configMapGenerator:
   - name: cm-test-assistant
     behavior: create
-    files:
-      - test-assistant/models.properties
+    literals:
+      - TEMP_DATA_DIR=/temp-data-dir/
   - name: env-workspace-manager-shared # shared workspace-manager configs across environments
     behavior: create
     literals:
@@ -39,6 +39,7 @@ configMapGenerator:
       - NEGOTIATOR_GRPC_ADDRESS=negotiator:9092
       - APPSERVICE_GRPC_ADDRESS=app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
+      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
   - name: cm-frontend
     behavior: create
     literals:
@@ -103,6 +104,7 @@ configMapGenerator:
       - AZURE_ACTIVEDIRECTORY_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
       - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
       - RUDDER_ADDRESS=http://dp-rudder:80
+      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
   - name: cm-connectords-cp
     behavior: create
     literals:
@@ -265,6 +267,7 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_URL=http://dp-rudder:80
+      - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
   - name: cm-dp-rudder
     behavior: create
     literals:
@@ -378,6 +381,22 @@ configMapGenerator:
     behavior: create
     files:
       - subscriptions/Config.toml
+  - name: cm-file-api-server
+    behavior: create
+    files:
+      - runtime/api-server.yaml
+  - name: cm-file-app-service
+    behavior: create
+    files:
+      - runtime/app-service.yaml
+  - name: cm-file-app-deployer
+    behavior: create
+    files:
+      - runtime/app-deployer.yaml
+  - name: cm-file-workspace-manager
+    behavior: create
+    files:
+      - runtime/workspace-manager.yaml
   - name: cm-file-step-enforcer
     behavior: create
     files:
@@ -399,3 +418,37 @@ configMapGenerator:
     behavior: create
     files:
       - negotiator/Config.toml
+  - name: cm-cio-internal-metric-collector
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
+      - CIO_PROXY_URL="http://cio-event-collector-service:8080"
+  - name: cm-cio-query-api
+    behavior: create
+    literals:
+      - CIO_ADX_DB="cio-metrics"
+  - name: cm-file-cio-event-collector
+    behavior: create
+    files:
+      - cio-dashboard/event-collector-service/Config.toml
+  - name: cm-file-cio-internal-metric-collector
+    behavior: create
+    files:
+      - cio-dashboard/internal-metric-collector/Config.toml
+  - name: cm-file-cio-query-api
+    behavior: create
+    files:
+      - cio-dashboard/query-api/Config.toml
+  - name: cm-file-cio-incident-configurator
+    behavior: create
+    files:
+      - cio-dashboard/incident-configurator/Config.toml
+  - name: cm-cio-incident-configurator
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
+  - name: cm-file-choreo-org-stat-data-pipeline
+    behavior: create
+    files:
+      - choreo-org-stat-data-pipeline/Config.toml
+

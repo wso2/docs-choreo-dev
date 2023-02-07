@@ -13,65 +13,61 @@
 
 import { LONG_TIME } from "../../../support/console/constants";
 import { ComponentDeployPage } from "../../../support/console/pages/component/component-deploy";
-import { ComponentDevelopPage } from "../../../support/console/pages/component/component-develop-page";
+import { ComponentListingPage } from "../../../support/console/pages/component/component-listing-page";
 import { ComponentObservePage } from "../../../support/console/pages/component/component-observe-page";
 import { ComponentOverviewPage } from "../../../support/console/pages/component/component-overview-page";
-import { Environment } from "../../../support/console/pages/enum/environment";
+import { Enums } from "../../../support/console/enums";
 import { ChoreoHomePage } from "../../../support/console/pages/home/home-page";
 import { LoginPage } from "../../../support/console/pages/login-page";
-import { ProjectOverviewPage } from "../../../support/console/pages/projects/project-overview";
 import { ProjectListingPage } from "../../../support/console/pages/projects/projects-listing-page";
-import { ScheduleTask } from "../../../support/console/pages/templates/schedule-task-template";
-import { VSExplorer } from "../../../support/console/pages/vscod-editor/vs-explorer";
-import { VSSourceControl } from "../../../support/console/pages/vscod-editor/vs-source-control";
+
+import { REUSABLE_PROJECT_NAME } from "../../../support/devportal/constants";
 import { Utils } from "../../../support/console/utils";
+import { GitHub } from "../../../support/github/github";
+import { GraphQL } from "../../../support/console/apis/graphql";
+import { ComponentData } from "../../../support/interfaces/component-data";
 
-describe("Schedule task", () => {
-
-  const PROJECT_DESCRIPTION = "sample oas flow scenario";
-  const PROJECT_NAME = Utils.generateProjectName();
-  const API_Name = Utils.generateComponentName("sch");
-  const commitMessage = "adding task method";
+describe("Create Schedule Trigger", () => {
+  const SCHEDULE_NAME = "create-ScheduleTrigger-1.7";
   const EXPECTED_RESULT =
     '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}';
+  const REPO_NAME = Utils.generateComponentName("repo");
+  const PROJECT_NAME = Utils.generateProjectName();
+  const PROJECT_DESCRIPTION = "Internal API Test";
 
   before(() => {
     LoginPage.login();
-    ChoreoHomePage.switchOrganization();
   });
+
   after(() => {
     ChoreoHomePage.logout();
   });
 
-  it("Creating a schedule task", () => {
-    cy.log("Starting schedule task creation");
-    ProjectListingPage.createNewProject(PROJECT_NAME, PROJECT_DESCRIPTION);
-    ProjectOverviewPage.addNewComponent();
-    ScheduleTask.selectTask();
-    ScheduleTask.createTask(API_Name, PROJECT_DESCRIPTION);
-    ComponentDevelopPage.getComponentURL();
-  });
-
-  it("Verify code edit in vscode", () => {
-    LoginPage.navigateToCodespace();
-    VSExplorer.pasteCode("scheduletask.bal");
-    VSExplorer.selectSourceControl();
-    VSExplorer.enterCommandInTerminal(
-      "bash /config/workspace/.githooks/pre-commit"
+  it("Verify Schedule Trigger component creation", () => {
+    let componentData: ComponentData = {
+      componentName: SCHEDULE_NAME,
+      displayType: Enums.DisplayType.scheduledTask,
+      accessibility: Enums.Accessibility.EXTERNAL,
+      projectName: PROJECT_NAME,
+      triggerChannels: "",
+      triggerId: null,
+      srcGitRepoUrl: "https://github.com/choreo-test-apps/schedule-trigger",
+      initializeAsBallerinaProject: false,
+      repositoryType: Enums.RepoType.UserManagedNonEmpty,
+      repositorySubPath: "",
+      sampleTemplate: "",
+    };
+    ProjectListingPage.createNewProject(
+      PROJECT_NAME,
+      PROJECT_DESCRIPTION,
+      Enums.Region.EU
     );
-    VSExplorer.enterCommandInTerminal(
-      "rm /config/workspace/.githooks/pre-commit"
-    );
-    VSSourceControl.commitChanges(commitMessage);
-    VSExplorer.enterCommandInTerminal("git push");
-  });
-
-  it("Verify component commits", () => {
-    LoginPage.reLoginToChoreo();
-
+    
+    GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
   it("Verify component deployment", () => {
+    ComponentListingPage.visitToAComponent(SCHEDULE_NAME);
     ComponentOverviewPage.navigateToDeploy();
     ComponentDeployPage.deployScheduleTask();
   });
@@ -85,12 +81,12 @@ describe("Schedule task", () => {
     ComponentObservePage.gotoLogs(LONG_TIME);
   });
   it("Verify dev env logs", () => {
-    ComponentObservePage.selectEnv(Environment.DEVELOPMENT);
+    ComponentObservePage.selectEnv(Enums.Environment.DEVELOPMENT);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 
-  it("Verify dev env logs", () => {
-    ComponentObservePage.selectEnv(Environment.PRODUCTION);
+  it("Verify prod env logs", () => {
+    ComponentObservePage.selectEnv(Enums.Environment.PRODUCTION);
     ComponentObservePage.verifyTextInLogs(EXPECTED_RESULT);
   });
 

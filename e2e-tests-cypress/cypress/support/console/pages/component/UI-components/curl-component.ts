@@ -1,5 +1,8 @@
 
-import { Environment } from "../../enum/environment";
+import { CurlData } from "../../../../interfaces/curl-data";
+import { Enums } from "../../../enums";
+
+
 
 export class Curl {
   static selectMethod(httpMethod: string) {
@@ -17,22 +20,49 @@ export class Curl {
     }
   }
 
-  static selectCurlEnvironment(env: Environment) {
+  static selectCurlEnvironment(env: Enums.Environment) {
 
     cy.get('[data-testid="env"]>div').click();
     cy.get('ul>li').contains(env).click();
-  
   }
-  static selectEnvironment(env: Environment) {
+
+  static selectEnvironment(env: Enums.Environment) {
     cy.get('[data-cyid="select-env"]').click()
     cy.get('[data-cyid="item-env-name"]').contains(env).click()
   }
 
   static getRequestComponents(env: string) {
     const curlData = Cypress.env(`${env}`);
+    let curl: CurlData = {
+      method: "",
+      url: "",
+      headers: {"api-key":""}
+    }
+    if (curlData) {
+      curl.headers = curlData["headers"]
+      curl.method = curlData["method"]
+      curl.url = curlData["url"]
+      return cy.wrap(curl)
+    }
 
-    if (curlData) { return cy.wrap(curlData); }
+    return cy.get("textarea").invoke("text")
+      .then((c) => {
+        const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
+        const arrayURL = modifiedURL.split(" ");
+        const url = arrayURL[1];
+        const apiKey = arrayURL[4];
+        const method = arrayURL[6];
+      
+        curl.headers["api-key"] = apiKey
+        curl.url = url
+        curl.method = method
+        Cypress.env(`${env}`, curl);
+        return cy.wrap(curl);
+      });
 
+  }
+
+  static getRequestComponentsDiscardPrevious(env: string) {
     return cy.get("textarea").invoke("text")
       .then((c) => {
         const modifiedURL = c.replace(/"/g, "").replace(/'/g, "");
@@ -44,7 +74,6 @@ export class Curl {
         Cypress.env(`${env}`, curl);
         return cy.wrap(curl);
       });
-
   }
 
   static enterPathParameter(pathParameter: string) {

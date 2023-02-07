@@ -59,12 +59,21 @@ public class BackendFailureAnomaly extends TestNGCitrusSpringSupport {
   private final static Logger log = LoggerFactory.getLogger(BackendFailureAnomaly.class);
 
   @BeforeClass
-  public void beforeClass() throws InterruptedException, IOException, TokenRetrievalException, RedeployException, ComponentDeploymentStatusCheckException, ComponentDeploymentTimeoutException, GetDeploymentsStatusCheckException {
+  public void beforeClass() throws  Exception {
+      invokeAccessTokenHandler =  new TokenHandler.Builder(
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE),
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_USER_EMAIL),
+              Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_USER_PASSWORD))
+              .asgardeoClientId(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_ID))
+              .asgardeoClientSecret(Configuration.getConfig(ConfigDefinition.ASGARDEO_CLIENT_SECRET))
+              .cpAppClientId(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_ID))
+              .cpAppClientSecret(Configuration.getConfig(ConfigDefinition.CP_APP_CLIENT_SECRET)).build();
+
       String orgUuid = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_UUID);
       String passthorughVersionId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_VERSION_ID);
       orgHandler = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_TEST_CHOREO_ORG_HANDLE);
 
-      projectsAPIAccessToken = TestContext.getAnomalyDetectionUserTokenHandler().getTestTokenForCPAPIs();
+      projectsAPIAccessToken = invokeAccessTokenHandler.getTestTokenForCPAPIs();
       passthroughComponentId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_COMPONENT_ID);
       passthroughReleaseId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PASSTHROUGH_RELEASE_ID);
       projectId = Configuration.getConfig(ConfigDefinition.ANOMALY_DETECTION_PROJECT_ID);
