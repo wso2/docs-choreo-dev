@@ -268,6 +268,7 @@ configMapGenerator:
     literals:
       - RUDDER_URL=http://dp-rudder:80
       - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
+      - DELETION_PERIOD_IN_MONTHS=3
   - name: cm-dp-rudder
     behavior: create
     literals:
@@ -325,6 +326,8 @@ configMapGenerator:
       - AZURE_TENANT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
       - AZURE_CLIENT_ID="08eae7d4-cdcb-400d-894e-b27d66419876"
       - RUDDER_HOST="http://dp-rudder:80"
+      - EMAIL_USER_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_USERNAME"
+      - EMAIL_PASSWORD_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_PASSWORD"
   - name: cm-file-lowcode-parser
     behavior: create
     files:
@@ -451,4 +454,8 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-org-stat-data-pipeline/Config.toml
-
+  - name: cm-file-crypto-key-service
+    behavior: create
+    files:
+      - crypto-key-service/Config.toml
+      

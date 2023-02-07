@@ -74,7 +74,7 @@ export class Apis {
     cy.get("#outlined-search-bar-api-listing")
       .focus()
       .type(`${textApiName}{enter}`);
-    cy.get(`[data-testid="apiCard-${textApiName}"`).last().click();
+    cy.get(`[data-testid="apiCard-${textApiName}"`).click();
   }
 
   private static getInvokeUrl() {

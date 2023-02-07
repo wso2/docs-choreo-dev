@@ -6,18 +6,18 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    choreo.component: dp-cloud-manager
-    choreo.dataplane: "true"
-  name: dp-cloud-manager
+    choreo.component: crypto-key-service
+  name: crypto-key-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: dp-cloud-manager
+      choreo.component: crypto-key-service
   template:
     metadata:
       labels:
-        choreo.component: dp-cloud-manager
+        choreo.component: crypto-key-service
+        antiaffinity: crypto-key-service
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -27,23 +27,16 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dp-cloud-manager
+        - name: crypto-key-service
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/dp-cloud-manager:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-crypto-key-service:latest
           resources:
             limits:
-              cpu: 550m
-              memory: 550Mi
+              cpu: 600m
+              memory: 600Mi
             requests:
-              cpu: 500m
-              memory: 500Mi
-          envFrom:
-            - configMapRef:
-                name: env-dp-cloud-manager
-            - configMapRef:
-                name: cm-dp-cloud-manager
-            - secretRef:
-                name: secret-dp-cloud-manager
+              cpu: 600m
+              memory: 600Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
@@ -55,7 +48,7 @@ spec:
               drop:
                 - all
           ports:
-            - containerPort: 3200
+            - containerPort: 9091
               name: http-port
               protocol: TCP
           readinessProbe:
@@ -65,7 +58,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /healthz
+              path: /cryptokeyservice/health
               port: http-port
           livenessProbe:
             initialDelaySeconds: 10
@@ -74,22 +67,17 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /healthz
+              path: /cryptokeyservice/health
               port: http-port
           volumeMounts:
-            - name: secret-dp-cloud-manager
-              mountPath: /mnt/csi/secret-dp-cloud-manager
-              readOnly: true
-      volumes:
-        - name: secret-dp-cloud-manager
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-dp-cloud-manager
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-crypto-key-service
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
@@ -99,5 +87,5 @@ spec:
                   - key: antiaffinity
                     operator: In
                     values:
-                      - dp-cloud-manager
+                      - crypto-key-service
               topologyKey: kubernetes.io/hostname

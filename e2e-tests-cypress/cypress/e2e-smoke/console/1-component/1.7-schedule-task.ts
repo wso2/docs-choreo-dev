@@ -62,6 +62,7 @@ describe("Create Schedule Trigger", () => {
       PROJECT_DESCRIPTION,
       Enums.Region.EU
     );
+    
     GraphQL.createComponentWithRepo(componentData, REPO_NAME);
   });
 
