@@ -48,7 +48,7 @@ spec:
               drop:
                 - all
           ports:
-            - containerPort: 3200
+            - containerPort: 9091
               name: http-port
               protocol: TCP
           readinessProbe:
