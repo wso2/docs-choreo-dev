@@ -37,9 +37,6 @@ spec:
             requests:
               cpu: 600m
               memory: 600Mi
-          envFrom:
-            - configMapRef:
-                name: cm-crypto-key-service
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001
@@ -72,7 +69,15 @@ spec:
             httpGet:
               path: /health
               port: http-port
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
       restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-crypto-key-service
       serviceAccountName: sa-choreo-default
       affinity:
         podAntiAffinity:
