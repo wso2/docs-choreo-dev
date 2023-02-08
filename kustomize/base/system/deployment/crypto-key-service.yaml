@@ -29,7 +29,7 @@ spec:
       containers:
         - name: crypto-key-service
           imagePullPolicy: Always
-          image: choreocontrolplane.azurecr.io/choreoipaas/crypto-key-service:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-crypto-key-service:latest
           resources:
             limits:
               cpu: 600m
