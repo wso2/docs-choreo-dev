@@ -58,7 +58,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /health
+              path: /cryptokeyservice/health
               port: http-port
           livenessProbe:
             initialDelaySeconds: 10
@@ -67,7 +67,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /health
+              path: /cryptokeyservice/health
               port: http-port
           volumeMounts:
             - name: config
