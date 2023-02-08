@@ -328,6 +328,13 @@ configMapGenerator:
       - RUDDER_HOST="http://dp-rudder:80"
       - EMAIL_USER_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_USERNAME"
       - EMAIL_PASSWORD_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_PASSWORD"
+  - name: cm-cdn-tlscert-synchronizer
+    behavior: create
+    literals:
+      - TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - TLS_KEY_PATH=/mnt/tls.key
+      - TLS_CERT_PATH=/mnt/tls.crt
+      - KEYVAULT_NAME=shared-fe-apps-cdn-60
   - name: cm-file-lowcode-parser
     behavior: create
     files:
