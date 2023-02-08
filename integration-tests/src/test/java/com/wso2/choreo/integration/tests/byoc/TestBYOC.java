@@ -37,7 +37,7 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void setup_TestBYOC() throws Exception {
-        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+       accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ChoreoProject project = GraphQL.createProject(accessToken);
         projectId = project.getId();
     }
@@ -60,8 +60,17 @@ public class TestBYOC extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(choreoComponent);
     }
 
-
     @Test(dependsOnMethods = {"componentRetrieval_TestBYOC"})
+    @CitrusTest
+    public void addDeploymentConfiguration_TestBYOCEUDataPlane() throws Exception {
+        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+    }
+
+
+
+
+
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestBYOCEUDataPlane"})
     @CitrusTest
     public void deploy_TestBYOC() throws Exception {
         Status status = GraphQL.deployComponent(choreoComponent, accessToken);

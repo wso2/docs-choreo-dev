@@ -36,7 +36,6 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
 
 
-
     private String projectId;
     private String repoName;
     private String accessToken;
@@ -82,25 +81,22 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
     }
 
 
-
     @Test(dependsOnMethods = {"componentRetrieval_TestClientJwTValidation"})
+    @CitrusTest
+    public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
+        Orgs.getConfigurationMapping(choreoComponent, accessToken);
+        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
+    }
+
+
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestClientJwTValidation"})
     @CitrusTest
     public void deploy_TestClientJwTValidation() throws Exception {
         Status status = GraphQL.deployComponent(choreoComponent, accessToken);
         Assert.assertTrue(status.isSuccess());
     }
 
-
-
     @Test(dependsOnMethods = {"deploy_TestClientJwTValidation"})
-    @CitrusTest
-    public void addDeploymentConfiguration_TestClientJwTValidation() throws Exception {
-        Orgs.getConfigurationMapping(choreoComponent,accessToken);
-        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
-    }
-
-
-    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestClientJwTValidation"})
     @CitrusTest
     public void deploymentStatusByVersion_TestClientJwTValidation() throws Exception {
         GraphQL.deploymentStatusByVersion(choreoComponent, accessToken);
@@ -145,13 +141,6 @@ public class TestClientJwTValidation extends TestNGCitrusSpringSupport {
         ChoreoComponent[] components = GraphQL.getProjectComponents(projectId, accessToken);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK.value());
         Assert.assertEquals(components.length, 0);
-    }
-
-    @Test(dependsOnMethods = {"deleteComponent_TestClientJwTValidation"}, alwaysRun = true)
-    @CitrusTest
-    public void deleteRepo_TestClientJwTValidation() {
-        Response response = GitHub.deleteGitHubRepo(repoName);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT.value());
     }
 
 }

@@ -156,7 +156,7 @@ public class ProxyApiIT extends TestNGCitrusSpringSupport {
     public void promoteProxyAPI_ProxyApiIT() throws NoLatestApiVersionFoundException, IOException {
         String revisionId = proxyAPIBuild.getBuilds()[0].getRevisionId();
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
-        APICreator.promoteProxyAPI(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(), prodEnv.getId(), revisionId, buildId, proxyAPI.getId(), accessToken);
+        APICreator.promoteProxyAPI(choreoComponent.getId(), choreoComponent.getLatestApiVersion().getId(),devEnv.getId(), prodEnv.getId(), buildId,accessToken);
     }
 
     @Test(dependsOnMethods = {"promoteProxyAPI_ProxyApiIT"})
