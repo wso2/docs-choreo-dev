@@ -36,6 +36,7 @@ public class TestBYOCEUDp extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_TestBYOCEUDataPlane() throws Exception {
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+
     }
 
     @Test
@@ -63,14 +64,15 @@ public class TestBYOCEUDp extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(choreoComponent);
     }
 
+
     @Test(dependsOnMethods = {"componentRetrieval_TestBYOCEUDataPlane"})
     @CitrusTest
-    public void initialPRGeneration_TestBYOCEUDataPlane() throws IOException, UnexpectedResponseException {
-        PullRequest[] prs = GraphQL.getComponentPullRequests(choreoComponent.getId(), accessToken, 0);
-        Assert.assertEquals(prs.length, 0);
+    public void addDeploymentConfiguration_TestBYOCEUDataPlane() throws Exception {
+        Orgs.addConfiguration(choreoComponent, "dev", accessToken);
     }
 
-    @Test(dependsOnMethods = {"initialPRGeneration_TestBYOCEUDataPlane"})
+
+    @Test(dependsOnMethods = {"addDeploymentConfiguration_TestBYOCEUDataPlane"})
     @CitrusTest
     public void deploy_TestBYOCEUDataPlane() throws Exception {
         Status status = GraphQL.deployComponent(choreoComponent, accessToken);

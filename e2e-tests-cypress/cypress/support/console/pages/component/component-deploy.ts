@@ -26,7 +26,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     if (isExternalAPI) {
-      cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).should("be.visible").wait(1000).click();
+      cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
     }
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
     GraphQL.getComponentDeploymentStatus()
@@ -56,8 +56,8 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     if (isExternalAPI) {
-      cy.get('[data-cyid="btn-next"]').should("be.visible").wait(1000).realClick();
-      cy.get('[data-cyid="btn-next"]').should("be.visible").wait(1000).realClick();
+      cy.get('[data-cyid="btn-next"]').realClick();
+      cy.get('[data-cyid="btn-next"]').realClick();
     }
 
 

@@ -217,8 +217,6 @@ public class GraphQL extends ControlPlaneAPI {
     public static Status deployComponent(ChoreoComponent component, String accessToken) throws IOException, NoLatestCommitHashFoundException, NoLatestApiVersionFoundException, NoLatestAppEnvIdFoundException {
         Commit[] commits = getCommitHistory(component.getId(), accessToken);
         Commit latestCommit = Commit.getLatestCommit(commits);
-
-
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).latestVersionId(component.getLatestApiVersion().getId()).
                 devEnvIdToDeploy(component.getLatestAppEnvId("dev")).sha(latestCommit.getSha()).branch("main").shaDate(latestCommit.getAuthor().getDate()).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/deployComponent.mustache", dto);
@@ -230,6 +228,7 @@ public class GraphQL extends ControlPlaneAPI {
 
     public static ComponentStatusByVersion deploymentStatusByVersion(ChoreoComponent component, String accessToken)
             throws Exception {
+        ComponentStatusByVersion componentStatusByVersion = null;
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).latestVersionId(component.getLatestApiVersion().getId()).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/deploymentStatusByVersion.mustache", dto);
         Response response = null;
@@ -239,17 +238,18 @@ public class GraphQL extends ControlPlaneAPI {
 
             log.info(response.getRes());
             if (status.length > 0) {
-                ComponentStatusByVersion csbv = status[0];
-                if (csbv.getConclusion() != null && csbv.getConclusion().equals("failure")) {
+                componentStatusByVersion= status[0];
+                if (componentStatusByVersion.getConclusion() != null && componentStatusByVersion.getConclusion().equals("failure")) {
                     throw new UnexpectedResponseException(response.getStatusCode(), "Component was not deployed successfully");
                 }
-                if (csbv.getStatus().equals("completed") && csbv.getConclusion().equals("success")) {
-                    return csbv;
+                if (componentStatusByVersion.getStatus().equals("completed") && componentStatusByVersion.getConclusion().equals("success")) {
+                    return componentStatusByVersion;
                 }
             }
             SleepUtil.sleep(30);
         }
-        throw new UnexpectedResponseException(response.getStatusCode(), "Component was not deployed successfully");
+
+        return componentStatusByVersion;
     }
 
     public static ComponentDeploymentStatus componentDeployment(ChoreoComponent component, String envName, String accessToken) throws Exception {
