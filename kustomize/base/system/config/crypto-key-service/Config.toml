@@ -1,0 +1,5 @@
+port = 9091
+keyAlgorithm = "RSA"
+keySize = 2048
+secretManagerBaseURL = "http://dp-secret-manager/api/v1"
+jwtJwksEndpoint = "{{.JWT_JWKS_ENDPOINT}}"
