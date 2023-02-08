@@ -453,4 +453,8 @@ configMapGenerator:
     behavior: create
     files:
       - choreo-org-stat-data-pipeline/Config.toml
-
+  - name: cm-file-crypto-key-service
+    behavior: create
+    files:
+      - crypto-key-service/Config.toml
+      
