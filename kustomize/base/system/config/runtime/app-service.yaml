@@ -445,3 +445,7 @@ pardotallUserList:
   tokenURL: {{.PARDOT_USER_REGISTRATION_TOKEN_URL}}
   pardotEndpoint: {{.PARDOT_USER_REGISTRATION_ENDPOINT}}
   pardotSvcURL: {{.PARDOT_USER_REGISTRATION_SVC_URL}}
+choreoDemoOrg:
+  enable: ${IS_CHOREO_DEMO_ORG_ENABLED}
+  demoOrgId: ${DEMO_ORG_ID}
+  role: ${DEMO_ORG_ROLE}
