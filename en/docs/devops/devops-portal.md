@@ -102,11 +102,11 @@ Follow these steps to create a volume mount:
 
     ![Volume mounts](../assets/img/devops-portal/volume-mounts.png){.cInlineImage-full}
 
-You can perform the following actions in the **Volume Mounts** pane:
+    You can perform the following actions in the **Volume Mounts** pane:
 
-- Create new volumes and mounts.
-- Delete existing volumes and mounts.
-- Search for volumes you have created.
+    - Create new volumes and mounts.
+    - Delete existing volumes and mounts.
+    - Search for volumes you have created.
 
 ### Health Checks
 
