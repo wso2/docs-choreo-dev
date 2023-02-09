@@ -457,6 +457,7 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_URL="http://dp-rudder:80"
+      - CICD_URL="http://dp-cicd"
   - name: cm-file-choreo-org-stat-data-pipeline
     behavior: create
     files:
