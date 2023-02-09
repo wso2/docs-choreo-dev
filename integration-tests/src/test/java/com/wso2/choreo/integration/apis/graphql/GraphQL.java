@@ -52,7 +52,6 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -66,18 +65,15 @@ import static com.consol.citrus.validation.json.JsonMessageValidationContext.Bui
 public class GraphQL extends ControlPlaneAPI {
 
 
-
-
-
-    public static ProxyResponse<ChoreoComponent> createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId,String accessToken) throws IOException {
+    public static ProxyResponse<ChoreoComponent> createGraphqlQueryForComponentCreation(String apiName, String projectId, String apiId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().apiName(apiName.toLowerCase()).orgId(ORG_ID).orgHandler(ORG_HANDLE).displayName(apiName).
                 displayType(Constant.displayType.proxy.name()).projectId(projectId).apiId(apiId.replaceAll("\"", "")).build();
 
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/api-proxy/graphqlQueryForComponentCreation.mustache", dto);
-        Response response= HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
-        ChoreoComponent res = ObjectMapperUtil.mapStringToObject(ChoreoComponent.class,response.getRes(),"createComponent");
+        Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
+        ChoreoComponent res = ObjectMapperUtil.mapStringToObject(ChoreoComponent.class, response.getRes(), "createComponent");
 
-    return     ProxyResponse.<ChoreoComponent>builder().entity(res).response(response).build();
+        return ProxyResponse.<ChoreoComponent>builder().entity(res).response(response).build();
 
     }
 
@@ -116,12 +112,11 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
 
-    public static ChoreoProject createProject(Constant.region region,String accessToken) throws IOException {
+    public static ChoreoProject createProject(Constant.region region, String accessToken) throws IOException {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(Constant.TEST_PROJECT_NAME_PREFIX.concat(String.valueOf(new Date().getTime())))
                 .description(Constant.TEST_PROJECT_DESCRIPTION).region(region.name()).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/createProject.mustache", graphqlDTO);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        log.info(response.getRes());
         return ObjectMapperUtil.mapStringToObject(ChoreoProject.class, response.getRes(), "createProject");
     }
 
@@ -159,7 +154,7 @@ public class GraphQL extends ControlPlaneAPI {
         return ObjectMapperUtil.mapToCollection(Environment[].class, response.getRes(), "environments");
     }
 
-    public static Environment[] getComponentDeploymentEnvironment(String projectId,String accessToken) throws IOException {
+    public static Environment[] getComponentDeploymentEnvironment(String projectId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgUuid(ORG_UUID).projectId(projectId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getComponentDeploymentEnvironments.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
@@ -177,7 +172,6 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO dto = GraphqlDTO.builder().releaseId(releaseId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/observability/graphql/queryForComponentObservabilityIds.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        log.info(response.getRes());
         return Arrays.
                 stream(ObjectMapperUtil.mapToCollection(ObservabilityIdInformation[].class,
                         response.getRes(), "observerbilityIds")).filter(ob -> ob.getReleaseId().equals(releaseId)).findFirst().get();
@@ -201,7 +195,6 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/commitHistory.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        log.info(response.getRes());
         return ObjectMapperUtil.mapToCollection(Commit[].class, response.getRes(), "commitHistory");
     }
 
@@ -209,7 +202,6 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).branch(branch).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/commitHistoryBranch.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
-        log.info(response.getRes());
         return ObjectMapperUtil.mapToCollection(Commit[].class, response.getRes(), "commitHistory");
     }
 
@@ -232,13 +224,13 @@ public class GraphQL extends ControlPlaneAPI {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).latestVersionId(component.getLatestApiVersion().getId()).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/deploymentStatusByVersion.mustache", dto);
         Response response = null;
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < 20; i++) {
             response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
             ComponentStatusByVersion[] status = ObjectMapperUtil.mapToCollection(ComponentStatusByVersion[].class, response.getRes(), "deploymentStatusByVersion");
 
             log.info(response.getRes());
             if (status.length > 0) {
-                componentStatusByVersion= status[0];
+                componentStatusByVersion = status[0];
                 if (componentStatusByVersion.getConclusion() != null && componentStatusByVersion.getConclusion().equals("failure")) {
                     throw new UnexpectedResponseException(response.getStatusCode(), "Component was not deployed successfully");
                 }
@@ -246,7 +238,7 @@ public class GraphQL extends ControlPlaneAPI {
                     return componentStatusByVersion;
                 }
             }
-            SleepUtil.sleep(30);
+            SleepUtil.sleep(25);
         }
 
         return componentStatusByVersion;
@@ -256,12 +248,11 @@ public class GraphQL extends ControlPlaneAPI {
         String envId = component.getLatestAppEnvId(envName);
         GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).orgUuid(ORG_UUID).componentId(component.getId()).versionId(component.getLatestApiVersion().getId()).environmentId(envId).build();
         String expectedResponse = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/componentDeployment.mustache", dto);
-        Response response ;
+        Response response;
         ComponentDeploymentStatus deployments = null;
         for (int i = 0; i < 10; i++) {
             response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(expectedResponse), accessToken, "");
             deployments = ObjectMapperUtil.mapStringToObject(ComponentDeploymentStatus.class, response.getRes(), "componentDeployment");
-            log.info(response.getRes());
             if (deployments.getDeploymentStatusV2().equals("ERROR") || deployments.getDeploymentStatus().equals("ERROR")) {
                 throw new UnexpectedResponseException(response.getStatusCode(), "deploymentStatusV2 is " +
                         deployments.getDeploymentStatusV2() + " and deploymentStatus is " + deployments.getDeploymentStatus());
@@ -276,7 +267,7 @@ public class GraphQL extends ControlPlaneAPI {
         return deployments;
     }
 
-    public static ProxyDeployment getProxyAPIDeploymentDetails(String componentId,String versionId,String envId,String accessToken) throws IOException {
+    public static ProxyDeployment getProxyAPIDeploymentDetails(String componentId, String versionId, String envId, String accessToken) throws IOException {
         GraphqlDTO dto = GraphqlDTO.builder().orgHandler(ORG_HANDLE).orgUuid(ORG_UUID).componentId(componentId).versionId(versionId).environmentId(envId).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/getProxyDeploymentDetails.mustache", dto);
         Response response = HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
@@ -455,8 +446,8 @@ public class GraphQL extends ControlPlaneAPI {
      * @param accessToken    Access token
      * @param graphqlDTO     dto
      * @param responseParams Expected response parameters
-     * @throws IOException If error occurred in object mapping
      * @return Release ID of the deployment
+     * @throws IOException If error occurred in object mapping
      */
     public static void getComponentDeploymentStatus(TestActionRunner runner, HttpClient client, String accessToken,
                                                     GraphqlDTO graphqlDTO, Map<String, String> responseParams)
@@ -528,14 +519,15 @@ public class GraphQL extends ControlPlaneAPI {
 
     /**
      * Stop component deployment
-     * @param runner Test Action Runner
-     * @param client HTTP Client
+     *
+     * @param runner      Test Action Runner
+     * @param client      HTTP Client
      * @param accessToken Access Token
-     * @param graphqlDTO DTO
+     * @param graphqlDTO  DTO
      * @throws IOException If error occurred in object mapping
      */
     public static void stopDeployment(TestActionRunner runner, HttpClient client, String accessToken,
-                                        GraphqlDTO graphqlDTO) throws IOException {
+                                      GraphqlDTO graphqlDTO) throws IOException {
 
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/deploy/stopDeployment.mustache", graphqlDTO);

@@ -256,6 +256,7 @@ export class GraphQL {
     ChoreoHomePage.navigateToMarketPlace();
     ChoreoHomePage.navigateToProjects();
     cy.get("tbody>tr p").should("be.visible");
+    return cy.wrap({})
   }
 
   static getDeployedComponentDetails(projectId: string, handler: string) {
@@ -281,6 +282,7 @@ export class GraphQL {
 
   static getComponentDeploymentStatus(env: string = "dev") {
     const { handle, uuid, } = Cypress.env("userData");
+    cy.log(JSON.stringify(Cypress.env(env)))
     const { componentId, latestAPIVersionId, environmentId } = Cypress.env(env)
     const query = GraphQLQueryBuilder.getComponentDeploymentStatus(handle, uuid, componentId, latestAPIVersionId, environmentId)
     let isActive: boolean = false

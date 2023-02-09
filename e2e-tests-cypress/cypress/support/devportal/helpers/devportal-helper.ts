@@ -76,14 +76,15 @@ export class DevPortalHelper {
       DevPortalHelper.PROJECT_DESCRIPTION,
       Enums.Region.US
     );
-    GraphQL.createComponentWithRepo(componentData, DevPortalHelper.REPO_NAME);
-
-
-    ComponentListingPage.visitToAComponent(API_Name);
-    ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
-    ComponentOverviewPage.navigateToManage();
-    ComponentAPILifecycle.manageLifecycle();
-    ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+    GraphQL.createComponentWithRepo(componentData, DevPortalHelper.REPO_NAME)
+    .then(()=>{
+      ComponentListingPage.visitToAComponent(API_Name);
+      ComponentOverviewPage.navigateToDeploy();
+      ComponentDeployPage.deployToDev();
+      ComponentOverviewPage.navigateToManage();
+      ComponentAPILifecycle.manageLifecycle();
+      ComponentAPILifecycle.publishWithoutConnector().should("be.visible");
+    });   
   }
+
 }
