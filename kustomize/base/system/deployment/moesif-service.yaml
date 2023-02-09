@@ -29,16 +29,16 @@ spec:
         - name: moesif-service
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-moesif-service:latest # align  with info given in azure ci pipeline.
           env:
-            - name: CHOREO-MOESIF-KEY-MANAGEMENT-DB-MSSQL-PASSWORD
+            - name: CHOREO_MOESIF_KEY_MANAGEMENT_DB_MSSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: secret-moesif-service
-                  key: CHOREO-MOESIF-KEY-MANAGEMENT-DB-MSSQL-PASSWORD
-            - name: MOESIF-AUTH-PWD
+                  key: CHOREO_MOESIF_KEY_MANAGEMENT_DB_MSSQL_PASSWORD
+            - name: MOESIF_AUTH_PWD
               valueFrom:
                 secretKeyRef:
                   name: secret-moesif-service
-                  key: MOESIF-AUTH-PWD
+                  key: MOESIF_AUTH_PWD
           ports:
             - containerPort: 8080      # To be used for internal service
               name: internal-http-port
