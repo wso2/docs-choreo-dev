@@ -60,12 +60,8 @@ describe("Verify BYOR functionality", () => {
     ComponentDeployPage.deployToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-  });
-
-  it("Verify test functionality of root resource in dev on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
+  it("Verify test functionality of root resource on swagger in dev", () => {
+    ComponentOverviewPage.navigateToTest(true);
     TestHelper.testOnSwagger(
       Enums.Environment.DEVELOPMENT,
       RESOURCE_NAME,
@@ -77,7 +73,7 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  it("Verify test functionality of root resource in dev on curl", () => {
+  it("Verify test functionality of root resource on curl in dev", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
       Enums.HTTPMethod.GET,
@@ -91,7 +87,27 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
+
+  it("Verify resource access without the token in dev", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.DEVELOPMENT,
+      Enums.HTTPMethod.GET,
+      RESOURCE_NAME,
+      queryParameters1
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(MATCHING_STRING);
+        expect(res.status).equal(200);
+      });
+    });
+  });
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
+  it("Verify test functionality of root resource on swagger in prod", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
       Enums.Environment.PRODUCTION,
@@ -104,12 +120,25 @@ describe("Verify BYOR functionality", () => {
     });
   });
 
-  it("Verify test functionality of root resource in prod on curl", () => {
+  it("Verify test functionality of root resource on curl in prod", () => {
     TestHelper.testOnCurl(
       Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
       RESOURCE_NAME,
       queryParameters1
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(MATCHING_STRING);
+        expect(res.status).equal(200);
+      });
+    });
+  });
+
+  it("Verify resource access without the token in prod", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      RESOURCE_NAME
     ).then((curl) => {
       Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
         expect(res.body).equal(MATCHING_STRING);
@@ -142,33 +171,22 @@ describe("Verify BYOR functionality", () => {
     ComponentAPILifecycle.applyConfiguration(Enums.Environment.PRODUCTION);
   });
 
-  it("Verify resource access without the token in dev", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnCurl(
-      Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME,
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
-    });
-  });
+  
 
-  it("Verify resource access without the token in prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
-      Enums.HTTPMethod.GET,
-      RESOURCE_NAME
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(MATCHING_STRING);
-        expect(res.status).equal(200);
-      });
-    });
-  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   it("Verify manage functionality and Publish Connector", () => {
     ComponentOverviewPage.navigateToManage();
