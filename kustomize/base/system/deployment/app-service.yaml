@@ -134,6 +134,11 @@ spec:
                 secretKeyRef:
                   name: secret-app-service
                   key: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+            - name: API_MANAGER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-api-manager
+                  key: API_MANAGER_CLIENT_SECRET                
           envFrom:
             - configMapRef:
                 name: env-app-service
@@ -204,10 +209,22 @@ spec:
             - name: secret-runtime
               mountPath: "/mnt/csi/secret-runtime"
               readOnly: true
+            - name: secret-api-manager
+              mountPath: "/mnt/csi/secret-api-manager"
+              readOnly: true              
       volumes:
         - name: config
           configMap:
             name: cm-file-app-service
+                - name: secret-gsuite
+        - name: secret-api-manager
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-api-manager
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: secret-gsuite
           csi:
             driver: secrets-store.csi.k8s.io
