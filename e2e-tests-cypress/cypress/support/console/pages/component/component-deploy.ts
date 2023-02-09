@@ -26,6 +26,7 @@ export class ComponentDeployPage {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
     if (isExternalAPI) {
+      Utils.interceptConfig()
       cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
     }
     cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
@@ -56,6 +57,7 @@ export class ComponentDeployPage {
       .should("be.enabled")
       .click();
     if (isExternalAPI) {
+      Utils.interceptConfig()
       cy.get('[data-cyid="btn-next"]').realClick();
       cy.get('[data-cyid="btn-next"]').realClick();
     }

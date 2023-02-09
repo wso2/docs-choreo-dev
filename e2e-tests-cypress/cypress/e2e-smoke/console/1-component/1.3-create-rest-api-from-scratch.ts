@@ -69,10 +69,6 @@ describe("Verify project creation functionality", () => {
     ComponentDeployPage.deployToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-  });
-
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest();
     TestHelper.testOnSwagger(
@@ -86,36 +82,10 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it("Verify test functionality of root resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      "root",
-      "number",
-      "2"
-    ).then((res) => {
-      expect(res.response).to.be.eq("4");
-      expect(res.statusCode).to.be.eq("200");
-    });
-  });
 
   it("Verify test functionality using generated curl in Dev", () => {
     TestHelper.testOnCurl(
       Enums.Environment.DEVELOPMENT,
-      Enums.HTTPMethod.GET,
-      "root",
-      queryParameters1
-    ).then((curl) => {
-      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
-        expect(res.body).equal(4);
-        expect(res.status).equal(200);
-      });
-    });
-  });
-
-  it("Verify test functionality using generated curl in Prod", () => {
-    TestHelper.testOnCurl(
-      Enums.Environment.PRODUCTION,
       Enums.HTTPMethod.GET,
       "root",
       queryParameters1
@@ -140,18 +110,6 @@ describe("Verify project creation functionality", () => {
     });
   });
 
-  it("Verify test functionality of isOdd resource in prod on swagger", () => {
-    ComponentOverviewPage.navigateToTest();
-    TestHelper.testOnSwagger(
-      Enums.Environment.PRODUCTION,
-      "isOdd",
-      "number",
-      "5"
-    ).then((res) => {
-      expect(res.response).to.be.eq("true");
-      expect(res.statusCode).to.be.eq("200");
-    });
-  });
 
   it("Verify test functionality using generated curl in dev", () => {
     TestHelper.testOnCurl(
@@ -166,6 +124,59 @@ describe("Verify project creation functionality", () => {
       });
     });
   });
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
+
+
+  it("Verify test functionality of root resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      "root",
+      "number",
+      "2"
+    ).then((res) => {
+      expect(res.response).to.be.eq("4");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+
+
+  it("Verify test functionality using generated curl in Prod", () => {
+    TestHelper.testOnCurl(
+      Enums.Environment.PRODUCTION,
+      Enums.HTTPMethod.GET,
+      "root",
+      queryParameters1
+    ).then((curl) => {
+      Utils.sendGetRequest(curl.url, curl.headers).then((res) => {
+        expect(res.body).equal(4);
+        expect(res.status).equal(200);
+      });
+    });
+  });
+
+
+
+  it("Verify test functionality of isOdd resource in prod on swagger", () => {
+    ComponentOverviewPage.navigateToTest();
+    TestHelper.testOnSwagger(
+      Enums.Environment.PRODUCTION,
+      "isOdd",
+      "number",
+      "5"
+    ).then((res) => {
+      expect(res.response).to.be.eq("true");
+      expect(res.statusCode).to.be.eq("200");
+    });
+  });
+
+ 
 
   it("Verify test functionality using generated curl in prod", () => {
     TestHelper.testOnCurl(

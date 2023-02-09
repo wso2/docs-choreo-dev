@@ -226,5 +226,9 @@ export class Utils {
     return false;
   }
 
+   static interceptConfig() {
+     cy.intercept(`${Cypress.env("apimSvcURL")}/api/am/publisher/v2/apis/**`).as('config')
+    cy.wait('@config', { timeout: 180000 })
+  }
 
 }

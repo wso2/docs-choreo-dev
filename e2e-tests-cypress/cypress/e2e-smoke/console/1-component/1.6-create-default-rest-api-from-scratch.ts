@@ -60,10 +60,6 @@ describe("Verify BYOR functionality", () => {
     ComponentDeployPage.deployToDev();
   });
 
-  it("Verify component promote to prod", () => {
-    ComponentDeployPage.promoteToProd();
-  });
-
   it("Verify test functionality of root resource in dev on swagger", () => {
     ComponentOverviewPage.navigateToTest(true);
     TestHelper.testOnSwagger(
@@ -90,6 +86,13 @@ describe("Verify BYOR functionality", () => {
       });
     });
   });
+
+  it("Verify component promote to prod", () => {
+    ComponentOverviewPage.navigateToDeploy();
+    ComponentDeployPage.promoteToProd();
+  });
+
+
 
   it("Verify test functionality of root resource in prod on swagger", () => {
     ComponentOverviewPage.navigateToTest();
