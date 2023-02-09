@@ -138,12 +138,13 @@ public class APICreator extends ControlPlaneAPI {
 
     }
 
-    public static Status promoteProxyAPI(String componentId, String versionId, String envId, String revisionId, String buildId, String apiId, String accessToken) throws IOException {
-        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy?environmentId=" + envId + "&revisionId=" + revisionId + "&buildId=" + buildId + "&apiId=" + apiId + "&accessMode=external";
+
+
+    public static Status promoteProxyAPI(String componentId, String versionId, String fromEnv,String targetEnv,  String buildId,  String accessToken) throws IOException {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/promote?fromEnv=" + fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId ;
         Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
     }
-
 
 
     public static TestConfigs getAPIKey(String apiId, String accessToken) throws IOException {

@@ -34,8 +34,6 @@ import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.componentstatus.Status;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.observability.ObservabilityIdInformation;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponent;
-import com.wso2.choreo.integration.common.choreoproject.RestApiChoreoComponentBuilder;
 import com.wso2.choreo.integration.common.exceptions.*;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -106,7 +104,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createUserManagedComponent_ObservabilityAPITestCase() throws IOException {
         String componentName = Constant.TEST_COMPONENT_NAME.concat(String.valueOf(new Date().getTime()));
-        GitHub.initGitHubRepo(repoName, true, true, "nanoc");
+
         GraphqlDTO dto = GraphqlDTO.builder().name(componentName).
                 triggerID("null").
                 srcGitRepoUrl("https://github.com/choreo-test-apps/rest-api").
@@ -303,7 +301,7 @@ public class ObservabilityAPITestCase extends TestNGCitrusSpringSupport {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("observeId", observabilityIdInformation.getObsId());
         queryParams.put("version", observabilityIdInformation.getVerzion());
-        queryParams.put("from", Instant.now().minusSeconds(60 * 60 * 24).toString());
+        queryParams.put("from", Instant.now().minusSeconds(60 * 60).toString());
         queryParams.put("to", Instant.now().toString());
         mustache.execute(writer, queryParams).flush();
         String body = writer.toString();

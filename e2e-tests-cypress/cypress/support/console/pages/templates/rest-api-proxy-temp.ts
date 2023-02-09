@@ -58,7 +58,6 @@ export class RestAPIProxyTemplate {
     if (validateResourceName) {
       resourceIdentifier = "resource-/" + validateResourceName;
     }
-
     cy.get(`[data-testid="${resourceIdentifier}"]`);
     Utils.saveComponentURL();
   }

@@ -11,10 +11,9 @@
  * associated services.
  */
 
+import { ComponentData } from "../../../interfaces/component-data";
+import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
-import { RestAPIProxyTemplate } from "../templates/rest-api-proxy-temp";
-import { RestAPITemplate } from "../templates/rest-api-temp";
-import { TriggersTemplate } from "../templates/slackTrigger-creation-temp";
 
 export class ProjectOverviewPage {
   static selectComponent(fileID) {
@@ -23,6 +22,30 @@ export class ProjectOverviewPage {
 
   static addNewComponent() {
     cy.get(".MuiContainer-root button").click(); // Need to add a id for the Create button
+  }
+
+
+  static searchReuseComponent(componentData: ComponentData) {
+
+    const REPO_NAME = Utils.generateComponentName("repo");
+    cy.wait(5000)
+    cy.get('body').then(bdy => {
+      if (bdy.find('tbody').length > 0) {
+        let isFound: boolean = false;
+        const kk = bdy.find('p')
+        for (let i = 0; i < kk.length; i++) {
+          if (kk[i].innerText === componentData.componentName) {
+            isFound = true;
+            break;
+          }
+        }
+        if(!isFound){
+          GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+        }
+      }else{
+        GraphQL.createComponentWithRepo(componentData, REPO_NAME);
+      }
+    })
   }
 
   static createHttpProxyAPI() {

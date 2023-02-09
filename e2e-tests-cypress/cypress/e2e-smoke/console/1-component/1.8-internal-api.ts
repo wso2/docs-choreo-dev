@@ -94,12 +94,12 @@ describe("Verify internal API creation functionality", () => {
   it("Verify REST API component deployment", () => {
     ComponentListingPage.visitToAComponent(REST_API_NAME);
     ComponentOverviewPage.navigateToDeploy();
-    ComponentDeployPage.deployToDev();
+    ComponentDeployPage.deployToDev(false);
     ComponentDeployPage.verifyDeploymentStatus();
   });
 
   it("Verify REST API component promote to PROD", () => {
-    ComponentDeployPage.promoteToProd();
+    ComponentDeployPage.promoteToProd(false);
   });
 
   it("Publish the API", () => {

@@ -42,12 +42,8 @@ spec:
                 name: env-dp-cloud-manager
             - configMapRef:
                 name: cm-dp-cloud-manager
-          env:
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: DB_PASSWORD
-                  name: secret-dp-cloud-manager
+            - secretRef:
+                name: secret-dp-cloud-manager
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10001

@@ -14,6 +14,7 @@
 import "cypress-file-upload";
 import "cypress-xpath";
 import "cypress-real-events/support";
+import "cypress-fail-fast";
 
 
 Cypress.on("uncaught:exception", (err, runnable) => {

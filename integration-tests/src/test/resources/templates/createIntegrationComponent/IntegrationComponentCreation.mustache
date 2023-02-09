@@ -1,0 +1,39 @@
+mutation{
+    createIntegrationComponent(
+        component: {
+            name: "{{apiName}}",
+            displayName: "{{displayName}}",
+            description: "",
+            orgId: {{orgId}},
+            orgHandler: "{{orgHandler}}",
+            projectId: "{{projectId}}",
+            labels: "",
+            componentType: "{{componentType}}",
+            accessibility: "external"
+            srcGitRepoUrl: "{{srcGitRepoUrl}}",
+            srcGitRepoBranch: "{{repositoryBranch}}"
+            version: "1.0.0"
+        }
+    ){
+id,
+createdAt,
+updatedAt,
+name,
+handle,
+organizationId,
+projectId,
+orgHandle,
+type,
+description,
+imageRegistryId,
+imageRegistry {
+id,
+createdAt,
+updatedAt,
+cloudConnectorId,
+imageRepositoryName
+},
+componentType,
+httpBased
+}
+}

@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { GraphQL } from "../../apis/graphql";
 import { Utils } from "../../utils";
 
 interface PromoteConfigs {
@@ -21,15 +22,23 @@ interface PromoteConfigs {
 }
 
 export class ComponentDeployPage {
-  static deployToDev() {
+  static deployToDev(isExternalAPI: boolean = true) {
     window.localStorage.setItem("hideSocialShareModel", "true");
-    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").focus().click();
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
-    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should(
-      "be.visible"
-    );
+    cy.get('[data-cyid="btn-deploy-api"]').should("be.enabled").click();
+    if (isExternalAPI) {
+      cy.get('[data-cyid="btn-next"]', { timeout: 600000 }).click();
+    }
+    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
+    GraphQL.getComponentDeploymentStatus()
     // UI re-rendering takes place, so recheck if the Stop button has been loaded after a short wait
     // to ensure rendering completes before checking the deployment status
+    cy.wait(600);
+    cy.get('[data-testid="btn-stop"]', { timeout: 600000 }).should("be.visible");
+    cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains("Active", { timeout: 360000 });
+  }
+
+  static waitTillAutoBuildComplete() {
+    window.localStorage.setItem("hideSocialShareModel", "true");
     cy.wait(600);
     cy.get('[data-testid="btn-stop"]').should("be.visible");
 
@@ -38,18 +47,7 @@ export class ComponentDeployPage {
       { timeout: 360000 }
     );
   }
-
-static waitTillAutoBuildComplete(){
-  window.localStorage.setItem("hideSocialShareModel", "true");
-  cy.wait(600);
-  cy.get('[data-testid="btn-stop"]').should("be.visible");
-
-  cy.get('[data-cyid="deployment-status"]', { timeout: 360000 }).contains(
-    "Active",
-    { timeout: 360000 }
-  );
-}
-  static promoteToProd() {
+  static promoteToProd(isExternalAPI: boolean = true) {
     window.localStorage.setItem("hideSocialShareModel", "true");
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
@@ -57,8 +55,12 @@ static waitTillAutoBuildComplete(){
     cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .click();
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
-    cy.get('[data-cyid="btn-next"]').should("be.enabled").focus().click();
+    if (isExternalAPI) {
+      cy.get('[data-cyid="btn-next"]').realClick();
+      cy.get('[data-cyid="btn-next"]').realClick();
+    }
+
+
     cy.get('[data-testid="btn-stop"]', { timeout: 360000 })
       .should("have.length", 2)
       .eq(1)
@@ -258,13 +260,12 @@ static waitTillAutoBuildComplete(){
     settingButtonCount,
     promoButtonIndex = 0,
   }: PromoteConfigs) {
-    cy.get('[data-cyid*="btn-promote"]', { timeout: 360000 })
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 })
       .should("be.enabled")
       .wait(2000)
-      .eq(promoButtonIndex)
       .click(); // promote button
     cy.wait(6000);
-    cy.get('[data-cyid*="btn-promote"]', { timeout: 360000 }).should(
+    cy.get('[data-cyid="btn-promote"]', { timeout: 360000 }).should(
       "not.be.disabled"
     );
   }
